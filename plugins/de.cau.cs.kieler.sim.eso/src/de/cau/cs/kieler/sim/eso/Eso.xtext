@@ -18,6 +18,7 @@ tick:
     (input+=signal)*
     ('%' 'Output' ':' (output+=signal)*)?
     (extraInfos+=kvpair)*
+    ('%%' 'Output' ':' (extraInfosOutput+=kvpair)*)?
     ';';
 
 /* From the Xtext documentation:
@@ -35,7 +36,7 @@ kvpair:
     {kvpair}
     '%%'
     key=(ALPHANUMSPECIAL)
-    ':'
+    '='
     value=(EsoJson | EsoString | EsoFloat | EsoBool | EsoInt);
     
 EsoInt:
@@ -59,7 +60,7 @@ EsoJson:
 ;
 
 terminal SPECIAL:
-    ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | '=' | '+' | '-' | '_';
+    ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | ':' | '+' | '-' | '_';
     
 terminal BOOL returns ecore::EBoolean:
     ('true' | 'false');

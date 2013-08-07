@@ -146,10 +146,15 @@ class SCLExpressionExtensions {
     // Because expression serialization, serializes ALL text until the preceding ";",
     // one needs to filter this maybe wrongly serialized text away. 
     def String correctSerialization(String text) {
-        val i1 = text.lastIndexOf("\r");
-        val i2 = text.lastIndexOf("\n");
-        val i3 = text.lastIndexOf("\t");
-        val i4 = text.lastIndexOf("*/")+1;
+        val i1 = text.lastIndexOf("\r")
+        val i2 = text.lastIndexOf("\n")
+        val i3 = text.lastIndexOf("\t")
+        val i4 = text.lastIndexOf("*/")+1
+        
+        if (i3 > 0) {
+            var text2 = text.substring(i3 + 1);
+            return text2.replace("\r", "").replace("\n", "");
+        }
         
         if ((i1 > 0) || (i2 > 0) || (i3 > 0) || (i4 > 1)) {
             var i = i4;

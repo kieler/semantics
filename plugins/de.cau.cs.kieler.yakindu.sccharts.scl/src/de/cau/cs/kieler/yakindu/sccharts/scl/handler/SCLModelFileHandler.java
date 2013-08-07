@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.yakindu.sccharts.scl.handler;
 
+import java.util.EnumSet;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
@@ -25,6 +27,7 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.CoreToSCLTransformation;
 import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.CoreToSCLOptimization;
+import de.cau.cs.kieler.yakindu.sccharts.scl.xtend.SCLOptimizations;
 import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
 
 /**
@@ -89,23 +92,30 @@ public class SCLModelFileHandler extends AbstractModelFileHandler {
     // Executed when the transformation is invoked.
     public EObject doTransformation(EObject modelObject, String commandString, ISelection selection) {
 
+        final EnumSet<SCLOptimizations> opt = EnumSet.noneOf(SCLOptimizations.class);
         // Use the default transformation optimizations or
         // use the optimization selected in the context menu.
-        int opt = CoreToSCLOptimization.OPTIMIZE_DEFAULT;
+        opt.add(SCLOptimizations.GOTO);
+        opt.add(SCLOptimizations.LABEL);
+        opt.add(SCLOptimizations.SELFLOOP);
         if (commandString.equals(SCLTRANSFORMATIONCOMMANDNOOPT)) {
-            opt = CoreToSCLOptimization.OPTIMIZE_NONE;
+            opt.clear();
         }
         if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYGOTO)) {
-            opt = CoreToSCLOptimization.OPTIMIZE_GOTO;
+            opt.clear();
+            opt.add(SCLOptimizations.GOTO);
         }
         if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYLABEL)) {
-            opt = CoreToSCLOptimization.OPTIMIZE_LABEL;
+            opt.clear();
+            opt.add(SCLOptimizations.LABEL);
         }
         if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYSELFLOOP)) {
-            opt = CoreToSCLOptimization.OPTIMIZE_SELFLOOP;
+            opt.clear();
+            opt.add(SCLOptimizations.SELFLOOP);
         }
         if (commandString.equals(SCLTRANSFORMATIONCOMMANDONLYSTATEPOSITION)) {
-            opt = CoreToSCLOptimization.OPTIMIZE_STATEPOSITION;
+            opt.clear();
+            opt.add(SCLOptimizations.STATEPOSITION);
         }
 
         // Invoke the transformation via guice...

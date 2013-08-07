@@ -42,6 +42,7 @@ public class EsoParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTraceAccess().getGroup(), "rule__Trace__Group__0");
 					put(grammarAccess.getTickAccess().getGroup(), "rule__Tick__Group__0");
 					put(grammarAccess.getTickAccess().getGroup_2(), "rule__Tick__Group_2__0");
+					put(grammarAccess.getTickAccess().getGroup_4(), "rule__Tick__Group_4__0");
 					put(grammarAccess.getSignalAccess().getGroup(), "rule__Signal__Group__0");
 					put(grammarAccess.getSignalAccess().getGroup_2(), "rule__Signal__Group_2__0");
 					put(grammarAccess.getKvpairAccess().getGroup(), "rule__Kvpair__Group__0");
@@ -50,6 +51,7 @@ public class EsoParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTickAccess().getInputAssignment_1(), "rule__Tick__InputAssignment_1");
 					put(grammarAccess.getTickAccess().getOutputAssignment_2_3(), "rule__Tick__OutputAssignment_2_3");
 					put(grammarAccess.getTickAccess().getExtraInfosAssignment_3(), "rule__Tick__ExtraInfosAssignment_3");
+					put(grammarAccess.getTickAccess().getExtraInfosOutputAssignment_4_3(), "rule__Tick__ExtraInfosOutputAssignment_4_3");
 					put(grammarAccess.getSignalAccess().getNameAssignment_0(), "rule__Signal__NameAssignment_0");
 					put(grammarAccess.getSignalAccess().getValuedAssignment_1(), "rule__Signal__ValuedAssignment_1");
 					put(grammarAccess.getSignalAccess().getValAssignment_2_0(), "rule__Signal__ValAssignment_2_0");

@@ -1,0 +1,240 @@
+/**
+ */
+package scg.impl;
+
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import scg.Assignment;
+import scg.Link;
+import scg.ScgPackage;
+
+/**
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Assignment</b></em>'.
+ * <!-- end-user-doc -->
+ * <p>
+ * The following features are implemented:
+ * <ul>
+ *   <li>{@link scg.impl.AssignmentImpl#getNext <em>Next</em>}</li>
+ *   <li>{@link scg.impl.AssignmentImpl#getAssignments <em>Assignments</em>}</li>
+ * </ul>
+ * </p>
+ *
+ * @generated
+ */
+public class AssignmentImpl extends NodeImpl implements Assignment {
+    /**
+     * The cached value of the '{@link #getNext() <em>Next</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getNext()
+     * @generated
+     * @ordered
+     */
+    protected Link next;
+
+    /**
+     * The default value of the '{@link #getAssignments() <em>Assignments</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAssignments()
+     * @generated
+     * @ordered
+     */
+    protected static final String ASSIGNMENTS_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getAssignments() <em>Assignments</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAssignments()
+     * @generated
+     * @ordered
+     */
+    protected String assignments = ASSIGNMENTS_EDEFAULT;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected AssignmentImpl() {
+        super();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return ScgPackage.Literals.ASSIGNMENT;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Link getNext() {
+        return next;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetNext(Link newNext, NotificationChain msgs) {
+        Link oldNext = next;
+        next = newNext;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__NEXT, oldNext, newNext);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setNext(Link newNext) {
+        if (newNext != next) {
+            NotificationChain msgs = null;
+            if (next != null)
+                msgs = ((InternalEObject)next).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__NEXT, null, msgs);
+            if (newNext != null)
+                msgs = ((InternalEObject)newNext).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__NEXT, null, msgs);
+            msgs = basicSetNext(newNext, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__NEXT, newNext, newNext));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getAssignments() {
+        return assignments;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setAssignments(String newAssignments) {
+        String oldAssignments = assignments;
+        assignments = newAssignments;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__ASSIGNMENTS, oldAssignments, assignments));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case ScgPackage.ASSIGNMENT__NEXT:
+                return basicSetNext(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case ScgPackage.ASSIGNMENT__NEXT:
+                return getNext();
+            case ScgPackage.ASSIGNMENT__ASSIGNMENTS:
+                return getAssignments();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case ScgPackage.ASSIGNMENT__NEXT:
+                setNext((Link)newValue);
+                return;
+            case ScgPackage.ASSIGNMENT__ASSIGNMENTS:
+                setAssignments((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case ScgPackage.ASSIGNMENT__NEXT:
+                setNext((Link)null);
+                return;
+            case ScgPackage.ASSIGNMENT__ASSIGNMENTS:
+                setAssignments(ASSIGNMENTS_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case ScgPackage.ASSIGNMENT__NEXT:
+                return next != null;
+            case ScgPackage.ASSIGNMENT__ASSIGNMENTS:
+                return ASSIGNMENTS_EDEFAULT == null ? assignments != null : !ASSIGNMENTS_EDEFAULT.equals(assignments);
+        }
+        return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (Assignments: ");
+        result.append(assignments);
+        result.append(')');
+        return result.toString();
+    }
+
+} //AssignmentImpl

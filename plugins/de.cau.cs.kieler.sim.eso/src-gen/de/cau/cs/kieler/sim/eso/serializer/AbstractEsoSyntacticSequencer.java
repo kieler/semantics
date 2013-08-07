@@ -19,11 +19,13 @@ public abstract class AbstractEsoSyntacticSequencer extends AbstractSyntacticSeq
 
 	protected EsoGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_tick___PercentSignKeyword_2_0_OutputKeyword_2_1_ColonKeyword_2_2__q;
+	protected AbstractElementAlias match_tick___PercentSignPercentSignKeyword_4_0_OutputKeyword_4_1_ColonKeyword_4_2__q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (EsoGrammarAccess) access;
 		match_tick___PercentSignKeyword_2_0_OutputKeyword_2_1_ColonKeyword_2_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getTickAccess().getPercentSignKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getTickAccess().getOutputKeyword_2_1()), new TokenAlias(false, false, grammarAccess.getTickAccess().getColonKeyword_2_2()));
+		match_tick___PercentSignPercentSignKeyword_4_0_OutputKeyword_4_1_ColonKeyword_4_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getTickAccess().getPercentSignPercentSignKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getTickAccess().getOutputKeyword_4_1()), new TokenAlias(false, false, grammarAccess.getTickAccess().getColonKeyword_4_2()));
 	}
 	
 	@Override
@@ -40,6 +42,8 @@ public abstract class AbstractEsoSyntacticSequencer extends AbstractSyntacticSeq
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
 			if(match_tick___PercentSignKeyword_2_0_OutputKeyword_2_1_ColonKeyword_2_2__q.equals(syntax))
 				emit_tick___PercentSignKeyword_2_0_OutputKeyword_2_1_ColonKeyword_2_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_tick___PercentSignPercentSignKeyword_4_0_OutputKeyword_4_1_ColonKeyword_4_2__q.equals(syntax))
+				emit_tick___PercentSignPercentSignKeyword_4_0_OutputKeyword_4_1_ColonKeyword_4_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -49,6 +53,14 @@ public abstract class AbstractEsoSyntacticSequencer extends AbstractSyntacticSeq
 	 *     ('%' 'Output' ':')?
 	 */
 	protected void emit_tick___PercentSignKeyword_2_0_OutputKeyword_2_1_ColonKeyword_2_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
+	 *     ('%%' 'Output' ':')?
+	 */
+	protected void emit_tick___PercentSignPercentSignKeyword_4_0_OutputKeyword_4_1_ColonKeyword_4_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

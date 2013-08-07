@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Magical Stuff
+Bundle-SymbolicName: de.cau.cs.kieler.sim.salabim
+Bundle-Version: 0.0.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.sim.salabim.Taube
+Require-Bundle: org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

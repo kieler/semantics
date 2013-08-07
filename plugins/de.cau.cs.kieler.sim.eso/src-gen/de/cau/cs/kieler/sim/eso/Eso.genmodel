@@ -17,6 +17,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Eso.ecore#//tick/input"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Eso.ecore#//tick/output"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Eso.ecore#//tick/extraInfos"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Eso.ecore#//tick/extraInfosOutput"/>
     </genClasses>
     <genClasses ecoreClass="Eso.ecore#//signal">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Eso.ecore#//signal/name"/>

@@ -51,6 +51,14 @@
       <elements xsi:type="xtext:Assignment" cardinality="*" feature="extraInfos" operator="+=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.4"/>
       </elements>
+      <elements xsi:type="xtext:Group" cardinality="?">
+        <elements xsi:type="xtext:Keyword" value="%%"/>
+        <elements xsi:type="xtext:Keyword" value="Output"/>
+        <elements xsi:type="xtext:Keyword" value=":"/>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="extraInfosOutput" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="//@rules.4"/>
+        </elements>
+      </elements>
       <elements xsi:type="xtext:Keyword" value=";"/>
     </alternatives>
   </rules>
@@ -92,7 +100,7 @@
       <elements xsi:type="xtext:Assignment" feature="key" operator="=">
         <terminal xsi:type="xtext:RuleCall" rule="//@rules.14"/>
       </elements>
-      <elements xsi:type="xtext:Keyword" value=":"/>
+      <elements xsi:type="xtext:Keyword" value="="/>
       <elements xsi:type="xtext:Assignment" feature="value" operator="=">
         <terminal xsi:type="xtext:Alternatives">
           <elements xsi:type="xtext:RuleCall" rule="//@rules.9"/>
@@ -157,7 +165,7 @@
       <elements xsi:type="xtext:Keyword" value="$"/>
       <elements xsi:type="xtext:Keyword" value="&amp;"/>
       <elements xsi:type="xtext:Keyword" value="*"/>
-      <elements xsi:type="xtext:Keyword" value="="/>
+      <elements xsi:type="xtext:Keyword" value=":"/>
       <elements xsi:type="xtext:Keyword" value="+"/>
       <elements xsi:type="xtext:Keyword" value="-"/>
       <elements xsi:type="xtext:Keyword" value="_"/>
