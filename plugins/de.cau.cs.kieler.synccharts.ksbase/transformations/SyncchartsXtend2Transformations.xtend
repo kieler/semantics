@@ -25,7 +25,7 @@ class SyncchartsXtend2Transformations {
         newState.setId(state.id + "_State_" + (state.parentRegion.states.size + 1))
         newState.setLabel("")
         state.parentRegion.states.add(newState)
-        //newState.parentRegion = state.parentRegion
+        newState.parentRegion = state.parentRegion
         newTrans.setSourceState(state)
         newTrans.setTargetState(newState) 
     }
@@ -191,7 +191,7 @@ class SyncchartsXtend2Transformations {
     def upgradeState(State parentState) {
         val Region region = SyncchartsFactory::eINSTANCE.createRegion()
         val State state = SyncchartsFactory::eINSTANCE.createState()
-        region.setId("Region_" + parentState.regions.size + 1)
+        region.setId("Region_" + (parentState.regions.size + 1))
         region.setLabel("")
         state.setId("State_1")
         state.setLabel("")
