@@ -452,12 +452,12 @@ class ESO2VHDL {
 			    // compute which variables must be set with which value
 			    // Variables which are listed in the ESO file in that tick will be set to this value
 			    // all other variables must be set absent
-			    val ArrayList<kvpair> allInputs = computeValidVariabeles(inputArray, tick.extraInfos)
+//			    val ArrayList<kvpair> allInputs = computeValidVariabeles(inputArray, tick.extraInfos)
 			    
 //			    setInputs = setInputs
 			    
 			    // Generate VHDL code 
-				setInputs = setInputs + allInputs.map[ kvp |
+				setInputs = setInputs + tick.extraInfos.map[ kvp |
                     '''«kvp.key» <= «kvp.valueFromKvPair»;'''
                 ].join('\n')				
 					
@@ -470,13 +470,13 @@ class ESO2VHDL {
 				// all outputs which are mentioned in the current tick in the ESO file are tested 
 				// according to their mentioned value, all unmentioned values must be set to absent,
 				// but only the 'present' variables, because the value from a variable would not be changed
-				val ArrayList<kvpair> allAssertions = computeValidVariabeles(outputArray, tick.extraInfosOutput)
+//				val ArrayList<kvpair> allAssertions = computeValidVariabeles(outputArray, tick.extraInfosOutput)
 				
 				// Generate VHDL code
 				// The assertion contains the following failing info: in which trace, in which tick, 
 				// which signal and the expected value
 				asserts = ""
-                asserts = asserts + allAssertions.map[ kvp |
+                asserts = asserts + tick.extraInfosOutput.map[ kvp |
                     '''
                         assert( «kvp.key» = «kvp.valueFromKvPair» )
                             report "«numberToString(traceCnt)» trace: «numberToString(tickCnt)» tick: «kvp.key» should have been «kvp.valueFromKvPair»"
