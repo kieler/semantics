@@ -207,7 +207,7 @@ class SCL2VHDL {
             
             --update local variables
             «signalToVariable(modelInputs)»
-            reset_int := reset_reg;
+            RUNNING_local := RUNNING_reg;
         
             --main program
             «generateMainProcess(program.statements)»
@@ -230,9 +230,9 @@ class SCL2VHDL {
         begin
             wait until rising_edge(tick);
             if(reset = true) then
-                reset_reg <= true;
+                RUNNING_reg <= true;
              else
-                reset_reg <= reset;
+                RUNNING_reg <= reset;
              end if;
         end process;
         ''' 
@@ -242,9 +242,9 @@ class SCL2VHDL {
         
         variables.map[ variable | 
             if(variable.input || variable.output){
-                '''«variable.name + "_int"» := «value»;'''
+                '''«variable.name + "_local"» := «value»;'''
             }else if(variable.name.equals("RESET")){
-                 '''«variable.name + "_int"» := «value»;'''   
+                 '''«variable.name + "_local"» := «value»;'''   
             }else{
                 '''«variable.name» := «value»;'''
             }
@@ -267,11 +267,11 @@ class SCL2VHDL {
 //            if (reset = '1') then
 //                u_notInitial := false;
 //                u_notInitialDetect := true;
-//                entry_int <= false;
+//                entry_local <= false;
 //            else 
 //                u_entry := not u_notInitial;
 //                u_notInitial := u_notInitial or u_notInitialDetect;
-//                entry_int <= u_entry;
+//                entry_local <= u_entry;
 //            end if;
 //     end process;
 //     '''
@@ -285,9 +285,9 @@ class SCL2VHDL {
             if(lVar.input && lVar.output){
                 //yes, set the output from such variable
                 var originalName = lVar.name.subSequence(0,lVar.name.indexOf("_out")).toString
-                '''«lVar.name» <= «originalName»_int;'''
+                '''«lVar.name» <= «originalName»_local;'''
             }else{
-                '''«lVar.name» <= «lVar.name»_int;'''
+                '''«lVar.name» <= «lVar.name»_local;'''
             }
             
         ].join('\n')
@@ -301,7 +301,7 @@ class SCL2VHDL {
 
     def signalToVariable(ArrayList<VariableDefinition> variables) { 
         
-        val localVar = variables.map(lVar | '''«lVar.name»_int := «lVar.name»;''').join('\n')
+        val localVar = variables.map(lVar | '''«lVar.name»_local := «lVar.name»;''').join('\n')
         
         //else must be an empty String, when not null is written into the file
         if(!(localVar.nullOrEmpty))
@@ -318,7 +318,7 @@ class SCL2VHDL {
 
 //    def genarateLocalSignals(ArrayList<VariableDefinition> variables) { 
 //        
-//        val localVar = variables.map(lVar | '''«generateVhdlSignalFromVariableWithInitialValue(lVar,"_int")»''').join('\n')
+//        val localVar = variables.map(lVar | '''«generateVhdlSignalFromVariableWithInitialValue(lVar,"_local")»''').join('\n')
 //        
 //        //else must be an empty String, when not null is written into the file
 //        if(!(localVar.nullOrEmpty))
@@ -331,9 +331,9 @@ class SCL2VHDL {
         
         val localVar = variables.map[lVar | 
             if(lVar.input || lVar.output){
-                '''«generateVhdlVariabelFromVariableWithInitialValue(lVar,"_int")»'''
+                '''«generateVhdlVariabelFromVariableWithInitialValue(lVar,"_local")»'''
             }else if(lVar.name.equals("RESET")){
-                '''«generateVhdlVariabelFromVariableWithInitialValue(lVar,"_int")»'''
+                '''«generateVhdlVariabelFromVariableWithInitialValue(lVar,"_local")»'''
             }else{
                 '''«generateVhdlVariabelFromVariableWithInitialValue(lVar,"")»'''
             }
@@ -498,12 +498,12 @@ class SCL2VHDL {
     '''«inst.instruction.expand»'''
    }  
    
-   // Expand a Variable Declaration, all internal signals have an "_int" at the end
+   // Expand a Variable Declaration, all internal signals have an "_local" at the end
    def dispatch expand(VariableDefinition vari) {
         if(vari.input || vari.output){
-            '''«vari.name»_int'''
-        }else if(vari.name.equals("RESET")){
-            '''«vari.name»_int'''
+            '''«vari.name»_local'''
+        }else if(vari.name.equals("RUNNING")){
+            '''«vari.name»_local'''
         }else{
             '''«vari.name»'''
         }
