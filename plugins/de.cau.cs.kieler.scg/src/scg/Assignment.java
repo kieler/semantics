@@ -12,7 +12,7 @@ package scg;
  * The following features are supported:
  * <ul>
  *   <li>{@link scg.Assignment#getNext <em>Next</em>}</li>
- *   <li>{@link scg.Assignment#getAssignments <em>Assignments</em>}</li>
+ *   <li>{@link scg.Assignment#getAssignment <em>Assignment</em>}</li>
  * </ul>
  * </p>
  *
@@ -48,29 +48,29 @@ public interface Assignment extends Node {
     void setNext(Link value);
 
     /**
-     * Returns the value of the '<em><b>Assignments</b></em>' attribute.
+     * Returns the value of the '<em><b>Assignment</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Assignments</em>' attribute isn't clear,
+     * If the meaning of the '<em>Assignment</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Assignments</em>' attribute.
-     * @see #setAssignments(String)
-     * @see scg.ScgPackage#getAssignment_Assignments()
+     * @return the value of the '<em>Assignment</em>' attribute.
+     * @see #setAssignment(String)
+     * @see scg.ScgPackage#getAssignment_Assignment()
      * @model
      * @generated
      */
-    String getAssignments();
+    String getAssignment();
 
     /**
-     * Sets the value of the '{@link scg.Assignment#getAssignments <em>Assignments</em>}' attribute.
+     * Sets the value of the '{@link scg.Assignment#getAssignment <em>Assignment</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Assignments</em>' attribute.
-     * @see #getAssignments()
+     * @param value the new value of the '<em>Assignment</em>' attribute.
+     * @see #getAssignment()
      * @generated
      */
-    void setAssignments(String value);
+    void setAssignment(String value);
 
 } // Assignment
