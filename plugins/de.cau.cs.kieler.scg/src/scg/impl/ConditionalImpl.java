@@ -3,14 +3,12 @@
 package scg.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import scg.Conditional;
-import scg.Node;
+import scg.Link;
 import scg.ScgPackage;
 
 /**
@@ -30,24 +28,24 @@ import scg.ScgPackage;
  */
 public class ConditionalImpl extends NodeImpl implements Conditional {
     /**
-     * The cached value of the '{@link #getThen() <em>Then</em>}' reference.
+     * The cached value of the '{@link #getThen() <em>Then</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getThen()
      * @generated
      * @ordered
      */
-    protected Node then;
+    protected Link then;
 
     /**
-     * The cached value of the '{@link #getElse() <em>Else</em>}' reference.
+     * The cached value of the '{@link #getElse() <em>Else</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getElse()
      * @generated
      * @ordered
      */
-    protected Node else_;
+    protected Link else_;
 
     /**
      * The default value of the '{@link #getCondition() <em>Condition</em>}' attribute.
@@ -93,15 +91,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Node getThen() {
-        if (then != null && then.eIsProxy()) {
-            InternalEObject oldThen = (InternalEObject)then;
-            then = (Node)eResolveProxy(oldThen);
-            if (then != oldThen) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.CONDITIONAL__THEN, oldThen, then));
-            }
-        }
+    public Link getThen() {
         return then;
     }
 
@@ -110,36 +100,41 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Node basicGetThen() {
-        return then;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setThen(Node newThen) {
-        Node oldThen = then;
+    public NotificationChain basicSetThen(Link newThen, NotificationChain msgs) {
+        Link oldThen = then;
         then = newThen;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__THEN, oldThen, then));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Node getElse() {
-        if (else_ != null && else_.eIsProxy()) {
-            InternalEObject oldElse = (InternalEObject)else_;
-            else_ = (Node)eResolveProxy(oldElse);
-            if (else_ != oldElse) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.CONDITIONAL__ELSE, oldElse, else_));
-            }
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__THEN, oldThen, newThen);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
         }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setThen(Link newThen) {
+        if (newThen != then) {
+            NotificationChain msgs = null;
+            if (then != null)
+                msgs = ((InternalEObject)then).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.CONDITIONAL__THEN, null, msgs);
+            if (newThen != null)
+                msgs = ((InternalEObject)newThen).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.CONDITIONAL__THEN, null, msgs);
+            msgs = basicSetThen(newThen, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__THEN, newThen, newThen));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Link getElse() {
         return else_;
     }
 
@@ -148,20 +143,33 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Node basicGetElse() {
-        return else_;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setElse(Node newElse) {
-        Node oldElse = else_;
+    public NotificationChain basicSetElse(Link newElse, NotificationChain msgs) {
+        Link oldElse = else_;
         else_ = newElse;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__ELSE, oldElse, else_));
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__ELSE, oldElse, newElse);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setElse(Link newElse) {
+        if (newElse != else_) {
+            NotificationChain msgs = null;
+            if (else_ != null)
+                msgs = ((InternalEObject)else_).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.CONDITIONAL__ELSE, null, msgs);
+            if (newElse != null)
+                msgs = ((InternalEObject)newElse).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.CONDITIONAL__ELSE, null, msgs);
+            msgs = basicSetElse(newElse, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__ELSE, newElse, newElse));
     }
 
     /**
@@ -191,14 +199,28 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * @generated
      */
     @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case ScgPackage.CONDITIONAL__THEN:
+                return basicSetThen(null, msgs);
+            case ScgPackage.CONDITIONAL__ELSE:
+                return basicSetElse(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case ScgPackage.CONDITIONAL__THEN:
-                if (resolve) return getThen();
-                return basicGetThen();
+                return getThen();
             case ScgPackage.CONDITIONAL__ELSE:
-                if (resolve) return getElse();
-                return basicGetElse();
+                return getElse();
             case ScgPackage.CONDITIONAL__CONDITION:
                 return getCondition();
         }
@@ -214,10 +236,10 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case ScgPackage.CONDITIONAL__THEN:
-                setThen((Node)newValue);
+                setThen((Link)newValue);
                 return;
             case ScgPackage.CONDITIONAL__ELSE:
-                setElse((Node)newValue);
+                setElse((Link)newValue);
                 return;
             case ScgPackage.CONDITIONAL__CONDITION:
                 setCondition((String)newValue);
@@ -235,10 +257,10 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
     public void eUnset(int featureID) {
         switch (featureID) {
             case ScgPackage.CONDITIONAL__THEN:
-                setThen((Node)null);
+                setThen((Link)null);
                 return;
             case ScgPackage.CONDITIONAL__ELSE:
-                setElse((Node)null);
+                setElse((Link)null);
                 return;
             case ScgPackage.CONDITIONAL__CONDITION:
                 setCondition(CONDITION_EDEFAULT);

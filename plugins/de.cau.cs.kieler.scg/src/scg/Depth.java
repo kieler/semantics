@@ -58,12 +58,12 @@ public interface Depth extends Node {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Next</em>' reference.
-     * @see #setNext(Node)
+     * @see #setNext(Link)
      * @see scg.ScgPackage#getDepth_Next()
      * @model
      * @generated
      */
-    Node getNext();
+    Link getNext();
 
     /**
      * Sets the value of the '{@link scg.Depth#getNext <em>Next</em>}' reference.
@@ -73,6 +73,6 @@ public interface Depth extends Node {
      * @see #getNext()
      * @generated
      */
-    void setNext(Node value);
+    void setNext(Link value);
 
 } // Depth

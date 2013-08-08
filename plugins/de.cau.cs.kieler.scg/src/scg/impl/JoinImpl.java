@@ -4,15 +4,12 @@ package scg.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import scg.Fork;
 import scg.Join;
-import scg.Node;
+import scg.Link;
 import scg.ScgPackage;
 
 /**
@@ -41,14 +38,14 @@ public class JoinImpl extends NodeImpl implements Join {
     protected Fork fork;
 
     /**
-     * The cached value of the '{@link #getNext() <em>Next</em>}' reference.
+     * The cached value of the '{@link #getNext() <em>Next</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getNext()
      * @generated
      * @ordered
      */
-    protected Node next;
+    protected Link next;
 
     /**
      * <!-- begin-user-doc -->
@@ -134,15 +131,7 @@ public class JoinImpl extends NodeImpl implements Join {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Node getNext() {
-        if (next != null && next.eIsProxy()) {
-            InternalEObject oldNext = (InternalEObject)next;
-            next = (Node)eResolveProxy(oldNext);
-            if (next != oldNext) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.JOIN__NEXT, oldNext, next));
-            }
-        }
+    public Link getNext() {
         return next;
     }
 
@@ -151,20 +140,33 @@ public class JoinImpl extends NodeImpl implements Join {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Node basicGetNext() {
-        return next;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setNext(Node newNext) {
-        Node oldNext = next;
+    public NotificationChain basicSetNext(Link newNext, NotificationChain msgs) {
+        Link oldNext = next;
         next = newNext;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.JOIN__NEXT, oldNext, next));
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.JOIN__NEXT, oldNext, newNext);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setNext(Link newNext) {
+        if (newNext != next) {
+            NotificationChain msgs = null;
+            if (next != null)
+                msgs = ((InternalEObject)next).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.JOIN__NEXT, null, msgs);
+            if (newNext != null)
+                msgs = ((InternalEObject)newNext).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.JOIN__NEXT, null, msgs);
+            msgs = basicSetNext(newNext, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.JOIN__NEXT, newNext, newNext));
     }
 
     /**
@@ -193,6 +195,8 @@ public class JoinImpl extends NodeImpl implements Join {
         switch (featureID) {
             case ScgPackage.JOIN__FORK:
                 return basicSetFork(null, msgs);
+            case ScgPackage.JOIN__NEXT:
+                return basicSetNext(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -209,8 +213,7 @@ public class JoinImpl extends NodeImpl implements Join {
                 if (resolve) return getFork();
                 return basicGetFork();
             case ScgPackage.JOIN__NEXT:
-                if (resolve) return getNext();
-                return basicGetNext();
+                return getNext();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -227,7 +230,7 @@ public class JoinImpl extends NodeImpl implements Join {
                 setFork((Fork)newValue);
                 return;
             case ScgPackage.JOIN__NEXT:
-                setNext((Node)newValue);
+                setNext((Link)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -245,7 +248,7 @@ public class JoinImpl extends NodeImpl implements Join {
                 setFork((Fork)null);
                 return;
             case ScgPackage.JOIN__NEXT:
-                setNext((Node)null);
+                setNext((Link)null);
                 return;
         }
         super.eUnset(featureID);

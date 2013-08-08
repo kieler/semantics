@@ -23,56 +23,56 @@ package scg;
  */
 public interface Conditional extends Node {
     /**
-     * Returns the value of the '<em><b>Then</b></em>' reference.
+     * Returns the value of the '<em><b>Then</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Then</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Then</em>' reference.
-     * @see #setThen(Node)
+     * @return the value of the '<em>Then</em>' containment reference.
+     * @see #setThen(Link)
      * @see scg.ScgPackage#getConditional_Then()
-     * @model
+     * @model containment="true"
      * @generated
      */
-    Node getThen();
+    Link getThen();
 
     /**
-     * Sets the value of the '{@link scg.Conditional#getThen <em>Then</em>}' reference.
+     * Sets the value of the '{@link scg.Conditional#getThen <em>Then</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Then</em>' reference.
+     * @param value the new value of the '<em>Then</em>' containment reference.
      * @see #getThen()
      * @generated
      */
-    void setThen(Node value);
+    void setThen(Link value);
 
     /**
-     * Returns the value of the '<em><b>Else</b></em>' reference.
+     * Returns the value of the '<em><b>Else</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Else</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Else</em>' reference.
-     * @see #setElse(Node)
+     * @return the value of the '<em>Else</em>' containment reference.
+     * @see #setElse(Link)
      * @see scg.ScgPackage#getConditional_Else()
-     * @model
+     * @model containment="true"
      * @generated
      */
-    Node getElse();
+    Link getElse();
 
     /**
-     * Sets the value of the '{@link scg.Conditional#getElse <em>Else</em>}' reference.
+     * Sets the value of the '{@link scg.Conditional#getElse <em>Else</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Else</em>' reference.
+     * @param value the new value of the '<em>Else</em>' containment reference.
      * @see #getElse()
      * @generated
      */
-    void setElse(Node value);
+    void setElse(Link value);
 
     /**
      * Returns the value of the '<em><b>Condition</b></em>' attribute.

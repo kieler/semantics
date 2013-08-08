@@ -63,6 +63,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
             case ScgPackage.ASSIGNMENT: return createAssignment();
             case ScgPackage.FORK: return createFork();
             case ScgPackage.JOIN: return createJoin();
+            case ScgPackage.LINK: return createLink();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -136,6 +137,16 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     public Join createJoin() {
         JoinImpl join = new JoinImpl();
         return join;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Link createLink() {
+        LinkImpl link = new LinkImpl();
+        return link;
     }
 
     /**

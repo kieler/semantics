@@ -50,29 +50,29 @@ public interface Join extends Node {
     void setFork(Fork value);
 
     /**
-     * Returns the value of the '<em><b>Next</b></em>' reference.
+     * Returns the value of the '<em><b>Next</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Next</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Next</em>' reference.
-     * @see #setNext(Node)
+     * @return the value of the '<em>Next</em>' containment reference.
+     * @see #setNext(Link)
      * @see scg.ScgPackage#getJoin_Next()
-     * @model
+     * @model containment="true"
      * @generated
      */
-    Node getNext();
+    Link getNext();
 
     /**
-     * Sets the value of the '{@link scg.Join#getNext <em>Next</em>}' reference.
+     * Sets the value of the '{@link scg.Join#getNext <em>Next</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Next</em>' reference.
+     * @param value the new value of the '<em>Next</em>' containment reference.
      * @see #getNext()
      * @generated
      */
-    void setNext(Node value);
+    void setNext(Link value);
 
 } // Join

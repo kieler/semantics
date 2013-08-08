@@ -3,22 +3,17 @@
 package scg.impl;
 
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import scg.Fork;
 import scg.Join;
-import scg.Node;
+import scg.Link;
 import scg.ScgPackage;
 
 /**
@@ -47,14 +42,14 @@ public class ForkImpl extends NodeImpl implements Fork {
     protected Join join;
 
     /**
-     * The cached value of the '{@link #getNext() <em>Next</em>}' reference list.
+     * The cached value of the '{@link #getNext() <em>Next</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getNext()
      * @generated
      * @ordered
      */
-    protected EList<Node> next;
+    protected EList<Link> next;
 
     /**
      * <!-- begin-user-doc -->
@@ -140,9 +135,9 @@ public class ForkImpl extends NodeImpl implements Fork {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Node> getNext() {
+    public EList<Link> getNext() {
         if (next == null) {
-            next = new EObjectResolvingEList<Node>(Node.class, this, ScgPackage.FORK__NEXT);
+            next = new EObjectContainmentEList<Link>(Link.class, this, ScgPackage.FORK__NEXT);
         }
         return next;
     }
@@ -173,6 +168,8 @@ public class ForkImpl extends NodeImpl implements Fork {
         switch (featureID) {
             case ScgPackage.FORK__JOIN:
                 return basicSetJoin(null, msgs);
+            case ScgPackage.FORK__NEXT:
+                return ((InternalEList<?>)getNext()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -208,7 +205,7 @@ public class ForkImpl extends NodeImpl implements Fork {
                 return;
             case ScgPackage.FORK__NEXT:
                 getNext().clear();
-                getNext().addAll((Collection<? extends Node>)newValue);
+                getNext().addAll((Collection<? extends Link>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
