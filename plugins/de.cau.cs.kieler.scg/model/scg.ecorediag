@@ -76,7 +76,7 @@
     <children xmi:type="notation:Node" xmi:id="__ztYs_5-EeKl4r-nR2-lSw" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="__ztYtP5-EeKl4r-nR2-lSw" type="5001">
       <children xmi:type="notation:Node" xmi:id="_7HNX4P5_EeKl4r-nR2-lSw" type="2001">
-        <element xmi:type="ecore:EAttribute" href="scg.ecore#//Assignment/Assignments"/>
+        <element xmi:type="ecore:EAttribute" href="scg.ecore#//Assignment/Assignment"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_7HNX4f5_EeKl4r-nR2-lSw"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="__ztYtf5-EeKl4r-nR2-lSw"/>

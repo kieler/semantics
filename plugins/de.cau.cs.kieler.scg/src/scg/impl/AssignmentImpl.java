@@ -19,7 +19,7 @@ import scg.ScgPackage;
  * The following features are implemented:
  * <ul>
  *   <li>{@link scg.impl.AssignmentImpl#getNext <em>Next</em>}</li>
- *   <li>{@link scg.impl.AssignmentImpl#getAssignments <em>Assignments</em>}</li>
+ *   <li>{@link scg.impl.AssignmentImpl#getAssignment <em>Assignment</em>}</li>
  * </ul>
  * </p>
  *
@@ -37,24 +37,24 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     protected Link next;
 
     /**
-     * The default value of the '{@link #getAssignments() <em>Assignments</em>}' attribute.
+     * The default value of the '{@link #getAssignment() <em>Assignment</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getAssignments()
+     * @see #getAssignment()
      * @generated
      * @ordered
      */
-    protected static final String ASSIGNMENTS_EDEFAULT = null;
+    protected static final String ASSIGNMENT_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getAssignments() <em>Assignments</em>}' attribute.
+     * The cached value of the '{@link #getAssignment() <em>Assignment</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getAssignments()
+     * @see #getAssignment()
      * @generated
      * @ordered
      */
-    protected String assignments = ASSIGNMENTS_EDEFAULT;
+    protected String assignment = ASSIGNMENT_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -123,8 +123,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getAssignments() {
-        return assignments;
+    public String getAssignment() {
+        return assignment;
     }
 
     /**
@@ -132,11 +132,11 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setAssignments(String newAssignments) {
-        String oldAssignments = assignments;
-        assignments = newAssignments;
+    public void setAssignment(String newAssignment) {
+        String oldAssignment = assignment;
+        assignment = newAssignment;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__ASSIGNMENTS, oldAssignments, assignments));
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__ASSIGNMENT, oldAssignment, assignment));
     }
 
     /**
@@ -163,8 +163,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
         switch (featureID) {
             case ScgPackage.ASSIGNMENT__NEXT:
                 return getNext();
-            case ScgPackage.ASSIGNMENT__ASSIGNMENTS:
-                return getAssignments();
+            case ScgPackage.ASSIGNMENT__ASSIGNMENT:
+                return getAssignment();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -180,8 +180,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
             case ScgPackage.ASSIGNMENT__NEXT:
                 setNext((Link)newValue);
                 return;
-            case ScgPackage.ASSIGNMENT__ASSIGNMENTS:
-                setAssignments((String)newValue);
+            case ScgPackage.ASSIGNMENT__ASSIGNMENT:
+                setAssignment((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -198,8 +198,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
             case ScgPackage.ASSIGNMENT__NEXT:
                 setNext((Link)null);
                 return;
-            case ScgPackage.ASSIGNMENT__ASSIGNMENTS:
-                setAssignments(ASSIGNMENTS_EDEFAULT);
+            case ScgPackage.ASSIGNMENT__ASSIGNMENT:
+                setAssignment(ASSIGNMENT_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -215,8 +215,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
         switch (featureID) {
             case ScgPackage.ASSIGNMENT__NEXT:
                 return next != null;
-            case ScgPackage.ASSIGNMENT__ASSIGNMENTS:
-                return ASSIGNMENTS_EDEFAULT == null ? assignments != null : !ASSIGNMENTS_EDEFAULT.equals(assignments);
+            case ScgPackage.ASSIGNMENT__ASSIGNMENT:
+                return ASSIGNMENT_EDEFAULT == null ? assignment != null : !ASSIGNMENT_EDEFAULT.equals(assignment);
         }
         return super.eIsSet(featureID);
     }
@@ -231,8 +231,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (Assignments: ");
-        result.append(assignments);
+        result.append(" (Assignment: ");
+        result.append(assignment);
         result.append(')');
         return result.toString();
     }
