@@ -27,16 +27,10 @@ import de.cau.cs.kieler.scl.scl.VariableDefinition
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.IPath
 import org.eclipse.emf.common.util.URI
-//import org.yakindu.sct.model.stext.stext.impl.IntLiteralImpl
-//import org.yakindu.sct.model.stext.stext.impl.BoolLiteralImpl
-import de.cau.cs.kieler.scl.vhdl.Variables
-//import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 import de.cau.cs.kieler.sim.eso.eso.kvpair
-//import org.yakindu.sct.model.stext.stext.Expression
 import de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension
 import java.io.File
 import java.lang.Character
-import de.cau.cs.kieler.sim.eso.eso.EsoFactory
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -67,10 +61,7 @@ class ESO2VHDL {
     
     extension de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension VHDLExtension = 
          Guice::createInjector().getInstance(typeof(VHDLExtension))
-    
-    /** indicator if a certian variables was already added to a list */
-    boolean allreadyAdded
-	
+    	
 	/** contains the current trace number */
 	int traceCnt
 	/** contains the current tick number */
@@ -269,48 +260,7 @@ class ESO2VHDL {
 	END;
     '''
 	}
-	
-//	//-------------------------------------------------------------------------
-//	/**
-//	 * Generate component port declaration from the to tested VHDL component
-//	 * 
-//	 * @param inputArray 
-//	 *         contains all input variables from SCL model
-//	 *
-//	 * @param outputArray 
-//     *         contains all output variables from SCL model
-//	 * 
-//	 ** @param componentName
-//     *          the name for the VHDL component, this name must be the same like the component name from 
-//     *          generated component from the SCL model 
-//     * 
-//     * @return a String which contains VHDL code for the component declaration
-//	 */
-//	def generateComponent(ArrayList<Variables> inputArray, ArrayList<Variables> outputArray, String componentName) { 
-//	
-//		// compute the component input and output ports including its type  
-//		// e.g. A_in : IN boolean; 		
-//		val ins = inputArray.map(input | '''«input.name»: IN «getTypeString(input)»''').join(';\n')
-//		val outs = outputArray.map(output | '''«output.name» : OUT «getTypeString(output)»''').join(';\n')
-//		
-//		// compute the whole component, the last entry in the component has no ';' (VHDL syntax)
-//		// if there are no inputs and output res should be empty, 
-//		// not null (null will be a String in the VHDL code)
-//		val res = if(!(ins.nullOrEmpty && outs.nullOrEmpty))
-//					 '''--inputs''' + '\n'  + ins + (if(!outs.nullOrEmpty) ';\n') + 
-//					 '''--outputs'''+ '\n' + outs 		 
-//		
-//		// Generate VHDL code
-//		'''
-//		COMPONENT «componentName»
-//		PORT(
-//			 tick : IN  std_logic;
-//			 reset : IN std_logic«if(!res.nullOrEmpty)';\n' + res»
-//			);
-//		END COMPONENT;
-//		'''
-//	}
-	
+		
 	//-------------------------------------------------------------------------
 	/**
      * Generate Unit Under Test (UUT) instantiation from the to tested VHDL component
@@ -438,7 +388,6 @@ class ESO2VHDL {
 			
 			// at each new trace generate  the reset code which resets the model
 			simTick = "\n--NEW TRACE\n" + generateVhdlResetCode(wait)	//Reset on every new Trace
-//            resetWasSet = true
             
             // a counter, it contains the number of the current tick
 			tickCnt = 1
@@ -448,29 +397,15 @@ class ESO2VHDL {
 			    
 				// clear field bevor genarate new code
                 setInputs = ""
-			 
-			    // compute which variables must be set with which value
-			    // Variables which are listed in the ESO file in that tick will be set to this value
-			    // all other variables must be set absent
-//			    val ArrayList<kvpair> allInputs = computeValidVariabeles(inputArray, tick.extraInfos)
-			    
-//			    setInputs = setInputs
 			    
 			    // Generate VHDL code 
 				setInputs = setInputs + tick.extraInfos.map[ kvp |
-                    '''«kvp.key» <= «kvp.valueFromKvPair»;'''
-                ].join('\n')				
+                    '''«kvp.key» <= «kvp.valueFromKvPair»;'''].join('\n')				
 					
 				// if setInputs is null or empty, set it to an empty string, otherwise if it is null
 				// there will be a null written in the VHDL code.					
 				if(setInputs.nullOrEmpty)
 					setInputs = ""
-				
-				// generate assertions to nearly ALL outputs
-				// all outputs which are mentioned in the current tick in the ESO file are tested 
-				// according to their mentioned value, all unmentioned values must be set to absent,
-				// but only the 'present' variables, because the value from a variable would not be changed
-//				val ArrayList<kvpair> allAssertions = computeValidVariabeles(outputArray, tick.extraInfosOutput)
 				
 				// Generate VHDL code
 				// The assertion contains the following failing info: in which trace, in which tick, 
@@ -487,12 +422,7 @@ class ESO2VHDL {
 				// simTicks contains (at the end) the complete tick code for ONE trace
 				// add some additional comments 
 				simTick =  simTick + ("\n--" + " tick " + tickCnt.toString + '\n')+ setInputs + '\n' + wait + asserts + '\n'
-							
-//				if(resetWasSet){
-//				    resetWasSet = false
-//				    simTick = simTick //+ "reset <= false;\n"
-//				}
-							
+														
 				// the tick counter shows the current tick in the current trace
 				tickCnt = tickCnt + 1
 			]
@@ -582,161 +512,4 @@ class ESO2VHDL {
         }
 	}
 	
-//	/**
-//	 * Generates a VHDL signal declaration string according to the given variable
-//	 * 
-//	 * @param variable
-//	 *             the variable for which a signal should be generated
-//	 * 
-//	 * @return the VHDl code for a signal decalration
-//	 *             
-//	 */
-//	def generateSignalFromVariableWithInitialValue(Variables variable) { 
-//        
-//		val value = variable.value
-//		if(value instanceof Integer){
-//			return "signal " + variable.name + " : integer range 31 downto 0 := " + value.toString + ";"
-//		}
-//		else if(value instanceof Boolean)
-//			return "signal " + variable.name + " boolean := " + value.toString + ";"			
-//	}
-
-//	/**
-//	 * Generates VHDL code for type initiation for a given variable
-//	 * 
-//	 * @param variable  
-//	 *             the variable for which the VHDl type should returned
-//	 * 
-//	 * @return the VHDL type
-//	 */
-//	def getTypeString(Variables v) { 
-//		
-//		val value = v.value
-//		if(value instanceof Integer)
-//			return "integer range 31 downto 0"
-//		else if(value instanceof Boolean){
-//			return "boolean"
-//		}
-//	}
-	
-
-    /**
-     * Compute how the variables should be set or tested
-     * 
-     * we must ensure that values which should be present in the current tick, are tested and values which are not
-     * listed in an ESO file to be tested for absence, and that variables which should be set, are set to their value
-     * and variables which are not listed in the current tick, to set absent
-     * so compute a list of variables which contains this information
-     * 
-     * @param variableList
-     *          a list with all needed variables
-     * 
-     * @param extraInfos
-     *          the extraInfos from the current tick
-     * 
-     * @return a list which contains all variables that should be set or tested to a specific value 
-     * 
-     */
-    def ArrayList<kvpair> computeValidVariabeles(ArrayList<VariableDefinition> variableList, EList<kvpair> extraInfos) { 
-         val asserts = new ArrayList<kvpair>
-         allreadyAdded = false
-         
-         // check for all variables if they should be set in the current tick 
-         // (they appear in the current tick in the ESO trace). If it should set, do so. 
-         // For all other variables, which are not appear in the current tick do not.
-         variableList.forEach[variable | 
-             if(!extraInfos.nullOrEmpty){
-                 //check if the current variable appears in the current tick
-                 extraInfos.forEach[ kvp |
-                     if(variable.name.equals(kvp.key)){
-                         //variable appears in current tick, set it according to the appearance
-                         asserts.add(kvp)
-                         
-                         //The current tested variable was set already 
-                         allreadyAdded = true
-                     }
-                 ]
-             }
-             
-             // This variable should not be emitted/tested in this tick, so set/test all 
-             // variables to absent (false) and let the _valued variables unchanged, 
-             // because this value is remembered across the ticks
-             if(!allreadyAdded){
-                 // Because, we cannot say anything about an absent _value variable don't set the variable 
-                 // (make an assertion). A valued Signal e.g. F(6) is transformed to F and F_value,
-                 // F must be set/test to/for absent only
-                 if(!(variable.name.contains("_value"))){
-                     val kvp = EsoFactory::eINSTANCE.createkvpair
-                     val boolValue = EsoFactory::eINSTANCE.createEsoBool
-                     boolValue.setValue(false)
-                     kvp.setKey(variable.name)
-                     kvp.setValue(boolValue)
-                     asserts.add(kvp)
-                 }    
-             }
-             
-             //set false for the next variable
-             allreadyAdded = false
-         ]
-
-         return asserts
-    }
-    
-    /**
-     * create a variable according to a given SCL variable declaration
-     * 
-     * @param variable
-     *          a variable declaration from a SCL model
-     * 
-     * @param isInput
-     *          specifies if the new variable is an input variable
-     * 
-     * @param isOutput
-     *          specifies if the new variable is an output variable
-     * 
-     * @return a new variable
-     * 
-     */
-//	def createVariableFromModel(VariableDeclaration variable, boolean isInput, boolean isOutput) {
-//		
-//		val Expression initialValue = variable.initialValue
-//		val name = variable.name
-//		
-//		// The variable has an initial value, so generate a variable with the same name and 
-//		// the initial value. The value will be saved as normal int or boolean and not as a
-//		// stext type 
-//		if(initialValue != null){
-//		    
-//			val value1 = initialValue as PrimitiveValueExpression
-//			
-//			if(value1.value instanceof IntLiteralImpl){
-//				//value is a kind of an integer format
-//				val value2 = value1.value as IntLiteralImpl
-//				val value3 = value2.value
-//				new Variables(name,isInput,isOutput,value3)
-//				
-//			}else if (value1.value instanceof BoolLiteralImpl){
-//				//the variable is a kind of a boolean type
-//				val value2 = value1.value as BoolLiteralImpl
-//				val value3 = value2.value
-//				new Variables(name,isInput,isOutput,value3)
-//			}	
-//		}
-//		// no initial value present
-//		// generate a initial value according to the type of the variable
-//		// a type must be specified (rvh: synchronous meeting)
-//		else{
-//			val String type = variable.type.name
-//			// All used signals should have an initial value in a VHDL simulation
-//			// otherwise may cause incorrect simulation results
-//			if(type == "integer"){
-//				new Variables(name,isInput,isOutput,0)
-//			}
-//			else if(type == "boolean") {
-//				new Variables(name,isInput,isOutput,false)
-//			}
-//		}
-//		
-//	}
-
 }

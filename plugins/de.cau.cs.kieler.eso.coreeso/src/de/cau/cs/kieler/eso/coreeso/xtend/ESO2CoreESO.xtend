@@ -21,7 +21,6 @@ import de.cau.cs.kieler.sim.eso.eso.trace
 import de.cau.cs.kieler.sim.eso.eso.EsoFactory
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scl.scl.Program
-import de.cau.cs.kieler.scl.scl.SclFactory
 import java.io.File
 import org.eclipse.core.runtime.IPath
 import de.cau.cs.kieler.core.model.util.ModelUtil
@@ -30,7 +29,6 @@ import de.cau.cs.kieler.sim.eso.eso.signal
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.scl.scl.VariableDefinition
 import java.util.ArrayList
-import java.util.LinkedList
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -58,7 +56,7 @@ class ESO2CoreESO {
      */
 	def tracelist transformESO2CoreESO (tracelist tl, File modelFile) {
 	
-	    val sclModel = loadModel(modelFile)
+	    val sclModel = loadSCLModel(modelFile)
 	    val inputDefinitions = new ArrayList<VariableDefinition>
 	    val outputDefinitions = new ArrayList<VariableDefinition>
 	    
@@ -83,36 +81,16 @@ class ESO2CoreESO {
 			    //generate a new tick
 				newTick = EsoFactory::eINSTANCE.createtick
 				
-				//add all existing extraInfos to the new extraInfo fields
+				//add all existing extraInfos to the new extraInfo field
 				newTick.extraInfos.addAll(tick.extraInfos)
 				
 				//transform all input variables from the current tick
-//				tick.input.forEach[in |
-//					
-//					//add an variable (extra Info)
-//					//pure signal transformation
-//					newTick.extraInfos.add(newKvpair(in.name, true))
-//					if(in.valued){
-//					    //valued signal transformation
-//						newTick.extraInfos.add(newKvpair(in.name + "_value", in.^val))
-//					}					
-//				]     
-                
                 newTick.extraInfos.addAll(computeKVP(tick.input, inputDefinitions))
                 
+                //add all existing extraInfosOutput to the new extraInfoOutput field
                 newTick.extraInfosOutput.addAll(tick.extraInfosOutput)
-//                //transform all outputs variables from the current tick
-//				tick.output.forEach[out |
-//					
-//					//add an variable (extra Info)
-//                    //pure signal transformation
-//					newTick.extraInfosOutput.add(newKvpair(out.name, true))
-//					if(out.valued){
-//					    //valued signal transformation
-//						newTick.extraInfosOutput.add(newKvpair(out.name + "_value", out.^val))
-//					}
-//				]
 
+                //transform all outputs variables from the current tick
                 newTick.extraInfosOutput.addAll(computeKVP(tick.output, outputDefinitions))
 
 				//add new generated tick to new trace
@@ -175,6 +153,23 @@ class ESO2CoreESO {
 		return kvp
 	}	
 	
+	/**
+     * Compute how the variables should be set or tested
+     * 
+     * we must ensure that values which should be present in the current tick, are tested and values which are not
+     * listed in an ESO file to be tested for absence, and that variables which should be set, are set to their value
+     * and variables which are not listed in the current tick, to set absent
+     * so compute a list of key value pairs which contains this information
+     * 
+     * @param signals
+     *          the signals that are tested (outputs) or set (inputs)
+     * 
+     * @param definitions
+     *          the variable definition from the according scl model
+     * 
+     * @return a list which contains all key value pairs that should be set or tested to a specific value 
+     * 
+     */
 	def computeKVP(EList<signal> signals, ArrayList<VariableDefinition> definitions){
 	    
 	   val newKvps = new ArrayList<kvpair>
@@ -228,7 +223,6 @@ class ESO2CoreESO {
 	    return newKvps
 	}
 	
-	
 	 /**
      * loads the SCL model from a given file
      * 
@@ -237,7 +231,7 @@ class ESO2CoreESO {
      * 
      * @return the SCL model from file 
      */
-    def Program loadModel(File modelFile) { 
+    def Program loadSCLModel(File modelFile) { 
 
         val IPath iPath = new Path(modelFile.toString())
                 
