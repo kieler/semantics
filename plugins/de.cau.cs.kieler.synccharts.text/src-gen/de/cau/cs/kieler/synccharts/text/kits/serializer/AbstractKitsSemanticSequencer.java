@@ -548,7 +548,7 @@ public abstract class AbstractKitsSemanticSequencer extends ActionsSemanticSeque
 	 *                     suspensionTrigger=Action
 	 *                 )* 
 	 *                 bodyText+=TextualCode* 
-	 *                 (regions+=SingleRegion regions+=Region*)?
+	 *                 regions+=Region*
 	 *             )
 	 *         )? 
 	 *         outgoingTransitions+=Transition*

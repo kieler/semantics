@@ -65,9 +65,10 @@ State returns synccharts::State:
              'onexit'  exitActions+=Action  |
              'suspension' suspensionTrigger=Action)*
             (bodyText += TextualCode)*
-            (
-             (regions+=SingleRegion)(regions+=Region)*
-             )?
+//            (
+//             (regions+=SingleRegion)
+             (regions+=Region)*
+//             )?
             )
           '}') 
      )?

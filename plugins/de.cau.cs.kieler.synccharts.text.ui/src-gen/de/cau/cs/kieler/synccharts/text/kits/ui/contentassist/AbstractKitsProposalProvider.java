@@ -5,17 +5,16 @@ package de.cau.cs.kieler.synccharts.text.kits.ui.contentassist;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.*;
-import de.cau.cs.kieler.synccharts.text.actions.ui.contentassist.ActionsProposalProvider;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 
 /**
- * Represents a generated, default implementation of interface {@link IProposalProvider}.
+ * Represents a generated, default implementation of superclass {@link de.cau.cs.kieler.synccharts.text.actions.ui.contentassist.ActionsProposalProvider}.
  * Methods are dynamically dispatched on the first parameter, i.e., you can override them 
  * with a more concrete subtype. 
  */
 @SuppressWarnings("all")
-public class AbstractKitsProposalProvider extends ActionsProposalProvider {
+public class AbstractKitsProposalProvider extends de.cau.cs.kieler.synccharts.text.actions.ui.contentassist.ActionsProposalProvider {
 		
 	public void completeRootRegion_Annotations(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);

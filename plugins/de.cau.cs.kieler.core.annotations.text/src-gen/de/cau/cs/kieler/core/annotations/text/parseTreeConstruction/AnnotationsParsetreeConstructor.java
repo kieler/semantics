@@ -6,14 +6,13 @@ package de.cau.cs.kieler.core.annotations.text.parseTreeConstruction;
 import org.eclipse.emf.ecore.*;
 import org.eclipse.xtext.*;
 import org.eclipse.xtext.parsetree.reconstr.IEObjectConsumer;
-import org.eclipse.xtext.parsetree.reconstr.impl.AbstractParseTreeConstructor;
 
 import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
 
 import com.google.inject.Inject;
 
 @SuppressWarnings("all")
-public class AnnotationsParsetreeConstructor extends AbstractParseTreeConstructor {
+public class AnnotationsParsetreeConstructor extends org.eclipse.xtext.parsetree.reconstr.impl.AbstractParseTreeConstructor {
 		
 	@Inject
 	private AnnotationsGrammarAccess grammarAccess;
@@ -50,17 +49,25 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule Annotation ****************
  *
  * // --------------------------
+ * 
  * //
+ * 
  * //   ANNOTATIONS
+ * 
  * //
+ * 
  * // --------------------------
+ * 
  * Annotation:
+ * 
  * 	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
+ * 
  * 	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
  *
  **/
 
 // CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
+// 
 // | KeyIntValueAnnotation | KeyFloatValueAnnotation
 protected class Annotation_Alternatives extends AlternativesToken {
 
@@ -360,12 +367,15 @@ protected class Annotation_KeyFloatValueAnnotationParserRuleCall_6 extends RuleC
 /************ begin Rule ValuedAnnotation ****************
  *
  * ValuedAnnotation returns Annotation:
+ * 
  * 	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+ * 
  * 	KeyIntValueAnnotation | KeyFloatValueAnnotation;
  *
  **/
 
 // CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+// 
 // KeyIntValueAnnotation | KeyFloatValueAnnotation
 protected class ValuedAnnotation_Alternatives extends AlternativesToken {
 
@@ -627,7 +637,9 @@ protected class ValuedAnnotation_KeyFloatValueAnnotationParserRuleCall_5 extends
 /************ begin Rule CommentAnnotation ****************
  *
  * // e.g.: / ** semantic comment * /
+ * 
  * CommentAnnotation returns StringAnnotation:
+ * 
  * 	value=COMMENT_ANNOTATION;
  *
  **/
@@ -673,7 +685,9 @@ protected class CommentAnnotation_ValueAssignment extends AssignmentToken  {
 /************ begin Rule TagAnnotation ****************
  *
  * // e.g.: @HVlayout
+ * 
  * TagAnnotation returns Annotation:
+ * 
  * 	"@" name=ExtendedID ("(" annotations+=Annotation* ")")?;
  *
  **/
@@ -884,7 +898,9 @@ protected class TagAnnotation_RightParenthesisKeyword_2_2 extends KeywordToken  
 /************ begin Rule KeyStringValueAnnotation ****************
  *
  * // e.g.: @layouter dot;   
+ * 
  * KeyStringValueAnnotation returns StringAnnotation:
+ * 
  * 	"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?;
  *
  **/
@@ -1129,7 +1145,9 @@ protected class KeyStringValueAnnotation_RightParenthesisKeyword_3_2 extends Key
 /************ begin Rule TypedKeyStringValueAnnotation ****************
  *
  * // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
+ * 
  * TypedKeyStringValueAnnotation returns TypedStringAnnotation:
+ * 
  * 	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString ("(" annotations+=Annotation* ")")?;
  *
  **/
@@ -1452,7 +1470,9 @@ protected class TypedKeyStringValueAnnotation_RightParenthesisKeyword_6_2 extend
 /************ begin Rule KeyBooleanValueAnnotation ****************
  *
  * // e.g.: @visible true;
+ * 
  * KeyBooleanValueAnnotation returns BooleanAnnotation:
+ * 
  * 	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
  *
  **/
@@ -1697,7 +1717,9 @@ protected class KeyBooleanValueAnnotation_RightParenthesisKeyword_3_2 extends Ke
 /************ begin Rule KeyIntValueAnnotation ****************
  *
  * // e.g.: @minSpace 10;    
+ * 
  * KeyIntValueAnnotation returns IntAnnotation:
+ * 
  * 	"@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?;
  *
  **/
@@ -1942,7 +1964,9 @@ protected class KeyIntValueAnnotation_RightParenthesisKeyword_3_2 extends Keywor
 /************ begin Rule KeyFloatValueAnnotation ****************
  *
  * // e.g.: @minSpace 10.0;    
+ * 
  * KeyFloatValueAnnotation returns FloatAnnotation:
+ * 
  * 	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
  *
  **/
@@ -2187,7 +2211,9 @@ protected class KeyFloatValueAnnotation_RightParenthesisKeyword_3_2 extends Keyw
 /************ begin Rule ImportAnnotation ****************
  *
  * // needed for importing other resources
+ * 
  * ImportAnnotation:
+ * 
  * 	"import" importURI=STRING;
  *
  **/

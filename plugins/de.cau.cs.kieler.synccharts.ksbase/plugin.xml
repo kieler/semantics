@@ -601,7 +601,7 @@
                  icon="icons/abro.gif"
                  menu="false"
                  name="ABRO"
-                 popup="false"
+                 popup="true"
                  popupbar="false"
                  separated="false"
                  templates="true"
