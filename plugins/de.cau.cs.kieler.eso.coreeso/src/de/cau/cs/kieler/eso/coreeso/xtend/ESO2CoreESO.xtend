@@ -20,6 +20,19 @@ import de.cau.cs.kieler.sim.eso.eso.tick
 import de.cau.cs.kieler.sim.eso.eso.trace
 import de.cau.cs.kieler.sim.eso.eso.EsoFactory
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.scl.scl.Program
+import de.cau.cs.kieler.scl.scl.SclFactory
+import java.io.File
+import org.eclipse.core.runtime.IPath
+import de.cau.cs.kieler.core.model.util.ModelUtil
+import org.eclipse.core.runtime.Path
+import de.cau.cs.kieler.sim.eso.eso.signal
+import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.scl.scl.VariableDefinition
+import java.util.ArrayList
+import java.util.LinkedList
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * 
@@ -30,6 +43,7 @@ import org.eclipse.emf.ecore.EObject
  * 
  */
 class ESO2CoreESO {
+    boolean allreadyAdded
 	tick newTick
 	trace newTrace
 
@@ -42,8 +56,19 @@ class ESO2CoreESO {
      * @return a new tracelist without pure and valued signals
      * 
      */
-	def tracelist transformESO2CoreESO (tracelist tl) {
+	def tracelist transformESO2CoreESO (tracelist tl, File modelFile) {
 	
+	    val sclModel = loadModel(modelFile)
+	    val inputDefinitions = new ArrayList<VariableDefinition>
+	    val outputDefinitions = new ArrayList<VariableDefinition>
+	    
+	    sclModel.definitions.forEach[ definition | 
+	        if(definition.input) inputDefinitions.add(definition.copy)
+	    ]
+	    sclModel.definitions.forEach[ definition | 
+	        if(definition.output) outputDefinitions.add(definition.copy)
+	    ]
+
 		val newTl = EsoFactory::eINSTANCE.createtracelist
 
         //transform all traces
@@ -62,28 +87,34 @@ class ESO2CoreESO {
 				newTick.extraInfos.addAll(tick.extraInfos)
 				
 				//transform all input variables from the current tick
-				tick.input.forEach[in |
-					
-					//add an variable (extra Info)
-					//pure signal transformation
-					newTick.extraInfos.add(newKvpair(in.name, true))
-					if(in.valued){
-					    //valued signal transformation
-						newTick.extraInfos.add(newKvpair(in.name + "_value", in.^val))
-					}					
-				]     
+//				tick.input.forEach[in |
+//					
+//					//add an variable (extra Info)
+//					//pure signal transformation
+//					newTick.extraInfos.add(newKvpair(in.name, true))
+//					if(in.valued){
+//					    //valued signal transformation
+//						newTick.extraInfos.add(newKvpair(in.name + "_value", in.^val))
+//					}					
+//				]     
                 
-                //transform all outputs variables from the current tick
-				tick.output.forEach[out |
-					
-					//add an variable (extra Info)
-                    //pure signal transformation
-					newTick.extraInfosOutput.add(newKvpair(out.name, true))
-					if(out.valued){
-					    //valued signal transformation
-						newTick.extraInfosOutput.add(newKvpair(out.name + "_value", out.^val))
-					}
-				]
+                newTick.extraInfos.addAll(computeKVP(tick.input, inputDefinitions))
+                
+                newTick.extraInfosOutput.addAll(tick.extraInfosOutput)
+//                //transform all outputs variables from the current tick
+//				tick.output.forEach[out |
+//					
+//					//add an variable (extra Info)
+//                    //pure signal transformation
+//					newTick.extraInfosOutput.add(newKvpair(out.name, true))
+//					if(out.valued){
+//					    //valued signal transformation
+//						newTick.extraInfosOutput.add(newKvpair(out.name + "_value", out.^val))
+//					}
+//				]
+
+                newTick.extraInfosOutput.addAll(computeKVP(tick.output, outputDefinitions))
+
 				//add new generated tick to new trace
 				newTrace.ticks.add(newTick)
 			]
@@ -143,6 +174,83 @@ class ESO2CoreESO {
 		
 		return kvp
 	}	
+	
+	def computeKVP(EList<signal> signals, ArrayList<VariableDefinition> definitions){
+	    
+	   val newKvps = new ArrayList<kvpair>
+	    
+	    allreadyAdded = false
+	    
+	    definitions.forEach[ variable | 
+	        if(!signals.nullOrEmpty){
+                 //check if the current variable appears in the current tick
+                 signals.forEach[ signal |
+                     if(variable.name.equals(signal.name)){
+                         //variable appears in current tick, set it according to the appearance
+                         if(signal.valued){
+                             newKvps.add(newKvpair(signal.name + "_value", signal.^val))
+                             newKvps.add(newKvpair(signal.name, true))
+                         }else{
+                             newKvps.add(newKvpair(signal.name, true))
+                         }
+                         //The current tested variable was set already 
+                         allreadyAdded = true
+                     }else if(variable.name.contains("_value")){
+                         //Variables with a _value prefix should never contain in an eso file
+                         //additional the _value variable is generated if there is found a valued signal
+                         //The _value prefix is used in the transformation from valued signals to 
+                         //variables, a valued signal S(1) is transformed to S = true and S_value = 1 
+                         allreadyAdded = true
+                     }
+                 ]
+             }
+	        // This variable should not be emitted/tested in this tick, so set/test all 
+             // variables to absent (false) and let the _valued variables unchanged, 
+             // because this value is remembered across the ticks
+             if(!allreadyAdded){
+                 // Because, we cannot say anything about an absent _value variable don't set the variable 
+                 // (make an assertion). A valued Signal e.g. F(6) is transformed to F and F_value,
+                 // F must be set/test to/for absence only
+                 if(!(variable.name.contains("_value"))){
+                     val kvp = EsoFactory::eINSTANCE.createkvpair
+                     val boolValue = EsoFactory::eINSTANCE.createEsoBool
+                     boolValue.setValue(false)
+                     kvp.setKey(variable.name)
+                     kvp.setValue(boolValue)
+                     newKvps.add(kvp)
+                 }    
+             }
+             
+             //set false for the next variable
+             allreadyAdded = false
+	    ]
+
+	    return newKvps
+	}
+	
+	
+	 /**
+     * loads the SCL model from a given file
+     * 
+     * @param modelile
+     *             contains the file which holds the SCL model
+     * 
+     * @return the SCL model from file 
+     */
+    def Program loadModel(File modelFile) { 
+
+        val IPath iPath = new Path(modelFile.toString())
+                
+        val EObject eobject = ModelUtil::loadEObjectFromModelFile(iPath)
+        
+        //check if the file contains an SCL model
+        if(eobject instanceof Program){
+            val Program sclModel = eobject as Program
+            sclModel
+        }else{
+            return null
+        }   
+    }
 }
 
 

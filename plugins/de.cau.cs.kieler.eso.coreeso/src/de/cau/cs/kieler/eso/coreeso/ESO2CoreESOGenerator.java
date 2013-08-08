@@ -13,9 +13,11 @@
  */
 package de.cau.cs.kieler.eso.coreeso;
 
+import org.eclipse.core.internal.resources.File;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.yakindu.sct.model.stext.STextStandaloneSetup;
 
 import com.google.inject.Injector;
@@ -73,10 +75,18 @@ private static Injector injector = new STextStandaloneSetup().createInjectorAndD
 
     public tracelist doTransformation(EObject modelObject,
                     String commandString, ISelection selection) {       
-            
+           
+        File file = (File) ((TreeSelection) selection).getFirstElement();
+
+        //The SCl model is needed to transform a core ESO trace to a VHDL testbench
+        //it must have the same name and it must place in the same folder as the ESO file
+        //ESO core generation: test.eso transforms to test.core.eso therefore two times removeFileExtension
+        java.io.File ioFile = file.getFullPath().removeFileExtension()
+                .removeFileExtension().removeFileExtension().addFileExtension("scl").toFile();
+        
         if (commandString.equals(TRANSFORMATIONCOMMAND)) {
             tracelist transformed = (new ESO2CoreESO())
-                            .transformESO2CoreESO((tracelist) modelObject);
+                            .transformESO2CoreESO((tracelist) modelObject, ioFile);
             return transformed;
         }
         
