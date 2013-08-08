@@ -1,0 +1,24 @@
+module simpletransition
+input boolean I ; output boolean O ; {
+	fork
+		__25995998_S:
+		pause;
+		if ! I then
+			goto __25995998_S;
+		end;
+		O = true || O;
+		__25995998_F:
+		pause;
+		goto __25995998_F;
+	par
+		__27351009_S1:
+		I = false;
+		pause;
+		goto __27351009_S1;
+	par
+		__15191703_S1:
+		O = false;
+		pause;
+		goto __15191703_S1;
+	join;
+}

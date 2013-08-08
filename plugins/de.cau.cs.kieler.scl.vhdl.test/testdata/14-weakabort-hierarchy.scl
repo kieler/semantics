@@ -1,0 +1,49 @@
+module DVDPlayer
+input boolean POWER ; input boolean PLAY ; output boolean O ; {
+	fork
+		__31557865_Off:
+		pause;
+		if ! POWER then
+			goto __31557865_Off;
+		end;
+		fork
+			__31557865_On_H_5868618_English:
+			pause;
+			O = true || O;
+			goto __31557865_On_H_5868618_French;
+			__31557865_On_H_5868618_German:
+			pause;
+			O = true || O;
+			goto __31557865_On_H_5868618_English;
+			__31557865_On_H_5868618_French:
+			pause;
+			O = true || O;
+			goto __31557865_On_H_5868618_German;
+		par
+			__31557865_On_H_31254872_PAUSE:
+			pause;
+			if ! PLAY then
+				goto __31557865_On_H_31254872_PAUSE;
+			end;
+			pause;
+			if PLAY then
+				goto __31557865_On_H_31254872_PAUSE;
+			end;
+		join;
+	par
+		__13058268_S1:
+		POWER = false;
+		pause;
+		goto __13058268_S1;
+	par
+		__9844667_S1:
+		PLAY = false;
+		pause;
+		goto __9844667_S1;
+	par
+		__25943746_S1:
+		O = false;
+		pause;
+		goto __25943746_S1;
+	join;
+}

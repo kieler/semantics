@@ -1,0 +1,23 @@
+module simple
+input boolean I ; output boolean O ; {
+	fork
+		__1760635_R:
+		__1760635_R_S:
+		pause;
+		if ! I then
+			goto __1760635_R_S;
+		end;
+		O = true || O;
+		goto __1760635_R;
+	par
+		__24120781_S1:
+		I = false;
+		pause;
+		goto __24120781_S1;
+	par
+		__31626840_S1:
+		O = false;
+		pause;
+		goto __31626840_S1;
+	join;
+}

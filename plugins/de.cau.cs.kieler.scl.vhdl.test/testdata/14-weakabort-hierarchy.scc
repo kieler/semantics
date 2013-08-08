@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:sgraph="http://www.yakindu.org/sct/sgraph/2.0.0" xmlns:syncgraph="http://kieler.org/syncgraph">
+  <sgraph:Statechart xmi:id="_wWAMIP9QEeKgkM-AiFIT3A">
+    <regions xmi:id="_wWAMIf9QEeKgkM-AiFIT3A">
+      <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMIv9QEeKgkM-AiFIT3A" specification="input boolean POWER ; input boolean PLAY ; output boolean O ;" name="DVDPlayer">
+        <regions xmi:id="_wWAMJ_9QEeKgkM-AiFIT3A">
+          <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMKP9QEeKgkM-AiFIT3A" specification="" name="Off" incomingTransitions="_wWAML_9QEeKgkM-AiFIT3A" isInitial="true">
+            <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_wWAMKv9QEeKgkM-AiFIT3A" specification="POWER" target="_wWAMLf9QEeKgkM-AiFIT3A" priority="1"/>
+          </vertices>
+          <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMLf9QEeKgkM-AiFIT3A" specification="" name="On" incomingTransitions="_wWAMKv9QEeKgkM-AiFIT3A">
+            <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_wWAML_9QEeKgkM-AiFIT3A" specification="POWER" target="_wWAMKP9QEeKgkM-AiFIT3A" priority="1"/>
+            <regions xmi:id="_wWAMMv9QEeKgkM-AiFIT3A">
+              <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMM_9QEeKgkM-AiFIT3A" specification="" name="H" isInitial="true">
+                <regions xmi:id="_wWAMNf9QEeKgkM-AiFIT3A">
+                  <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMNv9QEeKgkM-AiFIT3A" specification="" name="English" incomingTransitions="_wWAMQ_9QEeKgkM-AiFIT3A" isInitial="true">
+                    <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_wWAMOP9QEeKgkM-AiFIT3A" specification="/ O = true || O" target="_wWAMTP9QEeKgkM-AiFIT3A" priority="1"/>
+                  </vertices>
+                  <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMQf9QEeKgkM-AiFIT3A" specification="" name="German" incomingTransitions="_wWAMTv9QEeKgkM-AiFIT3A">
+                    <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_wWAMQ_9QEeKgkM-AiFIT3A" specification="/ O = true || O" target="_wWAMNv9QEeKgkM-AiFIT3A" priority="1"/>
+                  </vertices>
+                  <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMTP9QEeKgkM-AiFIT3A" specification="" name="French" incomingTransitions="_wWAMOP9QEeKgkM-AiFIT3A">
+                    <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_wWAMTv9QEeKgkM-AiFIT3A" specification="/ O = true || O" target="_wWAMQf9QEeKgkM-AiFIT3A" priority="1"/>
+                  </vertices>
+                </regions>
+                <regions xmi:id="_wWAMV_9QEeKgkM-AiFIT3A">
+                  <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMWP9QEeKgkM-AiFIT3A" specification="" name="PAUSE" incomingTransitions="_wWAMX_9QEeKgkM-AiFIT3A" isInitial="true">
+                    <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_wWAMWv9QEeKgkM-AiFIT3A" specification="PLAY" target="_wWAMXf9QEeKgkM-AiFIT3A" priority="1"/>
+                  </vertices>
+                  <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMXf9QEeKgkM-AiFIT3A" specification="" name="Playing" incomingTransitions="_wWAMWv9QEeKgkM-AiFIT3A">
+                    <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_wWAMX_9QEeKgkM-AiFIT3A" specification="PLAY" target="_wWAMWP9QEeKgkM-AiFIT3A" priority="1"/>
+                    <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_wWAMYv9QEeKgkM-AiFIT3A" specification="" target="_wWAMZP9QEeKgkM-AiFIT3A" priority="2"/>
+                  </vertices>
+                  <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMZP9QEeKgkM-AiFIT3A" specification="" name="S" incomingTransitions="_wWAMYv9QEeKgkM-AiFIT3A" isFinal="true"/>
+                </regions>
+              </vertices>
+            </regions>
+          </vertices>
+        </regions>
+        <regions xmi:id="_wWAMZv9QEeKgkM-AiFIT3A">
+          <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMZ_9QEeKgkM-AiFIT3A" name="S1" incomingTransitions="_wWAMcP9QEeKgkM-AiFIT3A" isInitial="true">
+            <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_wWAMaP9QEeKgkM-AiFIT3A" specification="/ POWER = false" target="_wWAMb_9QEeKgkM-AiFIT3A" isImmediate="true"/>
+          </vertices>
+          <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMb_9QEeKgkM-AiFIT3A" name="S2" incomingTransitions="_wWAMaP9QEeKgkM-AiFIT3A">
+            <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_wWAMcP9QEeKgkM-AiFIT3A" target="_wWAMZ_9QEeKgkM-AiFIT3A"/>
+          </vertices>
+        </regions>
+        <regions xmi:id="_wWAMcf9QEeKgkM-AiFIT3A">
+          <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMcv9QEeKgkM-AiFIT3A" name="S1" incomingTransitions="_wWAMe_9QEeKgkM-AiFIT3A" isInitial="true">
+            <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_wWAMc_9QEeKgkM-AiFIT3A" specification="/ PLAY = false" target="_wWAMev9QEeKgkM-AiFIT3A" isImmediate="true"/>
+          </vertices>
+          <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMev9QEeKgkM-AiFIT3A" name="S2" incomingTransitions="_wWAMc_9QEeKgkM-AiFIT3A">
+            <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_wWAMe_9QEeKgkM-AiFIT3A" target="_wWAMcv9QEeKgkM-AiFIT3A"/>
+          </vertices>
+        </regions>
+        <regions xmi:id="_wWAMfP9QEeKgkM-AiFIT3A">
+          <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMff9QEeKgkM-AiFIT3A" name="S1" incomingTransitions="_wWAMhv9QEeKgkM-AiFIT3A" isInitial="true">
+            <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_wWAMfv9QEeKgkM-AiFIT3A" specification="/ O = false" target="_wWAMhf9QEeKgkM-AiFIT3A" isImmediate="true"/>
+          </vertices>
+          <vertices xsi:type="syncgraph:SyncState" xmi:id="_wWAMhf9QEeKgkM-AiFIT3A" name="S2" incomingTransitions="_wWAMfv9QEeKgkM-AiFIT3A">
+            <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_wWAMhv9QEeKgkM-AiFIT3A" target="_wWAMff9QEeKgkM-AiFIT3A"/>
+          </vertices>
+        </regions>
+      </vertices>
+    </regions>
+  </sgraph:Statechart>
+  <notation:Diagram xmi:id="_wWAMh_9QEeKgkM-AiFIT3A" type="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor" element="_wWAMIP9QEeKgkM-AiFIT3A" measurementUnit="Pixel">
+    <styles xsi:type="notation:DiagramStyle" xmi:id="_wWAMiP9QEeKgkM-AiFIT3A"/>
+  </notation:Diagram>
+</xmi:XMI>

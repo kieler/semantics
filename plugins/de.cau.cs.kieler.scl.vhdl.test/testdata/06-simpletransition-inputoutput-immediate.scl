@@ -1,0 +1,27 @@
+module syncchart
+input boolean I ; output boolean O ; {
+	fork
+		__19316091_H_A:
+		pause;
+		if ! I then
+			goto __19316091_H_A;
+		end;
+		O = true || O;
+		__19316091_H_C:
+		pause;
+		goto __19316091_H_C;
+		__19316091_S:
+		pause;
+		goto __19316091_S;
+	par
+		__25563508_S1:
+		I = false;
+		pause;
+		goto __25563508_S1;
+	par
+		__30218244_S1:
+		O = false;
+		pause;
+		goto __30218244_S1;
+	join;
+}

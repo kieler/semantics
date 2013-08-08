@@ -1,0 +1,38 @@
+module ABRO
+input boolean A ; input boolean B ; output boolean O ; {
+	fork
+		fork
+			__23428740_WaitAB_5122473_wA:
+			pause;
+			if ! A then
+				goto __23428740_WaitAB_5122473_wA;
+			end;
+			B = true || B;
+		par
+			__23428740_WaitAB_12278008_wB:
+			pause;
+			if ! B then
+				goto __23428740_WaitAB_12278008_wB;
+			end;
+		join;
+		O = true || O;
+		__23428740_done:
+		pause;
+		goto __23428740_done;
+	par
+		__22491233_S1:
+		A = false;
+		pause;
+		goto __22491233_S1;
+	par
+		__13596176_S1:
+		B = false;
+		pause;
+		goto __13596176_S1;
+	par
+		__6880845_S1:
+		O = false;
+		pause;
+		goto __6880845_S1;
+	join;
+}

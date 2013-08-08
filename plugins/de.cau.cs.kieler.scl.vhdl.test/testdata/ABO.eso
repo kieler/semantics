@@ -1,0 +1,20 @@
+!reset ;
+A
+% Output : O1 A B 
+;
+
+% Output : O1
+;
+
+B 
+% Output : O2 B
+;
+
+!reset ;
+
+% Output : 
+;
+
+A
+% Output : O2 A B
+;

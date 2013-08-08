@@ -1,0 +1,29 @@
+module ABO
+input output boolean A; 
+input output boolean B; 
+output boolean O1; 
+output boolean O2; 
+{
+	O1 = false;
+	O2 = false;
+	fork
+		__WaitAB_HandleA_WaitA:
+		if A then
+			B = true;
+			O1 = true;
+			goto __WaitAB_HandleA_DoneA;
+		end;
+		pause;
+		goto __WaitAB_HandleA_WaitA;
+		__WaitAB_HandleA_DoneA:
+	par
+		__WaitAB_HandleB_WaitB:
+		pause;
+		if ! B then
+			goto __WaitAB_HandleB_WaitB;
+		end;
+		O1 = true;
+	join;
+	O1 = false;
+	O2 = true;
+}

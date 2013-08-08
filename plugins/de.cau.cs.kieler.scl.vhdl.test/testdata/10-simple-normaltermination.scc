@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:sgraph="http://www.yakindu.org/sct/sgraph/2.0.0" xmlns:syncgraph="http://kieler.org/syncgraph">
+  <sgraph:Statechart xmi:id="_VjJ0sP9QEeKgkM-AiFIT3A">
+    <regions xmi:id="_VjJ0sf9QEeKgkM-AiFIT3A">
+      <vertices xsi:type="syncgraph:SyncState" xmi:id="_VjJ0sv9QEeKgkM-AiFIT3A" specification="input boolean I ; output boolean O ;" name="simple">
+        <regions xmi:id="_VjJ0tv9QEeKgkM-AiFIT3A">
+          <vertices xsi:type="syncgraph:SyncState" xmi:id="_VjJ0t_9QEeKgkM-AiFIT3A" specification="" name="R" incomingTransitions="_VjJ0uf9QEeKgkM-AiFIT3A" isInitial="true">
+            <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_VjJ0uf9QEeKgkM-AiFIT3A" specification="/ O = true || O" target="_VjJ0t_9QEeKgkM-AiFIT3A" priority="1" type="NORMALTERMINATION"/>
+            <regions xmi:id="_VjJ0wv9QEeKgkM-AiFIT3A">
+              <vertices xsi:type="syncgraph:SyncState" xmi:id="_VjJ0w_9QEeKgkM-AiFIT3A" specification="" name="S" isInitial="true">
+                <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_VjJ0xf9QEeKgkM-AiFIT3A" specification="I" target="_VjJ0yP9QEeKgkM-AiFIT3A" priority="1"/>
+              </vertices>
+              <vertices xsi:type="syncgraph:SyncState" xmi:id="_VjJ0yP9QEeKgkM-AiFIT3A" specification="" name="E" incomingTransitions="_VjJ0xf9QEeKgkM-AiFIT3A" isFinal="true"/>
+            </regions>
+          </vertices>
+        </regions>
+        <regions xmi:id="_VjJ0yv9QEeKgkM-AiFIT3A">
+          <vertices xsi:type="syncgraph:SyncState" xmi:id="_VjJ0y_9QEeKgkM-AiFIT3A" name="S1" incomingTransitions="_VjJ01P9QEeKgkM-AiFIT3A" isInitial="true">
+            <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_VjJ0zP9QEeKgkM-AiFIT3A" specification="/ I = false" target="_VjJ00_9QEeKgkM-AiFIT3A" isImmediate="true"/>
+          </vertices>
+          <vertices xsi:type="syncgraph:SyncState" xmi:id="_VjJ00_9QEeKgkM-AiFIT3A" name="S2" incomingTransitions="_VjJ0zP9QEeKgkM-AiFIT3A">
+            <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_VjJ01P9QEeKgkM-AiFIT3A" target="_VjJ0y_9QEeKgkM-AiFIT3A"/>
+          </vertices>
+        </regions>
+        <regions xmi:id="_VjJ01f9QEeKgkM-AiFIT3A">
+          <vertices xsi:type="syncgraph:SyncState" xmi:id="_VjJ01v9QEeKgkM-AiFIT3A" name="S1" incomingTransitions="_VjJ03_9QEeKgkM-AiFIT3A" isInitial="true">
+            <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_VjJ01_9QEeKgkM-AiFIT3A" specification="/ O = false" target="_VjJ03v9QEeKgkM-AiFIT3A" isImmediate="true"/>
+          </vertices>
+          <vertices xsi:type="syncgraph:SyncState" xmi:id="_VjJ03v9QEeKgkM-AiFIT3A" name="S2" incomingTransitions="_VjJ01_9QEeKgkM-AiFIT3A">
+            <outgoingTransitions xsi:type="syncgraph:SyncTransition" xmi:id="_VjJ03_9QEeKgkM-AiFIT3A" target="_VjJ01v9QEeKgkM-AiFIT3A"/>
+          </vertices>
+        </regions>
+      </vertices>
+    </regions>
+  </sgraph:Statechart>
+  <notation:Diagram xmi:id="_VjJ04P9QEeKgkM-AiFIT3A" type="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor" element="_VjJ0sP9QEeKgkM-AiFIT3A" measurementUnit="Pixel">
+    <styles xsi:type="notation:DiagramStyle" xmi:id="_VjJ04f9QEeKgkM-AiFIT3A"/>
+  </notation:Diagram>
+</xmi:XMI>

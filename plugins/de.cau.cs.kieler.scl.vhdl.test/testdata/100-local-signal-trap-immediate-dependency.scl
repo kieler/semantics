@@ -1,0 +1,46 @@
+module localsignaltrapimmediatedependency
+output boolean T;
+input boolean I;
+output boolean O1;
+output boolean O2;
+output boolean O3;
+output boolean O4;
+{
+	fork
+		__F_R0_A:
+		pause;
+		if ! I then
+			goto __F_R0_A;
+		end;
+		goto __F_R0_B;
+		__F_R0_C:
+		O3 = true;
+		goto __F_R0_CC;
+		__F_R0_B:
+		T = true;
+		O2 = true;
+		goto __F_R0_C;
+		__F_R0_CC:
+		pause;
+		goto __F_R0_CC;
+	par
+		__F_R1_D:
+		pause;
+		if ! T then
+			goto __F_R1_D;
+		end;
+		O1 = true;
+		__F_R1_E:
+		pause;
+		goto __F_R1_E;
+	join;
+	__G:
+	pause;
+	if ! T then
+		goto __G;
+	end;
+		O4 = true;
+	__bla:
+	pause;
+	goto __bla;
+}

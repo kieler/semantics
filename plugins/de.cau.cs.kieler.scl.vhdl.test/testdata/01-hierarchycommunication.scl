@@ -1,0 +1,26 @@
+module hierarchy
+input boolean I;
+output boolean O;
+boolean L1;
+boolean L2;
+{
+	fork
+		__24944043_H_A:
+		pause;
+		if ! I then
+			goto __24944043_H_A;
+		end;
+		L1 = true;
+		__24944043_H_B:
+		pause;
+		goto __24944043_H_B;
+	par
+		__12762984_C:
+		pause;
+		if L1 then
+			L2 = true;
+			goto __12762984_C;
+		end;
+		goto __12762984_C;
+	join;
+}
