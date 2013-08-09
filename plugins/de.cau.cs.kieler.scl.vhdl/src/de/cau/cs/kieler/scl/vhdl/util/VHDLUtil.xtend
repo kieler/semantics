@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.scl.vhdl.extensions
+package de.cau.cs.kieler.scl.vhdl.util
 
 import de.cau.cs.kieler.scl.vhdl.Variables
 import de.cau.cs.kieler.scl.scl.VariableDefinition
@@ -9,7 +9,7 @@ import org.yakindu.sct.model.stext.stext.impl.IntLiteralImpl
 import java.util.ArrayList
 import org.yakindu.base.types.Type
 
-class VHDLExtension {
+class VHDLUtil {
     
     
     //-------------------------------------------------------------------------

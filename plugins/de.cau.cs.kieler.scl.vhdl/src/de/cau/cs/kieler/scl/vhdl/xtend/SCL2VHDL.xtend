@@ -15,16 +15,9 @@
 
 import com.google.inject.Guice
 import de.cau.cs.kieler.scl.scl.Program
-//import de.cau.cs.kieler.scl.scl.StatementSequence
-//import de.cau.cs.kieler.scl.scl.Thread
 import de.cau.cs.kieler.scl.scl.Statement
-//import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.InstructionStatement
-//import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Conditional
-//import de.cau.cs.kieler.scl.scl.Goto
-//import de.cau.cs.kieler.scl.scl.Parallel
-//import de.cau.cs.kieler.scl.scl.Instruction
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.VariableDefinition
 
@@ -43,27 +36,19 @@ import org.yakindu.sct.model.stext.stext.ParenthesizedExpression
 import org.yakindu.sct.model.stext.stext.NumericalAddSubtractExpression
 import org.yakindu.sct.model.stext.stext.NumericalMultiplyDivideExpression
 import org.yakindu.sct.model.stext.stext.ShiftExpression
-//import org.yakindu.sct.model.stext.stext.AssignmentOperator
 import org.yakindu.sct.model.stext.stext.AdditiveOperator
 
 import java.util.ArrayList
-import de.cau.cs.kieler.scl.vhdl.Variables
 import org.eclipse.emf.common.util.EList
-//import org.eclipse.xtext.xbase.scoping.featurecalls.OperatorMapping
-//import org.yakindu.sct.model.stext.stext.AssignmentOperator
-//import org.yakindu.sct.model.stext.stext.AssignmentOperator
-//import org.yakindu.sct.model.stext.stext.AssignmentOperator
 import java.io.File
 import org.eclipse.emf.common.util.URI
-import de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension
-import java.util.HashMap
-import org.eclipse.emf.common.util.EList
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
 import de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions
 import de.cau.cs.kieler.scl.extensions.SCLCreateExtensions
 import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
+import de.cau.cs.kieler.scl.vhdl.util.VHDLUtil
 
 /**
  * Transformation of SCL code into VHDL code.
@@ -72,8 +57,8 @@ import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
  */
 class SCL2VHDL {
     
-     extension de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension VHDLExtension = 
-         Guice::createInjector().getInstance(typeof(VHDLExtension))
+     extension de.cau.cs.kieler.scl.vhdl.util.VHDLUtil VHDLExtension = 
+         Guice::createInjector().getInstance(typeof(VHDLUtil))
      extension de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions SCLFactoryExtensions = 
          Guice::createInjector().getInstance(typeof(SCLFactoryExtensions))
      extension de.cau.cs.kieler.scl.extensions.SCLCreateExtensions SCLCreateExtensions = 

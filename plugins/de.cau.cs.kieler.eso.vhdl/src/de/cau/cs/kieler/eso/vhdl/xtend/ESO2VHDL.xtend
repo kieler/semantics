@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.IPath
 import org.eclipse.emf.common.util.URI
 import de.cau.cs.kieler.sim.eso.eso.kvpair
-import de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension
+import de.cau.cs.kieler.scl.vhdl.util.VHDLUtil
 import java.io.File
 import java.lang.Character
 
@@ -36,7 +36,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * This class transforms a given core ESO tracelist to a VHDL testbench.
- * The proper SCl model is needed for this transformation
+ * The appropriated SCl model is needed for this transformation
  * 
  * With the aid of the SCL model the whole entity declaration, the interface declaration
  * of the tested component and the instantiation of the Unit Under Test (UUT) is done.
@@ -49,7 +49,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * Convention: 
  *      - the SCL and ESO file must have the same name
  *      - the entity name from the unit under test is derived from the model name
- *        So in the VHDL file which specifies the uut, the entity must have the model name too
+ *        So in the VHDL file (not testbench) which specifies the uut, the 
+ *        entity must have the model name too
  *      - the testbench entity gets the model name with an '_tb' extension (TestBench)   
  * 
  * 
@@ -57,10 +58,9 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * 
  */
 class ESO2VHDL {
-//    boolean resetWasSet
     
-    extension de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension VHDLExtension = 
-         Guice::createInjector().getInstance(typeof(VHDLExtension))
+    extension de.cau.cs.kieler.scl.vhdl.util.VHDLUtil VHDLExtension = 
+         Guice::createInjector().getInstance(typeof(VHDLUtil))
     	
 	/** contains the current trace number */
 	int traceCnt
@@ -80,15 +80,16 @@ class ESO2VHDL {
 	/**
 	 * Transforms an ESO tracelist to a VHDL testbench 
 	 * 
-	 * @param tl
+	 * @param tracelist
 	 *         the ESO file tracelist
 	 * 
 	 * @param modelFile
 	 *         the proper SCL model file
 	 * 
 	 */
-	def transformESO2VHDL (tracelist tl, File modelFile) {
+	def transformESO2VHDL (tracelist tracelist, File modelFile) {
 		
+		//the model name
 		var String modelname
 		
 		// generate entity name from model filename
@@ -97,16 +98,20 @@ class ESO2VHDL {
 		// ?!? delete leading numbers
 		// BE CAREFULL!! TO CHANGE THIS COMPUTATION
         // the same computation take place in the automated JUnit test, these two names must match:
-        // the entityname in vhdl file (here) and the name which will be used for the generated batch file
+        // the entityname in vhdl file (here) and the name which will be used for the 
+        // generated batch file
 		if(modelFile != null){
 			val input = URI::createFileURI(modelFile.getName());
 			modelname = input.toString
+			//get the name from the beginning to the first dot
 			val temp = modelname.subSequence(0, modelname.indexOf("."))
 			modelname = temp.toString		  
+			//vhdl could not work with '-', replace it with '_'
 			modelname = modelname.replace("-","_")
 			
 			var firstChar = modelname.charAt(0)
 			
+			//delete all leading numbers an underscores
 			while( Character::isDigit(firstChar) || (firstChar == "_")){
 			    if(!modelname.nullOrEmpty){
 			         firstChar = modelname.charAt(0)
@@ -130,17 +135,21 @@ class ESO2VHDL {
        	var sclModel = loadModel(modelFile)
        	
        	//eliminate input outputs
-       	transformInputOutputs(tl.traces, sclModel.definitions)
+       	transformInputOutputs(tracelist.traces, sclModel.definitions)
        	
        	'''
 		«/* Generate the header */»
 		«generateHeader()»
-		«/*Generate entity */»
-		«createEntity(tl.traces, modelname, sclModel.definitions)»
+		«/*Generate the complete entity including behavioral */»
+		«createEntity(tracelist.traces, modelname, sclModel.definitions)»
        	'''
    	}
    	
-   	
+   	/**
+   	 * 
+   	 * 
+   	 * 
+   	 */
     def transformInputOutputs(EList<trace> traces, EList<VariableDefinition> modelVariables) { 
         
         traces.forEach[ trace |
@@ -164,7 +173,7 @@ class ESO2VHDL {
    /**
     * Generate the header for generated VHDl code
     * 
-    * @return VHDL header comment and library include
+    * @return VHDL header comment and library includes
     * 
     */
    def generateHeader() {
@@ -193,7 +202,7 @@ class ESO2VHDL {
      * Generates the whole VHDL testbench entity with the whole functionality
      * 
      * @param esotracelist
-     *          the whole ESO tracelist for which the testbench should be created
+     *          the ESO tracelist for which the testbench should be created
      * 
      * @param entityName
      *          the name for the testbench entity
@@ -210,19 +219,27 @@ class ESO2VHDL {
     val modelOutputs = new ArrayList<VariableDefinition>
     
     // Get Input and Output from Model and save them
+    // The inputs and outputs are saved in different fields because it is easier to create
+    // a readable vhdl file
     vars.forEach[ variable | 
+    	// input output variables must be split into an input and an output variable,
+    	// because in vhdl it is not possible e.g. to write an input signal
     	if(variable.input && variable.output){
     	    modelInputs.add(variable)
     	    var tempVar = variable.copy
+    	    // input output variables are separated as follows:
+    	    // input output S => input S and output S_out
     	    tempVar.name = variable.name + "_out"
     	    modelOutputs.add(tempVar)
     	} else if(variable.input) {
+    	    //normal input variable
     	    modelInputs.add(variable)
     	} else if(variable.output){
+            // normal output variable
     	    modelOutputs.add(variable)
     	}
 		// local variables (variable.input == false and variable.output == false) not needed here
-		// modelInput and modelOutput are mainly used to generate VHDL interfaces
+		// modelInput and modelOutput are used to generate VHDL interfaces
     ]
     
     // start creating testbench
@@ -241,14 +258,14 @@ class ESO2VHDL {
 	--Outputs«/* Declare local signals for all output signals*/»
 	«modelOutputs.map( out |'''«generateVhdlSignalFromVariableWithInitialValue(out,"")»''').join('\n')»
 	
-	--Control«/* Generate control signals, every component (generated from SCL) need a tick and reset port */»
+	--Control«/* Generate control signals, every component need a tick and reset pin */»
 	signal reset : boolean := false;
 	signal tick : std_logic := '0';
 	signal term : boolean := false;
 	constant tick_period : time := 100 ns;
 	
 	BEGIN«/* fill testbench with functionality */»
-	    «/* instantiate the Unit Under Test (SCL-VHDL-model)  */»
+	    «/* instantiate the Unit Under Test (seq-SCL-VHDL-model)  */»
 		«generateUUT(modelInputs, modelOutputs, entityName)»
 	    
 	    «/* The testbench simulates the tick, generate that process */»
@@ -273,11 +290,13 @@ class ESO2VHDL {
      * 
      ** @param uutName
      *         the name for the UUT, this name must be the same like the component name from 
-     *         generated component from the SCL model and from the component declaration in the testbench
+     *         generated component from the SCL model and from the component declaration 
+     *         in the testbench
      * 
      * @return a String which contains VHDL code for the component declaration
      */
-	def generateUUT(ArrayList<VariableDefinition> inputArray, ArrayList<VariableDefinition> outputArray, String uutName) {
+	def generateUUT(ArrayList<VariableDefinition> inputArray, ArrayList<VariableDefinition> outputArray, 
+	    String uutName) {
 		 
 		// compute the mapping from the component to local signals
 		// e.g. A_in => A_in (the component signal name and the local single name are equal)
@@ -338,7 +357,8 @@ class ESO2VHDL {
      * 
      * @return a String which contains VHDL code for the simulation process
      */
-	def generateSimulation(EList<trace> esoTracelist, ArrayList<VariableDefinition> inputArray, ArrayList<VariableDefinition> outputArray) { 
+	def generateSimulation(EList<trace> esoTracelist, ArrayList<VariableDefinition> inputArray, 
+	    ArrayList<VariableDefinition> outputArray ) { 
 	
 	'''
 	-- Stimulus process
@@ -358,10 +378,11 @@ class ESO2VHDL {
      * Generate simulation assertions
      * Here are all inputs set according to the ESO tracelist and tested
      * if all outputs carry their values according to the ESO tracelist else a assertion is hurt
-     * This setting and testing is done for every tick. Between the ticks a reset is generated
+     * This setting and testing is done for every tick. Between the traces a reset is generated
+     * if it is explained in the eso file
      * 
      * @param esoTracelist
-     *         the whole tracelist from ESO file
+     *         the tracelist from ESO file
      * 
      * @param inputArray 
      *         contains all input variables from SCL model
@@ -371,7 +392,8 @@ class ESO2VHDL {
      * 
      * @return a String which contains VHDL code for the assertions for all ticks
      */
-	def generateSimulationAssertions(EList<trace> esoTracelist, ArrayList<VariableDefinition> inputArray, ArrayList<VariableDefinition> outputArray) { 
+	def generateSimulationAssertions(EList<trace> esoTracelist, 
+	    ArrayList<VariableDefinition> inputArray, ArrayList<VariableDefinition> outputArray ) { 
 		
 		// VHDL code which waits a certain time
 		val String wait = '''wait for tick_period;''' + '\n' 
@@ -395,33 +417,36 @@ class ESO2VHDL {
 			// for all ticks inside a trace generate VHDL simulation code
 			trace.ticks.forEach[ tick | 
 			    
-				// clear field bevor genarate new code
+				// clear field before generate new code
                 setInputs = ""
 			    
-			    // Generate VHDL code 
+			    // Generate VHDL code for all Inputs
 				setInputs = setInputs + tick.extraInfos.map[ kvp |
                     '''«kvp.key» <= «kvp.valueFromKvPair»;'''].join('\n')				
 					
 				// if setInputs is null or empty, set it to an empty string, otherwise if it is null
-				// there will be a null written in the VHDL code.					
+				// there will be a null-string written in the VHDL code.					
 				if(setInputs.nullOrEmpty)
 					setInputs = ""
 				
-				// Generate VHDL code
+				// Generate VHDL assertions for all outputs
 				// The assertion contains the following failing info: in which trace, in which tick, 
 				// which signal and the expected value
 				asserts = ""
                 asserts = asserts + tick.extraInfosOutput.map[ kvp |
                     '''
                         assert( «kvp.key» = «kvp.valueFromKvPair» )
-                            report "«numberToString(traceCnt)» trace: «numberToString(tickCnt)» tick: «kvp.key» should have been «kvp.valueFromKvPair»"
+                            report "«numberToString(traceCnt)» trace: «
+                            numberToString(tickCnt)» tick: «kvp.key» should have been «
+                            kvp.valueFromKvPair»"
                             severity ERROR;''' + ''
                 ].join('\n')	
 				
 				// Compute code that is needed for one tick
 				// simTicks contains (at the end) the complete tick code for ONE trace
 				// add some additional comments 
-				simTick =  simTick + ("\n--" + " tick " + tickCnt.toString + '\n')+ setInputs + '\n' + wait + asserts + '\n'
+				simTick =  simTick + ("\n--" + " tick " + tickCnt.toString + '\n')+ setInputs +
+				               '\n' + wait + asserts + '\n'
 														
 				// the tick counter shows the current tick in the current trace
 				tickCnt = tickCnt + 1

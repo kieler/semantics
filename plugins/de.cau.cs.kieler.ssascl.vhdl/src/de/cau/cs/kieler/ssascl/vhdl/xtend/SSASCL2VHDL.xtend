@@ -43,7 +43,7 @@ import org.eclipse.emf.common.util.EList
 //import org.yakindu.sct.model.stext.stext.AssignmentOperator
 import java.io.File
 import org.eclipse.emf.common.util.URI
-import de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension
+import de.cau.cs.kieler.scl.vhdl.util.VHDLUtil
 import de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions
 import de.cau.cs.kieler.scl.extensions.SCLCreateExtensions
 import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
@@ -57,8 +57,8 @@ class SSASCL2VHDL {
     
     Object vhdlCode
     
-    extension de.cau.cs.kieler.scl.vhdl.extensions.VHDLExtension VHDLExtension = 
-         Guice::createInjector().getInstance(typeof(VHDLExtension))
+    extension de.cau.cs.kieler.scl.vhdl.util.VHDLUtil VHDLExtension = 
+         Guice::createInjector().getInstance(typeof(VHDLUtil))
     extension de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions SCLFactoryExtensions = 
          Guice::createInjector().getInstance(typeof(SCLFactoryExtensions))
     extension de.cau.cs.kieler.scl.extensions.SCLCreateExtensions SCLCreateExtensions = 

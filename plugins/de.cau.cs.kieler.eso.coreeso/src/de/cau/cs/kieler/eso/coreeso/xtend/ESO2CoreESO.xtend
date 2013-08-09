@@ -39,38 +39,51 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * In core ESO no pure nor valued signals exists. Instead there are only variables.
  * Valued signals are transformed to a present and value variable
  * 
+ * If a signals is absent in ESO file 
+ * 
+ * @author gjo
  */
 class ESO2CoreESO {
     boolean allreadyAdded
+    
+    /** contains the information for one tick */
 	tick newTick
+	/** contains the the information for one trace */
 	trace newTrace
 
     /**
      * 
      * Generates a new ESO tracelist which only contains variables.
      * 
-     * @param tl original ESO file tracelist
+     * @param tracelist original ESO file tracelist
      * 
      * @return a new tracelist without pure and valued signals
      * 
      */
-	def tracelist transformESO2CoreESO (tracelist tl, File modelFile) {
-	
+	def tracelist transformESO2CoreESO (tracelist tracelist, File modelFile) {
+	    //the scl model
 	    val sclModel = loadSCLModel(modelFile)
+	    
+	    //all input definitions from scl model
 	    val inputDefinitions = new ArrayList<VariableDefinition>
+	    
+	    //al output definitions from scl model
 	    val outputDefinitions = new ArrayList<VariableDefinition>
 	    
+	    //get all input definitions
 	    sclModel.definitions.forEach[ definition | 
 	        if(definition.input) inputDefinitions.add(definition.copy)
 	    ]
+	    // get all output definitions
 	    sclModel.definitions.forEach[ definition | 
 	        if(definition.output) outputDefinitions.add(definition.copy)
 	    ]
 
-		val newTl = EsoFactory::eINSTANCE.createtracelist
+        //the new core eso tracelist
+		val coreTracelist = EsoFactory::eINSTANCE.createtracelist
 
         //transform all traces
-		tl.traces.forEach[trace |
+		tracelist.traces.forEach[trace |
 		    
 		    //create a new trace
 			newTrace = EsoFactory::eINSTANCE.createtrace
@@ -97,12 +110,11 @@ class ESO2CoreESO {
 				newTrace.ticks.add(newTick)
 			]
 			//add new generated trace to the trace list
-			newTl.traces.add(newTrace)
+			coreTracelist.traces.add(newTrace)
 		]
 		
-		//return new tracelist
-		return newTl
-//		return tl
+		//return new core tracelist
+		return coreTracelist
 	}
 	
 	/**
@@ -114,7 +126,7 @@ class ESO2CoreESO {
 	 *         an EObject which is an ESO-Object containing the valued information
 	 * 
 	 */
-	def dispatch kvpair newKvpair(String name, EObject valueObject) { 
+	def dispatch kvpair newKvpair(String name, EObject value) { 
 		
 		//new kvpair which will be filled according to the valueObject and the name
 		val kvp = EsoFactory::eINSTANCE.createkvpair
@@ -123,16 +135,16 @@ class ESO2CoreESO {
 		kvp.setKey(name)
 		
 		//set value it is the same as the signal value
-		kvp.setValue(valueObject)
+		kvp.setValue(value)
 		
 		return kvp
 	}
 
     /**
      * Generates a new KVPair, for pure signals.
-     * The boolValue field is normally set to true, because if there is a pure signal in the
-     * trace, the generate variable is true because the signal is emitted 
-     * 
+     * A pure signal is transformed into a variable. A variable is set to true if the signal is present,
+     * otherwise false
+     *  
      * @param name
      *         name of the current valued signal
      * @param boolValue
@@ -156,62 +168,79 @@ class ESO2CoreESO {
 	/**
      * Compute how the variables should be set or tested
      * 
-     * we must ensure that values which should be present in the current tick, are tested and values which are not
-     * listed in an ESO file to be tested for absence, and that variables which should be set, are set to their value
-     * and variables which are not listed in the current tick, to set absent
-     * so compute a list of key value pairs which contains this information
+     * we must ensure that values which should be present in the current tick, are tested and values 
+     * which are not listed in an ESO file to be tested for absence, and that variables which should 
+     * be set, are set to their value and variables which are not listed in the current tick, to set 
+     * absent so compute a list of key value pairs which contains this information
      * 
      * @param signals
      *          the signals that are tested (outputs) or set (inputs)
      * 
      * @param definitions
-     *          the variable definition from the according scl model
+     *          the variable definition from the appropriated scl model
      * 
      * @return a list which contains all key value pairs that should be set or tested to a specific value 
      * 
      */
 	def computeKVP(EList<signal> signals, ArrayList<VariableDefinition> definitions){
 	    
-	   val newKvps = new ArrayList<kvpair>
+	    // list from key value pairs
+	    val newKvps = new ArrayList<kvpair>
 	    
+	    // If there is an assignment in the eso file to a specific variable then these variable has a
+	    // value for these tick, if the value for a variable is not assigned in the ESO we must set is 
+	    // to absent
 	    allreadyAdded = false
 	    
+	    //check for all variables if they have a definition in the eso file
 	    definitions.forEach[ variable | 
-	        if(!signals.nullOrEmpty){
+	        // if the current eso tick is empty then add a kvp which shows an absent variable
+	        if((!signals.nullOrEmpty) && (!variable.name.contains("_value"))){
                  //check if the current variable appears in the current tick
                  signals.forEach[ signal |
                      if(variable.name.equals(signal.name)){
                          //variable appears in current tick, set it according to the appearance
                          if(signal.valued){
+                             //Here a valued signal is separated into a present and a valued variable
                              newKvps.add(newKvpair(signal.name + "_value", signal.^val))
                              newKvps.add(newKvpair(signal.name, true))
                          }else{
+                             //pure signals get a variable
                              newKvps.add(newKvpair(signal.name, true))
                          }
-                         //The current tested variable was set already 
+                         //The current tested variable was set already, so it don't must be set absence
                          allreadyAdded = true
-                     }else if(variable.name.contains("_value")){
-                         //Variables with a _value prefix should never contain in an eso file
-                         //additional the _value variable is generated if there is found a valued signal
-                         //The _value prefix is used in the transformation from valued signals to 
-                         //variables, a valued signal S(1) is transformed to S = true and S_value = 1 
-                         allreadyAdded = true
+                     
+//                     // Variables with a _value prefix should not appear in an eso file
+//                     // additional: the _value variable is already generated if there is found a valued 
+//                     // signal. The _value prefix is used in the transformation from valued signals to 
+//                     // variables, a valued signal S(1) is transformed to S = true and S_value = 1
+//                     }else if(variable.name.contains("_value")){
+//                         // so if there is found a variable definition in the scl model which contains
+//                         // the _value prefix, it is already created in the previous part of this method
+//                         allreadyAdded = true
                      }
                  ]
              }
-	        // This variable should not be emitted/tested in this tick, so set/test all 
-             // variables to absent (false) and let the _valued variables unchanged, 
+	         // This variable should not be emitted/tested for presence in this tick, so set/test all 
+             // variables for absence (false) and let the _valued variables unchanged, 
              // because this value is remembered across the ticks
              if(!allreadyAdded){
                  // Because, we cannot say anything about an absent _value variable don't set the variable 
-                 // (make an assertion). A valued Signal e.g. F(6) is transformed to F and F_value,
+                 // (or make an assertion if it will be tested). 
+                 // A valued Signal e.g. F(6) is transformed to F and F_value,
                  // F must be set/test to/for absence only
                  if(!(variable.name.contains("_value"))){
+                     // create a new key value pair
                      val kvp = EsoFactory::eINSTANCE.createkvpair
+                     // create a new ESO bool object
                      val boolValue = EsoFactory::eINSTANCE.createEsoBool
+                     // set the new key valua pair
                      boolValue.setValue(false)
                      kvp.setKey(variable.name)
                      kvp.setValue(boolValue)
+                     
+                     // add this key value pair to list that will be returnd
                      newKvps.add(kvp)
                  }    
              }

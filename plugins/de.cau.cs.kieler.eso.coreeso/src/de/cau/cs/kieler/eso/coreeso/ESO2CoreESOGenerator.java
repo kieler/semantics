@@ -14,14 +14,18 @@
 package de.cau.cs.kieler.eso.coreeso;
 
 import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.yakindu.sct.model.stext.STextStandaloneSetup;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.core.WrappedException;
 import de.cau.cs.kieler.eso.coreeso.xtend.ESO2CoreESO;
 import de.cau.cs.kieler.scl.handler.AbstractModelFileHandler;
 import de.cau.cs.kieler.sim.eso.eso.tracelist;
@@ -46,7 +50,7 @@ private static Injector injector = new STextStandaloneSetup().createInjectorAndD
     }
 
     public String ModelHandlerFileExtensionTransformed() {
-            return "core.vhdl.eso";
+            return "core.eso";
     }
 
     public String ModelHandlerDiagramEditorID() {
@@ -75,20 +79,26 @@ private static Injector injector = new STextStandaloneSetup().createInjectorAndD
 
     public tracelist doTransformation(EObject modelObject,
                     String commandString, ISelection selection) {       
-           
-        File file = (File) ((TreeSelection) selection).getFirstElement();
+         
+        try{
+            File file = (File) ((TreeSelection) selection).getFirstElement();
 
-        //The SCl model is needed to transform a core ESO trace to a VHDL testbench
-        //it must have the same name and it must place in the same folder as the ESO file
-        //ESO core generation: test.eso transforms to test.core.eso therefore two times removeFileExtension
-        java.io.File ioFile = file.getFullPath().removeFileExtension()
+            //The SCl model is needed to transform a core ESO trace to a VHDL testbench
+            //it must have the same name and it must place in the same folder as the ESO file
+            //ESO core generation: test.eso transforms to test.core.eso therefore two times removeFileExtension
+            java.io.File ioFile = file.getFullPath().removeFileExtension()
                 .removeFileExtension().removeFileExtension().addFileExtension("scl").toFile();
         
-        if (commandString.equals(TRANSFORMATIONCOMMAND)) {
-            tracelist transformed = (new ESO2CoreESO())
-                            .transformESO2CoreESO((tracelist) modelObject, ioFile);
-            return transformed;
+            if (commandString.equals(TRANSFORMATIONCOMMAND)) {
+                tracelist transformed = (new ESO2CoreESO())
+                                .transformESO2CoreESO((tracelist) modelObject, ioFile);
+                return transformed;
+            }
+        }catch(Exception e){
+            throw new WrappedException(e, "The appropiate model file wasn't found!");
         }
+        
+        
         
         return null;
     }
