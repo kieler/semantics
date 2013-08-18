@@ -1,31 +1,32 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.scl.seqscl.s.xtend
 
 import com.google.inject.Guice
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.scl.scl.Program
-import javax.inject.Inject
 import de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions
 import de.cau.cs.kieler.scl.extensions.SCLCreateExtensions
 import de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions
 import java.util.List
-import de.cau.cs.kieler.scl.basicblocks.BasicBlock
-import de.cau.cs.kieler.scl.scl.SclFactory
-import org.yakindu.sct.model.stext.stext.Expression
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.VariableDefinition
 import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
-import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
 import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
-import de.cau.cs.kieler.scl.scl.Assignment
 import org.yakindu.sct.model.stext.stext.AssignmentExpression
 import java.util.ArrayList
 
-import de.cau.cs.kieler.s.s.impl.SFactoryImpl;
 import de.cau.cs.kieler.s.s.SFactory;
 import de.cau.cs.kieler.core.kexpressions.*
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
@@ -34,8 +35,6 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import com.google.inject.Injector
 import org.eclipse.xtext.serializer.ISerializer
 import de.cau.cs.kieler.scl.SCLStandaloneSetup
-import org.yakindu.sct.model.stext.stext.Expression
-import org.yakindu.sct.model.stext.stext.AssignmentExpression
 import org.yakindu.sct.model.stext.stext.LogicalAndExpression
 import org.yakindu.sct.model.stext.stext.LogicalOrExpression
 import org.yakindu.sct.model.stext.stext.LogicalNotExpression
@@ -44,23 +43,24 @@ import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression
 import org.yakindu.sct.model.stext.stext.BoolLiteral
 import org.yakindu.sct.model.stext.stext.IntLiteral
 
+/**
+ * This class transforms a sequential SCL program into an S program.
+ * The transformation proceeds pretty straightforward.
+ * 
+ * @author: ssm
+ */
 class SeqSCLToSTransformation {
 
     private static val Injector i = SCLStandaloneSetup::doSetup();
     private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
 
-    extension de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions SCLFactoryExtensions = 
-         Guice::createInjector().getInstance(typeof(SCLFactoryExtensions))
-    extension de.cau.cs.kieler.scl.extensions.SCLCreateExtensions SCLCreateExtensions = 
-         Guice::createInjector().getInstance(typeof(SCLCreateExtensions))
-    extension de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions SCLBasicBlockExtensions = 
-         Guice::createInjector().getInstance(typeof(SCLBasicBlockExtensions))
     extension de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions SCLExpressionExtensions = 
          Guice::createInjector().getInstance(typeof(SCLExpressionExtensions))
     extension de.cau.cs.kieler.scl.extensions.SCLStatementExtensions SCLStatementExtensions = 
          Guice::createInjector().getInstance(typeof(SCLStatementExtensions))
 
          
+    // Factories for S und K(expressions).
     def SFactory() {
         SFactory::eINSTANCE
     }
@@ -69,10 +69,12 @@ class SeqSCLToSTransformation {
         KExpressionsFactory::eINSTANCE
     }
     
+    // Main transformation method
     def de.cau.cs.kieler.s.s.Program transformSeqSCLToSProgram(Program program) {
         val targetProgram = SFactory.createProgram()
         targetProgram.setName(program.getName())
 
+        // Copy definitions.
         for(decl : program.definitions) {
             val vari = KFactory.createSignal
             vari.setName(decl.getName)
@@ -80,12 +82,11 @@ class SeqSCLToSTransformation {
             vari.setIsInput(decl.isInput)
             vari.setIsOutput(decl.isOutput)
             vari.setCombineOperator(CombineOperator::NONE);
-//            if (decl.initialValue != null) 
-//                vari.setInitialValue(serializer.serialize(decl.initialValue).correctSerialization) 
                 
             targetProgram.signals.add(vari);
         }
         
+        // Create go state, emit the go signal and traverse to the tick function.
         val stateGo = SFactory.createState
         stateGo.setName('_go');
         val stateTick = SFactory.createState
@@ -103,6 +104,7 @@ class SeqSCLToSTransformation {
         val tickTrans = SFactory.createTrans
         tickTrans.setContinuation(stateTick)
         
+        // Query instructions and add them to the tick function.
         val instructions = program.statements.transformStatements(targetProgram)
         stateTick.instructions.addAll(instructions)
         
@@ -115,10 +117,13 @@ class SeqSCLToSTransformation {
         
         targetProgram
     }
-     
+    
+    // Transforms a list of SCL statements to a list of S instructions.
     def List<de.cau.cs.kieler.s.s.Instruction> transformStatements(List<Statement> statements,  
         de.cau.cs.kieler.s.s.Program targetProgram
     ) {
+        // Since a sequential SCL program only consists out of assignments and conditionals,
+        // the transformation is reasonable.
         val iL = new ArrayList<de.cau.cs.kieler.s.s.Instruction>
 
         for(stmt : statements) {
@@ -131,8 +136,6 @@ class SeqSCLToSTransformation {
                 iL.add(emitSignal)
             } else if (stmt.isConditional) {
                 val kex = stmt.getInstruction.asConditional.expression.toKExpression(targetProgram, true);
-//                val kexstr = '_' + 
-//                    (stmt.getInstruction.asConditional.expression as ElementReferenceExpression).toSignal(targetProgram).name
                 var cond = SFactory.createIf
                 val kex2 = KFactory.createOperatorExpression
                 val bool = KFactory.createBooleanValue
@@ -150,7 +153,8 @@ class SeqSCLToSTransformation {
         }
         return iL    
     } 
-    
+
+    // Transforms a SyncText expression to an S signal.    
     def Signal toSignal(
         org.yakindu.sct.model.stext.stext.ElementReferenceExpression expression,
         de.cau.cs.kieler.s.s.Program targetProgram
@@ -160,6 +164,7 @@ class SeqSCLToSTransformation {
             ).head)
     }
 
+    // Transforms all used SyncText expressions to equivalent Kexpressions.
     def de.cau.cs.kieler.core.kexpressions.Expression toKExpression(
         org.yakindu.sct.model.stext.stext.Expression expression,
         de.cau.cs.kieler.s.s.Program targetProgram, 
@@ -226,19 +231,22 @@ class SeqSCLToSTransformation {
         return null
     }
 
+    // Short-cut to encapsulate a kexpression in a value of kexpresison.
     def de.cau.cs.kieler.core.kexpressions.Expression createValueOfExp(de.cau.cs.kieler.core.kexpressions.Expression expression) {
         val voe = KFactory.createOperatorExpression
         voe.setOperator(OperatorType::VAL)        
         voe.subExpressions.add(expression)
         voe
     }
-     
+    
+    // Retrieve type enum identified by its name. 
     def ValueType toKType(Type vdType) {
         if (vdType == null) return ValueType::BOOL;
         if (vdType.getName == 'integer') return ValueType::INT;
         ValueType::BOOL;
     }
     
+    // Helper: chop spaces in string.
     def String chop(String s) {
         s.replace(" ", "")
     }
