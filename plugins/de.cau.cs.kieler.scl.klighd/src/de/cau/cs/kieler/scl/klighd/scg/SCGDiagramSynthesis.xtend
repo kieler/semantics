@@ -52,6 +52,7 @@ import de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions
 import de.cau.cs.kieler.scl.extensions.SCLGotoExtensions
 import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
 import de.cau.cs.kieler.scl.extensions.SCLStatementSequenceExtensions
+import de.cau.cs.kieler.scl.extensions.DependencyType
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
@@ -343,9 +344,9 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                     !((markedEdges.containsKey(targetNode) && markedEdges.get(targetNode) == sourceNode))) {
                         
                     val depType = instruction.dependencyType(targetInstruction.getInstruction)
-                    val depTypeString = depType.dependencyTypeToString
+//                    val depTypeString = depType.dependencyTypeToString
                         
-                    if (depType>0) {
+                    if (depType != DependencyType::UNKNOWN) {
                     val edge = createEdge() => [
                         it.source = sourceNode
                         it.sourcePort = sourceNode.getPort('dependency')
@@ -355,15 +356,15 @@ class SCGDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
                             it.bendRadius = 5;
                             it.setLineWidth(1.25f);
                             it.foreground = DEPENDENCY_COLOR.color
-                            if (depType == SCLDependencyExtensions::DEPENDENCY_TYPE_WI) {
+                            if (depType == DependencyType::WRITEINCREMENT) {
                                 it.foreground = "blue".color
                                 it.addArrowDecorator();                                
                             }
-                            if (depType == SCLDependencyExtensions::DEPENDENCY_TYPE_WR) {
+                            if (depType == DependencyType::WRITEREAD) {
                                 it.setForegroundColor(0, 192, 0)
                                 it.addArrowDecorator();                                
                             }
-                            if (depType == SCLDependencyExtensions::DEPENDENCY_TYPE_RI) {
+                            if (depType == DependencyType::READINCREMENT) {
                                 it.setForegroundColor(0, 168, 168)
                                 it.addArrowDecorator();                                
                             }
