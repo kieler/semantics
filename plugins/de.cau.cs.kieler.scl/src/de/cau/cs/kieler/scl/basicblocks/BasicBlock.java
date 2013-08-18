@@ -22,13 +22,22 @@ import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.impl.StatementSequenceImpl;
 
 /**
+ * The BasicBlock class aids in the instruction split of pause and parallel instruction.
+ * Corresponding helper classes were created adn are included in this package.
+ * Each helper class contains an reference to the originating EObject which can be dereferenced.
+ * 
+ * The class also includes cache mechanisms to speed up the basic block calculations.
+ * 
  * @author ssm
  *
  */
 public class BasicBlock {
     
+    // The statement list
     protected ArrayList<Statement> statements;
     
+    // Members for caching
+    // The cache members are filled and used in the basic block extensions.
     public String CachedName;
     public String CachedEmptyName;
     public int CachedIndex;
@@ -73,6 +82,8 @@ public class BasicBlock {
         return statements;
     }
     
+    // Compares to basic block classes for equality.
+    // Therefore the sequence of statements is examined and not the actual basic block class.
     public boolean isEqual(BasicBlock basicBlock) {
         if (basicBlock.equals(this)) return true;
         if (basicBlock.getStatements().size()!=this.getStatements().size()) return false;

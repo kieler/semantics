@@ -23,36 +23,27 @@ import org.yakindu.sct.model.stext.stext.AssignmentOperator
 import de.cau.cs.kieler.scl.scl.VariableDefinition
 import org.yakindu.sct.model.stext.stext.LogicalNotExpression
 
+/**
+ * Extensions for the SText / SyncText expression language used in SCL.
+ * 
+ * @author: ssm
+ */
+
 class SCLExpressionExtensions {
    
     @Inject
     extension SCLFactoryExtensions
-   
-    // ======================================================================================================
-    // ==                  E X P R E S S I O N    M E T A M O D E L   E X T E N S I O N                    ==
-    // ======================================================================================================
 
-     def Expression toExpression(RegularEventSpec spec) {
-//      val rel = SText.createLogicalRelationExpression()
+    // Copies a regular event spec to a standard expression for further use.    
+    def Expression toExpression(RegularEventSpec spec) {
       val elref = SText.createElementReferenceExpression()
-//      val primval = SText.createPrimitiveValueExpression()
-//      val bval = SText.createBoolLiteral()
-      
       elref.setReference((spec.event.copy as ElementReferenceExpression).reference)
-//      bval.setValue(true)
-//      primval.setValue(bval)
-      
-//      rel.setLeftOperand(elref) 
-//      rel.setOperator(RelationalOperator::EQUALS)
-//      rel.setRightOperand(primval)
-        
       elref
     }
     
-//    def dispatch Expression toExpression(Expression exp) {
-//        exp
-//    }
-
+    // Negates the given expression.
+    // If the expression is already an negation, the negation is removed.
+    // Otherwise a new negation is added and parenthesized if necessary.
     def Expression negate(Expression exp) {
         if (exp instanceof LogicalNotExpression) {
             return (exp as LogicalNotExpression).operand.copy
@@ -71,26 +62,23 @@ class SCLExpressionExtensions {
         not
     }
     
-//    def dispatch Expression negate(RegularEventSpec spec) {
-//        val not = SText.createLogicalNotExpression()
-//        val par = SText.createParenthesizedExpression()
-//        par.setExpression(spec.toExpression)   
-//        not.setOperand(par);
-//        not  
-//    }    
 
+    // Create parenthesizes around a given expression.
     def Expression createParanthesizedExpression(Expression exp) {
         val newExp = SText.createParenthesizedExpression
         newExp.setExpression(exp)
         newExp
     }
 
+    // Create an element reference expression for a given variable definition.
     def Expression createElementReferenceExpression(VariableDefinition varDec) {
         val exp = SText.createElementReferenceExpression 
         exp.setReference(varDec)
         exp
     }
 
+    // If op1 is already an expression, op1 and op2 are combined via an or expression.
+    // Otherwise op2 is returned.
     def Expression addOrExpression(Expression op1, Expression op2) {
         if (op1 == null) {
             return op2
@@ -99,6 +87,7 @@ class SCLExpressionExtensions {
         }
     }
     
+    // Equivalent as or for and expressions.
     def Expression addAndExpression(Expression op1, Expression op2) {
         if (op1 == null) {
             return op2
@@ -107,12 +96,14 @@ class SCLExpressionExtensions {
         }
     }
     
+    // Adds parenthesis around a given expression.
     def Expression addParanthesizedExpression(Expression exp) {
         val pe = SText.createParenthesizedExpression
         pe.setExpression(exp)
         pe
     }
 
+    // Creates an or expression.
     def Expression createOrExpression(Expression op1, Expression op2) {
         val or = SText.createLogicalOrExpression()
         or.setLeftOperand(op1)
@@ -120,6 +111,7 @@ class SCLExpressionExtensions {
         or
     } 
 
+    // Creates an and expression.
     def Expression createAndExpression(Expression op1, Expression op2) {
         val and = SText.createLogicalAndExpression()
         and.setLeftOperand(op1)
@@ -127,6 +119,8 @@ class SCLExpressionExtensions {
         and
     } 
     
+    // Create an assignment expression.
+    // The expression (on the right hand side) is assigned to the var ref.
     def Expression createAssignmentExpression(ElementReferenceExpression varRef, Expression expression) {
         val assignment = SText.createAssignmentExpression()
         assignment.setVarRef(varRef)
@@ -135,6 +129,7 @@ class SCLExpressionExtensions {
         assignment
     }
     
+    // Returns a primitive boolean (true or false) expression.
     def Expression assignBoolean(boolean bool) {
         val primitiveValueExpression = SText.createPrimitiveValueExpression()
         val literal = SText.createBoolLiteral()

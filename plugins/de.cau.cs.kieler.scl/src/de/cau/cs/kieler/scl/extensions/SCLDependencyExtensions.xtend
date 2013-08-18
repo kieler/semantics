@@ -32,6 +32,13 @@ import javax.inject.Inject
 import de.cau.cs.kieler.scl.scl.Statement
 import org.yakindu.sct.model.stext.stext.AssignmentOperator;
 
+/**
+ * The dependency extension contains all mandatory methods to determine and categorize SCL statement
+ * dependencies.
+ * 
+ * @author: ssm
+ */
+
 class SCLDependencyExtensions {
     
     @Inject
@@ -41,16 +48,6 @@ class SCLDependencyExtensions {
     @Inject
     extension SCLStatementSequenceExtensions;
     
-    public static val DEPENDENCY_TYPE_UNKNOWN = 0
-    public static val DEPENDENCY_TYPE_WW = 1
-    public static val DEPENDENCY_TYPE_WI = 2
-    public static val DEPENDENCY_TYPE_WR = 3
-    public static val DEPENDENCY_TYPE_RI = 4
-    
-    // ======================================================================================================
-    // ==                   D E P E N D E N C Y   M E T A M O D E L   E X T E N S I O N                    ==
-    // ======================================================================================================
-
 /* ----------------------------------------------------
  * SText expression example structure
  *     
@@ -142,8 +139,7 @@ class SCLDependencyExtensions {
         iS
     }
     
-    
-    
+    // Checks whether or not a writer is a confluent writer.
     def boolean isConfluentWriterAbs(Instruction firstInst, Instruction secondInst) {
         if ((!(firstInst instanceof Assignment)) || (!(secondInst instanceof Assignment))) return false
         val asgn1 = (firstInst as Assignment).assignment as AssignmentExpression
@@ -162,6 +158,7 @@ class SCLDependencyExtensions {
         return false
     }
     
+    // Checks whether or not an instruction is an absolute writer.
     def boolean isWriterAbs(Instruction instruction) {
         if (!(instruction instanceof Assignment)) return false
         val asgn = (instruction as Assignment).assignment as AssignmentExpression
@@ -173,6 +170,7 @@ class SCLDependencyExtensions {
         return false
     }
 
+    // Checks whether or not an instruction is an relative writer.
     def boolean isWriterRel(Instruction instruction) {
         if (!(instruction instanceof Assignment)) return false
         val asgn = (instruction as Assignment).assignment as AssignmentExpression
@@ -184,12 +182,14 @@ class SCLDependencyExtensions {
         return false
     }
     
+    // Retrieves the definition of a writer. 
     def VariableDefinition getWriteRef(Instruction instruction) {
         if (!(instruction instanceof Assignment)) return null
         val asgn = (instruction as Assignment).assignment as AssignmentExpression
         return ((asgn.varRef as ElementReferenceExpression).reference as VariableDefinition)
     }
     
+    // Returns true, is an instruction is a reader w.r.t. a definition.
     def boolean isReader(Instruction instruction, VariableDefinition vardec) {
         if (instruction instanceof Assignment) {
             val asgn = (instruction as Assignment).assignment as AssignmentExpression
@@ -205,7 +205,7 @@ class SCLDependencyExtensions {
         return false
     }
     
-    
+    // Returns a list of concurrent dependencies w.r.t. a given instruction. 
     def List<Statement> getConcurrentDependencies(Instruction instruction) {
         val dList = new ArrayList<Statement>
         val depList = instruction.dependencyInstructions(instruction.getProgram)
@@ -220,10 +220,12 @@ class SCLDependencyExtensions {
         dList
     }
      
+    // Returns true, if an instruction has concurrent dependencies.
     def boolean hasConcurrentDependencies(Instruction instruction) {
         getConcurrentDependencies(instruction).size > 0
     }
     
+    // Returns a list of statements, that comprise a concurrent dependency that targets a given instruction.
     def List<Statement> getConcurrentTargetDependencies(Instruction instruction) {
         val dList = new ArrayList<Statement>
         val depList = instruction.dependencyInstructions(instruction.getProgram)
@@ -239,35 +241,37 @@ class SCLDependencyExtensions {
         dList
     }
     
+    // Returns true, if an instruction has concurrent dependencies that target the given instruction.
     def boolean hasConcurrentTargetDependencies(Instruction instruction) {
         getConcurrentTargetDependencies(instruction).size != 0
     }
-    
-    
-    
-    
-    def int dependencyType(Instruction firstInst, Instruction secondInst) {
+
+    // Determines the type of a dependency defined by its two instructions.    
+    def DependencyType dependencyType(Instruction firstInst, Instruction secondInst) {
         if (firstInst.isWriterAbs && secondInst.isWriterAbs && firstInst.getWriteRef==secondInst.getWriteRef &&
-            !isConfluentWriterAbs(firstInst, secondInst)) return DEPENDENCY_TYPE_WW
+            !isConfluentWriterAbs(firstInst, secondInst)) return DependencyType::WRITEWRITE;
         if (firstInst.isWriterAbs && secondInst.isWriterRel && firstInst.getWriteRef==secondInst.getWriteRef)
-            return DEPENDENCY_TYPE_WI
-        if (firstInst.isWriterAbs && secondInst.isReader(firstInst.getWriteRef)) return DEPENDENCY_TYPE_WR
-        if (firstInst.isWriterRel && secondInst.isReader(firstInst.getWriteRef)) return DEPENDENCY_TYPE_RI
-        return DEPENDENCY_TYPE_UNKNOWN
+            return DependencyType::WRITEINCREMENT;
+        if (firstInst.isWriterAbs && secondInst.isReader(firstInst.getWriteRef)) return DependencyType::WRITEREAD;
+        if (firstInst.isWriterRel && secondInst.isReader(firstInst.getWriteRef)) return DependencyType::READINCREMENT;
+        return DependencyType::UNKNOWN;
     }
     
+    // Returns true, if the target instruction is actually a target for a dependency.
     def boolean isDependencyTarget(Instruction target, Instruction source) {
-        dependencyType(source, target) != DEPENDENCY_TYPE_UNKNOWN
+        dependencyType(source, target) != DependencyType::UNKNOWN;
     }
     
-    def String dependencyTypeToString(int type) {
-        if (type == DEPENDENCY_TYPE_WW) return "ww"
-        if (type == DEPENDENCY_TYPE_WR) return "wr"
-        if (type == DEPENDENCY_TYPE_WI) return "wi"
-        if (type == DEPENDENCY_TYPE_RI) return "ri"
+    // Cast types to string (accoring to DATE'13) for display reasons.
+    def String dependencyTypeToString(DependencyType type) {
+        if (type == DependencyType::WRITEWRITE) return "ww"
+        if (type == DependencyType::WRITEREAD) return "wr"
+        if (type == DependencyType::WRITEINCREMENT) return "wi"
+        if (type == DependencyType::READINCREMENT) return "ri"
         return "null"
     }
     
+    // Sort instructions according to DAC'13 scheme: init-write-read.
     def int compareSCLDependencyOrder(Instruction i1, Instruction i2) {
         var order = 1
         if (i1 instanceof Assignment) order = -1

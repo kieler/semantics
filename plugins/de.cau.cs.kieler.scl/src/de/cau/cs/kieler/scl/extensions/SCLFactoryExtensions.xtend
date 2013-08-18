@@ -21,6 +21,12 @@ import org.yakindu.base.base.BaseFactory
 import org.yakindu.base.types.TypesFactory
 import de.cau.cs.kieler.scl.scl.SclFactory
 
+/**
+ * All factories needed for SCL are contained in this extensions.
+ * 
+ * @author: ssm
+ */
+
 class SCLFactoryExtensions {
 
     def void Debug(String debugString) { System::out.println(debugString) }

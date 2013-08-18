@@ -31,6 +31,13 @@ import de.cau.cs.kieler.scl.basicblocks.PauseSurfaceImpl
 import de.cau.cs.kieler.scl.basicblocks.PauseDepth
 import de.cau.cs.kieler.scl.basicblocks.PauseDepthImpl
 
+/**
+ * Collection of statement sequence extensions.
+ * 
+ * @author: ssm
+ * 
+ */
+
 class SCLStatementSequenceExtensions {
         
     @Inject
@@ -38,15 +45,8 @@ class SCLStatementSequenceExtensions {
     @Inject
     extension SCLGotoExtensions
         
-    // ======================================================================================================
-    // ==                   S C L T H R E A D   M E T A M O D E L   E X T E N S I O N                      ==
-    // ======================================================================================================
-    
-    /*
-     * Methods for scl threads and instructions in this context 
-     */
-    
-    // Retrieve the thread list of a given instruction
+ 
+    // Retrieve the thread of a given instruction/statement
     def Thread getThread(Instruction instruction) {
         getThread(instruction.eContainer as Statement)
     }
@@ -61,6 +61,7 @@ class SCLStatementSequenceExtensions {
         return null
     }
 
+    // Retrieve the parallel instruction of a subordinate instruction / statement
     def Parallel getParallel(Instruction instruction) {
         getParallel(instruction.eContainer as Statement);
     }
@@ -75,11 +76,8 @@ class SCLStatementSequenceExtensions {
         return null
     }
 
-
+    // Retrieve the program of an instruction / statement
     def Program getProgram(Instruction instruction) {
-//        var container = instruction
-//        if (container instanceof PauseSurface) container = (container as PauseSurfaceImpl).PauseReference
-//        else if (container instanceof PauseDepth) container = (container as PauseDepthImpl).PauseReference
         getProgram(instruction.eContainer as Statement)
     }
     
@@ -92,7 +90,8 @@ class SCLStatementSequenceExtensions {
         }
         return null
     }
-    
+
+    // Retrieve the statement sequence of an instruction / statement    
     def StatementSequence getParentStatementSequence(Instruction instruction) {
         getParentStatementSequence(instruction.eContainer as Statement)
     }
@@ -108,7 +107,7 @@ class SCLStatementSequenceExtensions {
         return null
     }
 
-    // Checks if two instructions are in the same thread instruction list 
+    // Checks if two instructions / statements are in the same thread instruction list 
     def dispatch boolean isInSameThreadAs(Instruction instruction, Instruction secondInstruction) {
         getThread(instruction) == getThread(secondInstruction)
     }
@@ -117,7 +116,7 @@ class SCLStatementSequenceExtensions {
         getThread(statement) == getThread(secondStatement)
     }
     
-    // Checks if an instruction is in the main thread list (program.instructions)
+    // Checks if an instruction /statement is in the main thread list (program.instructions)
     def dispatch boolean isInMainThread(Instruction instruction) {
         getThread(instruction) == null
     }
@@ -126,6 +125,7 @@ class SCLStatementSequenceExtensions {
         getThread(statement) == null
     }
     
+    // Checks whether or not two instructions /statements share the same parent
     def boolean hasSameThreadParentAs(Instruction instruction, Instruction secondInstruction) {
         (instruction.eContainer as Statement).hasSameThreadParentAs((secondInstruction.eContainer as Statement))
     }
@@ -134,6 +134,7 @@ class SCLStatementSequenceExtensions {
         statement.getThread?.eContainer == secondStatement.getThread?.eContainer
     }
 
+    // Retrieves the least common ancestor of two instructions / statements
     def Parallel getLeastCommonAncestorParallel(Instruction instruction, Instruction secondInstruction) {
         getLeastCommonAncestorParallel(instruction.eContainer as Statement, 
             secondInstruction.eContainer as Statement
@@ -141,6 +142,8 @@ class SCLStatementSequenceExtensions {
     }
     
     def Parallel getLeastCommonAncestorParallel(Statement statement, Statement secondStatement) {
+        // As explained in DATE'13 the least common ancestor fork (lcaf) is determined recursively
+        // throughout encapsulating parallel instructions.
         var ps1 = statement.getThread;
         while (ps1 != null) {
             var ps2 = secondStatement.getThread;
@@ -156,43 +159,9 @@ class SCLStatementSequenceExtensions {
         }
         return null
     }
+    
 
-    // Checks if an instruction is in the given thread
-//    def dispatch boolean isInThread(Instruction instruction, AbstractThread thread) {
-//        thread.eAllContents.filter(typeof(InstructionStatement)).exists(e|e.instruction == instruction)
-//    }    
-
-    // Checks if a statement is in the given thread
-//    def dispatch boolean isInThread(Statement statement, AbstractThread thread) {
-//        thread.eAllContents.filter(typeof(Statement)).exists(e|e == statement)
-//    }
-    
-    // Checks if a thread contains the given instruction
-//    def dispatch boolean contains(AbstractThread thread, Instruction instruction) {
-//        instruction.isInThread(thread)
-//    }    
-    
-    // Checks if a thread contains the given statement
-//    def dispatch boolean contains(AbstractThread thread, Statement statement) {
-//        statement.isInThread(thread)
-//    }
-    
-    // Drop previous statements from a list of statements till the given statement
-//    def dropPrevious(List<Statement> statements, Statement statement) {
-//        var stmts = statements.copyAll
-//        while(stmts != null && stmts.size>0 && stmts.head != statement) 
-//            stmts = stmts.tail.toList
-//        stmts
-//    }
-//    
-//    def dropPrevious(StatementSequence thread, Statement statement) {
-//        if (statement.eContainer instanceof Conditional) {
-//            return dropPrevious((statement.eContainer as Conditional).statements, statement)    
-//        } else {
-//            return dropPrevious(thread.statements, statement)
-//        }
-//    }
-    
+    // Retrieves the instruction statement preceding the given instruction.
     def InstructionStatement getPreviousInstructionStatement(Statement statement) {
         val sseq = statement.getParentStatementSequence
         var index = sseq.statements.indexOf(statement) - 1
@@ -205,6 +174,7 @@ class SCLStatementSequenceExtensions {
         return null
     }
     
+    // Retrieves the preceding statement regardless of its type.
     def Statement getPreviousStatement(Statement statement) {
         val sseq = statement.getParentStatementSequence
         var index = sseq.statements.indexOf(statement) - 1
@@ -212,6 +182,7 @@ class SCLStatementSequenceExtensions {
         sseq.statements.get(index)
     }
     
+    // Retrieves the preceding statements with respect of hierarchy.
     def Statement getPreviousStatementHierarchical(Statement statement) {
         val sseq = statement.getParentStatementSequence
         var transformedStatement = statement
@@ -225,6 +196,7 @@ class SCLStatementSequenceExtensions {
         sseq.statements.get(index)
     }
 
+    // Retrieves the preceding instruction statement with repsect of hierarchy.
     def Statement getPreviousInstructionStatementHierarchical(Statement statement) {
         var prevStatement = statement.previousStatementHierarchical
         while (prevStatement != null && prevStatement.isEmpty) 
@@ -232,11 +204,12 @@ class SCLStatementSequenceExtensions {
         prevStatement
     }
     
-    
+    // Returns the next statements.
     def Statement getNextStatement(Statement statement) {
         getNextStatement(statement, false)
     }
     
+    // Returns the next statement and follows goto jumps, if the next statement is a goto.
     def Statement getNextStatement(Statement statement, boolean resolveGotos) {
         val sseq = statement.getParentStatementSequence
         var transformedStatement = statement
@@ -253,21 +226,25 @@ class SCLStatementSequenceExtensions {
         result
     }
     
+    // Retrieves the next instruction statement.
     def Statement getNextInstructionStatement(Statement statement) {
         getNextInstructionStatement(statement, false)
     }
 
+    // Retrieves the next instruction statement including goto jump follow-ups.
     def Statement getNextInstructionStatement(Statement statement, boolean resolveGotos) {
         var nextStatement = statement.getNextStatement(resolveGotos)
         while (nextStatement != null && nextStatement.isEmpty) 
             nextStatement = nextStatement.getNextStatement(resolveGotos)
         nextStatement
     }
-
+    
+    // Retrieves the next statement respecting hierarchy.
     def Statement getNextStatementHierarchical(Statement statement) {
         getNextStatementHierarchical(statement, false) 
     }
     
+    // Retrieves the next statement respecting hierarchy and goto jumps.
     def Statement getNextStatementHierarchical(Statement statement, boolean resolveGotos) {
         val stmt = statement.getNextStatement(resolveGotos)
         if (stmt == null) {
@@ -278,6 +255,7 @@ class SCLStatementSequenceExtensions {
         stmt
     }
 
+    // Retrieves the next instruction statement respecting hierarchy and goto jumps.
     def Statement getNextInstructionStatementHierarchical(Statement statement) {
         getNextInstructionStatementHierarchical(statement, false) 
     }
@@ -289,6 +267,7 @@ class SCLStatementSequenceExtensions {
         nextStatement
     }    
     
+    // Returns true, if a statement is the last statement of a statement sequence.
     def boolean endOfSequence(Statement statement) {
         statement.getNextInstructionStatement(false) == null
     }

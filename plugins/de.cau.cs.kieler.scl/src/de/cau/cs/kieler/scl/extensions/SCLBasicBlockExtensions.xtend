@@ -39,6 +39,13 @@ import de.cau.cs.kieler.scl.scl.StatementSequence
 import java.util.HashMap
 import de.cau.cs.kieler.scl.scl.Program
 
+/**
+ * The SCL basic block extension comprises all mandatory methods for creating, comparing and manipulating 
+ * basic blocks. It also implement a cache mechanism to speed up the time consuming basic block calculations.
+ * 
+ * @author: ssm
+ */
+
 class SCLBasicBlockExtensions {
     
     @Inject
@@ -52,13 +59,17 @@ class SCLBasicBlockExtensions {
     @Inject
     extension SCLDependencyExtensions
     
+    // This switch decides whether or not basic blocks are separated at incoming dependency edges.
     public static val SPLIT_BLOCKS_AT_DEPENDENCY = true
     
+    // Prefixes for basic block descriptions
     public static val BASICBLOCKPREFIX = 'g';
     public static val EMPTYBLOCKPREFIX = 'e';
     
+    // Cache for whole SCL programs
     public var HashMap<Program, ArrayList<BasicBlock>> CachedPrograms
     
+    // The cache map for SCL programs is initialized in the constructor.
     def SCLBasicExtensions() {
         CachedPrograms = new HashMap<Program, ArrayList<BasicBlock>>
     }
@@ -77,7 +88,6 @@ class SCLBasicBlockExtensions {
         if (prevStatement.isConditional) return true
         if (prevStatement.isGoto) return true 
         if (SPLIT_BLOCKS_AT_DEPENDENCY) {
-//            if ((prevStatement.isAssignment || prevStatement.isConditional) && prevStatement.getInstruction.hasConcurrentTargetDependencies) return true;
             if ((statement.isAssignment || statement.isConditional) && statement.getInstruction.hasConcurrentTargetDependencies) return true;
         }
 
@@ -127,7 +137,10 @@ class SCLBasicBlockExtensions {
         val bBox = new ArrayList<Statement>
         if (instructionStatement == null) return bBox
         val sseq = instructionStatement.getParentStatementSequence
-        
+
+        // If the statement is a goto, we need a little more magic, find the target and retry the method.
+        // Therefore, a goto jump belongs to another statement in the context of basic blocks since it is
+        // not visible as node in the SCG.           
         if (instructionStatement.isGoto) { 
             if (instructionStatement.instruction.asGoto.getTargetStatement?.getInstructionStatement?.instruction == null) return bBox
             var statementHier = instructionStatement.previousStatementHierarchical
@@ -140,6 +153,7 @@ class SCLBasicBlockExtensions {
         var Statement transformedStatement = instructionStatement
         if (instructionStatement.hasInstruction) transformedStatement = (instructionStatement as Statement).getInstruction.eContainer as Statement
         
+        // Retrieve statement sequence to work with...
         var ArrayList<Statement> sList = new ArrayList<Statement>
         var oIndex = sseq.statements.indexOf(transformedStatement)
         if (oIndex < 0) {
@@ -152,6 +166,8 @@ class SCLBasicBlockExtensions {
             }
         } else { sList.addAll(sseq.statements) }
         
+        // If the actual statement is not the beginning of a new block, search the beginning and
+        // add all statements to the basic block list. 
         val stmt = sList.get(oIndex)
         if (!stmt.isBasicBlockFirst || 
             (stmt.isPause && !isDepth && oIndex>0) ||
@@ -169,12 +185,16 @@ class SCLBasicBlockExtensions {
             }
             bBox.addAll(predStatements.reverse)
         }
+        
+        // Add the statement to the block and return, if it's already the last statement of the block.
         bBox.add(stmt)
         var breakOnFirst = false;
         if (stmt.isBasicBlockLast) {
           if (!isDepth) { return bBox }  
           else { breakOnFirst = true }
         } 
+        
+        // Otherwise add the succeeding statements until a closing statement is found.
         var succIndex = oIndex + 1
         while (succIndex < sList.size) {
             val succStmt = sList.get(succIndex)
@@ -202,6 +222,7 @@ class SCLBasicBlockExtensions {
         basicBlock.getHead
     }
     
+    // Separates pause and parallel statements in two (surface and depth) statements. 
     def List<Statement> separateSurfaceAndDepth(List<Statement> statements, boolean isDepth) {
         val returnList = new ArrayList<Statement>
         if (statements.head.isPause && (statements.size>1 || (isDepth && statements.size == 1))) {
@@ -234,38 +255,38 @@ class SCLBasicBlockExtensions {
         returnList
     }
     
+    // Returns true, if the statement is a pause surface.
     def boolean isPauseSurface(Statement statement) {
         statement.hasInstruction && statement.trueInstruction instanceof PauseSurface
     }
     
+    // Returns true, if the statement is a pause depth.
     def boolean isPauseDepth(Statement statement) {
         statement.hasInstruction && statement.trueInstruction instanceof PauseDepth
     }
-    
-//    def Instruction getPauseReference(Statement statement) {
-//        if (statement.isPauseSurface) return (statement.instruction as PauseSurfaceImpl).PauseReference
-//        if (statement.isPauseDepth) return (statement.instruction as PauseDepthImpl).PauseReference
-//        return null
-//    }
 
+    // Returns true, if the statement is a parallel fork.    
     def boolean isParallelFork(Statement statement) {
         statement.hasInstruction && statement.trueInstruction instanceof ParallelFork
     }
     
+    // Returns true, if the statement is a parallel join.
     def boolean isParallelJoin(Statement statement) {
         statement.hasInstruction && statement.trueInstruction instanceof ParallelJoin
     }
 
-    
+    // Creates a new basic block instance.
     def BasicBlock createBasicBlock() {
         new BasicBlock()
     } 
     
+    // Creates a new basic block identified by its head.
     def BasicBlock create basicBlock: createBasicBlock() getBasicBlockByHead(Statement basicBlockHead, boolean isDepth) {
         val statements = basicBlockHead.getBasicBlockStatements(isDepth).separateSurfaceAndDepth(isDepth)
         basicBlock.statements.addAll(statements)
     }
     
+    // Creates a new basic block identified by any of its statements.
     def BasicBlock getBasicBlockByAnyStatement(Statement statement) {
         val statements = statement.getBasicBlockStatements
         if (statements.head == null) return null
@@ -276,6 +297,7 @@ class SCLBasicBlockExtensions {
             getBasicBlockByHead(statements.head, false)
     }
     
+    // Creates a new basic block and forces it to treat its head as depth, if the head is a split instruction.
     def BasicBlock getBasicBlockByAnyStatementDepth(Statement statement) {
         val statements = statement.getBasicBlockStatements(true)
         if (statements.head == null) return null
@@ -292,6 +314,7 @@ class SCLBasicBlockExtensions {
         basicBlock.getHead.hashCode.toString
     }
     
+    // Returns true, if a list of basic block already contains a basic block with an equal statement list.
     def containsEqual(List<BasicBlock> basicBlocks, BasicBlock basicBlock) {
         for(bb : basicBlocks) {
             if (bb.isEqual(basicBlock)) return true
@@ -299,6 +322,7 @@ class SCLBasicBlockExtensions {
         return false
     }
     
+    // Removes any equal basic blocks from a list of basic blocks.
     def removeEqual(List<BasicBlock> basicBlocks, BasicBlock basicBlock) {
         var i = 0
         while (i<basicBlocks.size) {
@@ -311,6 +335,7 @@ class SCLBasicBlockExtensions {
         }
     }
     
+    // Copies a list of basic blocks.
     def List<BasicBlock> copy(List<BasicBlock> basicBlocks) {
         val newList = new ArrayList<BasicBlock>
         for(bb : basicBlocks) {
@@ -319,6 +344,7 @@ class SCLBasicBlockExtensions {
         newList
     }
      
+     // Retrieves all basic blocks in a statement list context identified by a statement.
     def List<BasicBlock> getBasicBlocks(Statement statement) {
         getBasicBlocks(statement, true)
     } 
@@ -336,7 +362,6 @@ class SCLBasicBlockExtensions {
                 if (!basicBlocks.containsEqual(bb)) basicBlocks.add(bb)
             }
             c = c + 1
-//            Debug("Evaluated bb : " + c.toString)
         }
         if (sseq instanceof Conditional) {
             for(stmt : (sseq as Conditional).elseStatements) {
@@ -347,7 +372,9 @@ class SCLBasicBlockExtensions {
         }
         basicBlocks
     }
-    
+
+    // Recursive method to find all basic blocks in a statement context.
+    // Used by get basic blocks.     
     def List<BasicBlock> _getBasicBlocksByStatement(Statement stmt, boolean hierarchical) {
         val basicBlocks = new ArrayList<BasicBlock>
             val stmtBlock = stmt.getBasicBlockByAnyStatement
@@ -361,8 +388,6 @@ class SCLBasicBlockExtensions {
                 if (stmtBlockDepth != null && !basicBlocks.containsEqual(stmtBlockDepth)) basicBlocks.add(stmtBlockDepth)
             }
             if (stmt.hasInstruction && stmt.getInstruction instanceof Conditional) {
-                // ignore blocks that are already in the list 
-//                basicBlocks.addAll((stmt.getInstruction as Conditional).statements.head.getBasicBlocks)
                 for (block : (stmt.getInstruction as Conditional).statements.head.getBasicBlocks) {
                     if (!basicBlocks.containsEqual(block)) basicBlocks.add(block)  
                 } 
@@ -381,7 +406,9 @@ class SCLBasicBlockExtensions {
                 } 
         basicBlocks
     }
-    
+
+    // Retrieves all basic blocks of a program (identified by any of its statements).
+    // The result is cached and used again if the blocks of the program in question are queried again.    
     def List<BasicBlock> getAllBasicBlocks(Statement statement) {
         val program = statement.getProgram
         
@@ -402,10 +429,12 @@ class SCLBasicBlockExtensions {
         basicBlocks
     }
     
+    // Retrieves the count of basic blocks of a program.
     def int getAllBasicBlocksCount(Statement statement) {
         getAllBasicBlocks(statement).size
     }
     
+    // Returns the index of a basic block in a list of basic blocks.
     def int getBasicBlockIndex(BasicBlock basicBlock) {
         if (basicBlock.CachedIndex>-1) return basicBlock.CachedIndex;
         var c = 0
@@ -420,6 +449,7 @@ class SCLBasicBlockExtensions {
         c = -1
     }
     
+    // Returns the name of a basic block.
     def String getBasicBlockName(BasicBlock basicBlock) {
         var String name = "";
         if (!basicBlock.CachedName.nullOrEmpty) {
@@ -432,6 +462,7 @@ class SCLBasicBlockExtensions {
         name
     }
 
+    // Returns the name of a basic block that is used as empty mark in the synchronizer join context.
     def String getEmptyBlockName(BasicBlock basicBlock) {
         var String name = ""
         if (!basicBlock.CachedEmptyName.nullOrEmpty) {
@@ -444,15 +475,18 @@ class SCLBasicBlockExtensions {
         name
     }
     
+    // Returns the name of the basic block w.r.t. to its role.
     def String getBasicBlockName(BasicBlock basicBlock, boolean emptyBlock) {
         if (emptyBlock) return basicBlock.getEmptyBlockName
         else return basicBlock.getBasicBlockName
     }
     
+    // Returns true, if the head of a basic block is the depth of a pause.
     def boolean headIsDepth(BasicBlock basicBlock) {
         basicBlock.getHead.hasInstruction && basicBlock.getHead.trueInstruction instanceof PauseDepth
     } 
     
+    // Returns a list of basic blocks that pose as predecessors to a given basic block.
     def List<BasicBlock> getBasicBlockPredecessor(BasicBlock basicBlock) {
         val predecessors = new ArrayList<BasicBlock>;
         if (!basicBlock.CachedPredecessors.nullOrEmpty) {
@@ -513,16 +547,19 @@ class SCLBasicBlockExtensions {
         predecessors
     }
     
+    // Returns true, if the last instruction of a basic block is a pause surface.
     def boolean isPauseSurface(BasicBlock basicBlock) {
         if (basicBlock.statements.last.trueInstruction instanceof PauseSurface) return true
         return false
     }
     
+    // Returns true, if the last instruction of a basic block is a conditional.
     def boolean isConditionalPredecessor(BasicBlock basicBlock, BasicBlock predecessor) {
-        if (predecessor.statements.last.isConditional)  return true;
+        if (predecessor.statements.last.isConditional) return true;
         return false
     }
     
+    // Returns true, if a basic block resides in the true branch of a conditional predecessor.
     def boolean isConditionalPredecessorTrueBranch(BasicBlock basicBlock, BasicBlock predecessor) {
         if (predecessor.statements.last.isConditional) {
             if (predecessor.statements.last.getInstruction.asConditional.statements.head.getBasicBlockByHead(false).isEqual(basicBlock))
@@ -537,6 +574,7 @@ class SCLBasicBlockExtensions {
         return false
     }
     
+    // Returns the expression of a conditional predecessor.
     def Expression getConditionalExpression(BasicBlock basicBlock) {
         if (basicBlock.statements.last.isConditional) {
             return basicBlock.statements.last.getInstruction.asConditional.expression
@@ -544,16 +582,19 @@ class SCLBasicBlockExtensions {
         return null
     }
     
+    // Returns true, if the basic block starts with a parallel join.
     def boolean isParallelJoin(BasicBlock basicBlock) {
         if (basicBlock.statements.head.trueInstruction instanceof ParallelJoin) return true
         return false
     }
    
+    // Returns true, if the basic block closes with a parallel fork.
     def boolean isParallelFork(BasicBlock basicBlock) {
         if (basicBlock.statements.last.trueInstruction instanceof ParallelFork) return true
         return false
     }
 
+    // Returns a list of basic blocks that are dependency predecessors to a given basic block.
     def List<BasicBlock> getBasicBlockDependencyPredecessors(BasicBlock basicBlock) {
         val predecessors = new ArrayList<BasicBlock>;
         if (!basicBlock.CachedDependencyPredecessors.nullOrEmpty) {
@@ -579,7 +620,7 @@ class SCLBasicBlockExtensions {
         predecessors
     }
     
-    
+    // Retrieves a list of basic block successors.
     def List<BasicBlock> getBasicBlockSuccessor(BasicBlock basicBlock) {
         val successors = new ArrayList<BasicBlock>;
         if (!basicBlock.CachedSuccessors.nullOrEmpty) {
@@ -626,6 +667,7 @@ class SCLBasicBlockExtensions {
         successors
     }
     
+    // Returns true, if a basic block is the last block in a thread (and hence, is followed by an exit node).
     def boolean isExitBlock(BasicBlock basicBlock) {
         val succ = basicBlock.basicBlockSuccessor 
         if (succ.size == 0) return true
@@ -633,11 +675,15 @@ class SCLBasicBlockExtensions {
         return false
     }
     
+    // Returns true, if a basic block is an exit block and basic block's last statement is a conditional.
     def boolean isConditionalExitBlock(BasicBlock basicBlock) {
+//        if (basicBlock.isExitBlock && basicBlock.statements.last.isConditional) return true
         if (basicBlock.statements.last.isConditional) return true
         return false
     }
     
+    // Returns true, if the exit node of an conditional exit block is connected to the true branch of the 
+    // given conditional.
     def boolean isConditionalExitBlockTrue(BasicBlock basicBlock) {
         if (basicBlock == null) return false;
         val lastStatement = basicBlock.statements.last.getInstruction.asConditional.statements.last;
@@ -646,7 +692,7 @@ class SCLBasicBlockExtensions {
         return false
     }
     
-
+    // Remove all surface basic block from a thread (identified by its basic blocks).
     def List<BasicBlock> stripSurface(List<BasicBlock> basicBlocks) {
         val newBlockList = new ArrayList<BasicBlock>;
         var cfpassed = false
@@ -710,6 +756,7 @@ class SCLBasicBlockExtensions {
         newBlockList
     }
     
+    // Only retrieve the surfaces of a thread (identified by its basic blocks).
     def List<BasicBlock> getSurfaces(List<BasicBlock> basicBlocks) {
         val newBlockList = new ArrayList<BasicBlock>;
         
@@ -722,11 +769,12 @@ class SCLBasicBlockExtensions {
         newBlockList
     }    
     
+    // Returns true, if a program is ASC schedulable.
     def boolean isASCSchedulable(Program program) {
         program.ASCPool.size == 0
     }
     
-    
+    // Returns a list of blocks that remained in the basic block pool after the ASC algorithm completed.    
     def List<BasicBlock> ASCPool(Program program) {
         var changed = false
         var basicBlockPool = program.statements.head.getAllBasicBlocks 

@@ -45,6 +45,12 @@ import org.yakindu.sct.model.sgraph.Declaration
 import org.yakindu.base.types.TypesFactory
 import org.yakindu.sct.model.stext.types.STextDefaulTypeSystem
 
+/**
+ * The SCL create extensions aid in the creation of SCL elements.
+ * 
+ * @author: ssm 
+ */
+
 class SCLCreateExtensions {
   
     @Inject
@@ -56,21 +62,14 @@ class SCLCreateExtensions {
     @Inject
     extension SCLExpressionExtensions
     
-    // ======================================================================================================
-    // ==                       C R E A T E   M E T A M O D E L   E X T E N S I O N                        ==
-    // ======================================================================================================
     
-    /*
-     * Methods for easy object creation
-     */
-    
-    // Create a new list of EObjects
+    // Create a new list of statements
     def createNewStatementList()
     {
         new ArrayList<Statement>
     }
     
-    // Create a new list of EObjects and insert the first instruction
+    // Create a new list of statements and insert the first instruction
     def createNewStatementList(Statement statement) {
         createNewStatementList.add(statement);
     }
@@ -81,26 +80,31 @@ class SCLCreateExtensions {
         createNewStatementList(statement)
     }
     
+    // Create instruction statement
     def createSCLInstructionStatement() {
         SCL.createInstructionStatement()
     }
     
+    // Create instruction statement and insert instruction
     def createSCLInstructionStatement(Instruction instruction) {
         val statement = createSCLInstructionStatement()
         statement.instruction = instruction
         statement
     }
     
+    // Default for statement creation is create an instruction statement.
     def createStatement(Instruction instruction) {
         createSCLInstructionStatement(instruction)
     }
     
+    // Creates a list of statements out of a list of instructions.
     def List<Statement> createStatements(List<Assignment> instructions) {
         val list = new ArrayList<Statement>
         instructions.forEach(e|list.add(e.createStatement))
         list
     }
    
+    // Creates an empty statement.
     def createSCLEmptyStatement() {
         SCL.createEmptyStatement()
     }
@@ -113,25 +117,19 @@ class SCLCreateExtensions {
         goto
     }
     
-    // Create a SCL comment 
-//    def Annotation createSCLComment(String commentString) {
-//        var comment = SCL.createAnnotation();
-//        comment.setComment('// '+commentString);
-//        comment;
-//    }
-    
-    // Create a SCL label
+    // Create an SCL label
     def Statement createSCLEmptyStatement(String labelName) {
         val statement = SCL.createEmptyStatement()
         statement.setLabel(labelName)
         statement
     }
-    
+
+    // Create a statement scope.     
     def StatementScope createSCLStatementScope() {
         SCL.createStatementScope()
     }
     
-    // Create a SCL pause
+    // Create an SCL pause
     def Pause createSCLPause() {
         SCL.createPause()
     }
@@ -165,7 +163,7 @@ class SCLCreateExtensions {
         }
     }
 
-
+    // Creates a new definition out of a given name and a type.
     def VariableDefinition create varDef: SCL.createVariableDefinition()
         createVariableDefinition(String name, String type) {
 
@@ -173,11 +171,7 @@ class SCLCreateExtensions {
         varDef.setInput(false);
         varDef.setOutput(false);
         if (!type.nullOrEmpty) {
-//            val primitiveType = TypesFactory::eINSTANCE.createPrimitiveType
-//            primitiveType.setName(type)
             varDef.setType(types.findFirst[it.name==type]);
-//                primitiveType as Type
-//            )
         }
     }
 
@@ -188,15 +182,6 @@ class SCLCreateExtensions {
         val assignments = new ArrayList<Assignment>
         if (effect instanceof ReactionEffect) {
             for(action : (effect as ReactionEffect).actions) {
-//                 action.eAllContents.filter(typeof(AssignmentExpression)).forEach [
-//                    val assignment = SCL.createAssignment();
-//                    assignment.assignment = it.copy
-//                    assignment.eAllContents.filter(typeof(AssignmentExpression)).forEach [
-//                        val varRef = (it.varRef as ElementReferenceExpression);
-//                        varRef.reference = (varRef.reference as Event).createVariableDeclaration();
-//                    ]
-//                    assignments.add(assignment)
-//                ]
                     val assignment = SCL.createAssignment()
                     if (action instanceof ElementReferenceExpression) {
                         assignment.assignment = SText.createAssignmentExpression
@@ -210,15 +195,14 @@ class SCLCreateExtensions {
                     assignment.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [
                         it.reference = (it.reference as Declaration).createVariableDefinition();
                     ]
-//                    ((assignment.assignment as AssignmentExpression).varRef as ElementReferenceExpression).reference = 
-//                        (((action as AssignmentExpression).varRef as ElementReferenceExpression).reference as Event).createVariableDeclaration();
                     assignments.add(assignment)
             }
         }
         
         assignments;    
     }
-    
+
+    // Create a new assignment out of a given expression and a definition.    
     def Assignment createSCLAssignment(Expression expression, VariableDefinition declRef) {
         val assignment = SCL.createAssignment()
         assignment.assignment = expression
@@ -229,6 +213,7 @@ class SCLCreateExtensions {
         assignment
     }
     
+    // Creates a new assignment out of two given definitions.
     def Assignment createSCLAssignment(VariableDefinition firstDecl, VariableDefinition secondDecl) {
         val assignment = SCL.createAssignment()
         
@@ -258,12 +243,6 @@ class SCLCreateExtensions {
         var conditional = SCL.createConditional()
         if (trigger instanceof ReactionTrigger) {
             val reactionTrigger = trigger as ReactionTrigger;
-//            if (reactionTrigger.guardExpression != null) {
-//                conditional.expression = reactionTrigger.guardExpression.copy;
-//                conditional.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [ e |
-//                    e.reference = (e.reference as Event).createVariableDeclaration;  
-//                ]
-//            } else 
             if (reactionTrigger.expression != null) {
                 conditional.expression = reactionTrigger.expression.copy;
                 conditional.eAllContents.filter(typeof(ElementReferenceExpression)).forEach [ e |

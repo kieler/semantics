@@ -18,11 +18,13 @@ import org.yakindu.sct.model.sgraph.Statechart
 import de.cau.cs.kieler.yakindu.model.sgraph.syncgraph.SyncState
 import java.util.HashMap
 
+/**
+ * This class contains all naming and string methods regarding SCL.
+ * 
+ * @author: ssm
+ */
+
 class SCLNamingExtensions {
-    
-    // ======================================================================================================
-    // ==                    ID  &  N A M I N G   M E T A M O D E L   E X T E N S I O N                    ==
-    // ======================================================================================================
     
     // Since yakindu does not make use of the EObject ID field, one can use this method to 
     // make every ID in a statechart unique.

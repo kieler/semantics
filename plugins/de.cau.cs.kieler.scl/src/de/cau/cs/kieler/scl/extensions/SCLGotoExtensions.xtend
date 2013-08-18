@@ -14,15 +14,21 @@
 package de.cau.cs.kieler.scl.extensions
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.scl.scl.StatementSequence
-import de.cau.cs.kieler.scl.scl.Thread
+import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.StatementSequence
+import java.util.ArrayList
+import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.scl.EmptyStatement
-import java.util.ArrayList
+
+/**
+ * These methods help to find goto targets and successor instructions of labels.
+ * 
+ * @author: ssm
+ */
 
 class SCLGotoExtensions {
     
@@ -30,15 +36,7 @@ class SCLGotoExtensions {
     extension SCLStatementExtensions
     @Inject
     extension SCLStatementSequenceExtensions
-    
-    // ======================================================================================================
-    // ==                 G O T O  - L O O K U P   M E T A M O D E L   E X T E N S I O N                   ==
-    // ======================================================================================================
-    
-    /*
-     * These methods help to find goto targets and successor instructions of labels.
-     */
-    
+        
     // Retrieves the target statement of a goto statement.
     // REMARK: Because the target may not exit this function may return null! 
     def Statement getTargetStatement(Goto goto) {
@@ -80,7 +78,8 @@ class SCLGotoExtensions {
         return (statementSequence.statements.get(index)) as InstructionStatement
     }
     
-    def ArrayList<Goto> getIncomingGotos(Statement statement) {
+    // Retrieves a list of goto instructions that target the given statement.
+    def List<Goto> getIncomingGotos(Statement statement) {
         val gotos = new ArrayList<Goto>;
         val transformedStatement = statement.getInstruction.eContainer as Statement
         val directGotos = transformedStatement.getParentStatementSequence.statements.allContents.filter(typeof(Goto)).filter(e|e.getTargetStatement == transformedStatement)
