@@ -1,39 +1,52 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.scl.seqscl.xtend
 
-import com.google.inject.Guice
 import com.google.common.collect.ImmutableList
-import de.cau.cs.kieler.scl.scl.Program
-import javax.inject.Inject
-import de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions
-import de.cau.cs.kieler.scl.extensions.SCLCreateExtensions
-import de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions
-import java.util.List
+import com.google.inject.Guice
 import de.cau.cs.kieler.scl.basicblocks.BasicBlock
-import de.cau.cs.kieler.scl.scl.SclFactory
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.InstructionStatement
-import de.cau.cs.kieler.scl.scl.VariableDefinition
+import de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions
+import de.cau.cs.kieler.scl.extensions.SCLCreateExtensions
 import de.cau.cs.kieler.scl.extensions.SCLExpressionExtensions
-import org.yakindu.sct.model.stext.stext.Expression
-import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
+import de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions
 import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
 import de.cau.cs.kieler.scl.scl.Assignment
+import de.cau.cs.kieler.scl.scl.Program
+import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.VariableDefinition
+import java.util.List
 import org.yakindu.sct.model.stext.stext.AssignmentExpression
-import java.util.ArrayList
-import org.yakindu.sct.model.stext.stext.LogicalOrExpression
+import org.yakindu.sct.model.stext.stext.ElementReferenceExpression
+import org.yakindu.sct.model.stext.stext.Expression
 import org.yakindu.sct.model.stext.stext.LogicalAndExpression
+import org.yakindu.sct.model.stext.stext.LogicalOrExpression
+
+import static de.cau.cs.kieler.scl.seqscl.xtend.SCLToSeqSCLTransformation.*
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+
+/**
+ * Manages the transformation from SCL to sequential SCL.
+ * At first it is checked which basic blocks can be placed because their predecessors are already processed.
+ * Secondly, the block itself is processed and removed from the list of to-be-processed blocks.
+ * If all blocks can be ordered, the program is acyclic and therefore schedulable.
+ * 
+ * @author: ssm
+ */
 
 class SCLToSeqSCLTransformation {
 
-//    @Inject
-//    extension SCLFactoryExtensions
-//    @Inject
-//    extension SCLCreateExtensions
-//    @Inject
-//    extension SCLBasicBlockExtensions
-    
     extension de.cau.cs.kieler.scl.extensions.SCLFactoryExtensions SCLFactoryExtensions = 
          Guice::createInjector().getInstance(typeof(SCLFactoryExtensions))
     extension de.cau.cs.kieler.scl.extensions.SCLCreateExtensions SCLCreateExtensions = 
@@ -45,15 +58,22 @@ class SCLToSeqSCLTransformation {
     extension de.cau.cs.kieler.scl.extensions.SCLStatementExtensions SCLStatementExtensions = 
          Guice::createInjector().getInstance(typeof(SCLStatementExtensions))
     
+    // Name of the reset (or go) signal.
     static val String RESETSIGNAL = 'RESET';
+    // Name of the module suffix which will be appended to the original name
+    static val String PROGRAMSUFFIX = "_tick";
     
     def Program transformSCLToSCLControlflow(Program program) {
         val targetProgram = SCL.createProgram()
         
-        targetProgram.setName(program.getName + "_tick")
+        // Create the new program.
+        // As it is also an SCL program, we can copy all definitions and append additional ones.
+        targetProgram.setName(program.getName + PROGRAMSUFFIX)
         targetProgram.definitions.addAll(program.definitions.copyAll)
         targetProgram.definitions.add(createVariableDefinition(RESETSIGNAL, 'boolean'))
         
+        // Retrieve all basic blocks (they are now cached!)
+        // and create guards for all blocks.
         var List<BasicBlock> basicBlocks = program.statements.head.getAllBasicBlocks
 
         for(basicBlock : basicBlocks) {
@@ -67,10 +87,10 @@ class SCLToSeqSCLTransformation {
             }
         }
 
-
+        // Perform the ASC analysis and place all blocks that can be placed.
+        // TODO: remove code duplication (ASC analysis is partly included in the basic block extension)
         var changed = false
         var basicBlockPool = basicBlocks.copy
-//        var basicBlockPool = program.statements.head.getAllBasicBlocks 
         while(basicBlockPool.size>0) {
             Debug("---")
             var String poolStr = "";
@@ -133,10 +153,14 @@ class SCLToSeqSCLTransformation {
         targetProgram
     }
     
+    // Transform basic block is called by the main analysis. It is called when all prerequisites for a
+    // block are met and it is eligible to be processed. 
+    // The method differs if a block is a join or not and proceeds according to its type.
     def List<Statement> transformBasicBlock(Program program, Program sourceProgram, BasicBlock basicBlock) {
         var newStatements = createNewStatementList
         val predecessors = basicBlock.getBasicBlockPredecessor
  
+        // If the block is a parallel join block, a synchronizer has to be built.
         if (basicBlock.isParallelJoin) {
             var unreachableJoin = false
             var Expression syncExp = null 
@@ -197,6 +221,7 @@ class SCLToSeqSCLTransformation {
             newStatements.add(guardAssignment)
             
         }
+        // if the block is not a join, continue here...
         else 
         {
  
@@ -294,10 +319,12 @@ class SCLToSeqSCLTransformation {
         newStatements
     }
     
+    // Returns the definition identified by its name.
     def VariableDefinition getDefinitionByName(Program program, String name) {
         program.definitions.filter(e | e.getName() == name).head
     }
     
+    // Returns the definition identified by its name as element reference expression.
     def ElementReferenceExpression getDefinitionByNameAsElemRef(Program program, String name) {
         val varRef = program.getDefinitionByName(name)
         val expression = SText.createElementReferenceExpression
@@ -305,14 +332,11 @@ class SCLToSeqSCLTransformation {
         expression        
     }
     
+    // Transforms the references of an assignment expression of the source program the 
+    // corresponding references in the target program.
     def Statement transformVarRef(Statement statement, Program targetProgram, Program sourceProgram) {
         val instr = (statement.getInstruction as Assignment)
         val aExp = (instr.assignment as AssignmentExpression)
-//        val varRef = aExp.varRef as ElementReferenceExpression
-//        val varDec = sourceProgram.declarations.filter(e | e == varRef.reference).head
-//        
-//        val tarDec = targetProgram.getDeclarationByName(varDec.name)
-//        varRef.reference = tarDec
         
         aExp.eAllContents.filter(typeof(ElementReferenceExpression)).forEach[
             val vD = sourceProgram.definitions.filter(e | e == it.reference).head
@@ -323,6 +347,10 @@ class SCLToSeqSCLTransformation {
         statement 
     }
     
+    
+    // Transforms the references of an element reference expression (or all nested element reference 
+    // expressions) of the source program the 
+    // corresponding references in the target program.
     def transformExpression(Expression exp, Program targetProgram, Program sourceProgram) {
         if (exp instanceof ElementReferenceExpression) {
             val ere = exp as ElementReferenceExpression
