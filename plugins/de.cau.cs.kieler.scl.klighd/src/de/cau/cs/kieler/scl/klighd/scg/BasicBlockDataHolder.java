@@ -25,17 +25,20 @@ import de.cau.cs.kieler.scl.scl.Instruction;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.Statement;
 
+/**
+ * Class to hold basic block information.
+ * The class is used in the basic block modifier post-processing trick.
+ * 
+ * @author ssm
+ *
+ */
+
 public class BasicBlockDataHolder extends KGraphDataImpl {
 
     public List<BasicBlock> BasicBlockData;
     public HashMap<Instruction, Pair<KNode, KNode>> NodeData;
     public Program SCLProgram;
     
-//    BasicBlockDataHolder(Statement rootStatement) {
-//        BasicBlockRootStatement = rootStatement;
-//        BasicBlockNodes = new ArrayList<Pair<KNode, Statement>>();
-//    }
-
     BasicBlockDataHolder() {
         BasicBlockData = new ArrayList<BasicBlock>();
         NodeData = new HashMap<Instruction, Pair<KNode, KNode>>();

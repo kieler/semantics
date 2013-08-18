@@ -36,14 +36,24 @@ import de.cau.cs.kieler.scl.extensions.SCLStatementExtensions
 import de.cau.cs.kieler.scl.basicblocks.BasicBlock
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 
+/**
+ * Basic Block Visualization
+ * done via post-processing trick.
+ * 
+ * The class is called after all layouting took place. It uses the transfered basic block information 
+ * of the SCL program to draw the basic blocks afterwards. 
+ * The class needs refactoring as soon as neater methods for post-processing or hierarchical edge routing
+ * become available. 
+ * 
+ * @author: ssm
+ */
+
 class BasicBlockModifier implements IStyleModifier {
     
     extension KRenderingExtensions KRenderingExtensions = 
          Guice::createInjector().getInstance(typeof(KRenderingExtensions))    
     extension KColorExtensions KColorExtensions = 
          Guice::createInjector().getInstance(typeof(KColorExtensions))  
-//    extension KLabelExtensions KLabelExtensions = 
-//         Guice::createInjector().getInstance(typeof(KLabelExtensions))  
     private static val KRenderingFactory renderingFactory = KRenderingFactory::eINSTANCE
     extension SCLBasicBlockExtensions SCLBasicBlockExtensions = 
          Guice::createInjector().getInstance(typeof(SCLBasicBlockExtensions))  

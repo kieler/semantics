@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.scl.klighd.scg;
 
 import org.eclipse.xtext.resource.XtextResource;
@@ -15,6 +28,14 @@ import de.cau.cs.kieler.klighd.xtext.triggers.XtextBasedEditorActivationChangeTr
 // SUPPRESS CHECKSTYLE NEXT LineLength
 import de.cau.cs.kieler.klighd.xtext.triggers.XtextBasedEditorActivationChangeTrigger.XtextModelChangeState.EventType;
 
+/**
+ * 
+ * Combination to trigger SCG drawing effect.
+ * 
+ * @author ssm
+ *
+ */
+
 public class SCGDiagramSynthesisCombination extends AbstractCombination {
 
     /**
@@ -29,6 +50,7 @@ public class SCGDiagramSynthesisCombination extends AbstractCombination {
           // the replacement is needed since the secondary view ids seem to be required
           //  to be free of ':', which will be violated on windows determining them this way. 
         
+        // Don't show SCG's of sequential SCL's.
         if (id.contains(".tick.scl")) { return; }
         
         if (state.getEventType().equals(EventType.CLOSED)) {
