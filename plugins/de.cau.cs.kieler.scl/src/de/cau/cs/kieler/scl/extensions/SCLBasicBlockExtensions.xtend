@@ -13,31 +13,30 @@
  */
  package de.cau.cs.kieler.scl.extensions
 
-import com.google.inject.Inject
 import com.google.common.collect.ImmutableList
+import com.google.inject.Inject
 import de.cau.cs.kieler.scl.basicblocks.BasicBlock
+import de.cau.cs.kieler.scl.basicblocks.ParallelFork
+import de.cau.cs.kieler.scl.basicblocks.ParallelForkImpl
+import de.cau.cs.kieler.scl.basicblocks.ParallelJoin
+import de.cau.cs.kieler.scl.basicblocks.ParallelJoinImpl
+import de.cau.cs.kieler.scl.basicblocks.PauseDepth
+import de.cau.cs.kieler.scl.basicblocks.PauseDepthImpl
+import de.cau.cs.kieler.scl.basicblocks.PauseSurface
+import de.cau.cs.kieler.scl.basicblocks.PauseSurfaceImpl
 import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Goto
-import de.cau.cs.kieler.scl.scl.Statement
-import java.util.ArrayList
-import java.util.List
-import de.cau.cs.kieler.scl.scl.Pause
-import de.cau.cs.kieler.scl.basicblocks.PauseDepthImpl
-import de.cau.cs.kieler.scl.scl.impl.StatementImpl
-import de.cau.cs.kieler.scl.basicblocks.PauseSurfaceImpl
-import de.cau.cs.kieler.scl.basicblocks.PauseDepth
-import de.cau.cs.kieler.scl.basicblocks.PauseSurface
-import de.cau.cs.kieler.scl.scl.Instruction
-import de.cau.cs.kieler.scl.basicblocks.ParallelFork
-import de.cau.cs.kieler.scl.basicblocks.ParallelJoin
-import de.cau.cs.kieler.scl.basicblocks.ParallelForkImpl
 import de.cau.cs.kieler.scl.scl.Parallel
-import de.cau.cs.kieler.scl.basicblocks.ParallelJoinImpl
-import org.yakindu.sct.model.stext.stext.Expression
-import de.cau.cs.kieler.scl.scl.Thread
-import de.cau.cs.kieler.scl.scl.StatementSequence
-import java.util.HashMap
+import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Program
+import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.Thread
+import java.util.ArrayList
+import java.util.HashMap
+import java.util.List
+import org.yakindu.sct.model.stext.stext.Expression
+
+import static de.cau.cs.kieler.scl.extensions.SCLBasicBlockExtensions.*
 
 /**
  * The SCL basic block extension comprises all mandatory methods for creating, comparing and manipulating 
