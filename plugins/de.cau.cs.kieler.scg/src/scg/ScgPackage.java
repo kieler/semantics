@@ -1,6 +1,19 @@
 /**
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package scg;
+
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -67,13 +80,22 @@ public interface ScgPackage extends EPackage {
     int NODE = 0;
 
     /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+
+    /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int NODE__INCOMING = 0;
+    int NODE__INCOMING = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Is Initial</b></em>' attribute.
@@ -82,7 +104,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int NODE__IS_INITIAL = 1;
+    int NODE__IS_INITIAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Node</em>' class.
@@ -91,16 +113,43 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int NODE_FEATURE_COUNT = 2;
+    int NODE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
-    /**
-     * The number of operations of the '<em>Node</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int NODE_OPERATION_COUNT = 0;
+//    /**
+//     * The operation id for the '<em>Get Annotation</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int NODE___GET_ANNOTATION__STRING = AnnotationsPackage.ANNOTATABLE___GET_ANNOTATION__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Get All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int NODE___GET_ALL_ANNOTATIONS__STRING = AnnotationsPackage.ANNOTATABLE___GET_ALL_ANNOTATIONS__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Remove All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int NODE___REMOVE_ALL_ANNOTATIONS__STRING = AnnotationsPackage.ANNOTATABLE___REMOVE_ALL_ANNOTATIONS__STRING;
+
+//    /**
+//     * The number of operations of the '<em>Node</em>' class.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int NODE_OPERATION_COUNT = AnnotationsPackage.ANNOTATABLE_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link scg.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -111,6 +160,15 @@ public interface ScgPackage extends EPackage {
      * @generated
      */
     int CONDITIONAL = 1;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL__ANNOTATIONS = NODE__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -166,14 +224,41 @@ public interface ScgPackage extends EPackage {
      */
     int CONDITIONAL_FEATURE_COUNT = NODE_FEATURE_COUNT + 3;
 
-    /**
-     * The number of operations of the '<em>Conditional</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONDITIONAL_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
+//    /**
+//     * The operation id for the '<em>Get Annotation</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int CONDITIONAL___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Get All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int CONDITIONAL___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Remove All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int CONDITIONAL___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+
+//    /**
+//     * The number of operations of the '<em>Conditional</em>' class.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int CONDITIONAL_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link scg.impl.SurfaceImpl <em>Surface</em>}' class.
@@ -184,6 +269,15 @@ public interface ScgPackage extends EPackage {
      * @generated
      */
     int SURFACE = 2;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SURFACE__ANNOTATIONS = NODE__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -221,14 +315,41 @@ public interface ScgPackage extends EPackage {
      */
     int SURFACE_FEATURE_COUNT = NODE_FEATURE_COUNT + 1;
 
-    /**
-     * The number of operations of the '<em>Surface</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SURFACE_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
+//    /**
+//     * The operation id for the '<em>Get Annotation</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int SURFACE___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Get All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int SURFACE___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Remove All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int SURFACE___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+//
+//    /**
+//     * The number of operations of the '<em>Surface</em>' class.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int SURFACE_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link scg.impl.DepthImpl <em>Depth</em>}' class.
@@ -239,6 +360,15 @@ public interface ScgPackage extends EPackage {
      * @generated
      */
     int DEPTH = 3;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPTH__ANNOTATIONS = NODE__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -285,14 +415,41 @@ public interface ScgPackage extends EPackage {
      */
     int DEPTH_FEATURE_COUNT = NODE_FEATURE_COUNT + 2;
 
-    /**
-     * The number of operations of the '<em>Depth</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DEPTH_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
+//    /**
+//     * The operation id for the '<em>Get Annotation</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int DEPTH___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Get All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int DEPTH___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Remove All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int DEPTH___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+//
+//    /**
+//     * The number of operations of the '<em>Depth</em>' class.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int DEPTH_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link scg.impl.AssignmentImpl <em>Assignment</em>}' class.
@@ -303,6 +460,15 @@ public interface ScgPackage extends EPackage {
      * @generated
      */
     int ASSIGNMENT = 4;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__ANNOTATIONS = NODE__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -349,14 +515,41 @@ public interface ScgPackage extends EPackage {
      */
     int ASSIGNMENT_FEATURE_COUNT = NODE_FEATURE_COUNT + 2;
 
-    /**
-     * The number of operations of the '<em>Assignment</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ASSIGNMENT_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
+//    /**
+//     * The operation id for the '<em>Get Annotation</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int ASSIGNMENT___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Get All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int ASSIGNMENT___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Remove All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int ASSIGNMENT___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+//
+//    /**
+//     * The number of operations of the '<em>Assignment</em>' class.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int ASSIGNMENT_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link scg.impl.ForkImpl <em>Fork</em>}' class.
@@ -367,6 +560,15 @@ public interface ScgPackage extends EPackage {
      * @generated
      */
     int FORK = 5;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FORK__ANNOTATIONS = NODE__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -413,14 +615,41 @@ public interface ScgPackage extends EPackage {
      */
     int FORK_FEATURE_COUNT = NODE_FEATURE_COUNT + 2;
 
-    /**
-     * The number of operations of the '<em>Fork</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int FORK_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
+//    /**
+//     * The operation id for the '<em>Get Annotation</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int FORK___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Get All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int FORK___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Remove All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int FORK___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+//
+//    /**
+//     * The number of operations of the '<em>Fork</em>' class.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int FORK_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link scg.impl.JoinImpl <em>Join</em>}' class.
@@ -431,6 +660,15 @@ public interface ScgPackage extends EPackage {
      * @generated
      */
     int JOIN = 6;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JOIN__ANNOTATIONS = NODE__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Incoming</b></em>' reference list.
@@ -477,15 +715,41 @@ public interface ScgPackage extends EPackage {
      */
     int JOIN_FEATURE_COUNT = NODE_FEATURE_COUNT + 2;
 
-    /**
-     * The number of operations of the '<em>Join</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int JOIN_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
-
+//    /**
+//     * The operation id for the '<em>Get Annotation</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int JOIN___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Get All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int JOIN___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Remove All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int JOIN___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+//
+//    /**
+//     * The number of operations of the '<em>Join</em>' class.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int JOIN_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link scg.impl.LinkImpl <em>Link</em>}' class.
@@ -498,13 +762,22 @@ public interface ScgPackage extends EPackage {
     int LINK = 7;
 
     /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+
+    /**
      * The feature id for the '<em><b>Target</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LINK__TARGET = 0;
+    int LINK__TARGET = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
      * The number of structural features of the '<em>Link</em>' class.
@@ -513,16 +786,80 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LINK_FEATURE_COUNT = 1;
+    int LINK_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+//    /**
+//     * The operation id for the '<em>Get Annotation</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int LINK___GET_ANNOTATION__STRING = AnnotationsPackage.ANNOTATABLE___GET_ANNOTATION__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Get All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int LINK___GET_ALL_ANNOTATIONS__STRING = AnnotationsPackage.ANNOTATABLE___GET_ALL_ANNOTATIONS__STRING;
+//
+//    /**
+//     * The operation id for the '<em>Remove All Annotations</em>' operation.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int LINK___REMOVE_ALL_ANNOTATIONS__STRING = AnnotationsPackage.ANNOTATABLE___REMOVE_ALL_ANNOTATIONS__STRING;
+
+//    /**
+//     * The number of operations of the '<em>Link</em>' class.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     * @ordered
+//     */
+//    int LINK_OPERATION_COUNT = AnnotationsPackage.ANNOTATABLE_OPERATION_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>Link</em>' class.
+     * The meta object id for the '{@link scg.impl.SCGraphImpl <em>SC Graph</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see scg.impl.SCGraphImpl
+     * @see scg.impl.ScgPackageImpl#getSCGraph()
+     * @generated
+     */
+    int SC_GRAPH = 8;
+
+    /**
+     * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LINK_OPERATION_COUNT = 0;
+    int SC_GRAPH__NODES = 0;
+
+    /**
+     * The number of structural features of the '<em>SC Graph</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPH_FEATURE_COUNT = 1;
+
+    /**
+     * The number of operations of the '<em>SC Graph</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPH_OPERATION_COUNT = 0;
 
 
     /**
@@ -771,6 +1108,27 @@ public interface ScgPackage extends EPackage {
     EReference getLink_Target();
 
     /**
+     * Returns the meta object for class '{@link scg.SCGraph <em>SC Graph</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>SC Graph</em>'.
+     * @see scg.SCGraph
+     * @generated
+     */
+    EClass getSCGraph();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link scg.SCGraph#getNodes <em>Nodes</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Nodes</em>'.
+     * @see scg.SCGraph#getNodes()
+     * @see #getSCGraph()
+     * @generated
+     */
+    EReference getSCGraph_Nodes();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -992,6 +1350,24 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
         EReference LINK__TARGET = eINSTANCE.getLink_Target();
+
+        /**
+         * The meta object literal for the '{@link scg.impl.SCGraphImpl <em>SC Graph</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see scg.impl.SCGraphImpl
+         * @see scg.impl.ScgPackageImpl#getSCGraph()
+         * @generated
+         */
+        EClass SC_GRAPH = eINSTANCE.getSCGraph();
+
+        /**
+         * The meta object literal for the '<em><b>Nodes</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SC_GRAPH__NODES = eINSTANCE.getSCGraph_Nodes();
 
     }
 

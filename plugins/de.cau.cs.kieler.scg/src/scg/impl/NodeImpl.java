@@ -1,17 +1,35 @@
 /**
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package scg.impl;
 
+import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
+
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import scg.Link;
 import scg.Node;
 import scg.ScgPackage;
@@ -30,7 +48,7 @@ import scg.ScgPackage;
  *
  * @generated
  */
-public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
+public class NodeImpl extends AnnotatableImpl implements Node {
     /**
      * The cached value of the '{@link #getIncoming() <em>Incoming</em>}' reference list.
      * <!-- begin-user-doc -->
@@ -40,6 +58,7 @@ public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
      * @ordered
      */
     protected EList<Link> incoming;
+
     /**
      * The default value of the '{@link #isIsInitial() <em>Is Initial</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -49,6 +68,7 @@ public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
      * @ordered
      */
     protected static final boolean IS_INITIAL_EDEFAULT = false;
+
     /**
      * The cached value of the '{@link #isIsInitial() <em>Is Initial</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -58,6 +78,7 @@ public class NodeImpl extends MinimalEObjectImpl.Container implements Node {
      * @ordered
      */
     protected boolean isInitial = IS_INITIAL_EDEFAULT;
+
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

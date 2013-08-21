@@ -1,6 +1,19 @@
 /**
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package scg.util;
+
+import de.cau.cs.kieler.core.annotations.Annotatable;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -98,6 +111,14 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseLink(Link object) {
                 return createLinkAdapter();
+            }
+            @Override
+            public Adapter caseSCGraph(SCGraph object) {
+                return createSCGraphAdapter();
+            }
+            @Override
+            public Adapter caseAnnotatable(Annotatable object) {
+                return createAnnotatableAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -228,6 +249,34 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createLinkAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link scg.SCGraph <em>SC Graph</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see scg.SCGraph
+     * @generated
+     */
+    public Adapter createSCGraphAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.annotations.Annotatable
+     * @generated
+     */
+    public Adapter createAnnotatableAdapter() {
         return null;
     }
 

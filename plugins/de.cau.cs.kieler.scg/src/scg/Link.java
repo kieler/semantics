@@ -1,8 +1,19 @@
 /**
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package scg;
 
-import org.eclipse.emf.ecore.EObject;
+import de.cau.cs.kieler.core.annotations.Annotatable;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,7 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Link extends EObject {
+public interface Link extends Annotatable {
     /**
      * Returns the value of the '<em><b>Target</b></em>' reference.
      * It is bidirectional and its opposite is '{@link scg.Node#getIncoming <em>Incoming</em>}'.

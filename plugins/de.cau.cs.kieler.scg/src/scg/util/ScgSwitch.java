@@ -1,6 +1,19 @@
 /**
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package scg.util;
+
+import de.cau.cs.kieler.core.annotations.Annotatable;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -69,6 +82,7 @@ public class ScgSwitch<T> extends Switch<T> {
             case ScgPackage.NODE: {
                 Node node = (Node)theEObject;
                 T result = caseNode(node);
+                if (result == null) result = caseAnnotatable(node);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -76,6 +90,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 Conditional conditional = (Conditional)theEObject;
                 T result = caseConditional(conditional);
                 if (result == null) result = caseNode(conditional);
+                if (result == null) result = caseAnnotatable(conditional);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -83,6 +98,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 Surface surface = (Surface)theEObject;
                 T result = caseSurface(surface);
                 if (result == null) result = caseNode(surface);
+                if (result == null) result = caseAnnotatable(surface);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -90,6 +106,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 Depth depth = (Depth)theEObject;
                 T result = caseDepth(depth);
                 if (result == null) result = caseNode(depth);
+                if (result == null) result = caseAnnotatable(depth);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -97,6 +114,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 Assignment assignment = (Assignment)theEObject;
                 T result = caseAssignment(assignment);
                 if (result == null) result = caseNode(assignment);
+                if (result == null) result = caseAnnotatable(assignment);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -104,6 +122,7 @@ public class ScgSwitch<T> extends Switch<T> {
                 Fork fork = (Fork)theEObject;
                 T result = caseFork(fork);
                 if (result == null) result = caseNode(fork);
+                if (result == null) result = caseAnnotatable(fork);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -111,12 +130,20 @@ public class ScgSwitch<T> extends Switch<T> {
                 Join join = (Join)theEObject;
                 T result = caseJoin(join);
                 if (result == null) result = caseNode(join);
+                if (result == null) result = caseAnnotatable(join);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case ScgPackage.LINK: {
                 Link link = (Link)theEObject;
                 T result = caseLink(link);
+                if (result == null) result = caseAnnotatable(link);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ScgPackage.SC_GRAPH: {
+                SCGraph scGraph = (SCGraph)theEObject;
+                T result = caseSCGraph(scGraph);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -241,6 +268,36 @@ public class ScgSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseLink(Link object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>SC Graph</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>SC Graph</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSCGraph(SCGraph object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Annotatable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseAnnotatable(Annotatable object) {
         return null;
     }
 

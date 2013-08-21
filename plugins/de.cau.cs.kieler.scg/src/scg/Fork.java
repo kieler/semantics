@@ -1,4 +1,15 @@
 /**
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package scg;
 
@@ -55,7 +66,7 @@ public interface Fork extends Node {
      * The list contents are of type {@link scg.Link}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Next</em>' reference list isn't clear,
+     * If the meaning of the '<em>Next</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->

@@ -1,4 +1,15 @@
 /**
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package scg.impl;
 
@@ -64,6 +75,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
             case ScgPackage.FORK: return createFork();
             case ScgPackage.JOIN: return createJoin();
             case ScgPackage.LINK: return createLink();
+            case ScgPackage.SC_GRAPH: return createSCGraph();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -147,6 +159,16 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     public Link createLink() {
         LinkImpl link = new LinkImpl();
         return link;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SCGraph createSCGraph() {
+        SCGraphImpl scGraph = new SCGraphImpl();
+        return scGraph;
     }
 
     /**

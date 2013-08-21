@@ -1,6 +1,19 @@
 /**
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package scg.impl;
+
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -16,6 +29,7 @@ import scg.Fork;
 import scg.Join;
 import scg.Link;
 import scg.Node;
+import scg.SCGraph;
 import scg.ScgFactory;
 import scg.ScgPackage;
 import scg.Surface;
@@ -84,6 +98,13 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
     private EClass linkEClass = null;
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass scGraphEClass = null;
+
+    /**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -128,6 +149,9 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         ScgPackageImpl theScgPackage = (ScgPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ScgPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ScgPackageImpl());
 
         isInited = true;
+
+        // Initialize simple dependencies
+        AnnotationsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theScgPackage.createPackageContents();
@@ -356,6 +380,24 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getSCGraph() {
+        return scGraphEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getSCGraph_Nodes() {
+        return (EReference)scGraphEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public ScgFactory getScgFactory() {
         return (ScgFactory)getEFactoryInstance();
     }
@@ -409,6 +451,9 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         linkEClass = createEClass(LINK);
         createEReference(linkEClass, LINK__TARGET);
+
+        scGraphEClass = createEClass(SC_GRAPH);
+        createEReference(scGraphEClass, SC_GRAPH__NODES);
     }
 
     /**
@@ -434,17 +479,22 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         setNsPrefix(eNS_PREFIX);
         setNsURI(eNS_URI);
 
+        // Obtain other dependent packages
+        AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
+
         // Create type parameters
 
         // Set bounds for type parameters
 
         // Add supertypes to classes
+        nodeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         conditionalEClass.getESuperTypes().add(this.getNode());
         surfaceEClass.getESuperTypes().add(this.getNode());
         depthEClass.getESuperTypes().add(this.getNode());
         assignmentEClass.getESuperTypes().add(this.getNode());
         forkEClass.getESuperTypes().add(this.getNode());
         joinEClass.getESuperTypes().add(this.getNode());
+        linkEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
 
         // Initialize classes, features, and operations; add parameters
         initEClass(nodeEClass, Node.class, "Node", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -477,6 +527,9 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         initEClass(linkEClass, Link.class, "Link", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getLink_Target(), this.getNode(), this.getNode_Incoming(), "target", null, 1, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(scGraphEClass, SCGraph.class, "SCGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getSCGraph_Nodes(), this.getNode(), null, "nodes", null, 0, -1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);
