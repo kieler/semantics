@@ -13,17 +13,14 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
+import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.Fork;
 import de.cau.cs.kieler.scg.Join;
-import de.cau.cs.kieler.scg.Link;
 import de.cau.cs.kieler.scg.ScgPackage;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -59,7 +56,7 @@ public class JoinImpl extends NodeImpl implements Join {
      * @generated
      * @ordered
      */
-    protected Link next;
+    protected ControlFlow next;
 
     /**
      * <!-- begin-user-doc -->
@@ -145,7 +142,7 @@ public class JoinImpl extends NodeImpl implements Join {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Link getNext() {
+    public ControlFlow getNext() {
         return next;
     }
 
@@ -154,8 +151,8 @@ public class JoinImpl extends NodeImpl implements Join {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetNext(Link newNext, NotificationChain msgs) {
-        Link oldNext = next;
+    public NotificationChain basicSetNext(ControlFlow newNext, NotificationChain msgs) {
+        ControlFlow oldNext = next;
         next = newNext;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.JOIN__NEXT, oldNext, newNext);
@@ -169,7 +166,7 @@ public class JoinImpl extends NodeImpl implements Join {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setNext(Link newNext) {
+    public void setNext(ControlFlow newNext) {
         if (newNext != next) {
             NotificationChain msgs = null;
             if (next != null)
@@ -244,7 +241,7 @@ public class JoinImpl extends NodeImpl implements Join {
                 setFork((Fork)newValue);
                 return;
             case ScgPackage.JOIN__NEXT:
-                setNext((Link)newValue);
+                setNext((ControlFlow)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -262,7 +259,7 @@ public class JoinImpl extends NodeImpl implements Join {
                 setFork((Fork)null);
                 return;
             case ScgPackage.JOIN__NEXT:
-                setNext((Link)null);
+                setNext((ControlFlow)null);
                 return;
         }
         super.eUnset(featureID);

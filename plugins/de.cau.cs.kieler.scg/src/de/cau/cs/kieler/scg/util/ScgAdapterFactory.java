@@ -125,6 +125,10 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
                 return createExitAdapter();
             }
             @Override
+            public Adapter caseControlFlow(ControlFlow object) {
+                return createControlFlowAdapter();
+            }
+            @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
             }
@@ -299,6 +303,20 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createExitAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ControlFlow <em>Control Flow</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.ControlFlow
+     * @generated
+     */
+    public Adapter createControlFlowAdapter() {
         return null;
     }
 

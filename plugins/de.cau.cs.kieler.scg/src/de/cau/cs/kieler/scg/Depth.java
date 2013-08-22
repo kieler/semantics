@@ -69,12 +69,12 @@ public interface Depth extends Node {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Next</em>' containment reference.
-     * @see #setNext(Link)
+     * @see #setNext(ControlFlow)
      * @see de.cau.cs.kieler.scg.ScgPackage#getDepth_Next()
      * @model containment="true"
      * @generated
      */
-    Link getNext();
+    ControlFlow getNext();
 
     /**
      * Sets the value of the '{@link de.cau.cs.kieler.scg.Depth#getNext <em>Next</em>}' containment reference.
@@ -84,6 +84,6 @@ public interface Depth extends Node {
      * @see #getNext()
      * @generated
      */
-    void setNext(Link value);
+    void setNext(ControlFlow value);
 
 } // Depth

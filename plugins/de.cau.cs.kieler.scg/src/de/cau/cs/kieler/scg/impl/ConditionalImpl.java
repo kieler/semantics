@@ -14,15 +14,12 @@
 package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.scg.Conditional;
-import de.cau.cs.kieler.scg.Link;
+import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.ScgPackage;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -49,7 +46,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * @generated
      * @ordered
      */
-    protected Link then;
+    protected ControlFlow then;
 
     /**
      * The cached value of the '{@link #getElse() <em>Else</em>}' containment reference.
@@ -59,7 +56,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * @generated
      * @ordered
      */
-    protected Link else_;
+    protected ControlFlow else_;
 
     /**
      * The default value of the '{@link #getCondition() <em>Condition</em>}' attribute.
@@ -105,7 +102,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Link getThen() {
+    public ControlFlow getThen() {
         return then;
     }
 
@@ -114,8 +111,8 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetThen(Link newThen, NotificationChain msgs) {
-        Link oldThen = then;
+    public NotificationChain basicSetThen(ControlFlow newThen, NotificationChain msgs) {
+        ControlFlow oldThen = then;
         then = newThen;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__THEN, oldThen, newThen);
@@ -129,7 +126,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setThen(Link newThen) {
+    public void setThen(ControlFlow newThen) {
         if (newThen != then) {
             NotificationChain msgs = null;
             if (then != null)
@@ -148,7 +145,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Link getElse() {
+    public ControlFlow getElse() {
         return else_;
     }
 
@@ -157,8 +154,8 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetElse(Link newElse, NotificationChain msgs) {
-        Link oldElse = else_;
+    public NotificationChain basicSetElse(ControlFlow newElse, NotificationChain msgs) {
+        ControlFlow oldElse = else_;
         else_ = newElse;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__ELSE, oldElse, newElse);
@@ -172,7 +169,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setElse(Link newElse) {
+    public void setElse(ControlFlow newElse) {
         if (newElse != else_) {
             NotificationChain msgs = null;
             if (else_ != null)
@@ -250,10 +247,10 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case ScgPackage.CONDITIONAL__THEN:
-                setThen((Link)newValue);
+                setThen((ControlFlow)newValue);
                 return;
             case ScgPackage.CONDITIONAL__ELSE:
-                setElse((Link)newValue);
+                setElse((ControlFlow)newValue);
                 return;
             case ScgPackage.CONDITIONAL__CONDITION:
                 setCondition((String)newValue);
@@ -271,10 +268,10 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
     public void eUnset(int featureID) {
         switch (featureID) {
             case ScgPackage.CONDITIONAL__THEN:
-                setThen((Link)null);
+                setThen((ControlFlow)null);
                 return;
             case ScgPackage.CONDITIONAL__ELSE:
-                setElse((Link)null);
+                setElse((ControlFlow)null);
                 return;
             case ScgPackage.CONDITIONAL__CONDITION:
                 setCondition(CONDITION_EDEFAULT);

@@ -132,6 +132,15 @@ public interface ScgFactory extends EFactory {
     Exit createExit();
 
     /**
+     * Returns a new object of class '<em>Control Flow</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Control Flow</em>'.
+     * @generated
+     */
+    ControlFlow createControlFlow();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

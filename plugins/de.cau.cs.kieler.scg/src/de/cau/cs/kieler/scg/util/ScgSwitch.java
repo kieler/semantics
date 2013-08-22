@@ -163,6 +163,14 @@ public class ScgSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case ScgPackage.CONTROL_FLOW: {
+                ControlFlow controlFlow = (ControlFlow)theEObject;
+                T result = caseControlFlow(controlFlow);
+                if (result == null) result = caseLink(controlFlow);
+                if (result == null) result = caseAnnotatable(controlFlow);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -329,6 +337,21 @@ public class ScgSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseExit(Exit object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Control Flow</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Control Flow</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseControlFlow(ControlFlow object) {
         return null;
     }
 

@@ -13,23 +13,17 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
+import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.Fork;
 import de.cau.cs.kieler.scg.Join;
-import de.cau.cs.kieler.scg.Link;
 import de.cau.cs.kieler.scg.ScgPackage;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -66,7 +60,7 @@ public class ForkImpl extends NodeImpl implements Fork {
      * @generated
      * @ordered
      */
-    protected EList<Link> next;
+    protected EList<ControlFlow> next;
 
     /**
      * <!-- begin-user-doc -->
@@ -152,9 +146,9 @@ public class ForkImpl extends NodeImpl implements Fork {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Link> getNext() {
+    public EList<ControlFlow> getNext() {
         if (next == null) {
-            next = new EObjectContainmentEList<Link>(Link.class, this, ScgPackage.FORK__NEXT);
+            next = new EObjectContainmentEList<ControlFlow>(ControlFlow.class, this, ScgPackage.FORK__NEXT);
         }
         return next;
     }
@@ -222,7 +216,7 @@ public class ForkImpl extends NodeImpl implements Fork {
                 return;
             case ScgPackage.FORK__NEXT:
                 getNext().clear();
-                getNext().addAll((Collection<? extends Link>)newValue);
+                getNext().addAll((Collection<? extends ControlFlow>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);

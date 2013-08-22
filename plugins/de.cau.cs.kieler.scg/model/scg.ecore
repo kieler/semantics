@@ -7,8 +7,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInitial" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//Node">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="then" eType="#//Link" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="else" eType="#//Link" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="then" eType="#//ControlFlow"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="else" eType="#//ControlFlow"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Condition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Surface" eSuperTypes="#//Node">
@@ -18,22 +20,25 @@
   <eClassifiers xsi:type="ecore:EClass" name="Depth" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="surface" lowerBound="1"
         eType="#//Surface" eOpposite="#//Surface/depth"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//Link" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//ControlFlow"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Node">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//Link" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//ControlFlow"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="Assignment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Fork" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="join" lowerBound="1" eType="#//Join"
         eOpposite="#//Join/fork"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="next" lowerBound="1" upperBound="-1"
-        eType="#//Link" containment="true"/>
+        eType="#//ControlFlow" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Join" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="fork" lowerBound="1" eType="#//Fork"
         eOpposite="#//Fork/join"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//Link" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//ControlFlow"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Link" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
@@ -46,11 +51,14 @@
   <eClassifiers xsi:type="ecore:EClass" name="Entry" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="exit" lowerBound="1" eType="#//Exit"
         eOpposite="#//Exit/entry"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//Link" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//ControlFlow"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Exit" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="entry" lowerBound="1" eType="#//Entry"
         eOpposite="#//Entry/exit"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//Link" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//ControlFlow"
+        containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ControlFlow" eSuperTypes="#//Link"/>
 </ecore:EPackage>

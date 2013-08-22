@@ -42,12 +42,12 @@ public interface Conditional extends Node {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Then</em>' containment reference.
-     * @see #setThen(Link)
+     * @see #setThen(ControlFlow)
      * @see de.cau.cs.kieler.scg.ScgPackage#getConditional_Then()
      * @model containment="true"
      * @generated
      */
-    Link getThen();
+    ControlFlow getThen();
 
     /**
      * Sets the value of the '{@link de.cau.cs.kieler.scg.Conditional#getThen <em>Then</em>}' containment reference.
@@ -57,7 +57,7 @@ public interface Conditional extends Node {
      * @see #getThen()
      * @generated
      */
-    void setThen(Link value);
+    void setThen(ControlFlow value);
 
     /**
      * Returns the value of the '<em><b>Else</b></em>' containment reference.
@@ -68,12 +68,12 @@ public interface Conditional extends Node {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Else</em>' containment reference.
-     * @see #setElse(Link)
+     * @see #setElse(ControlFlow)
      * @see de.cau.cs.kieler.scg.ScgPackage#getConditional_Else()
      * @model containment="true"
      * @generated
      */
-    Link getElse();
+    ControlFlow getElse();
 
     /**
      * Sets the value of the '{@link de.cau.cs.kieler.scg.Conditional#getElse <em>Else</em>}' containment reference.
@@ -83,7 +83,7 @@ public interface Conditional extends Node {
      * @see #getElse()
      * @generated
      */
-    void setElse(Link value);
+    void setElse(ControlFlow value);
 
     /**
      * Returns the value of the '<em><b>Condition</b></em>' attribute.

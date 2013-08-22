@@ -14,15 +14,12 @@
 package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.scg.Assignment;
-import de.cau.cs.kieler.scg.Link;
+import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.ScgPackage;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -48,7 +45,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * @generated
      * @ordered
      */
-    protected Link next;
+    protected ControlFlow next;
 
     /**
      * The default value of the '{@link #getAssignment() <em>Assignment</em>}' attribute.
@@ -94,7 +91,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Link getNext() {
+    public ControlFlow getNext() {
         return next;
     }
 
@@ -103,8 +100,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetNext(Link newNext, NotificationChain msgs) {
-        Link oldNext = next;
+    public NotificationChain basicSetNext(ControlFlow newNext, NotificationChain msgs) {
+        ControlFlow oldNext = next;
         next = newNext;
         if (eNotificationRequired()) {
             ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__NEXT, oldNext, newNext);
@@ -118,7 +115,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setNext(Link newNext) {
+    public void setNext(ControlFlow newNext) {
         if (newNext != next) {
             NotificationChain msgs = null;
             if (next != null)
@@ -192,7 +189,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case ScgPackage.ASSIGNMENT__NEXT:
-                setNext((Link)newValue);
+                setNext((ControlFlow)newValue);
                 return;
             case ScgPackage.ASSIGNMENT__ASSIGNMENT:
                 setAssignment((String)newValue);
@@ -210,7 +207,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     public void eUnset(int featureID) {
         switch (featureID) {
             case ScgPackage.ASSIGNMENT__NEXT:
-                setNext((Link)null);
+                setNext((ControlFlow)null);
                 return;
             case ScgPackage.ASSIGNMENT__ASSIGNMENT:
                 setAssignment(ASSIGNMENT_EDEFAULT);

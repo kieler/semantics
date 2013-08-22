@@ -78,6 +78,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
             case ScgPackage.SC_GRAPH: return createSCGraph();
             case ScgPackage.ENTRY: return createEntry();
             case ScgPackage.EXIT: return createExit();
+            case ScgPackage.CONTROL_FLOW: return createControlFlow();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -191,6 +192,16 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     public Exit createExit() {
         ExitImpl exit = new ExitImpl();
         return exit;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ControlFlow createControlFlow() {
+        ControlFlowImpl controlFlow = new ControlFlowImpl();
+        return controlFlow;
     }
 
     /**

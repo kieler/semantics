@@ -9,10 +9,13 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
- de.cau.cs.kieler.core.annotations;visibility:=reexport
+ de.cau.cs.kieler.core.annotations;visibility:=reexport,
+ org.eclipse.xtend.lib,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: 
- de.cau.cs.kieler.scg,
+Export-Package: de.cau.cs.kieler.scg,
  de.cau.cs.kieler.scg.impl,
  de.cau.cs.kieler.scg.util
 Bundle-ActivationPolicy: lazy
+

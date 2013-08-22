@@ -63,7 +63,7 @@ public interface Fork extends Node {
 
     /**
      * Returns the value of the '<em><b>Next</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scg.Link}.
+     * The list contents are of type {@link de.cau.cs.kieler.scg.ControlFlow}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Next</em>' containment reference list isn't clear,
@@ -75,6 +75,6 @@ public interface Fork extends Node {
      * @model containment="true" required="true"
      * @generated
      */
-    EList<Link> getNext();
+    EList<ControlFlow> getNext();
 
 } // Fork

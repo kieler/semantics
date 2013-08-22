@@ -115,6 +115,7 @@ public interface ScgPackage extends EPackage {
      */
     int NODE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
+
     /**
      * The operation id for the '<em>Get Annotation</em>' operation.
      * <!-- begin-user-doc -->
@@ -231,7 +232,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CONDITIONAL___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
+    int CONDITIONAL___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -240,7 +241,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CONDITIONAL___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int CONDITIONAL___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -249,7 +250,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CONDITIONAL___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int CONDITIONAL___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Conditional</em>' class.
@@ -322,7 +323,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SURFACE___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
+    int SURFACE___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -331,7 +332,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SURFACE___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int SURFACE___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -340,7 +341,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SURFACE___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int SURFACE___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Surface</em>' class.
@@ -422,7 +423,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DEPTH___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
+    int DEPTH___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -431,7 +432,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DEPTH___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int DEPTH___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -440,7 +441,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DEPTH___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int DEPTH___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Depth</em>' class.
@@ -522,7 +523,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ASSIGNMENT___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
+    int ASSIGNMENT___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -531,7 +532,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ASSIGNMENT___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int ASSIGNMENT___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -540,7 +541,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ASSIGNMENT___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int ASSIGNMENT___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Assignment</em>' class.
@@ -622,7 +623,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FORK___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
+    int FORK___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -631,7 +632,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FORK___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int FORK___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -640,7 +641,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FORK___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int FORK___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Fork</em>' class.
@@ -722,7 +723,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int JOIN___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
+    int JOIN___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -731,7 +732,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int JOIN___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int JOIN___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -740,7 +741,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int JOIN___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int JOIN___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Join</em>' class.
@@ -932,7 +933,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ENTRY___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
+    int ENTRY___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -941,7 +942,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ENTRY___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int ENTRY___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -950,7 +951,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ENTRY___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int ENTRY___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Entry</em>' class.
@@ -1032,7 +1033,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EXIT___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
+    int EXIT___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -1041,7 +1042,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EXIT___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int EXIT___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -1050,7 +1051,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EXIT___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int EXIT___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Exit</em>' class.
@@ -1060,6 +1061,80 @@ public interface ScgPackage extends EPackage {
      * @ordered
      */
     int EXIT_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
+
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ControlFlowImpl <em>Control Flow</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scg.impl.ControlFlowImpl
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getControlFlow()
+     * @generated
+     */
+    int CONTROL_FLOW = 11;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_FLOW__ANNOTATIONS = LINK__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_FLOW__TARGET = LINK__TARGET;
+
+    /**
+     * The number of structural features of the '<em>Control Flow</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_FLOW_FEATURE_COUNT = LINK_FEATURE_COUNT + 0;
+
+    /**
+     * The operation id for the '<em>Get Annotation</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_FLOW___GET_ANNOTATION__STRING = LINK___GET_ANNOTATION__STRING;
+
+    /**
+     * The operation id for the '<em>Get All Annotations</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_FLOW___GET_ALL_ANNOTATIONS__STRING = LINK___GET_ALL_ANNOTATIONS__STRING;
+
+    /**
+     * The operation id for the '<em>Remove All Annotations</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_FLOW___REMOVE_ALL_ANNOTATIONS__STRING = LINK___REMOVE_ALL_ANNOTATIONS__STRING;
+
+    /**
+     * The number of operations of the '<em>Control Flow</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_FLOW_OPERATION_COUNT = LINK_OPERATION_COUNT + 0;
 
 
     /**
@@ -1393,6 +1468,16 @@ public interface ScgPackage extends EPackage {
     EReference getExit_Next();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ControlFlow <em>Control Flow</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Control Flow</em>'.
+     * @see de.cau.cs.kieler.scg.ControlFlow
+     * @generated
+     */
+    EClass getControlFlow();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1684,6 +1769,16 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
         EReference EXIT__NEXT = eINSTANCE.getExit_Next();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ControlFlowImpl <em>Control Flow</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scg.impl.ControlFlowImpl
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getControlFlow()
+         * @generated
+         */
+        EClass CONTROL_FLOW = eINSTANCE.getControlFlow();
 
     }
 
