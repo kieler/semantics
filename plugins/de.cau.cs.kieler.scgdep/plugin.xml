@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated scgdep -->
+      <package
+            uri="http://kieler.cs.cau.de/scgdep/0.1.0"
+            class="de.cau.cs.kieler.scgdep.ScgdepPackage"
+            genModel="model/scgdep.genmodel"/>
+   </extension>
+
+</plugin>

@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.core.annotations;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: 
- scg,
- scg.impl,
- scg.util
+ de.cau.cs.kieler.scg,
+ de.cau.cs.kieler.scg.impl,
+ de.cau.cs.kieler.scg.util
 Bundle-ActivationPolicy: lazy

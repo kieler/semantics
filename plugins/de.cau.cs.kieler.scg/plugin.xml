@@ -10,7 +10,7 @@
       <!-- @generated scg -->
       <package
             uri="http://kieler.cs.cau.de/scg/0.1.0"
-            class="scg.ScgPackage"
+            class="de.cau.cs.kieler.scg.ScgPackage"
             genModel="model/scg.genmodel"/>
    </extension>
 
