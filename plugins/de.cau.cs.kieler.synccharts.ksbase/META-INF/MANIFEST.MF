@@ -10,13 +10,14 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.gmf.runtime.diagram.ui.resources.editor;bundle-version="1.2.0",
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.2.0",
  org.eclipse.xtend.util.stdlib;bundle-version="1.0.0",
- de.cau.cs.kieler.synccharts.diagram,
+ de.cau.cs.kieler.synccharts.diagram;resolution:=optional,
  de.cau.cs.kieler.ksbase,
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.ksbase.ui,
- de.cau.cs.kieler.synccharts.diagram.custom,
+ de.cau.cs.kieler.synccharts.diagram.custom;resolution:=optional,
  de.cau.cs.kieler.core.kivi,
- org.eclipse.xtend.lib;bundle-version="2.4.2"
+ org.eclipse.xtend.lib;bundle-version="2.4.2",
+ de.cau.cs.kieler.synccharts
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.ksbase
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
