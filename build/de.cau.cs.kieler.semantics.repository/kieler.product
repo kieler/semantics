@@ -166,20 +166,20 @@ This Agreement is governed by the laws of the State of New York and the intellec
    </plugins>
 
    <features>
-      <feature id="de.cau.cs.kieler.kgraph.feature" version="0.1.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kiml.gmf.feature" version="0.9.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kiml.graphiti.feature" version="0.9.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kiml.graphviz.feature" version="0.7.2.qualifier"/>
-      <feature id="de.cau.cs.kieler.kiml.ogdf.feature" version="0.6.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.klighd.feature" version="0.2.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.klighd.examples.feature" version="0.2.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kwebs.client.jaxws.feature" version="0.2.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.ptview.feature" version="0.1.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.dependencies.feature" version="0.5.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.esterel.feature" version="0.2.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.synccharts.feature" version="0.8.0.qualifier"/>
-      <feature id="net.ogdf.bin.feature" version="2.0.1.qualifier"/>
-      <feature id="org.ptolemy.feature" version="8.1.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.kgraph.feature" version="0.0.0"/>
+      <feature id="de.cau.cs.kieler.kiml.gmf.feature" version="0.0.0"/>
+      <feature id="de.cau.cs.kieler.kiml.graphiti.feature" version="0.0.0"/>
+      <feature id="de.cau.cs.kieler.kiml.graphviz.feature" version="0.0.0"/>
+      <feature id="de.cau.cs.kieler.kiml.ogdf.feature" version="0.0.0"/>
+      <feature id="de.cau.cs.kieler.klighd.feature" version="0.0.0"/>
+      <feature id="de.cau.cs.kieler.klighd.examples.feature" version="0.0.0"/>
+      <feature id="de.cau.cs.kieler.kwebs.client.jaxws.feature" version="0.0.0"/>
+      <feature id="de.cau.cs.kieler.ptview.feature" version="0.0.0"/>
+      <feature id="de.cau.cs.kieler.dependencies.feature" version="0.0.0"/>
+      <feature id="de.cau.cs.kieler.esterel.feature" version="0.0.0"/>
+      <feature id="de.cau.cs.kieler.synccharts.feature" version="0.0.0"/>
+      <feature id="net.ogdf.bin.feature" version="0.0.0"/>
+      <feature id="org.ptolemy.feature" version="0.0.0"/>
    </features>
 
    <configurations>

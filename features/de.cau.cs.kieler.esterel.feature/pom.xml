@@ -11,6 +11,10 @@
   <artifactId>de.cau.cs.kieler.esterel.feature</artifactId>
   <version>0.2.0-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
+
+<!-- Disable building the source feature for the moment since a few plug-ins
+     do not build source versions yet. -->
+<!--
   <build>
     <plugins>
       <plugin>
@@ -43,4 +47,5 @@
       </plugin>
     </plugins>
   </build>
+-->
 </project>

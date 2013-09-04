@@ -16,9 +16,11 @@
    <feature url="features/de.cau.cs.kieler.synccharts_0.8.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.feature" version="0.8.0.qualifier">
       <category name="kieler-sem"/>
    </feature>
+<!--
    <feature url="features/de.cau.cs.kieler.synccharts.source_0.8.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.feature.source" version="0.8.0.qualifier">
       <category name="kieler-sem-dev"/>
    </feature>
+-->
    <category-def name="kieler-sem" label="KIELER Semantics">
       <description>
          Kiel Integrated Environment for Layout Eclipse RichClient, Semantics components, Nightly Build
