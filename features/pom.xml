@@ -21,7 +21,6 @@
     <module>de.cau.cs.kieler.esterel.feature</module>
     <module>de.cau.cs.kieler.synccharts.feature</module>
 <!--
-    <module>de.cau.cs.kieler.sdk.feature</module>
     <module>de.cau.cs.kieler.uml2.feature</module>
 -->
   </modules>
