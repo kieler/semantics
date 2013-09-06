@@ -52,9 +52,10 @@ public class SynctextRuntimeModule extends AbstractSynctextRuntimeModule {
 
     @Override
     public Class<? extends ILinker> bindILinker() {
-        return SCTLinker.class;
+        return SyncTextLinker.class;
     }
 
+    
     @Override
     public Class<? extends IQualifiedNameProvider> bindIQualifiedNameProvider() {
         return StextNameProvider.class;
