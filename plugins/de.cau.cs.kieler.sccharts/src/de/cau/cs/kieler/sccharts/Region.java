@@ -39,7 +39,7 @@ import org.eclipse.emf.common.util.EList;
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.sccharts.scchartsPackage#getRegion()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion()
  * @model
  * @generated
  */
@@ -62,7 +62,7 @@ public interface Region extends Scope {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>States</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getRegion_States()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion_States()
      * @see de.cau.cs.kieler.sccharts.State#getParentRegion
      * @model opposite="parentRegion" containment="true"
      * @generated
@@ -80,7 +80,7 @@ public interface Region extends Scope {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parent State</em>' container reference.
      * @see #setParentState(State)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getRegion_ParentState()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion_ParentState()
      * @see de.cau.cs.kieler.sccharts.State#getRegions
      * @model opposite="regions" transient="false"
      * @generated

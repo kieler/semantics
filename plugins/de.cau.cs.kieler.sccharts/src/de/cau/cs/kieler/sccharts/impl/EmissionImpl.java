@@ -17,7 +17,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.Signal;
 
 import de.cau.cs.kieler.sccharts.Emission;
-import de.cau.cs.kieler.sccharts.scchartsPackage;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -85,7 +85,7 @@ public class EmissionImpl extends EffectImpl implements Emission {
      */
     @Override
     protected EClass eStaticClass() {
-        return scchartsPackage.Literals.EMISSION;
+        return SCChartsPackage.Literals.EMISSION;
     }
 
     /**
@@ -99,7 +99,7 @@ public class EmissionImpl extends EffectImpl implements Emission {
             signal = (Signal)eResolveProxy(oldSignal);
             if (signal != oldSignal) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, scchartsPackage.EMISSION__SIGNAL, oldSignal, signal));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.EMISSION__SIGNAL, oldSignal, signal));
             }
         }
         return signal;
@@ -123,7 +123,7 @@ public class EmissionImpl extends EffectImpl implements Emission {
         Signal oldSignal = signal;
         signal = newSignal;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.EMISSION__SIGNAL, oldSignal, signal));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.EMISSION__SIGNAL, oldSignal, signal));
     }
 
     /**
@@ -144,7 +144,7 @@ public class EmissionImpl extends EffectImpl implements Emission {
         Expression oldNewValue = newValue;
         newValue = newNewValue;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, scchartsPackage.EMISSION__NEW_VALUE, oldNewValue, newNewValue);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.EMISSION__NEW_VALUE, oldNewValue, newNewValue);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -159,14 +159,14 @@ public class EmissionImpl extends EffectImpl implements Emission {
         if (newNewValue != newValue) {
             NotificationChain msgs = null;
             if (newValue != null)
-                msgs = ((InternalEObject)newValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - scchartsPackage.EMISSION__NEW_VALUE, null, msgs);
+                msgs = ((InternalEObject)newValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.EMISSION__NEW_VALUE, null, msgs);
             if (newNewValue != null)
-                msgs = ((InternalEObject)newNewValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - scchartsPackage.EMISSION__NEW_VALUE, null, msgs);
+                msgs = ((InternalEObject)newNewValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.EMISSION__NEW_VALUE, null, msgs);
             msgs = basicSetNewValue(newNewValue, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.EMISSION__NEW_VALUE, newNewValue, newNewValue));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.EMISSION__NEW_VALUE, newNewValue, newNewValue));
     }
 
     /**
@@ -177,7 +177,7 @@ public class EmissionImpl extends EffectImpl implements Emission {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case scchartsPackage.EMISSION__NEW_VALUE:
+            case SCChartsPackage.EMISSION__NEW_VALUE:
                 return basicSetNewValue(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -191,10 +191,10 @@ public class EmissionImpl extends EffectImpl implements Emission {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case scchartsPackage.EMISSION__SIGNAL:
+            case SCChartsPackage.EMISSION__SIGNAL:
                 if (resolve) return getSignal();
                 return basicGetSignal();
-            case scchartsPackage.EMISSION__NEW_VALUE:
+            case SCChartsPackage.EMISSION__NEW_VALUE:
                 return getNewValue();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -208,10 +208,10 @@ public class EmissionImpl extends EffectImpl implements Emission {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case scchartsPackage.EMISSION__SIGNAL:
+            case SCChartsPackage.EMISSION__SIGNAL:
                 setSignal((Signal)newValue);
                 return;
-            case scchartsPackage.EMISSION__NEW_VALUE:
+            case SCChartsPackage.EMISSION__NEW_VALUE:
                 setNewValue((Expression)newValue);
                 return;
         }
@@ -226,10 +226,10 @@ public class EmissionImpl extends EffectImpl implements Emission {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case scchartsPackage.EMISSION__SIGNAL:
+            case SCChartsPackage.EMISSION__SIGNAL:
                 setSignal((Signal)null);
                 return;
-            case scchartsPackage.EMISSION__NEW_VALUE:
+            case SCChartsPackage.EMISSION__NEW_VALUE:
                 setNewValue((Expression)null);
                 return;
         }
@@ -244,9 +244,9 @@ public class EmissionImpl extends EffectImpl implements Emission {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case scchartsPackage.EMISSION__SIGNAL:
+            case SCChartsPackage.EMISSION__SIGNAL:
                 return signal != null;
-            case scchartsPackage.EMISSION__NEW_VALUE:
+            case SCChartsPackage.EMISSION__NEW_VALUE:
                 return newValue != null;
         }
         return super.eIsSet(featureID);

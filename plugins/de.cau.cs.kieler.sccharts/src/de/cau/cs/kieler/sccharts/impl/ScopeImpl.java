@@ -20,9 +20,9 @@ import de.cau.cs.kieler.core.kexpressions.TextualCode;
 import de.cau.cs.kieler.core.kexpressions.Variable;
 
 import de.cau.cs.kieler.sccharts.Action;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.Substitution;
-import de.cau.cs.kieler.sccharts.scchartsPackage;
 
 import java.util.Collection;
 
@@ -250,7 +250,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      */
     @Override
     protected EClass eStaticClass() {
-        return scchartsPackage.Literals.SCOPE;
+        return SCChartsPackage.Literals.SCOPE;
     }
 
     /**
@@ -271,7 +271,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         String oldId = id;
         id = newId;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.SCOPE__ID, oldId, id));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__ID, oldId, id));
     }
 
     /**
@@ -292,7 +292,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         String oldLabel = label;
         label = newLabel;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.SCOPE__LABEL, oldLabel, label));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__LABEL, oldLabel, label));
     }
 
     /**
@@ -302,7 +302,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      */
     public EList<Signal> getSignals() {
         if (signals == null) {
-            signals = new EObjectContainmentEList<Signal>(Signal.class, this, scchartsPackage.SCOPE__SIGNALS);
+            signals = new EObjectContainmentEList<Signal>(Signal.class, this, SCChartsPackage.SCOPE__SIGNALS);
         }
         return signals;
     }
@@ -314,7 +314,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      */
     public EList<Variable> getVariables() {
         if (variables == null) {
-            variables = new EObjectContainmentEList<Variable>(Variable.class, this, scchartsPackage.SCOPE__VARIABLES);
+            variables = new EObjectContainmentEList<Variable>(Variable.class, this, SCChartsPackage.SCOPE__VARIABLES);
         }
         return variables;
     }
@@ -337,7 +337,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         Action oldSuspensionTrigger = suspensionTrigger;
         suspensionTrigger = newSuspensionTrigger;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, scchartsPackage.SCOPE__SUSPENSION_TRIGGER, oldSuspensionTrigger, newSuspensionTrigger);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__SUSPENSION_TRIGGER, oldSuspensionTrigger, newSuspensionTrigger);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -352,14 +352,14 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         if (newSuspensionTrigger != suspensionTrigger) {
             NotificationChain msgs = null;
             if (suspensionTrigger != null)
-                msgs = ((InternalEObject)suspensionTrigger).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - scchartsPackage.SCOPE__SUSPENSION_TRIGGER, null, msgs);
+                msgs = ((InternalEObject)suspensionTrigger).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__SUSPENSION_TRIGGER, null, msgs);
             if (newSuspensionTrigger != null)
-                msgs = ((InternalEObject)newSuspensionTrigger).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - scchartsPackage.SCOPE__SUSPENSION_TRIGGER, null, msgs);
+                msgs = ((InternalEObject)newSuspensionTrigger).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__SUSPENSION_TRIGGER, null, msgs);
             msgs = basicSetSuspensionTrigger(newSuspensionTrigger, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.SCOPE__SUSPENSION_TRIGGER, newSuspensionTrigger, newSuspensionTrigger));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__SUSPENSION_TRIGGER, newSuspensionTrigger, newSuspensionTrigger));
     }
 
     /**
@@ -369,7 +369,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      */
     public EList<Action> getExitActions() {
         if (exitActions == null) {
-            exitActions = new EObjectContainmentEList<Action>(Action.class, this, scchartsPackage.SCOPE__EXIT_ACTIONS);
+            exitActions = new EObjectContainmentEList<Action>(Action.class, this, SCChartsPackage.SCOPE__EXIT_ACTIONS);
         }
         return exitActions;
     }
@@ -381,7 +381,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      */
     public EList<Action> getInnerActions() {
         if (innerActions == null) {
-            innerActions = new EObjectContainmentEList<Action>(Action.class, this, scchartsPackage.SCOPE__INNER_ACTIONS);
+            innerActions = new EObjectContainmentEList<Action>(Action.class, this, SCChartsPackage.SCOPE__INNER_ACTIONS);
         }
         return innerActions;
     }
@@ -393,7 +393,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      */
     public EList<Action> getEntryActions() {
         if (entryActions == null) {
-            entryActions = new EObjectContainmentEList<Action>(Action.class, this, scchartsPackage.SCOPE__ENTRY_ACTIONS);
+            entryActions = new EObjectContainmentEList<Action>(Action.class, this, SCChartsPackage.SCOPE__ENTRY_ACTIONS);
         }
         return entryActions;
     }
@@ -409,7 +409,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             bodyReference = eResolveProxy(oldBodyReference);
             if (bodyReference != oldBodyReference) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, scchartsPackage.SCOPE__BODY_REFERENCE, oldBodyReference, bodyReference));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.SCOPE__BODY_REFERENCE, oldBodyReference, bodyReference));
             }
         }
         return bodyReference;
@@ -433,7 +433,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         EObject oldBodyReference = bodyReference;
         bodyReference = newBodyReference;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.SCOPE__BODY_REFERENCE, oldBodyReference, bodyReference));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__BODY_REFERENCE, oldBodyReference, bodyReference));
     }
 
     /**
@@ -454,7 +454,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         EObject oldBodyContents = bodyContents;
         bodyContents = newBodyContents;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, scchartsPackage.SCOPE__BODY_CONTENTS, oldBodyContents, newBodyContents);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__BODY_CONTENTS, oldBodyContents, newBodyContents);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -469,14 +469,14 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         if (newBodyContents != bodyContents) {
             NotificationChain msgs = null;
             if (bodyContents != null)
-                msgs = ((InternalEObject)bodyContents).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - scchartsPackage.SCOPE__BODY_CONTENTS, null, msgs);
+                msgs = ((InternalEObject)bodyContents).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__BODY_CONTENTS, null, msgs);
             if (newBodyContents != null)
-                msgs = ((InternalEObject)newBodyContents).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - scchartsPackage.SCOPE__BODY_CONTENTS, null, msgs);
+                msgs = ((InternalEObject)newBodyContents).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__BODY_CONTENTS, null, msgs);
             msgs = basicSetBodyContents(newBodyContents, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.SCOPE__BODY_CONTENTS, newBodyContents, newBodyContents));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__BODY_CONTENTS, newBodyContents, newBodyContents));
     }
 
     /**
@@ -486,7 +486,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      */
     public EList<TextualCode> getBodyText() {
         if (bodyText == null) {
-            bodyText = new EObjectContainmentEList<TextualCode>(TextualCode.class, this, scchartsPackage.SCOPE__BODY_TEXT);
+            bodyText = new EObjectContainmentEList<TextualCode>(TextualCode.class, this, SCChartsPackage.SCOPE__BODY_TEXT);
         }
         return bodyText;
     }
@@ -498,7 +498,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      */
     public EList<Substitution> getRenamings() {
         if (renamings == null) {
-            renamings = new EObjectContainmentWithInverseEList<Substitution>(Substitution.class, this, scchartsPackage.SCOPE__RENAMINGS, scchartsPackage.SUBSTITUTION__PARENT_SCOPE);
+            renamings = new EObjectContainmentWithInverseEList<Substitution>(Substitution.class, this, SCChartsPackage.SCOPE__RENAMINGS, SCChartsPackage.SUBSTITUTION__PARENT_SCOPE);
         }
         return renamings;
     }
@@ -521,7 +521,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         String oldInterfaceDeclaration = interfaceDeclaration;
         interfaceDeclaration = newInterfaceDeclaration;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.SCOPE__INTERFACE_DECLARATION, oldInterfaceDeclaration, interfaceDeclaration));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__INTERFACE_DECLARATION, oldInterfaceDeclaration, interfaceDeclaration));
     }
 
     /**
@@ -533,7 +533,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case scchartsPackage.SCOPE__RENAMINGS:
+            case SCChartsPackage.SCOPE__RENAMINGS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getRenamings()).basicAdd(otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -547,23 +547,23 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case scchartsPackage.SCOPE__SIGNALS:
+            case SCChartsPackage.SCOPE__SIGNALS:
                 return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
-            case scchartsPackage.SCOPE__VARIABLES:
+            case SCChartsPackage.SCOPE__VARIABLES:
                 return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
-            case scchartsPackage.SCOPE__SUSPENSION_TRIGGER:
+            case SCChartsPackage.SCOPE__SUSPENSION_TRIGGER:
                 return basicSetSuspensionTrigger(null, msgs);
-            case scchartsPackage.SCOPE__EXIT_ACTIONS:
+            case SCChartsPackage.SCOPE__EXIT_ACTIONS:
                 return ((InternalEList<?>)getExitActions()).basicRemove(otherEnd, msgs);
-            case scchartsPackage.SCOPE__INNER_ACTIONS:
+            case SCChartsPackage.SCOPE__INNER_ACTIONS:
                 return ((InternalEList<?>)getInnerActions()).basicRemove(otherEnd, msgs);
-            case scchartsPackage.SCOPE__ENTRY_ACTIONS:
+            case SCChartsPackage.SCOPE__ENTRY_ACTIONS:
                 return ((InternalEList<?>)getEntryActions()).basicRemove(otherEnd, msgs);
-            case scchartsPackage.SCOPE__BODY_CONTENTS:
+            case SCChartsPackage.SCOPE__BODY_CONTENTS:
                 return basicSetBodyContents(null, msgs);
-            case scchartsPackage.SCOPE__BODY_TEXT:
+            case SCChartsPackage.SCOPE__BODY_TEXT:
                 return ((InternalEList<?>)getBodyText()).basicRemove(otherEnd, msgs);
-            case scchartsPackage.SCOPE__RENAMINGS:
+            case SCChartsPackage.SCOPE__RENAMINGS:
                 return ((InternalEList<?>)getRenamings()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -577,32 +577,32 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case scchartsPackage.SCOPE__ID:
+            case SCChartsPackage.SCOPE__ID:
                 return getId();
-            case scchartsPackage.SCOPE__LABEL:
+            case SCChartsPackage.SCOPE__LABEL:
                 return getLabel();
-            case scchartsPackage.SCOPE__SIGNALS:
+            case SCChartsPackage.SCOPE__SIGNALS:
                 return getSignals();
-            case scchartsPackage.SCOPE__VARIABLES:
+            case SCChartsPackage.SCOPE__VARIABLES:
                 return getVariables();
-            case scchartsPackage.SCOPE__SUSPENSION_TRIGGER:
+            case SCChartsPackage.SCOPE__SUSPENSION_TRIGGER:
                 return getSuspensionTrigger();
-            case scchartsPackage.SCOPE__EXIT_ACTIONS:
+            case SCChartsPackage.SCOPE__EXIT_ACTIONS:
                 return getExitActions();
-            case scchartsPackage.SCOPE__INNER_ACTIONS:
+            case SCChartsPackage.SCOPE__INNER_ACTIONS:
                 return getInnerActions();
-            case scchartsPackage.SCOPE__ENTRY_ACTIONS:
+            case SCChartsPackage.SCOPE__ENTRY_ACTIONS:
                 return getEntryActions();
-            case scchartsPackage.SCOPE__BODY_REFERENCE:
+            case SCChartsPackage.SCOPE__BODY_REFERENCE:
                 if (resolve) return getBodyReference();
                 return basicGetBodyReference();
-            case scchartsPackage.SCOPE__BODY_CONTENTS:
+            case SCChartsPackage.SCOPE__BODY_CONTENTS:
                 return getBodyContents();
-            case scchartsPackage.SCOPE__BODY_TEXT:
+            case SCChartsPackage.SCOPE__BODY_TEXT:
                 return getBodyText();
-            case scchartsPackage.SCOPE__RENAMINGS:
+            case SCChartsPackage.SCOPE__RENAMINGS:
                 return getRenamings();
-            case scchartsPackage.SCOPE__INTERFACE_DECLARATION:
+            case SCChartsPackage.SCOPE__INTERFACE_DECLARATION:
                 return getInterfaceDeclaration();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -617,50 +617,50 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case scchartsPackage.SCOPE__ID:
+            case SCChartsPackage.SCOPE__ID:
                 setId((String)newValue);
                 return;
-            case scchartsPackage.SCOPE__LABEL:
+            case SCChartsPackage.SCOPE__LABEL:
                 setLabel((String)newValue);
                 return;
-            case scchartsPackage.SCOPE__SIGNALS:
+            case SCChartsPackage.SCOPE__SIGNALS:
                 getSignals().clear();
                 getSignals().addAll((Collection<? extends Signal>)newValue);
                 return;
-            case scchartsPackage.SCOPE__VARIABLES:
+            case SCChartsPackage.SCOPE__VARIABLES:
                 getVariables().clear();
                 getVariables().addAll((Collection<? extends Variable>)newValue);
                 return;
-            case scchartsPackage.SCOPE__SUSPENSION_TRIGGER:
+            case SCChartsPackage.SCOPE__SUSPENSION_TRIGGER:
                 setSuspensionTrigger((Action)newValue);
                 return;
-            case scchartsPackage.SCOPE__EXIT_ACTIONS:
+            case SCChartsPackage.SCOPE__EXIT_ACTIONS:
                 getExitActions().clear();
                 getExitActions().addAll((Collection<? extends Action>)newValue);
                 return;
-            case scchartsPackage.SCOPE__INNER_ACTIONS:
+            case SCChartsPackage.SCOPE__INNER_ACTIONS:
                 getInnerActions().clear();
                 getInnerActions().addAll((Collection<? extends Action>)newValue);
                 return;
-            case scchartsPackage.SCOPE__ENTRY_ACTIONS:
+            case SCChartsPackage.SCOPE__ENTRY_ACTIONS:
                 getEntryActions().clear();
                 getEntryActions().addAll((Collection<? extends Action>)newValue);
                 return;
-            case scchartsPackage.SCOPE__BODY_REFERENCE:
+            case SCChartsPackage.SCOPE__BODY_REFERENCE:
                 setBodyReference((EObject)newValue);
                 return;
-            case scchartsPackage.SCOPE__BODY_CONTENTS:
+            case SCChartsPackage.SCOPE__BODY_CONTENTS:
                 setBodyContents((EObject)newValue);
                 return;
-            case scchartsPackage.SCOPE__BODY_TEXT:
+            case SCChartsPackage.SCOPE__BODY_TEXT:
                 getBodyText().clear();
                 getBodyText().addAll((Collection<? extends TextualCode>)newValue);
                 return;
-            case scchartsPackage.SCOPE__RENAMINGS:
+            case SCChartsPackage.SCOPE__RENAMINGS:
                 getRenamings().clear();
                 getRenamings().addAll((Collection<? extends Substitution>)newValue);
                 return;
-            case scchartsPackage.SCOPE__INTERFACE_DECLARATION:
+            case SCChartsPackage.SCOPE__INTERFACE_DECLARATION:
                 setInterfaceDeclaration((String)newValue);
                 return;
         }
@@ -675,43 +675,43 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case scchartsPackage.SCOPE__ID:
+            case SCChartsPackage.SCOPE__ID:
                 setId(ID_EDEFAULT);
                 return;
-            case scchartsPackage.SCOPE__LABEL:
+            case SCChartsPackage.SCOPE__LABEL:
                 setLabel(LABEL_EDEFAULT);
                 return;
-            case scchartsPackage.SCOPE__SIGNALS:
+            case SCChartsPackage.SCOPE__SIGNALS:
                 getSignals().clear();
                 return;
-            case scchartsPackage.SCOPE__VARIABLES:
+            case SCChartsPackage.SCOPE__VARIABLES:
                 getVariables().clear();
                 return;
-            case scchartsPackage.SCOPE__SUSPENSION_TRIGGER:
+            case SCChartsPackage.SCOPE__SUSPENSION_TRIGGER:
                 setSuspensionTrigger((Action)null);
                 return;
-            case scchartsPackage.SCOPE__EXIT_ACTIONS:
+            case SCChartsPackage.SCOPE__EXIT_ACTIONS:
                 getExitActions().clear();
                 return;
-            case scchartsPackage.SCOPE__INNER_ACTIONS:
+            case SCChartsPackage.SCOPE__INNER_ACTIONS:
                 getInnerActions().clear();
                 return;
-            case scchartsPackage.SCOPE__ENTRY_ACTIONS:
+            case SCChartsPackage.SCOPE__ENTRY_ACTIONS:
                 getEntryActions().clear();
                 return;
-            case scchartsPackage.SCOPE__BODY_REFERENCE:
+            case SCChartsPackage.SCOPE__BODY_REFERENCE:
                 setBodyReference((EObject)null);
                 return;
-            case scchartsPackage.SCOPE__BODY_CONTENTS:
+            case SCChartsPackage.SCOPE__BODY_CONTENTS:
                 setBodyContents((EObject)null);
                 return;
-            case scchartsPackage.SCOPE__BODY_TEXT:
+            case SCChartsPackage.SCOPE__BODY_TEXT:
                 getBodyText().clear();
                 return;
-            case scchartsPackage.SCOPE__RENAMINGS:
+            case SCChartsPackage.SCOPE__RENAMINGS:
                 getRenamings().clear();
                 return;
-            case scchartsPackage.SCOPE__INTERFACE_DECLARATION:
+            case SCChartsPackage.SCOPE__INTERFACE_DECLARATION:
                 setInterfaceDeclaration(INTERFACE_DECLARATION_EDEFAULT);
                 return;
         }
@@ -726,31 +726,31 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case scchartsPackage.SCOPE__ID:
+            case SCChartsPackage.SCOPE__ID:
                 return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-            case scchartsPackage.SCOPE__LABEL:
+            case SCChartsPackage.SCOPE__LABEL:
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
-            case scchartsPackage.SCOPE__SIGNALS:
+            case SCChartsPackage.SCOPE__SIGNALS:
                 return signals != null && !signals.isEmpty();
-            case scchartsPackage.SCOPE__VARIABLES:
+            case SCChartsPackage.SCOPE__VARIABLES:
                 return variables != null && !variables.isEmpty();
-            case scchartsPackage.SCOPE__SUSPENSION_TRIGGER:
+            case SCChartsPackage.SCOPE__SUSPENSION_TRIGGER:
                 return suspensionTrigger != null;
-            case scchartsPackage.SCOPE__EXIT_ACTIONS:
+            case SCChartsPackage.SCOPE__EXIT_ACTIONS:
                 return exitActions != null && !exitActions.isEmpty();
-            case scchartsPackage.SCOPE__INNER_ACTIONS:
+            case SCChartsPackage.SCOPE__INNER_ACTIONS:
                 return innerActions != null && !innerActions.isEmpty();
-            case scchartsPackage.SCOPE__ENTRY_ACTIONS:
+            case SCChartsPackage.SCOPE__ENTRY_ACTIONS:
                 return entryActions != null && !entryActions.isEmpty();
-            case scchartsPackage.SCOPE__BODY_REFERENCE:
+            case SCChartsPackage.SCOPE__BODY_REFERENCE:
                 return bodyReference != null;
-            case scchartsPackage.SCOPE__BODY_CONTENTS:
+            case SCChartsPackage.SCOPE__BODY_CONTENTS:
                 return bodyContents != null;
-            case scchartsPackage.SCOPE__BODY_TEXT:
+            case SCChartsPackage.SCOPE__BODY_TEXT:
                 return bodyText != null && !bodyText.isEmpty();
-            case scchartsPackage.SCOPE__RENAMINGS:
+            case SCChartsPackage.SCOPE__RENAMINGS:
                 return renamings != null && !renamings.isEmpty();
-            case scchartsPackage.SCOPE__INTERFACE_DECLARATION:
+            case SCChartsPackage.SCOPE__INTERFACE_DECLARATION:
                 return INTERFACE_DECLARATION_EDEFAULT == null ? interfaceDeclaration != null : !INTERFACE_DECLARATION_EDEFAULT.equals(interfaceDeclaration);
         }
         return super.eIsSet(featureID);

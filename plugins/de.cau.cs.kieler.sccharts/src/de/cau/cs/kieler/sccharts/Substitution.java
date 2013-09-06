@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.sccharts.scchartsPackage#getSubstitution()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getSubstitution()
  * @model
  * @generated
  */
@@ -52,7 +52,7 @@ public interface Substitution extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parent Scope</em>' container reference.
      * @see #setParentScope(Scope)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getSubstitution_ParentScope()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getSubstitution_ParentScope()
      * @see de.cau.cs.kieler.sccharts.Scope#getRenamings
      * @model opposite="renamings" required="true" transient="false"
      * @generated
@@ -79,7 +79,7 @@ public interface Substitution extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Formal</em>' attribute.
      * @see #setFormal(String)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getSubstitution_Formal()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getSubstitution_Formal()
      * @model required="true"
      * @generated
      */
@@ -105,7 +105,7 @@ public interface Substitution extends EObject {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Actual</em>' attribute.
      * @see #setActual(String)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getSubstitution_Actual()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getSubstitution_Actual()
      * @model required="true"
      * @generated
      */

@@ -22,6 +22,8 @@ import de.cau.cs.kieler.sccharts.Assignment;
 import de.cau.cs.kieler.sccharts.Effect;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.SCChartsFactory;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.StateType;
@@ -29,8 +31,6 @@ import de.cau.cs.kieler.sccharts.Substitution;
 import de.cau.cs.kieler.sccharts.TextEffect;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.TransitionType;
-import de.cau.cs.kieler.sccharts.scchartsFactory;
-import de.cau.cs.kieler.sccharts.scchartsPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -47,7 +47,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  * <!-- end-user-doc -->
  * @generated
  */
-public class scchartsPackageImpl extends EPackageImpl implements scchartsPackage {
+public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -157,12 +157,12 @@ public class scchartsPackageImpl extends EPackageImpl implements scchartsPackage
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.eclipse.emf.ecore.EPackage.Registry
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#eNS_URI
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#eNS_URI
      * @see #init()
      * @generated
      */
-    private scchartsPackageImpl() {
-        super(eNS_URI, scchartsFactory.eINSTANCE);
+    private SCChartsPackageImpl() {
+        super(eNS_URI, SCChartsFactory.eINSTANCE);
     }
 
     /**
@@ -175,7 +175,7 @@ public class scchartsPackageImpl extends EPackageImpl implements scchartsPackage
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
      * 
-     * <p>This method is used to initialize {@link scchartsPackage#eINSTANCE} when that field is accessed.
+     * <p>This method is used to initialize {@link SCChartsPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -184,11 +184,11 @@ public class scchartsPackageImpl extends EPackageImpl implements scchartsPackage
      * @see #initializePackageContents()
      * @generated
      */
-    public static scchartsPackage init() {
-        if (isInited) return (scchartsPackage)EPackage.Registry.INSTANCE.getEPackage(scchartsPackage.eNS_URI);
+    public static SCChartsPackage init() {
+        if (isInited) return (SCChartsPackage)EPackage.Registry.INSTANCE.getEPackage(SCChartsPackage.eNS_URI);
 
         // Obtain or create and register package
-        scchartsPackageImpl thescchartsPackage = (scchartsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof scchartsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new scchartsPackageImpl());
+        SCChartsPackageImpl theSCChartsPackage = (SCChartsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SCChartsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new SCChartsPackageImpl());
 
         isInited = true;
 
@@ -196,18 +196,18 @@ public class scchartsPackageImpl extends EPackageImpl implements scchartsPackage
         KExpressionsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
-        thescchartsPackage.createPackageContents();
+        theSCChartsPackage.createPackageContents();
 
         // Initialize created meta-data
-        thescchartsPackage.initializePackageContents();
+        theSCChartsPackage.initializePackageContents();
 
         // Mark meta-data to indicate it can't be changed
-        thescchartsPackage.freeze();
+        theSCChartsPackage.freeze();
 
   
         // Update the registry and return the package
-        EPackage.Registry.INSTANCE.put(scchartsPackage.eNS_URI, thescchartsPackage);
-        return thescchartsPackage;
+        EPackage.Registry.INSTANCE.put(SCChartsPackage.eNS_URI, theSCChartsPackage);
+        return theSCChartsPackage;
     }
 
     /**
@@ -683,8 +683,8 @@ public class scchartsPackageImpl extends EPackageImpl implements scchartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public scchartsFactory getscchartsFactory() {
-        return (scchartsFactory)getEFactoryInstance();
+    public SCChartsFactory getSCChartsFactory() {
+        return (SCChartsFactory)getEFactoryInstance();
     }
 
     /**
@@ -894,4 +894,4 @@ public class scchartsPackageImpl extends EPackageImpl implements scchartsPackage
         createResource(eNS_URI);
     }
 
-} //scchartsPackageImpl
+} //SCChartsPackageImpl

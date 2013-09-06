@@ -29,7 +29,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * 
  *   
  * <!-- end-model-doc -->
- * @see de.cau.cs.kieler.sccharts.scchartsPackage#getStateType()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getStateType()
  * @model
  * @generated
  */

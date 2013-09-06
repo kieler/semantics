@@ -35,7 +35,7 @@ import de.cau.cs.kieler.core.kexpressions.Variable;
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.sccharts.scchartsPackage#getAssignment()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAssignment()
  * @model
  * @generated
  */
@@ -57,7 +57,7 @@ public interface Assignment extends Effect {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Variable</em>' reference.
      * @see #setVariable(Variable)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getAssignment_Variable()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAssignment_Variable()
      * @model required="true"
      * @generated
      */
@@ -83,7 +83,7 @@ public interface Assignment extends Effect {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Expression</em>' containment reference.
      * @see #setExpression(Expression)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getAssignment_Expression()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAssignment_Expression()
      * @model containment="true" required="true"
      * @generated
      */

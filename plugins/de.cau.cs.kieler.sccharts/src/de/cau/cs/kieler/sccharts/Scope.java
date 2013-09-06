@@ -65,7 +65,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.sccharts.scchartsPackage#getScope()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope()
  * @model abstract="true"
  * @generated
  */
@@ -87,7 +87,7 @@ public interface Scope extends Annotatable {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Id</em>' attribute.
      * @see #setId(String)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getScope_Id()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Id()
      * @model
      * @generated
      */
@@ -113,7 +113,7 @@ public interface Scope extends Annotatable {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Label</em>' attribute.
      * @see #setLabel(String)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getScope_Label()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Label()
      * @model
      * @generated
      */
@@ -139,7 +139,7 @@ public interface Scope extends Annotatable {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Signals</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getScope_Signals()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Signals()
      * @model containment="true"
      * @generated
      */
@@ -155,7 +155,7 @@ public interface Scope extends Annotatable {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Variables</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getScope_Variables()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Variables()
      * @model containment="true"
      * @generated
      */
@@ -171,7 +171,7 @@ public interface Scope extends Annotatable {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Suspension Trigger</em>' containment reference.
      * @see #setSuspensionTrigger(Action)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getScope_SuspensionTrigger()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_SuspensionTrigger()
      * @model containment="true"
      * @generated
      */
@@ -197,7 +197,7 @@ public interface Scope extends Annotatable {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Exit Actions</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getScope_ExitActions()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_ExitActions()
      * @model containment="true"
      * @generated
      */
@@ -213,7 +213,7 @@ public interface Scope extends Annotatable {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Inner Actions</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getScope_InnerActions()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_InnerActions()
      * @model containment="true"
      * @generated
      */
@@ -229,7 +229,7 @@ public interface Scope extends Annotatable {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Entry Actions</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getScope_EntryActions()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_EntryActions()
      * @model containment="true"
      * @generated
      */
@@ -245,7 +245,7 @@ public interface Scope extends Annotatable {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Body Reference</em>' reference.
      * @see #setBodyReference(EObject)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getScope_BodyReference()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_BodyReference()
      * @model
      * @generated
      */
@@ -271,7 +271,7 @@ public interface Scope extends Annotatable {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Body Contents</em>' containment reference.
      * @see #setBodyContents(EObject)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getScope_BodyContents()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_BodyContents()
      * @model containment="true"
      * @generated
      */
@@ -297,7 +297,7 @@ public interface Scope extends Annotatable {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Body Text</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getScope_BodyText()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_BodyText()
      * @model containment="true"
      * @generated
      */
@@ -314,7 +314,7 @@ public interface Scope extends Annotatable {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Renamings</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getScope_Renamings()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Renamings()
      * @see de.cau.cs.kieler.sccharts.Substitution#getParentScope
      * @model opposite="parentScope" containment="true"
      * @generated
@@ -331,7 +331,7 @@ public interface Scope extends Annotatable {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Interface Declaration</em>' attribute.
      * @see #setInterfaceDeclaration(String)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getScope_InterfaceDeclaration()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_InterfaceDeclaration()
      * @model dataType="de.cau.cs.kieler.sccharts.Parsable"
      * @generated
      */

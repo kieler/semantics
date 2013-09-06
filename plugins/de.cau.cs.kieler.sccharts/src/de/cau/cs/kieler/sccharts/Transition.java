@@ -52,7 +52,7 @@ package de.cau.cs.kieler.sccharts;
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.sccharts.scchartsPackage#getTransition()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition()
  * @model
  * @generated
  */
@@ -74,7 +74,7 @@ public interface Transition extends Action {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Priority</em>' attribute.
      * @see #setPriority(int)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getTransition_Priority()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Priority()
      * @model
      * @generated
      */
@@ -102,7 +102,7 @@ public interface Transition extends Action {
      * @return the value of the '<em>Type</em>' attribute.
      * @see de.cau.cs.kieler.sccharts.TransitionType
      * @see #setType(TransitionType)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getTransition_Type()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Type()
      * @model required="true"
      * @generated
      */
@@ -130,7 +130,7 @@ public interface Transition extends Action {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Target State</em>' reference.
      * @see #setTargetState(State)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getTransition_TargetState()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_TargetState()
      * @see de.cau.cs.kieler.sccharts.State#getIncomingTransitions
      * @model opposite="incomingTransitions" required="true"
      * @generated
@@ -157,7 +157,7 @@ public interface Transition extends Action {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Is History</em>' attribute.
      * @see #setIsHistory(boolean)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getTransition_IsHistory()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_IsHistory()
      * @model
      * @generated
      */
@@ -184,7 +184,7 @@ public interface Transition extends Action {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Source State</em>' container reference.
      * @see #setSourceState(State)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getTransition_SourceState()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_SourceState()
      * @see de.cau.cs.kieler.sccharts.State#getOutgoingTransitions
      * @model opposite="outgoingTransitions" required="true" transient="false"
      * @generated

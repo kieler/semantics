@@ -39,7 +39,7 @@ import de.cau.cs.kieler.core.kexpressions.Signal;
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.sccharts.scchartsPackage#getEmission()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getEmission()
  * @model
  * @generated
  */
@@ -61,7 +61,7 @@ public interface Emission extends Effect {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Signal</em>' reference.
      * @see #setSignal(Signal)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getEmission_Signal()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getEmission_Signal()
      * @model required="true"
      * @generated
      */
@@ -87,7 +87,7 @@ public interface Emission extends Effect {
      * <!-- end-user-doc -->
      * @return the value of the '<em>New Value</em>' containment reference.
      * @see #setNewValue(Expression)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getEmission_NewValue()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getEmission_NewValue()
      * @model containment="true"
      * @generated
      */

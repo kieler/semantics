@@ -13,10 +13,10 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.TransitionType;
-import de.cau.cs.kieler.sccharts.scchartsPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -139,7 +139,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      */
     @Override
     protected EClass eStaticClass() {
-        return scchartsPackage.Literals.TRANSITION;
+        return SCChartsPackage.Literals.TRANSITION;
     }
 
     /**
@@ -160,7 +160,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
         int oldPriority = priority;
         priority = newPriority;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.TRANSITION__PRIORITY, oldPriority, priority));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__PRIORITY, oldPriority, priority));
     }
 
     /**
@@ -181,7 +181,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
         TransitionType oldType = type;
         type = newType == null ? TYPE_EDEFAULT : newType;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.TRANSITION__TYPE, oldType, type));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__TYPE, oldType, type));
     }
 
     /**
@@ -195,7 +195,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
             targetState = (State)eResolveProxy(oldTargetState);
             if (targetState != oldTargetState) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, scchartsPackage.TRANSITION__TARGET_STATE, oldTargetState, targetState));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.TRANSITION__TARGET_STATE, oldTargetState, targetState));
             }
         }
         return targetState;
@@ -219,7 +219,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
         State oldTargetState = targetState;
         targetState = newTargetState;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, scchartsPackage.TRANSITION__TARGET_STATE, oldTargetState, newTargetState);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__TARGET_STATE, oldTargetState, newTargetState);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -234,14 +234,14 @@ public class TransitionImpl extends ActionImpl implements Transition {
         if (newTargetState != targetState) {
             NotificationChain msgs = null;
             if (targetState != null)
-                msgs = ((InternalEObject)targetState).eInverseRemove(this, scchartsPackage.STATE__INCOMING_TRANSITIONS, State.class, msgs);
+                msgs = ((InternalEObject)targetState).eInverseRemove(this, SCChartsPackage.STATE__INCOMING_TRANSITIONS, State.class, msgs);
             if (newTargetState != null)
-                msgs = ((InternalEObject)newTargetState).eInverseAdd(this, scchartsPackage.STATE__INCOMING_TRANSITIONS, State.class, msgs);
+                msgs = ((InternalEObject)newTargetState).eInverseAdd(this, SCChartsPackage.STATE__INCOMING_TRANSITIONS, State.class, msgs);
             msgs = basicSetTargetState(newTargetState, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.TRANSITION__TARGET_STATE, newTargetState, newTargetState));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__TARGET_STATE, newTargetState, newTargetState));
     }
 
     /**
@@ -262,7 +262,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
         boolean oldIsHistory = isHistory;
         isHistory = newIsHistory;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.TRANSITION__IS_HISTORY, oldIsHistory, isHistory));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__IS_HISTORY, oldIsHistory, isHistory));
     }
 
     /**
@@ -271,7 +271,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * @generated
      */
     public State getSourceState() {
-        if (eContainerFeatureID() != scchartsPackage.TRANSITION__SOURCE_STATE) return null;
+        if (eContainerFeatureID() != SCChartsPackage.TRANSITION__SOURCE_STATE) return null;
         return (State)eContainer();
     }
 
@@ -281,7 +281,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * @generated
      */
     public NotificationChain basicSetSourceState(State newSourceState, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newSourceState, scchartsPackage.TRANSITION__SOURCE_STATE, msgs);
+        msgs = eBasicSetContainer((InternalEObject)newSourceState, SCChartsPackage.TRANSITION__SOURCE_STATE, msgs);
         return msgs;
     }
 
@@ -291,19 +291,19 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * @generated
      */
     public void setSourceState(State newSourceState) {
-        if (newSourceState != eInternalContainer() || (eContainerFeatureID() != scchartsPackage.TRANSITION__SOURCE_STATE && newSourceState != null)) {
+        if (newSourceState != eInternalContainer() || (eContainerFeatureID() != SCChartsPackage.TRANSITION__SOURCE_STATE && newSourceState != null)) {
             if (EcoreUtil.isAncestor(this, newSourceState))
                 throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
             NotificationChain msgs = null;
             if (eInternalContainer() != null)
                 msgs = eBasicRemoveFromContainer(msgs);
             if (newSourceState != null)
-                msgs = ((InternalEObject)newSourceState).eInverseAdd(this, scchartsPackage.STATE__OUTGOING_TRANSITIONS, State.class, msgs);
+                msgs = ((InternalEObject)newSourceState).eInverseAdd(this, SCChartsPackage.STATE__OUTGOING_TRANSITIONS, State.class, msgs);
             msgs = basicSetSourceState(newSourceState, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.TRANSITION__SOURCE_STATE, newSourceState, newSourceState));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__SOURCE_STATE, newSourceState, newSourceState));
     }
 
     /**
@@ -314,11 +314,11 @@ public class TransitionImpl extends ActionImpl implements Transition {
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case scchartsPackage.TRANSITION__TARGET_STATE:
+            case SCChartsPackage.TRANSITION__TARGET_STATE:
                 if (targetState != null)
-                    msgs = ((InternalEObject)targetState).eInverseRemove(this, scchartsPackage.STATE__INCOMING_TRANSITIONS, State.class, msgs);
+                    msgs = ((InternalEObject)targetState).eInverseRemove(this, SCChartsPackage.STATE__INCOMING_TRANSITIONS, State.class, msgs);
                 return basicSetTargetState((State)otherEnd, msgs);
-            case scchartsPackage.TRANSITION__SOURCE_STATE:
+            case SCChartsPackage.TRANSITION__SOURCE_STATE:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetSourceState((State)otherEnd, msgs);
@@ -334,9 +334,9 @@ public class TransitionImpl extends ActionImpl implements Transition {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case scchartsPackage.TRANSITION__TARGET_STATE:
+            case SCChartsPackage.TRANSITION__TARGET_STATE:
                 return basicSetTargetState(null, msgs);
-            case scchartsPackage.TRANSITION__SOURCE_STATE:
+            case SCChartsPackage.TRANSITION__SOURCE_STATE:
                 return basicSetSourceState(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -350,8 +350,8 @@ public class TransitionImpl extends ActionImpl implements Transition {
     @Override
     public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
         switch (eContainerFeatureID()) {
-            case scchartsPackage.TRANSITION__SOURCE_STATE:
-                return eInternalContainer().eInverseRemove(this, scchartsPackage.STATE__OUTGOING_TRANSITIONS, State.class, msgs);
+            case SCChartsPackage.TRANSITION__SOURCE_STATE:
+                return eInternalContainer().eInverseRemove(this, SCChartsPackage.STATE__OUTGOING_TRANSITIONS, State.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
@@ -364,16 +364,16 @@ public class TransitionImpl extends ActionImpl implements Transition {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case scchartsPackage.TRANSITION__PRIORITY:
+            case SCChartsPackage.TRANSITION__PRIORITY:
                 return getPriority();
-            case scchartsPackage.TRANSITION__TYPE:
+            case SCChartsPackage.TRANSITION__TYPE:
                 return getType();
-            case scchartsPackage.TRANSITION__TARGET_STATE:
+            case SCChartsPackage.TRANSITION__TARGET_STATE:
                 if (resolve) return getTargetState();
                 return basicGetTargetState();
-            case scchartsPackage.TRANSITION__IS_HISTORY:
+            case SCChartsPackage.TRANSITION__IS_HISTORY:
                 return isIsHistory();
-            case scchartsPackage.TRANSITION__SOURCE_STATE:
+            case SCChartsPackage.TRANSITION__SOURCE_STATE:
                 return getSourceState();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -387,19 +387,19 @@ public class TransitionImpl extends ActionImpl implements Transition {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case scchartsPackage.TRANSITION__PRIORITY:
+            case SCChartsPackage.TRANSITION__PRIORITY:
                 setPriority((Integer)newValue);
                 return;
-            case scchartsPackage.TRANSITION__TYPE:
+            case SCChartsPackage.TRANSITION__TYPE:
                 setType((TransitionType)newValue);
                 return;
-            case scchartsPackage.TRANSITION__TARGET_STATE:
+            case SCChartsPackage.TRANSITION__TARGET_STATE:
                 setTargetState((State)newValue);
                 return;
-            case scchartsPackage.TRANSITION__IS_HISTORY:
+            case SCChartsPackage.TRANSITION__IS_HISTORY:
                 setIsHistory((Boolean)newValue);
                 return;
-            case scchartsPackage.TRANSITION__SOURCE_STATE:
+            case SCChartsPackage.TRANSITION__SOURCE_STATE:
                 setSourceState((State)newValue);
                 return;
         }
@@ -414,19 +414,19 @@ public class TransitionImpl extends ActionImpl implements Transition {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case scchartsPackage.TRANSITION__PRIORITY:
+            case SCChartsPackage.TRANSITION__PRIORITY:
                 setPriority(PRIORITY_EDEFAULT);
                 return;
-            case scchartsPackage.TRANSITION__TYPE:
+            case SCChartsPackage.TRANSITION__TYPE:
                 setType(TYPE_EDEFAULT);
                 return;
-            case scchartsPackage.TRANSITION__TARGET_STATE:
+            case SCChartsPackage.TRANSITION__TARGET_STATE:
                 setTargetState((State)null);
                 return;
-            case scchartsPackage.TRANSITION__IS_HISTORY:
+            case SCChartsPackage.TRANSITION__IS_HISTORY:
                 setIsHistory(IS_HISTORY_EDEFAULT);
                 return;
-            case scchartsPackage.TRANSITION__SOURCE_STATE:
+            case SCChartsPackage.TRANSITION__SOURCE_STATE:
                 setSourceState((State)null);
                 return;
         }
@@ -441,15 +441,15 @@ public class TransitionImpl extends ActionImpl implements Transition {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case scchartsPackage.TRANSITION__PRIORITY:
+            case SCChartsPackage.TRANSITION__PRIORITY:
                 return priority != PRIORITY_EDEFAULT;
-            case scchartsPackage.TRANSITION__TYPE:
+            case SCChartsPackage.TRANSITION__TYPE:
                 return type != TYPE_EDEFAULT;
-            case scchartsPackage.TRANSITION__TARGET_STATE:
+            case SCChartsPackage.TRANSITION__TARGET_STATE:
                 return targetState != null;
-            case scchartsPackage.TRANSITION__IS_HISTORY:
+            case SCChartsPackage.TRANSITION__IS_HISTORY:
                 return isHistory != IS_HISTORY_EDEFAULT;
-            case scchartsPackage.TRANSITION__SOURCE_STATE:
+            case SCChartsPackage.TRANSITION__SOURCE_STATE:
                 return getSourceState() != null;
         }
         return super.eIsSet(featureID);

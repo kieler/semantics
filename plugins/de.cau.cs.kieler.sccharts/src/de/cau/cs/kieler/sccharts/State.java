@@ -51,7 +51,7 @@ import org.eclipse.emf.common.util.EList;
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.sccharts.scchartsPackage#getState()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState()
  * @model
  * @generated
  */
@@ -75,7 +75,7 @@ public interface State extends Scope {
      * @return the value of the '<em>Type</em>' attribute.
      * @see de.cau.cs.kieler.sccharts.StateType
      * @see #setType(StateType)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getState_Type()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_Type()
      * @model required="true"
      * @generated
      */
@@ -103,7 +103,7 @@ public interface State extends Scope {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Regions</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getState_Regions()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_Regions()
      * @see de.cau.cs.kieler.sccharts.Region#getParentState
      * @model opposite="parentState" containment="true"
      * @generated
@@ -121,7 +121,7 @@ public interface State extends Scope {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parent Region</em>' container reference.
      * @see #setParentRegion(Region)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getState_ParentRegion()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_ParentRegion()
      * @see de.cau.cs.kieler.sccharts.Region#getStates
      * @model opposite="states" required="true" transient="false"
      * @generated
@@ -148,7 +148,7 @@ public interface State extends Scope {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Is Initial</em>' attribute.
      * @see #setIsInitial(boolean)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getState_IsInitial()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_IsInitial()
      * @model
      * @generated
      */
@@ -174,7 +174,7 @@ public interface State extends Scope {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Is Final</em>' attribute.
      * @see #setIsFinal(boolean)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getState_IsFinal()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_IsFinal()
      * @model
      * @generated
      */
@@ -201,7 +201,7 @@ public interface State extends Scope {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Outgoing Transitions</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getState_OutgoingTransitions()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_OutgoingTransitions()
      * @see de.cau.cs.kieler.sccharts.Transition#getSourceState
      * @model opposite="sourceState" containment="true"
      * @generated
@@ -219,7 +219,7 @@ public interface State extends Scope {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Incoming Transitions</em>' reference list.
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getState_IncomingTransitions()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_IncomingTransitions()
      * @see de.cau.cs.kieler.sccharts.Transition#getTargetState
      * @model opposite="targetState"
      * @generated

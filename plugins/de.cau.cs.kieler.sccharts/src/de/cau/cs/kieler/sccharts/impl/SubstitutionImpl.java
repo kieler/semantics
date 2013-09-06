@@ -13,9 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.Substitution;
-import de.cau.cs.kieler.sccharts.scchartsPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -107,7 +107,7 @@ public class SubstitutionImpl extends EObjectImpl implements Substitution {
      */
     @Override
     protected EClass eStaticClass() {
-        return scchartsPackage.Literals.SUBSTITUTION;
+        return SCChartsPackage.Literals.SUBSTITUTION;
     }
 
     /**
@@ -116,7 +116,7 @@ public class SubstitutionImpl extends EObjectImpl implements Substitution {
      * @generated
      */
     public Scope getParentScope() {
-        if (eContainerFeatureID() != scchartsPackage.SUBSTITUTION__PARENT_SCOPE) return null;
+        if (eContainerFeatureID() != SCChartsPackage.SUBSTITUTION__PARENT_SCOPE) return null;
         return (Scope)eContainer();
     }
 
@@ -126,7 +126,7 @@ public class SubstitutionImpl extends EObjectImpl implements Substitution {
      * @generated
      */
     public NotificationChain basicSetParentScope(Scope newParentScope, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newParentScope, scchartsPackage.SUBSTITUTION__PARENT_SCOPE, msgs);
+        msgs = eBasicSetContainer((InternalEObject)newParentScope, SCChartsPackage.SUBSTITUTION__PARENT_SCOPE, msgs);
         return msgs;
     }
 
@@ -136,19 +136,19 @@ public class SubstitutionImpl extends EObjectImpl implements Substitution {
      * @generated
      */
     public void setParentScope(Scope newParentScope) {
-        if (newParentScope != eInternalContainer() || (eContainerFeatureID() != scchartsPackage.SUBSTITUTION__PARENT_SCOPE && newParentScope != null)) {
+        if (newParentScope != eInternalContainer() || (eContainerFeatureID() != SCChartsPackage.SUBSTITUTION__PARENT_SCOPE && newParentScope != null)) {
             if (EcoreUtil.isAncestor(this, newParentScope))
                 throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
             NotificationChain msgs = null;
             if (eInternalContainer() != null)
                 msgs = eBasicRemoveFromContainer(msgs);
             if (newParentScope != null)
-                msgs = ((InternalEObject)newParentScope).eInverseAdd(this, scchartsPackage.SCOPE__RENAMINGS, Scope.class, msgs);
+                msgs = ((InternalEObject)newParentScope).eInverseAdd(this, SCChartsPackage.SCOPE__RENAMINGS, Scope.class, msgs);
             msgs = basicSetParentScope(newParentScope, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.SUBSTITUTION__PARENT_SCOPE, newParentScope, newParentScope));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SUBSTITUTION__PARENT_SCOPE, newParentScope, newParentScope));
     }
 
     /**
@@ -169,7 +169,7 @@ public class SubstitutionImpl extends EObjectImpl implements Substitution {
         String oldFormal = formal;
         formal = newFormal;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.SUBSTITUTION__FORMAL, oldFormal, formal));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SUBSTITUTION__FORMAL, oldFormal, formal));
     }
 
     /**
@@ -190,7 +190,7 @@ public class SubstitutionImpl extends EObjectImpl implements Substitution {
         String oldActual = actual;
         actual = newActual;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.SUBSTITUTION__ACTUAL, oldActual, actual));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SUBSTITUTION__ACTUAL, oldActual, actual));
     }
 
     /**
@@ -201,7 +201,7 @@ public class SubstitutionImpl extends EObjectImpl implements Substitution {
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case scchartsPackage.SUBSTITUTION__PARENT_SCOPE:
+            case SCChartsPackage.SUBSTITUTION__PARENT_SCOPE:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetParentScope((Scope)otherEnd, msgs);
@@ -217,7 +217,7 @@ public class SubstitutionImpl extends EObjectImpl implements Substitution {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case scchartsPackage.SUBSTITUTION__PARENT_SCOPE:
+            case SCChartsPackage.SUBSTITUTION__PARENT_SCOPE:
                 return basicSetParentScope(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -231,8 +231,8 @@ public class SubstitutionImpl extends EObjectImpl implements Substitution {
     @Override
     public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
         switch (eContainerFeatureID()) {
-            case scchartsPackage.SUBSTITUTION__PARENT_SCOPE:
-                return eInternalContainer().eInverseRemove(this, scchartsPackage.SCOPE__RENAMINGS, Scope.class, msgs);
+            case SCChartsPackage.SUBSTITUTION__PARENT_SCOPE:
+                return eInternalContainer().eInverseRemove(this, SCChartsPackage.SCOPE__RENAMINGS, Scope.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
@@ -245,11 +245,11 @@ public class SubstitutionImpl extends EObjectImpl implements Substitution {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case scchartsPackage.SUBSTITUTION__PARENT_SCOPE:
+            case SCChartsPackage.SUBSTITUTION__PARENT_SCOPE:
                 return getParentScope();
-            case scchartsPackage.SUBSTITUTION__FORMAL:
+            case SCChartsPackage.SUBSTITUTION__FORMAL:
                 return getFormal();
-            case scchartsPackage.SUBSTITUTION__ACTUAL:
+            case SCChartsPackage.SUBSTITUTION__ACTUAL:
                 return getActual();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -263,13 +263,13 @@ public class SubstitutionImpl extends EObjectImpl implements Substitution {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case scchartsPackage.SUBSTITUTION__PARENT_SCOPE:
+            case SCChartsPackage.SUBSTITUTION__PARENT_SCOPE:
                 setParentScope((Scope)newValue);
                 return;
-            case scchartsPackage.SUBSTITUTION__FORMAL:
+            case SCChartsPackage.SUBSTITUTION__FORMAL:
                 setFormal((String)newValue);
                 return;
-            case scchartsPackage.SUBSTITUTION__ACTUAL:
+            case SCChartsPackage.SUBSTITUTION__ACTUAL:
                 setActual((String)newValue);
                 return;
         }
@@ -284,13 +284,13 @@ public class SubstitutionImpl extends EObjectImpl implements Substitution {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case scchartsPackage.SUBSTITUTION__PARENT_SCOPE:
+            case SCChartsPackage.SUBSTITUTION__PARENT_SCOPE:
                 setParentScope((Scope)null);
                 return;
-            case scchartsPackage.SUBSTITUTION__FORMAL:
+            case SCChartsPackage.SUBSTITUTION__FORMAL:
                 setFormal(FORMAL_EDEFAULT);
                 return;
-            case scchartsPackage.SUBSTITUTION__ACTUAL:
+            case SCChartsPackage.SUBSTITUTION__ACTUAL:
                 setActual(ACTUAL_EDEFAULT);
                 return;
         }
@@ -305,11 +305,11 @@ public class SubstitutionImpl extends EObjectImpl implements Substitution {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case scchartsPackage.SUBSTITUTION__PARENT_SCOPE:
+            case SCChartsPackage.SUBSTITUTION__PARENT_SCOPE:
                 return getParentScope() != null;
-            case scchartsPackage.SUBSTITUTION__FORMAL:
+            case SCChartsPackage.SUBSTITUTION__FORMAL:
                 return FORMAL_EDEFAULT == null ? formal != null : !FORMAL_EDEFAULT.equals(formal);
-            case scchartsPackage.SUBSTITUTION__ACTUAL:
+            case SCChartsPackage.SUBSTITUTION__ACTUAL:
                 return ACTUAL_EDEFAULT == null ? actual != null : !ACTUAL_EDEFAULT.equals(actual);
         }
         return super.eIsSet(featureID);

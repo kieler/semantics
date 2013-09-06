@@ -20,10 +20,10 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.sccharts.scchartsPackage
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage
  * @generated
  */
-public interface scchartsFactory extends EFactory {
+public interface SCChartsFactory extends EFactory {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -37,7 +37,7 @@ public interface scchartsFactory extends EFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    scchartsFactory eINSTANCE = de.cau.cs.kieler.sccharts.impl.scchartsFactoryImpl.init();
+    SCChartsFactory eINSTANCE = de.cau.cs.kieler.sccharts.impl.SCChartsFactoryImpl.init();
 
     /**
      * Returns a new object of class '<em>Action</em>'.
@@ -118,6 +118,6 @@ public interface scchartsFactory extends EFactory {
      * @return the package supported by this factory.
      * @generated
      */
-    scchartsPackage getscchartsPackage();
+    SCChartsPackage getSCChartsPackage();
 
-} //scchartsFactory
+} //SCChartsFactory

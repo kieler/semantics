@@ -27,7 +27,7 @@ import de.cau.cs.kieler.core.kexpressions.TextualCode;
  * <!-- end-model-doc -->
  *
  *
- * @see de.cau.cs.kieler.sccharts.scchartsPackage#getTextEffect()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTextEffect()
  * @model
  * @generated
  */

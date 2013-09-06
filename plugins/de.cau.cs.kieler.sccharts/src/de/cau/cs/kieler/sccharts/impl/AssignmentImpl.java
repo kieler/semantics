@@ -17,7 +17,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.Variable;
 
 import de.cau.cs.kieler.sccharts.Assignment;
-import de.cau.cs.kieler.sccharts.scchartsPackage;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -85,7 +85,7 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
      */
     @Override
     protected EClass eStaticClass() {
-        return scchartsPackage.Literals.ASSIGNMENT;
+        return SCChartsPackage.Literals.ASSIGNMENT;
     }
 
     /**
@@ -99,7 +99,7 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
             variable = (Variable)eResolveProxy(oldVariable);
             if (variable != oldVariable) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, scchartsPackage.ASSIGNMENT__VARIABLE, oldVariable, variable));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.ASSIGNMENT__VARIABLE, oldVariable, variable));
             }
         }
         return variable;
@@ -123,7 +123,7 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
         Variable oldVariable = variable;
         variable = newVariable;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.ASSIGNMENT__VARIABLE, oldVariable, variable));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ASSIGNMENT__VARIABLE, oldVariable, variable));
     }
 
     /**
@@ -144,7 +144,7 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
         Expression oldExpression = expression;
         expression = newExpression;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, scchartsPackage.ASSIGNMENT__EXPRESSION, oldExpression, newExpression);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.ASSIGNMENT__EXPRESSION, oldExpression, newExpression);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -159,14 +159,14 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
         if (newExpression != expression) {
             NotificationChain msgs = null;
             if (expression != null)
-                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - scchartsPackage.ASSIGNMENT__EXPRESSION, null, msgs);
+                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.ASSIGNMENT__EXPRESSION, null, msgs);
             if (newExpression != null)
-                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - scchartsPackage.ASSIGNMENT__EXPRESSION, null, msgs);
+                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.ASSIGNMENT__EXPRESSION, null, msgs);
             msgs = basicSetExpression(newExpression, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.ASSIGNMENT__EXPRESSION, newExpression, newExpression));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ASSIGNMENT__EXPRESSION, newExpression, newExpression));
     }
 
     /**
@@ -177,7 +177,7 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case scchartsPackage.ASSIGNMENT__EXPRESSION:
+            case SCChartsPackage.ASSIGNMENT__EXPRESSION:
                 return basicSetExpression(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -191,10 +191,10 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case scchartsPackage.ASSIGNMENT__VARIABLE:
+            case SCChartsPackage.ASSIGNMENT__VARIABLE:
                 if (resolve) return getVariable();
                 return basicGetVariable();
-            case scchartsPackage.ASSIGNMENT__EXPRESSION:
+            case SCChartsPackage.ASSIGNMENT__EXPRESSION:
                 return getExpression();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -208,10 +208,10 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case scchartsPackage.ASSIGNMENT__VARIABLE:
+            case SCChartsPackage.ASSIGNMENT__VARIABLE:
                 setVariable((Variable)newValue);
                 return;
-            case scchartsPackage.ASSIGNMENT__EXPRESSION:
+            case SCChartsPackage.ASSIGNMENT__EXPRESSION:
                 setExpression((Expression)newValue);
                 return;
         }
@@ -226,10 +226,10 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case scchartsPackage.ASSIGNMENT__VARIABLE:
+            case SCChartsPackage.ASSIGNMENT__VARIABLE:
                 setVariable((Variable)null);
                 return;
-            case scchartsPackage.ASSIGNMENT__EXPRESSION:
+            case SCChartsPackage.ASSIGNMENT__EXPRESSION:
                 setExpression((Expression)null);
                 return;
         }
@@ -244,9 +244,9 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case scchartsPackage.ASSIGNMENT__VARIABLE:
+            case SCChartsPackage.ASSIGNMENT__VARIABLE:
                 return variable != null;
-            case scchartsPackage.ASSIGNMENT__EXPRESSION:
+            case SCChartsPackage.ASSIGNMENT__EXPRESSION:
                 return expression != null;
         }
         return super.eIsSet(featureID);

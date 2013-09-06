@@ -14,10 +14,10 @@
 package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.StateType;
 import de.cau.cs.kieler.sccharts.Transition;
-import de.cau.cs.kieler.sccharts.scchartsPackage;
 
 import java.util.Collection;
 
@@ -169,7 +169,7 @@ public class StateImpl extends ScopeImpl implements State {
      */
     @Override
     protected EClass eStaticClass() {
-        return scchartsPackage.Literals.STATE;
+        return SCChartsPackage.Literals.STATE;
     }
 
     /**
@@ -190,7 +190,7 @@ public class StateImpl extends ScopeImpl implements State {
         StateType oldType = type;
         type = newType == null ? TYPE_EDEFAULT : newType;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.STATE__TYPE, oldType, type));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__TYPE, oldType, type));
     }
 
     /**
@@ -200,7 +200,7 @@ public class StateImpl extends ScopeImpl implements State {
      */
     public EList<Region> getRegions() {
         if (regions == null) {
-            regions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, scchartsPackage.STATE__REGIONS, scchartsPackage.REGION__PARENT_STATE);
+            regions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, SCChartsPackage.STATE__REGIONS, SCChartsPackage.REGION__PARENT_STATE);
         }
         return regions;
     }
@@ -211,7 +211,7 @@ public class StateImpl extends ScopeImpl implements State {
      * @generated
      */
     public Region getParentRegion() {
-        if (eContainerFeatureID() != scchartsPackage.STATE__PARENT_REGION) return null;
+        if (eContainerFeatureID() != SCChartsPackage.STATE__PARENT_REGION) return null;
         return (Region)eContainer();
     }
 
@@ -221,7 +221,7 @@ public class StateImpl extends ScopeImpl implements State {
      * @generated
      */
     public NotificationChain basicSetParentRegion(Region newParentRegion, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newParentRegion, scchartsPackage.STATE__PARENT_REGION, msgs);
+        msgs = eBasicSetContainer((InternalEObject)newParentRegion, SCChartsPackage.STATE__PARENT_REGION, msgs);
         return msgs;
     }
 
@@ -231,19 +231,19 @@ public class StateImpl extends ScopeImpl implements State {
      * @generated
      */
     public void setParentRegion(Region newParentRegion) {
-        if (newParentRegion != eInternalContainer() || (eContainerFeatureID() != scchartsPackage.STATE__PARENT_REGION && newParentRegion != null)) {
+        if (newParentRegion != eInternalContainer() || (eContainerFeatureID() != SCChartsPackage.STATE__PARENT_REGION && newParentRegion != null)) {
             if (EcoreUtil.isAncestor(this, newParentRegion))
                 throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
             NotificationChain msgs = null;
             if (eInternalContainer() != null)
                 msgs = eBasicRemoveFromContainer(msgs);
             if (newParentRegion != null)
-                msgs = ((InternalEObject)newParentRegion).eInverseAdd(this, scchartsPackage.REGION__STATES, Region.class, msgs);
+                msgs = ((InternalEObject)newParentRegion).eInverseAdd(this, SCChartsPackage.REGION__STATES, Region.class, msgs);
             msgs = basicSetParentRegion(newParentRegion, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.STATE__PARENT_REGION, newParentRegion, newParentRegion));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__PARENT_REGION, newParentRegion, newParentRegion));
     }
 
     /**
@@ -264,7 +264,7 @@ public class StateImpl extends ScopeImpl implements State {
         boolean oldIsInitial = isInitial;
         isInitial = newIsInitial;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.STATE__IS_INITIAL, oldIsInitial, isInitial));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__IS_INITIAL, oldIsInitial, isInitial));
     }
 
     /**
@@ -285,7 +285,7 @@ public class StateImpl extends ScopeImpl implements State {
         boolean oldIsFinal = isFinal;
         isFinal = newIsFinal;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.STATE__IS_FINAL, oldIsFinal, isFinal));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__IS_FINAL, oldIsFinal, isFinal));
     }
 
     /**
@@ -295,7 +295,7 @@ public class StateImpl extends ScopeImpl implements State {
      */
     public EList<Transition> getOutgoingTransitions() {
         if (outgoingTransitions == null) {
-            outgoingTransitions = new EObjectContainmentWithInverseEList<Transition>(Transition.class, this, scchartsPackage.STATE__OUTGOING_TRANSITIONS, scchartsPackage.TRANSITION__SOURCE_STATE);
+            outgoingTransitions = new EObjectContainmentWithInverseEList<Transition>(Transition.class, this, SCChartsPackage.STATE__OUTGOING_TRANSITIONS, SCChartsPackage.TRANSITION__SOURCE_STATE);
         }
         return outgoingTransitions;
     }
@@ -307,7 +307,7 @@ public class StateImpl extends ScopeImpl implements State {
      */
     public EList<Transition> getIncomingTransitions() {
         if (incomingTransitions == null) {
-            incomingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, scchartsPackage.STATE__INCOMING_TRANSITIONS, scchartsPackage.TRANSITION__TARGET_STATE);
+            incomingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, SCChartsPackage.STATE__INCOMING_TRANSITIONS, SCChartsPackage.TRANSITION__TARGET_STATE);
         }
         return incomingTransitions;
     }
@@ -321,15 +321,15 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case scchartsPackage.STATE__REGIONS:
+            case SCChartsPackage.STATE__REGIONS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getRegions()).basicAdd(otherEnd, msgs);
-            case scchartsPackage.STATE__PARENT_REGION:
+            case SCChartsPackage.STATE__PARENT_REGION:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetParentRegion((Region)otherEnd, msgs);
-            case scchartsPackage.STATE__OUTGOING_TRANSITIONS:
+            case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getOutgoingTransitions()).basicAdd(otherEnd, msgs);
-            case scchartsPackage.STATE__INCOMING_TRANSITIONS:
+            case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingTransitions()).basicAdd(otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -343,13 +343,13 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case scchartsPackage.STATE__REGIONS:
+            case SCChartsPackage.STATE__REGIONS:
                 return ((InternalEList<?>)getRegions()).basicRemove(otherEnd, msgs);
-            case scchartsPackage.STATE__PARENT_REGION:
+            case SCChartsPackage.STATE__PARENT_REGION:
                 return basicSetParentRegion(null, msgs);
-            case scchartsPackage.STATE__OUTGOING_TRANSITIONS:
+            case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 return ((InternalEList<?>)getOutgoingTransitions()).basicRemove(otherEnd, msgs);
-            case scchartsPackage.STATE__INCOMING_TRANSITIONS:
+            case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return ((InternalEList<?>)getIncomingTransitions()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -363,8 +363,8 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
         switch (eContainerFeatureID()) {
-            case scchartsPackage.STATE__PARENT_REGION:
-                return eInternalContainer().eInverseRemove(this, scchartsPackage.REGION__STATES, Region.class, msgs);
+            case SCChartsPackage.STATE__PARENT_REGION:
+                return eInternalContainer().eInverseRemove(this, SCChartsPackage.REGION__STATES, Region.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
@@ -377,19 +377,19 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case scchartsPackage.STATE__TYPE:
+            case SCChartsPackage.STATE__TYPE:
                 return getType();
-            case scchartsPackage.STATE__REGIONS:
+            case SCChartsPackage.STATE__REGIONS:
                 return getRegions();
-            case scchartsPackage.STATE__PARENT_REGION:
+            case SCChartsPackage.STATE__PARENT_REGION:
                 return getParentRegion();
-            case scchartsPackage.STATE__IS_INITIAL:
+            case SCChartsPackage.STATE__IS_INITIAL:
                 return isIsInitial();
-            case scchartsPackage.STATE__IS_FINAL:
+            case SCChartsPackage.STATE__IS_FINAL:
                 return isIsFinal();
-            case scchartsPackage.STATE__OUTGOING_TRANSITIONS:
+            case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 return getOutgoingTransitions();
-            case scchartsPackage.STATE__INCOMING_TRANSITIONS:
+            case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return getIncomingTransitions();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -404,27 +404,27 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case scchartsPackage.STATE__TYPE:
+            case SCChartsPackage.STATE__TYPE:
                 setType((StateType)newValue);
                 return;
-            case scchartsPackage.STATE__REGIONS:
+            case SCChartsPackage.STATE__REGIONS:
                 getRegions().clear();
                 getRegions().addAll((Collection<? extends Region>)newValue);
                 return;
-            case scchartsPackage.STATE__PARENT_REGION:
+            case SCChartsPackage.STATE__PARENT_REGION:
                 setParentRegion((Region)newValue);
                 return;
-            case scchartsPackage.STATE__IS_INITIAL:
+            case SCChartsPackage.STATE__IS_INITIAL:
                 setIsInitial((Boolean)newValue);
                 return;
-            case scchartsPackage.STATE__IS_FINAL:
+            case SCChartsPackage.STATE__IS_FINAL:
                 setIsFinal((Boolean)newValue);
                 return;
-            case scchartsPackage.STATE__OUTGOING_TRANSITIONS:
+            case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 getOutgoingTransitions().clear();
                 getOutgoingTransitions().addAll((Collection<? extends Transition>)newValue);
                 return;
-            case scchartsPackage.STATE__INCOMING_TRANSITIONS:
+            case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 getIncomingTransitions().clear();
                 getIncomingTransitions().addAll((Collection<? extends Transition>)newValue);
                 return;
@@ -440,25 +440,25 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case scchartsPackage.STATE__TYPE:
+            case SCChartsPackage.STATE__TYPE:
                 setType(TYPE_EDEFAULT);
                 return;
-            case scchartsPackage.STATE__REGIONS:
+            case SCChartsPackage.STATE__REGIONS:
                 getRegions().clear();
                 return;
-            case scchartsPackage.STATE__PARENT_REGION:
+            case SCChartsPackage.STATE__PARENT_REGION:
                 setParentRegion((Region)null);
                 return;
-            case scchartsPackage.STATE__IS_INITIAL:
+            case SCChartsPackage.STATE__IS_INITIAL:
                 setIsInitial(IS_INITIAL_EDEFAULT);
                 return;
-            case scchartsPackage.STATE__IS_FINAL:
+            case SCChartsPackage.STATE__IS_FINAL:
                 setIsFinal(IS_FINAL_EDEFAULT);
                 return;
-            case scchartsPackage.STATE__OUTGOING_TRANSITIONS:
+            case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 getOutgoingTransitions().clear();
                 return;
-            case scchartsPackage.STATE__INCOMING_TRANSITIONS:
+            case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 getIncomingTransitions().clear();
                 return;
         }
@@ -473,19 +473,19 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case scchartsPackage.STATE__TYPE:
+            case SCChartsPackage.STATE__TYPE:
                 return type != TYPE_EDEFAULT;
-            case scchartsPackage.STATE__REGIONS:
+            case SCChartsPackage.STATE__REGIONS:
                 return regions != null && !regions.isEmpty();
-            case scchartsPackage.STATE__PARENT_REGION:
+            case SCChartsPackage.STATE__PARENT_REGION:
                 return getParentRegion() != null;
-            case scchartsPackage.STATE__IS_INITIAL:
+            case SCChartsPackage.STATE__IS_INITIAL:
                 return isInitial != IS_INITIAL_EDEFAULT;
-            case scchartsPackage.STATE__IS_FINAL:
+            case SCChartsPackage.STATE__IS_FINAL:
                 return isFinal != IS_FINAL_EDEFAULT;
-            case scchartsPackage.STATE__OUTGOING_TRANSITIONS:
+            case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 return outgoingTransitions != null && !outgoingTransitions.isEmpty();
-            case scchartsPackage.STATE__INCOMING_TRANSITIONS:
+            case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return incomingTransitions != null && !incomingTransitions.isEmpty();
         }
         return super.eIsSet(featureID);

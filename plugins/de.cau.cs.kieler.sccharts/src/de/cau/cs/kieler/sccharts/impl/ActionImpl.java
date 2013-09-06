@@ -19,7 +19,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.Effect;
-import de.cau.cs.kieler.sccharts.scchartsPackage;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import java.util.Collection;
 
@@ -157,7 +157,7 @@ public class ActionImpl extends AnnotatableImpl implements Action {
      */
     @Override
     protected EClass eStaticClass() {
-        return scchartsPackage.Literals.ACTION;
+        return SCChartsPackage.Literals.ACTION;
     }
 
     /**
@@ -167,7 +167,7 @@ public class ActionImpl extends AnnotatableImpl implements Action {
      */
     public EList<Effect> getEffects() {
         if (effects == null) {
-            effects = new EObjectContainmentEList<Effect>(Effect.class, this, scchartsPackage.ACTION__EFFECTS);
+            effects = new EObjectContainmentEList<Effect>(Effect.class, this, SCChartsPackage.ACTION__EFFECTS);
         }
         return effects;
     }
@@ -190,7 +190,7 @@ public class ActionImpl extends AnnotatableImpl implements Action {
         Expression oldTrigger = trigger;
         trigger = newTrigger;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, scchartsPackage.ACTION__TRIGGER, oldTrigger, newTrigger);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.ACTION__TRIGGER, oldTrigger, newTrigger);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -205,14 +205,14 @@ public class ActionImpl extends AnnotatableImpl implements Action {
         if (newTrigger != trigger) {
             NotificationChain msgs = null;
             if (trigger != null)
-                msgs = ((InternalEObject)trigger).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - scchartsPackage.ACTION__TRIGGER, null, msgs);
+                msgs = ((InternalEObject)trigger).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.ACTION__TRIGGER, null, msgs);
             if (newTrigger != null)
-                msgs = ((InternalEObject)newTrigger).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - scchartsPackage.ACTION__TRIGGER, null, msgs);
+                msgs = ((InternalEObject)newTrigger).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.ACTION__TRIGGER, null, msgs);
             msgs = basicSetTrigger(newTrigger, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.ACTION__TRIGGER, newTrigger, newTrigger));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ACTION__TRIGGER, newTrigger, newTrigger));
     }
 
     /**
@@ -233,7 +233,7 @@ public class ActionImpl extends AnnotatableImpl implements Action {
         int oldDelay = delay;
         delay = newDelay;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.ACTION__DELAY, oldDelay, delay));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ACTION__DELAY, oldDelay, delay));
     }
 
     /**
@@ -254,7 +254,7 @@ public class ActionImpl extends AnnotatableImpl implements Action {
         boolean oldIsImmediate = isImmediate;
         isImmediate = newIsImmediate;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.ACTION__IS_IMMEDIATE, oldIsImmediate, isImmediate));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ACTION__IS_IMMEDIATE, oldIsImmediate, isImmediate));
     }
 
     /**
@@ -275,7 +275,7 @@ public class ActionImpl extends AnnotatableImpl implements Action {
         String oldLabel = label;
         label = newLabel;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, scchartsPackage.ACTION__LABEL, oldLabel, label));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ACTION__LABEL, oldLabel, label));
     }
 
     /**
@@ -286,9 +286,9 @@ public class ActionImpl extends AnnotatableImpl implements Action {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case scchartsPackage.ACTION__EFFECTS:
+            case SCChartsPackage.ACTION__EFFECTS:
                 return ((InternalEList<?>)getEffects()).basicRemove(otherEnd, msgs);
-            case scchartsPackage.ACTION__TRIGGER:
+            case SCChartsPackage.ACTION__TRIGGER:
                 return basicSetTrigger(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -302,15 +302,15 @@ public class ActionImpl extends AnnotatableImpl implements Action {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case scchartsPackage.ACTION__EFFECTS:
+            case SCChartsPackage.ACTION__EFFECTS:
                 return getEffects();
-            case scchartsPackage.ACTION__TRIGGER:
+            case SCChartsPackage.ACTION__TRIGGER:
                 return getTrigger();
-            case scchartsPackage.ACTION__DELAY:
+            case SCChartsPackage.ACTION__DELAY:
                 return getDelay();
-            case scchartsPackage.ACTION__IS_IMMEDIATE:
+            case SCChartsPackage.ACTION__IS_IMMEDIATE:
                 return isIsImmediate();
-            case scchartsPackage.ACTION__LABEL:
+            case SCChartsPackage.ACTION__LABEL:
                 return getLabel();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -325,20 +325,20 @@ public class ActionImpl extends AnnotatableImpl implements Action {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case scchartsPackage.ACTION__EFFECTS:
+            case SCChartsPackage.ACTION__EFFECTS:
                 getEffects().clear();
                 getEffects().addAll((Collection<? extends Effect>)newValue);
                 return;
-            case scchartsPackage.ACTION__TRIGGER:
+            case SCChartsPackage.ACTION__TRIGGER:
                 setTrigger((Expression)newValue);
                 return;
-            case scchartsPackage.ACTION__DELAY:
+            case SCChartsPackage.ACTION__DELAY:
                 setDelay((Integer)newValue);
                 return;
-            case scchartsPackage.ACTION__IS_IMMEDIATE:
+            case SCChartsPackage.ACTION__IS_IMMEDIATE:
                 setIsImmediate((Boolean)newValue);
                 return;
-            case scchartsPackage.ACTION__LABEL:
+            case SCChartsPackage.ACTION__LABEL:
                 setLabel((String)newValue);
                 return;
         }
@@ -353,19 +353,19 @@ public class ActionImpl extends AnnotatableImpl implements Action {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case scchartsPackage.ACTION__EFFECTS:
+            case SCChartsPackage.ACTION__EFFECTS:
                 getEffects().clear();
                 return;
-            case scchartsPackage.ACTION__TRIGGER:
+            case SCChartsPackage.ACTION__TRIGGER:
                 setTrigger((Expression)null);
                 return;
-            case scchartsPackage.ACTION__DELAY:
+            case SCChartsPackage.ACTION__DELAY:
                 setDelay(DELAY_EDEFAULT);
                 return;
-            case scchartsPackage.ACTION__IS_IMMEDIATE:
+            case SCChartsPackage.ACTION__IS_IMMEDIATE:
                 setIsImmediate(IS_IMMEDIATE_EDEFAULT);
                 return;
-            case scchartsPackage.ACTION__LABEL:
+            case SCChartsPackage.ACTION__LABEL:
                 setLabel(LABEL_EDEFAULT);
                 return;
         }
@@ -380,15 +380,15 @@ public class ActionImpl extends AnnotatableImpl implements Action {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case scchartsPackage.ACTION__EFFECTS:
+            case SCChartsPackage.ACTION__EFFECTS:
                 return effects != null && !effects.isEmpty();
-            case scchartsPackage.ACTION__TRIGGER:
+            case SCChartsPackage.ACTION__TRIGGER:
                 return trigger != null;
-            case scchartsPackage.ACTION__DELAY:
+            case SCChartsPackage.ACTION__DELAY:
                 return delay != DELAY_EDEFAULT;
-            case scchartsPackage.ACTION__IS_IMMEDIATE:
+            case SCChartsPackage.ACTION__IS_IMMEDIATE:
                 return isImmediate != IS_IMMEDIATE_EDEFAULT;
-            case scchartsPackage.ACTION__LABEL:
+            case SCChartsPackage.ACTION__LABEL:
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
         }
         return super.eIsSet(featureID);

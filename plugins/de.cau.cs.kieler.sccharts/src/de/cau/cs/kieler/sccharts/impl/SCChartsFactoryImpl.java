@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * <!-- end-user-doc -->
  * @generated
  */
-public class scchartsFactoryImpl extends EFactoryImpl implements scchartsFactory {
+public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -44,17 +44,17 @@ public class scchartsFactoryImpl extends EFactoryImpl implements scchartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public static scchartsFactory init() {
+    public static SCChartsFactory init() {
         try {
-            scchartsFactory thescchartsFactory = (scchartsFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/sccharts/0.2.4"); 
-            if (thescchartsFactory != null) {
-                return thescchartsFactory;
+            SCChartsFactory theSCChartsFactory = (SCChartsFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/sccharts/0.2.4"); 
+            if (theSCChartsFactory != null) {
+                return theSCChartsFactory;
             }
         }
         catch (Exception exception) {
             EcorePlugin.INSTANCE.log(exception);
         }
-        return new scchartsFactoryImpl();
+        return new SCChartsFactoryImpl();
     }
 
     /**
@@ -63,7 +63,7 @@ public class scchartsFactoryImpl extends EFactoryImpl implements scchartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public scchartsFactoryImpl() {
+    public SCChartsFactoryImpl() {
         super();
     }
 
@@ -75,14 +75,14 @@ public class scchartsFactoryImpl extends EFactoryImpl implements scchartsFactory
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case scchartsPackage.ACTION: return createAction();
-            case scchartsPackage.ASSIGNMENT: return createAssignment();
-            case scchartsPackage.EMISSION: return createEmission();
-            case scchartsPackage.REGION: return createRegion();
-            case scchartsPackage.SUBSTITUTION: return createSubstitution();
-            case scchartsPackage.STATE: return createState();
-            case scchartsPackage.TRANSITION: return createTransition();
-            case scchartsPackage.TEXT_EFFECT: return createTextEffect();
+            case SCChartsPackage.ACTION: return createAction();
+            case SCChartsPackage.ASSIGNMENT: return createAssignment();
+            case SCChartsPackage.EMISSION: return createEmission();
+            case SCChartsPackage.REGION: return createRegion();
+            case SCChartsPackage.SUBSTITUTION: return createSubstitution();
+            case SCChartsPackage.STATE: return createState();
+            case SCChartsPackage.TRANSITION: return createTransition();
+            case SCChartsPackage.TEXT_EFFECT: return createTextEffect();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -96,11 +96,11 @@ public class scchartsFactoryImpl extends EFactoryImpl implements scchartsFactory
     @Override
     public Object createFromString(EDataType eDataType, String initialValue) {
         switch (eDataType.getClassifierID()) {
-            case scchartsPackage.STATE_TYPE:
+            case SCChartsPackage.STATE_TYPE:
                 return createStateTypeFromString(eDataType, initialValue);
-            case scchartsPackage.TRANSITION_TYPE:
+            case SCChartsPackage.TRANSITION_TYPE:
                 return createTransitionTypeFromString(eDataType, initialValue);
-            case scchartsPackage.PARSABLE:
+            case SCChartsPackage.PARSABLE:
                 return createParsableFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
@@ -115,11 +115,11 @@ public class scchartsFactoryImpl extends EFactoryImpl implements scchartsFactory
     @Override
     public String convertToString(EDataType eDataType, Object instanceValue) {
         switch (eDataType.getClassifierID()) {
-            case scchartsPackage.STATE_TYPE:
+            case SCChartsPackage.STATE_TYPE:
                 return convertStateTypeToString(eDataType, instanceValue);
-            case scchartsPackage.TRANSITION_TYPE:
+            case SCChartsPackage.TRANSITION_TYPE:
                 return convertTransitionTypeToString(eDataType, instanceValue);
-            case scchartsPackage.PARSABLE:
+            case SCChartsPackage.PARSABLE:
                 return convertParsableToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
@@ -269,8 +269,8 @@ public class scchartsFactoryImpl extends EFactoryImpl implements scchartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public scchartsPackage getscchartsPackage() {
-        return (scchartsPackage)getEPackage();
+    public SCChartsPackage getSCChartsPackage() {
+        return (SCChartsPackage)getEPackage();
     }
 
     /**
@@ -280,8 +280,8 @@ public class scchartsFactoryImpl extends EFactoryImpl implements scchartsFactory
      * @generated
      */
     @Deprecated
-    public static scchartsPackage getPackage() {
-        return scchartsPackage.eINSTANCE;
+    public static SCChartsPackage getPackage() {
+        return SCChartsPackage.eINSTANCE;
     }
 
-} //scchartsFactoryImpl
+} //SCChartsFactoryImpl

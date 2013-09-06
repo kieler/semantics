@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- end-model-doc -->
  *
  *
- * @see de.cau.cs.kieler.sccharts.scchartsPackage#getEffect()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getEffect()
  * @model abstract="true"
  * @generated
  */

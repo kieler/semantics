@@ -34,10 +34,10 @@ import org.eclipse.emf.ecore.util.Switch;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.sccharts.scchartsPackage
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage
  * @generated
  */
-public class scchartsSwitch<T> extends Switch<T> {
+public class SCChartsSwitch<T> extends Switch<T> {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -51,7 +51,7 @@ public class scchartsSwitch<T> extends Switch<T> {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected static scchartsPackage modelPackage;
+    protected static SCChartsPackage modelPackage;
 
     /**
      * Creates an instance of the switch.
@@ -59,9 +59,9 @@ public class scchartsSwitch<T> extends Switch<T> {
      * <!-- end-user-doc -->
      * @generated
      */
-    public scchartsSwitch() {
+    public SCChartsSwitch() {
         if (modelPackage == null) {
-            modelPackage = scchartsPackage.eINSTANCE;
+            modelPackage = SCChartsPackage.eINSTANCE;
         }
     }
 
@@ -88,34 +88,34 @@ public class scchartsSwitch<T> extends Switch<T> {
     @Override
     protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
-            case scchartsPackage.ACTION: {
+            case SCChartsPackage.ACTION: {
                 Action action = (Action)theEObject;
                 T result = caseAction(action);
                 if (result == null) result = caseAnnotatable(action);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case scchartsPackage.ASSIGNMENT: {
+            case SCChartsPackage.ASSIGNMENT: {
                 Assignment assignment = (Assignment)theEObject;
                 T result = caseAssignment(assignment);
                 if (result == null) result = caseEffect(assignment);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case scchartsPackage.EFFECT: {
+            case SCChartsPackage.EFFECT: {
                 Effect effect = (Effect)theEObject;
                 T result = caseEffect(effect);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case scchartsPackage.EMISSION: {
+            case SCChartsPackage.EMISSION: {
                 Emission emission = (Emission)theEObject;
                 T result = caseEmission(emission);
                 if (result == null) result = caseEffect(emission);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case scchartsPackage.REGION: {
+            case SCChartsPackage.REGION: {
                 Region region = (Region)theEObject;
                 T result = caseRegion(region);
                 if (result == null) result = caseScope(region);
@@ -123,13 +123,13 @@ public class scchartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case scchartsPackage.SUBSTITUTION: {
+            case SCChartsPackage.SUBSTITUTION: {
                 Substitution substitution = (Substitution)theEObject;
                 T result = caseSubstitution(substitution);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case scchartsPackage.STATE: {
+            case SCChartsPackage.STATE: {
                 State state = (State)theEObject;
                 T result = caseState(state);
                 if (result == null) result = caseScope(state);
@@ -137,7 +137,7 @@ public class scchartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case scchartsPackage.TRANSITION: {
+            case SCChartsPackage.TRANSITION: {
                 Transition transition = (Transition)theEObject;
                 T result = caseTransition(transition);
                 if (result == null) result = caseAction(transition);
@@ -145,14 +145,14 @@ public class scchartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case scchartsPackage.SCOPE: {
+            case SCChartsPackage.SCOPE: {
                 Scope scope = (Scope)theEObject;
                 T result = caseScope(scope);
                 if (result == null) result = caseAnnotatable(scope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case scchartsPackage.TEXT_EFFECT: {
+            case SCChartsPackage.TEXT_EFFECT: {
                 TextEffect textEffect = (TextEffect)theEObject;
                 T result = caseTextEffect(textEffect);
                 if (result == null) result = caseTextualCode(textEffect);
@@ -360,4 +360,4 @@ public class scchartsSwitch<T> extends Switch<T> {
         return null;
     }
 
-} //scchartsSwitch
+} //SCChartsSwitch

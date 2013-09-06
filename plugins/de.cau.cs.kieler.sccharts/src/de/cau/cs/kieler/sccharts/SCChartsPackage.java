@@ -35,11 +35,11 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.sccharts.scchartsFactory
+ * @see de.cau.cs.kieler.sccharts.SCChartsFactory
  * @model kind="package"
  * @generated
  */
-public interface scchartsPackage extends EPackage {
+public interface SCChartsPackage extends EPackage {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -77,14 +77,14 @@ public interface scchartsPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    scchartsPackage eINSTANCE = de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl.init();
+    SCChartsPackage eINSTANCE = de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl.init();
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ActionImpl <em>Action</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.sccharts.impl.ActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getAction()
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getAction()
      * @generated
      */
     int ACTION = 0;
@@ -157,7 +157,7 @@ public interface scchartsPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.sccharts.impl.EffectImpl
-     * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getEffect()
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEffect()
      * @generated
      */
     int EFFECT = 2;
@@ -176,7 +176,7 @@ public interface scchartsPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.sccharts.impl.AssignmentImpl
-     * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getAssignment()
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getAssignment()
      * @generated
      */
     int ASSIGNMENT = 1;
@@ -213,7 +213,7 @@ public interface scchartsPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.sccharts.impl.EmissionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getEmission()
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEmission()
      * @generated
      */
     int EMISSION = 3;
@@ -250,7 +250,7 @@ public interface scchartsPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.sccharts.impl.ScopeImpl
-     * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getScope()
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getScope()
      * @generated
      */
     int SCOPE = 8;
@@ -395,7 +395,7 @@ public interface scchartsPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.sccharts.impl.RegionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getRegion()
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion()
      * @generated
      */
     int REGION = 4;
@@ -558,7 +558,7 @@ public interface scchartsPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.sccharts.impl.SubstitutionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getSubstitution()
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSubstitution()
      * @generated
      */
     int SUBSTITUTION = 5;
@@ -604,7 +604,7 @@ public interface scchartsPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.sccharts.impl.StateImpl
-     * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getState()
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getState()
      * @generated
      */
     int STATE = 6;
@@ -812,7 +812,7 @@ public interface scchartsPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.sccharts.impl.TransitionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getTransition()
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransition()
      * @generated
      */
     int TRANSITION = 7;
@@ -930,7 +930,7 @@ public interface scchartsPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.sccharts.impl.TextEffectImpl
-     * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getTextEffect()
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTextEffect()
      * @generated
      */
     int TEXT_EFFECT = 9;
@@ -967,7 +967,7 @@ public interface scchartsPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.sccharts.StateType
-     * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getStateType()
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
      * @generated
      */
     int STATE_TYPE = 10;
@@ -977,7 +977,7 @@ public interface scchartsPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see de.cau.cs.kieler.sccharts.TransitionType
-     * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getTransitionType()
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransitionType()
      * @generated
      */
     int TRANSITION_TYPE = 11;
@@ -987,7 +987,7 @@ public interface scchartsPackage extends EPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see java.lang.String
-     * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getParsable()
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
      * @generated
      */
     int PARSABLE = 12;
@@ -1560,7 +1560,7 @@ public interface scchartsPackage extends EPackage {
      * @return the factory that creates the instances of the model.
      * @generated
      */
-    scchartsFactory getscchartsFactory();
+    SCChartsFactory getSCChartsFactory();
 
     /**
      * <!-- begin-user-doc -->
@@ -1580,7 +1580,7 @@ public interface scchartsPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.sccharts.impl.ActionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getAction()
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getAction()
          * @generated
          */
         EClass ACTION = eINSTANCE.getAction();
@@ -1630,7 +1630,7 @@ public interface scchartsPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.sccharts.impl.AssignmentImpl
-         * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getAssignment()
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getAssignment()
          * @generated
          */
         EClass ASSIGNMENT = eINSTANCE.getAssignment();
@@ -1656,7 +1656,7 @@ public interface scchartsPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.sccharts.impl.EffectImpl
-         * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getEffect()
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEffect()
          * @generated
          */
         EClass EFFECT = eINSTANCE.getEffect();
@@ -1666,7 +1666,7 @@ public interface scchartsPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.sccharts.impl.EmissionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getEmission()
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEmission()
          * @generated
          */
         EClass EMISSION = eINSTANCE.getEmission();
@@ -1692,7 +1692,7 @@ public interface scchartsPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.sccharts.impl.RegionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getRegion()
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion()
          * @generated
          */
         EClass REGION = eINSTANCE.getRegion();
@@ -1718,7 +1718,7 @@ public interface scchartsPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.sccharts.impl.SubstitutionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getSubstitution()
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSubstitution()
          * @generated
          */
         EClass SUBSTITUTION = eINSTANCE.getSubstitution();
@@ -1752,7 +1752,7 @@ public interface scchartsPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.sccharts.impl.StateImpl
-         * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getState()
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getState()
          * @generated
          */
         EClass STATE = eINSTANCE.getState();
@@ -1818,7 +1818,7 @@ public interface scchartsPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.sccharts.impl.TransitionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getTransition()
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransition()
          * @generated
          */
         EClass TRANSITION = eINSTANCE.getTransition();
@@ -1868,7 +1868,7 @@ public interface scchartsPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.sccharts.impl.ScopeImpl
-         * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getScope()
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getScope()
          * @generated
          */
         EClass SCOPE = eINSTANCE.getScope();
@@ -1982,7 +1982,7 @@ public interface scchartsPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.sccharts.impl.TextEffectImpl
-         * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getTextEffect()
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTextEffect()
          * @generated
          */
         EClass TEXT_EFFECT = eINSTANCE.getTextEffect();
@@ -1992,7 +1992,7 @@ public interface scchartsPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.sccharts.StateType
-         * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getStateType()
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
          * @generated
          */
         EEnum STATE_TYPE = eINSTANCE.getStateType();
@@ -2002,7 +2002,7 @@ public interface scchartsPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see de.cau.cs.kieler.sccharts.TransitionType
-         * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getTransitionType()
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransitionType()
          * @generated
          */
         EEnum TRANSITION_TYPE = eINSTANCE.getTransitionType();
@@ -2012,11 +2012,11 @@ public interface scchartsPackage extends EPackage {
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @see java.lang.String
-         * @see de.cau.cs.kieler.sccharts.impl.scchartsPackageImpl#getParsable()
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
          * @generated
          */
         EDataType PARSABLE = eINSTANCE.getParsable();
 
     }
 
-} //scchartsPackage
+} //SCChartsPackage

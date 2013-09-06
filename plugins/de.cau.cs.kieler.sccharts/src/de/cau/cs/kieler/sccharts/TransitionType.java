@@ -28,7 +28,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * A Transition has a type specifying some special property.
  * 
  * <!-- end-model-doc -->
- * @see de.cau.cs.kieler.sccharts.scchartsPackage#getTransitionType()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransitionType()
  * @model
  * @generated
  */

@@ -31,10 +31,10 @@ import org.eclipse.emf.ecore.EObject;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.sccharts.scchartsPackage
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage
  * @generated
  */
-public class scchartsAdapterFactory extends AdapterFactoryImpl {
+public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -48,7 +48,7 @@ public class scchartsAdapterFactory extends AdapterFactoryImpl {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected static scchartsPackage modelPackage;
+    protected static SCChartsPackage modelPackage;
 
     /**
      * Creates an instance of the adapter factory.
@@ -56,9 +56,9 @@ public class scchartsAdapterFactory extends AdapterFactoryImpl {
      * <!-- end-user-doc -->
      * @generated
      */
-    public scchartsAdapterFactory() {
+    public SCChartsAdapterFactory() {
         if (modelPackage == null) {
-            modelPackage = scchartsPackage.eINSTANCE;
+            modelPackage = SCChartsPackage.eINSTANCE;
         }
     }
 
@@ -87,8 +87,8 @@ public class scchartsAdapterFactory extends AdapterFactoryImpl {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected scchartsSwitch<Adapter> modelSwitch =
-        new scchartsSwitch<Adapter>() {
+    protected SCChartsSwitch<Adapter> modelSwitch =
+        new SCChartsSwitch<Adapter>() {
             @Override
             public Adapter caseAction(Action object) {
                 return createActionAdapter();
@@ -337,4 +337,4 @@ public class scchartsAdapterFactory extends AdapterFactoryImpl {
         return null;
     }
 
-} //scchartsAdapterFactory
+} //SCChartsAdapterFactory

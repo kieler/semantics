@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.sccharts.Effect;
-import de.cau.cs.kieler.sccharts.scchartsPackage;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -53,7 +53,7 @@ public abstract class EffectImpl extends EObjectImpl implements Effect {
      */
     @Override
     protected EClass eStaticClass() {
-        return scchartsPackage.Literals.EFFECT;
+        return SCChartsPackage.Literals.EFFECT;
     }
 
 } //EffectImpl

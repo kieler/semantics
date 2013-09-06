@@ -15,8 +15,8 @@ package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.core.kexpressions.impl.TextualCodeImpl;
 
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.TextEffect;
-import de.cau.cs.kieler.sccharts.scchartsPackage;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -53,7 +53,7 @@ public class TextEffectImpl extends TextualCodeImpl implements TextEffect {
      */
     @Override
     protected EClass eStaticClass() {
-        return scchartsPackage.Literals.TEXT_EFFECT;
+        return SCChartsPackage.Literals.TEXT_EFFECT;
     }
 
 } //TextEffectImpl

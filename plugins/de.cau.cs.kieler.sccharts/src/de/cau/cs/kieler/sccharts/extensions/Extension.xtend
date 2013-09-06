@@ -13,11 +13,9 @@
  */
  package de.cau.cs.kieler.sccharts.extensions
 
-import org.eclipse.emf.common.util.EList
-import org.eclipse.emf.ecore.EObject
-import java.util.List
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
@@ -29,8 +27,6 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class Extension { 
 
-   // -------------------------------------------------------------------------
-   
     //-------------------------------------------------------------------------
     //--             H O T F I X   F O R   S C C H A R T S                   --
     //-------------------------------------------------------------------------

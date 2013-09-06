@@ -53,7 +53,7 @@ import org.eclipse.emf.common.util.EList;
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.sccharts.scchartsPackage#getAction()
+ * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction()
  * @model
  * @generated
  */
@@ -75,7 +75,7 @@ public interface Action extends Annotatable {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Effects</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getAction_Effects()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Effects()
      * @model containment="true"
      * @generated
      */
@@ -91,7 +91,7 @@ public interface Action extends Annotatable {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Trigger</em>' containment reference.
      * @see #setTrigger(Expression)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getAction_Trigger()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Trigger()
      * @model containment="true"
      * @generated
      */
@@ -118,7 +118,7 @@ public interface Action extends Annotatable {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Delay</em>' attribute.
      * @see #setDelay(int)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getAction_Delay()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Delay()
      * @model default="1"
      * @generated
      */
@@ -144,7 +144,7 @@ public interface Action extends Annotatable {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Is Immediate</em>' attribute.
      * @see #setIsImmediate(boolean)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getAction_IsImmediate()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_IsImmediate()
      * @model
      * @generated
      */
@@ -170,7 +170,7 @@ public interface Action extends Annotatable {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Label</em>' attribute.
      * @see #setLabel(String)
-     * @see de.cau.cs.kieler.sccharts.scchartsPackage#getAction_Label()
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Label()
      * @model unique="false" ordered="false"
      * @generated
      */
