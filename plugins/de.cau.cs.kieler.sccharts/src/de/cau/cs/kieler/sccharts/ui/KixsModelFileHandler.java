@@ -137,6 +137,7 @@ public class KixsModelFileHandler extends AbstractConvertModelHandler {
      */
     @Override
     protected Injector createResourceInjector() {
+        // Force AbstractConvertModelHandler to use XMIResource (instead of Xtext Resources)
         return null;
     }
 

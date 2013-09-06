@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
@@ -200,14 +201,28 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
         // Create URIs and load the instance with our resource injector
         URI input = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
         URI output = URI.createURI("");
+        EObject model;
         Injector rInjector = createResourceInjector();
-        ResourceSet resourceSet = rInjector.getInstance(ResourceSet.class);
-        Resource resourceLoad = resourceSet.getResource(input, true);
-        EObject model = resourceLoad.getContents().get(0);
+        if (rInjector != null) {
+            ResourceSet resourceSet = rInjector.getInstance(ResourceSet.class);
+            Resource resourceLoad = resourceSet.getResource(input, true);
+            model = resourceLoad.getContents().get(0);
+        }
+        else {
+            // Try to load SCCharts model
+            XMIResourceImpl inputResource = new XMIResourceImpl(input);            
+            // Load SCCharts model
+            try {
+                inputResource.load(null);
+                model = inputResource.getContents().get(0);
+            } catch (IOException e) {
+                throw new ExecutionException("Could not load SCChart as an XMIResource.", e);
+            }
+        }
 
         // Transform the model and unload the resource
         Object transformedObject = transform(model, event, selection);
-        resourceLoad.unload();
+        model.eResource().unload();
 
         // Set destination uri
         output = URI.createURI(input.toString());
