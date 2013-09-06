@@ -1,34 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<site
-      associateSitesURL="associateSites.xml">
+<site associateSitesURL="associateSites.xml">
+   
    <description name="KIELER Semantics (Nightly Builds)" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/">
       Update site for the KIELER Semantics project nightly builds.
    </description>
-   <!--   <feature url="features/de.cau.cs.kieler.sdk_0.6.0.qualifier.jar" id="de.cau.cs.kieler.sdk" version="0.6.0.qualifier">
-      <category name="kieler-sem-dev"/>
-   </feature> -->
-   <!--   <feature url="features/de.cau.cs.kieler.uml2_0.4.0.qualifier.jar" id="de.cau.cs.kieler.uml2.feature" version="0.4.0.qualifier">
-      <category name="kieler-sem"/>
-   </feature>
-      <feature url="features/de.cau.cs.kieler.uml2.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.uml2.feature.source" version="0.4.0.qualifier">
-      <category name="kieler-sem-dev"/>
-   </feature> -->
-   <feature url="features/de.cau.cs.kieler.synccharts_0.8.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.feature" version="0.8.0.qualifier">
-      <category name="kieler-sem"/>
-   </feature>
-<!--
-   <feature url="features/de.cau.cs.kieler.synccharts.source_0.8.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.feature.source" version="0.8.0.qualifier">
-      <category name="kieler-sem-dev"/>
-   </feature>
--->
+   
+   <!-- CATEGORY DEFINITIONS -->
+
    <category-def name="kieler-sem" label="KIELER Semantics">
       <description>
          Kiel Integrated Environment for Layout Eclipse RichClient, Semantics components, Nightly Build
       </description>
    </category-def>
-   <category-def name="kieler-sem-dev" label="KIELER Semantics (Development)">
+   <category-def name="kieler-sources" label="KIELER Sources">
       <description>
-         Kiel Integrated Environment for Layout Eclipse RichClient, Semantics components, Nightly Build (Sources and Additional Features)
+         Source features for features of all other categories.
       </description>
    </category-def>
+
+
+   <!-- KIELER SEMANTICS -->
+
+   <feature url="features/de.cau.cs.kieler.esterel_0.2.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature" version="0.2.0.qualifier">
+      <category name="kieler-sem"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.esterel.source_0.2.0.qualifier.jar" id="de.cau.cs.kieler.esterel.feature.source" version="0.2.0.qualifier">
+      <category name="kieler-sources"/>
+   </feature>
+
+   <feature url="features/de.cau.cs.kieler.synccharts_0.8.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.feature" version="0.8.0.qualifier">
+      <category name="kieler-sem"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.synccharts.source_0.8.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.feature.source" version="0.8.0.qualifier">
+      <category name="kieler-sources"/>
+   </feature>
+
+   <!--
+   <feature url="features/de.cau.cs.kieler.uml2_0.4.0.qualifier.jar" id="de.cau.cs.kieler.uml2.feature" version="0.4.0.qualifier">
+      <category name="kieler-sem"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.uml2.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.uml2.feature.source" version="0.4.0.qualifier">
+      <category name="kieler-sources"/>
+   </feature>
+   -->
+
 </site>

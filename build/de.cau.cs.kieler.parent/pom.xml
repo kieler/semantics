@@ -19,7 +19,7 @@
     <profile>
       <id>juno42</id>
       <properties>
-        <tycho-version>0.18.0</tycho-version>
+        <tycho-version>0.18.1</tycho-version>
         <targetJdk>1.5</targetJdk>
       </properties>
 
@@ -27,7 +27,10 @@
         <repository>
           <id>p2.juno42</id>
           <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/juno422/</url>
+<!--
           <url>file:/home/java/repository/juno422/</url>
+-->
         </repository>
         <repository>
           <id>p2.ptolemy</id>

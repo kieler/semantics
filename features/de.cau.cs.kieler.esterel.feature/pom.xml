@@ -12,9 +12,6 @@
   <version>0.2.0-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
-<!-- Disable building the source feature for the moment since a few plug-ins
-     do not build source versions yet. -->
-<!--
   <build>
     <plugins>
       <plugin>
@@ -28,6 +25,15 @@
             <goals>
               <goal>source-feature</goal>
             </goals>
+            <configuration>
+              <excludes>
+                <plugin id="de.cau.cs.kieler.esterel.cec.linux.x86" />
+                <plugin id="de.cau.cs.kieler.esterel.cec.linux.x86_64" />
+                <plugin id="de.cau.cs.kieler.esterel.cec.macosx.x86" />
+                <plugin id="de.cau.cs.kieler.esterel.cec.macosx.x86_64" />
+                <plugin id="de.cau.cs.kieler.esterel.cec.win32.x86" />
+              </excludes>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -47,5 +53,4 @@
       </plugin>
     </plugins>
   </build>
--->
 </project>
