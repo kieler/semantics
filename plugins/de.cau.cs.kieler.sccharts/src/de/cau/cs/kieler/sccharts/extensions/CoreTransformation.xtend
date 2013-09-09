@@ -54,7 +54,7 @@ class CoreTransformation {
 
     // Transforming Local Signals.
     def Region transformExposeLocalSignal(Region rootRegion) {
-        // Clone the complete SyncCharts region 
+        // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
@@ -184,7 +184,7 @@ class CoreTransformation {
     
     // Transforming Normal Termination. 
     def Region transformNormalTermination(Region rootRegion) {
-        // Clone the complete SyncCharts region 
+        // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
@@ -317,7 +317,7 @@ class CoreTransformation {
     // the above transformation.
     
     def Region transformSurfaceDepth (Region rootRegion) {
-        // Clone the complete SyncCharts region 
+        // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
 
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).filter(e | !e.hierarchical).toList();
@@ -457,7 +457,7 @@ class CoreTransformation {
     // Add T_eff to C's outgoing transitions. 
     
     def Region transformSplitTransition (Region rootRegion) {
-        // Clone the complete SyncCharts region 
+        // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
 
         var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
@@ -518,7 +518,7 @@ class CoreTransformation {
 
 
     def Region transformFinalStateTransition (Region rootRegion) {
-        // Clone the complete SyncCharts region 
+        // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
 
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
@@ -678,7 +678,7 @@ class CoreTransformation {
     // in order to handle possible outgoing normal terminations of S correctly.
     
     def Region transformCountDelay (Region rootRegion) {
-        // Clone the complete SyncCharts region 
+        // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
 
         var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
@@ -768,7 +768,7 @@ class CoreTransformation {
 //     
 //    // Transforming Count Delays entry function.
 //    def Region transformCountDelay (Region rootRegion) {
-//        // Clone the complete SyncCharts region 
+//        // Clone the complete SCCharts region 
 //        var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
 //
 //        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
@@ -796,7 +796,7 @@ class CoreTransformation {
 //               auxiliaryVariable.setType(ValueType::INT);
 //               auxiliaryVariable.setInitialValue("0");
 //
-//               // add auxiliaryVariable to first (and only) root region state SyncCharts main interface
+//               // add auxiliaryVariable to first (and only) root region state SCCharts main interface
 //                 targetRootRegion.states.get(0).variables.add(auxiliaryVariable);
 //                 
 //               // add self-loop transition, counting up the variable
@@ -850,7 +850,7 @@ class CoreTransformation {
     
     // Transforming Suspends.
     def Region transformSuspend(Region rootRegion) {
-        // Clone the complete SyncCharts region 
+        // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
 
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
@@ -1025,7 +1025,7 @@ class CoreTransformation {
     // Transforming History. This is using the concept of suspend so it must
     // be followed by resolving suspension
     def Region transformHistory(Region rootRegion) {
-        // Clone the complete SyncCharts region 
+        // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
@@ -1078,7 +1078,7 @@ class CoreTransformation {
             auxiliarySuspendSignal.setIsOutput(false);
             auxiliarySuspendSignal.setType(ValueType::PURE);
 
-            // Add auxiliarySignal to first (and only) root region state SyncCharts main interface
+            // Add auxiliarySignal to first (and only) root region state SCCharts main interface
             targetRootRegion.states.get(0).signals.add(auxiliarySuspendSignal);
             
             var Expression suspensionTrigger;
@@ -1146,7 +1146,7 @@ class CoreTransformation {
             auxiliaryEntrySignal.setIsInput(false);
             auxiliaryEntrySignal.setIsOutput(false);
             auxiliaryEntrySignal.setType(ValueType::PURE);
-            // Add auxiliarySignal to first (and only) root region state SyncCharts main interface
+            // Add auxiliarySignal to first (and only) root region state SCCharts main interface
             targetRootRegion.states.get(0).signals.add(auxiliaryEntrySignal);
 
 
@@ -1187,7 +1187,7 @@ class CoreTransformation {
             auxiliaryResetSignal.setIsOutput(false);
             auxiliaryResetSignal.setType(ValueType::PURE);
 
-            // Add auxiliarySignal to first (and only) root region state SyncCharts main interface
+            // Add auxiliarySignal to first (and only) root region state SCCharts main interface
             targetRootRegion.states.get(0).signals.add(auxiliaryResetSignal);
             
             // Add a self loop to the NEW state that resets it if auxiliary reset signal is present
@@ -1217,7 +1217,7 @@ class CoreTransformation {
     
     // Transforming During Actions.
     def Region transformDuringAction(Region rootRegion) {
-        // Clone the complete SyncCharts region 
+        // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
@@ -1290,7 +1290,7 @@ class CoreTransformation {
 
     // Transforming Entry and During Actions.
     def Region transformEntryAction(Region rootRegion) {
-        // Clone the complete SyncCharts region 
+        // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
@@ -1403,7 +1403,7 @@ class CoreTransformation {
     
     // Transforming Exit Actions. 
     def Region transformExitAction(Region rootRegion) {
-        // Clone the complete SyncCharts region 
+        // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
@@ -1483,7 +1483,7 @@ class CoreTransformation {
         // Weak abort the macro state and connect it to the original target. Put the action into an
         // transition within the macro state.
         //
-        // From Charles Andre, Semantics of SyncCharts: Note that strong and weak abortions have the
+        // From Charles Andre, Semantics of SCCharts: Note that strong and weak abortions have the
         // same effect on exit actions. This explains why exit actions are primitive constructs: they 
         // cannot be expressed by a combination of the already studied constructs.
         //
@@ -1765,7 +1765,7 @@ class CoreTransformation {
            
     // Transforming PRE Operator.
     def Region transformPreOperator(Region rootRegion) {
-        // Clone the complete SyncCharts region 
+        // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
@@ -2030,7 +2030,7 @@ class CoreTransformation {
            
     // Transforming SCC Aborts.
     def Region transformSCCAborts(Region rootRegion) {
-        // Clone the complete SyncCharts region 
+        // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
@@ -2166,7 +2166,7 @@ class CoreTransformation {
             if (weakTriggerOperatorExpression.subExpressions.size == 1) {
                 weakTrigger = weakTriggerOperatorExpression.subExpressions.get(0);
             }
-            // Hotfix for SyncCharts
+            // Hotfix for SCCharts
             if (strongTrigger instanceof OperatorExpression) {
                 strongTrigger = (strongTrigger as OperatorExpression).fixForOperatorExpressionLists;
             }
