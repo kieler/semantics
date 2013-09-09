@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ 
+ http://www.informatik.uni-kiel.de/rtsys/kieler/
+ 
+ Copyright 2009 by
+ + Christian-Albrechts-University of Kiel
+   + Department of Computer Science
+     + Real-Time and Embedded Systems Group
+ 
+ This code is provided under the terms of the Eclipse Public License (EPL).
+ See the file epl-v10.html for the license text.
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://kieler.cs.cau.de/sccharts/0.2.4"
+            class="de.cau.cs.kieler.sccharts.scchartsPackage"
+            genModel="model/sccharts.genmodel"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler.sccharts.coresccharts.commands.category"
+            id="de.cau.cs.kieler.sccharts.coresccharts.commands.AllCoreTransformations"
+            name="AllCoreTransformations">
+      </command>
+      <category
+            id="de.cau.cs.kieler.sccharts.coresccharts.commands.category"
+            name="SCCharts Transformations">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.KixsModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SignalTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.KixsModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.InputOutputSignalTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.KixsModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.DuringTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.KixsModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.AllCoreTransformations">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               id="de.cau.cs.kieler.sccharts.coresccharts.coretransformations"
+               label="Transform SCCharts"
+               mnemonic="T">
+            <separator
+                  name="de.cau.cs.kieler.core.ui.separator1"
+                  visible="true">
+            </separator>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.AllCoreTransformations"
+               label="All Core Transformations"
+               mnemonic="A"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SignalTransformation"
+               label="Signals"
+               mnemonic="A"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.InputOutputSignalTransformation"
+               label="Input Output Signals"
+               mnemonic="A"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.DuringTransformation"
+               label="During Actions"
+               mnemonic="D"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="kixs">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+
+</plugin>

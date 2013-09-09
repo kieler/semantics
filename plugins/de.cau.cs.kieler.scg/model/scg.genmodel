@@ -4,7 +4,7 @@
     modelDirectory="/de.cau.cs.kieler.scg/src" modelPluginID="de.cau.cs.kieler.scg"
     modelName="Scg" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
-    operationReflection="true" importOrganizing="true"
+    operationReflection="true" 
     usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations">
   <foreignModel>scg.ecore</foreignModel>
   <genPackages prefix="Scg" basePackage="de.cau.cs.kieler" disposableProviderFactory="true" ecorePackage="scg.ecore#/">
