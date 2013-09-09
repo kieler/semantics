@@ -61,7 +61,7 @@ public interface SCChartsPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "http://kieler.cs.cau.de/sccharts/0.2.4";
+    String eNS_URI = "http://kieler.cs.cau.de/sccharts/0.1.0";
 
     /**
      * The package namespace name.

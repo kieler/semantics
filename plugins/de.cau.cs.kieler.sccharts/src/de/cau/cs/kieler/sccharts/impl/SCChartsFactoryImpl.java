@@ -46,7 +46,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      */
     public static SCChartsFactory init() {
         try {
-            SCChartsFactory theSCChartsFactory = (SCChartsFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/sccharts/0.2.4"); 
+            SCChartsFactory theSCChartsFactory = (SCChartsFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/sccharts/0.1.0"); 
             if (theSCChartsFactory != null) {
                 return theSCChartsFactory;
             }
