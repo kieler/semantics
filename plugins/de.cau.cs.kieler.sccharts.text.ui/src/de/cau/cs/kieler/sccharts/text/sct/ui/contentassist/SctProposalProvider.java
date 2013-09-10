@@ -3,9 +3,10 @@
 */
 package de.cau.cs.kieler.sccharts.text.sct.ui.contentassist;
 
+import de.cau.cs.kieler.sccharts.text.sct.ui.contentassist.AbstractSctProposalProvider;
 /**
- * see http://www.eclipse.org/Xtext/documentation.html#contentAssist on how to customize content assistant
+ * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
-public class SctProposalProvider extends de.cau.cs.kieler.sccharts.text.sct.ui.contentassist.AbstractSctProposalProvider {
+public class SctProposalProvider extends AbstractSctProposalProvider {
 
 }

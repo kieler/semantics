@@ -1,23 +1,33 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: SCCharts Text UI
-Bundle-SymbolicName: de.cau.cs.kieler.sccharts.text.ui;singleton:=true
-Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.sccharts.text.ui.SctUiPlugin
+Bundle-Name: KIELER SCCharts Textual Editor
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.eclipse.xtext.ui,
- org.eclipse.xtext.ui.shared,
- org.eclipse.ui.editors,
- org.antlr.runtime,
- de.cau.cs.kieler.sccharts.text
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Version: 0.5.1.qualifier
+Bundle-SymbolicName: de.cau.cs.kieler.sccharts.text.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
-Export-Package: de.cau.cs.kieler.sccharts.text.actions.ui.contentassist,
- de.cau.cs.kieler.sccharts.text.actions.ui.contentassist.antlr,
- de.cau.cs.kieler.sccharts.text.actions.ui.quickfix,
- de.cau.cs.kieler.sccharts.text.sct.ui.contentassist,
- de.cau.cs.kieler.sccharts.text.sct.ui.contentassist.antlr,
- de.cau.cs.kieler.sccharts.text.sct.ui.quickfix
+Require-Bundle: org.eclipse.xtext.ui;bundle-version="2.1.0",
+ org.eclipse.xtext.ui.shared,
+ org.eclipse.xtext.builder,
+ org.eclipse.ui.editors;bundle-version="3.5.0",
+ org.eclipse.ui.ide;bundle-version="3.5.0",
+ org.eclipse.ui,
+ org.antlr.runtime,
+ de.cau.cs.kieler.core.annotations,
+ de.cau.cs.kieler.core.kexpressions,
+ de.cau.cs.kieler.core.kexpressions.ui,
+ de.cau.cs.kieler.sccharts.text,
+ de.cau.cs.kieler.core.annotations.text.ui
 Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: de.cau.cs.kieler.sccharts.text.actions.ui.contentassist.antlr,
+ de.cau.cs.kieler.sccharts.text.sct.ui,
+ de.cau.cs.kieler.sccharts.text.sct.ui.contentassist.antlr,
+ de.cau.cs.kieler.sccharts.text.ui,
+ de.cau.cs.kieler.sccharts.text.sctState.ui.contentassist.antlr,
+ de.cau.cs.kieler.sccharts.text.actions.ui.contentassist,
+ de.cau.cs.kieler.sccharts.text.sct.ui.contentassist,
+ de.cau.cs.kieler.sccharts.text.sctState.ui.contentassist,
+ de.cau.cs.kieler.sccharts.text.actions.ui.quickfix,
+ de.cau.cs.kieler.sccharts.text.sctState.ui.quickfix,
+ de.cau.cs.kieler.sccharts.text.sct.ui.quickfix
+Bundle-Activator: de.cau.cs.kieler.sccharts.text.ui.SctUIPlugin

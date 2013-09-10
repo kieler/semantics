@@ -3,11 +3,12 @@
 */
 package de.cau.cs.kieler.sccharts.text.sct.ui.outline;
 
+import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
+
 /**
- * Customization of the default outline structure.
+ * customization of the default outline structure
  *
- * see http://www.eclipse.org/Xtext/documentation.html#outline
  */
-public class SctOutlineTreeProvider extends org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider {
-	
+public class SctOutlineTreeProvider extends DefaultOutlineTreeProvider {
+
 }
