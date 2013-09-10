@@ -85,7 +85,6 @@
     <module>de.cau.cs.kieler.synccharts.codegen.dependencies.klighd</module>
     <module>de.cau.cs.kieler.synccharts.codegen.s</module>
     <module>de.cau.cs.kieler.synccharts</module>
-    <module>de.cau.cs.kieler.synccharts.codegen.esterel</module>
     <module>de.cau.cs.kieler.synccharts.codegen.sc</module>
     <module>de.cau.cs.kieler.synccharts.custom</module>
     <module>de.cau.cs.kieler.synccharts.diagram</module>

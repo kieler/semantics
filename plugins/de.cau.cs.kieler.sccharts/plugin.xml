@@ -19,8 +19,8 @@
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://kieler.cs.cau.de/sccharts/0.2.4"
-            class="de.cau.cs.kieler.sccharts.scchartsPackage"
+            uri="http://kieler.cs.cau.de/sccharts/0.1.0"
+            class="de.cau.cs.kieler.sccharts.SCChartsPackage"
             genModel="model/sccharts.genmodel"/>
    </extension>
    <extension
@@ -38,20 +38,68 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.KixsModelFileHandler"
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.AllCoreTransformations">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.AbortTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SurfaceDepthTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.TriggerEffectTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
             commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SignalTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.KixsModelFileHandler"
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
             commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.InputOutputSignalTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.KixsModelFileHandler"
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.EntryTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
             commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.DuringTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.KixsModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.AllCoreTransformations">
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.ExitTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.HistoryTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SuspendTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.CountDelayTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.PreTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.ExposeLocalSignalTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.NormalTerminationTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.FinalStateTransitionTransformation">
       </handler>
    </extension>
    <extension
@@ -90,6 +138,83 @@
                </iterate>
             </visibleWhen>
          </command>
+         <separator
+               name="de.cau.cs.kieler.sccharts.separator1"
+               visible="true">
+         </separator>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.AbortTransformation"
+               label="Strong and Weak Aborts"
+               mnemonic="A"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SurfaceDepthTransformation"
+               label="Surface and Depth"
+               mnemonic="T"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.TriggerEffectTransformation"
+               label="Split Triggers and Effects"
+               mnemonic="S"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+         <separator
+               name="de.cau.cs.kieler.sccharts.separator2"
+               visible="true">
+         </separator>
       </menuContribution>
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
@@ -140,6 +265,29 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.EntryTransformation"
+               label="Entry Actions"
+               mnemonic="E"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
                commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.DuringTransformation"
                label="During Actions"
                mnemonic="D"
@@ -153,13 +301,202 @@
                      <test
                            forcePluginActivation="true"
                            property="org.eclipse.core.resources.extension"
-                           value="kixs">
+                           value="scc">
                      </test>
                   </adapt>
                </iterate>
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.ExitTransformation"
+               label="Exit Actions"
+               mnemonic="X"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.HistoryTransformation"
+               label="History Transitions"
+               mnemonic="H"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SuspendTransformation"
+               label="Suspend Actions"
+               mnemonic="D"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.CountDelayTransformation"
+               label="Count Delay Transitions"
+               mnemonic="D"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.PreTransformation"
+               label="Pre Operator"
+               mnemonic="P"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <separator
+               name="de.cau.cs.kieler.sccharts.separator3"
+               visible="true">
+         </separator>
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.ExposeLocalSignalTransformation"
+               label="Expose Local Signals"
+               mnemonic="L"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.NormalTerminationTransformation"
+               label="Normal Termination Transitions"
+               mnemonic="D"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.FinalStateTransitionTransformation"
+               label="Transitions from Final States"
+               mnemonic="D"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+
    </extension>
 
 </plugin>

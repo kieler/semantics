@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sccharts" nsURI="http://kieler.cs.cau.de/sccharts/0.2.4"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sccharts" nsURI="http://kieler.cs.cau.de/sccharts/0.1.0"
     nsPrefix="sccharts">
   <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
