@@ -1,7 +1,0 @@
-module de.cau.cs.kieler.sccharts.text.GenerateAll
-
-Workflow {
-	component =  @actions.Actions auto-inject {}
-	component =  @sct.Sct auto-inject {}
-    component =  @sctState.SctState auto-inject {}
-}
