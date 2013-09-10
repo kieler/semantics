@@ -6,48 +6,49 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            default="true"
-            extensions="action"
-            id="de.cau.cs.kieler.sccharts.text.actions.Actions"
-            name="Actions Editor">
-        </editor>
+              class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+              contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+              default="true"
+              extensions="sct"
+              icon="icons/obj16/SCChartsTextFile.gif"
+              id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+              name="Sct Editor">
+        </editor>        
     </extension>
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
-                    definitionId="de.cau.cs.kieler.sccharts.text.actions.Actions.Editor.opened">
+                    definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
         <handler
-            class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
-            commandId="de.cau.cs.kieler.sccharts.text.actions.Actions.validate">
+            class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="de.cau.cs.kieler.sccharts.text.sct.Sct.validate">
          <activeWhen>
             <reference
-                    definitionId="de.cau.cs.kieler.sccharts.text.actions.Actions.Editor.opened">
+                    definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened">
             </reference>
          </activeWhen>
-      	</handler>
+      </handler>
       	<!-- copy qualified name -->
         <handler
-            class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+            class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
             <activeWhen>
-				<reference definitionId="de.cau.cs.kieler.sccharts.text.actions.Actions.Editor.opened" />
+				<reference definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened" />
             </activeWhen>
         </handler>
         <handler
-            class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+            class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
             <activeWhen>
             	<and>
-            		<reference definitionId="de.cau.cs.kieler.sccharts.text.actions.Actions.XtextEditor.opened" />
+            		<reference definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.XtextEditor.opened" />
 	                <iterate>
 						<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 					</iterate>
@@ -56,22 +57,22 @@
         </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
-        <definition id="de.cau.cs.kieler.sccharts.text.actions.Actions.Editor.opened">
+        <definition id="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened">
             <and>
                 <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="de.cau.cs.kieler.sccharts.text.actions.Actions" 
+                        value="de.cau.cs.kieler.sccharts.text.sct.Sct" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
         </definition>
-        <definition id="de.cau.cs.kieler.sccharts.text.actions.Actions.XtextEditor.opened">
+        <definition id="de.cau.cs.kieler.sccharts.text.sct.Sct.XtextEditor.opened">
             <and>
                 <reference definitionId="isXtextEditorActive"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="de.cau.cs.kieler.sccharts.text.actions.Actions" 
+                        value="de.cau.cs.kieler.sccharts.text.sct.Sct" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
@@ -80,33 +81,34 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.sccharts.text.actions.Actions"
-            name="Actions">
-            <keywordReference id="de.cau.cs.kieler.sccharts.text.actions.ui.keyword_Actions"/>
+              category="de.cau.cs.kieler.sccharts"
+              class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+              id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+              name="SCT">
+            <keywordReference id="de.cau.cs.kieler.sccharts.text.sct.ui.keyword_Sct"/>
         </page>
         <page
-            category="de.cau.cs.kieler.sccharts.text.actions.Actions"
-            class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="de.cau.cs.kieler.sccharts.text.actions.Actions.coloring"
+            category="de.cau.cs.kieler.sccharts.text.sct.Sct"
+            class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="de.cau.cs.kieler.sccharts.text.sct.Sct.coloring"
             name="Syntax Coloring">
-            <keywordReference id="de.cau.cs.kieler.sccharts.text.actions.ui.keyword_Actions"/>
+            <keywordReference id="de.cau.cs.kieler.sccharts.text.sct.ui.keyword_Sct"/>
         </page>
         <page
-            category="de.cau.cs.kieler.sccharts.text.actions.Actions"
-            class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-            id="de.cau.cs.kieler.sccharts.text.actions.Actions.templates"
+            category="de.cau.cs.kieler.sccharts.text.sct.Sct"
+            class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="de.cau.cs.kieler.sccharts.text.sct.Sct.templates"
             name="Templates">
-            <keywordReference id="de.cau.cs.kieler.sccharts.text.actions.ui.keyword_Actions"/>
+            <keywordReference id="de.cau.cs.kieler.sccharts.text.sct.ui.keyword_Sct"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.sccharts.text.actions.Actions"
-            name="Actions">
-            <keywordReference id="de.cau.cs.kieler.sccharts.text.actions.ui.keyword_Actions"/>
+            class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+            name="Sct">
+            <keywordReference id="de.cau.cs.kieler.sccharts.text.sct.ui.keyword_Sct"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -118,12 +120,15 @@
         <keyword
             id="de.cau.cs.kieler.sccharts.text.actions.ui.keyword_Actions"
             label="Actions"/>
+        <keyword
+            id="de.cau.cs.kieler.sccharts.text.sct.ui.keyword_Sct"
+            label="Sct"/>
     </extension>
     <extension
          point="org.eclipse.ui.commands">
       <command
             description="Trigger expensive validation"
-            id="de.cau.cs.kieler.sccharts.text.actions.Actions.validate"
+            id="de.cau.cs.kieler.sccharts.text.sct.Sct.validate"
             name="Validate">
       </command>
       <!-- copy qualified name -->
@@ -144,12 +149,12 @@
         <menuContribution
             locationURI="popup:#TextEditorContext?after=group.edit">
              <command
-                 commandId="de.cau.cs.kieler.sccharts.text.actions.Actions.validate"
+                 commandId="de.cau.cs.kieler.sccharts.text.sct.Sct.validate"
                  style="push"
                  tooltip="Trigger expensive validation">
             <visibleWhen checkEnabled="false">
                 <reference
-                    definitionId="de.cau.cs.kieler.sccharts.text.actions.Actions.Editor.opened">
+                    definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened">
                 </reference>
             </visibleWhen>
          </command>  
@@ -159,7 +164,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName" 
          		style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="de.cau.cs.kieler.sccharts.text.actions.Actions.Editor.opened" />
+                	<reference definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -167,7 +172,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
             	style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="de.cau.cs.kieler.sccharts.text.actions.Actions.Editor.opened" />
+                	<reference definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -176,7 +181,7 @@
 				style="push" tooltip="Copy Qualified Name">
          		<visibleWhen checkEnabled="false">
 	            	<and>
-	            		<reference definitionId="de.cau.cs.kieler.sccharts.text.actions.Actions.XtextEditor.opened" />
+	            		<reference definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.XtextEditor.opened" />
 						<iterate>
 							<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 						</iterate>
@@ -184,12 +189,65 @@
 				</visibleWhen>
 			</command>
          </menuContribution>
+         <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.core.model.convert"
+               label="Convert to Textual Model (sct)"
+               style="push"
+               tooltip="Convert the model to textual SCCharts format">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <test
+                           forcePluginActivation="false"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+            <parameter
+                  name="de.cau.cs.kieler.convert.targetExtension"
+                  value="sct">
+            </parameter>
+         </command>
+                  <command
+               commandId="de.cau.cs.kieler.core.model.convert"
+               label="Convert to XMI Model (kixs)"
+               style="push"
+               tooltip="Convert the model to XMI-based SCCharts format">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <test
+                           forcePluginActivation="false"
+                           property="org.eclipse.core.resources.extension"
+                           value="sct">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+            <parameter
+                  name="de.cau.cs.kieler.convert.targetExtension"
+                  value="kixs">
+            </parameter>
+         </command>
+     </menuContribution>
     </extension>
     <extension point="org.eclipse.ui.menus">
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-                	<reference definitionId="de.cau.cs.kieler.sccharts.text.actions.Actions.Editor.opened">
+                	<reference definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened">
                 	</reference>
             	</visibleWhen>
 			</command>
@@ -197,11 +255,11 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	    <handler
-            class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
             commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
-                    definitionId="de.cau.cs.kieler.sccharts.text.actions.Actions.Editor.opened">
+                    definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
@@ -212,36 +270,52 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="de.cau.cs.kieler.sccharts.text.actions.ui.CustomizedActionsExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="action">
 		</parser>
+		<parser
+			class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			type="sct">
+		</parser>
+  		<parser
+        	class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctEmbeddedExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+	        type="sctem">
+		</parser>
+		<parser
+        	class="de.cau.cs.kieler.sccharts.text.sctState.ui.CustomizedSctStateExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+	        type="sctState">
+  		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
-            class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            class="de.cau.cs.kieler.sccharts.text.actions.ui.CustomizedActionsExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="action">
+        </resourceServiceProvider>
+        <resourceServiceProvider
+            class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            uriExtension="sct">
         </resourceServiceProvider>
     </extension>
 
 
-    <!-- marker definitions for de.cau.cs.kieler.sccharts.text.actions.Actions -->
+    <!-- marker definitions for de.cau.cs.kieler.sccharts.text.sct.Sct -->
     <extension
-            id="actions.check.fast"
-            name="Actions Problem"
+            id="sct.check.fast"
+            name="Sct Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.fast"/>
         <persistent value="true"/>
     </extension>
     <extension
-            id="actions.check.normal"
-            name="Actions Problem"
+            id="sct.check.normal"
+            name="Sct Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.normal"/>
         <persistent value="true"/>
     </extension>
     <extension
-            id="actions.check.expensive"
-            name="Actions Problem"
+            id="sct.check.expensive"
+            name="Sct Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.expensive"/>
         <persistent value="true"/>
@@ -251,11 +325,11 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="de.cau.cs.kieler.sccharts.text.actions.Actions.Editor.opened">
+					definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -275,38 +349,73 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="de.cau.cs.kieler.sccharts.text.actions.Actions.Editor.opened"/>
+					<reference definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
-    <!-- quickfix marker resolution generator for de.cau.cs.kieler.sccharts.text.actions.Actions -->
+   <!-- quickfix marker resolution generator -->
+   <!-- extension
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator
+            class="de.cau.cs.kieler.sccharts.text.actions.ui.CustomizedActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
+      </markerResolutionGenerator>
+      <markerResolutionGenerator
+            class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
+      </markerResolutionGenerator>
+   </extension -->
+    <!-- quickfix marker resolution generator for de.cau.cs.kieler.sccharts.text.sct.Sct -->
     <extension
             point="org.eclipse.ui.ide.markerResolution">
         <markerResolutionGenerator
-            class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.cau.cs.kieler.sccharts.text.actions.ui.actions.check.fast">
+            class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.sccharts.text.sct.ui.sct.check.fast">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.cau.cs.kieler.sccharts.text.actions.ui.actions.check.normal">
+            class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.sccharts.text.sct.ui.sct.check.normal">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="de.cau.cs.kieler.sccharts.text.actions.ui.ActionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="de.cau.cs.kieler.sccharts.text.actions.ui.actions.check.expensive">
+            class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="de.cau.cs.kieler.sccharts.text.sct.ui.sct.check.expensive">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
+    </extension>
+   	<!-- Rename Refactoring -->
+	<extension point="org.eclipse.ui.handlers">
+		<handler 
+			class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
+			<activeWhen>
+				<reference
+					definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+	</extension>
+    <extension point="org.eclipse.ui.menus">
+         <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+         <command commandId="org.eclipse.xtext.ui.refactoring.RenameElement"
+               style="push">
+            <visibleWhen checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
     </extension>
 
 </plugin>
