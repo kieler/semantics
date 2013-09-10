@@ -36,11 +36,11 @@ public class SctUIPlugin extends AbstractUIPlugin {
 
     public static final String ACTIONS_LANGUAGE = "de.cau.cs.kieler.sccharts.text.actions.Actions";
 
-    public static final String KITS_LANGUAGE = "de.cau.cs.kieler.sccharts.text.sct.Sct";
+    public static final String SCT_LANGUAGE = "de.cau.cs.kieler.sccharts.text.sct.Sct";
 
-    public static final String KITS_STATE_LANGUAGE = "de.cau.cs.kieler.sccharts.text.sctState.SctState";
+    public static final String SCT_STATE_LANGUAGE = "de.cau.cs.kieler.sccharts.text.sctState.SctState";
 
-    public static final String KITS_LANGUAGE_EMBEDDED = "de.cau.cs.kieler.sccharts.text.sct.SctEmbedded";
+    public static final String SCT_LANGUAGE_EMBEDDED = "de.cau.cs.kieler.sccharts.text.sct.SctEmbedded";
 
     private Map<String, Injector> injectors = new HashMap<String, Injector>();
     private static SctUIPlugin INSTANCE;
@@ -59,18 +59,18 @@ public class SctUIPlugin extends AbstractUIPlugin {
                     Guice.createInjector(Modules.override(
                             Modules.override(getRuntimeModule(ACTIONS_LANGUAGE)).with(
                                     getUiModule(ACTIONS_LANGUAGE))).with(getSharedStateModule())));
-            injectors.put(KITS_LANGUAGE,
+            injectors.put(SCT_LANGUAGE,
                     Guice.createInjector(Modules.override(
-                            Modules.override(getRuntimeModule(KITS_LANGUAGE)).with(
-                                    getUiModule(KITS_LANGUAGE))).with(getSharedStateModule())));
-            injectors.put(KITS_STATE_LANGUAGE,
+                            Modules.override(getRuntimeModule(SCT_LANGUAGE)).with(
+                                    getUiModule(SCT_LANGUAGE))).with(getSharedStateModule())));
+            injectors.put(SCT_STATE_LANGUAGE,
                     Guice.createInjector(Modules.override(
-                            Modules.override(getRuntimeModule(KITS_STATE_LANGUAGE)).with(
-                                    getUiModule(KITS_STATE_LANGUAGE))).with(getSharedStateModule())));
-            injectors.put(KITS_LANGUAGE_EMBEDDED,
+                            Modules.override(getRuntimeModule(SCT_STATE_LANGUAGE)).with(
+                                    getUiModule(SCT_STATE_LANGUAGE))).with(getSharedStateModule())));
+            injectors.put(SCT_LANGUAGE_EMBEDDED,
                     Guice.createInjector(Modules.override(
-                            Modules.override(getRuntimeModule(KITS_LANGUAGE_EMBEDDED)).with(
-                            		getUiModule(KITS_LANGUAGE_EMBEDDED)))
+                            Modules.override(getRuntimeModule(SCT_LANGUAGE_EMBEDDED)).with(
+                            		getUiModule(SCT_LANGUAGE_EMBEDDED)))
                             		.with(getSharedStateModule())));
 
         } catch (Exception e) {
@@ -88,13 +88,13 @@ public class SctUIPlugin extends AbstractUIPlugin {
         if (ACTIONS_LANGUAGE.equals(grammar)) {
             return new de.cau.cs.kieler.sccharts.text.actions.ActionsRuntimeModule();
         }
-        if (KITS_LANGUAGE.equals(grammar)) {
+        if (SCT_LANGUAGE.equals(grammar)) {
             return new de.cau.cs.kieler.sccharts.text.sct.SctRuntimeModule();
         }
-//        if (KITS_STATE_LANGUAGE.equals(grammar)) {
+//        if (SCT_STATE_LANGUAGE.equals(grammar)) {
 //            return new de.cau.cs.kieler.sccharts.text.sctState.SctStateRuntimeModule();
 //        }
-        if (KITS_LANGUAGE_EMBEDDED.equals(grammar)) {
+        if (SCT_LANGUAGE_EMBEDDED.equals(grammar)) {
         	return new de.cau.cs.kieler.sccharts.text.sct.SctEmbeddedRuntimeModule();
         }
         throw new IllegalArgumentException(grammar);
@@ -105,13 +105,13 @@ public class SctUIPlugin extends AbstractUIPlugin {
         if (ACTIONS_LANGUAGE.equals(grammar)) {
             return new de.cau.cs.kieler.sccharts.text.actions.ui.ActionsUiModule(this);
         }
-        if (KITS_LANGUAGE.equals(grammar)) {
+        if (SCT_LANGUAGE.equals(grammar)) {
             return new de.cau.cs.kieler.sccharts.text.sct.ui.SctUiModule(this);
         }
-//        if (KITS_STATE_LANGUAGE.equals(grammar)) {
+//        if (SCT_STATE_LANGUAGE.equals(grammar)) {
 //            return new de.cau.cs.kieler.sccharts.text.sctState.ui.SctStateUiModule(this);
 //        }
-        if (KITS_LANGUAGE_EMBEDDED.equals(grammar)) {
+        if (SCT_LANGUAGE_EMBEDDED.equals(grammar)) {
             return new de.cau.cs.kieler.sccharts.text.sct.ui.SctEmbeddedUIModule(this);
     }
         throw new IllegalArgumentException(grammar);

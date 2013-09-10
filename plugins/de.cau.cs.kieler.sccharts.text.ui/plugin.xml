@@ -84,7 +84,7 @@
               category="de.cau.cs.kieler.sccharts"
               class="de.cau.cs.kieler.sccharts.text.sct.ui.CustomizedSctExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
-              name="KITS">
+              name="SCT">
             <keywordReference id="de.cau.cs.kieler.sccharts.text.sct.ui.keyword_Sct"/>
         </page>
         <page
@@ -206,7 +206,7 @@
                      <test
                            forcePluginActivation="false"
                            property="org.eclipse.core.resources.extension"
-                           value="kixs">
+                           value="scc">
                      </test>
                   </adapt>
                </iterate>

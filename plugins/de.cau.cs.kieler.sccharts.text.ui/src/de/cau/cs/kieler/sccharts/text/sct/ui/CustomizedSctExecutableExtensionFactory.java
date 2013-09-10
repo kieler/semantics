@@ -32,7 +32,7 @@ public class CustomizedSctExecutableExtensionFactory extends
     @Override
     public Injector getInjector() {
         return de.cau.cs.kieler.sccharts.text.ui.SctUIPlugin.getInstance().getInjector(
-                SctUIPlugin.KITS_LANGUAGE);
+                SctUIPlugin.SCT_LANGUAGE);
     }
 
 }
