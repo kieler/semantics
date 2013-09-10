@@ -23,11 +23,8 @@ Export-Package: de.cau.cs.kieler.sccharts.text.actions.ui.contentassist.antlr,
  de.cau.cs.kieler.sccharts.text.sct.ui,
  de.cau.cs.kieler.sccharts.text.sct.ui.contentassist.antlr,
  de.cau.cs.kieler.sccharts.text.ui,
- de.cau.cs.kieler.sccharts.text.sctState.ui.contentassist.antlr,
  de.cau.cs.kieler.sccharts.text.actions.ui.contentassist,
  de.cau.cs.kieler.sccharts.text.sct.ui.contentassist,
- de.cau.cs.kieler.sccharts.text.sctState.ui.contentassist,
  de.cau.cs.kieler.sccharts.text.actions.ui.quickfix,
- de.cau.cs.kieler.sccharts.text.sctState.ui.quickfix,
  de.cau.cs.kieler.sccharts.text.sct.ui.quickfix
 Bundle-Activator: de.cau.cs.kieler.sccharts.text.ui.SctUIPlugin
