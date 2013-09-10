@@ -6,6 +6,10 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.scg.pret.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- de.cau.cs.kieler.scg;bundle-version="0.1.0"
+ de.cau.cs.kieler.scg;bundle-version="0.1.0",
+ org.eclipse.xtend.lib,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+
