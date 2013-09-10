@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.sccharts.text.Sct.formatting;
+package de.cau.cs.kieler.sccharts.text.sct.formatting;
 
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.Grammar;
@@ -9,18 +9,18 @@ import org.eclipse.xtext.util.Pair;
 
 import de.cau.cs.kieler.core.annotations.text.formatting.AnnotationsFormatter;
 import de.cau.cs.kieler.sccharts.text.actions.formatting.ActionsFormatter;
-import de.cau.cs.kieler.sccharts.text.Sct.services.sctGrammarAccess;
+import de.cau.cs.kieler.sccharts.text.sct.services.SctGrammarAccess;
 
 /**
  * Custom {@link IFormatter} contributing to sct serialization.
  *
  * @author chsch
  */
-public class sctFormatter extends ActionsFormatter {
+public class SctFormatter extends ActionsFormatter {
 
     @Override
     protected void configureFormatting(FormattingConfig c) {
-        sctGrammarAccess f = (sctGrammarAccess) getGrammarAccess();
+        SctGrammarAccess f = (SctGrammarAccess) getGrammarAccess();
         customConfigureFormatting(c, f);
     }
 
@@ -33,7 +33,7 @@ public class sctFormatter extends ActionsFormatter {
      * @param f
      *            GrammarAccess provided by caller
      */
-    protected void customConfigureFormatting(FormattingConfig c, sctGrammarAccess f) {
+    protected void customConfigureFormatting(FormattingConfig c, SctGrammarAccess f) {
         super.customConfigureFormatting(c, f.getActionsGrammarAccess());
 
         for (Pair<Keyword, Keyword> pair : f.findKeywordPairs("{", "}")) {

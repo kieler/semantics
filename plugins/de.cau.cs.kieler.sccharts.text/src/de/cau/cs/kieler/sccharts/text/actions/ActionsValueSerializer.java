@@ -24,11 +24,11 @@ public class ActionsValueSerializer extends ValueSerializer {
 	 * Method is currently not used, behavior will be realized by the transient value service.
 	 */
 	public String serializeAssignedValue(EObject context, RuleCall ruleCall, Object value, INode node) {
-		if (SyncchartsPackage.eINSTANCE.getAction().isInstance(context)
+		if (SCChartsPackage.eINSTANCE.getAction().isInstance(context)
 				&& XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
 				Assignment assigment = (Assignment) ruleCall.eContainer();
 
-				if (SyncchartsPackage.eINSTANCE.getAction_Delay().getName().equals(assigment.getFeature())
+				if (SCChartsPackage.eINSTANCE.getAction_Delay().getName().equals(assigment.getFeature())
 						&& value.equals(1)) {
 					return null;
 				}

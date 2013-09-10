@@ -24,7 +24,7 @@ import org.eclipse.xtext.parsetree.reconstr.impl.ValueSerializer;
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.sccharts.SyncchartsPackage;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.text.sct.SctTransientValueService;
 
 /**
@@ -88,18 +88,18 @@ public class SctEnumLiteralSerializer extends EnumLiteralSerializer {
         // if we have a state under consideration and are processing the call of a
         // parser rule called from an assignment to a feature of the state
         // here: ... type = StateType ... ,i.e. the call of the StateType rule
-        if (SyncchartsPackage.eINSTANCE.getState().isInstance(context)
+        if (SCChartsPackage.eINSTANCE.getState().isInstance(context)
                 && XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
 
             Assignment a = (Assignment) ruleCall.eContainer();
 
             // if the feature the assignment is made to is the 'type' feature
-            if (a.getFeature().equals(SyncchartsPackage.eINSTANCE.getState_Type().getName())) {
+            if (a.getFeature().equals(SCChartsPackage.eINSTANCE.getState_Type().getName())) {
 
                 // ask the transientValueService;
                 // note that the return inverse value semantics!
                 return !transientValueService.isTransient(context,
-                        SyncchartsPackage.eINSTANCE.getState_Type(), -1);
+                        SCChartsPackage.eINSTANCE.getState_Type(), -1);
             }
         }
 

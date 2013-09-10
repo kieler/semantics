@@ -19,7 +19,7 @@ import java.util.Set;
 //import org.eclipse.xtext.validation.Check;
 
 import de.cau.cs.kieler.core.model.validation.CustomEValidator;
-import de.cau.cs.kieler.sccharts.SyncchartsPackage;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
 
 public class SctJavaValidator extends AbstractSctJavaValidator implements
@@ -45,8 +45,8 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public void checkTypeNameStartsWithCapital(
             final de.cau.cs.kieler.sccharts.State s) {
         if (!Character.isUpperCase(s.getId().charAt(0))) {
-            warning("Name should start with a capital", SyncchartsPackage.eINSTANCE.getScope_Id(),
-                    SyncchartsPackage.SCOPE__ID, BAD_ID);
+            warning("Name should start with a capital", SCChartsPackage.eINSTANCE.getScope_Id(),
+                    SCChartsPackage.SCOPE__ID, BAD_ID);
         }
     }
 
@@ -73,16 +73,16 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
             }
             if (t.getPriority() == 0) {
                 error("Priority must be assigned.",
-                        SyncchartsPackage.eINSTANCE.getTransition_Priority(),
-                        SyncchartsPackage.TRANSITION__PRIORITY, MISSING_PRIO);
+                        SCChartsPackage.eINSTANCE.getTransition_Priority(),
+                        SCChartsPackage.TRANSITION__PRIORITY, MISSING_PRIO);
             } else {
                 if (t.getPriority() < highestPrioTransition.getPriority()) {
                     highestPrioTransition = t;
                 }
                 if (prios.contains(Integer.valueOf(t.getPriority()))) {
                     error("Priority is not unique.",
-                            SyncchartsPackage.eINSTANCE.getTransition_Priority(),
-                            SyncchartsPackage.TRANSITION__PRIORITY,
+                            SCChartsPackage.eINSTANCE.getTransition_Priority(),
+                            SCChartsPackage.TRANSITION__PRIORITY,
                             NON_UNIQUE_PRIO);
                 } else {
                     if (t.getPriority() > count) {
@@ -99,20 +99,20 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
 
         if (!startsWithOne) {
             warning("Transition priorities should start with value 1",
-                    SyncchartsPackage.eINSTANCE.getTransition_Priority(),
-                    SyncchartsPackage.STATE__OUTGOING_TRANSITIONS,
+                    SCChartsPackage.eINSTANCE.getTransition_Priority(),
+                    SCChartsPackage.STATE__OUTGOING_TRANSITIONS,
                     NO_PRIO_1_TRANSITION);
         } else {
             if (!subsequent) {
                 warning("Priorities are not subsequent.",
-                        SyncchartsPackage.eINSTANCE.getTransition_Priority(),
-                        SyncchartsPackage.STATE__OUTGOING_TRANSITIONS,
+                        SCChartsPackage.eINSTANCE.getTransition_Priority(),
+                        SCChartsPackage.STATE__OUTGOING_TRANSITIONS,
                         NON_SUCCEEDING_PRIOS);
             } else {
                 if (!sorted) {
                     warning("Transition are not sorted according to their priorities.",
-                            SyncchartsPackage.eINSTANCE.getTransition_Priority(),
-                            SyncchartsPackage.STATE__OUTGOING_TRANSITIONS,
+                            SCChartsPackage.eINSTANCE.getTransition_Priority(),
+                            SCChartsPackage.STATE__OUTGOING_TRANSITIONS,
                             UNSORTED_PRIOS);
                 }
             }

@@ -33,7 +33,7 @@ import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.StateType;
-import de.cau.cs.kieler.sccharts.scchartsPackage;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.text.sct.formatting.SctValueSerializer;
 
@@ -76,12 +76,12 @@ public class SctTransientValueService extends DefaultTransientValueService {
     public boolean isTransient(EObject owner, EStructuralFeature feature, int index) {
 
         /* suppress the implicit (mostly EOpposites) features */
-        if (feature == scchartsPackage.eINSTANCE.getState_ParentRegion()
-                || feature == scchartsPackage.eINSTANCE.getScope_InterfaceDeclaration()
-                || feature == scchartsPackage.eINSTANCE.getState_IncomingTransitions()
-                || feature == scchartsPackage.eINSTANCE.getRegion_ParentState()
-                || feature == scchartsPackage.eINSTANCE.getTransition_SourceState()
-                || feature == scchartsPackage.eINSTANCE.getSubstitution_ParentScope()) {
+        if (feature == SCChartsPackage.eINSTANCE.getState_ParentRegion()
+                || feature == SCChartsPackage.eINSTANCE.getScope_InterfaceDeclaration()
+                || feature == SCChartsPackage.eINSTANCE.getState_IncomingTransitions()
+                || feature == SCChartsPackage.eINSTANCE.getRegion_ParentState()
+                || feature == SCChartsPackage.eINSTANCE.getTransition_SourceState()
+                || feature == SCChartsPackage.eINSTANCE.getSubstitution_ParentScope()) {
             return true;
         }
 
@@ -92,8 +92,8 @@ public class SctTransientValueService extends DefaultTransientValueService {
          * b) a region has no label -> whole region declaration will be skipped
          * c) scope label != null (maybe "") and id is equal to label (label is unique)
          */
-        if (feature == scchartsPackage.eINSTANCE.getScope_Label()) {
-            if (scchartsPackage.eINSTANCE.getRegion().isInstance(owner)) {
+        if (feature == SCChartsPackage.eINSTANCE.getScope_Label()) {
+            if (SCChartsPackage.eINSTANCE.getRegion().isInstance(owner)) {
                 if (owner.eContainer() == null || Strings.isEmpty(((Region) owner).getLabel())) {
                     return true;
                 }
@@ -102,24 +102,24 @@ public class SctTransientValueService extends DefaultTransientValueService {
             return (scope.getLabel() == null || scope.getLabel().equals(scope.getId()));
         }
 
-        if (feature == scchartsPackage.eINSTANCE.getScope_BodyContents()) {
+        if (feature == SCChartsPackage.eINSTANCE.getScope_BodyContents()) {
             return true;
         }
 
-        if (feature == scchartsPackage.eINSTANCE.getScope_BodyReference()) {
+        if (feature == SCChartsPackage.eINSTANCE.getScope_BodyReference()) {
             return true;
         }
 
 
         /* suppress id serialization if id is equals to "" */
-        if (scchartsPackage.eINSTANCE.getRegion().isInstance(owner)
-                && feature == scchartsPackage.eINSTANCE.getScope_Id()) {
+        if (SCChartsPackage.eINSTANCE.getRegion().isInstance(owner)
+                && feature == SCChartsPackage.eINSTANCE.getScope_Id()) {
             return Strings.isEmpty((String) owner.eGet(feature));
         }
 
 
         /* suppress the 'normal' attribute of a state */
-        if (feature == scchartsPackage.eINSTANCE.getState_Type()) {
+        if (feature == SCChartsPackage.eINSTANCE.getState_Type()) {
             return owner.eGet(feature).equals(StateType.NORMAL);
         }
 
@@ -183,8 +183,8 @@ public class SctTransientValueService extends DefaultTransientValueService {
         }
 
 
-        if (feature == scchartsPackage.eINSTANCE.getAction_Label()) {
-            if (scchartsPackage.eINSTANCE.getTransition().isInstance(owner)) {
+        if (feature == SCChartsPackage.eINSTANCE.getAction_Label()) {
+            if (SCChartsPackage.eINSTANCE.getTransition().isInstance(owner)) {
                 return Strings.isEmpty((String) owner.eGet(feature)) || !actionIsEmpty((Action) owner);
             } else {
                 // FIXME: the action label is not part of a parser rule yet, so it has to be marked transient
@@ -195,15 +195,15 @@ public class SctTransientValueService extends DefaultTransientValueService {
 
 
         /* suppress the transition's priority if it's the only outgoing one of its source state */
-        if (feature == scchartsPackage.eINSTANCE.getTransition_Priority()) {
-            if (scchartsPackage.eINSTANCE.getTransition().isInstance(owner)) {
+        if (feature == SCChartsPackage.eINSTANCE.getTransition_Priority()) {
+            if (SCChartsPackage.eINSTANCE.getTransition().isInstance(owner)) {
                 return ((Transition) owner).getSourceState().getOutgoingTransitions().size() == 1;
             }
         }
 
 
-        if (feature == scchartsPackage.eINSTANCE.getScope_Signals()) {
-            if (scchartsPackage.eINSTANCE.getRegion().isInstance(owner)
+        if (feature == SCChartsPackage.eINSTANCE.getScope_Signals()) {
+            if (SCChartsPackage.eINSTANCE.getRegion().isInstance(owner)
                     && owner.eContainer() == null) {
                 /* do not serialized the implicit 'tick' signal! */
                 return ((Region) owner).getSignals().get(index).getName().equals("tick");

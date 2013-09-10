@@ -35,7 +35,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.scchartsPackage;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 /**
  * A customized {@link LazyLinkingResource}. Modifies the parsed model and fixes some runtime bugs.
@@ -125,11 +125,11 @@ public class SctResource extends LazyLinkingResource {
         EObject o = null;
         for (Iterator<EObject> i = this.getAllContents(); i.hasNext();) {
             o = i.next();
-            if (scchartsPackage.eINSTANCE.getScope().isInstance(o)) {
+            if (SCChartsPackage.eINSTANCE.getScope().isInstance(o)) {
                 setupScopeLabel((Scope) o);
 //                setupScopeID((Scope) o, m);
             }
-            if (scchartsPackage.eINSTANCE.getState().isInstance(o)) {
+            if (SCChartsPackage.eINSTANCE.getState().isInstance(o)) {
                 setupPriorities((State) o);
             }
             if (KExpressionsPackage.eINSTANCE.getValuedObject().isInstance(o)) {

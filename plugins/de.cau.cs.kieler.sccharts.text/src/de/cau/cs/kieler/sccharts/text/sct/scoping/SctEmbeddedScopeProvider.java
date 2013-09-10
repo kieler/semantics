@@ -28,7 +28,7 @@ import org.eclipse.xtext.scoping.impl.SimpleScope;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.SyncchartsPackage;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
 
 /**
@@ -46,7 +46,7 @@ public class SctEmbeddedScopeProvider extends SctScopeProvider {
             l = new ArrayList<IEObjectDescription>();
             l.add(new EObjectDescription(QualifiedName.create(((State) trans.eContainer()).getId()),
                     trans.eContainer(), Collections.<String, String> emptyMap()));
-            if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(logicalContainer)) {
+            if (SCChartsPackage.eINSTANCE.getRegion().isInstance(logicalContainer)) {
                 for (State s : ((Region) logicalContainer).getStates()) {
                     l.add(new EObjectDescription(QualifiedName.create(s.getId()), s,
                             Collections.<String, String> emptyMap()));

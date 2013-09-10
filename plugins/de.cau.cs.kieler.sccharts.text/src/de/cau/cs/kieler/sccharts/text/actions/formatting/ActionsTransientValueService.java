@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 
 import de.cau.cs.kieler.sccharts.Action;
-import de.cau.cs.kieler.sccharts.SyncchartsPackage;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 /**
  * @author haf, chsch
@@ -44,16 +44,16 @@ public class ActionsTransientValueService implements ITransientValueService {
      * (org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature, int)
      */
     public boolean isTransient(EObject owner, EStructuralFeature feature, int index) {
-        if (feature.equals(SyncchartsPackage.eINSTANCE.getTransition_Priority())
-            || feature.equals(SyncchartsPackage.eINSTANCE.getTransition_Type())
-            || feature.equals(SyncchartsPackage.eINSTANCE.getTransition_IsHistory())
-            || feature.equals(SyncchartsPackage.eINSTANCE.getTransition_SourceState())
-            || feature.equals(SyncchartsPackage.eINSTANCE.getTransition_TargetState())
-            || feature.equals(SyncchartsPackage.eINSTANCE.getAction_Label()))
+        if (feature.equals(SCChartsPackage.eINSTANCE.getTransition_Priority())
+            || feature.equals(SCChartsPackage.eINSTANCE.getTransition_Type())
+            || feature.equals(SCChartsPackage.eINSTANCE.getTransition_IsHistory())
+            || feature.equals(SCChartsPackage.eINSTANCE.getTransition_SourceState())
+            || feature.equals(SCChartsPackage.eINSTANCE.getTransition_TargetState())
+            || feature.equals(SCChartsPackage.eINSTANCE.getAction_Label()))
             return true;
 
         // this realizes the non-serialization of transition delay property if it is 1!
-        if (feature.equals(SyncchartsPackage.eINSTANCE.getAction_Delay())) {
+        if (feature.equals(SCChartsPackage.eINSTANCE.getAction_Delay())) {
         	return ((Action) owner).getDelay() == 1;
         }
 

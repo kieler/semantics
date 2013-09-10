@@ -27,7 +27,7 @@ import com.google.inject.Inject;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
-import de.cau.cs.kieler.sccharts.SyncchartsPackage;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.text.sct.SctTransientValueService;
 
 /**
@@ -59,34 +59,34 @@ public class SctValueSerializer extends ValueSerializer {
 
             Assignment a = (Assignment) ruleCall.eContainer();
 
-            if (SyncchartsPackage.eINSTANCE.getScope().isInstance(context)) {
+            if (SCChartsPackage.eINSTANCE.getScope().isInstance(context)) {
                 // if the assignment is made to a scope's label feature
-                if (a.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Label().getName())) {
+                if (a.getFeature().equals(SCChartsPackage.eINSTANCE.getScope_Label().getName())) {
 
                     // ask the transientValueService;
                     // note that the return inverse value semantics!
                     return !transientValueService.isTransient(context,
-                            SyncchartsPackage.eINSTANCE.getScope_Label(), -1);
+                            SCChartsPackage.eINSTANCE.getScope_Label(), -1);
                 } else {
                     // if the assignment is made to a scope's id feature
-                    if (a.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Id().getName())) {
+                    if (a.getFeature().equals(SCChartsPackage.eINSTANCE.getScope_Id().getName())) {
 
                         // ask the transientValueService;
                         // note that the return inverse value semantics!
                         return !transientValueService.isTransient(context,
-                                SyncchartsPackage.eINSTANCE.getScope_Id(), -1);
+                                SCChartsPackage.eINSTANCE.getScope_Id(), -1);
                     }
                 }
             } else {
                 // if the assignment is made to an action's label feature
-                if (SyncchartsPackage.eINSTANCE.getAction().isInstance(context)
+                if (SCChartsPackage.eINSTANCE.getAction().isInstance(context)
                         && a.getFeature().equals(
-                                SyncchartsPackage.eINSTANCE.getAction_Label().getName())) {
+                                SCChartsPackage.eINSTANCE.getAction_Label().getName())) {
 
                     // ask the transientValueService;
                     // note that the return inverse value semantics!
                     return !transientValueService.isTransient(context,
-                            SyncchartsPackage.eINSTANCE.getAction_Label(), -1);
+                            SCChartsPackage.eINSTANCE.getAction_Label(), -1);
                 }
             }
         }
@@ -136,13 +136,13 @@ public class SctValueSerializer extends ValueSerializer {
     public String serializeAssignedValue(EObject context, RuleCall ruleCall, Object value,
             INode node) {
 
-        if (SyncchartsPackage.eINSTANCE.getScope().isInstance(context)
+        if (SCChartsPackage.eINSTANCE.getScope().isInstance(context)
                 && XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
 
             Assignment a = (Assignment) ruleCall.eContainer();
 
             // if the feature the assignment is made to is the 'initialValue' feature
-            if (a.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Id().getName())) {
+            if (a.getFeature().equals(SCChartsPackage.eINSTANCE.getScope_Id().getName())) {
 
                 if (((Scope) context).getLabel() == null) {
                     String result = super.serializeAssignedValue(context, ruleCall, value, node);

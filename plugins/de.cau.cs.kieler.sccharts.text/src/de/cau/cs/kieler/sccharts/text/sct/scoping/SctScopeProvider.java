@@ -43,7 +43,7 @@ import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.SyncchartsPackage;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
 
 /**
@@ -97,7 +97,7 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
                 for (Iterator<EObject> it = r.getAllContents(); it.hasNext();) {
                     obj = it.next();
                     if (!((InternalEObject) obj).eIsProxy()
-                            && SyncchartsPackage.eINSTANCE.getState().isInstance(obj)) {
+                            && SCChartsPackage.eINSTANCE.getState().isInstance(obj)) {
                         l.add(new EObjectDescription(QualifiedName.create(((State) obj).getId()), obj,
                                 Collections.<String, String> emptyMap()));
                     }
@@ -187,7 +187,7 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         List<IEObjectDescription> l = new LinkedList<IEObjectDescription>();
         EObject container = obj;
         while (true) {
-            if (SyncchartsPackage.eINSTANCE.getScope().isInstance(container)) {
+            if (SCChartsPackage.eINSTANCE.getScope().isInstance(container)) {
                 break;
             }
             container = container.eContainer();
@@ -220,7 +220,7 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
             ValuedObject vObj = ((ValuedObjectReference) obj).getValuedObject();
             l.add(new EObjectDescription(QualifiedName.create(vObj.getName()), vObj,
                    Collections.<String, String> emptyMap()));
-        } else if (SyncchartsPackage.eINSTANCE.getEmission().isInstance(obj)
+        } else if (SCChartsPackage.eINSTANCE.getEmission().isInstance(obj)
                 && ((Emission) obj).getSignal() != null
                 && ((Emission) obj).getSignal().eResource() != obj.eResource()) {
             Signal s = ((Emission) obj).getSignal();
@@ -260,7 +260,7 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         List<IEObjectDescription> l = new LinkedList<IEObjectDescription>();
         EObject container = obj;
         while (true) {
-            if (SyncchartsPackage.eINSTANCE.getScope().isInstance(container)) {
+            if (SCChartsPackage.eINSTANCE.getScope().isInstance(container)) {
                 break;
             }
             container = container.eContainer();
@@ -293,7 +293,7 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
             ValuedObject vObj = ((ValuedObjectReference) obj).getValuedObject();
             l.add(new EObjectDescription(QualifiedName.create(vObj.getName()), vObj,
                     Collections.<String, String> emptyMap()));
-        } else if (SyncchartsPackage.eINSTANCE.getAssignment().isInstance(obj)
+        } else if (SCChartsPackage.eINSTANCE.getAssignment().isInstance(obj)
                 && ((Assignment) obj).getVariable() != null
                 && ((Assignment) obj).getVariable().eResource() != obj.eResource()) {
             Variable v = ((Assignment) obj).getVariable();
