@@ -43,8 +43,8 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
-import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
-import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
+//import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
+//import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
 import java.util.Collection
 import java.util.List
 import javax.inject.Inject
@@ -57,11 +57,11 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
-    private static val Injector i = ActionsStandaloneSetup::doSetup();
-    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
-    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
-    private static val Resource TMP_RES = i.getInstance(typeof(ResourceSet))
-            .createResource(URI::createFileURI("dummy.action"));
+//    private static val Injector i = ActionsStandaloneSetup::doSetup();
+//    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
+//    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
+//    private static val Resource TMP_RES = i.getInstance(typeof(ResourceSet))
+//            .createResource(URI::createFileURI("dummy.action"));
     
     @Inject
     extension KNodeExtensions
@@ -268,22 +268,22 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 };
             ];
 
-            if (SHOW_LABELS.optionBooleanValue) {
-                scopeProvider.parent = t.sourceState;
-                val String label =
-                    try {
-                        serializer.serialize(t.copy => [
-                            TMP_RES.contents += it;
-                        ]);
-                    } finally {
-                        TMP_RES.contents.clear;
-                    } 
-                if (!label.nullOrEmpty) {
-                    t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
-                        label, 11, KlighdConstants::DEFAULT_FONT_NAME
-                    );
-                }
-            }
+//            if (SHOW_LABELS.optionBooleanValue) {
+//                scopeProvider.parent = t.sourceState;
+//                val String label =
+//                    try {
+//                        serializer.serialize(t.copy => [
+//                            TMP_RES.contents += it;
+//                        ]);
+//                    } finally {
+//                        TMP_RES.contents.clear;
+//                    } 
+//                if (!label.nullOrEmpty) {
+//                    t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
+//                        label, 11, KlighdConstants::DEFAULT_FONT_NAME
+//                    );
+//                }
+//            }
             if (SHOW_PRIORITY_LABELS.optionBooleanValue) {
                 t.createLabel("prio", edge).putToLookUpWith(t).configureTailLabel(String::valueOf(
                     if (t.priority != 0) t.priority else t.sourceState.outgoingTransitions.indexOf(t)

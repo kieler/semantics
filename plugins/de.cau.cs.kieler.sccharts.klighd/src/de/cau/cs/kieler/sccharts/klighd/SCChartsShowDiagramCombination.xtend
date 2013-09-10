@@ -13,8 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts.klighd
 
-import de.cau.cs.kieler.core.model.triggers.PartTrigger
-import de.cau.cs.kieler.core.model.triggers.SelectionTrigger
+import de.cau.cs.kieler.core.kivi.triggers.PartTrigger
+import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.effects.KlighdDiagramEffect
 import de.cau.cs.kieler.klighd.incremental.UpdateStrategy
@@ -48,13 +48,13 @@ class SCChartsShowDiagramCombination extends UpdateXtextModelKLighDCombination {
            return;
         }
         
-        val selection = selectionState.selectedObjects;
+        val selection = selectionState.selection;
         if (!selection.nullOrEmpty) {
             if (selection.size == 1 && typeof(IFile).isInstance(selection.get(0))) {
                 val IFile file = selection.get(0) as IFile;
                 val path = file.fullPath.toPortableString;
               
-                if (!path.endsWith("kixs") && !path.endsWith("kits")) {
+                if (!path.endsWith("scc")) {
                     return;
                 }
                 

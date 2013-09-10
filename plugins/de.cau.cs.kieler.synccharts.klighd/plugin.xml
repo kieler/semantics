@@ -10,10 +10,6 @@
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.transformations.GuiceBasedTransformationFactory:de.cau.cs.kieler.synccharts.klighd.SyncChartsDiagramSynthesis"
-            id="de.cau.cs.kieler.synccharts.klighd.diagramSynthesis">
-      </diagramSynthesis>
    </extension>
    <extension
          point="de.cau.cs.kieler.core.kivi.combinations">
