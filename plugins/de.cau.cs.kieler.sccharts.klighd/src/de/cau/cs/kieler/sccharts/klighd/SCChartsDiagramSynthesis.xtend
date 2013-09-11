@@ -173,7 +173,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
     def dispatch KNode translate(State s) {
         return s.createNode().putToLookUpWith(s) => [ node |
-            // node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
+            //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
             // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
             // node.setLayoutOption(LayoutOptions::SPACING, 0f);
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
@@ -221,28 +221,64 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.setGridPlacement(1);
                 } 
                 
-                it.addText(s.label).putToLookUpWith(s) => [
-                    it.fontSize = 10;
-                    it.setFontBold(true);
-                    it.setGridPlacementData().setMaxCellHeightEx(40)
-                        .from(LEFT, 10, 0, TOP, 9f, 0)
-                        .to(RIGHT, 10, 0, BOTTOM, 10, 0);
-                ];
                 
+                 if (!s.regions.empty) {
+                    // Get a smaller window-title-bare if this a macro state 
+                    it.addText(s.label).putToLookUpWith(s) => [
+                        it.fontSize = 10;
+                        it.setFontBold(true);
+                        it.setGridPlacementData().setMaxCellHeightEx(40)
+                            .from(LEFT, 0, 0, TOP, 0f, 0)
+                            .to(RIGHT, 10, 0, BOTTOM, 0, 0);
+                    ];
+                 }
+                 else {
+                    // For simple states we want a larger area 
+                    it.addText(s.label).putToLookUpWith(s) => [
+                        it.fontSize = 10;
+                        it.setFontBold(true);
+                        it.setGridPlacementData().setMaxCellHeightEx(40)
+                            .from(LEFT, 10, 0, TOP, 9f, 0)
+                            .to(RIGHT, 10, 0, BOTTOM, 10, 0);
+                    ];
+                 }
+                
+                        //it.setGridPlacementData.setMaxCellHeight(40);
+                        //it.setGridPlacement(s.valuedObjects.size + 2);
+//                        it.addText("Signals:")
+//                            .setGridPlacementData.from(LEFT, 5, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 5, 0);
+
+                                //it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
+                                //.setPointPlacementData() (LEFT, 0, 0, TOP, 0, i2)//.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                 
                 if (SHOW_SIGNAL_DECLARATIONS.optionBooleanValue && !s.valuedObjects.empty) {
-                    it.addRectangle => [
-                        it.invisible = true;
-                        it.setGridPlacementData.setMaxCellHeight(40);
-                        it.setGridPlacement(s.valuedObjects.size + 2);
-                        it.addText("Signals:")
-                            .setGridPlacementData.from(LEFT, 5, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 5, 0);
                         for (sig : s.valuedObjects) {
-                            it.addText(sig.name + ";")
-                                .setGridPlacementData.from(LEFT, 5, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 5, 0);
-                        }
-                        it.addRectangle().invisible = true;
+                    it.addRectangle => [
+                    //it.background = "white".color;
+                        it.invisible = true;
+                            var declaration = "";
+                            if (sig.isInput) {
+                                declaration = declaration + "input ";
+                            }
+                            if (sig.isOutput) {
+                                declaration = declaration + "output "
+                            }
+                            if (sig.isSignal) {
+                                declaration = declaration + "signal ";
+                            }
+                            if (sig.isStatic) {
+                                declaration = declaration + "static ";
+                            }
+                            if (declaration.equals("")) {
+                                it.addText(sig.name + ";")
+                            }
+                            else {
+                                it.addText(declaration.trim + " " + sig.name + ";")
+                                .setPointPlacementData(createKPosition(LEFT, 4, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+                            }
+                            it.addRectangle().invisible = true;
                     ];
+                        }
                 }
                 
                 if (!s.regions.empty) {
@@ -252,7 +288,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     
                     it.addChildArea().setGridPlacementData() => [
                         from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)
-                        minCellHeight = 40;
+                        minCellHeight = 20;
                     ];
                 }
             ];
