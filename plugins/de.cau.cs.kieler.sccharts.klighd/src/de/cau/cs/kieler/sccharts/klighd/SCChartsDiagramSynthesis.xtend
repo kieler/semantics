@@ -54,6 +54,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.krendering.KColor
 
 class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
@@ -114,6 +115,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     private static val float DASH_WHITE = 5;
     private static val List<Float> DASH_PATTERN = newArrayList(DASH_BLACK, DASH_WHITE); 
 
+    private static val KColor SCCHARTSGRAY = RENDERING_FACTORY.createKColor()=>[it.red=240;it.green=240;it.blue=240];
+    private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor()=>[it.red=248;it.green=249;it.blue=253];
+    private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor()=>[it.red=205;it.green=220;it.blue=243];
+    
+    
+
+
     def dispatch KNode translate(Region r) {
         return r.createNode().putToLookUpWith(r) => [ node |
             // node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
@@ -132,12 +140,15 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             }
             
             node.addRectangle() => [
-                it.invisible = true;
+                it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
+                it.setSurroundingSpace(7,0);
+                it.invisible = false;
+                it.lineWidth = 0;
                 // it.invisible = false;
-                it.foreground = "red".color;
+                //it.foreground = "red".color;
                 it.addText("Region:" + if (r.label.nullOrEmpty) "" else " "+r.label).putToLookUpWith(r) => [
                     it.foreground = "gray".color
-                    it.fontSize = 11                    
+                    it.fontSize = 10                  
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
@@ -187,17 +198,21 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     node.setNodeSize(20,20);
                 ] else if (s.isFinal) figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
                     // re-configure the outer rounded rectangle
-                    val offset = figure.lineWidthValue + 1;
+                    val offset = figure.lineWidthValue + 3;
                     figure.setCornerSize(offset + cornerRadius, offset + cornerRadius)
+                    figure.lineWidth = 2;
 
                     // configure the inner one
+                    it.background = "white".color;
                     it.styleRef = figure;
+                    it.lineWidth = 2;
                     it.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset, 0);
                 ] else figure
                 
              ) => [
                 node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
-                
+                it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+                it.shadow = "black".color;
                 if (conditional) {
                     return;
                 }
@@ -207,7 +222,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 } 
                 
                 it.addText(s.label).putToLookUpWith(s) => [
-                    it.fontSize = 11;
+                    it.fontSize = 10;
+                    it.setFontBold(true);
                     it.setGridPlacementData().setMaxCellHeightEx(40)
                         .from(LEFT, 10, 0, TOP, 9f, 0)
                         .to(RIGHT, 10, 0, BOTTOM, 10, 0);
