@@ -111,9 +111,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     }
     
     
-    private static val float DASH_BLACK = 10;
-    private static val float DASH_WHITE = 5;
-    private static val List<Float> DASH_PATTERN = newArrayList(DASH_BLACK, DASH_WHITE); 
+    private static val float REGION_DASH_BLACK = 10;
+    private static val float REGION_DASH_WHITE = 5;
+    private static val List<Float> REGION_DASH_PATTERN = newArrayList(REGION_DASH_BLACK, REGION_DASH_WHITE); 
+    private static val float TRANSITION_DASH_BLACK = 7;
+    private static val float TRANSITION_DASH_WHITE = 3;
+    private static val List<Float> TRANSITION_DASH_PATTERN = newArrayList(TRANSITION_DASH_BLACK, TRANSITION_DASH_WHITE); 
 
     private static val KColor SCCHARTSGRAY = RENDERING_FACTORY.createKColor()=>[it.red=240;it.green=240;it.blue=240];
     private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor()=>[it.red=248;it.green=249;it.blue=253];
@@ -155,14 +158,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.addVerticalLine(LEFT, 1, 1) => [
                     it.lineStyle = LineStyle::CUSTOM;
                     it.lineStyle.dashPattern.clear;
-                    it.lineStyle.dashPattern += DASH_PATTERN;
+                    it.lineStyle.dashPattern += REGION_DASH_PATTERN;
                     it.invisible = true;
                     it.invisible.modifierId = "de.cau.cs.kieler.sccharts.klighd.regionLineModifier";
                 ];
                 it.addHorizontalLine(TOP, 1, 1) => [
                     it.lineStyle = LineStyle::CUSTOM;
                     it.lineStyle.dashPattern.clear;
-                    it.lineStyle.dashPattern += DASH_PATTERN;
+                    it.lineStyle.dashPattern += REGION_DASH_PATTERN;
                     it.invisible = true;
                     it.invisible.modifierId = "de.cau.cs.kieler.sccharts.klighd.regionLineModifier";
                 ];
@@ -304,7 +307,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             edge.source = t.sourceState.node;
             edge.target = t.targetState.node;
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            
             edge.addSpline(2) => [
+                if (t.isImmediate) {
+                    it.lineStyle = LineStyle::CUSTOM;
+                    it.lineStyle.dashPattern.clear;
+                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
+                }
                 it.addArrowDecorator() => [
                     if (t.isHistory) {
                         it.parent.addHistoryDecorator();
