@@ -86,16 +86,16 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     extension KColorExtensions
     
     private static val TransformationOption SHOW_LABELS
-        = TransformationOption::createCheckOption("Transition labels", false);
+        = TransformationOption::createCheckOption("Transition labels", true);
         
-    private static val TransformationOption SHOW_PRIORITY_LABELS
-        = TransformationOption::createCheckOption("Transition priorities", false);
+//    private static val TransformationOption SHOW_PRIORITY_LABELS
+//        = TransformationOption::createCheckOption("Transition priorities", false);
 
     private static val TransformationOption SHOW_SIGNAL_DECLARATIONS
-        = TransformationOption::createCheckOption("Signal declarations", false);
+        = TransformationOption::createCheckOption("Declarations", true);
 
     override public getTransformationOptions() {
-        return ImmutableSet::of(SHOW_LABELS, SHOW_PRIORITY_LABELS, SHOW_SIGNAL_DECLARATIONS);
+        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_LABELS );
     }
     
     override public getRecommendedLayoutOptions() {
@@ -276,8 +276,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 it.addText(sig.name + ";")
                             }
                             else {
-                                it.addText(declaration.trim + " " + sig.name + ";")
-                                .setPointPlacementData(createKPosition(LEFT, 4, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+                                it.addText(declaration.trim + " " + sig.name + ";") => [
+                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+                                    it.putToLookUpWith(sig);
+                                ]
                             }
                             it.addRectangle().invisible = true;
                     ];
@@ -331,7 +333,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
             if (SHOW_LABELS.optionBooleanValue) {
                 scopeProvider.parent = t.sourceState;
-                val String label =
+                var String label =
                     try {
                         serializer.serialize(t.copy => [
                             TMP_RES.contents += it;
@@ -339,17 +341,20 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     } finally {
                         TMP_RES.contents.clear;
                     } 
+                if (t.sourceState.outgoingTransitions.size > 1) {
+                    label =  t.sourceState.outgoingTransitions.indexOf(t) + 1 + ": " + label;
+                }
                 if (!label.nullOrEmpty) {
                     t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
                         label, 10, KlighdConstants::DEFAULT_FONT_NAME
                     );
                 }
             }
-            if (SHOW_PRIORITY_LABELS.optionBooleanValue) {
-                t.createLabel("prio", edge).putToLookUpWith(t).configureTailLabel(String::valueOf(
-                    if (t.priority != 0) t.priority else t.sourceState.outgoingTransitions.indexOf(t)
-                ), 11, KlighdConstants::DEFAULT_FONT_NAME);
-            }
+//            if (SHOW_PRIORITY_LABELS.optionBooleanValue) {
+//                t.createLabel("prio", edge).putToLookUpWith(t).configureTailLabel(String::valueOf(
+//                    if (t.priority != 0) t.priority else t.sourceState.outgoingTransitions.indexOf(t)
+//                ), 11, KlighdConstants::DEFAULT_FONT_NAME);
+//            }
         ];
     }
     
