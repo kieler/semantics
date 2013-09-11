@@ -149,9 +149,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.lineWidth = 0;
                 // it.invisible = false;
                 //it.foreground = "red".color;
-                it.addText("Region:" + if (r.label.nullOrEmpty) "" else " "+r.label).putToLookUpWith(r) => [
+                it.addText("[-]" + if (r.label.nullOrEmpty) "" else " "+r.label).putToLookUpWith(r) => [
                     it.foreground = "gray".color
-                    it.fontSize = 10                  
+                    it.fontSize = 8                  
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
@@ -277,7 +277,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                             }
                             else {
                                 it.addText(declaration.trim + " " + sig.name + ";") => [
-                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
                                     it.putToLookUpWith(sig);
                                 ]
                             }
@@ -293,7 +293,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     
                     it.addChildArea().setGridPlacementData() => [
                         from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)
-                        minCellHeight = 20;
+                        minCellHeight = 36;
                     ];
                 }
             ];
@@ -346,7 +346,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 }
                 if (!label.nullOrEmpty) {
                     t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
-                        label, 10, KlighdConstants::DEFAULT_FONT_NAME
+                        label, 5, KlighdConstants::DEFAULT_FONT_NAME
                     );
                 }
             }
