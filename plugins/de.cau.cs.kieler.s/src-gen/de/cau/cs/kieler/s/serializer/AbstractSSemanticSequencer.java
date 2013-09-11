@@ -11,24 +11,13 @@ import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.BooleanValue;
-import de.cau.cs.kieler.core.kexpressions.ChannelDescription;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
-import de.cau.cs.kieler.core.kexpressions.ISignal;
-import de.cau.cs.kieler.core.kexpressions.IVariable;
-import de.cau.cs.kieler.core.kexpressions.Input;
-import de.cau.cs.kieler.core.kexpressions.InputOutput;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
-import de.cau.cs.kieler.core.kexpressions.InterfaceVariableDecl;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
-import de.cau.cs.kieler.core.kexpressions.Output;
-import de.cau.cs.kieler.core.kexpressions.Return;
-import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
-import de.cau.cs.kieler.core.kexpressions.TypeIdentifier;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.core.kexpressions.Variable;
-import de.cau.cs.kieler.core.kexpressions.VariableDecl;
 import de.cau.cs.kieler.core.kexpressions.serializer.KExpressionsSemanticSequencer;
 import de.cau.cs.kieler.s.s.Abort;
 import de.cau.cs.kieler.s.s.Await;
@@ -104,12 +93,9 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 				}
 				else break;
 			case AnnotationsPackage.STRING_ANNOTATION:
-				if(context == grammarAccess.getAnnotationRule()) {
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_Annotation_CommentAnnotation_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getValuedAnnotationRule()) {
-					sequence_CommentAnnotation_KeyStringValueAnnotation_ValuedAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getCommentAnnotationRule()) {
@@ -163,12 +149,6 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 					return; 
 				}
 				else break;
-			case KExpressionsPackage.CHANNEL_DESCRIPTION:
-				if(context == grammarAccess.getChannelDescriptionRule()) {
-					sequence_ChannelDescription(context, (ChannelDescription) semanticObject); 
-					return; 
-				}
-				else break;
 			case KExpressionsPackage.FLOAT_VALUE:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -190,34 +170,6 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
 					sequence_FloatValue(context, (FloatValue) semanticObject); 
-					return; 
-				}
-				else break;
-			case KExpressionsPackage.ISIGNAL:
-				if(context == grammarAccess.getISignalRule()) {
-					sequence_ISignal(context, (ISignal) semanticObject); 
-					return; 
-				}
-				else break;
-			case KExpressionsPackage.IVARIABLE:
-				if(context == grammarAccess.getIVariableRule()) {
-					sequence_IVariable(context, (IVariable) semanticObject); 
-					return; 
-				}
-				else break;
-			case KExpressionsPackage.INPUT:
-				if(context == grammarAccess.getInterfaceDeclarationRule() ||
-				   context == grammarAccess.getInterfaceSignalDeclRule() ||
-				   context == grammarAccess.getRootRule()) {
-					sequence_InterfaceSignalDecl(context, (Input) semanticObject); 
-					return; 
-				}
-				else break;
-			case KExpressionsPackage.INPUT_OUTPUT:
-				if(context == grammarAccess.getInterfaceDeclarationRule() ||
-				   context == grammarAccess.getInterfaceSignalDeclRule() ||
-				   context == grammarAccess.getRootRule()) {
-					sequence_InterfaceSignalDecl(context, (InputOutput) semanticObject); 
 					return; 
 				}
 				else break;
@@ -245,48 +197,31 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 					return; 
 				}
 				else break;
-			case KExpressionsPackage.INTERFACE_VARIABLE_DECL:
-				if(context == grammarAccess.getInterfaceDeclarationRule() ||
-				   context == grammarAccess.getInterfaceVariableDeclRule() ||
-				   context == grammarAccess.getRootRule()) {
-					sequence_InterfaceVariableDecl(context, (InterfaceVariableDecl) semanticObject); 
-					return; 
-				}
-				else break;
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
-				if(context == grammarAccess.getAtomicValuedExpressionRule()) {
-					sequence_AddExpression_AndExpression_AtomicValuedExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getRootRule() ||
-				   context == grammarAccess.getSExpressionRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_Expression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getAddExpressionRule() ||
+				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicValuedExpressionRule() ||
 				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
 				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getExpressionRule() ||
 				   context == grammarAccess.getModExpressionRule() ||
 				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getMultExpressionRule() ||
 				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getRootRule() ||
+				   context == grammarAccess.getSExpressionRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getAtomicExpressionRule()) {
-					sequence_AndExpression_AtomicExpression_CompareOperation_NotExpression_OrExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_Expression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getAndExpressionRule() ||
 				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getBooleanExpressionRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
@@ -297,28 +232,6 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 				}
 				else if(context == grammarAccess.getValuedObjectTestExpressionRule()) {
 					sequence_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case KExpressionsPackage.OUTPUT:
-				if(context == grammarAccess.getInterfaceDeclarationRule() ||
-				   context == grammarAccess.getInterfaceSignalDeclRule() ||
-				   context == grammarAccess.getRootRule()) {
-					sequence_InterfaceSignalDecl(context, (Output) semanticObject); 
-					return; 
-				}
-				else break;
-			case KExpressionsPackage.RETURN:
-				if(context == grammarAccess.getInterfaceDeclarationRule() ||
-				   context == grammarAccess.getInterfaceSignalDeclRule() ||
-				   context == grammarAccess.getRootRule()) {
-					sequence_InterfaceSignalDecl(context, (Return) semanticObject); 
-					return; 
-				}
-				else break;
-			case KExpressionsPackage.SIGNAL:
-				if(context == grammarAccess.getSignalRule()) {
-					sequence_Signal(context, (Signal) semanticObject); 
 					return; 
 				}
 				else break;
@@ -354,9 +267,9 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 					return; 
 				}
 				else break;
-			case KExpressionsPackage.TYPE_IDENTIFIER:
-				if(context == grammarAccess.getTypeIdentifierRule()) {
-					sequence_TypeIdentifier(context, (TypeIdentifier) semanticObject); 
+			case KExpressionsPackage.VALUED_OBJECT:
+				if(context == grammarAccess.getValuedObjectRule()) {
+					sequence_ValuedObject(context, (ValuedObject) semanticObject); 
 					return; 
 				}
 				else break;
@@ -390,18 +303,6 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 				   context == grammarAccess.getValuedObjectReferenceRule() ||
 				   context == grammarAccess.getValuedObjectTestExpressionRule()) {
 					sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
-					return; 
-				}
-				else break;
-			case KExpressionsPackage.VARIABLE:
-				if(context == grammarAccess.getVariableRule()) {
-					sequence_Variable(context, (Variable) semanticObject); 
-					return; 
-				}
-				else break;
-			case KExpressionsPackage.VARIABLE_DECL:
-				if(context == grammarAccess.getVariableDeclRule()) {
-					sequence_VariableDecl(context, (VariableDecl) semanticObject); 
 					return; 
 				}
 				else break;
@@ -533,7 +434,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (signal=[Signal|ID] continuation=[Continuation|ID]?)
+	 *     (signal=[ValuedObject|ID] continuation=[Continuation|ID]?)
 	 */
 	protected void sequence_Await(EObject context, Await semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -542,7 +443,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (signal=[Signal|ID] value=SExpression? continuation=[Continuation|ID]?)
+	 *     (signal=[ValuedObject|ID] value=SExpression? continuation=[Continuation|ID]?)
 	 */
 	protected void sequence_Emit(EObject context, Emit semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -603,7 +504,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     signal=[Signal|ID]
+	 *     signal=[ValuedObject|ID]
 	 */
 	protected void sequence_LocalSignal(EObject context, LocalSignal semanticObject) {
 		if(errorAcceptor != null) {
@@ -612,7 +513,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getLocalSignalAccess().getSignalSignalIDTerminalRuleCall_2_0_1(), semanticObject.getSignal());
+		feeder.accept(grammarAccess.getLocalSignalAccess().getSignalValuedObjectIDTerminalRuleCall_2_0_1(), semanticObject.getSignal());
 		feeder.finish();
 	}
 	
@@ -637,13 +538,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (
-	 *         name=ID 
-	 *         priority=INT 
-	 *         ((variables+=Variable | signals+=Signal) (variables+=Variable | signals+=Signal)*)? 
-	 *         globalHostCodeInstruction=HOSTCODE* 
-	 *         states+=State+
-	 *     )
+	 *     (name=ID priority=INT valuedObjects+=ValuedObject? globalHostCodeInstruction=HOSTCODE* states+=State+)
 	 */
 	protected void sequence_Program(EObject context, Program semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -652,22 +547,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (
-	 *         isInput?='input'? 
-	 *         isOutput?='output'? 
-	 *         name=EString 
-	 *         initialValue=EString? 
-	 *         (type=ValueType | (type=ValueType (combineOperator=CombineOperator | hostCombineOperator=EString)))?
-	 *     )
-	 */
-	protected void sequence_Signal(EObject context, Signal semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (name=ID (signals+=Signal+ | variables+=Variable+)? instructions+=Instruction*)
+	 *     (name=ID valuedObjects+=ValuedObject* instructions+=Instruction*)
 	 */
 	protected void sequence_State(EObject context, State semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -685,7 +565,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (name=ID (signals+=Signal+ | variables+=Variable+)? states+=State*)
+	 *     (name=ID valuedObjects+=ValuedObject* states+=State*)
 	 */
 	protected void sequence_Thread(EObject context, de.cau.cs.kieler.s.s.Thread semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -710,9 +590,16 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (name=EString initialValue=EString? type=ValueType?)
+	 *     (
+	 *         isInput?='input'? 
+	 *         isOutput?='output'? 
+	 *         isSignal?='signal'? 
+	 *         name=EString 
+	 *         initialValue=EString? 
+	 *         (type=ValueType | (type=ValueType combineOperator=CombineOperator))?
+	 *     )
 	 */
-	protected void sequence_Variable(EObject context, Variable semanticObject) {
+	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }
