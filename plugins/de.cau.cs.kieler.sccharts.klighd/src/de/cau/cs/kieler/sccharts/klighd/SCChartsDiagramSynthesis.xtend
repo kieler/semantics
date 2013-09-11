@@ -85,17 +85,17 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     @Inject
     extension KColorExtensions
     
-    private static val TransformationOption SHOW_LABELS
-        = TransformationOption::createCheckOption("Transition labels", true);
-        
-//    private static val TransformationOption SHOW_PRIORITY_LABELS
-//        = TransformationOption::createCheckOption("Transition priorities", false);
-
     private static val TransformationOption SHOW_SIGNAL_DECLARATIONS
         = TransformationOption::createCheckOption("Declarations", true);
 
+    private static val TransformationOption SHOW_LABELS
+        = TransformationOption::createCheckOption("Transition labels", true);
+        
+    private static val TransformationOption SHOW_SHADOW
+        = TransformationOption::createCheckOption("Shadow", true);
+
     override public getTransformationOptions() {
-        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_LABELS );
+        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_LABELS, SHOW_SHADOW);
     }
     
     override public getRecommendedLayoutOptions() {
@@ -215,7 +215,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
              ) => [
                 node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
                 it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
-                it.shadow = "black".color;
+                if (SHOW_SHADOW.optionBooleanValue) {
+                    it.shadow = "black".color;
+                }
                 if (conditional) {
                     return;
                 }
@@ -227,7 +229,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 
                  if (!s.regions.empty) {
                     // Get a smaller window-title-bare if this a macro state 
-                    it.addText(s.label).putToLookUpWith(s) => [
+                    it.addText(" " + s.label).putToLookUpWith(s) => [
                         it.fontSize = 10;
                         it.setFontBold(true);
                         it.setGridPlacementData().setMaxCellHeightEx(40)
