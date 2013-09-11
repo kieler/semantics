@@ -177,14 +177,6 @@
   <children xmi:type="notation:Node" xmi:id="_qNlZcCMFEeCoS6apQnzF5Q" type="1001">
     <children xmi:type="notation:Node" xmi:id="_qNlZcyMFEeCoS6apQnzF5Q" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_qNlZdCMFEeCoS6apQnzF5Q" type="5001">
-      <children xmi:type="notation:Node" xmi:id="_qNlZfCMFEeCoS6apQnzF5Q" type="2001">
-        <element xmi:type="ecore:EAttribute" href="kexpressions.ecore#//Signal/isInput"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_qNlZfSMFEeCoS6apQnzF5Q"/>
-      </children>
-      <children xmi:type="notation:Node" xmi:id="_qNlZfiMFEeCoS6apQnzF5Q" type="2001">
-        <element xmi:type="ecore:EAttribute" href="kexpressions.ecore#//Signal/isOutput"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_qNlZfyMFEeCoS6apQnzF5Q"/>
-      </children>
       <children xmi:type="notation:Node" xmi:id="_qNlZgCMFEeCoS6apQnzF5Q" type="2001">
         <element xmi:type="ecore:EAttribute" href="kexpressions.ecore#//Signal/combineOperator"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_qNlZgSMFEeCoS6apQnzF5Q"/>
@@ -284,10 +276,6 @@
   <children xmi:type="notation:Node" xmi:id="_qNlZsCMFEeCoS6apQnzF5Q" type="1001">
     <children xmi:type="notation:Node" xmi:id="_qNlZsyMFEeCoS6apQnzF5Q" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_qNlZtCMFEeCoS6apQnzF5Q" type="5001">
-      <children xmi:type="notation:Node" xmi:id="_qNlZvCMFEeCoS6apQnzF5Q" type="2001">
-        <element xmi:type="ecore:EAttribute" href="kexpressions.ecore#//Variable/const"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_qNlZvSMFEeCoS6apQnzF5Q"/>
-      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_qNlZtSMFEeCoS6apQnzF5Q"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_qNlZtiMFEeCoS6apQnzF5Q"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_qNlZtyMFEeCoS6apQnzF5Q"/>

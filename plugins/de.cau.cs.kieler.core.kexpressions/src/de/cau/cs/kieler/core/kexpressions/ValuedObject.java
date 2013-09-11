@@ -27,7 +27,11 @@ import de.cau.cs.kieler.core.annotations.Annotatable;
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getHostType <em>Host Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsInput <em>Is Input</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsOutput <em>Is Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsStatic <em>Is Static</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsSignal <em>Is Signal</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}</li>
  * </ul>
  * </p>
  *
@@ -118,29 +122,136 @@ public interface ValuedObject extends Annotatable {
     void setInitialValue(String value);
 
     /**
-     * Returns the value of the '<em><b>Host Type</b></em>' attribute.
+     * Returns the value of the '<em><b>Is Input</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Host Type</em>' attribute isn't clear,
+     * If the meaning of the '<em>Is Input</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Host Type</em>' attribute.
-     * @see #setHostType(String)
-     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_HostType()
-     * @model
+     * @return the value of the '<em>Is Input</em>' attribute.
+     * @see #setIsInput(boolean)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_IsInput()
+     * @model required="true"
      * @generated
      */
-    String getHostType();
+    boolean isIsInput();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getHostType <em>Host Type</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsInput <em>Is Input</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Host Type</em>' attribute.
-     * @see #getHostType()
+     * @param value the new value of the '<em>Is Input</em>' attribute.
+     * @see #isIsInput()
      * @generated
      */
-    void setHostType(String value);
+    void setIsInput(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Is Output</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Is Output</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Is Output</em>' attribute.
+     * @see #setIsOutput(boolean)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_IsOutput()
+     * @model required="true"
+     * @generated
+     */
+    boolean isIsOutput();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsOutput <em>Is Output</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Is Output</em>' attribute.
+     * @see #isIsOutput()
+     * @generated
+     */
+    void setIsOutput(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Is Static</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Is Static</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Is Static</em>' attribute.
+     * @see #setIsStatic(boolean)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_IsStatic()
+     * @model required="true"
+     * @generated
+     */
+    boolean isIsStatic();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsStatic <em>Is Static</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Is Static</em>' attribute.
+     * @see #isIsStatic()
+     * @generated
+     */
+    void setIsStatic(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Is Signal</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Is Signal</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Is Signal</em>' attribute.
+     * @see #setIsSignal(boolean)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_IsSignal()
+     * @model required="true"
+     * @generated
+     */
+    boolean isIsSignal();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsSignal <em>Is Signal</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Is Signal</em>' attribute.
+     * @see #isIsSignal()
+     * @generated
+     */
+    void setIsSignal(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Combine Operator</b></em>' attribute.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.core.kexpressions.CombineOperator}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Combine Operator</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Combine Operator</em>' attribute.
+     * @see de.cau.cs.kieler.core.kexpressions.CombineOperator
+     * @see #setCombineOperator(CombineOperator)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_CombineOperator()
+     * @model required="true"
+     * @generated
+     */
+    CombineOperator getCombineOperator();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Combine Operator</em>' attribute.
+     * @see de.cau.cs.kieler.core.kexpressions.CombineOperator
+     * @see #getCombineOperator()
+     * @generated
+     */
+    void setCombineOperator(CombineOperator value);
 
 } // ValuedObject

@@ -32,7 +32,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      */
     public static KExpressionsFactory init() {
         try {
-            KExpressionsFactory theKExpressionsFactory = (KExpressionsFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/kexpressions/0.1.2"); 
+            KExpressionsFactory theKExpressionsFactory = (KExpressionsFactory)EPackage.Registry.INSTANCE.getEFactory(KExpressionsPackage.eNS_URI);
             if (theKExpressionsFactory != null) {
                 return theKExpressionsFactory;
             }
@@ -64,9 +64,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.COMPLEX_EXPRESSION: return createComplexExpression();
             case KExpressionsPackage.EXPRESSION: return createExpression();
             case KExpressionsPackage.TEXTUAL_CODE: return createTextualCode();
-            case KExpressionsPackage.SIGNAL: return createSignal();
             case KExpressionsPackage.VALUED_OBJECT: return createValuedObject();
-            case KExpressionsPackage.VARIABLE: return createVariable();
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE: return createValuedObjectReference();
             case KExpressionsPackage.VALUE: return createValue();
             case KExpressionsPackage.INT_VALUE: return createIntValue();
@@ -74,18 +72,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.BOOLEAN_VALUE: return createBooleanValue();
             case KExpressionsPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
             case KExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
-            case KExpressionsPackage.INTERFACE_DECLARATION: return createInterfaceDeclaration();
-            case KExpressionsPackage.INTERFACE_SIGNAL_DECL: return createInterfaceSignalDecl();
-            case KExpressionsPackage.ISIGNAL: return createISignal();
-            case KExpressionsPackage.CHANNEL_DESCRIPTION: return createChannelDescription();
-            case KExpressionsPackage.TYPE_IDENTIFIER: return createTypeIdentifier();
-            case KExpressionsPackage.INTERFACE_VARIABLE_DECL: return createInterfaceVariableDecl();
-            case KExpressionsPackage.VARIABLE_DECL: return createVariableDecl();
-            case KExpressionsPackage.IVARIABLE: return createIVariable();
-            case KExpressionsPackage.INPUT: return createInput();
-            case KExpressionsPackage.OUTPUT: return createOutput();
-            case KExpressionsPackage.INPUT_OUTPUT: return createInputOutput();
-            case KExpressionsPackage.RETURN: return createReturn();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -164,29 +150,9 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public Signal createSignal() {
-        SignalImpl signal = new SignalImpl();
-        return signal;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public ValuedObject createValuedObject() {
         ValuedObjectImpl valuedObject = new ValuedObjectImpl();
         return valuedObject;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Variable createVariable() {
-        VariableImpl variable = new VariableImpl();
-        return variable;
     }
 
     /**
@@ -257,126 +223,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public TextExpression createTextExpression() {
         TextExpressionImpl textExpression = new TextExpressionImpl();
         return textExpression;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public InterfaceDeclaration createInterfaceDeclaration() {
-        InterfaceDeclarationImpl interfaceDeclaration = new InterfaceDeclarationImpl();
-        return interfaceDeclaration;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public InterfaceSignalDecl createInterfaceSignalDecl() {
-        InterfaceSignalDeclImpl interfaceSignalDecl = new InterfaceSignalDeclImpl();
-        return interfaceSignalDecl;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ISignal createISignal() {
-        ISignalImpl iSignal = new ISignalImpl();
-        return iSignal;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ChannelDescription createChannelDescription() {
-        ChannelDescriptionImpl channelDescription = new ChannelDescriptionImpl();
-        return channelDescription;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public TypeIdentifier createTypeIdentifier() {
-        TypeIdentifierImpl typeIdentifier = new TypeIdentifierImpl();
-        return typeIdentifier;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public InterfaceVariableDecl createInterfaceVariableDecl() {
-        InterfaceVariableDeclImpl interfaceVariableDecl = new InterfaceVariableDeclImpl();
-        return interfaceVariableDecl;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public VariableDecl createVariableDecl() {
-        VariableDeclImpl variableDecl = new VariableDeclImpl();
-        return variableDecl;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public IVariable createIVariable() {
-        IVariableImpl iVariable = new IVariableImpl();
-        return iVariable;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Input createInput() {
-        InputImpl input = new InputImpl();
-        return input;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Output createOutput() {
-        OutputImpl output = new OutputImpl();
-        return output;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public InputOutput createInputOutput() {
-        InputOutputImpl inputOutput = new InputOutputImpl();
-        return inputOutput;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Return createReturn() {
-        ReturnImpl return_ = new ReturnImpl();
-        return return_;
     }
 
     /**

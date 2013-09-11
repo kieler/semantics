@@ -57,7 +57,7 @@ Workflow {
 			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment {
 				options = {
 					classSplitting = true
-					backtrack = false
+					backtrack = true
 				}
 			}
 			
