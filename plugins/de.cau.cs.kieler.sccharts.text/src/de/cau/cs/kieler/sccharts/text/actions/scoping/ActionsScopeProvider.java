@@ -16,8 +16,7 @@ import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
-import de.cau.cs.kieler.core.kexpressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Scope;
 
 /**
@@ -48,15 +47,10 @@ public class ActionsScopeProvider extends AbstractDeclarativeScopeProvider {
     private Iterable<IEObjectDescription> getElements(EObject parent){
         ArrayList<IEObjectDescription> elements = new ArrayList<IEObjectDescription>();
                 if (parent != null && parent instanceof Scope) {
-                        List<Signal> signals = ((Scope) parent).getSignals();
-                        for (Signal signal : signals) {
+                        List<ValuedObject> valuedObjects = ((Scope) parent).getValuedObjects();
+                        for (ValuedObject valuedObject : valuedObjects) {
                                 elements.add(new EObjectDescription(QualifiedName.create(
-                                        signal.getName()), signal, Collections.EMPTY_MAP));
-                        }
-                        List<Variable> variables = ((Scope) parent).getVariables();
-                        for (Variable variable : variables) {
-                                elements.add(new EObjectDescription(QualifiedName.create(
-                                        variable.getName()), variable, Collections.EMPTY_MAP));
+                                        valuedObject.getName()), valuedObject, Collections.EMPTY_MAP));
                         }
                 }
                 return elements;

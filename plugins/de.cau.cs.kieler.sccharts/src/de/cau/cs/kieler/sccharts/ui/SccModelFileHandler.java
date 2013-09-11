@@ -104,7 +104,7 @@ public class SccModelFileHandler extends AbstractConvertModelHandler {
      */
     @Override
     protected String getTargetExtension() {
-        return "transformed.kixs";
+        return "transformed.scc";
     }
 
     // -------------------------------------------------------------------------

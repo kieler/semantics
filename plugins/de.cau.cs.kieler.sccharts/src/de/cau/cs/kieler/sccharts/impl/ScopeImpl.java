@@ -15,9 +15,8 @@ package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kexpressions.TextualCode;
-import de.cau.cs.kieler.core.kexpressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -50,8 +49,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLabel <em>Label</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getSignals <em>Signals</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getVariables <em>Variables</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getValuedObjects <em>Valued Objects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getExitActions <em>Exit Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getInnerActions <em>Inner Actions</em>}</li>
@@ -115,24 +113,14 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     protected String label = LABEL_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getSignals() <em>Signals</em>}' containment reference list.
+     * The cached value of the '{@link #getValuedObjects() <em>Valued Objects</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getSignals()
+     * @see #getValuedObjects()
      * @generated
      * @ordered
      */
-    protected EList<Signal> signals;
-
-    /**
-     * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getVariables()
-     * @generated
-     * @ordered
-     */
-    protected EList<Variable> variables;
+    protected EList<ValuedObject> valuedObjects;
 
     /**
      * The cached value of the '{@link #getSuspensionTrigger() <em>Suspension Trigger</em>}' containment reference.
@@ -300,23 +288,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Signal> getSignals() {
-        if (signals == null) {
-            signals = new EObjectContainmentEList<Signal>(Signal.class, this, SCChartsPackage.SCOPE__SIGNALS);
+    public EList<ValuedObject> getValuedObjects() {
+        if (valuedObjects == null) {
+            valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, SCChartsPackage.SCOPE__VALUED_OBJECTS);
         }
-        return signals;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Variable> getVariables() {
-        if (variables == null) {
-            variables = new EObjectContainmentEList<Variable>(Variable.class, this, SCChartsPackage.SCOPE__VARIABLES);
-        }
-        return variables;
+        return valuedObjects;
     }
 
     /**
@@ -547,10 +523,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SCChartsPackage.SCOPE__SIGNALS:
-                return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.SCOPE__VARIABLES:
-                return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.SCOPE__VALUED_OBJECTS:
+                return ((InternalEList<?>)getValuedObjects()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__SUSPENSION_TRIGGER:
                 return basicSetSuspensionTrigger(null, msgs);
             case SCChartsPackage.SCOPE__EXIT_ACTIONS:
@@ -581,10 +555,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return getId();
             case SCChartsPackage.SCOPE__LABEL:
                 return getLabel();
-            case SCChartsPackage.SCOPE__SIGNALS:
-                return getSignals();
-            case SCChartsPackage.SCOPE__VARIABLES:
-                return getVariables();
+            case SCChartsPackage.SCOPE__VALUED_OBJECTS:
+                return getValuedObjects();
             case SCChartsPackage.SCOPE__SUSPENSION_TRIGGER:
                 return getSuspensionTrigger();
             case SCChartsPackage.SCOPE__EXIT_ACTIONS:
@@ -623,13 +595,9 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SCChartsPackage.SCOPE__LABEL:
                 setLabel((String)newValue);
                 return;
-            case SCChartsPackage.SCOPE__SIGNALS:
-                getSignals().clear();
-                getSignals().addAll((Collection<? extends Signal>)newValue);
-                return;
-            case SCChartsPackage.SCOPE__VARIABLES:
-                getVariables().clear();
-                getVariables().addAll((Collection<? extends Variable>)newValue);
+            case SCChartsPackage.SCOPE__VALUED_OBJECTS:
+                getValuedObjects().clear();
+                getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
                 return;
             case SCChartsPackage.SCOPE__SUSPENSION_TRIGGER:
                 setSuspensionTrigger((Action)newValue);
@@ -681,11 +649,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SCChartsPackage.SCOPE__LABEL:
                 setLabel(LABEL_EDEFAULT);
                 return;
-            case SCChartsPackage.SCOPE__SIGNALS:
-                getSignals().clear();
-                return;
-            case SCChartsPackage.SCOPE__VARIABLES:
-                getVariables().clear();
+            case SCChartsPackage.SCOPE__VALUED_OBJECTS:
+                getValuedObjects().clear();
                 return;
             case SCChartsPackage.SCOPE__SUSPENSION_TRIGGER:
                 setSuspensionTrigger((Action)null);
@@ -730,10 +695,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
             case SCChartsPackage.SCOPE__LABEL:
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
-            case SCChartsPackage.SCOPE__SIGNALS:
-                return signals != null && !signals.isEmpty();
-            case SCChartsPackage.SCOPE__VARIABLES:
-                return variables != null && !variables.isEmpty();
+            case SCChartsPackage.SCOPE__VALUED_OBJECTS:
+                return valuedObjects != null && !valuedObjects.isEmpty();
             case SCChartsPackage.SCOPE__SUSPENSION_TRIGGER:
                 return suspensionTrigger != null;
             case SCChartsPackage.SCOPE__EXIT_ACTIONS:

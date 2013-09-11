@@ -29,7 +29,6 @@ import org.eclipse.xtext.util.Strings;
 
 import de.cau.cs.kieler.core.kexpressions.CombineOperator;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Region;
@@ -132,9 +131,9 @@ public class SctResource extends LazyLinkingResource {
             if (SCChartsPackage.eINSTANCE.getState().isInstance(o)) {
                 setupPriorities((State) o);
             }
-            if (KExpressionsPackage.eINSTANCE.getValuedObject().isInstance(o)) {
-                setupTypes((ValuedObject) o);
-            }
+//            if (KExpressionsPackage.eINSTANCE.getValuedObject().isInstance(o)) {
+//                setupTypes((ValuedObject) o);
+//            }
         }
     }
 
@@ -236,16 +235,16 @@ public class SctResource extends LazyLinkingResource {
 //        }
     }
 
-    private void setupTypes(ValuedObject v) {
-        if (!Strings.isEmpty(v.getHostType())) {
-            v.setType(ValueType.HOST);
-        }
-        if (KExpressionsPackage.eINSTANCE.getSignal().isInstance(v)) {
-            if (!Strings.isEmpty(((Signal) v).getHostCombineOperator())) {
-                ((Signal) v).setCombineOperator(CombineOperator.HOST);
-            }
-        }
-    }
+//    private void setupTypes(ValuedObject v) {
+//        //if (!Strings.isEmpty(v.getHostType())) {
+//            v.setType(ValueType.HOST);
+//        //}
+//        if (KExpressionsPackage.eINSTANCE.getValuedObject().isInstance(v)) {
+//            //if (!Strings.isEmpty(((ValuedObject) v).getHostCombineOperator())) {
+//                ((ValuedObject) v).setCombineOperator(CombineOperator.HOST);
+//            //}
+//        }
+//    }
 
     // /** copied from TriggerListenerIDs */
     // List<UniqueStringCache> caches = new ArrayList<UniqueStringCache>();

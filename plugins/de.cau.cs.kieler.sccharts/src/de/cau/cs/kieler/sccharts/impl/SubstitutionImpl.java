@@ -117,7 +117,7 @@ public class SubstitutionImpl extends EObjectImpl implements Substitution {
      */
     public Scope getParentScope() {
         if (eContainerFeatureID() != SCChartsPackage.SUBSTITUTION__PARENT_SCOPE) return null;
-        return (Scope)eContainer();
+        return (Scope)eInternalContainer();
     }
 
     /**

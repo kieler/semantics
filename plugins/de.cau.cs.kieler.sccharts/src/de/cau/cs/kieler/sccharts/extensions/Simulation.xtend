@@ -41,23 +41,23 @@ class Simulation {
     //-------------------------------------------------------------------------
     def Region transform2Simulation (Region rootRegion) {
           // Transformation of a SyncChart to another SyncChart
-          // enriched with additional signals for each state and
+          // enriched with additional valuedObjects for each state and
           // each transition.
           // 
-          // These signals are HS for auxiliary state signals
-          // and HT for auxiliary transition signals.
+          // These valuedObjects are HS for auxiliary state valuedObjects
+          // and HT for auxiliary transition valuedObjects.
           // 
-          // Signals HS are generated in the following fashion for a 
+          // ValuedObjects HS are generated in the following fashion for a 
           // state S:
           // 
           // 1. For every incoming transition, add an output-emit action for HS
           // 2. Create an auxiliary region that has one state and a self-loop 
           //    emitting HS.
           // 3. Initial states need new initial states connected with an
-          //    immediate transition that emits the signal HS.
+          //    immediate transition that emits the valuedObject HS.
           // 
           // ATTENTION: Iff the state is a final state, then do not emit the
-          // in-state-auxiliary signal inside (2.) because the thread in this case
+          // in-state-auxiliary valuedObject inside (2.) because the thread in this case
           // cannot terminate! (This would change the semantics)
           // 
           // ATTENTION: Iff the state has an outgoing normal termination then
@@ -65,11 +65,11 @@ class Simulation {
           // The normal termination is transformed into a weak abort - this is the
           // best approximation 
           // 
-          // Signal HT are generated in the following fashion for a
+          // ValuedObject HT are generated in the following fashion for a
           // transition T:
           // 
-          // As names for the signals are randomly generated and must be unique
-          // there must be a mapping that keeps track which signal (name) belongs to
+          // As names for the valuedObjects are randomly generated and must be unique
+          // there must be a mapping that keeps track which valuedObject (name) belongs to
           // which original S statement.
           // General method to create the enriched SyncCharts simulation models.
           var AUXILIARY_VARIABLE_TAG_STATE =  SCChartsPlugin::AUXILIARY_VARIABLE_TAG_STATE
@@ -116,23 +116,23 @@ class Simulation {
      
      // Transform a transition as described in 1.
      def void transformTransition(Transition transition, Region targetRootRegion, String UID) {
-          // auxiliary signal
-          val auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
+          // auxiliary valuedObject
+          val auxiliaryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
           val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
           
-          // Setup the auxiliarySignal as an OUTPUT to the module
-          auxiliarySignal.setName(UID);
-          auxiliarySignal.setIsInput(false);
-          auxiliarySignal.setIsOutput(true);
-          auxiliarySignal.setType(ValueType::PURE);
-          // Set the auxliiarySignal for emission 
-          auxiliaryEmission.setSignal(auxiliarySignal);
+          // Setup the auxiliaryValuedObject as an OUTPUT to the module
+          auxiliaryValuedObject.setName(UID);
+          auxiliaryValuedObject.setIsInput(false);
+          auxiliaryValuedObject.setIsOutput(true);
+          auxiliaryValuedObject.setType(ValueType::PURE);
+          // Set the auxliiaryValuedObject for emission 
+          auxiliaryEmission.setValuedObject(auxiliaryValuedObject);
           
-          // Add emission of auxiliary Signal to tansition
+          // Add emission of auxiliary ValuedObject to tansition
           transition.effects.add(auxiliaryEmission);
 
-          // Add auxiliarySignal to first (and only) root region state SyncCharts main interface
-          targetRootRegion.states.get(0).signals.add(auxiliarySignal);
+          // Add auxiliaryValuedObject to first (and only) root region state SyncCharts main interface
+          targetRootRegion.states.get(0).valuedObjects.add(auxiliaryValuedObject);
      }
 
     
@@ -148,27 +148,27 @@ class Simulation {
           // Do the following only for NON-final states
           // Do the following only for NON-top-most-states
           if (!state.isFinal && state.parentRegion != targetRootRegion) {
-               // auxiliary signal
-               val auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
+               // auxiliary valuedObject
+               val auxiliaryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
           
-               // Setup the auxiliarySignal as an OUTPUT to the module
-               auxiliarySignal.setName(UID);
-               auxiliarySignal.setIsInput(false);
-               auxiliarySignal.setIsOutput(true);
-               auxiliarySignal.setType(ValueType::PURE);
+               // Setup the auxiliaryValuedObject as an OUTPUT to the module
+               auxiliaryValuedObject.setName(UID);
+               auxiliaryValuedObject.setIsInput(false);
+               auxiliaryValuedObject.setIsOutput(true);
+               auxiliaryValuedObject.setType(ValueType::PURE);
 
-               // Add emission of auxiliary Signal as an immediate during action for this state
+               // Add emission of auxiliary ValuedObject as an immediate during action for this state
                val immediateDuringAction = SCChartsFactory::eINSTANCE.createAction();
                immediateDuringAction.setIsImmediate(true);
                val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
-                   auxiliaryEmission.setSignal(auxiliarySignal);
+                   auxiliaryEmission.setValuedObject(auxiliaryValuedObject);
                immediateDuringAction.effects.add(auxiliaryEmission);
                
                // Add during action to state
                state.innerActions.add(immediateDuringAction);
 
-               // Add auxiliarySignal to first (and only) root region state SyncCharts main interface
-               targetRootRegion.states.get(0).signals.add(auxiliarySignal);
+               // Add auxiliaryValuedObject to first (and only) root region state SyncCharts main interface
+               targetRootRegion.states.get(0).valuedObjects.add(auxiliaryValuedObject);
           }
           
      }     

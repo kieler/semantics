@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.sccharts.Assignment;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.AssignmentImpl#getVariable <em>Variable</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
@@ -50,14 +50,14 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * The cached value of the '{@link #getVariable() <em>Variable</em>}' reference.
+     * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getVariable()
+     * @see #getValuedObject()
      * @generated
      * @ordered
      */
-    protected Variable variable;
+    protected ValuedObject valuedObject;
 
     /**
      * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -93,16 +93,16 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Variable getVariable() {
-        if (variable != null && variable.eIsProxy()) {
-            InternalEObject oldVariable = (InternalEObject)variable;
-            variable = (Variable)eResolveProxy(oldVariable);
-            if (variable != oldVariable) {
+    public ValuedObject getValuedObject() {
+        if (valuedObject != null && valuedObject.eIsProxy()) {
+            InternalEObject oldValuedObject = (InternalEObject)valuedObject;
+            valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
+            if (valuedObject != oldValuedObject) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.ASSIGNMENT__VARIABLE, oldVariable, variable));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
             }
         }
-        return variable;
+        return valuedObject;
     }
 
     /**
@@ -110,8 +110,8 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Variable basicGetVariable() {
-        return variable;
+    public ValuedObject basicGetValuedObject() {
+        return valuedObject;
     }
 
     /**
@@ -119,11 +119,11 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setVariable(Variable newVariable) {
-        Variable oldVariable = variable;
-        variable = newVariable;
+    public void setValuedObject(ValuedObject newValuedObject) {
+        ValuedObject oldValuedObject = valuedObject;
+        valuedObject = newValuedObject;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ASSIGNMENT__VARIABLE, oldVariable, variable));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
     }
 
     /**
@@ -191,9 +191,9 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SCChartsPackage.ASSIGNMENT__VARIABLE:
-                if (resolve) return getVariable();
-                return basicGetVariable();
+            case SCChartsPackage.ASSIGNMENT__VALUED_OBJECT:
+                if (resolve) return getValuedObject();
+                return basicGetValuedObject();
             case SCChartsPackage.ASSIGNMENT__EXPRESSION:
                 return getExpression();
         }
@@ -208,8 +208,8 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SCChartsPackage.ASSIGNMENT__VARIABLE:
-                setVariable((Variable)newValue);
+            case SCChartsPackage.ASSIGNMENT__VALUED_OBJECT:
+                setValuedObject((ValuedObject)newValue);
                 return;
             case SCChartsPackage.ASSIGNMENT__EXPRESSION:
                 setExpression((Expression)newValue);
@@ -226,8 +226,8 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.ASSIGNMENT__VARIABLE:
-                setVariable((Variable)null);
+            case SCChartsPackage.ASSIGNMENT__VALUED_OBJECT:
+                setValuedObject((ValuedObject)null);
                 return;
             case SCChartsPackage.ASSIGNMENT__EXPRESSION:
                 setExpression((Expression)null);
@@ -244,8 +244,8 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.ASSIGNMENT__VARIABLE:
-                return variable != null;
+            case SCChartsPackage.ASSIGNMENT__VALUED_OBJECT:
+                return valuedObject != null;
             case SCChartsPackage.ASSIGNMENT__EXPRESSION:
                 return expression != null;
         }

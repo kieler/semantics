@@ -20,7 +20,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.Signal
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.sccharts.Action
@@ -52,15 +52,15 @@ class CoreTransformation {
     //-------------------------------------------------------------------------
     // @requires: none
 
-    // Transforming Local Signals.
-    def Region transformExposeLocalSignal(Region rootRegion) {
+    // Transforming Local ValuedObjects.
+    def Region transformExposeLocalValuedObject(Region rootRegion) {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
         for(targetState : targetStates) {
             // This statement we want to modify
-            targetState.transformExposeLocalSignal(targetRootRegion);
+            targetState.transformExposeLocalValuedObject(targetRootRegion);
         }
         
         targetRootRegion;
@@ -114,45 +114,45 @@ class CoreTransformation {
         return StartSymbol + "_";
     }
            
-    // Traverse all states and transform possible local signals
-    def void transformExposeLocalSignal(State state, Region targetRootRegion) {
-        // EXPOSE LOCAL SIGNALS: For every local signal create a global signal
-        // and wherever the local signal is emitted, also emit the new global 
-        // signal.
-        // Name the new global signals according to the local signal's hierarchy. 
+    // Traverse all states and transform possible local valuedObjects
+    def void transformExposeLocalValuedObject(State state, Region targetRootRegion) {
+        // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
+        // and wherever the local valuedObject is emitted, also emit the new global 
+        // valuedObject.
+        // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
                
                // Exclude the top level state
                if (state.parentRegion == targetRootRegion) {
                    return;
                }
         
-               // There are local signals, raise them
-               if (state.signals != null && state.signals.size > 0) {
+               // There are local valuedObjects, raise them
+               if (state.valuedObjects != null && state.valuedObjects.size > 0) {
                     val hierarchicalStateName = state.getHierarchicalName("LOCAL");
                     
-                    for (Signal stateSignal : ImmutableList::copyOf(state.signals)) {
+                    for (ValuedObject stateValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
                         
-                       val newSignalName = hierarchicalStateName + "_" + stateSignal.name;
-                       val globalSignal = KExpressionsFactory::eINSTANCE.createSignal();
-                       globalSignal.setName(newSignalName);
-                       globalSignal.setIsInput(false);
-                       globalSignal.setIsOutput(true);
-                       globalSignal.setType(ValueType::PURE);
-                       targetRootRegion.states.get(0).signals.add(globalSignal);
+                       val newValuedObjectName = hierarchicalStateName + "_" + stateValuedObject.name;
+                       val globalValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+                       globalValuedObject.setName(newValuedObjectName);
+                       globalValuedObject.setIsInput(false);
+                       globalValuedObject.setIsOutput(true);
+                       globalValuedObject.setType(ValueType::PURE);
+                       targetRootRegion.states.get(0).valuedObjects.add(globalValuedObject);
                        
-                       // for every emission of the local signal add an emission of the new
-                       // global signal
+                       // for every emission of the local valuedObject add an emission of the new
+                       // global valuedObject
                        val allActions = state.eAllContents().toIterable().filter(typeof(Action)).toList();
-                       val localSignalActions = allActions.filter(e | (e.eAllContents().toIterable().
-                           filter(typeof(Emission)).toList().filter(ee | ee.signal == stateSignal)).size > 0);
+                       val localValuedObjectActions = allActions.filter(e | (e.eAllContents().toIterable().
+                           filter(typeof(Emission)).toList().filter(ee | ee.valuedObject == stateValuedObject)).size > 0);
 
-                       for (localSignalAction : ImmutableList::copyOf(localSignalActions)) {
+                       for (localValuedObjectAction : ImmutableList::copyOf(localValuedObjectActions)) {
                            val emission = SCChartsFactory::eINSTANCE.createEmission();
-                           emission.setSignal(globalSignal);
-                           localSignalAction.effects.add(emission);
+                           emission.setValuedObject(globalValuedObject);
+                           localValuedObjectAction.effects.add(emission);
                        }
                     }
-               } // end if local signals present
+               } // end if local valuedObjects present
 
     }
     
@@ -166,7 +166,7 @@ class CoreTransformation {
     // Edit: 30.11.2012: Normal Terminations are considered to be immediate
     // This means that e.g. test10 with a normal termination self loop can
     // be executed as long as the body not immediately.
-    // For this reason ANOTHER signal terminated is introduced not per region
+    // For this reason ANOTHER valuedObject terminated is introduced not per region
     // byt per normal termination, indicating a taken normal termination
     // and preventing the same to be taken again within a tick.
     // Like adding a pause in Esterel to
@@ -199,8 +199,8 @@ class CoreTransformation {
     def void transformNormalTermination(State state, Region targetRootRegion) {
         // NORMAL TERMINATION : For every state with normal termination transitions transform these into
         // weak abort transitions. Create a trigger for these new transitions that contains a conjunction
-        // of a new termSignal, one for every contained region.
-        // For every region add an immediate during action to all final state emitting this termSignal
+        // of a new termValuedObject, one for every contained region.
+        // For every region add an immediate during action to all final state emitting this termValuedObject
         // (belonging to the region).
         // Explicitly negate triggers of other outgoing transitions (see test147)
         
@@ -213,23 +213,23 @@ class CoreTransformation {
                     val triggerExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
                          triggerExpression.setOperator(OperatorType::AND);
                
-                    // Setup the auxiliary terminated signal indicating that a normal termination
+                    // Setup the auxiliary terminated valuedObject indicating that a normal termination
                     // has been taken in the same synchronous tick and must not be taken again.
-                    val terminatedSignal = KExpressionsFactory::eINSTANCE.createSignal();
-                        terminatedSignal.setName("terminated" + state.hashCode);
-                        terminatedSignal.setIsInput(false);
-                        terminatedSignal.setIsOutput(false);
-                        terminatedSignal.setType(ValueType::PURE);
-//                        state.parentRegion.parentState.signals.add(terminatedSignal);
-                        targetRootRegion.states.get(0).signals.add(terminatedSignal);
+                    val terminatedValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+                        terminatedValuedObject.setName("terminated" + state.hashCode);
+                        terminatedValuedObject.setIsInput(false);
+                        terminatedValuedObject.setIsOutput(false);
+                        terminatedValuedObject.setType(ValueType::PURE);
+//                        state.parentRegion.parentState.valuedObjects.add(terminatedValuedObject);
+                        targetRootRegion.states.get(0).valuedObjects.add(terminatedValuedObject);
                         
-                    val terminatedSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                        terminatedSignalReference.setValuedObject(terminatedSignal);
+                    val terminatedValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                        terminatedValuedObjectReference.setValuedObject(terminatedValuedObject);
                     val notTerminatedExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
                         notTerminatedExpression.setOperator(OperatorType::NOT);
-                        notTerminatedExpression.subExpressions.add(terminatedSignalReference);
+                        notTerminatedExpression.subExpressions.add(terminatedValuedObjectReference);
                     val terminatedEmission = SCChartsFactory::eINSTANCE.createEmission();
-                        terminatedEmission.setSignal(terminatedSignal);
+                        terminatedEmission.setValuedObject(terminatedValuedObject);
                     // Add the prevention of re-run of normal termination within the same tick
                     triggerExpression.subExpressions.add(notTerminatedExpression);
                     // Explicitly prevent that a normal termination is taken when another transition
@@ -243,25 +243,25 @@ class CoreTransformation {
                         }
                     }
                     
-                    // Prevent the normal termination to be taken again by emitting this helper signal (test10)
+                    // Prevent the normal termination to be taken again by emitting this helper valuedObject (test10)
                     normalTerminationTransition.effects.add(terminatedEmission);
                                         
-                    // Walk thru all regions that must terminate and create one termination signal per
-                    // region. For the weak abort create a conjunction of these signals as the trigger.
+                    // Walk thru all regions that must terminate and create one termination valuedObject per
+                    // region. For the weak abort create a conjunction of these valuedObjects as the trigger.
                     for (region : state.regions) {
-                         // Setup the auxiliary termination signal indicating that a normal termination
+                         // Setup the auxiliary termination valuedObject indicating that a normal termination
                          // should be taken.
-                         val finishedSignal = KExpressionsFactory::eINSTANCE.createSignal();
-                         finishedSignal.setName("finished" + region.hashCode);
-                         finishedSignal.setIsInput(false);
-                         finishedSignal.setIsOutput(false);
-                         finishedSignal.setType(ValueType::PURE);
+                         val finishedValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+                         finishedValuedObject.setName("finished" + region.hashCode);
+                         finishedValuedObject.setIsInput(false);
+                         finishedValuedObject.setIsOutput(false);
+                         finishedValuedObject.setType(ValueType::PURE);
 
                          val finalStates = region.states.filter(e | e.isFinal == true);
-                         // For all final states add a during action that emits the termination signal
+                         // For all final states add a during action that emits the termination valuedObject
                          for (finalState : finalStates) {
                               val finishedEmission = SCChartsFactory::eINSTANCE.createEmission();
-                              finishedEmission.setSignal(finishedSignal);
+                              finishedEmission.setValuedObject(finishedValuedObject);
                               val termDuringAction = SCChartsFactory::eINSTANCE.createAction
                               termDuringAction.setIsImmediate(true);
                               termDuringAction.effects.add(finishedEmission);
@@ -270,17 +270,17 @@ class CoreTransformation {
                               finalState.setIsFinal(false);
                          }
                     
-//                         state.parentRegion.parentState.signals.add(finishedSignal);
-                       targetRootRegion.states.get(0).signals.add(finishedSignal);
+//                         state.parentRegion.parentState.valuedObjects.add(finishedValuedObject);
+                       targetRootRegion.states.get(0).valuedObjects.add(finishedValuedObject);
                          val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                         valuedObjectReference.setValuedObject(finishedSignal);
+                         valuedObjectReference.setValuedObject(finishedValuedObject);
                          triggerExpression.subExpressions.add(valuedObjectReference);
                     }
                
                     // A normal termination should immediately be triggerable! (test 145) 
                     normalTerminationTransition.setIsImmediate(true);
                     if (triggerExpression.subExpressions.size == 1) {
-                         // if there is just one signal, we do not need an AND!
+                         // if there is just one valuedObject, we do not need an AND!
                          normalTerminationTransition.setTrigger(triggerExpression.subExpressions.get(0));
                     }
                     else if (triggerExpression.subExpressions.size > 1) {
@@ -299,7 +299,7 @@ class CoreTransformation {
     //                                 macro state, hence we just consider simple states here)
 
     // For every non-hierarchical state S that has outgoing transitions and is of type NORMAL:
-    // Create an auxiliary signal isDepth_S that indicates that the state was
+    // Create an auxiliary valuedObject isDepth_S that indicates that the state was
     // entered in an earlier tick and add it to the parent state P of the parent region R of S.
     // Modify all triggers of outgoing non-immediate transitions T of S: 1. set them to be
     // immediate and 2. add "isDepth_S &&" to its trigger.
@@ -355,19 +355,19 @@ class CoreTransformation {
              initialState.outgoingTransitions.add(connect);
          }             
            
-         // Create auxiliary signal
-         var isDepthSignalUID = "isDepth_" + parentRegion.hashCode + "_" + state.id;
-         val isDepthSignal = KExpressionsFactory::eINSTANCE.createSignal();
-         isDepthSignal.setName(isDepthSignalUID);
-         isDepthSignal.setIsInput(false);
-         isDepthSignal.setIsOutput(false);
-         isDepthSignal.setType(ValueType::PURE);
-         parentRegion.parentState.signals.add(isDepthSignal);  
+         // Create auxiliary valuedObject
+         var isDepthValuedObjectUID = "isDepth_" + parentRegion.hashCode + "_" + state.id;
+         val isDepthValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+         isDepthValuedObject.setName(isDepthValuedObjectUID);
+         isDepthValuedObject.setIsInput(false);
+         isDepthValuedObject.setIsOutput(false);
+         isDepthValuedObject.setType(ValueType::PURE);
+         parentRegion.parentState.valuedObjects.add(isDepthValuedObject);  
 
          // Modify triggers of non immediate transitions and make them immediate
          val nonImmediateTransitions = state.outgoingTransitions.filter(e | !e.isImmediate).toList;
          val auxiliaryTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
-             auxiliaryTrigger.setValuedObject(isDepthSignal);
+             auxiliaryTrigger.setValuedObject(isDepthValuedObject);
          for (transition : nonImmediateTransitions) {
              // Make this transition immediate now
              transition.setIsImmediate(true);
@@ -438,7 +438,7 @@ class CoreTransformation {
          connectBack.setTargetState(surfaceState);
          depthState.outgoingTransitions.add(connectBack);
          val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
-         auxiliaryEmission.setSignal(isDepthSignal);
+         auxiliaryEmission.setValuedObject(isDepthValuedObject);
          connectBack.effects.add(auxiliaryEmission);
          
        }
@@ -508,7 +508,7 @@ class CoreTransformation {
     //-------------------------------------------------------------------------
     
     // For every region R that contains final states with outgoing transitions do the following:
-    // Create an Abort signal and add it to R's parent state P.
+    // Create an Abort valuedObject and add it to R's parent state P.
     // Go through every region of P other then R and search for final states Q_1..n. For all incoming transitions
     // of all Q_1..n add an emission of Abort.
     // Find a common final state F of region R that has no outgoing transition. If no one exists, create one.
@@ -536,14 +536,14 @@ class CoreTransformation {
        val parentStatesIsConsidered = parentState.eAllContents().toIterable().filter(typeof(State)).filter(e | e.parentRegion.parentState == parentState && e.isFinal && !e.outgoingTransitions.nullOrEmpty).toList();
          
        if (!parentStatesIsConsidered.nullOrEmpty) {
-            // Auxiliary reset signal
-            var auxiliaryResetSignalUID = "Abort" + parentState.hashCode;
-            val auxiliaryResetSignal = KExpressionsFactory::eINSTANCE.createSignal();
-            auxiliaryResetSignal.setName(auxiliaryResetSignalUID);
-            auxiliaryResetSignal.setIsInput(false);
-            auxiliaryResetSignal.setIsOutput(false);
-            auxiliaryResetSignal.setType(ValueType::PURE);
-            parentState.signals.add(auxiliaryResetSignal);
+            // Auxiliary reset valuedObject
+            var auxiliaryResetValuedObjectUID = "Abort" + parentState.hashCode;
+            val auxiliaryResetValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+            auxiliaryResetValuedObject.setName(auxiliaryResetValuedObjectUID);
+            auxiliaryResetValuedObject.setIsInput(false);
+            auxiliaryResetValuedObject.setIsOutput(false);
+            auxiliaryResetValuedObject.setType(ValueType::PURE);
+            parentState.valuedObjects.add(auxiliaryResetValuedObject);
             
             // Auxiliary watch master region with macro WatchMasterState and AbortedState
             val auxiliaryWatchMasterRegion  = SCChartsFactory::eINSTANCE.createRegion();
@@ -565,29 +565,29 @@ class CoreTransformation {
             abortRegionTransition.setType(TransitionType::NORMALTERMINATION);
             abortRegionTransition.setTargetState(auxiliaryAbortedState);
             auxiliaryWatchMasterState.outgoingTransitions.add(abortRegionTransition);
-            // In this normal termination emit reset signal for the region           
-            val auxiliaryResetSignalEmission = SCChartsFactory::eINSTANCE.createEmission();
-            auxiliaryResetSignalEmission.setSignal(auxiliaryResetSignal);   
-            abortRegionTransition.effects.add(auxiliaryResetSignalEmission);                       
+            // In this normal termination emit reset valuedObject for the region           
+            val auxiliaryResetValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
+            auxiliaryResetValuedObjectEmission.setValuedObject(auxiliaryResetValuedObject);   
+            abortRegionTransition.effects.add(auxiliaryResetValuedObjectEmission);                       
             
             // For every parallel region W
             for (parallelRegion : parentState.regions) {
                    if (parallelRegion != auxiliaryWatchMasterRegion) {
-                        // Auxiliary term signal - Try to find existing for parallelRegion
-                        val auxiliaryRegionTermSignalUID = "Term" + parallelRegion.hashCode;
-                        var Signal auxiliaryRegionTermSignal = null; 
-                        auxiliaryRegionTermSignal = KExpressionsFactory::eINSTANCE.createSignal();
-                        auxiliaryRegionTermSignal.setName(auxiliaryRegionTermSignalUID);
-                        auxiliaryRegionTermSignal.setIsInput(false);
-                        auxiliaryRegionTermSignal.setIsOutput(false);
-                        auxiliaryRegionTermSignal.setType(ValueType::PURE);
-                        parentState.signals.add(auxiliaryRegionTermSignal);
+                        // Auxiliary term valuedObject - Try to find existing for parallelRegion
+                        val auxiliaryRegionTermValuedObjectUID = "Term" + parallelRegion.hashCode;
+                        var ValuedObject auxiliaryRegionTermValuedObject = null; 
+                        auxiliaryRegionTermValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+                        auxiliaryRegionTermValuedObject.setName(auxiliaryRegionTermValuedObjectUID);
+                        auxiliaryRegionTermValuedObject.setIsInput(false);
+                        auxiliaryRegionTermValuedObject.setIsOutput(false);
+                        auxiliaryRegionTermValuedObject.setType(ValueType::PURE);
+                        parentState.valuedObjects.add(auxiliaryRegionTermValuedObject);
                             
                         for (finalState : parallelRegion.states.filter(e | e.isFinal))  {
                                 for (finalStateTransition : finalState.incomingTransitions) {
-                                   val auxiliaryTermSignalEmission = SCChartsFactory::eINSTANCE.createEmission();
-                                   auxiliaryTermSignalEmission.setSignal(auxiliaryRegionTermSignal);   
-                                   finalStateTransition.effects.add(auxiliaryTermSignalEmission);                       
+                                   val auxiliaryTermValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
+                                   auxiliaryTermValuedObjectEmission.setValuedObject(auxiliaryRegionTermValuedObject);   
+                                   finalStateTransition.effects.add(auxiliaryTermValuedObjectEmission);                       
                                 }
                         }
                         
@@ -608,7 +608,7 @@ class CoreTransformation {
                         // Connect
                         val terminatedRegionTransition = SCChartsFactory::eINSTANCE.createTransition();
                         val terminatedRegionTransitionTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
-                        terminatedRegionTransitionTrigger.setValuedObject(auxiliaryRegionTermSignal);
+                        terminatedRegionTransitionTrigger.setValuedObject(auxiliaryRegionTermValuedObject);
                         terminatedRegionTransition.setPriority(1)
                         terminatedRegionTransition.setIsImmediate(true);
                         terminatedRegionTransition.setTrigger(terminatedRegionTransitionTrigger);
@@ -649,7 +649,7 @@ class CoreTransformation {
                         // Add aborting transition
                         val resetTransition = SCChartsFactory::eINSTANCE.createTransition();
                         val auxiliaryResetTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
-                        auxiliaryResetTrigger.setValuedObject(auxiliaryResetSignal);
+                        auxiliaryResetTrigger.setValuedObject(auxiliaryResetValuedObject);
                         resetTransition.setTrigger(auxiliaryResetTrigger);
                         resetTransition.setPriority(maxPrio)
                         resetTransition.setIsImmediate(true);
@@ -672,7 +672,7 @@ class CoreTransformation {
     //-------------------------------------------------------------------------
 
     // For every transition T from state S with a count delay n create a region R. Put the
-    // region into S (hence, S may become a macro state). Create a new signal countDelay that is emitted
+    // region into S (hence, S may become a macro state). Create a new valuedObject countDelay that is emitted
     // by the last transition of the auxiliary region R. Create n+1 states within R and connect
     // these by the same trigger of T just without the count delay. The n+1's state must be final
     // in order to handle possible outgoing normal terminations of S correctly.
@@ -702,20 +702,20 @@ class CoreTransformation {
                // Optimization: If there is no outgoing normal termination out of S then do not mark states as final
                val existsNormalTermination = !(sourceState.parentRegion.parentState.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).nullOrEmpty);
 
-               // auxiliary trigger signal
-               var auxiliarySignalUID = "countDelay" + transition.hashCode;
-               val auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
-               auxiliarySignal.setName(auxiliarySignalUID);
-               auxiliarySignal.setIsInput(false);
-               auxiliarySignal.setIsOutput(false);
-               auxiliarySignal.setType(ValueType::PURE);
-               targetRootState.signals.add(auxiliarySignal);
+               // auxiliary trigger valuedObject
+               var auxiliaryValuedObjectUID = "countDelay" + transition.hashCode;
+               val auxiliaryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+               auxiliaryValuedObject.setName(auxiliaryValuedObjectUID);
+               auxiliaryValuedObject.setIsInput(false);
+               auxiliaryValuedObject.setIsOutput(false);
+               auxiliaryValuedObject.setType(ValueType::PURE);
+               targetRootState.valuedObjects.add(auxiliaryValuedObject);
 
                val triggerExpression = transition.trigger;
                
 
                // Create auxiliary region R and add it to the source state.
-               // Also add the auxiliary signal to this common parent state
+               // Also add the auxiliary valuedObject to this common parent state
                val auxiliaryRegion = SCChartsFactory::eINSTANCE.createRegion()
                sourceState.regions.add(auxiliaryRegion);
 
@@ -741,7 +741,7 @@ class CoreTransformation {
                        if (delay > transition.delay) {
                            // Connect last state
                            val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
-                           auxiliaryEmission.setSignal(auxiliarySignal);
+                           auxiliaryEmission.setValuedObject(auxiliaryValuedObject);
                            connect.effects.add(auxiliaryEmission);
                        } 
                        
@@ -756,7 +756,7 @@ class CoreTransformation {
                // Modify original trigger
                transition.setDelay(0);
                val auxiliaryTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
-               auxiliaryTrigger.setValuedObject(auxiliarySignal);
+               auxiliaryTrigger.setValuedObject(auxiliaryValuedObject);
                transition.setTrigger(auxiliaryTrigger);
           }
      }
@@ -789,7 +789,7 @@ class CoreTransformation {
 //    // number of ticks).
 //     def void transformCountDelay(Transition transition, Region targetRootRegion) {
 //          if (transition.delay > 1) {
-//               // auxiliary signal
+//               // auxiliary valuedObject
 //               val auxiliaryVariable = KExpressionsFactory::eINSTANCE.createVariable;
 //               val auxiliaryVariableName = "countDelay" + transition.hashCode + "";
 //               auxiliaryVariable.setName(auxiliaryVariableName);
@@ -845,7 +845,7 @@ class CoreTransformation {
     // the transition back be non-immediate. If it is non immediate then
     // have the transition back be immediate.
     // Create an immediate during action of the Suspended state that emits
-    // an auxiliaryDisableSignal that is added to all outgoing transitions
+    // an auxiliaryDisableValuedObject that is added to all outgoing transitions
     // (within the disabledExpression) 
     
     // Transforming Suspends.
@@ -925,13 +925,13 @@ class CoreTransformation {
                  notSuspendTrigger.setOperator(OperatorType::NOT);
                  notSuspendTrigger.subExpressions.add(suspendTrigger.copy);
             
-               // Add SET and RESET signal signal flag 
-               val disabledSignal = KExpressionsFactory::eINSTANCE.createSignal();
-               disabledSignal.setName("disabled" + state.id);
-               disabledSignal.setIsInput(false);
-               disabledSignal.setIsOutput(false);
-               disabledSignal.setType(ValueType::PURE);
-               targetRootRegion.states.get(0).signals.add(disabledSignal);
+               // Add SET and RESET valuedObject valuedObject flag 
+               val disabledValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+               disabledValuedObject.setName("disabled" + state.id);
+               disabledValuedObject.setIsInput(false);
+               disabledValuedObject.setIsOutput(false);
+               disabledValuedObject.setType(ValueType::PURE);
+               targetRootRegion.states.get(0).valuedObjects.add(disabledValuedObject);
                
                // Add a NonSuspended and Suspended state
                val runningState = SCChartsFactory::eINSTANCE.createState();
@@ -942,11 +942,11 @@ class CoreTransformation {
                disabledState.setId("Suspended" + state.hashCode);
                disabledState.setLabel(state.id + "Disabled");
                
-               // Add during action that emits the disable signal 
+               // Add during action that emits the disable valuedObject 
                val immediateDuringAction = SCChartsFactory::eINSTANCE.createAction();
                immediateDuringAction.setIsImmediate(true);
                val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
-                   auxiliaryEmission.setSignal(disabledSignal);
+                   auxiliaryEmission.setValuedObject(disabledValuedObject);
                immediateDuringAction.effects.add(auxiliaryEmission);
                disabledState.innerActions.add(immediateDuringAction);
                
@@ -969,7 +969,7 @@ class CoreTransformation {
                    disabled2actionTransition.setIsImmediate(!immediateSuspension);
                    disabled2actionTransition.setPriority(1);
                    disabledState.outgoingTransitions.add(disabled2actionTransition);
-                   // Do not emit the disableSignal when the suspend trigger is not true any more!
+                   // Do not emit the disableValuedObject when the suspend trigger is not true any more!
                    disabled2actionTransition.setType(TransitionType::STRONGABORT);
                val action2runningTransition =  SCChartsFactory::eINSTANCE.createTransition();
                    action2runningTransition.setTargetState(runningState);
@@ -993,7 +993,7 @@ class CoreTransformation {
                targetRootRegion.states.get(0).regions.add(suspendActionRegion);
                
 
-            // Add disabled signal  to ALL hierarchically lower (immediate) transitions
+            // Add disabled valuedObject  to ALL hierarchically lower (immediate) transitions
             // that appear INSIDE the considered state (in its regions)
             var List<Transition> consideredTransitions = <Transition> newLinkedList;
             for (region : state.regions) {
@@ -1007,10 +1007,10 @@ class CoreTransformation {
             } 
             
             for (consideredTransition : ImmutableList::copyOf(consideredTransitions)) {
-                val disabledSignalRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-                    disabledSignalRef.setValuedObject(disabledSignal);
+                val disabledValuedObjectRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                    disabledValuedObjectRef.setValuedObject(disabledValuedObject);
                 val disabledExpression = buildDisabledExpression(consideredTransition.trigger, 
-                                                                 disabledSignalRef);
+                                                                 disabledValuedObjectRef);
                 consideredTransition.setTrigger(disabledExpression);
             }
         } // if any suspension there
@@ -1061,8 +1061,8 @@ class CoreTransformation {
             auxiliaryState.setLabel(state.id + "History");
             auxiliaryState.setIsInitial(true);
             
-            // Move local signal declaration to auxiliary state (test 139)
-            auxiliaryState.signals.addAll(state.signals);
+            // Move local valuedObject declaration to auxiliary state (test 139)
+            auxiliaryState.valuedObjects.addAll(state.valuedObjects);
             
             // Move all regions to new auxiliary State
             for (region : ImmutableList::copyOf(state.regions)) {
@@ -1070,23 +1070,23 @@ class CoreTransformation {
             }
             state.regions.removeAll(auxiliaryState.regions);
             
-            // Auxiliary state gets suspended by NOT auxiliary signal
-            val auxiliarySuspendSignal = KExpressionsFactory::eINSTANCE.createSignal();
-            val auxiliarySuspendSignalUID = state.id + "Execute";
-            auxiliarySuspendSignal.setName(auxiliarySuspendSignalUID);
-            auxiliarySuspendSignal.setIsInput(false);
-            auxiliarySuspendSignal.setIsOutput(false);
-            auxiliarySuspendSignal.setType(ValueType::PURE);
+            // Auxiliary state gets suspended by NOT auxiliary valuedObject
+            val auxiliarySuspendValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+            val auxiliarySuspendValuedObjectUID = state.id + "Execute";
+            auxiliarySuspendValuedObject.setName(auxiliarySuspendValuedObjectUID);
+            auxiliarySuspendValuedObject.setIsInput(false);
+            auxiliarySuspendValuedObject.setIsOutput(false);
+            auxiliarySuspendValuedObject.setType(ValueType::PURE);
 
-            // Add auxiliarySignal to first (and only) root region state SCCharts main interface
-            targetRootRegion.states.get(0).signals.add(auxiliarySuspendSignal);
+            // Add auxiliaryValuedObject to first (and only) root region state SCCharts main interface
+            targetRootRegion.states.get(0).valuedObjects.add(auxiliarySuspendValuedObject);
             
             var Expression suspensionTrigger;
                 val notAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                     notAuxiliaryTrigger.setOperator(OperatorType::NOT);
-                val auxiliarySignalRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-                    auxiliarySignalRef.setValuedObject(auxiliarySuspendSignal);
-                    notAuxiliaryTrigger.subExpressions.add(auxiliarySignalRef);
+                val auxiliaryValuedObjectRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                    auxiliaryValuedObjectRef.setValuedObject(auxiliarySuspendValuedObject);
+                    notAuxiliaryTrigger.subExpressions.add(auxiliaryValuedObjectRef);
             if (state.suspensionTrigger != null) {
                 // If there already is a suspension trigger than combine it with OR
                 val suspensionTrigger2 = KExpressionsFactory::eINSTANCE.createOperatorExpression;
@@ -1114,52 +1114,52 @@ class CoreTransformation {
                 historyTransition.setIsHistory(false);
             }
             
-            // Add a self loop to the original state that emits the auxiliary signal
+            // Add a self loop to the original state that emits the auxiliary valuedObject
             // forcing the internals NOT to suspend
             val selfLoop = SCChartsFactory::eINSTANCE.createTransition();
             selfLoop.setTargetState(state);
             selfLoop.setPriority(state.outgoingTransitions.size + 1);
             val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
-                auxiliaryEmission.setSignal(auxiliarySuspendSignal);
+                auxiliaryEmission.setValuedObject(auxiliarySuspendValuedObject);
             //selfLoop.effects.add(auxiliaryEmission);
             state.outgoingTransitions.add(selfLoop);
             
-            // Add auxiliary signal forcing internals NOT to suspend to all
+            // Add auxiliary valuedObject forcing internals NOT to suspend to all
             // outgoing WEAK abort transitions (consider NORMAL termination as weak aborts)
             val weakAbortTransitions = ImmutableList::copyOf(state.outgoingTransitions.filter(e | e.type != TransitionType::STRONGABORT));
             for (weakAbortTransition : weakAbortTransitions) {
                 val auxiliaryEmission2 = SCChartsFactory::eINSTANCE.createEmission();
-                    auxiliaryEmission2.setSignal(auxiliarySuspendSignal);
+                    auxiliaryEmission2.setValuedObject(auxiliarySuspendValuedObject);
                 weakAbortTransition.effects.add(auxiliaryEmission2);
             }
 
             //---
 
-            // Re-entry of a history state: Emit a second auxiliaryEntrySignal
+            // Re-entry of a history state: Emit a second auxiliaryEntryValuedObject
             // and wait in all inner simple states with an additional self loop on
-            // this signal.  
+            // this valuedObject.  
             
-            // Auxiliary suspend re-entry signal
-            val auxiliaryEntrySignal = KExpressionsFactory::eINSTANCE.createSignal();
-            val auxiliaryEntrySignalUID = state.id + "Entry";
-            auxiliaryEntrySignal.setName(auxiliaryEntrySignalUID);
-            auxiliaryEntrySignal.setIsInput(false);
-            auxiliaryEntrySignal.setIsOutput(false);
-            auxiliaryEntrySignal.setType(ValueType::PURE);
-            // Add auxiliarySignal to first (and only) root region state SCCharts main interface
-            targetRootRegion.states.get(0).signals.add(auxiliaryEntrySignal);
+            // Auxiliary suspend re-entry valuedObject
+            val auxiliaryEntryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+            val auxiliaryEntryValuedObjectUID = state.id + "Entry";
+            auxiliaryEntryValuedObject.setName(auxiliaryEntryValuedObjectUID);
+            auxiliaryEntryValuedObject.setIsInput(false);
+            auxiliaryEntryValuedObject.setIsOutput(false);
+            auxiliaryEntryValuedObject.setType(ValueType::PURE);
+            // Add auxiliaryValuedObject to first (and only) root region state SCCharts main interface
+            targetRootRegion.states.get(0).valuedObjects.add(auxiliaryEntryValuedObject);
 
 
-            // For all incoming transitions now add a suspendSignal emission (to immediately enable the execution of the body)
-            // also for all history transitions (re-entry) add an entrySignal emission to (in most times) disabled outgoing transitions that are NOT immediate
+            // For all incoming transitions now add a suspendValuedObject emission (to immediately enable the execution of the body)
+            // also for all history transitions (re-entry) add an entryValuedObject emission to (in most times) disabled outgoing transitions that are NOT immediate
             for (incomingTransition : allTransitions) {
                 val auxiliarySuspendEmission = SCChartsFactory::eINSTANCE.createEmission();
-                    auxiliarySuspendEmission.setSignal(auxiliarySuspendSignal);
+                    auxiliarySuspendEmission.setValuedObject(auxiliarySuspendValuedObject);
                 incomingTransition.effects.add(auxiliarySuspendEmission);
             }
             for (historyTransition : historyTransitions) {
                    val auxiliaryEntryEmission = SCChartsFactory::eINSTANCE.createEmission();
-                       auxiliaryEntryEmission.setSignal(auxiliaryEntrySignal);
+                       auxiliaryEntryEmission.setValuedObject(auxiliaryEntryValuedObject);
                    historyTransition.effects.add(auxiliaryEntryEmission);
             }
             
@@ -1167,10 +1167,10 @@ class CoreTransformation {
             val innerStates = ImmutableList::copyOf(auxiliaryState.eAllContents.filter(typeof(State)));
             for (innerState : innerStates) {
                 for (outgoingTransition : ImmutableList::copyOf(innerState.outgoingTransitions.filter(e | !e.isImmediate))) {
-                   val auxiliaryEntrySignalRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-                       auxiliaryEntrySignalRef.setValuedObject(auxiliaryEntrySignal);
+                   val auxiliaryEntryValuedObjectRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                       auxiliaryEntryValuedObjectRef.setValuedObject(auxiliaryEntryValuedObject);
                     val disabledExpression = buildDisabledExpression(outgoingTransition.trigger, 
-                                                                     auxiliaryEntrySignalRef);
+                                                                     auxiliaryEntryValuedObjectRef);
                     outgoingTransition.setTrigger(disabledExpression);
                 }
             }
@@ -1178,32 +1178,32 @@ class CoreTransformation {
             //---
             
             // For resetting the inner states when entering by a normal transition
-            // add a reset signal and emit it when entering.
-            // On entering also all local (valued) signals will be reset automatically.
-            val auxiliaryResetSignal = KExpressionsFactory::eINSTANCE.createSignal();
-            val auxiliaryResetSignalUID = state.id + "Reset";
-            auxiliaryResetSignal.setName(auxiliaryResetSignalUID);
-            auxiliaryResetSignal.setIsInput(false);
-            auxiliaryResetSignal.setIsOutput(false);
-            auxiliaryResetSignal.setType(ValueType::PURE);
+            // add a reset valuedObject and emit it when entering.
+            // On entering also all local (valued) valuedObjects will be reset automatically.
+            val auxiliaryResetValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+            val auxiliaryResetValuedObjectUID = state.id + "Reset";
+            auxiliaryResetValuedObject.setName(auxiliaryResetValuedObjectUID);
+            auxiliaryResetValuedObject.setIsInput(false);
+            auxiliaryResetValuedObject.setIsOutput(false);
+            auxiliaryResetValuedObject.setType(ValueType::PURE);
 
-            // Add auxiliarySignal to first (and only) root region state SCCharts main interface
-            targetRootRegion.states.get(0).signals.add(auxiliaryResetSignal);
+            // Add auxiliaryValuedObject to first (and only) root region state SCCharts main interface
+            targetRootRegion.states.get(0).valuedObjects.add(auxiliaryResetValuedObject);
             
-            // Add a self loop to the NEW state that resets it if auxiliary reset signal is present
+            // Add a self loop to the NEW state that resets it if auxiliary reset valuedObject is present
             val resetSelfLoop = SCChartsFactory::eINSTANCE.createTransition();
             resetSelfLoop.setTargetState(auxiliaryState);
             resetSelfLoop.setPriority(1);
             resetSelfLoop.setType(TransitionType::STRONGABORT);
-                val auxiliaryResetSignalRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-                    auxiliaryResetSignalRef.setValuedObject(auxiliaryResetSignal);
-            resetSelfLoop.setTrigger(auxiliaryResetSignalRef);
+                val auxiliaryResetValuedObjectRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                    auxiliaryResetValuedObjectRef.setValuedObject(auxiliaryResetValuedObject);
+            resetSelfLoop.setTrigger(auxiliaryResetValuedObjectRef);
             auxiliaryState.outgoingTransitions.add(resetSelfLoop);
             
-            // For all non-history transitions now add a resetSignal emission
+            // For all non-history transitions now add a resetValuedObject emission
             for (nonHistoryTransition : nonHistoryTransitions) {
                 val auxiliaryResetEmission = SCChartsFactory::eINSTANCE.createEmission();
-                    auxiliaryResetEmission.setSignal(auxiliaryResetSignal);
+                    auxiliaryResetEmission.setValuedObject(auxiliaryResetValuedObject);
                 nonHistoryTransition.effects.add(auxiliaryResetEmission);
             }
             
@@ -1379,7 +1379,7 @@ class CoreTransformation {
     // @requires: entry actions
     // @requires: during actions
     // @requires: suspend
-    // @requires: valued signals
+    // @requires: valued valuedObjects
 
     // Helper function to gather all hierarchically higher outgoing transitions
     // for an inner state.
@@ -1466,12 +1466,12 @@ class CoreTransformation {
     // Traverse all states and transform macro states that have actions to transform
     def void transformExitAction(State state, Region targetRootRegion) {
         // EXIT ACTIONS : For every state with exit actions create a new top-level region and
-        // create SET and RESET signals. This region contains a set and reset (inital) state
+        // create SET and RESET valuedObjects. This region contains a set and reset (inital) state
         // connected from reset to set with an intermediate macro state containing all the
         // exit actions and labeled with SET and not RESET. Another arc from set to reset labeled
         // with RESET. A self-arc from reset labeled with SET and RESET.
-        // Every transition considered to be outgoing in any way emits the SET signal.
-        // The entry action emits the RESET signal.
+        // Every transition considered to be outgoing in any way emits the SET valuedObject.
+        // The entry action emits the RESET valuedObject.
         // The state in question must have an immediate during action, resetting (emit RESET), BUT
         // important is that this is triggered and the trigger is excluded hierarchically by ALL
         // possibly outgoing transitions to the outside that are weak (in this case we do not want
@@ -1495,8 +1495,8 @@ class CoreTransformation {
         // because the action from inside is allowed to take place as the "last wish".
         //
         // FLAW I: When re-entering one has to give precedence to reset but when exiting one wants
-        // to giv precedence to set. => Valued signals are too limited, more preciseley the combine
-        // function of valued signals. Better use a two state representation.
+        // to giv precedence to set. => Valued valuedObjects are too limited, more preciseley the combine
+        // function of valued valuedObjects. Better use a two state representation.
         //
         // FLAW II: When transforming a history transition with suspend, when re-entering,
         // entry actions are currently not executed again (propably they should?! FIXME: find out about
@@ -1508,37 +1508,37 @@ class CoreTransformation {
                var List<Transition> consideredTransitions = <Transition> newLinkedList;
                consideredTransitions.addAll(state.hierarchicallyHigherOutgoingTransitions);
                
-               // Add SET and SETI and RESETI and RESETN signal signal flag 
-               val setSignal = KExpressionsFactory::eINSTANCE.createSignal();
-               setSignal.setName("Set" + state.id);
-               setSignal.setIsInput(false);
-               setSignal.setIsOutput(false);
-               setSignal.setType(ValueType::PURE);
-               targetRootRegion.states.get(0).signals.add(setSignal);
+               // Add SET and SETI and RESETI and RESETN valuedObject valuedObject flag 
+               val setValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+               setValuedObject.setName("Set" + state.id);
+               setValuedObject.setIsInput(false);
+               setValuedObject.setIsOutput(false);
+               setValuedObject.setType(ValueType::PURE);
+               targetRootRegion.states.get(0).valuedObjects.add(setValuedObject);
 
-               // This signal is produced by ALL immediate outputs (also hierarchically higher)
+               // This valuedObject is produced by ALL immediate outputs (also hierarchically higher)
                // it is able to trigger an immediate transition back from reset to set (when entering reset)
                // set ---> reset -#-> set
-               val setISignal = KExpressionsFactory::eINSTANCE.createSignal();
-               setISignal.setName("SetI" + state.id);
-               setISignal.setIsInput(false);
-               setISignal.setIsOutput(false);
-               setISignal.setType(ValueType::PURE);
-               targetRootRegion.states.get(0).signals.add(setISignal);
+               val setIValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+               setIValuedObject.setName("SetI" + state.id);
+               setIValuedObject.setIsInput(false);
+               setIValuedObject.setIsOutput(false);
+               setIValuedObject.setType(ValueType::PURE);
+               targetRootRegion.states.get(0).valuedObjects.add(setIValuedObject);
                
-               val resetISignal = KExpressionsFactory::eINSTANCE.createSignal();
-               resetISignal.setName("ResetI" + state.id);
-               resetISignal.setIsInput(false);
-               resetISignal.setIsOutput(false);
-               resetISignal.setType(ValueType::PURE);
-               targetRootRegion.states.get(0).signals.add(resetISignal);
+               val resetIValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+               resetIValuedObject.setName("ResetI" + state.id);
+               resetIValuedObject.setIsInput(false);
+               resetIValuedObject.setIsOutput(false);
+               resetIValuedObject.setType(ValueType::PURE);
+               targetRootRegion.states.get(0).valuedObjects.add(resetIValuedObject);
 
-               val resetNSignal = KExpressionsFactory::eINSTANCE.createSignal();
-               resetNSignal.setName("ResetN" + state.id);
-               resetNSignal.setIsInput(false);
-               resetNSignal.setIsOutput(false);
-               resetNSignal.setType(ValueType::PURE);
-               targetRootRegion.states.get(0).signals.add(resetNSignal);
+               val resetNValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+               resetNValuedObject.setName("ResetN" + state.id);
+               resetNValuedObject.setIsInput(false);
+               resetNValuedObject.setIsOutput(false);
+               resetNValuedObject.setType(ValueType::PURE);
+               targetRootRegion.states.get(0).valuedObjects.add(resetNValuedObject);
                
                // Add a Set and Reset state
                val resetState = SCChartsFactory::eINSTANCE.createState();
@@ -1570,37 +1570,37 @@ class CoreTransformation {
                // (B) set -- Set and ResetI and ResetN --> set (means started in C, ending in C by outputting O)
                // (C) reset -- Set --> set (means starting NOT in C, ending in C by outputting O)
                // (D) reset -- #SetI --> set (possibly a chain coming from inside set and ending in inside set over transient reset)
-               val setSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                   setSignalReference.setValuedObject(setSignal);
-               val setISignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                   setISignalReference.setValuedObject(setISignal);
-               val resetISignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                   resetISignalReference.setValuedObject(resetISignal);
-               val resetNSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                   resetNSignalReference.setValuedObject(resetNSignal);
+               val setValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                   setValuedObjectReference.setValuedObject(setValuedObject);
+               val setIValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                   setIValuedObjectReference.setValuedObject(setIValuedObject);
+               val resetIValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                   resetIValuedObjectReference.setValuedObject(resetIValuedObject);
+               val resetNValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                   resetNValuedObjectReference.setValuedObject(resetNValuedObject);
                val andExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                    andExpression.setOperator(OperatorType::AND);
                
                // (A)
-               set2resetTransition.setTrigger(resetISignalReference.copy);
+               set2resetTransition.setTrigger(resetIValuedObjectReference.copy);
                set2resetTransition.setPriority(2); // Set a LOWER prio than set to set (B)
                
                // (B)
                val set2setTrigger = andExpression.copy;
                    val set2setTrigger2 = andExpression.copy;
-                       set2setTrigger2.subExpressions.add(setSignalReference.copy);
-                       set2setTrigger2.subExpressions.add(resetISignalReference.copy);
+                       set2setTrigger2.subExpressions.add(setValuedObjectReference.copy);
+                       set2setTrigger2.subExpressions.add(resetIValuedObjectReference.copy);
                    set2setTrigger.subExpressions.add(set2setTrigger2);
-                   set2setTrigger.subExpressions.add(resetNSignalReference.copy);
+                   set2setTrigger.subExpressions.add(resetNValuedObjectReference.copy);
                set2setTransition.setTrigger(set2setTrigger);
                set2setTransition.setPriority(1); // Set a HIGHER prio than set to reset (A)
                
                // (C)
-               reset2setTransition.setTrigger(setSignalReference.copy);
+               reset2setTransition.setTrigger(setValuedObjectReference.copy);
                reset2setTransition.setPriority(2);
                
                // (D)
-               reset2setITransition.setTrigger(setISignalReference.copy);
+               reset2setITransition.setTrigger(setIValuedObjectReference.copy);
                reset2setITransition.setIsImmediate(true);
                reset2setITransition.setPriority(1);
                
@@ -1620,12 +1620,12 @@ class CoreTransformation {
                      entryAction.setIsImmediate(true);
                      var entryActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                          entryActionTrigger.setOperator(OperatorType::AND);
-                         entryActionTrigger.subExpressions.add(setSignalReference.copy); // (C)
+                         entryActionTrigger.subExpressions.add(setValuedObjectReference.copy); // (C)
                          if (entryAction.trigger != null) {
                              entryActionTrigger.subExpressions.add(entryAction.trigger);
                              entryAction.setTrigger(entryActionTrigger);
                          } else {
-                             entryAction.setTrigger(setSignalReference.copy);
+                             entryAction.setTrigger(setValuedObjectReference.copy);
                          }
                      setState.entryActions.add(entryAction);
 
@@ -1650,17 +1650,17 @@ class CoreTransformation {
                val strongAbortSelfLoopPresent = consideredTransitions.filter(e | e.type == TransitionType::STRONGABORT && e.isPossibleSelfLoop);
                val cornerCaseTransition = consideredTransitions.filter(e | !e.isPossibleSelfLoop);
                if (strongAbortSelfLoopPresent.size > 0) {
-                 // Create SetInner signal only for outgoing transitions that are no self loops
+                 // Create SetInner valuedObject only for outgoing transitions that are no self loops
                  // this includes also possible chains of immediate transitions
                  // Optimization: only consider strong aborts, because for weak aborts 78 is not a problem!
-                 val setSignalInner = KExpressionsFactory::eINSTANCE.createSignal();
-                 setSignalInner.setName("SetInner" + state.id);
-                 setSignalInner.setIsInput(false);
-                  setSignalInner.setIsOutput(false);
-                  setSignalInner.setType(ValueType::PURE);
-                  targetRootRegion.states.get(0).signals.add(setSignalInner);
-                  val setSignalInnerReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                     setSignalInnerReference.setValuedObject(setSignalInner);
+                 val setValuedObjectInner = KExpressionsFactory::eINSTANCE.createValuedObject();
+                 setValuedObjectInner.setName("SetInner" + state.id);
+                 setValuedObjectInner.setIsInput(false);
+                  setValuedObjectInner.setIsOutput(false);
+                  setValuedObjectInner.setType(ValueType::PURE);
+                  targetRootRegion.states.get(0).valuedObjects.add(setValuedObjectInner);
+                  val setValuedObjectInnerReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                     setValuedObjectInnerReference.setValuedObject(setValuedObjectInner);
                  //Create In state and Out state
                  val inState = SCChartsFactory::eINSTANCE.createState();
                  inState.setId("ExitIn" + state.hashCode);
@@ -1674,7 +1674,7 @@ class CoreTransformation {
                      in2outTransition.setTargetState(outState);
                      in2outTransition.setIsImmediate(true);
                      inState.outgoingTransitions.add(in2outTransition);
-                     in2outTransition.setTrigger(setSignalInnerReference.copy);
+                     in2outTransition.setTrigger(setValuedObjectInnerReference.copy);
                  // Create InOut region    
                  val setInOutRegion = SCChartsFactory::eINSTANCE.createRegion();
                  setInOutRegion.setId("ExitInOutRegion" + state.hashCode);
@@ -1684,15 +1684,15 @@ class CoreTransformation {
                  // Add emission to corner case transitions 
                  for (transition : cornerCaseTransition) {
                      val setEmission = SCChartsFactory::eINSTANCE.createEmission();
-                          setEmission.setSignal(setSignalInner);
+                          setEmission.setValuedObject(setValuedObjectInner);
                      transition.effects.add(setEmission);
                   }
                  // Add during action for inState
-                 val duringIActionResetSignalN = SCChartsFactory::eINSTANCE.createAction();
+                 val duringIActionResetValuedObjectN = SCChartsFactory::eINSTANCE.createAction();
                  val resetNEmission2 = SCChartsFactory::eINSTANCE.createEmission();
-                 resetNEmission2.setSignal(resetNSignal);
-                 duringIActionResetSignalN.effects.add(resetNEmission2);
-                 inState.innerActions.add(duringIActionResetSignalN);
+                 resetNEmission2.setValuedObject(resetNValuedObject);
+                 duringIActionResetValuedObjectN.effects.add(resetNEmission2);
+                 inState.innerActions.add(duringIActionResetValuedObjectN);
                } // End corner case
 
                
@@ -1702,11 +1702,11 @@ class CoreTransformation {
                val duringIAction = SCChartsFactory::eINSTANCE.createAction();
                duringIAction.setIsImmediate(true);
                val resetIEmission = SCChartsFactory::eINSTANCE.createEmission();
-                   resetIEmission.setSignal(resetISignal);
+                   resetIEmission.setValuedObject(resetIValuedObject);
                duringIAction.effects.add(resetIEmission);
                val duringNAction = SCChartsFactory::eINSTANCE.createAction();
                val resetNEmission = SCChartsFactory::eINSTANCE.createEmission();
-                   resetNEmission.setSignal(resetNSignal);
+                   resetNEmission.setValuedObject(resetNValuedObject);
                duringNAction.effects.add(resetNEmission);
                state.innerActions.add(duringIAction);
                state.innerActions.add(duringNAction);
@@ -1736,18 +1736,18 @@ class CoreTransformation {
                
   
                for (transition : consideredTransitions) {
-                   // For every considered transition add an emission of the set signal
+                   // For every considered transition add an emission of the set valuedObject
                    // that will result in executing the exit action if it was not
                    // previously executed.
                    val setEmission = SCChartsFactory::eINSTANCE.createEmission();
-                       setEmission.setSignal(setSignal);
+                       setEmission.setValuedObject(setValuedObject);
                    transition.effects.add(setEmission);
                 }
                 
                for (transition : consideredTransitions.filter(e | e.isImmediate)) {
-                   // For every considered immediate transition add an emission of the setI signal
+                   // For every considered immediate transition add an emission of the setI valuedObject
                    val setIEmission = SCChartsFactory::eINSTANCE.createEmission();
-                       setIEmission.setSignal(setISignal);
+                       setIEmission.setValuedObject(setIValuedObject);
                    transition.effects.add(setIEmission);
                 }
                 
@@ -1777,21 +1777,21 @@ class CoreTransformation {
         targetRootRegion;
     }
 
-    // Return a list of Pre Expressions for an action that references the signal
-    def List<OperatorExpression> getPreExpression(Action action, Signal signal) {
+    // Return a list of Pre Expressions for an action that references the valuedObject
+    def List<OperatorExpression> getPreExpression(Action action, ValuedObject valuedObject) {
         val List<OperatorExpression> returnPreExpressions = <OperatorExpression> newLinkedList;
         val preExpressions = action.eAllContents.filter(typeof(OperatorExpression)).toList().filter(e | 
             (e.operator == OperatorType::PRE) && 
             (e.subExpressions.size() == 1) &&  
             (e.subExpressions.get(0) instanceof ValuedObjectReference) &&
-            ((e.subExpressions.get(0) as ValuedObjectReference).valuedObject == signal)
+            ((e.subExpressions.get(0) as ValuedObjectReference).valuedObject == valuedObject)
         );
         returnPreExpressions.addAll(preExpressions);
         return returnPreExpressions;
     }
 
-    // Return a list of Pre Expressions for an action that references the value of a signal
-    def List<OperatorExpression> getPreValExpression(Action action, Signal signal) {
+    // Return a list of Pre Expressions for an action that references the value of a valuedObject
+    def List<OperatorExpression> getPreValExpression(Action action, ValuedObject valuedObject) {
         val List<OperatorExpression> returnPreValExpressions = <OperatorExpression> newLinkedList;
         val preValExpressions = action.eAllContents.filter(typeof(OperatorExpression)).toList().filter(e | 
             (e.operator == OperatorType::PRE) && 
@@ -1800,52 +1800,52 @@ class CoreTransformation {
             ((e.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL) &&
             ((e.subExpressions.get(0) as OperatorExpression).subExpressions.size() == 1) &&
             ((e.subExpressions.get(0) as OperatorExpression).subExpressions.get(0) instanceof ValuedObjectReference) &&
-            (((e.subExpressions.get(0) as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).valuedObject == signal)
+            (((e.subExpressions.get(0) as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).valuedObject == valuedObject)
         );
         returnPreValExpressions.addAll(preValExpressions);
         return returnPreValExpressions;
     }
 
     
-    // Traverse all states that might declare a signal that is used with the PRE operator
+    // Traverse all states that might declare a valuedObject that is used with the PRE operator
     def void transformPreOperator(State state, Region targetRootRegion) {
         
-        // Filter all signals and retrieve those that are referenced
+        // Filter all valuedObjects and retrieve those that are referenced
         val allActions = state.eAllContents.filter(typeof(Action)).toList();
-        val allPreSignals = state.signals.filter (signal | allActions.filter(action | action.getPreExpression(signal).size > 0 || action.getPreValExpression(signal).size > 0).size > 0); 
+        val allPreValuedObjects = state.valuedObjects.filter (valuedObject | allActions.filter(action | action.getPreExpression(valuedObject).size > 0 || action.getPreValExpression(valuedObject).size > 0).size > 0); 
         
-        for (preSignal : ImmutableList::copyOf(allPreSignals)) {
+        for (preValuedObject : ImmutableList::copyOf(allPreValuedObjects)) {
 
             // Create PreS / PreV
-            val explicitPreSignal = KExpressionsFactory::eINSTANCE.createSignal();
-            explicitPreSignal.setName("Pre" + preSignal.name);
-            explicitPreSignal.setIsInput(false);
-            explicitPreSignal.setIsOutput(false);
-            explicitPreSignal.setType(preSignal.type);
-            if (!preSignal.initialValue.nullOrEmpty) {
-                explicitPreSignal.setInitialValue(preSignal.initialValue);
+            val explicitPreValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+            explicitPreValuedObject.setName("Pre" + preValuedObject.name);
+            explicitPreValuedObject.setIsInput(false);
+            explicitPreValuedObject.setIsOutput(false);
+            explicitPreValuedObject.setType(preValuedObject.type);
+            if (!preValuedObject.initialValue.nullOrEmpty) {
+                explicitPreValuedObject.setInitialValue(preValuedObject.initialValue);
             }
             // Add to the current state
-            state.signals.add(explicitPreSignal);
+            state.valuedObjects.add(explicitPreValuedObject);
 
-            // PreSignal and ExplicitPreSignal References                
-            val explicitPreSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                explicitPreSignalReference.setValuedObject(explicitPreSignal);
-            val preSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                preSignalReference.setValuedObject(preSignal);
+            // PreValuedObject and ExplicitPreValuedObject References                
+            val explicitPreValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                explicitPreValuedObjectReference.setValuedObject(explicitPreValuedObject);
+            val preValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                preValuedObjectReference.setValuedObject(preValuedObject);
             
             // Add a Pre and NotPre state
             val preState = SCChartsFactory::eINSTANCE.createState();
-            preState.setId("Pre" + preSignal.hashCode);
+            preState.setId("Pre" + preValuedObject.hashCode);
             preState.setLabel("Pre");
             val notPreState = SCChartsFactory::eINSTANCE.createState();
-            notPreState.setId("NotPre" + preSignal.hashCode);
+            notPreState.setId("NotPre" + preValuedObject.hashCode);
             notPreState.setIsInitial(true);
             notPreState.setLabel("NotPre");       
             
             // Add a region     
             val preRegion = SCChartsFactory::eINSTANCE.createRegion();
-            preRegion.setId("PreRegion" + preSignal.hashCode);
+            preRegion.setId("PreRegion" + preValuedObject.hashCode);
             preRegion.states.add(preState);
             preRegion.states.add(notPreState);
             state.regions.add(preRegion);
@@ -1860,30 +1860,30 @@ class CoreTransformation {
             pre2NotPreTransition.setTargetState(notPreState);
             preState.outgoingTransitions.add(pre2NotPreTransition);
             
-            if (preSignal.type == ValueType::PURE) {
-                // Simple Signal Case
-                notPre2PreTransition.setTrigger(preSignalReference.copy);
-                val explicitPreSignalEmission = SCChartsFactory::eINSTANCE.createEmission();
-                    explicitPreSignalEmission.setSignal(explicitPreSignal);
+            if (preValuedObject.type == ValueType::PURE) {
+                // Simple ValuedObject Case
+                notPre2PreTransition.setTrigger(preValuedObjectReference.copy);
+                val explicitPreValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
+                    explicitPreValuedObjectEmission.setValuedObject(explicitPreValuedObject);
                 val preSelfTransition =  SCChartsFactory::eINSTANCE.createTransition();
                     preSelfTransition.setTargetState(preState);
                     preSelfTransition.setPriority(1);
                     preState.outgoingTransitions.add(preSelfTransition);
-                preSelfTransition.setTrigger(preSignalReference.copy);
-                // PreSignal emission must be added as an inner action
+                preSelfTransition.setTrigger(preValuedObjectReference.copy);
+                // PreValuedObject emission must be added as an inner action
                 // to be decoupled from deciding for a specific transition (B is present or B is not present)
-                val explicitPreSignalEmissionAction = SCChartsFactory::eINSTANCE.createAction();
-                explicitPreSignalEmissionAction.effects.add(explicitPreSignalEmission.copy);
-                preState.innerActions.add(explicitPreSignalEmissionAction);
-                //preSelfTransition.effects.add(explicitPreSignalEmission.copy);
-                //pre2NotPreTransition.effects.add(explicitPreSignalEmission.copy);
+                val explicitPreValuedObjectEmissionAction = SCChartsFactory::eINSTANCE.createAction();
+                explicitPreValuedObjectEmissionAction.effects.add(explicitPreValuedObjectEmission.copy);
+                preState.innerActions.add(explicitPreValuedObjectEmissionAction);
+                //preSelfTransition.effects.add(explicitPreValuedObjectEmission.copy);
+                //pre2NotPreTransition.effects.add(explicitPreValuedObjectEmission.copy);
             }
             else {
-                // Valued Signal Case
+                // Valued ValuedObject Case
                 
                 // Additional PreB state
                 val preBState = SCChartsFactory::eINSTANCE.createState();
-                    preBState.setId("PreB" + preSignal.hashCode);
+                    preBState.setId("PreB" + preValuedObject.hashCode);
                     preBState.setLabel("PreB");
                 preRegion.states.add(preBState);
                 
@@ -1900,87 +1900,87 @@ class CoreTransformation {
                     pre2PreBTransition.setPriority(1);
                     preState.outgoingTransitions.add(pre2PreBTransition);
                     
-                // Additional Signals                    
-                val explicitPre1Signal = KExpressionsFactory::eINSTANCE.createSignal();
-                explicitPre1Signal.setName("Pre1" + preSignal.name);
-                explicitPre1Signal.setIsInput(false);
-                explicitPre1Signal.setIsOutput(false);
-                explicitPre1Signal.setType(preSignal.type);
-                if (!preSignal.initialValue.nullOrEmpty) {
-                    explicitPre1Signal.setInitialValue(preSignal.initialValue);
+                // Additional ValuedObjects                    
+                val explicitPre1ValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+                explicitPre1ValuedObject.setName("Pre1" + preValuedObject.name);
+                explicitPre1ValuedObject.setIsInput(false);
+                explicitPre1ValuedObject.setIsOutput(false);
+                explicitPre1ValuedObject.setType(preValuedObject.type);
+                if (!preValuedObject.initialValue.nullOrEmpty) {
+                    explicitPre1ValuedObject.setInitialValue(preValuedObject.initialValue);
                 }
-                state.signals.add(explicitPre1Signal);
-                val explicitPre2Signal = KExpressionsFactory::eINSTANCE.createSignal();
-                explicitPre2Signal.setName("Pre2" + preSignal.name);
-                explicitPre2Signal.setIsInput(false);
-                explicitPre2Signal.setIsOutput(false);
-                explicitPre2Signal.setType(preSignal.type);
-                if (!preSignal.initialValue.nullOrEmpty) {
-                    explicitPre2Signal.setInitialValue(preSignal.initialValue);
+                state.valuedObjects.add(explicitPre1ValuedObject);
+                val explicitPre2ValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+                explicitPre2ValuedObject.setName("Pre2" + preValuedObject.name);
+                explicitPre2ValuedObject.setIsInput(false);
+                explicitPre2ValuedObject.setIsOutput(false);
+                explicitPre2ValuedObject.setType(preValuedObject.type);
+                if (!preValuedObject.initialValue.nullOrEmpty) {
+                    explicitPre2ValuedObject.setInitialValue(preValuedObject.initialValue);
                 }
-                state.signals.add(explicitPre2Signal);
+                state.valuedObjects.add(explicitPre2ValuedObject);
                 
                 // Transition triggers & effects
-                val explicitPre1SignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-                    explicitPre1SignalReference.setValuedObject(explicitPre1Signal);
-                val explicitPre2SignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-                    explicitPre2SignalReference.setValuedObject(explicitPre2Signal);
+                val explicitPre1ValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                    explicitPre1ValuedObjectReference.setValuedObject(explicitPre1ValuedObject);
+                val explicitPre2ValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+                    explicitPre2ValuedObjectReference.setValuedObject(explicitPre2ValuedObject);
                                     
                 val valPreExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                     valPreExpression.setOperator(OperatorType::VAL);   
-                    valPreExpression.subExpressions.add(preSignalReference.copy);             
+                    valPreExpression.subExpressions.add(preValuedObjectReference.copy);             
                 val valExplicitPre1Expression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                     valExplicitPre1Expression.setOperator(OperatorType::VAL);   
-                    valExplicitPre1Expression.subExpressions.add(explicitPre1SignalReference.copy);             
+                    valExplicitPre1Expression.subExpressions.add(explicitPre1ValuedObjectReference.copy);             
                 val valExplicitPre2Expression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                     valExplicitPre2Expression.setOperator(OperatorType::VAL);   
-                    valExplicitPre2Expression.subExpressions.add(explicitPre2SignalReference.copy);             
+                    valExplicitPre2Expression.subExpressions.add(explicitPre2ValuedObjectReference.copy);             
                 
-                val explicitPreSignalEmissionFromPre1 = SCChartsFactory::eINSTANCE.createEmission();
-                    explicitPreSignalEmissionFromPre1.setSignal(explicitPreSignal);
-                    explicitPreSignalEmissionFromPre1.setNewValue(valExplicitPre1Expression.copy);
-                val explicitPreSignalEmissionFromPre2 = SCChartsFactory::eINSTANCE.createEmission();
-                    explicitPreSignalEmissionFromPre2.setSignal(explicitPreSignal);
-                    explicitPreSignalEmissionFromPre2.setNewValue(valExplicitPre2Expression.copy);
+                val explicitPreValuedObjectEmissionFromPre1 = SCChartsFactory::eINSTANCE.createEmission();
+                    explicitPreValuedObjectEmissionFromPre1.setValuedObject(explicitPreValuedObject);
+                    explicitPreValuedObjectEmissionFromPre1.setNewValue(valExplicitPre1Expression.copy);
+                val explicitPreValuedObjectEmissionFromPre2 = SCChartsFactory::eINSTANCE.createEmission();
+                    explicitPreValuedObjectEmissionFromPre2.setValuedObject(explicitPreValuedObject);
+                    explicitPreValuedObjectEmissionFromPre2.setNewValue(valExplicitPre2Expression.copy);
                     
-                val explicitPre1SignalEmission = SCChartsFactory::eINSTANCE.createEmission();
-                    explicitPre1SignalEmission.setSignal(explicitPre1Signal);
-                    explicitPre1SignalEmission.setNewValue(valPreExpression.copy);
-                val explicitPre2SignalEmission = SCChartsFactory::eINSTANCE.createEmission();
-                    explicitPre2SignalEmission.setSignal(explicitPre2Signal);
-                    explicitPre2SignalEmission.setNewValue(valPreExpression.copy);
+                val explicitPre1ValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
+                    explicitPre1ValuedObjectEmission.setValuedObject(explicitPre1ValuedObject);
+                    explicitPre1ValuedObjectEmission.setNewValue(valPreExpression.copy);
+                val explicitPre2ValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
+                    explicitPre2ValuedObjectEmission.setValuedObject(explicitPre2ValuedObject);
+                    explicitPre2ValuedObjectEmission.setNewValue(valPreExpression.copy);
                     
-                // PreSignal emission must be added as an inner action
+                // PreValuedObject emission must be added as an inner action
                 // to be decoupled from deciding for a specific transition (B is present or B is not present)
-                val explicitPreSignalEmissionFromPre1Action = SCChartsFactory::eINSTANCE.createAction();
-                explicitPreSignalEmissionFromPre1Action.effects.add(explicitPreSignalEmissionFromPre1);
-                val explicitPreSignalEmissionFromPre2Action = SCChartsFactory::eINSTANCE.createAction();
-                explicitPreSignalEmissionFromPre2Action.effects.add(explicitPreSignalEmissionFromPre2);
-                preState.innerActions.add(explicitPreSignalEmissionFromPre1Action);
-                preBState.innerActions.add(explicitPreSignalEmissionFromPre2Action);
+                val explicitPreValuedObjectEmissionFromPre1Action = SCChartsFactory::eINSTANCE.createAction();
+                explicitPreValuedObjectEmissionFromPre1Action.effects.add(explicitPreValuedObjectEmissionFromPre1);
+                val explicitPreValuedObjectEmissionFromPre2Action = SCChartsFactory::eINSTANCE.createAction();
+                explicitPreValuedObjectEmissionFromPre2Action.effects.add(explicitPreValuedObjectEmissionFromPre2);
+                preState.innerActions.add(explicitPreValuedObjectEmissionFromPre1Action);
+                preBState.innerActions.add(explicitPreValuedObjectEmissionFromPre2Action);
                     
                 // Fill transitions
-//                pre2NotPreTransition.effects.add(explicitPreSignalEmissionFromPre1.copy);
+//                pre2NotPreTransition.effects.add(explicitPreValuedObjectEmissionFromPre1.copy);
 
-                pre2PreBTransition.setTrigger(preSignalReference.copy);
-//                pre2PreBTransition.effects.add(explicitPreSignalEmissionFromPre1.copy);
-                pre2PreBTransition.effects.add(explicitPre2SignalEmission.copy);
+                pre2PreBTransition.setTrigger(preValuedObjectReference.copy);
+//                pre2PreBTransition.effects.add(explicitPreValuedObjectEmissionFromPre1.copy);
+                pre2PreBTransition.effects.add(explicitPre2ValuedObjectEmission.copy);
                  
-                preB2PreTransition.setTrigger(preSignalReference.copy);
-//                preB2PreTransition.effects.add(explicitPreSignalEmissionFromPre2.copy);
-                preB2PreTransition.effects.add(explicitPre1SignalEmission.copy);
+                preB2PreTransition.setTrigger(preValuedObjectReference.copy);
+//                preB2PreTransition.effects.add(explicitPreValuedObjectEmissionFromPre2.copy);
+                preB2PreTransition.effects.add(explicitPre1ValuedObjectEmission.copy);
                  
-//                preB2NotPreTransition.effects.add(explicitPreSignalEmissionFromPre2.copy);
+//                preB2NotPreTransition.effects.add(explicitPreValuedObjectEmissionFromPre2.copy);
                  
-                notPre2PreTransition.setTrigger(preSignalReference.copy);
-                notPre2PreTransition.effects.add(explicitPre1SignalEmission.copy);
+                notPre2PreTransition.setTrigger(preValuedObjectReference.copy);
+                notPre2PreTransition.effects.add(explicitPre1ValuedObjectEmission.copy);
             }
 
-            // Replace the ComplexExpression Pre(S) by the SignalReference PreS in all actions            
+            // Replace the ComplexExpression Pre(S) by the ValuedObjectReference PreS in all actions            
             // Replace the ComplexExpression Pre(?S) by the OperatorExpression ?PreS in all actions            
             for (action : allActions) {
-               val preExpressions = action.getPreExpression(preSignal);
-               val preValExpressions = action.getPreValExpression(preSignal);
+               val preExpressions = action.getPreExpression(preValuedObject);
+               val preValExpressions = action.getPreValExpression(preValuedObject);
 
                for (preExpression : preExpressions) {
                    val container = preExpression.eContainer;
@@ -1988,10 +1988,10 @@ class CoreTransformation {
                    if (container instanceof ComplexExpression) {
                        // If nested PRE or PRE inside another complex expression
                        (container as ComplexExpression).subExpressions.remove(preExpression);
-                       (container as ComplexExpression).subExpressions.add(explicitPreSignalReference.copy);
+                       (container as ComplexExpression).subExpressions.add(explicitPreValuedObjectReference.copy);
                    } else if(container instanceof Action) {
                        // If PRE directly a trigger
-                       (container as Action).setTrigger(explicitPreSignalReference.copy)
+                       (container as Action).setTrigger(explicitPreValuedObjectReference.copy)
                    }
                }
                    
@@ -2007,7 +2007,7 @@ class CoreTransformation {
                        // Transform pre(?V) --> ?PreV
                        val valueExpression = preValExpression.subExpressions.get(0);
                        (valueExpression as OperatorExpression).subExpressions.remove(0);
-                       (valueExpression as OperatorExpression).subExpressions.add(explicitPreSignalReference.copy);
+                       (valueExpression as OperatorExpression).subExpressions.add(explicitPreValuedObjectReference.copy);
                        if (container instanceof Emission) {
                             (container as Emission).setNewValue(valueExpression.copy);
                        }
@@ -2103,7 +2103,7 @@ class CoreTransformation {
                 normalTerminationTransition.setType(TransitionType::NORMALTERMINATION);
                 state.outgoingTransitions.add(normalTerminationTransition);            
                         
-            // Create complex triggers to be filled with auxiliary signals (sorted strong or weak)                        
+            // Create complex triggers to be filled with auxiliary valuedObjects (sorted strong or weak)                        
             var Expression strongTrigger; 
             val strongTriggerOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                 strongTriggerOperatorExpression.setOperator(OperatorType::OR); 
@@ -2119,20 +2119,20 @@ class CoreTransformation {
                 // Add transition to watcher region
                 // ONLY iff this is not a normal termination
                 if (transition.type != TransitionType::NORMALTERMINATION) {
-                    // Create a signal 
-                    val transitionSignal = KExpressionsFactory::eINSTANCE.createSignal();
-                    val transitionSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                        transitionSignalReference.setValuedObject(transitionSignal);
+                    // Create a valuedObject 
+                    val transitionValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+                    val transitionValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                        transitionValuedObjectReference.setValuedObject(transitionValuedObject);
                     if (transition.type == TransitionType::STRONGABORT) {
-                        transitionSignal.setName("_" + state.id + "_S" + transition.priority);
-                        strongTriggerOperatorExpression.subExpressions.add(transitionSignalReference.copy);
+                        transitionValuedObject.setName("_" + state.id + "_S" + transition.priority);
+                        strongTriggerOperatorExpression.subExpressions.add(transitionValuedObjectReference.copy);
                     } else {
-                        transitionSignal.setName("_" + state.id + "_W" + transition.priority);
-                        weakTriggerOperatorExpression.subExpressions.add(transitionSignalReference.copy);
+                        transitionValuedObject.setName("_" + state.id + "_W" + transition.priority);
+                        weakTriggerOperatorExpression.subExpressions.add(transitionValuedObjectReference.copy);
                     }                    
-                    transitionSignal.setIsInput(false);
-                    transitionSignal.setIsOutput(false);
-                    state.parentRegion.parentState.signals.add(transitionSignal);
+                    transitionValuedObject.setIsInput(false);
+                    transitionValuedObject.setIsOutput(false);
+                    state.parentRegion.parentState.valuedObjects.add(transitionValuedObject);
                 
                     val watcherTransition =  SCChartsFactory::eINSTANCE.createTransition();
                     watcherTransition.setTargetState(abortState);
@@ -2143,12 +2143,12 @@ class CoreTransformation {
                     watcherTransition.setPriority(transition.priority);
                     watcherTransition.setIsImmediate(transition.isImmediate);
                     watcherTransition.setDelay(transition.delay);
-                    // Watcher transition emits the auxiliary signal
-                    val transitionSignalEmission = SCChartsFactory::eINSTANCE.createEmission();
-                        transitionSignalEmission.setSignal(transitionSignal);
-                    watcherTransition.effects.add(transitionSignalEmission);
-                    // Change trigger of original transition to transitionSignalReference
-                    transition.setTrigger(transitionSignalReference.copy);
+                    // Watcher transition emits the auxiliary valuedObject
+                    val transitionValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
+                        transitionValuedObjectEmission.setValuedObject(transitionValuedObject);
+                    watcherTransition.effects.add(transitionValuedObjectEmission);
+                    // Change trigger of original transition to transitionValuedObjectReference
+                    transition.setTrigger(transitionValuedObjectReference.copy);
                 }
                 
                 // Move original transition from state to conditionalState
@@ -2159,7 +2159,7 @@ class CoreTransformation {
                 transition.setIsImmediate(true); 
             }
             
-            // Simplify triggers (if they only consist of one signal reference)
+            // Simplify triggers (if they only consist of one valuedObject reference)
             if (strongTriggerOperatorExpression.subExpressions.size == 1) {
                 strongTrigger = strongTriggerOperatorExpression.subExpressions.get(0);
             }
@@ -2202,7 +2202,7 @@ class CoreTransformation {
                             val strongAbortTransition =  SCChartsFactory::eINSTANCE.createTransition();
                             strongAbortTransition.setTargetState(abortedState);
                             strongAbortTransition.setIsImmediate(true);
-                            // Now add all strong abort watcher signals as a trigger
+                            // Now add all strong abort watcher valuedObjects as a trigger
                             strongAbortTransition.setTrigger(strongTrigger.copy);
                             // Set the highest priority
                             strongAbortTransition.setPriority(1);
@@ -2223,7 +2223,7 @@ class CoreTransformation {
                             val weakAbortTransition =  SCChartsFactory::eINSTANCE.createTransition();
                             weakAbortTransition.setTargetState(abortedState);
                             weakAbortTransition.setIsImmediate(true);
-                            // Now add all weak abort watcher signals as a trigger
+                            // Now add all weak abort watcher valuedObjects as a trigger
                             weakAbortTransition.setTrigger(weakTrigger.copy);
                             // Set the lowest priority
                             weakAbortTransition.setPriority(regionState.maxPriority + 1);
@@ -2239,17 +2239,17 @@ class CoreTransformation {
             // transformation is necessary to be able to abort the watcher in case
             // of triggering the normal termination.
             if (normalTerminationExists) {
-                // If there is at least one such transition then whe need an "_Exit" signal
-                val exitSignal = KExpressionsFactory::eINSTANCE.createSignal();
-                val exitSignalReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                    exitSignalReference.setValuedObject(exitSignal);
-                exitSignal.setName("_Term_" + state.id);
-                state.signals.add(exitSignal);
+                // If there is at least one such transition then whe need an "_Exit" valuedObject
+                val exitValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+                val exitValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+                    exitValuedObjectReference.setValuedObject(exitValuedObject);
+                exitValuedObject.setName("_Term_" + state.id);
+                state.valuedObjects.add(exitValuedObject);
                 // Add a watcher transition from Run to Abort triggered by _Exit
                 val watcherTransition =  SCChartsFactory::eINSTANCE.createTransition();
                 watcherTransition.setTargetState(abortState);
                 runState.outgoingTransitions.add(watcherTransition);
-                watcherTransition.setTrigger(exitSignalReference);
+                watcherTransition.setTrigger(exitValuedObjectReference);
                 watcherTransition.setPriority(runState.maxPriority + 1);
                 watcherTransition.setIsImmediate(true);
                 watcherTransition.setDelay(0);
@@ -2281,9 +2281,9 @@ class CoreTransformation {
                 transition.setPriority(1);
                 transition.setType(TransitionType::NORMALTERMINATION);
                 mainState.outgoingTransitions.add(transition);            
-                val exitSignalEmission = SCChartsFactory::eINSTANCE.createEmission();
-                exitSignalEmission.setSignal(exitSignal);
-                transition.effects.add(exitSignalEmission);
+                val exitValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
+                exitValuedObjectEmission.setValuedObject(exitValuedObject);
+                transition.effects.add(exitValuedObjectEmission);
                 
                 // Move the watcher region outside the mainState
                 state.regions.add(watcherRegion);

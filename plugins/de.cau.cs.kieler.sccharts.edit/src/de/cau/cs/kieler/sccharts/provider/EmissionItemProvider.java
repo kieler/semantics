@@ -78,25 +78,25 @@ public class EmissionItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addSignalPropertyDescriptor(object);
+            addValuedObjectPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Signal feature.
+     * This adds a property descriptor for the Valued Object feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addSignalPropertyDescriptor(Object object) {
+    protected void addValuedObjectPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_Emission_signal_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Emission_signal_feature", "_UI_Emission_type"),
-                 SCChartsPackage.Literals.EMISSION__SIGNAL,
+                 getString("_UI_Emission_valuedObject_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Emission_valuedObject_feature", "_UI_Emission_type"),
+                 SCChartsPackage.Literals.EMISSION__VALUED_OBJECT,
                  true,
                  false,
                  true,

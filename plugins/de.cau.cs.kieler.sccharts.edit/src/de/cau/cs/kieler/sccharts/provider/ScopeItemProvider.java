@@ -195,8 +195,7 @@ public class ScopeItemProvider
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__SIGNALS);
-            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__VARIABLES);
+            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS);
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__SUSPENSION_TRIGGER);
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__EXIT_ACTIONS);
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__INNER_ACTIONS);
@@ -252,8 +251,7 @@ public class ScopeItemProvider
             case SCChartsPackage.SCOPE__INTERFACE_DECLARATION:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
-            case SCChartsPackage.SCOPE__SIGNALS:
-            case SCChartsPackage.SCOPE__VARIABLES:
+            case SCChartsPackage.SCOPE__VALUED_OBJECTS:
             case SCChartsPackage.SCOPE__SUSPENSION_TRIGGER:
             case SCChartsPackage.SCOPE__EXIT_ACTIONS:
             case SCChartsPackage.SCOPE__INNER_ACTIONS:
@@ -280,23 +278,8 @@ public class ScopeItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__SIGNALS,
-                 KExpressionsFactory.eINSTANCE.createSignal()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__SIGNALS,
-                 KExpressionsFactory.eINSTANCE.createISignal()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__VARIABLES,
-                 KExpressionsFactory.eINSTANCE.createVariable()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__VARIABLES,
-                 KExpressionsFactory.eINSTANCE.createIVariable()));
+                (SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS,
+                 KExpressionsFactory.eINSTANCE.createValuedObject()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -446,16 +429,6 @@ public class ScopeItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createSignal()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createVariable()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
                  KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
 
         newChildDescriptors.add
@@ -487,66 +460,6 @@ public class ScopeItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createInterfaceDeclaration()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createInterfaceSignalDecl()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createISignal()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createChannelDescription()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createTypeIdentifier()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createInterfaceVariableDecl()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createVariableDecl()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createIVariable()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createInput()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createOutput()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createInputOutput()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createReturn()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -583,8 +496,7 @@ public class ScopeItemProvider
         boolean qualify =
             childFeature == AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__BODY_CONTENTS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__SIGNALS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__VARIABLES ||
+            childFeature == SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS ||
             childFeature == SCChartsPackage.Literals.SCOPE__SUSPENSION_TRIGGER ||
             childFeature == SCChartsPackage.Literals.SCOPE__EXIT_ACTIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__INNER_ACTIONS ||

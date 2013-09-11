@@ -212,7 +212,7 @@ public class StateImpl extends ScopeImpl implements State {
      */
     public Region getParentRegion() {
         if (eContainerFeatureID() != SCChartsPackage.STATE__PARENT_REGION) return null;
-        return (Region)eContainer();
+        return (Region)eInternalContainer();
     }
 
     /**

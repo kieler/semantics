@@ -12,7 +12,7 @@ RootRegion returns sccharts::Region:
     (
       (annotations += Annotation)*
       'region' (id=ID)? (label=STRING)? ':'
-      (variables+=Variable|signals+=Signal)*
+      (valuedObjects+=ValuedObject)*
       (bodyText+=TextualCode)* 
      )?
     (states+=State)*;
@@ -24,7 +24,7 @@ SingleRegion returns sccharts::Region:
     (
       (annotations += Annotation)*
       'region' (id=ID)? (label=STRING)? ':'
-      (variables+=Variable|signals+=Signal)*
+      (valuedObjects+=ValuedObject)*
       (bodyText+=TextualCode)*
      )?
     (states+=State)*;
@@ -35,7 +35,7 @@ Region returns sccharts::Region:
 	{sccharts::Region}
     (annotations += Annotation)*
     'region' (id=ID)? (label=STRING)? ':'
-    (variables+=Variable|signals+=Signal)*
+    (valuedObjects+=ValuedObject)*
     (bodyText+=TextualCode)* 
     (states+=State)+;
 
@@ -58,12 +58,11 @@ State returns sccharts::State:
      | 
       ('{'
           (
-            (signals+=Signal                |
-             variables+=Variable            |
-             'onentry' entryActions+=Action |
-             'oninner' innerActions+=Action |
-             'onexit'  exitActions+=Action  |
-             'suspension' suspensionTrigger=Action)*
+            (valuedObjects+=ValuedObject    |
+             'entry' entryActions+=Action |
+             'inner' innerActions+=Action |
+             'exit'  exitActions+=Action  |
+             'suspend' suspensionTrigger=Action)*
             (bodyText += TextualCode)*
             (
              (regions+=SingleRegion)(regions+=Region)*
@@ -89,45 +88,61 @@ Transition returns sccharts::Transition:
 
 // ---------------------------------------------------------------------------------------------------
 
-Signal returns kexpressions::Signal:
-    aSignal
-    | ISignal;
+//Signal returns kexpressions::Signal:
+//    aSignal
+//    | ISignal;
+//
+//aSignal returns kexpressions::Signal:
+//    (annotations+=Annotation)*
+//    (isInput?='input')?
+//	(isOutput?='output')?
+//	'signal' name=ID (':=' initialValue=AnyType)?
+//    ((':' (type = ValueType | hostType = STRING))
+//      |
+//     (':' 'combine' (type = ValueType | hostType = STRING) 'with'
+//        (combineOperator = CombineOperator | hostCombineOperator = STRING))
+//    )?;
+//
+//ISignal returns kexpressions::ISignal:
+//    (annotations+=Annotation)*
+//    (isInput?='input')?
+//	(isOutput?='output')?
+//	'signal' name=ID (':=' initialValue=AnyType)?
+//    ((':' (type = ValueType | hostType = STRING))
+//      |
+//     (':' 'combine' (type = ValueType | hostType = STRING) 'with'
+//        (combineOperator = CombineOperator | hostCombineOperator = STRING))
+//    )?;
 
-aSignal returns kexpressions::Signal:
+
+
+ValuedObject returns kexpressions::ValuedObject:
     (annotations+=Annotation)*
     (isInput?='input')?
-	(isOutput?='output')?
-	'signal' name=ID (':=' initialValue=AnyType)?
-    ((':' (type = ValueType | hostType = STRING))
+    (isOutput?='output')?
+    (isStatic?='static')?
+    (isSignal?='signal')?
+    name=ID (':=' initialValue=AnyType)?
+    ((':' (type = ValueType))
       |
-     (':' 'combine' (type = ValueType | hostType = STRING) 'with'
-        (combineOperator = CombineOperator | hostCombineOperator = STRING))
+     (':' 'combine' (type = ValueType) 'with'
+        (combineOperator = CombineOperator))
     )?;
 
-ISignal returns kexpressions::ISignal:
-    (annotations+=Annotation)*
-    (isInput?='input')?
-	(isOutput?='output')?
-	'signal' name=ID (':=' initialValue=AnyType)?
-    ((':' (type = ValueType | hostType = STRING))
-      |
-     (':' 'combine' (type = ValueType | hostType = STRING) 'with'
-        (combineOperator = CombineOperator | hostCombineOperator = STRING))
-    )?;
 
 // ---------------------------------------------------------------------------------------------------
 
-Variable returns kexpressions::Variable:
-    aVariable
-    | IVariable;
-    
-aVariable returns kexpressions::Variable:
-    (annotations += Annotation)*
-    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
-
-IVariable returns kexpressions::IVariable:
-    (annotations += Annotation)*
-    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
+//Variable returns kexpressions::Variable:
+//    aVariable
+//    | IVariable;
+//    
+//aVariable returns kexpressions::Variable:
+//    (annotations += Annotation)*
+//    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
+//
+//IVariable returns kexpressions::IVariable:
+//    (annotations += Annotation)*
+//    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
 
 // ---------------------------------------------------------------------------------------------------
 

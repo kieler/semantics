@@ -34,10 +34,8 @@ import org.eclipse.xtext.scoping.impl.SimpleScope;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.OperatorType;
-import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.core.kexpressions.Variable;
 import de.cau.cs.kieler.sccharts.Assignment;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.Region;
@@ -110,7 +108,7 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 
 
     /**
-     * A implementation of scoping for signal and variable references.
+     * A implementation of scoping for valuedObject and variable references.
      * Won't be called directly but via reflection by the Xtext runtime.
      * Delegates to {@link SctScopeProvider#scope_ValuedObject(EObject, EReference, State)}.
      *
@@ -134,8 +132,8 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     protected List<IEObjectDescription> scope_ValuedObject(final EObject obj,
             final EReference reference, final Scope logicalContainer) {
 
-        // include all available signals
-        List<IEObjectDescription> l = this.scope_Signal(obj, reference, logicalContainer);
+        // include all available valuedObjects
+        List<IEObjectDescription> l = this.scope_ValuedObject2(obj, reference, logicalContainer);
 
         // this branch will be entered during linking if the valuedObjectReference
         // is contained by a '?' OperatorExpression
@@ -160,17 +158,17 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     }
 
     /**
-     * A implementation of scoping for signal emissions.
+     * A implementation of scoping for valuedObject emissions.
      * Won't be called directly but via reflection by the Xtext runtime.
-     * Delegates to {@link SctScopeProvider#scope_Signal(EObject, EReference, State)}.
+     * Delegates to {@link SctScopeProvider#scope_ValuedObject(EObject, EReference, State)}.
      *
      * @param obj
      * @param reference
      * @return
      */
-	public IScope scope_Emission_signal(final EObject obj,
+	public IScope scope_Emission_valuedObject(final EObject obj,
 			final EReference reference) {
-		return new SimpleScope(this.scope_Signal(obj, reference, null));
+		return new SimpleScope(this.scope_ValuedObject(obj, reference, null));
     }
 
 	/**
@@ -181,7 +179,7 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 	 * @param logicalContainer
 	 * @return
 	 */
-	protected List<IEObjectDescription> scope_Signal(final EObject obj,
+	protected List<IEObjectDescription> scope_ValuedObject2(final EObject obj,
 			final EReference reference, final Scope logicalContainer) {
 
         List<IEObjectDescription> l = new LinkedList<IEObjectDescription>();
@@ -196,7 +194,7 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         boolean inLogicalContainer = false;
         Scope scope = (Scope) container;
         do {
-            for (Signal s : scope.getSignals()) {
+            for (ValuedObject s : scope.getValuedObjects()) {
                 l.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
                         Collections.<String, String> emptyMap()));
             }
@@ -210,20 +208,20 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 
         /*
          * FIXME this is very problematic code introduced to enable textual representations of not
-         * completely transformed sccharts models from esterel models, which may refer to signals
+         * completely transformed sccharts models from esterel models, which may refer to valuedObjects
          * of the esterel model
          */
         if (KExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(obj)
                 && ((ValuedObjectReference) obj).getValuedObject() != null
-                && KExpressionsPackage.eINSTANCE.getSignal().isInstance(((ValuedObjectReference) obj).getValuedObject())
+                && KExpressionsPackage.eINSTANCE.getValuedObject().isInstance(((ValuedObjectReference) obj).getValuedObject())
                 && ((ValuedObjectReference) obj).getValuedObject().eResource() != obj.eResource()) {
             ValuedObject vObj = ((ValuedObjectReference) obj).getValuedObject();
             l.add(new EObjectDescription(QualifiedName.create(vObj.getName()), vObj,
                    Collections.<String, String> emptyMap()));
         } else if (SCChartsPackage.eINSTANCE.getEmission().isInstance(obj)
-                && ((Emission) obj).getSignal() != null
-                && ((Emission) obj).getSignal().eResource() != obj.eResource()) {
-            Signal s = ((Emission) obj).getSignal();
+                && ((Emission) obj).getValuedObject() != null
+                && ((Emission) obj).getValuedObject().eResource() != obj.eResource()) {
+            ValuedObject s = ((Emission) obj).getValuedObject();
             l.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
                    Collections.<String, String> emptyMap()));
         }
@@ -269,10 +267,10 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         boolean inLogicalContainer = false;
         Scope scope = (Scope) container;
         do {
-            for (Variable v : scope.getVariables()) {
-                l.add(new EObjectDescription(QualifiedName.create(v.getName()), v,
-                        Collections.<String, String> emptyMap()));
-            }
+//            for (Variable v : scope.getVariables()) {
+//                l.add(new EObjectDescription(QualifiedName.create(v.getName()), v,
+//                        Collections.<String, String> emptyMap()));
+//            }
 
             scope = (Scope) scope.eContainer();
             if (scope == null && !inLogicalContainer && container != null) {
@@ -283,23 +281,24 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 
         /*
          * FIXME this is very problematic code introduced to enable textual representations of not
-         * completely transformed sccharts models from esterel models, which may refer to signals
+         * completely transformed sccharts models from esterel models, which may refer to valuedObjects
          * of the esterel model
          */
         if (KExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(obj)
                 && ((ValuedObjectReference) obj).getValuedObject() != null
-                && KExpressionsPackage.eINSTANCE.getVariable().isInstance(((ValuedObjectReference) obj).getValuedObject())
+                //&& KExpressionsPackage.eINSTANCE.getVariable().isInstance(((ValuedObjectReference) obj).getValuedObject())
                 && ((ValuedObjectReference) obj).getValuedObject().eResource() != obj.eResource()) {
             ValuedObject vObj = ((ValuedObjectReference) obj).getValuedObject();
             l.add(new EObjectDescription(QualifiedName.create(vObj.getName()), vObj,
                     Collections.<String, String> emptyMap()));
-        } else if (SCChartsPackage.eINSTANCE.getAssignment().isInstance(obj)
-                && ((Assignment) obj).getVariable() != null
-                && ((Assignment) obj).getVariable().eResource() != obj.eResource()) {
-            Variable v = ((Assignment) obj).getVariable();
-            l.add(new EObjectDescription(QualifiedName.create(v.getName()), v,
-                   Collections.<String, String> emptyMap()));
-        }
+        } 
+//        else if (SCChartsPackage.eINSTANCE.getAssignment().isInstance(obj)
+//                && ((Assignment) obj).getVariable() != null
+//                && ((Assignment) obj).getVariable().eResource() != obj.eResource()) {
+//            Variable v = ((Assignment) obj).getVariable();
+//            l.add(new EObjectDescription(QualifiedName.create(v.getName()), v,
+//                   Collections.<String, String> emptyMap()));
+//        }
         return l;
     }
 }

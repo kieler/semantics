@@ -145,36 +145,36 @@ public class SctFormatter extends ActionsFormatter {
          * SIGNAL
          */
         // does work :-)
-        c.setLinewrap().after(f.getSignalRule());
+        c.setLinewrap().after(f.getValuedObjectRule());
 //
 //        // an alternative formulation of the formatting instructions
-//        c.setLinewrap().before(f.getASignalAccess().getAnnotationsAssignment_0().getTerminal());
-//        c.setLinewrap().before(f.getASignalAccess().getIsInputInputKeyword_1_0());
-//        c.setLinewrap().before(f.getASignalAccess().getIsOutputOutputKeyword_2_0());
-//        c.setLinewrap().before(f.getASignalAccess().getSignalKeyword_3());
-//        c.setNoLinewrap().between(f.getASignalAccess().getIsInputInputKeyword_1_0(),
-//                f.getASignalAccess().getIsOutputOutputKeyword_2_0());
-//        c.setNoLinewrap().between(f.getASignalAccess().getIsInputInputKeyword_1_0(),
-//                f.getASignalAccess().getSignalKeyword_3());
-//        c.setNoLinewrap().between(f.getASignalAccess().getIsOutputOutputKeyword_2_0(),
-//                f.getASignalAccess().getSignalKeyword_3());
+//        c.setLinewrap().before(f.getAValuedObjectAccess().getAnnotationsAssignment_0().getTerminal());
+//        c.setLinewrap().before(f.getAValuedObjectAccess().getIsInputInputKeyword_1_0());
+//        c.setLinewrap().before(f.getAValuedObjectAccess().getIsOutputOutputKeyword_2_0());
+//        c.setLinewrap().before(f.getAValuedObjectAccess().getValuedObjectKeyword_3());
+//        c.setNoLinewrap().between(f.getAValuedObjectAccess().getIsInputInputKeyword_1_0(),
+//                f.getAValuedObjectAccess().getIsOutputOutputKeyword_2_0());
+//        c.setNoLinewrap().between(f.getAValuedObjectAccess().getIsInputInputKeyword_1_0(),
+//                f.getAValuedObjectAccess().getValuedObjectKeyword_3());
+//        c.setNoLinewrap().between(f.getAValuedObjectAccess().getIsOutputOutputKeyword_2_0(),
+//                f.getAValuedObjectAccess().getValuedObjectKeyword_3());
 //
-//        c.setLinewrap().before(f.getISignalAccess().getAnnotationsAssignment_0().getTerminal());
-//        c.setLinewrap().before(f.getISignalAccess().getIsInputInputKeyword_1_0());
-//        c.setLinewrap().before(f.getISignalAccess().getIsOutputOutputKeyword_2_0());
-//        c.setLinewrap().before(f.getISignalAccess().getSignalKeyword_3());
-//        c.setNoLinewrap().between(f.getISignalAccess().getIsInputInputKeyword_1_0(),
-//                f.getISignalAccess().getIsOutputOutputKeyword_2_0());
-//        c.setNoLinewrap().between(f.getISignalAccess().getIsInputInputKeyword_1_0(),
-//                f.getISignalAccess().getSignalKeyword_3());
-//        c.setNoLinewrap().between(f.getISignalAccess().getIsOutputOutputKeyword_2_0(),
-//                f.getISignalAccess().getSignalKeyword_3());
+//        c.setLinewrap().before(f.getIValuedObjectAccess().getAnnotationsAssignment_0().getTerminal());
+//        c.setLinewrap().before(f.getIValuedObjectAccess().getIsInputInputKeyword_1_0());
+//        c.setLinewrap().before(f.getIValuedObjectAccess().getIsOutputOutputKeyword_2_0());
+//        c.setLinewrap().before(f.getIValuedObjectAccess().getValuedObjectKeyword_3());
+//        c.setNoLinewrap().between(f.getIValuedObjectAccess().getIsInputInputKeyword_1_0(),
+//                f.getIValuedObjectAccess().getIsOutputOutputKeyword_2_0());
+//        c.setNoLinewrap().between(f.getIValuedObjectAccess().getIsInputInputKeyword_1_0(),
+//                f.getIValuedObjectAccess().getValuedObjectKeyword_3());
+//        c.setNoLinewrap().between(f.getIValuedObjectAccess().getIsOutputOutputKeyword_2_0(),
+//                f.getIValuedObjectAccess().getValuedObjectKeyword_3());
 //
 //
-        /*
-         * VARIABLE
-         */
-        c.setLinewrap().after(f.getVariableRule());
+//        /*
+//         * VARIABLE
+//         */
+//        c.setLinewrap().after(f.getVariableRule());
 //
 //        c.setLinewrap().before(f.getAVariableAccess().getAnnotationsAssignment_0().getTerminal());
 //        c.setLinewrap().before(f.getAVariableAccess().getVarKeyword_1());
