@@ -74,16 +74,8 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
     protected KExpressionsSwitch<Adapter> modelSwitch =
         new KExpressionsSwitch<Adapter>() {
             @Override
-            public Adapter caseComplexExpression(ComplexExpression object) {
-                return createComplexExpressionAdapter();
-            }
-            @Override
             public Adapter caseExpression(Expression object) {
                 return createExpressionAdapter();
-            }
-            @Override
-            public Adapter caseTextualCode(TextualCode object) {
-                return createTextualCodeAdapter();
             }
             @Override
             public Adapter caseValuedObject(ValuedObject object) {
@@ -142,20 +134,6 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
 
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ComplexExpression <em>Complex Expression</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.ComplexExpression
-     * @generated
-     */
-    public Adapter createComplexExpressionAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Expression <em>Expression</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -166,20 +144,6 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createExpressionAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.TextualCode <em>Textual Code</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.TextualCode
-     * @generated
-     */
-    public Adapter createTextualCodeAdapter() {
         return null;
     }
 

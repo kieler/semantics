@@ -67,12 +67,12 @@ public class ValuedObjectItemProvider
 
             addNamePropertyDescriptor(object);
             addTypePropertyDescriptor(object);
-            addInitialValuePropertyDescriptor(object);
             addIsInputPropertyDescriptor(object);
             addIsOutputPropertyDescriptor(object);
             addIsStaticPropertyDescriptor(object);
             addIsSignalPropertyDescriptor(object);
             addCombineOperatorPropertyDescriptor(object);
+            addInitialValuePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -138,7 +138,7 @@ public class ValuedObjectItemProvider
                  true,
                  false,
                  false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
                  null,
                  null));
     }
@@ -292,12 +292,12 @@ public class ValuedObjectItemProvider
         switch (notification.getFeatureID(ValuedObject.class)) {
             case KExpressionsPackage.VALUED_OBJECT__NAME:
             case KExpressionsPackage.VALUED_OBJECT__TYPE:
-            case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
             case KExpressionsPackage.VALUED_OBJECT__IS_INPUT:
             case KExpressionsPackage.VALUED_OBJECT__IS_OUTPUT:
             case KExpressionsPackage.VALUED_OBJECT__IS_STATIC:
             case KExpressionsPackage.VALUED_OBJECT__IS_SIGNAL:
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
+            case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

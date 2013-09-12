@@ -26,15 +26,6 @@ public interface KExpressionsFactory extends EFactory {
     KExpressionsFactory eINSTANCE = de.cau.cs.kieler.core.kexpressions.impl.KExpressionsFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Complex Expression</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Complex Expression</em>'.
-     * @generated
-     */
-    ComplexExpression createComplexExpression();
-
-    /**
      * Returns a new object of class '<em>Expression</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -42,15 +33,6 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     Expression createExpression();
-
-    /**
-     * Returns a new object of class '<em>Textual Code</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Textual Code</em>'.
-     * @generated
-     */
-    TextualCode createTextualCode();
 
     /**
      * Returns a new object of class '<em>Valued Object</em>'.

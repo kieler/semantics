@@ -61,9 +61,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case KExpressionsPackage.COMPLEX_EXPRESSION: return createComplexExpression();
             case KExpressionsPackage.EXPRESSION: return createExpression();
-            case KExpressionsPackage.TEXTUAL_CODE: return createTextualCode();
             case KExpressionsPackage.VALUED_OBJECT: return createValuedObject();
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE: return createValuedObjectReference();
             case KExpressionsPackage.VALUE: return createValue();
@@ -120,29 +118,9 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public ComplexExpression createComplexExpression() {
-        ComplexExpressionImpl complexExpression = new ComplexExpressionImpl();
-        return complexExpression;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public Expression createExpression() {
         ExpressionImpl expression = new ExpressionImpl();
         return expression;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public TextualCode createTextualCode() {
-        TextualCodeImpl textualCode = new TextualCodeImpl();
-        return textualCode;
     }
 
     /**

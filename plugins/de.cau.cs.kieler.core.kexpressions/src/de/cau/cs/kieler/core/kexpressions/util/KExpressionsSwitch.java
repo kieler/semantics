@@ -74,22 +74,9 @@ public class KExpressionsSwitch<T> extends Switch<T> {
     @Override
     protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
-            case KExpressionsPackage.COMPLEX_EXPRESSION: {
-                ComplexExpression complexExpression = (ComplexExpression)theEObject;
-                T result = caseComplexExpression(complexExpression);
-                if (result == null) result = caseExpression(complexExpression);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case KExpressionsPackage.EXPRESSION: {
                 Expression expression = (Expression)theEObject;
                 T result = caseExpression(expression);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case KExpressionsPackage.TEXTUAL_CODE: {
-                TextualCode textualCode = (TextualCode)theEObject;
-                T result = caseTextualCode(textualCode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -103,7 +90,6 @@ public class KExpressionsSwitch<T> extends Switch<T> {
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE: {
                 ValuedObjectReference valuedObjectReference = (ValuedObjectReference)theEObject;
                 T result = caseValuedObjectReference(valuedObjectReference);
-                if (result == null) result = caseComplexExpression(valuedObjectReference);
                 if (result == null) result = caseExpression(valuedObjectReference);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -142,7 +128,6 @@ public class KExpressionsSwitch<T> extends Switch<T> {
             case KExpressionsPackage.OPERATOR_EXPRESSION: {
                 OperatorExpression operatorExpression = (OperatorExpression)theEObject;
                 T result = caseOperatorExpression(operatorExpression);
-                if (result == null) result = caseComplexExpression(operatorExpression);
                 if (result == null) result = caseExpression(operatorExpression);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -150,29 +135,12 @@ public class KExpressionsSwitch<T> extends Switch<T> {
             case KExpressionsPackage.TEXT_EXPRESSION: {
                 TextExpression textExpression = (TextExpression)theEObject;
                 T result = caseTextExpression(textExpression);
-                if (result == null) result = caseComplexExpression(textExpression);
-                if (result == null) result = caseTextualCode(textExpression);
                 if (result == null) result = caseExpression(textExpression);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             default: return defaultCase(theEObject);
         }
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Complex Expression</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Complex Expression</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseComplexExpression(ComplexExpression object) {
-        return null;
     }
 
     /**
@@ -187,21 +155,6 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseExpression(Expression object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Textual Code</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Textual Code</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseTextualCode(TextualCode object) {
         return null;
     }
 

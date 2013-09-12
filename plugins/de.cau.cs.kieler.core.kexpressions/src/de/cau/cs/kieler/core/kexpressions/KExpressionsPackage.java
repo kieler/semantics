@@ -70,7 +70,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getExpression()
      * @generated
      */
-    int EXPRESSION = 1;
+    int EXPRESSION = 0;
 
     /**
      * The number of structural features of the '<em>Expression</em>' class.
@@ -82,71 +82,6 @@ public interface KExpressionsPackage extends EPackage {
     int EXPRESSION_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ComplexExpressionImpl <em>Complex Expression</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.core.kexpressions.impl.ComplexExpressionImpl
-     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getComplexExpression()
-     * @generated
-     */
-    int COMPLEX_EXPRESSION = 0;
-
-    /**
-     * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int COMPLEX_EXPRESSION__SUB_EXPRESSIONS = EXPRESSION_FEATURE_COUNT + 0;
-
-    /**
-     * The number of structural features of the '<em>Complex Expression</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int COMPLEX_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.TextualCodeImpl <em>Textual Code</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.core.kexpressions.impl.TextualCodeImpl
-     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getTextualCode()
-     * @generated
-     */
-    int TEXTUAL_CODE = 2;
-
-    /**
-     * The feature id for the '<em><b>Code</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEXTUAL_CODE__CODE = 0;
-
-    /**
-     * The feature id for the '<em><b>Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEXTUAL_CODE__TYPE = 1;
-
-    /**
-     * The number of structural features of the '<em>Textual Code</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEXTUAL_CODE_FEATURE_COUNT = 2;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl <em>Valued Object</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -154,7 +89,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getValuedObject()
      * @generated
      */
-    int VALUED_OBJECT = 3;
+    int VALUED_OBJECT = 1;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -184,22 +119,13 @@ public interface KExpressionsPackage extends EPackage {
     int VALUED_OBJECT__TYPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Initial Value</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int VALUED_OBJECT__INITIAL_VALUE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
-
-    /**
      * The feature id for the '<em><b>Is Input</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__IS_INPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int VALUED_OBJECT__IS_INPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Is Output</b></em>' attribute.
@@ -208,7 +134,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__IS_OUTPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int VALUED_OBJECT__IS_OUTPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Is Static</b></em>' attribute.
@@ -217,7 +143,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__IS_STATIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int VALUED_OBJECT__IS_STATIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Is Signal</b></em>' attribute.
@@ -226,7 +152,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__IS_SIGNAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+    int VALUED_OBJECT__IS_SIGNAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
@@ -235,7 +161,16 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__COMBINE_OPERATOR = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
+    int VALUED_OBJECT__COMBINE_OPERATOR = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+
+    /**
+     * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VALUED_OBJECT__INITIAL_VALUE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
      * The number of structural features of the '<em>Valued Object</em>' class.
@@ -254,16 +189,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getValuedObjectReference()
      * @generated
      */
-    int VALUED_OBJECT_REFERENCE = 4;
-
-    /**
-     * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int VALUED_OBJECT_REFERENCE__SUB_EXPRESSIONS = COMPLEX_EXPRESSION__SUB_EXPRESSIONS;
+    int VALUED_OBJECT_REFERENCE = 2;
 
     /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
@@ -272,7 +198,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT_REFERENCE__VALUED_OBJECT = COMPLEX_EXPRESSION_FEATURE_COUNT + 0;
+    int VALUED_OBJECT_REFERENCE__VALUED_OBJECT = EXPRESSION_FEATURE_COUNT + 0;
 
     /**
      * The number of structural features of the '<em>Valued Object Reference</em>' class.
@@ -281,7 +207,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT_REFERENCE_FEATURE_COUNT = COMPLEX_EXPRESSION_FEATURE_COUNT + 1;
+    int VALUED_OBJECT_REFERENCE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ValueImpl <em>Value</em>}' class.
@@ -291,7 +217,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getValue()
      * @generated
      */
-    int VALUE = 5;
+    int VALUE = 3;
 
     /**
      * The number of structural features of the '<em>Value</em>' class.
@@ -310,7 +236,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getIntValue()
      * @generated
      */
-    int INT_VALUE = 6;
+    int INT_VALUE = 4;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -338,7 +264,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getFloatValue()
      * @generated
      */
-    int FLOAT_VALUE = 7;
+    int FLOAT_VALUE = 5;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -366,7 +292,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getBooleanValue()
      * @generated
      */
-    int BOOLEAN_VALUE = 8;
+    int BOOLEAN_VALUE = 6;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -394,16 +320,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getOperatorExpression()
      * @generated
      */
-    int OPERATOR_EXPRESSION = 9;
-
-    /**
-     * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int OPERATOR_EXPRESSION__SUB_EXPRESSIONS = COMPLEX_EXPRESSION__SUB_EXPRESSIONS;
+    int OPERATOR_EXPRESSION = 7;
 
     /**
      * The feature id for the '<em><b>Operator</b></em>' attribute.
@@ -412,7 +329,16 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATOR_EXPRESSION__OPERATOR = COMPLEX_EXPRESSION_FEATURE_COUNT + 0;
+    int OPERATOR_EXPRESSION__OPERATOR = EXPRESSION_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OPERATOR_EXPRESSION__SUB_EXPRESSIONS = EXPRESSION_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Operator Expression</em>' class.
@@ -421,7 +347,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int OPERATOR_EXPRESSION_FEATURE_COUNT = COMPLEX_EXPRESSION_FEATURE_COUNT + 1;
+    int OPERATOR_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl <em>Text Expression</em>}' class.
@@ -431,34 +357,16 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getTextExpression()
      * @generated
      */
-    int TEXT_EXPRESSION = 10;
+    int TEXT_EXPRESSION = 8;
 
     /**
-     * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
+     * The feature id for the '<em><b>Text</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TEXT_EXPRESSION__SUB_EXPRESSIONS = COMPLEX_EXPRESSION__SUB_EXPRESSIONS;
-
-    /**
-     * The feature id for the '<em><b>Code</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEXT_EXPRESSION__CODE = COMPLEX_EXPRESSION_FEATURE_COUNT + 0;
-
-    /**
-     * The feature id for the '<em><b>Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEXT_EXPRESSION__TYPE = COMPLEX_EXPRESSION_FEATURE_COUNT + 1;
+    int TEXT_EXPRESSION__TEXT = EXPRESSION_FEATURE_COUNT + 0;
 
     /**
      * The number of structural features of the '<em>Text Expression</em>' class.
@@ -467,7 +375,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_EXPRESSION_FEATURE_COUNT = COMPLEX_EXPRESSION_FEATURE_COUNT + 2;
+    int TEXT_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
@@ -477,7 +385,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 11;
+    int COMBINE_OPERATOR = 9;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -487,7 +395,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 12;
+    int OPERATOR_TYPE = 10;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -497,29 +405,8 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 13;
+    int VALUE_TYPE = 11;
 
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.ComplexExpression <em>Complex Expression</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Complex Expression</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.ComplexExpression
-     * @generated
-     */
-    EClass getComplexExpression();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.ComplexExpression#getSubExpressions <em>Sub Expressions</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Sub Expressions</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.ComplexExpression#getSubExpressions()
-     * @see #getComplexExpression()
-     * @generated
-     */
-    EReference getComplexExpression_SubExpressions();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.Expression <em>Expression</em>}'.
@@ -530,38 +417,6 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EClass getExpression();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.TextualCode <em>Textual Code</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Textual Code</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.TextualCode
-     * @generated
-     */
-    EClass getTextualCode();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TextualCode#getCode <em>Code</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Code</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.TextualCode#getCode()
-     * @see #getTextualCode()
-     * @generated
-     */
-    EAttribute getTextualCode_Code();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TextualCode#getType <em>Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Type</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.TextualCode#getType()
-     * @see #getTextualCode()
-     * @generated
-     */
-    EAttribute getTextualCode_Type();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject <em>Valued Object</em>}'.
@@ -596,15 +451,15 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getValuedObject_Type();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Initial Value</em>'.
+     * @return the meta object for the containment reference '<em>Initial Value</em>'.
      * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#getInitialValue()
      * @see #getValuedObject()
      * @generated
      */
-    EAttribute getValuedObject_InitialValue();
+    EReference getValuedObject_InitialValue();
 
     /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsInput <em>Is Input</em>}'.
@@ -777,6 +632,17 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getOperatorExpression_Operator();
 
     /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.OperatorExpression#getSubExpressions <em>Sub Expressions</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Sub Expressions</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.OperatorExpression#getSubExpressions()
+     * @see #getOperatorExpression()
+     * @generated
+     */
+    EReference getOperatorExpression_SubExpressions();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.TextExpression <em>Text Expression</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -785,6 +651,17 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EClass getTextExpression();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TextExpression#getText <em>Text</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Text</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.TextExpression#getText()
+     * @see #getTextExpression()
+     * @generated
+     */
+    EAttribute getTextExpression_Text();
 
     /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}'.
@@ -839,24 +716,6 @@ public interface KExpressionsPackage extends EPackage {
      */
     interface Literals {
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ComplexExpressionImpl <em>Complex Expression</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.core.kexpressions.impl.ComplexExpressionImpl
-         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getComplexExpression()
-         * @generated
-         */
-        EClass COMPLEX_EXPRESSION = eINSTANCE.getComplexExpression();
-
-        /**
-         * The meta object literal for the '<em><b>Sub Expressions</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference COMPLEX_EXPRESSION__SUB_EXPRESSIONS = eINSTANCE.getComplexExpression_SubExpressions();
-
-        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ExpressionImpl <em>Expression</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -865,32 +724,6 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EClass EXPRESSION = eINSTANCE.getExpression();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.TextualCodeImpl <em>Textual Code</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.core.kexpressions.impl.TextualCodeImpl
-         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getTextualCode()
-         * @generated
-         */
-        EClass TEXTUAL_CODE = eINSTANCE.getTextualCode();
-
-        /**
-         * The meta object literal for the '<em><b>Code</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute TEXTUAL_CODE__CODE = eINSTANCE.getTextualCode_Code();
-
-        /**
-         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute TEXTUAL_CODE__TYPE = eINSTANCE.getTextualCode_Type();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl <em>Valued Object</em>}' class.
@@ -919,12 +752,12 @@ public interface KExpressionsPackage extends EPackage {
         EAttribute VALUED_OBJECT__TYPE = eINSTANCE.getValuedObject_Type();
 
         /**
-         * The meta object literal for the '<em><b>Initial Value</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Initial Value</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute VALUED_OBJECT__INITIAL_VALUE = eINSTANCE.getValuedObject_InitialValue();
+        EReference VALUED_OBJECT__INITIAL_VALUE = eINSTANCE.getValuedObject_InitialValue();
 
         /**
          * The meta object literal for the '<em><b>Is Input</b></em>' attribute feature.
@@ -1067,6 +900,14 @@ public interface KExpressionsPackage extends EPackage {
         EAttribute OPERATOR_EXPRESSION__OPERATOR = eINSTANCE.getOperatorExpression_Operator();
 
         /**
+         * The meta object literal for the '<em><b>Sub Expressions</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference OPERATOR_EXPRESSION__SUB_EXPRESSIONS = eINSTANCE.getOperatorExpression_SubExpressions();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl <em>Text Expression</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1075,6 +916,14 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EClass TEXT_EXPRESSION = eINSTANCE.getTextExpression();
+
+        /**
+         * The meta object literal for the '<em><b>Text</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TEXT_EXPRESSION__TEXT = eINSTANCE.getTextExpression_Text();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.

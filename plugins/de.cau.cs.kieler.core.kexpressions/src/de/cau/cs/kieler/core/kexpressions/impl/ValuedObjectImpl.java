@@ -9,14 +9,17 @@ package de.cau.cs.kieler.core.kexpressions.impl;
 import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 
 import de.cau.cs.kieler.core.kexpressions.CombineOperator;
+import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -28,12 +31,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getInitialValue <em>Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#isIsInput <em>Is Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#isIsOutput <em>Is Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#isIsStatic <em>Is Static</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#isIsSignal <em>Is Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getCombineOperator <em>Combine Operator</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getInitialValue <em>Initial Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -79,26 +82,6 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
      * @ordered
      */
     protected ValueType type = TYPE_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getInitialValue() <em>Initial Value</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getInitialValue()
-     * @generated
-     * @ordered
-     */
-    protected static final String INITIAL_VALUE_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getInitialValue() <em>Initial Value</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getInitialValue()
-     * @generated
-     * @ordered
-     */
-    protected String initialValue = INITIAL_VALUE_EDEFAULT;
 
     /**
      * The default value of the '{@link #isIsInput() <em>Is Input</em>}' attribute.
@@ -201,6 +184,16 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
     protected CombineOperator combineOperator = COMBINE_OPERATOR_EDEFAULT;
 
     /**
+     * The cached value of the '{@link #getInitialValue() <em>Initial Value</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getInitialValue()
+     * @generated
+     * @ordered
+     */
+    protected Expression initialValue;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -266,7 +259,7 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getInitialValue() {
+    public Expression getInitialValue() {
         return initialValue;
     }
 
@@ -275,11 +268,47 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setInitialValue(String newInitialValue) {
-        String oldInitialValue = initialValue;
+    public NotificationChain basicSetInitialValue(Expression newInitialValue, NotificationChain msgs) {
+        Expression oldInitialValue = initialValue;
         initialValue = newInitialValue;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE, oldInitialValue, initialValue));
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE, oldInitialValue, newInitialValue);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setInitialValue(Expression newInitialValue) {
+        if (newInitialValue != initialValue) {
+            NotificationChain msgs = null;
+            if (initialValue != null)
+                msgs = ((InternalEObject)initialValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE, null, msgs);
+            if (newInitialValue != null)
+                msgs = ((InternalEObject)newInitialValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE, null, msgs);
+            msgs = basicSetInitialValue(newInitialValue, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE, newInitialValue, newInitialValue));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
+                return basicSetInitialValue(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
@@ -399,8 +428,6 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
                 return getName();
             case KExpressionsPackage.VALUED_OBJECT__TYPE:
                 return getType();
-            case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
-                return getInitialValue();
             case KExpressionsPackage.VALUED_OBJECT__IS_INPUT:
                 return isIsInput();
             case KExpressionsPackage.VALUED_OBJECT__IS_OUTPUT:
@@ -411,6 +438,8 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
                 return isIsSignal();
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
                 return getCombineOperator();
+            case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
+                return getInitialValue();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -429,9 +458,6 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
             case KExpressionsPackage.VALUED_OBJECT__TYPE:
                 setType((ValueType)newValue);
                 return;
-            case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
-                setInitialValue((String)newValue);
-                return;
             case KExpressionsPackage.VALUED_OBJECT__IS_INPUT:
                 setIsInput((Boolean)newValue);
                 return;
@@ -446,6 +472,9 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
                 return;
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
                 setCombineOperator((CombineOperator)newValue);
+                return;
+            case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
+                setInitialValue((Expression)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -465,9 +494,6 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
             case KExpressionsPackage.VALUED_OBJECT__TYPE:
                 setType(TYPE_EDEFAULT);
                 return;
-            case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
-                setInitialValue(INITIAL_VALUE_EDEFAULT);
-                return;
             case KExpressionsPackage.VALUED_OBJECT__IS_INPUT:
                 setIsInput(IS_INPUT_EDEFAULT);
                 return;
@@ -482,6 +508,9 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
                 return;
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
                 setCombineOperator(COMBINE_OPERATOR_EDEFAULT);
+                return;
+            case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
+                setInitialValue((Expression)null);
                 return;
         }
         super.eUnset(featureID);
@@ -499,8 +528,6 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
             case KExpressionsPackage.VALUED_OBJECT__TYPE:
                 return type != TYPE_EDEFAULT;
-            case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
-                return INITIAL_VALUE_EDEFAULT == null ? initialValue != null : !INITIAL_VALUE_EDEFAULT.equals(initialValue);
             case KExpressionsPackage.VALUED_OBJECT__IS_INPUT:
                 return isInput != IS_INPUT_EDEFAULT;
             case KExpressionsPackage.VALUED_OBJECT__IS_OUTPUT:
@@ -511,6 +538,8 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
                 return isSignal != IS_SIGNAL_EDEFAULT;
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
                 return combineOperator != COMBINE_OPERATOR_EDEFAULT;
+            case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
+                return initialValue != null;
         }
         return super.eIsSet(featureID);
     }
@@ -529,8 +558,6 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
         result.append(name);
         result.append(", type: ");
         result.append(type);
-        result.append(", initialValue: ");
-        result.append(initialValue);
         result.append(", isInput: ");
         result.append(isInput);
         result.append(", isOutput: ");

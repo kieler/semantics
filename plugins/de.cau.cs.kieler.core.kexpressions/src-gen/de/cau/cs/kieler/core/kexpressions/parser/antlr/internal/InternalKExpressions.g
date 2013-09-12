@@ -1373,11 +1373,11 @@ ruleTextExpression returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((
 (
-		lv_code_0_0=RULE_HOSTCODE
+(
+		lv_text_0_0=RULE_HOSTCODE
 		{
-			newLeafNode(lv_code_0_0, grammarAccess.getTextExpressionAccess().getCodeHOSTCODETerminalRuleCall_0_0()); 
+			newLeafNode(lv_text_0_0, grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1385,39 +1385,13 @@ ruleTextExpression returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"code",
-        		lv_code_0_0, 
+       			"text",
+        		lv_text_0_0, 
         		"HOSTCODE");
 	    }
 
 )
-)(	otherlv_1='(' 
-    {
-    	newLeafNode(otherlv_1, grammarAccess.getTextExpressionAccess().getLeftParenthesisKeyword_1_0());
-    }
-(
-(
-		lv_type_2_0=RULE_ID
-		{
-			newLeafNode(lv_type_2_0, grammarAccess.getTextExpressionAccess().getTypeIDTerminalRuleCall_1_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getTextExpressionRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"type",
-        		lv_type_2_0, 
-        		"ID");
-	    }
-
 )
-)	otherlv_3=')' 
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getTextExpressionAccess().getRightParenthesisKeyword_1_2());
-    }
-)?)
 ;
 
 

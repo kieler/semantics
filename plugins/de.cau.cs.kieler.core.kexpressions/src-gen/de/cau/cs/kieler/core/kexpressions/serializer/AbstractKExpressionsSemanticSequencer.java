@@ -367,10 +367,17 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	/**
 	 * Constraint:
-	 *     (code=HOSTCODE type=ID?)
+	 *     text=HOSTCODE
 	 */
 	protected void sequence_TextExpression(EObject context, TextExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.TEXT_EXPRESSION__TEXT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.TEXT_EXPRESSION__TEXT));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_0(), semanticObject.getText());
+		feeder.finish();
 	}
 	
 	
@@ -379,7 +386,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     valuedObject=[ValuedObject|ID]
 	 */
 	protected void sequence_ValuedObjectReference(EObject context, ValuedObjectReference semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_1(), semanticObject.getValuedObject());
+		feeder.finish();
 	}
 	
 	

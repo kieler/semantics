@@ -143,9 +143,9 @@ ValuedObjectReference returns ValuedObjectReference:
 	valuedObject=[ValuedObject|ID];
 
 
-// Example: 'printf(...)'(C)
+// Example: 'printf(...)'
 TextExpression returns TextExpression:
-	code=HOSTCODE ("(" type=ID ")")?;
+	text=HOSTCODE;
 
 
 IntValue returns IntValue:

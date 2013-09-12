@@ -76,29 +76,6 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.ComplexExpression} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected ComplexExpressionItemProvider complexExpressionItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.ComplexExpression}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createComplexExpressionAdapter() {
-        if (complexExpressionItemProvider == null) {
-            complexExpressionItemProvider = new ComplexExpressionItemProvider(this);
-        }
-
-        return complexExpressionItemProvider;
-    }
-
-    /**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.Expression} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -119,29 +96,6 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
         }
 
         return expressionItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.TextualCode} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected TextualCodeItemProvider textualCodeItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.TextualCode}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createTextualCodeAdapter() {
-        if (textualCodeItemProvider == null) {
-            textualCodeItemProvider = new TextualCodeItemProvider(this);
-        }
-
-        return textualCodeItemProvider;
     }
 
     /**
@@ -427,9 +381,7 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
      * @generated
      */
     public void dispose() {
-        if (complexExpressionItemProvider != null) complexExpressionItemProvider.dispose();
         if (expressionItemProvider != null) expressionItemProvider.dispose();
-        if (textualCodeItemProvider != null) textualCodeItemProvider.dispose();
         if (valuedObjectItemProvider != null) valuedObjectItemProvider.dispose();
         if (valuedObjectReferenceItemProvider != null) valuedObjectReferenceItemProvider.dispose();
         if (valueItemProvider != null) valueItemProvider.dispose();

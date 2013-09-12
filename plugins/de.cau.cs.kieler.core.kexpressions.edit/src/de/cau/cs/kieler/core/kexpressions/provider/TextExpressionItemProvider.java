@@ -33,7 +33,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class TextExpressionItemProvider
-    extends ComplexExpressionItemProvider
+    extends ExpressionItemProvider
     implements
         IEditingDomainItemProvider,
         IStructuredItemContentProvider,
@@ -61,48 +61,25 @@ public class TextExpressionItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addCodePropertyDescriptor(object);
-            addTypePropertyDescriptor(object);
+            addTextPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Code feature.
+     * This adds a property descriptor for the Text feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addCodePropertyDescriptor(Object object) {
+    protected void addTextPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_TextualCode_code_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_TextualCode_code_feature", "_UI_TextualCode_type"),
-                 KExpressionsPackage.Literals.TEXTUAL_CODE__CODE,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Type feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addTypePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_TextualCode_type_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_TextualCode_type_feature", "_UI_TextualCode_type"),
-                 KExpressionsPackage.Literals.TEXTUAL_CODE__TYPE,
+                 getString("_UI_TextExpression_text_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_TextExpression_text_feature", "_UI_TextExpression_type"),
+                 KExpressionsPackage.Literals.TEXT_EXPRESSION__TEXT,
                  true,
                  false,
                  false,
@@ -130,7 +107,7 @@ public class TextExpressionItemProvider
      */
     @Override
     public String getText(Object object) {
-        String label = ((TextExpression)object).getCode();
+        String label = ((TextExpression)object).getText();
         return label == null || label.length() == 0 ?
             getString("_UI_TextExpression_type") :
             getString("_UI_TextExpression_type") + " " + label;
@@ -148,8 +125,7 @@ public class TextExpressionItemProvider
         updateChildren(notification);
 
         switch (notification.getFeatureID(TextExpression.class)) {
-            case KExpressionsPackage.TEXT_EXPRESSION__CODE:
-            case KExpressionsPackage.TEXT_EXPRESSION__TYPE:
+            case KExpressionsPackage.TEXT_EXPRESSION__TEXT:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

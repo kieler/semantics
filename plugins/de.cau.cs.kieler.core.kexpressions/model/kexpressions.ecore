@@ -47,24 +47,10 @@
       </eAnnotations>
     </eLiterals>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ComplexExpression" eSuperTypes="#//Expression">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A ComplexExpression is an Expression that contains a list of sub expressions.&#xA;This does make sense mainly for it subtypes. It does not carry an operator&#xA;or something similar itself, because sub expressions make also sense in some&#xA;contexts without an operator, e.g. for SignalReferences."/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subExpressions" upperBound="-1"
-        eType="#//Expression" containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An Expression is the supertype of all kinds of Expressions over Signals, Variables or Values. &#xA;It is used as a simple common entry point. In this metamodel there are no more specializations avaliable&#xA;according to return value of the Expressions (e.g. BooleanExpression or ValuedExpression). These&#xA;might be provided by more specialized textual grammars for this metamodel."/>
     </eAnnotations>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TextualCode">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="TextualCode carries an arbitrary String. It is used as an escape to external host languages&#xA;such as C or Java. A type String can be used to specify what kind of language is represented&#xA;by the code String.&#xA;Subclasses such as TextExpression or TextEffect (synccharts metamodel) can be used to employ it in the&#xA;corresponding context. &#xA;"/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="OperatorType">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -157,7 +143,6 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//ValueType"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="initialValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInput" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOutput" lowerBound="1"
@@ -168,6 +153,8 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="combineOperator" lowerBound="1"
         eType="#//CombineOperator"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="initialValue" eType="#//Expression"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ValueType">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -190,7 +177,7 @@
     <eLiterals name="DOUBLE" value="5" literal="double"/>
     <eLiterals name="STRING" value="6" literal="string"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ValuedObjectReference" eSuperTypes="#//ComplexExpression">
+  <eClassifiers xsi:type="ecore:EClass" name="ValuedObjectReference" eSuperTypes="#//Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A ValuedObjectReference has a reference to a ValuedObject and is a ComplexExpression.&#xA;Therefore such reference may have subExpressions. Those can be used to &#xA;address a specific value. E.g. the ValuedObject could carry an array&#xA;value and a subExpression could be an IntValue that points to a special entry in &#xA;that array. &#xA;&lt;p>&#xA;The distinction between a Variable and a VariableReference is mainly due to containment&#xA;relations. A Variable is usually defined exactly once and therefore contained by some &#xA;scope element. A reference to that Variable may be required multiple times where&#xA;such reference need to be contained at the places where the reference is used.&#xA;Hence we need this distinction."/>
     </eAnnotations>
@@ -220,15 +207,18 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="OperatorExpression" eSuperTypes="#//ComplexExpression">
+  <eClassifiers xsi:type="ecore:EClass" name="OperatorExpression" eSuperTypes="#//Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An OperatorExpression is the most obvious ComplexExpression containing&#xA;an operator and a list of subExpressions. The meaning is that the operator &#xA;should be applied to all elements of the ordered subExpression list.&#xA;Note that some pre-defined operators are not commutative, hence the&#xA;order of the subExpressions list is of importance."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//OperatorType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subExpressions" upperBound="-1"
+        eType="#//Expression" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TextExpression" eSuperTypes="#//ComplexExpression #//TextualCode">
+  <eClassifiers xsi:type="ecore:EClass" name="TextExpression" eSuperTypes="#//Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A TextExpression is an Expression containing arbitrary text. It is used to&#xA;escape to a host language such as C or Java. This way arbitrary host code&#xA;can be used as parameters for operators, other functions or values."/>
     </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>
