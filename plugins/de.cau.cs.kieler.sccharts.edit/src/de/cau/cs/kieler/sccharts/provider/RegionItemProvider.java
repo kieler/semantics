@@ -187,8 +187,7 @@ public class RegionItemProvider
         boolean qualify =
             childFeature == AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__BODY_CONTENTS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__SIGNALS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__VARIABLES ||
+            childFeature == SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS ||
             childFeature == SCChartsPackage.Literals.SCOPE__SUSPENSION_TRIGGER ||
             childFeature == SCChartsPackage.Literals.SCOPE__EXIT_ACTIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__INNER_ACTIONS ||

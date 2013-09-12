@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +30,7 @@ import de.cau.cs.kieler.core.kexpressions.Variable;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.Assignment#getVariable <em>Variable</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Assignment#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Assignment#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
@@ -48,30 +48,30 @@ public interface Assignment extends Effect {
     String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * Returns the value of the '<em><b>Variable</b></em>' reference.
+     * Returns the value of the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Variable</em>' reference isn't clear,
+     * If the meaning of the '<em>Valued Object</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Variable</em>' reference.
-     * @see #setVariable(Variable)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAssignment_Variable()
+     * @return the value of the '<em>Valued Object</em>' reference.
+     * @see #setValuedObject(ValuedObject)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAssignment_ValuedObject()
      * @model required="true"
      * @generated
      */
-    Variable getVariable();
+    ValuedObject getValuedObject();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Assignment#getVariable <em>Variable</em>}' reference.
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Assignment#getValuedObject <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Variable</em>' reference.
-     * @see #getVariable()
+     * @param value the new value of the '<em>Valued Object</em>' reference.
+     * @see #getValuedObject()
      * @generated
      */
-    void setVariable(Variable value);
+    void setValuedObject(ValuedObject value);
 
     /**
      * Returns the value of the '<em><b>Expression</b></em>' containment reference.

@@ -43,8 +43,8 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
-//import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
-//import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
+import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
+import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
 import java.util.Collection
 import java.util.List
 import javax.inject.Inject
@@ -58,11 +58,11 @@ import de.cau.cs.kieler.core.krendering.KColor
 
 class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
-//    private static val Injector i = ActionsStandaloneSetup::doSetup();
-//    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
-//    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
-//    private static val Resource TMP_RES = i.getInstance(typeof(ResourceSet))
-//            .createResource(URI::createFileURI("dummy.action"));
+    private static val Injector i = ActionsStandaloneSetup::doSetup();
+    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
+    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
+    private static val Resource TMP_RES = i.getInstance(typeof(ResourceSet))
+            .createResource(URI::createFileURI("dummy.action"));
     
     @Inject
     extension KNodeExtensions
@@ -179,7 +179,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
             val conditional = s.type == StateType::CONDITIONAL;
-            val simpleState = s.signals.empty && s.regions.empty;
+            val simpleState = s.valuedObjects.empty && s.regions.empty;
             val cornerRadius = if (conditional) 10 else if (simpleState) 17 else 8;
             val lineWidth = if (s.isInitial && s.isFinal) 2.1f else if (s.isInitial) 4 else 1;
 
@@ -230,14 +230,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 ];
                 
                 
-                if (SHOW_SIGNAL_DECLARATIONS.optionBooleanValue && !s.signals.empty) {
+                if (SHOW_SIGNAL_DECLARATIONS.optionBooleanValue && !s.valuedObjects.empty) {
                     it.addRectangle => [
                         it.invisible = true;
                         it.setGridPlacementData.setMaxCellHeight(40);
-                        it.setGridPlacement(s.signals.size + 2);
+                        it.setGridPlacement(s.valuedObjects.size + 2);
                         it.addText("Signals:")
                             .setGridPlacementData.from(LEFT, 5, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 5, 0);
-                        for (sig : s.signals) {
+                        for (sig : s.valuedObjects) {
                             it.addText(sig.name + ";")
                                 .setGridPlacementData.from(LEFT, 5, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 5, 0);
                         }
@@ -284,22 +284,22 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 };
             ];
 
-//            if (SHOW_LABELS.optionBooleanValue) {
-//                scopeProvider.parent = t.sourceState;
-//                val String label =
-//                    try {
-//                        serializer.serialize(t.copy => [
-//                            TMP_RES.contents += it;
-//                        ]);
-//                    } finally {
-//                        TMP_RES.contents.clear;
-//                    } 
-//                if (!label.nullOrEmpty) {
-//                    t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
-//                        label, 11, KlighdConstants::DEFAULT_FONT_NAME
-//                    );
-//                }
-//            }
+            if (SHOW_LABELS.optionBooleanValue) {
+                scopeProvider.parent = t.sourceState;
+                val String label =
+                    try {
+                        serializer.serialize(t.copy => [
+                            TMP_RES.contents += it;
+                        ]);
+                    } finally {
+                        TMP_RES.contents.clear;
+                    } 
+                if (!label.nullOrEmpty) {
+                    t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
+                        label, 10, KlighdConstants::DEFAULT_FONT_NAME
+                    );
+                }
+            }
             if (SHOW_PRIORITY_LABELS.optionBooleanValue) {
                 t.createLabel("prio", edge).putToLookUpWith(t).configureTailLabel(String::valueOf(
                     if (t.priority != 0) t.priority else t.sourceState.outgoingTransitions.indexOf(t)

@@ -278,7 +278,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getAssignment_Variable() {
+    public EReference getAssignment_ValuedObject() {
         return (EReference)assignmentEClass.getEStructuralFeatures().get(0);
     }
 
@@ -314,7 +314,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getEmission_Signal() {
+    public EReference getEmission_ValuedObject() {
         return (EReference)emissionEClass.getEStructuralFeatures().get(0);
     }
 
@@ -548,7 +548,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_Signals() {
+    public EReference getScope_ValuedObjects() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(2);
     }
 
@@ -557,7 +557,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_Variables() {
+    public EReference getScope_SuspensionTrigger() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(3);
     }
 
@@ -566,7 +566,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_SuspensionTrigger() {
+    public EReference getScope_ExitActions() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(4);
     }
 
@@ -575,7 +575,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_ExitActions() {
+    public EReference getScope_InnerActions() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(5);
     }
 
@@ -584,7 +584,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_InnerActions() {
+    public EReference getScope_EntryActions() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(6);
     }
 
@@ -593,7 +593,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_EntryActions() {
+    public EReference getScope_BodyReference() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(7);
     }
 
@@ -602,7 +602,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_BodyReference() {
+    public EReference getScope_BodyContents() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(8);
     }
 
@@ -611,7 +611,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_BodyContents() {
+    public EReference getScope_BodyText() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(9);
     }
 
@@ -620,7 +620,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_BodyText() {
+    public EReference getScope_Renamings() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(10);
     }
 
@@ -629,17 +629,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_Renamings() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(11);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getScope_InterfaceDeclaration() {
-        return (EAttribute)scopeEClass.getEStructuralFeatures().get(12);
+        return (EAttribute)scopeEClass.getEStructuralFeatures().get(11);
     }
 
     /**
@@ -714,13 +705,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEAttribute(actionEClass, ACTION__LABEL);
 
         assignmentEClass = createEClass(ASSIGNMENT);
-        createEReference(assignmentEClass, ASSIGNMENT__VARIABLE);
+        createEReference(assignmentEClass, ASSIGNMENT__VALUED_OBJECT);
         createEReference(assignmentEClass, ASSIGNMENT__EXPRESSION);
 
         effectEClass = createEClass(EFFECT);
 
         emissionEClass = createEClass(EMISSION);
-        createEReference(emissionEClass, EMISSION__SIGNAL);
+        createEReference(emissionEClass, EMISSION__VALUED_OBJECT);
         createEReference(emissionEClass, EMISSION__NEW_VALUE);
 
         regionEClass = createEClass(REGION);
@@ -751,8 +742,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         scopeEClass = createEClass(SCOPE);
         createEAttribute(scopeEClass, SCOPE__ID);
         createEAttribute(scopeEClass, SCOPE__LABEL);
-        createEReference(scopeEClass, SCOPE__SIGNALS);
-        createEReference(scopeEClass, SCOPE__VARIABLES);
+        createEReference(scopeEClass, SCOPE__VALUED_OBJECTS);
         createEReference(scopeEClass, SCOPE__SUSPENSION_TRIGGER);
         createEReference(scopeEClass, SCOPE__EXIT_ACTIONS);
         createEReference(scopeEClass, SCOPE__INNER_ACTIONS);
@@ -824,13 +814,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEAttribute(getAction_Label(), ecorePackage.getEString(), "label", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
         initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getAssignment_Variable(), theKExpressionsPackage.getVariable(), null, "variable", null, 1, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getAssignment_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getAssignment_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 1, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(effectEClass, Effect.class, "Effect", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(emissionEClass, Emission.class, "Emission", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getEmission_Signal(), theKExpressionsPackage.getSignal(), null, "signal", null, 1, 1, Emission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEmission_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, Emission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getEmission_NewValue(), theKExpressionsPackage.getExpression(), null, "newValue", null, 0, 1, Emission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(regionEClass, Region.class, "Region", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -861,8 +851,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEClass(scopeEClass, Scope.class, "Scope", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getScope_Id(), ecorePackage.getEString(), "id", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getScope_Label(), ecorePackage.getEString(), "label", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_Signals(), theKExpressionsPackage.getSignal(), null, "signals", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_Variables(), theKExpressionsPackage.getVariable(), null, "variables", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getScope_ValuedObjects(), theKExpressionsPackage.getValuedObject(), null, "valuedObjects", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_SuspensionTrigger(), this.getAction(), null, "suspensionTrigger", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_ExitActions(), this.getAction(), null, "exitActions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_InnerActions(), this.getAction(), null, "innerActions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

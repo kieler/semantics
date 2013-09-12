@@ -65,23 +65,23 @@ public class SctEnumLiteralSerializer extends EnumLiteralSerializer {
             }
         }
 
-        // if we have a signal under consideration and are processing the call of a
-        // parser rule called from an assignment to a feature of the signal
+        // if we have a valuedObject under consideration and are processing the call of a
+        // parser rule called from an assignment to a feature of the valuedObject
         // here: ... combineOperator = CombineOperator ... ,i.e. the call of the CombineOperator
         // rule
-        if (KExpressionsPackage.eINSTANCE.getSignal().isInstance(context)
+        if (KExpressionsPackage.eINSTANCE.getValuedObject().isInstance(context)
                 && XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
 
             Assignment a = (Assignment) ruleCall.eContainer();
 
             // if the feature the assignment is made to is the 'type' feature
             if (a.getFeature().equals(
-                    KExpressionsPackage.eINSTANCE.getSignal_CombineOperator().getName())) {
+                    KExpressionsPackage.eINSTANCE.getValuedObject_CombineOperator().getName())) {
 
                 // ask the transientValueService;
                 // note that the return inverse value semantics!
                 return !transientValueService.isTransient(context,
-                        KExpressionsPackage.eINSTANCE.getSignal_CombineOperator(), -1);
+                        KExpressionsPackage.eINSTANCE.getValuedObject_CombineOperator(), -1);
             }
         }
 

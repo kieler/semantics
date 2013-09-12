@@ -51,8 +51,8 @@ public class SctKeywordSerializer extends KeywordSerializer {
             if (Strings.isEmpty(region.getId())
                     && Strings.isEmpty(region.getLabel())
                     && (region.getAnnotations() == null || region.getAnnotations().isEmpty())
-                    && (region.getSignals() == null || region.getSignals().isEmpty())
-                    && (region.getVariables() == null || region.getVariables().isEmpty())) {
+                    && (region.getValuedObjects() == null || region.getValuedObjects().isEmpty())) {
+//                    && (region.getVariables() == null || region.getVariables().isEmpty())) {
                 return null;
             }
         }
@@ -64,8 +64,8 @@ public class SctKeywordSerializer extends KeywordSerializer {
                     && Strings.isEmpty(region.getId())
                     && Strings.isEmpty(region.getLabel())
                     && (region.getAnnotations() == null || region.getAnnotations().isEmpty())
-                    && (region.getSignals() == null || region.getSignals().isEmpty())
-                    && (region.getVariables() == null || region.getVariables().isEmpty())) {
+                    && (region.getValuedObjects() == null || region.getValuedObjects().isEmpty())) {
+//                    && (region.getVariables() == null || region.getVariables().isEmpty())) {
                 return null;
             }
         }

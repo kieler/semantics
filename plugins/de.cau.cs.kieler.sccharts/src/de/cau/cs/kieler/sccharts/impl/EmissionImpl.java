@@ -14,8 +14,8 @@
 package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.Signal;
 
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.EmissionImpl#getSignal <em>Signal</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.EmissionImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.EmissionImpl#getNewValue <em>New Value</em>}</li>
  * </ul>
  * </p>
@@ -50,14 +50,14 @@ public class EmissionImpl extends EffectImpl implements Emission {
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * The cached value of the '{@link #getSignal() <em>Signal</em>}' reference.
+     * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getSignal()
+     * @see #getValuedObject()
      * @generated
      * @ordered
      */
-    protected Signal signal;
+    protected ValuedObject valuedObject;
 
     /**
      * The cached value of the '{@link #getNewValue() <em>New Value</em>}' containment reference.
@@ -93,16 +93,16 @@ public class EmissionImpl extends EffectImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Signal getSignal() {
-        if (signal != null && signal.eIsProxy()) {
-            InternalEObject oldSignal = (InternalEObject)signal;
-            signal = (Signal)eResolveProxy(oldSignal);
-            if (signal != oldSignal) {
+    public ValuedObject getValuedObject() {
+        if (valuedObject != null && valuedObject.eIsProxy()) {
+            InternalEObject oldValuedObject = (InternalEObject)valuedObject;
+            valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
+            if (valuedObject != oldValuedObject) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.EMISSION__SIGNAL, oldSignal, signal));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.EMISSION__VALUED_OBJECT, oldValuedObject, valuedObject));
             }
         }
-        return signal;
+        return valuedObject;
     }
 
     /**
@@ -110,8 +110,8 @@ public class EmissionImpl extends EffectImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Signal basicGetSignal() {
-        return signal;
+    public ValuedObject basicGetValuedObject() {
+        return valuedObject;
     }
 
     /**
@@ -119,11 +119,11 @@ public class EmissionImpl extends EffectImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setSignal(Signal newSignal) {
-        Signal oldSignal = signal;
-        signal = newSignal;
+    public void setValuedObject(ValuedObject newValuedObject) {
+        ValuedObject oldValuedObject = valuedObject;
+        valuedObject = newValuedObject;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.EMISSION__SIGNAL, oldSignal, signal));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.EMISSION__VALUED_OBJECT, oldValuedObject, valuedObject));
     }
 
     /**
@@ -191,9 +191,9 @@ public class EmissionImpl extends EffectImpl implements Emission {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SCChartsPackage.EMISSION__SIGNAL:
-                if (resolve) return getSignal();
-                return basicGetSignal();
+            case SCChartsPackage.EMISSION__VALUED_OBJECT:
+                if (resolve) return getValuedObject();
+                return basicGetValuedObject();
             case SCChartsPackage.EMISSION__NEW_VALUE:
                 return getNewValue();
         }
@@ -208,8 +208,8 @@ public class EmissionImpl extends EffectImpl implements Emission {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SCChartsPackage.EMISSION__SIGNAL:
-                setSignal((Signal)newValue);
+            case SCChartsPackage.EMISSION__VALUED_OBJECT:
+                setValuedObject((ValuedObject)newValue);
                 return;
             case SCChartsPackage.EMISSION__NEW_VALUE:
                 setNewValue((Expression)newValue);
@@ -226,8 +226,8 @@ public class EmissionImpl extends EffectImpl implements Emission {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.EMISSION__SIGNAL:
-                setSignal((Signal)null);
+            case SCChartsPackage.EMISSION__VALUED_OBJECT:
+                setValuedObject((ValuedObject)null);
                 return;
             case SCChartsPackage.EMISSION__NEW_VALUE:
                 setNewValue((Expression)null);
@@ -244,8 +244,8 @@ public class EmissionImpl extends EffectImpl implements Emission {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.EMISSION__SIGNAL:
-                return signal != null;
+            case SCChartsPackage.EMISSION__VALUED_OBJECT:
+                return valuedObject != null;
             case SCChartsPackage.EMISSION__NEW_VALUE:
                 return newValue != null;
         }

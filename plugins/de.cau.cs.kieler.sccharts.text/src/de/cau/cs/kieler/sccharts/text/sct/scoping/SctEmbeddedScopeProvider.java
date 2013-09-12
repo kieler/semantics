@@ -59,7 +59,7 @@ public class SctEmbeddedScopeProvider extends SctScopeProvider {
     }
 
     /**
-     * A implementation of scoping for signals and variables. Won't be called directly but via
+     * A implementation of scoping for valuedObjects and variables. Won't be called directly but via
      * reflection by the Xtext runtime. Delegates to
      * {@link SctScopeProvider#scope_ValuedObject(EObject, EReference, State)}.
      *
@@ -73,17 +73,17 @@ public class SctEmbeddedScopeProvider extends SctScopeProvider {
     }
 
     /**
-     * A implementation of scoping for signal emissions. Won't be called directly but via reflection
+     * A implementation of scoping for valuedObject emissions. Won't be called directly but via reflection
      * by the Xtext runtime. Delegates to
-     * {@link SctScopeProvider#scope_Signal(EObject, EReference, State)}.
+     * {@link SctScopeProvider#scope_ValuedObject(EObject, EReference, State)}.
      *
      * @param obj
      * @param reference
      * @return
      */
-     public IScope scope_Emission_signal(final EObject obj, final EReference reference) {
-//    public IScope scope_Signal(final EObject obj, final EReference reference) {
-        return new SimpleScope(this.scope_Signal(obj, reference, logicalContainer));
+     public IScope scope_Emission_valuedObject(final EObject obj, final EReference reference) {
+//    public IScope scope_ValuedObject(final EObject obj, final EReference reference) {
+        return new SimpleScope(this.scope_ValuedObject(obj, reference, logicalContainer));
     }
 
     /**

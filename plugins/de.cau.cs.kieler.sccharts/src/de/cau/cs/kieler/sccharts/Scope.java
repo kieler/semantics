@@ -15,9 +15,8 @@ package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kexpressions.TextualCode;
-import de.cau.cs.kieler.core.kexpressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -51,8 +50,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLabel <em>Label</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getSignals <em>Signals</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getVariables <em>Variables</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getValuedObjects <em>Valued Objects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getExitActions <em>Exit Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getInnerActions <em>Inner Actions</em>}</li>
@@ -130,36 +128,20 @@ public interface Scope extends Annotatable {
     void setLabel(String value);
 
     /**
-     * Returns the value of the '<em><b>Signals</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Signal}.
+     * Returns the value of the '<em><b>Valued Objects</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Signals</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Valued Objects</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Signals</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Signals()
+     * @return the value of the '<em>Valued Objects</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_ValuedObjects()
      * @model containment="true"
      * @generated
      */
-    EList<Signal> getSignals();
-
-    /**
-     * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Variable}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Variables</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Variables</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Variables()
-     * @model containment="true"
-     * @generated
-     */
-    EList<Variable> getVariables();
+    EList<ValuedObject> getValuedObjects();
 
     /**
      * Returns the value of the '<em><b>Suspension Trigger</b></em>' containment reference.

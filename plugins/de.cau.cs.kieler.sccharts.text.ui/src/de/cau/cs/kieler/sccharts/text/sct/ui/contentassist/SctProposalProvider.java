@@ -3,10 +3,21 @@
 */
 package de.cau.cs.kieler.sccharts.text.sct.ui.contentassist;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+
 import de.cau.cs.kieler.sccharts.text.sct.ui.contentassist.AbstractSctProposalProvider;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
 public class SctProposalProvider extends AbstractSctProposalProvider {
 
+    public void completeRootRegion_Id(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        //completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
+    }
+
+    
 }

@@ -78,25 +78,25 @@ public class AssignmentItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addVariablePropertyDescriptor(object);
+            addValuedObjectPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Variable feature.
+     * This adds a property descriptor for the Valued Object feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addVariablePropertyDescriptor(Object object) {
+    protected void addValuedObjectPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_Assignment_variable_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Assignment_variable_feature", "_UI_Assignment_type"),
-                 SCChartsPackage.Literals.ASSIGNMENT__VARIABLE,
+                 getString("_UI_Assignment_valuedObject_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Assignment_valuedObject_feature", "_UI_Assignment_type"),
+                 SCChartsPackage.Literals.ASSIGNMENT__VALUED_OBJECT,
                  true,
                  false,
                  true,

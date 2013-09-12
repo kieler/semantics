@@ -272,7 +272,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      */
     public State getSourceState() {
         if (eContainerFeatureID() != SCChartsPackage.TRANSITION__SOURCE_STATE) return null;
-        return (State)eContainer();
+        return (State)eInternalContainer();
     }
 
     /**

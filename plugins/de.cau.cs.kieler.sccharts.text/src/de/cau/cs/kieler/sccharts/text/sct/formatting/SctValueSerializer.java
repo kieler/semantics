@@ -91,8 +91,8 @@ public class SctValueSerializer extends ValueSerializer {
             }
         }
 
-        // if we have a signal under consideration and are processing the call of a
-        // parser rule called from an assignment to a feature of the signal
+        // if we have a valuedObject under consideration and are processing the call of a
+        // parser rule called from an assignment to a feature of the valuedObject
         // here: ... hostType = EString ... ,i.e. the call of the EString rule
         // or: ... hostCombineOperator = EString ... ,i.e. the call of the EString rule
         if (KExpressionsPackage.eINSTANCE.getValuedObject().isInstance(context)
@@ -110,25 +110,25 @@ public class SctValueSerializer extends ValueSerializer {
                         KExpressionsPackage.eINSTANCE.getValuedObject_InitialValue(), -1);
             }
 
-            // if the feature the assignment is made to is the 'hostType' feature
-            if (a.getFeature().equals(
-                    KExpressionsPackage.eINSTANCE.getValuedObject_HostType().getName())) {
+//            // if the feature the assignment is made to is the 'hostType' feature
+//            if (a.getFeature().equals(
+//                    KExpressionsPackage.eINSTANCE.getValuedObject_HostType().getName())) {
+//
+//                // ask the transientValueService;
+//                // note that the return inverse value semantics!
+//                return !transientValueService.isTransient(context,
+//                        KExpressionsPackage.eINSTANCE.getValuedObject_HostType(), -1);
+//            }
 
-                // ask the transientValueService;
-                // note that the return inverse value semantics!
-                return !transientValueService.isTransient(context,
-                        KExpressionsPackage.eINSTANCE.getValuedObject_HostType(), -1);
-            }
-
-            // if the feature the assignment is made to is the 'hostCombineOperator' feature
-            if (a.getFeature().equals(
-                    KExpressionsPackage.eINSTANCE.getSignal_HostCombineOperator().getName())) {
-
-                // ask the transientValueService;
-                // note that the return inverse value semantics!
-                return !transientValueService.isTransient(context,
-                        KExpressionsPackage.eINSTANCE.getSignal_HostCombineOperator(), -1);
-            }
+//            // if the feature the assignment is made to is the 'hostCombineOperator' feature
+//            if (a.getFeature().equals(
+//                    KExpressionsPackage.eINSTANCE.getValuedObject_HostCombineOperator().getName())) {
+//
+//                // ask the transientValueService;
+//                // note that the return inverse value semantics!
+//                return !transientValueService.isTransient(context,
+//                        KExpressionsPackage.eINSTANCE.getValuedObject_HostCombineOperator(), -1);
+//            }
         }
         return super.isValid(context, ruleCall, value, errorAcceptor);
     }

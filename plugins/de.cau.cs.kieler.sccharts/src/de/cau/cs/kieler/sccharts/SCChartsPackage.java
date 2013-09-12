@@ -182,13 +182,13 @@ public interface SCChartsPackage extends EPackage {
     int ASSIGNMENT = 1;
 
     /**
-     * The feature id for the '<em><b>Variable</b></em>' reference.
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ASSIGNMENT__VARIABLE = EFFECT_FEATURE_COUNT + 0;
+    int ASSIGNMENT__VALUED_OBJECT = EFFECT_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -219,13 +219,13 @@ public interface SCChartsPackage extends EPackage {
     int EMISSION = 3;
 
     /**
-     * The feature id for the '<em><b>Signal</b></em>' reference.
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int EMISSION__SIGNAL = EFFECT_FEATURE_COUNT + 0;
+    int EMISSION__VALUED_OBJECT = EFFECT_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>New Value</b></em>' containment reference.
@@ -283,22 +283,13 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Signals</b></em>' containment reference list.
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE__SIGNALS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
-
-    /**
-     * The feature id for the '<em><b>Variables</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__VARIABLES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int SCOPE__VALUED_OBJECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Suspension Trigger</b></em>' containment reference.
@@ -307,7 +298,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__SUSPENSION_TRIGGER = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int SCOPE__SUSPENSION_TRIGGER = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Exit Actions</b></em>' containment reference list.
@@ -316,7 +307,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__EXIT_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int SCOPE__EXIT_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Inner Actions</b></em>' containment reference list.
@@ -325,7 +316,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__INNER_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+    int SCOPE__INNER_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Entry Actions</b></em>' containment reference list.
@@ -334,7 +325,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__ENTRY_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
+    int SCOPE__ENTRY_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
     /**
      * The feature id for the '<em><b>Body Reference</b></em>' reference.
@@ -343,7 +334,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__BODY_REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
+    int SCOPE__BODY_REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
      * The feature id for the '<em><b>Body Contents</b></em>' containment reference.
@@ -352,7 +343,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__BODY_CONTENTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
+    int SCOPE__BODY_CONTENTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
 
     /**
      * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
@@ -361,7 +352,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__BODY_TEXT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 10;
+    int SCOPE__BODY_TEXT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
 
     /**
      * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
@@ -370,7 +361,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__RENAMINGS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 11;
+    int SCOPE__RENAMINGS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 10;
 
     /**
      * The feature id for the '<em><b>Interface Declaration</b></em>' attribute.
@@ -379,7 +370,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__INTERFACE_DECLARATION = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 12;
+    int SCOPE__INTERFACE_DECLARATION = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 11;
 
     /**
      * The number of structural features of the '<em>Scope</em>' class.
@@ -388,7 +379,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 13;
+    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 12;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
@@ -428,22 +419,13 @@ public interface SCChartsPackage extends EPackage {
     int REGION__LABEL = SCOPE__LABEL;
 
     /**
-     * The feature id for the '<em><b>Signals</b></em>' containment reference list.
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REGION__SIGNALS = SCOPE__SIGNALS;
-
-    /**
-     * The feature id for the '<em><b>Variables</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__VARIABLES = SCOPE__VARIABLES;
+    int REGION__VALUED_OBJECTS = SCOPE__VALUED_OBJECTS;
 
     /**
      * The feature id for the '<em><b>Suspension Trigger</b></em>' containment reference.
@@ -637,22 +619,13 @@ public interface SCChartsPackage extends EPackage {
     int STATE__LABEL = SCOPE__LABEL;
 
     /**
-     * The feature id for the '<em><b>Signals</b></em>' containment reference list.
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__SIGNALS = SCOPE__SIGNALS;
-
-    /**
-     * The feature id for the '<em><b>Variables</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STATE__VARIABLES = SCOPE__VARIABLES;
+    int STATE__VALUED_OBJECTS = SCOPE__VALUED_OBJECTS;
 
     /**
      * The feature id for the '<em><b>Suspension Trigger</b></em>' containment reference.
@@ -1069,15 +1042,15 @@ public interface SCChartsPackage extends EPackage {
     EClass getAssignment();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Assignment#getVariable <em>Variable</em>}'.
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Assignment#getValuedObject <em>Valued Object</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Variable</em>'.
-     * @see de.cau.cs.kieler.sccharts.Assignment#getVariable()
+     * @return the meta object for the reference '<em>Valued Object</em>'.
+     * @see de.cau.cs.kieler.sccharts.Assignment#getValuedObject()
      * @see #getAssignment()
      * @generated
      */
-    EReference getAssignment_Variable();
+    EReference getAssignment_ValuedObject();
 
     /**
      * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Assignment#getExpression <em>Expression</em>}'.
@@ -1111,15 +1084,15 @@ public interface SCChartsPackage extends EPackage {
     EClass getEmission();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Emission#getSignal <em>Signal</em>}'.
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Emission#getValuedObject <em>Valued Object</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Signal</em>'.
-     * @see de.cau.cs.kieler.sccharts.Emission#getSignal()
+     * @return the meta object for the reference '<em>Valued Object</em>'.
+     * @see de.cau.cs.kieler.sccharts.Emission#getValuedObject()
      * @see #getEmission()
      * @generated
      */
-    EReference getEmission_Signal();
+    EReference getEmission_ValuedObject();
 
     /**
      * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Emission#getNewValue <em>New Value</em>}'.
@@ -1392,26 +1365,15 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getScope_Label();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getSignals <em>Signals</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getValuedObjects <em>Valued Objects</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Signals</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getSignals()
+     * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
+     * @see de.cau.cs.kieler.sccharts.Scope#getValuedObjects()
      * @see #getScope()
      * @generated
      */
-    EReference getScope_Signals();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getVariables <em>Variables</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Variables</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getVariables()
-     * @see #getScope()
-     * @generated
-     */
-    EReference getScope_Variables();
+    EReference getScope_ValuedObjects();
 
     /**
      * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Scope#getSuspensionTrigger <em>Suspension Trigger</em>}'.
@@ -1636,12 +1598,12 @@ public interface SCChartsPackage extends EPackage {
         EClass ASSIGNMENT = eINSTANCE.getAssignment();
 
         /**
-         * The meta object literal for the '<em><b>Variable</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference ASSIGNMENT__VARIABLE = eINSTANCE.getAssignment_Variable();
+        EReference ASSIGNMENT__VALUED_OBJECT = eINSTANCE.getAssignment_ValuedObject();
 
         /**
          * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
@@ -1672,12 +1634,12 @@ public interface SCChartsPackage extends EPackage {
         EClass EMISSION = eINSTANCE.getEmission();
 
         /**
-         * The meta object literal for the '<em><b>Signal</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference EMISSION__SIGNAL = eINSTANCE.getEmission_Signal();
+        EReference EMISSION__VALUED_OBJECT = eINSTANCE.getEmission_ValuedObject();
 
         /**
          * The meta object literal for the '<em><b>New Value</b></em>' containment reference feature.
@@ -1890,20 +1852,12 @@ public interface SCChartsPackage extends EPackage {
         EAttribute SCOPE__LABEL = eINSTANCE.getScope_Label();
 
         /**
-         * The meta object literal for the '<em><b>Signals</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference SCOPE__SIGNALS = eINSTANCE.getScope_Signals();
-
-        /**
-         * The meta object literal for the '<em><b>Variables</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SCOPE__VARIABLES = eINSTANCE.getScope_Variables();
+        EReference SCOPE__VALUED_OBJECTS = eINSTANCE.getScope_ValuedObjects();
 
         /**
          * The meta object literal for the '<em><b>Suspension Trigger</b></em>' containment reference feature.

@@ -38,7 +38,7 @@ public class SctUIPlugin extends AbstractUIPlugin {
 
     public static final String SCT_LANGUAGE = "de.cau.cs.kieler.sccharts.text.sct.Sct";
 
-    public static final String SCT_STATE_LANGUAGE = "de.cau.cs.kieler.sccharts.text.sctState.SctState";
+    //public static final String SCT_STATE_LANGUAGE = "de.cau.cs.kieler.sccharts.text.sctState.SctState";
 
     public static final String SCT_LANGUAGE_EMBEDDED = "de.cau.cs.kieler.sccharts.text.sct.SctEmbedded";
 
@@ -63,10 +63,10 @@ public class SctUIPlugin extends AbstractUIPlugin {
                     Guice.createInjector(Modules.override(
                             Modules.override(getRuntimeModule(SCT_LANGUAGE)).with(
                                     getUiModule(SCT_LANGUAGE))).with(getSharedStateModule())));
-            injectors.put(SCT_STATE_LANGUAGE,
-                    Guice.createInjector(Modules.override(
-                            Modules.override(getRuntimeModule(SCT_STATE_LANGUAGE)).with(
-                                    getUiModule(SCT_STATE_LANGUAGE))).with(getSharedStateModule())));
+//            injectors.put(SCT_STATE_LANGUAGE,
+//                    Guice.createInjector(Modules.override(
+//                            Modules.override(getRuntimeModule(SCT_STATE_LANGUAGE)).with(
+//                                    getUiModule(SCT_STATE_LANGUAGE))).with(getSharedStateModule())));
             injectors.put(SCT_LANGUAGE_EMBEDDED,
                     Guice.createInjector(Modules.override(
                             Modules.override(getRuntimeModule(SCT_LANGUAGE_EMBEDDED)).with(

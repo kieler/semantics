@@ -26,7 +26,6 @@ import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.impl.AnnotationImpl;
 import de.cau.cs.kieler.core.kexpressions.CombineOperator;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Action;
@@ -47,8 +46,8 @@ public class SctTransientValueService extends DefaultTransientValueService {
 
     /**
      * Decides whether each element of an owners feature needs to be checked. Here, I want this to
-     * be false except while serializing annotations and the signals of the root region: The 'tick'
-     * signal should not be serialized.
+     * be false except while serializing annotations and the valuedObjects of the root region: The 'tick'
+     * valuedObject should not be serialized.
      *
      * Serialization of entryActions,... especially for regions is NOT considered yet!!
      *
@@ -59,8 +58,8 @@ public class SctTransientValueService extends DefaultTransientValueService {
         if (feature == AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations()) {
             return true;
         }
-        if (feature == SCChartsPackage.eINSTANCE.getScope_Signals()) {
-            // check all signals in order to prevent attempts to serialize trapdecls (kies)
+        if (feature == SCChartsPackage.eINSTANCE.getScope_ValuedObjects()) {
+            // check all valuedObjects in order to prevent attempts to serialize trapdecls (kies)
 //                && scchartsPackage.eINSTANCE.getRegion().isInstance(owner)
 //                && owner.eContainer() == null) {
             return true;
@@ -124,11 +123,11 @@ public class SctTransientValueService extends DefaultTransientValueService {
         }
 
 
-        /* suppress the additions introduced by uru's ISignal/IVariable classes */
-        if (feature == KExpressionsPackage.eINSTANCE.getISignal_ChannelDescr()
-                || feature == KExpressionsPackage.eINSTANCE.getIVariable_Expression()) {
-            return true;
-        }
+//        /* suppress the additions introduced by uru's IValuedObject/IVariable classes */
+//        if (feature == KExpressionsPackage.eINSTANCE.getIValuedObject_ChannelDescr()
+//                || feature == KExpressionsPackage.eINSTANCE.getIVariable_Expression()) {
+//            return true;
+//        }
 
 
         /* suppress the 'initialValue' feature if null or "" */
@@ -137,50 +136,50 @@ public class SctTransientValueService extends DefaultTransientValueService {
         }
 
 
+//        /*
+//         * suppress the enum value of a valueObjects's 'type' feature if a) type == host && hostType
+//         * is set b) type == pure && combineOperator != none
+//         */
+//        if (feature == KExpressionsPackage.eINSTANCE.getValuedObject_Type()) {
+//            if (owner.eGet(feature).equals(ValueType.HOST)) {
+//                return !this.isTransient(owner,
+//                        KExpressionsPackage.eINSTANCE.getValuedObject_HostType(), index);
+//            }
+//            if (KExpressionsPackage.eINSTANCE.getValuedObject().isInstance(owner)) {
+//                return owner.eGet(feature).equals(ValueType.PURE)
+//                        && ((ValuedObject) owner).getCombineOperator().equals(CombineOperator.NONE);
+//            } else {
+//                // the type of variables is mandatory, so serialize it!
+//                return false;
+//            }
+//        }
+
+
+//        /* do not serialize a host type if 'host' is not selected in 'type' */
+//        if (feature == KExpressionsPackage.eINSTANCE.getValuedObject_HostType()) {
+//            return !((ValuedObject) owner).getType().equals(ValueType.HOST)
+//                    || Strings.isEmpty((String) owner.eGet(feature));
+//        }
+
+
         /*
-         * suppress the enum value of a valueObjects's 'type' feature if a) type == host && hostType
-         * is set b) type == pure && combineOperator != none
-         */
-        if (feature == KExpressionsPackage.eINSTANCE.getValuedObject_Type()) {
-            if (owner.eGet(feature).equals(ValueType.HOST)) {
-                return !this.isTransient(owner,
-                        KExpressionsPackage.eINSTANCE.getValuedObject_HostType(), index);
-            }
-            if (KExpressionsPackage.eINSTANCE.getSignal().isInstance(owner)) {
-                return owner.eGet(feature).equals(ValueType.PURE)
-                        && ((Signal) owner).getCombineOperator().equals(CombineOperator.NONE);
-            } else {
-                // the type of variables is mandatory, so serialize it!
-                return false;
-            }
-        }
-
-
-        /* do not serialize a host type if 'host' is not selected in 'type' */
-        if (feature == KExpressionsPackage.eINSTANCE.getValuedObject_HostType()) {
-            return !((ValuedObject) owner).getType().equals(ValueType.HOST)
-                    || Strings.isEmpty((String) owner.eGet(feature));
-        }
-
-
-        /*
-         * suppress the enum value of a signal's 'combineOperator' feature if a) combineOperator ==
+         * suppress the enum value of a valuedObject's 'combineOperator' feature if a) combineOperator ==
          * host && hostCombineOperator is set b) combineOperator == none
          */
-        if (feature == KExpressionsPackage.eINSTANCE.getSignal_CombineOperator()) {
-            if (owner.eGet(feature).equals(CombineOperator.HOST)) {
-                return !this.isTransient(owner,
-                        KExpressionsPackage.eINSTANCE.getSignal_HostCombineOperator(), index);
-            }
+        if (feature == KExpressionsPackage.eINSTANCE.getValuedObject_CombineOperator()) {
+//            if (owner.eGet(feature).equals(CombineOperator.HOST)) {
+//                return !this.isTransient(owner,
+//                        KExpressionsPackage.eINSTANCE.getValuedObject_HostCombineOperator(), index);
+//            }
             return owner.eGet(feature).equals(CombineOperator.NONE);
         }
 
 
-        /* do not serialize a hostCombineOperator if 'host' is not selected in 'combineOperator' */
-        if (feature == KExpressionsPackage.eINSTANCE.getSignal_HostCombineOperator()) {
-            return !((Signal) owner).getCombineOperator().equals(CombineOperator.HOST)
-                    || Strings.isEmpty((String) owner.eGet(feature));
-        }
+//        /* do not serialize a hostCombineOperator if 'host' is not selected in 'combineOperator' */
+//        if (feature == KExpressionsPackage.eINSTANCE.getValuedObject_HostCombineOperator()) {
+//            return !((ValuedObject) owner).getCombineOperator().equals(CombineOperator.HOST)
+//                    || Strings.isEmpty((String) owner.eGet(feature));
+//        }
 
 
         if (feature == SCChartsPackage.eINSTANCE.getAction_Label()) {
@@ -202,18 +201,18 @@ public class SctTransientValueService extends DefaultTransientValueService {
         }
 
 
-        if (feature == SCChartsPackage.eINSTANCE.getScope_Signals()) {
+        if (feature == SCChartsPackage.eINSTANCE.getScope_ValuedObjects()) {
             if (SCChartsPackage.eINSTANCE.getRegion().isInstance(owner)
                     && owner.eContainer() == null) {
-                /* do not serialized the implicit 'tick' signal! */
-                return ((Region) owner).getSignals().get(index).getName().equals("tick");
+                /* do not serialized the implicit 'tick' valuedObject! */
+                return ((Region) owner).getValuedObjects().get(index).getName().equals("tick");
             }
 
             // During the esterel2sccharts transformation, TrapDecls may occur in SCCharts models.
             //  Since Traps are Esterel stuff and the SCCharts stuff must not have any dependency
             //  on this I cannot explicitly check "instanceof TrapDecl".
             // what an evil hack ... :-(
-            if (((EList<Signal>) owner.eGet(feature)).get(index).eClass().getName()
+            if (((EList<ValuedObject>) owner.eGet(feature)).get(index).eClass().getName()
                     .startsWith("T")) {
                 return true;
             } else {
