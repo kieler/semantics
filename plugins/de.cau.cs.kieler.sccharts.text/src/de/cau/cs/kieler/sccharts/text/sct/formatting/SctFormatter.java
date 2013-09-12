@@ -193,7 +193,7 @@ public class SctFormatter extends ActionsFormatter {
          */
 
         c.setLinewrap().after(f.getTextualCodeRule());
-        c.setNoSpace().before(f.getTextualCodeAccess().getColonKeyword_3());
+        c.setNoSpace().before(f.getTextualCodeAccess().getColonKeyword_2());
 
 
         /*

@@ -17,6 +17,7 @@ package de.cau.cs.kieler.sccharts.provider;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 
 import de.cau.cs.kieler.sccharts.Emission;
+import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import java.util.Collection;
@@ -190,12 +191,12 @@ public class EmissionItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.EMISSION__NEW_VALUE,
-                 KExpressionsFactory.eINSTANCE.createExpression()));
+                 SCChartsFactory.eINSTANCE.createTextEffect()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.EMISSION__NEW_VALUE,
-                 KExpressionsFactory.eINSTANCE.createComplexExpression()));
+                 KExpressionsFactory.eINSTANCE.createExpression()));
 
         newChildDescriptors.add
             (createChildParameter

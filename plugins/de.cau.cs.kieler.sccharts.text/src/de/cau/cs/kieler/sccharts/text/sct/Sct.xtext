@@ -122,7 +122,7 @@ ValuedObject returns kexpressions::ValuedObject:
     (isOutput?='output')?
     (isStatic?='static')?
     (isSignal?='signal')?
-    name=ID (':=' initialValue=AnyType)?
+    name=ID (':=' initialValue=Expression)?
     ((':' (type = ValueType))
       |
      (':' 'combine' (type = ValueType) 'with'
@@ -146,8 +146,8 @@ ValuedObject returns kexpressions::ValuedObject:
 
 // ---------------------------------------------------------------------------------------------------
 
-TextualCode returns kexpressions::TextualCode:
-    'textual' 'code' ( '(' type = ID ')')? ':' code = STRING;
+TextualCode returns kexpressions::TextExpression:
+    'textual' 'code' ':' text = STRING;
 
 // ---------------------------------------------------------------------------------------------------
 

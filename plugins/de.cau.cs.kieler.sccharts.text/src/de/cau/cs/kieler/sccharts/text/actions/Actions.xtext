@@ -39,7 +39,7 @@ Assignment returns sccharts::Assignment:
 
 
 TextEffect returns sccharts::TextEffect:
- 	code=HOSTCODE ("(" type=ID ")")?;
+ 	text=HOSTCODE;
 
 enum DivOperator returns kexpressions::OperatorType:	
 	DIV=":";
