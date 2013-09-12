@@ -605,9 +605,9 @@ ruleTextExpression
     }
 	:
 (
-{ before(grammarAccess.getTextExpressionAccess().getGroup()); }
-(rule__TextExpression__Group__0)
-{ after(grammarAccess.getTextExpressionAccess().getGroup()); }
+{ before(grammarAccess.getTextExpressionAccess().getTextAssignment()); }
+(rule__TextExpression__TextAssignment)
+{ after(grammarAccess.getTextExpressionAccess().getTextAssignment()); }
 )
 
 ;
@@ -3345,163 +3345,6 @@ finally {
 
 
 
-rule__TextExpression__Group__0
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__TextExpression__Group__0__Impl
-	rule__TextExpression__Group__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__TextExpression__Group__0__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getTextExpressionAccess().getCodeAssignment_0()); }
-(rule__TextExpression__CodeAssignment_0)
-{ after(grammarAccess.getTextExpressionAccess().getCodeAssignment_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__TextExpression__Group__1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__TextExpression__Group__1__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__TextExpression__Group__1__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getTextExpressionAccess().getGroup_1()); }
-(rule__TextExpression__Group_1__0)?
-{ after(grammarAccess.getTextExpressionAccess().getGroup_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
-
-
-
-rule__TextExpression__Group_1__0
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__TextExpression__Group_1__0__Impl
-	rule__TextExpression__Group_1__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__TextExpression__Group_1__0__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getTextExpressionAccess().getLeftParenthesisKeyword_1_0()); }
-
-	'(' 
-
-{ after(grammarAccess.getTextExpressionAccess().getLeftParenthesisKeyword_1_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__TextExpression__Group_1__1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__TextExpression__Group_1__1__Impl
-	rule__TextExpression__Group_1__2
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__TextExpression__Group_1__1__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getTextExpressionAccess().getTypeAssignment_1_1()); }
-(rule__TextExpression__TypeAssignment_1_1)
-{ after(grammarAccess.getTextExpressionAccess().getTypeAssignment_1_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__TextExpression__Group_1__2
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__TextExpression__Group_1__2__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__TextExpression__Group_1__2__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getTextExpressionAccess().getRightParenthesisKeyword_1_2()); }
-
-	')' 
-
-{ after(grammarAccess.getTextExpressionAccess().getRightParenthesisKeyword_1_2()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
-
-
-
-
-
 rule__TagAnnotation__Group__0
     @init {
 		int stackSize = keepStackSize();
@@ -5370,29 +5213,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TextExpression__CodeAssignment_0
+rule__TextExpression__TextAssignment
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getTextExpressionAccess().getCodeHOSTCODETerminalRuleCall_0_0()); }
-	RULE_HOSTCODE{ after(grammarAccess.getTextExpressionAccess().getCodeHOSTCODETerminalRuleCall_0_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__TextExpression__TypeAssignment_1_1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getTextExpressionAccess().getTypeIDTerminalRuleCall_1_1_0()); }
-	RULE_ID{ after(grammarAccess.getTextExpressionAccess().getTypeIDTerminalRuleCall_1_1_0()); }
+{ before(grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_0()); }
+	RULE_HOSTCODE{ after(grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_0()); }
 )
 
 ;
