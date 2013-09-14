@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="kexpressions"
-    nsURI="http://kieler.cs.cau.de/kexpressions/0.1.2" nsPrefix="kexpressions">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="kexpressions" nsURI="http://kieler.cs.cau.de/esterel/kexpressions/0.1.2"
+    nsPrefix="kexpressions">
   <eClassifiers xsi:type="ecore:EEnum" name="CombineOperator">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Built-in operators that can be used as Signal combine operators."/>
@@ -258,7 +257,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypeIdentifier">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//ValueType"
-        defaultValueLiteral=""/>
+        defaultValueLiteral="pure"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//CombineOperator"/>
   </eClassifiers>

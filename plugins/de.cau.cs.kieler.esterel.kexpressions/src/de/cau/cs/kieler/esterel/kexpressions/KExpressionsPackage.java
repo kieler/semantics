@@ -44,7 +44,7 @@ public interface KExpressionsPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "http://kieler.cs.cau.de/kexpressions/0.1.2";
+    String eNS_URI = "http://kieler.cs.cau.de/esterel/kexpressions/0.1.2";
 
     /**
      * The package namespace name.

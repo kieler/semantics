@@ -110,7 +110,7 @@ public enum CombineOperator implements Enumerator {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
-     * Specifies that no combine operator is given.
+     * Specifies that no combine operator is given. 
      * <!-- end-model-doc -->
      * @see #NONE
      * @model
@@ -139,7 +139,7 @@ public enum CombineOperator implements Enumerator {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Arithmetic multiplication.
-     *
+     * 
      * <!-- end-model-doc -->
      * @see #MULT
      * @model literal="*"
@@ -209,8 +209,8 @@ public enum CombineOperator implements Enumerator {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
-     * Specifies that no built-in combine operator should be used
-     * but the operator given in the hostCombineOperator field given as a String and
+     * Specifies that no built-in combine operator should be used 
+     * but the operator given in the hostCombineOperator field given as a String and 
      * referencing some function of the host language (maybe C or Java, etc. ) .
      * <!-- end-model-doc -->
      * @see #HOST

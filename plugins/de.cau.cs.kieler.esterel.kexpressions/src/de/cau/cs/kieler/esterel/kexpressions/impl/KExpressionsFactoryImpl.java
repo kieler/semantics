@@ -32,7 +32,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      */
     public static KExpressionsFactory init() {
         try {
-            KExpressionsFactory theKExpressionsFactory = (KExpressionsFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/kexpressions/0.1.2");
+            KExpressionsFactory theKExpressionsFactory = (KExpressionsFactory)EPackage.Registry.INSTANCE.getEFactory(KExpressionsPackage.eNS_URI);
             if (theKExpressionsFactory != null) {
                 return theKExpressionsFactory;
             }

@@ -14,7 +14,7 @@ package de.cau.cs.kieler.esterel.kexpressions;
  *
  * <!-- begin-model-doc -->
  * An OperatorExpression is the most obvious ComplexExpression containing
- * an operator and a list of subExpressions. The meaning is that the operator
+ * an operator and a list of subExpressions. The meaning is that the operator 
  * should be applied to all elements of the ordered subExpression list.
  * Note that some pre-defined operators are not commutative, hence the
  * order of the subExpressions list is of importance.
