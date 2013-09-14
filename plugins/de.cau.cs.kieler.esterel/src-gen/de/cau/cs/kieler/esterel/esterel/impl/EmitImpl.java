@@ -2,11 +2,11 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.ISignal;
-
 import de.cau.cs.kieler.esterel.esterel.Emit;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+
+import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.esterel.kexpressions.ISignal;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;

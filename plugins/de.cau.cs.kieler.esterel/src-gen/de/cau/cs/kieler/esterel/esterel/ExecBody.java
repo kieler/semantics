@@ -2,8 +2,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.IVariable;
+import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.esterel.kexpressions.IVariable;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -30,7 +30,7 @@ public interface ExecBody extends EObject
 {
   /**
    * Returns the value of the '<em><b>Vars</b></em>' reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.IVariable}.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.IVariable}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Vars</em>' reference list isn't clear,
@@ -46,7 +46,7 @@ public interface ExecBody extends EObject
 
   /**
    * Returns the value of the '<em><b>Kexpressions</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.Expression}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Kexpressions</em>' containment reference list isn't clear,

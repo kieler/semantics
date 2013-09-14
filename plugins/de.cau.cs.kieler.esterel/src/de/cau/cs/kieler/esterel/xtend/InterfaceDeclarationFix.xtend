@@ -13,9 +13,9 @@
  */ 
 package de.cau.cs.kieler.esterel.xtend
 
-import de.cau.cs.kieler.core.kexpressions.ISignal
-import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl
-import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.esterel.kexpressions.ISignal
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
+import de.cau.cs.kieler.esterel.kexpressions.ValueType
 import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.esterel.Program
 

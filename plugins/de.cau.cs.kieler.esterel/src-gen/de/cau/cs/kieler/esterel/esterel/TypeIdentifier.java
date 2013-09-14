@@ -13,6 +13,6 @@ package de.cau.cs.kieler.esterel.esterel;
  * @model
  * @generated
  */
-public interface TypeIdentifier extends de.cau.cs.kieler.core.kexpressions.TypeIdentifier
+public interface TypeIdentifier extends de.cau.cs.kieler.esterel.kexpressions.TypeIdentifier
 {
 } // TypeIdentifier

@@ -13,6 +13,6 @@ package de.cau.cs.kieler.esterel.esterel;
  * @model
  * @generated
  */
-public interface ChannelDescription extends de.cau.cs.kieler.core.kexpressions.ChannelDescription
+public interface ChannelDescription extends de.cau.cs.kieler.esterel.kexpressions.ChannelDescription
 {
 } // ChannelDescription

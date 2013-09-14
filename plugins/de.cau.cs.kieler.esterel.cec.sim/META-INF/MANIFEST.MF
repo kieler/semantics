@@ -23,7 +23,9 @@ Require-Bundle: org.eclipse.gmf.runtime.diagram.ui,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent,
  de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.sim.signals,
- de.cau.cs.kieler.esterel.ui
+ de.cau.cs.kieler.esterel.ui,
+ de.cau.cs.kieler.esterel.kexpressions;bundle-version="0.4.1",
+ de.cau.cs.kieler.esterel.kexpressions.ui;bundle-version="0.4.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.esterel.cec.sim

@@ -24,11 +24,11 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
-import de.cau.cs.kieler.core.kexpressions.ISignal;
-import de.cau.cs.kieler.core.kexpressions.IVariable;
-import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
-import de.cau.cs.kieler.core.kexpressions.InterfaceVariableDecl;
-import de.cau.cs.kieler.core.kexpressions.VariableDecl;
+import de.cau.cs.kieler.esterel.kexpressions.ISignal;
+import de.cau.cs.kieler.esterel.kexpressions.IVariable;
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceVariableDecl;
+import de.cau.cs.kieler.esterel.kexpressions.VariableDecl;
 import de.cau.cs.kieler.esterel.esterel.ConstantDecls;
 import de.cau.cs.kieler.esterel.esterel.ConstantWithValue;
 import de.cau.cs.kieler.esterel.esterel.Function;

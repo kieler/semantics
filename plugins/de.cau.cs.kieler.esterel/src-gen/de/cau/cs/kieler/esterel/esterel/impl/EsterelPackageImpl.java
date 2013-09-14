@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-
 import de.cau.cs.kieler.esterel.esterel.Abort;
 import de.cau.cs.kieler.esterel.esterel.AbortBody;
 import de.cau.cs.kieler.esterel.esterel.AbortCase;
@@ -110,6 +108,8 @@ import de.cau.cs.kieler.esterel.esterel.WeakAbortCase;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortEnd;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortEndAlt;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortInstance;
+
+import de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;

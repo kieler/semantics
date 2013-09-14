@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.core.kexpressions.InterfaceVariableDecl;
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceVariableDecl;
 
 /**
  * <!-- begin-user-doc -->

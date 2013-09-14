@@ -2,8 +2,6 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
-
 import de.cau.cs.kieler.esterel.esterel.ConstantDecls;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.FunctionDecl;
@@ -13,6 +11,8 @@ import de.cau.cs.kieler.esterel.esterel.RelationDecl;
 import de.cau.cs.kieler.esterel.esterel.SensorDecl;
 import de.cau.cs.kieler.esterel.esterel.TaskDecl;
 import de.cau.cs.kieler.esterel.esterel.TypeDecl;
+
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
 
 import java.util.Collection;
 

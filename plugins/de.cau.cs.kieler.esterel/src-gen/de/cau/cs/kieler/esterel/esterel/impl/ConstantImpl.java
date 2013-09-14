@@ -2,10 +2,10 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl;
-
 import de.cau.cs.kieler.esterel.esterel.Constant;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+
+import de.cau.cs.kieler.esterel.kexpressions.impl.ValuedObjectImpl;
 
 import org.eclipse.emf.ecore.EClass;
 
