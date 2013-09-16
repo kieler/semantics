@@ -595,7 +595,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	 *         isOutput?='output'? 
 	 *         isSignal?='signal'? 
 	 *         name=EString 
-	 *         initialValue=EString? 
+	 *         initialValue=Expression? 
 	 *         (type=ValueType | (type=ValueType combineOperator=CombineOperator))?
 	 *     )
 	 */

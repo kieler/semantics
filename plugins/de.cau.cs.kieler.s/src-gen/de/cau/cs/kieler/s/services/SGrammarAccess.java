@@ -255,7 +255,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cColonEqualsSignKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cInitialValueAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cInitialValueEStringParserRuleCall_4_1_0 = (RuleCall)cInitialValueAssignment_4_1.eContents().get(0);
+		private final RuleCall cInitialValueExpressionParserRuleCall_4_1_0 = (RuleCall)cInitialValueAssignment_4_1.eContents().get(0);
 		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
 		private final Group cGroup_5_0 = (Group)cAlternatives_5.eContents().get(0);
 		private final Keyword cColonKeyword_5_0_0 = (Keyword)cGroup_5_0.eContents().get(0);
@@ -272,12 +272,12 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//ValuedObject returns kexpressions::ValuedObject:
-		//	isInput?="input"? isOutput?="output"? isSignal?="signal"? name=EString (":=" initialValue=EString)? (":"
+		//	isInput?="input"? isOutput?="output"? isSignal?="signal"? name=EString (":=" initialValue=Expression)? (":"
 		//	type=ValueType | ":" "combine" type=ValueType "with" combineOperator=CombineOperator)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//isInput?="input"? isOutput?="output"? isSignal?="signal"? name=EString (":=" initialValue=EString)? (":" type=ValueType
-		//| ":" "combine" type=ValueType "with" combineOperator=CombineOperator)? ";"
+		//isInput?="input"? isOutput?="output"? isSignal?="signal"? name=EString (":=" initialValue=Expression)? (":"
+		//type=ValueType | ":" "combine" type=ValueType "with" combineOperator=CombineOperator)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//isInput?="input"?
@@ -304,17 +304,17 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//EString
 		public RuleCall getNameEStringParserRuleCall_3_0() { return cNameEStringParserRuleCall_3_0; }
 
-		//(":=" initialValue=EString)?
+		//(":=" initialValue=Expression)?
 		public Group getGroup_4() { return cGroup_4; }
 
 		//":="
 		public Keyword getColonEqualsSignKeyword_4_0() { return cColonEqualsSignKeyword_4_0; }
 
-		//initialValue=EString
+		//initialValue=Expression
 		public Assignment getInitialValueAssignment_4_1() { return cInitialValueAssignment_4_1; }
 
-		//EString
-		public RuleCall getInitialValueEStringParserRuleCall_4_1_0() { return cInitialValueEStringParserRuleCall_4_1_0; }
+		//Expression
+		public RuleCall getInitialValueExpressionParserRuleCall_4_1_0() { return cInitialValueExpressionParserRuleCall_4_1_0; }
 
 		//(":" type=ValueType | ":" "combine" type=ValueType "with" combineOperator=CombineOperator)?
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
@@ -1193,7 +1193,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ValuedObject returns kexpressions::ValuedObject:
-	//	isInput?="input"? isOutput?="output"? isSignal?="signal"? name=EString (":=" initialValue=EString)? (":"
+	//	isInput?="input"? isOutput?="output"? isSignal?="signal"? name=EString (":=" initialValue=Expression)? (":"
 	//	type=ValueType | ":" "combine" type=ValueType "with" combineOperator=CombineOperator)? ";";
 	public ValuedObjectElements getValuedObjectAccess() {
 		return (pValuedObject != null) ? pValuedObject : (pValuedObject = new ValuedObjectElements());
@@ -1604,9 +1604,9 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectReferenceAccess().getRule();
 	}
 
-	//// Example: 'printf(...)'(C)
+	//// Example: 'printf(...)'
 	//TextExpression:
-	//	code=HOSTCODE ("(" type=ID ")")?;
+	//	text=HOSTCODE;
 	public KExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
 		return gaKExpressions.getTextExpressionAccess();
 	}

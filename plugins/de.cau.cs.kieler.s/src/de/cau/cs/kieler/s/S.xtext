@@ -60,7 +60,7 @@ ValuedObject returns kexpressions::ValuedObject:
 	(isOutput?='output')?
 	(isSignal?='signal')?
 	(name=EString)
-	(':=' initialValue=EString)?
+	(':=' initialValue=Expression)?
     ((':' type=ValueType)
       |
      (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator) )
