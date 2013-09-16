@@ -49,7 +49,7 @@ State:
 
 Thread:
 	'thread' '(' name = ID ')' '{'
-	(((valuedObjects+=ValuedObject)+ ';'))? 
+	(((valuedObjects+=ValuedObject)+ ';')*)? 
 	(states+=State';')*
 	'}'
 ;
