@@ -19,7 +19,6 @@ import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.Signal
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
@@ -116,7 +115,7 @@ class S2SCC {
     #define _SC_ID_MAX «2*program.priority» 
 
     // Highest signal id in use;
-    #define _SC_SIG_MAX «program.getSignals().size» 
+    #define _SC_SIG_MAX «program.getValuedObjects().filter[e|e.isSignal].size» 
 
     #include "sc.h"
 
@@ -187,10 +186,10 @@ class S2SCC {
    
    // Generate signal constants.
    def sSignalConstants(Program program) {
-       '''typedef enum {«FOR signal : program.getSignals() SEPARATOR ",
+       '''typedef enum {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ",
  "»«signal.name»«ENDFOR»} signaltype;
        
-       const char *s2signame[] = {«FOR signal : program.getSignals() SEPARATOR ", 
+       const char *s2signame[] = {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ", 
 "»"«signal.name»"«ENDFOR»};'''
    }
    
@@ -212,7 +211,7 @@ class S2SCC {
    def sSetOutputFunction(Program program) {
        '''
     void callOutputs() {
-    «FOR signal : program.getSignals().filter(e|e.isOutput)»
+    «FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isOutput)»
         OUTPUT_«signal.name»(PRESENT_SCC(«signal.name»));
     «ENDFOR»
         }
@@ -224,7 +223,7 @@ class S2SCC {
    def sResetSignals(Program program) {
        '''
     void resetSignals() {
-    «FOR signal : program.getSignals()»
+    «FOR signal : program.getValuedObjects().filter[e|e.isSignal]»
       presentSigIntPre[«signal.name»] = presentSigInt[«signal.name»];
       presentSigInt[«signal.name»] = 0;
       valSigIntPre[«signal.name»] = valSigInt[«signal.name»];
@@ -242,7 +241,7 @@ class S2SCC {
    def sTotalResetSignals(Program program) {
        '''
     void totalResetSignals() {
-    «FOR signal : program.getSignals()»
+    «FOR signal : program.getValuedObjects().filter[e|e.isSignal]»
       presentSigInt[«signal.name»] = 0;
       presentSigIntPre[«signal.name»] = 0;
       valSigInt[«signal.name»] = «signal.combineOperator.initialValue»;
@@ -273,7 +272,7 @@ void setInputs(){
 
     object = cJSON_Parse(buffer);
     
-   «'''«FOR signal : program.signals.filter(e|e.isInput||e.isOutput)»
+   «'''«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isInput||e.isOutput)»
                    «signal.callInputs»
    «ENDFOR»'''»    
    }'''
@@ -331,7 +330,7 @@ void setInputs(){
 
    // Define output functions to return JSON for each s signal.
    def sOutputs(Program program) {
-    '''«'''«FOR signal : program.signals.filter(e | e.isOutput)»
+    '''«'''«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e | e.isOutput)»
         void OUTPUT_«signal.name»(int status){
         value = cJSON_CreateObject();
         cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
@@ -350,7 +349,9 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    // -------------------------------------------------------------------------   
    
    // Call input functions for each JSON s signal that is present.
-   def callInputs(Signal signal) {
+   def callInputs(ValuedObject signal) {
+       if (signal.isSignal) {
+           return        
        '''child = cJSON_GetObjectItem(object, "«signal.name»");
         if (child != NULL) {
             present = cJSON_GetObjectItem(child, "present");
@@ -367,6 +368,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
         }   
           
        '''
+       }
    }
    
    // -------------------------------------------------------------------------   
@@ -403,7 +405,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    }
    // Expand Text Expression
    def dispatch expand(TextExpression expression) {
-        '''(«expression.code.extractCode»)'''
+        '''(«expression.text.extractCode»)'''
    }
 
    // -------------------------------------------------------------------------   
@@ -629,12 +631,16 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    // -------------------------------------------------------------------------
     
    // Expand a signal.
-   def dispatch expand(Signal signal) {
-        '''PRESENT_SCC(«signal.name»)'''
+   def dispatch expand(ValuedObject signal) {
+       if (signal.isSignal) {
+            return  '''PRESENT_SCC(«signal.name»)'''
+       }
    }
    // Expand a signal within a value reference
-   def dispatch expand_val(Signal signal) {
-        '''«signal.name»'''
+   def dispatch expand_val(ValuedObject signal) {
+       if (signal.isSignal) {
+            return  '''«signal.name»'''
+       }
    }
    def dispatch expand_val(ValuedObjectReference valuedObjectReference) {
         '''«valuedObjectReference.valuedObject.expand_val»'''
@@ -664,10 +670,5 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
         '''«valuedObjectReference.valuedObject.expand»'''
    }
    
-   // Expand a valued object.
-   def dispatch expand(ValuedObject valuedObject) {
-        ''''''
-   }
-
    // -------------------------------------------------------------------------   
 }

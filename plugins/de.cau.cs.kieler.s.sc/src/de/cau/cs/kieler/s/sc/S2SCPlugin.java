@@ -20,8 +20,8 @@ import java.io.IOException;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.xtend.S2SCC;
 import de.cau.cs.kieler.s.sc.xtend.S2SCALT;
@@ -133,11 +133,13 @@ public class S2SCPlugin extends AbstractUIPlugin {
      */
     public static String estimateBufferSize(final Program program) {
         int bufferSizeInt = 0;
-        for (Signal signal : program.getSignals()) {
-            if (signal.getType() == ValueType.PURE) {
-                bufferSizeInt += signal.getName().length() + PURE_SIGNAL_BUFFER_CONSTANT;
-            } else {
-                bufferSizeInt += signal.getName().length() + VALUED_SIGNAL_BUFFER_CONSTANT;
+        for (ValuedObject signal : program.getValuedObjects()) {
+            if (signal.isIsSignal()) {
+                if (signal.getType() == ValueType.PURE) {
+                    bufferSizeInt += signal.getName().length() + PURE_SIGNAL_BUFFER_CONSTANT;
+                } else {
+                    bufferSizeInt += signal.getName().length() + VALUED_SIGNAL_BUFFER_CONSTANT;
+                }
             }
         }
         double log = Math.ceil(Math.log(bufferSizeInt) / Math.log(2));

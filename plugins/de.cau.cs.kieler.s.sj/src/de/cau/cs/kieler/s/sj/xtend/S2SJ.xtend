@@ -20,7 +20,6 @@ import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.Signal
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
@@ -84,7 +83,7 @@ class S2SJ {
    
    // -------------------------------------------------------------------------   
 
-   def String listSignals(List<Signal> signalList) {
+   def String listSignals(List<ValuedObject> signalList) {
        '''
     «FOR signal : signalList SEPARATOR ""»
         public boolean «signal.name» = false;
@@ -139,7 +138,7 @@ public class ''' + className + ''' extends SJLProgramWithSignals<State> implemen
         ''' + program.eAllContents.filter(typeof(Continuation)).toList.listContinuations + '''
     }
 
-''' + program.signals.listSignals + ''' 
+''' + program.valuedObjects.filter[e|e.isSignal].toList.listSignals + ''' 
 
     public ''' + className + '''() {
         super(''' + program.states.head.name + ''', ''' + program.priority + ''', ''' + program.priority + ''');
@@ -154,13 +153,13 @@ public class ''' + className + ''' extends SJLProgramWithSignals<State> implemen
    def sResetSignals(Program program) {
     '''
     public void resetInputSignals() {    
-    «FOR signal : program.signals.filter(e | e.isInput) SEPARATOR ""»
+    «FOR signal : program.valuedObjects.filter[e|e.isSignal].filter(e | e.isInput) SEPARATOR ""»
         «signal.name» = false;
     «ENDFOR»
     }
 
     public void resetOutputSignals() {    
-    «FOR signal : program.signals.filter(e | !e.isInput) SEPARATOR ""»
+    «FOR signal : program.valuedObjects.filter[e|e.isSignal].filter(e | !e.isInput) SEPARATOR ""»
         «signal.name» = false;
     «ENDFOR»
     }
@@ -219,7 +218,7 @@ public class ''' + className + ''' extends SJLProgramWithSignals<State> implemen
    }
    // Expand Text Expression
    def dispatch expand(TextExpression expression) {
-        '''(«expression.code.extractCode»)'''
+        '''(«expression.text.extractCode»)'''
    }
 
    // -------------------------------------------------------------------------   
@@ -462,12 +461,16 @@ break;'''
    // -------------------------------------------------------------------------
     
    // Expand a signal.
-   def dispatch expand(Signal signal) {
-        '''«signal.name»'''
+   def dispatch expand(ValuedObject signal) {
+       if (signal.isSignal) {
+         return  '''«signal.name»'''
+       }
    }
    // Expand a signal within a value reference
-   def dispatch expand_val(Signal signal) {
-        '''«signal.name»'''
+   def dispatch expand_val(ValuedObject signal) {
+       if (signal.isSignal) {
+         return '''«signal.name»'''
+       }
    }
    def dispatch expand_val(ValuedObjectReference valuedObjectReference) {
         '''«valuedObjectReference.valuedObject.expand_val»'''
@@ -497,10 +500,5 @@ break;'''
         '''«valuedObjectReference.valuedObject.expand»'''
    }
    
-   // Expand a valued object.
-   def dispatch expand(ValuedObject valuedObject) {
-        ''''''
-   }
-
    // -------------------------------------------------------------------------   
 }
