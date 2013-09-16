@@ -39,7 +39,7 @@ Program :
 
 State:
 	'state' '(' name = ID ')' '{'
-	(((valuedObjects+=ValuedObject)+ ';'))? 
+	(((valuedObjects+=ValuedObject)+ ';')*)? 
 	(instructions+=Instruction';')*
 	'}'
 ;
