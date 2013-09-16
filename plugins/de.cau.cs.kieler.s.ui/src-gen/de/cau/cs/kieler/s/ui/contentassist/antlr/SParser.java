@@ -58,6 +58,8 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 					put(grammarAccess.getProgramAccess().getGroup(), "rule__Program__Group__0");
+					put(grammarAccess.getProgramAccess().getGroup_5(), "rule__Program__Group_5__0");
+					put(grammarAccess.getProgramAccess().getGroup_6(), "rule__Program__Group_6__0");
 					put(grammarAccess.getStateAccess().getGroup(), "rule__State__Group__0");
 					put(grammarAccess.getStateAccess().getGroup_5(), "rule__State__Group_5__0");
 					put(grammarAccess.getStateAccess().getGroup_6(), "rule__State__Group_6__0");
@@ -125,8 +127,9 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExtendedIDAccess().getGroup_1(), "rule__ExtendedID__Group_1__0");
 					put(grammarAccess.getProgramAccess().getNameAssignment_1(), "rule__Program__NameAssignment_1");
 					put(grammarAccess.getProgramAccess().getPriorityAssignment_3(), "rule__Program__PriorityAssignment_3");
-					put(grammarAccess.getProgramAccess().getValuedObjectsAssignment_5(), "rule__Program__ValuedObjectsAssignment_5");
-					put(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionAssignment_6(), "rule__Program__GlobalHostCodeInstructionAssignment_6");
+					put(grammarAccess.getProgramAccess().getValuedObjectsAssignment_5_0(), "rule__Program__ValuedObjectsAssignment_5_0");
+					put(grammarAccess.getProgramAccess().getValuedObjectsAssignment_5_1(), "rule__Program__ValuedObjectsAssignment_5_1");
+					put(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionAssignment_6_1(), "rule__Program__GlobalHostCodeInstructionAssignment_6_1");
 					put(grammarAccess.getProgramAccess().getStatesAssignment_7(), "rule__Program__StatesAssignment_7");
 					put(grammarAccess.getStateAccess().getNameAssignment_2(), "rule__State__NameAssignment_2");
 					put(grammarAccess.getStateAccess().getValuedObjectsAssignment_5_0(), "rule__State__ValuedObjectsAssignment_5_0");

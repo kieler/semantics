@@ -29,10 +29,16 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPriorityAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cPriorityINTTerminalRuleCall_3_0 = (RuleCall)cPriorityAssignment_3.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cValuedObjectsAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_5_0 = (RuleCall)cValuedObjectsAssignment_5.eContents().get(0);
-		private final Assignment cGlobalHostCodeInstructionAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0 = (RuleCall)cGlobalHostCodeInstructionAssignment_6.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Assignment cValuedObjectsAssignment_5_0 = (Assignment)cGroup_5.eContents().get(0);
+		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_5_0_0 = (RuleCall)cValuedObjectsAssignment_5_0.eContents().get(0);
+		private final Assignment cValuedObjectsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_5_1_0 = (RuleCall)cValuedObjectsAssignment_5_1.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cApostropheKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cGlobalHostCodeInstructionAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_1_0 = (RuleCall)cGlobalHostCodeInstructionAssignment_6_1.eContents().get(0);
+		private final Keyword cApostropheKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
 		private final Assignment cStatesAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final RuleCall cStatesStateParserRuleCall_7_0 = (RuleCall)cStatesAssignment_7.eContents().get(0);
 		
@@ -40,13 +46,15 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//	"synchronous program" name=ID "(" priority=INT ")" //	((signals += Signal) (signals += Signal)*)?
 		//	//	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 		//	//	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
-		//	valuedObjects+=ValuedObject? globalHostCodeInstruction=HOSTCODE* states+=State+;
+		//	(valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? //    (((valuedObjects+=ValuedObject)+ ';')*)? 
+		//	("\'" globalHostCodeInstruction=HOSTCODE "\'")? states+=State+;
 		public ParserRule getRule() { return rule; }
 
 		//"synchronous program" name=ID "(" priority=INT ")" //	((signals += Signal) (signals += Signal)*)?
 		////	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 		////	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
-		//valuedObjects+=ValuedObject? globalHostCodeInstruction=HOSTCODE* states+=State+
+		//(valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? //    (((valuedObjects+=ValuedObject)+ ';')*)? 
+		//("\'" globalHostCodeInstruction=HOSTCODE "\'")? states+=State+
 		public Group getGroup() { return cGroup; }
 
 		//"synchronous program"
@@ -70,17 +78,35 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 
-		//valuedObjects+=ValuedObject?
-		public Assignment getValuedObjectsAssignment_5() { return cValuedObjectsAssignment_5; }
+		//(valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)?
+		public Group getGroup_5() { return cGroup_5; }
+
+		//valuedObjects+=ValuedObject
+		public Assignment getValuedObjectsAssignment_5_0() { return cValuedObjectsAssignment_5_0; }
 
 		//ValuedObject
-		public RuleCall getValuedObjectsValuedObjectParserRuleCall_5_0() { return cValuedObjectsValuedObjectParserRuleCall_5_0; }
+		public RuleCall getValuedObjectsValuedObjectParserRuleCall_5_0_0() { return cValuedObjectsValuedObjectParserRuleCall_5_0_0; }
 
-		//globalHostCodeInstruction=HOSTCODE*
-		public Assignment getGlobalHostCodeInstructionAssignment_6() { return cGlobalHostCodeInstructionAssignment_6; }
+		//valuedObjects+=ValuedObject*
+		public Assignment getValuedObjectsAssignment_5_1() { return cValuedObjectsAssignment_5_1; }
+
+		//ValuedObject
+		public RuleCall getValuedObjectsValuedObjectParserRuleCall_5_1_0() { return cValuedObjectsValuedObjectParserRuleCall_5_1_0; }
+
+		//("\'" globalHostCodeInstruction=HOSTCODE "\'")?
+		public Group getGroup_6() { return cGroup_6; }
+
+		//"\'"
+		public Keyword getApostropheKeyword_6_0() { return cApostropheKeyword_6_0; }
+
+		//globalHostCodeInstruction=HOSTCODE
+		public Assignment getGlobalHostCodeInstructionAssignment_6_1() { return cGlobalHostCodeInstructionAssignment_6_1; }
 
 		//HOSTCODE
-		public RuleCall getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0() { return cGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0; }
+		public RuleCall getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_1_0() { return cGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_1_0; }
+
+		//"\'"
+		public Keyword getApostropheKeyword_6_2() { return cApostropheKeyword_6_2; }
 
 		//states+=State+
 		public Assignment getStatesAssignment_7() { return cStatesAssignment_7; }
@@ -364,6 +390,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cHostCodeAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cHostCodeHOSTCODETerminalRuleCall_0 = (RuleCall)cHostCodeAssignment.eContents().get(0);
 		
+		////    )?;
 		////---------------------------------------------------------------------
 		////----------------------- List of S-Instructions ----------------------
 		////---------------------------------------------------------------------
@@ -1155,7 +1182,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//	"synchronous program" name=ID "(" priority=INT ")" //	((signals += Signal) (signals += Signal)*)?
 	//	//	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 	//	//	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
-	//	valuedObjects+=ValuedObject? globalHostCodeInstruction=HOSTCODE* states+=State+;
+	//	(valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? //    (((valuedObjects+=ValuedObject)+ ';')*)? 
+	//	("\'" globalHostCodeInstruction=HOSTCODE "\'")? states+=State+;
 	public ProgramElements getProgramAccess() {
 		return (pProgram != null) ? pProgram : (pProgram = new ProgramElements());
 	}
@@ -1203,6 +1231,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectAccess().getRule();
 	}
 
+	////    )?;
 	////---------------------------------------------------------------------
 	////----------------------- List of S-Instructions ----------------------
 	////---------------------------------------------------------------------

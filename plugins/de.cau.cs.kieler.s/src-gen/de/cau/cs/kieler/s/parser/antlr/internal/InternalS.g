@@ -132,10 +132,10 @@ ruleProgram returns [EObject current=null]
     {
     	newLeafNode(otherlv_4, grammarAccess.getProgramAccess().getRightParenthesisKeyword_4());
     }
-(
+((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProgramAccess().getValuedObjectsValuedObjectParserRuleCall_5_0()); 
+	        newCompositeNode(grammarAccess.getProgramAccess().getValuedObjectsValuedObjectParserRuleCall_5_0_0()); 
 	    }
 		lv_valuedObjects_5_0=ruleValuedObject		{
 	        if ($current==null) {
@@ -150,11 +150,33 @@ ruleProgram returns [EObject current=null]
 	    }
 
 )
-)?(
+)(
 (
-		lv_globalHostCodeInstruction_6_0=RULE_HOSTCODE
+		{ 
+	        newCompositeNode(grammarAccess.getProgramAccess().getValuedObjectsValuedObjectParserRuleCall_5_1_0()); 
+	    }
+		lv_valuedObjects_6_0=ruleValuedObject		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getProgramRule());
+	        }
+       		add(
+       			$current, 
+       			"valuedObjects",
+        		lv_valuedObjects_6_0, 
+        		"ValuedObject");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)*)?(	otherlv_7='\'' 
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getProgramAccess().getApostropheKeyword_6_0());
+    }
+(
+(
+		lv_globalHostCodeInstruction_8_0=RULE_HOSTCODE
 		{
-			newLeafNode(lv_globalHostCodeInstruction_6_0, grammarAccess.getProgramAccess().getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0()); 
+			newLeafNode(lv_globalHostCodeInstruction_8_0, grammarAccess.getProgramAccess().getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -163,24 +185,28 @@ ruleProgram returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"globalHostCodeInstruction",
-        		lv_globalHostCodeInstruction_6_0, 
+        		lv_globalHostCodeInstruction_8_0, 
         		"HOSTCODE");
 	    }
 
 )
-)*(
+)	otherlv_9='\'' 
+    {
+    	newLeafNode(otherlv_9, grammarAccess.getProgramAccess().getApostropheKeyword_6_2());
+    }
+)?(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getProgramAccess().getStatesStateParserRuleCall_7_0()); 
 	    }
-		lv_states_7_0=ruleState		{
+		lv_states_10_0=ruleState		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProgramRule());
 	        }
        		add(
        			$current, 
        			"states",
-        		lv_states_7_0, 
+        		lv_states_10_0, 
         		"State");
 	        afterParserOrEnumRuleCall();
 	    }

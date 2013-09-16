@@ -20,8 +20,10 @@ Program :
 //	((signals += Signal) (signals += Signal)*)?
 //	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 //	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
-    (((valuedObjects+=ValuedObject))*)?
-	(globalHostCodeInstruction = HOSTCODE)*
+    
+    ((valuedObjects += ValuedObject) (valuedObjects += ValuedObject)*)?
+//    (((valuedObjects+=ValuedObject)+ ';')*)? 
+	('\'' globalHostCodeInstruction = HOSTCODE '\'')?
 	(states += State)+
 ;
 
@@ -65,6 +67,7 @@ ValuedObject returns kexpressions::ValuedObject:
       |
      (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator) )
     )? ";";
+//    )?;
     
 
 //---------------------------------------------------------------------
