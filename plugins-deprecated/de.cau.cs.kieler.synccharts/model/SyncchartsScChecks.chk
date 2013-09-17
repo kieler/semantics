@@ -1,0 +1,103 @@
+import synccharts;
+import kexpressions;
+
+// determine whether trigger or effect of an action contain host code
+Boolean containsHostCode(TextEffect effect):
+ true
+;
+Boolean containsHostCode(TextualCode effect):
+ true
+;
+Boolean containsHostCode(TextExpression expression):
+ true
+;
+Boolean containsHostCode(Void effect):
+ false
+;
+Boolean containsHostCode(Expression expression):
+ false
+;
+Boolean containsHostCode(ComplexExpression expression):
+ expression.subExpressions != null && expression.subExpressions.exists(e|e.containsHostCode())
+;
+Boolean containsHostCode(Effect effect):
+ false
+;
+Boolean containsHostCode(Assignment effect):
+ effect.expression != null && effect.expression.containsHostCode()
+;
+
+context Action
+ WARNING "SC: Host code is not supported!" :
+ (trigger == null || !trigger.containsHostCode()) 
+ && (effects == null || effects.size == 0 || !effects.exists(e|e.containsHostCode()));
+
+context Action
+ WARNING "SC: Delays are not supported!" :
+ delay == 1;
+
+context Transition
+ WARNING "SC: History connector is not supported!" :
+ !isHistory; 
+ 
+
+context State
+ WARNING "SC: On exit actions are not supported!" : 
+ exitActions == null || exitActions.isEmpty;
+
+
+context State
+ WARNING "SC: Final states must not have outgoing transitions!" : 
+ outgoingTransitions == null || outgoingTransitions.isEmpty || isFinal == false;
+
+context State WARNING "SC: Textual states cannot be simulated yet! Further transform the textual state first into its graphical representation" :
+  this.type != StateType::TEXTUAL;
+
+context State WARNING "SC: Reference states cannot be simulated yet! Use an expaned version of this SyncChart!" :
+  this.type != StateType::REFERENCE; 
+  
+  
+context State
+ WARNING "SC: Final states must not have inner actions!" : 
+ innerActions == null || innerActions.isEmpty || isFinal == false;
+
+
+// This rule tries to find for every region a final state if the macro state is a
+// final state (otherwise this final state will never terminate with SC, with
+// Ptolemy this is no problem)
+Boolean containsFinalState(Region region):
+  !(region.states.containsFinalState().select(e|e == true).isEmpty)
+;
+Boolean containsFinalState(State state):
+ (
+   (state.isFinal && state.regions.isEmpty)
+   ||
+   (state.isFinal && (state.regions.containsFinalState().select(e|e == true) 
+                      == 
+                      state.regions.containsFinalState()
+                     )
+   )
+ )
+;
+context State
+ WARNING "SC: Final states that are macro states only terminate if all inner states terminate!\nFor this all final macro states should contain final states!" : 
+ !this.isFinal || this.regions.isEmpty || this.containsFinalState();
+
+ 
+context State
+ WARNING "SC: Suspension is not supported!" :
+ suspensionTrigger == null;
+
+
+// FIXME: not working yet
+context Scope
+ WARNING "SC: Float and unsigned signals are not supported: " + getSignalsWithFloatUnsignedType(this):
+ signals == null || getSignalsWithFloatUnsignedType(this).isEmpty;
+
+List[Signal] getSignalsWithFloatUnsignedType(Scope scope):
+ scope.signals.select(e|e.type == ValueType::FLOAT || e.type == ValueType::UNSIGNED).name
+;
+
+context Signal
+ WARNING "SC: Float and unsigned signals are not supported!" :
+ type != ValueType::FLOAT && type != ValueType::UNSIGNED;

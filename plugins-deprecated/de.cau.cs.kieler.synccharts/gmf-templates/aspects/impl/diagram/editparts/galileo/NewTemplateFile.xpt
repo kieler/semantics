@@ -1,0 +1,89 @@
+/*
+ * Copyright (c) 2006, 2009 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Dmitry Stadnik (Borland) - initial API and implementation
+ *    Alexander Shatalin (Borland) - initial API and implementation
+ */
+
+«IMPORT gmfgen» 
+«EXTENSION xpt::diagram::ViewmapAttributesUtils»
+«EXTENSION xpt::diagram::editparts::Utils»
+«EXTENSION xpt::diagram::Utils»
+
+«DEFINE extendsListContents FOR gmfgen::GenNode-»
+«REM»
+Added special superclass for State EditParts
+«ENDREM»
+«IF  == "State2EditPart"»
+de.cau.cs.kieler.synccharts.custom.AttributeAwareStateFigureShapeNodeEditPart
+«ELSE»
+«IF hasBorderItems(self)»org.eclipse.gmf.runtime.diagram.ui.editparts.AbstractBorderedShapeEditPart«ELSE»org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart«ENDIF-»
+«ENDIF»
+«ENDDEFINE»
+
+«DEFINE createNodeShape(node : gmfgen::GenNode) FOR gmfgen::FigureViewmap-»
+	«LET (if figureQualifiedClassName = null then 'org.eclipse.draw2d.RectangleFigure' else figureQualifiedClassName endif) AS fqn-»
+		«EXPAND xpt::Common::generatedMemberComment»
+		protected org.eclipse.draw2d.IFigure createNodeShape() {
+			primaryShape = new «fqn»()«IF node.getLayoutType() = gmfgen::ViewmapLayoutType::XY_LAYOUT»{
+				protected boolean useLocalCoordinates() {
+					return true;
+				}
+			}«ENDIF»;
+			«REM» added conditional setting of adapter target «ENDREM»
+			if (primaryShape instanceof de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) {
+				((de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) primaryShape).listenTo(this.getNotationView().getElement());
+			}
+			return primaryShape;
+		}
+
+		«EXPAND getPrimaryShapeMethod FOR fqn-»
+	«ENDLET-»
+«ENDDEFINE»
+
+«DEFINE createNodeShape(node : gmfgen::GenNode) FOR gmfgen::InnerClassViewmap-»
+	«EXPAND xpt::Common::generatedMemberComment»
+	protected org.eclipse.draw2d.IFigure createNodeShape() {
+		org.eclipse.draw2d.IFigure figure = new «className»();
+		«REM» added conditional setting of adapter target «ENDREM»
+		if (figure instanceof de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) {
+			((de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
+		}
+		«IF node.childNodes->size() > 0 and node.getLayoutType() = gmfgen::ViewmapLayoutType::XY_LAYOUT-»
+ 		figure.setUseLocalCoordinates(true);
+		«ENDIF-»
+ 		return primaryShape = figure;
+	}
+
+	«EXPAND getPrimaryShapeMethod FOR className-»
+«ENDDEFINE»
+
+«DEFINE getPrimaryShapeMethod FOR String-»
+	«EXPAND xpt::Common::generatedMemberComment»
+	public «self» getPrimaryShape() {
+		return («self») primaryShape;
+	}
+«ENDDEFINE»
+
+«REM»Changed default size of 40 to 20«ENDREM»
+«DEFINE createNodePlate FOR gmfgen::GenNode-»
+	«EXPAND xpt::Common::generatedMemberComment»
+	protected org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure createNodePlate() {
+		org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure result = new org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure(«IF getDiagram().isPixelMapMode()»«defaultSizeWidth(viewmap, 20)», «defaultSizeHeight(viewmap, 20)»«ELSE»getMapMode().DPtoLP(«defaultSizeWidth(viewmap, 20)»), getMapMode().DPtoLP(«defaultSizeHeight(viewmap, 20)»)«ENDIF»);
+		«EXPAND setupNodePlate-»
+		return result;
+	}
+«ENDDEFINE»
+
+«DEFINE setupNodePlate FOR gmfgen::GenNode»«ENDDEFINE»
+
+«DEFINE setupNodePlate FOR gmfgen::GenChildSideAffixedNode»
+	//FIXME: workaround for #154536
+	result.getBounds().setSize(result.getPreferredSize());
+«ENDDEFINE»

@@ -1,0 +1,625 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
+    "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
+<entity name="nested2c" class="ptolemy.actor.TypedCompositeActor">
+    <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="8.1.devel">
+    </property>
+    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={276, 598, 815, 501}, maximized=false}">
+    </property>
+    <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[600, 394]">
+    </property>
+    <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="1.0">
+    </property>
+    <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{300.0, 197.0}">
+    </property>
+    <property name="SyncChartDirector" class="ptolemy.actor.kiel.SyncChartDirector">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{95, 305}">
+        </property>
+    </property>
+    <entity name="918158682_region_1" class="ptolemy.domains.modal.modal.ModalModel">
+        <property name="_tableauFactory" class="ptolemy.vergil.modal.modal.ModalTableauFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[275.0, 95.0]">
+        </property>
+        <port name="Li" class="ptolemy.domains.modal.modal.ModalPort">
+            <property name="input"/>
+            <property name="local_input" class="ptolemy.kernel.util.StringAttribute">
+            </property>
+            <property name="1" class="ptolemy.kernel.util.StringAttribute">
+            </property>
+        </port>
+        <port name="Lo" class="ptolemy.domains.modal.modal.ModalPort">
+            <property name="output"/>
+            <property name="local_output" class="ptolemy.kernel.util.StringAttribute">
+            </property>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="int">
+            </property>
+            <property name="2" class="ptolemy.kernel.util.StringAttribute">
+            </property>
+        </port>
+        <entity name="_Controller" class="ptolemy.domains.modal.modal.ModalController">
+            <port name="Li" class="ptolemy.domains.modal.modal.ModalPort">
+                <property name="input"/>
+                <property name="local_input" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="1" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="{300.0, 140.796875}">
+                </property>
+            </port>
+            <port name="Lo" class="ptolemy.domains.modal.modal.ModalPort">
+                <property name="output"/>
+                <property name="local_output" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="int">
+                </property>
+                <property name="2" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="{300.0, 204.8671875}">
+                </property>
+            </port>
+            <entity name="200586989" class="ptolemy.domains.modal.kernel.State">
+                <property name="refinementName" class="ptolemy.kernel.util.StringAttribute" value="200586989">
+                </property>
+                <property name="isInitialState" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+                <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="elementURIFragment" class="ptolemy.kernel.util.StringAttribute" value="//@innerStates.0/@regions.0/@innerStates.0">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="{300.0, 75.0}">
+                </property>
+            </entity>
+        </entity>
+        <entity name="200586989" class="ptolemy.domains.modal.modal.Refinement">
+            <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={263, 411, 952, 489}, maximized=false}">
+            </property>
+            <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[737, 382]">
+            </property>
+            <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="1.0">
+            </property>
+            <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{368.5, 191.0}">
+            </property>
+            <property name="SyncChartDirector" class="ptolemy.actor.kiel.SyncChartDirector">
+                <property name="_location" class="ptolemy.kernel.util.Location" value="{80, 300}">
+                </property>
+            </property>
+            <port name="Li" class="ptolemy.domains.modal.modal.ModalPort">
+                <property name="input"/>
+                <property name="local_input" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="1" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[50.0, 45.0]">
+                </property>
+            </port>
+            <port name="Lo" class="ptolemy.domains.modal.modal.ModalPort">
+                <property name="output"/>
+                <property name="local_output" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="int">
+                </property>
+                <property name="2" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[535.0, 35.0]">
+                </property>
+            </port>
+            <entity name="200586989_region_1" class="ptolemy.domains.modal.modal.ModalModel">
+                <property name="_tableauFactory" class="ptolemy.vergil.modal.modal.ModalTableauFactory">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[230.0, 45.0]">
+                </property>
+                <port name="Li" class="ptolemy.domains.modal.modal.ModalPort">
+                    <property name="input"/>
+                    <property name="environment_input" class="ptolemy.kernel.util.StringAttribute">
+                    </property>
+                    <property name="1" class="ptolemy.kernel.util.StringAttribute">
+                    </property>
+                </port>
+                <port name="Lo" class="ptolemy.domains.modal.modal.ModalPort">
+                    <property name="output"/>
+                    <property name="environment_output" class="ptolemy.kernel.util.StringAttribute">
+                    </property>
+                    <property name="_type" class="ptolemy.actor.TypeAttribute" value="int">
+                    </property>
+                    <property name="2" class="ptolemy.kernel.util.StringAttribute">
+                    </property>
+                </port>
+                <entity name="_Controller" class="ptolemy.domains.modal.modal.ModalController">
+                    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={232, 257, 815, 509}, maximized=false}">
+                    </property>
+                    <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[600, 400]">
+                    </property>
+                    <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="1.0">
+                    </property>
+                    <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{300.0, 200.0}">
+                    </property>
+                    <port name="Li" class="ptolemy.domains.modal.modal.ModalPort">
+                        <property name="input"/>
+                        <property name="local_input" class="ptolemy.kernel.util.StringAttribute">
+                        </property>
+                        <property name="1" class="ptolemy.kernel.util.StringAttribute">
+                        </property>
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="{420.0, 164.796875}">
+                        </property>
+                    </port>
+                    <port name="Lo" class="ptolemy.domains.modal.modal.ModalPort">
+                        <property name="output"/>
+                        <property name="local_output" class="ptolemy.kernel.util.StringAttribute">
+                        </property>
+                        <property name="_type" class="ptolemy.actor.TypeAttribute" value="int">
+                        </property>
+                        <property name="2" class="ptolemy.kernel.util.StringAttribute">
+                        </property>
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="{420.0, 244.8671875}">
+                        </property>
+                    </port>
+                    <entity name="375787635" class="ptolemy.domains.modal.kernel.State">
+                        <property name="isInitialState" class="ptolemy.data.expr.Parameter" value="false">
+                        </property>
+                        <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                        </property>
+                        <property name="elementURIFragment" class="ptolemy.kernel.util.StringAttribute" value="//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.1">
+                        </property>
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="[190.0, 55.0]">
+                        </property>
+                    </entity>
+                    <entity name="375787636" class="ptolemy.domains.modal.kernel.State">
+                        <property name="isInitialState" class="ptolemy.data.expr.Parameter" value="true">
+                        </property>
+                        <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                        </property>
+                        <property name="elementURIFragment" class="ptolemy.kernel.util.StringAttribute" value="//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0">
+                        </property>
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="{180.0, 200.0}">
+                        </property>
+                    </entity>
+                    <relation name="375787636_transition_1" class="ptolemy.domains.modal.kernel.Transition">
+                        <property name="guardExpression" class="ptolemy.kernel.util.StringAttribute" value="false">
+                        </property>
+                        <property name="outputActions" class="ptolemy.domains.modal.kernel.OutputActionsAttribute" value="Lo=1">
+                        </property>
+                        <property name="reset" class="ptolemy.data.expr.Parameter" value="true">
+                        </property>
+                        <property name="preemptive" class="ptolemy.data.expr.Parameter" value="false">
+                        </property>
+                        <property name="defaultTransition" class="ptolemy.data.expr.Parameter" value="false">
+                        </property>
+                        <property name="nondeterministic" class="ptolemy.data.expr.Parameter" value="false">
+                        </property>
+                    </relation>
+                    <link port="375787635.incomingPort" relation="375787636_transition_1"/>
+                    <link port="375787636.outgoingPort" relation="375787636_transition_1"/>
+                </entity>
+                <relation name="LiRelation" class="ptolemy.actor.TypedIORelation">
+                    <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
+                    </property>
+                </relation>
+                <relation name="LoRelation" class="ptolemy.actor.TypedIORelation">
+                    <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
+                    </property>
+                </relation>
+                <link port="Li" relation="LiRelation"/>
+                <link port="Lo" relation="LoRelation"/>
+                <link port="_Controller.Li" relation="LiRelation"/>
+                <link port="_Controller.Lo" relation="LoRelation"/>
+            </entity>
+            <entity name="Lo_COMBINE2" class="ptolemy.actor.kiel.KielerCombine">
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[385.0, 40.0]">
+                </property>
+            </entity>
+            <relation name="Li_RELATION" class="ptolemy.actor.TypedIORelation">
+                <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+                </property>
+                <vertex name="Li_RELATIONVERTEX" value="[125.0, 45.0]">
+                </vertex>
+            </relation>
+            <relation name="Lo_RELATION" class="ptolemy.actor.TypedIORelation">
+                <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+                </property>
+                <vertex name="Lo_RELATIONVERTEX" value="[485.0, 35.0]">
+                </vertex>
+            </relation>
+            <relation name="relation2" class="ptolemy.actor.TypedIORelation">
+            </relation>
+            <link port="Li" relation="Li_RELATION"/>
+            <link port="Lo" relation="Lo_RELATION"/>
+            <link port="200586989_region_1.Li" relation="Li_RELATION"/>
+            <link port="200586989_region_1.Lo" relation="relation2"/>
+            <link port="Lo_COMBINE2.input" relation="relation2"/>
+            <link port="Lo_COMBINE2.output" relation="Lo_RELATION"/>
+        </entity>
+        <relation name="LiRelation" class="ptolemy.actor.TypedIORelation">
+            <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
+            </property>
+        </relation>
+        <relation name="LoRelation" class="ptolemy.actor.TypedIORelation">
+            <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
+            </property>
+        </relation>
+        <link port="Li" relation="LiRelation"/>
+        <link port="Lo" relation="LoRelation"/>
+        <link port="_Controller.Li" relation="LiRelation"/>
+        <link port="_Controller.Lo" relation="LoRelation"/>
+        <link port="200586989.Li" relation="LiRelation"/>
+        <link port="200586989.Lo" relation="LoRelation"/>
+    </entity>
+    <entity name="Lo_COMBINE" class="ptolemy.actor.kiel.KielerCombine">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{456.2578125, 93.00364583333334}">
+        </property>
+    </entity>
+    <entity name="O_COMBINE" class="ptolemy.actor.lib.AddSubtract">
+        <property name="signal name" class="ptolemy.data.expr.Parameter" value="'O'">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{448.609375, 203.0703125}">
+        </property>
+    </entity>
+    <entity name="Display" class="ptolemy.actor.lib.gui.Display">
+        <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={559, 336, 334, 231}, maximized=false}">
+        </property>
+        <property name="_paneSize" class="ptolemy.actor.gui.SizeAttribute" value="[326, 183]">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[570.0, 205.0]">
+        </property>
+    </entity>
+    <entity name="918158682_region_" class="ptolemy.domains.modal.modal.ModalModel">
+        <property name="_tableauFactory" class="ptolemy.vergil.modal.modal.ModalTableauFactory">
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[275.0, 170.0]">
+        </property>
+        <port name="Li" class="ptolemy.domains.modal.modal.ModalPort">
+            <property name="input"/>
+            <property name="local_input" class="ptolemy.kernel.util.StringAttribute">
+            </property>
+            <property name="1" class="ptolemy.kernel.util.StringAttribute">
+            </property>
+        </port>
+        <port name="Lo" class="ptolemy.domains.modal.modal.ModalPort">
+            <property name="output"/>
+            <property name="local_output" class="ptolemy.kernel.util.StringAttribute">
+            </property>
+            <property name="_type" class="ptolemy.actor.TypeAttribute" value="int">
+            </property>
+            <property name="2" class="ptolemy.kernel.util.StringAttribute">
+            </property>
+        </port>
+        <port name="O" class="ptolemy.domains.modal.modal.ModalPort">
+            <property name="output"/>
+            <property name="environment_output" class="ptolemy.kernel.util.StringAttribute">
+            </property>
+            <property name="2" class="ptolemy.kernel.util.StringAttribute">
+            </property>
+        </port>
+        <entity name="_Controller" class="ptolemy.domains.modal.modal.ModalController">
+            <port name="Li" class="ptolemy.domains.modal.modal.ModalPort">
+                <property name="input"/>
+                <property name="local_input" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="1" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="{300.0, 140.796875}">
+                </property>
+            </port>
+            <port name="Lo" class="ptolemy.domains.modal.modal.ModalPort">
+                <property name="output"/>
+                <property name="local_output" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="int">
+                </property>
+                <property name="2" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="{300.0, 204.8671875}">
+                </property>
+            </port>
+            <port name="O" class="ptolemy.domains.modal.modal.RefinementPort">
+                <property name="input"/>
+                <property name="output"/>
+                <property name="environment_output" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="2" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="{300.0, 268.9453125}">
+                </property>
+            </port>
+            <entity name="200586989" class="ptolemy.domains.modal.kernel.State">
+                <property name="refinementName" class="ptolemy.kernel.util.StringAttribute" value="200586989">
+                </property>
+                <property name="isInitialState" class="ptolemy.data.expr.Parameter" value="true">
+                </property>
+                <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                </property>
+                <property name="elementURIFragment" class="ptolemy.kernel.util.StringAttribute" value="//@innerStates.0/@regions.0/@innerStates.0">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="{300.0, 75.0}">
+                </property>
+            </entity>
+        </entity>
+        <entity name="200586989" class="ptolemy.domains.modal.modal.Refinement">
+            <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={255, 405, 952, 489}, maximized=false}">
+            </property>
+            <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[737, 382]">
+            </property>
+            <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="1.0">
+            </property>
+            <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{368.5, 191.0}">
+            </property>
+            <property name="SyncChartDirector" class="ptolemy.actor.kiel.SyncChartDirector">
+                <property name="_location" class="ptolemy.kernel.util.Location" value="{80, 300}">
+                </property>
+            </property>
+            <port name="Li" class="ptolemy.domains.modal.modal.ModalPort">
+                <property name="input"/>
+                <property name="local_input" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="1" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[55.0, 135.0]">
+                </property>
+            </port>
+            <port name="Lo" class="ptolemy.domains.modal.modal.ModalPort">
+                <property name="output"/>
+                <property name="local_output" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="_type" class="ptolemy.actor.TypeAttribute" value="int">
+                </property>
+                <property name="2" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[705.0, 100.0]">
+                </property>
+            </port>
+            <port name="O" class="ptolemy.domains.modal.modal.RefinementPort">
+                <property name="output"/>
+                <property name="environment_output" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="2" class="ptolemy.kernel.util.StringAttribute">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[510.0, 165.0]">
+                </property>
+            </port>
+            <entity name="200586989_region_2" class="ptolemy.domains.modal.modal.ModalModel">
+                <property name="_tableauFactory" class="ptolemy.vergil.modal.modal.ModalTableauFactory">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="{274.65625, 124.27812499999999}">
+                </property>
+                <port name="Li" class="ptolemy.domains.modal.modal.ModalPort">
+                    <property name="input"/>
+                    <property name="environment_input" class="ptolemy.kernel.util.StringAttribute">
+                    </property>
+                    <property name="1" class="ptolemy.kernel.util.StringAttribute">
+                    </property>
+                </port>
+                <port name="Lo" class="ptolemy.domains.modal.modal.ModalPort">
+                    <property name="output"/>
+                    <property name="environment_output" class="ptolemy.kernel.util.StringAttribute">
+                    </property>
+                    <property name="_type" class="ptolemy.actor.TypeAttribute" value="int">
+                    </property>
+                    <property name="2" class="ptolemy.kernel.util.StringAttribute">
+                    </property>
+                </port>
+                <port name="O" class="ptolemy.domains.modal.modal.ModalPort">
+                    <property name="output"/>
+                    <property name="environment_output" class="ptolemy.kernel.util.StringAttribute">
+                    </property>
+                    <property name="2" class="ptolemy.kernel.util.StringAttribute">
+                    </property>
+                </port>
+                <entity name="_Controller" class="ptolemy.domains.modal.modal.ModalController">
+                    <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={236, 310, 815, 509}, maximized=false}">
+                    </property>
+                    <property name="_vergilSize" class="ptolemy.actor.gui.SizeAttribute" value="[600, 400]">
+                    </property>
+                    <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="1.0">
+                    </property>
+                    <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{300.0, 200.0}">
+                    </property>
+                    <port name="Li" class="ptolemy.domains.modal.modal.ModalPort">
+                        <property name="input"/>
+                        <property name="local_input" class="ptolemy.kernel.util.StringAttribute">
+                        </property>
+                        <property name="1" class="ptolemy.kernel.util.StringAttribute">
+                        </property>
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="{420.0, 140.796875}">
+                        </property>
+                    </port>
+                    <port name="Lo" class="ptolemy.domains.modal.modal.ModalPort">
+                        <property name="output"/>
+                        <property name="local_output" class="ptolemy.kernel.util.StringAttribute">
+                        </property>
+                        <property name="_type" class="ptolemy.actor.TypeAttribute" value="int">
+                        </property>
+                        <property name="2" class="ptolemy.kernel.util.StringAttribute">
+                        </property>
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="{420.0, 204.8671875}">
+                        </property>
+                    </port>
+                    <port name="O" class="ptolemy.domains.modal.modal.RefinementPort">
+                        <property name="input"/>
+                        <property name="output"/>
+                        <property name="environment_output" class="ptolemy.kernel.util.StringAttribute">
+                        </property>
+                        <property name="2" class="ptolemy.kernel.util.StringAttribute">
+                        </property>
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="{420.0, 268.9453125}">
+                        </property>
+                    </port>
+                    <entity name="886321812" class="ptolemy.domains.modal.kernel.State">
+                        <property name="isInitialState" class="ptolemy.data.expr.Parameter" value="false">
+                        </property>
+                        <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                        </property>
+                        <property name="elementURIFragment" class="ptolemy.kernel.util.StringAttribute" value="//@innerStates.0/@regions.0/@innerStates.0/@regions.1/@innerStates.1">
+                        </property>
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="[335.0, 165.0]">
+                        </property>
+                    </entity>
+                    <entity name="886321813" class="ptolemy.domains.modal.kernel.State">
+                        <property name="isInitialState" class="ptolemy.data.expr.Parameter" value="true">
+                        </property>
+                        <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                        </property>
+                        <property name="elementURIFragment" class="ptolemy.kernel.util.StringAttribute" value="//@innerStates.0/@regions.0/@innerStates.0/@regions.1/@innerStates.0">
+                        </property>
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="{180.0, 200.0}">
+                        </property>
+                    </entity>
+                    <entity name="state" class="ptolemy.domains.modal.kernel.State">
+                        <property name="_hideName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                        </property>
+                        <property name="_location" class="ptolemy.kernel.util.Location" value="[335.0, 230.0]">
+                        </property>
+                    </entity>
+                    <relation name="886321813_transition_1" class="ptolemy.domains.modal.kernel.Transition">
+                        <property name="guardExpression" class="ptolemy.kernel.util.StringAttribute" value="Li_isPresent">
+                        </property>
+                        <property name="outputActions" class="ptolemy.domains.modal.kernel.OutputActionsAttribute" value="O=1">
+                        </property>
+                        <property name="exitAngle" class="ptolemy.data.expr.Parameter" value="-1.1618616079091395">
+                        </property>
+                        <property name="gamma" class="ptolemy.data.expr.Parameter" value="-0.3097252429768342">
+                        </property>
+                        <property name="reset" class="ptolemy.data.expr.Parameter" value="true">
+                        </property>
+                        <property name="preemptive" class="ptolemy.data.expr.Parameter" value="false">
+                        </property>
+                        <property name="defaultTransition" class="ptolemy.data.expr.Parameter" value="false">
+                        </property>
+                        <property name="nondeterministic" class="ptolemy.data.expr.Parameter" value="false">
+                        </property>
+                    </relation>
+                    <relation name="relation" class="ptolemy.domains.modal.kernel.Transition">
+                        <property name="guardExpression" class="ptolemy.kernel.util.StringAttribute" value="!Li_isPresent">
+                        </property>
+                        <property name="outputActions" class="ptolemy.domains.modal.kernel.OutputActionsAttribute" value="O=2">
+                        </property>
+                        <property name="exitAngle" class="ptolemy.data.expr.Parameter" value="0.6283185307179586">
+                        </property>
+                        <property name="gamma" class="ptolemy.data.expr.Parameter" value="0.8706134087931839">
+                        </property>
+                    </relation>
+                    <link port="886321812.incomingPort" relation="886321813_transition_1"/>
+                    <link port="886321813.outgoingPort" relation="886321813_transition_1"/>
+                    <link port="886321813.outgoingPort" relation="relation"/>
+                    <link port="state.incomingPort" relation="relation"/>
+                </entity>
+                <relation name="LiRelation" class="ptolemy.actor.TypedIORelation">
+                    <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
+                    </property>
+                </relation>
+                <relation name="LoRelation" class="ptolemy.actor.TypedIORelation">
+                    <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
+                    </property>
+                </relation>
+                <relation name="ORelation" class="ptolemy.actor.TypedIORelation">
+                    <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
+                    </property>
+                </relation>
+                <link port="Li" relation="LiRelation"/>
+                <link port="Lo" relation="LoRelation"/>
+                <link port="O" relation="ORelation"/>
+                <link port="_Controller.Li" relation="LiRelation"/>
+                <link port="_Controller.Lo" relation="LoRelation"/>
+                <link port="_Controller.O" relation="ORelation"/>
+            </entity>
+            <entity name="O_COMBINE" class="ptolemy.actor.lib.AddSubtract">
+                <property name="signal name" class="ptolemy.data.expr.Parameter" value="'O'">
+                </property>
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[390.0, 165.0]">
+                </property>
+            </entity>
+            <entity name="Lo_COMBINE2" class="ptolemy.actor.kiel.KielerCombine">
+                <property name="_location" class="ptolemy.kernel.util.Location" value="[570.0, 80.0]">
+                </property>
+            </entity>
+            <relation name="Li_RELATION" class="ptolemy.actor.TypedIORelation">
+                <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+                </property>
+                <vertex name="Li_RELATIONVERTEX" value="[135.0, 200.0]">
+                </vertex>
+            </relation>
+            <relation name="Lo_RELATION" class="ptolemy.actor.TypedIORelation">
+                <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+                </property>
+                <vertex name="Lo_RELATIONVERTEX" value="[660.0, 95.0]">
+                </vertex>
+            </relation>
+            <relation name="O200586989_region_2_COMBINERELATION" class="ptolemy.actor.TypedIORelation">
+                <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+                </property>
+            </relation>
+            <relation name="O_RELATION" class="ptolemy.actor.TypedIORelation">
+                <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+                </property>
+                <vertex name="O_RELATIONVERTEX" value="[450.0, 165.0]">
+                </vertex>
+            </relation>
+            <relation name="relation" class="ptolemy.actor.TypedIORelation">
+            </relation>
+            <relation name="relation4" class="ptolemy.actor.TypedIORelation">
+                <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+                </property>
+                <vertex name="vertex1" value="[660.0, 200.0]">
+                </vertex>
+            </relation>
+            <link port="Li" relation="Li_RELATION"/>
+            <link port="Lo" relation="Lo_RELATION"/>
+            <link port="O" relation="O_RELATION"/>
+            <link port="200586989_region_2.Li" relation="Li_RELATION"/>
+            <link port="200586989_region_2.Lo" relation="relation"/>
+            <link port="200586989_region_2.O" relation="O200586989_region_2_COMBINERELATION"/>
+            <link port="O_COMBINE.plus" relation="O200586989_region_2_COMBINERELATION"/>
+            <link port="O_COMBINE.output" relation="O_RELATION"/>
+            <link port="Lo_COMBINE2.input" relation="relation"/>
+            <link port="Lo_COMBINE2.output" relation="Lo_RELATION"/>
+            <link relation1="Lo_RELATION" relation2="relation4"/>
+        </entity>
+        <relation name="LiRelation" class="ptolemy.actor.TypedIORelation">
+            <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
+            </property>
+        </relation>
+        <relation name="LoRelation" class="ptolemy.actor.TypedIORelation">
+            <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
+            </property>
+        </relation>
+        <relation name="ORelation" class="ptolemy.actor.TypedIORelation">
+            <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
+            </property>
+        </relation>
+        <link port="Li" relation="LiRelation"/>
+        <link port="Lo" relation="LoRelation"/>
+        <link port="O" relation="ORelation"/>
+        <link port="_Controller.Li" relation="LiRelation"/>
+        <link port="_Controller.Lo" relation="LoRelation"/>
+        <link port="_Controller.O" relation="ORelation"/>
+        <link port="200586989.Li" relation="LiRelation"/>
+        <link port="200586989.Lo" relation="LoRelation"/>
+        <link port="200586989.O" relation="ORelation"/>
+    </entity>
+    <relation name="Li_RELATION" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+        </property>
+        <vertex name="Li_RELATIONVERTEX" value="[125.0, 130.0]">
+        </vertex>
+    </relation>
+    <relation name="Lo918158682_region_1_COMBINERELATION" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="-1">
+        </property>
+    </relation>
+    <relation name="relation" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation2" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <relation name="relation3" class="ptolemy.actor.TypedIORelation">
+    </relation>
+    <link port="918158682_region_1.Li" relation="Li_RELATION"/>
+    <link port="918158682_region_1.Lo" relation="Lo918158682_region_1_COMBINERELATION"/>
+    <link port="Lo_COMBINE.input" relation="Lo918158682_region_1_COMBINERELATION"/>
+    <link port="Lo_COMBINE.input" relation="relation2"/>
+    <link port="Lo_COMBINE.output" relation="Li_RELATION"/>
+    <link port="O_COMBINE.plus" relation="relation3"/>
+    <link port="O_COMBINE.output" relation="relation"/>
+    <link port="Display.input" relation="relation"/>
+    <link port="918158682_region_.Li" relation="Li_RELATION"/>
+    <link port="918158682_region_.Lo" relation="relation2"/>
+    <link port="918158682_region_.O" relation="relation3"/>
+</entity>

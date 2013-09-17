@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_C17C4eXCEd-73qpz5Jyfhw" name="model">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_C2MvsuXCEd-73qpz5Jyfhw" name="StateMachine0">
+    <region xmi:id="_C2QaEOXCEd-73qpz5Jyfhw" name="Region0">
+      <subvertex xmi:type="uml:State" xmi:id="_F6BtEOXCEd-73qpz5Jyfhw" name="a"/>
+      <subvertex xmi:type="uml:State" xmi:id="_HAwroOXCEd-73qpz5Jyfhw" name="b"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_H2QwQOXCEd-73qpz5Jyfhw" name=""/>
+      <subvertex xmi:type="uml:State" xmi:id="_ueQKwB_kEeGb6t-aFA3Rug" name="c"/>
+      <transition xmi:id="_IztP8OXCEd-73qpz5Jyfhw" name="" source="_H2QwQOXCEd-73qpz5Jyfhw" target="_F6BtEOXCEd-73qpz5Jyfhw"/>
+      <transition xmi:id="_K_ej8OXCEd-73qpz5Jyfhw" name="a" source="_F6BtEOXCEd-73qpz5Jyfhw" target="_HAwroOXCEd-73qpz5Jyfhw"/>
+      <transition xmi:id="_wVtboB_kEeGb6t-aFA3Rug" name="b" source="_F6BtEOXCEd-73qpz5Jyfhw" target="_ueQKwB_kEeGb6t-aFA3Rug"/>
+      <transition xmi:id="_XsmicR_lEeGTwfFE5aMtAA" name="a" source="_HAwroOXCEd-73qpz5Jyfhw" target="_F6BtEOXCEd-73qpz5Jyfhw"/>
+      <transition xmi:id="_Z1TUUB_lEeGTwfFE5aMtAA" name="b" source="_ueQKwB_kEeGb6t-aFA3Rug" target="_F6BtEOXCEd-73qpz5Jyfhw"/>
+      <transition xmi:id="_sQSB4B_lEeGTwfFE5aMtAA" name="a" source="_ueQKwB_kEeGb6t-aFA3Rug" target="_ueQKwB_kEeGb6t-aFA3Rug"/>
+      <transition xmi:id="_tPRZsB_lEeGTwfFE5aMtAA" name="b" source="_HAwroOXCEd-73qpz5Jyfhw" target="_HAwroOXCEd-73qpz5Jyfhw"/>
+    </region>
+  </packagedElement>
+</uml:Model>

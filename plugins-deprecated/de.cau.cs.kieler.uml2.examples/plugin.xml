@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kex">
+      <category
+            id="de.cau.cs.kieler.uml2"
+            title="UML2 StateChart">
+      </category>
+      <example
+            author="KIELER Workgroup"
+            category="de.cau.cs.kieler.uml2"
+            contact="kieler@informatik.uni-kiel.de"
+            description="UML2 Example Model for Simulation and Verification"
+            generation_date="de.cau.cs.kieler.uml2.model.example"
+            id="de.cau.cs.kieler.uml2.model"
+            overview_pic="images/model.png"
+            root_directory="examples/"
+            title="UML2 Model">
+         <resource
+               direct_open="true"
+               local_path="examples/model.di"
+               resource_type="file">
+         </resource>
+         <resource
+               direct_open="true"
+               local_path="examples/model.notation"
+               resource_type="file">
+         </resource>
+         <resource
+               direct_open="true"
+               local_path="examples/model.uml"
+               resource_type="file">
+         </resource>
+         <resource
+               direct_open="true"
+               local_path="examples/modelchecking.execution"
+               resource_type="file">
+         </resource>
+         <resource
+               direct_open="true"
+               local_path="examples/simulation.execution"
+               resource_type="file">
+         </resource>
+      </example>
+   </extension>
+
+</plugin>
