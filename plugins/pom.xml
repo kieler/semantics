@@ -34,6 +34,9 @@
     <module>de.cau.cs.kieler.core.model.xtext</module>
     <module>de.cau.cs.kieler.core.product</module>
     <module>de.cau.cs.kieler.esterel</module>
+    <module>de.cau.cs.kieler.esterel.kexpressions</module>
+    <module>de.cau.cs.kieler.esterel.kexpressions.edit</module>
+    <module>de.cau.cs.kieler.esterel.kexpressions.ui</module>
     <module>de.cau.cs.kieler.esterel.cec</module>
     <module>de.cau.cs.kieler.esterel.cec.linux.x86</module>
     <module>de.cau.cs.kieler.esterel.cec.linux.x86_64</module>
