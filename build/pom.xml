@@ -7,30 +7,40 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-<!-- all plugins need to be listed as module -->
 
-  <modules>
-    <module>../../plugins</module>
-    <module>../../features</module>
-    <module>../de.cau.cs.kieler.semantics.repository</module>
-  </modules>
+  <!-- Define a few properties used throughout all build profiles. -->
+  <properties>
+    <tycho-version>0.18.1</tycho-version>
+    <targetJdk>1.5</targetJdk>
 
+    <!-- guarantee that we use utf8 for compilation, this is especially required
+         due to xtend's template symbols («) when running maven on windows. -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+  </properties>
+
+
+  <!-- Define one profile for each output target we have. -->
   <profiles>
+    <!-- The Semantics p2 repository and product. -->
     <profile>
-      <id>juno42</id>
-      <properties>
-        <tycho-version>0.18.1</tycho-version>
-        <targetJdk>1.5</targetJdk>
-      </properties>
+      <id>semantics</id>
+      
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
 
       <repositories>
         <repository>
           <id>p2.juno42</id>
           <layout>p2</layout>
           <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/juno422/</url>
-<!--
-          <url>file:/home/java/repository/juno422/</url>
--->
+        </repository>
+        <repository>
+          <id>p2.kieler-pragmatics</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_0.9.1/</url>
         </repository>
         <repository>
           <id>p2.ptolemy</id>
@@ -38,20 +48,9 @@
           <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy/</url>
         </repository>
         <repository>
-          <id>p2.kieler-pragmatics</id>
-          <layout>p2</layout>
-          <!--<url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_0.9/</url>-->
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics/</url>
-        </repository>
-        <repository>
           <id>p2.eclipse.juno</id>
           <layout>p2</layout>
           <url>http://download.eclipse.org/releases/juno</url>
-        </repository>
-        <repository>
-          <id>p2.papyrus</id>
-          <layout>p2</layout>
-          <url>http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/maintenance/juno</url>
         </repository>
         <repository>
           <id>p2.orbit</id>
@@ -59,6 +58,12 @@
           <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository/</url>
         </repository>
       </repositories>
+
+      <modules>
+        <module>../plugins</module>
+        <module>../features</module>
+        <module>../de.cau.cs.kieler.semantics.repository</module>
+      </modules>
     </profile>
   </profiles>
 
