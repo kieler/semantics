@@ -488,10 +488,11 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    }
 	
    // Expand a signal.
-   def dispatch expand(ValuedObject signal) {
+   def dispatch CharSequence expand(ValuedObject signal) {
        if (signal.isSignal) {
         return	 '''PRESENT(sig_«signal.name»)'''
        }
+       return ''''''
    }
 
    // Expand a int expression value.
@@ -505,7 +506,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    }
 
    // Expand a boolean expression value (true or false).
-   def dispatch expand(BooleanValue expression) {
+   def dispatch CharSequence expand(BooleanValue expression) {
    	 '''«IF expression.value == true »1«ENDIF»«IF expression.value == false»0«ENDIF»'''
    }
 

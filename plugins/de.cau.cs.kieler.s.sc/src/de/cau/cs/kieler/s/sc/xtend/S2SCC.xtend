@@ -631,16 +631,18 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    // -------------------------------------------------------------------------
     
    // Expand a signal.
-   def dispatch expand(ValuedObject signal) {
+   def dispatch CharSequence expand(ValuedObject signal) {
        if (signal.isSignal) {
             return  '''PRESENT_SCC(«signal.name»)'''
        }
+       return ''''''
    }
    // Expand a signal within a value reference
-   def dispatch expand_val(ValuedObject signal) {
+   def dispatch CharSequence expand_val(ValuedObject signal) {
        if (signal.isSignal) {
             return  '''«signal.name»'''
        }
+       return ''''''
    }
    def dispatch expand_val(ValuedObjectReference valuedObjectReference) {
         '''«valuedObjectReference.valuedObject.expand_val»'''
