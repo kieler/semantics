@@ -89,16 +89,21 @@ import de.cau.cs.kieler.kies.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.Activator;
 import de.cau.cs.kieler.kies.EsterelToSyncChartDataComponent;
 import de.cau.cs.kieler.kies.SyncChartsOptimizationDataComponent;
-import de.cau.cs.kieler.synccharts.Action;
-import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.StateType;
-import de.cau.cs.kieler.synccharts.SyncchartsFactory;
-import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
-import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
-import de.cau.cs.kieler.synccharts.listener.SyncchartsContentUtil;
-import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
-import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializer;
+import de.cau.cs.kieler.sccharts.Action;
+import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.StateType;
+import de.cau.cs.kieler.sccharts.SCChartsFactory;
+import de.cau.cs.kieler.sccharts.TextEffect;
+
+import de.cau.cs.kieler.sccharts.SCChartsPlugin;
+
+import de.cau.cs.kieler.sccharts.diagram.part.SyncchartsDiagramEditor;
+import de.cau.cs.kieler.sccharts.diagram.part.SyncchartsDiagramEditorUtil;
+
+import de.cau.cs.kieler.sccharts.listener.SyncchartsContentUtil;
+import de.cau.cs.kieler.sccharts.text.actions.bridge.ActionLabelProcessorWrapper;
+import de.cau.cs.kieler.sccharts.text.actions.bridge.ActionLabelSerializer;
 
 /**
  * Utility class providing convenient methods for the esterel to synccharts transformation and the
@@ -196,9 +201,9 @@ public final class TransformationUtil {
     public static void setBodyReference(final State s, final EObject obj) {
         if (obj != null && s != null) {
             s.setBodyReference(obj);
-            TextualCode code = KExpressionsFactory.eINSTANCE.createTextualCode();
+            TextExpression code = KExpressionsFactory.eINSTANCE.createTextExpression();
             s.setType(StateType.TEXTUAL);
-            code.setCode(TransformationUtil.getSerializedString(obj));
+            code.setText(TransformationUtil.getSerializedString(obj));
             s.getBodyText().add(code);
         }
     }
@@ -237,18 +242,18 @@ public final class TransformationUtil {
                         return boolVal;
                     } else {
                         TextExpression te = fac.createTextExpression();
-                        te.setCode(val);
+                        te.setText(val);
                         return te;
                     }
                 }
             }
         } else if (cexpr.getConstant() != null) {
             TextExpression te = fac.createTextExpression();
-            te.setCode(cexpr.getConstant().getName());
+            te.setText(cexpr.getConstant() + "");
             return te;
         }
         TextExpression te = fac.createTextExpression();
-        te.setCode("unsupported ConstantExpression: " + cexpr.getClass());
+        te.setText("unsupported ConstantExpression: " + cexpr.getClass().getName());
         return te;
     }
 
@@ -355,7 +360,7 @@ public final class TransformationUtil {
 
             // setup initial syncchart with one state in the global region
             Resource resource = xtextResourceSet.getResource(kixsURI, true);
-            SyncchartsFactory sf = SyncchartsFactory.eINSTANCE;
+            SCChartsFactory sf = SCChartsFactory.eINSTANCE;
             Region rootRegion = (Region) resource.getContents().get(0);
             State rootState = sf.createState();
             rootState.setId("r0");
@@ -368,9 +373,9 @@ public final class TransformationUtil {
             rootState.setBodyReference(esterelModule);
 
             // parse the esterel code and display as textual code
-            TextualCode code = KExpressionsFactory.eINSTANCE.createTextualCode();
+            TextExpression code = KExpressionsFactory.eINSTANCE.createTextExpression();
             rootState.getBodyText().add(code);
-            code.setCode(TransformationUtil.getSerializedString(esterelModule));
+            code.setText(TransformationUtil.getSerializedString(esterelModule));
 
             @SuppressWarnings("rawtypes")
             Map saveOptions = Maps.newHashMap();
@@ -405,7 +410,7 @@ public final class TransformationUtil {
             if (kixsFile.exists()) {
                 Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
                 String currentName = kixsFile.getName();
-                currentName = currentName.substring(0, currentName.lastIndexOf(".") + 1) + "kixs";
+                currentName = currentName.substring(0, currentName.lastIndexOf(".") + 1) + "scc";
                 InputDialog inputdiag = new InputDialog(shell, "Existing File.",
                         "File already exists. Overwrite or choose a new name.", currentName,
                         new KixsInputValidator());
@@ -422,31 +427,31 @@ public final class TransformationUtil {
                 }
             }
 
-            // remove a possible old .kids file to avoid any graphic relicts.
-            final IFile possibleKidsFile = workspace.getRoot().getFile(
-                    newKixsFile.getFullPath().removeFileExtension().addFileExtension("kids"));
-            if (possibleKidsFile.exists()) {
-                // in case the .kids is currently opened, close it first
-                MonitoredOperation.runInUI(new Runnable() {
-                    public void run() {
-                        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                                .getActivePage();
-                        IEditorReference[] editors = page.getEditorReferences();
-                        for (IEditorReference editorRef : editors) {
-                            if (editorRef.getId().equals(SyncchartsDiagramEditor.ID)) {
-                                if (editorRef.getPartName().equals(possibleKidsFile.getName())) {
-                                    page.closeEditor(editorRef.getEditor(false), false);
-                                }
-                            }
-                        }
-                    }
-                }, true);
-                possibleKidsFile.delete(true, null);
-            }
-
-            // create corresponding syncchart
-            final URI kidsURI = URI.createPlatformResourceURI(newKixsFile.getFullPath()
-                    .removeFileExtension().addFileExtension("kids").toString(), false);
+//            // remove a possible old .kids file to avoid any graphic relicts.
+//            final IFile possibleKidsFile = workspace.getRoot().getFile(
+//                    newKixsFile.getFullPath().removeFileExtension().addFileExtension("kids"));
+//            if (possibleKidsFile.exists()) {
+//                // in case the .kids is currently opened, close it first
+//                MonitoredOperation.runInUI(new Runnable() {
+//                    public void run() {
+//                        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+//                                .getActivePage();
+//                        IEditorReference[] editors = page.getEditorReferences();
+//                        for (IEditorReference editorRef : editors) {
+//                            if (editorRef.getId().equals(SCChartsPlugin.EDITOR_ID)) {
+//                                if (editorRef.getPartName().equals(possibleKidsFile.getName())) {
+//                                    page.closeEditor(editorRef.getEditor(false), false);
+//                                }
+//                            }
+//                        }
+//                    }
+//                }, true);
+//                possibleKidsFile.delete(true, null);
+//            }
+//
+//            // create corresponding syncchart
+//            final URI kidsURI = URI.createPlatformResourceURI(newKixsFile.getFullPath()
+//                    .removeFileExtension().addFileExtension("kids").toString(), false);
             final URI kixsURI = URI.createPlatformResourceURI(newKixsFile.getFullPath().toString(),
                     false);
 
@@ -456,6 +461,9 @@ public final class TransformationUtil {
             final IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
                 protected void execute(final IProgressMonitor monitor) throws CoreException,
                         InterruptedException {
+                    
+                    final Resource modelResource =  kixsURI.r getResourceSet().createResource(kixsURI);
+                    
                     Resource diagram = SyncchartsDiagramEditorUtil.createDiagram(kidsURI, kixsURI,
                             monitor);
                     try {
@@ -599,7 +607,8 @@ public final class TransformationUtil {
         // create an artificial editing domain and register trigger listener
         TransactionalEditingDomain ted = TransactionalEditingDomain.Factory.INSTANCE
                 .createEditingDomain(rs);
-        SyncchartsContentUtil.addTriggerListeners(ted);
+//TODO: CURRENTLY DEACTIVATED
+//        SyncchartsContentUtil.addTriggerListeners(ted);
 
         try {
             // set up the data component in headless mode
@@ -642,10 +651,11 @@ public final class TransformationUtil {
 
             // process action labels
             try {
-                ActionLabelProcessorWrapper.processActionLabels(rootRegion,
-                        ActionLabelProcessorWrapper.SERIALIZE);
-                ActionLabelProcessorWrapper.processActionLabels(rootRegion,
-                        ActionLabelProcessorWrapper.PARSE);
+// TODO: CURRENTLY DEACTIVATED
+//                ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+//                        ActionLabelProcessorWrapper.SERIALIZE);
+//                ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+//                        ActionLabelProcessorWrapper.PARSE);
             } catch (Exception e) {
                 TransformationUtil.LOGGER.info("Parse or serialization error." + e.getMessage());
             }
@@ -683,7 +693,7 @@ public final class TransformationUtil {
                 IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                         .getActivePage();
                 try {
-                    page.openEditor(new FileEditorInput(fileToOpen), SyncchartsDiagramEditor.ID);
+                    page.openEditor(new FileEditorInput(fileToOpen), SCChartsPlugin.EDITOR_ID);
                 } catch (PartInitException e) {
                     Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                             "Problem opening the SyncCharts Diagram.", e);

@@ -22,14 +22,17 @@ Require-Bundle: org.eclipse.ui,
  com.google.guava;bundle-version="8.0.0",
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.sim.kiem,
- de.cau.cs.kieler.synccharts,
  de.cau.cs.kieler.core.kivi,
  de.cau.cs.kieler.synccharts.diagram,
  de.cau.cs.kieler.synccharts.ksbase,
  de.cau.cs.kieler.core.model.xtend,
  de.cau.cs.kieler.core.model.gmf,
  de.cau.cs.kieler.esterel,
- de.cau.cs.kieler.kiml.kivi
+ de.cau.cs.kieler.kiml.kivi,
+ de.cau.cs.kieler.sccharts,
+ de.cau.cs.kieler.sccharts.text,
+ de.cau.cs.kieler.sccharts.text.ui,
+ de.cau.cs.kieler.core.model.xtext;bundle-version="0.3.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kies,

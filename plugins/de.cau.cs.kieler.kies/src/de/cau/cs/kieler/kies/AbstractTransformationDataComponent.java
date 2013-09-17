@@ -31,6 +31,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtend.XtendFacade;
 import org.eclipse.xtend.expression.Variable;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.json.JSONObject;
 
 import com.google.common.collect.Maps;
@@ -40,15 +41,17 @@ import de.cau.cs.kieler.core.model.gmf.effects.RefreshGMFEditPoliciesEffect;
 import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.xtend.util.XtendTransformationUtil;
+import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
 import de.cau.cs.kieler.kies.kivi.KiesTransformationContext;
 import de.cau.cs.kieler.kies.util.TransformationUtil;
 import de.cau.cs.kieler.kiml.kivi.LayoutEffect;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
+import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.State;
+
+//import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
  * Abstract implementation of a TransformationDataComponent.
@@ -334,12 +337,16 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     protected void fetchRootRegionAndState() {
         // fetch the root model elements
         IEditorPart editor = TransformationUtil.getActiveEditor();
-        if (editor instanceof SyncchartsDiagramEditor) {
-            EditPart rootEditPart = ((DiagramEditor) editor).getDiagramEditPart();
-
-            Object selView = rootEditPart.getModel();
-            EObject selModel = ((View) selView).getElement();
-            rootRegion = (Region) selModel;
+        if (editor instanceof XtextEditor) {
+            
+            Region rootRegion = (Region) XtextModelingUtil.getModelFromXtextEditor((XtextEditor) editor,
+                    true);
+            
+//            EditPart rootEditPart = ((DiagramEditor) editor).getDiagramEditPart();
+//            Object selView = rootEditPart.getModel();
+//            EObject selModel = ((View) selView).getElement();
+//            rootRegion = (Region) selModel;
+            
             if (rootRegion != null && rootRegion.getStates().size() > 0) {
                 State root = rootRegion.getStates().get(0);
                 rootState = root;
@@ -407,18 +414,20 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         effect.execute();
         effect.getResult();
         final IEditorPart currentlyActiveEditor = TransformationUtil.getActiveEditor();
-        if (currentlyActiveEditor instanceof SyncchartsDiagramEditor) {
-            RefreshGMFEditPoliciesEffect gmfEffect = new RefreshGMFEditPoliciesEffect(
-                    (SyncchartsDiagramEditor) currentlyActiveEditor, true);
-            gmfEffect.execute();
+        if (currentlyActiveEditor instanceof XtextEditor) {
 
-            processLayout((SyncchartsDiagramEditor) currentlyActiveEditor);
+// TODO: CURRENTLY DEACTIVATED            
+//            RefreshGMFEditPoliciesEffect gmfEffect = new RefreshGMFEditPoliciesEffect(
+//                    (SyncchartsDiagramEditor) currentlyActiveEditor, true);
+//            gmfEffect.execute();
+
+            //processLayout((SyncchartsDiagramEditor) currentlyActiveEditor);
         }
     }
 
-    private void processLayout(final SyncchartsDiagramEditor activeEditor) {
-        // apply automatic layout by triggering the trigger (null layouts whole diagram)
-        LayoutEffect layoutEffect = new LayoutEffect(activeEditor, null);
-        layoutEffect.execute();
-    }
+//    private void processLayout(final SyncchartsDiagramEditor activeEditor) {
+//        // apply automatic layout by triggering the trigger (null layouts whole diagram)
+//        LayoutEffect layoutEffect = new LayoutEffect(activeEditor, null);
+//        layoutEffect.execute();
+//    }
 }
