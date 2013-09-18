@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.cau.cs.kieler.esterel.feature"
-      label="KIELER Esterel"
-      version="0.2.0.qualifier"
+      id="de.cau.cs.kieler.sccharts.feature"
+      label="KIELER SCCharts Editing/Simulation/Code Gen"
+      version="0.8.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel"
-      plugin="de.cau.cs.kieler.esterel.ui">
+      plugin="de.cau.cs.kieler.sccharts">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
-      KIELER Esterel feature contains an Xtext based full featured textual Esterel editor including syntaxt highlighting and code completion and a bundled version of the Columbia Esterel Compiler (CEC) for simulation. During simulation there is also debug mode available that is able to highlight active Esterel statements.
+      KIELER SCCharts feature contains the KIELER SCCharts Textual Editor (*.sct) with automatic KLighD diagram synthesis. SCCharts can be simulated with the Ptolemy II (UC Berkeley) simulation engine (KLePto). Code generation to Synchronous C (SC) or Syncchronous Java (SJ) is also provided.
    </description>
 
    <copyright>
@@ -227,7 +227,6 @@ litigation.
       <import feature="org.eclipse.xtend" version="1.0.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.runtime" version="2.1.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.ui" version="2.1.0" match="greaterOrEqual"/>
-      <import plugin="org.apache.batik.swing" version="1.6.0" match="equivalent"/>
    </requires>
 
    <plugin
@@ -252,14 +251,21 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.annotations.text"
+         id="de.cau.cs.kieler.core.kexpressions"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.annotations.text.ui"
+         id="de.cau.cs.kieler.core.kexpressions.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.kexpressions.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -287,14 +293,14 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.model.xtend"
+         id="de.cau.cs.kieler.core.model.gmf"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.model.xtext"
+         id="de.cau.cs.kieler.core.model.xtend"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -315,19 +321,88 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.kev"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="de.cau.cs.kieler.kex"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="de.cau.cs.kieler.kex.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kiml"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kiml.gmf"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kiml.graphviz.dot"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kiml.graphviz.layouter"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kiml.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.klay.layered"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.ksbase"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.ksbase.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.s"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.s.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.sim.kiem"
@@ -351,6 +426,34 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.sim.instructions"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.sim.kart"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.sim.kart.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.sim.benchmark"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="de.cau.cs.kieler.sim.kiem.ui.datacomponent"
          download-size="0"
          install-size="0"
@@ -358,14 +461,14 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.kiem.ui.launching"
+         id="de.cau.cs.kieler.sim.kivi"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.kivi"
+         id="de.cau.cs.kieler.sim.ptolemy"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -386,6 +489,55 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.sjl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.sccharts"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.sccharts.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.sccharts.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.sccharts.klighd"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.sccharts.text"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.sccharts.text.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.json"
          download-size="0"
          install-size="0"
@@ -393,21 +545,76 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.cec"
+         id="org.ptolemy"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.ptolemy.moml"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.cec.sim"
+         id="de.cau.cs.kieler.kev"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.cec.sim.kivi"
+         id="org.apache.batik.swing"
+         download-size="0"
+         install-size="0"
+         version="1.6.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kiml.service"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.model.xtext"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.sim.kiem.ui.launching"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.annotations.text"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.annotations.text.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.sim.eso"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.sim.eso.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -419,7 +626,6 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
 
    <plugin
          id="de.cau.cs.kieler.esterel.kexpressions"
@@ -442,51 +648,6 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
-
-   <plugin
-         id="de.cau.cs.kieler.esterel.cec.linux.x86"
-         os="linux"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
-         id="de.cau.cs.kieler.esterel.cec.linux.x86_64"
-         os="linux"
-         arch="x86_64"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
-         id="de.cau.cs.kieler.esterel.cec.macosx.x86"
-         os="macosx"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
-         id="de.cau.cs.kieler.esterel.cec.macosx.x86_64"
-         os="macosx"
-         arch="x86_64"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
-         id="de.cau.cs.kieler.esterel.cec.win32.x86"
-         os="win32"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
 
    <plugin
          id="de.cau.cs.kieler.esterel.ui"
@@ -515,14 +676,7 @@ litigation.
          version="0.0.0"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.eso"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.eso.ui"
+         id="de.cau.cs.kieler.kiml.kivi"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>de.cau.cs.kieler</groupId>
-  <artifactId>de.cau.cs.kieler.synccharts.feature</artifactId>
+  <artifactId>de.cau.cs.kieler.sccharts.feature</artifactId>
   <version>0.8.0-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
@@ -26,9 +26,10 @@
               <goal>source-feature</goal>
             </goals>
             <configuration>
-              <excludes>
-                <plugin id="de.cau.cs.kieler.synccharts.examples" />
+<!--              <excludes>
+                <plugin id="de.cau.cs.kieler.sccharts.examples" />
               </excludes>
+-->              
             </configuration>
           </execution>
         </executions>
