@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.esterel.kexpressions.ValuedObject;
 
 import org.eclipse.emf.ecore.EObject;
 

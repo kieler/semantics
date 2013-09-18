@@ -2,13 +2,13 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
-
 import de.cau.cs.kieler.esterel.esterel.ElsIf;
 import de.cau.cs.kieler.esterel.esterel.ElsePart;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.IfTest;
 import de.cau.cs.kieler.esterel.esterel.ThenPart;
+
+import de.cau.cs.kieler.esterel.kexpressions.Expression;
 
 import java.util.Collection;
 

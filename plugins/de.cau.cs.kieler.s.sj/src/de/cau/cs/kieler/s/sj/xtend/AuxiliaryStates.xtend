@@ -13,7 +13,6 @@
  */
 package  de.cau.cs.kieler.s.sj.xtend
 
-import de.cau.cs.kieler.s.s.Continuation
 import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.Pause
 import de.cau.cs.kieler.s.s.Prio
@@ -21,7 +20,6 @@ import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.SFactory
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
-import org.eclipse.emf.common.util.EList
 import org.eclipse.xtend.util.stdlib.CloningExtensions
 import com.google.common.collect.ImmutableList
 

@@ -18,7 +18,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * and utility methods for working with them.
  * <!-- end-user-doc -->
  * <!-- begin-model-doc -->
- * OperatorTypes are used for OperatorExpressions.
+ * OperatorTypes are used for OperatorExpressions. 
  * The types may reference any corresponding
  * operator or function that may make use of
  * an arbitrary number of subExpressions. Hence it
@@ -307,7 +307,7 @@ public enum OperatorType implements Enumerator {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Not Equal operator.
-     *
+     * 
      * <!-- end-model-doc -->
      * @see #NE
      * @model literal="<>"
@@ -322,7 +322,7 @@ public enum OperatorType implements Enumerator {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Logical AND operator.
-     *
+     * 
      * <!-- end-model-doc -->
      * @see #AND
      * @model literal="and"

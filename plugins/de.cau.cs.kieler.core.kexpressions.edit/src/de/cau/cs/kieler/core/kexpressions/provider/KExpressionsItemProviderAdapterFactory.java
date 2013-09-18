@@ -76,29 +76,6 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.ComplexExpression} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected ComplexExpressionItemProvider complexExpressionItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.ComplexExpression}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createComplexExpressionAdapter() {
-        if (complexExpressionItemProvider == null) {
-            complexExpressionItemProvider = new ComplexExpressionItemProvider(this);
-        }
-
-        return complexExpressionItemProvider;
-    }
-
-    /**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.Expression} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -122,52 +99,6 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.TextualCode} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected TextualCodeItemProvider textualCodeItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.TextualCode}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createTextualCodeAdapter() {
-        if (textualCodeItemProvider == null) {
-            textualCodeItemProvider = new TextualCodeItemProvider(this);
-        }
-
-        return textualCodeItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.Signal} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected SignalItemProvider signalItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.Signal}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createSignalAdapter() {
-        if (signalItemProvider == null) {
-            signalItemProvider = new SignalItemProvider(this);
-        }
-
-        return signalItemProvider;
-    }
-
-    /**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.ValuedObject} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -188,29 +119,6 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
         }
 
         return valuedObjectItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.Variable} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected VariableItemProvider variableItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.Variable}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createVariableAdapter() {
-        if (variableItemProvider == null) {
-            variableItemProvider = new VariableItemProvider(this);
-        }
-
-        return variableItemProvider;
     }
 
     /**
@@ -375,282 +283,6 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.InterfaceDeclaration} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected InterfaceDeclarationItemProvider interfaceDeclarationItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.InterfaceDeclaration}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createInterfaceDeclarationAdapter() {
-        if (interfaceDeclarationItemProvider == null) {
-            interfaceDeclarationItemProvider = new InterfaceDeclarationItemProvider(this);
-        }
-
-        return interfaceDeclarationItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected InterfaceSignalDeclItemProvider interfaceSignalDeclItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createInterfaceSignalDeclAdapter() {
-        if (interfaceSignalDeclItemProvider == null) {
-            interfaceSignalDeclItemProvider = new InterfaceSignalDeclItemProvider(this);
-        }
-
-        return interfaceSignalDeclItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.ISignal} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected ISignalItemProvider iSignalItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.ISignal}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createISignalAdapter() {
-        if (iSignalItemProvider == null) {
-            iSignalItemProvider = new ISignalItemProvider(this);
-        }
-
-        return iSignalItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.ChannelDescription} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected ChannelDescriptionItemProvider channelDescriptionItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.ChannelDescription}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createChannelDescriptionAdapter() {
-        if (channelDescriptionItemProvider == null) {
-            channelDescriptionItemProvider = new ChannelDescriptionItemProvider(this);
-        }
-
-        return channelDescriptionItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.TypeIdentifier} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected TypeIdentifierItemProvider typeIdentifierItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.TypeIdentifier}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createTypeIdentifierAdapter() {
-        if (typeIdentifierItemProvider == null) {
-            typeIdentifierItemProvider = new TypeIdentifierItemProvider(this);
-        }
-
-        return typeIdentifierItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.InterfaceVariableDecl} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected InterfaceVariableDeclItemProvider interfaceVariableDeclItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.InterfaceVariableDecl}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createInterfaceVariableDeclAdapter() {
-        if (interfaceVariableDeclItemProvider == null) {
-            interfaceVariableDeclItemProvider = new InterfaceVariableDeclItemProvider(this);
-        }
-
-        return interfaceVariableDeclItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.VariableDecl} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected VariableDeclItemProvider variableDeclItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.VariableDecl}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createVariableDeclAdapter() {
-        if (variableDeclItemProvider == null) {
-            variableDeclItemProvider = new VariableDeclItemProvider(this);
-        }
-
-        return variableDeclItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.IVariable} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected IVariableItemProvider iVariableItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.IVariable}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createIVariableAdapter() {
-        if (iVariableItemProvider == null) {
-            iVariableItemProvider = new IVariableItemProvider(this);
-        }
-
-        return iVariableItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.Input} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected InputItemProvider inputItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.Input}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createInputAdapter() {
-        if (inputItemProvider == null) {
-            inputItemProvider = new InputItemProvider(this);
-        }
-
-        return inputItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.Output} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected OutputItemProvider outputItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.Output}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createOutputAdapter() {
-        if (outputItemProvider == null) {
-            outputItemProvider = new OutputItemProvider(this);
-        }
-
-        return outputItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.InputOutput} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected InputOutputItemProvider inputOutputItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.InputOutput}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createInputOutputAdapter() {
-        if (inputOutputItemProvider == null) {
-            inputOutputItemProvider = new InputOutputItemProvider(this);
-        }
-
-        return inputOutputItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.Return} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected ReturnItemProvider returnItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.Return}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createReturnAdapter() {
-        if (returnItemProvider == null) {
-            returnItemProvider = new ReturnItemProvider(this);
-        }
-
-        return returnItemProvider;
-    }
-
-    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -749,12 +381,8 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
      * @generated
      */
     public void dispose() {
-        if (complexExpressionItemProvider != null) complexExpressionItemProvider.dispose();
         if (expressionItemProvider != null) expressionItemProvider.dispose();
-        if (textualCodeItemProvider != null) textualCodeItemProvider.dispose();
-        if (signalItemProvider != null) signalItemProvider.dispose();
         if (valuedObjectItemProvider != null) valuedObjectItemProvider.dispose();
-        if (variableItemProvider != null) variableItemProvider.dispose();
         if (valuedObjectReferenceItemProvider != null) valuedObjectReferenceItemProvider.dispose();
         if (valueItemProvider != null) valueItemProvider.dispose();
         if (intValueItemProvider != null) intValueItemProvider.dispose();
@@ -762,18 +390,6 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
         if (booleanValueItemProvider != null) booleanValueItemProvider.dispose();
         if (operatorExpressionItemProvider != null) operatorExpressionItemProvider.dispose();
         if (textExpressionItemProvider != null) textExpressionItemProvider.dispose();
-        if (interfaceDeclarationItemProvider != null) interfaceDeclarationItemProvider.dispose();
-        if (interfaceSignalDeclItemProvider != null) interfaceSignalDeclItemProvider.dispose();
-        if (iSignalItemProvider != null) iSignalItemProvider.dispose();
-        if (channelDescriptionItemProvider != null) channelDescriptionItemProvider.dispose();
-        if (typeIdentifierItemProvider != null) typeIdentifierItemProvider.dispose();
-        if (interfaceVariableDeclItemProvider != null) interfaceVariableDeclItemProvider.dispose();
-        if (variableDeclItemProvider != null) variableDeclItemProvider.dispose();
-        if (iVariableItemProvider != null) iVariableItemProvider.dispose();
-        if (inputItemProvider != null) inputItemProvider.dispose();
-        if (outputItemProvider != null) outputItemProvider.dispose();
-        if (inputOutputItemProvider != null) inputOutputItemProvider.dispose();
-        if (returnItemProvider != null) returnItemProvider.dispose();
     }
 
 }

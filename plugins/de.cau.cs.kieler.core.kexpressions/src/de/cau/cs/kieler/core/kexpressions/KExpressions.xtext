@@ -18,8 +18,7 @@ import "http://kieler.cs.cau.de/kexpressions/0.1.2"
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 Root returns ecore::EObject:
-    Expression
-    | InterfaceDeclaration;
+    Expression;
 
 //Variable returns annotations::Annotatable:
 //    (annotations += StringAnnotation)*;
@@ -132,10 +131,9 @@ AtomicValuedExpression returns Expression:
     ;
 
 
-// Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
+// Example: pre(pre(val(A))), pre(val(pre(A))), val(A), A varX
 ValuedObjectTestExpression returns Expression:
-	{OperatorExpression} operator=PreOperator '('subExpressions+=ValuedObjectTestExpression')'
-	| {OperatorExpression} operator=ValueTestOperator subExpressions+=ValuedObjectReference
+	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression')'
 	| ValuedObjectReference
 	;
 
@@ -145,9 +143,9 @@ ValuedObjectReference returns ValuedObjectReference:
 	valuedObject=[ValuedObject|ID];
 
 
-// Example: 'printf(...)'(C)
+// Example: 'printf(...)'
 TextExpression returns TextExpression:
-	code=HOSTCODE ("(" type=ID ")")?;
+	text=HOSTCODE;
 
 
 IntValue returns IntValue:
@@ -178,41 +176,68 @@ AnyType returns ecore::EString:
 //
 // --------------------------
 
-InterfaceDeclaration:
-	InterfaceSignalDecl 
-	| InterfaceVariableDecl
-;
 
-ISignal returns ISignal:
-	name=ID (channelDescr=ChannelDescription)?;
+//ISignal returns ISignal:
+//	name=ID (channelDescr=ChannelDescription)?;
 
-InterfaceSignalDecl:
-	{Input} "input" signals+=ISignal ("," signals+=ISignal)* ";" |
-	{Output} "output" signals+=ISignal ("," signals+=ISignal)* ";" |
-	{InputOutput} "inputoutput" signals+=ISignal ("," signals+=ISignal)* ";" |
-	{Return} "return" signals+=ISignal ("," signals+=ISignal)* ";";
+//InterfaceDeclaration:
+//	(declarations+=ValuedObject ";")* ;
 
-ChannelDescription:
-	(":" type=TypeIdentifier)
-	| ("(" type=TypeIdentifier ")")
-	| (":=" expression=Expression ":" type=TypeIdentifier);
+//ChannelDescription:
+//	(":" type=TypeIdentifier)
+//	| ("(" type=TypeIdentifier ")")
+//	| (":=" expression=Expression ":" type=TypeIdentifier);
 
 // Variables
-InterfaceVariableDecl:
-	"var" (varDecls+=VariableDecl) ("," varDecls+=VariableDecl)*;
+//InterfaceVariableDecl:
+//	"var" (varDecls+=VariableDecl) ("," varDecls+=VariableDecl)*;
 	
-VariableDecl:
-	(variables+=IVariable) ("," variables+=IVariable)* ":" type=TypeIdentifier;
+//VariableDecl:
+//	(variables+=IVariable) ("," variables+=IVariable)* ":" type=TypeIdentifier;
 
-IVariable:
-	 name=ID (":=" expression=Expression)?;
+//IVariable:
+//	 name=ID (":=" expression=Expression)?;
 
 // transform ID to hostcode
-TypeIdentifier:
-	type=ValueType 
-	| typeID=ID
-	| ("combine" (type=ValueType | typeID=ID) "with" operator=CombineOperator);
+//TypeIdentifier:
+//	type=ValueType 
+//	| typeID=ID
+//	| ("combine" (type=ValueType | typeID=ID) "with" operator=CombineOperator);
 	
+	
+	
+//InterfaceDeclaration:
+//  (declarations+= ValuedObjectDelaration ";")* ;
+//
+//
+//ValuedObjectDelaration:
+//    SignalDeclaration | SignalDeclaration
+//;
+//	
+//SignalDeclaration returns Signal:
+//    SignalDefinition
+//;
+//SignalDefinition:
+//    (isInput?='input')? (isOutput?='output')? 'signal'
+//    name=ID (':' (type=ValueType | typeID=ID)
+//    ('=' varInitialValue=Expression)?
+//    ('with' varCombineOperator=CombineOperator)?)? ';';
+
+
+/************************************************/
+/*           Variable Definition                */
+/************************************************/
+// A dummy VariableDefinition declaration, which will be override by an other grammar 
+//VariableDefinition:
+//  {VariableDefinition} 'variable' name=ID ';';
+// CMOT changes, want to use VariableDefinitions from SyncText
+//VariableDeclaration returns Variable:
+//    VariableDefinition
+//;
+//VariableDefinition:
+//    (isInput?='input')? (isOutput?='output')? (isStatic?='static')? (type=ValueType | typeID=ID) name=ID
+//    ('=' initialValue=Expression)? ('with' varCombineOperator=CombineOperator)? ';';    
+//	
 	
 
 // --------------------------
@@ -252,8 +277,8 @@ enum ModOperator returns OperatorType:
 enum DivOperator returns OperatorType:	
 	DIV="/";
 
-enum ValueTestOperator returns OperatorType:
-	VAL="?";
+enum ValOperator returns OperatorType:
+	VAL="val";
 
 
 /*

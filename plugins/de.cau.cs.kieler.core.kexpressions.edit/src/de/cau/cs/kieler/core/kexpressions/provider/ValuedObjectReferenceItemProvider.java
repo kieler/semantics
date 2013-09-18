@@ -30,7 +30,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class ValuedObjectReferenceItemProvider
-    extends ComplexExpressionItemProvider
+    extends ExpressionItemProvider
     implements
         IEditingDomainItemProvider,
         IStructuredItemContentProvider,

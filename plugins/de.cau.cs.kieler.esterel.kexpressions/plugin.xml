@@ -12,7 +12,7 @@
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://kieler.cs.cau.de/kexpressions/0.1.2"
+            uri="http://kieler.cs.cau.de/esterel/kexpressions/0.1.2"
             class="de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage"
             genModel="model/kexpressions.genmodel"/>
    </extension>

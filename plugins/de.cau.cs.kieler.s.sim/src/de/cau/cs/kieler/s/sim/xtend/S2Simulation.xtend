@@ -101,7 +101,8 @@ class S2Simulation {
         ) {
                   
             // auxiliary signal
-            var auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
+            var auxiliarySignal = KExpressionsFactory::eINSTANCE.createValuedObject();
+            auxiliarySignal.setIsSignal(true);
             var auxiliaryEmitInstruction = SFactory::eINSTANCE.createEmit
                   
             // Setup the auxiliarySignal as an OUTPUT to the module
@@ -117,7 +118,7 @@ class S2Simulation {
             
             if (container instanceof State) {
                   // Add auxiliarySignal to program
-                  program.signals.add(auxiliarySignal);
+                  program.valuedObjects.add(auxiliarySignal);
                   val stateInstruction = container as State;
                   val instructionList = stateInstruction.instructions;
                   val index = instructionList.indexOf(instruction);
@@ -125,7 +126,7 @@ class S2Simulation {
             }
             else if (container instanceof If) {
                   // Add auxiliarySignal to program
-                  program.signals.add(auxiliarySignal);
+                  program.valuedObjects.add(auxiliarySignal);
                   val ifInstruction = container as If
                   val instructionList = ifInstruction.instructions;
                   val index = instructionList.indexOf(instruction);

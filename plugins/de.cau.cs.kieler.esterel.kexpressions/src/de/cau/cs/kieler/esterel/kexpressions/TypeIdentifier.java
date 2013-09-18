@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface TypeIdentifier extends EObject {
     /**
      * Returns the value of the '<em><b>Type</b></em>' attribute.
-     * The default value is <code>""</code>.
+     * The default value is <code>"pure"</code>.
      * The literals are from the enumeration {@link de.cau.cs.kieler.esterel.kexpressions.ValueType}.
      * <!-- begin-user-doc -->
      * <p>
@@ -41,7 +41,7 @@ public interface TypeIdentifier extends EObject {
      * @see de.cau.cs.kieler.esterel.kexpressions.ValueType
      * @see #setType(ValueType)
      * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getTypeIdentifier_Type()
-     * @model default=""
+     * @model default="pure"
      * @generated
      */
     ValueType getType();

@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
+import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.TextualCode;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
@@ -271,7 +272,7 @@ public interface Scope extends Annotatable {
 
     /**
      * Returns the value of the '<em><b>Body Text</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.TextualCode}.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.TextExpression}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Body Text</em>' containment reference list isn't clear,
@@ -283,7 +284,7 @@ public interface Scope extends Annotatable {
      * @model containment="true"
      * @generated
      */
-    EList<TextualCode> getBodyText();
+    EList<TextExpression> getBodyText();
 
     /**
      * Returns the value of the '<em><b>Renamings</b></em>' containment reference list.

@@ -6,14 +6,13 @@ package de.cau.cs.kieler.core.annotations.text.parseTreeConstruction;
 import org.eclipse.emf.ecore.*;
 import org.eclipse.xtext.*;
 import org.eclipse.xtext.parsetree.reconstr.IEObjectConsumer;
-import org.eclipse.xtext.parsetree.reconstr.impl.AbstractParseTreeConstructor;
 
 import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
 
 import com.google.inject.Inject;
 
 @SuppressWarnings("all")
-public class AnnotationsParsetreeConstructor extends AbstractParseTreeConstructor {
+public class AnnotationsParsetreeConstructor extends org.eclipse.xtext.parsetree.reconstr.impl.AbstractParseTreeConstructor {
 		
 	@Inject
 	private AnnotationsGrammarAccess grammarAccess;

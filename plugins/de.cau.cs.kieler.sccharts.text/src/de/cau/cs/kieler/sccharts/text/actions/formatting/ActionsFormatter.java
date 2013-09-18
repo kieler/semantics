@@ -39,8 +39,9 @@ public class ActionsFormatter extends KExpressionsFormatter {
         // avoid space in valued Emission like 'X (5 + 7)' -> 'X(5 + 7)'
         c.setNoSpace().before(f.getEmissionAccess().getLeftParenthesisKeyword_1_0());
 
+        // There is no type any more
         // avoid space in textual effect like '/ "foo" (java)' -> '/ "foo"(java)'
-        c.setNoSpace().before(f.getTextEffectAccess().getLeftParenthesisKeyword_1_0());
+        //c.setNoSpace().before(f.getTextEffectAccess().getLeftParenthesisKeyword_1_0());
 
     }
 }

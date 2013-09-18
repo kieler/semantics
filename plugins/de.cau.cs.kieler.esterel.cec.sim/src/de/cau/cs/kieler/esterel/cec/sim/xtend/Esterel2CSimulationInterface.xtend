@@ -13,9 +13,9 @@
  */
 package de.cau.cs.kieler.esterel.cec.sim.xtend
 
-import de.cau.cs.kieler.core.kexpressions.Input
-import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl
-import de.cau.cs.kieler.core.kexpressions.Output
+import de.cau.cs.kieler.esterel.kexpressions.Input
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
+import de.cau.cs.kieler.esterel.kexpressions.Output
 import de.cau.cs.kieler.esterel.esterel.Module
 
 /**

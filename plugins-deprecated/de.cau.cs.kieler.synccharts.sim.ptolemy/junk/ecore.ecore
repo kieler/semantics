@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="">
+  <eClassifiers xsi:type="ecore:EClass" name="EClass">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name:String"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eAttributes" upperBound="-1"
+        eType="#//EAttribute"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eReferences" upperBound="-1"
+        eType="#//EReference"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EAttribute">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name:String"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eAttributeType" lowerBound="1"
+        eType="#//EDataType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EDataType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EReference">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name:String"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="containment:boolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eReferenceType" lowerBound="1"
+        eType="#//EClass"/>
+  </eClassifiers>
+</ecore:EPackage>

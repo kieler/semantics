@@ -90,22 +90,27 @@ public class InstructionsViewPlugin extends AbstractUIPlugin {
     //-------------------------------------------------------------------------
     
     public void refresh() {
-        // Retrieve a handle toe the instruction list table
-        InstructionsDataList list = InstructionsDataList.getInstance();
-        // Clear the table
-        list.clear();
-        // Add lines of ALL providers to the table
-        for (IInstructionsDataProvider provider : getInstructionsDataProviderList()) {
-            List<EObject> statementList = provider.getMarkedStatements();
-            for (EObject statement : statementList) {
-                InstructionsData instructionsData = provider.getInstructionsData(statement);
-                
-                list.add(instructionsData);
+        try {
+            // Retrieve a handle to the instruction list table
+            InstructionsDataList list = InstructionsDataList.getInstance();
+            // Clear the table
+            list.clear();
+            // Add lines of ALL providers to the table
+            for (IInstructionsDataProvider provider : getInstructionsDataProviderList()) {
+                List<EObject> statementList = provider.getMarkedStatements();
+                for (EObject statement : statementList) {
+                    InstructionsData instructionsData = provider.getInstructionsData(statement);
+                    
+                    list.add(instructionsData);
+                }
             }
+            // Refresh the instruction View
+            InstructionsView.getInstance().refreshViewerAsync();
+            return;
         }
-        // Refresh the instruction View
-        InstructionsView.getInstance().refreshViewerAsync();
-        return;
+        catch (Exception e) {
+            // ignore refresh errors
+        }
     }
     
     //-------------------------------------------------------------------------

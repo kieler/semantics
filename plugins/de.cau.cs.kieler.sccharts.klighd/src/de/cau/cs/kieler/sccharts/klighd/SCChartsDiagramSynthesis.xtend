@@ -85,17 +85,17 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     @Inject
     extension KColorExtensions
     
-    private static val TransformationOption SHOW_LABELS
-        = TransformationOption::createCheckOption("Transition labels", false);
-        
-    private static val TransformationOption SHOW_PRIORITY_LABELS
-        = TransformationOption::createCheckOption("Transition priorities", false);
-
     private static val TransformationOption SHOW_SIGNAL_DECLARATIONS
-        = TransformationOption::createCheckOption("Signal declarations", false);
+        = TransformationOption::createCheckOption("Declarations", true);
+
+    private static val TransformationOption SHOW_LABELS
+        = TransformationOption::createCheckOption("Transition labels", true);
+        
+    private static val TransformationOption SHOW_SHADOW
+        = TransformationOption::createCheckOption("Shadow", true);
 
     override public getTransformationOptions() {
-        return ImmutableSet::of(SHOW_LABELS, SHOW_PRIORITY_LABELS, SHOW_SIGNAL_DECLARATIONS);
+        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_LABELS, SHOW_SHADOW);
     }
     
     override public getRecommendedLayoutOptions() {
@@ -111,9 +111,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     }
     
     
-    private static val float DASH_BLACK = 10;
-    private static val float DASH_WHITE = 5;
-    private static val List<Float> DASH_PATTERN = newArrayList(DASH_BLACK, DASH_WHITE); 
+    private static val float REGION_DASH_BLACK = 10;
+    private static val float REGION_DASH_WHITE = 5;
+    private static val List<Float> REGION_DASH_PATTERN = newArrayList(REGION_DASH_BLACK, REGION_DASH_WHITE); 
+    private static val float TRANSITION_DASH_BLACK = 7;
+    private static val float TRANSITION_DASH_WHITE = 3;
+    private static val List<Float> TRANSITION_DASH_PATTERN = newArrayList(TRANSITION_DASH_BLACK, TRANSITION_DASH_WHITE); 
 
     private static val KColor SCCHARTSGRAY = RENDERING_FACTORY.createKColor()=>[it.red=240;it.green=240;it.blue=240];
     private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor()=>[it.red=248;it.green=249;it.blue=253];
@@ -146,23 +149,23 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.lineWidth = 0;
                 // it.invisible = false;
                 //it.foreground = "red".color;
-                it.addText("Region:" + if (r.label.nullOrEmpty) "" else " "+r.label).putToLookUpWith(r) => [
+                it.addText("[-]" + if (r.label.nullOrEmpty) "" else " "+r.label).putToLookUpWith(r) => [
                     it.foreground = "gray".color
-                    it.fontSize = 10                  
+                    it.fontSize = 8                  
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
                 it.addVerticalLine(LEFT, 1, 1) => [
                     it.lineStyle = LineStyle::CUSTOM;
                     it.lineStyle.dashPattern.clear;
-                    it.lineStyle.dashPattern += DASH_PATTERN;
+                    it.lineStyle.dashPattern += REGION_DASH_PATTERN;
                     it.invisible = true;
                     it.invisible.modifierId = "de.cau.cs.kieler.sccharts.klighd.regionLineModifier";
                 ];
                 it.addHorizontalLine(TOP, 1, 1) => [
                     it.lineStyle = LineStyle::CUSTOM;
                     it.lineStyle.dashPattern.clear;
-                    it.lineStyle.dashPattern += DASH_PATTERN;
+                    it.lineStyle.dashPattern += REGION_DASH_PATTERN;
                     it.invisible = true;
                     it.invisible.modifierId = "de.cau.cs.kieler.sccharts.klighd.regionLineModifier";
                 ];
@@ -173,7 +176,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
     def dispatch KNode translate(State s) {
         return s.createNode().putToLookUpWith(s) => [ node |
-            // node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
+            //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
             // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
             // node.setLayoutOption(LayoutOptions::SPACING, 0f);
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
@@ -212,7 +215,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
              ) => [
                 node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
                 it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
-                it.shadow = "black".color;
+                if (SHOW_SHADOW.optionBooleanValue) {
+                    it.shadow = "black".color;
+                }
                 if (conditional) {
                     return;
                 }
@@ -221,28 +226,66 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.setGridPlacement(1);
                 } 
                 
-                it.addText(s.label).putToLookUpWith(s) => [
-                    it.fontSize = 10;
-                    it.setFontBold(true);
-                    it.setGridPlacementData().setMaxCellHeightEx(40)
-                        .from(LEFT, 10, 0, TOP, 9f, 0)
-                        .to(RIGHT, 10, 0, BOTTOM, 10, 0);
-                ];
                 
+                 if (!s.regions.empty) {
+                    // Get a smaller window-title-bare if this a macro state 
+                    it.addText(" " + s.label).putToLookUpWith(s) => [
+                        it.fontSize = 10;
+                        it.setFontBold(true);
+                        it.setGridPlacementData().setMaxCellHeightEx(40)
+                            .from(LEFT, 0, 0, TOP, 0f, 0)
+                            .to(RIGHT, 10, 0, BOTTOM, 0, 0);
+                    ];
+                 }
+                 else {
+                    // For simple states we want a larger area 
+                    it.addText(s.label).putToLookUpWith(s) => [
+                        it.fontSize = 10;
+                        it.setFontBold(true);
+                        it.setGridPlacementData().setMaxCellHeightEx(40)
+                            .from(LEFT, 10, 0, TOP, 9f, 0)
+                            .to(RIGHT, 10, 0, BOTTOM, 10, 0);
+                    ];
+                 }
+                
+                        //it.setGridPlacementData.setMaxCellHeight(40);
+                        //it.setGridPlacement(s.valuedObjects.size + 2);
+//                        it.addText("Signals:")
+//                            .setGridPlacementData.from(LEFT, 5, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 5, 0);
+
+                                //it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
+                                //.setPointPlacementData() (LEFT, 0, 0, TOP, 0, i2)//.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                 
                 if (SHOW_SIGNAL_DECLARATIONS.optionBooleanValue && !s.valuedObjects.empty) {
-                    it.addRectangle => [
-                        it.invisible = true;
-                        it.setGridPlacementData.setMaxCellHeight(40);
-                        it.setGridPlacement(s.valuedObjects.size + 2);
-                        it.addText("Signals:")
-                            .setGridPlacementData.from(LEFT, 5, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 5, 0);
                         for (sig : s.valuedObjects) {
-                            it.addText(sig.name + ";")
-                                .setGridPlacementData.from(LEFT, 5, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 5, 0);
-                        }
-                        it.addRectangle().invisible = true;
+                    it.addRectangle => [
+                    //it.background = "white".color;
+                        it.invisible = true;
+                            var declaration = "";
+                            if (sig.isInput) {
+                                declaration = declaration + "input ";
+                            }
+                            if (sig.isOutput) {
+                                declaration = declaration + "output "
+                            }
+                            if (sig.isSignal) {
+                                declaration = declaration + "signal ";
+                            }
+                            if (sig.isStatic) {
+                                declaration = declaration + "static ";
+                            }
+                            if (declaration.equals("")) {
+                                it.addText(sig.name + ";")
+                            }
+                            else {
+                                it.addText(declaration.trim + " " + sig.name + ";") => [
+                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+                                    it.putToLookUpWith(sig);
+                                ]
+                            }
+                            it.addRectangle().invisible = true;
                     ];
+                        }
                 }
                 
                 if (!s.regions.empty) {
@@ -252,7 +295,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     
                     it.addChildArea().setGridPlacementData() => [
                         from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)
-                        minCellHeight = 40;
+                        minCellHeight = 36;
+                        minCellWidth = 36;
                     ];
                 }
             ];
@@ -268,7 +312,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             edge.source = t.sourceState.node;
             edge.target = t.targetState.node;
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            
             edge.addSpline(2) => [
+                if (t.isImmediate) {
+                    it.lineStyle = LineStyle::CUSTOM;
+                    it.lineStyle.dashPattern.clear;
+                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
+                }
                 it.addArrowDecorator() => [
                     if (t.isHistory) {
                         it.parent.addHistoryDecorator();
@@ -286,7 +336,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
             if (SHOW_LABELS.optionBooleanValue) {
                 scopeProvider.parent = t.sourceState;
-                val String label =
+                var String label =
                     try {
                         serializer.serialize(t.copy => [
                             TMP_RES.contents += it;
@@ -294,17 +344,20 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     } finally {
                         TMP_RES.contents.clear;
                     } 
+                if (t.sourceState.outgoingTransitions.size > 1) {
+                    label =  t.sourceState.outgoingTransitions.indexOf(t) + 1 + ": " + label;
+                }
                 if (!label.nullOrEmpty) {
                     t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
-                        label, 10, KlighdConstants::DEFAULT_FONT_NAME
+                        label, 5, KlighdConstants::DEFAULT_FONT_NAME
                     );
                 }
             }
-            if (SHOW_PRIORITY_LABELS.optionBooleanValue) {
-                t.createLabel("prio", edge).putToLookUpWith(t).configureTailLabel(String::valueOf(
-                    if (t.priority != 0) t.priority else t.sourceState.outgoingTransitions.indexOf(t)
-                ), 11, KlighdConstants::DEFAULT_FONT_NAME);
-            }
+//            if (SHOW_PRIORITY_LABELS.optionBooleanValue) {
+//                t.createLabel("prio", edge).putToLookUpWith(t).configureTailLabel(String::valueOf(
+//                    if (t.priority != 0) t.priority else t.sourceState.outgoingTransitions.indexOf(t)
+//                ), 11, KlighdConstants::DEFAULT_FONT_NAME);
+//            }
         ];
     }
     

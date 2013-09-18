@@ -26,15 +26,6 @@ public interface KExpressionsFactory extends EFactory {
     KExpressionsFactory eINSTANCE = de.cau.cs.kieler.core.kexpressions.impl.KExpressionsFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Complex Expression</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Complex Expression</em>'.
-     * @generated
-     */
-    ComplexExpression createComplexExpression();
-
-    /**
      * Returns a new object of class '<em>Expression</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -44,24 +35,6 @@ public interface KExpressionsFactory extends EFactory {
     Expression createExpression();
 
     /**
-     * Returns a new object of class '<em>Textual Code</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Textual Code</em>'.
-     * @generated
-     */
-    TextualCode createTextualCode();
-
-    /**
-     * Returns a new object of class '<em>Signal</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Signal</em>'.
-     * @generated
-     */
-    Signal createSignal();
-
-    /**
      * Returns a new object of class '<em>Valued Object</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -69,15 +42,6 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     ValuedObject createValuedObject();
-
-    /**
-     * Returns a new object of class '<em>Variable</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Variable</em>'.
-     * @generated
-     */
-    Variable createVariable();
 
     /**
      * Returns a new object of class '<em>Valued Object Reference</em>'.
@@ -141,114 +105,6 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     TextExpression createTextExpression();
-
-    /**
-     * Returns a new object of class '<em>Interface Declaration</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Interface Declaration</em>'.
-     * @generated
-     */
-    InterfaceDeclaration createInterfaceDeclaration();
-
-    /**
-     * Returns a new object of class '<em>Interface Signal Decl</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Interface Signal Decl</em>'.
-     * @generated
-     */
-    InterfaceSignalDecl createInterfaceSignalDecl();
-
-    /**
-     * Returns a new object of class '<em>ISignal</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>ISignal</em>'.
-     * @generated
-     */
-    ISignal createISignal();
-
-    /**
-     * Returns a new object of class '<em>Channel Description</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Channel Description</em>'.
-     * @generated
-     */
-    ChannelDescription createChannelDescription();
-
-    /**
-     * Returns a new object of class '<em>Type Identifier</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Type Identifier</em>'.
-     * @generated
-     */
-    TypeIdentifier createTypeIdentifier();
-
-    /**
-     * Returns a new object of class '<em>Interface Variable Decl</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Interface Variable Decl</em>'.
-     * @generated
-     */
-    InterfaceVariableDecl createInterfaceVariableDecl();
-
-    /**
-     * Returns a new object of class '<em>Variable Decl</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Variable Decl</em>'.
-     * @generated
-     */
-    VariableDecl createVariableDecl();
-
-    /**
-     * Returns a new object of class '<em>IVariable</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>IVariable</em>'.
-     * @generated
-     */
-    IVariable createIVariable();
-
-    /**
-     * Returns a new object of class '<em>Input</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Input</em>'.
-     * @generated
-     */
-    Input createInput();
-
-    /**
-     * Returns a new object of class '<em>Output</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Output</em>'.
-     * @generated
-     */
-    Output createOutput();
-
-    /**
-     * Returns a new object of class '<em>Input Output</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Input Output</em>'.
-     * @generated
-     */
-    InputOutput createInputOutput();
-
-    /**
-     * Returns a new object of class '<em>Return</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Return</em>'.
-     * @generated
-     */
-    Return createReturn();
 
     /**
      * Returns the package supported by this factory.

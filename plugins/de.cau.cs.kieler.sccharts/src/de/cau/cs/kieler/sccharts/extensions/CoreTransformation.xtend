@@ -1822,7 +1822,7 @@ class CoreTransformation {
             explicitPreValuedObject.setIsInput(false);
             explicitPreValuedObject.setIsOutput(false);
             explicitPreValuedObject.setType(preValuedObject.type);
-            if (!preValuedObject.initialValue.nullOrEmpty) {
+            if (preValuedObject.initialValue != null) {
                 explicitPreValuedObject.setInitialValue(preValuedObject.initialValue);
             }
             // Add to the current state
@@ -1906,7 +1906,7 @@ class CoreTransformation {
                 explicitPre1ValuedObject.setIsInput(false);
                 explicitPre1ValuedObject.setIsOutput(false);
                 explicitPre1ValuedObject.setType(preValuedObject.type);
-                if (!preValuedObject.initialValue.nullOrEmpty) {
+                if (preValuedObject.initialValue != null) {
                     explicitPre1ValuedObject.setInitialValue(preValuedObject.initialValue);
                 }
                 state.valuedObjects.add(explicitPre1ValuedObject);
@@ -1915,7 +1915,7 @@ class CoreTransformation {
                 explicitPre2ValuedObject.setIsInput(false);
                 explicitPre2ValuedObject.setIsOutput(false);
                 explicitPre2ValuedObject.setType(preValuedObject.type);
-                if (!preValuedObject.initialValue.nullOrEmpty) {
+                if (preValuedObject.initialValue != null) {
                     explicitPre2ValuedObject.setInitialValue(preValuedObject.initialValue);
                 }
                 state.valuedObjects.add(explicitPre2ValuedObject);

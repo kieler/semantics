@@ -4,14 +4,14 @@ package de.cau.cs.kieler.esterel.esterel.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
-import de.cau.cs.kieler.core.kexpressions.ComplexExpression;
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.ISignal;
-import de.cau.cs.kieler.core.kexpressions.Signal;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
-
 import de.cau.cs.kieler.esterel.esterel.*;
+
+import de.cau.cs.kieler.esterel.kexpressions.ComplexExpression;
+import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.esterel.kexpressions.ISignal;
+import de.cau.cs.kieler.esterel.kexpressions.Signal;
+import de.cau.cs.kieler.esterel.kexpressions.ValuedObject;
+import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -604,12 +604,12 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createTrapReferenceExprAdapter();
       }
       @Override
-      public Adapter caseKExpressions_ChannelDescription(de.cau.cs.kieler.core.kexpressions.ChannelDescription object)
+      public Adapter caseKExpressions_ChannelDescription(de.cau.cs.kieler.esterel.kexpressions.ChannelDescription object)
       {
         return createKExpressions_ChannelDescriptionAdapter();
       }
       @Override
-      public Adapter caseKExpressions_TypeIdentifier(de.cau.cs.kieler.core.kexpressions.TypeIdentifier object)
+      public Adapter caseKExpressions_TypeIdentifier(de.cau.cs.kieler.esterel.kexpressions.TypeIdentifier object)
       {
         return createKExpressions_TypeIdentifierAdapter();
       }
@@ -2231,13 +2231,13 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ChannelDescription <em>Channel Description</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.kexpressions.ChannelDescription <em>Channel Description</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.core.kexpressions.ChannelDescription
+   * @see de.cau.cs.kieler.esterel.kexpressions.ChannelDescription
    * @generated
    */
   public Adapter createKExpressions_ChannelDescriptionAdapter()
@@ -2246,13 +2246,13 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.TypeIdentifier <em>Type Identifier</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.kexpressions.TypeIdentifier <em>Type Identifier</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.core.kexpressions.TypeIdentifier
+   * @see de.cau.cs.kieler.esterel.kexpressions.TypeIdentifier
    * @generated
    */
   public Adapter createKExpressions_TypeIdentifierAdapter()
@@ -2276,13 +2276,13 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject <em>Valued Object</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.kexpressions.ValuedObject <em>Valued Object</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.core.kexpressions.ValuedObject
+   * @see de.cau.cs.kieler.esterel.kexpressions.ValuedObject
    * @generated
    */
   public Adapter createValuedObjectAdapter()
@@ -2291,13 +2291,13 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Signal <em>Signal</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.kexpressions.Signal <em>Signal</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.core.kexpressions.Signal
+   * @see de.cau.cs.kieler.esterel.kexpressions.Signal
    * @generated
    */
   public Adapter createSignalAdapter()
@@ -2306,13 +2306,13 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ISignal <em>ISignal</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.kexpressions.ISignal <em>ISignal</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.core.kexpressions.ISignal
+   * @see de.cau.cs.kieler.esterel.kexpressions.ISignal
    * @generated
    */
   public Adapter createISignalAdapter()
@@ -2321,13 +2321,13 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Expression <em>Expression</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.kexpressions.Expression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.core.kexpressions.Expression
+   * @see de.cau.cs.kieler.esterel.kexpressions.Expression
    * @generated
    */
   public Adapter createExpressionAdapter()
@@ -2336,13 +2336,13 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ComplexExpression <em>Complex Expression</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.kexpressions.ComplexExpression <em>Complex Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.core.kexpressions.ComplexExpression
+   * @see de.cau.cs.kieler.esterel.kexpressions.ComplexExpression
    * @generated
    */
   public Adapter createComplexExpressionAdapter()
@@ -2351,13 +2351,13 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference <em>Valued Object Reference</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference <em>Valued Object Reference</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+   * @see de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
    * @generated
    */
   public Adapter createValuedObjectReferenceAdapter()

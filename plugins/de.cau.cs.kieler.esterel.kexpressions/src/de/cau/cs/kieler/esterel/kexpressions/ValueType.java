@@ -25,7 +25,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * makes sense for Signals).
  * <p>
  * HOST means that no actual type is given but the
- * type in the hostType attribute should be used
+ * type in the hostType attribute should be used 
  * instead.
  * <!-- end-model-doc -->
  * @see de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage#getValueType()
@@ -195,7 +195,7 @@ public enum ValueType implements Enumerator {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * HOST means that no actual type is given but the
-     * type in the hostType attribute should be used
+     * type in the hostType attribute should be used 
      * instead.
      * <!-- end-model-doc -->
      * @see #HOST

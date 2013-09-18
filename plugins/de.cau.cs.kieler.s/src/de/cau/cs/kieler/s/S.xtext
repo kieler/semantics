@@ -19,8 +19,11 @@ Program :
 	'synchronous program' name = ID '(' priority=INT ')'
 //	((signals += Signal) (signals += Signal)*)?
 //	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
-	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
-	(globalHostCodeInstruction = HOSTCODE)*
+//	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
+    
+    ((valuedObjects += ValuedObject) (valuedObjects += ValuedObject)*)?
+//    (((valuedObjects+=ValuedObject)+ ';')*)? 
+	('\'' globalHostCodeInstruction = HOSTCODE '\'')?
 	(states += State)+
 ;
 
@@ -38,7 +41,7 @@ Program :
 
 State:
 	'state' '(' name = ID ')' '{'
-	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
+	(((valuedObjects+=ValuedObject)+ ';')*)? 
 	(instructions+=Instruction';')*
 	'}'
 ;
@@ -48,28 +51,23 @@ State:
 
 Thread:
 	'thread' '(' name = ID ')' '{'
-	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
+	(((valuedObjects+=ValuedObject)+ ';')*)? 
 	(states+=State';')*
 	'}'
 ;
 
-Variable returns kexpressions::Variable:
-	'variable'
-	(name=EString)
-	(':=' initialValue=EString)?
-	(':' type=ValueType)?
-;
 
-Signal returns kexpressions::Signal:
+ValuedObject returns kexpressions::ValuedObject:
     (isInput?='input')?
 	(isOutput?='output')?
-	'signal'
+	(isSignal?='signal')?
 	(name=EString)
-	(':=' initialValue=EString)?
+	(':=' initialValue=Expression)?
     ((':' type=ValueType)
       |
-     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=EString) )
+     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator) )
     )? ";";
+//    )?;
     
 
 //---------------------------------------------------------------------
@@ -134,11 +132,11 @@ Halt :
   
   
 LocalSignal: // For handling local signal re-initialization (taking care or reincarnation)
-    'signal''('signal=[kexpressions::Signal]')'
+    'signal''('signal=[kexpressions::ValuedObject]')'
 ;
 
 Emit:
-	'emit''('signal= [kexpressions::Signal] ('(' value=SExpression ')')? (',' continuation=[Continuation])?')'
+	'emit''('signal= [kexpressions::ValuedObject] ('(' value=SExpression ')')? (',' continuation=[Continuation])?')'
 ;
   
 Abort : 
@@ -155,7 +153,7 @@ If :
   
 // Complex instruction
 Await:
-	'await' '('signal= [kexpressions::Signal] (',' continuation=[Continuation])?')'
+	'await' '('signal= [kexpressions::ValuedObject] (',' continuation=[Continuation])?')'
 ;
 
 

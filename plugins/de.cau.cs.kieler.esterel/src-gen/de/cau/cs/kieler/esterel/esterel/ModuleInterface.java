@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -35,7 +35,7 @@ public interface ModuleInterface extends EObject
 {
   /**
    * Returns the value of the '<em><b>Int Signal Decls</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl}.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Int Signal Decls</em>' containment reference list isn't clear,

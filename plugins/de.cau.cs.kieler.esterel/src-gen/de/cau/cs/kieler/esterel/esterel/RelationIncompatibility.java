@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.core.kexpressions.ISignal;
+import de.cau.cs.kieler.esterel.kexpressions.ISignal;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -26,7 +26,7 @@ public interface RelationIncompatibility extends RelationType
 {
   /**
    * Returns the value of the '<em><b>Incomp</b></em>' reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ISignal}.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.ISignal}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Incomp</em>' reference list isn't clear,

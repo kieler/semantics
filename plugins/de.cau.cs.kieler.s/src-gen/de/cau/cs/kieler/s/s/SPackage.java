@@ -85,22 +85,13 @@ public interface SPackage extends EPackage
   int PROGRAM__PRIORITY = 1;
 
   /**
-   * The feature id for the '<em><b>Variables</b></em>' containment reference list.
+   * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__VARIABLES = 2;
-
-  /**
-   * The feature id for the '<em><b>Signals</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROGRAM__SIGNALS = 3;
+  int PROGRAM__VALUED_OBJECTS = 2;
 
   /**
    * The feature id for the '<em><b>Global Host Code Instruction</b></em>' attribute.
@@ -109,7 +100,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION = 4;
+  int PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION = 3;
 
   /**
    * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -118,7 +109,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROGRAM__STATES = 5;
+  int PROGRAM__STATES = 4;
 
   /**
    * The number of structural features of the '<em>Program</em>' class.
@@ -127,7 +118,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROGRAM_FEATURE_COUNT = 6;
+  int PROGRAM_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.ContinuationImpl <em>Continuation</em>}' class.
@@ -149,22 +140,13 @@ public interface SPackage extends EPackage
   int CONTINUATION__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Signals</b></em>' containment reference list.
+   * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONTINUATION__SIGNALS = 1;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTINUATION__VARIABLES = 2;
+  int CONTINUATION__VALUED_OBJECTS = 1;
 
   /**
    * The number of structural features of the '<em>Continuation</em>' class.
@@ -173,7 +155,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONTINUATION_FEATURE_COUNT = 3;
+  int CONTINUATION_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.StateImpl <em>State</em>}' class.
@@ -195,22 +177,13 @@ public interface SPackage extends EPackage
   int STATE__NAME = CONTINUATION__NAME;
 
   /**
-   * The feature id for the '<em><b>Signals</b></em>' containment reference list.
+   * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE__SIGNALS = CONTINUATION__SIGNALS;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE__VARIABLES = CONTINUATION__VARIABLES;
+  int STATE__VALUED_OBJECTS = CONTINUATION__VALUED_OBJECTS;
 
   /**
    * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
@@ -250,22 +223,13 @@ public interface SPackage extends EPackage
   int THREAD__NAME = CONTINUATION__NAME;
 
   /**
-   * The feature id for the '<em><b>Signals</b></em>' containment reference list.
+   * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int THREAD__SIGNALS = CONTINUATION__SIGNALS;
-
-  /**
-   * The feature id for the '<em><b>Variables</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int THREAD__VARIABLES = CONTINUATION__VARIABLES;
+  int THREAD__VALUED_OBJECTS = CONTINUATION__VALUED_OBJECTS;
 
   /**
    * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -774,26 +738,15 @@ public interface SPackage extends EPackage
   EAttribute getProgram_Priority();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getVariables <em>Variables</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getValuedObjects <em>Valued Objects</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Variables</em>'.
-   * @see de.cau.cs.kieler.s.s.Program#getVariables()
+   * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
+   * @see de.cau.cs.kieler.s.s.Program#getValuedObjects()
    * @see #getProgram()
    * @generated
    */
-  EReference getProgram_Variables();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getSignals <em>Signals</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Signals</em>'.
-   * @see de.cau.cs.kieler.s.s.Program#getSignals()
-   * @see #getProgram()
-   * @generated
-   */
-  EReference getProgram_Signals();
+  EReference getProgram_ValuedObjects();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.Program#getGlobalHostCodeInstruction <em>Global Host Code Instruction</em>}'.
@@ -902,26 +855,15 @@ public interface SPackage extends EPackage
   EAttribute getContinuation_Name();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Continuation#getSignals <em>Signals</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Continuation#getValuedObjects <em>Valued Objects</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Signals</em>'.
-   * @see de.cau.cs.kieler.s.s.Continuation#getSignals()
+   * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
+   * @see de.cau.cs.kieler.s.s.Continuation#getValuedObjects()
    * @see #getContinuation()
    * @generated
    */
-  EReference getContinuation_Signals();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Continuation#getVariables <em>Variables</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Variables</em>'.
-   * @see de.cau.cs.kieler.s.s.Continuation#getVariables()
-   * @see #getContinuation()
-   * @generated
-   */
-  EReference getContinuation_Variables();
+  EReference getContinuation_ValuedObjects();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Instruction <em>Instruction</em>}'.
@@ -1323,20 +1265,12 @@ public interface SPackage extends EPackage
     EAttribute PROGRAM__PRIORITY = eINSTANCE.getProgram_Priority();
 
     /**
-     * The meta object literal for the '<em><b>Variables</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PROGRAM__VARIABLES = eINSTANCE.getProgram_Variables();
-
-    /**
-     * The meta object literal for the '<em><b>Signals</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROGRAM__SIGNALS = eINSTANCE.getProgram_Signals();
+    EReference PROGRAM__VALUED_OBJECTS = eINSTANCE.getProgram_ValuedObjects();
 
     /**
      * The meta object literal for the '<em><b>Global Host Code Instruction</b></em>' attribute feature.
@@ -1427,20 +1361,12 @@ public interface SPackage extends EPackage
     EAttribute CONTINUATION__NAME = eINSTANCE.getContinuation_Name();
 
     /**
-     * The meta object literal for the '<em><b>Signals</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference CONTINUATION__SIGNALS = eINSTANCE.getContinuation_Signals();
-
-    /**
-     * The meta object literal for the '<em><b>Variables</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference CONTINUATION__VARIABLES = eINSTANCE.getContinuation_Variables();
+    EReference CONTINUATION__VALUED_OBJECTS = eINSTANCE.getContinuation_ValuedObjects();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.InstructionImpl <em>Instruction</em>}' class.

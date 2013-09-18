@@ -19,13 +19,13 @@ package de.cau.cs.kieler.esterel.kexpressions;
  * is neither input nor output, it is considered to be a local signal with a limited scope not visible
  * to the outside.
  * <p>
- * As the value of a Signal is unique in one tick, the interpreter needs to know how to handle
- * multiple emissions of the same Signal in a tick. Therefore a combineOperator can be set. Such
+ * As the value of a Signal is unique in one tick, the interpreter needs to know how to handle 
+ * multiple emissions of the same Signal in a tick. Therefore a combineOperator can be set. Such 
  * operator needs to be commutative. It can be chosen from a pre-defined enumeration or by
- * a String referencing a function in the target language (e.g. a C or Java function name that
+ * a String referencing a function in the target language (e.g. a C or Java function name that 
  * has exactly two parameters and produces one combined result of the corresponding data type).
- *
- *
+ * 
+ * 
  * <!-- end-model-doc -->
  *
  * <p>

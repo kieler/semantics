@@ -2,10 +2,10 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-
 import de.cau.cs.kieler.esterel.esterel.ConstantWithValue;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+
+import de.cau.cs.kieler.esterel.kexpressions.ValuedObject;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;

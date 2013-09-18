@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.core.kexpressions.TypeIdentifier;
+import de.cau.cs.kieler.esterel.kexpressions.TypeIdentifier;
 
 /**
  * <!-- begin-user-doc -->
