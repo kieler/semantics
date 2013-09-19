@@ -15,8 +15,8 @@ package de.cau.cs.kieler.esterel.cec.sim.xtend
 
 import de.cau.cs.kieler.esterel.cec.sim.EsterelCECSimPlugin
 
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.esterel.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.esterel.kexpressions.ValueType
 import de.cau.cs.kieler.esterel.esterel.Abort
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.Do

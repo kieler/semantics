@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.s.s;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,12 +31,12 @@ public interface LocalSignal extends Instruction
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Signal</em>' reference.
-   * @see #setSignal(Signal)
+   * @see #setSignal(ValuedObject)
    * @see de.cau.cs.kieler.s.s.SPackage#getLocalSignal_Signal()
    * @model
    * @generated
    */
-  Signal getSignal();
+  ValuedObject getSignal();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.s.s.LocalSignal#getSignal <em>Signal</em>}' reference.
@@ -46,6 +46,6 @@ public interface LocalSignal extends Instruction
    * @see #getSignal()
    * @generated
    */
-  void setSignal(Signal value);
+  void setSignal(ValuedObject value);
 
 } // LocalSignal

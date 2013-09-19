@@ -39,7 +39,7 @@ import org.json.JSONObject;
 
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
@@ -165,9 +165,9 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
      */
     public boolean isDirty() {
         return true;
-        //TODO: A more sophisticated test is necessary (e.g. compare hash of settings & editor).
+        // TODO: A more sophisticated test is necessary (e.g. compare hash of settings & editor).
         // the following ALONE is NOT sufficient!
-        //return (sjExecution == null || !sjExecution.isCompiled());
+        // return (sjExecution == null || !sjExecution.isCompiled());
     }
 
     // -------------------------------------------------------------------------
@@ -247,13 +247,13 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                     }
                 }
             }
-            
+
             // Make a tick (either benchmarked or not)
             if (this.benchmark) {
                 program.doTick(Benchmark.BENCHMARK_NORMED_RUNS);
-                
+
                 // Nanoseconds
-                double bench = ((double)program.getLastTickTime()) ;
+                double bench = ((double) program.getLastTickTime());
                 returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_TIME, bench);
 
                 returnObj.accumulate(Benchmark.BENCHMARK_SIGNAL_SOURCE,
@@ -263,7 +263,6 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             } else {
                 program.doTick();
             }
-
 
             // Inspect the output
 
@@ -304,14 +303,14 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                     try {
                         // Find out about priority
                         if (program.getOutput(sSignalOutputName + "_prio") instanceof Integer) {
-                            sSignalIsSignalPrio = (Integer) program.getOutput(sSignalOutputName
-                                    + "_prio");
+                            sSignalIsSignalPrio =
+                                    (Integer) program.getOutput(sSignalOutputName + "_prio");
                         }
 
                         // Find out about execution order
                         if (program.getOutput(sSignalOutputName + "_order") instanceof Integer) {
-                            sSignalIsSignalOrder = (Integer) program.getOutput(sSignalOutputName
-                                    + "_order");
+                            sSignalIsSignalOrder =
+                                    (Integer) program.getOutput(sSignalOutputName + "_order");
                         }
                     } catch (NoSuchFieldException e) {
                         // ignore misssing fields
@@ -327,8 +326,9 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                     if (sSignalOutputName.startsWith(SSimPlugin.AUXILIARY_VARIABLE_TAG)
                             && sSignalIsPresent) {
                         try {
-                            String statementWithoutAuxiliaryVariableTag = sSignalOutputName
-                                    .substring(SSimPlugin.AUXILIARY_VARIABLE_TAG.length());
+                            String statementWithoutAuxiliaryVariableTag =
+                                    sSignalOutputName.substring(SSimPlugin.AUXILIARY_VARIABLE_TAG
+                                            .length());
 
                             DebugData activeStatement = new DebugData();
                             activeStatement.name = statementWithoutAuxiliaryVariableTag;
@@ -386,8 +386,9 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
 
             // Finally accumulate all active Statements (activeStatements)
             // under the statementName
-            String statementName = this.getProperties()[KIEM_PROPERTY_STATEMENTNAME
-                    + KIEM_PROPERTY_DIFF].getValue();
+            String statementName =
+                    this.getProperties()[KIEM_PROPERTY_STATEMENTNAME + KIEM_PROPERTY_DIFF]
+                            .getValue();
             returnObj.accumulate(statementName, activeStatements);
 
         } catch (JSONException e) {
@@ -434,20 +435,25 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
         final int nProperties = KIEM_PROPERTY_MAX;
         KiemProperty[] properties = new KiemProperty[nProperties];
         KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
-        properties[KIEM_PROPERTY_STATEMENTNAME] = new KiemProperty(
-                KIEM_PROPERTY_NAME_STATEMENTNAME, KIEM_PROPERTY_DEFAULT_STATEMENTNAME);
-        properties[KIEM_PROPERTY_CCOMPILER] = new KiemProperty(KIEM_PROPERTY_NAME_CCOMPILER,
-                compilerFile, KIEM_PROPERTY_DEFAULT_CCOMPILER);
-        properties[KIEM_PROPERTY_FULLDEBUGMODE] = new KiemProperty(
-                KIEM_PROPERTY_NAME_FULLDEBUGMODE, KIEM_PROPERTY_DEFAULT_FULLDEBUGMODE);
-        properties[KIEM_PROPERTY_BENCHMARK] = new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK,
-                KIEM_PROPERTY_DEFAULT_BENCHMARK);
-        properties[KIEM_PROPERTY_ALTERNATIVESYNTAX] = new KiemProperty(
-                KIEM_PROPERTY_NAME_ALTERNATIVESYNTAX, KIEM_PROPERTY_DEFAULT_ALTERNATIVESYNTAX);
-        properties[KIEM_PROPERTY_SCDEBUGCONSOLE] = new KiemProperty(
-                KIEM_PROPERTY_NAME_SCDEBUGCONSOLE, KIEM_PROPERTY_DEFAULT_SCDEBUGCONSOLE);
-        properties[KIEM_PROPERTY_SCL] = new KiemProperty(KIEM_PROPERTY_NAME_SCL,
-                KIEM_PROPERTY_DEFAULT_SCL);
+        properties[KIEM_PROPERTY_STATEMENTNAME] =
+                new KiemProperty(KIEM_PROPERTY_NAME_STATEMENTNAME,
+                        KIEM_PROPERTY_DEFAULT_STATEMENTNAME);
+        properties[KIEM_PROPERTY_CCOMPILER] =
+                new KiemProperty(KIEM_PROPERTY_NAME_CCOMPILER, compilerFile,
+                        KIEM_PROPERTY_DEFAULT_CCOMPILER);
+        properties[KIEM_PROPERTY_FULLDEBUGMODE] =
+                new KiemProperty(KIEM_PROPERTY_NAME_FULLDEBUGMODE,
+                        KIEM_PROPERTY_DEFAULT_FULLDEBUGMODE);
+        properties[KIEM_PROPERTY_BENCHMARK] =
+                new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK, KIEM_PROPERTY_DEFAULT_BENCHMARK);
+        properties[KIEM_PROPERTY_ALTERNATIVESYNTAX] =
+                new KiemProperty(KIEM_PROPERTY_NAME_ALTERNATIVESYNTAX,
+                        KIEM_PROPERTY_DEFAULT_ALTERNATIVESYNTAX);
+        properties[KIEM_PROPERTY_SCDEBUGCONSOLE] =
+                new KiemProperty(KIEM_PROPERTY_NAME_SCDEBUGCONSOLE,
+                        KIEM_PROPERTY_DEFAULT_SCDEBUGCONSOLE);
+        properties[KIEM_PROPERTY_SCL] =
+                new KiemProperty(KIEM_PROPERTY_NAME_SCL, KIEM_PROPERTY_DEFAULT_SCL);
 
         return properties;
     }
@@ -568,8 +574,8 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             String packageName = "test";
 
             // Generate SJ code
-            scOutput = scOutput.trimSegments(1).appendSegment(className)
-                    .appendFileExtension("java");
+            scOutput =
+                    scOutput.trimSegments(1).appendSegment(className).appendFileExtension("java");
             IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile scOutputFile = ModelUtil.convertIPathToIFile(scOutputPath);
             String scOutputString = ModelUtil.getAbsoluteFilePath(scOutputFile);
@@ -624,16 +630,18 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
         outputSignalList = new LinkedList<String>();
         JSONObject res = new JSONObject();
         try {
-            if (myModel != null && myModel.getSignals() != null) {
-                for (Signal signal : myModel.getSignals()) {
-                    if (signal.isIsInput()) {
-                        res.accumulate(signal.getName(), JSONSignalValues.newValue(false));
-                    }
-                    if (signal.isIsOutput()) {
-                        String signalName = signal.getName();
-                        if (!signalName.startsWith(SSimPlugin.AUXILIARY_VARIABLE_TAG)) {
-                            res.accumulate(signalName, JSONSignalValues.newValue(false));
-                            outputSignalList.add(signalName);
+            if (myModel != null && myModel.getValuedObjects() != null) {
+                for (ValuedObject signal : myModel.getValuedObjects()) {
+                    if (signal.isIsSignal()) {
+                        if (signal.isIsInput()) {
+                            res.accumulate(signal.getName(), JSONSignalValues.newValue(false));
+                        }
+                        if (signal.isIsOutput()) {
+                            String signalName = signal.getName();
+                            if (!signalName.startsWith(SSimPlugin.AUXILIARY_VARIABLE_TAG)) {
+                                res.accumulate(signalName, JSONSignalValues.newValue(false));
+                                outputSignalList.add(signalName);
+                            }
                         }
                     }
                 }

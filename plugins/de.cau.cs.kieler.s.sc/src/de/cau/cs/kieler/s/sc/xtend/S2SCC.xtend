@@ -19,7 +19,6 @@ import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.Signal
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
@@ -116,7 +115,7 @@ class S2SCC {
     #define _SC_ID_MAX «2*program.priority» 
 
     // Highest signal id in use;
-    #define _SC_SIG_MAX «program.getSignals().size» 
+    #define _SC_SIG_MAX «program.getValuedObjects().filter[e|e.isSignal].size» 
 
     #include "sc.h"
 
@@ -187,10 +186,10 @@ class S2SCC {
    
    // Generate signal constants.
    def sSignalConstants(Program program) {
-       '''typedef enum {«FOR signal : program.getSignals() SEPARATOR ",
+       '''typedef enum {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ",
  "»«signal.name»«ENDFOR»} signaltype;
        
-       const char *s2signame[] = {«FOR signal : program.getSignals() SEPARATOR ", 
+       const char *s2signame[] = {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ", 
 "»"«signal.name»"«ENDFOR»};'''
    }
    
@@ -212,7 +211,7 @@ class S2SCC {
    def sSetOutputFunction(Program program) {
        '''
     void callOutputs() {
-    «FOR signal : program.getSignals().filter(e|e.isOutput)»
+    «FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isOutput)»
         OUTPUT_«signal.name»(PRESENT_SCC(«signal.name»));
     «ENDFOR»
         }
@@ -224,7 +223,7 @@ class S2SCC {
    def sResetSignals(Program program) {
        '''
     void resetSignals() {
-    «FOR signal : program.getSignals()»
+    «FOR signal : program.getValuedObjects().filter[e|e.isSignal]»
       presentSigIntPre[«signal.name»] = presentSigInt[«signal.name»];
       presentSigInt[«signal.name»] = 0;
       valSigIntPre[«signal.name»] = valSigInt[«signal.name»];
@@ -242,7 +241,7 @@ class S2SCC {
    def sTotalResetSignals(Program program) {
        '''
     void totalResetSignals() {
-    «FOR signal : program.getSignals()»
+    «FOR signal : program.getValuedObjects().filter[e|e.isSignal]»
       presentSigInt[«signal.name»] = 0;
       presentSigIntPre[«signal.name»] = 0;
       valSigInt[«signal.name»] = «signal.combineOperator.initialValue»;
@@ -273,7 +272,7 @@ void setInputs(){
 
     object = cJSON_Parse(buffer);
     
-   «'''«FOR signal : program.signals.filter(e|e.isInput||e.isOutput)»
+   «'''«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isInput||e.isOutput)»
                    «signal.callInputs»
    «ENDFOR»'''»    
    }'''
@@ -331,7 +330,7 @@ void setInputs(){
 
    // Define output functions to return JSON for each s signal.
    def sOutputs(Program program) {
-    '''«'''«FOR signal : program.signals.filter(e | e.isOutput)»
+    '''«'''«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e | e.isOutput)»
         void OUTPUT_«signal.name»(int status){
         value = cJSON_CreateObject();
         cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
@@ -350,7 +349,9 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    // -------------------------------------------------------------------------   
    
    // Call input functions for each JSON s signal that is present.
-   def callInputs(Signal signal) {
+   def callInputs(ValuedObject signal) {
+       if (signal.isSignal) {
+           return        
        '''child = cJSON_GetObjectItem(object, "«signal.name»");
         if (child != NULL) {
             present = cJSON_GetObjectItem(child, "present");
@@ -367,13 +368,14 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
         }   
           
        '''
+       }
    }
    
    // -------------------------------------------------------------------------   
    // -------------------------------------------------------------------------
    
    // Expand a state traversing all instructions of that state.
-   def dispatch expand(State state) {
+   def dispatch CharSequence expand(State state) {
            '''«state.name»: { 
            «FOR instruction : state.instructions»
            «instruction.expand»
@@ -382,7 +384,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    }
    
    // Expand an IF instruction traversing all instructions of that IF instruction.
-   def dispatch expand(If ifInstruction) {
+   def dispatch CharSequence expand(If ifInstruction) {
        '''if («ifInstruction.expression.expand») { 
            «FOR instruction : ifInstruction.instructions»
                «instruction.expand»
@@ -398,38 +400,38 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    }
    
    // Expand Host code.
-   def dispatch expand(HostCodeInstruction hostCodeInstruction) {
+   def dispatch CharSequence expand(HostCodeInstruction hostCodeInstruction) {
         '''«hostCodeInstruction.hostCode.extractCode»;'''
    }
    // Expand Text Expression
-   def dispatch expand(TextExpression expression) {
-        '''(«expression.code.extractCode»)'''
+   def dispatch CharSequence expand(TextExpression expression) {
+        '''(«expression.text.extractCode»)'''
    }
 
    // -------------------------------------------------------------------------   
       
    // Expand a PAUSE instruction.
-   def dispatch expand(Pause pauseInstruction) {
+   def dispatch CharSequence expand(Pause pauseInstruction) {
        '''PAUSE;'''
    }   
    
    // Expand a TERM instruction.
-   def dispatch expand(Term termInstruction) {
+   def dispatch CharSequence expand(Term termInstruction) {
        '''TERM;'''
    }   
    
    // Expand a HALT instruction.
-   def dispatch expand(Halt haltInstruction) {
+   def dispatch CharSequence expand(Halt haltInstruction) {
        '''HALT;'''
    }   
    
    // Expand a JOIN instruction.
-   def dispatch expand(Join joinInstruction) {
+   def dispatch CharSequence expand(Join joinInstruction) {
        '''JOINELSE(«joinInstruction.continuation.name»);'''
    } 
    
    // Expand an ABORT instruction.  
-   def dispatch expand(Abort abortInstruction) {
+   def dispatch CharSequence expand(Abort abortInstruction) {
        '''ABORT;'''
    }   
    
@@ -446,7 +448,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    }
    
    // Expand a FORK instruction.
-   def dispatch expand(Fork forkInstruction) {
+   def dispatch CharSequence expand(Fork forkInstruction) {
        '''«IF forkInstruction.getLastFork != forkInstruction» 
              FORK(«forkInstruction.thread.name»,«forkInstruction.priority»);
           «ENDIF»
@@ -457,30 +459,30 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    }   
 
    // Expand a TRANS instruction.    
-   def dispatch expand(Trans transInstruction) {
+   def dispatch CharSequence expand(Trans transInstruction) {
        '''GOTO(«transInstruction.continuation.name»);'''
    }   
    
    // Expand an AWAIT instruction.
-   def dispatch expand(Await awaitInstruction) {
+   def dispatch CharSequence expand(Await awaitInstruction) {
        '''AWAIT;'''
    }   
    
    // Expand a PRIO instruction.
-   def dispatch expand(Prio prioInstruction) {
+   def dispatch CharSequence expand(Prio prioInstruction) {
        '''PRIO(«prioInstruction.priority»);'''
    }   
    
    // Expand SIGNAL instruction. This takes care of reincarnation
    // by resetting local signals when the state is re-entered.
    // Also reset the value of valued signals (test 139).
-   def dispatch expand(LocalSignal signalInstruction) {
+   def dispatch CharSequence expand(LocalSignal signalInstruction) {
        '''presentSigInt[«signalInstruction.signal.name»] = 0;
           valSigInt[«signalInstruction.signal.name»] = «signalInstruction.signal.combineOperator.initialValue»;'''   
    }
    
    // Expand an EMIT instruction.
-   def dispatch expand(Emit emitInstruction) {
+   def dispatch CharSequence expand(Emit emitInstruction) {
        if (emitInstruction.value != null) {
            '''EMIT_VAL_SCC(«emitInstruction.signal.name», «emitInstruction.value.expand»,
                «emitInstruction.signal.combineOperator.macro», 
@@ -492,7 +494,8 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    }   
    
    // Expand fall back for other instructions: Do nothing.
-   def dispatch expand(Instruction instruction) {
+   def dispatch CharSequence expand(Instruction instruction) {
+       ''''''
    }   
    
    // -------------------------------------------------------------------------   
@@ -547,7 +550,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    // -------------------------------------------------------------------------
    
    //Expand a complex expression.
-   def dispatch expand(OperatorExpression expression) {
+   def dispatch CharSequence expand(OperatorExpression expression) {
         '''
     «IF expression.operator  == OperatorType::EQ»
         («FOR subexpression : expression.subExpressions SEPARATOR " == "»
@@ -629,45 +632,46 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    // -------------------------------------------------------------------------
     
    // Expand a signal.
-   def dispatch expand(Signal signal) {
-        '''PRESENT_SCC(«signal.name»)'''
+   def dispatch CharSequence expand(ValuedObject signal) {
+       if (signal.isSignal) {
+            return  '''PRESENT_SCC(«signal.name»)'''
+       }
+       return ''''''
    }
    // Expand a signal within a value reference
-   def dispatch expand_val(Signal signal) {
-        '''«signal.name»'''
+   def dispatch CharSequence expand_val(ValuedObject signal) {
+       if (signal.isSignal) {
+            return  '''«signal.name»'''
+       }
+       return ''''''
    }
-   def dispatch expand_val(ValuedObjectReference valuedObjectReference) {
+   def dispatch CharSequence expand_val(ValuedObjectReference valuedObjectReference) {
         '''«valuedObjectReference.valuedObject.expand_val»'''
    }   
-   def dispatch expand_val(Expression other) {
+   def dispatch CharSequence expand_val(Expression other) {
         other.expand;
    }
    
    // Expand a int expression value.
-   def dispatch expand(IntValue expression) {
+   def dispatch CharSequence expand(IntValue expression) {
         '''«expression.value.toString»'''
    }
 
    // Expand a float expression value.
-   def dispatch expand(FloatValue expression) {
+   def dispatch CharSequenceexpand(FloatValue expression) {
         '''«expression.value.toString»'''
    }
 
    // Expand a boolean expression value (true or false).
-   def dispatch expand(BooleanValue expression) {
+   def dispatch CharSequenceexpand(BooleanValue expression) {
         '''«IF expression.value == true »1«ENDIF»«IF expression.value == false»0«ENDIF»'''
    }
 
    
    // Expand an object reference.
-   def dispatch expand(ValuedObjectReference valuedObjectReference) {
+   def dispatch CharSequence expand(ValuedObjectReference valuedObjectReference) {
         '''«valuedObjectReference.valuedObject.expand»'''
    }
    
-   // Expand a valued object.
-   def dispatch expand(ValuedObject valuedObject) {
-        ''''''
-   }
-
    // -------------------------------------------------------------------------   
 }

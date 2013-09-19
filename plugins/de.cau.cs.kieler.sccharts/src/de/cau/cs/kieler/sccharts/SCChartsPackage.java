@@ -909,22 +909,13 @@ public interface SCChartsPackage extends EPackage {
     int TEXT_EFFECT = 9;
 
     /**
-     * The feature id for the '<em><b>Code</b></em>' attribute.
+     * The feature id for the '<em><b>Text</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TEXT_EFFECT__CODE = KExpressionsPackage.TEXTUAL_CODE__CODE;
-
-    /**
-     * The feature id for the '<em><b>Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEXT_EFFECT__TYPE = KExpressionsPackage.TEXTUAL_CODE__TYPE;
+    int TEXT_EFFECT__TEXT = KExpressionsPackage.TEXT_EXPRESSION__TEXT;
 
     /**
      * The number of structural features of the '<em>Text Effect</em>' class.
@@ -933,7 +924,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_EFFECT_FEATURE_COUNT = KExpressionsPackage.TEXTUAL_CODE_FEATURE_COUNT + 0;
+    int TEXT_EFFECT_FEATURE_COUNT = KExpressionsPackage.TEXT_EXPRESSION_FEATURE_COUNT + 0;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.

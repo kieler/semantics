@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.esterel.kexpressions.Expression;
 
 import org.eclipse.emf.common.util.EList;
 

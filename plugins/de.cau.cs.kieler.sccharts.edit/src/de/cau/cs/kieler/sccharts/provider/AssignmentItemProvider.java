@@ -17,6 +17,7 @@ package de.cau.cs.kieler.sccharts.provider;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 
 import de.cau.cs.kieler.sccharts.Assignment;
+import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import java.util.Collection;
@@ -190,12 +191,12 @@ public class AssignmentItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 KExpressionsFactory.eINSTANCE.createExpression()));
+                 SCChartsFactory.eINSTANCE.createTextEffect()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 KExpressionsFactory.eINSTANCE.createComplexExpression()));
+                 KExpressionsFactory.eINSTANCE.createExpression()));
 
         newChildDescriptors.add
             (createChildParameter

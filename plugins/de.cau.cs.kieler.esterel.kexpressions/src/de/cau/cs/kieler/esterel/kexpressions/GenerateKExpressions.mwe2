@@ -4,7 +4,7 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/de/cau/cs/kieler/core/kexpressions/KExpressions.xtext"
+var grammarURI = "classpath:/de/cau/cs/kieler/esterel/kexpressions/KExpressions.xtext"
 var file.extensions = "expr"
 var projectName = "de.cau.cs.kieler.esterel.kexpressions"
 var runtimeProject = "../${projectName}"

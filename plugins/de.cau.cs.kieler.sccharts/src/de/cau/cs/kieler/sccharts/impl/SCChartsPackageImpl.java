@@ -802,7 +802,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         stateEClass.getESuperTypes().add(this.getScope());
         transitionEClass.getESuperTypes().add(this.getAction());
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
-        textEffectEClass.getESuperTypes().add(theKExpressionsPackage.getTextualCode());
+        textEffectEClass.getESuperTypes().add(theKExpressionsPackage.getTextExpression());
         textEffectEClass.getESuperTypes().add(this.getEffect());
 
         // Initialize classes and features; add operations and parameters
@@ -858,7 +858,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getScope_EntryActions(), this.getAction(), null, "entryActions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_BodyReference(), ecorePackage.getEObject(), null, "bodyReference", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_BodyContents(), ecorePackage.getEObject(), null, "bodyContents", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_BodyText(), theKExpressionsPackage.getTextualCode(), null, "bodyText", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getScope_BodyText(), theKExpressionsPackage.getTextExpression(), null, "bodyText", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_Renamings(), this.getSubstitution(), this.getSubstitution_ParentScope(), "renamings", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getScope_InterfaceDeclaration(), this.getParsable(), "interfaceDeclaration", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

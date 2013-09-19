@@ -15,6 +15,8 @@ package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.TextualCode;
 
 import de.cau.cs.kieler.sccharts.*;
@@ -134,8 +136,12 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createAnnotatableAdapter();
             }
             @Override
-            public Adapter caseTextualCode(TextualCode object) {
-                return createTextualCodeAdapter();
+            public Adapter caseExpression(Expression object) {
+                return createExpressionAdapter();
+            }
+            @Override
+            public Adapter caseTextExpression(TextExpression object) {
+                return createTextExpressionAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -312,16 +318,30 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.TextualCode <em>Textual Code</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Expression <em>Expression</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.TextualCode
+     * @see de.cau.cs.kieler.core.kexpressions.Expression
      * @generated
      */
-    public Adapter createTextualCodeAdapter() {
+    public Adapter createExpressionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.TextExpression <em>Text Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.kexpressions.TextExpression
+     * @generated
+     */
+    public Adapter createTextExpressionAdapter() {
         return null;
     }
 

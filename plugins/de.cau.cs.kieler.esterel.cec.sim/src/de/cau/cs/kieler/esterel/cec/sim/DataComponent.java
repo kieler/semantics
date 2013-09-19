@@ -57,10 +57,10 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.core.kexpressions.Input;
-import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
-import de.cau.cs.kieler.core.kexpressions.Output;
-import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.esterel.kexpressions.Input;
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
+import de.cau.cs.kieler.esterel.kexpressions.Output;
+import de.cau.cs.kieler.esterel.kexpressions.Signal;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.esterel.cec.CEC;
 import de.cau.cs.kieler.esterel.cec.sim.xtend.Esterel2CSimulationInterface;

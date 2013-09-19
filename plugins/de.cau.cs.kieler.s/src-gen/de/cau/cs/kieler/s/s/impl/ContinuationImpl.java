@@ -2,8 +2,7 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
-import de.cau.cs.kieler.core.kexpressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.SPackage;
@@ -32,8 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ContinuationImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.ContinuationImpl#getSignals <em>Signals</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.ContinuationImpl#getVariables <em>Variables</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.ContinuationImpl#getValuedObjects <em>Valued Objects</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,24 +60,14 @@ public class ContinuationImpl extends MinimalEObjectImpl.Container implements Co
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getSignals() <em>Signals</em>}' containment reference list.
+   * The cached value of the '{@link #getValuedObjects() <em>Valued Objects</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSignals()
+   * @see #getValuedObjects()
    * @generated
    * @ordered
    */
-  protected EList<Signal> signals;
-
-  /**
-   * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getVariables()
-   * @generated
-   * @ordered
-   */
-  protected EList<Variable> variables;
+  protected EList<ValuedObject> valuedObjects;
 
   /**
    * <!-- begin-user-doc -->
@@ -130,27 +118,13 @@ public class ContinuationImpl extends MinimalEObjectImpl.Container implements Co
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Signal> getSignals()
+  public EList<ValuedObject> getValuedObjects()
   {
-    if (signals == null)
+    if (valuedObjects == null)
     {
-      signals = new EObjectContainmentEList<Signal>(Signal.class, this, SPackage.CONTINUATION__SIGNALS);
+      valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, SPackage.CONTINUATION__VALUED_OBJECTS);
     }
-    return signals;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Variable> getVariables()
-  {
-    if (variables == null)
-    {
-      variables = new EObjectContainmentEList<Variable>(Variable.class, this, SPackage.CONTINUATION__VARIABLES);
-    }
-    return variables;
+    return valuedObjects;
   }
 
   /**
@@ -163,10 +137,8 @@ public class ContinuationImpl extends MinimalEObjectImpl.Container implements Co
   {
     switch (featureID)
     {
-      case SPackage.CONTINUATION__SIGNALS:
-        return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
-      case SPackage.CONTINUATION__VARIABLES:
-        return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
+      case SPackage.CONTINUATION__VALUED_OBJECTS:
+        return ((InternalEList<?>)getValuedObjects()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -183,10 +155,8 @@ public class ContinuationImpl extends MinimalEObjectImpl.Container implements Co
     {
       case SPackage.CONTINUATION__NAME:
         return getName();
-      case SPackage.CONTINUATION__SIGNALS:
-        return getSignals();
-      case SPackage.CONTINUATION__VARIABLES:
-        return getVariables();
+      case SPackage.CONTINUATION__VALUED_OBJECTS:
+        return getValuedObjects();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -205,13 +175,9 @@ public class ContinuationImpl extends MinimalEObjectImpl.Container implements Co
       case SPackage.CONTINUATION__NAME:
         setName((String)newValue);
         return;
-      case SPackage.CONTINUATION__SIGNALS:
-        getSignals().clear();
-        getSignals().addAll((Collection<? extends Signal>)newValue);
-        return;
-      case SPackage.CONTINUATION__VARIABLES:
-        getVariables().clear();
-        getVariables().addAll((Collection<? extends Variable>)newValue);
+      case SPackage.CONTINUATION__VALUED_OBJECTS:
+        getValuedObjects().clear();
+        getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -230,11 +196,8 @@ public class ContinuationImpl extends MinimalEObjectImpl.Container implements Co
       case SPackage.CONTINUATION__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case SPackage.CONTINUATION__SIGNALS:
-        getSignals().clear();
-        return;
-      case SPackage.CONTINUATION__VARIABLES:
-        getVariables().clear();
+      case SPackage.CONTINUATION__VALUED_OBJECTS:
+        getValuedObjects().clear();
         return;
     }
     super.eUnset(featureID);
@@ -252,10 +215,8 @@ public class ContinuationImpl extends MinimalEObjectImpl.Container implements Co
     {
       case SPackage.CONTINUATION__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case SPackage.CONTINUATION__SIGNALS:
-        return signals != null && !signals.isEmpty();
-      case SPackage.CONTINUATION__VARIABLES:
-        return variables != null && !variables.isEmpty();
+      case SPackage.CONTINUATION__VALUED_OBJECTS:
+        return valuedObjects != null && !valuedObjects.isEmpty();
     }
     return super.eIsSet(featureID);
   }

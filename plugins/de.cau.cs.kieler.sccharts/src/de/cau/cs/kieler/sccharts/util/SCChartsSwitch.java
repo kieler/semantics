@@ -15,6 +15,8 @@ package de.cau.cs.kieler.sccharts.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.TextualCode;
 
 import de.cau.cs.kieler.sccharts.*;
@@ -155,8 +157,9 @@ public class SCChartsSwitch<T> extends Switch<T> {
             case SCChartsPackage.TEXT_EFFECT: {
                 TextEffect textEffect = (TextEffect)theEObject;
                 T result = caseTextEffect(textEffect);
-                if (result == null) result = caseTextualCode(textEffect);
+                if (result == null) result = caseTextExpression(textEffect);
                 if (result == null) result = caseEffect(textEffect);
+                if (result == null) result = caseExpression(textEffect);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -330,17 +333,32 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Textual Code</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Textual Code</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Expression</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseTextualCode(TextualCode object) {
+    public T caseExpression(Expression object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Text Expression</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Text Expression</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseTextExpression(TextExpression object) {
         return null;
     }
 

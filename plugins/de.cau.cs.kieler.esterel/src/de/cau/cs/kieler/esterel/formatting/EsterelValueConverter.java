@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.esterel.formatting;
 
-import de.cau.cs.kieler.core.kexpressions.formatting.KExpressionsValueConverter;
+import de.cau.cs.kieler.esterel.kexpressions.formatting.KExpressionsValueConverter;
 
 /**
  * Reuse functionality introduced by the KExpressionsValueConverter here.

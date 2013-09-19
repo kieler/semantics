@@ -74,28 +74,12 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
     protected KExpressionsSwitch<Adapter> modelSwitch =
         new KExpressionsSwitch<Adapter>() {
             @Override
-            public Adapter caseComplexExpression(ComplexExpression object) {
-                return createComplexExpressionAdapter();
-            }
-            @Override
             public Adapter caseExpression(Expression object) {
                 return createExpressionAdapter();
             }
             @Override
-            public Adapter caseTextualCode(TextualCode object) {
-                return createTextualCodeAdapter();
-            }
-            @Override
-            public Adapter caseSignal(Signal object) {
-                return createSignalAdapter();
-            }
-            @Override
             public Adapter caseValuedObject(ValuedObject object) {
                 return createValuedObjectAdapter();
-            }
-            @Override
-            public Adapter caseVariable(Variable object) {
-                return createVariableAdapter();
             }
             @Override
             public Adapter caseValuedObjectReference(ValuedObjectReference object) {
@@ -126,54 +110,6 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createTextExpressionAdapter();
             }
             @Override
-            public Adapter caseInterfaceDeclaration(InterfaceDeclaration object) {
-                return createInterfaceDeclarationAdapter();
-            }
-            @Override
-            public Adapter caseInterfaceSignalDecl(InterfaceSignalDecl object) {
-                return createInterfaceSignalDeclAdapter();
-            }
-            @Override
-            public Adapter caseISignal(ISignal object) {
-                return createISignalAdapter();
-            }
-            @Override
-            public Adapter caseChannelDescription(ChannelDescription object) {
-                return createChannelDescriptionAdapter();
-            }
-            @Override
-            public Adapter caseTypeIdentifier(TypeIdentifier object) {
-                return createTypeIdentifierAdapter();
-            }
-            @Override
-            public Adapter caseInterfaceVariableDecl(InterfaceVariableDecl object) {
-                return createInterfaceVariableDeclAdapter();
-            }
-            @Override
-            public Adapter caseVariableDecl(VariableDecl object) {
-                return createVariableDeclAdapter();
-            }
-            @Override
-            public Adapter caseIVariable(IVariable object) {
-                return createIVariableAdapter();
-            }
-            @Override
-            public Adapter caseInput(Input object) {
-                return createInputAdapter();
-            }
-            @Override
-            public Adapter caseOutput(Output object) {
-                return createOutputAdapter();
-            }
-            @Override
-            public Adapter caseInputOutput(InputOutput object) {
-                return createInputOutputAdapter();
-            }
-            @Override
-            public Adapter caseReturn(Return object) {
-                return createReturnAdapter();
-            }
-            @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
             }
@@ -198,20 +134,6 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
 
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ComplexExpression <em>Complex Expression</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.ComplexExpression
-     * @generated
-     */
-    public Adapter createComplexExpressionAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Expression <em>Expression</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -226,34 +148,6 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.TextualCode <em>Textual Code</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.TextualCode
-     * @generated
-     */
-    public Adapter createTextualCodeAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Signal <em>Signal</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.Signal
-     * @generated
-     */
-    public Adapter createSignalAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject <em>Valued Object</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -264,20 +158,6 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createValuedObjectAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Variable <em>Variable</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.Variable
-     * @generated
-     */
-    public Adapter createVariableAdapter() {
         return null;
     }
 
@@ -376,174 +256,6 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createTextExpressionAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.InterfaceDeclaration <em>Interface Declaration</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.InterfaceDeclaration
-     * @generated
-     */
-    public Adapter createInterfaceDeclarationAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl <em>Interface Signal Decl</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl
-     * @generated
-     */
-    public Adapter createInterfaceSignalDeclAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ISignal <em>ISignal</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.ISignal
-     * @generated
-     */
-    public Adapter createISignalAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ChannelDescription <em>Channel Description</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.ChannelDescription
-     * @generated
-     */
-    public Adapter createChannelDescriptionAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.TypeIdentifier <em>Type Identifier</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.TypeIdentifier
-     * @generated
-     */
-    public Adapter createTypeIdentifierAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.InterfaceVariableDecl <em>Interface Variable Decl</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.InterfaceVariableDecl
-     * @generated
-     */
-    public Adapter createInterfaceVariableDeclAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.VariableDecl <em>Variable Decl</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.VariableDecl
-     * @generated
-     */
-    public Adapter createVariableDeclAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.IVariable <em>IVariable</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.IVariable
-     * @generated
-     */
-    public Adapter createIVariableAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Input <em>Input</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.Input
-     * @generated
-     */
-    public Adapter createInputAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Output <em>Output</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.Output
-     * @generated
-     */
-    public Adapter createOutputAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.InputOutput <em>Input Output</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.InputOutput
-     * @generated
-     */
-    public Adapter createInputOutputAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Return <em>Return</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.kexpressions.Return
-     * @generated
-     */
-    public Adapter createReturnAdapter() {
         return null;
     }
 

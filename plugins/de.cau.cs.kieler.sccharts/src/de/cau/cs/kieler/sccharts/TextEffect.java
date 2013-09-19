@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts;
 
+import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.TextualCode;
 
 /**
@@ -31,7 +32,7 @@ import de.cau.cs.kieler.core.kexpressions.TextualCode;
  * @model
  * @generated
  */
-public interface TextEffect extends TextualCode, Effect {
+public interface TextEffect extends TextExpression, Effect {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

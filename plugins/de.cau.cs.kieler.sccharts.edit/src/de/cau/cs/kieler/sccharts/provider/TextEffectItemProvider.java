@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.sccharts.provider;
 
 
-import de.cau.cs.kieler.core.kexpressions.provider.TextualCodeItemProvider;
+import de.cau.cs.kieler.core.kexpressions.provider.TextExpressionItemProvider;
 
 import de.cau.cs.kieler.sccharts.TextEffect;
 
@@ -40,7 +40,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class TextEffectItemProvider
-    extends TextualCodeItemProvider
+    extends TextExpressionItemProvider
     implements
         IEditingDomainItemProvider,
         IStructuredItemContentProvider,
@@ -98,7 +98,7 @@ public class TextEffectItemProvider
      */
     @Override
     public String getText(Object object) {
-        String label = ((TextEffect)object).getCode();
+        String label = ((TextEffect)object).getText();
         return label == null || label.length() == 0 ?
             getString("_UI_TextEffect_type") :
             getString("_UI_TextEffect_type") + " " + label;

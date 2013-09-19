@@ -3,7 +3,7 @@
 package de.cau.cs.kieler.s.s.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.Emit;
@@ -42,7 +42,7 @@ public class EmitImpl extends InstructionImpl implements Emit
    * @generated
    * @ordered
    */
-  protected Signal signal;
+  protected ValuedObject signal;
 
   /**
    * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
@@ -90,12 +90,12 @@ public class EmitImpl extends InstructionImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal getSignal()
+  public ValuedObject getSignal()
   {
     if (signal != null && signal.eIsProxy())
     {
       InternalEObject oldSignal = (InternalEObject)signal;
-      signal = (Signal)eResolveProxy(oldSignal);
+      signal = (ValuedObject)eResolveProxy(oldSignal);
       if (signal != oldSignal)
       {
         if (eNotificationRequired())
@@ -110,7 +110,7 @@ public class EmitImpl extends InstructionImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal basicGetSignal()
+  public ValuedObject basicGetSignal()
   {
     return signal;
   }
@@ -120,9 +120,9 @@ public class EmitImpl extends InstructionImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSignal(Signal newSignal)
+  public void setSignal(ValuedObject newSignal)
   {
-    Signal oldSignal = signal;
+    ValuedObject oldSignal = signal;
     signal = newSignal;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SPackage.EMIT__SIGNAL, oldSignal, signal));
@@ -268,7 +268,7 @@ public class EmitImpl extends InstructionImpl implements Emit
     switch (featureID)
     {
       case SPackage.EMIT__SIGNAL:
-        setSignal((Signal)newValue);
+        setSignal((ValuedObject)newValue);
         return;
       case SPackage.EMIT__VALUE:
         setValue((Expression)newValue);
@@ -291,7 +291,7 @@ public class EmitImpl extends InstructionImpl implements Emit
     switch (featureID)
     {
       case SPackage.EMIT__SIGNAL:
-        setSignal((Signal)null);
+        setSignal((ValuedObject)null);
         return;
       case SPackage.EMIT__VALUE:
         setValue((Expression)null);

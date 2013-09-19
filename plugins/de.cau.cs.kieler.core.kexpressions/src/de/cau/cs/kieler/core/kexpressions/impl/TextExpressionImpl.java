@@ -23,53 +23,32 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl#getCode <em>Code</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl#getText <em>Text</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class TextExpressionImpl extends ComplexExpressionImpl implements TextExpression {
+public class TextExpressionImpl extends ExpressionImpl implements TextExpression {
     /**
-     * The default value of the '{@link #getCode() <em>Code</em>}' attribute.
+     * The default value of the '{@link #getText() <em>Text</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getCode()
+     * @see #getText()
      * @generated
      * @ordered
      */
-    protected static final String CODE_EDEFAULT = null;
+    protected static final String TEXT_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getCode() <em>Code</em>}' attribute.
+     * The cached value of the '{@link #getText() <em>Text</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getCode()
+     * @see #getText()
      * @generated
      * @ordered
      */
-    protected String code = CODE_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getType()
-     * @generated
-     * @ordered
-     */
-    protected static final String TYPE_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getType()
-     * @generated
-     * @ordered
-     */
-    protected String type = TYPE_EDEFAULT;
+    protected String text = TEXT_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -95,8 +74,8 @@ public class TextExpressionImpl extends ComplexExpressionImpl implements TextExp
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getCode() {
-        return code;
+    public String getText() {
+        return text;
     }
 
     /**
@@ -104,32 +83,11 @@ public class TextExpressionImpl extends ComplexExpressionImpl implements TextExp
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setCode(String newCode) {
-        String oldCode = code;
-        code = newCode;
+    public void setText(String newText) {
+        String oldText = text;
+        text = newText;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.TEXT_EXPRESSION__CODE, oldCode, code));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setType(String newType) {
-        String oldType = type;
-        type = newType;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.TEXT_EXPRESSION__TYPE, oldType, type));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.TEXT_EXPRESSION__TEXT, oldText, text));
     }
 
     /**
@@ -140,10 +98,8 @@ public class TextExpressionImpl extends ComplexExpressionImpl implements TextExp
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KExpressionsPackage.TEXT_EXPRESSION__CODE:
-                return getCode();
-            case KExpressionsPackage.TEXT_EXPRESSION__TYPE:
-                return getType();
+            case KExpressionsPackage.TEXT_EXPRESSION__TEXT:
+                return getText();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -156,11 +112,8 @@ public class TextExpressionImpl extends ComplexExpressionImpl implements TextExp
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KExpressionsPackage.TEXT_EXPRESSION__CODE:
-                setCode((String)newValue);
-                return;
-            case KExpressionsPackage.TEXT_EXPRESSION__TYPE:
-                setType((String)newValue);
+            case KExpressionsPackage.TEXT_EXPRESSION__TEXT:
+                setText((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -174,11 +127,8 @@ public class TextExpressionImpl extends ComplexExpressionImpl implements TextExp
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KExpressionsPackage.TEXT_EXPRESSION__CODE:
-                setCode(CODE_EDEFAULT);
-                return;
-            case KExpressionsPackage.TEXT_EXPRESSION__TYPE:
-                setType(TYPE_EDEFAULT);
+            case KExpressionsPackage.TEXT_EXPRESSION__TEXT:
+                setText(TEXT_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -192,46 +142,10 @@ public class TextExpressionImpl extends ComplexExpressionImpl implements TextExp
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KExpressionsPackage.TEXT_EXPRESSION__CODE:
-                return CODE_EDEFAULT == null ? code != null : !CODE_EDEFAULT.equals(code);
-            case KExpressionsPackage.TEXT_EXPRESSION__TYPE:
-                return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+            case KExpressionsPackage.TEXT_EXPRESSION__TEXT:
+                return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT.equals(text);
         }
         return super.eIsSet(featureID);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-        if (baseClass == TextualCode.class) {
-            switch (derivedFeatureID) {
-                case KExpressionsPackage.TEXT_EXPRESSION__CODE: return KExpressionsPackage.TEXTUAL_CODE__CODE;
-                case KExpressionsPackage.TEXT_EXPRESSION__TYPE: return KExpressionsPackage.TEXTUAL_CODE__TYPE;
-                default: return -1;
-            }
-        }
-        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-        if (baseClass == TextualCode.class) {
-            switch (baseFeatureID) {
-                case KExpressionsPackage.TEXTUAL_CODE__CODE: return KExpressionsPackage.TEXT_EXPRESSION__CODE;
-                case KExpressionsPackage.TEXTUAL_CODE__TYPE: return KExpressionsPackage.TEXT_EXPRESSION__TYPE;
-                default: return -1;
-            }
-        }
-        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
     /**
@@ -244,10 +158,8 @@ public class TextExpressionImpl extends ComplexExpressionImpl implements TextExp
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (code: ");
-        result.append(code);
-        result.append(", type: ");
-        result.append(type);
+        result.append(" (text: ");
+        result.append(text);
         result.append(')');
         return result.toString();
     }

@@ -14,13 +14,13 @@ package de.cau.cs.kieler.esterel.kexpressions;
  *
  * <!-- begin-model-doc -->
  * A ValuedObjectReference has a reference to a ValuedObject and is a ComplexExpression.
- * Therefore such reference may have subExpressions. Those can be used to
+ * Therefore such reference may have subExpressions. Those can be used to 
  * address a specific value. E.g. the ValuedObject could carry an array
- * value and a subExpression could be an IntValue that points to a special entry in
- * that array.
+ * value and a subExpression could be an IntValue that points to a special entry in 
+ * that array. 
  * <p>
  * The distinction between a Variable and a VariableReference is mainly due to containment
- * relations. A Variable is usually defined exactly once and therefore contained by some
+ * relations. A Variable is usually defined exactly once and therefore contained by some 
  * scope element. A reference to that Variable may be required multiple times where
  * such reference need to be contained at the places where the reference is used.
  * Hence we need this distinction.

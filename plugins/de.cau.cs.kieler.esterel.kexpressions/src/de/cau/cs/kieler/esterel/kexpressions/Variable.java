@@ -24,8 +24,8 @@ package de.cau.cs.kieler.esterel.kexpressions;
  * <p>
  * Due to the restrictions in broadcast communication, the usage of Variables is discouraged
  * everywhere where Signals could be used instead.
- *
- *
+ * 
+ * 
  * <!-- end-model-doc -->
  *
  * <p>

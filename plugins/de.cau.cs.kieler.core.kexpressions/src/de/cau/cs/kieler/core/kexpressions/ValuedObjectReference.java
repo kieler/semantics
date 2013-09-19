@@ -37,7 +37,7 @@ package de.cau.cs.kieler.core.kexpressions;
  * @model
  * @generated
  */
-public interface ValuedObjectReference extends ComplexExpression {
+public interface ValuedObjectReference extends Expression {
     /**
      * Returns the value of the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
