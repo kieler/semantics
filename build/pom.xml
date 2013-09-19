@@ -47,6 +47,7 @@
           <layout>p2</layout>
           <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy/</url>
         </repository>
+<!--
         <repository>
           <id>p2.eclipse.juno</id>
           <layout>p2</layout>
@@ -57,6 +58,7 @@
           <layout>p2</layout>
           <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20130118183705/repository/</url>
         </repository>
+-->
       </repositories>
 
       <modules>
