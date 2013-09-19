@@ -34,6 +34,7 @@ import de.cau.cs.kieler.sccharts.TransitionType
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * SCCharts CoreTransformation Extensions.
@@ -46,6 +47,178 @@ class CoreTransformation {
 
     @Inject
     extension Extension
+    
+    //-------------------------------------------------------------------------
+    //--             B A S I C   C R E A T I O N   M E T H O D S             --
+    //-------------------------------------------------------------------------
+    
+    //====== GENERAL MODEL ELEMENTS =====
+    
+    // Return the root region
+    def Region getRootRegion(Region region) {
+        // Recursively find the root region 
+        if (region.parentState == null) {
+             return region;
+        }   
+        region.parentState.parentRegion.rootRegion;
+    }
+    
+    // Return the root region
+    def Region getRootRegion(State state) {
+        state.parentRegion.rootRegion;
+    }
+    
+    // Return the root state
+    def State getRootState(Region region) {
+        // There should exactly be one state in the root region
+        region.rootRegion.states.get(0)
+    }
+    
+    // Return the root state
+    def State getRootState(State state) {
+        state.parentRegion.rootState;   
+    }
+    
+    //=========== EMISSIONS =============
+    
+    def Emission createEmission(Action action, ValuedObject valuedObject) {
+        val emission = SCChartsFactory::eINSTANCE.createEmission()
+        emission.setValuedObject(valuedObject)
+        action.effects.add(emission)
+        emission
+    }
+    
+    def Emission createEmission(Action action, ValuedObject valuedObject, Expression newValue) {
+        val emission = SCChartsFactory::eINSTANCE.createEmission()
+        emission.setValuedObject(valuedObject)
+        emission.setNewValue(newValue);
+        action.effects.add(emission)
+        emission
+    }
+
+    //==========  EXPRESSIONS  ==========
+
+    //=========  VALUED OBJECT  =========
+
+    // Creates a new ValuedObject in a scope
+    def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
+         val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+         valuedObject.setName(valuedObjectName)
+         scope.valuedObjects.add(valuedObject)
+         valuedObject
+    }
+    
+    def ValuedObject setIsSignal(ValuedObject valuedObject, boolean isSignal) {
+        valuedObject.setIsSignal(isSignal)
+        valuedObject
+    }
+    def ValuedObject setIsInput(ValuedObject valuedObject) {
+         valuedObject.setIsInput(true)
+         valuedObject
+    }    
+    def ValuedObject setIsOutput(ValuedObject valuedObject) {
+         valuedObject.setIsOutput(true)
+         valuedObject
+    }    
+    def ValuedObject setTypePure(ValuedObject valuedObject) {
+         valuedObject.setType(ValueType::PURE)
+         valuedObject
+    }    
+    def ValuedObject setTypeInt(ValuedObject valuedObject) {
+         valuedObject.setType(ValueType::INT)
+         valuedObject
+    }   
+    def ValuedObject setTypeBool(ValuedObject valuedObject) {
+         valuedObject.setType(ValueType::BOOL)
+         valuedObject
+    }    
+    def ValuedObject setTypeDouble(ValuedObject valuedObject) {
+         valuedObject.setType(ValueType::DOUBLE)
+         valuedObject
+    }    
+    def ValuedObject setTypeFloat(ValuedObject valuedObject) {
+         valuedObject.setType(ValueType::FLOAT)
+         valuedObject
+    }    
+
+    //===========  VARIABLES  ===========
+
+    // Creates a new Variable ValuedObject in a scope
+    def ValuedObject createVariable(Scope scope, String variableName) {
+         val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+         valuedObject.setName(variableName)
+         valuedObject.setIsSignal(false)
+         scope.valuedObjects.add(valuedObject)
+         valuedObject;
+    }
+    
+    // Creates a new Int Variable ValuedObject in a scope
+    def ValuedObject createIntVariable(Scope scope, String variableName) {
+         val valuedObject = scope.createVariable(variableName)
+         valuedObject.setTypeInt
+    }
+    
+    // Creates a new Bool Variable ValuedObject in a scope
+    def ValuedObject createBoolVariable(Scope scope, String variableName) {
+         val valuedObject = scope.createVariable(variableName)
+         valuedObject.setTypeBool
+    }
+
+    // Creates a new Double Variable ValuedObject in a scope
+    def ValuedObject createDoubleVariable(Scope scope, String variableName) {
+         val valuedObject = scope.createVariable(variableName)
+         valuedObject.setTypeDouble
+    }
+
+    // Creates a new Float Variable ValuedObject in a scope
+    def ValuedObject createFloatVariable(Scope scope, String variableName) {
+         val valuedObject = scope.createVariable(variableName)
+         valuedObject.setTypeFloat
+    }
+
+
+    //============  SIGNALS  ============
+    
+    // Creates a new Signal ValuedObject in a scope
+    def ValuedObject createSignal(Scope scope, String signalName) {
+         val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject()
+         valuedObject.setName(signalName)
+         valuedObject.setIsSignal(true)
+         scope.valuedObjects.add(valuedObject)
+         valuedObject
+    }
+
+    // Creates a new Pure Signal ValuedObject in a scope
+    def ValuedObject createPureSignal(Scope scope, String variableName) {
+         val valuedObject = scope.createSignal(variableName)
+         valuedObject.setTypePure
+    }
+
+    // Creates a new Int Signal ValuedObject in a scope
+    def ValuedObject createIntSignal(Scope scope, String variableName) {
+         val valuedObject = scope.createSignal(variableName)
+         valuedObject.setTypeInt
+    }
+
+    // Creates a new Bool Signal ValuedObject in a scope
+    def ValuedObject createBoolSignal(Scope scope, String variableName) {
+         val valuedObject = scope.createSignal(variableName)
+         valuedObject.setTypeBool
+    }
+
+    // Creates a new Double Signal ValuedObject in a scope
+    def ValuedObject createDoubleSignal(Scope scope, String variableName) {
+         val valuedObject = scope.createSignal(variableName)
+         valuedObject.setTypeDouble
+    }
+
+    // Creates a new Float Signal ValuedObject in a scope
+    def ValuedObject createFloatSignal(Scope scope, String variableName) {
+         val valuedObject = scope.createSignal(variableName)
+         valuedObject.setTypeFloat
+    }
+
+    
          
     //-------------------------------------------------------------------------
     //--             E X P O S E   L O C A L   S I G N A L S                 --
@@ -130,27 +303,26 @@ class CoreTransformation {
                if (state.valuedObjects != null && state.valuedObjects.size > 0) {
                     val hierarchicalStateName = state.getHierarchicalName("LOCAL");
                     
-                    for (ValuedObject stateValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
+                    for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
                         
-                       val newValuedObjectName = hierarchicalStateName + "_" + stateValuedObject.name;
-                       val globalValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-                       globalValuedObject.setName(newValuedObjectName);
-                       globalValuedObject.setIsInput(false);
-                       globalValuedObject.setIsOutput(true);
-                       globalValuedObject.setType(ValueType::PURE);
-                       targetRootRegion.states.get(0).valuedObjects.add(globalValuedObject);
+                       val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
+                       val globalValuedObject = targetRootRegion.rootState.createValuedObject(newValuedObjectName).setIsOutput
+                       globalValuedObject.setIsSignal(localValuedObject.isSignal)
                        
-                       // for every emission of the local valuedObject add an emission of the new
+                       // For every emission of the local valuedObject add an emission of the new
                        // global valuedObject
                        val allActions = state.eAllContents().toIterable().filter(typeof(Action)).toList();
                        val localValuedObjectActions = allActions.filter(e | (e.eAllContents().toIterable().
-                           filter(typeof(Emission)).toList().filter(ee | ee.valuedObject == stateValuedObject)).size > 0);
+                           filter(typeof(Emission)).toList().filter(ee | ee.valuedObject == localValuedObject)).size > 0);
 
                        for (localValuedObjectAction : ImmutableList::copyOf(localValuedObjectActions)) {
-                           val emission = SCChartsFactory::eINSTANCE.createEmission();
-                           emission.setValuedObject(globalValuedObject);
-                           localValuedObjectAction.effects.add(emission);
+                           val emission = localValuedObjectAction.createEmission(globalValuedObject);
+                           val newValue = (localValuedObjectAction as Emission).newValue
+                           if (newValue != null) {
+                               emission.setNewValue(newValue)
+                           }
                        }
+                       
                     }
                } // end if local valuedObjects present
 
