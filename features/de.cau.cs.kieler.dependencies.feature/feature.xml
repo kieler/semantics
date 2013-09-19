@@ -109,11 +109,6 @@
          search-location="self"/>
 
    <includes
-         id="org.eclipse.zest"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
          id="org.eclipse.draw2d"
          version="0.0.0"
          search-location="self"/>
