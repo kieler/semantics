@@ -36,7 +36,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cEffectsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_5_1_0 = (RuleCall)cEffectsAssignment_5_1.eContents().get(0);
 		private final Group cGroup_5_2 = (Group)cGroup_5.eContents().get(2);
-		private final Keyword cCommaKeyword_5_2_0 = (Keyword)cGroup_5_2.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5_2_0 = (Keyword)cGroup_5_2.eContents().get(0);
 		private final Assignment cEffectsAssignment_5_2_1 = (Assignment)cGroup_5_2.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_5_2_1_0 = (RuleCall)cEffectsAssignment_5_2_1.eContents().get(0);
 		
@@ -46,11 +46,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//// you need to override the rule to support transitions properly
 		//Transition returns sccharts::Transition:
 		//	{sccharts::Transition} annotations+=Annotation* isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/"
-		//	effects+=Effect ("," effects+=Effect)*)?;
+		//	effects+=Effect (";" effects+=Effect)*)?;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::Transition} annotations+=Annotation* isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/"
-		//effects+=Effect ("," effects+=Effect)*)?
+		//effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Transition}
@@ -80,7 +80,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//BooleanExpression
 		public RuleCall getTriggerBooleanExpressionParserRuleCall_4_0() { return cTriggerBooleanExpressionParserRuleCall_4_0; }
 
-		//("/" effects+=Effect ("," effects+=Effect)*)?
+		//("/" effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup_5() { return cGroup_5; }
 
 		//"/"
@@ -92,11 +92,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//Effect
 		public RuleCall getEffectsEffectParserRuleCall_5_1_0() { return cEffectsEffectParserRuleCall_5_1_0; }
 
-		//("," effects+=Effect)*
+		//(";" effects+=Effect)*
 		public Group getGroup_5_2() { return cGroup_5_2; }
 
-		//","
-		public Keyword getCommaKeyword_5_2_0() { return cCommaKeyword_5_2_0; }
+		//";"
+		public Keyword getSemicolonKeyword_5_2_0() { return cSemicolonKeyword_5_2_0; }
 
 		//effects+=Effect
 		public Assignment getEffectsAssignment_5_2_1() { return cEffectsAssignment_5_2_1; }
@@ -120,18 +120,18 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cEffectsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_4_1_0 = (RuleCall)cEffectsAssignment_4_1.eContents().get(0);
 		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
-		private final Keyword cCommaKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
+		private final Keyword cSemicolonKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
 		private final Assignment cEffectsAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_4_2_1_0 = (RuleCall)cEffectsAssignment_4_2_1.eContents().get(0);
 		
 		//// chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
 		//Action returns sccharts::Action:
 		//	{sccharts::Action} //    (annotations += Annotation)*
-		//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?;
+		//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::Action} //    (annotations += Annotation)*
-		//isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?
+		//isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Action}
@@ -155,7 +155,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//BooleanExpression
 		public RuleCall getTriggerBooleanExpressionParserRuleCall_3_0() { return cTriggerBooleanExpressionParserRuleCall_3_0; }
 
-		//("/" effects+=Effect ("," effects+=Effect)*)?
+		//("/" effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup_4() { return cGroup_4; }
 
 		//"/"
@@ -167,11 +167,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//Effect
 		public RuleCall getEffectsEffectParserRuleCall_4_1_0() { return cEffectsEffectParserRuleCall_4_1_0; }
 
-		//("," effects+=Effect)*
+		//(";" effects+=Effect)*
 		public Group getGroup_4_2() { return cGroup_4_2; }
 
-		//","
-		public Keyword getCommaKeyword_4_2_0() { return cCommaKeyword_4_2_0; }
+		//";"
+		public Keyword getSemicolonKeyword_4_2_0() { return cSemicolonKeyword_4_2_0; }
 
 		//effects+=Effect
 		public Assignment getEffectsAssignment_4_2_1() { return cEffectsAssignment_4_2_1; }
@@ -369,7 +369,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// you need to override the rule to support transitions properly
 	//Transition returns sccharts::Transition:
 	//	{sccharts::Transition} annotations+=Annotation* isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/"
-	//	effects+=Effect ("," effects+=Effect)*)?;
+	//	effects+=Effect (";" effects+=Effect)*)?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
 	}
@@ -381,7 +381,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
 	//Action returns sccharts::Action:
 	//	{sccharts::Action} //    (annotations += Annotation)*
-	//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?;
+	//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
 	public ActionElements getActionAccess() {
 		return (pAction != null) ? pAction : (pAction = new ActionElements());
 	}

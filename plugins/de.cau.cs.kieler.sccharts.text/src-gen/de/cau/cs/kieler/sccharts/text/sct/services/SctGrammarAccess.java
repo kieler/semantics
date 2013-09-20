@@ -587,7 +587,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cEffectsAssignment_4_1_0_3_1 = (Assignment)cGroup_4_1_0_3.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_4_1_0_3_1_0 = (RuleCall)cEffectsAssignment_4_1_0_3_1.eContents().get(0);
 		private final Group cGroup_4_1_0_3_2 = (Group)cGroup_4_1_0_3.eContents().get(2);
-		private final Keyword cCommaKeyword_4_1_0_3_2_0 = (Keyword)cGroup_4_1_0_3_2.eContents().get(0);
+		private final Keyword cSemicolonKeyword_4_1_0_3_2_0 = (Keyword)cGroup_4_1_0_3_2.eContents().get(0);
 		private final Assignment cEffectsAssignment_4_1_0_3_2_1 = (Assignment)cGroup_4_1_0_3_2.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_4_1_0_3_2_1_0 = (RuleCall)cEffectsAssignment_4_1_0_3_2_1.eContents().get(0);
 		private final Assignment cLabelAssignment_4_1_1 = (Assignment)cAlternatives_4_1.eContents().get(1);
@@ -598,12 +598,12 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//// ---------------------------------------------------------------------------------------------------
 		//Transition returns sccharts::Transition:
 		//	annotations+=Annotation* type=TransitionType priority=INT? targetState=[sccharts::State] ("with" (isImmediate?="#"?
-		//	delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? | label=STRING))?
+		//	delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? | label=STRING))?
 		//	isHistory?="history"?;
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* type=TransitionType priority=INT? targetState=[sccharts::State] ("with" (isImmediate?="#"?
-		//delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? | label=STRING))?
+		//delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? | label=STRING))?
 		//isHistory?="history"?
 		public Group getGroup() { return cGroup; }
 
@@ -634,17 +634,17 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getTargetStateStateIDTerminalRuleCall_3_0_1() { return cTargetStateStateIDTerminalRuleCall_3_0_1; }
 
-		//("with" (isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? |
+		//("with" (isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? |
 		//label=STRING))?
 		public Group getGroup_4() { return cGroup_4; }
 
 		//"with"
 		public Keyword getWithKeyword_4_0() { return cWithKeyword_4_0; }
 
-		//isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? | label=STRING
+		//isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? | label=STRING
 		public Alternatives getAlternatives_4_1() { return cAlternatives_4_1; }
 
-		//isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?
+		//isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup_4_1_0() { return cGroup_4_1_0; }
 
 		//isImmediate?="#"?
@@ -665,7 +665,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//BooleanExpression
 		public RuleCall getTriggerBooleanExpressionParserRuleCall_4_1_0_2_0() { return cTriggerBooleanExpressionParserRuleCall_4_1_0_2_0; }
 
-		//("/" effects+=Effect ("," effects+=Effect)*)?
+		//("/" effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup_4_1_0_3() { return cGroup_4_1_0_3; }
 
 		//"/"
@@ -677,11 +677,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//Effect
 		public RuleCall getEffectsEffectParserRuleCall_4_1_0_3_1_0() { return cEffectsEffectParserRuleCall_4_1_0_3_1_0; }
 
-		//("," effects+=Effect)*
+		//(";" effects+=Effect)*
 		public Group getGroup_4_1_0_3_2() { return cGroup_4_1_0_3_2; }
 
-		//","
-		public Keyword getCommaKeyword_4_1_0_3_2_0() { return cCommaKeyword_4_1_0_3_2_0; }
+		//";"
+		public Keyword getSemicolonKeyword_4_1_0_3_2_0() { return cSemicolonKeyword_4_1_0_3_2_0; }
 
 		//effects+=Effect
 		public Assignment getEffectsAssignment_4_1_0_3_2_1() { return cEffectsAssignment_4_1_0_3_2_1; }
@@ -1121,7 +1121,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// ---------------------------------------------------------------------------------------------------
 	//Transition returns sccharts::Transition:
 	//	annotations+=Annotation* type=TransitionType priority=INT? targetState=[sccharts::State] ("with" (isImmediate?="#"?
-	//	delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? | label=STRING))?
+	//	delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? | label=STRING))?
 	//	isHistory?="history"?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
@@ -1227,7 +1227,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
 	//Action returns sccharts::Action:
 	//	{sccharts::Action} //    (annotations += Annotation)*
-	//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?;
+	//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
 	public ActionsGrammarAccess.ActionElements getActionAccess() {
 		return gaActions.getActionAccess();
 	}

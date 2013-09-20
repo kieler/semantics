@@ -110,10 +110,10 @@ public class InternalActionsLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:13:7: ( ',' )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:13:9: ','
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:13:7: ( ';' )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:13:9: ';'
             {
-            match(','); 
+            match(';'); 
 
             }
 
@@ -1870,7 +1870,7 @@ public class InternalActionsLexer extends Lexer {
         "\1\1\26\uffff\1\2\3\uffff\1\0\5\uffff\1\3\66\uffff}>";
     static final String[] DFA24_transitionS = {
             "\11\37\2\36\2\37\1\36\22\37\1\36\1\37\1\33\1\1\3\37\1\27\1"+
-            "\4\1\5\1\24\1\22\1\3\1\23\1\12\1\2\12\30\1\6\1\37\1\14\1\13"+
+            "\4\1\5\1\24\1\22\1\37\1\23\1\12\1\2\12\30\1\6\1\3\1\14\1\13"+
             "\1\15\1\37\1\7\32\35\1\10\1\37\1\11\1\34\1\35\1\37\1\20\4\35"+
             "\1\32\6\35\1\25\1\21\1\17\1\16\3\35\1\31\1\35\1\26\4\35\uff85"+
             "\37",
@@ -2017,7 +2017,7 @@ public class InternalActionsLexer extends Lexer {
 
                         else if ( (LA24_0=='/') ) {s = 2;}
 
-                        else if ( (LA24_0==',') ) {s = 3;}
+                        else if ( (LA24_0==';') ) {s = 3;}
 
                         else if ( (LA24_0=='(') ) {s = 4;}
 
@@ -2073,7 +2073,7 @@ public class InternalActionsLexer extends Lexer {
 
                         else if ( ((LA24_0>='\t' && LA24_0<='\n')||LA24_0=='\r'||LA24_0==' ') ) {s = 30;}
 
-                        else if ( ((LA24_0>='\u0000' && LA24_0<='\b')||(LA24_0>='\u000B' && LA24_0<='\f')||(LA24_0>='\u000E' && LA24_0<='\u001F')||LA24_0=='!'||(LA24_0>='$' && LA24_0<='&')||LA24_0==';'||LA24_0=='?'||LA24_0=='\\'||LA24_0=='`'||(LA24_0>='{' && LA24_0<='\uFFFF')) ) {s = 31;}
+                        else if ( ((LA24_0>='\u0000' && LA24_0<='\b')||(LA24_0>='\u000B' && LA24_0<='\f')||(LA24_0>='\u000E' && LA24_0<='\u001F')||LA24_0=='!'||(LA24_0>='$' && LA24_0<='&')||LA24_0==','||LA24_0=='?'||LA24_0=='\\'||LA24_0=='`'||(LA24_0>='{' && LA24_0<='\uFFFF')) ) {s = 31;}
 
                         if ( s>=0 ) return s;
                         break;

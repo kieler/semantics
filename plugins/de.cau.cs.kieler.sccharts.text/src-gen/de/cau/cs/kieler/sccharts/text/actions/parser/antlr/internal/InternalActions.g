@@ -184,9 +184,9 @@ ruleTransition returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_7=',' 
+)(	otherlv_7=';' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getTransitionAccess().getCommaKeyword_5_2_0());
+    	newLeafNode(otherlv_7, grammarAccess.getTransitionAccess().getSemicolonKeyword_5_2_0());
     }
 (
 (

@@ -1108,9 +1108,9 @@ ruleTransition returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_10=',' 
+)(	otherlv_10=';' 
     {
-    	newLeafNode(otherlv_10, grammarAccess.getTransitionAccess().getCommaKeyword_4_1_0_3_2_0());
+    	newLeafNode(otherlv_10, grammarAccess.getTransitionAccess().getSemicolonKeyword_4_1_0_3_2_0());
     }
 (
 (
@@ -1589,9 +1589,9 @@ ruleAction returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_6=',' 
+)(	otherlv_6=';' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getActionAccess().getCommaKeyword_4_2_0());
+    	newLeafNode(otherlv_6, grammarAccess.getActionAccess().getSemicolonKeyword_4_2_0());
     }
 (
 (
