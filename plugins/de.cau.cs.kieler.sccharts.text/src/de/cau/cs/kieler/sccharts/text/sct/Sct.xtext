@@ -79,7 +79,7 @@ Transition returns sccharts::Transition:
 	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
 	( 'with'
 	 (
-	   ( (isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ('/' effects+=Effect (','effects+=Effect)*)? )
+	   ( (isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ('/' effects+=Effect (';'effects+=Effect)*)? )
 	  |
 	   ( label=STRING )
 	  )
