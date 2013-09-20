@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.sccharts.ui;
+package de.cau.cs.kieler.sccharts.handler;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -17,18 +17,18 @@ import com.google.inject.Injector;
 import com.google.inject.name.Named;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
+import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPlugin;
+import de.cau.cs.kieler.sccharts.extensions.CoreTransformation;
 
 /**
- * The handler to register the context menu action for transformations on SCCharts including all
- * those that transform an extended SCChart into a core SCChart.
- * 
+ * The abstract handler for SCCharts file formats scc and sct.
  * 
  * @author cmot
  * @kieler.design 2013-09-05 proposed cmot
  * @kieler.rating 2013-09-05 proposed yellow
  */
-public class SccModelFileHandler extends AbstractConvertModelHandler {
+public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandler {
 
     public static final String ALLCORE_TRANSFORMATIONS =
             "de.cau.cs.kieler.sccharts.coresccharts.commands.AllCoreTransformations";
@@ -80,16 +80,16 @@ public class SccModelFileHandler extends AbstractConvertModelHandler {
 
     // -------------------------------------------------------------------------
 
-    public SccModelFileHandler() {
+    public SCChartsModelFileHandler() {
         super();
     }
 
     // -------------------------------------------------------------------------
 
-    public String getDiagramEditorID() {
-        return SCChartsPlugin.EDITOR_ID;
-    }
-
+//    public String getDiagramEditorID() {
+//        return SCChartsPlugin.EDITOR_ID;
+//    }
+//
     // -------------------------------------------------------------------------
 
     protected boolean doOpenEditor(final Object modelObject, final ExecutionEvent event,
@@ -99,13 +99,13 @@ public class SccModelFileHandler extends AbstractConvertModelHandler {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected String getTargetExtension() {
-        return "transformed.scc";
-    }
+//    /**
+//     * {@inheritDoc}
+//     */
+//    @Override
+//    protected String getTargetExtension() {
+//        return "transformed.scc";
+//    }
 
     // -------------------------------------------------------------------------
 
@@ -118,10 +118,13 @@ public class SccModelFileHandler extends AbstractConvertModelHandler {
         EObject transformed = null;
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
+        // Use commandString for Scc and Sct Transformation
+        commandString = commandString.replace("commands.Scc", "commands.");
+        commandString = commandString.replace("commands.Sct", "commands.");
         System.out.println(commandString);
         transformed = model;
-        if (commandString.equals(SIGNAL_TRANSFORMATION)) {
-//            transformed = (new Co()).transformSignal((Statechart) model);
+        if (commandString.equals(EXPOSELOCALSIGNALS_TRANSFORMATION)) {
+            transformed = (new CoreTransformation()).transformExposeLocalValuedObject((Region) model);
 //        } else if (commandString.equals(INPUTOUTPUTSIGNAL_TRANSFORMATION)) {
 //            transformed = (new SCCTransformations()).transformInputOutputSignal((Statechart) model);
 //        } else if (commandString.equals(DURING_TRANSFORMATION)) {

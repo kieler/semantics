@@ -38,77 +38,79 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.AllCoreTransformations">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccAllCoreTransformations">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.AbortTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccAbortTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SurfaceDepthTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccSurfaceDepthTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.TriggerEffectTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccTriggerEffectTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SignalTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccSignalTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.InputOutputSignalTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccInputOutputSignalTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.EntryTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccEntryTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.DuringTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccDuringTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.ExitTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccExitTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.HistoryTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccHistoryTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SuspendTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccSuspendTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.CountDelayTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccCountDelayTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.PreTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccPreTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.ExposeLocalSignalTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccExposeLocalSignalsTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.NormalTerminationTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccNormalTerminationTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.sccharts.ui.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.FinalStateTransitionTransformation">
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccFinalStateTransitionTransformation">
       </handler>
    </extension>
+
+
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <menu
                id="de.cau.cs.kieler.sccharts.coresccharts.coretransformations"
-               label="Transform SCCharts"
+               label="Transform SCChart"
                mnemonic="T">
             <separator
                   name="de.cau.cs.kieler.core.ui.separator1"
@@ -119,7 +121,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.AllCoreTransformations"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccAllCoreTransformations"
                label="All Core Transformations"
                mnemonic="A"
                style="push">
@@ -139,14 +141,14 @@
             </visibleWhen>
          </command>
          <separator
-               name="de.cau.cs.kieler.sccharts.separator1"
+               name="de.cau.cs.kieler.sccharts.separator1scc"
                visible="true">
          </separator>
       </menuContribution>
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.AbortTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccAbortTransformation"
                label="Strong and Weak Aborts"
                mnemonic="A"
                style="push">
@@ -169,7 +171,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SurfaceDepthTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccSurfaceDepthTransformation"
                label="Surface and Depth"
                mnemonic="T"
                style="push">
@@ -192,7 +194,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.TriggerEffectTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccTriggerEffectTransformation"
                label="Split Triggers and Effects"
                mnemonic="S"
                style="push">
@@ -212,14 +214,14 @@
             </visibleWhen>
          </command>
          <separator
-               name="de.cau.cs.kieler.sccharts.separator2"
+               name="de.cau.cs.kieler.sccharts.separator2scc"
                visible="true">
          </separator>
       </menuContribution>
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SignalTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccSignalTransformation"
                label="Signals"
                mnemonic="A"
                style="push">
@@ -242,7 +244,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.InputOutputSignalTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccInputOutputSignalTransformation"
                label="Input Output Signals"
                mnemonic="A"
                style="push">
@@ -265,7 +267,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.EntryTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccEntryTransformation"
                label="Entry Actions"
                mnemonic="E"
                style="push">
@@ -288,7 +290,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.DuringTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccDuringTransformation"
                label="During Actions"
                mnemonic="D"
                style="push">
@@ -311,7 +313,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.ExitTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccExitTransformation"
                label="Exit Actions"
                mnemonic="X"
                style="push">
@@ -334,7 +336,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.HistoryTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccHistoryTransformation"
                label="History Transitions"
                mnemonic="H"
                style="push">
@@ -357,7 +359,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SuspendTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccSuspendTransformation"
                label="Suspend Actions"
                mnemonic="D"
                style="push">
@@ -380,7 +382,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.CountDelayTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccCountDelayTransformation"
                label="Count Delay Transitions"
                mnemonic="D"
                style="push">
@@ -403,7 +405,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.PreTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccPreTransformation"
                label="Pre Operator"
                mnemonic="P"
                style="push">
@@ -426,11 +428,11 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <separator
-               name="de.cau.cs.kieler.sccharts.separator3"
+               name="de.cau.cs.kieler.sccharts.separator3scc"
                visible="true">
          </separator>
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.ExposeLocalSignalTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccExposeLocalSignalsTransformation"
                label="Expose Local Signals"
                mnemonic="L"
                style="push">
@@ -453,7 +455,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.NormalTerminationTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccNormalTerminationTransformation"
                label="Normal Termination Transitions"
                mnemonic="D"
                style="push">
@@ -476,7 +478,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coresccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.FinalStateTransitionTransformation"
+               commandId="de.cau.cs.kieler.sccharts.coresccharts.commands.SccFinalStateTransitionTransformation"
                label="Transitions from Final States"
                mnemonic="D"
                style="push">
@@ -498,5 +500,7 @@
       </menuContribution>
 
    </extension>
+
+
 
 </plugin>

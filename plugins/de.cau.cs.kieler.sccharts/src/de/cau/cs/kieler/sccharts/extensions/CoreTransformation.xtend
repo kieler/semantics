@@ -54,6 +54,12 @@ class CoreTransformation {
     
     //====== GENERAL MODEL ELEMENTS =====
     
+    // Return the list of containing emissions
+    def List<Emission> getContainingEmissions(Action action) {
+        action.eAllContents().toIterable().
+                           filter(typeof(Emission)).toList();
+    }
+    
     // Return the root region
     def Region getRootRegion(Region region) {
         // Recursively find the root region 
@@ -308,19 +314,25 @@ class CoreTransformation {
                        val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
                        val globalValuedObject = targetRootRegion.rootState.createValuedObject(newValuedObjectName).setIsOutput
                        globalValuedObject.setIsSignal(localValuedObject.isSignal)
+                       globalValuedObject.setType(localValuedObject.type);
                        
                        // For every emission of the local valuedObject add an emission of the new
                        // global valuedObject
                        val allActions = state.eAllContents().toIterable().filter(typeof(Action)).toList();
-                       val localValuedObjectActions = allActions.filter(e | (e.eAllContents().toIterable().
-                           filter(typeof(Emission)).toList().filter(ee | ee.valuedObject == localValuedObject)).size > 0);
+                       val localValuedObjectActions = allActions.filter(e | (e.containingEmissions.
+                           filter(ee | ee.valuedObject == localValuedObject)
+                       ).size > 0);
 
                        for (localValuedObjectAction : ImmutableList::copyOf(localValuedObjectActions)) {
-                           val emission = localValuedObjectAction.createEmission(globalValuedObject);
-                           val newValue = (localValuedObjectAction as Emission).newValue
-                           if (newValue != null) {
-                               emission.setNewValue(newValue)
-                           }
+                           val lastMatchingEmission = localValuedObjectAction.containingEmissions.
+                                            filter(ee | ee  == localValuedObject).last as Emission;
+                           if (lastMatchingEmission != null) {
+                               val newValue = lastMatchingEmission.newValue
+                               val emission = localValuedObjectAction.createEmission(globalValuedObject);
+                               if (newValue != null) {
+                                   emission.setNewValue(newValue.copy)
+                               }
+                           }                                            
                        }
                        
                     }
