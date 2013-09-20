@@ -5403,7 +5403,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 if ( (LA6_1==65) ) {
                     alt6=2;
                 }
-                else if ( (LA6_1==EOF||LA6_1==RULE_ID||LA6_1==RULE_COMMENT_ANNOTATION||(LA6_1>=26 && LA6_1<=32)||(LA6_1>=50 && LA6_1<=53)||LA6_1==56||(LA6_1>=58 && LA6_1<=62)||LA6_1==68||(LA6_1>=72 && LA6_1<=73)||(LA6_1>=75 && LA6_1<=79)) ) {
+                else if ( (LA6_1==EOF||LA6_1==RULE_ID||LA6_1==RULE_COMMENT_ANNOTATION||(LA6_1>=26 && LA6_1<=32)||(LA6_1>=50 && LA6_1<=53)||(LA6_1>=58 && LA6_1<=62)||LA6_1==68||(LA6_1>=72 && LA6_1<=73)||(LA6_1>=75 && LA6_1<=79)) ) {
                     alt6=1;
                 }
                 else {
@@ -15376,8 +15376,14 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 int alt66=2;
                 int LA66_0 = input.LA(1);
 
-                if ( (LA66_0==56) ) {
-                    alt66=1;
+                if ( (LA66_0==52) ) {
+                    int LA66_2 = input.LA(2);
+
+                    if ( (LA66_2==RULE_ID||LA66_2==RULE_HOSTCODE) ) {
+                        alt66=1;
+                    }
+
+
                 }
 
 
@@ -15462,24 +15468,24 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Transition__Group_4_1_0_3_2__0__Impl"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4975:1: rule__Transition__Group_4_1_0_3_2__0__Impl : ( ',' ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4975:1: rule__Transition__Group_4_1_0_3_2__0__Impl : ( ';' ) ;
     public final void rule__Transition__Group_4_1_0_3_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4979:1: ( ( ',' ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4980:1: ( ',' )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4979:1: ( ( ';' ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4980:1: ( ';' )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4980:1: ( ',' )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4981:1: ','
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4980:1: ( ';' )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4981:1: ';'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTransitionAccess().getCommaKeyword_4_1_0_3_2_0()); 
+               before(grammarAccess.getTransitionAccess().getSemicolonKeyword_4_1_0_3_2_0()); 
             }
-            match(input,56,FollowSets000.FOLLOW_56_in_rule__Transition__Group_4_1_0_3_2__0__Impl10385); if (state.failed) return ;
+            match(input,52,FollowSets000.FOLLOW_52_in_rule__Transition__Group_4_1_0_3_2__0__Impl10385); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTransitionAccess().getCommaKeyword_4_1_0_3_2_0()); 
+               after(grammarAccess.getTransitionAccess().getSemicolonKeyword_4_1_0_3_2_0()); 
             }
 
             }
@@ -18386,7 +18392,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 int alt78=2;
                 int LA78_0 = input.LA(1);
 
-                if ( (LA78_0==56) ) {
+                if ( (LA78_0==52) ) {
                     alt78=1;
                 }
 
@@ -18472,24 +18478,24 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Action__Group_4_2__0__Impl"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6044:1: rule__Action__Group_4_2__0__Impl : ( ',' ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6044:1: rule__Action__Group_4_2__0__Impl : ( ';' ) ;
     public final void rule__Action__Group_4_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6048:1: ( ( ',' ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6049:1: ( ',' )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6048:1: ( ( ';' ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6049:1: ( ';' )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6049:1: ( ',' )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6050:1: ','
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6049:1: ( ';' )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6050:1: ';'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getActionAccess().getCommaKeyword_4_2_0()); 
+               before(grammarAccess.getActionAccess().getSemicolonKeyword_4_2_0()); 
             }
-            match(input,56,FollowSets000.FOLLOW_56_in_rule__Action__Group_4_2__0__Impl12501); if (state.failed) return ;
+            match(input,52,FollowSets000.FOLLOW_52_in_rule__Action__Group_4_2__0__Impl12501); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getActionAccess().getCommaKeyword_4_2_0()); 
+               after(grammarAccess.getActionAccess().getSemicolonKeyword_4_2_0()); 
             }
 
             }
@@ -36779,14 +36785,14 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_rule__Transition__Group_4_1_0_3__0__Impl_in_rule__Transition__Group_4_1_0_3__010168 = new BitSet(new long[]{0x00000000000000A0L});
         public static final BitSet FOLLOW_rule__Transition__Group_4_1_0_3__1_in_rule__Transition__Group_4_1_0_3__010171 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_64_in_rule__Transition__Group_4_1_0_3__0__Impl10199 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_1_0_3__1__Impl_in_rule__Transition__Group_4_1_0_3__110230 = new BitSet(new long[]{0x0100000000000000L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_1_0_3__1__Impl_in_rule__Transition__Group_4_1_0_3__110230 = new BitSet(new long[]{0x0010000000000000L});
         public static final BitSet FOLLOW_rule__Transition__Group_4_1_0_3__2_in_rule__Transition__Group_4_1_0_3__110233 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Transition__EffectsAssignment_4_1_0_3_1_in_rule__Transition__Group_4_1_0_3__1__Impl10260 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Transition__Group_4_1_0_3__2__Impl_in_rule__Transition__Group_4_1_0_3__210290 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_1_0_3_2__0_in_rule__Transition__Group_4_1_0_3__2__Impl10317 = new BitSet(new long[]{0x0100000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_1_0_3_2__0_in_rule__Transition__Group_4_1_0_3__2__Impl10317 = new BitSet(new long[]{0x0010000000000002L});
         public static final BitSet FOLLOW_rule__Transition__Group_4_1_0_3_2__0__Impl_in_rule__Transition__Group_4_1_0_3_2__010354 = new BitSet(new long[]{0x00000000000000A0L});
         public static final BitSet FOLLOW_rule__Transition__Group_4_1_0_3_2__1_in_rule__Transition__Group_4_1_0_3_2__010357 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_56_in_rule__Transition__Group_4_1_0_3_2__0__Impl10385 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_52_in_rule__Transition__Group_4_1_0_3_2__0__Impl10385 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Transition__Group_4_1_0_3_2__1__Impl_in_rule__Transition__Group_4_1_0_3_2__110416 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Transition__EffectsAssignment_4_1_0_3_2_1_in_rule__Transition__Group_4_1_0_3_2__1__Impl10443 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ValuedObject__Group__0__Impl_in_rule__ValuedObject__Group__010477 = new BitSet(new long[]{0x0020000000000420L,0x000000000000F000L});
@@ -36871,14 +36877,14 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_rule__Action__Group_4__0__Impl_in_rule__Action__Group_4__012284 = new BitSet(new long[]{0x00000000000000A0L});
         public static final BitSet FOLLOW_rule__Action__Group_4__1_in_rule__Action__Group_4__012287 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_64_in_rule__Action__Group_4__0__Impl12315 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Action__Group_4__1__Impl_in_rule__Action__Group_4__112346 = new BitSet(new long[]{0x0100000000000000L});
+        public static final BitSet FOLLOW_rule__Action__Group_4__1__Impl_in_rule__Action__Group_4__112346 = new BitSet(new long[]{0x0010000000000000L});
         public static final BitSet FOLLOW_rule__Action__Group_4__2_in_rule__Action__Group_4__112349 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Action__EffectsAssignment_4_1_in_rule__Action__Group_4__1__Impl12376 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Action__Group_4__2__Impl_in_rule__Action__Group_4__212406 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Action__Group_4_2__0_in_rule__Action__Group_4__2__Impl12433 = new BitSet(new long[]{0x0100000000000002L});
+        public static final BitSet FOLLOW_rule__Action__Group_4_2__0_in_rule__Action__Group_4__2__Impl12433 = new BitSet(new long[]{0x0010000000000002L});
         public static final BitSet FOLLOW_rule__Action__Group_4_2__0__Impl_in_rule__Action__Group_4_2__012470 = new BitSet(new long[]{0x00000000000000A0L});
         public static final BitSet FOLLOW_rule__Action__Group_4_2__1_in_rule__Action__Group_4_2__012473 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_56_in_rule__Action__Group_4_2__0__Impl12501 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_52_in_rule__Action__Group_4_2__0__Impl12501 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Action__Group_4_2__1__Impl_in_rule__Action__Group_4_2__112532 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Action__EffectsAssignment_4_2_1_in_rule__Action__Group_4_2__1__Impl12559 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Emission__Group__0__Impl_in_rule__Emission__Group__012593 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});

@@ -2008,11 +2008,11 @@ rule__Transition__Group_5_2__0__Impl
     }
 :
 (
-{ before(grammarAccess.getTransitionAccess().getCommaKeyword_5_2_0()); }
+{ before(grammarAccess.getTransitionAccess().getSemicolonKeyword_5_2_0()); }
 
-	',' 
+	';' 
 
-{ after(grammarAccess.getTransitionAccess().getCommaKeyword_5_2_0()); }
+{ after(grammarAccess.getTransitionAccess().getSemicolonKeyword_5_2_0()); }
 )
 
 ;

@@ -4978,11 +4978,11 @@ rule__Transition__Group_4_1_0_3_2__0__Impl
     }
 :
 (
-{ before(grammarAccess.getTransitionAccess().getCommaKeyword_4_1_0_3_2_0()); }
+{ before(grammarAccess.getTransitionAccess().getSemicolonKeyword_4_1_0_3_2_0()); }
 
-	',' 
+	';' 
 
-{ after(grammarAccess.getTransitionAccess().getCommaKeyword_4_1_0_3_2_0()); }
+{ after(grammarAccess.getTransitionAccess().getSemicolonKeyword_4_1_0_3_2_0()); }
 )
 
 ;
@@ -6047,11 +6047,11 @@ rule__Action__Group_4_2__0__Impl
     }
 :
 (
-{ before(grammarAccess.getActionAccess().getCommaKeyword_4_2_0()); }
+{ before(grammarAccess.getActionAccess().getSemicolonKeyword_4_2_0()); }
 
-	',' 
+	';' 
 
-{ after(grammarAccess.getActionAccess().getCommaKeyword_4_2_0()); }
+{ after(grammarAccess.getActionAccess().getSemicolonKeyword_4_2_0()); }
 )
 
 ;

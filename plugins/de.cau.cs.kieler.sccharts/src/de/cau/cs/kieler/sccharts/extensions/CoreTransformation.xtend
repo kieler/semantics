@@ -54,13 +54,18 @@ class CoreTransformation {
     
     //====== GENERAL MODEL ELEMENTS =====
     
-    // Return the list of containing emissions
-    def List<Emission> getContainingEmissions(Action action) {
+    // Return the list of all contained States.
+    def List<State> getContainedStates(Region region) {
+        region.eAllContents().toIterable().filter(typeof(State)).toList()
+    }
+    
+    // Return the list of contained Emissions.
+    def List<Emission> getContainedEmissions(Action action) {
         action.eAllContents().toIterable().
                            filter(typeof(Emission)).toList();
     }
     
-    // Return the root region
+    // Return the root region.
     def Region getRootRegion(Region region) {
         // Recursively find the root region 
         if (region.parentState == null) {
@@ -69,24 +74,25 @@ class CoreTransformation {
         region.parentState.parentRegion.rootRegion;
     }
     
-    // Return the root region
+    // Return the root region.
     def Region getRootRegion(State state) {
         state.parentRegion.rootRegion;
     }
     
-    // Return the root state
+    // Return the root state.
     def State getRootState(Region region) {
         // There should exactly be one state in the root region
         region.rootRegion.states.get(0)
     }
     
-    // Return the root state
+    // Return the root state.
     def State getRootState(State state) {
         state.parentRegion.rootState;   
     }
     
     //=========== EMISSIONS =============
     
+    // Create an Emission and add it sequentially to an action's effects list.
     def Emission createEmission(Action action, ValuedObject valuedObject) {
         val emission = SCChartsFactory::eINSTANCE.createEmission()
         emission.setValuedObject(valuedObject)
@@ -94,6 +100,7 @@ class CoreTransformation {
         emission
     }
     
+    // Create a valued Emission and add it sequentially to an action's effects list. 
     def Emission createEmission(Action action, ValuedObject valuedObject, Expression newValue) {
         val emission = SCChartsFactory::eINSTANCE.createEmission()
         emission.setValuedObject(valuedObject)
@@ -103,10 +110,12 @@ class CoreTransformation {
     }
 
     //==========  EXPRESSIONS  ==========
+    
+    //TODO
 
     //=========  VALUED OBJECT  =========
 
-    // Creates a new ValuedObject in a scope
+    // Creates a new ValuedObject in a scope.
     def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
          val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
          valuedObject.setName(valuedObjectName)
@@ -149,7 +158,7 @@ class CoreTransformation {
 
     //===========  VARIABLES  ===========
 
-    // Creates a new Variable ValuedObject in a scope
+    // Creates a new variable ValuedObject in a Scope.
     def ValuedObject createVariable(Scope scope, String variableName) {
          val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
          valuedObject.setName(variableName)
@@ -158,34 +167,45 @@ class CoreTransformation {
          valuedObject;
     }
     
-    // Creates a new Int Variable ValuedObject in a scope
+    // Creates a new Int variable ValuedObject in a Scope.
     def ValuedObject createIntVariable(Scope scope, String variableName) {
          val valuedObject = scope.createVariable(variableName)
          valuedObject.setTypeInt
     }
     
-    // Creates a new Bool Variable ValuedObject in a scope
+    // Creates a new Bool variable ValuedObject in a Scope.
     def ValuedObject createBoolVariable(Scope scope, String variableName) {
          val valuedObject = scope.createVariable(variableName)
          valuedObject.setTypeBool
     }
 
-    // Creates a new Double Variable ValuedObject in a scope
+    // Creates a new Double variable ValuedObject in a Scope.
     def ValuedObject createDoubleVariable(Scope scope, String variableName) {
          val valuedObject = scope.createVariable(variableName)
          valuedObject.setTypeDouble
     }
 
-    // Creates a new Float Variable ValuedObject in a scope
+    // Creates a new Float variable ValuedObject in a Scope.
     def ValuedObject createFloatVariable(Scope scope, String variableName) {
          val valuedObject = scope.createVariable(variableName)
          valuedObject.setTypeFloat
     }
 
+    // Apply attributes of another ValuedObject.
+    def ValuedObject applyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
+        valuedObject.setIsInput(valuedObjectWithAttributes.isInput)
+        valuedObject.setIsOutput(valuedObjectWithAttributes.isOutput)
+        valuedObject.setIsStatic(valuedObjectWithAttributes.isStatic)
+        valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
+        valuedObject.setType(valuedObjectWithAttributes.type)
+        valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
+        valuedObject
+    }
+    
 
     //============  SIGNALS  ============
     
-    // Creates a new Signal ValuedObject in a scope
+    // Creates a new signal ValuedObject in a Scope.
     def ValuedObject createSignal(Scope scope, String signalName) {
          val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject()
          valuedObject.setName(signalName)
@@ -194,56 +214,40 @@ class CoreTransformation {
          valuedObject
     }
 
-    // Creates a new Pure Signal ValuedObject in a scope
+    // Creates a new pure signal ValuedObject in a Scope.
     def ValuedObject createPureSignal(Scope scope, String variableName) {
          val valuedObject = scope.createSignal(variableName)
          valuedObject.setTypePure
     }
 
-    // Creates a new Int Signal ValuedObject in a scope
+    // Creates a new Int signal ValuedObject in a Scope.
     def ValuedObject createIntSignal(Scope scope, String variableName) {
          val valuedObject = scope.createSignal(variableName)
          valuedObject.setTypeInt
     }
 
-    // Creates a new Bool Signal ValuedObject in a scope
+    // Creates a new Bool signal ValuedObject in a Scope.
     def ValuedObject createBoolSignal(Scope scope, String variableName) {
          val valuedObject = scope.createSignal(variableName)
          valuedObject.setTypeBool
     }
 
-    // Creates a new Double Signal ValuedObject in a scope
+    // Creates a new Double signal ValuedObject in a Scope.
     def ValuedObject createDoubleSignal(Scope scope, String variableName) {
          val valuedObject = scope.createSignal(variableName)
          valuedObject.setTypeDouble
     }
 
-    // Creates a new Float Signal ValuedObject in a scope
+    // Creates a new Float signal ValuedObject in a Scope.
     def ValuedObject createFloatSignal(Scope scope, String variableName) {
          val valuedObject = scope.createSignal(variableName)
          valuedObject.setTypeFloat
     }
 
-    
-         
-    //-------------------------------------------------------------------------
-    //--             E X P O S E   L O C A L   S I G N A L S                 --
-    //-------------------------------------------------------------------------
-    // @requires: none
 
-    // Transforming Local ValuedObjects.
-    def Region transformExposeLocalValuedObject(Region rootRegion) {
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
-        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
-
-        for(targetState : targetStates) {
-            // This statement we want to modify
-            targetState.transformExposeLocalValuedObject(targetRootRegion);
-        }
-        
-        targetRootRegion;
-    }
+    //-------------------------------------------------------------------------
+    //--                           N A M I N G S                             --
+    //-------------------------------------------------------------------------
     
     // For C variables it is necessary to remove special characters, this may lead
     // to name clashes in unlikely cases. 
@@ -292,8 +296,25 @@ class CoreTransformation {
         }
         return StartSymbol + "_";
     }
+
+         
+    //-------------------------------------------------------------------------
+    //--             E X P O S E   L O C A L   S I G N A L S                 --
+    //-------------------------------------------------------------------------
+    // @requires: none
+
+    // Transforming Local ValuedObjects.
+    def Region transformExposeLocalValuedObject(Region rootRegion) {
+        // Clone the complete SCCharts region 
+        val targetRootRegion = rootRegion.copy;
+        // Traverse all states
+        for(targetState : targetRootRegion.getContainedStates) {
+            targetState.transformExposeLocalValuedObject(targetRootRegion);
+        }
+        targetRootRegion;
+    }
            
-    // Traverse all states and transform possible local valuedObjects
+    // Traverse all states and transform possible local valuedObjects.
     def void transformExposeLocalValuedObject(State state, Region targetRootRegion) {
         // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
         // and wherever the local valuedObject is emitted, also emit the new global 
@@ -310,21 +331,20 @@ class CoreTransformation {
                     val hierarchicalStateName = state.getHierarchicalName("LOCAL");
                     
                     for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
-                        
                        val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
                        val globalValuedObject = targetRootRegion.rootState.createValuedObject(newValuedObjectName).setIsOutput
-                       globalValuedObject.setIsSignal(localValuedObject.isSignal)
-                       globalValuedObject.setType(localValuedObject.type);
+                       globalValuedObject.applyAttributes(localValuedObject)
                        
-                       // For every emission of the local valuedObject add an emission of the new
-                       // global valuedObject
+                       
+                       // For every Emission of the local ValuedObject add an Emission of the new
+                       // global ValuedObject
                        val allActions = state.eAllContents().toIterable().filter(typeof(Action)).toList();
-                       val localValuedObjectActions = allActions.filter(e | (e.containingEmissions.
+                       val localValuedObjectActions = allActions.filter(e | (e.containedEmissions.
                            filter(ee | ee.valuedObject == localValuedObject)
                        ).size > 0);
 
                        for (localValuedObjectAction : ImmutableList::copyOf(localValuedObjectActions)) {
-                           val lastMatchingEmission = localValuedObjectAction.containingEmissions.
+                           val lastMatchingEmission = localValuedObjectAction.containedEmissions.
                                             filter(ee | ee  == localValuedObject).last as Emission;
                            if (lastMatchingEmission != null) {
                                val newValue = lastMatchingEmission.newValue
@@ -870,7 +890,7 @@ class CoreTransformation {
         // For every transition in the SyncChart do the transformation
         // Iterate over a copy of the list  
         for(targetTransition : targetTransitions) {
-            // This statement we want to modify
+            
             targetTransition.transformCountDelay(targetRootRegion);
         }
         
@@ -960,7 +980,7 @@ class CoreTransformation {
 //        // For every transition in the SyncChart do the transformation
 //        // Iterate over a copy of the list  
 //        for(targetTransition : targetTransitions) {
-//            // This statement we want to modify
+//            
 //            targetTransition.transformCountDelay(targetRootRegion);
 //        }
 //        
@@ -1042,7 +1062,7 @@ class CoreTransformation {
         // For every state in the SyncChart do the transformation
         // Iterate over a copy of the list  
         for(targetState :  ImmutableList::copyOf(targetStates)) {
-            // This statement we want to modify
+            
             targetState.transformSuspend(targetRootRegion);
         }
         
@@ -1220,7 +1240,7 @@ class CoreTransformation {
         //             it.transformHistory(targetRootRegion);
         //        ]
         for(targetState :  ImmutableList::copyOf(targetStates)) {
-            // This statement we want to modify
+            
             targetState.transformHistory(targetRootRegion);
         }
         
@@ -1406,7 +1426,7 @@ class CoreTransformation {
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
         for(targetState : ImmutableList::copyOf(targetStates)) {
-            // This statement we want to modify
+            
             targetState.transformDuringAction(targetRootRegion);
         }
         
@@ -1479,7 +1499,7 @@ class CoreTransformation {
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
         for(targetState : ImmutableList::copyOf(targetStates)) {
-            // This statement we want to modify
+            
             targetState.transformEntryAction(targetRootRegion);
         }
         
@@ -1592,7 +1612,7 @@ class CoreTransformation {
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
         for(targetState :  ImmutableList::copyOf(targetStates)) {
-            // This statement we want to modify
+            
             targetState.transformExitAction(targetRootRegion);
         }
         
@@ -1954,7 +1974,6 @@ class CoreTransformation {
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
         for(targetState : ImmutableList::copyOf(targetStates)) {
-            // This statement we want to modify
             targetState.transformPreOperator(targetRootRegion);
         }
         
@@ -2219,7 +2238,6 @@ class CoreTransformation {
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
         for(targetState : ImmutableList::copyOf(targetStates)) {
-            // This statement we want to modify
             targetState.transformSCCAborts(targetRootRegion);
         }
         

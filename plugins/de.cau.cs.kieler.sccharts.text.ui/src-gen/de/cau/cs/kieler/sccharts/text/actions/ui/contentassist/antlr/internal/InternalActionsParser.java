@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalActionsParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_HOSTCODE", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "':'", "'pre'", "'or'", "'and'", "'not'", "'+'", "'-'", "'*'", "'mod'", "'val'", "'='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'/'", "','", "'('", "')'", "':='", "'@'", "'['", "']'", "'.'", "'#'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_HOSTCODE", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "':'", "'pre'", "'or'", "'and'", "'not'", "'+'", "'-'", "'*'", "'mod'", "'val'", "'='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'/'", "';'", "'('", "')'", "':='", "'@'", "'['", "']'", "'.'", "'#'"
     };
     public static final int RULE_BOOLEAN=9;
     public static final int RULE_ID=5;
@@ -6184,24 +6184,24 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Transition__Group_5_2__0__Impl"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:2005:1: rule__Transition__Group_5_2__0__Impl : ( ',' ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:2005:1: rule__Transition__Group_5_2__0__Impl : ( ';' ) ;
     public final void rule__Transition__Group_5_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:2009:1: ( ( ',' ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:2010:1: ( ',' )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:2009:1: ( ( ';' ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:2010:1: ( ';' )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:2010:1: ( ',' )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:2011:1: ','
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:2010:1: ( ';' )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:2011:1: ';'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTransitionAccess().getCommaKeyword_5_2_0()); 
+               before(grammarAccess.getTransitionAccess().getSemicolonKeyword_5_2_0()); 
             }
             match(input,33,FollowSets000.FOLLOW_33_in_rule__Transition__Group_5_2__0__Impl4237); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTransitionAccess().getCommaKeyword_5_2_0()); 
+               after(grammarAccess.getTransitionAccess().getSemicolonKeyword_5_2_0()); 
             }
 
             }
