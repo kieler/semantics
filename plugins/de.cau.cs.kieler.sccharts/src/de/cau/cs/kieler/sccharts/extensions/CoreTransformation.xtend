@@ -15,7 +15,6 @@
 
 import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.ComplexExpression
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
@@ -54,6 +53,16 @@ class CoreTransformation {
     
     //====== GENERAL MODEL ELEMENTS =====
     
+    // Get the single normal termination Transition. Return null if there is 
+    // no outgoing normal termination Transition.
+    def Transition getNormalTerminationTransitions(State state) {
+        val allNormalTerminationTransitions = state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION);
+        if (allNormalTerminationTransitions.size == 0) {
+            return null;
+        }
+        allNormalTerminationTransitions.head;
+    }
+    
     // Return the list of all contained States.
     def List<State> getContainedStates(Region region) {
         region.eAllContents().toIterable().filter(typeof(State)).toList()
@@ -91,27 +100,90 @@ class CoreTransformation {
     }
     
     //=========== EMISSIONS =============
+
+    // Create an Emission.
+    def Emission createEmission(ValuedObject valuedObject) {
+        val emission = SCChartsFactory::eINSTANCE.createEmission()
+        emission.setValuedObject(valuedObject)
+        emission
+    }
     
     // Create an Emission and add it sequentially to an action's effects list.
     def Emission createEmission(Action action, ValuedObject valuedObject) {
-        val emission = SCChartsFactory::eINSTANCE.createEmission()
-        emission.setValuedObject(valuedObject)
+        val emission = createEmission(valuedObject)
         action.effects.add(emission)
         emission
     }
     
-    // Create a valued Emission and add it sequentially to an action's effects list. 
-    def Emission createEmission(Action action, ValuedObject valuedObject, Expression newValue) {
-        val emission = SCChartsFactory::eINSTANCE.createEmission()
+    // Create a valued Emission. 
+    def Emission createEmission(ValuedObject valuedObject, Expression newValue) {
+        val emission = createEmission(valuedObject)
         emission.setValuedObject(valuedObject)
         emission.setNewValue(newValue);
+        emission
+    }
+
+    // Create a valued Emission and add it sequentially to an action's effects list. 
+    def Emission createEmission(Action action, ValuedObject valuedObject, Expression newValue) {
+        val emission = createEmission(valuedObject, newValue)
         action.effects.add(emission)
         emission
     }
 
     //==========  EXPRESSIONS  ==========
     
-    //TODO
+    // Create an AND Expression.
+    def OperatorExpression createAndExpression() {
+        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
+        expression.setOperator(OperatorType::AND)
+        expression
+    }
+    // Create an AND Expression as a sub expression.
+    def OperatorExpression createAndExpression(OperatorExpression operatorExpression) {
+        val expression = createAndExpression()
+        operatorExpression.add(expression)
+        expression
+    }
+
+    // Create an OR Expression.
+    def OperatorExpression createOrExpression() {
+        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
+        expression.setOperator(OperatorType::OR)
+        expression
+    }
+    // Create an OR Expression as a sub expression.
+    def OperatorExpression createOrExpression(OperatorExpression operatorExpression) {
+        val expression = createOrExpression()
+        operatorExpression.add(expression)
+        expression
+    }
+
+    // Create an NOT Expression.
+    def OperatorExpression createNotExpression() {
+        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
+        expression.setOperator(OperatorType::NOT)
+        expression
+    }
+    // Create an NOT Expression as a sub expression.
+    def OperatorExpression createNotExpression(OperatorExpression operatorExpression) {
+        val expression = createNotExpression()
+        operatorExpression.add(expression)
+        expression
+    }
+    
+    // Add a sub expression to an OperatorExpression.
+    def OperatorExpression add(OperatorExpression operatorExpression, Expression expression) {
+        operatorExpression.add(expression)
+        operatorExpression
+    }
+    
+    // Create a ValuedObjectReference to a valuedObject
+    def ValuedObjectReference reference (ValuedObject valuedObject) {
+         val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+         valuedObjectReference.setValuedObject(valuedObject);
+         valuedObjectReference
+    }
+    
 
     //=========  VALUED OBJECT  =========
 
@@ -371,13 +443,13 @@ class CoreTransformation {
     // This means that e.g. test10 with a normal termination self loop can
     // be executed as long as the body not immediately.
     // For this reason ANOTHER valuedObject terminated is introduced not per region
-    // byt per normal termination, indicating a taken normal termination
+    // but per normal termination, indicating a taken normal termination
     // and preventing the same to be taken again within a tick.
     // Like adding a pause in Esterel to
     // loop
     // [ p || pause ]
     // end loop
-    // when p may or may not be instantanous.
+    // when p may or may not be instantaneous.
     
     // Edit: 08.01.2013: Normal Terminations must not be taken after a self
     // loop returns to the macro state that is left by the normal termination
@@ -391,11 +463,10 @@ class CoreTransformation {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
-
+        // Traverse all states
         for(targetState :  ImmutableList::copyOf(targetStates)) {
             targetState.transformNormalTermination(targetRootRegion);
         }
-        
         targetRootRegion;
     }
            
@@ -409,41 +480,31 @@ class CoreTransformation {
         // Explicitly negate triggers of other outgoing transitions (see test147)
         
                // This is the special case where we must taken care of a normal termination 
-               if (state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).size > 0) {
-                    val normalTerminationTransition = state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).head;
+               val normalTerminationTransition = state.getNormalTerminationTransitions;
+               if (normalTerminationTransition != null) {
                     val otherTransitions = state.outgoingTransitions.filter(e | e.type != TransitionType::NORMALTERMINATION);
                     
                     normalTerminationTransition.setType(TransitionType::WEAKABORT);
-                    val triggerExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
-                         triggerExpression.setOperator(OperatorType::AND);
+                    val triggerExpression = createAndExpression
                
                     // Setup the auxiliary terminated valuedObject indicating that a normal termination
                     // has been taken in the same synchronous tick and must not be taken again.
-                    val terminatedValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-                        terminatedValuedObject.setName("terminated" + state.hashCode);
-                        terminatedValuedObject.setIsInput(false);
-                        terminatedValuedObject.setIsOutput(false);
-                        terminatedValuedObject.setType(ValueType::PURE);
-//                        state.parentRegion.parentState.valuedObjects.add(terminatedValuedObject);
-                        targetRootRegion.states.get(0).valuedObjects.add(terminatedValuedObject);
+                    val rootState = state.rootState
+                    val terminatedValuedObject = rootState.createPureSignal("terminated" + state.hashCode);
                         
-                    val terminatedValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                        terminatedValuedObjectReference.setValuedObject(terminatedValuedObject);
-                    val notTerminatedExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
-                        notTerminatedExpression.setOperator(OperatorType::NOT);
-                        notTerminatedExpression.subExpressions.add(terminatedValuedObjectReference);
+                    val notTerminatedExpression = createNotExpression.add(terminatedValuedObject.reference);
                     val terminatedEmission = SCChartsFactory::eINSTANCE.createEmission();
                         terminatedEmission.setValuedObject(terminatedValuedObject);
                     // Add the prevention of re-run of normal termination within the same tick
-                    triggerExpression.subExpressions.add(notTerminatedExpression);
+                    triggerExpression.add(notTerminatedExpression);
                     // Explicitly prevent that a normal termination is taken when another transition
                     // has been taken before (e.g., a weak abort self loop like in test 147)
                     for (otherTransition : otherTransitions) {
                         if (otherTransition.trigger != null) {
                             val negatedExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
                             negatedExpression.setOperator(OperatorType::NOT);
-                            negatedExpression.subExpressions.add(otherTransition.trigger.copy);
-                            triggerExpression.subExpressions.add(negatedExpression);
+                            negatedExpression.add(otherTransition.trigger.copy);
+                            triggerExpression.add(negatedExpression);
                         }
                     }
                     
@@ -478,7 +539,7 @@ class CoreTransformation {
                        targetRootRegion.states.get(0).valuedObjects.add(finishedValuedObject);
                          val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
                          valuedObjectReference.setValuedObject(finishedValuedObject);
-                         triggerExpression.subExpressions.add(valuedObjectReference);
+                         triggerExpression.add(valuedObjectReference);
                     }
                
                     // A normal termination should immediately be triggerable! (test 145) 
@@ -579,8 +640,8 @@ class CoreTransformation {
              if (transition.trigger != null) {
                  val andAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                  andAuxiliaryTrigger.setOperator(OperatorType::AND);
-                 andAuxiliaryTrigger.subExpressions.add(auxiliaryTrigger.copy);
-                 andAuxiliaryTrigger.subExpressions.add(transition.trigger);
+                 andAuxiliaryTrigger.add(auxiliaryTrigger.copy);
+                 andAuxiliaryTrigger.add(transition.trigger);
                  transition.setTrigger(andAuxiliaryTrigger);
              }  else {
                  transition.setTrigger(auxiliaryTrigger.copy);
@@ -1101,13 +1162,13 @@ class CoreTransformation {
                     }
                     else {
                         // Default case
-                        notAuxiliaryTrigger.subExpressions.add(disabledWhenExpression.copy);
+                        notAuxiliaryTrigger.add(disabledWhenExpression.copy);
                         auxiliaryTrigger = notAuxiliaryTrigger;
                     }
                     if (inExpression != null) {
                       // There is an outgoing transition trigger  
-                       andAuxiliaryTrigger.subExpressions.add(inExpression);
-                       andAuxiliaryTrigger.subExpressions.add(auxiliaryTrigger);
+                       andAuxiliaryTrigger.add(inExpression);
+                       andAuxiliaryTrigger.add(auxiliaryTrigger);
                        return andAuxiliaryTrigger;
                     } else {
                        // The simple case, there is NO outgoing transition trigger yet
@@ -1127,7 +1188,7 @@ class CoreTransformation {
              val immediateSuspension = state.suspensionTrigger.isImmediate;
              val notSuspendTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                  notSuspendTrigger.setOperator(OperatorType::NOT);
-                 notSuspendTrigger.subExpressions.add(suspendTrigger.copy);
+                 notSuspendTrigger.add(suspendTrigger.copy);
             
                // Add SET and RESET valuedObject valuedObject flag 
                val disabledValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
@@ -1290,13 +1351,13 @@ class CoreTransformation {
                     notAuxiliaryTrigger.setOperator(OperatorType::NOT);
                 val auxiliaryValuedObjectRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
                     auxiliaryValuedObjectRef.setValuedObject(auxiliarySuspendValuedObject);
-                    notAuxiliaryTrigger.subExpressions.add(auxiliaryValuedObjectRef);
+                    notAuxiliaryTrigger.add(auxiliaryValuedObjectRef);
             if (state.suspensionTrigger != null) {
                 // If there already is a suspension trigger than combine it with OR
                 val suspensionTrigger2 = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                     suspensionTrigger2.setOperator(OperatorType::OR);
-                    suspensionTrigger2.subExpressions.add(notAuxiliaryTrigger);
-                    suspensionTrigger2.subExpressions.add(state.suspensionTrigger.trigger);
+                    suspensionTrigger2.add(notAuxiliaryTrigger);
+                    suspensionTrigger2.add(state.suspensionTrigger.trigger);
                 suspensionTrigger = suspensionTrigger2;
             }
             else {
@@ -1635,7 +1696,7 @@ class CoreTransformation {
        else {
           for (expression : expressionList) {
              if (expression != null) {
-                returnExpression.subExpressions.add(expression);
+                returnExpression.add(expression);
              }
           }
           return returnExpression;
@@ -1792,10 +1853,10 @@ class CoreTransformation {
                // (B)
                val set2setTrigger = andExpression.copy;
                    val set2setTrigger2 = andExpression.copy;
-                       set2setTrigger2.subExpressions.add(setValuedObjectReference.copy);
-                       set2setTrigger2.subExpressions.add(resetIValuedObjectReference.copy);
-                   set2setTrigger.subExpressions.add(set2setTrigger2);
-                   set2setTrigger.subExpressions.add(resetNValuedObjectReference.copy);
+                       set2setTrigger2.add(setValuedObjectReference.copy);
+                       set2setTrigger2.add(resetIValuedObjectReference.copy);
+                   set2setTrigger.add(set2setTrigger2);
+                   set2setTrigger.add(resetNValuedObjectReference.copy);
                set2setTransition.setTrigger(set2setTrigger);
                set2setTransition.setPriority(1); // Set a HIGHER prio than set to reset (A)
                
@@ -1824,9 +1885,9 @@ class CoreTransformation {
                      entryAction.setIsImmediate(true);
                      var entryActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                          entryActionTrigger.setOperator(OperatorType::AND);
-                         entryActionTrigger.subExpressions.add(setValuedObjectReference.copy); // (C)
+                         entryActionTrigger.add(setValuedObjectReference.copy); // (C)
                          if (entryAction.trigger != null) {
-                             entryActionTrigger.subExpressions.add(entryAction.trigger);
+                             entryActionTrigger.add(entryAction.trigger);
                              entryAction.setTrigger(entryActionTrigger);
                          } else {
                              entryAction.setTrigger(setValuedObjectReference.copy);
@@ -1837,9 +1898,9 @@ class CoreTransformation {
                      duringAction.setIsImmediate(true);
                      var duringActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                          duringActionTrigger.setOperator(OperatorType::AND);
-                         duringActionTrigger.subExpressions.add(set2setTrigger.copy); // (B)
+                         duringActionTrigger.add(set2setTrigger.copy); // (B)
                          if (duringAction.trigger != null) {
-                             duringActionTrigger.subExpressions.add(duringAction.trigger);
+                             duringActionTrigger.add(duringAction.trigger);
                              duringAction.setTrigger(duringActionTrigger);
                          } else {
                              duringAction.setTrigger(set2setTrigger.copy);
@@ -2131,13 +2192,13 @@ class CoreTransformation {
                                     
                 val valPreExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                     valPreExpression.setOperator(OperatorType::VAL);   
-                    valPreExpression.subExpressions.add(preValuedObjectReference.copy);             
+                    valPreExpression.add(preValuedObjectReference.copy);             
                 val valExplicitPre1Expression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                     valExplicitPre1Expression.setOperator(OperatorType::VAL);   
-                    valExplicitPre1Expression.subExpressions.add(explicitPre1ValuedObjectReference.copy);             
+                    valExplicitPre1Expression.add(explicitPre1ValuedObjectReference.copy);             
                 val valExplicitPre2Expression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                     valExplicitPre2Expression.setOperator(OperatorType::VAL);   
-                    valExplicitPre2Expression.subExpressions.add(explicitPre2ValuedObjectReference.copy);             
+                    valExplicitPre2Expression.add(explicitPre2ValuedObjectReference.copy);             
                 
                 val explicitPreValuedObjectEmissionFromPre1 = SCChartsFactory::eINSTANCE.createEmission();
                     explicitPreValuedObjectEmissionFromPre1.setValuedObject(explicitPreValuedObject);
@@ -2188,10 +2249,10 @@ class CoreTransformation {
                for (preExpression : preExpressions) {
                    val container = preExpression.eContainer;
                    
-                   if (container instanceof ComplexExpression) {
+                   if (container instanceof OperatorExpression) {
                        // If nested PRE or PRE inside another complex expression
-                       (container as ComplexExpression).subExpressions.remove(preExpression);
-                       (container as ComplexExpression).subExpressions.add(explicitPreValuedObjectReference.copy);
+                       (container as OperatorExpression).subExpressions.remove(preExpression);
+                       (container as OperatorExpression).add(explicitPreValuedObjectReference.copy);
                    } else if(container instanceof Action) {
                        // If PRE directly a trigger
                        (container as Action).setTrigger(explicitPreValuedObjectReference.copy)
@@ -2210,14 +2271,14 @@ class CoreTransformation {
                        // Transform pre(?V) --> ?PreV
                        val valueExpression = preValExpression.subExpressions.get(0);
                        (valueExpression as OperatorExpression).subExpressions.remove(0);
-                       (valueExpression as OperatorExpression).subExpressions.add(explicitPreValuedObjectReference.copy);
+                       (valueExpression as OperatorExpression).add(explicitPreValuedObjectReference.copy);
                        if (container instanceof Emission) {
                             (container as Emission).setNewValue(valueExpression.copy);
                        }
-                       else if (container instanceof ComplexExpression) {
+                       else if (container instanceof OperatorExpression) {
                            // If nested PRE or PRE inside another complex expression
-                           (container as ComplexExpression).subExpressions.remove(preValExpression);
-                           (container as ComplexExpression).subExpressions.add(valueExpression.copy);
+                           (container as OperatorExpression).subExpressions.remove(preValExpression);
+                           (container as OperatorExpression).add(valueExpression.copy);
                       }
                   }
                
@@ -2327,10 +2388,10 @@ class CoreTransformation {
                         transitionValuedObjectReference.setValuedObject(transitionValuedObject);
                     if (transition.type == TransitionType::STRONGABORT) {
                         transitionValuedObject.setName("_" + state.id + "_S" + transition.priority);
-                        strongTriggerOperatorExpression.subExpressions.add(transitionValuedObjectReference.copy);
+                        strongTriggerOperatorExpression.add(transitionValuedObjectReference.copy);
                     } else {
                         transitionValuedObject.setName("_" + state.id + "_W" + transition.priority);
-                        weakTriggerOperatorExpression.subExpressions.add(transitionValuedObjectReference.copy);
+                        weakTriggerOperatorExpression.add(transitionValuedObjectReference.copy);
                     }                    
                     transitionValuedObject.setIsInput(false);
                     transitionValuedObject.setIsOutput(false);
