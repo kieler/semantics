@@ -8,7 +8,6 @@ package de.cau.cs.kieler.core.kexpressions.impl;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
-import de.cau.cs.kieler.core.kexpressions.TextualCode;
 
 import org.eclipse.emf.common.notify.Notification;
 
