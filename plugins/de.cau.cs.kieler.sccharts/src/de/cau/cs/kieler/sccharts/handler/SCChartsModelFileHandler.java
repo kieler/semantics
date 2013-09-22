@@ -41,7 +41,7 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
 
     public static final String TRIGGEREFFECT_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.coresccharts.commands.TriggerEffectTransformation";
-    
+
     public static final String SIGNAL_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.coresccharts.commands.SignalTransformation";
 
@@ -68,13 +68,13 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
 
     public static final String PRE_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.coresccharts.commands.PreTransformation";
-    
+
     public static final String EXPOSELOCALSIGNALS_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.coresccharts.commands.ExposeLocalSignalsTransformation";
 
     public static final String NORMALTERMINATION_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.coresccharts.commands.NormalTerminationTransformation";
-    
+
     public static final String FINALSTATETRANSITION_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.coresccharts.commands.FinalStateTransitionTransformation";
 
@@ -86,10 +86,10 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
 
     // -------------------------------------------------------------------------
 
-//    public String getDiagramEditorID() {
-//        return SCChartsPlugin.EDITOR_ID;
-//    }
-//
+    // public String getDiagramEditorID() {
+    // return SCChartsPlugin.EDITOR_ID;
+    // }
+    //
     // -------------------------------------------------------------------------
 
     protected boolean doOpenEditor(final Object modelObject, final ExecutionEvent event,
@@ -99,13 +99,13 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
 
     // -------------------------------------------------------------------------
 
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    protected String getTargetExtension() {
-//        return "transformed.scc";
-//    }
+    // /**
+    // * {@inheritDoc}
+    // */
+    // @Override
+    // protected String getTargetExtension() {
+    // return "transformed.scc";
+    // }
 
     // -------------------------------------------------------------------------
 
@@ -123,14 +123,41 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
         commandString = commandString.replace("commands.Sct", "commands.");
         System.out.println(commandString);
         transformed = model;
-        if (commandString.equals(EXPOSELOCALSIGNALS_TRANSFORMATION)) {
+        if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {
+            // TODO
+        } else if (commandString.equals(ABORT_TRANSFORMATION)) {
+            // TODO
+        } else if (commandString.equals(SURFACEDEPTH_TRANSFORMATION)) {
+            transformed = (new CoreTransformation()).transformSurfaceDepth((Region) model);
+        } else if (commandString.equals(TRIGGEREFFECT_TRANSFORMATION)) {
+            transformed = (new CoreTransformation()).transformTriggerEffect((Region) model);
+        } else if (commandString.equals(SIGNAL_TRANSFORMATION)) {
+            // TODO
+            // transformed = (new CoreTransformation()).transformSignal((Region) model);
+        } else if (commandString.equals(INPUTOUTPUTSIGNAL_TRANSFORMATION)) {
+            // TODO
+            //transformed = (new CoreTransformation()).transformInputOutputSignal((Region) model);
+        } else if (commandString.equals(ENTRY_TRANSFORMATION)) {
+            transformed = (new CoreTransformation()).transformEntry((Region) model);
+        } else if (commandString.equals(DURING_TRANSFORMATION)) {
+            transformed = (new CoreTransformation()).transformDuring((Region) model);
+        } else if (commandString.equals(EXIT_TRANSFORMATION)) {
+            transformed = (new CoreTransformation()).transformExit((Region) model);
+        } else if (commandString.equals(HISTORY_TRANSFORMATION)) {
+            transformed = (new CoreTransformation()).transformHistory((Region) model);
+        } else if (commandString.equals(SUSPEND_TRANSFORMATION)) {
+            transformed = (new CoreTransformation()).transformSuspend((Region) model);
+        } else if (commandString.equals(COUNTDELAY_TRANSFORMATION)) {
+            transformed = (new CoreTransformation()).transformCountDelay((Region) model);
+        } else if (commandString.equals(PRE_TRANSFORMATION)) {
+            transformed = (new CoreTransformation()).transformPre((Region) model);
+        } else if (commandString.equals(EXPOSELOCALSIGNALS_TRANSFORMATION)) {
             transformed = (new CoreTransformation()).transformExposeLocalValuedObject((Region) model);
-//        } else if (commandString.equals(INPUTOUTPUTSIGNAL_TRANSFORMATION)) {
-//            transformed = (new SCCTransformations()).transformInputOutputSignal((Statechart) model);
-//        } else if (commandString.equals(DURING_TRANSFORMATION)) {
-//            transformed = (new SCCTransformations()).transformDuring((Statechart) model);
+        } else if (commandString.equals(NORMALTERMINATION_TRANSFORMATION)) {
+            transformed = (new CoreTransformation()).transformNormalTermination((Region) model);
+        } else if (commandString.equals(FINALSTATETRANSITION_TRANSFORMATION)) {
+            transformed = (new CoreTransformation()).transformFinalStateTransition((Region) model);
         }
-
         return transformed;
     }
 

@@ -259,7 +259,7 @@ class CoreTransformation {
     
     // Add a sub expression to an OperatorExpression.
     def OperatorExpression add(OperatorExpression operatorExpression, Expression expression) {
-        operatorExpression.add(expression)
+        operatorExpression.subExpressions.add(expression)
         operatorExpression
     }
     
@@ -785,7 +785,7 @@ class CoreTransformation {
     // Set the T_eff to have T's target state. Set T to have the target C.
     // Add T_eff to C's outgoing transitions. 
     
-    def Region transformSplitTransition (Region rootRegion) {
+    def Region transformTriggerEffect (Region rootRegion) {
         // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
 
@@ -794,13 +794,13 @@ class CoreTransformation {
         // For every transition in the SyncChart do the transformation
         // Iterate over a copy of the list  
         for(targetTransition : targetTransitions) {
-            targetTransition.transformSplitTransition(targetRootRegion);
+            targetTransition.transformTriggerEffect(targetRootRegion);
         }
         
         targetRootRegion;
     }
          
-     def void transformSplitTransition(Transition transition, Region targetRootRegion) {
+     def void transformTriggerEffect(Transition transition, Region targetRootRegion) {
          
          // Only apply this to transition that have both, a trigger and effects!
          if (transition.trigger != null && !transition.effects.nullOrEmpty) {
@@ -1538,18 +1538,18 @@ class CoreTransformation {
     //-------------------------------------------------------------------------
     
     // Transforming During Actions.
-    def Region transformDuringAction(Region rootRegion) {
+    def Region transformDuring(Region rootRegion) {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         // Traverse all states
         for(targetState : targetRootRegion.getContainedStates) {            
-            targetState.transformDuringAction(targetRootRegion);
+            targetState.transformDuring(targetRootRegion);
         }
         targetRootRegion;
     }
     
     // Traverse all states and transform macro states that have actions to transform
-    def void transformDuringAction(State state, Region targetRootRegion) {
+    def void transformDuring(State state, Region targetRootRegion) {
         // DURING ACTIONS : 
         // For each action create a separate region in the state. 
         // Put the action into an transition within the macro state.
@@ -1608,18 +1608,18 @@ class CoreTransformation {
     // @requires: during actions
 
     // Transforming Entry and During Actions.
-    def Region transformEntryAction(Region rootRegion) {
+    def Region transformEntry(Region rootRegion) {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         // Traverse all states
         for(targetState : targetRootRegion.getContainedStates) {            
-            targetState.transformEntryAction(targetRootRegion);
+            targetState.transformEntry(targetRootRegion);
         }
         targetRootRegion;
     }
         
     // Traverse all states and transform macro states that have actions to transform
-    def void transformEntryAction(State state, Region targetRootRegion) {
+    def void transformEntry(State state, Region targetRootRegion) {
         // ENTRY ACTIONS :
         // First Idea: Create a macro state for all incoming transitions. Weak abort the
         // macro state and connect it to the original target. Put the action into an
@@ -1718,12 +1718,12 @@ class CoreTransformation {
     }
     
     // Transforming Exit Actions. 
-    def Region transformExitAction(Region rootRegion) {
+    def Region transformExit(Region rootRegion) {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         // Traverse all states
         for(targetState : targetRootRegion.getContainedStates) {
-            targetState.transformExitAction(targetRootRegion);
+            targetState.transformExit(targetRootRegion);
         }
         targetRootRegion;
     }
@@ -1777,7 +1777,7 @@ class CoreTransformation {
    }    
            
     // Traverse all states and transform macro states that have actions to transform
-    def void transformExitAction(State state, Region targetRootRegion) {
+    def void transformExit(State state, Region targetRootRegion) {
         // EXIT ACTIONS : For every state with exit actions create a new top-level region and
         // create SET and RESET valuedObjects. This region contains a set and reset (inital) state
         // connected from reset to set with an intermediate macro state containing all the
@@ -2077,12 +2077,12 @@ class CoreTransformation {
     //-------------------------------------------------------------------------
            
     // Transforming PRE Operator.
-    def Region transformPreOperator(Region rootRegion) {
+    def Region transformPre(Region rootRegion) {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         // Traverse all states
         for(targetState : targetRootRegion.getContainedStates) {
-            targetState.transformPreOperator(targetRootRegion);
+            targetState.transformPre(targetRootRegion);
         }
         targetRootRegion;
     }
@@ -2118,7 +2118,7 @@ class CoreTransformation {
 
     
     // Traverse all states that might declare a valuedObject that is used with the PRE operator
-    def void transformPreOperator(State state, Region targetRootRegion) {
+    def void transformPre(State state, Region targetRootRegion) {
         
         // Filter all valuedObjects and retrieve those that are referenced
         val allActions = state.eAllContents.filter(typeof(Action)).toList();
