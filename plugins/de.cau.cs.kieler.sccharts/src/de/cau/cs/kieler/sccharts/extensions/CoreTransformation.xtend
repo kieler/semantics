@@ -19,13 +19,14 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.Transition
@@ -33,7 +34,7 @@ import de.cau.cs.kieler.sccharts.TransitionType
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.Effect
 
 /**
  * SCCharts CoreTransformation Extensions.
@@ -99,10 +100,52 @@ class CoreTransformation {
         state.parentRegion.rootState;   
     }
     
+    //========== STATE ACTIONS ===========
+
+    // Create a during action for a state.
+    def Action createDuringAction(State state) {
+        val action = SCChartsFactory::eINSTANCE.createAction
+        state.innerActions.add(action);
+        action
+    }
+    // Create an immediate during action for a state.
+    def Action createImmediateDuringAction(State state) {
+        val action = state.createDuringAction
+        action.setIsImmediate(true);
+        action
+    }
+
+    // Create a entry action for a state.
+    def Action createEntryAction(State state) {
+        val action = SCChartsFactory::eINSTANCE.createAction
+        state.entryActions.add(action);
+        action
+    }
+    // Create an immediate entry action for a state.
+    def Action createImmediateEntryAction(State state) {
+        val action = state.createEntryAction
+        action.setIsImmediate(true);
+        action
+    }
+
+    // Create a exit action for a state.
+    def Action createExitAction(State state) {
+        val action = SCChartsFactory::eINSTANCE.createAction
+        state.entryActions.add(action);
+        action
+    }
+    // Create an immediate exit action for a state.
+    def Action createImmediateExitAction(State state) {
+        val action = state.createExitAction
+        action.setIsImmediate(true);
+        action
+    }
+
+
     //=========== EMISSIONS =============
 
     // Create an Emission.
-    def Emission createEmission(ValuedObject valuedObject) {
+    def Emission emit(ValuedObject valuedObject) {
         val emission = SCChartsFactory::eINSTANCE.createEmission()
         emission.setValuedObject(valuedObject)
         emission
@@ -110,14 +153,27 @@ class CoreTransformation {
     
     // Create an Emission and add it sequentially to an action's effects list.
     def Emission createEmission(Action action, ValuedObject valuedObject) {
-        val emission = createEmission(valuedObject)
-        action.effects.add(emission)
+        val emission = valuedObject.emit
+        action.addEmission(emission)
         emission
     }
     
+    // Create an Emission and add it sequentially to an action's effects list.
+    def Emission addEmission(Action action, Emission emission) {
+        // An Emsssion is a specialized Effect with a new value and a ValuedObject
+        action.addEffect(emission)
+        emission
+    }
+
+    // Create an Effect (supertype of Emission) and add it sequentially to an action's effects list.
+    def Effect addEffect(Action action, Effect effect) {
+        action.effects.add(effect)
+        effect
+    }
+
     // Create a valued Emission. 
-    def Emission createEmission(ValuedObject valuedObject, Expression newValue) {
-        val emission = createEmission(valuedObject)
+    def Emission emit(ValuedObject valuedObject, Expression newValue) {
+        val emission = valuedObject.emit
         emission.setValuedObject(valuedObject)
         emission.setNewValue(newValue);
         emission
@@ -125,8 +181,8 @@ class CoreTransformation {
 
     // Create a valued Emission and add it sequentially to an action's effects list. 
     def Emission createEmission(Action action, ValuedObject valuedObject, Expression newValue) {
-        val emission = createEmission(valuedObject, newValue)
-        action.effects.add(emission)
+        val emission = valuedObject.emit(newValue)
+        action.addEmission(emission)
         emission
     }
 
@@ -144,6 +200,23 @@ class CoreTransformation {
         operatorExpression.add(expression)
         expression
     }
+    // Create an AND Expression add expressionFirst and expressionSecond as a sub expression.
+    def OperatorExpression and(Expression expressionFirst, Expression expressionSecond) {
+        val andExpression = createAndExpression()
+        andExpression.add(expressionFirst)
+        andExpression.add(expressionSecond)
+        andExpression
+    }
+    // Trim an AND/OR Expession if it contains only a single sub expression.
+    def Expression trim(OperatorExpression operatorExpression) {
+        if (operatorExpression.subExpressions.size == 1 && 
+            ((operatorExpression.operator == OperatorType::AND) || (operatorExpression.operator == OperatorType::OR))
+        ) {
+               // if there is just one sub expression, we do not need an AND/OR!
+               operatorExpression.subExpressions.get(0);
+        }
+        operatorExpression;
+    }
 
     // Create an OR Expression.
     def OperatorExpression createOrExpression() {
@@ -157,6 +230,13 @@ class CoreTransformation {
         operatorExpression.add(expression)
         expression
     }
+    // Create an OR Expression add expressionFirst or expressionSecond as a sub expression.
+    def OperatorExpression or(Expression expressionFirst, Expression expressionSecond) {
+        val orExpression = createOrExpression()
+        orExpression.add(expressionFirst)
+        orExpression.add(expressionSecond)
+        orExpression
+    }
 
     // Create an NOT Expression.
     def OperatorExpression createNotExpression() {
@@ -169,6 +249,12 @@ class CoreTransformation {
         val expression = createNotExpression()
         operatorExpression.add(expression)
         expression
+    }
+    // Create an NOT Expression and add expression as a sub expression.
+    def OperatorExpression not(Expression expression) {
+        val notExpression = createNotExpression()
+        notExpression.add(expression)
+        notExpression
     }
     
     // Add a sub expression to an OperatorExpression.
@@ -420,7 +506,7 @@ class CoreTransformation {
                                             filter(ee | ee  == localValuedObject).last as Emission;
                            if (lastMatchingEmission != null) {
                                val newValue = lastMatchingEmission.newValue
-                               val emission = localValuedObjectAction.createEmission(globalValuedObject);
+                               val emission = localValuedObjectAction.addEmission(globalValuedObject.emit);
                                if (newValue != null) {
                                    emission.setNewValue(newValue.copy)
                                }
@@ -462,9 +548,9 @@ class CoreTransformation {
     def Region transformNormalTermination(Region rootRegion) {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
-        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
+        
         // Traverse all states
-        for(targetState :  ImmutableList::copyOf(targetStates)) {
+        for(targetState : targetRootRegion.getContainedStates) {
             targetState.transformNormalTermination(targetRootRegion);
         }
         targetRootRegion;
@@ -492,65 +578,43 @@ class CoreTransformation {
                     val rootState = state.rootState
                     val terminatedValuedObject = rootState.createPureSignal("terminated" + state.hashCode);
                         
-                    val notTerminatedExpression = createNotExpression.add(terminatedValuedObject.reference);
-                    val terminatedEmission = SCChartsFactory::eINSTANCE.createEmission();
-                        terminatedEmission.setValuedObject(terminatedValuedObject);
+                    val terminatedEmission = terminatedValuedObject.emit
                     // Add the prevention of re-run of normal termination within the same tick
-                    triggerExpression.add(notTerminatedExpression);
+                    triggerExpression.add(not(terminatedValuedObject.reference));
                     // Explicitly prevent that a normal termination is taken when another transition
                     // has been taken before (e.g., a weak abort self loop like in test 147)
                     for (otherTransition : otherTransitions) {
                         if (otherTransition.trigger != null) {
-                            val negatedExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
-                            negatedExpression.setOperator(OperatorType::NOT);
-                            negatedExpression.add(otherTransition.trigger.copy);
-                            triggerExpression.add(negatedExpression);
+                            triggerExpression.add(not(otherTransition.trigger.copy));
                         }
                     }
                     
                     // Prevent the normal termination to be taken again by emitting this helper valuedObject (test10)
-                    normalTerminationTransition.effects.add(terminatedEmission);
+                    normalTerminationTransition.addEmission(terminatedEmission);
                                         
                     // Walk thru all regions that must terminate and create one termination valuedObject per
                     // region. For the weak abort create a conjunction of these valuedObjects as the trigger.
                     for (region : state.regions) {
                          // Setup the auxiliary termination valuedObject indicating that a normal termination
                          // should be taken.
-                         val finishedValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-                         finishedValuedObject.setName("finished" + region.hashCode);
-                         finishedValuedObject.setIsInput(false);
-                         finishedValuedObject.setIsOutput(false);
-                         finishedValuedObject.setType(ValueType::PURE);
+                         val finishedValuedObject = targetRootRegion.rootState.createPureSignal("finished" + region.hashCode)
 
                          val finalStates = region.states.filter(e | e.isFinal == true);
                          // For all final states add a during action that emits the termination valuedObject
                          for (finalState : finalStates) {
-                              val finishedEmission = SCChartsFactory::eINSTANCE.createEmission();
-                              finishedEmission.setValuedObject(finishedValuedObject);
-                              val termDuringAction = SCChartsFactory::eINSTANCE.createAction
-                              termDuringAction.setIsImmediate(true);
-                              termDuringAction.effects.add(finishedEmission);
-                              finalState.innerActions.add(termDuringAction);
+                              finalState.createImmediateDuringAction.addEmission(finishedValuedObject.emit);
                               // Set the final state flag to false
                               finalState.setIsFinal(false);
                          }
                     
-//                         state.parentRegion.parentState.valuedObjects.add(finishedValuedObject);
-                       targetRootRegion.states.get(0).valuedObjects.add(finishedValuedObject);
-                         val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                         valuedObjectReference.setValuedObject(finishedValuedObject);
-                         triggerExpression.add(valuedObjectReference);
+                         triggerExpression.add(finishedValuedObject.reference);
                     }
                
                     // A normal termination should immediately be triggerable! (test 145) 
                     normalTerminationTransition.setIsImmediate(true);
-                    if (triggerExpression.subExpressions.size == 1) {
-                         // if there is just one valuedObject, we do not need an AND!
-                         normalTerminationTransition.setTrigger(triggerExpression.subExpressions.get(0));
-                    }
-                    else if (triggerExpression.subExpressions.size > 1) {
-                         normalTerminationTransition.setTrigger(triggerExpression.fixForOperatorExpressionLists);
-                    }
+                    
+                   // if there is just one valuedObject, we do not need an AND!
+                   normalTerminationTransition.setTrigger(triggerExpression.fixForOperatorExpressionLists.trim);
                } // end if normal termination present
 
     }
@@ -704,7 +768,7 @@ class CoreTransformation {
          depthState.outgoingTransitions.add(connectBack);
          val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
          auxiliaryEmission.setValuedObject(isDepthValuedObject);
-         connectBack.effects.add(auxiliaryEmission);
+         connectBack.addEmission(auxiliaryEmission);
          
        }
      }
@@ -756,7 +820,7 @@ class CoreTransformation {
              effectTransition.setPriority(1);
              // Move effect to effect transition
              for (effect : transition.effects) {
-                 effectTransition.effects.add(effect.copy);
+                 effectTransition.addEffect(effect.copy);
              } 
              transition.effects.clear;
              // Re-connect
@@ -785,15 +849,10 @@ class CoreTransformation {
     def Region transformFinalStateTransition (Region rootRegion) {
         // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
-
-        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
-
         // For every state in the SyncChart do the transformation
-        // Iterate over a copy of the list  
-        for(targetState : targetStates) {
-            targetState.transformFinalStateTransition(rootRegion);
+        for(targetState : targetRootRegion.getContainedStates) {
+           targetState.transformFinalStateTransition(rootRegion);
         }
-        
         targetRootRegion;
     }
          
@@ -833,7 +892,7 @@ class CoreTransformation {
             // In this normal termination emit reset valuedObject for the region           
             val auxiliaryResetValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
             auxiliaryResetValuedObjectEmission.setValuedObject(auxiliaryResetValuedObject);   
-            abortRegionTransition.effects.add(auxiliaryResetValuedObjectEmission);                       
+            abortRegionTransition.addEmission(auxiliaryResetValuedObjectEmission);                       
             
             // For every parallel region W
             for (parallelRegion : parentState.regions) {
@@ -852,7 +911,7 @@ class CoreTransformation {
                                 for (finalStateTransition : finalState.incomingTransitions) {
                                    val auxiliaryTermValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
                                    auxiliaryTermValuedObjectEmission.setValuedObject(auxiliaryRegionTermValuedObject);   
-                                   finalStateTransition.effects.add(auxiliaryTermValuedObjectEmission);                       
+                                   finalStateTransition.addEmission(auxiliaryTermValuedObjectEmission);                       
                                 }
                         }
                         
@@ -1007,7 +1066,7 @@ class CoreTransformation {
                            // Connect last state
                            val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
                            auxiliaryEmission.setValuedObject(auxiliaryValuedObject);
-                           connect.effects.add(auxiliaryEmission);
+                           connect.addEmission(auxiliaryEmission);
                        } 
                        
                        // Make state final (just in case, because there could be
@@ -1071,7 +1130,7 @@ class CoreTransformation {
 //               selfLoop.setPriority(1);
 //               val selfLoopEffect = SCChartsFactory::eINSTANCE.createTextEffect;
 //               selfLoopEffect.setCode(auxiliaryVariableName + "++");
-//               selfLoop.effects.add(selfLoopEffect);
+//               selfLoop.addEmission(selfLoopEffect);
 //               selfLoop.setTrigger(transition.trigger);
 //               state.outgoingTransitions.add(selfLoop);
 //
@@ -1089,7 +1148,7 @@ class CoreTransformation {
 //            resetEffect.setCode(auxiliaryVariableName + "= 0");
 //            for (incomingTransition : state.incomingTransitions) {
 //                // Add reset text effect of incoming transition
-//                transition.effects.add(resetEffect);
+//                transition.addEmission(resetEffect);
 //            }
 //               
 //          }
@@ -1118,17 +1177,15 @@ class CoreTransformation {
         // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
 
-        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
-
         // For every state in the SyncChart do the transformation
         // Iterate over a copy of the list  
-        for(targetState :  ImmutableList::copyOf(targetStates)) {
+        for(targetState : targetRootRegion.getContainedStates) {
             
             targetState.transformSuspend(targetRootRegion);
         }
         
         // Now delete all suspends
-        for(targetState :  ImmutableList::copyOf(targetStates.filter(e | e.suspensionTrigger != null))) {
+        for(targetState :  targetRootRegion.getContainedStates.filter(e | e.suspensionTrigger != null)) {
             targetState.setSuspensionTrigger(null);
         }
         
@@ -1196,7 +1253,7 @@ class CoreTransformation {
                disabledValuedObject.setIsInput(false);
                disabledValuedObject.setIsOutput(false);
                disabledValuedObject.setType(ValueType::PURE);
-               targetRootRegion.states.get(0).valuedObjects.add(disabledValuedObject);
+               targetRootRegion.rootState.valuedObjects.add(disabledValuedObject);
                
                // Add a NonSuspended and Suspended state
                val runningState = SCChartsFactory::eINSTANCE.createState();
@@ -1212,7 +1269,7 @@ class CoreTransformation {
                immediateDuringAction.setIsImmediate(true);
                val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
                    auxiliaryEmission.setValuedObject(disabledValuedObject);
-               immediateDuringAction.effects.add(auxiliaryEmission);
+               immediateDuringAction.addEmission(auxiliaryEmission);
                disabledState.innerActions.add(immediateDuringAction);
                
                // Create the body of the intermediate state - containing the entry actions
@@ -1292,7 +1349,7 @@ class CoreTransformation {
     def Region transformHistory(Region rootRegion) {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
-        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
+        
 
         // For every state in the SyncChart do the transformation
         // Iterate over a copy of the list
@@ -1300,7 +1357,7 @@ class CoreTransformation {
         //        ImmutableList::copyOf(targetStates).forEach[
         //             it.transformHistory(targetRootRegion);
         //        ]
-        for(targetState :  ImmutableList::copyOf(targetStates)) {
+        for(targetState : targetRootRegion.getContainedStates) {
             
             targetState.transformHistory(targetRootRegion);
         }
@@ -1344,7 +1401,7 @@ class CoreTransformation {
             auxiliarySuspendValuedObject.setType(ValueType::PURE);
 
             // Add auxiliaryValuedObject to first (and only) root region state SCCharts main interface
-            targetRootRegion.states.get(0).valuedObjects.add(auxiliarySuspendValuedObject);
+            targetRootRegion.rootState.valuedObjects.add(auxiliarySuspendValuedObject);
             
             var Expression suspensionTrigger;
                 val notAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
@@ -1386,7 +1443,7 @@ class CoreTransformation {
             selfLoop.setPriority(state.outgoingTransitions.size + 1);
             val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
                 auxiliaryEmission.setValuedObject(auxiliarySuspendValuedObject);
-            //selfLoop.effects.add(auxiliaryEmission);
+            //selfLoop.addEmission(auxiliaryEmission);
             state.outgoingTransitions.add(selfLoop);
             
             // Add auxiliary valuedObject forcing internals NOT to suspend to all
@@ -1395,7 +1452,7 @@ class CoreTransformation {
             for (weakAbortTransition : weakAbortTransitions) {
                 val auxiliaryEmission2 = SCChartsFactory::eINSTANCE.createEmission();
                     auxiliaryEmission2.setValuedObject(auxiliarySuspendValuedObject);
-                weakAbortTransition.effects.add(auxiliaryEmission2);
+                weakAbortTransition.addEmission(auxiliaryEmission2);
             }
 
             //---
@@ -1412,7 +1469,7 @@ class CoreTransformation {
             auxiliaryEntryValuedObject.setIsOutput(false);
             auxiliaryEntryValuedObject.setType(ValueType::PURE);
             // Add auxiliaryValuedObject to first (and only) root region state SCCharts main interface
-            targetRootRegion.states.get(0).valuedObjects.add(auxiliaryEntryValuedObject);
+            targetRootRegion.rootState.valuedObjects.add(auxiliaryEntryValuedObject);
 
 
             // For all incoming transitions now add a suspendValuedObject emission (to immediately enable the execution of the body)
@@ -1420,12 +1477,12 @@ class CoreTransformation {
             for (incomingTransition : allTransitions) {
                 val auxiliarySuspendEmission = SCChartsFactory::eINSTANCE.createEmission();
                     auxiliarySuspendEmission.setValuedObject(auxiliarySuspendValuedObject);
-                incomingTransition.effects.add(auxiliarySuspendEmission);
+                incomingTransition.addEmission(auxiliarySuspendEmission);
             }
             for (historyTransition : historyTransitions) {
                    val auxiliaryEntryEmission = SCChartsFactory::eINSTANCE.createEmission();
                        auxiliaryEntryEmission.setValuedObject(auxiliaryEntryValuedObject);
-                   historyTransition.effects.add(auxiliaryEntryEmission);
+                   historyTransition.addEmission(auxiliaryEntryEmission);
             }
             
             // ...disabled outgoing transitions that are NOT immediate (s.a.)
@@ -1453,7 +1510,7 @@ class CoreTransformation {
             auxiliaryResetValuedObject.setType(ValueType::PURE);
 
             // Add auxiliaryValuedObject to first (and only) root region state SCCharts main interface
-            targetRootRegion.states.get(0).valuedObjects.add(auxiliaryResetValuedObject);
+            targetRootRegion.rootState.valuedObjects.add(auxiliaryResetValuedObject);
             
             // Add a self loop to the NEW state that resets it if auxiliary reset valuedObject is present
             val resetSelfLoop = SCChartsFactory::eINSTANCE.createTransition();
@@ -1469,7 +1526,7 @@ class CoreTransformation {
             for (nonHistoryTransition : nonHistoryTransitions) {
                 val auxiliaryResetEmission = SCChartsFactory::eINSTANCE.createEmission();
                     auxiliaryResetEmission.setValuedObject(auxiliaryResetValuedObject);
-                nonHistoryTransition.effects.add(auxiliaryResetEmission);
+                nonHistoryTransition.addEmission(auxiliaryResetEmission);
             }
             
         }
@@ -1484,13 +1541,10 @@ class CoreTransformation {
     def Region transformDuringAction(Region rootRegion) {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
-        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
-
-        for(targetState : ImmutableList::copyOf(targetStates)) {
-            
+        // Traverse all states
+        for(targetState : targetRootRegion.getContainedStates) {            
             targetState.transformDuringAction(targetRootRegion);
         }
-        
         targetRootRegion;
     }
     
@@ -1521,7 +1575,7 @@ class CoreTransformation {
                      dummyInternalTransition.setIsImmediate(innerAction.isImmediate);
                      dummyInternalTransition.setTrigger(innerAction.trigger.copy);
                      for (action : innerAction.effects) {
-                        dummyInternalTransition.effects.add(action.copy);
+                        dummyInternalTransition.addEffect(action.copy);
                      }
                      dummyInternalState1.outgoingTransitions.add(dummyInternalTransition);
                      // Add self loop
@@ -1557,13 +1611,10 @@ class CoreTransformation {
     def Region transformEntryAction(Region rootRegion) {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
-        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
-
-        for(targetState : ImmutableList::copyOf(targetStates)) {
-            
+        // Traverse all states
+        for(targetState : targetRootRegion.getContainedStates) {            
             targetState.transformEntryAction(targetRootRegion);
         }
-        
         targetRootRegion;
     }
         
@@ -1670,13 +1721,10 @@ class CoreTransformation {
     def Region transformExitAction(Region rootRegion) {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
-        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
-
-        for(targetState :  ImmutableList::copyOf(targetStates)) {
-            
+        // Traverse all states
+        for(targetState : targetRootRegion.getContainedStates) {
             targetState.transformExitAction(targetRootRegion);
         }
-        
         targetRootRegion;
     }
            
@@ -1779,7 +1827,7 @@ class CoreTransformation {
                setValuedObject.setIsInput(false);
                setValuedObject.setIsOutput(false);
                setValuedObject.setType(ValueType::PURE);
-               targetRootRegion.states.get(0).valuedObjects.add(setValuedObject);
+               targetRootRegion.rootState.valuedObjects.add(setValuedObject);
 
                // This valuedObject is produced by ALL immediate outputs (also hierarchically higher)
                // it is able to trigger an immediate transition back from reset to set (when entering reset)
@@ -1789,21 +1837,21 @@ class CoreTransformation {
                setIValuedObject.setIsInput(false);
                setIValuedObject.setIsOutput(false);
                setIValuedObject.setType(ValueType::PURE);
-               targetRootRegion.states.get(0).valuedObjects.add(setIValuedObject);
+               targetRootRegion.rootState.valuedObjects.add(setIValuedObject);
                
                val resetIValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
                resetIValuedObject.setName("ResetI" + state.id);
                resetIValuedObject.setIsInput(false);
                resetIValuedObject.setIsOutput(false);
                resetIValuedObject.setType(ValueType::PURE);
-               targetRootRegion.states.get(0).valuedObjects.add(resetIValuedObject);
+               targetRootRegion.rootState.valuedObjects.add(resetIValuedObject);
 
                val resetNValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
                resetNValuedObject.setName("ResetN" + state.id);
                resetNValuedObject.setIsInput(false);
                resetNValuedObject.setIsOutput(false);
                resetNValuedObject.setType(ValueType::PURE);
-               targetRootRegion.states.get(0).valuedObjects.add(resetNValuedObject);
+               targetRootRegion.rootState.valuedObjects.add(resetNValuedObject);
                
                // Add a Set and Reset state
                val resetState = SCChartsFactory::eINSTANCE.createState();
@@ -1923,7 +1971,7 @@ class CoreTransformation {
                  setValuedObjectInner.setIsInput(false);
                   setValuedObjectInner.setIsOutput(false);
                   setValuedObjectInner.setType(ValueType::PURE);
-                  targetRootRegion.states.get(0).valuedObjects.add(setValuedObjectInner);
+                  targetRootRegion.rootState.valuedObjects.add(setValuedObjectInner);
                   val setValuedObjectInnerReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
                      setValuedObjectInnerReference.setValuedObject(setValuedObjectInner);
                  //Create In state and Out state
@@ -1950,13 +1998,13 @@ class CoreTransformation {
                  for (transition : cornerCaseTransition) {
                      val setEmission = SCChartsFactory::eINSTANCE.createEmission();
                           setEmission.setValuedObject(setValuedObjectInner);
-                     transition.effects.add(setEmission);
+                     transition.addEmission(setEmission);
                   }
                  // Add during action for inState
                  val duringIActionResetValuedObjectN = SCChartsFactory::eINSTANCE.createAction();
                  val resetNEmission2 = SCChartsFactory::eINSTANCE.createEmission();
                  resetNEmission2.setValuedObject(resetNValuedObject);
-                 duringIActionResetValuedObjectN.effects.add(resetNEmission2);
+                 duringIActionResetValuedObjectN.addEmission(resetNEmission2);
                  inState.innerActions.add(duringIActionResetValuedObjectN);
                } // End corner case
 
@@ -1968,11 +2016,11 @@ class CoreTransformation {
                duringIAction.setIsImmediate(true);
                val resetIEmission = SCChartsFactory::eINSTANCE.createEmission();
                    resetIEmission.setValuedObject(resetIValuedObject);
-               duringIAction.effects.add(resetIEmission);
+               duringIAction.addEmission(resetIEmission);
                val duringNAction = SCChartsFactory::eINSTANCE.createAction();
                val resetNEmission = SCChartsFactory::eINSTANCE.createEmission();
                    resetNEmission.setValuedObject(resetNValuedObject);
-               duringNAction.effects.add(resetNEmission);
+               duringNAction.addEmission(resetNEmission);
                state.innerActions.add(duringIAction);
                state.innerActions.add(duringNAction);
                
@@ -1996,7 +2044,7 @@ class CoreTransformation {
 //                   newInitialState.outgoingTransitions.add(immediateTransition);
 //               }
 //               for (incomingTransition : ImmutableList::copyOf(state.incomingTransitions)) {
-//                   incomingTransition.effects.add(resetIEmission.copy);
+//                   incomingTransition.addEmission(resetIEmission.copy);
 //               }
                
   
@@ -2006,14 +2054,14 @@ class CoreTransformation {
                    // previously executed.
                    val setEmission = SCChartsFactory::eINSTANCE.createEmission();
                        setEmission.setValuedObject(setValuedObject);
-                   transition.effects.add(setEmission);
+                   transition.addEmission(setEmission);
                 }
                 
                for (transition : consideredTransitions.filter(e | e.isImmediate)) {
                    // For every considered immediate transition add an emission of the setI valuedObject
                    val setIEmission = SCChartsFactory::eINSTANCE.createEmission();
                        setIEmission.setValuedObject(setIValuedObject);
-                   transition.effects.add(setIEmission);
+                   transition.addEmission(setIEmission);
                 }
                 
                 
@@ -2032,12 +2080,10 @@ class CoreTransformation {
     def Region transformPreOperator(Region rootRegion) {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
-        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
-
-        for(targetState : ImmutableList::copyOf(targetStates)) {
+        // Traverse all states
+        for(targetState : targetRootRegion.getContainedStates) {
             targetState.transformPreOperator(targetRootRegion);
         }
-        
         targetRootRegion;
     }
 
@@ -2137,10 +2183,10 @@ class CoreTransformation {
                 // PreValuedObject emission must be added as an inner action
                 // to be decoupled from deciding for a specific transition (B is present or B is not present)
                 val explicitPreValuedObjectEmissionAction = SCChartsFactory::eINSTANCE.createAction();
-                explicitPreValuedObjectEmissionAction.effects.add(explicitPreValuedObjectEmission.copy);
+                explicitPreValuedObjectEmissionAction.addEmission(explicitPreValuedObjectEmission.copy);
                 preState.innerActions.add(explicitPreValuedObjectEmissionAction);
-                //preSelfTransition.effects.add(explicitPreValuedObjectEmission.copy);
-                //pre2NotPreTransition.effects.add(explicitPreValuedObjectEmission.copy);
+                //preSelfTransition.addEmission(explicitPreValuedObjectEmission.copy);
+                //pre2NotPreTransition.addEmission(explicitPreValuedObjectEmission.copy);
             }
             else {
                 // Valued ValuedObject Case
@@ -2217,27 +2263,27 @@ class CoreTransformation {
                 // PreValuedObject emission must be added as an inner action
                 // to be decoupled from deciding for a specific transition (B is present or B is not present)
                 val explicitPreValuedObjectEmissionFromPre1Action = SCChartsFactory::eINSTANCE.createAction();
-                explicitPreValuedObjectEmissionFromPre1Action.effects.add(explicitPreValuedObjectEmissionFromPre1);
+                explicitPreValuedObjectEmissionFromPre1Action.addEmission(explicitPreValuedObjectEmissionFromPre1);
                 val explicitPreValuedObjectEmissionFromPre2Action = SCChartsFactory::eINSTANCE.createAction();
-                explicitPreValuedObjectEmissionFromPre2Action.effects.add(explicitPreValuedObjectEmissionFromPre2);
+                explicitPreValuedObjectEmissionFromPre2Action.addEmission(explicitPreValuedObjectEmissionFromPre2);
                 preState.innerActions.add(explicitPreValuedObjectEmissionFromPre1Action);
                 preBState.innerActions.add(explicitPreValuedObjectEmissionFromPre2Action);
                     
                 // Fill transitions
-//                pre2NotPreTransition.effects.add(explicitPreValuedObjectEmissionFromPre1.copy);
+//                pre2NotPreTransition.addEmission(explicitPreValuedObjectEmissionFromPre1.copy);
 
                 pre2PreBTransition.setTrigger(preValuedObjectReference.copy);
-//                pre2PreBTransition.effects.add(explicitPreValuedObjectEmissionFromPre1.copy);
-                pre2PreBTransition.effects.add(explicitPre2ValuedObjectEmission.copy);
+//                pre2PreBTransition.addEmission(explicitPreValuedObjectEmissionFromPre1.copy);
+                pre2PreBTransition.addEmission(explicitPre2ValuedObjectEmission.copy);
                  
                 preB2PreTransition.setTrigger(preValuedObjectReference.copy);
-//                preB2PreTransition.effects.add(explicitPreValuedObjectEmissionFromPre2.copy);
-                preB2PreTransition.effects.add(explicitPre1ValuedObjectEmission.copy);
+//                preB2PreTransition.addEmission(explicitPreValuedObjectEmissionFromPre2.copy);
+                preB2PreTransition.addEmission(explicitPre1ValuedObjectEmission.copy);
                  
-//                preB2NotPreTransition.effects.add(explicitPreValuedObjectEmissionFromPre2.copy);
+//                preB2NotPreTransition.addEmission(explicitPreValuedObjectEmissionFromPre2.copy);
                  
                 notPre2PreTransition.setTrigger(preValuedObjectReference.copy);
-                notPre2PreTransition.effects.add(explicitPre1ValuedObjectEmission.copy);
+                notPre2PreTransition.addEmission(explicitPre1ValuedObjectEmission.copy);
             }
 
             // Replace the ComplexExpression Pre(S) by the ValuedObjectReference PreS in all actions            
@@ -2296,12 +2342,10 @@ class CoreTransformation {
     def Region transformSCCAborts(Region rootRegion) {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
-        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
-
-        for(targetState : ImmutableList::copyOf(targetStates)) {
+        // Traverse all states
+        for(targetState : targetRootRegion.getContainedStates) {
             targetState.transformSCCAborts(targetRootRegion);
         }
-        
         targetRootRegion;
     }
     
@@ -2409,7 +2453,7 @@ class CoreTransformation {
                     // Watcher transition emits the auxiliary valuedObject
                     val transitionValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
                         transitionValuedObjectEmission.setValuedObject(transitionValuedObject);
-                    watcherTransition.effects.add(transitionValuedObjectEmission);
+                    watcherTransition.addEmission(transitionValuedObjectEmission);
                     // Change trigger of original transition to transitionValuedObjectReference
                     transition.setTrigger(transitionValuedObjectReference.copy);
                 }
@@ -2546,7 +2590,7 @@ class CoreTransformation {
                 mainState.outgoingTransitions.add(transition);            
                 val exitValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
                 exitValuedObjectEmission.setValuedObject(exitValuedObject);
-                transition.effects.add(exitValuedObjectEmission);
+                transition.addEmission(exitValuedObjectEmission);
                 
                 // Move the watcher region outside the mainState
                 state.regions.add(watcherRegion);
