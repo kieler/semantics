@@ -35,6 +35,7 @@ import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.Effect
+import org.eclipse.emf.ecore.EObject
 
 /**
  * SCCharts CoreTransformation Extensions.
@@ -45,8 +46,11 @@ import de.cau.cs.kieler.sccharts.Effect
  */
 class CoreTransformation { 
 
-    @Inject
-    extension Extension
+    //@Inject
+    //extension Extension
+    
+    // This prefix is used for namings of all generated signals, states and regions
+    static final String GENERATED_PREFIX = "_"
     
     //-------------------------------------------------------------------------
     //--             B A S I C   C R E A T I O N   M E T H O D S             --
@@ -188,6 +192,20 @@ class CoreTransformation {
 
     //==========  EXPRESSIONS  ==========
     
+    // Trim an AND/OR Expession if it contains only a single sub expression.
+    def Expression trim(OperatorExpression operatorExpression) {
+        if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty) return {
+            operatorExpression
+        }
+        if (operatorExpression.subExpressions.size == 1 && 
+            ((operatorExpression.operator == OperatorType::AND) || (operatorExpression.operator == OperatorType::OR))
+        ) {
+               // if there is just one sub expression, we do not need an AND/OR!
+               operatorExpression.subExpressions.get(0);
+        }
+        operatorExpression;
+    }
+
     // Create an AND Expression.
     def OperatorExpression createAndExpression() {
         val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
@@ -206,16 +224,6 @@ class CoreTransformation {
         andExpression.add(expressionFirst)
         andExpression.add(expressionSecond)
         andExpression
-    }
-    // Trim an AND/OR Expession if it contains only a single sub expression.
-    def Expression trim(OperatorExpression operatorExpression) {
-        if (operatorExpression.subExpressions.size == 1 && 
-            ((operatorExpression.operator == OperatorType::AND) || (operatorExpression.operator == OperatorType::OR))
-        ) {
-               // if there is just one sub expression, we do not need an AND/OR!
-               operatorExpression.subExpressions.get(0);
-        }
-        operatorExpression;
     }
 
     // Create an OR Expression.
@@ -406,6 +414,21 @@ class CoreTransformation {
     //-------------------------------------------------------------------------
     //--                           N A M I N G S                             --
     //-------------------------------------------------------------------------
+
+    // Prefixes a name with the hash code of an eObject
+    def String id(EObject eObject) {
+        eObject.hashCode + ""
+    }
+    
+    // Prefixes a name with the hash code of an eObject
+    def String id(EObject eObject, String string) {
+        eObject.id + string
+    }
+    
+    // Prefixes a name with the generated prefix string
+    def String id(String string) {
+        GENERATED_PREFIX + string;
+    }
     
     // For C variables it is necessary to remove special characters, this may lead
     // to name clashes in unlikely cases. 
@@ -432,10 +455,10 @@ class CoreTransformation {
                 // Region IDs can be empty, state IDs normally aren't but the code generation handles 
                 // also this case. 
                 if (stateId.nullOrEmpty) {
-                    stateId = state.hashCode + "";
+                    stateId = state.id
                 }
                 if (regionId.nullOrEmpty) {
-                    regionId = state.parentRegion.hashCode + "";
+                    regionId = state.parentRegion.id
                 }
                 if (!higherHierarchyReturnedName.nullOrEmpty) {
                     higherHierarchyReturnedName = higherHierarchyReturnedName + "_";
@@ -455,6 +478,30 @@ class CoreTransformation {
         return StartSymbol + "_";
     }
 
+    //-------------------------------------------------------------------------
+    //--             H O T F I X   F O R   S C C H A R T S                   --
+    //-------------------------------------------------------------------------
+    // Because the SCCharts KExpressions Parser has a problem with
+    // AND / OR lists of more than two elements the following fixes
+    // an OperatorExpression of such kind.
+    // Test 141
+    def OperatorExpression fixForOperatorExpressionLists(OperatorExpression operatorExpression) {
+        if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty || operatorExpression.subExpressions.size <= 2) {
+            // In this case we do not need the fix
+            return operatorExpression;
+        }
+        // Here we apply the fix recursively
+        val operatorExpressionCopy = operatorExpression.copy;
+        val newOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+        newOperatorExpression.setOperator(operatorExpression.operator);
+        newOperatorExpression.subExpressions.add(operatorExpression.subExpressions.head);
+        // Call recursively without the first element
+        operatorExpressionCopy.subExpressions.remove(0);
+        newOperatorExpression.subExpressions.add(operatorExpressionCopy.fixForOperatorExpressionLists);
+        return newOperatorExpression;
+    }
+   
+   // -------------------------------------------------------------------------   
          
     //-------------------------------------------------------------------------
     //--             E X P O S E   L O C A L   S I G N A L S                 --
@@ -576,7 +623,7 @@ class CoreTransformation {
                     // Setup the auxiliary terminated valuedObject indicating that a normal termination
                     // has been taken in the same synchronous tick and must not be taken again.
                     val rootState = state.rootState
-                    val terminatedValuedObject = rootState.createPureSignal("terminated" + state.hashCode);
+                    val terminatedValuedObject = rootState.createPureSignal(state.id("terminated"));
                         
                     val terminatedEmission = terminatedValuedObject.emit
                     // Add the prevention of re-run of normal termination within the same tick
@@ -597,7 +644,7 @@ class CoreTransformation {
                     for (region : state.regions) {
                          // Setup the auxiliary termination valuedObject indicating that a normal termination
                          // should be taken.
-                         val finishedValuedObject = targetRootRegion.rootState.createPureSignal("finished" + region.hashCode)
+                         val finishedValuedObject = targetRootRegion.rootState.createPureSignal(region.id("finished"))
 
                          val finalStates = region.states.filter(e | e.isFinal == true);
                          // For all final states add a during action that emits the termination valuedObject
@@ -614,7 +661,12 @@ class CoreTransformation {
                     normalTerminationTransition.setIsImmediate(true);
                     
                    // if there is just one valuedObject, we do not need an AND!
-                   normalTerminationTransition.setTrigger(triggerExpression.fixForOperatorExpressionLists.trim);
+                   if (triggerExpression != null) {
+                       var trigger = triggerExpression;
+                       trigger = fixForOperatorExpressionLists(trigger)
+                       val trimmedTrigger = trim(trigger)
+                       normalTerminationTransition.setTrigger(trimmedTrigger);
+                   }
                } // end if normal termination present
 
     }
@@ -670,7 +722,7 @@ class CoreTransformation {
          // Insert a state and a transition here because conditional states cannot be initial
          if (state.isInitial) {
              val initialState  = SCChartsFactory::eINSTANCE.createState();
-             initialState.setId("Initial" + state.hashCode);
+             initialState.setId(state.id("Initial"));
              initialState.setLabel("I"); 
              initialState.setIsInitial(true);
              parentRegion.states.add(initialState);
@@ -685,7 +737,7 @@ class CoreTransformation {
          }             
            
          // Create auxiliary valuedObject
-         var isDepthValuedObjectUID = "isDepth_" + parentRegion.hashCode + "_" + state.id;
+         var isDepthValuedObjectUID = "isDepth_" + parentRegion.id + "_" + state.id;
          val isDepthValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
          isDepthValuedObject.setName(isDepthValuedObjectUID);
          isDepthValuedObject.setIsInput(false);
@@ -726,7 +778,7 @@ class CoreTransformation {
          for (transition : orderedTransitionList) {
             surfState  = SCChartsFactory::eINSTANCE.createState();
             surfState.setType(StateType::CONDITIONAL);
-            surfState.setId(stateId + "Surface" + transition.hashCode);
+            surfState.setId(stateId + transition.id("Surface"));
             surfState.setLabel(stateLabel + "Surface");
             parentRegion.states.add(surfState);
             // Move transition to this state
@@ -809,7 +861,7 @@ class CoreTransformation {
               val triggerTransition = transition;
              
              val triggeredState  = SCChartsFactory::eINSTANCE.createState();
-             triggeredState.setId(targetState.id + "_Triggered_" + targetState.hashCode);
+             triggeredState.setId(targetState.id + "_Triggered_" + targetState.id);
              triggeredState.setLabel( targetState.id + "_Triggered"); 
              triggeredState.setType(StateType::CONDITIONAL);
              parentRegion.states.add(triggeredState);
@@ -861,7 +913,7 @@ class CoreTransformation {
          
        if (!parentStatesIsConsidered.nullOrEmpty) {
             // Auxiliary reset valuedObject
-            var auxiliaryResetValuedObjectUID = "Abort" + parentState.hashCode;
+            var auxiliaryResetValuedObjectUID = parentState.id("Abort");
             val auxiliaryResetValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
             auxiliaryResetValuedObject.setName(auxiliaryResetValuedObjectUID);
             auxiliaryResetValuedObject.setIsInput(false);
@@ -872,15 +924,15 @@ class CoreTransformation {
             // Auxiliary watch master region with macro WatchMasterState and AbortedState
             val auxiliaryWatchMasterRegion  = SCChartsFactory::eINSTANCE.createRegion();
             parentState.regions.add(auxiliaryWatchMasterRegion);
-            auxiliaryWatchMasterRegion.setId("Watch" + parentState.hashCode);
+            auxiliaryWatchMasterRegion.setId(parentState.id("Watch"));
             val auxiliaryWatchMasterState  = SCChartsFactory::eINSTANCE.createState();
             auxiliaryWatchMasterRegion.states.add(auxiliaryWatchMasterState);
-            auxiliaryWatchMasterState.setId("Watch" + parentState.hashCode);
+            auxiliaryWatchMasterState.setId(parentState.id("Watch"));
             auxiliaryWatchMasterState.setLabel("Watch");
             auxiliaryWatchMasterState.setIsInitial(true);
             val auxiliaryAbortedState  = SCChartsFactory::eINSTANCE.createState();
             auxiliaryWatchMasterRegion.states.add(auxiliaryAbortedState);
-            auxiliaryAbortedState.setId("Aborted" + parentState.hashCode);
+            auxiliaryAbortedState.setId(parentState.id("Aborted"));
             auxiliaryAbortedState.setLabel("Aborted");
             auxiliaryAbortedState.setIsFinal(true);
             // Connect WatchMaster and Aborted state
@@ -898,7 +950,7 @@ class CoreTransformation {
             for (parallelRegion : parentState.regions) {
                    if (parallelRegion != auxiliaryWatchMasterRegion) {
                         // Auxiliary term valuedObject - Try to find existing for parallelRegion
-                        val auxiliaryRegionTermValuedObjectUID = "Term" + parallelRegion.hashCode;
+                        val auxiliaryRegionTermValuedObjectUID = parallelRegion.id("Term");
                         var ValuedObject auxiliaryRegionTermValuedObject = null; 
                         auxiliaryRegionTermValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
                         auxiliaryRegionTermValuedObject.setName(auxiliaryRegionTermValuedObjectUID);
@@ -918,15 +970,15 @@ class CoreTransformation {
                         // Now add regions for all parallelRegions in the auxiliaryWatchMasterState
                         val auxiliaryWatchRegion  = SCChartsFactory::eINSTANCE.createRegion();
                         auxiliaryWatchMasterState.regions.add(auxiliaryWatchRegion);
-                        auxiliaryWatchRegion.setId("Watch" + parallelRegion.hashCode);
+                        auxiliaryWatchRegion.setId(parallelRegion.id("Watch"));
                         val auxiliaryWatchState  = SCChartsFactory::eINSTANCE.createState();
                         auxiliaryWatchRegion.states.add(auxiliaryWatchState);
-                        auxiliaryWatchState.setId("I" + parallelRegion.hashCode);
+                        auxiliaryWatchState.setId(parallelRegion.id("I"));
                         auxiliaryWatchState.setLabel("I");
                         auxiliaryWatchState.setIsInitial(true);
                         val auxiliaryTerminatedState  = SCChartsFactory::eINSTANCE.createState();
                         auxiliaryWatchRegion.states.add(auxiliaryTerminatedState);
-                        auxiliaryTerminatedState.setId("T" + parallelRegion.hashCode);
+                        auxiliaryTerminatedState.setId(parallelRegion.id("T"));
                         auxiliaryTerminatedState.setLabel("T");
                         auxiliaryTerminatedState.setIsFinal(true);
                         // Connect
@@ -954,7 +1006,7 @@ class CoreTransformation {
                     if (finalStates.nullOrEmpty) {
                         // Create one 
                         finalStateAbortTarget  = SCChartsFactory::eINSTANCE.createState();
-                        finalStateAbortTarget.setId("final" + parentRegion.hashCode);
+                        finalStateAbortTarget.setId(parentRegion.id("final"));
                         finalStateAbortTarget.setLabel("final");
                         finalStateAbortTarget.setIsInitial(false);
                         parentRegion.states.add(finalStateAbortTarget);
@@ -1027,7 +1079,7 @@ class CoreTransformation {
                val existsNormalTermination = !(sourceState.parentRegion.parentState.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION).nullOrEmpty);
 
                // auxiliary trigger valuedObject
-               var auxiliaryValuedObjectUID = "countDelay" + transition.hashCode;
+               var auxiliaryValuedObjectUID = transition.id("countDelay");
                val auxiliaryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
                auxiliaryValuedObject.setName(auxiliaryValuedObjectUID);
                auxiliaryValuedObject.setIsInput(false);
@@ -1257,11 +1309,11 @@ class CoreTransformation {
                
                // Add a NonSuspended and Suspended state
                val runningState = SCChartsFactory::eINSTANCE.createState();
-               runningState.setId("NonSuspended" + state.hashCode);
+               runningState.setId(state.id("NonSuspended"));
                runningState.setLabel(state.id + "Running");
                runningState.setIsInitial(true);
                val disabledState = SCChartsFactory::eINSTANCE.createState();
-               disabledState.setId("Suspended" + state.hashCode);
+               disabledState.setId(state.id("Suspended"));
                disabledState.setLabel(state.id + "Disabled");
                
                // Add during action that emits the disable valuedObject 
@@ -1275,7 +1327,7 @@ class CoreTransformation {
                // Create the body of the intermediate state - containing the entry actions
                // as during actions.
                val actionState = SCChartsFactory::eINSTANCE.createState();
-               actionState.setId("Awake" + state.hashCode);
+               actionState.setId(state.id("Awake"));
                actionState.setLabel("Awake " + state.label);
                // For every entry action: Create a region
                for (entryAction : state.entryActions) {
@@ -1308,7 +1360,7 @@ class CoreTransformation {
                
                // Create a region with two states running and disabled and the intermediate entry-action-macro-state
                val suspendActionRegion = SCChartsFactory::eINSTANCE.createRegion();
-               suspendActionRegion.setId("SuspendActionRegion" + state.hashCode);
+               suspendActionRegion.setId(state.id("SuspendActionRegion"));
                suspendActionRegion.states.add(actionState);
                suspendActionRegion.states.add(runningState);
                suspendActionRegion.states.add(disabledState);
@@ -1562,10 +1614,10 @@ class CoreTransformation {
                for (innerAction : state.innerActions) {
                      val dummyInternalState1 = SCChartsFactory::eINSTANCE.createState();
                      val dummyInternalState2 = SCChartsFactory::eINSTANCE.createState();
-                     dummyInternalState1.setId("During1Internal" + state.hashCode);
+                     dummyInternalState1.setId(state.id("During1Internal"));
                      dummyInternalState1.setLabel("i");
                      dummyInternalState1.setIsInitial(true);
-                     dummyInternalState2.setId("During2Internal" + state.hashCode);
+                     dummyInternalState2.setId(state.id("During2Internal"));
                      dummyInternalState2.setLabel("f");
                      // Add action dummyTransition
                      val dummyInternalTransition =  SCChartsFactory::eINSTANCE.createTransition();
@@ -1590,7 +1642,7 @@ class CoreTransformation {
                      dummyInternalState2.outgoingTransitions.add(dummyInternalLoopTransition);
                      // Add the region to the state
                      val dummyInternalRegion = SCChartsFactory::eINSTANCE.createRegion();
-                     dummyInternalRegion.setId("DuringDummyRegion" + innerAction.hashCode);
+                     dummyInternalRegion.setId(innerAction.id("DuringDummyRegion"));
                      dummyInternalRegion.states.add(dummyInternalState1);
                      dummyInternalRegion.states.add(dummyInternalState2);
                      state.regions.add(dummyInternalRegion);
@@ -1639,7 +1691,7 @@ class CoreTransformation {
         // original state with an immediate (true triggered) transition.
         if (state.entryActions != null && state.entryActions.size > 0) {
                 val surroundState = SCChartsFactory::eINSTANCE.createState();
-                surroundState.setId("EntrySurround" + state.hashCode);
+                surroundState.setId(state.id("EntrySurround"));
                 surroundState.setLabel("EntrySurround " + state.label);
                 state.parentRegion.states.add(surroundState);
                 // If the original state is an initial stat then the new surround state must also be
@@ -1656,14 +1708,14 @@ class CoreTransformation {
                 state.outgoingTransitions.clear();
                 // Move original state into new state
                 val surroundRegion = SCChartsFactory::eINSTANCE.createRegion();
-                surroundRegion.setId("EntrySurroundRegion" + state.hashCode);
+                surroundRegion.setId(state.id("EntrySurroundRegion"));
                 surroundState.regions.add(surroundRegion);
                 surroundRegion.states.add(state);
                 
                 // Create initial state add it to the surround state
                 val initialState  = SCChartsFactory::eINSTANCE.createState();
                 val initialTransition =  SCChartsFactory::eINSTANCE.createTransition();
-                initialState.setId("init" + state.hashCode);
+                initialState.setId(state.id("init"));
                 initialState.setLabel("init " + state.label);
                 initialTransition.setLabel("#");
                 initialTransition.setTargetState(state);
@@ -1855,10 +1907,10 @@ class CoreTransformation {
                
                // Add a Set and Reset state
                val resetState = SCChartsFactory::eINSTANCE.createState();
-               resetState.setId("ExitReset" + state.hashCode);
+               resetState.setId(state.id("ExitReset"));
                resetState.setLabel("r");
                val setState = SCChartsFactory::eINSTANCE.createState();
-               setState.setId("ExitSet" + state.hashCode);
+               setState.setId(state.id("ExitSet"));
                // The Set state has to be the initial state
                setState.setIsInitial(true);
                setState.setLabel("s");
@@ -1919,7 +1971,7 @@ class CoreTransformation {
                
                // Create a region with two states set and reset 
                val exitActionRegion = SCChartsFactory::eINSTANCE.createRegion();
-               exitActionRegion.setId("ExitActionRegion" + state.hashCode);
+               exitActionRegion.setId(state.id("ExitActionRegion"));
                exitActionRegion.states.add(resetState);
                exitActionRegion.states.add(setState);
                targetRootRegion.states.get(0).regions.add(exitActionRegion);
@@ -1976,11 +2028,11 @@ class CoreTransformation {
                      setValuedObjectInnerReference.setValuedObject(setValuedObjectInner);
                  //Create In state and Out state
                  val inState = SCChartsFactory::eINSTANCE.createState();
-                 inState.setId("ExitIn" + state.hashCode);
+                 inState.setId(state.id("ExitIn"));
                  inState.setIsInitial(true);
                  inState.setLabel("in");
                  val outState = SCChartsFactory::eINSTANCE.createState();
-                 outState.setId("ExitOut" + state.hashCode);
+                 outState.setId(state.id("ExitOut"));
                  outState.setLabel("out");
                  // Connect In and Out states with transitions triggered #SetCC
                  val in2outTransition =  SCChartsFactory::eINSTANCE.createTransition();
@@ -1990,7 +2042,7 @@ class CoreTransformation {
                      in2outTransition.setTrigger(setValuedObjectInnerReference.copy);
                  // Create InOut region    
                  val setInOutRegion = SCChartsFactory::eINSTANCE.createRegion();
-                 setInOutRegion.setId("ExitInOutRegion" + state.hashCode);
+                 setInOutRegion.setId(state.id("ExitInOutRegion"));
                  setInOutRegion.states.add(inState);
                  setInOutRegion.states.add(outState);
                  setState.regions.add(setInOutRegion);
@@ -2146,16 +2198,16 @@ class CoreTransformation {
             
             // Add a Pre and NotPre state
             val preState = SCChartsFactory::eINSTANCE.createState();
-            preState.setId("Pre" + preValuedObject.hashCode);
+            preState.setId(preValuedObject.id("Pre"));
             preState.setLabel("Pre");
             val notPreState = SCChartsFactory::eINSTANCE.createState();
-            notPreState.setId("NotPre" + preValuedObject.hashCode);
+            notPreState.setId(preValuedObject.id("NotPre"));
             notPreState.setIsInitial(true);
             notPreState.setLabel("NotPre");       
             
             // Add a region     
             val preRegion = SCChartsFactory::eINSTANCE.createRegion();
-            preRegion.setId("PreRegion" + preValuedObject.hashCode);
+            preRegion.setId(preValuedObject.id("PreRegion"));
             preRegion.states.add(preState);
             preRegion.states.add(notPreState);
             state.regions.add(preRegion);
@@ -2193,7 +2245,7 @@ class CoreTransformation {
                 
                 // Additional PreB state
                 val preBState = SCChartsFactory::eINSTANCE.createState();
-                    preBState.setId("PreB" + preValuedObject.hashCode);
+                    preBState.setId(preValuedObject.id("PreB"));
                     preBState.setLabel("PreB");
                 preRegion.states.add(preBState);
                 
@@ -2381,16 +2433,16 @@ class CoreTransformation {
             // 2. Watcher region
             // Add a Pre and NotPre state
             val runState = SCChartsFactory::eINSTANCE.createState();
-            runState.setId("Run" + state.hashCode);
+            runState.setId(state.id("Run"));
             runState.setLabel("Run");
             runState.setIsInitial(true);
             //runState.setIsFinal(true);  // DO NOT SET THE RUN STATE AS FINAL! //
             val abortState = SCChartsFactory::eINSTANCE.createState();
-            abortState.setId("Abort" + state.hashCode);
+            abortState.setId(state.id("Abort"));
             abortState.setLabel("Abort");             
             abortState.setIsFinal(true);
             val watcherRegion = SCChartsFactory::eINSTANCE.createRegion();
-            watcherRegion.setId("Ctrl" + state.hashCode);
+            watcherRegion.setId(state.id("Ctrl"));
             watcherRegion.states.add(runState);
             watcherRegion.states.add(abortState);
             val needWatcherRegion = (originalOutgoingTransitions.filter(e| e.type != TransitionType::NORMALTERMINATION).size > 0);
@@ -2401,7 +2453,7 @@ class CoreTransformation {
             // Add a conditional node outside of the state and connect it with
             // a normal termination transition
             val conditionalState = SCChartsFactory::eINSTANCE.createState();
-            conditionalState.setId("_Conditional" + state.hashCode);
+            conditionalState.setId(state.id("_Conditional"));
             conditionalState.setType(StateType::CONDITIONAL);
             state.parentRegion.states.add(conditionalState);
             val normalTerminationTransition = SCChartsFactory::eINSTANCE.createTransition();
@@ -2488,7 +2540,7 @@ class CoreTransformation {
                 val regionStates = ImmutableList::copyOf(region.states);
                 
                 val abortedState = SCChartsFactory::eINSTANCE.createState();
-                abortedState.setId("_Aborted" + state.hashCode);
+                abortedState.setId(state.id("_Aborted"));
                 abortedState.setLabel("_Aborted");             
                 abortedState.setIsFinal(true);
                 val needAbortedState = ((outgoingStrongTransitions.size > 0 || 
@@ -2562,13 +2614,13 @@ class CoreTransformation {
                 watcherTransition.setDelay(0);
                               
                 val mainRegion = SCChartsFactory::eINSTANCE.createRegion();
-                mainRegion.setId("Body" + state.hashCode);
+                mainRegion.setId(state.id("Body"));
                 val mainState = SCChartsFactory::eINSTANCE.createState();
-                mainState.setId("Main" + state.hashCode);
+                mainState.setId(state.id("Main"));
                 mainState.setLabel("Main");
                 mainState.setIsInitial(true);
                 val termState = SCChartsFactory::eINSTANCE.createState();
-                termState.setId("Term" + state.hashCode);
+                termState.setId(state.id("Term"));
                 termState.setLabel("Term");
                 termState.setIsFinal(true);
                 // Move all inner regions of the state to the mainState
@@ -2576,7 +2628,7 @@ class CoreTransformation {
                 for (region : regions) {
                     mainState.regions.add(region);
                     if (region.id.nullOrEmpty) {
-                        region.setId("R" + region.hashCode);
+                        region.setId(region.id("R"));
                     }
                 }
                 mainRegion.states.add(mainState);
