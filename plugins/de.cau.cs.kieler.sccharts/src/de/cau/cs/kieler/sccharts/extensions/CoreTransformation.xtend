@@ -14,7 +14,7 @@
  package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.common.collect.ImmutableList
-import com.google.inject.Inject
+//import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
@@ -422,7 +422,7 @@ class CoreTransformation {
     
     // Prefixes a name with the hash code of an eObject
     def String id(EObject eObject, String string) {
-        eObject.id + string
+        string + eObject.id  
     }
     
     // Prefixes a name with the generated prefix string
@@ -662,10 +662,7 @@ class CoreTransformation {
                     
                    // if there is just one valuedObject, we do not need an AND!
                    if (triggerExpression != null) {
-                       var trigger = triggerExpression;
-                       trigger = fixForOperatorExpressionLists(trigger)
-                       val trimmedTrigger = trim(trigger)
-                       normalTerminationTransition.setTrigger(trimmedTrigger);
+                       normalTerminationTransition.setTrigger(triggerExpression.fixForOperatorExpressionLists.trim);
                    }
                } // end if normal termination present
 
