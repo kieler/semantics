@@ -38,7 +38,7 @@ public class ScgdepFactoryImpl extends EFactoryImpl implements ScgdepFactory {
      */
     public static ScgdepFactory init() {
         try {
-            ScgdepFactory theScgdepFactory = (ScgdepFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/scgdep/0.1.0"); 
+            ScgdepFactory theScgdepFactory = (ScgdepFactory)EPackage.Registry.INSTANCE.getEFactory(ScgdepPackage.eNS_URI);
             if (theScgdepFactory != null) {
                 return theScgdepFactory;
             }

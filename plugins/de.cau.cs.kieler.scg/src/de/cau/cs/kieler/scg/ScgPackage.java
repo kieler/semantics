@@ -232,7 +232,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CONDITIONAL___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
+    int CONDITIONAL___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -241,7 +241,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CONDITIONAL___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int CONDITIONAL___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -250,7 +250,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CONDITIONAL___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int CONDITIONAL___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Conditional</em>' class.
@@ -323,7 +323,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SURFACE___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
+    int SURFACE___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -332,7 +332,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SURFACE___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int SURFACE___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -341,7 +341,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SURFACE___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int SURFACE___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Surface</em>' class.
@@ -423,7 +423,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DEPTH___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
+    int DEPTH___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -432,7 +432,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DEPTH___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int DEPTH___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -441,7 +441,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DEPTH___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int DEPTH___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Depth</em>' class.
@@ -523,7 +523,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ASSIGNMENT___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
+    int ASSIGNMENT___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -532,7 +532,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ASSIGNMENT___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int ASSIGNMENT___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -541,7 +541,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ASSIGNMENT___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int ASSIGNMENT___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Assignment</em>' class.
@@ -623,7 +623,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FORK___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
+    int FORK___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -632,7 +632,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FORK___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int FORK___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -641,7 +641,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FORK___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int FORK___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Fork</em>' class.
@@ -723,7 +723,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int JOIN___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
+    int JOIN___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -732,7 +732,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int JOIN___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int JOIN___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -741,7 +741,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int JOIN___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int JOIN___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Join</em>' class.
@@ -933,7 +933,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ENTRY___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
+    int ENTRY___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -942,7 +942,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ENTRY___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int ENTRY___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -951,7 +951,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ENTRY___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int ENTRY___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Entry</em>' class.
@@ -1033,7 +1033,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EXIT___GET_ANNOTATION__STRING_1 = NODE___GET_ANNOTATION__STRING;
+    int EXIT___GET_ANNOTATION__STRING = NODE___GET_ANNOTATION__STRING;
 
     /**
      * The operation id for the '<em>Get All Annotations</em>' operation.
@@ -1042,7 +1042,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EXIT___GET_ALL_ANNOTATIONS__STRING_1 = NODE___GET_ALL_ANNOTATIONS__STRING;
+    int EXIT___GET_ALL_ANNOTATIONS__STRING = NODE___GET_ALL_ANNOTATIONS__STRING;
 
     /**
      * The operation id for the '<em>Remove All Annotations</em>' operation.
@@ -1051,7 +1051,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EXIT___REMOVE_ALL_ANNOTATIONS__STRING_1 = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
+    int EXIT___REMOVE_ALL_ANNOTATIONS__STRING = NODE___REMOVE_ALL_ANNOTATIONS__STRING;
 
     /**
      * The number of operations of the '<em>Exit</em>' class.
