@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scg.provider;
 
 
 import de.cau.cs.kieler.scg.Assignment;
+import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
 
 import java.util.Collection;
@@ -187,6 +188,9 @@ public class AssignmentItemProvider
             case ScgPackage.ASSIGNMENT__ASSIGNMENT:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
+            case ScgPackage.ASSIGNMENT__NEXT:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+                return;
         }
         super.notifyChanged(notification);
     }
@@ -201,6 +205,11 @@ public class AssignmentItemProvider
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
         super.collectNewChildDescriptors(newChildDescriptors, object);
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.ASSIGNMENT__NEXT,
+                 ScgFactory.eINSTANCE.createControlFlow()));
     }
 
 }

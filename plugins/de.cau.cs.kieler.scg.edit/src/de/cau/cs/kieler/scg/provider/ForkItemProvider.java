@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scg.provider;
 
 
 import de.cau.cs.kieler.scg.Fork;
+import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
 
 import java.util.Collection;
@@ -31,6 +32,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
  * This is the item provider adapter for a {@link de.cau.cs.kieler.scg.Fork} object.
@@ -180,6 +182,12 @@ public class ForkItemProvider
     @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
+
+        switch (notification.getFeatureID(Fork.class)) {
+            case ScgPackage.FORK__NEXT:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+                return;
+        }
         super.notifyChanged(notification);
     }
 
@@ -193,6 +201,11 @@ public class ForkItemProvider
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
         super.collectNewChildDescriptors(newChildDescriptors, object);
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.FORK__NEXT,
+                 ScgFactory.eINSTANCE.createControlFlow()));
     }
 
 }
