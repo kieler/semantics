@@ -313,7 +313,7 @@ class CoreTransformation {
             ((operatorExpression.operator == OperatorType::AND) || (operatorExpression.operator == OperatorType::OR))
         ) {
                // if there is just one sub expression, we do not need an AND/OR!
-               return operatorExpression.subExpressions.get(0).trim;
+               operatorExpression.subExpressions.get(0).trim;
         }
         else if (operatorExpression.subExpressions.size > 1 ) {
                for (Expression subExpression : operatorExpression.subExpressions) {
@@ -877,7 +877,7 @@ class CoreTransformation {
                         // Replace in valuedObjectReference
                         (signalTest.subExpressions.get(0) as ValuedObjectReference).setValuedObject(valueVariable)
                     }
-                    action.setTrigger(action.trigger.trim)
+                    //action.setTrigger(action.trigger.trim)
                  }
             }
             
