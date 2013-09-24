@@ -296,7 +296,7 @@ public class StateItemProvider
             childFeature == SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS ||
             childFeature == SCChartsPackage.Literals.SCOPE__SUSPENSION_TRIGGER ||
             childFeature == SCChartsPackage.Literals.SCOPE__EXIT_ACTIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__INNER_ACTIONS ||
+            childFeature == SCChartsPackage.Literals.SCOPE__DURING_ACTIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__ENTRY_ACTIONS ||
             childFeature == SCChartsPackage.Literals.STATE__OUTGOING_TRANSITIONS ||
             childFeature == SCChartsPackage.Literals.STATE__REGIONS ||

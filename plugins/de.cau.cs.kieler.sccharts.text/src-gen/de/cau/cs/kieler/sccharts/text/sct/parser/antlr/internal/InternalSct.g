@@ -792,23 +792,23 @@ ruleState returns [EObject current=null]
 
 )
 ))
-    |(	otherlv_20='inner' 
+    |(	otherlv_20='during' 
     {
-    	newLeafNode(otherlv_20, grammarAccess.getStateAccess().getInnerKeyword_6_1_1_0_2_0());
+    	newLeafNode(otherlv_20, grammarAccess.getStateAccess().getDuringKeyword_6_1_1_0_2_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getStateAccess().getInnerActionsActionParserRuleCall_6_1_1_0_2_1_0()); 
+	        newCompositeNode(grammarAccess.getStateAccess().getDuringActionsActionParserRuleCall_6_1_1_0_2_1_0()); 
 	    }
-		lv_innerActions_21_0=ruleAction		{
+		lv_duringActions_21_0=ruleAction		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getStateRule());
 	        }
        		add(
        			$current, 
-       			"innerActions",
-        		lv_innerActions_21_0, 
+       			"duringActions",
+        		lv_duringActions_21_0, 
         		"Action");
 	        afterParserOrEnumRuleCall();
 	    }

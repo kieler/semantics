@@ -411,7 +411,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         (
 	 *             (bodyReference=[State|ID] (renamings+=Substitution renamings+=Substitution*)?) | 
 	 *             (
-	 *                 (valuedObjects+=ValuedObject | entryActions+=Action | innerActions+=Action | exitActions+=Action | suspensionTrigger=Action)* 
+	 *                 (valuedObjects+=ValuedObject | entryActions+=Action | duringActions+=Action | exitActions+=Action | suspensionTrigger=Action)* 
 	 *                 bodyText+=TextualCode* 
 	 *                 (regions+=SingleRegion regions+=Region*)?
 	 *             )

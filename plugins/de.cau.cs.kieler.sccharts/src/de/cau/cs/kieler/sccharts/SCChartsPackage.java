@@ -310,13 +310,13 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__EXIT_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
-     * The feature id for the '<em><b>Inner Actions</b></em>' containment reference list.
+     * The feature id for the '<em><b>During Actions</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE__INNER_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int SCOPE__DURING_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Entry Actions</b></em>' containment reference list.
@@ -446,13 +446,13 @@ public interface SCChartsPackage extends EPackage {
     int REGION__EXIT_ACTIONS = SCOPE__EXIT_ACTIONS;
 
     /**
-     * The feature id for the '<em><b>Inner Actions</b></em>' containment reference list.
+     * The feature id for the '<em><b>During Actions</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REGION__INNER_ACTIONS = SCOPE__INNER_ACTIONS;
+    int REGION__DURING_ACTIONS = SCOPE__DURING_ACTIONS;
 
     /**
      * The feature id for the '<em><b>Entry Actions</b></em>' containment reference list.
@@ -646,13 +646,13 @@ public interface SCChartsPackage extends EPackage {
     int STATE__EXIT_ACTIONS = SCOPE__EXIT_ACTIONS;
 
     /**
-     * The feature id for the '<em><b>Inner Actions</b></em>' containment reference list.
+     * The feature id for the '<em><b>During Actions</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__INNER_ACTIONS = SCOPE__INNER_ACTIONS;
+    int STATE__DURING_ACTIONS = SCOPE__DURING_ACTIONS;
 
     /**
      * The feature id for the '<em><b>Entry Actions</b></em>' containment reference list.
@@ -1389,15 +1389,15 @@ public interface SCChartsPackage extends EPackage {
     EReference getScope_ExitActions();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getInnerActions <em>Inner Actions</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getDuringActions <em>During Actions</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Inner Actions</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getInnerActions()
+     * @return the meta object for the containment reference list '<em>During Actions</em>'.
+     * @see de.cau.cs.kieler.sccharts.Scope#getDuringActions()
      * @see #getScope()
      * @generated
      */
-    EReference getScope_InnerActions();
+    EReference getScope_DuringActions();
 
     /**
      * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getEntryActions <em>Entry Actions</em>}'.
@@ -1867,12 +1867,12 @@ public interface SCChartsPackage extends EPackage {
         EReference SCOPE__EXIT_ACTIONS = eINSTANCE.getScope_ExitActions();
 
         /**
-         * The meta object literal for the '<em><b>Inner Actions</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>During Actions</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference SCOPE__INNER_ACTIONS = eINSTANCE.getScope_InnerActions();
+        EReference SCOPE__DURING_ACTIONS = eINSTANCE.getScope_DuringActions();
 
         /**
          * The meta object literal for the '<em><b>Entry Actions</b></em>' containment reference list feature.

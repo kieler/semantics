@@ -138,7 +138,7 @@ class CoreTransformation {
     // Create a during action for a state.
     def Action createDuringAction(State state) {
         val action = SCChartsFactory::eINSTANCE.createAction
-        state.innerActions.add(action);
+        state.duringActions.add(action);
         action
     }
     // Create an immediate during action for a state.
@@ -1588,7 +1588,7 @@ class CoreTransformation {
                val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
                    auxiliaryEmission.setValuedObject(disabledValuedObject);
                immediateDuringAction.addEmission(auxiliaryEmission);
-               disabledState.innerActions.add(immediateDuringAction);
+               disabledState.duringActions.add(immediateDuringAction);
                
                // Create the body of the intermediate state - containing the entry actions
                // as during actions.
@@ -1599,7 +1599,7 @@ class CoreTransformation {
                for (entryAction : state.entryActions) {
                      val entryActionCopy = entryAction.copy;
                      entryActionCopy.setIsImmediate(true);
-                     actionState.innerActions.add(entryActionCopy); 
+                     actionState.duringActions.add(entryActionCopy); 
                }               
                
                // Connect Suspended and NonSuspended States with transitions (s.a. for a more detailed explanation)
@@ -1874,10 +1874,10 @@ class CoreTransformation {
         // Add a loop back to the initial state of the added region.
         // In case the during action is immediate, the looping transition is non-immediate.
         // In case the during action is non-immediate, the looping transition is immediate.
-        if (state.innerActions != null && state.innerActions.size > 0) {
+        if (state.duringActions != null && state.duringActions.size > 0) {
                // Create the body of the dummy state - containing the during action
                // For every during action: Create a region
-               for (innerAction : state.innerActions) {
+               for (innerAction : state.duringActions) {
                      val dummyInternalState1 = SCChartsFactory::eINSTANCE.createState();
                      val dummyInternalState2 = SCChartsFactory::eINSTANCE.createState();
                      dummyInternalState1.setId(state.id("During1Internal"));
@@ -1915,7 +1915,7 @@ class CoreTransformation {
                }
          
                // After transforming during actions, erase them
-               state.innerActions.clear();
+               state.duringActions.clear();
        }
     }
 
@@ -1998,7 +1998,7 @@ class CoreTransformation {
                     val entryActionCopy = entryAction.copy;
                     entryActionCopy.setIsImmediate(true);
                     // Create during actions for the initial state
-                    initialState.innerActions.add(entryActionCopy);
+                    initialState.duringActions.add(entryActionCopy);
                 }
 
                 // After transforming entry actions, erase them
@@ -2271,7 +2271,7 @@ class CoreTransformation {
                          } else {
                              duringAction.setTrigger(set2setTrigger.copy);
                          }
-                     setState.innerActions.add(duringAction);
+                     setState.duringActions.add(duringAction);
                }               
 
 
@@ -2323,7 +2323,7 @@ class CoreTransformation {
                  val resetNEmission2 = SCChartsFactory::eINSTANCE.createEmission();
                  resetNEmission2.setValuedObject(resetNValuedObject);
                  duringIActionResetValuedObjectN.addEmission(resetNEmission2);
-                 inState.innerActions.add(duringIActionResetValuedObjectN);
+                 inState.duringActions.add(duringIActionResetValuedObjectN);
                } // End corner case
 
                
@@ -2339,8 +2339,8 @@ class CoreTransformation {
                val resetNEmission = SCChartsFactory::eINSTANCE.createEmission();
                    resetNEmission.setValuedObject(resetNValuedObject);
                duringNAction.addEmission(resetNEmission);
-               state.innerActions.add(duringIAction);
-               state.innerActions.add(duringNAction);
+               state.duringActions.add(duringIAction);
+               state.duringActions.add(duringNAction);
                
                
 // André says: Do not execute exitActions if the state is bypassed (by an enabled immediate strong abort)
@@ -2502,7 +2502,7 @@ class CoreTransformation {
                 // to be decoupled from deciding for a specific transition (B is present or B is not present)
                 val explicitPreValuedObjectEmissionAction = SCChartsFactory::eINSTANCE.createAction();
                 explicitPreValuedObjectEmissionAction.addEmission(explicitPreValuedObjectEmission.copy);
-                preState.innerActions.add(explicitPreValuedObjectEmissionAction);
+                preState.duringActions.add(explicitPreValuedObjectEmissionAction);
                 //preSelfTransition.addEmission(explicitPreValuedObjectEmission.copy);
                 //pre2NotPreTransition.addEmission(explicitPreValuedObjectEmission.copy);
             }
@@ -2584,8 +2584,8 @@ class CoreTransformation {
                 explicitPreValuedObjectEmissionFromPre1Action.addEmission(explicitPreValuedObjectEmissionFromPre1);
                 val explicitPreValuedObjectEmissionFromPre2Action = SCChartsFactory::eINSTANCE.createAction();
                 explicitPreValuedObjectEmissionFromPre2Action.addEmission(explicitPreValuedObjectEmissionFromPre2);
-                preState.innerActions.add(explicitPreValuedObjectEmissionFromPre1Action);
-                preBState.innerActions.add(explicitPreValuedObjectEmissionFromPre2Action);
+                preState.duringActions.add(explicitPreValuedObjectEmissionFromPre1Action);
+                preBState.duringActions.add(explicitPreValuedObjectEmissionFromPre2Action);
                     
                 // Fill transitions
 //                pre2NotPreTransition.addEmission(explicitPreValuedObjectEmissionFromPre1.copy);

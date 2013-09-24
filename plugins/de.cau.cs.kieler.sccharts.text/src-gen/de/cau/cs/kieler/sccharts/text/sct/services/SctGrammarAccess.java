@@ -309,9 +309,9 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cEntryActionsAssignment_6_1_1_0_1_1 = (Assignment)cGroup_6_1_1_0_1.eContents().get(1);
 		private final RuleCall cEntryActionsActionParserRuleCall_6_1_1_0_1_1_0 = (RuleCall)cEntryActionsAssignment_6_1_1_0_1_1.eContents().get(0);
 		private final Group cGroup_6_1_1_0_2 = (Group)cAlternatives_6_1_1_0.eContents().get(2);
-		private final Keyword cInnerKeyword_6_1_1_0_2_0 = (Keyword)cGroup_6_1_1_0_2.eContents().get(0);
-		private final Assignment cInnerActionsAssignment_6_1_1_0_2_1 = (Assignment)cGroup_6_1_1_0_2.eContents().get(1);
-		private final RuleCall cInnerActionsActionParserRuleCall_6_1_1_0_2_1_0 = (RuleCall)cInnerActionsAssignment_6_1_1_0_2_1.eContents().get(0);
+		private final Keyword cDuringKeyword_6_1_1_0_2_0 = (Keyword)cGroup_6_1_1_0_2.eContents().get(0);
+		private final Assignment cDuringActionsAssignment_6_1_1_0_2_1 = (Assignment)cGroup_6_1_1_0_2.eContents().get(1);
+		private final RuleCall cDuringActionsActionParserRuleCall_6_1_1_0_2_1_0 = (RuleCall)cDuringActionsAssignment_6_1_1_0_2_1.eContents().get(0);
 		private final Group cGroup_6_1_1_0_3 = (Group)cAlternatives_6_1_1_0.eContents().get(3);
 		private final Keyword cExitKeyword_6_1_1_0_3_0 = (Keyword)cGroup_6_1_1_0_3.eContents().get(0);
 		private final Assignment cExitActionsAssignment_6_1_1_0_3_1 = (Assignment)cGroup_6_1_1_0_3.eContents().get(1);
@@ -336,15 +336,15 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//State returns sccharts::State:
 		//	annotations+=Annotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)? type=StateType?
 		//	"state" id=ID label=STRING? ("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution (","
-		//	renamings+=Substitution)* "]")? | "{" ((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "inner"
-		//	innerActions+=Action | "exit" exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode*
+		//	renamings+=Substitution)* "]")? | "{" ((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "during"
+		//	duringActions+=Action | "exit" exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode*
 		//	(regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";";
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)? type=StateType?
 		//"state" id=ID label=STRING? ("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution (","
-		//renamings+=Substitution)* "]")? | "{" ((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "inner"
-		//innerActions+=Action | "exit" exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode*
+		//renamings+=Substitution)* "]")? | "{" ((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "during"
+		//duringActions+=Action | "exit" exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode*
 		//(regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";"
 		public Group getGroup() { return cGroup; }
 
@@ -409,7 +409,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getLabelSTRINGTerminalRuleCall_5_0() { return cLabelSTRINGTerminalRuleCall_5_0; }
 
 		//("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution ("," renamings+=Substitution)* "]")? | "{"
-		//((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "inner" innerActions+=Action | "exit"
+		//((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "during" duringActions+=Action | "exit"
 		//exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode* (regions+=SingleRegion
 		//regions+=Region*)?) "}")?
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
@@ -456,7 +456,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_6_0_2_3() { return cRightSquareBracketKeyword_6_0_2_3; }
 
-		//"{" ((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "inner" innerActions+=Action | "exit"
+		//"{" ((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "during" duringActions+=Action | "exit"
 		//exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode* (regions+=SingleRegion
 		//regions+=Region*)?) "}"
 		public Group getGroup_6_1() { return cGroup_6_1; }
@@ -464,12 +464,13 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_6_1_0() { return cLeftCurlyBracketKeyword_6_1_0; }
 
-		//(valuedObjects+=ValuedObject | "entry" entryActions+=Action | "inner" innerActions+=Action | "exit" exitActions+=Action
-		//| "suspend" suspensionTrigger=Action)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?
+		//(valuedObjects+=ValuedObject | "entry" entryActions+=Action | "during" duringActions+=Action | "exit"
+		//exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode* (regions+=SingleRegion
+		//regions+=Region*)?
 		public Group getGroup_6_1_1() { return cGroup_6_1_1; }
 
-		//(valuedObjects+=ValuedObject | "entry" entryActions+=Action | "inner" innerActions+=Action | "exit" exitActions+=Action
-		//| "suspend" suspensionTrigger=Action)*
+		//(valuedObjects+=ValuedObject | "entry" entryActions+=Action | "during" duringActions+=Action | "exit"
+		//exitActions+=Action | "suspend" suspensionTrigger=Action)*
 		public Alternatives getAlternatives_6_1_1_0() { return cAlternatives_6_1_1_0; }
 
 		//valuedObjects+=ValuedObject
@@ -490,17 +491,17 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//Action
 		public RuleCall getEntryActionsActionParserRuleCall_6_1_1_0_1_1_0() { return cEntryActionsActionParserRuleCall_6_1_1_0_1_1_0; }
 
-		//"inner" innerActions+=Action
+		//"during" duringActions+=Action
 		public Group getGroup_6_1_1_0_2() { return cGroup_6_1_1_0_2; }
 
-		//"inner"
-		public Keyword getInnerKeyword_6_1_1_0_2_0() { return cInnerKeyword_6_1_1_0_2_0; }
+		//"during"
+		public Keyword getDuringKeyword_6_1_1_0_2_0() { return cDuringKeyword_6_1_1_0_2_0; }
 
-		//innerActions+=Action
-		public Assignment getInnerActionsAssignment_6_1_1_0_2_1() { return cInnerActionsAssignment_6_1_1_0_2_1; }
+		//duringActions+=Action
+		public Assignment getDuringActionsAssignment_6_1_1_0_2_1() { return cDuringActionsAssignment_6_1_1_0_2_1; }
 
 		//Action
-		public RuleCall getInnerActionsActionParserRuleCall_6_1_1_0_2_1_0() { return cInnerActionsActionParserRuleCall_6_1_1_0_2_1_0; }
+		public RuleCall getDuringActionsActionParserRuleCall_6_1_1_0_2_1_0() { return cDuringActionsActionParserRuleCall_6_1_1_0_2_1_0; }
 
 		//"exit" exitActions+=Action
 		public Group getGroup_6_1_1_0_3() { return cGroup_6_1_1_0_3; }
@@ -1107,8 +1108,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//State returns sccharts::State:
 	//	annotations+=Annotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)? type=StateType?
 	//	"state" id=ID label=STRING? ("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution (","
-	//	renamings+=Substitution)* "]")? | "{" ((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "inner"
-	//	innerActions+=Action | "exit" exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode*
+	//	renamings+=Substitution)* "]")? | "{" ((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "during"
+	//	duringActions+=Action | "exit" exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode*
 	//	(regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";";
 	public StateElements getStateAccess() {
 		return (pState != null) ? pState : (pState = new StateElements());
@@ -1224,7 +1225,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getTransitionTypeAccess().getRule();
 	}
 
-	//// chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
+	//// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
 	//Action returns sccharts::Action:
 	//	{sccharts::Action} //    (annotations += Annotation)*
 	//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
