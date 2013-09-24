@@ -36,6 +36,10 @@ import java.util.List
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.Effect
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.sccharts.Assignment
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.kexpressions.BooleanValue
+import de.cau.cs.kieler.core.kexpressions.services.KExpressionsGrammarAccess.BooleanExpressionElements
 
 /**
  * SCCharts CoreTransformation Extensions.
@@ -56,6 +60,11 @@ class CoreTransformation {
     //--             B A S I C   C R E A T I O N   M E T H O D S             --
     //-------------------------------------------------------------------------
     
+    // Create an immutable list copy
+    def ImmutableList<Object> immutableCopy(Iterable<Object> object) {
+        ImmutableList::copyOf(object)
+    }
+    
     //====== GENERAL MODEL ELEMENTS =====
     
     // Get the single normal termination Transition. Return null if there is 
@@ -69,14 +78,34 @@ class CoreTransformation {
     }
     
     // Return the list of all contained States.
-    def List<State> getContainedStates(Region region) {
+    def List<State> getAllContainedStates(Region region) {
         region.eAllContents().toIterable().filter(typeof(State)).toList()
     }
     
     // Return the list of contained Emissions.
-    def List<Emission> getContainedEmissions(Action action) {
+    def List<Emission> getAllContainedEmissions(Action action) {
         action.eAllContents().toIterable().
                            filter(typeof(Emission)).toList();
+    }
+    
+    // Return the list of pure signals of a state.
+    def List<ValuedObject> getPureSignals(State state) {
+        state.valuedObjects.filter[e|e.isSignal && e.type == ValueType::PURE].toList
+    }
+
+    // Return the list of valued signals of a state.
+    def List<ValuedObject> getValuedSignals(State state) {
+        state.valuedObjects.filter[e|e.isSignal && e.type != ValueType::PURE].toList
+    }
+    
+    // Return the list of all signals of a state.
+    def List<ValuedObject> getSignals(State state) {
+        state.valuedObjects.filter[e|e.isSignal].toList
+    }
+    
+    // Return true if the valued Object is a pure signal
+    def boolean isPureSignal(ValuedObject valuedObject) {
+        valuedObject.isSignal && valuedObject.type == ValueType::PURE
     }
     
     // Return the root region.
@@ -145,7 +174,44 @@ class CoreTransformation {
         action
     }
 
+    //========== ASSIGNMENTS ============
+    
+    // Create an Assignment.
+    def Assignment assign(ValuedObject valuedObject) {
+        val assignment = SCChartsFactory::eINSTANCE.createAssignment()
+        assignment.setValuedObject(valuedObject)
+        assignment
+    }
 
+    // Create an Assignment and add it sequentially to an action's effects list.
+    def Assignment createAssignment(Action action, ValuedObject valuedObject) {
+        val assignment = valuedObject.assign
+        action.addAssignment(assignment)
+        assignment
+    }
+    
+    // Create an Assignment and add it sequentially to an action's effects list.
+    def Assignment addAssignment(Action action, Assignment assignment) {
+        // An Assignment is a specialized Effect with a new value and a ValuedObject
+        action.addEffect(assignment)
+        assignment
+    }
+
+    // Create a valued Assignment. 
+    def Assignment assign(ValuedObject valuedObject, Expression newValue) {
+        val assignment = valuedObject.assign
+        assignment.setValuedObject(valuedObject)
+        assignment.setExpression(newValue);
+        assignment
+    }
+
+    // Create a valued Assignment and add it sequentially to an action's effects list. 
+    def Assignment createAssignment(Action action, ValuedObject valuedObject, Expression newValue) {
+        val assignment = valuedObject.assign(newValue)
+        action.addAssignment(assignment)
+        assignment
+    }
+    
     //=========== EMISSIONS =============
 
     // Create an Emission.
@@ -164,7 +230,7 @@ class CoreTransformation {
     
     // Create an Emission and add it sequentially to an action's effects list.
     def Emission addEmission(Action action, Emission emission) {
-        // An Emsssion is a specialized Effect with a new value and a ValuedObject
+        // An Emission is a specialized Effect with a new value and a ValuedObject
         action.addEffect(emission)
         emission
     }
@@ -190,10 +256,56 @@ class CoreTransformation {
         emission
     }
 
-    //==========  EXPRESSIONS  ==========
+    //=======  STATIC EXPRESSIONS  ======
     
-    // Trim an AND/OR Expession if it contains only a single sub expression.
-    def Expression trim(OperatorExpression operatorExpression) {
+    def static BooleanValue TRUE() {
+        createBooleanValue(true)
+    }
+
+    def static BooleanValue FALSE() {
+        createBooleanValue(true)
+    }
+
+    def static BooleanValue createBooleanValue(boolean value) {
+        val booleanValue = KExpressionsFactory::eINSTANCE.createBooleanValue
+        booleanValue.setValue(value)
+        booleanValue
+    }
+
+    //==  EXPRESSION MODIFICATIONS  ==
+
+    def void replace(EObject eObject, Expression searchExpression, Expression replaceExpression) {
+        for (Expression expression : eObject.eAllContents.filter(typeof(Expression)).toList) {
+            expression.replace(searchExpression, replaceExpression)
+        }
+    }
+
+    def void replace(Action action, Expression searchExpression, Expression replaceExpression) {
+        action.setTrigger(action.trigger.replace(searchExpression, replaceExpression))
+    }
+    
+    def Expression replace(Expression expression, Expression searchExpression, Expression replaceExpression) {
+        if (expression == searchExpression) {
+            return replaceExpression
+        }
+        else if (searchExpression instanceof OperatorExpression) {
+            val operatorExpression = searchExpression as OperatorExpression
+            for (Expression subExpression : operatorExpression.subExpressions) { 
+                subExpression.replace(searchExpression, replaceExpression)
+            }
+        }
+        expression
+    }
+    
+    
+
+    // Trim all AND/OR Expressions if it contains only a single sub expression
+    def dispatch Expression trim(Expression expression) {
+        expression
+    }
+    
+    // Trim an AND/OR Expression if it contains only a single sub expression.
+    def dispatch Expression trim(OperatorExpression operatorExpression) {
         if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty) return {
             operatorExpression
         }
@@ -201,9 +313,36 @@ class CoreTransformation {
             ((operatorExpression.operator == OperatorType::AND) || (operatorExpression.operator == OperatorType::OR))
         ) {
                // if there is just one sub expression, we do not need an AND/OR!
-               operatorExpression.subExpressions.get(0);
+               return operatorExpression.subExpressions.get(0).trim;
+        }
+        else if (operatorExpression.subExpressions.size > 1 ) {
+               for (Expression subExpression : operatorExpression.subExpressions) {
+                   subExpression.trim
+               }
         }
         operatorExpression;
+    }
+
+    //==========  EXPRESSIONS  ==========
+
+    // Create an EQ Expression.
+    def OperatorExpression createEQExpression() {
+        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
+        expression.setOperator(OperatorType::EQ)
+        expression
+    }
+    // Create an EQ Expression as a sub expression.
+    def OperatorExpression createEQExpression(OperatorExpression operatorExpression) {
+        val expression = createEQExpression()
+        operatorExpression.add(expression)
+        expression
+    }
+    // Create an EQ Expression add expressionFirst and expressionSecond as a sub expression.
+    def OperatorExpression isEqual(Expression expressionFirst, Expression expressionSecond) {
+        val eqExpression = createEQExpression()
+        eqExpression.add(expressionFirst)
+        eqExpression.add(expressionSecond)
+        eqExpression
     }
 
     // Create an AND Expression.
@@ -513,7 +652,7 @@ class CoreTransformation {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         // Traverse all states
-        for(targetState : targetRootRegion.getContainedStates) {
+        for(targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformExposeLocalValuedObject(targetRootRegion);
         }
         targetRootRegion;
@@ -544,12 +683,12 @@ class CoreTransformation {
                        // For every Emission of the local ValuedObject add an Emission of the new
                        // global ValuedObject
                        val allActions = state.eAllContents().toIterable().filter(typeof(Action)).toList();
-                       val localValuedObjectActions = allActions.filter(e | (e.containedEmissions.
+                       val localValuedObjectActions = allActions.filter(e | (e.allContainedEmissions.
                            filter(ee | ee.valuedObject == localValuedObject)
                        ).size > 0);
 
                        for (localValuedObjectAction : ImmutableList::copyOf(localValuedObjectActions)) {
-                           val lastMatchingEmission = localValuedObjectAction.containedEmissions.
+                           val lastMatchingEmission = localValuedObjectAction.allContainedEmissions.
                                             filter(ee | ee  == localValuedObject).last as Emission;
                            if (lastMatchingEmission != null) {
                                val newValue = lastMatchingEmission.newValue
@@ -597,11 +736,11 @@ class CoreTransformation {
         val targetRootRegion = rootRegion.copy;
         
         // Traverse all states
-        for(targetState : targetRootRegion.getContainedStates) {
+        for(targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformNormalTermination(targetRootRegion);
         }
         targetRootRegion;
-    }
+    }    
            
     // Traverse all states and transform outgoing normal termination transitions into weak aborts
     def void transformNormalTermination(State state, Region targetRootRegion) {
@@ -667,6 +806,136 @@ class CoreTransformation {
                } // end if normal termination present
 
     }
+           
+           
+           
+    //-------------------------------------------------------------------------
+    //--                             S I G N A L S                           --
+    //-------------------------------------------------------------------------
+    
+    private static val String variableValueExtension = "_val";
+
+    // @requires: during actions
+    
+    // For all states do the following:
+    // If the state has a specification, then convert all signals
+    // (a) simple signal S to boolean variable S (variablePresent)
+    // (b) valued signal S to two boolean variables S and S_val (variableValue)
+
+    //input signal S; --> input boolean S;
+    //input signal S:bool; --> input boolean S; input boolean S_val;
+    //input signal S:integer; --> input boolean S; input integer S_val;
+ 
+    // Transforming a signal to a variable. 
+    def Region transformSignal(Region rootRegion) {
+        // Clone the complete SCCharts region 
+        val targetRootRegion = rootRegion.copy;
+        
+        // Traverse all states
+        for(targetState : targetRootRegion.getAllContainedStates) {
+            targetState.transformSignal(targetRootRegion);
+        }
+        targetRootRegion;
+    }
+           
+          
+    // Traverse all states and transform outgoing normal termination transitions into weak aborts
+    def void transformSignal(State state, Region targetRootRegion) {
+        val allSignals = state.signals
+        // Go thru all signals
+        for (ValuedObject signal : allSignals) {
+            val isValuedSignal = !signal.pureSignal
+            
+            // Change signal to variable
+            signal.setIsSignal(false)
+            
+            val presentVariable = signal
+            
+            // If this is a valued signal we need a second signal for the value
+            if (isValuedSignal) {
+                 val valueVariable = state.createVariable(signal.name + variableValueExtension)
+                 // Copy type and input/output attributes from the original signal
+                 valueVariable.applyAttributes(signal)
+                 val allActions = state.eAllContents.filter(typeof(Action)).toList
+                 for (Action action: allActions) {
+                    // Wherever an emission is, create a new assignment right behind
+                    val allSignalEmissions = action.getAllContainedEmissions.filter[e|e.valuedObject == signal].toList
+                    for (Emission signalEmission : allSignalEmissions.immutableCopy) {
+                           // Assign the emitted valued
+                           val variableAssignment = valueVariable.assign(signalEmission.newValue)
+                           // Put it in right order
+                           val index = action.effects.indexOf(signalEmission);
+                           action.effects.add(index, variableAssignment);
+                    }
+                    // Wherever an val test is, put the valueVariable there instead
+                    val allSignalValTests = action.eAllContents.filter(typeof(OperatorExpression)).
+                        filter(e|e.operator == OperatorType::VAL && e.subExpressions.get(0) instanceof ValuedObjectReference &&
+                             (e.subExpressions.get(0) as ValuedObjectReference).valuedObject == signal).toList
+                    for (OperatorExpression signalTest : allSignalValTests.immutableCopy) {
+                        // Put a trim-able Operator here
+                        signalTest.setOperator(OperatorType::AND)
+                        // Replace in valuedObjectReference
+                        (signalTest.subExpressions.get(0) as ValuedObjectReference).setValuedObject(valueVariable)
+                    }
+                    action.setTrigger(action.trigger.trim)
+                 }
+            }
+            
+            // Reset initial value and combine operator because we want to reset
+            // the signal manually in every
+            presentVariable.setInitialValue(null)
+            presentVariable.setCombineOperator(null)
+            
+            // Modify signal emission & presence test
+            val allActions = state.eAllContents.filter(typeof(Action)).toList
+            for (Action action: allActions) {
+                  // Wherever an emission is, modify it to be an assignment of the presentVariable
+                  val allSignalEmissions = action.getAllContainedEmissions.filter[e|e.valuedObject == signal].toList
+                  for (Emission signalEmission : allSignalEmissions.immutableCopy) {
+                           // Assign the emitted valued
+                           val variableAssignment = presentVariable.assign(TRUE)
+                           // Remove the signal emission value (because it will be the presentValue emission)
+                           // Put it in right order
+                           val index = action.effects.indexOf(signalEmission);
+                           action.effects.add(index, variableAssignment);
+                           // Remove emission
+                           action.effects.remove(signalEmission)
+                 }
+                 // Wherever a present test is, put an Operator Expression (presentVariable == TRUE) there instead
+                 val allSignalTests = action.eAllContents.filter(typeof(ValuedObjectReference)).filter(e|e.valuedObject == signal).toList
+                 for (ValuedObjectReference signalTest : allSignalTests.immutableCopy) {
+//                        val presentVariableTest = signalTest.valuedObject.reference.isEqual(TRUE);
+                        val presentVariableTest = signalTest.valuedObject.reference.isEqual(TRUE);
+                        action.replace(signalTest, presentVariableTest);
+                 }
+            }
+            
+            
+            // Add a during reset action for the presentVariable
+            val duringAction = state.createDuringAction
+            duringAction.createAssignment(presentVariable, FALSE)
+        }
+    }
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+   ////////////////////////////////////////////////////////////////////////////////////////           
+   ////////////////////////////////////////////////////////////////////////////////////////           
+   ////////////////////////////////////////////////////////////////////////////////////////           
+   //                                                                                    //
+   //                                       O  L  D                                      //
+   //                                                                                    //
+   ////////////////////////////////////////////////////////////////////////////////////////           
+   ////////////////////////////////////////////////////////////////////////////////////////           
+   ////////////////////////////////////////////////////////////////////////////////////////           
+              
            
            
 
@@ -899,7 +1168,7 @@ class CoreTransformation {
         // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
         // For every state in the SyncChart do the transformation
-        for(targetState : targetRootRegion.getContainedStates) {
+        for(targetState : targetRootRegion.getAllContainedStates) {
            targetState.transformFinalStateTransition(rootRegion);
         }
         targetRootRegion;
@@ -1228,13 +1497,13 @@ class CoreTransformation {
 
         // For every state in the SyncChart do the transformation
         // Iterate over a copy of the list  
-        for(targetState : targetRootRegion.getContainedStates) {
+        for(targetState : targetRootRegion.getAllContainedStates) {
             
             targetState.transformSuspend(targetRootRegion);
         }
         
         // Now delete all suspends
-        for(targetState :  targetRootRegion.getContainedStates.filter(e | e.suspensionTrigger != null)) {
+        for(targetState :  targetRootRegion.getAllContainedStates.filter(e | e.suspensionTrigger != null)) {
             targetState.setSuspensionTrigger(null);
         }
         
@@ -1406,7 +1675,7 @@ class CoreTransformation {
         //        ImmutableList::copyOf(targetStates).forEach[
         //             it.transformHistory(targetRootRegion);
         //        ]
-        for(targetState : targetRootRegion.getContainedStates) {
+        for(targetState : targetRootRegion.getAllContainedStates) {
             
             targetState.transformHistory(targetRootRegion);
         }
@@ -1591,7 +1860,7 @@ class CoreTransformation {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         // Traverse all states
-        for(targetState : targetRootRegion.getContainedStates) {            
+        for(targetState : targetRootRegion.getAllContainedStates) {            
             targetState.transformDuring(targetRootRegion);
         }
         targetRootRegion;
@@ -1661,7 +1930,7 @@ class CoreTransformation {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         // Traverse all states
-        for(targetState : targetRootRegion.getContainedStates) {            
+        for(targetState : targetRootRegion.getAllContainedStates) {            
             targetState.transformEntry(targetRootRegion);
         }
         targetRootRegion;
@@ -1771,7 +2040,7 @@ class CoreTransformation {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         // Traverse all states
-        for(targetState : targetRootRegion.getContainedStates) {
+        for(targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformExit(targetRootRegion);
         }
         targetRootRegion;
@@ -2130,7 +2399,7 @@ class CoreTransformation {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         // Traverse all states
-        for(targetState : targetRootRegion.getContainedStates) {
+        for(targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformPre(targetRootRegion);
         }
         targetRootRegion;
@@ -2392,7 +2661,7 @@ class CoreTransformation {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
         // Traverse all states
-        for(targetState : targetRootRegion.getContainedStates) {
+        for(targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformSCCAborts(targetRootRegion);
         }
         targetRootRegion;
