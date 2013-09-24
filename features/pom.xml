@@ -11,7 +11,7 @@
     <groupId>de.cau.cs.kieler</groupId>
     <artifactId>parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>../build/de.cau.cs.kieler.parent/pom.xml</relativePath>
+    <relativePath>../build/pom.xml</relativePath>
   </parent>
 
   <!-- all features are listed as modules -->
@@ -19,7 +19,7 @@
   <modules>
     <module>de.cau.cs.kieler.dependencies.feature</module>
     <module>de.cau.cs.kieler.esterel.feature</module>
-    <module>de.cau.cs.kieler.synccharts.feature</module>
+    <module>de.cau.cs.kieler.sccharts.feature</module>
 <!--
     <module>de.cau.cs.kieler.uml2.feature</module>
 -->

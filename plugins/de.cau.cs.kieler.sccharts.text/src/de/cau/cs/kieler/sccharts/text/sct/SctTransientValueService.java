@@ -132,7 +132,7 @@ public class SctTransientValueService extends DefaultTransientValueService {
 
         /* suppress the 'initialValue' feature if null or "" */
         if (feature == KExpressionsPackage.eINSTANCE.getValuedObject_InitialValue()) {
-            return Strings.isEmpty((String) owner.eGet(feature));
+            return Strings.isEmpty((String) (owner.eGet(feature) + ""));
         }
 
 

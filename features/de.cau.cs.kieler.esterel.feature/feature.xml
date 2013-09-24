@@ -11,7 +11,7 @@
    </description>
 
    <copyright>
-      Copyright 2011 by Real-Time and Embedded Systems Group, Department
+      Copyright 2013 by Real-Time and Embedded Systems Group, Department
 of Computer Science, Christian-Albrechts-University of Kiel
    </copyright>
 
@@ -266,27 +266,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.kexpressions"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.core.kexpressions.edit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.core.kexpressions.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="de.cau.cs.kieler.core.kgraph"
          download-size="0"
          install-size="0"
@@ -349,26 +328,6 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
-   <plugin
-         id="de.cau.cs.kieler.kies"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.s"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.s.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.sim.kiem"
@@ -460,6 +419,29 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
+
+   <plugin
+         id="de.cau.cs.kieler.esterel.kexpressions"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.esterel.kexpressions.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.esterel.kexpressions.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 
    <plugin
          id="de.cau.cs.kieler.esterel.cec.linux.x86"

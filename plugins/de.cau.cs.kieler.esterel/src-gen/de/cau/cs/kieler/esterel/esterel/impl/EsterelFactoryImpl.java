@@ -30,7 +30,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     try
     {
-      EsterelFactory theEsterelFactory = (EsterelFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.cau.de/cs/kieler/esterel/Esterel"); 
+      EsterelFactory theEsterelFactory = (EsterelFactory)EPackage.Registry.INSTANCE.getEFactory(EsterelPackage.eNS_URI);
       if (theEsterelFactory != null)
       {
         return theEsterelFactory;

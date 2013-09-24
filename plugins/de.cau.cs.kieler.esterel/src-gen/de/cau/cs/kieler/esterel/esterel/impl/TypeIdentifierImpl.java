@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class TypeIdentifierImpl extends de.cau.cs.kieler.core.kexpressions.impl.TypeIdentifierImpl implements TypeIdentifier
+public class TypeIdentifierImpl extends de.cau.cs.kieler.esterel.kexpressions.impl.TypeIdentifierImpl implements TypeIdentifier
 {
   /**
    * <!-- begin-user-doc -->

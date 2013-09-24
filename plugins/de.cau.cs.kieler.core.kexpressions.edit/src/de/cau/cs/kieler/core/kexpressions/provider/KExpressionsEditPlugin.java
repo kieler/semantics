@@ -47,7 +47,6 @@ public final class KExpressionsEditPlugin extends EMFPlugin {
         super
           (new ResourceLocator [] {
              AnnotationsEditPlugin.INSTANCE,
-             EcoreEditPlugin.INSTANCE,
            });
     }
 

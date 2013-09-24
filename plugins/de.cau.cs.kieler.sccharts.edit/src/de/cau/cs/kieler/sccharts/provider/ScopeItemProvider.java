@@ -414,16 +414,6 @@ public class ScopeItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createComplexExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createTextualCode()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
                  KExpressionsFactory.eINSTANCE.createValuedObject()));
 
         newChildDescriptors.add
@@ -465,11 +455,6 @@ public class ScopeItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.SCOPE__BODY_TEXT,
                  SCChartsFactory.eINSTANCE.createTextEffect()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_TEXT,
-                 KExpressionsFactory.eINSTANCE.createTextualCode()));
 
         newChildDescriptors.add
             (createChildParameter

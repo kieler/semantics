@@ -4,14 +4,14 @@ package de.cau.cs.kieler.esterel.esterel.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
-import de.cau.cs.kieler.core.kexpressions.ComplexExpression;
-import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.ISignal;
-import de.cau.cs.kieler.core.kexpressions.Signal;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
-
 import de.cau.cs.kieler.esterel.esterel.*;
+
+import de.cau.cs.kieler.esterel.kexpressions.ComplexExpression;
+import de.cau.cs.kieler.esterel.kexpressions.Expression;
+import de.cau.cs.kieler.esterel.kexpressions.ISignal;
+import de.cau.cs.kieler.esterel.kexpressions.Signal;
+import de.cau.cs.kieler.esterel.kexpressions.ValuedObject;
+import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -2573,7 +2573,7 @@ public class EsterelSwitch<T> extends Switch<T>
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseKExpressions_ChannelDescription(de.cau.cs.kieler.core.kexpressions.ChannelDescription object)
+  public T caseKExpressions_ChannelDescription(de.cau.cs.kieler.esterel.kexpressions.ChannelDescription object)
   {
     return null;
   }
@@ -2589,7 +2589,7 @@ public class EsterelSwitch<T> extends Switch<T>
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseKExpressions_TypeIdentifier(de.cau.cs.kieler.core.kexpressions.TypeIdentifier object)
+  public T caseKExpressions_TypeIdentifier(de.cau.cs.kieler.esterel.kexpressions.TypeIdentifier object)
   {
     return null;
   }

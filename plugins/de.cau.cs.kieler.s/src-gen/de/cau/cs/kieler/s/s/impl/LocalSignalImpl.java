@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.s.s.LocalSignal;
 import de.cau.cs.kieler.s.s.SPackage;
@@ -37,7 +37,7 @@ public class LocalSignalImpl extends InstructionImpl implements LocalSignal
    * @generated
    * @ordered
    */
-  protected Signal signal;
+  protected ValuedObject signal;
 
   /**
    * <!-- begin-user-doc -->
@@ -65,12 +65,12 @@ public class LocalSignalImpl extends InstructionImpl implements LocalSignal
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal getSignal()
+  public ValuedObject getSignal()
   {
     if (signal != null && signal.eIsProxy())
     {
       InternalEObject oldSignal = (InternalEObject)signal;
-      signal = (Signal)eResolveProxy(oldSignal);
+      signal = (ValuedObject)eResolveProxy(oldSignal);
       if (signal != oldSignal)
       {
         if (eNotificationRequired())
@@ -85,7 +85,7 @@ public class LocalSignalImpl extends InstructionImpl implements LocalSignal
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal basicGetSignal()
+  public ValuedObject basicGetSignal()
   {
     return signal;
   }
@@ -95,9 +95,9 @@ public class LocalSignalImpl extends InstructionImpl implements LocalSignal
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSignal(Signal newSignal)
+  public void setSignal(ValuedObject newSignal)
   {
-    Signal oldSignal = signal;
+    ValuedObject oldSignal = signal;
     signal = newSignal;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SPackage.LOCAL_SIGNAL__SIGNAL, oldSignal, signal));
@@ -131,7 +131,7 @@ public class LocalSignalImpl extends InstructionImpl implements LocalSignal
     switch (featureID)
     {
       case SPackage.LOCAL_SIGNAL__SIGNAL:
-        setSignal((Signal)newValue);
+        setSignal((ValuedObject)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -148,7 +148,7 @@ public class LocalSignalImpl extends InstructionImpl implements LocalSignal
     switch (featureID)
     {
       case SPackage.LOCAL_SIGNAL__SIGNAL:
-        setSignal((Signal)null);
+        setSignal((ValuedObject)null);
         return;
     }
     super.eUnset(featureID);

@@ -16,14 +16,14 @@ import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 Transition returns sccharts::Transition:
 	{sccharts::Transition}
     (annotations += Annotation)*
-	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((',') effects+=Effect)*)?; 
+	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 
 
 
 // chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
 Action returns sccharts::Action:
     {sccharts::Action}
 //    (annotations += Annotation)*
-	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((',') effects+=Effect)*)?; 		
+	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 		
 
 
 Effect returns sccharts::Effect: 
@@ -39,7 +39,7 @@ Assignment returns sccharts::Assignment:
 
 
 TextEffect returns sccharts::TextEffect:
- 	code=HOSTCODE ("(" type=ID ")")?;
+ 	text=HOSTCODE;
 
 enum DivOperator returns kexpressions::OperatorType:	
 	DIV=":";

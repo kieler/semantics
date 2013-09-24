@@ -16,7 +16,6 @@
 import de.cau.cs.kieler.core.kexpressions.BooleanValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.Signal
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
@@ -121,7 +120,7 @@ class S2SCALT {
 	#define _SC_ID_MAX «program.priority + 1» 
 
 	// Highest signal id in use;
-	#define _SC_SIG_MAX «program.getSignals().size» 
+	#define _SC_SIG_MAX «program.getValuedObjects().filter[e|e.isSignal].size» 
 
 	#include "sc.h"
 
@@ -139,10 +138,10 @@ class S2SCALT {
    
    // Generate signal constants.
    def sSignalConstant(Program program) {
-   	'''typedef enum {«FOR signal : program.getSignals() SEPARATOR ",
+   	'''typedef enum {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ",
  "»sig_«signal.name»«ENDFOR»} signaltype;
    	
-   	const char *s2signame[] = {«FOR signal : program.getSignals() SEPARATOR ", 
+   	const char *s2signame[] = {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ", 
 "»"sig_«signal.name»"«ENDFOR»};'''
    }
    
@@ -152,7 +151,7 @@ class S2SCALT {
    	int reset() {
 	RESET();
 	/* initialize all valued integer signals */
-	«FOR signal : program.getSignals()»
+	«FOR signal : program.getValuedObjects().filter[e|e.isSignal]»
 	valSigInt[sig_«signal.name»] = 0;
 	«ENDFOR»
 	return 0;
@@ -163,7 +162,7 @@ class S2SCALT {
    // Generate simple signal inputs.
    def sInputs(Program program) {
    	''' 
-	«FOR signal : program.getSignals().filter(e|e.isInput||e.isOutput)»
+	«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isInput||e.isOutput)»
 void INPUT_«signal.name»() {
 	   _sigAdd(signals, sig_«signal.name»);
 «//     signalsPtr[sig_«signal.name»] = u2b(«signal.name»);
@@ -181,7 +180,7 @@ void INPUT_«signal.name»() {
    def sSetOutputFunction(Program program) {
    	'''
 	void callOutputs() {
-	«FOR signal : program.getSignals().filter(e|e.isOutput)»
+	«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isOutput)»
 		OUTPUT_«signal.name»(_sigContains(signals, sig_«signal.name»));«/*OUTPUT_«signal.name»(signals & (1 << sig_«signal.name»)); */»
 	«ENDFOR»
 		}
@@ -198,7 +197,7 @@ void INPUT_«signal.name»() {
 		//signals=0;
 		_sigClear(signals);
 		//_checkTickInit;
-	«FOR signal : program.getSignals().filter(e|e.isOutput)»
+	«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isOutput)»
 	  _sigDel(signals, sig_«signal.name»);
 	«ENDFOR»
 	}
@@ -226,7 +225,7 @@ void setInputs(){
 
 	object = cJSON_Parse(buffer);
 	
-   «'''«FOR signal : program.signals.filter(e|e.isInput||e.isOutput)»
+   «'''«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isInput||e.isOutput)»
 	       		«signal.callInputs»
    «ENDFOR»'''»	
    }'''
@@ -289,7 +288,7 @@ void setInputs(){
 
    // Define output functions to return JSON for each s signal.
    def sSimpleOutputs(Program program) {
-	'''«'''«FOR signal : program.signals.filter(e | e.isOutput)»
+	'''«'''«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e | e.isOutput)»
 		void OUTPUT_«signal.name»(int status){
 		value = cJSON_CreateObject();
 		cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
@@ -306,7 +305,8 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    // -------------------------------------------------------------------------   
    
    // Call input functions for each JSON s signal that is present.
-   def callInputs(Signal signal) {
+   def callInputs(ValuedObject signal) {
+       if (signal.isSignal) {
    	'''child = cJSON_GetObjectItem(object, "«signal.name»");
 		if (child != NULL) {
 			present = cJSON_GetObjectItem(child, "present");
@@ -317,6 +317,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
 		}   
    	   
    	'''
+       }
    }
    
    // -------------------------------------------------------------------------   
@@ -332,7 +333,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    }
    
    // Expand a state traversing all instructions of that state.
-   def dispatch expand(State state) {
+   def dispatch CharSequence expand(State state) {
    		'''Thread(«state.name») { 
    		«FOR instruction : state.instructions»
    		«instruction.expand»
@@ -341,7 +342,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    }
    
    // Expand an IF instruction traversing all instructions of that IF instruction.
-   def dispatch expand(If ifInstruction) {
+   def dispatch CharSequence expand(If ifInstruction) {
    	'''if («ifInstruction.expression.expand») { 
    		«FOR instruction : ifInstruction.instructions»
    			«instruction.expand»
@@ -350,27 +351,27 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    }   
    
    // Expand a PAUSE instruction.
-   def dispatch expand(Pause pauseInstruction) {
+   def dispatch CharSequence expand(Pause pauseInstruction) {
    	'''PAUSE;'''
    }   
    
    // Expand a TERM instruction.
-   def dispatch expand(Term termInstruction) {
+   def dispatch CharSequence expand(Term termInstruction) {
    	'''TERM;'''
    }   
    
    // Expand a HALT instruction.
-   def dispatch expand(Halt haltInstruction) {
+   def dispatch CharSequence expand(Halt haltInstruction) {
    	'''HALT;'''
    }   
    
    // Expand a JOIN instruction.
-   def dispatch expand(Join joinInstruction) {
+   def dispatch CharSequence expand(Join joinInstruction) {
    	'''JOINELSE(«joinInstruction.continuation.name»);'''
    } 
    
    // Expand an ABORT instruction.  
-   def dispatch expand(Abort abortInstruction) {
+   def dispatch CharSequence expand(Abort abortInstruction) {
    	'''ABORT;'''
    }   
    
@@ -389,7 +390,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    // Expand a FORK instruction.
    // Add fork instructions to forkThreadName and forkThreadPrioList
    // if the LAST fork instruction is reached, process these lists and clear them. 
-   def dispatch expand(Fork forkInstruction) {
+   def dispatch CharSequence expand(Fork forkInstruction) {
    	'''«IF forkInstruction.getLastFork != forkInstruction»
    	     «forkThreadNameList.add(forkInstruction.thread.name).suppress» 
    	     «forkThreadPrioMap.put(forkInstruction.thread.name, forkInstruction.priority)» 
@@ -418,22 +419,22 @@ FORK«forkThreadNameList.size»(«FOR forkThreadName : forkThreadNameList SEPARA
    }   
 
    // Expand a TRANS instruction.	
-   def dispatch expand(Trans transInstruction) {
+   def dispatch CharSequence expand(Trans transInstruction) {
    	'''GOTO(«transInstruction.continuation.name»);'''
    }   
    
    // Expand an AWAIT instruction.
-   def dispatch expand(Await awaitInstruction) {
+   def dispatch CharSequence expand(Await awaitInstruction) {
    	'''AWAIT;'''
    }   
    
    // Expand a PRIO instruction.
-   def dispatch expand(Prio prioInstruction) {
+   def dispatch CharSequence expand(Prio prioInstruction) {
    	'''PRIO(«prioInstruction.priority»);'''
    }   
    
    // Expand an EMIT instruction.
-   def dispatch expand(Emit emitInstruction) {
+   def dispatch CharSequence expand(Emit emitInstruction) {
    	if (emitInstruction.value != null) {
 	   	'''EMITINTADD(sig_«emitInstruction.signal.name», «emitInstruction.value.expand»);'''
    		
@@ -444,14 +445,15 @@ FORK«forkThreadNameList.size»(«FOR forkThreadName : forkThreadNameList SEPARA
    }   
    
    // Expand fall back for other instructions do nothing.
-   def dispatch expand(Instruction instruction) {
+   def dispatch CharSequence expand(Instruction instruction) {
+       ''''''
    }   
    
    // -------------------------------------------------------------------------   
    // -------------------------------------------------------------------------
    
    //Expand a complex expression.
-   def dispatch expand(OperatorExpression expression) {
+   def dispatch CharSequence expand(OperatorExpression expression) {
    	 '''
 	«IF expression.operator  == OperatorType::EQ»
 		(«FOR subexpression : expression.subExpressions SEPARATOR " == "»
@@ -531,35 +533,33 @@ FORK«forkThreadNameList.size»(«FOR forkThreadName : forkThreadNameList SEPARA
    }
 	
    // Expand a signal.
-   def dispatch expand(Signal signal) {
-   	 '''PRESENT(sig_«signal.name»)'''
+   def dispatch CharSequence expand(ValuedObject signal) {
+       if (signal.isSignal) {
+            return '''PRESENT(sig_«signal.name»)'''
+       }
+       return ''''''
    }
 
    // Expand a int expression value.
-   def dispatch expand(IntValue expression) {
+   def dispatch CharSequence expand(IntValue expression) {
    	 '''«expression.value.toString»'''
    }
 
    // Expand a float expression value.
-   def dispatch expand(FloatValue expression) {
+   def dispatch CharSequence expand(FloatValue expression) {
    	 '''«expression.value.toString»'''
    }
 
    // Expand a boolean expression value (true or false).
-   def dispatch expand(BooleanValue expression) {
+   def dispatch CharSequence expand(BooleanValue expression) {
    	 '''«IF expression.value == true »1«ENDIF»«IF expression.value == false»0«ENDIF»'''
    }
 
    
    // Expand an object reference.
-   def dispatch expand(ValuedObjectReference valuedObjectReference) {
+   def dispatch CharSequence expand(ValuedObjectReference valuedObjectReference) {
    	 '''«valuedObjectReference.valuedObject.expand»'''
    }
    
-   // Expand a valued object.
-   def dispatch expand(ValuedObject valuedObject) {
-   	 ''''''
-   }
-
    // -------------------------------------------------------------------------   
 }

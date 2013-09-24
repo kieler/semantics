@@ -15,7 +15,7 @@ package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 
-import de.cau.cs.kieler.core.kexpressions.TextualCode;
+import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.sccharts.Action;
@@ -190,7 +190,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * @generated
      * @ordered
      */
-    protected EList<TextualCode> bodyText;
+    protected EList<TextExpression> bodyText;
 
     /**
      * The cached value of the '{@link #getRenamings() <em>Renamings</em>}' containment reference list.
@@ -460,9 +460,9 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<TextualCode> getBodyText() {
+    public EList<TextExpression> getBodyText() {
         if (bodyText == null) {
-            bodyText = new EObjectContainmentEList<TextualCode>(TextualCode.class, this, SCChartsPackage.SCOPE__BODY_TEXT);
+            bodyText = new EObjectContainmentEList<TextExpression>(TextExpression.class, this, SCChartsPackage.SCOPE__BODY_TEXT);
         }
         return bodyText;
     }
@@ -622,7 +622,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return;
             case SCChartsPackage.SCOPE__BODY_TEXT:
                 getBodyText().clear();
-                getBodyText().addAll((Collection<? extends TextualCode>)newValue);
+                getBodyText().addAll((Collection<? extends TextExpression>)newValue);
                 return;
             case SCChartsPackage.SCOPE__RENAMINGS:
                 getRenamings().clear();

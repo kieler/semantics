@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class ValuedObjectReferenceImpl extends ComplexExpressionImpl implements ValuedObjectReference {
+public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedObjectReference {
     /**
      * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->

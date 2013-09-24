@@ -11,7 +11,7 @@
     <groupId>de.cau.cs.kieler</groupId>
     <artifactId>parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>../build/de.cau.cs.kieler.parent/pom.xml</relativePath>
+    <relativePath>../build/pom.xml</relativePath>
   </parent>
 
 <!-- all plugins need to be listed as module -->
@@ -34,6 +34,9 @@
     <module>de.cau.cs.kieler.core.model.xtext</module>
     <module>de.cau.cs.kieler.core.product</module>
     <module>de.cau.cs.kieler.esterel</module>
+    <module>de.cau.cs.kieler.esterel.kexpressions</module>
+    <module>de.cau.cs.kieler.esterel.kexpressions.edit</module>
+    <module>de.cau.cs.kieler.esterel.kexpressions.ui</module>
     <module>de.cau.cs.kieler.esterel.cec</module>
     <module>de.cau.cs.kieler.esterel.cec.linux.x86</module>
     <module>de.cau.cs.kieler.esterel.cec.linux.x86_64</module>
@@ -49,9 +52,7 @@
     <module>de.cau.cs.kieler.kev</module>
     <module>de.cau.cs.kieler.kex</module>
     <module>de.cau.cs.kieler.kex.ui</module>
-    <module>de.cau.cs.kieler.kies</module>
     <module>de.cau.cs.kieler.ksbase.gmf</module>
-    <module>de.cau.cs.kieler.maude</module>
     <module>de.cau.cs.kieler.s</module>
     <module>de.cau.cs.kieler.s.sc</module>
     <module>de.cau.cs.kieler.s.sj</module>
@@ -80,28 +81,12 @@
     <module>de.cau.cs.kieler.sim.syncsignalreset</module>
     <module>de.cau.cs.kieler.sim.table</module>
     <module>de.cau.cs.kieler.sjl</module>
-    <module>de.cau.cs.kieler.synccharts.benchmark</module>
-    <module>de.cau.cs.kieler.synccharts.codegen.dependencies</module>
-    <module>de.cau.cs.kieler.synccharts.codegen.dependencies.klighd</module>
-    <module>de.cau.cs.kieler.synccharts.codegen.s</module>
-    <module>de.cau.cs.kieler.synccharts</module>
-    <module>de.cau.cs.kieler.synccharts.codegen.sc</module>
-    <module>de.cau.cs.kieler.synccharts.custom</module>
-    <module>de.cau.cs.kieler.synccharts.diagram</module>
-    <module>de.cau.cs.kieler.synccharts.diagram.custom</module>
-    <module>de.cau.cs.kieler.synccharts.edit</module>
-    <module>de.cau.cs.kieler.synccharts.editor</module>
-    <module>de.cau.cs.kieler.synccharts.examples</module>
-    <module>de.cau.cs.kieler.synccharts.kivi</module>
-    <module>de.cau.cs.kieler.synccharts.klighd</module>
-    <module>de.cau.cs.kieler.synccharts.ksbase</module>
-    <module>de.cau.cs.kieler.synccharts.sim.ptolemy</module>
-    <module>de.cau.cs.kieler.synccharts.sim.sc</module>
-    <module>de.cau.cs.kieler.synccharts.sim.s</module>
-    <module>de.cau.cs.kieler.synccharts.synchronizer</module>
-    <module>de.cau.cs.kieler.synccharts.text</module>
-    <module>de.cau.cs.kieler.synccharts.text.bridge</module>
-    <module>de.cau.cs.kieler.synccharts.text.ui</module>
+    <module>de.cau.cs.kieler.sccharts</module>
+    <module>de.cau.cs.kieler.sccharts.edit</module>
+    <module>de.cau.cs.kieler.sccharts.editor</module>
+    <module>de.cau.cs.kieler.sccharts.klighd</module>
+    <module>de.cau.cs.kieler.sccharts.text</module>
+    <module>de.cau.cs.kieler.sccharts.text.ui</module>
     <module>org.json</module>
   </modules>
 

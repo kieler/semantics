@@ -7,6 +7,8 @@ public class SCChartsPlugin implements BundleActivator {
 
         public static String EDITOR_ID = "de.cau.cs.kieler.synccharts.presentation.SyncchartsEditorID";
         
+        public static String TEXT_EDITOR_ID = "de.cau.cs.kieler.sccharts.text.sct.Sct";
+        
         /**
          * The Constant AUXILIARY_VARIABLE_TAG for a Transition.
          */

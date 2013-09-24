@@ -4,16 +4,20 @@
     modelDirectory="/de.cau.cs.kieler.scg/src" modelPluginID="de.cau.cs.kieler.scg"
     modelName="Scg" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
-    operationReflection="true" 
-    usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations">
+    usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations"
+    operationReflection="true">
   <foreignModel>scg.ecore</foreignModel>
-  <genPackages prefix="Scg" basePackage="de.cau.cs.kieler" disposableProviderFactory="true" ecorePackage="scg.ecore#/">
+  <genPackages prefix="Scg" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
+      ecorePackage="scg.ecore#/">
     <genClasses ecoreClass="scg.ecore#//Node">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Node/previous"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Node/incoming"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Node/isInitial"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Conditional">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Conditional/then"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Conditional/else"/>
+      <genFeatures notify="false" children="true" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference scg.ecore#//Conditional/then"/>
+      <genFeatures notify="false" children="true" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference scg.ecore#//Conditional/else"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Conditional/Condition"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Surface">
@@ -21,19 +25,38 @@
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Depth">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Depth/surface"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Depth/next"/>
+      <genFeatures notify="false" children="true" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference scg.ecore#//Depth/next"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Assignment">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Assignment/next"/>
+      <genFeatures notify="false" children="true" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference scg.ecore#//Assignment/next"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Assignment/Assignment"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Fork">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Fork/join"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Fork/next"/>
+      <genFeatures notify="false" children="true" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference scg.ecore#//Fork/next"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Join">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Join/fork"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Join/next"/>
+      <genFeatures notify="false" children="true" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference scg.ecore#//Join/next"/>
     </genClasses>
+    <genClasses ecoreClass="scg.ecore#//Link">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Link/target"/>
+    </genClasses>
+    <genClasses ecoreClass="scg.ecore#//SCGraph">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//SCGraph/nodes"/>
+    </genClasses>
+    <genClasses ecoreClass="scg.ecore#//Entry">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Entry/exit"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Entry/next"/>
+    </genClasses>
+    <genClasses ecoreClass="scg.ecore#//Exit">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Exit/entry"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Exit/next"/>
+    </genClasses>
+    <genClasses ecoreClass="scg.ecore#//ControlFlow"/>
   </genPackages>
 </genmodel:GenModel>

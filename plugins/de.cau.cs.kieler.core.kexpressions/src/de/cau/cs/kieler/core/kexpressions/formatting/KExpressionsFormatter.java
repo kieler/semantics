@@ -55,8 +55,8 @@ public class KExpressionsFormatter extends AnnotationsFormatter {
             c.setNoSpace().before(comma);
         }
 
-        // Don't insert space after value test ('?') and 'pre' Operator
-        c.setNoSpace().after(f.getValueTestOperatorRule());
+        // Don't insert space after value test ('val') and 'pre' Operator
+        c.setNoSpace().after(f.getValOperatorRule());
         c.setNoSpace().after(f.getPreOperatorRule());
 
         for (Pair<Keyword, Keyword> pair : f.findKeywordPairs("(", ")")) {

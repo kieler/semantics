@@ -39,7 +39,7 @@ import org.json.JSONObject;
 
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.S2SCPlugin;
@@ -567,16 +567,18 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
         outputSignalList = new LinkedList<String>();
         JSONObject res = new JSONObject();
         try {
-            if (myModel != null && myModel.getSignals() != null) {
-                for (Signal signal : myModel.getSignals()) {
-                    if (signal.isIsInput()) {
-                        res.accumulate(signal.getName(), JSONSignalValues.newValue(false));
-                    }
-                    if (signal.isIsOutput()) {
-                        String signalName = signal.getName();
-                        if (!signalName.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)) {
-                            res.accumulate(signalName, JSONSignalValues.newValue(false));
-                            outputSignalList.add(signalName);
+            if (myModel != null && myModel.getValuedObjects() != null) {
+                for (ValuedObject signal : myModel.getValuedObjects()) {
+                    if (signal.isIsSignal()) {
+                        if (signal.isIsInput()) {
+                            res.accumulate(signal.getName(), JSONSignalValues.newValue(false));
+                        }
+                        if (signal.isIsOutput()) {
+                            String signalName = signal.getName();
+                            if (!signalName.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)) {
+                                res.accumulate(signalName, JSONSignalValues.newValue(false));
+                                outputSignalList.add(signalName);
+                            }
                         }
                     }
                 }

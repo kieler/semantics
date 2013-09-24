@@ -1,0 +1,7 @@
+module de.cau.cs.kieler.synccharts.text.GenerateAll
+
+Workflow {
+	component =  @actions.Actions auto-inject {}
+	component =  @kits.Kits auto-inject {}
+    component =  @kitsState.KitsState auto-inject {}
+}

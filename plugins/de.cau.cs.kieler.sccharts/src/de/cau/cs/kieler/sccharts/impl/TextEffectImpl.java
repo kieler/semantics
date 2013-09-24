@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.core.kexpressions.impl.TextualCodeImpl;
+import de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl;
 
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.TextEffect;
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class TextEffectImpl extends TextualCodeImpl implements TextEffect {
+public class TextEffectImpl extends TextExpressionImpl implements TextEffect {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

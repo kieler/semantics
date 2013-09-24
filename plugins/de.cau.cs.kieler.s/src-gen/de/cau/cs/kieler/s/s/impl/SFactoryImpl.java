@@ -48,7 +48,7 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
   {
     try
     {
-      SFactory theSFactory = (SFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.cau.de/cs/kieler/s"); 
+      SFactory theSFactory = (SFactory)EPackage.Registry.INSTANCE.getEFactory(SPackage.eNS_URI);
       if (theSFactory != null)
       {
         return theSFactory;

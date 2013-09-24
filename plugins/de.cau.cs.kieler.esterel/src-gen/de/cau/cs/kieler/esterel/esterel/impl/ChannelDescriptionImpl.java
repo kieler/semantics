@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class ChannelDescriptionImpl extends de.cau.cs.kieler.core.kexpressions.impl.ChannelDescriptionImpl implements ChannelDescription
+public class ChannelDescriptionImpl extends de.cau.cs.kieler.esterel.kexpressions.impl.ChannelDescriptionImpl implements ChannelDescription
 {
   /**
    * <!-- begin-user-doc -->

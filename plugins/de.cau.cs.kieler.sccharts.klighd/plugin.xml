@@ -18,7 +18,7 @@
    <extension
          point="de.cau.cs.kieler.core.kivi.combinations">
       <combination
-            active="false"
+            active="true"
             class="de.cau.cs.kieler.sccharts.klighd.SCChartsShowDiagramCombination"
             name="Show SCCharts Diagrams with KLighD">
       </combination>

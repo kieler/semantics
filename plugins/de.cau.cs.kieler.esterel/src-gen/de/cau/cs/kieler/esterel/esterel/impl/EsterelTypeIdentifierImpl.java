@@ -2,11 +2,11 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.core.kexpressions.impl.TypeIdentifierImpl;
-
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.EsterelTypeIdentifier;
 import de.cau.cs.kieler.esterel.esterel.Function;
+
+import de.cau.cs.kieler.esterel.kexpressions.impl.TypeIdentifierImpl;
 
 import org.eclipse.emf.common.notify.Notification;
 

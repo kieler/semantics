@@ -67,8 +67,12 @@ public class ValuedObjectItemProvider
 
             addNamePropertyDescriptor(object);
             addTypePropertyDescriptor(object);
+            addIsInputPropertyDescriptor(object);
+            addIsOutputPropertyDescriptor(object);
+            addIsStaticPropertyDescriptor(object);
+            addIsSignalPropertyDescriptor(object);
+            addCombineOperatorPropertyDescriptor(object);
             addInitialValuePropertyDescriptor(object);
-            addHostTypePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -134,25 +138,113 @@ public class ValuedObjectItemProvider
                  true,
                  false,
                  false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
                  null,
                  null));
     }
 
     /**
-     * This adds a property descriptor for the Host Type feature.
+     * This adds a property descriptor for the Is Input feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addHostTypePropertyDescriptor(Object object) {
+    protected void addIsInputPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_ValuedObject_hostType_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_hostType_feature", "_UI_ValuedObject_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT__HOST_TYPE,
+                 getString("_UI_ValuedObject_isInput_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_isInput_feature", "_UI_ValuedObject_type"),
+                 KExpressionsPackage.Literals.VALUED_OBJECT__IS_INPUT,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Is Output feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addIsOutputPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ValuedObject_isOutput_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_isOutput_feature", "_UI_ValuedObject_type"),
+                 KExpressionsPackage.Literals.VALUED_OBJECT__IS_OUTPUT,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Is Static feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addIsStaticPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ValuedObject_isStatic_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_isStatic_feature", "_UI_ValuedObject_type"),
+                 KExpressionsPackage.Literals.VALUED_OBJECT__IS_STATIC,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Is Signal feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addIsSignalPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ValuedObject_isSignal_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_isSignal_feature", "_UI_ValuedObject_type"),
+                 KExpressionsPackage.Literals.VALUED_OBJECT__IS_SIGNAL,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Combine Operator feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addCombineOperatorPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ValuedObject_combineOperator_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_combineOperator_feature", "_UI_ValuedObject_type"),
+                 KExpressionsPackage.Literals.VALUED_OBJECT__COMBINE_OPERATOR,
                  true,
                  false,
                  false,
@@ -200,8 +292,12 @@ public class ValuedObjectItemProvider
         switch (notification.getFeatureID(ValuedObject.class)) {
             case KExpressionsPackage.VALUED_OBJECT__NAME:
             case KExpressionsPackage.VALUED_OBJECT__TYPE:
+            case KExpressionsPackage.VALUED_OBJECT__IS_INPUT:
+            case KExpressionsPackage.VALUED_OBJECT__IS_OUTPUT:
+            case KExpressionsPackage.VALUED_OBJECT__IS_STATIC:
+            case KExpressionsPackage.VALUED_OBJECT__IS_SIGNAL:
+            case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
-            case KExpressionsPackage.VALUED_OBJECT__HOST_TYPE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

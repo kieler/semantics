@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.s.s.Await;
 import de.cau.cs.kieler.s.s.Continuation;
@@ -39,7 +39,7 @@ public class AwaitImpl extends InstructionImpl implements Await
    * @generated
    * @ordered
    */
-  protected Signal signal;
+  protected ValuedObject signal;
 
   /**
    * The cached value of the '{@link #getContinuation() <em>Continuation</em>}' reference.
@@ -77,12 +77,12 @@ public class AwaitImpl extends InstructionImpl implements Await
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal getSignal()
+  public ValuedObject getSignal()
   {
     if (signal != null && signal.eIsProxy())
     {
       InternalEObject oldSignal = (InternalEObject)signal;
-      signal = (Signal)eResolveProxy(oldSignal);
+      signal = (ValuedObject)eResolveProxy(oldSignal);
       if (signal != oldSignal)
       {
         if (eNotificationRequired())
@@ -97,7 +97,7 @@ public class AwaitImpl extends InstructionImpl implements Await
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal basicGetSignal()
+  public ValuedObject basicGetSignal()
   {
     return signal;
   }
@@ -107,9 +107,9 @@ public class AwaitImpl extends InstructionImpl implements Await
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSignal(Signal newSignal)
+  public void setSignal(ValuedObject newSignal)
   {
-    Signal oldSignal = signal;
+    ValuedObject oldSignal = signal;
     signal = newSignal;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SPackage.AWAIT__SIGNAL, oldSignal, signal));
@@ -189,7 +189,7 @@ public class AwaitImpl extends InstructionImpl implements Await
     switch (featureID)
     {
       case SPackage.AWAIT__SIGNAL:
-        setSignal((Signal)newValue);
+        setSignal((ValuedObject)newValue);
         return;
       case SPackage.AWAIT__CONTINUATION:
         setContinuation((Continuation)newValue);
@@ -209,7 +209,7 @@ public class AwaitImpl extends InstructionImpl implements Await
     switch (featureID)
     {
       case SPackage.AWAIT__SIGNAL:
-        setSignal((Signal)null);
+        setSignal((ValuedObject)null);
         return;
       case SPackage.AWAIT__CONTINUATION:
         setContinuation((Continuation)null);

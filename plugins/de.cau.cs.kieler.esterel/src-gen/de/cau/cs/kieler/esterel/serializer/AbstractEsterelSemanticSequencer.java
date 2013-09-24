@@ -10,22 +10,6 @@ import de.cau.cs.kieler.core.annotations.ImportAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
-import de.cau.cs.kieler.core.kexpressions.BooleanValue;
-import de.cau.cs.kieler.core.kexpressions.FloatValue;
-import de.cau.cs.kieler.core.kexpressions.ISignal;
-import de.cau.cs.kieler.core.kexpressions.IVariable;
-import de.cau.cs.kieler.core.kexpressions.Input;
-import de.cau.cs.kieler.core.kexpressions.InputOutput;
-import de.cau.cs.kieler.core.kexpressions.IntValue;
-import de.cau.cs.kieler.core.kexpressions.InterfaceVariableDecl;
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
-import de.cau.cs.kieler.core.kexpressions.Output;
-import de.cau.cs.kieler.core.kexpressions.Return;
-import de.cau.cs.kieler.core.kexpressions.TextExpression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.core.kexpressions.VariableDecl;
-import de.cau.cs.kieler.core.kexpressions.serializer.KExpressionsSemanticSequencer;
 import de.cau.cs.kieler.esterel.esterel.Abort;
 import de.cau.cs.kieler.esterel.esterel.AbortCase;
 import de.cau.cs.kieler.esterel.esterel.AbortCaseSingle;
@@ -122,6 +106,22 @@ import de.cau.cs.kieler.esterel.esterel.WeakAbortCase;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortEnd;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortEndAlt;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortInstance;
+import de.cau.cs.kieler.esterel.kexpressions.BooleanValue;
+import de.cau.cs.kieler.esterel.kexpressions.FloatValue;
+import de.cau.cs.kieler.esterel.kexpressions.ISignal;
+import de.cau.cs.kieler.esterel.kexpressions.IVariable;
+import de.cau.cs.kieler.esterel.kexpressions.Input;
+import de.cau.cs.kieler.esterel.kexpressions.InputOutput;
+import de.cau.cs.kieler.esterel.kexpressions.IntValue;
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceVariableDecl;
+import de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.esterel.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.esterel.kexpressions.Output;
+import de.cau.cs.kieler.esterel.kexpressions.Return;
+import de.cau.cs.kieler.esterel.kexpressions.TextExpression;
+import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.esterel.kexpressions.VariableDecl;
+import de.cau.cs.kieler.esterel.kexpressions.serializer.KExpressionsSemanticSequencer;
 import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -180,12 +180,9 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 				}
 				else break;
 			case AnnotationsPackage.STRING_ANNOTATION:
-				if(context == grammarAccess.getAnnotationRule()) {
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_Annotation_CommentAnnotation_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getValuedAnnotationRule()) {
-					sequence_CommentAnnotation_KeyStringValueAnnotation_ValuedAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getCommentAnnotationRule()) {
@@ -1134,38 +1131,29 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 				}
 				else break;
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
-				if(context == grammarAccess.getAtomicValuedExpressionRule()) {
-					sequence_AddExpression_AndExpression_AtomicValuedExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getRootRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_Expression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getAddExpressionRule() ||
+				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicValuedExpressionRule() ||
 				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
 				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getExpressionRule() ||
 				   context == grammarAccess.getModExpressionRule() ||
 				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getMultExpressionRule() ||
 				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getAtomicExpressionRule()) {
-					sequence_AndExpression_AtomicExpression_CompareOperation_NotExpression_OrExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_Expression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getAndExpressionRule() ||
 				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getBooleanExpressionRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
@@ -1174,12 +1162,9 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 					sequence_AndExpression_CompareOperation_NotExpression_OrExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getSignalAtomicExpressionRule()) {
-					sequence_SignalAndExpression_SignalAtomicExpression_SignalExpression_SignalNotExpression_SignalPreExpr(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
 				else if(context == grammarAccess.getSignalAndExpressionRule() ||
 				   context == grammarAccess.getSignalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getSignalAtomicExpressionRule() ||
 				   context == grammarAccess.getSignalExpressionRule() ||
 				   context == grammarAccess.getSignalExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getSignalNotExpressionRule() ||
@@ -1245,7 +1230,7 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 				else break;
 			case KExpressionsPackage.TYPE_IDENTIFIER:
 				if(context == grammarAccess.getEsterelTypeIdentifierRule()) {
-					sequence_EsterelTypeIdentifier(context, (de.cau.cs.kieler.core.kexpressions.TypeIdentifier) semanticObject); 
+					sequence_EsterelTypeIdentifier(context, (de.cau.cs.kieler.esterel.kexpressions.TypeIdentifier) semanticObject); 
 					return; 
 				}
 				else break;
@@ -1345,22 +1330,6 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 		feeder.accept(grammarAccess.getAbortAccess().getStatementStatementParserRuleCall_1_0(), semanticObject.getStatement());
 		feeder.accept(grammarAccess.getAbortAccess().getBodyAbortBodyParserRuleCall_3_0(), semanticObject.getBody());
 		feeder.finish();
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (
-	 *         (operator=PreOperator subExpressions+=ValuedObjectTestExpression) | 
-	 *         (operator=ValueTestOperator subExpressions+=ValuedObjectReference) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_0_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 operator=AndOperator subExpressions+=CompareOperation) | 
-	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 operator=OrOperator subExpressions+=AndExpression)
-	 *     )
-	 */
-	protected void sequence_AndExpression_AtomicExpression_CompareOperation_NotExpression_OrExpression_ValuedObjectTestExpression(EObject context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -1604,7 +1573,7 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 	 * Constraint:
 	 *     (type=ValueType | typeID=ID)
 	 */
-	protected void sequence_EsterelTypeIdentifier(EObject context, de.cau.cs.kieler.core.kexpressions.TypeIdentifier semanticObject) {
+	protected void sequence_EsterelTypeIdentifier(EObject context, de.cau.cs.kieler.esterel.kexpressions.TypeIdentifier semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -2066,20 +2035,6 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 	 *     (list+=Sequence_Sequence_1_0 list+=AtomicStatement+)
 	 */
 	protected void sequence_Sequence(EObject context, Sequence semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (
-	 *         (subExpressions+=SignalAndExpression_OperatorExpression_1_0 operator=AndOperator subExpressions+=SignalNotExpression) | 
-	 *         (operator=NotOperator subExpressions+=SignalNotExpression) | 
-	 *         (subExpressions+=SignalExpression_OperatorExpression_1_0 operator=OrOperator subExpressions+=SignalAndExpression) | 
-	 *         (operator=PreOperator subExpressions+=SignalReferenceExpr)
-	 *     )
-	 */
-	protected void sequence_SignalAndExpression_SignalAtomicExpression_SignalExpression_SignalNotExpression_SignalPreExpr(EObject context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
