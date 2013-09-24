@@ -19,7 +19,7 @@ Transition returns sccharts::Transition:
 	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 
 
 
-// chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
+// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
 Action returns sccharts::Action:
     {sccharts::Action}
 //    (annotations += Annotation)*

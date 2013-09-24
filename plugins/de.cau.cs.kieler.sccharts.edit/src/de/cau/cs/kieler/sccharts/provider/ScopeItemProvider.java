@@ -198,7 +198,7 @@ public class ScopeItemProvider
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS);
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__SUSPENSION_TRIGGER);
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__EXIT_ACTIONS);
-            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__INNER_ACTIONS);
+            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__DURING_ACTIONS);
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__ENTRY_ACTIONS);
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__BODY_CONTENTS);
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__BODY_TEXT);
@@ -254,7 +254,7 @@ public class ScopeItemProvider
             case SCChartsPackage.SCOPE__VALUED_OBJECTS:
             case SCChartsPackage.SCOPE__SUSPENSION_TRIGGER:
             case SCChartsPackage.SCOPE__EXIT_ACTIONS:
-            case SCChartsPackage.SCOPE__INNER_ACTIONS:
+            case SCChartsPackage.SCOPE__DURING_ACTIONS:
             case SCChartsPackage.SCOPE__ENTRY_ACTIONS:
             case SCChartsPackage.SCOPE__BODY_CONTENTS:
             case SCChartsPackage.SCOPE__BODY_TEXT:
@@ -303,12 +303,12 @@ public class ScopeItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__INNER_ACTIONS,
+                (SCChartsPackage.Literals.SCOPE__DURING_ACTIONS,
                  SCChartsFactory.eINSTANCE.createAction()));
 
         newChildDescriptors.add
             (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__INNER_ACTIONS,
+                (SCChartsPackage.Literals.SCOPE__DURING_ACTIONS,
                  SCChartsFactory.eINSTANCE.createTransition()));
 
         newChildDescriptors.add
@@ -484,7 +484,7 @@ public class ScopeItemProvider
             childFeature == SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS ||
             childFeature == SCChartsPackage.Literals.SCOPE__SUSPENSION_TRIGGER ||
             childFeature == SCChartsPackage.Literals.SCOPE__EXIT_ACTIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__INNER_ACTIONS ||
+            childFeature == SCChartsPackage.Literals.SCOPE__DURING_ACTIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__ENTRY_ACTIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__RENAMINGS ||
             childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT;

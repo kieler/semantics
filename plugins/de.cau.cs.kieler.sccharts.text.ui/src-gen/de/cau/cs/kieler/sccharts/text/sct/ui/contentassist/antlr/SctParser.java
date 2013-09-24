@@ -164,7 +164,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getRenamingsAssignment_6_0_2_2_1(), "rule__State__RenamingsAssignment_6_0_2_2_1");
 					put(grammarAccess.getStateAccess().getValuedObjectsAssignment_6_1_1_0_0(), "rule__State__ValuedObjectsAssignment_6_1_1_0_0");
 					put(grammarAccess.getStateAccess().getEntryActionsAssignment_6_1_1_0_1_1(), "rule__State__EntryActionsAssignment_6_1_1_0_1_1");
-					put(grammarAccess.getStateAccess().getInnerActionsAssignment_6_1_1_0_2_1(), "rule__State__InnerActionsAssignment_6_1_1_0_2_1");
+					put(grammarAccess.getStateAccess().getDuringActionsAssignment_6_1_1_0_2_1(), "rule__State__DuringActionsAssignment_6_1_1_0_2_1");
 					put(grammarAccess.getStateAccess().getExitActionsAssignment_6_1_1_0_3_1(), "rule__State__ExitActionsAssignment_6_1_1_0_3_1");
 					put(grammarAccess.getStateAccess().getSuspensionTriggerAssignment_6_1_1_0_4_1(), "rule__State__SuspensionTriggerAssignment_6_1_1_0_4_1");
 					put(grammarAccess.getStateAccess().getBodyTextAssignment_6_1_1_1(), "rule__State__BodyTextAssignment_6_1_1_1");

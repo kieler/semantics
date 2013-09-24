@@ -132,8 +132,7 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
         } else if (commandString.equals(TRIGGEREFFECT_TRANSFORMATION)) {
             transformed = (new CoreTransformation()).transformTriggerEffect((Region) model);
         } else if (commandString.equals(SIGNAL_TRANSFORMATION)) {
-            // TODO
-            // transformed = (new CoreTransformation()).transformSignal((Region) model);
+            transformed = (new CoreTransformation()).transformSignal((Region) model);
         } else if (commandString.equals(INPUTOUTPUTSIGNAL_TRANSFORMATION)) {
             // TODO
             //transformed = (new CoreTransformation()).transformInputOutputSignal((Region) model);

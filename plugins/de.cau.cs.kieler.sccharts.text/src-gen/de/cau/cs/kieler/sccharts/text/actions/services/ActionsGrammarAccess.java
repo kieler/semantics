@@ -124,7 +124,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cEffectsAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_4_2_1_0 = (RuleCall)cEffectsAssignment_4_2_1.eContents().get(0);
 		
-		//// chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
+		//// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
 		//Action returns sccharts::Action:
 		//	{sccharts::Action} //    (annotations += Annotation)*
 		//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
@@ -378,7 +378,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTransitionAccess().getRule();
 	}
 
-	//// chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
+	//// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
 	//Action returns sccharts::Action:
 	//	{sccharts::Action} //    (annotations += Annotation)*
 	//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
