@@ -198,6 +198,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
             ]
+            
+            s.depth?.translateTickEdge
         ];
     }
 
@@ -296,5 +298,39 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         ];
     }
 
+
+    def KEdge translateTickEdge(Depth t) {
+        return t.createEdge().putToLookUpWith(t) => [ edge |
+            edge.source = t.surface?.node;
+            edge.target = t.node;
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+      
+            edge.addSpline(2) => [
+                    it.lineStyle = LineStyle::DOT;
+//                    it.lineStyle.dashPattern.clear;
+//                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
+            ]
+                        
+//            if (SHOW_LABELS.optionBooleanValue) {
+//                scopeProvider.parent = t.sourceState;
+//                var String label =
+//                    try {
+//                        serializer.serialize(t.copy => [
+//                            TMP_RES.contents += it;
+//                        ]);
+//                    } finally {
+//                        TMP_RES.contents.clear;
+//                    } 
+//                if (t.sourceState.outgoingTransitions.size > 1) {
+//                    label =  t.sourceState.outgoingTransitions.indexOf(t) + 1 + ": " + label;
+//                }
+//                if (!label.nullOrEmpty) {
+//                    t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
+//                        label, 5, KlighdConstants::DEFAULT_FONT_NAME
+//                    );
+//                }
+//            }
+        ]
+    }
    
 }
