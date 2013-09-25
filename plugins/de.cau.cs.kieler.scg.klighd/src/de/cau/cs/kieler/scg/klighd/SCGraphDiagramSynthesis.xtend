@@ -147,6 +147,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     private static val String SCGPORTID_INCOMING = "incoming"
     private static val String SCGPORTID_OUTGOING = "outgoing"
+    private static val String SCGPORTID_OUTGOING_THEN = "outgoingthen"
+    private static val String SCGPORTID_OUTGOING_ELSE = "outgoingelse"
 
 
     def dispatch KNode translate(SCGraph r) {
@@ -164,22 +166,23 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             for (s : r.nodes) {
                 if (s instanceof Surface)    (s as Surface).depth?.translateTickEdge
-                if (s instanceof Assignment) (s as Assignment).next?.translateControlFlow("")
-                if (s instanceof Entry)      (s as Entry).next?.translateControlFlow("")
-                if (s instanceof Exit)       (s as Exit).next?.translateControlFlow("")
-                if (s instanceof Join)       (s as Join).next?.translateControlFlow("")
+                if (s instanceof Assignment) (s as Assignment).next?.translateControlFlow(SCGPORTID_OUTGOING)
+                if (s instanceof Entry)      (s as Entry).next?.translateControlFlow(SCGPORTID_OUTGOING)
+                if (s instanceof Exit)       (s as Exit).next?.translateControlFlow(SCGPORTID_OUTGOING)
+                if (s instanceof Join)       (s as Join).next?.translateControlFlow(SCGPORTID_OUTGOING)
+                if (s instanceof Depth)      (s as Depth).next?.translateControlFlow(SCGPORTID_OUTGOING)
                 
                 if (s instanceof Fork) {
                     (s as Fork).getNext().forEach[e | e.translateControlFlow(""); ]   
                 } 
                 
                 if (s instanceof Conditional) {
-                    (s as Conditional).then?.translateControlFlow("outgoingThen")
-                    (s as Conditional).getElse()?.translateControlFlow("outgoingElse")
+                    (s as Conditional).then?.translateControlFlow(SCGPORTID_OUTGOING_THEN)
+                    (s as Conditional).getElse()?.translateControlFlow(SCGPORTID_OUTGOING_ELSE)
                 }
             }
             
-        ];
+        ]
     }
     
     def dispatch KNode translate(Assignment s) {
@@ -206,6 +209,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             ];
             
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
+            
         ]
     }
     
@@ -225,8 +232,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
             ]
-            
-        ]
+
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING_THEN, 37, 25, 3, PortSide::SOUTH)
+            node.addPort(SCGPORTID_OUTGOING_ELSE, 75, 11, 3, PortSide::EAST)
+        ];
     }
     
     def dispatch KNode translate(Surface s) {
@@ -246,7 +257,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
             
-            node.addNSPortsFixed
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
             
         ]
     }
@@ -271,7 +284,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
             
-            node.addNSPortsFixed
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
         ]
     }
     
@@ -292,6 +307,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
 
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
         ]
     }    
  
@@ -312,6 +330,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
             
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
         ]
     }
 
@@ -332,6 +353,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
             
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
         ]
     }
 
@@ -352,7 +375,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
             
-            s.next?.translateControlFlow("");
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)
         ]
     }
 
@@ -376,47 +400,33 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     def KEdge translateControlFlow(ControlFlow t, String outgoing) {
         return t.createEdge().putToLookUpWith(t) => [ edge |
-            edge.source = t.eContainer?.node;
-            edge.target = t.target?.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            val sourceObj = t.eContainer
+            val targetObj = t.target
+            edge.source = sourceObj.node
+            edge.target = targetObj.node
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+
+            if (sourceObj instanceof Fork) {
+            } else {
+                edge.sourcePort = sourceObj.node.getPort(outgoing)
+            }
+            
+            if (targetObj instanceof Join) {
+                
+            } else {
+                edge.targetPort = targetObj.node.getPort(SCGPORTID_INCOMING)
+            }
       
             edge.addRoundedBendsPolyline(1,2) => [
-                    it.lineStyle = LineStyle::SOLID;
+                    it.lineStyle = LineStyle::SOLID
 //                    it.lineStyle.dashPattern.clear;
 //                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
             ]
                         
-//            if (SHOW_LABELS.optionBooleanValue) {
-//                scopeProvider.parent = t.sourceState;
-//                var String label =
-//                    try {
-//                        serializer.serialize(t.copy => [
-//                            TMP_RES.contents += it;
-//                        ]);
-//                    } finally {
-//                        TMP_RES.contents.clear;
-//                    } 
-//                if (t.sourceState.outgoingTransitions.size > 1) {
-//                    label =  t.sourceState.outgoingTransitions.indexOf(t) + 1 + ": " + label;
-//                }
-//                if (!label.nullOrEmpty) {
-//                    t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
-//                        label, 5, KlighdConstants::DEFAULT_FONT_NAME
-//                    );
-//                }
-//            }
         ]
     }    
    
    
-   
-    def void addNSPortsFixed(KNode node) {
-        node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-        node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
-        node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)
-//        node.addPort(SCGPORTID_INCOMING, node.width / 2 - 1, node.height / 2 -1, 2, PortSide::UNDEFINED)
-    }   
-
     def KPort addPort(KNode node, String mapping, float x, float y, int size, PortSide side) {
       node.createPort(mapping) => [
          it.addLayoutParam(LayoutOptions::PORT_SIDE, side);
@@ -425,6 +435,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
          it.addRectangle.invisible = true;
          node.ports += it
       ]
+    }
+    
+    def KPort addPortFixedSide(KNode node, String mapping, PortSide side) {
+        node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
+        node.addPort(mapping, 37, 0, 3, side)
     }    
    
 }
