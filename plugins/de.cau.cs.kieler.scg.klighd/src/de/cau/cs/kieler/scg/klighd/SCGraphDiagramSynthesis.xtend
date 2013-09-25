@@ -399,6 +399,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
     
     def KEdge translateControlFlow(ControlFlow t, String outgoing) {
+        if (t.target == null || t.eContainer == null) return null;
+        
         return t.createEdge().putToLookUpWith(t) => [ edge |
             val sourceObj = t.eContainer
             val targetObj = t.target
@@ -407,12 +409,23 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
 
             if (sourceObj instanceof Fork) {
+                edge.sourcePort = sourceObj.node.createPort("fork" + targetObj.hashCode()) => [
+                    it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
+                    it.setPortSize(3,3)
+                    it.addRectangle.invisible = true;
+                    sourceObj.node.ports += it
+                ]
             } else {
                 edge.sourcePort = sourceObj.node.getPort(outgoing)
             }
             
             if (targetObj instanceof Join) {
-                
+                edge.targetPort = targetObj.node.createPort("join" + sourceObj.hashCode()) => [
+                    it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+                    it.setPortSize(3,3)
+                    it.addRectangle.invisible = true;
+                    targetObj.node.ports += it
+                ]
             } else {
                 edge.targetPort = targetObj.node.getPort(SCGPORTID_INCOMING)
             }
