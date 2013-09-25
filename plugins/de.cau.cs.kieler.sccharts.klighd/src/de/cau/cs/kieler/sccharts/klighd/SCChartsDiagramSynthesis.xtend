@@ -292,17 +292,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                             if (sig.isStatic) {
                                 declaration = declaration + "static ";
                             }
-                            if (declaration.equals("")) {
-                                //declarations.add(sig.name + init + type + ";")
-                                it.addText(sig.name + init + type + ";")
+                            if (!declaration.equals("")) {
+                                declaration = declaration.trim + " "
                             }
-                            else {
-                                //declarations.add(declaration.trim + " " + sig.name  + init + type + ";")
-                                    it.addText(declaration.trim + " " + sig.name  + init + type + ";") => [
+
+                            it.addText(declaration + sig.name  + init + type + ";") => [
                                     it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
                                     it.putToLookUpWith(sig);
-                                ]
-                            }
+                            ]
                             it.addRectangle().invisible = true;
                             ];
                         }
