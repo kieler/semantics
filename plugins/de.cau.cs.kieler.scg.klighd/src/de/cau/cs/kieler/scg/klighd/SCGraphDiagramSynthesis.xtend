@@ -326,7 +326,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25); 
-                node.KRendering.add(factory.createKText.of("exit").putToLookUpWith(s));
+                node.KRendering.add(factory.createKText.of("fork").putToLookUpWith(s));
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
@@ -346,7 +346,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25); 
-                node.KRendering.add(factory.createKText.of("exit").putToLookUpWith(s));
+                node.KRendering.add(factory.createKText.of("join").putToLookUpWith(s));
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
