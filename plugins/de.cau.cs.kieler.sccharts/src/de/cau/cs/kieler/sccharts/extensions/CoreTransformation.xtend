@@ -306,18 +306,23 @@ class CoreTransformation {
     
     // Trim an AND/OR Expression if it contains only a single sub expression.
     def dispatch Expression trim(OperatorExpression operatorExpression) {
-        if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty) return {
-            operatorExpression
+        if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty) {
+            return operatorExpression
         }
         if (operatorExpression.subExpressions.size == 1 && 
             ((operatorExpression.operator == OperatorType::AND) || (operatorExpression.operator == OperatorType::OR))
         ) {
                // if there is just one sub expression, we do not need an AND/OR!
-               operatorExpression.subExpressions.get(0).trim;
+               val innerExpression = operatorExpression.subExpressions.get(0);
+               if (innerExpression != null) {
+                   return innerExpression.trim
+               }
+               return innerExpression
         }
         else if (operatorExpression.subExpressions.size > 1 ) {
-               for (Expression subExpression : operatorExpression.subExpressions) {
-                   subExpression.trim
+               for (Expression subExpression : operatorExpression.subExpressions.immutableCopy) {
+                   operatorExpression.add(subExpression.trim.copy)
+                   operatorExpression.subExpressions.remove(subExpression)
                }
         }
         operatorExpression;
@@ -876,8 +881,11 @@ class CoreTransformation {
                         signalTest.setOperator(OperatorType::AND)
                         // Replace in valuedObjectReference
                         (signalTest.subExpressions.get(0) as ValuedObjectReference).setValuedObject(valueVariable)
+                        //signalTest.add(TRUE)
                     }
-                    //action.setTrigger(action.trigger.trim)
+                    if (action.trigger != null) {
+                        action.setTrigger(action.trigger.trim)
+                    }
                  }
             }
             
@@ -904,7 +912,6 @@ class CoreTransformation {
                  // Wherever a present test is, put an Operator Expression (presentVariable == TRUE) there instead
                  val allSignalTests = action.eAllContents.filter(typeof(ValuedObjectReference)).filter(e|e.valuedObject == signal).toList
                  for (ValuedObjectReference signalTest : allSignalTests.immutableCopy) {
-//                        val presentVariableTest = signalTest.valuedObject.reference.isEqual(TRUE);
                         val presentVariableTest = signalTest.valuedObject.reference.isEqual(TRUE);
                         action.replace(signalTest, presentVariableTest);
                  }
