@@ -93,6 +93,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     private static val TransformationOption SHOW_SIGNAL_DECLARATIONS
         = TransformationOption::createCheckOption("Declarations", true);
 
+    private static val TransformationOption SHOW_STATE_ACTIONS
+        = TransformationOption::createCheckOption("State actions", true);
+
     private static val TransformationOption SHOW_LABELS
         = TransformationOption::createCheckOption("Transition labels", true);
         
@@ -100,7 +103,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         = TransformationOption::createCheckOption("Shadow", true);
 
     override public getTransformationOptions() {
-        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_LABELS, SHOW_SHADOW);
+        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_SHADOW);
     }
     
     override public getRecommendedLayoutOptions() {
@@ -179,6 +182,26 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         ];
     }
     
+    
+    def boolean hasNoRegionsWithStates(State state) {
+        return (state.regions == null || state.regions.size == 0 || state.eAllContents.filter(typeof(State)).size == 0)
+    }
+    
+    // Tells if the state needs a macro state rendering because of regions or declarations
+    def boolean hasRegionsOrDeclarations(State state) {
+        val returnValue =  
+            (!state.hasNoRegionsWithStates
+            ||
+            ((!state.entryActions.nullOrEmpty
+            ||
+            !state.duringActions.nullOrEmpty
+            ||
+            !state.exitActions.nullOrEmpty) && SHOW_STATE_ACTIONS.optionBooleanValue)
+            ||
+            (!state.valuedObjects.nullOrEmpty && SHOW_SIGNAL_DECLARATIONS.optionBooleanValue)) 
+        return returnValue 
+    }
+    
     def dispatch KNode translate(State s) {
         return s.createNode().putToLookUpWith(s) => [ node |
             //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
@@ -187,8 +210,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
             val conditional = s.type == StateType::CONDITIONAL;
-            val simpleState = s.valuedObjects.empty && s.regions.empty;
-            val cornerRadius = if (conditional) 10 else if (simpleState) 17 else 8;
+            val cornerRadius = if (conditional) 10 else if (!s.hasRegionsOrDeclarations) 17 else 8;
             val lineWidth = if (s.isInitial && s.isFinal) 2.1f else if (s.isInitial) 4 else 1;
 
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth)
@@ -227,12 +249,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     return;
                 }
                 
-                if (!simpleState) {
+                if (s.hasRegionsOrDeclarations) {
                     it.setGridPlacement(1);
                 } 
                 
                 
-                 if (!s.regions.empty) {
+                 if (s.hasRegionsOrDeclarations) {
                     // Get a smaller window-title-bare if this a macro state 
                     it.addText(" " + s.label).putToLookUpWith(s) => [
                         it.fontSize = 10;
@@ -261,8 +283,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 //it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                                 //.setPointPlacementData() (LEFT, 0, 0, TOP, 0, i2)//.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                 
-                if (SHOW_SIGNAL_DECLARATIONS.optionBooleanValue && !s.valuedObjects.empty) {
-                    
+                
+                if (SHOW_SIGNAL_DECLARATIONS.optionBooleanValue) {
                         for (sig : s.valuedObjects) {
                     it.addRectangle => [
                     //it.background = "white".color;
@@ -304,6 +326,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                             ];
                         }
                         
+                }
+                        
+                if (SHOW_STATE_ACTIONS.optionBooleanValue) {
                         scopeProvider.parent = s;
                         for (action : s.entryActions) {
                             it.addRectangle => [
@@ -339,7 +364,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         
                 }
                 
-                if (!s.regions.empty) {
+                if (s.hasRegionsOrDeclarations) {
                     it.addHorizontalLine(1, 1)
                         .setGridPlacementData() //.from(LEFT, 0, 0, TOP, 30, 0).to(RIGHT, 0, 0, TOP, 30, 0)
                         .maxCellHeight = 1;                        
@@ -352,7 +377,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 }
             ];
 
-            for (r : s.regions) node.children += r.translate;
+            if (!s.hasNoRegionsWithStates) {
+                for (r : s.regions) node.children += r.translate;
+            }
             
             for (t : s.outgoingTransitions) t.translateTransition();
         ];

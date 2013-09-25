@@ -263,7 +263,7 @@ class CoreTransformation {
     }
 
     def static BooleanValue FALSE() {
-        createBooleanValue(true)
+        createBooleanValue(false)
     }
 
     def static BooleanValue createBooleanValue(boolean value) {
@@ -851,9 +851,6 @@ class CoreTransformation {
         for (ValuedObject signal : allSignals) {
             val isValuedSignal = !signal.pureSignal
             
-            // Change signal to variable
-            signal.setIsSignal(false)
-            
             val presentVariable = signal
             
             // If this is a valued signal we need a second signal for the value
@@ -889,6 +886,10 @@ class CoreTransformation {
                  }
             }
             
+            // Change signal to variable
+            presentVariable.setIsSignal(false)
+            presentVariable.setTypeBool
+            
             // Reset initial value and combine operator because we want to reset
             // the signal manually in every
             presentVariable.setInitialValue(null)
@@ -916,7 +917,6 @@ class CoreTransformation {
                         action.replace(signalTest, presentVariableTest);
                  }
             }
-            
             
             // Add a during reset action for the presentVariable
             val duringAction = state.createDuringAction
