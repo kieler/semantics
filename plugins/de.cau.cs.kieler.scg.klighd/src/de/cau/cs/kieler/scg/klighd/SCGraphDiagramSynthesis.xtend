@@ -62,6 +62,13 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.ControlFlow
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kgraph.KPort
+import de.cau.cs.kieler.kiml.options.PortSide
+import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.kiml.options.PortConstraints
 
 class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
@@ -76,6 +83,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     @Inject
     extension KRenderingExtensions
+
+    @Inject
+    extension KPortExtensions
     
     @Inject
     extension KContainerRenderingExtensions
@@ -89,20 +99,25 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject
     extension SCGraphShapes
     
-    private static val TransformationOption SHOW_SIGNAL_DECLARATIONS
-        = TransformationOption::createCheckOption("Declarations", true);
-
     private static val TransformationOption SHOW_LABELS
         = TransformationOption::createCheckOption("Transition labels", true);
         
     private static val TransformationOption SHOW_SHADOW
         = TransformationOption::createCheckOption("Shadow", true);
         
-    private static val TransformationOption ALIGN_TICK_EDGES
-        = TransformationOption::createCheckOption("Tick edge alignment", true);
+    private static val TransformationOption ALIGN_TICK_START
+        = TransformationOption::createCheckOption("Tick start alignment", true);
+
+//    private static val TransformationOption ALIGN_EDGES
+//        = TransformationOption::createCheckOption("Control flow edge alignment", true);
+//
+//    private static val TransformationOption FIXATE_EDGES
+//        = TransformationOption::createCheckOption("Fixate control flow edge", true);
+
 
     override public getTransformationOptions() {
-        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_LABELS, SHOW_SHADOW, ALIGN_TICK_EDGES);
+//        return ImmutableSet::of(SHOW_LABELS, SHOW_SHADOW, ALIGN_TICK_START, ALIGN_EDGES, FIXATE_EDGES);
+        return ImmutableSet::of(SHOW_LABELS, SHOW_SHADOW, ALIGN_TICK_START);
     }
     
     override public getRecommendedLayoutOptions() {
@@ -130,15 +145,41 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor()=>[it.red=205;it.green=220;it.blue=243];
     
     
+    private static val String SCGPORTID_INCOMING = "incoming"
+    private static val String SCGPORTID_OUTGOING = "outgoing"
+    private static val String SCGPORTID_OUTGOING_THEN = "outgoingthen"
+    private static val String SCGPORTID_OUTGOING_ELSE = "outgoingelse"
 
 
     def dispatch KNode translate(SCGraph r) {
         return r.createNode().putToLookUpWith(r) => [ node |
             // node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
-            // node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT);
-            // node.setLayoutOption(LayoutOptions::SPACING, 40f);
+             node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN);
+             node.setLayoutOption(LayoutOptions::SPACING, 20f);
+             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+             node.addLayoutParam(Properties::THOROUGHNESS, 100)
+             node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);             
             for (s : r.nodes) {
                 node.children += s.translate;
+            }
+            
+            for (s : r.nodes) {
+                if (s instanceof Surface)    (s as Surface).depth?.translateTickEdge
+                if (s instanceof Assignment) (s as Assignment).next?.translateControlFlow(SCGPORTID_OUTGOING)
+                if (s instanceof Entry)      (s as Entry).next?.translateControlFlow(SCGPORTID_OUTGOING)
+                if (s instanceof Exit)       (s as Exit).next?.translateControlFlow(SCGPORTID_OUTGOING)
+                if (s instanceof Join)       (s as Join).next?.translateControlFlow(SCGPORTID_OUTGOING)
+                if (s instanceof Depth)      (s as Depth).next?.translateControlFlow(SCGPORTID_OUTGOING)
+                
+                if (s instanceof Fork) {
+                    (s as Fork).getNext().forEach[e | e.translateControlFlow(""); ]   
+                } 
+                
+                if (s instanceof Conditional) {
+                    (s as Conditional).then?.translateControlFlow(SCGPORTID_OUTGOING_THEN)
+                    (s as Conditional).getElse()?.translateControlFlow(SCGPORTID_OUTGOING_ELSE)
+                }
             }
             
         ]
@@ -149,7 +190,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
             // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
             // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
             val cornerRadius = 2;
             val lineWidth = 1.0f;
@@ -164,9 +205,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
                 it.setGridPlacement(1);
-                it.addText("assignment").putToLookUpWith(s);
+                it.addText(s.assignment).putToLookUpWith(s);
 
             ];
+            
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
+            
         ]
     }
     
@@ -175,18 +221,23 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
             // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
             // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
             val figure = node.addPolygon().createDiamondShape();
 //                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25); 
-                node.KRendering.add(factory.createKText.of("cond").putToLookUpWith(s));
+                node.KRendering.add(factory.createKText.of(s.condition).putToLookUpWith(s));
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
             ]
-        ];
+
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING_THEN, 37, 25, 3, PortSide::SOUTH)
+            node.addPort(SCGPORTID_OUTGOING_ELSE, 75, 11, 3, PortSide::EAST)
+        ]
     }
     
     def dispatch KNode translate(Surface s) {
@@ -194,7 +245,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
             // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
             // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
             val figure = node.addPolygon().createSurfaceShape();
 //                .background = "white".color;
@@ -206,8 +257,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
             
-            s.depth?.translateTickEdge
-        ];
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
+            
+        ]
     }
 
     def dispatch KNode translate(Depth s) {
@@ -215,8 +269,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
             // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
             // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
-            if (ALIGN_TICK_EDGES.optionBooleanValue) {
+//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+            if (ALIGN_TICK_START.optionBooleanValue) {
                 node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
             }
 
@@ -229,6 +283,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
             ]
+            
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
         ]
     }
     
@@ -237,7 +295,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
             // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
             // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
             val figure = node.addEllipse();
 //                .background = "white".color;
@@ -248,7 +306,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
             ]
-        ];
+
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
+        ]
     }    
  
     def dispatch KNode translate(Exit s) {
@@ -256,7 +318,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
             // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
             // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
             val figure = node.addEllipse();
 //                .background = "white".color;
@@ -267,7 +329,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
             ]
-        ];
+            
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
+        ]
     }
 
     def dispatch KNode translate(Fork s) {
@@ -275,18 +341,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
             // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
             // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
             val figure = node.addPolygon().createTriangleShape();
 //                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25); 
-                node.KRendering.add(factory.createKText.of("exit").putToLookUpWith(s));
+                node.KRendering.add(factory.createKText.of("fork").putToLookUpWith(s));
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
             ]
-        ];
+            
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
+        ]
     }
 
     def dispatch KNode translate(Join s) {
@@ -294,18 +363,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
             // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
             // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
             val figure = node.addPolygon().createTriangleShapeReversed();
 //                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25); 
-                node.KRendering.add(factory.createKText.of("exit").putToLookUpWith(s));
+                node.KRendering.add(factory.createKText.of("join").putToLookUpWith(s));
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
             ]
-        ];
+            
+            node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)
+        ]
     }
 
 
@@ -313,34 +385,74 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return t.createEdge().putToLookUpWith(t) => [ edge |
             edge.source = t.surface?.node;
             edge.target = t.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            edge.sourcePort = t.surface?.node.getPort(SCGPORTID_OUTGOING)
+            edge.targetPort = t.node.getPort(SCGPORTID_INCOMING)
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
       
-            edge.addSpline(2) => [
+            edge.addRoundedBendsPolyline(1,2) => [
                     it.lineStyle = LineStyle::DOT;
 //                    it.lineStyle.dashPattern.clear;
 //                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
             ]
                         
-//            if (SHOW_LABELS.optionBooleanValue) {
-//                scopeProvider.parent = t.sourceState;
-//                var String label =
-//                    try {
-//                        serializer.serialize(t.copy => [
-//                            TMP_RES.contents += it;
-//                        ]);
-//                    } finally {
-//                        TMP_RES.contents.clear;
-//                    } 
-//                if (t.sourceState.outgoingTransitions.size > 1) {
-//                    label =  t.sourceState.outgoingTransitions.indexOf(t) + 1 + ": " + label;
-//                }
-//                if (!label.nullOrEmpty) {
-//                    t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
-//                        label, 5, KlighdConstants::DEFAULT_FONT_NAME
-//                    );
-//                }
-//            }
         ]
     }
+    
+    def KEdge translateControlFlow(ControlFlow t, String outgoing) {
+        if (t.target == null || t.eContainer == null) return null;
+        
+        return t.createEdge().putToLookUpWith(t) => [ edge |
+            val sourceObj = t.eContainer
+            val targetObj = t.target
+            edge.source = sourceObj.node
+            edge.target = targetObj.node
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+
+            if (sourceObj instanceof Fork) {
+                edge.sourcePort = sourceObj.node.createPort("fork" + targetObj.hashCode()) => [
+                    it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
+                    it.setPortSize(3,3)
+                    it.addRectangle.invisible = true;
+                    sourceObj.node.ports += it
+                ]
+            } else {
+                edge.sourcePort = sourceObj.node.getPort(outgoing)
+            }
+            
+            if (targetObj instanceof Join) {
+                edge.targetPort = targetObj.node.createPort("join" + sourceObj.hashCode()) => [
+                    it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+                    it.setPortSize(3,3)
+                    it.addRectangle.invisible = true;
+                    targetObj.node.ports += it
+                ]
+            } else {
+                edge.targetPort = targetObj.node.getPort(SCGPORTID_INCOMING)
+            }
+      
+            edge.addRoundedBendsPolyline(1,2) => [
+                    it.lineStyle = LineStyle::SOLID
+//                    it.lineStyle.dashPattern.clear;
+//                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
+            ]
+                        
+        ]
+    }    
+   
+   
+    def KPort addPort(KNode node, String mapping, float x, float y, int size, PortSide side) {
+      node.createPort(mapping) => [
+         it.addLayoutParam(LayoutOptions::PORT_SIDE, side);
+         it.setPortPos(x, y)
+         it.setPortSize(size,size)
+         it.addRectangle.invisible = true;
+         node.ports += it
+      ]
+    }
+    
+    def KPort addPortFixedSide(KNode node, String mapping, PortSide side) {
+        node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
+        node.addPort(mapping, 37, 0, 3, side)
+    }    
    
 }
