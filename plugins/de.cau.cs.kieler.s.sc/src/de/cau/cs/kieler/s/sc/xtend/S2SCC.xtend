@@ -334,7 +334,7 @@ void setInputs(){
         void OUTPUT_«signal.name»(int status){
         value = cJSON_CreateObject();
         cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
-    «IF signal.type == ValueType::INT»
+    «IF signal.type == ValueType::INTEGER»
 cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
     «ENDIF»
         cJSON_AddItemToObject(value, "order", cJSON_CreateNumber(sigOrder[«signal.name»]));
