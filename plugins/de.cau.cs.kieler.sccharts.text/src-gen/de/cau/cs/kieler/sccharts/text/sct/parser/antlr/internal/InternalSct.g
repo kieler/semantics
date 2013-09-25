@@ -1329,45 +1329,41 @@ ruleValuedObject returns [EObject current=null]
     {
     	newLeafNode(otherlv_10, grammarAccess.getValuedObjectAccess().getColonKeyword_7_1_0());
     }
-	otherlv_11='combine' 
-    {
-    	newLeafNode(otherlv_11, grammarAccess.getValuedObjectAccess().getCombineKeyword_7_1_1());
-    }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectAccess().getTypeValueTypeEnumRuleCall_7_1_2_0()); 
+	        newCompositeNode(grammarAccess.getValuedObjectAccess().getTypeValueTypeEnumRuleCall_7_1_1_0()); 
 	    }
-		lv_type_12_0=ruleValueType		{
+		lv_type_11_0=ruleValueType		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getValuedObjectRule());
 	        }
        		set(
        			$current, 
        			"type",
-        		lv_type_12_0, 
+        		lv_type_11_0, 
         		"ValueType");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_13='with' 
+)	otherlv_12='combine' 
     {
-    	newLeafNode(otherlv_13, grammarAccess.getValuedObjectAccess().getWithKeyword_7_1_3());
+    	newLeafNode(otherlv_12, grammarAccess.getValuedObjectAccess().getCombineKeyword_7_1_2());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectAccess().getCombineOperatorCombineOperatorEnumRuleCall_7_1_4_0()); 
+	        newCompositeNode(grammarAccess.getValuedObjectAccess().getCombineOperatorCombineOperatorEnumRuleCall_7_1_3_0()); 
 	    }
-		lv_combineOperator_14_0=ruleCombineOperator		{
+		lv_combineOperator_13_0=ruleCombineOperator		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getValuedObjectRule());
 	        }
        		set(
        			$current, 
        			"combineOperator",
-        		lv_combineOperator_14_0, 
+        		lv_combineOperator_13_0, 
         		"CombineOperator");
 	        afterParserOrEnumRuleCall();
 	    }

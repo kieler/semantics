@@ -128,7 +128,7 @@ ValuedObject returns kexpressions::ValuedObject:
     name=ID (':=' initialValue=Expression)?
     ((':' (type = ValueType))
       |
-     (':' 'combine' (type = ValueType) 'with'
+     (':' (type = ValueType) 'combine'
         (combineOperator = CombineOperator))
     )?;
 

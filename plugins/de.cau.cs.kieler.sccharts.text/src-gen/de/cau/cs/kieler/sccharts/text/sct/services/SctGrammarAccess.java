@@ -696,12 +696,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTypeValueTypeEnumRuleCall_7_0_1_0 = (RuleCall)cTypeAssignment_7_0_1.eContents().get(0);
 		private final Group cGroup_7_1 = (Group)cAlternatives_7.eContents().get(1);
 		private final Keyword cColonKeyword_7_1_0 = (Keyword)cGroup_7_1.eContents().get(0);
-		private final Keyword cCombineKeyword_7_1_1 = (Keyword)cGroup_7_1.eContents().get(1);
-		private final Assignment cTypeAssignment_7_1_2 = (Assignment)cGroup_7_1.eContents().get(2);
-		private final RuleCall cTypeValueTypeEnumRuleCall_7_1_2_0 = (RuleCall)cTypeAssignment_7_1_2.eContents().get(0);
-		private final Keyword cWithKeyword_7_1_3 = (Keyword)cGroup_7_1.eContents().get(3);
-		private final Assignment cCombineOperatorAssignment_7_1_4 = (Assignment)cGroup_7_1.eContents().get(4);
-		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_7_1_4_0 = (RuleCall)cCombineOperatorAssignment_7_1_4.eContents().get(0);
+		private final Assignment cTypeAssignment_7_1_1 = (Assignment)cGroup_7_1.eContents().get(1);
+		private final RuleCall cTypeValueTypeEnumRuleCall_7_1_1_0 = (RuleCall)cTypeAssignment_7_1_1.eContents().get(0);
+		private final Keyword cCombineKeyword_7_1_2 = (Keyword)cGroup_7_1.eContents().get(2);
+		private final Assignment cCombineOperatorAssignment_7_1_3 = (Assignment)cGroup_7_1.eContents().get(3);
+		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_7_1_3_0 = (RuleCall)cCombineOperatorAssignment_7_1_3.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		////Signal returns kexpressions::Signal:
@@ -731,12 +730,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		////    )?;
 		//ValuedObject returns kexpressions::ValuedObject:
 		//	annotations+=Annotation* isInput?="input"? isOutput?="output"? isStatic?="static"? isSignal?="signal"? name=ID (":="
-		//	initialValue=Expression)? (":" type=ValueType | ":" "combine" type=ValueType "with"
-		//	combineOperator=CombineOperator)?;
+		//	initialValue=Expression)? (":" type=ValueType | ":" type=ValueType "combine" combineOperator=CombineOperator)?;
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* isInput?="input"? isOutput?="output"? isStatic?="static"? isSignal?="signal"? name=ID (":="
-		//initialValue=Expression)? (":" type=ValueType | ":" "combine" type=ValueType "with" combineOperator=CombineOperator)?
+		//initialValue=Expression)? (":" type=ValueType | ":" type=ValueType "combine" combineOperator=CombineOperator)?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -787,7 +785,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//Expression
 		public RuleCall getInitialValueExpressionParserRuleCall_6_1_0() { return cInitialValueExpressionParserRuleCall_6_1_0; }
 
-		//(":" type=ValueType | ":" "combine" type=ValueType "with" combineOperator=CombineOperator)?
+		//(":" type=ValueType | ":" type=ValueType "combine" combineOperator=CombineOperator)?
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 
 		//":" type=ValueType
@@ -802,29 +800,26 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//ValueType
 		public RuleCall getTypeValueTypeEnumRuleCall_7_0_1_0() { return cTypeValueTypeEnumRuleCall_7_0_1_0; }
 
-		//":" "combine" type=ValueType "with" combineOperator=CombineOperator
+		//":" type=ValueType "combine" combineOperator=CombineOperator
 		public Group getGroup_7_1() { return cGroup_7_1; }
 
 		//":"
 		public Keyword getColonKeyword_7_1_0() { return cColonKeyword_7_1_0; }
 
-		//"combine"
-		public Keyword getCombineKeyword_7_1_1() { return cCombineKeyword_7_1_1; }
-
 		//type=ValueType
-		public Assignment getTypeAssignment_7_1_2() { return cTypeAssignment_7_1_2; }
+		public Assignment getTypeAssignment_7_1_1() { return cTypeAssignment_7_1_1; }
 
 		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_7_1_2_0() { return cTypeValueTypeEnumRuleCall_7_1_2_0; }
+		public RuleCall getTypeValueTypeEnumRuleCall_7_1_1_0() { return cTypeValueTypeEnumRuleCall_7_1_1_0; }
 
-		//"with"
-		public Keyword getWithKeyword_7_1_3() { return cWithKeyword_7_1_3; }
+		//"combine"
+		public Keyword getCombineKeyword_7_1_2() { return cCombineKeyword_7_1_2; }
 
 		//combineOperator=CombineOperator
-		public Assignment getCombineOperatorAssignment_7_1_4() { return cCombineOperatorAssignment_7_1_4; }
+		public Assignment getCombineOperatorAssignment_7_1_3() { return cCombineOperatorAssignment_7_1_3; }
 
 		//CombineOperator
-		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_7_1_4_0() { return cCombineOperatorCombineOperatorEnumRuleCall_7_1_4_0; }
+		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_7_1_3_0() { return cCombineOperatorCombineOperatorEnumRuleCall_7_1_3_0; }
 	}
 
 	public class TextualCodeElements extends AbstractParserRuleElementFinder {
@@ -1137,8 +1132,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	////    )?;
 	//ValuedObject returns kexpressions::ValuedObject:
 	//	annotations+=Annotation* isInput?="input"? isOutput?="output"? isStatic?="static"? isSignal?="signal"? name=ID (":="
-	//	initialValue=Expression)? (":" type=ValueType | ":" "combine" type=ValueType "with"
-	//	combineOperator=CombineOperator)?;
+	//	initialValue=Expression)? (":" type=ValueType | ":" type=ValueType "combine" combineOperator=CombineOperator)?;
 	public ValuedObjectElements getValuedObjectAccess() {
 		return (pValuedObject != null) ? pValuedObject : (pValuedObject = new ValuedObjectElements());
 	}
