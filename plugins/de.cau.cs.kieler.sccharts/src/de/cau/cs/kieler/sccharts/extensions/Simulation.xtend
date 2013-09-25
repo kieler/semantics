@@ -158,14 +158,14 @@ class Simulation {
                auxiliaryValuedObject.setType(ValueType::PURE);
 
                // Add emission of auxiliary ValuedObject as an immediate during action for this state
-               val immediateDuringAction = SCChartsFactory::eINSTANCE.createAction();
+               val immediateDuringAction = SCChartsFactory::eINSTANCE.createDuringAction();
                immediateDuringAction.setIsImmediate(true);
                val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
                    auxiliaryEmission.setValuedObject(auxiliaryValuedObject);
                immediateDuringAction.effects.add(auxiliaryEmission);
                
                // Add during action to state
-               state.duringActions.add(immediateDuringAction);
+               state.localActions.add(immediateDuringAction);
 
                // Add auxiliaryValuedObject to first (and only) root region state SyncCharts main interface
                targetRootRegion.states.get(0).valuedObjects.add(auxiliaryValuedObject);

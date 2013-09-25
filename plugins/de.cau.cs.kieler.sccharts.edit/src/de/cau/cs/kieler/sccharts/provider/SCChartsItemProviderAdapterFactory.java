@@ -274,6 +274,98 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.EntryAction} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected EntryActionItemProvider entryActionItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.EntryAction}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createEntryActionAdapter() {
+        if (entryActionItemProvider == null) {
+            entryActionItemProvider = new EntryActionItemProvider(this);
+        }
+
+        return entryActionItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.DuringAction} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected DuringActionItemProvider duringActionItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.DuringAction}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createDuringActionAdapter() {
+        if (duringActionItemProvider == null) {
+            duringActionItemProvider = new DuringActionItemProvider(this);
+        }
+
+        return duringActionItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.ExitAction} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ExitActionItemProvider exitActionItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.ExitAction}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createExitActionAdapter() {
+        if (exitActionItemProvider == null) {
+            exitActionItemProvider = new ExitActionItemProvider(this);
+        }
+
+        return exitActionItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.SuspendAction} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected SuspendActionItemProvider suspendActionItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.SuspendAction}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createSuspendActionAdapter() {
+        if (suspendActionItemProvider == null) {
+            suspendActionItemProvider = new SuspendActionItemProvider(this);
+        }
+
+        return suspendActionItemProvider;
+    }
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -380,6 +472,10 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         if (stateItemProvider != null) stateItemProvider.dispose();
         if (transitionItemProvider != null) transitionItemProvider.dispose();
         if (textEffectItemProvider != null) textEffectItemProvider.dispose();
+        if (entryActionItemProvider != null) entryActionItemProvider.dispose();
+        if (duringActionItemProvider != null) duringActionItemProvider.dispose();
+        if (exitActionItemProvider != null) exitActionItemProvider.dispose();
+        if (suspendActionItemProvider != null) suspendActionItemProvider.dispose();
     }
 
 }

@@ -18,10 +18,13 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kexpressions.serializer.KExpressionsSemanticSequencer;
-import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.Assignment;
+import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.Emission;
+import de.cau.cs.kieler.sccharts.EntryAction;
+import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
+import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.TextEffect;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.text.actions.services.ActionsGrammarAccess;
@@ -285,12 +288,6 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == SCChartsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case SCChartsPackage.ACTION:
-				if(context == grammarAccess.getActionRule()) {
-					sequence_Action(context, (Action) semanticObject); 
-					return; 
-				}
-				else break;
 			case SCChartsPackage.ASSIGNMENT:
 				if(context == grammarAccess.getAssignmentRule() ||
 				   context == grammarAccess.getEffectRule()) {
@@ -298,10 +295,34 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 					return; 
 				}
 				else break;
+			case SCChartsPackage.DURING_ACTION:
+				if(context == grammarAccess.getDuringActionRule()) {
+					sequence_DuringAction(context, (DuringAction) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCChartsPackage.EMISSION:
 				if(context == grammarAccess.getEffectRule() ||
 				   context == grammarAccess.getEmissionRule()) {
 					sequence_Emission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.ENTRY_ACTION:
+				if(context == grammarAccess.getEntryActionRule()) {
+					sequence_EntryAction(context, (EntryAction) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.EXIT_ACTION:
+				if(context == grammarAccess.getExitActionRule()) {
+					sequence_ExitAction(context, (ExitAction) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.SUSPEND_ACTION:
+				if(context == grammarAccess.getSuspendActionRule()) {
+					sequence_SuspendAction(context, (SuspendAction) semanticObject); 
 					return; 
 				}
 				else break;
@@ -324,15 +345,6 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     (isImmediate?='#'? delay=INT? trigger=BooleanExpression? (effects+=Effect effects+=Effect*)?)
-	 */
-	protected void sequence_Action(EObject context, Action semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
 	 *     (valuedObject=[ValuedObject|ID] expression=Expression)
 	 */
 	protected void sequence_Assignment(EObject context, Assignment semanticObject) {
@@ -352,9 +364,45 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
+	 *     (isImmediate?='immediate'? trigger=BooleanExpression? (effects+=Effect effects+=Effect*)?)
+	 */
+	protected void sequence_DuringAction(EObject context, DuringAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (valuedObject=[ValuedObject|ID] newValue=Expression?)
 	 */
 	protected void sequence_Emission(EObject context, Emission semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (trigger=BooleanExpression? (effects+=Effect effects+=Effect*)?)
+	 */
+	protected void sequence_EntryAction(EObject context, EntryAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (trigger=BooleanExpression? (effects+=Effect effects+=Effect*)?)
+	 */
+	protected void sequence_ExitAction(EObject context, ExitAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (isImmediate?='immediate'? trigger=BooleanExpression?)
+	 */
+	protected void sequence_SuspendAction(EObject context, SuspendAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -377,7 +425,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* isImmediate?='#'? delay=INT? trigger=BooleanExpression? (effects+=Effect effects+=Effect*)?)
+	 *     (annotations+=Annotation* delay=INT? trigger=BooleanExpression? (effects+=Effect effects+=Effect*)?)
 	 */
 	protected void sequence_Transition(EObject context, Transition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

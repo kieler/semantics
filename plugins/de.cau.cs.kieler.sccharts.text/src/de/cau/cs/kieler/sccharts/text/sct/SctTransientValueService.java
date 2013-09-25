@@ -76,7 +76,7 @@ public class SctTransientValueService extends DefaultTransientValueService {
 
         /* suppress the implicit (mostly EOpposites) features */
         if (feature == SCChartsPackage.eINSTANCE.getState_ParentRegion()
-                || feature == SCChartsPackage.eINSTANCE.getScope_InterfaceDeclaration()
+//                || feature == SCChartsPackage.eINSTANCE.getScope_InterfaceDeclaration()
                 || feature == SCChartsPackage.eINSTANCE.getState_IncomingTransitions()
                 || feature == SCChartsPackage.eINSTANCE.getRegion_ParentState()
                 || feature == SCChartsPackage.eINSTANCE.getTransition_SourceState()

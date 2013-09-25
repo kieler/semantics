@@ -18,13 +18,16 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.Assignment;
+import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.Emission;
+import de.cau.cs.kieler.sccharts.EntryAction;
+import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Substitution;
+import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.TextEffect;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.text.actions.serializer.ActionsSemanticSequencer;
@@ -299,12 +302,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == SCChartsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case SCChartsPackage.ACTION:
-				if(context == grammarAccess.getActionRule()) {
-					sequence_Action(context, (Action) semanticObject); 
-					return; 
-				}
-				else break;
 			case SCChartsPackage.ASSIGNMENT:
 				if(context == grammarAccess.getAssignmentRule() ||
 				   context == grammarAccess.getEffectRule()) {
@@ -312,10 +309,31 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					return; 
 				}
 				else break;
+			case SCChartsPackage.DURING_ACTION:
+				if(context == grammarAccess.getDuringActionRule() ||
+				   context == grammarAccess.getLocalActionRule()) {
+					sequence_DuringAction(context, (DuringAction) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCChartsPackage.EMISSION:
 				if(context == grammarAccess.getEffectRule() ||
 				   context == grammarAccess.getEmissionRule()) {
 					sequence_Emission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.ENTRY_ACTION:
+				if(context == grammarAccess.getEntryActionRule() ||
+				   context == grammarAccess.getLocalActionRule()) {
+					sequence_EntryAction(context, (EntryAction) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.EXIT_ACTION:
+				if(context == grammarAccess.getExitActionRule() ||
+				   context == grammarAccess.getLocalActionRule()) {
+					sequence_ExitAction(context, (ExitAction) semanticObject); 
 					return; 
 				}
 				else break;
@@ -342,6 +360,13 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 			case SCChartsPackage.SUBSTITUTION:
 				if(context == grammarAccess.getSubstitutionRule()) {
 					sequence_Substitution(context, (Substitution) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.SUSPEND_ACTION:
+				if(context == grammarAccess.getLocalActionRule() ||
+				   context == grammarAccess.getSuspendActionRule()) {
+					sequence_SuspendAction(context, (SuspendAction) semanticObject); 
 					return; 
 				}
 				else break;
@@ -410,11 +435,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         label=STRING? 
 	 *         (
 	 *             (bodyReference=[State|ID] (renamings+=Substitution renamings+=Substitution*)?) | 
-	 *             (
-	 *                 (valuedObjects+=ValuedObject | entryActions+=Action | duringActions+=Action | exitActions+=Action | suspensionTrigger=Action)* 
-	 *                 bodyText+=TextualCode* 
-	 *                 (regions+=SingleRegion regions+=Region*)?
-	 *             )
+	 *             ((valuedObjects+=ValuedObject | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
 	 *         )? 
 	 *         outgoingTransitions+=Transition*
 	 *     )
@@ -456,7 +477,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         type=TransitionType 
 	 *         priority=INT? 
 	 *         targetState=[State|ID] 
-	 *         ((isImmediate?='#'? delay=INT? trigger=BooleanExpression? (effects+=Effect effects+=Effect*)?) | label=STRING)? 
+	 *         ((isImmediate?='immediate'? delay=INT? trigger=BooleanExpression? (effects+=Effect effects+=Effect*)?) | label=STRING)? 
 	 *         isHistory?='history'?
 	 *     )
 	 */

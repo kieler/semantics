@@ -19,8 +19,12 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.Assignment;
+import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.Effect;
 import de.cau.cs.kieler.sccharts.Emission;
+import de.cau.cs.kieler.sccharts.EntryAction;
+import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -28,6 +32,7 @@ import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.StateType;
 import de.cau.cs.kieler.sccharts.Substitution;
+import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.TextEffect;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.TransitionType;
@@ -124,6 +129,41 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EClass textEffectEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass localActionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass entryActionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass duringActionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass exitActionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass suspendActionEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -557,7 +597,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_SuspensionTrigger() {
+    public EReference getScope_LocalActions() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(3);
     }
 
@@ -566,7 +606,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_ExitActions() {
+    public EReference getScope_BodyReference() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(4);
     }
 
@@ -575,7 +615,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_DuringActions() {
+    public EReference getScope_BodyContents() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(5);
     }
 
@@ -584,7 +624,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_EntryActions() {
+    public EReference getScope_BodyText() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(6);
     }
 
@@ -593,44 +633,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_BodyReference() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(7);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getScope_BodyContents() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(8);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getScope_BodyText() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(9);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EReference getScope_Renamings() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(10);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getScope_InterfaceDeclaration() {
-        return (EAttribute)scopeEClass.getEStructuralFeatures().get(11);
+        return (EReference)scopeEClass.getEStructuralFeatures().get(7);
     }
 
     /**
@@ -640,6 +644,51 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      */
     public EClass getTextEffect() {
         return textEffectEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getLocalAction() {
+        return localActionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getEntryAction() {
+        return entryActionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getDuringAction() {
+        return duringActionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getExitAction() {
+        return exitActionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getSuspendAction() {
+        return suspendActionEClass;
     }
 
     /**
@@ -743,17 +792,23 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEAttribute(scopeEClass, SCOPE__ID);
         createEAttribute(scopeEClass, SCOPE__LABEL);
         createEReference(scopeEClass, SCOPE__VALUED_OBJECTS);
-        createEReference(scopeEClass, SCOPE__SUSPENSION_TRIGGER);
-        createEReference(scopeEClass, SCOPE__EXIT_ACTIONS);
-        createEReference(scopeEClass, SCOPE__DURING_ACTIONS);
-        createEReference(scopeEClass, SCOPE__ENTRY_ACTIONS);
+        createEReference(scopeEClass, SCOPE__LOCAL_ACTIONS);
         createEReference(scopeEClass, SCOPE__BODY_REFERENCE);
         createEReference(scopeEClass, SCOPE__BODY_CONTENTS);
         createEReference(scopeEClass, SCOPE__BODY_TEXT);
         createEReference(scopeEClass, SCOPE__RENAMINGS);
-        createEAttribute(scopeEClass, SCOPE__INTERFACE_DECLARATION);
 
         textEffectEClass = createEClass(TEXT_EFFECT);
+
+        localActionEClass = createEClass(LOCAL_ACTION);
+
+        entryActionEClass = createEClass(ENTRY_ACTION);
+
+        duringActionEClass = createEClass(DURING_ACTION);
+
+        exitActionEClass = createEClass(EXIT_ACTION);
+
+        suspendActionEClass = createEClass(SUSPEND_ACTION);
 
         // Create enums
         stateTypeEEnum = createEEnum(STATE_TYPE);
@@ -804,6 +859,11 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         textEffectEClass.getESuperTypes().add(theKExpressionsPackage.getTextExpression());
         textEffectEClass.getESuperTypes().add(this.getEffect());
+        localActionEClass.getESuperTypes().add(this.getAction());
+        entryActionEClass.getESuperTypes().add(this.getLocalAction());
+        duringActionEClass.getESuperTypes().add(this.getLocalAction());
+        exitActionEClass.getESuperTypes().add(this.getLocalAction());
+        suspendActionEClass.getESuperTypes().add(this.getLocalAction());
 
         // Initialize classes and features; add operations and parameters
         initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -852,17 +912,23 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEAttribute(getScope_Id(), ecorePackage.getEString(), "id", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getScope_Label(), ecorePackage.getEString(), "label", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_ValuedObjects(), theKExpressionsPackage.getValuedObject(), null, "valuedObjects", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_SuspensionTrigger(), this.getAction(), null, "suspensionTrigger", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_ExitActions(), this.getAction(), null, "exitActions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_DuringActions(), this.getAction(), null, "duringActions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_EntryActions(), this.getAction(), null, "entryActions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getScope_LocalActions(), this.getLocalAction(), null, "localActions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_BodyReference(), ecorePackage.getEObject(), null, "bodyReference", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_BodyContents(), ecorePackage.getEObject(), null, "bodyContents", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_BodyText(), theKExpressionsPackage.getTextExpression(), null, "bodyText", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_Renamings(), this.getSubstitution(), this.getSubstitution_ParentScope(), "renamings", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getScope_InterfaceDeclaration(), this.getParsable(), "interfaceDeclaration", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(textEffectEClass, TextEffect.class, "TextEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(localActionEClass, LocalAction.class, "LocalAction", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(entryActionEClass, EntryAction.class, "EntryAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(duringActionEClass, DuringAction.class, "DuringAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(exitActionEClass, ExitAction.class, "ExitAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(suspendActionEClass, SuspendAction.class, "SuspendAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(stateTypeEEnum, StateType.class, "StateType");

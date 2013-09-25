@@ -112,6 +112,42 @@ public interface SCChartsFactory extends EFactory {
     TextEffect createTextEffect();
 
     /**
+     * Returns a new object of class '<em>Entry Action</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Entry Action</em>'.
+     * @generated
+     */
+    EntryAction createEntryAction();
+
+    /**
+     * Returns a new object of class '<em>During Action</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>During Action</em>'.
+     * @generated
+     */
+    DuringAction createDuringAction();
+
+    /**
+     * Returns a new object of class '<em>Exit Action</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Exit Action</em>'.
+     * @generated
+     */
+    ExitAction createExitAction();
+
+    /**
+     * Returns a new object of class '<em>Suspend Action</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Suspend Action</em>'.
+     * @generated
+     */
+    SuspendAction createSuspendAction();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

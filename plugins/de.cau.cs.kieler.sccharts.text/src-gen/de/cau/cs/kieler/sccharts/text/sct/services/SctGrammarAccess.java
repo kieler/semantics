@@ -304,22 +304,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives_6_1_1_0 = (Alternatives)cGroup_6_1_1.eContents().get(0);
 		private final Assignment cValuedObjectsAssignment_6_1_1_0_0 = (Assignment)cAlternatives_6_1_1_0.eContents().get(0);
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_6_1_1_0_0_0 = (RuleCall)cValuedObjectsAssignment_6_1_1_0_0.eContents().get(0);
-		private final Group cGroup_6_1_1_0_1 = (Group)cAlternatives_6_1_1_0.eContents().get(1);
-		private final Keyword cEntryKeyword_6_1_1_0_1_0 = (Keyword)cGroup_6_1_1_0_1.eContents().get(0);
-		private final Assignment cEntryActionsAssignment_6_1_1_0_1_1 = (Assignment)cGroup_6_1_1_0_1.eContents().get(1);
-		private final RuleCall cEntryActionsActionParserRuleCall_6_1_1_0_1_1_0 = (RuleCall)cEntryActionsAssignment_6_1_1_0_1_1.eContents().get(0);
-		private final Group cGroup_6_1_1_0_2 = (Group)cAlternatives_6_1_1_0.eContents().get(2);
-		private final Keyword cDuringKeyword_6_1_1_0_2_0 = (Keyword)cGroup_6_1_1_0_2.eContents().get(0);
-		private final Assignment cDuringActionsAssignment_6_1_1_0_2_1 = (Assignment)cGroup_6_1_1_0_2.eContents().get(1);
-		private final RuleCall cDuringActionsActionParserRuleCall_6_1_1_0_2_1_0 = (RuleCall)cDuringActionsAssignment_6_1_1_0_2_1.eContents().get(0);
-		private final Group cGroup_6_1_1_0_3 = (Group)cAlternatives_6_1_1_0.eContents().get(3);
-		private final Keyword cExitKeyword_6_1_1_0_3_0 = (Keyword)cGroup_6_1_1_0_3.eContents().get(0);
-		private final Assignment cExitActionsAssignment_6_1_1_0_3_1 = (Assignment)cGroup_6_1_1_0_3.eContents().get(1);
-		private final RuleCall cExitActionsActionParserRuleCall_6_1_1_0_3_1_0 = (RuleCall)cExitActionsAssignment_6_1_1_0_3_1.eContents().get(0);
-		private final Group cGroup_6_1_1_0_4 = (Group)cAlternatives_6_1_1_0.eContents().get(4);
-		private final Keyword cSuspendKeyword_6_1_1_0_4_0 = (Keyword)cGroup_6_1_1_0_4.eContents().get(0);
-		private final Assignment cSuspensionTriggerAssignment_6_1_1_0_4_1 = (Assignment)cGroup_6_1_1_0_4.eContents().get(1);
-		private final RuleCall cSuspensionTriggerActionParserRuleCall_6_1_1_0_4_1_0 = (RuleCall)cSuspensionTriggerAssignment_6_1_1_0_4_1.eContents().get(0);
+		private final Assignment cLocalActionsAssignment_6_1_1_0_1 = (Assignment)cAlternatives_6_1_1_0.eContents().get(1);
+		private final RuleCall cLocalActionsLocalActionParserRuleCall_6_1_1_0_1_0 = (RuleCall)cLocalActionsAssignment_6_1_1_0_1.eContents().get(0);
 		private final Assignment cBodyTextAssignment_6_1_1_1 = (Assignment)cGroup_6_1_1.eContents().get(1);
 		private final RuleCall cBodyTextTextualCodeParserRuleCall_6_1_1_1_0 = (RuleCall)cBodyTextAssignment_6_1_1_1.eContents().get(0);
 		private final Group cGroup_6_1_1_2 = (Group)cGroup_6_1_1.eContents().get(2);
@@ -336,16 +322,14 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//State returns sccharts::State:
 		//	annotations+=Annotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)? type=StateType?
 		//	"state" id=ID label=STRING? ("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution (","
-		//	renamings+=Substitution)* "]")? | "{" ((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "during"
-		//	duringActions+=Action | "exit" exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode*
-		//	(regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";";
+		//	renamings+=Substitution)* "]")? | "{" ((valuedObjects+=ValuedObject | localActions+=LocalAction)*
+		//	bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";";
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)? type=StateType?
 		//"state" id=ID label=STRING? ("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution (","
-		//renamings+=Substitution)* "]")? | "{" ((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "during"
-		//duringActions+=Action | "exit" exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode*
-		//(regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";"
+		//renamings+=Substitution)* "]")? | "{" ((valuedObjects+=ValuedObject | localActions+=LocalAction)*
+		//bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";"
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -409,8 +393,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getLabelSTRINGTerminalRuleCall_5_0() { return cLabelSTRINGTerminalRuleCall_5_0; }
 
 		//("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution ("," renamings+=Substitution)* "]")? | "{"
-		//((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "during" duringActions+=Action | "exit"
-		//exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode* (regions+=SingleRegion
+		//((valuedObjects+=ValuedObject | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion
 		//regions+=Region*)?) "}")?
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 
@@ -456,21 +439,18 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_6_0_2_3() { return cRightSquareBracketKeyword_6_0_2_3; }
 
-		//"{" ((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "during" duringActions+=Action | "exit"
-		//exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode* (regions+=SingleRegion
+		//"{" ((valuedObjects+=ValuedObject | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion
 		//regions+=Region*)?) "}"
 		public Group getGroup_6_1() { return cGroup_6_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_6_1_0() { return cLeftCurlyBracketKeyword_6_1_0; }
 
-		//(valuedObjects+=ValuedObject | "entry" entryActions+=Action | "during" duringActions+=Action | "exit"
-		//exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode* (regions+=SingleRegion
+		//(valuedObjects+=ValuedObject | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion
 		//regions+=Region*)?
 		public Group getGroup_6_1_1() { return cGroup_6_1_1; }
 
-		//(valuedObjects+=ValuedObject | "entry" entryActions+=Action | "during" duringActions+=Action | "exit"
-		//exitActions+=Action | "suspend" suspensionTrigger=Action)*
+		//(valuedObjects+=ValuedObject | localActions+=LocalAction)*
 		public Alternatives getAlternatives_6_1_1_0() { return cAlternatives_6_1_1_0; }
 
 		//valuedObjects+=ValuedObject
@@ -479,53 +459,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//ValuedObject
 		public RuleCall getValuedObjectsValuedObjectParserRuleCall_6_1_1_0_0_0() { return cValuedObjectsValuedObjectParserRuleCall_6_1_1_0_0_0; }
 
-		//"entry" entryActions+=Action
-		public Group getGroup_6_1_1_0_1() { return cGroup_6_1_1_0_1; }
+		//localActions+=LocalAction
+		public Assignment getLocalActionsAssignment_6_1_1_0_1() { return cLocalActionsAssignment_6_1_1_0_1; }
 
-		//"entry"
-		public Keyword getEntryKeyword_6_1_1_0_1_0() { return cEntryKeyword_6_1_1_0_1_0; }
-
-		//entryActions+=Action
-		public Assignment getEntryActionsAssignment_6_1_1_0_1_1() { return cEntryActionsAssignment_6_1_1_0_1_1; }
-
-		//Action
-		public RuleCall getEntryActionsActionParserRuleCall_6_1_1_0_1_1_0() { return cEntryActionsActionParserRuleCall_6_1_1_0_1_1_0; }
-
-		//"during" duringActions+=Action
-		public Group getGroup_6_1_1_0_2() { return cGroup_6_1_1_0_2; }
-
-		//"during"
-		public Keyword getDuringKeyword_6_1_1_0_2_0() { return cDuringKeyword_6_1_1_0_2_0; }
-
-		//duringActions+=Action
-		public Assignment getDuringActionsAssignment_6_1_1_0_2_1() { return cDuringActionsAssignment_6_1_1_0_2_1; }
-
-		//Action
-		public RuleCall getDuringActionsActionParserRuleCall_6_1_1_0_2_1_0() { return cDuringActionsActionParserRuleCall_6_1_1_0_2_1_0; }
-
-		//"exit" exitActions+=Action
-		public Group getGroup_6_1_1_0_3() { return cGroup_6_1_1_0_3; }
-
-		//"exit"
-		public Keyword getExitKeyword_6_1_1_0_3_0() { return cExitKeyword_6_1_1_0_3_0; }
-
-		//exitActions+=Action
-		public Assignment getExitActionsAssignment_6_1_1_0_3_1() { return cExitActionsAssignment_6_1_1_0_3_1; }
-
-		//Action
-		public RuleCall getExitActionsActionParserRuleCall_6_1_1_0_3_1_0() { return cExitActionsActionParserRuleCall_6_1_1_0_3_1_0; }
-
-		//"suspend" suspensionTrigger=Action
-		public Group getGroup_6_1_1_0_4() { return cGroup_6_1_1_0_4; }
-
-		//"suspend"
-		public Keyword getSuspendKeyword_6_1_1_0_4_0() { return cSuspendKeyword_6_1_1_0_4_0; }
-
-		//suspensionTrigger=Action
-		public Assignment getSuspensionTriggerAssignment_6_1_1_0_4_1() { return cSuspensionTriggerAssignment_6_1_1_0_4_1; }
-
-		//Action
-		public RuleCall getSuspensionTriggerActionParserRuleCall_6_1_1_0_4_1_0() { return cSuspensionTriggerActionParserRuleCall_6_1_1_0_4_1_0; }
+		//LocalAction
+		public RuleCall getLocalActionsLocalActionParserRuleCall_6_1_1_0_1_0() { return cLocalActionsLocalActionParserRuleCall_6_1_1_0_1_0; }
 
 		//bodyText+=TextualCode*
 		public Assignment getBodyTextAssignment_6_1_1_1() { return cBodyTextAssignment_6_1_1_1; }
@@ -561,6 +499,34 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getSemicolonKeyword_8() { return cSemicolonKeyword_8; }
 	}
 
+	public class LocalActionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalAction");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cEntryActionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cDuringActionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cExitActionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cSuspendActionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		
+		//LocalAction returns sccharts::LocalAction:
+		//	EntryAction | DuringAction | ExitAction | SuspendAction;
+		public ParserRule getRule() { return rule; }
+
+		//EntryAction | DuringAction | ExitAction | SuspendAction
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//EntryAction
+		public RuleCall getEntryActionParserRuleCall_0() { return cEntryActionParserRuleCall_0; }
+
+		//DuringAction
+		public RuleCall getDuringActionParserRuleCall_1() { return cDuringActionParserRuleCall_1; }
+
+		//ExitAction
+		public RuleCall getExitActionParserRuleCall_2() { return cExitActionParserRuleCall_2; }
+
+		//SuspendAction
+		public RuleCall getSuspendActionParserRuleCall_3() { return cSuspendActionParserRuleCall_3; }
+	}
+
 	public class TransitionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Transition");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -578,7 +544,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives_4_1 = (Alternatives)cGroup_4.eContents().get(1);
 		private final Group cGroup_4_1_0 = (Group)cAlternatives_4_1.eContents().get(0);
 		private final Assignment cIsImmediateAssignment_4_1_0_0 = (Assignment)cGroup_4_1_0.eContents().get(0);
-		private final Keyword cIsImmediateNumberSignKeyword_4_1_0_0_0 = (Keyword)cIsImmediateAssignment_4_1_0_0.eContents().get(0);
+		private final Keyword cIsImmediateImmediateKeyword_4_1_0_0_0 = (Keyword)cIsImmediateAssignment_4_1_0_0.eContents().get(0);
 		private final Assignment cDelayAssignment_4_1_0_1 = (Assignment)cGroup_4_1_0.eContents().get(1);
 		private final RuleCall cDelayINTTerminalRuleCall_4_1_0_1_0 = (RuleCall)cDelayAssignment_4_1_0_1.eContents().get(0);
 		private final Assignment cTriggerAssignment_4_1_0_2 = (Assignment)cGroup_4_1_0.eContents().get(2);
@@ -598,14 +564,14 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//Transition returns sccharts::Transition:
-		//	annotations+=Annotation* type=TransitionType priority=INT? targetState=[sccharts::State] ("with" (isImmediate?="#"?
-		//	delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? | label=STRING))?
-		//	isHistory?="history"?;
+		//	annotations+=Annotation* type=TransitionType priority=INT? targetState=[sccharts::State] ("with"
+		//	(isImmediate?="immediate"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? |
+		//	label=STRING))? isHistory?="history"?;
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* type=TransitionType priority=INT? targetState=[sccharts::State] ("with" (isImmediate?="#"?
-		//delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? | label=STRING))?
-		//isHistory?="history"?
+		//annotations+=Annotation* type=TransitionType priority=INT? targetState=[sccharts::State] ("with"
+		//(isImmediate?="immediate"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? |
+		//label=STRING))? isHistory?="history"?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -635,24 +601,25 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getTargetStateStateIDTerminalRuleCall_3_0_1() { return cTargetStateStateIDTerminalRuleCall_3_0_1; }
 
-		//("with" (isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? |
+		//("with" (isImmediate?="immediate"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? |
 		//label=STRING))?
 		public Group getGroup_4() { return cGroup_4; }
 
 		//"with"
 		public Keyword getWithKeyword_4_0() { return cWithKeyword_4_0; }
 
-		//isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? | label=STRING
+		//isImmediate?="immediate"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? |
+		//label=STRING
 		public Alternatives getAlternatives_4_1() { return cAlternatives_4_1; }
 
-		//isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)?
+		//isImmediate?="immediate"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup_4_1_0() { return cGroup_4_1_0; }
 
-		//isImmediate?="#"?
+		//isImmediate?="immediate"?
 		public Assignment getIsImmediateAssignment_4_1_0_0() { return cIsImmediateAssignment_4_1_0_0; }
 
-		//"#"
-		public Keyword getIsImmediateNumberSignKeyword_4_1_0_0_0() { return cIsImmediateNumberSignKeyword_4_1_0_0_0; }
+		//"immediate"
+		public Keyword getIsImmediateImmediateKeyword_4_1_0_0_0() { return cIsImmediateImmediateKeyword_4_1_0_0_0; }
 
 		//delay=INT?
 		public Assignment getDelayAssignment_4_1_0_1() { return cDelayAssignment_4_1_0_1; }
@@ -1024,6 +991,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	private SingleRegionElements pSingleRegion;
 	private RegionElements pRegion;
 	private StateElements pState;
+	private LocalActionElements pLocalAction;
 	private TransitionElements pTransition;
 	private ValuedObjectElements pValuedObject;
 	private TextualCodeElements pTextualCode;
@@ -1108,9 +1076,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//State returns sccharts::State:
 	//	annotations+=Annotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)? type=StateType?
 	//	"state" id=ID label=STRING? ("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution (","
-	//	renamings+=Substitution)* "]")? | "{" ((valuedObjects+=ValuedObject | "entry" entryActions+=Action | "during"
-	//	duringActions+=Action | "exit" exitActions+=Action | "suspend" suspensionTrigger=Action)* bodyText+=TextualCode*
-	//	(regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";";
+	//	renamings+=Substitution)* "]")? | "{" ((valuedObjects+=ValuedObject | localActions+=LocalAction)*
+	//	bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";";
 	public StateElements getStateAccess() {
 		return (pState != null) ? pState : (pState = new StateElements());
 	}
@@ -1119,11 +1086,21 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getStateAccess().getRule();
 	}
 
+	//LocalAction returns sccharts::LocalAction:
+	//	EntryAction | DuringAction | ExitAction | SuspendAction;
+	public LocalActionElements getLocalActionAccess() {
+		return (pLocalAction != null) ? pLocalAction : (pLocalAction = new LocalActionElements());
+	}
+	
+	public ParserRule getLocalActionRule() {
+		return getLocalActionAccess().getRule();
+	}
+
 	//// ---------------------------------------------------------------------------------------------------
 	//Transition returns sccharts::Transition:
-	//	annotations+=Annotation* type=TransitionType priority=INT? targetState=[sccharts::State] ("with" (isImmediate?="#"?
-	//	delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? | label=STRING))?
-	//	isHistory?="history"?;
+	//	annotations+=Annotation* type=TransitionType priority=INT? targetState=[sccharts::State] ("with"
+	//	(isImmediate?="immediate"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? |
+	//	label=STRING))? isHistory?="history"?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
 	}
@@ -1225,16 +1202,53 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getTransitionTypeAccess().getRule();
 	}
 
-	//// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
-	//Action returns sccharts::Action:
-	//	{sccharts::Action} //    (annotations += Annotation)*
-	//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
-	public ActionsGrammarAccess.ActionElements getActionAccess() {
-		return gaActions.getActionAccess();
+	////// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
+	////Action returns sccharts::Action:
+	////    {sccharts::Action}
+	//////    (annotations += Annotation)*
+	////	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 		
+	//EntryAction returns sccharts::EntryAction:
+	//	{sccharts::EntryAction} //    (annotations += Annotation)*
+	//	"entry" ":" trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+	public ActionsGrammarAccess.EntryActionElements getEntryActionAccess() {
+		return gaActions.getEntryActionAccess();
 	}
 	
-	public ParserRule getActionRule() {
-		return getActionAccess().getRule();
+	public ParserRule getEntryActionRule() {
+		return getEntryActionAccess().getRule();
+	}
+
+	//DuringAction returns sccharts::DuringAction:
+	//	{sccharts::DuringAction} //    (annotations += Annotation)*
+	//	isImmediate?="immediate"? "during" ":" trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+	public ActionsGrammarAccess.DuringActionElements getDuringActionAccess() {
+		return gaActions.getDuringActionAccess();
+	}
+	
+	public ParserRule getDuringActionRule() {
+		return getDuringActionAccess().getRule();
+	}
+
+	//ExitAction returns sccharts::ExitAction:
+	//	{sccharts::ExitAction} //    (annotations += Annotation)*
+	//	"exit" ":" trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+	public ActionsGrammarAccess.ExitActionElements getExitActionAccess() {
+		return gaActions.getExitActionAccess();
+	}
+	
+	public ParserRule getExitActionRule() {
+		return getExitActionAccess().getRule();
+	}
+
+	//SuspendAction returns sccharts::SuspendAction:
+	//	{sccharts::SuspendAction} //    (annotations += Annotation)*
+	//	isImmediate?="immediate"? "suspend" ":" trigger=BooleanExpression? ";";
+	public ActionsGrammarAccess.SuspendActionElements getSuspendActionAccess() {
+		return gaActions.getSuspendActionAccess();
+	}
+	
+	public ParserRule getSuspendActionRule() {
+		return getSuspendActionAccess().getRule();
 	}
 
 	//Effect returns sccharts::Effect:

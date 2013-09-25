@@ -1,7 +1,6 @@
 RULE_BOOLEAN=9
 RULE_ID=5
 T__40=40
-T__41=41
 T__29=29
 T__28=28
 T__27=27
@@ -38,7 +37,6 @@ RULE_WS=14
 RULE_COMMENT_ANNOTATION=10
 '!'=20
 '|'=18
-'#'=41
 '>='=30
 '/'=32
 'mod'=24

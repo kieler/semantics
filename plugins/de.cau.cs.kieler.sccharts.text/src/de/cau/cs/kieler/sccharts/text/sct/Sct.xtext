@@ -58,11 +58,8 @@ State returns sccharts::State:
      | 
       ('{'
           (
-            (valuedObjects+=ValuedObject    |
-             'entry' entryActions+=Action |
-             'during' duringActions+=Action |
-             'exit'  exitActions+=Action  |
-             'suspend' suspensionTrigger=Action)*
+            (valuedObjects+=ValuedObject |
+             localActions+=LocalAction)*
             (bodyText += TextualCode)*
             (
              (regions+=SingleRegion)(regions+=Region)*
@@ -71,6 +68,12 @@ State returns sccharts::State:
           '}') 
      )?
     (outgoingTransitions+=Transition)* ';';
+    
+
+LocalAction returns sccharts::LocalAction:
+    EntryAction | DuringAction | ExitAction | SuspendAction
+;    
+    
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -79,7 +82,7 @@ Transition returns sccharts::Transition:
 	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
 	( 'with'
 	 (
-	   ( (isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ('/' effects+=Effect (';'effects+=Effect)*)? )
+	   ( (isImmediate?='immediate')? (delay=INT)? (trigger=BooleanExpression)? ('/' effects+=Effect (';'effects+=Effect)*)? )
 	  |
 	   ( label=STRING )
 	  )

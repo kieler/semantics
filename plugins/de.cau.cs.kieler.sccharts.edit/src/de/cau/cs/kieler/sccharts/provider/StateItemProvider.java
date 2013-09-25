@@ -294,13 +294,10 @@ public class StateItemProvider
             childFeature == AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__BODY_CONTENTS ||
             childFeature == SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__SUSPENSION_TRIGGER ||
-            childFeature == SCChartsPackage.Literals.SCOPE__EXIT_ACTIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__DURING_ACTIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__ENTRY_ACTIONS ||
-            childFeature == SCChartsPackage.Literals.STATE__OUTGOING_TRANSITIONS ||
+            childFeature == SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS ||
             childFeature == SCChartsPackage.Literals.STATE__REGIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__RENAMINGS ||
+            childFeature == SCChartsPackage.Literals.STATE__OUTGOING_TRANSITIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT;
 
         if (qualify) {

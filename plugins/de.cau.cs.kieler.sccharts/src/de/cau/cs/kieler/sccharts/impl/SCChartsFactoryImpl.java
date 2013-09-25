@@ -83,6 +83,10 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.STATE: return createState();
             case SCChartsPackage.TRANSITION: return createTransition();
             case SCChartsPackage.TEXT_EFFECT: return createTextEffect();
+            case SCChartsPackage.ENTRY_ACTION: return createEntryAction();
+            case SCChartsPackage.DURING_ACTION: return createDuringAction();
+            case SCChartsPackage.EXIT_ACTION: return createExitAction();
+            case SCChartsPackage.SUSPEND_ACTION: return createSuspendAction();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -204,6 +208,46 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public TextEffect createTextEffect() {
         TextEffectImpl textEffect = new TextEffectImpl();
         return textEffect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EntryAction createEntryAction() {
+        EntryActionImpl entryAction = new EntryActionImpl();
+        return entryAction;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DuringAction createDuringAction() {
+        DuringActionImpl duringAction = new DuringActionImpl();
+        return duringAction;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ExitAction createExitAction() {
+        ExitActionImpl exitAction = new ExitActionImpl();
+        return exitAction;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SuspendAction createSuspendAction() {
+        SuspendActionImpl suspendAction = new SuspendActionImpl();
+        return suspendAction;
     }
 
     /**

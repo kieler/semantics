@@ -60,6 +60,10 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import java.util.LinkedList
+import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.ExitAction
+import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.SuspendAction
 
 class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
@@ -192,14 +196,23 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         val returnValue =  
             (!state.hasNoRegionsWithStates
             ||
-            ((!state.entryActions.nullOrEmpty
-            ||
-            !state.duringActions.nullOrEmpty
-            ||
-            !state.exitActions.nullOrEmpty) && SHOW_STATE_ACTIONS.optionBooleanValue)
+            (!state.localActions.nullOrEmpty && SHOW_STATE_ACTIONS.optionBooleanValue)
             ||
             (!state.valuedObjects.nullOrEmpty && SHOW_SIGNAL_DECLARATIONS.optionBooleanValue)) 
         return returnValue 
+    }
+    
+    def dispatch String getActionName(EntryAction action) {
+        "entry"
+    }
+    def dispatch String getActionName(DuringAction action) {
+        "during"
+    }
+    def dispatch String getActionName(ExitAction action) {
+        "exit"
+    }
+    def dispatch String getActionName(SuspendAction action) {
+        "suspend"
     }
     
     def dispatch KNode translate(State s) {
@@ -330,37 +343,17 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         
                 if (SHOW_STATE_ACTIONS.optionBooleanValue) {
                         scopeProvider.parent = s;
-                        for (action : s.entryActions) {
+                        for (action : s.localActions) {
                             it.addRectangle => [
                                 it.invisible = true;
-                                it.addText("entry: " + serializer.serialize(action.copy)) => [
+                                val text = serializer.serialize(action.copy);
+                                it.addText(text) => [
                                     it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
                                     it.putToLookUpWith(action);
                                 ]
                                 it.addRectangle().invisible = true;
                             ];
                         }
-                        for (action : s.duringActions) {
-                            it.addRectangle => [
-                                it.invisible = true;
-                                it.addText("during: " + serializer.serialize(action.copy)) => [
-                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
-                                    it.putToLookUpWith(action);
-                                ]
-                                it.addRectangle().invisible = true;
-                            ];
-                        }
-                        for (action : s.exitActions) {
-                            it.addRectangle => [
-                                it.invisible = true;
-                                it.addText("exit: " + serializer.serialize(action.copy)) => [
-                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
-                                    it.putToLookUpWith(action);
-                                ]
-                                it.addRectangle().invisible = true;
-                            ];
-                        }
-                        
                         
                 }
                 
