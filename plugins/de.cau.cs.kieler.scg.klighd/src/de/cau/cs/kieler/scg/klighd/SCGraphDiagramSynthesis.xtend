@@ -205,7 +205,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
                 it.setGridPlacement(1);
-                it.addText("assignment").putToLookUpWith(s);
+                it.addText(s.assignment).putToLookUpWith(s);
 
             ];
             
@@ -227,7 +227,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25); 
-                node.KRendering.add(factory.createKText.of("cond").putToLookUpWith(s));
+                node.KRendering.add(factory.createKText.of(s.condition).putToLookUpWith(s));
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
@@ -237,7 +237,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
             node.addPort(SCGPORTID_OUTGOING_THEN, 37, 25, 3, PortSide::SOUTH)
             node.addPort(SCGPORTID_OUTGOING_ELSE, 75, 11, 3, PortSide::EAST)
-        ];
+        ]
     }
     
     def dispatch KNode translate(Surface s) {
