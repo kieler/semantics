@@ -435,11 +435,10 @@ public class InternalActionsLexer extends Lexer {
         try {
             int _type = T__34;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:29:7: ( 'or' )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:29:9: 'or'
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:29:7: ( '|' )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:29:9: '|'
             {
-            match("or"); 
-
+            match('|'); 
 
             }
 
@@ -456,11 +455,10 @@ public class InternalActionsLexer extends Lexer {
         try {
             int _type = T__35;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:30:7: ( 'and' )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:30:9: 'and'
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:30:7: ( '&' )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:30:9: '&'
             {
-            match("and"); 
-
+            match('&'); 
 
             }
 
@@ -477,11 +475,10 @@ public class InternalActionsLexer extends Lexer {
         try {
             int _type = T__36;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:31:7: ( 'not' )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:31:9: 'not'
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:31:7: ( '!' )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:31:9: '!'
             {
-            match("not"); 
-
+            match('!'); 
 
             }
 
@@ -1796,13 +1793,13 @@ public class InternalActionsLexer extends Lexer {
     static final String DFA15_maxS =
         "\2\71\1\146\2\uffff";
     static final String DFA15_acceptS =
-        "\3\uffff\1\2\1\1";
+        "\3\uffff\1\1\1\2";
     static final String DFA15_specialS =
         "\5\uffff}>";
     static final String[] DFA15_transitionS = {
             "\1\1\2\uffff\12\2",
             "\12\2",
-            "\1\4\1\uffff\12\2\54\uffff\1\3",
+            "\1\3\1\uffff\12\2\54\uffff\1\4",
             "",
             ""
     };
@@ -1841,39 +1838,38 @@ public class InternalActionsLexer extends Lexer {
         }
     }
     static final String DFA24_eotS =
-        "\2\uffff\1\43\3\uffff\1\50\5\uffff\1\60\1\62\4\64\1\uffff\1\72"+
-        "\1\uffff\2\64\1\37\1\77\2\64\2\37\26\uffff\1\64\1\uffff\1\110\2"+
-        "\64\1\uffff\1\77\2\uffff\2\64\3\uffff\2\64\4\uffff\1\117\1\uffff"+
-        "\1\120\1\121\1\122\1\123\2\64\5\uffff\1\126\1\64\1\uffff\1\126";
+        "\2\uffff\1\43\3\uffff\1\50\5\uffff\1\60\1\62\1\64\4\uffff\1\72"+
+        "\1\uffff\2\64\1\37\1\77\2\64\2\37\26\uffff\1\64\5\uffff\1\77\2\uffff"+
+        "\2\64\3\uffff\2\64\4\uffff\1\114\1\115\1\116\2\64\3\uffff\1\121"+
+        "\1\64\1\uffff\1\121";
     static final String DFA24_eofS =
-        "\130\uffff";
+        "\123\uffff";
     static final String DFA24_minS =
-        "\1\0\1\uffff\1\52\3\uffff\1\75\5\uffff\2\75\2\162\1\156\1\157\1"+
-        "\uffff\1\60\1\uffff\1\157\1\141\1\0\1\56\1\162\1\141\1\0\1\101\4"+
-        "\uffff\1\0\21\uffff\1\145\1\uffff\1\60\1\144\1\164\1\uffff\1\56"+
-        "\2\uffff\1\144\1\154\3\uffff\1\165\1\154\4\uffff\1\60\1\uffff\4"+
-        "\60\1\145\1\163\5\uffff\1\60\1\145\1\uffff\1\60";
+        "\1\0\1\uffff\1\52\3\uffff\1\75\5\uffff\2\75\1\162\4\uffff\1\60"+
+        "\1\uffff\1\157\1\141\1\0\1\56\1\162\1\141\1\0\1\101\4\uffff\1\0"+
+        "\21\uffff\1\145\5\uffff\1\56\2\uffff\1\144\1\154\3\uffff\1\165\1"+
+        "\154\4\uffff\3\60\1\145\1\163\3\uffff\1\60\1\145\1\uffff\1\60";
     static final String DFA24_maxS =
-        "\1\uffff\1\uffff\1\57\3\uffff\1\75\5\uffff\1\76\1\75\2\162\1\156"+
-        "\1\157\1\uffff\1\71\1\uffff\1\157\1\141\1\uffff\1\146\1\162\1\141"+
-        "\1\uffff\1\172\4\uffff\1\uffff\21\uffff\1\145\1\uffff\1\172\1\144"+
-        "\1\164\1\uffff\1\146\2\uffff\1\144\1\154\3\uffff\1\165\1\154\4\uffff"+
-        "\1\172\1\uffff\4\172\1\145\1\163\5\uffff\1\172\1\145\1\uffff\1\172";
+        "\1\uffff\1\uffff\1\57\3\uffff\1\75\5\uffff\1\76\1\75\1\162\4\uffff"+
+        "\1\71\1\uffff\1\157\1\141\1\uffff\1\146\1\162\1\141\1\uffff\1\172"+
+        "\4\uffff\1\uffff\21\uffff\1\145\5\uffff\1\146\2\uffff\1\144\1\154"+
+        "\3\uffff\1\165\1\154\4\uffff\3\172\1\145\1\163\3\uffff\1\172\1\145"+
+        "\1\uffff\1\172";
     static final String DFA24_acceptS =
         "\1\uffff\1\1\1\uffff\1\3\1\4\1\5\1\uffff\1\7\1\10\1\11\1\12\1\14"+
-        "\6\uffff\1\26\1\uffff\1\30\10\uffff\1\42\1\44\1\45\1\1\1\uffff\1"+
-        "\43\1\2\1\3\1\4\1\5\1\6\1\13\1\7\1\10\1\11\1\12\1\14\1\16\1\21\1"+
-        "\15\1\20\1\17\1\uffff\1\42\3\uffff\1\26\1\uffff\1\27\1\30\2\uffff"+
-        "\1\33\1\36\1\37\2\uffff\1\41\1\44\1\34\1\35\1\uffff\1\23\6\uffff"+
-        "\1\22\1\24\1\25\1\31\1\32\2\uffff\1\40\1\uffff";
+        "\3\uffff\1\23\1\24\1\25\1\26\1\uffff\1\30\10\uffff\1\42\1\44\1\45"+
+        "\1\1\1\uffff\1\43\1\2\1\3\1\4\1\5\1\6\1\13\1\7\1\10\1\11\1\12\1"+
+        "\14\1\16\1\21\1\15\1\20\1\17\1\uffff\1\42\1\23\1\24\1\25\1\26\1"+
+        "\uffff\1\27\1\30\2\uffff\1\33\1\36\1\37\2\uffff\1\41\1\44\1\34\1"+
+        "\35\5\uffff\1\22\1\31\1\32\2\uffff\1\40\1\uffff";
     static final String DFA24_specialS =
-        "\1\1\26\uffff\1\2\3\uffff\1\0\5\uffff\1\3\66\uffff}>";
+        "\1\0\26\uffff\1\1\3\uffff\1\2\5\uffff\1\3\61\uffff}>";
     static final String[] DFA24_transitionS = {
-            "\11\37\2\36\2\37\1\36\22\37\1\36\1\37\1\33\1\1\3\37\1\27\1"+
-            "\4\1\5\1\24\1\22\1\37\1\23\1\12\1\2\12\30\1\6\1\3\1\14\1\13"+
-            "\1\15\1\37\1\7\32\35\1\10\1\37\1\11\1\34\1\35\1\37\1\20\4\35"+
-            "\1\32\6\35\1\25\1\21\1\17\1\16\3\35\1\31\1\35\1\26\4\35\uff85"+
-            "\37",
+            "\11\37\2\36\2\37\1\36\22\37\1\36\1\21\1\33\1\1\2\37\1\20\1"+
+            "\27\1\4\1\5\1\24\1\22\1\37\1\23\1\12\1\2\12\30\1\6\1\3\1\14"+
+            "\1\13\1\15\1\37\1\7\32\35\1\10\1\37\1\11\1\34\1\35\1\37\5\35"+
+            "\1\32\6\35\1\25\2\35\1\16\3\35\1\31\1\35\1\26\4\35\1\37\1\17"+
+            "\uff83\37",
             "",
             "\1\41\4\uffff\1\42",
             "",
@@ -1888,9 +1884,9 @@ public class InternalActionsLexer extends Lexer {
             "\1\56\1\57",
             "\1\61",
             "\1\63",
-            "\1\65",
-            "\1\66",
-            "\1\67",
+            "",
+            "",
+            "",
             "",
             "\12\71",
             "",
@@ -1926,39 +1922,34 @@ public class InternalActionsLexer extends Lexer {
             "",
             "\1\107",
             "",
-            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "\1\111",
-            "\1\112",
+            "",
+            "",
+            "",
             "",
             "\1\100\1\uffff\12\71\54\uffff\1\100",
             "",
             "",
+            "\1\110",
+            "\1\111",
+            "",
+            "",
+            "",
+            "\1\112",
             "\1\113",
-            "\1\114",
-            "",
-            "",
-            "",
-            "\1\115",
-            "\1\116",
             "",
             "",
             "",
             "",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "\1\124",
-            "\1\125",
-            "",
-            "",
+            "\1\117",
+            "\1\120",
             "",
             "",
             "",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "\1\127",
+            "\1\122",
             "",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64"
     };
@@ -2000,16 +1991,6 @@ public class InternalActionsLexer extends Lexer {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA24_27 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA24_27>='\u0000' && LA24_27<='\uFFFF')) ) {s = 67;}
-
-                        else s = 31;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
                         int LA24_0 = input.LA(1);
 
                         s = -1;
@@ -2041,11 +2022,11 @@ public class InternalActionsLexer extends Lexer {
 
                         else if ( (LA24_0=='p') ) {s = 14;}
 
-                        else if ( (LA24_0=='o') ) {s = 15;}
+                        else if ( (LA24_0=='|') ) {s = 15;}
 
-                        else if ( (LA24_0=='a') ) {s = 16;}
+                        else if ( (LA24_0=='&') ) {s = 16;}
 
-                        else if ( (LA24_0=='n') ) {s = 17;}
+                        else if ( (LA24_0=='!') ) {s = 17;}
 
                         else if ( (LA24_0=='+') ) {s = 18;}
 
@@ -2069,19 +2050,29 @@ public class InternalActionsLexer extends Lexer {
 
                         else if ( (LA24_0=='^') ) {s = 28;}
 
-                        else if ( ((LA24_0>='A' && LA24_0<='Z')||LA24_0=='_'||(LA24_0>='b' && LA24_0<='e')||(LA24_0>='g' && LA24_0<='l')||(LA24_0>='q' && LA24_0<='s')||LA24_0=='u'||(LA24_0>='w' && LA24_0<='z')) ) {s = 29;}
+                        else if ( ((LA24_0>='A' && LA24_0<='Z')||LA24_0=='_'||(LA24_0>='a' && LA24_0<='e')||(LA24_0>='g' && LA24_0<='l')||(LA24_0>='n' && LA24_0<='o')||(LA24_0>='q' && LA24_0<='s')||LA24_0=='u'||(LA24_0>='w' && LA24_0<='z')) ) {s = 29;}
 
                         else if ( ((LA24_0>='\t' && LA24_0<='\n')||LA24_0=='\r'||LA24_0==' ') ) {s = 30;}
 
-                        else if ( ((LA24_0>='\u0000' && LA24_0<='\b')||(LA24_0>='\u000B' && LA24_0<='\f')||(LA24_0>='\u000E' && LA24_0<='\u001F')||LA24_0=='!'||(LA24_0>='$' && LA24_0<='&')||LA24_0==','||LA24_0=='?'||LA24_0=='\\'||LA24_0=='`'||(LA24_0>='{' && LA24_0<='\uFFFF')) ) {s = 31;}
+                        else if ( ((LA24_0>='\u0000' && LA24_0<='\b')||(LA24_0>='\u000B' && LA24_0<='\f')||(LA24_0>='\u000E' && LA24_0<='\u001F')||(LA24_0>='$' && LA24_0<='%')||LA24_0==','||LA24_0=='?'||LA24_0=='\\'||LA24_0=='`'||LA24_0=='{'||(LA24_0>='}' && LA24_0<='\uFFFF')) ) {s = 31;}
 
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 1 : 
                         int LA24_23 = input.LA(1);
 
                         s = -1;
                         if ( ((LA24_23>='\u0000' && LA24_23<='\uFFFF')) ) {s = 62;}
+
+                        else s = 31;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA24_27 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA24_27>='\u0000' && LA24_27<='\uFFFF')) ) {s = 67;}
 
                         else s = 31;
 

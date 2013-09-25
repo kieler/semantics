@@ -1457,7 +1457,7 @@ ruleOrOperator
 :
 (
 { before(grammarAccess.getOrOperatorAccess().getOREnumLiteralDeclaration()); }
-(	'or' 
+(	'|' 
 )
 { after(grammarAccess.getOrOperatorAccess().getOREnumLiteralDeclaration()); }
 )
@@ -1477,7 +1477,7 @@ ruleAndOperator
 :
 (
 { before(grammarAccess.getAndOperatorAccess().getANDEnumLiteralDeclaration()); }
-(	'and' 
+(	'&' 
 )
 { after(grammarAccess.getAndOperatorAccess().getANDEnumLiteralDeclaration()); }
 )
@@ -1497,7 +1497,7 @@ ruleNotOperator
 :
 (
 { before(grammarAccess.getNotOperatorAccess().getNOTEnumLiteralDeclaration()); }
-(	'not' 
+(	'!' 
 )
 { after(grammarAccess.getNotOperatorAccess().getNOTEnumLiteralDeclaration()); }
 )
@@ -2235,10 +2235,10 @@ rule__ValueType__Alternatives
 )
 
     |(
-{ before(grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1()); }
+{ before(grammarAccess.getValueTypeAccess().getBOOLEANEnumLiteralDeclaration_1()); }
 (	'boolean' 
 )
-{ after(grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1()); }
+{ after(grammarAccess.getValueTypeAccess().getBOOLEANEnumLiteralDeclaration_1()); }
 )
 
     |(
@@ -2249,10 +2249,10 @@ rule__ValueType__Alternatives
 )
 
     |(
-{ before(grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3()); }
+{ before(grammarAccess.getValueTypeAccess().getINTEGEREnumLiteralDeclaration_3()); }
 (	'integer' 
 )
-{ after(grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3()); }
+{ after(grammarAccess.getValueTypeAccess().getINTEGEREnumLiteralDeclaration_3()); }
 )
 
     |(
@@ -2330,14 +2330,14 @@ rule__CombineOperator__Alternatives
 
     |(
 { before(grammarAccess.getCombineOperatorAccess().getOREnumLiteralDeclaration_5()); }
-(	'or' 
+(	'|' 
 )
 { after(grammarAccess.getCombineOperatorAccess().getOREnumLiteralDeclaration_5()); }
 )
 
     |(
 { before(grammarAccess.getCombineOperatorAccess().getANDEnumLiteralDeclaration_6()); }
-(	'and' 
+(	'&' 
 )
 { after(grammarAccess.getCombineOperatorAccess().getANDEnumLiteralDeclaration_6()); }
 )

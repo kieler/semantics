@@ -1314,7 +1314,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getExpressionAccess().getRule();
 	}
 
-	//// Example: not D and C or ?E = 42 or not (A and (B or C))
+	//// Example: not D and C or val(E) = 42 or not (A and (B or C))
 	//BooleanExpression returns Expression:
 	//	OrExpression;
 	public KExpressionsGrammarAccess.BooleanExpressionElements getBooleanExpressionAccess() {
@@ -1336,7 +1336,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getOrExpressionAccess().getRule();
 	}
 
-	//// Example: A and B, not C and 42 <= ?D
+	//// Example: A and B, not C and 42 <= val(D)
 	//AndExpression returns Expression:
 	//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator
 	//	subExpressions+=CompareOperation)*;
@@ -1348,7 +1348,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getAndExpressionAccess().getRule();
 	}
 
-	//// Example: 42 <= ?A
+	//// Example: 42 <= val(A)
 	//CompareOperation returns Expression:
 	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
 	//	subExpressions+=NotOrValuedExpression) | NotExpression;
@@ -1645,7 +1645,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum OrOperator returns OperatorType:
-	//	OR="or";
+	//	OR="|";
 	public KExpressionsGrammarAccess.OrOperatorElements getOrOperatorAccess() {
 		return gaActions.getOrOperatorAccess();
 	}
@@ -1655,7 +1655,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum AndOperator returns OperatorType:
-	//	AND="and";
+	//	AND="&";
 	public KExpressionsGrammarAccess.AndOperatorElements getAndOperatorAccess() {
 		return gaActions.getAndOperatorAccess();
 	}
@@ -1665,7 +1665,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum NotOperator returns OperatorType:
-	//	NOT="not";
+	//	NOT="!";
 	public KExpressionsGrammarAccess.NotOperatorElements getNotOperatorAccess() {
 		return gaActions.getNotOperatorAccess();
 	}
@@ -1727,7 +1727,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 	// * / enum ValueType:
-	//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" | INT="integer" | FLOAT="float" | DOUBLE="double" |
+	//	PURE="pure" | BOOLEAN="boolean" | UNSIGNED="unsigned" | INTEGER="integer" | FLOAT="float" | DOUBLE="double" |
 	//	STRING="string" | HOST="host";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaActions.getValueTypeAccess();
@@ -1738,7 +1738,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum CombineOperator:
-	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
+	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="|" | AND="&" | HOST="host";
 	public KExpressionsGrammarAccess.CombineOperatorElements getCombineOperatorAccess() {
 		return gaActions.getCombineOperatorAccess();
 	}

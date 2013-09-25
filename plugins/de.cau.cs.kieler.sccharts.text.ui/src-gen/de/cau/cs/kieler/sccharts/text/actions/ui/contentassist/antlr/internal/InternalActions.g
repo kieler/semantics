@@ -1171,7 +1171,7 @@ ruleOrOperator
 :
 (
 { before(grammarAccess.getOrOperatorAccess().getOREnumLiteralDeclaration()); }
-(	'or' 
+(	'|' 
 )
 { after(grammarAccess.getOrOperatorAccess().getOREnumLiteralDeclaration()); }
 )
@@ -1191,7 +1191,7 @@ ruleAndOperator
 :
 (
 { before(grammarAccess.getAndOperatorAccess().getANDEnumLiteralDeclaration()); }
-(	'and' 
+(	'&' 
 )
 { after(grammarAccess.getAndOperatorAccess().getANDEnumLiteralDeclaration()); }
 )
@@ -1211,7 +1211,7 @@ ruleNotOperator
 :
 (
 { before(grammarAccess.getNotOperatorAccess().getNOTEnumLiteralDeclaration()); }
-(	'not' 
+(	'!' 
 )
 { after(grammarAccess.getNotOperatorAccess().getNOTEnumLiteralDeclaration()); }
 )
