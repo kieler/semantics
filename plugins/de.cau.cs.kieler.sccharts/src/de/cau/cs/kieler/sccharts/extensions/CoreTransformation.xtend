@@ -445,11 +445,11 @@ class CoreTransformation {
          valuedObject
     }    
     def ValuedObject setTypeInt(ValuedObject valuedObject) {
-         valuedObject.setType(ValueType::INT)
+         valuedObject.setType(ValueType::INTEGER)
          valuedObject
     }   
     def ValuedObject setTypeBool(ValuedObject valuedObject) {
-         valuedObject.setType(ValueType::BOOL)
+         valuedObject.setType(ValueType::BOOLEAN)
          valuedObject
     }    
     def ValuedObject setTypeDouble(ValuedObject valuedObject) {

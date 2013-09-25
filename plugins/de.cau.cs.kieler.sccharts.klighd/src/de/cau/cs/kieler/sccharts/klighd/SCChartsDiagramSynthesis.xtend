@@ -55,6 +55,10 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.krendering.KColor
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
@@ -262,6 +266,18 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     //it.background = "white".color;
                         it.invisible = true;
                             var declaration = "";
+                            var type = "";
+                            var init = "";
+                            if (sig.type != ValueType::PURE) {
+                                type = ": " + sig.type.literal.toLowerCase
+                            }
+                            if (sig.combineOperator != null && sig.combineOperator != CombineOperator::NONE) {
+                                type = ": combine " + sig.type.literal.toLowerCase + " with " + sig.combineOperator.literal.toLowerCase
+                            }
+                            if (sig.initialValue != null) {
+                                init = " = " + serializer.serialize(sig.initialValue.copy)
+                            }
+                            
                             if (sig.isInput) {
                                 declaration = declaration + "input ";
                             }
@@ -275,10 +291,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 declaration = declaration + "static ";
                             }
                             if (declaration.equals("")) {
-                                it.addText(sig.name + ";")
+                                it.addText(sig.name + init + type + ";")
                             }
                             else {
-                                it.addText(declaration.trim + " " + sig.name + ";") => [
+                                it.addText(declaration.trim + " " + sig.name  + init + type + ";") => [
                                     it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
                                     it.putToLookUpWith(sig);
                                 ]
