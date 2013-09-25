@@ -304,23 +304,39 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 ]
                             }
                             it.addRectangle().invisible = true;
-                    ];
+                            ];
                         }
                         
-                        
-                        for (action : s.duringActions) {
-                            var String label =
-                                try {
-                                    serializer.serialize(action.copy => [
-                                    TMP_RES.contents += it;
-                                    ]);
-                                } finally {
-                                    TMP_RES.contents.clear;
-                                }
-                                it.addText(label) => [
-                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
-                                it.putToLookUpWith(action);
+                        scopeProvider.parent = s;
+                        for (action : s.entryActions) {
+                            it.addRectangle => [
+                                it.invisible = true;
+                                it.addText("entry: " + serializer.serialize(action.copy)) => [
+                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+                                    it.putToLookUpWith(action);
                                 ]
+                                it.addRectangle().invisible = true;
+                            ];
+                        }
+                        for (action : s.duringActions) {
+                            it.addRectangle => [
+                                it.invisible = true;
+                                it.addText("during: " + serializer.serialize(action.copy)) => [
+                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+                                    it.putToLookUpWith(action);
+                                ]
+                                it.addRectangle().invisible = true;
+                            ];
+                        }
+                        for (action : s.exitActions) {
+                            it.addRectangle => [
+                                it.invisible = true;
+                                it.addText("exit: " + serializer.serialize(action.copy)) => [
+                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+                                    it.putToLookUpWith(action);
+                                ]
+                                it.addRectangle().invisible = true;
+                            ];
                         }
                         
                         
@@ -374,14 +390,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
             if (SHOW_LABELS.optionBooleanValue) {
                 scopeProvider.parent = t.sourceState;
-                var String label =
-                    try {
-                        serializer.serialize(t.copy => [
-                            TMP_RES.contents += it;
-                        ]);
-                    } finally {
-                        TMP_RES.contents.clear;
-                    } 
+                var String label = serializer.serialize(t.copy)
                 if (t.sourceState.outgoingTransitions.size > 1) {
                     label =  t.sourceState.outgoingTransitions.indexOf(t) + 1 + ": " + label;
                 }
