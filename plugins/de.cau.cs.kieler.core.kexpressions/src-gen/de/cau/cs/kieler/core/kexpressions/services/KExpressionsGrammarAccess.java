@@ -61,7 +61,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "BooleanExpression");
 		private final RuleCall cOrExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		//// Example: not D and C or ?E = 42 or not (A and (B or C))
+		//// Example: not D and C or val(E) = 42 or not (A and (B or C))
 		//BooleanExpression returns Expression:
 		//	OrExpression;
 		public ParserRule getRule() { return rule; }
@@ -122,7 +122,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
 		private final RuleCall cSubExpressionsCompareOperationParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
-		//// Example: A and B, not C and 42 <= ?D
+		//// Example: A and B, not C and 42 <= val(D)
 		//AndExpression returns Expression:
 		//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator
 		//	subExpressions+=CompareOperation)*;
@@ -166,7 +166,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsNotOrValuedExpressionParserRuleCall_0_1_2_0 = (RuleCall)cSubExpressionsAssignment_0_1_2.eContents().get(0);
 		private final RuleCall cNotExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//// Example: 42 <= ?A
+		//// Example: 42 <= val(A)
 		//CompareOperation returns Expression:
 		//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
 		//	subExpressions+=NotOrValuedExpression) | NotExpression;
@@ -936,49 +936,49 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	public class OrOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "OrOperator");
 		private final EnumLiteralDeclaration cOREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cOROrKeyword_0 = (Keyword)cOREnumLiteralDeclaration.eContents().get(0);
+		private final Keyword cORVerticalLineKeyword_0 = (Keyword)cOREnumLiteralDeclaration.eContents().get(0);
 		
 		//enum OrOperator returns OperatorType:
-		//	OR="or";
+		//	OR="|";
 		public EnumRule getRule() { return rule; }
 
-		//OR="or"
+		//OR="|"
 		public EnumLiteralDeclaration getOREnumLiteralDeclaration() { return cOREnumLiteralDeclaration; }
 
-		//"or"
-		public Keyword getOROrKeyword_0() { return cOROrKeyword_0; }
+		//"|"
+		public Keyword getORVerticalLineKeyword_0() { return cORVerticalLineKeyword_0; }
 	}
 
 	public class AndOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "AndOperator");
 		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cANDAndKeyword_0 = (Keyword)cANDEnumLiteralDeclaration.eContents().get(0);
+		private final Keyword cANDAmpersandKeyword_0 = (Keyword)cANDEnumLiteralDeclaration.eContents().get(0);
 		
 		//enum AndOperator returns OperatorType:
-		//	AND="and";
+		//	AND="&";
 		public EnumRule getRule() { return rule; }
 
-		//AND="and"
+		//AND="&"
 		public EnumLiteralDeclaration getANDEnumLiteralDeclaration() { return cANDEnumLiteralDeclaration; }
 
-		//"and"
-		public Keyword getANDAndKeyword_0() { return cANDAndKeyword_0; }
+		//"&"
+		public Keyword getANDAmpersandKeyword_0() { return cANDAmpersandKeyword_0; }
 	}
 
 	public class NotOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "NotOperator");
 		private final EnumLiteralDeclaration cNOTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cNOTNotKeyword_0 = (Keyword)cNOTEnumLiteralDeclaration.eContents().get(0);
+		private final Keyword cNOTExclamationMarkKeyword_0 = (Keyword)cNOTEnumLiteralDeclaration.eContents().get(0);
 		
 		//enum NotOperator returns OperatorType:
-		//	NOT="not";
+		//	NOT="!";
 		public EnumRule getRule() { return rule; }
 
-		//NOT="not"
+		//NOT="!"
 		public EnumLiteralDeclaration getNOTEnumLiteralDeclaration() { return cNOTEnumLiteralDeclaration; }
 
-		//"not"
-		public Keyword getNOTNotKeyword_0() { return cNOTNotKeyword_0; }
+		//"!"
+		public Keyword getNOTExclamationMarkKeyword_0() { return cNOTExclamationMarkKeyword_0; }
 	}
 
 	public class AddOperatorElements extends AbstractEnumRuleElementFinder {
@@ -1082,12 +1082,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cPUREEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
 		private final Keyword cPUREPureKeyword_0_0 = (Keyword)cPUREEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cBOOLEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cBOOLBooleanKeyword_1_0 = (Keyword)cBOOLEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cBOOLEANEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cBOOLEANBooleanKeyword_1_0 = (Keyword)cBOOLEANEnumLiteralDeclaration_1.eContents().get(0);
 		private final EnumLiteralDeclaration cUNSIGNEDEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
 		private final Keyword cUNSIGNEDUnsignedKeyword_2_0 = (Keyword)cUNSIGNEDEnumLiteralDeclaration_2.eContents().get(0);
-		private final EnumLiteralDeclaration cINTEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
-		private final Keyword cINTIntegerKeyword_3_0 = (Keyword)cINTEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cINTEGEREnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cINTEGERIntegerKeyword_3_0 = (Keyword)cINTEGEREnumLiteralDeclaration_3.eContents().get(0);
 		private final EnumLiteralDeclaration cFLOATEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
 		private final Keyword cFLOATFloatKeyword_4_0 = (Keyword)cFLOATEnumLiteralDeclaration_4.eContents().get(0);
 		private final EnumLiteralDeclaration cDOUBLEEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
@@ -1100,12 +1100,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		/// *
 		//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 		// * / enum ValueType:
-		//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" | INT="integer" | FLOAT="float" | DOUBLE="double" |
+		//	PURE="pure" | BOOLEAN="boolean" | UNSIGNED="unsigned" | INTEGER="integer" | FLOAT="float" | DOUBLE="double" |
 		//	STRING="string" | HOST="host";
 		public EnumRule getRule() { return rule; }
 
-		//PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" | INT="integer" | FLOAT="float" | DOUBLE="double" | STRING="string" |
-		//HOST="host"
+		//PURE="pure" | BOOLEAN="boolean" | UNSIGNED="unsigned" | INTEGER="integer" | FLOAT="float" | DOUBLE="double" |
+		//STRING="string" | HOST="host"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//PURE="pure"
@@ -1114,11 +1114,11 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"pure"
 		public Keyword getPUREPureKeyword_0_0() { return cPUREPureKeyword_0_0; }
 
-		//BOOL="boolean"
-		public EnumLiteralDeclaration getBOOLEnumLiteralDeclaration_1() { return cBOOLEnumLiteralDeclaration_1; }
+		//BOOLEAN="boolean"
+		public EnumLiteralDeclaration getBOOLEANEnumLiteralDeclaration_1() { return cBOOLEANEnumLiteralDeclaration_1; }
 
 		//"boolean"
-		public Keyword getBOOLBooleanKeyword_1_0() { return cBOOLBooleanKeyword_1_0; }
+		public Keyword getBOOLEANBooleanKeyword_1_0() { return cBOOLEANBooleanKeyword_1_0; }
 
 		//UNSIGNED="unsigned"
 		public EnumLiteralDeclaration getUNSIGNEDEnumLiteralDeclaration_2() { return cUNSIGNEDEnumLiteralDeclaration_2; }
@@ -1126,11 +1126,11 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"unsigned"
 		public Keyword getUNSIGNEDUnsignedKeyword_2_0() { return cUNSIGNEDUnsignedKeyword_2_0; }
 
-		//INT="integer"
-		public EnumLiteralDeclaration getINTEnumLiteralDeclaration_3() { return cINTEnumLiteralDeclaration_3; }
+		//INTEGER="integer"
+		public EnumLiteralDeclaration getINTEGEREnumLiteralDeclaration_3() { return cINTEGEREnumLiteralDeclaration_3; }
 
 		//"integer"
-		public Keyword getINTIntegerKeyword_3_0() { return cINTIntegerKeyword_3_0; }
+		public Keyword getINTEGERIntegerKeyword_3_0() { return cINTEGERIntegerKeyword_3_0; }
 
 		//FLOAT="float"
 		public EnumLiteralDeclaration getFLOATEnumLiteralDeclaration_4() { return cFLOATEnumLiteralDeclaration_4; }
@@ -1171,17 +1171,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cMINEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
 		private final Keyword cMINMinKeyword_4_0 = (Keyword)cMINEnumLiteralDeclaration_4.eContents().get(0);
 		private final EnumLiteralDeclaration cOREnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
-		private final Keyword cOROrKeyword_5_0 = (Keyword)cOREnumLiteralDeclaration_5.eContents().get(0);
+		private final Keyword cORVerticalLineKeyword_5_0 = (Keyword)cOREnumLiteralDeclaration_5.eContents().get(0);
 		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
-		private final Keyword cANDAndKeyword_6_0 = (Keyword)cANDEnumLiteralDeclaration_6.eContents().get(0);
+		private final Keyword cANDAmpersandKeyword_6_0 = (Keyword)cANDEnumLiteralDeclaration_6.eContents().get(0);
 		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
 		private final Keyword cHOSTHostKeyword_7_0 = (Keyword)cHOSTEnumLiteralDeclaration_7.eContents().get(0);
 		
 		//enum CombineOperator:
-		//	NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
+		//	NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="|" | AND="&" | HOST="host";
 		public EnumRule getRule() { return rule; }
 
-		//NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host"
+		//NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="|" | AND="&" | HOST="host"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//NONE="none"
@@ -1214,17 +1214,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"min"
 		public Keyword getMINMinKeyword_4_0() { return cMINMinKeyword_4_0; }
 
-		//OR="or"
+		//OR="|"
 		public EnumLiteralDeclaration getOREnumLiteralDeclaration_5() { return cOREnumLiteralDeclaration_5; }
 
-		//"or"
-		public Keyword getOROrKeyword_5_0() { return cOROrKeyword_5_0; }
+		//"|"
+		public Keyword getORVerticalLineKeyword_5_0() { return cORVerticalLineKeyword_5_0; }
 
-		//AND="and"
+		//AND="&"
 		public EnumLiteralDeclaration getANDEnumLiteralDeclaration_6() { return cANDEnumLiteralDeclaration_6; }
 
-		//"and"
-		public Keyword getANDAndKeyword_6_0() { return cANDAndKeyword_6_0; }
+		//"&"
+		public Keyword getANDAmpersandKeyword_6_0() { return cANDAmpersandKeyword_6_0; }
 
 		//HOST="host"
 		public EnumLiteralDeclaration getHOSTEnumLiteralDeclaration_7() { return cHOSTEnumLiteralDeclaration_7; }
@@ -1337,7 +1337,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getExpressionAccess().getRule();
 	}
 
-	//// Example: not D and C or ?E = 42 or not (A and (B or C))
+	//// Example: not D and C or val(E) = 42 or not (A and (B or C))
 	//BooleanExpression returns Expression:
 	//	OrExpression;
 	public BooleanExpressionElements getBooleanExpressionAccess() {
@@ -1359,7 +1359,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getOrExpressionAccess().getRule();
 	}
 
-	//// Example: A and B, not C and 42 <= ?D
+	//// Example: A and B, not C and 42 <= val(D)
 	//AndExpression returns Expression:
 	//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator
 	//	subExpressions+=CompareOperation)*;
@@ -1371,7 +1371,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getAndExpressionAccess().getRule();
 	}
 
-	//// Example: 42 <= ?A
+	//// Example: 42 <= val(A)
 	//CompareOperation returns Expression:
 	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
 	//	subExpressions+=NotOrValuedExpression) | NotExpression;
@@ -1668,7 +1668,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum OrOperator returns OperatorType:
-	//	OR="or";
+	//	OR="|";
 	public OrOperatorElements getOrOperatorAccess() {
 		return (unknownRuleOrOperator != null) ? unknownRuleOrOperator : (unknownRuleOrOperator = new OrOperatorElements());
 	}
@@ -1678,7 +1678,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum AndOperator returns OperatorType:
-	//	AND="and";
+	//	AND="&";
 	public AndOperatorElements getAndOperatorAccess() {
 		return (unknownRuleAndOperator != null) ? unknownRuleAndOperator : (unknownRuleAndOperator = new AndOperatorElements());
 	}
@@ -1688,7 +1688,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum NotOperator returns OperatorType:
-	//	NOT="not";
+	//	NOT="!";
 	public NotOperatorElements getNotOperatorAccess() {
 		return (unknownRuleNotOperator != null) ? unknownRuleNotOperator : (unknownRuleNotOperator = new NotOperatorElements());
 	}
@@ -1760,7 +1760,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 	// * / enum ValueType:
-	//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" | INT="integer" | FLOAT="float" | DOUBLE="double" |
+	//	PURE="pure" | BOOLEAN="boolean" | UNSIGNED="unsigned" | INTEGER="integer" | FLOAT="float" | DOUBLE="double" |
 	//	STRING="string" | HOST="host";
 	public ValueTypeElements getValueTypeAccess() {
 		return (unknownRuleValueType != null) ? unknownRuleValueType : (unknownRuleValueType = new ValueTypeElements());
@@ -1771,7 +1771,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum CombineOperator:
-	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
+	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="|" | AND="&" | HOST="host";
 	public CombineOperatorElements getCombineOperatorAccess() {
 		return (unknownRuleCombineOperator != null) ? unknownRuleCombineOperator : (unknownRuleCombineOperator = new CombineOperatorElements());
 	}

@@ -87,7 +87,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    NOT(0, "NOT", "not"),
+    NOT(0, "NOT", "!"),
 
     /**
      * The '<em><b>VAL</b></em>' literal object.
@@ -97,7 +97,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    VAL(15, "VAL", "?"),
+    VAL(15, "VAL", "val"),
 
     /**
      * The '<em><b>PRE</b></em>' literal object.
@@ -127,7 +127,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    AND(4, "AND", "and"),
+    AND(4, "AND", "&"),
 
     /**
      * The '<em><b>OR</b></em>' literal object.
@@ -137,7 +137,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    OR(5, "OR", "or"),
+    OR(5, "OR", "|"),
 
     /**
      * The '<em><b>ADD</b></em>' literal object.
@@ -267,7 +267,7 @@ public enum OperatorType implements Enumerator {
      * Logical Negation operator (unary)
      * <!-- end-model-doc -->
      * @see #NOT
-     * @model literal="not"
+     * @model literal="!"
      * @generated
      * @ordered
      */
@@ -281,7 +281,7 @@ public enum OperatorType implements Enumerator {
      * Value operator. Returns the value of a Signal referenced by a SignalReference.
      * <!-- end-model-doc -->
      * @see #VAL
-     * @model literal="?"
+     * @model literal="val"
      * @generated
      * @ordered
      */
@@ -325,7 +325,7 @@ public enum OperatorType implements Enumerator {
      * 
      * <!-- end-model-doc -->
      * @see #AND
-     * @model literal="and"
+     * @model literal="&"
      * @generated
      * @ordered
      */
@@ -339,7 +339,7 @@ public enum OperatorType implements Enumerator {
      * Logical OR operator.
      * <!-- end-model-doc -->
      * @see #OR
-     * @model literal="or"
+     * @model literal="|"
      * @generated
      * @ordered
      */

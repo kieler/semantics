@@ -87,11 +87,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:12:7: ( 'or' )
-            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:12:9: 'or'
+            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:12:7: ( '|' )
+            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:12:9: '|'
             {
-            match("or"); 
-
+            match('|'); 
 
             }
 
@@ -108,11 +107,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:13:7: ( 'and' )
-            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:13:9: 'and'
+            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:13:7: ( '&' )
+            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:13:9: '&'
             {
-            match("and"); 
-
+            match('&'); 
 
             }
 
@@ -129,11 +127,10 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:14:7: ( 'not' )
-            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:14:9: 'not'
+            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:14:7: ( '!' )
+            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:14:9: '!'
             {
-            match("not"); 
-
+            match('!'); 
 
             }
 
@@ -1728,46 +1725,43 @@ public class InternalKExpressionsLexer extends Lexer {
         }
     }
     static final String DFA24_eotS =
-        "\1\uffff\4\36\1\uffff\1\44\1\uffff\1\36\1\51\1\36\1\uffff\1\56"+
-        "\1\60\6\uffff\1\34\1\70\2\36\2\34\3\uffff\1\36\1\uffff\1\77\2\36"+
-        "\1\uffff\1\70\2\uffff\1\36\3\uffff\1\36\17\uffff\2\36\2\uffff\1"+
-        "\110\1\uffff\1\111\1\112\1\113\2\uffff\1\114\2\36\5\uffff\1\117"+
-        "\1\36\1\uffff\1\117";
+        "\1\uffff\1\36\4\uffff\1\43\1\uffff\1\36\1\51\1\36\1\uffff\1\56"+
+        "\1\60\6\uffff\1\34\1\70\2\36\2\34\3\uffff\1\36\6\uffff\1\70\1\uffff"+
+        "\1\36\3\uffff\1\36\17\uffff\2\36\2\uffff\1\105\1\106\2\uffff\1\107"+
+        "\2\36\3\uffff\1\112\1\36\1\uffff\1\112";
     static final String DFA24_eofS =
-        "\121\uffff";
+        "\114\uffff";
     static final String DFA24_minS =
-        "\1\0\2\162\1\156\1\157\1\uffff\1\60\1\uffff\1\157\1\52\1\141\1"+
-        "\uffff\2\75\6\uffff\1\0\1\56\1\162\1\141\1\0\1\101\3\uffff\1\145"+
-        "\1\uffff\1\60\1\144\1\164\1\uffff\1\56\2\uffff\1\144\1\0\2\uffff"+
-        "\1\154\17\uffff\1\165\1\154\2\uffff\1\60\1\uffff\3\60\2\uffff\1"+
-        "\60\1\145\1\163\5\uffff\1\60\1\145\1\uffff\1\60";
+        "\1\0\1\162\4\uffff\1\60\1\uffff\1\157\1\52\1\141\1\uffff\2\75\6"+
+        "\uffff\1\0\1\56\1\162\1\141\1\0\1\101\3\uffff\1\145\6\uffff\1\56"+
+        "\1\uffff\1\144\1\0\2\uffff\1\154\17\uffff\1\165\1\154\2\uffff\2"+
+        "\60\2\uffff\1\60\1\145\1\163\3\uffff\1\60\1\145\1\uffff\1\60";
     static final String DFA24_maxS =
-        "\1\uffff\2\162\1\156\1\157\1\uffff\1\71\1\uffff\1\157\1\57\1\141"+
-        "\1\uffff\1\76\1\75\6\uffff\1\uffff\1\146\1\162\1\141\1\uffff\1\172"+
-        "\3\uffff\1\145\1\uffff\1\172\1\144\1\164\1\uffff\1\146\2\uffff\1"+
-        "\144\1\uffff\2\uffff\1\154\17\uffff\1\165\1\154\2\uffff\1\172\1"+
-        "\uffff\3\172\2\uffff\1\172\1\145\1\163\5\uffff\1\172\1\145\1\uffff"+
-        "\1\172";
+        "\1\uffff\1\162\4\uffff\1\71\1\uffff\1\157\1\57\1\141\1\uffff\1"+
+        "\76\1\75\6\uffff\1\uffff\1\146\1\162\1\141\1\uffff\1\172\3\uffff"+
+        "\1\145\6\uffff\1\146\1\uffff\1\144\1\uffff\2\uffff\1\154\17\uffff"+
+        "\1\165\1\154\2\uffff\2\172\2\uffff\1\172\1\145\1\163\3\uffff\1\172"+
+        "\1\145\1\uffff\1\172";
     static final String DFA24_acceptS =
-        "\5\uffff\1\5\1\uffff\1\7\3\uffff\1\13\2\uffff\1\21\1\22\1\23\1"+
-        "\24\1\25\1\26\6\uffff\1\36\1\40\1\41\1\uffff\1\36\3\uffff\1\5\1"+
-        "\uffff\1\6\1\7\2\uffff\1\37\1\11\1\uffff\1\13\1\15\1\20\1\14\1\17"+
-        "\1\16\1\21\1\22\1\23\1\24\1\25\1\26\1\27\1\32\1\33\2\uffff\1\35"+
-        "\1\40\1\uffff\1\2\3\uffff\1\30\1\31\3\uffff\1\1\1\3\1\4\1\10\1\12"+
+        "\2\uffff\1\2\1\3\1\4\1\5\1\uffff\1\7\3\uffff\1\13\2\uffff\1\21"+
+        "\1\22\1\23\1\24\1\25\1\26\6\uffff\1\36\1\40\1\41\1\uffff\1\36\1"+
+        "\2\1\3\1\4\1\5\1\6\1\uffff\1\7\2\uffff\1\37\1\11\1\uffff\1\13\1"+
+        "\15\1\20\1\14\1\17\1\16\1\21\1\22\1\23\1\24\1\25\1\26\1\27\1\32"+
+        "\1\33\2\uffff\1\35\1\40\2\uffff\1\30\1\31\3\uffff\1\1\1\10\1\12"+
         "\2\uffff\1\34\1\uffff";
     static final String DFA24_specialS =
-        "\1\1\23\uffff\1\3\3\uffff\1\2\16\uffff\1\0\51\uffff}>";
+        "\1\2\23\uffff\1\3\3\uffff\1\1\16\uffff\1\0\44\uffff}>";
     static final String[] DFA24_transitionS = {
-            "\11\34\2\33\2\34\1\33\22\34\1\33\1\34\1\30\4\34\1\24\1\16\1"+
-            "\17\1\7\1\5\1\34\1\6\1\23\1\11\12\25\2\34\1\14\1\13\1\15\1\34"+
-            "\1\20\32\32\1\21\1\34\1\22\1\31\1\32\1\34\1\3\4\32\1\27\6\32"+
-            "\1\10\1\4\1\2\1\1\3\32\1\26\1\32\1\12\4\32\uff85\34",
+            "\11\34\2\33\2\34\1\33\22\34\1\33\1\4\1\30\3\34\1\3\1\24\1\16"+
+            "\1\17\1\7\1\5\1\34\1\6\1\23\1\11\12\25\2\34\1\14\1\13\1\15\1"+
+            "\34\1\20\32\32\1\21\1\34\1\22\1\31\1\32\1\34\5\32\1\27\6\32"+
+            "\1\10\2\32\1\1\3\32\1\26\1\32\1\12\4\32\1\34\1\2\uff83\34",
             "\1\35",
-            "\1\37",
-            "\1\40",
-            "\1\41",
             "",
-            "\12\43",
+            "",
+            "",
+            "",
+            "\12\44",
             "",
             "\1\46",
             "\1\47\4\uffff\1\50",
@@ -1782,7 +1776,7 @@ public class InternalKExpressionsLexer extends Lexer {
             "",
             "",
             "\0\67",
-            "\1\71\1\uffff\12\43\54\uffff\1\71",
+            "\1\71\1\uffff\12\44\54\uffff\1\71",
             "\1\72",
             "\1\73",
             "\0\74",
@@ -1792,18 +1786,18 @@ public class InternalKExpressionsLexer extends Lexer {
             "",
             "\1\76",
             "",
-            "\12\36\7\uffff\32\36\4\uffff\1\36\1\uffff\32\36",
-            "\1\100",
-            "\1\101",
             "",
-            "\1\71\1\uffff\12\43\54\uffff\1\71",
+            "",
+            "",
+            "",
+            "",
+            "\1\71\1\uffff\12\44\54\uffff\1\71",
+            "",
+            "\1\77",
+            "\52\101\1\100\uffd5\101",
             "",
             "",
             "\1\102",
-            "\52\104\1\103\uffd5\104",
-            "",
-            "",
-            "\1\105",
             "",
             "",
             "",
@@ -1819,27 +1813,22 @@ public class InternalKExpressionsLexer extends Lexer {
             "",
             "",
             "",
-            "\1\106",
-            "\1\107",
+            "\1\103",
+            "\1\104",
             "",
             "",
-            "\12\36\7\uffff\32\36\4\uffff\1\36\1\uffff\32\36",
-            "",
-            "\12\36\7\uffff\32\36\4\uffff\1\36\1\uffff\32\36",
             "\12\36\7\uffff\32\36\4\uffff\1\36\1\uffff\32\36",
             "\12\36\7\uffff\32\36\4\uffff\1\36\1\uffff\32\36",
             "",
             "",
             "\12\36\7\uffff\32\36\4\uffff\1\36\1\uffff\32\36",
-            "\1\115",
-            "\1\116",
-            "",
-            "",
+            "\1\110",
+            "\1\111",
             "",
             "",
             "",
             "\12\36\7\uffff\32\36\4\uffff\1\36\1\uffff\32\36",
-            "\1\120",
+            "\1\113",
             "",
             "\12\36\7\uffff\32\36\4\uffff\1\36\1\uffff\32\36"
     };
@@ -1884,23 +1873,33 @@ public class InternalKExpressionsLexer extends Lexer {
                         int LA24_39 = input.LA(1);
 
                         s = -1;
-                        if ( (LA24_39=='*') ) {s = 67;}
+                        if ( (LA24_39=='*') ) {s = 64;}
 
-                        else if ( ((LA24_39>='\u0000' && LA24_39<=')')||(LA24_39>='+' && LA24_39<='\uFFFF')) ) {s = 68;}
+                        else if ( ((LA24_39>='\u0000' && LA24_39<=')')||(LA24_39>='+' && LA24_39<='\uFFFF')) ) {s = 65;}
 
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
+                        int LA24_24 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA24_24>='\u0000' && LA24_24<='\uFFFF')) ) {s = 60;}
+
+                        else s = 28;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
                         int LA24_0 = input.LA(1);
 
                         s = -1;
                         if ( (LA24_0=='p') ) {s = 1;}
 
-                        else if ( (LA24_0=='o') ) {s = 2;}
+                        else if ( (LA24_0=='|') ) {s = 2;}
 
-                        else if ( (LA24_0=='a') ) {s = 3;}
+                        else if ( (LA24_0=='&') ) {s = 3;}
 
-                        else if ( (LA24_0=='n') ) {s = 4;}
+                        else if ( (LA24_0=='!') ) {s = 4;}
 
                         else if ( (LA24_0=='+') ) {s = 5;}
 
@@ -1944,21 +1943,11 @@ public class InternalKExpressionsLexer extends Lexer {
 
                         else if ( (LA24_0=='^') ) {s = 25;}
 
-                        else if ( ((LA24_0>='A' && LA24_0<='Z')||LA24_0=='_'||(LA24_0>='b' && LA24_0<='e')||(LA24_0>='g' && LA24_0<='l')||(LA24_0>='q' && LA24_0<='s')||LA24_0=='u'||(LA24_0>='w' && LA24_0<='z')) ) {s = 26;}
+                        else if ( ((LA24_0>='A' && LA24_0<='Z')||LA24_0=='_'||(LA24_0>='a' && LA24_0<='e')||(LA24_0>='g' && LA24_0<='l')||(LA24_0>='n' && LA24_0<='o')||(LA24_0>='q' && LA24_0<='s')||LA24_0=='u'||(LA24_0>='w' && LA24_0<='z')) ) {s = 26;}
 
                         else if ( ((LA24_0>='\t' && LA24_0<='\n')||LA24_0=='\r'||LA24_0==' ') ) {s = 27;}
 
-                        else if ( ((LA24_0>='\u0000' && LA24_0<='\b')||(LA24_0>='\u000B' && LA24_0<='\f')||(LA24_0>='\u000E' && LA24_0<='\u001F')||LA24_0=='!'||(LA24_0>='#' && LA24_0<='&')||LA24_0==','||(LA24_0>=':' && LA24_0<=';')||LA24_0=='?'||LA24_0=='\\'||LA24_0=='`'||(LA24_0>='{' && LA24_0<='\uFFFF')) ) {s = 28;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA24_24 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA24_24>='\u0000' && LA24_24<='\uFFFF')) ) {s = 60;}
-
-                        else s = 28;
+                        else if ( ((LA24_0>='\u0000' && LA24_0<='\b')||(LA24_0>='\u000B' && LA24_0<='\f')||(LA24_0>='\u000E' && LA24_0<='\u001F')||(LA24_0>='#' && LA24_0<='%')||LA24_0==','||(LA24_0>=':' && LA24_0<=';')||LA24_0=='?'||LA24_0=='\\'||LA24_0=='`'||LA24_0=='{'||(LA24_0>='}' && LA24_0<='\uFFFF')) ) {s = 28;}
 
                         if ( s>=0 ) return s;
                         break;

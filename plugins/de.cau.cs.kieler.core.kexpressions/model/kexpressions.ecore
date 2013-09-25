@@ -81,12 +81,12 @@
         <details key="documentation" value="Greater or Equal operator. (Not commutative!)"/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="NOT" literal="not">
+    <eLiterals name="NOT" literal="!">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Logical Negation operator (unary)"/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="VAL" value="15" literal="?">
+    <eLiterals name="VAL" value="15" literal="val">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Value operator. Returns the value of a Signal referenced by a SignalReference."/>
       </eAnnotations>
@@ -101,12 +101,12 @@
         <details key="documentation" value="Not Equal operator.&#xA;"/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="AND" value="4" literal="and">
+    <eLiterals name="AND" value="4" literal="&amp;">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Logical AND operator.&#xA;"/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="OR" value="5" literal="or">
+    <eLiterals name="OR" value="5" literal="|">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Logical OR operator."/>
       </eAnnotations>
@@ -165,9 +165,9 @@
         <details key="documentation" value="Default value is the PURE type which means that the&#xA;ValuedObject does not contain any value at all (only&#xA;makes sense for Signals)."/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="BOOL" value="1" literal="bool"/>
+    <eLiterals name="BOOLEAN" value="1" literal="boolean"/>
     <eLiterals name="UNSIGNED" value="2" literal="unsigned"/>
-    <eLiterals name="INT" value="3" literal="int"/>
+    <eLiterals name="INTEGER" value="3" literal="integer"/>
     <eLiterals name="FLOAT" value="4" literal="float"/>
     <eLiterals name="HOST" value="7" literal="host">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

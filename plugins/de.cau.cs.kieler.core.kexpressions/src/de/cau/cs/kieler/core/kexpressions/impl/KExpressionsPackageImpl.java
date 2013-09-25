@@ -601,9 +601,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEEnum(valueTypeEEnum, ValueType.class, "ValueType");
         addEEnumLiteral(valueTypeEEnum, ValueType.PURE);
-        addEEnumLiteral(valueTypeEEnum, ValueType.BOOL);
+        addEEnumLiteral(valueTypeEEnum, ValueType.BOOLEAN);
         addEEnumLiteral(valueTypeEEnum, ValueType.UNSIGNED);
-        addEEnumLiteral(valueTypeEEnum, ValueType.INT);
+        addEEnumLiteral(valueTypeEEnum, ValueType.INTEGER);
         addEEnumLiteral(valueTypeEEnum, ValueType.FLOAT);
         addEEnumLiteral(valueTypeEEnum, ValueType.HOST);
         addEEnumLiteral(valueTypeEEnum, ValueType.DOUBLE);
