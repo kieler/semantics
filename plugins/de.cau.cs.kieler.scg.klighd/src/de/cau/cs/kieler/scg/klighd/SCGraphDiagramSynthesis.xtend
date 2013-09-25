@@ -62,6 +62,10 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.ControlFlow
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+
 
 class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
@@ -167,6 +171,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 it.addText("assignment").putToLookUpWith(s);
 
             ];
+            
+            s.next?.translateControlFlow("");
         ]
     }
     
@@ -186,7 +192,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
             ]
-        ];
+            
+            s.then?.translateControlFlow("outgoingThen");
+            s.getElse()?.translateControlFlow("outgoingElse");
+        ]
     }
     
     def dispatch KNode translate(Surface s) {
@@ -206,8 +215,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
             
-            s.depth?.translateTickEdge
-        ];
+            s.depth?.translateTickEdge;
+        ]
     }
 
     def dispatch KNode translate(Depth s) {
@@ -229,6 +238,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
             ]
+
+            s.next?.translateControlFlow("");
         ]
     }
     
@@ -248,7 +259,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
             ]
-        ];
+
+            s.next?.translateControlFlow("");
+        ]
     }    
  
     def dispatch KNode translate(Exit s) {
@@ -267,7 +280,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
             ]
-        ];
+            
+            s.next?.translateControlFlow("");
+        ]
     }
 
     def dispatch KNode translate(Fork s) {
@@ -286,7 +301,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
             ]
-        ];
+            
+            s.getNext().forEach[e | e.translateControlFlow(""); ]   
+        ]
     }
 
     def dispatch KNode translate(Join s) {
@@ -305,7 +322,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
             ]
-        ];
+            
+            s.next?.translateControlFlow("");
+        ]
     }
 
 
@@ -317,6 +336,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
       
             edge.addSpline(2) => [
                     it.lineStyle = LineStyle::DOT;
+//                    it.lineStyle.dashPattern.clear;
+//                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
+            ]
+                        
+        ]
+    }
+    
+    def KEdge translateControlFlow(ControlFlow t, String outgoing) {
+        return t.createEdge().putToLookUpWith(t) => [ edge |
+            edge.source = t.eContainer?.node;
+            edge.target = t.target?.node;
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+      
+            edge.addSpline(2) => [
+                    it.lineStyle = LineStyle::SOLID;
 //                    it.lineStyle.dashPattern.clear;
 //                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
             ]
@@ -341,6 +375,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //                }
 //            }
         ]
-    }
+    }    
    
 }
