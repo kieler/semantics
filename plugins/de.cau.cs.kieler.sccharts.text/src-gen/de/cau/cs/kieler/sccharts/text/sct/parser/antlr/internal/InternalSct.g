@@ -792,23 +792,23 @@ ruleState returns [EObject current=null]
 
 )
 ))
-    |(	otherlv_20='inner' 
+    |(	otherlv_20='during' 
     {
-    	newLeafNode(otherlv_20, grammarAccess.getStateAccess().getInnerKeyword_6_1_1_0_2_0());
+    	newLeafNode(otherlv_20, grammarAccess.getStateAccess().getDuringKeyword_6_1_1_0_2_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getStateAccess().getInnerActionsActionParserRuleCall_6_1_1_0_2_1_0()); 
+	        newCompositeNode(grammarAccess.getStateAccess().getDuringActionsActionParserRuleCall_6_1_1_0_2_1_0()); 
 	    }
-		lv_innerActions_21_0=ruleAction		{
+		lv_duringActions_21_0=ruleAction		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getStateRule());
 	        }
        		add(
        			$current, 
-       			"innerActions",
-        		lv_innerActions_21_0, 
+       			"duringActions",
+        		lv_duringActions_21_0, 
         		"Action");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -4185,7 +4185,7 @@ rulePreOperator returns [Enumerator current=null]
 ruleOrOperator returns [Enumerator current=null] 
     @init { enterRule(); }
     @after { leaveRule(); }:
-(	enumLiteral_0='or' 
+(	enumLiteral_0='|' 
 	{
         $current = grammarAccess.getOrOperatorAccess().getOREnumLiteralDeclaration().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_0, grammarAccess.getOrOperatorAccess().getOREnumLiteralDeclaration()); 
@@ -4198,7 +4198,7 @@ ruleOrOperator returns [Enumerator current=null]
 ruleAndOperator returns [Enumerator current=null] 
     @init { enterRule(); }
     @after { leaveRule(); }:
-(	enumLiteral_0='and' 
+(	enumLiteral_0='&' 
 	{
         $current = grammarAccess.getAndOperatorAccess().getANDEnumLiteralDeclaration().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_0, grammarAccess.getAndOperatorAccess().getANDEnumLiteralDeclaration()); 
@@ -4211,7 +4211,7 @@ ruleAndOperator returns [Enumerator current=null]
 ruleNotOperator returns [Enumerator current=null] 
     @init { enterRule(); }
     @after { leaveRule(); }:
-(	enumLiteral_0='not' 
+(	enumLiteral_0='!' 
 	{
         $current = grammarAccess.getNotOperatorAccess().getNOTEnumLiteralDeclaration().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_0, grammarAccess.getNotOperatorAccess().getNOTEnumLiteralDeclaration()); 
@@ -4297,8 +4297,8 @@ ruleValueType returns [Enumerator current=null]
 )
     |(	enumLiteral_1='boolean' 
 	{
-        $current = grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_1, grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1()); 
+        $current = grammarAccess.getValueTypeAccess().getBOOLEANEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_1, grammarAccess.getValueTypeAccess().getBOOLEANEnumLiteralDeclaration_1()); 
     }
 )
     |(	enumLiteral_2='unsigned' 
@@ -4309,8 +4309,8 @@ ruleValueType returns [Enumerator current=null]
 )
     |(	enumLiteral_3='integer' 
 	{
-        $current = grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_3, grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3()); 
+        $current = grammarAccess.getValueTypeAccess().getINTEGEREnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_3, grammarAccess.getValueTypeAccess().getINTEGEREnumLiteralDeclaration_3()); 
     }
 )
     |(	enumLiteral_4='float' 
@@ -4374,13 +4374,13 @@ ruleCombineOperator returns [Enumerator current=null]
         newLeafNode(enumLiteral_4, grammarAccess.getCombineOperatorAccess().getMINEnumLiteralDeclaration_4()); 
     }
 )
-    |(	enumLiteral_5='or' 
+    |(	enumLiteral_5='|' 
 	{
         $current = grammarAccess.getCombineOperatorAccess().getOREnumLiteralDeclaration_5().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_5, grammarAccess.getCombineOperatorAccess().getOREnumLiteralDeclaration_5()); 
     }
 )
-    |(	enumLiteral_6='and' 
+    |(	enumLiteral_6='&' 
 	{
         $current = grammarAccess.getCombineOperatorAccess().getANDEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_6, grammarAccess.getCombineOperatorAccess().getANDEnumLiteralDeclaration_6()); 

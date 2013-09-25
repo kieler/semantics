@@ -53,7 +53,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getValuedObjects <em>Valued Objects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getExitActions <em>Exit Actions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getInnerActions <em>Inner Actions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getDuringActions <em>During Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getEntryActions <em>Entry Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBodyReference <em>Body Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBodyContents <em>Body Contents</em>}</li>
@@ -186,20 +186,20 @@ public interface Scope extends Annotatable {
     EList<Action> getExitActions();
 
     /**
-     * Returns the value of the '<em><b>Inner Actions</b></em>' containment reference list.
+     * Returns the value of the '<em><b>During Actions</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.sccharts.Action}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Inner Actions</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>During Actions</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Inner Actions</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_InnerActions()
+     * @return the value of the '<em>During Actions</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_DuringActions()
      * @model containment="true"
      * @generated
      */
-    EList<Action> getInnerActions();
+    EList<Action> getDuringActions();
 
     /**
      * Returns the value of the '<em><b>Entry Actions</b></em>' containment reference list.

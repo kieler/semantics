@@ -45,6 +45,10 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.serializer.ISerializer
+import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
+import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
+import de.cau.cs.kieler.klay.layered.properties.Properties
+
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.krendering.KColor
@@ -93,9 +97,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
     private static val TransformationOption SHOW_SHADOW
         = TransformationOption::createCheckOption("Shadow", true);
+        
+    private static val TransformationOption ALIGN_TICK_EDGES
+        = TransformationOption::createCheckOption("Tick edge alignment", true);
 
     override public getTransformationOptions() {
-        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_LABELS, SHOW_SHADOW);
+        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_LABELS, SHOW_SHADOW, ALIGN_TICK_EDGES);
     }
     
     override public getRecommendedLayoutOptions() {
@@ -198,6 +205,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
             ]
+            
+            s.depth?.translateTickEdge
         ];
     }
 
@@ -207,6 +216,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
             // node.setLayoutOption(LayoutOptions::SPACING, 0f);
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+            if (ALIGN_TICK_EDGES.optionBooleanValue) {
+                node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+            }
 
             val figure = node.addPolygon().createDepthShape();
 //                .background = "white".color;
@@ -217,7 +229,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
             ]
-        ];
+        ]
     }
     
     def dispatch KNode translate(Entry s) {
@@ -296,5 +308,39 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         ];
     }
 
+
+    def KEdge translateTickEdge(Depth t) {
+        return t.createEdge().putToLookUpWith(t) => [ edge |
+            edge.source = t.surface?.node;
+            edge.target = t.node;
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+      
+            edge.addSpline(2) => [
+                    it.lineStyle = LineStyle::DOT;
+//                    it.lineStyle.dashPattern.clear;
+//                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
+            ]
+                        
+//            if (SHOW_LABELS.optionBooleanValue) {
+//                scopeProvider.parent = t.sourceState;
+//                var String label =
+//                    try {
+//                        serializer.serialize(t.copy => [
+//                            TMP_RES.contents += it;
+//                        ]);
+//                    } finally {
+//                        TMP_RES.contents.clear;
+//                    } 
+//                if (t.sourceState.outgoingTransitions.size > 1) {
+//                    label =  t.sourceState.outgoingTransitions.indexOf(t) + 1 + ": " + label;
+//                }
+//                if (!label.nullOrEmpty) {
+//                    t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
+//                        label, 5, KlighdConstants::DEFAULT_FONT_NAME
+//                    );
+//                }
+//            }
+        ]
+    }
    
 }

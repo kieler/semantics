@@ -165,7 +165,7 @@ class Simulation {
                immediateDuringAction.effects.add(auxiliaryEmission);
                
                // Add during action to state
-               state.innerActions.add(immediateDuringAction);
+               state.duringActions.add(immediateDuringAction);
 
                // Add auxiliaryValuedObject to first (and only) root region state SyncCharts main interface
                targetRootRegion.states.get(0).valuedObjects.add(auxiliaryValuedObject);

@@ -190,7 +190,7 @@ public class RegionItemProvider
             childFeature == SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS ||
             childFeature == SCChartsPackage.Literals.SCOPE__SUSPENSION_TRIGGER ||
             childFeature == SCChartsPackage.Literals.SCOPE__EXIT_ACTIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__INNER_ACTIONS ||
+            childFeature == SCChartsPackage.Literals.SCOPE__DURING_ACTIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__ENTRY_ACTIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__RENAMINGS ||
             childFeature == SCChartsPackage.Literals.REGION__STATES ||

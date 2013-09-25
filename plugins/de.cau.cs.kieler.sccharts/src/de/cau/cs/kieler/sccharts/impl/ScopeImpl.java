@@ -52,7 +52,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getValuedObjects <em>Valued Objects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getExitActions <em>Exit Actions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getInnerActions <em>Inner Actions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getDuringActions <em>During Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getEntryActions <em>Entry Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBodyReference <em>Body Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBodyContents <em>Body Contents</em>}</li>
@@ -143,14 +143,14 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     protected EList<Action> exitActions;
 
     /**
-     * The cached value of the '{@link #getInnerActions() <em>Inner Actions</em>}' containment reference list.
+     * The cached value of the '{@link #getDuringActions() <em>During Actions</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getInnerActions()
+     * @see #getDuringActions()
      * @generated
      * @ordered
      */
-    protected EList<Action> innerActions;
+    protected EList<Action> duringActions;
 
     /**
      * The cached value of the '{@link #getEntryActions() <em>Entry Actions</em>}' containment reference list.
@@ -355,11 +355,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Action> getInnerActions() {
-        if (innerActions == null) {
-            innerActions = new EObjectContainmentEList<Action>(Action.class, this, SCChartsPackage.SCOPE__INNER_ACTIONS);
+    public EList<Action> getDuringActions() {
+        if (duringActions == null) {
+            duringActions = new EObjectContainmentEList<Action>(Action.class, this, SCChartsPackage.SCOPE__DURING_ACTIONS);
         }
-        return innerActions;
+        return duringActions;
     }
 
     /**
@@ -529,8 +529,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return basicSetSuspensionTrigger(null, msgs);
             case SCChartsPackage.SCOPE__EXIT_ACTIONS:
                 return ((InternalEList<?>)getExitActions()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.SCOPE__INNER_ACTIONS:
-                return ((InternalEList<?>)getInnerActions()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.SCOPE__DURING_ACTIONS:
+                return ((InternalEList<?>)getDuringActions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__ENTRY_ACTIONS:
                 return ((InternalEList<?>)getEntryActions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__BODY_CONTENTS:
@@ -561,8 +561,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return getSuspensionTrigger();
             case SCChartsPackage.SCOPE__EXIT_ACTIONS:
                 return getExitActions();
-            case SCChartsPackage.SCOPE__INNER_ACTIONS:
-                return getInnerActions();
+            case SCChartsPackage.SCOPE__DURING_ACTIONS:
+                return getDuringActions();
             case SCChartsPackage.SCOPE__ENTRY_ACTIONS:
                 return getEntryActions();
             case SCChartsPackage.SCOPE__BODY_REFERENCE:
@@ -606,9 +606,9 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 getExitActions().clear();
                 getExitActions().addAll((Collection<? extends Action>)newValue);
                 return;
-            case SCChartsPackage.SCOPE__INNER_ACTIONS:
-                getInnerActions().clear();
-                getInnerActions().addAll((Collection<? extends Action>)newValue);
+            case SCChartsPackage.SCOPE__DURING_ACTIONS:
+                getDuringActions().clear();
+                getDuringActions().addAll((Collection<? extends Action>)newValue);
                 return;
             case SCChartsPackage.SCOPE__ENTRY_ACTIONS:
                 getEntryActions().clear();
@@ -658,8 +658,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SCChartsPackage.SCOPE__EXIT_ACTIONS:
                 getExitActions().clear();
                 return;
-            case SCChartsPackage.SCOPE__INNER_ACTIONS:
-                getInnerActions().clear();
+            case SCChartsPackage.SCOPE__DURING_ACTIONS:
+                getDuringActions().clear();
                 return;
             case SCChartsPackage.SCOPE__ENTRY_ACTIONS:
                 getEntryActions().clear();
@@ -701,8 +701,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return suspensionTrigger != null;
             case SCChartsPackage.SCOPE__EXIT_ACTIONS:
                 return exitActions != null && !exitActions.isEmpty();
-            case SCChartsPackage.SCOPE__INNER_ACTIONS:
-                return innerActions != null && !innerActions.isEmpty();
+            case SCChartsPackage.SCOPE__DURING_ACTIONS:
+                return duringActions != null && !duringActions.isEmpty();
             case SCChartsPackage.SCOPE__ENTRY_ACTIONS:
                 return entryActions != null && !entryActions.isEmpty();
             case SCChartsPackage.SCOPE__BODY_REFERENCE:

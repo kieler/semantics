@@ -35,7 +35,7 @@ Expression returns Expression:
 	;
 
 
-// Example: not D and C or ?E = 42 or not (A and (B or C))
+// Example: not D and C or val(E) = 42 or not (A and (B or C))
 BooleanExpression returns Expression:
 	OrExpression;
 
@@ -45,12 +45,12 @@ OrExpression returns Expression:
 	AndExpression ({OperatorExpression.subExpressions+=current} operator=OrOperator subExpressions+=AndExpression)*;
 
 
-// Example: A and B, not C and 42 <= ?D
+// Example: A and B, not C and 42 <= val(D)
 AndExpression returns Expression:
 	CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator subExpressions+=CompareOperation)*;
 
 
-// Example: 42 <= ?A
+// Example: 42 <= val(A)
 CompareOperation returns Expression:
 	=> NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=NotOrValuedExpression)
 	| NotExpression
@@ -254,13 +254,13 @@ enum PreOperator returns OperatorType:
     PRE="pre";
 
 enum OrOperator returns OperatorType:
-	OR="or";
+	OR="|";
 
 enum AndOperator returns OperatorType:
-	AND="and";
+	AND="&";
 
 enum NotOperator returns OperatorType:
-	NOT="not";
+	NOT="!";
 
 enum AddOperator returns OperatorType:
 	ADD="+";
@@ -285,14 +285,14 @@ enum ValOperator returns OperatorType:
    the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 */
 enum ValueType returns ValueType:
-	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned"	| 
-	INT="integer" | FLOAT="float" | DOUBLE="double" |
+	PURE="pure" | BOOLEAN="boolean" | UNSIGNED="unsigned"	| 
+	INTEGER="integer" | FLOAT="float" | DOUBLE="double" |
 	STRING="string" | HOST="host";
 
 
 enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
-	MIN="min" | OR="or" | AND="and" | HOST="host";
+	MIN="min" | OR="|" | AND="&" | HOST="host";
 
 
 // custom terminal rule allowing to save transition label string as they are

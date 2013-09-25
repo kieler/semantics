@@ -142,7 +142,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="exitActions" upperBound="-1"
         eType="#//Action" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="innerActions" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="duringActions" upperBound="-1"
         eType="#//Action" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="entryActions" upperBound="-1"
         eType="#//Action" containment="true"/>

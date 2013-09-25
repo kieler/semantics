@@ -60,7 +60,7 @@ State returns sccharts::State:
           (
             (valuedObjects+=ValuedObject    |
              'entry' entryActions+=Action |
-             'inner' innerActions+=Action |
+             'during' duringActions+=Action |
              'exit'  exitActions+=Action  |
              'suspend' suspensionTrigger=Action)*
             (bodyText += TextualCode)*

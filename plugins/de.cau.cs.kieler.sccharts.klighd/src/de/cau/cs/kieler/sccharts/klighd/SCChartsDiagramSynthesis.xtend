@@ -55,6 +55,11 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.krendering.KColor
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import java.util.LinkedList
 
 class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
@@ -257,11 +262,24 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 //.setPointPlacementData() (LEFT, 0, 0, TOP, 0, i2)//.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                 
                 if (SHOW_SIGNAL_DECLARATIONS.optionBooleanValue && !s.valuedObjects.empty) {
+                    
                         for (sig : s.valuedObjects) {
                     it.addRectangle => [
                     //it.background = "white".color;
                         it.invisible = true;
                             var declaration = "";
+                            var type = "";
+                            var init = "";
+                            if (sig.type != ValueType::PURE) {
+                                type = ": " + sig.type.literal.toLowerCase
+                            }
+                            if (sig.combineOperator != null && sig.combineOperator != CombineOperator::NONE) {
+                                type = ": combine " + sig.type.literal.toLowerCase + " with " + sig.combineOperator.literal.toLowerCase
+                            }
+                            if (sig.initialValue != null) {
+                                init = " = " + serializer.serialize(sig.initialValue.copy)
+                            }
+                            
                             if (sig.isInput) {
                                 declaration = declaration + "input ";
                             }
@@ -275,10 +293,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 declaration = declaration + "static ";
                             }
                             if (declaration.equals("")) {
-                                it.addText(sig.name + ";")
+                                //declarations.add(sig.name + init + type + ";")
+                                it.addText(sig.name + init + type + ";")
                             }
                             else {
-                                it.addText(declaration.trim + " " + sig.name + ";") => [
+                                //declarations.add(declaration.trim + " " + sig.name  + init + type + ";")
+                                    it.addText(declaration.trim + " " + sig.name  + init + type + ";") => [
                                     it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
                                     it.putToLookUpWith(sig);
                                 ]
@@ -286,6 +306,24 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                             it.addRectangle().invisible = true;
                     ];
                         }
+                        
+                        
+                        for (action : s.duringActions) {
+                            var String label =
+                                try {
+                                    serializer.serialize(action.copy => [
+                                    TMP_RES.contents += it;
+                                    ]);
+                                } finally {
+                                    TMP_RES.contents.clear;
+                                }
+                                it.addText(label) => [
+                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+                                it.putToLookUpWith(action);
+                                ]
+                        }
+                        
+                        
                 }
                 
                 if (!s.regions.empty) {

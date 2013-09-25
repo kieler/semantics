@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scg.provider;
 
 
 import de.cau.cs.kieler.scg.Conditional;
+import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
 
 import java.util.Collection;
@@ -211,6 +212,10 @@ public class ConditionalItemProvider
             case ScgPackage.CONDITIONAL__CONDITION:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
+            case ScgPackage.CONDITIONAL__THEN:
+            case ScgPackage.CONDITIONAL__ELSE:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+                return;
         }
         super.notifyChanged(notification);
     }
@@ -225,6 +230,39 @@ public class ConditionalItemProvider
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
         super.collectNewChildDescriptors(newChildDescriptors, object);
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.CONDITIONAL__THEN,
+                 ScgFactory.eINSTANCE.createControlFlow()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.CONDITIONAL__ELSE,
+                 ScgFactory.eINSTANCE.createControlFlow()));
+    }
+
+    /**
+     * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
+        Object childFeature = feature;
+        Object childObject = child;
+
+        boolean qualify =
+            childFeature == ScgPackage.Literals.CONDITIONAL__THEN ||
+            childFeature == ScgPackage.Literals.CONDITIONAL__ELSE;
+
+        if (qualify) {
+            return getString
+                ("_UI_CreateChild_text2",
+                 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+        }
+        return super.getCreateChildText(owner, feature, child, selection);
     }
 
 }
