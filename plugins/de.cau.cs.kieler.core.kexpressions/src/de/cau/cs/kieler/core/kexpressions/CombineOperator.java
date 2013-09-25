@@ -83,7 +83,7 @@ public enum CombineOperator implements Enumerator {
      * @generated
      * @ordered
      */
-    OR(4, "OR", "or"),
+    OR(4, "OR", "|"),
 
     /**
      * The '<em><b>AND</b></em>' literal object.
@@ -93,7 +93,7 @@ public enum CombineOperator implements Enumerator {
      * @generated
      * @ordered
      */
-    AND(3, "AND", "and"),
+    AND(3, "AND", "&"),
 
     /**
      * The '<em><b>HOST</b></em>' literal object.
@@ -184,7 +184,7 @@ public enum CombineOperator implements Enumerator {
      * Logical or function for boolean valued signals.
      * <!-- end-model-doc -->
      * @see #OR
-     * @model literal="or"
+     * @model literal="|"
      * @generated
      * @ordered
      */
@@ -198,7 +198,7 @@ public enum CombineOperator implements Enumerator {
      * Logical and for boolean valued signals.
      * <!-- end-model-doc -->
      * @see #AND
-     * @model literal="and"
+     * @model literal="&"
      * @generated
      * @ordered
      */

@@ -31,12 +31,12 @@
         <details key="documentation" value="The minimum function. Takes the lesser of the given two."/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="OR" value="4" literal="or">
+    <eLiterals name="OR" value="4" literal="|">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Logical or function for boolean valued signals."/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="AND" value="3" literal="and">
+    <eLiterals name="AND" value="3" literal="&amp;">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Logical and for boolean valued signals."/>
       </eAnnotations>

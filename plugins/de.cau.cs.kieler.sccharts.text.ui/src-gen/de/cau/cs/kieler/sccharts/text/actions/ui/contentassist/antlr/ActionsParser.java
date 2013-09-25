@@ -55,8 +55,8 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 					put(grammarAccess.getTransitionAccess().getGroup(), "rule__Transition__Group__0");
-					put(grammarAccess.getTransitionAccess().getGroup_4(), "rule__Transition__Group_4__0");
-					put(grammarAccess.getTransitionAccess().getGroup_4_2(), "rule__Transition__Group_4_2__0");
+					put(grammarAccess.getTransitionAccess().getGroup_5(), "rule__Transition__Group_5__0");
+					put(grammarAccess.getTransitionAccess().getGroup_5_2(), "rule__Transition__Group_5_2__0");
 					put(grammarAccess.getEntryActionAccess().getGroup(), "rule__EntryAction__Group__0");
 					put(grammarAccess.getEntryActionAccess().getGroup_4(), "rule__EntryAction__Group_4__0");
 					put(grammarAccess.getEntryActionAccess().getGroup_4_2(), "rule__EntryAction__Group_4_2__0");
@@ -107,10 +107,11 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExtendedIDAccess().getGroup(), "rule__ExtendedID__Group__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup_1(), "rule__ExtendedID__Group_1__0");
 					put(grammarAccess.getTransitionAccess().getAnnotationsAssignment_1(), "rule__Transition__AnnotationsAssignment_1");
-					put(grammarAccess.getTransitionAccess().getDelayAssignment_2(), "rule__Transition__DelayAssignment_2");
-					put(grammarAccess.getTransitionAccess().getTriggerAssignment_3(), "rule__Transition__TriggerAssignment_3");
-					put(grammarAccess.getTransitionAccess().getEffectsAssignment_4_1(), "rule__Transition__EffectsAssignment_4_1");
-					put(grammarAccess.getTransitionAccess().getEffectsAssignment_4_2_1(), "rule__Transition__EffectsAssignment_4_2_1");
+					put(grammarAccess.getTransitionAccess().getIsImmediateAssignment_2(), "rule__Transition__IsImmediateAssignment_2");
+					put(grammarAccess.getTransitionAccess().getDelayAssignment_3(), "rule__Transition__DelayAssignment_3");
+					put(grammarAccess.getTransitionAccess().getTriggerAssignment_4(), "rule__Transition__TriggerAssignment_4");
+					put(grammarAccess.getTransitionAccess().getEffectsAssignment_5_1(), "rule__Transition__EffectsAssignment_5_1");
+					put(grammarAccess.getTransitionAccess().getEffectsAssignment_5_2_1(), "rule__Transition__EffectsAssignment_5_2_1");
 					put(grammarAccess.getEntryActionAccess().getTriggerAssignment_3(), "rule__EntryAction__TriggerAssignment_3");
 					put(grammarAccess.getEntryActionAccess().getEffectsAssignment_4_1(), "rule__EntryAction__EffectsAssignment_4_1");
 					put(grammarAccess.getEntryActionAccess().getEffectsAssignment_4_2_1(), "rule__EntryAction__EffectsAssignment_4_2_1");

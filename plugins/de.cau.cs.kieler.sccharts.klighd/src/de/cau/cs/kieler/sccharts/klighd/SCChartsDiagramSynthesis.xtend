@@ -408,6 +408,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             if (SHOW_LABELS.optionBooleanValue) {
                 scopeProvider.parent = t.sourceState;
                 var String label = serializer.serialize(t.copy)
+                label = label.replace("immediate", "")
                 if (t.sourceState.outgoingTransitions.size > 1) {
                     label =  t.sourceState.outgoingTransitions.indexOf(t) + 1 + ": " + label;
                 }

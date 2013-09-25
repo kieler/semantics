@@ -1,6 +1,7 @@
 RULE_BOOLEAN=9
 RULE_ID=5
 T__40=40
+T__41=41
 T__29=29
 T__28=28
 T__27=27
@@ -51,6 +52,7 @@ RULE_COMMENT_ANNOTATION=10
 '.'=40
 'pre'=17
 ')'=35
+'immediate'=41
 '<='=28
 '<'=27
 ':'=16
