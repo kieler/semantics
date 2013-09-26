@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
+Bundle-Name: KIELER SC Graph Edit Support
 Bundle-SymbolicName: de.cau.cs.kieler.scg.edit;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: de.cau.cs.kieler.scg.provider.ScgEditPlugin$Implementation
-Bundle-Vendor: %providerName
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.scg.provider,
