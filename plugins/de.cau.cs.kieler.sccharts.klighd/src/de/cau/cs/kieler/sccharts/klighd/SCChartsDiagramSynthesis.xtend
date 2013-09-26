@@ -224,7 +224,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
             val conditional = s.type == StateType::CONDITIONAL;
             val cornerRadius = if (conditional) 10 else if (!s.hasRegionsOrDeclarations) 17 else 8;
-            val lineWidth = if (s.isInitial && s.isFinal) 2.1f else if (s.isInitial) 4 else 1;
+            val lineWidth = if (s.isInitial && s.isFinal) 4 else if (s.isInitial) 4 else 1;
 
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth)
                 .background = "white".color;
@@ -241,7 +241,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     node.setNodeSize(20,20);
                 ] else if (s.isFinal) figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
                     // re-configure the outer rounded rectangle
-                    val offset = figure.lineWidthValue + if (s.isInitial) 4 else 3;
+                    val offset = figure.lineWidthValue + if (s.isInitial) 3 else 3;
                     figure.setCornerSize(offset + cornerRadius, offset + cornerRadius)
                     figure.lineWidth = if (s.isInitial) 4 else 2;
 
