@@ -352,7 +352,11 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else break;
 			case SCChartsPackage.STATE:
-				if(context == grammarAccess.getStateRule()) {
+				if(context == grammarAccess.getSCChartRule()) {
+					sequence_SCChart(context, (State) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getStateRule()) {
 					sequence_State(context, (State) semanticObject); 
 					return; 
 				}
@@ -408,10 +412,28 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *     (
 	 *         annotations+=ImportAnnotation* 
 	 *         (annotations+=Annotation* id=ID? label=STRING? valuedObjects+=ValuedObject* bodyText+=TextualCode*)? 
-	 *         states+=State*
+	 *         states+=SCChart*
 	 *     )
 	 */
 	protected void sequence_RootRegion(EObject context, Region semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         type=StateType? 
+	 *         id=ID 
+	 *         label=STRING? 
+	 *         (
+	 *             (bodyReference=[State|ID] (renamings+=Substitution renamings+=Substitution*)?) | 
+	 *             ((valuedObjects+=ValuedObject | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
+	 *         )?
+	 *     )
+	 */
+	protected void sequence_SCChart(EObject context, State semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -429,7 +451,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         ((isInitial?='init' isFinal?='final'?) | (isFinal?='final' isInitial?='init'?))? 
+	 *         ((isInitial?='initial' isFinal?='final'?) | (isFinal?='final' isInitial?='initial'?))? 
 	 *         type=StateType? 
 	 *         id=ID 
 	 *         label=STRING? 
@@ -477,7 +499,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         type=TransitionType 
 	 *         priority=INT? 
 	 *         targetState=[State|ID] 
-	 *         ((isImmediate?='immediate'? delay=INT? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?) | label=STRING)? 
+	 *         (isImmediate?='immediate'? ((delay=INT? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?) | label=STRING))? 
 	 *         isHistory?='history'?
 	 *     )
 	 */

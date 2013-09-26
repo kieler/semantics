@@ -1666,7 +1666,7 @@ rule__CompareOperator__Alternatives
 :
 (
 { before(grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0()); }
-(	'=' 
+(	'==' 
 )
 { after(grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0()); }
 )
@@ -2273,11 +2273,11 @@ rule__Assignment__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getAssignmentAccess().getColonEqualsSignKeyword_1()); }
+{ before(grammarAccess.getAssignmentAccess().getEqualsSignKeyword_1()); }
 
-	':=' 
+	'=' 
 
-{ after(grammarAccess.getAssignmentAccess().getColonEqualsSignKeyword_1()); }
+{ after(grammarAccess.getAssignmentAccess().getEqualsSignKeyword_1()); }
 )
 
 ;

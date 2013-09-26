@@ -171,11 +171,10 @@ public class InternalActionsLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:16:7: ( ':=' )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:16:9: ':='
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:16:7: ( '=' )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:16:9: '='
             {
-            match(":="); 
-
+            match('='); 
 
             }
 
@@ -292,10 +291,11 @@ public class InternalActionsLexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:22:7: ( '=' )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:22:9: '='
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:22:7: ( '==' )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:22:9: '=='
             {
-            match('='); 
+            match("=="); 
+
 
             }
 
@@ -1860,17 +1860,17 @@ public class InternalActionsLexer extends Lexer {
         "\1\163\1\144\3\uffff\1\172\1\145\1\151\1\uffff\1\172\1\141\1\164"+
         "\1\145\1\172\1\uffff";
     static final String DFA24_acceptS =
-        "\3\uffff\1\3\1\4\1\5\1\uffff\1\7\1\10\1\11\1\12\1\14\3\uffff\1"+
+        "\3\uffff\1\3\1\4\1\5\1\uffff\1\7\1\10\1\11\1\12\1\13\3\uffff\1"+
         "\23\1\24\1\25\1\26\1\uffff\1\30\10\uffff\1\42\1\44\1\45\1\uffff"+
-        "\1\42\1\uffff\1\43\1\2\1\3\1\4\1\5\1\6\1\13\1\7\1\10\1\11\1\12\1"+
-        "\14\1\16\1\21\1\15\1\20\1\17\1\uffff\1\23\1\24\1\25\1\26\1\uffff"+
+        "\1\42\1\uffff\1\43\1\2\1\3\1\4\1\5\1\14\1\6\1\7\1\10\1\11\1\12\1"+
+        "\13\1\16\1\21\1\15\1\20\1\17\1\uffff\1\23\1\24\1\25\1\26\1\uffff"+
         "\1\27\1\30\2\uffff\1\33\1\36\1\37\2\uffff\1\41\1\44\1\uffff\1\34"+
         "\1\35\6\uffff\1\22\1\31\1\32\3\uffff\1\40\5\uffff\1\1";
     static final String DFA24_specialS =
-        "\1\1\26\uffff\1\0\3\uffff\1\3\6\uffff\1\2\70\uffff}>";
+        "\1\2\26\uffff\1\0\3\uffff\1\3\6\uffff\1\1\70\uffff}>";
     static final String[] DFA24_transitionS = {
             "\11\37\2\36\2\37\1\36\22\37\1\36\1\21\1\33\3\37\1\20\1\27\1"+
-            "\4\1\5\1\24\1\22\1\37\1\23\1\12\1\2\12\30\1\6\1\3\1\14\1\13"+
+            "\4\1\5\1\24\1\22\1\37\1\23\1\12\1\2\12\30\1\13\1\3\1\14\1\6"+
             "\1\15\1\37\1\7\32\35\1\10\1\37\1\11\1\34\1\35\1\37\5\35\1\32"+
             "\2\35\1\1\3\35\1\25\2\35\1\16\3\35\1\31\1\35\1\26\4\35\1\37"+
             "\1\17\uff83\37",
@@ -2013,6 +2013,16 @@ public class InternalActionsLexer extends Lexer {
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
+                        int LA24_34 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA24_34=='*') ) {s = 70;}
+
+                        else if ( ((LA24_34>='\u0000' && LA24_34<=')')||(LA24_34>='+' && LA24_34<='\uFFFF')) ) {s = 71;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
                         int LA24_0 = input.LA(1);
 
                         s = -1;
@@ -2026,7 +2036,7 @@ public class InternalActionsLexer extends Lexer {
 
                         else if ( (LA24_0==')') ) {s = 5;}
 
-                        else if ( (LA24_0==':') ) {s = 6;}
+                        else if ( (LA24_0=='=') ) {s = 6;}
 
                         else if ( (LA24_0=='@') ) {s = 7;}
 
@@ -2036,7 +2046,7 @@ public class InternalActionsLexer extends Lexer {
 
                         else if ( (LA24_0=='.') ) {s = 10;}
 
-                        else if ( (LA24_0=='=') ) {s = 11;}
+                        else if ( (LA24_0==':') ) {s = 11;}
 
                         else if ( (LA24_0=='<') ) {s = 12;}
 
@@ -2077,16 +2087,6 @@ public class InternalActionsLexer extends Lexer {
                         else if ( ((LA24_0>='\t' && LA24_0<='\n')||LA24_0=='\r'||LA24_0==' ') ) {s = 30;}
 
                         else if ( ((LA24_0>='\u0000' && LA24_0<='\b')||(LA24_0>='\u000B' && LA24_0<='\f')||(LA24_0>='\u000E' && LA24_0<='\u001F')||(LA24_0>='#' && LA24_0<='%')||LA24_0==','||LA24_0=='?'||LA24_0=='\\'||LA24_0=='`'||LA24_0=='{'||(LA24_0>='}' && LA24_0<='\uFFFF')) ) {s = 31;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA24_34 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA24_34=='*') ) {s = 70;}
-
-                        else if ( ((LA24_34>='\u0000' && LA24_34<=')')||(LA24_34>='+' && LA24_34<='\uFFFF')) ) {s = 71;}
 
                         if ( s>=0 ) return s;
                         break;

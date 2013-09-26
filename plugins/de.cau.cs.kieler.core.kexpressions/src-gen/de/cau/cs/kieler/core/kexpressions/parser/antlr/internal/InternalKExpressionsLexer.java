@@ -186,10 +186,11 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:17:7: ( '=' )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:17:9: '='
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:17:7: ( '==' )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:17:9: '=='
             {
-            match('='); 
+            match("=="); 
+
 
             }
 
@@ -1680,13 +1681,13 @@ public class InternalKExpressionsLexer extends Lexer {
     static final String DFA15_maxS =
         "\2\71\1\146\2\uffff";
     static final String DFA15_acceptS =
-        "\3\uffff\1\1\1\2";
+        "\3\uffff\1\2\1\1";
     static final String DFA15_specialS =
         "\5\uffff}>";
     static final String[] DFA15_transitionS = {
             "\1\1\2\uffff\12\2",
             "\12\2",
-            "\1\3\1\uffff\12\2\54\uffff\1\4",
+            "\1\4\1\uffff\12\2\54\uffff\1\3",
             "",
             ""
     };
@@ -1725,32 +1726,31 @@ public class InternalKExpressionsLexer extends Lexer {
         }
     }
     static final String DFA24_eotS =
-        "\10\uffff\1\46\1\50\1\52\4\uffff\1\57\1\uffff\1\52\1\65\1\52\1"+
-        "\34\1\70\2\52\2\34\17\uffff\1\52\6\uffff\1\70\1\uffff\1\52\3\uffff"+
+        "\7\uffff\1\34\1\46\1\50\1\52\4\uffff\1\60\1\uffff\1\52\1\65\1\52"+
+        "\1\34\1\70\2\52\2\34\17\uffff\1\52\5\uffff\1\70\2\uffff\1\52\3\uffff"+
         "\1\52\3\uffff\2\52\2\uffff\1\105\1\106\2\uffff\1\107\2\52\3\uffff"+
         "\1\112\1\52\1\uffff\1\112";
     static final String DFA24_eofS =
         "\114\uffff";
     static final String DFA24_minS =
-        "\1\0\7\uffff\2\75\1\162\4\uffff\1\60\1\uffff\1\157\1\52\1\141\1"+
-        "\0\1\56\1\162\1\141\1\0\1\101\17\uffff\1\145\6\uffff\1\56\1\uffff"+
+        "\1\0\6\uffff\3\75\1\162\4\uffff\1\60\1\uffff\1\157\1\52\1\141\1"+
+        "\0\1\56\1\162\1\141\1\0\1\101\17\uffff\1\145\5\uffff\1\56\2\uffff"+
         "\1\144\1\0\2\uffff\1\154\3\uffff\1\165\1\154\2\uffff\2\60\2\uffff"+
         "\1\60\1\145\1\163\3\uffff\1\60\1\145\1\uffff\1\60";
     static final String DFA24_maxS =
-        "\1\uffff\7\uffff\1\76\1\75\1\162\4\uffff\1\71\1\uffff\1\157\1\57"+
-        "\1\141\1\uffff\1\146\1\162\1\141\1\uffff\1\172\17\uffff\1\145\6"+
-        "\uffff\1\146\1\uffff\1\144\1\uffff\2\uffff\1\154\3\uffff\1\165\1"+
-        "\154\2\uffff\2\172\2\uffff\1\172\1\145\1\163\3\uffff\1\172\1\145"+
+        "\1\uffff\6\uffff\1\75\1\76\1\75\1\162\4\uffff\1\71\1\uffff\1\157"+
+        "\1\57\1\141\1\uffff\1\146\1\162\1\141\1\uffff\1\172\17\uffff\1\145"+
+        "\5\uffff\1\146\2\uffff\1\144\1\uffff\2\uffff\1\154\3\uffff\1\165"+
+        "\1\154\2\uffff\2\172\2\uffff\1\172\1\145\1\163\3\uffff\1\172\1\145"+
         "\1\uffff\1\172";
     static final String DFA24_acceptS =
-        "\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\3\uffff\1\16\1\17\1\20\1\21"+
-        "\1\uffff\1\23\11\uffff\1\36\1\40\1\41\1\1\1\2\1\3\1\4\1\5\1\6\1"+
-        "\7\1\11\1\14\1\10\1\13\1\12\1\uffff\1\36\1\16\1\17\1\20\1\21\1\22"+
-        "\1\uffff\1\23\2\uffff\1\37\1\25\1\uffff\1\27\1\32\1\33\2\uffff\1"+
-        "\35\1\40\2\uffff\1\30\1\31\3\uffff\1\15\1\24\1\26\2\uffff\1\34\1"+
-        "\uffff";
+        "\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6\4\uffff\1\16\1\17\1\20\1\21\1"+
+        "\uffff\1\23\11\uffff\1\36\1\40\1\41\1\1\1\2\1\3\1\4\1\5\1\6\1\7"+
+        "\1\11\1\14\1\10\1\13\1\12\1\uffff\1\36\1\16\1\17\1\20\1\21\1\uffff"+
+        "\1\22\1\23\2\uffff\1\37\1\25\1\uffff\1\27\1\32\1\33\2\uffff\1\35"+
+        "\1\40\2\uffff\1\30\1\31\3\uffff\1\15\1\24\1\26\2\uffff\1\34\1\uffff";
     static final String DFA24_specialS =
-        "\1\2\23\uffff\1\3\3\uffff\1\1\32\uffff\1\0\30\uffff}>";
+        "\1\3\23\uffff\1\2\3\uffff\1\1\32\uffff\1\0\30\uffff}>";
     static final String[] DFA24_transitionS = {
             "\11\34\2\33\2\34\1\33\22\34\1\33\1\15\1\30\3\34\1\14\1\24\1"+
             "\1\1\2\1\20\1\16\1\34\1\17\1\6\1\22\12\25\2\34\1\10\1\7\1\11"+
@@ -1762,7 +1762,7 @@ public class InternalKExpressionsLexer extends Lexer {
             "",
             "",
             "",
-            "",
+            "\1\43",
             "\1\44\1\45",
             "\1\47",
             "\1\51",
@@ -1770,13 +1770,13 @@ public class InternalKExpressionsLexer extends Lexer {
             "",
             "",
             "",
-            "\12\60",
+            "\12\57",
             "",
             "\1\62",
             "\1\63\4\uffff\1\64",
             "\1\66",
             "\0\67",
-            "\1\71\1\uffff\12\60\54\uffff\1\71",
+            "\1\71\1\uffff\12\57\54\uffff\1\71",
             "\1\72",
             "\1\73",
             "\0\74",
@@ -1802,8 +1802,8 @@ public class InternalKExpressionsLexer extends Lexer {
             "",
             "",
             "",
+            "\1\71\1\uffff\12\57\54\uffff\1\71",
             "",
-            "\1\71\1\uffff\12\60\54\uffff\1\71",
             "",
             "\1\77",
             "\52\101\1\100\uffd5\101",
@@ -1890,6 +1890,16 @@ public class InternalKExpressionsLexer extends Lexer {
                         if ( s>=0 ) return s;
                         break;
                     case 2 : 
+                        int LA24_20 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA24_20>='\u0000' && LA24_20<='\uFFFF')) ) {s = 55;}
+
+                        else s = 28;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 3 : 
                         int LA24_0 = input.LA(1);
 
                         s = -1;
@@ -1948,16 +1958,6 @@ public class InternalKExpressionsLexer extends Lexer {
                         else if ( ((LA24_0>='\t' && LA24_0<='\n')||LA24_0=='\r'||LA24_0==' ') ) {s = 27;}
 
                         else if ( ((LA24_0>='\u0000' && LA24_0<='\b')||(LA24_0>='\u000B' && LA24_0<='\f')||(LA24_0>='\u000E' && LA24_0<='\u001F')||(LA24_0>='#' && LA24_0<='%')||LA24_0==','||(LA24_0>=':' && LA24_0<=';')||LA24_0=='?'||LA24_0=='\\'||LA24_0=='`'||LA24_0=='{'||(LA24_0>='}' && LA24_0<='\uFFFF')) ) {s = 28;}
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 3 : 
-                        int LA24_20 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA24_20>='\u0000' && LA24_20<='\uFFFF')) ) {s = 55;}
-
-                        else s = 28;
 
                         if ( s>=0 ) return s;
                         break;

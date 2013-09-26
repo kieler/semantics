@@ -1516,7 +1516,7 @@ rule__CompareOperator__Alternatives
 :
 (
 { before(grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0()); }
-(	'=' 
+(	'==' 
 )
 { after(grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0()); }
 )

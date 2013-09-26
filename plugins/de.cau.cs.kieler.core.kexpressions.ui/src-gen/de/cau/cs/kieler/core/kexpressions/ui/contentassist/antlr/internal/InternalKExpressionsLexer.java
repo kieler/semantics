@@ -269,10 +269,11 @@ public class InternalKExpressionsLexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:21:7: ( '=' )
-            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:21:9: '='
+            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:21:7: ( '==' )
+            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:21:9: '=='
             {
-            match('='); 
+            match("=="); 
+
 
             }
 
@@ -1680,13 +1681,13 @@ public class InternalKExpressionsLexer extends Lexer {
     static final String DFA15_maxS =
         "\2\71\1\146\2\uffff";
     static final String DFA15_acceptS =
-        "\3\uffff\1\1\1\2";
+        "\3\uffff\1\2\1\1";
     static final String DFA15_specialS =
         "\5\uffff}>";
     static final String[] DFA15_transitionS = {
             "\1\1\2\uffff\12\2",
             "\12\2",
-            "\1\3\1\uffff\12\2\54\uffff\1\4",
+            "\1\4\1\uffff\12\2\54\uffff\1\3",
             "",
             ""
     };
@@ -1725,30 +1726,29 @@ public class InternalKExpressionsLexer extends Lexer {
         }
     }
     static final String DFA24_eotS =
-        "\1\uffff\1\36\4\uffff\1\43\1\uffff\1\36\1\51\1\36\1\uffff\1\56"+
-        "\1\60\6\uffff\1\34\1\70\2\36\2\34\3\uffff\1\36\6\uffff\1\70\1\uffff"+
-        "\1\36\3\uffff\1\36\17\uffff\2\36\2\uffff\1\105\1\106\2\uffff\1\107"+
+        "\1\uffff\1\36\4\uffff\1\44\1\uffff\1\36\1\51\1\36\1\34\1\56\1\60"+
+        "\6\uffff\1\34\1\70\2\36\2\34\3\uffff\1\36\5\uffff\1\70\2\uffff\1"+
+        "\36\3\uffff\1\36\17\uffff\2\36\2\uffff\1\105\1\106\2\uffff\1\107"+
         "\2\36\3\uffff\1\112\1\36\1\uffff\1\112";
     static final String DFA24_eofS =
         "\114\uffff";
     static final String DFA24_minS =
-        "\1\0\1\162\4\uffff\1\60\1\uffff\1\157\1\52\1\141\1\uffff\2\75\6"+
-        "\uffff\1\0\1\56\1\162\1\141\1\0\1\101\3\uffff\1\145\6\uffff\1\56"+
-        "\1\uffff\1\144\1\0\2\uffff\1\154\17\uffff\1\165\1\154\2\uffff\2"+
-        "\60\2\uffff\1\60\1\145\1\163\3\uffff\1\60\1\145\1\uffff\1\60";
+        "\1\0\1\162\4\uffff\1\60\1\uffff\1\157\1\52\1\141\3\75\6\uffff\1"+
+        "\0\1\56\1\162\1\141\1\0\1\101\3\uffff\1\145\5\uffff\1\56\2\uffff"+
+        "\1\144\1\0\2\uffff\1\154\17\uffff\1\165\1\154\2\uffff\2\60\2\uffff"+
+        "\1\60\1\145\1\163\3\uffff\1\60\1\145\1\uffff\1\60";
     static final String DFA24_maxS =
-        "\1\uffff\1\162\4\uffff\1\71\1\uffff\1\157\1\57\1\141\1\uffff\1"+
-        "\76\1\75\6\uffff\1\uffff\1\146\1\162\1\141\1\uffff\1\172\3\uffff"+
-        "\1\145\6\uffff\1\146\1\uffff\1\144\1\uffff\2\uffff\1\154\17\uffff"+
+        "\1\uffff\1\162\4\uffff\1\71\1\uffff\1\157\1\57\1\141\1\75\1\76"+
+        "\1\75\6\uffff\1\uffff\1\146\1\162\1\141\1\uffff\1\172\3\uffff\1"+
+        "\145\5\uffff\1\146\2\uffff\1\144\1\uffff\2\uffff\1\154\17\uffff"+
         "\1\165\1\154\2\uffff\2\172\2\uffff\1\172\1\145\1\163\3\uffff\1\172"+
         "\1\145\1\uffff\1\172";
     static final String DFA24_acceptS =
-        "\2\uffff\1\2\1\3\1\4\1\5\1\uffff\1\7\3\uffff\1\13\2\uffff\1\21"+
-        "\1\22\1\23\1\24\1\25\1\26\6\uffff\1\36\1\40\1\41\1\uffff\1\36\1"+
-        "\2\1\3\1\4\1\5\1\6\1\uffff\1\7\2\uffff\1\37\1\11\1\uffff\1\13\1"+
-        "\15\1\20\1\14\1\17\1\16\1\21\1\22\1\23\1\24\1\25\1\26\1\27\1\32"+
-        "\1\33\2\uffff\1\35\1\40\2\uffff\1\30\1\31\3\uffff\1\1\1\10\1\12"+
-        "\2\uffff\1\34\1\uffff";
+        "\2\uffff\1\2\1\3\1\4\1\5\1\uffff\1\7\6\uffff\1\21\1\22\1\23\1\24"+
+        "\1\25\1\26\6\uffff\1\36\1\40\1\41\1\uffff\1\36\1\2\1\3\1\4\1\5\1"+
+        "\uffff\1\6\1\7\2\uffff\1\37\1\11\1\uffff\1\13\1\15\1\20\1\14\1\17"+
+        "\1\16\1\21\1\22\1\23\1\24\1\25\1\26\1\27\1\32\1\33\2\uffff\1\35"+
+        "\1\40\2\uffff\1\30\1\31\3\uffff\1\1\1\10\1\12\2\uffff\1\34\1\uffff";
     static final String DFA24_specialS =
         "\1\2\23\uffff\1\3\3\uffff\1\1\16\uffff\1\0\44\uffff}>";
     static final String[] DFA24_transitionS = {
@@ -1761,12 +1761,12 @@ public class InternalKExpressionsLexer extends Lexer {
             "",
             "",
             "",
-            "\12\44",
+            "\12\43",
             "",
             "\1\46",
             "\1\47\4\uffff\1\50",
             "\1\52",
-            "",
+            "\1\53",
             "\1\54\1\55",
             "\1\57",
             "",
@@ -1776,7 +1776,7 @@ public class InternalKExpressionsLexer extends Lexer {
             "",
             "",
             "\0\67",
-            "\1\71\1\uffff\12\44\54\uffff\1\71",
+            "\1\71\1\uffff\12\43\54\uffff\1\71",
             "\1\72",
             "\1\73",
             "\0\74",
@@ -1790,8 +1790,8 @@ public class InternalKExpressionsLexer extends Lexer {
             "",
             "",
             "",
+            "\1\71\1\uffff\12\43\54\uffff\1\71",
             "",
-            "\1\71\1\uffff\12\44\54\uffff\1\71",
             "",
             "\1\77",
             "\52\101\1\100\uffd5\101",
