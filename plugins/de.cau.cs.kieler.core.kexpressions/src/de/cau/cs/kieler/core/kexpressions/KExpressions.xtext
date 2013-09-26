@@ -115,7 +115,7 @@ NegExpression returns Expression:
   
     
 AtomicExpression returns Expression:
-    BooleanValue
+    BoolValue
     | ValuedObjectTestExpression
     | '(' BooleanExpression ')'
     | TextExpression
@@ -159,7 +159,7 @@ FloatValue returns FloatValue:
 	value=FLOAT;
 
 
-BooleanValue returns BooleanValue:
+BoolValue returns BoolValue:
 	value=BOOLEAN;
 
 
@@ -285,8 +285,8 @@ enum ValOperator returns OperatorType:
    the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 */
 enum ValueType returns ValueType:
-	PURE="pure" | BOOLEAN="boolean" | UNSIGNED="unsigned"	| 
-	INTEGER="integer" | FLOAT="float" | DOUBLE="double" |
+	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned"	| 
+	INT="int" | FLOAT="float" | DOUBLE="double" |
 	STRING="string" | HOST="host";
 
 

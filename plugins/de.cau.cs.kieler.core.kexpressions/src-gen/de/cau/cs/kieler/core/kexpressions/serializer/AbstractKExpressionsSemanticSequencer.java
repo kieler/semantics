@@ -11,7 +11,7 @@ import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.annotations.text.serializer.AnnotationsSemanticSequencer;
-import de.cau.cs.kieler.core.kexpressions.BooleanValue;
+import de.cau.cs.kieler.core.kexpressions.BoolValue;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
@@ -100,7 +100,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == KExpressionsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case KExpressionsPackage.BOOLEAN_VALUE:
+			case KExpressionsPackage.BOOL_VALUE:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAndExpressionRule() ||
@@ -127,7 +127,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
-					sequence_BooleanValue(context, (BooleanValue) semanticObject); 
+					sequence_BoolValue(context, (BoolValue) semanticObject); 
 					return; 
 				}
 				else break;
@@ -321,10 +321,10 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 * Constraint:
 	 *     value=BOOLEAN
 	 */
-	protected void sequence_BooleanValue(EObject context, BooleanValue semanticObject) {
+	protected void sequence_BoolValue(EObject context, BoolValue semanticObject) {
 		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.BOOLEAN_VALUE__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.BOOLEAN_VALUE__VALUE));
+			if(transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.BOOL_VALUE__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.BOOL_VALUE__VALUE));
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);

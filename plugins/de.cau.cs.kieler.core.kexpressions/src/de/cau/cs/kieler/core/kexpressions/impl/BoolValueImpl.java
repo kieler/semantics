@@ -1,12 +1,8 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.core.kexpressions.impl;
 
-import de.cau.cs.kieler.core.kexpressions.BooleanValue;
+import de.cau.cs.kieler.core.kexpressions.BoolValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -17,18 +13,18 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Boolean Value</b></em>'.
+ * An implementation of the model object '<em><b>Bool Value</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.BooleanValueImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class BooleanValueImpl extends ValueImpl implements BooleanValue {
+public class BoolValueImpl extends ValueImpl implements BoolValue {
     /**
      * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -54,7 +50,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected BooleanValueImpl() {
+    protected BoolValueImpl() {
         super();
     }
 
@@ -65,7 +61,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
      */
     @Override
     protected EClass eStaticClass() {
-        return KExpressionsPackage.Literals.BOOLEAN_VALUE;
+        return KExpressionsPackage.Literals.BOOL_VALUE;
     }
 
     /**
@@ -86,7 +82,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
         Boolean oldValue = value;
         value = newValue;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.BOOLEAN_VALUE__VALUE, oldValue, value));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.BOOL_VALUE__VALUE, oldValue, value));
     }
 
     /**
@@ -97,7 +93,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KExpressionsPackage.BOOLEAN_VALUE__VALUE:
+            case KExpressionsPackage.BOOL_VALUE__VALUE:
                 return getValue();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -111,7 +107,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KExpressionsPackage.BOOLEAN_VALUE__VALUE:
+            case KExpressionsPackage.BOOL_VALUE__VALUE:
                 setValue((Boolean)newValue);
                 return;
         }
@@ -126,7 +122,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KExpressionsPackage.BOOLEAN_VALUE__VALUE:
+            case KExpressionsPackage.BOOL_VALUE__VALUE:
                 setValue(VALUE_EDEFAULT);
                 return;
         }
@@ -141,7 +137,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KExpressionsPackage.BOOLEAN_VALUE__VALUE:
+            case KExpressionsPackage.BOOL_VALUE__VALUE:
                 return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
         }
         return super.eIsSet(featureID);
@@ -163,4 +159,4 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
         return result.toString();
     }
 
-} //BooleanValueImpl
+} //BoolValueImpl

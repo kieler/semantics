@@ -67,7 +67,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.VALUE: return createValue();
             case KExpressionsPackage.INT_VALUE: return createIntValue();
             case KExpressionsPackage.FLOAT_VALUE: return createFloatValue();
-            case KExpressionsPackage.BOOLEAN_VALUE: return createBooleanValue();
+            case KExpressionsPackage.BOOL_VALUE: return createBoolValue();
             case KExpressionsPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
             case KExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
             default:
@@ -178,9 +178,9 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public BooleanValue createBooleanValue() {
-        BooleanValueImpl booleanValue = new BooleanValueImpl();
-        return booleanValue;
+    public BoolValue createBoolValue() {
+        BoolValueImpl boolValue = new BoolValueImpl();
+        return boolValue;
     }
 
     /**

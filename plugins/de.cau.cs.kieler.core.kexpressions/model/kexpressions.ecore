@@ -165,9 +165,9 @@
         <details key="documentation" value="Default value is the PURE type which means that the&#xA;ValuedObject does not contain any value at all (only&#xA;makes sense for Signals)."/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="BOOLEAN" value="1" literal="boolean"/>
+    <eLiterals name="BOOL" value="1" literal="bool"/>
     <eLiterals name="UNSIGNED" value="2" literal="unsigned"/>
-    <eLiterals name="INTEGER" value="3" literal="integer"/>
+    <eLiterals name="INT" value="3" literal="int"/>
     <eLiterals name="FLOAT" value="4" literal="float"/>
     <eLiterals name="HOST" value="7" literal="host">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -201,7 +201,7 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloatObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="BooleanValue" eSuperTypes="#//Value">
+  <eClassifiers xsi:type="ecore:EClass" name="BoolValue" eSuperTypes="#//Value">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An Boolean value object."/>
     </eAnnotations>

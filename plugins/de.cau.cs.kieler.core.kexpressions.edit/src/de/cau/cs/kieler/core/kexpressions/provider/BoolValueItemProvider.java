@@ -1,13 +1,9 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.core.kexpressions.provider;
 
 
-import de.cau.cs.kieler.core.kexpressions.BooleanValue;
+import de.cau.cs.kieler.core.kexpressions.BoolValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 import java.util.Collection;
@@ -27,12 +23,12 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.kexpressions.BooleanValue} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.core.kexpressions.BoolValue} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class BooleanValueItemProvider
+public class BoolValueItemProvider
     extends ValueItemProvider
     implements
         IEditingDomainItemProvider,
@@ -46,7 +42,7 @@ public class BooleanValueItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public BooleanValueItemProvider(AdapterFactory adapterFactory) {
+    public BoolValueItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -77,9 +73,9 @@ public class BooleanValueItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_BooleanValue_value_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_BooleanValue_value_feature", "_UI_BooleanValue_type"),
-                 KExpressionsPackage.Literals.BOOLEAN_VALUE__VALUE,
+                 getString("_UI_BoolValue_value_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_BoolValue_value_feature", "_UI_BoolValue_type"),
+                 KExpressionsPackage.Literals.BOOL_VALUE__VALUE,
                  true,
                  false,
                  false,
@@ -89,14 +85,14 @@ public class BooleanValueItemProvider
     }
 
     /**
-     * This returns BooleanValue.gif.
+     * This returns BoolValue.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/BooleanValue"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/BoolValue"));
     }
 
     /**
@@ -107,11 +103,11 @@ public class BooleanValueItemProvider
      */
     @Override
     public String getText(Object object) {
-        Boolean labelValue = ((BooleanValue)object).getValue();
+        Boolean labelValue = ((BoolValue)object).getValue();
         String label = labelValue == null ? null : labelValue.toString();
         return label == null || label.length() == 0 ?
-            getString("_UI_BooleanValue_type") :
-            getString("_UI_BooleanValue_type") + " " + label;
+            getString("_UI_BoolValue_type") :
+            getString("_UI_BoolValue_type") + " " + label;
     }
 
     /**
@@ -125,8 +121,8 @@ public class BooleanValueItemProvider
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(BooleanValue.class)) {
-            case KExpressionsPackage.BOOLEAN_VALUE__VALUE:
+        switch (notification.getFeatureID(BoolValue.class)) {
+            case KExpressionsPackage.BOOL_VALUE__VALUE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

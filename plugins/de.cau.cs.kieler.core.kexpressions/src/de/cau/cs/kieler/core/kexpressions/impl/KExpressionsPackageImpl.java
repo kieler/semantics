@@ -8,7 +8,7 @@ package de.cau.cs.kieler.core.kexpressions.impl;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 
-import de.cau.cs.kieler.core.kexpressions.BooleanValue;
+import de.cau.cs.kieler.core.kexpressions.BoolValue;
 import de.cau.cs.kieler.core.kexpressions.CombineOperator;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
@@ -85,7 +85,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass booleanValueEClass = null;
+    private EClass boolValueEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -344,8 +344,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getBooleanValue() {
-        return booleanValueEClass;
+    public EClass getBoolValue() {
+        return boolValueEClass;
     }
 
     /**
@@ -353,8 +353,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getBooleanValue_Value() {
-        return (EAttribute)booleanValueEClass.getEStructuralFeatures().get(0);
+    public EAttribute getBoolValue_Value() {
+        return (EAttribute)boolValueEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -480,8 +480,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         floatValueEClass = createEClass(FLOAT_VALUE);
         createEAttribute(floatValueEClass, FLOAT_VALUE__VALUE);
 
-        booleanValueEClass = createEClass(BOOLEAN_VALUE);
-        createEAttribute(booleanValueEClass, BOOLEAN_VALUE__VALUE);
+        boolValueEClass = createEClass(BOOL_VALUE);
+        createEAttribute(boolValueEClass, BOOL_VALUE__VALUE);
 
         operatorExpressionEClass = createEClass(OPERATOR_EXPRESSION);
         createEAttribute(operatorExpressionEClass, OPERATOR_EXPRESSION__OPERATOR);
@@ -532,7 +532,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         valueEClass.getESuperTypes().add(this.getExpression());
         intValueEClass.getESuperTypes().add(this.getValue());
         floatValueEClass.getESuperTypes().add(this.getValue());
-        booleanValueEClass.getESuperTypes().add(this.getValue());
+        boolValueEClass.getESuperTypes().add(this.getValue());
         operatorExpressionEClass.getESuperTypes().add(this.getExpression());
         textExpressionEClass.getESuperTypes().add(this.getExpression());
 
@@ -560,8 +560,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(floatValueEClass, FloatValue.class, "FloatValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getFloatValue_Value(), ecorePackage.getEFloatObject(), "value", null, 1, 1, FloatValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(booleanValueEClass, BooleanValue.class, "BooleanValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getBooleanValue_Value(), ecorePackage.getEBooleanObject(), "value", null, 1, 1, BooleanValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(boolValueEClass, BoolValue.class, "BoolValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getBoolValue_Value(), ecorePackage.getEBooleanObject(), "value", null, 1, 1, BoolValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(operatorExpressionEClass, OperatorExpression.class, "OperatorExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getOperatorExpression_Operator(), this.getOperatorType(), "operator", null, 0, 1, OperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -601,9 +601,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEEnum(valueTypeEEnum, ValueType.class, "ValueType");
         addEEnumLiteral(valueTypeEEnum, ValueType.PURE);
-        addEEnumLiteral(valueTypeEEnum, ValueType.BOOLEAN);
+        addEEnumLiteral(valueTypeEEnum, ValueType.BOOL);
         addEEnumLiteral(valueTypeEEnum, ValueType.UNSIGNED);
-        addEEnumLiteral(valueTypeEEnum, ValueType.INTEGER);
+        addEEnumLiteral(valueTypeEEnum, ValueType.INT);
         addEEnumLiteral(valueTypeEEnum, ValueType.FLOAT);
         addEEnumLiteral(valueTypeEEnum, ValueType.HOST);
         addEEnumLiteral(valueTypeEEnum, ValueType.DOUBLE);

@@ -1,15 +1,11 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.core.kexpressions;
 
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Boolean Value</b></em>'.
+ * A representation of the model object '<em><b>Bool Value</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -19,15 +15,15 @@ package de.cau.cs.kieler.core.kexpressions;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.BooleanValue#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.BoolValue#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getBooleanValue()
+ * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getBoolValue()
  * @model
  * @generated
  */
-public interface BooleanValue extends Value {
+public interface BoolValue extends Value {
     /**
      * Returns the value of the '<em><b>Value</b></em>' attribute.
      * <!-- begin-user-doc -->
@@ -38,14 +34,14 @@ public interface BooleanValue extends Value {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Value</em>' attribute.
      * @see #setValue(Boolean)
-     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getBooleanValue_Value()
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getBoolValue_Value()
      * @model required="true"
      * @generated
      */
     Boolean getValue();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.BooleanValue#getValue <em>Value</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.BoolValue#getValue <em>Value</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Value</em>' attribute.
@@ -54,4 +50,4 @@ public interface BooleanValue extends Value {
      */
     void setValue(Boolean value);
 
-} // BooleanValue
+} // BoolValue

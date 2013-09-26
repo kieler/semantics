@@ -208,7 +208,7 @@ public class OperatorExpressionItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (KExpressionsPackage.Literals.OPERATOR_EXPRESSION__SUB_EXPRESSIONS,
-                 KExpressionsFactory.eINSTANCE.createBooleanValue()));
+                 KExpressionsFactory.eINSTANCE.createBoolValue()));
 
         newChildDescriptors.add
             (createChildParameter

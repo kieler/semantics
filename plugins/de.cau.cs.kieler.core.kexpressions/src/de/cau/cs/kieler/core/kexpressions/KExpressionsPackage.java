@@ -285,14 +285,14 @@ public interface KExpressionsPackage extends EPackage {
     int FLOAT_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.BooleanValueImpl <em>Boolean Value</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl <em>Bool Value</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.core.kexpressions.impl.BooleanValueImpl
-     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getBooleanValue()
+     * @see de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl
+     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getBoolValue()
      * @generated
      */
-    int BOOLEAN_VALUE = 6;
+    int BOOL_VALUE = 6;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -301,16 +301,16 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BOOLEAN_VALUE__VALUE = VALUE_FEATURE_COUNT + 0;
+    int BOOL_VALUE__VALUE = VALUE_FEATURE_COUNT + 0;
 
     /**
-     * The number of structural features of the '<em>Boolean Value</em>' class.
+     * The number of structural features of the '<em>Bool Value</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BOOLEAN_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+    int BOOL_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.OperatorExpressionImpl <em>Operator Expression</em>}' class.
@@ -590,25 +590,25 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getFloatValue_Value();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.BooleanValue <em>Boolean Value</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.BoolValue <em>Bool Value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Boolean Value</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.BooleanValue
+     * @return the meta object for class '<em>Bool Value</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.BoolValue
      * @generated
      */
-    EClass getBooleanValue();
+    EClass getBoolValue();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.BooleanValue#getValue <em>Value</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.BoolValue#getValue <em>Value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Value</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.BooleanValue#getValue()
-     * @see #getBooleanValue()
+     * @see de.cau.cs.kieler.core.kexpressions.BoolValue#getValue()
+     * @see #getBoolValue()
      * @generated
      */
-    EAttribute getBooleanValue_Value();
+    EAttribute getBoolValue_Value();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.OperatorExpression <em>Operator Expression</em>}'.
@@ -864,14 +864,14 @@ public interface KExpressionsPackage extends EPackage {
         EAttribute FLOAT_VALUE__VALUE = eINSTANCE.getFloatValue_Value();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.BooleanValueImpl <em>Boolean Value</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl <em>Bool Value</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.core.kexpressions.impl.BooleanValueImpl
-         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getBooleanValue()
+         * @see de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl
+         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getBoolValue()
          * @generated
          */
-        EClass BOOLEAN_VALUE = eINSTANCE.getBooleanValue();
+        EClass BOOL_VALUE = eINSTANCE.getBoolValue();
 
         /**
          * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
@@ -879,7 +879,7 @@ public interface KExpressionsPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute BOOLEAN_VALUE__VALUE = eINSTANCE.getBooleanValue_Value();
+        EAttribute BOOL_VALUE__VALUE = eINSTANCE.getBoolValue_Value();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.OperatorExpressionImpl <em>Operator Expression</em>}' class.
