@@ -10,7 +10,7 @@ import de.cau.cs.kieler.core.annotations.ImportAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
-import de.cau.cs.kieler.core.kexpressions.BooleanValue;
+import de.cau.cs.kieler.core.kexpressions.BoolValue;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
@@ -109,15 +109,15 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == KExpressionsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case KExpressionsPackage.BOOLEAN_VALUE:
+			case KExpressionsPackage.BOOL_VALUE:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAndExpressionRule() ||
 				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
-				   context == grammarAccess.getBooleanExpressionRule() ||
-				   context == grammarAccess.getBooleanValueRule() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
+				   context == grammarAccess.getBoolValueRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
 				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
@@ -136,7 +136,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
-					sequence_BooleanValue(context, (BooleanValue) semanticObject); 
+					sequence_BoolValue(context, (BoolValue) semanticObject); 
 					return; 
 				}
 				else break;
@@ -210,7 +210,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 				else if(context == grammarAccess.getAndExpressionRule() ||
 				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
-				   context == grammarAccess.getBooleanExpressionRule() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getOrExpressionRule() ||
@@ -230,7 +230,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
-				   context == grammarAccess.getBooleanExpressionRule() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
 				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
@@ -261,7 +261,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
-				   context == grammarAccess.getBooleanExpressionRule() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
 				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
@@ -364,7 +364,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     (isImmediate?='immediate'? trigger=BooleanExpression? (effects+=Effect effects+=Effect*)?)
+	 *     (isImmediate?='immediate'? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
 	protected void sequence_DuringAction(EObject context, DuringAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -382,7 +382,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     (trigger=BooleanExpression? (effects+=Effect effects+=Effect*)?)
+	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
 	protected void sequence_EntryAction(EObject context, EntryAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -391,7 +391,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     (trigger=BooleanExpression? (effects+=Effect effects+=Effect*)?)
+	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
 	protected void sequence_ExitAction(EObject context, ExitAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -400,7 +400,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     (isImmediate?='immediate'? trigger=BooleanExpression?)
+	 *     (isImmediate?='immediate'? trigger=BoolExpression?)
 	 */
 	protected void sequence_SuspendAction(EObject context, SuspendAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -425,7 +425,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* isImmediate?='immediate'? delay=INT? trigger=BooleanExpression? (effects+=Effect effects+=Effect*)?)
+	 *     (annotations+=Annotation* isImmediate?='immediate'? delay=INT? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
 	protected void sequence_Transition(EObject context, Transition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

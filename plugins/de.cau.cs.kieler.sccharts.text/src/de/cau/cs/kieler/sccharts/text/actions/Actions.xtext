@@ -16,7 +16,7 @@ import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 Transition returns sccharts::Transition:
 	{sccharts::Transition}
     (annotations += Annotation)*
-	(isImmediate?='immediate')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 
+	(isImmediate?='immediate')? (delay=INT)? (trigger=BoolExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 
 
 
 //// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
@@ -27,19 +27,19 @@ Transition returns sccharts::Transition:
 EntryAction returns sccharts::EntryAction:
       {sccharts::EntryAction}
 //    (annotations += Annotation)*
-   'entry' ':' (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)? ';';      
+   'entry' ':' (trigger=BoolExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)? ';';      
 DuringAction returns sccharts::DuringAction:
     {sccharts::DuringAction}
 //    (annotations += Annotation)*
-   (isImmediate?='immediate')? 'during' ':' (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?  ';';      
+   (isImmediate?='immediate')? 'during' ':' (trigger=BoolExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?  ';';      
 ExitAction returns sccharts::ExitAction:
     {sccharts::ExitAction}
 //    (annotations += Annotation)*
-   'exit' ':' (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)? ';';      
+   'exit' ':' (trigger=BoolExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)? ';';      
 SuspendAction returns sccharts::SuspendAction:
     {sccharts::SuspendAction}
 //    (annotations += Annotation)*
-   (isImmediate?='immediate')? 'suspend' ':' (trigger=BooleanExpression)? ';';      
+   (isImmediate?='immediate')? 'suspend' ':' (trigger=BoolExpression)? ';';      
 
 Effect returns sccharts::Effect: 
 	Emission | Assignment | TextEffect;

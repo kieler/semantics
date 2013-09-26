@@ -409,7 +409,7 @@ public class ScopeItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createBooleanValue()));
+                 KExpressionsFactory.eINSTANCE.createBoolValue()));
 
         newChildDescriptors.add
             (createChildParameter

@@ -30,7 +30,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cDelayAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cDelayINTTerminalRuleCall_3_0 = (RuleCall)cDelayAssignment_3.eContents().get(0);
 		private final Assignment cTriggerAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cTriggerBooleanExpressionParserRuleCall_4_0 = (RuleCall)cTriggerAssignment_4.eContents().get(0);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_4_0 = (RuleCall)cTriggerAssignment_4.eContents().get(0);
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
 		private final Keyword cSolidusKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
 		private final Assignment cEffectsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
@@ -45,11 +45,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//// the features type, targetState, priority, isHistory are ignored and set as transient
 		//// you need to override the rule to support transitions properly
 		//Transition returns sccharts::Transition:
-		//	{sccharts::Transition} annotations+=Annotation* isImmediate?="immediate"? delay=INT? trigger=BooleanExpression? ("/"
+		//	{sccharts::Transition} annotations+=Annotation* isImmediate?="immediate"? delay=INT? trigger=BoolExpression? ("/"
 		//	effects+=Effect (";" effects+=Effect)*)?;
 		public ParserRule getRule() { return rule; }
 
-		//{sccharts::Transition} annotations+=Annotation* isImmediate?="immediate"? delay=INT? trigger=BooleanExpression? ("/"
+		//{sccharts::Transition} annotations+=Annotation* isImmediate?="immediate"? delay=INT? trigger=BoolExpression? ("/"
 		//effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
@@ -74,11 +74,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getDelayINTTerminalRuleCall_3_0() { return cDelayINTTerminalRuleCall_3_0; }
 
-		//trigger=BooleanExpression?
+		//trigger=BoolExpression?
 		public Assignment getTriggerAssignment_4() { return cTriggerAssignment_4; }
 
-		//BooleanExpression
-		public RuleCall getTriggerBooleanExpressionParserRuleCall_4_0() { return cTriggerBooleanExpressionParserRuleCall_4_0; }
+		//BoolExpression
+		public RuleCall getTriggerBoolExpressionParserRuleCall_4_0() { return cTriggerBoolExpressionParserRuleCall_4_0; }
 
 		//("/" effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup_5() { return cGroup_5; }
@@ -112,7 +112,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cEntryKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTriggerBooleanExpressionParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cSolidusKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cEffectsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
@@ -130,11 +130,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		////	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 		
 		//EntryAction returns sccharts::EntryAction:
 		//	{sccharts::EntryAction} //    (annotations += Annotation)*
-		//	"entry" ":" trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+		//	"entry" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::EntryAction} //    (annotations += Annotation)*
-		//"entry" ":" trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"
+		//"entry" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::EntryAction}
@@ -147,11 +147,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//":"
 		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
 
-		//trigger=BooleanExpression?
+		//trigger=BoolExpression?
 		public Assignment getTriggerAssignment_3() { return cTriggerAssignment_3; }
 
-		//BooleanExpression
-		public RuleCall getTriggerBooleanExpressionParserRuleCall_3_0() { return cTriggerBooleanExpressionParserRuleCall_3_0; }
+		//BoolExpression
+		public RuleCall getTriggerBoolExpressionParserRuleCall_3_0() { return cTriggerBoolExpressionParserRuleCall_3_0; }
 
 		//("/" effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup_4() { return cGroup_4; }
@@ -190,7 +190,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cDuringKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Keyword cColonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cTriggerAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cTriggerBooleanExpressionParserRuleCall_4_0 = (RuleCall)cTriggerAssignment_4.eContents().get(0);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_4_0 = (RuleCall)cTriggerAssignment_4.eContents().get(0);
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
 		private final Keyword cSolidusKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
 		private final Assignment cEffectsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
@@ -203,11 +203,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DuringAction returns sccharts::DuringAction:
 		//	{sccharts::DuringAction} //    (annotations += Annotation)*
-		//	isImmediate?="immediate"? "during" ":" trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+		//	isImmediate?="immediate"? "during" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::DuringAction} //    (annotations += Annotation)*
-		//isImmediate?="immediate"? "during" ":" trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"
+		//isImmediate?="immediate"? "during" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::DuringAction}
@@ -225,11 +225,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//":"
 		public Keyword getColonKeyword_3() { return cColonKeyword_3; }
 
-		//trigger=BooleanExpression?
+		//trigger=BoolExpression?
 		public Assignment getTriggerAssignment_4() { return cTriggerAssignment_4; }
 
-		//BooleanExpression
-		public RuleCall getTriggerBooleanExpressionParserRuleCall_4_0() { return cTriggerBooleanExpressionParserRuleCall_4_0; }
+		//BoolExpression
+		public RuleCall getTriggerBoolExpressionParserRuleCall_4_0() { return cTriggerBoolExpressionParserRuleCall_4_0; }
 
 		//("/" effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup_5() { return cGroup_5; }
@@ -266,7 +266,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cExitKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTriggerBooleanExpressionParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cSolidusKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cEffectsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
@@ -279,11 +279,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ExitAction returns sccharts::ExitAction:
 		//	{sccharts::ExitAction} //    (annotations += Annotation)*
-		//	"exit" ":" trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+		//	"exit" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::ExitAction} //    (annotations += Annotation)*
-		//"exit" ":" trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"
+		//"exit" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::ExitAction}
@@ -296,11 +296,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//":"
 		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
 
-		//trigger=BooleanExpression?
+		//trigger=BoolExpression?
 		public Assignment getTriggerAssignment_3() { return cTriggerAssignment_3; }
 
-		//BooleanExpression
-		public RuleCall getTriggerBooleanExpressionParserRuleCall_3_0() { return cTriggerBooleanExpressionParserRuleCall_3_0; }
+		//BoolExpression
+		public RuleCall getTriggerBoolExpressionParserRuleCall_3_0() { return cTriggerBoolExpressionParserRuleCall_3_0; }
 
 		//("/" effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup_4() { return cGroup_4; }
@@ -339,16 +339,16 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSuspendKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Keyword cColonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cTriggerAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cTriggerBooleanExpressionParserRuleCall_4_0 = (RuleCall)cTriggerAssignment_4.eContents().get(0);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_4_0 = (RuleCall)cTriggerAssignment_4.eContents().get(0);
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//SuspendAction returns sccharts::SuspendAction:
 		//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-		//	isImmediate?="immediate"? "suspend" ":" trigger=BooleanExpression? ";";
+		//	isImmediate?="immediate"? "suspend" ":" trigger=BoolExpression? ";";
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::SuspendAction} //    (annotations += Annotation)*
-		//isImmediate?="immediate"? "suspend" ":" trigger=BooleanExpression? ";"
+		//isImmediate?="immediate"? "suspend" ":" trigger=BoolExpression? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::SuspendAction}
@@ -366,11 +366,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//":"
 		public Keyword getColonKeyword_3() { return cColonKeyword_3; }
 
-		//trigger=BooleanExpression?
+		//trigger=BoolExpression?
 		public Assignment getTriggerAssignment_4() { return cTriggerAssignment_4; }
 
-		//BooleanExpression
-		public RuleCall getTriggerBooleanExpressionParserRuleCall_4_0() { return cTriggerBooleanExpressionParserRuleCall_4_0; }
+		//BoolExpression
+		public RuleCall getTriggerBoolExpressionParserRuleCall_4_0() { return cTriggerBoolExpressionParserRuleCall_4_0; }
 
 		//";"
 		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
@@ -567,7 +567,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// the features type, targetState, priority, isHistory are ignored and set as transient
 	//// you need to override the rule to support transitions properly
 	//Transition returns sccharts::Transition:
-	//	{sccharts::Transition} annotations+=Annotation* isImmediate?="immediate"? delay=INT? trigger=BooleanExpression? ("/"
+	//	{sccharts::Transition} annotations+=Annotation* isImmediate?="immediate"? delay=INT? trigger=BoolExpression? ("/"
 	//	effects+=Effect (";" effects+=Effect)*)?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
@@ -584,7 +584,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	////	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 		
 	//EntryAction returns sccharts::EntryAction:
 	//	{sccharts::EntryAction} //    (annotations += Annotation)*
-	//	"entry" ":" trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+	//	"entry" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
 	public EntryActionElements getEntryActionAccess() {
 		return (pEntryAction != null) ? pEntryAction : (pEntryAction = new EntryActionElements());
 	}
@@ -595,7 +595,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DuringAction returns sccharts::DuringAction:
 	//	{sccharts::DuringAction} //    (annotations += Annotation)*
-	//	isImmediate?="immediate"? "during" ":" trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+	//	isImmediate?="immediate"? "during" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
 	public DuringActionElements getDuringActionAccess() {
 		return (pDuringAction != null) ? pDuringAction : (pDuringAction = new DuringActionElements());
 	}
@@ -606,7 +606,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExitAction returns sccharts::ExitAction:
 	//	{sccharts::ExitAction} //    (annotations += Annotation)*
-	//	"exit" ":" trigger=BooleanExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+	//	"exit" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
 	public ExitActionElements getExitActionAccess() {
 		return (pExitAction != null) ? pExitAction : (pExitAction = new ExitActionElements());
 	}
@@ -617,7 +617,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SuspendAction returns sccharts::SuspendAction:
 	//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-	//	isImmediate?="immediate"? "suspend" ":" trigger=BooleanExpression? ";";
+	//	isImmediate?="immediate"? "suspend" ":" trigger=BoolExpression? ";";
 	public SuspendActionElements getSuspendActionAccess() {
 		return (pSuspendAction != null) ? pSuspendAction : (pSuspendAction = new SuspendActionElements());
 	}
@@ -694,7 +694,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	////
 	//// --------------------------
 	//Expression:
-	//	BooleanExpression | ValuedExpression;
+	//	BoolExpression | ValuedExpression;
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
 		return gaKExpressions.getExpressionAccess();
 	}
@@ -704,14 +704,14 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: not D and C or val(E) = 42 or not (A and (B or C))
-	//BooleanExpression returns Expression:
+	//BoolExpression returns Expression:
 	//	OrExpression;
-	public KExpressionsGrammarAccess.BooleanExpressionElements getBooleanExpressionAccess() {
-		return gaKExpressions.getBooleanExpressionAccess();
+	public KExpressionsGrammarAccess.BoolExpressionElements getBoolExpressionAccess() {
+		return gaKExpressions.getBoolExpressionAccess();
 	}
 	
-	public ParserRule getBooleanExpressionRule() {
-		return getBooleanExpressionAccess().getRule();
+	public ParserRule getBoolExpressionRule() {
+		return getBoolExpressionAccess().getRule();
 	}
 
 	//// Example: A or B, A and B and C, C and B or D and not E, A and B and C
@@ -856,7 +856,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicExpression returns Expression:
-	//	BooleanValue | ValuedObjectTestExpression | "(" BooleanExpression ")" | TextExpression;
+	//	BoolValue | ValuedObjectTestExpression | "(" BoolExpression ")" | TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
 	}
@@ -932,14 +932,14 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getFloatValueAccess().getRule();
 	}
 
-	//BooleanValue:
+	//BoolValue:
 	//	value=BOOLEAN;
-	public KExpressionsGrammarAccess.BooleanValueElements getBooleanValueAccess() {
-		return gaKExpressions.getBooleanValueAccess();
+	public KExpressionsGrammarAccess.BoolValueElements getBoolValueAccess() {
+		return gaKExpressions.getBoolValueAccess();
 	}
 	
-	public ParserRule getBooleanValueRule() {
-		return getBooleanValueAccess().getRule();
+	public ParserRule getBoolValueRule() {
+		return getBoolValueAccess().getRule();
 	}
 
 	//// data type rule allowing any kind of value to be accepted,
@@ -1116,8 +1116,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 	// * / enum ValueType:
-	//	PURE="pure" | BOOLEAN="boolean" | UNSIGNED="unsigned" | INTEGER="integer" | FLOAT="float" | DOUBLE="double" |
-	//	STRING="string" | HOST="host";
+	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | DOUBLE="double" | STRING="string" |
+	//	HOST="host";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaKExpressions.getValueTypeAccess();
 	}

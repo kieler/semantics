@@ -13,7 +13,7 @@
  */
  package de.cau.cs.kieler.s.sc.xtend
 
-import de.cau.cs.kieler.core.kexpressions.BooleanValue
+import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.IntValue
@@ -334,7 +334,7 @@ void setInputs(){
         void OUTPUT_«signal.name»(int status){
         value = cJSON_CreateObject();
         cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
-    «IF signal.type == ValueType::INTEGER»
+    «IF signal.type == ValueType::INT»
 cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
     «ENDIF»
         cJSON_AddItemToObject(value, "order", cJSON_CreateNumber(sigOrder[«signal.name»]));
@@ -663,7 +663,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    }
 
    // Expand a boolean expression value (true or false).
-   def dispatch CharSequenceexpand(BooleanValue expression) {
+   def dispatch CharSequenceexpand(BoolValue expression) {
         '''«IF expression.value == true »1«ENDIF»«IF expression.value == false»0«ENDIF»'''
    }
 

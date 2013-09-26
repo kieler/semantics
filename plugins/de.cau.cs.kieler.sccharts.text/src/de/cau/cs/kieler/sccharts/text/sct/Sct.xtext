@@ -82,7 +82,7 @@ Transition returns sccharts::Transition:
 	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
 	( 'with'
 	 (
-	   ( (isImmediate?='immediate')? (delay=INT)? (trigger=BooleanExpression)? ('/' effects+=Effect (';'effects+=Effect)*)? )
+	   ( (isImmediate?='immediate')? (delay=INT)? (trigger=BoolExpression)? ('/' effects+=Effect (';'effects+=Effect)*)? )
 	  |
 	   ( label=STRING )
 	  )
@@ -125,11 +125,10 @@ ValuedObject returns kexpressions::ValuedObject:
     (isOutput?='output')?
     (isStatic?='static')?
     (isSignal?='signal')?
+    (type = ValueType)?
     name=ID (':=' initialValue=Expression)?
-    ((':' (type = ValueType))
-      |
-     (':' (type = ValueType) 'combine'
-        (combineOperator = CombineOperator))
+    ( 'combine'
+      (combineOperator = CombineOperator)
     )?;
 
 

@@ -221,7 +221,7 @@ public class AssignmentItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 KExpressionsFactory.eINSTANCE.createBooleanValue()));
+                 KExpressionsFactory.eINSTANCE.createBoolValue()));
 
         newChildDescriptors.add
             (createChildParameter

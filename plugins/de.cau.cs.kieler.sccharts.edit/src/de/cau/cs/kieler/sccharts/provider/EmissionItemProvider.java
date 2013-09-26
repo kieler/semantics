@@ -221,7 +221,7 @@ public class EmissionItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.EMISSION__NEW_VALUE,
-                 KExpressionsFactory.eINSTANCE.createBooleanValue()));
+                 KExpressionsFactory.eINSTANCE.createBoolValue()));
 
         newChildDescriptors.add
             (createChildParameter

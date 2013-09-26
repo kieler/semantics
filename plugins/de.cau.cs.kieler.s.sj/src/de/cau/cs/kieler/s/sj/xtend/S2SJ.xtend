@@ -13,7 +13,7 @@
  */
  package de.cau.cs.kieler.s.sj.xtend
 
-import de.cau.cs.kieler.core.kexpressions.BooleanValue
+import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.FloatValue
@@ -492,7 +492,7 @@ break;'''
    }
 
    // Expand a boolean expression value (true or false).
-   def dispatch CharSequence expand(BooleanValue expression) {
+   def dispatch CharSequence expand(BoolValue expression) {
         '''«IF expression.value == true »true«ENDIF»«IF expression.value == false»false«ENDIF»'''
    }
 

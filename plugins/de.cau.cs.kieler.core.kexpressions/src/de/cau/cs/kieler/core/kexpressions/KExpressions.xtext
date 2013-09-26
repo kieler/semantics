@@ -30,13 +30,13 @@ Root returns ecore::EObject:
 // --------------------------
 
 Expression returns Expression:
-	=> BooleanExpression
+	=> BoolExpression
 	| ValuedExpression
 	;
 
 
 // Example: not D and C or val(E) = 42 or not (A and (B or C))
-BooleanExpression returns Expression:
+BoolExpression returns Expression:
 	OrExpression;
 
 
@@ -117,7 +117,7 @@ NegExpression returns Expression:
 AtomicExpression returns Expression:
     BoolValue
     | ValuedObjectTestExpression
-    | '(' BooleanExpression ')'
+    | '(' BoolExpression ')'
     | TextExpression
     ;
 

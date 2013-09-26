@@ -302,14 +302,18 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.addRectangle => [
                     //it.background = "white".color;
                         it.invisible = true;
+                        scopeProvider.parent = s;
+//                        val sigText =  serializer.serialize(sig)
+                        
                             var declaration = "";
                             var type = "";
                             var init = "";
+                            var combine = "";
                             if (sig.type != ValueType::PURE) {
-                                type = ": " + sig.type.literal.toLowerCase
+                                type = sig.type.literal.toLowerCase + " "
                             }
                             if (sig.combineOperator != null && sig.combineOperator != CombineOperator::NONE) {
-                                type = ": combine " + sig.type.literal.toLowerCase + " with " + sig.combineOperator.literal.toLowerCase
+                                combine = " combine " + sig.combineOperator.literal.toLowerCase
                             }
                             if (sig.initialValue != null) {
                                 init = " = " + serializer.serialize(sig.initialValue.copy)
@@ -331,7 +335,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 declaration = declaration.trim + " "
                             }
 
-                            it.addText(declaration + sig.name  + init + type + ";") => [
+//                            it.addText(sigText + ";") => [
+                            it.addText(declaration + type + sig.name + init +  combine + ";") => [
                                     it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
                                     it.putToLookUpWith(sig);
                             ]

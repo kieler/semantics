@@ -295,7 +295,7 @@ public class ActionItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.ACTION__TRIGGER,
-                 KExpressionsFactory.eINSTANCE.createBooleanValue()));
+                 KExpressionsFactory.eINSTANCE.createBoolValue()));
 
         newChildDescriptors.add
             (createChildParameter

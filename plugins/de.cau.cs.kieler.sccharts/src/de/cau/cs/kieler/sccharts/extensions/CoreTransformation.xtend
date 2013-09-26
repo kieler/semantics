@@ -37,9 +37,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.Effect
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.sccharts.Assignment
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.BooleanValue
-import de.cau.cs.kieler.core.kexpressions.services.KExpressionsGrammarAccess.BooleanExpressionElements
+import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
@@ -310,16 +308,16 @@ class CoreTransformation {
 
     //=======  STATIC EXPRESSIONS  ======
     
-    def static BooleanValue TRUE() {
+    def static BoolValue TRUE() {
         createBooleanValue(true)
     }
 
-    def static BooleanValue FALSE() {
+    def static BoolValue FALSE() {
         createBooleanValue(false)
     }
 
-    def static BooleanValue createBooleanValue(boolean value) {
-        val booleanValue = KExpressionsFactory::eINSTANCE.createBooleanValue
+    def static BoolValue createBooleanValue(boolean value) {
+        val booleanValue = KExpressionsFactory::eINSTANCE.createBoolValue
         booleanValue.setValue(value)
         booleanValue
     }
@@ -502,11 +500,11 @@ class CoreTransformation {
          valuedObject
     }    
     def ValuedObject setTypeInt(ValuedObject valuedObject) {
-         valuedObject.setType(ValueType::INTEGER)
+         valuedObject.setType(ValueType::INT)
          valuedObject
     }   
     def ValuedObject setTypeBool(ValuedObject valuedObject) {
-         valuedObject.setType(ValueType::BOOLEAN)
+         valuedObject.setType(ValueType::BOOL)
          valuedObject
     }    
     def ValuedObject setTypeDouble(ValuedObject valuedObject) {
