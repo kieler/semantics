@@ -87,6 +87,10 @@
     <module>de.cau.cs.kieler.sccharts.klighd</module>
     <module>de.cau.cs.kieler.sccharts.text</module>
     <module>de.cau.cs.kieler.sccharts.text.ui</module>
+	<module>de.cau.cs.kieler.scg</module>
+	<module>de.cau.cs.kieler.scg.edit</module>
+	<module>de.cau.cs.kieler.scg.editor</module>
+	<module>de.cau.cs.kieler.scg.klighd</module>
     <module>org.json</module>
   </modules>
 
