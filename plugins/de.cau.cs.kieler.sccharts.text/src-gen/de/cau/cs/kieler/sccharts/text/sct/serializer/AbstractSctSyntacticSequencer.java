@@ -28,10 +28,11 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 	protected AbstractElementAlias match_KeyIntValueAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q;
 	protected AbstractElementAlias match_KeyStringValueAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q;
 	protected AbstractElementAlias match_RootRegion___RegionKeyword_2_1_ColonKeyword_2_4__q;
+	protected AbstractElementAlias match_SCChart___LeftCurlyBracketKeyword_5_1_0_RightCurlyBracketKeyword_5_1_2__q;
 	protected AbstractElementAlias match_SingleRegion___RegionKeyword_1_1_ColonKeyword_1_4__q;
 	protected AbstractElementAlias match_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_2__q;
 	protected AbstractElementAlias match_TagAnnotation___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q;
-	protected AbstractElementAlias match_Transition_WithKeyword_4_0_q;
+	protected AbstractElementAlias match_Transition_WithKeyword_4_1_q;
 	protected AbstractElementAlias match_TypedKeyStringValueAnnotation___LeftParenthesisKeyword_6_0_RightParenthesisKeyword_6_2__q;
 	
 	@Inject
@@ -47,10 +48,11 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 		match_KeyIntValueAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getKeyIntValueAnnotationAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getKeyIntValueAnnotationAccess().getRightParenthesisKeyword_3_2()));
 		match_KeyStringValueAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getKeyStringValueAnnotationAccess().getRightParenthesisKeyword_3_2()));
 		match_RootRegion___RegionKeyword_2_1_ColonKeyword_2_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getRootRegionAccess().getRegionKeyword_2_1()), new TokenAlias(false, false, grammarAccess.getRootRegionAccess().getColonKeyword_2_4()));
+		match_SCChart___LeftCurlyBracketKeyword_5_1_0_RightCurlyBracketKeyword_5_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSCChartAccess().getLeftCurlyBracketKeyword_5_1_0()), new TokenAlias(false, false, grammarAccess.getSCChartAccess().getRightCurlyBracketKeyword_5_1_2()));
 		match_SingleRegion___RegionKeyword_1_1_ColonKeyword_1_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSingleRegionAccess().getRegionKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getSingleRegionAccess().getColonKeyword_1_4()));
 		match_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_6_1_0()), new TokenAlias(false, false, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_6_1_2()));
 		match_TagAnnotation___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getTagAnnotationAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getTagAnnotationAccess().getRightParenthesisKeyword_2_2()));
-		match_Transition_WithKeyword_4_0_q = new TokenAlias(false, true, grammarAccess.getTransitionAccess().getWithKeyword_4_0());
+		match_Transition_WithKeyword_4_1_q = new TokenAlias(false, true, grammarAccess.getTransitionAccess().getWithKeyword_4_1());
 		match_TypedKeyStringValueAnnotation___LeftParenthesisKeyword_6_0_RightParenthesisKeyword_6_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_6_0()), new TokenAlias(false, false, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_6_2()));
 	}
 	
@@ -86,14 +88,16 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 				emit_KeyStringValueAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_RootRegion___RegionKeyword_2_1_ColonKeyword_2_4__q.equals(syntax))
 				emit_RootRegion___RegionKeyword_2_1_ColonKeyword_2_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_SCChart___LeftCurlyBracketKeyword_5_1_0_RightCurlyBracketKeyword_5_1_2__q.equals(syntax))
+				emit_SCChart___LeftCurlyBracketKeyword_5_1_0_RightCurlyBracketKeyword_5_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_SingleRegion___RegionKeyword_1_1_ColonKeyword_1_4__q.equals(syntax))
 				emit_SingleRegion___RegionKeyword_1_1_ColonKeyword_1_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_2__q.equals(syntax))
 				emit_State___LeftCurlyBracketKeyword_6_1_0_RightCurlyBracketKeyword_6_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_TagAnnotation___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q.equals(syntax))
 				emit_TagAnnotation___LeftParenthesisKeyword_2_0_RightParenthesisKeyword_2_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_Transition_WithKeyword_4_0_q.equals(syntax))
-				emit_Transition_WithKeyword_4_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Transition_WithKeyword_4_1_q.equals(syntax))
+				emit_Transition_WithKeyword_4_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_TypedKeyStringValueAnnotation___LeftParenthesisKeyword_6_0_RightParenthesisKeyword_6_2__q.equals(syntax))
 				emit_TypedKeyStringValueAnnotation___LeftParenthesisKeyword_6_0_RightParenthesisKeyword_6_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
@@ -182,6 +186,14 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 	
 	/**
 	 * Syntax:
+	 *     ('{' '}')?
+	 */
+	protected void emit_SCChart___LeftCurlyBracketKeyword_5_1_0_RightCurlyBracketKeyword_5_1_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
 	 *     ('region' ':')?
 	 */
 	protected void emit_SingleRegion___RegionKeyword_1_1_ColonKeyword_1_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -208,7 +220,7 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 	 * Syntax:
 	 *     'with'?
 	 */
-	protected void emit_Transition_WithKeyword_4_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Transition_WithKeyword_4_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

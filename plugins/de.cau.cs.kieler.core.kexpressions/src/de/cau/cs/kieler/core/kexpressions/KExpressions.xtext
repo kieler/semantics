@@ -248,7 +248,7 @@ AnyType returns ecore::EString:
 
 
 enum CompareOperator returns OperatorType:
-	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 
 enum PreOperator returns OperatorType:
     PRE="pre";

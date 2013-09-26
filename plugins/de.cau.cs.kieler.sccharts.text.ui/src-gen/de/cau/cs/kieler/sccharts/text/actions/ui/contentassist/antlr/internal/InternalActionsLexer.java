@@ -273,10 +273,11 @@ public class InternalActionsLexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:21:7: ( '=' )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:21:9: '='
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:21:7: ( '==' )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:21:9: '=='
             {
-            match('='); 
+            match("=="); 
+
 
             }
 
@@ -476,11 +477,10 @@ public class InternalActionsLexer extends Lexer {
         try {
             int _type = T__36;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:31:7: ( ':=' )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:31:9: ':='
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:31:7: ( '=' )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:31:9: '='
             {
-            match(":="); 
-
+            match('='); 
 
             }
 
@@ -1839,30 +1839,29 @@ public class InternalActionsLexer extends Lexer {
         }
     }
     static final String DFA24_eotS =
-        "\1\uffff\1\41\1\43\4\uffff\1\51\1\uffff\2\43\1\uffff\1\60\1\62"+
-        "\1\65\7\uffff\1\43\1\37\1\77\2\43\2\37\5\uffff\1\43\5\uffff\1\77"+
-        "\2\uffff\2\43\20\uffff\1\43\3\uffff\2\43\2\uffff\1\115\1\116\1\117"+
-        "\2\uffff\3\43\3\uffff\1\43\1\124\2\43\1\uffff\1\124\3\43\1\132\1"+
-        "\uffff";
+        "\2\uffff\1\42\4\uffff\1\50\1\uffff\2\42\1\55\1\60\1\62\1\65\7\uffff"+
+        "\1\42\1\37\1\77\2\42\2\37\4\uffff\1\42\5\uffff\1\77\2\uffff\2\42"+
+        "\21\uffff\1\42\3\uffff\2\42\2\uffff\1\115\1\116\1\117\2\uffff\3"+
+        "\42\3\uffff\1\42\1\124\2\42\1\uffff\1\124\3\42\1\132\1\uffff";
     static final String DFA24_eofS =
         "\133\uffff";
     static final String DFA24_minS =
-        "\1\0\1\75\1\162\4\uffff\1\60\1\uffff\1\157\1\141\1\uffff\2\75\1"+
-        "\52\7\uffff\1\155\1\0\1\56\1\162\1\141\1\0\1\101\5\uffff\1\145\5"+
-        "\uffff\1\56\2\uffff\1\144\1\154\6\uffff\1\0\11\uffff\1\155\3\uffff"+
-        "\1\165\1\154\2\uffff\3\60\2\uffff\2\145\1\163\3\uffff\1\144\1\60"+
-        "\1\145\1\151\1\uffff\1\60\1\141\1\164\1\145\1\60\1\uffff";
+        "\1\0\1\uffff\1\162\4\uffff\1\60\1\uffff\1\157\1\141\3\75\1\52\7"+
+        "\uffff\1\155\1\0\1\56\1\162\1\141\1\0\1\101\4\uffff\1\145\5\uffff"+
+        "\1\56\2\uffff\1\144\1\154\7\uffff\1\0\11\uffff\1\155\3\uffff\1\165"+
+        "\1\154\2\uffff\3\60\2\uffff\2\145\1\163\3\uffff\1\144\1\60\1\145"+
+        "\1\151\1\uffff\1\60\1\141\1\164\1\145\1\60\1\uffff";
     static final String DFA24_maxS =
-        "\1\uffff\1\75\1\162\4\uffff\1\71\1\uffff\1\157\1\141\1\uffff\1"+
+        "\1\uffff\1\uffff\1\162\4\uffff\1\71\1\uffff\1\157\1\141\1\75\1"+
         "\76\1\75\1\57\7\uffff\1\155\1\uffff\1\146\1\162\1\141\1\uffff\1"+
-        "\172\5\uffff\1\145\5\uffff\1\146\2\uffff\1\144\1\154\6\uffff\1\uffff"+
+        "\172\4\uffff\1\145\5\uffff\1\146\2\uffff\1\144\1\154\7\uffff\1\uffff"+
         "\11\uffff\1\155\3\uffff\1\165\1\154\2\uffff\3\172\2\uffff\2\145"+
         "\1\163\3\uffff\1\144\1\172\1\145\1\151\1\uffff\1\172\1\141\1\164"+
         "\1\145\1\172\1\uffff";
     static final String DFA24_acceptS =
-        "\3\uffff\1\3\1\4\1\5\1\6\1\uffff\1\10\2\uffff\1\13\3\uffff\1\22"+
-        "\1\23\1\24\1\26\1\27\1\30\1\31\7\uffff\1\42\1\44\1\45\1\25\1\1\1"+
-        "\uffff\1\42\1\3\1\4\1\5\1\6\1\uffff\1\7\1\10\2\uffff\1\13\1\15\1"+
+        "\1\uffff\1\1\1\uffff\1\3\1\4\1\5\1\6\1\uffff\1\10\6\uffff\1\22"+
+        "\1\23\1\24\1\26\1\27\1\30\1\31\7\uffff\1\42\1\44\1\45\1\1\1\uffff"+
+        "\1\42\1\3\1\4\1\5\1\6\1\uffff\1\7\1\10\2\uffff\1\13\1\25\1\15\1"+
         "\20\1\14\1\17\1\16\1\uffff\1\43\1\21\1\22\1\23\1\24\1\26\1\27\1"+
         "\30\1\31\1\uffff\1\33\1\36\1\37\2\uffff\1\41\1\44\3\uffff\1\34\1"+
         "\35\3\uffff\1\2\1\11\1\12\4\uffff\1\40\5\uffff\1\32";
@@ -1874,17 +1873,17 @@ public class InternalActionsLexer extends Lexer {
             "\15\1\37\1\22\32\35\1\23\1\37\1\24\1\34\1\35\1\37\5\35\1\32"+
             "\2\35\1\26\3\35\1\11\2\35\1\2\3\35\1\31\1\35\1\12\4\35\1\37"+
             "\1\3\uff83\37",
-            "\1\40",
-            "\1\42",
+            "",
+            "\1\41",
             "",
             "",
             "",
             "",
-            "\12\50",
+            "\12\47",
             "",
+            "\1\52",
             "\1\53",
             "\1\54",
-            "",
             "\1\56\1\57",
             "\1\61",
             "\1\63\4\uffff\1\64",
@@ -1897,12 +1896,11 @@ public class InternalActionsLexer extends Lexer {
             "",
             "\1\75",
             "\0\76",
-            "\1\100\1\uffff\12\50\54\uffff\1\100",
+            "\1\100\1\uffff\12\47\54\uffff\1\100",
             "\1\101",
             "\1\102",
             "\0\103",
-            "\32\43\4\uffff\1\43\1\uffff\32\43",
-            "",
+            "\32\42\4\uffff\1\42\1\uffff\32\42",
             "",
             "",
             "",
@@ -1913,11 +1911,12 @@ public class InternalActionsLexer extends Lexer {
             "",
             "",
             "",
-            "\1\100\1\uffff\12\50\54\uffff\1\100",
+            "\1\100\1\uffff\12\47\54\uffff\1\100",
             "",
             "",
             "\1\106",
             "\1\107",
+            "",
             "",
             "",
             "",
@@ -1942,9 +1941,9 @@ public class InternalActionsLexer extends Lexer {
             "\1\114",
             "",
             "",
-            "\12\43\7\uffff\32\43\4\uffff\1\43\1\uffff\32\43",
-            "\12\43\7\uffff\32\43\4\uffff\1\43\1\uffff\32\43",
-            "\12\43\7\uffff\32\43\4\uffff\1\43\1\uffff\32\43",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
             "",
             "",
             "\1\120",
@@ -1954,15 +1953,15 @@ public class InternalActionsLexer extends Lexer {
             "",
             "",
             "\1\123",
-            "\12\43\7\uffff\32\43\4\uffff\1\43\1\uffff\32\43",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
             "\1\125",
             "\1\126",
             "",
-            "\12\43\7\uffff\32\43\4\uffff\1\43\1\uffff\32\43",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
             "\1\127",
             "\1\130",
             "\1\131",
-            "\12\43\7\uffff\32\43\4\uffff\1\43\1\uffff\32\43",
+            "\12\42\7\uffff\32\42\4\uffff\1\42\1\uffff\32\42",
             ""
     };
 

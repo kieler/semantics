@@ -110,7 +110,80 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cEntryActionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cEntryKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cTriggerAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_2_0 = (RuleCall)cTriggerAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cSolidusKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_3_1_0 = (RuleCall)cEffectsAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cSemicolonKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cEffectsAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_3_2_1_0 = (RuleCall)cEffectsAssignment_3_2_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		////// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
+		////Action returns sccharts::Action:
+		////    {sccharts::Action}
+		//////    (annotations += Annotation)*
+		////	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 		
+		//EntryAction returns sccharts::EntryAction:
+		//	{sccharts::EntryAction} //    (annotations += Annotation)*
+		//	"entry" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+		public ParserRule getRule() { return rule; }
+
+		//{sccharts::EntryAction} //    (annotations += Annotation)*
+		//"entry" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"
+		public Group getGroup() { return cGroup; }
+
+		//{sccharts::EntryAction}
+		public Action getEntryActionAction_0() { return cEntryActionAction_0; }
+
+		////    (annotations += Annotation)*
+		//"entry"
+		public Keyword getEntryKeyword_1() { return cEntryKeyword_1; }
+
+		//trigger=BoolExpression?
+		public Assignment getTriggerAssignment_2() { return cTriggerAssignment_2; }
+
+		//BoolExpression
+		public RuleCall getTriggerBoolExpressionParserRuleCall_2_0() { return cTriggerBoolExpressionParserRuleCall_2_0; }
+
+		//("/" effects+=Effect (";" effects+=Effect)*)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//"/"
+		public Keyword getSolidusKeyword_3_0() { return cSolidusKeyword_3_0; }
+
+		//effects+=Effect
+		public Assignment getEffectsAssignment_3_1() { return cEffectsAssignment_3_1; }
+
+		//Effect
+		public RuleCall getEffectsEffectParserRuleCall_3_1_0() { return cEffectsEffectParserRuleCall_3_1_0; }
+
+		//(";" effects+=Effect)*
+		public Group getGroup_3_2() { return cGroup_3_2; }
+
+		//";"
+		public Keyword getSemicolonKeyword_3_2_0() { return cSemicolonKeyword_3_2_0; }
+
+		//effects+=Effect
+		public Assignment getEffectsAssignment_3_2_1() { return cEffectsAssignment_3_2_1; }
+
+		//Effect
+		public RuleCall getEffectsEffectParserRuleCall_3_2_1_0() { return cEffectsEffectParserRuleCall_3_2_1_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+	}
+
+	public class DuringActionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DuringAction");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDuringActionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cIsImmediateAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cIsImmediateImmediateKeyword_1_0 = (Keyword)cIsImmediateAssignment_1.eContents().get(0);
+		private final Keyword cDuringKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
@@ -123,91 +196,13 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEffectsEffectParserRuleCall_4_2_1_0 = (RuleCall)cEffectsAssignment_4_2_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		////// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
-		////Action returns sccharts::Action:
-		////    {sccharts::Action}
-		//////    (annotations += Annotation)*
-		////	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 		
-		//EntryAction returns sccharts::EntryAction:
-		//	{sccharts::EntryAction} //    (annotations += Annotation)*
-		//	"entry" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
-		public ParserRule getRule() { return rule; }
-
-		//{sccharts::EntryAction} //    (annotations += Annotation)*
-		//"entry" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"
-		public Group getGroup() { return cGroup; }
-
-		//{sccharts::EntryAction}
-		public Action getEntryActionAction_0() { return cEntryActionAction_0; }
-
-		////    (annotations += Annotation)*
-		//"entry"
-		public Keyword getEntryKeyword_1() { return cEntryKeyword_1; }
-
-		//":"
-		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
-
-		//trigger=BoolExpression?
-		public Assignment getTriggerAssignment_3() { return cTriggerAssignment_3; }
-
-		//BoolExpression
-		public RuleCall getTriggerBoolExpressionParserRuleCall_3_0() { return cTriggerBoolExpressionParserRuleCall_3_0; }
-
-		//("/" effects+=Effect (";" effects+=Effect)*)?
-		public Group getGroup_4() { return cGroup_4; }
-
-		//"/"
-		public Keyword getSolidusKeyword_4_0() { return cSolidusKeyword_4_0; }
-
-		//effects+=Effect
-		public Assignment getEffectsAssignment_4_1() { return cEffectsAssignment_4_1; }
-
-		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_4_1_0() { return cEffectsEffectParserRuleCall_4_1_0; }
-
-		//(";" effects+=Effect)*
-		public Group getGroup_4_2() { return cGroup_4_2; }
-
-		//";"
-		public Keyword getSemicolonKeyword_4_2_0() { return cSemicolonKeyword_4_2_0; }
-
-		//effects+=Effect
-		public Assignment getEffectsAssignment_4_2_1() { return cEffectsAssignment_4_2_1; }
-
-		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_4_2_1_0() { return cEffectsEffectParserRuleCall_4_2_1_0; }
-
-		//";"
-		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
-	}
-
-	public class DuringActionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DuringAction");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cDuringActionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cIsImmediateAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cIsImmediateImmediateKeyword_1_0 = (Keyword)cIsImmediateAssignment_1.eContents().get(0);
-		private final Keyword cDuringKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Keyword cColonKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cTriggerAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cTriggerBoolExpressionParserRuleCall_4_0 = (RuleCall)cTriggerAssignment_4.eContents().get(0);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cSolidusKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cEffectsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_5_1_0 = (RuleCall)cEffectsAssignment_5_1.eContents().get(0);
-		private final Group cGroup_5_2 = (Group)cGroup_5.eContents().get(2);
-		private final Keyword cSemicolonKeyword_5_2_0 = (Keyword)cGroup_5_2.eContents().get(0);
-		private final Assignment cEffectsAssignment_5_2_1 = (Assignment)cGroup_5_2.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_5_2_1_0 = (RuleCall)cEffectsAssignment_5_2_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
-		
 		//DuringAction returns sccharts::DuringAction:
 		//	{sccharts::DuringAction} //    (annotations += Annotation)*
-		//	isImmediate?="immediate"? "during" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+		//	isImmediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::DuringAction} //    (annotations += Annotation)*
-		//isImmediate?="immediate"? "during" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"
+		//isImmediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::DuringAction}
@@ -222,80 +217,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"during"
 		public Keyword getDuringKeyword_2() { return cDuringKeyword_2; }
 
-		//":"
-		public Keyword getColonKeyword_3() { return cColonKeyword_3; }
-
-		//trigger=BoolExpression?
-		public Assignment getTriggerAssignment_4() { return cTriggerAssignment_4; }
-
-		//BoolExpression
-		public RuleCall getTriggerBoolExpressionParserRuleCall_4_0() { return cTriggerBoolExpressionParserRuleCall_4_0; }
-
-		//("/" effects+=Effect (";" effects+=Effect)*)?
-		public Group getGroup_5() { return cGroup_5; }
-
-		//"/"
-		public Keyword getSolidusKeyword_5_0() { return cSolidusKeyword_5_0; }
-
-		//effects+=Effect
-		public Assignment getEffectsAssignment_5_1() { return cEffectsAssignment_5_1; }
-
-		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_5_1_0() { return cEffectsEffectParserRuleCall_5_1_0; }
-
-		//(";" effects+=Effect)*
-		public Group getGroup_5_2() { return cGroup_5_2; }
-
-		//";"
-		public Keyword getSemicolonKeyword_5_2_0() { return cSemicolonKeyword_5_2_0; }
-
-		//effects+=Effect
-		public Assignment getEffectsAssignment_5_2_1() { return cEffectsAssignment_5_2_1; }
-
-		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_5_2_1_0() { return cEffectsEffectParserRuleCall_5_2_1_0; }
-
-		//";"
-		public Keyword getSemicolonKeyword_6() { return cSemicolonKeyword_6; }
-	}
-
-	public class ExitActionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ExitAction");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cExitActionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cExitKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTriggerBoolExpressionParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cSolidusKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cEffectsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_4_1_0 = (RuleCall)cEffectsAssignment_4_1.eContents().get(0);
-		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
-		private final Keyword cSemicolonKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
-		private final Assignment cEffectsAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_4_2_1_0 = (RuleCall)cEffectsAssignment_4_2_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
-		
-		//ExitAction returns sccharts::ExitAction:
-		//	{sccharts::ExitAction} //    (annotations += Annotation)*
-		//	"exit" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
-		public ParserRule getRule() { return rule; }
-
-		//{sccharts::ExitAction} //    (annotations += Annotation)*
-		//"exit" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"
-		public Group getGroup() { return cGroup; }
-
-		//{sccharts::ExitAction}
-		public Action getExitActionAction_0() { return cExitActionAction_0; }
-
-		////    (annotations += Annotation)*
-		//"exit"
-		public Keyword getExitKeyword_1() { return cExitKeyword_1; }
-
-		//":"
-		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
-
 		//trigger=BoolExpression?
 		public Assignment getTriggerAssignment_3() { return cTriggerAssignment_3; }
 
@@ -330,6 +251,73 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
 	}
 
+	public class ExitActionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ExitAction");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cExitActionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cExitKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cTriggerAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_2_0 = (RuleCall)cTriggerAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cSolidusKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_3_1_0 = (RuleCall)cEffectsAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cSemicolonKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cEffectsAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_3_2_1_0 = (RuleCall)cEffectsAssignment_3_2_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//ExitAction returns sccharts::ExitAction:
+		//	{sccharts::ExitAction} //    (annotations += Annotation)*
+		//	"exit" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+		public ParserRule getRule() { return rule; }
+
+		//{sccharts::ExitAction} //    (annotations += Annotation)*
+		//"exit" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"
+		public Group getGroup() { return cGroup; }
+
+		//{sccharts::ExitAction}
+		public Action getExitActionAction_0() { return cExitActionAction_0; }
+
+		////    (annotations += Annotation)*
+		//"exit"
+		public Keyword getExitKeyword_1() { return cExitKeyword_1; }
+
+		//trigger=BoolExpression?
+		public Assignment getTriggerAssignment_2() { return cTriggerAssignment_2; }
+
+		//BoolExpression
+		public RuleCall getTriggerBoolExpressionParserRuleCall_2_0() { return cTriggerBoolExpressionParserRuleCall_2_0; }
+
+		//("/" effects+=Effect (";" effects+=Effect)*)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//"/"
+		public Keyword getSolidusKeyword_3_0() { return cSolidusKeyword_3_0; }
+
+		//effects+=Effect
+		public Assignment getEffectsAssignment_3_1() { return cEffectsAssignment_3_1; }
+
+		//Effect
+		public RuleCall getEffectsEffectParserRuleCall_3_1_0() { return cEffectsEffectParserRuleCall_3_1_0; }
+
+		//(";" effects+=Effect)*
+		public Group getGroup_3_2() { return cGroup_3_2; }
+
+		//";"
+		public Keyword getSemicolonKeyword_3_2_0() { return cSemicolonKeyword_3_2_0; }
+
+		//effects+=Effect
+		public Assignment getEffectsAssignment_3_2_1() { return cEffectsAssignment_3_2_1; }
+
+		//Effect
+		public RuleCall getEffectsEffectParserRuleCall_3_2_1_0() { return cEffectsEffectParserRuleCall_3_2_1_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+	}
+
 	public class SuspendActionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SuspendAction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -337,18 +325,17 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cIsImmediateAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final Keyword cIsImmediateImmediateKeyword_1_0 = (Keyword)cIsImmediateAssignment_1.eContents().get(0);
 		private final Keyword cSuspendKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Keyword cColonKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cTriggerAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cTriggerBoolExpressionParserRuleCall_4_0 = (RuleCall)cTriggerAssignment_4.eContents().get(0);
-		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//SuspendAction returns sccharts::SuspendAction:
 		//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-		//	isImmediate?="immediate"? "suspend" ":" trigger=BoolExpression? ";";
+		//	isImmediate?="immediate"? "suspend" trigger=BoolExpression? ";";
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::SuspendAction} //    (annotations += Annotation)*
-		//isImmediate?="immediate"? "suspend" ":" trigger=BoolExpression? ";"
+		//isImmediate?="immediate"? "suspend" trigger=BoolExpression? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::SuspendAction}
@@ -363,17 +350,14 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"suspend"
 		public Keyword getSuspendKeyword_2() { return cSuspendKeyword_2; }
 
-		//":"
-		public Keyword getColonKeyword_3() { return cColonKeyword_3; }
-
 		//trigger=BoolExpression?
-		public Assignment getTriggerAssignment_4() { return cTriggerAssignment_4; }
+		public Assignment getTriggerAssignment_3() { return cTriggerAssignment_3; }
 
 		//BoolExpression
-		public RuleCall getTriggerBoolExpressionParserRuleCall_4_0() { return cTriggerBoolExpressionParserRuleCall_4_0; }
+		public RuleCall getTriggerBoolExpressionParserRuleCall_3_0() { return cTriggerBoolExpressionParserRuleCall_3_0; }
 
 		//";"
-		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
 
 	public class EffectElements extends AbstractParserRuleElementFinder {
@@ -450,15 +434,15 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
 		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
-		private final Keyword cColonEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
 		
 		//Assignment returns sccharts::Assignment:
-		//	valuedObject=[kexpressions::ValuedObject] ":=" expression=Expression;
+		//	valuedObject=[kexpressions::ValuedObject] "=" expression=Expression;
 		public ParserRule getRule() { return rule; }
 
-		//valuedObject=[kexpressions::ValuedObject] ":=" expression=Expression
+		//valuedObject=[kexpressions::ValuedObject] "=" expression=Expression
 		public Group getGroup() { return cGroup; }
 
 		//valuedObject=[kexpressions::ValuedObject]
@@ -470,8 +454,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
 
-		//":="
-		public Keyword getColonEqualsSignKeyword_1() { return cColonEqualsSignKeyword_1; }
+		//"="
+		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
 
 		//expression=Expression
 		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
@@ -584,7 +568,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	////	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 		
 	//EntryAction returns sccharts::EntryAction:
 	//	{sccharts::EntryAction} //    (annotations += Annotation)*
-	//	"entry" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+	//	"entry" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
 	public EntryActionElements getEntryActionAccess() {
 		return (pEntryAction != null) ? pEntryAction : (pEntryAction = new EntryActionElements());
 	}
@@ -595,7 +579,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DuringAction returns sccharts::DuringAction:
 	//	{sccharts::DuringAction} //    (annotations += Annotation)*
-	//	isImmediate?="immediate"? "during" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+	//	isImmediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
 	public DuringActionElements getDuringActionAccess() {
 		return (pDuringAction != null) ? pDuringAction : (pDuringAction = new DuringActionElements());
 	}
@@ -606,7 +590,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExitAction returns sccharts::ExitAction:
 	//	{sccharts::ExitAction} //    (annotations += Annotation)*
-	//	"exit" ":" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+	//	"exit" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
 	public ExitActionElements getExitActionAccess() {
 		return (pExitAction != null) ? pExitAction : (pExitAction = new ExitActionElements());
 	}
@@ -617,7 +601,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SuspendAction returns sccharts::SuspendAction:
 	//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-	//	isImmediate?="immediate"? "suspend" ":" trigger=BoolExpression? ";";
+	//	isImmediate?="immediate"? "suspend" trigger=BoolExpression? ";";
 	public SuspendActionElements getSuspendActionAccess() {
 		return (pSuspendAction != null) ? pSuspendAction : (pSuspendAction = new SuspendActionElements());
 	}
@@ -647,7 +631,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Assignment returns sccharts::Assignment:
-	//	valuedObject=[kexpressions::ValuedObject] ":=" expression=Expression;
+	//	valuedObject=[kexpressions::ValuedObject] "=" expression=Expression;
 	public AssignmentElements getAssignmentAccess() {
 		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
 	}
@@ -1014,7 +998,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	////
 	//// --------------------------
 	//enum CompareOperator returns OperatorType:
-	//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 	public KExpressionsGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {
 		return gaKExpressions.getCompareOperatorAccess();
 	}

@@ -241,14 +241,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     node.setNodeSize(20,20);
                 ] else if (s.isFinal) figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
                     // re-configure the outer rounded rectangle
-                    val offset = figure.lineWidthValue + 3;
+                    val offset = figure.lineWidthValue + if (s.isInitial) 4 else 3;
                     figure.setCornerSize(offset + cornerRadius, offset + cornerRadius)
-                    figure.lineWidth = 2;
+                    figure.lineWidth = if (s.isInitial) 4 else 2;
 
                     // configure the inner one
                     it.background = "white".color;
                     it.styleRef = figure;
-                    it.lineWidth = 2;
+                    it.lineWidth = if (s.isInitial) 2 else 2;
                     it.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset, 0);
                 ] else figure
                 

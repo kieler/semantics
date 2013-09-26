@@ -803,7 +803,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "CompareOperator");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cEQEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cEQEqualsSignKeyword_0_0 = (Keyword)cEQEnumLiteralDeclaration_0.eContents().get(0);
+		private final Keyword cEQEqualsSignEqualsSignKeyword_0_0 = (Keyword)cEQEnumLiteralDeclaration_0.eContents().get(0);
 		private final EnumLiteralDeclaration cLTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
 		private final Keyword cLTLessThanSignKeyword_1_0 = (Keyword)cLTEnumLiteralDeclaration_1.eContents().get(0);
 		private final EnumLiteralDeclaration cLEQEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
@@ -874,17 +874,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		////
 		//// --------------------------
 		//enum CompareOperator returns OperatorType:
-		//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+		//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 		public EnumRule getRule() { return rule; }
 
-		//EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>"
+		//EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//EQ="="
+		//EQ="=="
 		public EnumLiteralDeclaration getEQEnumLiteralDeclaration_0() { return cEQEnumLiteralDeclaration_0; }
 
-		//"="
-		public Keyword getEQEqualsSignKeyword_0_0() { return cEQEqualsSignKeyword_0_0; }
+		//"=="
+		public Keyword getEQEqualsSignEqualsSignKeyword_0_0() { return cEQEqualsSignEqualsSignKeyword_0_0; }
 
 		//LT="<"
 		public EnumLiteralDeclaration getLTEnumLiteralDeclaration_1() { return cLTEnumLiteralDeclaration_1; }
@@ -1648,7 +1648,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	////
 	//// --------------------------
 	//enum CompareOperator returns OperatorType:
-	//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 	public CompareOperatorElements getCompareOperatorAccess() {
 		return (unknownRuleCompareOperator != null) ? unknownRuleCompareOperator : (unknownRuleCompareOperator = new CompareOperatorElements());
 	}

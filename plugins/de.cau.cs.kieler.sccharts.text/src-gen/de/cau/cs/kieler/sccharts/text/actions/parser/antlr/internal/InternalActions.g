@@ -373,9 +373,9 @@ ruleAssignment returns [EObject current=null]
 	}
 
 )
-)	otherlv_1=':=' 
+)	otherlv_1='=' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getAssignmentAccess().getColonEqualsSignKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getAssignmentAccess().getEqualsSignKeyword_1());
     }
 (
 (
@@ -2635,7 +2635,7 @@ ruleDivOperator returns [Enumerator current=null]
 ruleCompareOperator returns [Enumerator current=null] 
     @init { enterRule(); }
     @after { leaveRule(); }:
-((	enumLiteral_0='=' 
+((	enumLiteral_0='==' 
 	{
         $current = grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_0, grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0()); 

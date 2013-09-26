@@ -37,7 +37,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    EQ(1, "EQ", "="),
+    EQ(1, "EQ", "=="),
 
     /**
      * The '<em><b>LT</b></em>' literal object.
@@ -197,7 +197,7 @@ public enum OperatorType implements Enumerator {
      * Equals operator
      * <!-- end-model-doc -->
      * @see #EQ
-     * @model literal="="
+     * @model literal="=="
      * @generated
      * @ordered
      */

@@ -2282,7 +2282,7 @@ ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToke
 ruleCompareOperator returns [Enumerator current=null] 
     @init { enterRule(); }
     @after { leaveRule(); }:
-((	enumLiteral_0='=' 
+((	enumLiteral_0='==' 
 	{
         $current = grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_0, grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0()); 
