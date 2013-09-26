@@ -155,7 +155,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return r.createNode().putToLookUpWith(r) => [ node |
             // node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
              node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN);
-             node.setLayoutOption(LayoutOptions::SPACING, 20f);
+             node.setLayoutOption(LayoutOptions::SPACING, 25f);
              node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
              node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
              node.addLayoutParam(Properties::THOROUGHNESS, 100)
@@ -389,7 +389,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.targetPort = t.node.getPort(SCGPORTID_INCOMING)
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
       
-            edge.addRoundedBendsPolyline(1,2) => [
+            edge.addRoundedBendsPolyline(8,2) => [
                     it.lineStyle = LineStyle::DOT;
 //                    it.lineStyle.dashPattern.clear;
 //                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
@@ -430,8 +430,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 edge.targetPort = targetObj.node.getPort(SCGPORTID_INCOMING)
             }
       
-            edge.addRoundedBendsPolyline(1,2) => [
+            edge.addRoundedBendsPolyline(8,2) => [
                     it.lineStyle = LineStyle::SOLID
+                    it.addArrowDecorator
 //                    it.lineStyle.dashPattern.clear;
 //                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
             ]
