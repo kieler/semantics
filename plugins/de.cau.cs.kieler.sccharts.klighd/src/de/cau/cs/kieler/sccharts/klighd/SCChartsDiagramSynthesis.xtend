@@ -64,6 +64,11 @@ import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.SuspendAction
+import de.cau.cs.kieler.core.kgraph.KGraphElement
+import de.cau.cs.kieler.core.kgraph.KLabeledGraphElement
+import de.cau.cs.kieler.core.krendering.KRectangle
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kiml.options.EdgeLabelPlacement
 
 class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
@@ -133,6 +138,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     private static val KColor SCCHARTSGRAY = RENDERING_FACTORY.createKColor()=>[it.red=240;it.green=240;it.blue=240];
     private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor()=>[it.red=248;it.green=249;it.blue=253];
     private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor()=>[it.red=205;it.green=220;it.blue=243];
+    private static val KColor KEYWORD = RENDERING_FACTORY.createKColor()=>[it.red=115;it.green=0;it.blue=65];
     
     
 
@@ -156,31 +162,29 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             
             node.addRectangle() => [
                 it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
-                it.setSurroundingSpace(7,0);
+                it.setSurroundingSpace(4,0);
                 it.invisible = false;
                 it.lineWidth = 0;
-                // it.invisible = false;
-                //it.foreground = "red".color;
                 it.addText("[-]" + if (r.label.nullOrEmpty) "" else " "+r.label).putToLookUpWith(r) => [
                     it.foreground = "gray".color
                     it.fontSize = 8                  
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
-                it.addVerticalLine(LEFT, 1, 1) => [
-                    it.lineStyle = LineStyle::CUSTOM;
-                    it.lineStyle.dashPattern.clear;
-                    it.lineStyle.dashPattern += REGION_DASH_PATTERN;
-                    it.invisible = true;
-                    it.invisible.modifierId = "de.cau.cs.kieler.sccharts.klighd.regionLineModifier";
-                ];
-                it.addHorizontalLine(TOP, 1, 1) => [
-                    it.lineStyle = LineStyle::CUSTOM;
-                    it.lineStyle.dashPattern.clear;
-                    it.lineStyle.dashPattern += REGION_DASH_PATTERN;
-                    it.invisible = true;
-                    it.invisible.modifierId = "de.cau.cs.kieler.sccharts.klighd.regionLineModifier";
-                ];
+//                it.addVerticalLine(LEFT, 1, 1) => [
+//                    it.lineStyle = LineStyle::CUSTOM;
+//                    it.lineStyle.dashPattern.clear;
+//                    it.lineStyle.dashPattern += REGION_DASH_PATTERN;
+//                    it.invisible = true;
+//                    it.invisible.modifierId = "de.cau.cs.kieler.sccharts.klighd.regionLineModifier";
+//                ];
+//                it.addHorizontalLine(TOP, 1, 1) => [
+//                    it.lineStyle = LineStyle::CUSTOM;
+//                    it.lineStyle.dashPattern.clear;
+//                    it.lineStyle.dashPattern += REGION_DASH_PATTERN;
+//                    it.invisible = true;
+//                    it.invisible.modifierId = "de.cau.cs.kieler.sccharts.klighd.regionLineModifier";
+//                ];
                 it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
             ];
         ];
@@ -215,11 +219,60 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         "suspend"
     }
     
+    
+    def boolean isKeyword(String text) {
+        return (text == "scchart")||
+               (text == "entry")||
+               (text == "during")||
+               (text == "exit")||
+               (text == "signal")||
+               (text == "int")||
+               (text == "bool")||
+               (text == "float")||
+               (text == "unsigned")||
+               (text == "immediate")||
+               (text == "input")||
+               (text == "output")||
+               (text == "pre")||
+               (text == "val")||
+               (text == "combine")
+    }
+    
+    def List<String> getWords(String text) {
+        text.split(" ")
+    }
+    
+    def KRectangle printHighlightedText(KRectangle parent, String text, EObject lookup) {
+            var offset = "" 
+            for (word : text.getWords) {
+              val currentOffset = offset
+                 parent.addText(currentOffset + word) => [
+                     if (word.keyword) {
+                        it.setForeground(KEYWORD.copy)
+                        it.setFontBold(true)
+                     }
+                     it.putToLookUpWith(lookup);
+                     it.setAreaPlacementData()
+                     it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+              ]
+              offset = offset + getSpaceString(word.length+1)
+            }    
+        parent
+    }
+    
+    def String getSpaceString(int length) {
+        if (length > 0) {
+            return "  " + getSpaceString(length-1)
+        }
+        return ""
+    }
+    
+    
     def dispatch KNode translate(State s) {
         return s.createNode().putToLookUpWith(s) => [ node |
-            //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
-            // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
-            // node.setLayoutOption(LayoutOptions::SPACING, 0f);
+//            node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
+//            node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
+//            node.setLayoutOption(LayoutOptions::SPACING, 0f);
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
             val conditional = s.type == StateType::CONDITIONAL;
@@ -255,6 +308,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
              ) => [
                 node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
                 it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+                //it.setSurroundingSpace(5,0);
+                it.invisible = false;
+                it.lineWidth = 0;
+
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
@@ -335,11 +392,15 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 declaration = declaration.trim + " "
                             }
 
-//                            it.addText(sigText + ";") => [
-                            it.addText(declaration + type + sig.name + init +  combine + ";") => [
-                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
-                                    it.putToLookUpWith(sig);
-                            ]
+                              it.printHighlightedText(declaration + type + sig.name + init +  combine + ";", sig) => [
+                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+                              ]
+//                            it.addText(declaration + type + sig.name + init +  combine + ";") => [
+//                                    it.setForeground(KEYWORD.copy)
+//                                    it.setFontBold(true)
+//                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+//                                    it.putToLookUpWith(sig);
+//                            ]
                             it.addRectangle().invisible = true;
                             ];
                         }
@@ -352,10 +413,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                             it.addRectangle => [
                                 it.invisible = true;
                                 val text = serializer.serialize(action.copy);
-                                it.addText(text) => [
-                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
-                                    it.putToLookUpWith(action);
-                                ]
+                                it.printHighlightedText(text, action)
+//                                it.addText(text) => [
+//                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+//                                    it.putToLookUpWith(action);
+//                                ]
                                 it.addRectangle().invisible = true;
                             ];
                         }
@@ -368,7 +430,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         .maxCellHeight = 1;                        
                     
                     it.addChildArea().setGridPlacementData() => [
-                        from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+                        from(LEFT, 3, 0, TOP, 3, 0).to(RIGHT, 3, 0, BOTTOM, 3, 0)
                         minCellHeight = 36;
                         minCellWidth = 36;
                     ];
@@ -376,7 +438,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             ];
 
             if (!s.hasNoRegionsWithStates) {
-                for (r : s.regions) node.children += r.translate;
+                    for (r : s.regions) node.children += r.translate;
             }
             
             for (t : s.outgoingTransitions) t.translateTransition();
