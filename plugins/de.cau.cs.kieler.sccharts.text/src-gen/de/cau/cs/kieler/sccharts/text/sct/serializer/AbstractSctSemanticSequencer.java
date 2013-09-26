@@ -499,8 +499,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         type=TransitionType 
 	 *         priority=INT? 
 	 *         targetState=[State|ID] 
-	 *         (isImmediate?='immediate'? ((delay=INT? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?) | label=STRING))? 
-	 *         isHistory?='history'?
+	 *         (isImmediate?='immediate'? isHistory?='history'? ((delay=INT? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?) | label=STRING)?)?
 	 *     )
 	 */
 	protected void sequence_Transition(EObject context, Transition semanticObject) {

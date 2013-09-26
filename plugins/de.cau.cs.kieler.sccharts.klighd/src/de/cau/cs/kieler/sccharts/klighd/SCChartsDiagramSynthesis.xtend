@@ -268,13 +268,18 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 //            node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
 //            node.setLayoutOption(LayoutOptions::SPACING, 0f);
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+            
+            if (s.isInitial) {
+                node.setParent(node.parent)
+            }
 
             val conditional = s.type == StateType::CONDITIONAL;
             val cornerRadius = if (conditional) 10 else if (!s.hasRegionsOrDeclarations) 17 else 8;
-            val lineWidth = if (s.isInitial && s.isFinal) 4 else if (s.isInitial) 4 else 1;
+            val lineWidth = if (s.isInitial) 4 else 1;
 
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth)
                 .background = "white".color;
+                figure.lineWidth = lineWidth;
             (
                 if (conditional) figure => [
                     it.background = "black".color;
@@ -288,23 +293,22 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     node.setNodeSize(20,20);
                 ] else if (s.isFinal) figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
                     // re-configure the outer rounded rectangle
-                    val offset = figure.lineWidthValue + if (s.isInitial) 3 else 3;
+                    val offset = figure.lineWidthValue + if (s.isInitial) 1 else 2;
                     figure.setCornerSize(offset + cornerRadius, offset + cornerRadius)
-                    figure.lineWidth = if (s.isInitial) 4 else 2;
+                    figure.lineWidth = if (s.isInitial) 2 else 1;
 
                     // configure the inner one
                     it.background = "white".color;
                     it.styleRef = figure;
-                    it.lineWidth = if (s.isInitial) 2 else 2;
+                    it.lineWidth = if (s.isInitial) 1 else 1;
                     it.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset, 0);
                 ] else figure
                 
              ) => [
                 node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
                 it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
-                //it.setSurroundingSpace(5,0);
+                //figure.setSurroundingSpace(5,0);
                 it.invisible = false;
-                it.lineWidth = 0;
 
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
@@ -339,23 +343,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     ];
                  }
                 
-                        //it.setGridPlacementData.setMaxCellHeight(40);
-                        //it.setGridPlacement(s.valuedObjects.size + 2);
-//                        it.addText("Signals:")
-//                            .setGridPlacementData.from(LEFT, 5, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 5, 0);
-
-                                //it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
-                                //.setPointPlacementData() (LEFT, 0, 0, TOP, 0, i2)//.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
-                
                 
                 if (SHOW_SIGNAL_DECLARATIONS.optionBooleanValue) {
                         for (sig : s.valuedObjects) {
                     it.addRectangle => [
-                    //it.background = "white".color;
                         it.invisible = true;
                         scopeProvider.parent = s;
-//                        val sigText =  serializer.serialize(sig)
-                        
                             var declaration = "";
                             var type = "";
                             var init = "";

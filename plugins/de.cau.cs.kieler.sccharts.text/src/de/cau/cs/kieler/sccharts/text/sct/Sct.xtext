@@ -103,14 +103,14 @@ LocalAction returns sccharts::LocalAction:
 Transition returns sccharts::Transition:
     (annotations += Annotation)*
 	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
-	( (isImmediate?='immediate')? 'with'
+	( (isImmediate?='immediate')? (isHistory?='history')? ('with'
 	 (
 	   ( (delay=INT)? (trigger=BoolExpression)? ('/' effects+=Effect (';'effects+=Effect)*)? )
 	  |
 	   ( label=STRING )
 	  )
-	 )? 	
-	(isHistory?='history')?;
+	 )?)? 	
+	;
 
 // ---------------------------------------------------------------------------------------------------
 
