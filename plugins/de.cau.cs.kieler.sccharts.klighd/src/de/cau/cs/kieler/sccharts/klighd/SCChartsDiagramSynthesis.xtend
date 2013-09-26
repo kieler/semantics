@@ -69,6 +69,7 @@ import de.cau.cs.kieler.core.kgraph.KLabeledGraphElement
 import de.cau.cs.kieler.core.krendering.KRectangle
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kiml.options.EdgeLabelPlacement
+import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 
 class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
@@ -243,29 +244,22 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     }
     
     def KRectangle printHighlightedText(KRectangle parent, String text, EObject lookup) {
-            var offset = "" 
+            var offset = 8f
             for (word : text.getWords) {
               val currentOffset = offset
-                 parent.addText(currentOffset + word) => [
+              val ktext = parent.addText(word + " ") => [
                      if (word.keyword) {
                         it.setForeground(KEYWORD.copy)
                         it.setFontBold(true)
                      }
                      it.putToLookUpWith(lookup);
-                     it.setAreaPlacementData()
-                     it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+                     it.setPointPlacementData(createKPosition(LEFT, currentOffset, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
               ]
-              offset = offset + getSpaceString(word.length+1)
+              offset = offset + PlacementUtil.estimateTextSize(ktext).width
             }    
         parent
     }
     
-    def String getSpaceString(int length) {
-        if (length > 0) {
-            return "  " + getSpaceString(length-1)
-        }
-        return ""
-    }
     
     
     def dispatch KNode translate(State s) {
