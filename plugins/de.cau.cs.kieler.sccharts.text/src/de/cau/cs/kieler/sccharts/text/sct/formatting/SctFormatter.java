@@ -130,9 +130,9 @@ public class SctFormatter extends ActionsFormatter {
 
         // let each transition declaration begin on a new line
         c.setLinewrap().before(f.getTransitionRule());
-        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_4_2_0_2_2_0());
-        c.setNoLinewrap().before(f.getTransitionAccess().getSolidusKeyword_4_2_0_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
-        c.setNoLinewrap().before(f.getTransitionAccess().getSemicolonKeyword_4_2_0_2_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
+        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_4_2_1_0_2_2_0());
+        c.setNoLinewrap().before(f.getTransitionAccess().getSolidusKeyword_4_2_1_0_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
+        c.setNoLinewrap().before(f.getTransitionAccess().getSemicolonKeyword_4_2_1_0_2_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
         c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_8());
 
     }

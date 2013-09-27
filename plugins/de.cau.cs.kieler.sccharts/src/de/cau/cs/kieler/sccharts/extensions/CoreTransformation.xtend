@@ -913,11 +913,13 @@ class CoreTransformation {
                     // Wherever an emission is, create a new assignment right behind
                     val allSignalEmissions = action.getAllContainedEmissions.filter[e|e.valuedObject == signal].toList
                     for (Emission signalEmission : allSignalEmissions.immutableCopy) {
+                        if (signalEmission.newValue != null) {
                            // Assign the emitted valued
                            val variableAssignment = valueVariable.assign(signalEmission.newValue)
                            // Put it in right order
                            val index = action.effects.indexOf(signalEmission);
                            action.effects.add(index, variableAssignment);
+                        }
                     }
                     // Wherever an val test is, put the valueVariable there instead
                     val allSignalValTests = action.eAllContents.filter(typeof(OperatorExpression)).
