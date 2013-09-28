@@ -48,7 +48,7 @@
    <extension point="org.eclipse.ui.editors">
       <!-- @generated scg -->
       <editor
-            id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+            id="de.cau.cs.kieler.scg.presentation.SCGEditorID"
             name="%_UI_ScgEditor_label"
             icon="icons/full/obj16/ScgModelFile.gif"
             extensions="scg"

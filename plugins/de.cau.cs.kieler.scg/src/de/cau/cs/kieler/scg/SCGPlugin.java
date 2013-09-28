@@ -5,7 +5,9 @@ import org.osgi.framework.BundleContext;
 
 public class SCGPlugin implements BundleActivator {
 
-	private static BundleContext context;
+        public static String EDITOR_ID = "de.cau.cs.kieler.scg.presentation.SCGEditorID";
+
+        private static BundleContext context;
 
 	static BundleContext getContext() {
 		return context;
