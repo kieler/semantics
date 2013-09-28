@@ -36,7 +36,6 @@ import java.util.List
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.Effect
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.sccharts.Assignment
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
@@ -45,6 +44,19 @@ import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.Assignment
+import java.util.HashMap
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Conditional
+import org.eclipse.xtext.serializer.ISerializer import com.google.inject.Injector
+import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
+import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -57,6 +69,10 @@ class Transformation {
 
     //@Inject
     //extension Extension
+    
+    private static val Injector i = ActionsStandaloneSetup::doSetup();
+    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
+    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
     
     // This prefix is used for namings of all generated signals, states and regions
     static final String GENERATED_PREFIX = "_"
@@ -229,28 +245,28 @@ class Transformation {
     //========== ASSIGNMENTS ============
     
     // Create an Assignment.
-    def Assignment assign(ValuedObject valuedObject) {
+    def de.cau.cs.kieler.sccharts.Assignment assign(ValuedObject valuedObject) {
         val assignment = SCChartsFactory::eINSTANCE.createAssignment()
         assignment.setValuedObject(valuedObject)
         assignment
     }
 
     // Create an Assignment and add it sequentially to an action's effects list.
-    def Assignment createAssignment(Action action, ValuedObject valuedObject) {
+    def de.cau.cs.kieler.sccharts.Assignment createAssignment(Action action, ValuedObject valuedObject) {
         val assignment = valuedObject.assign
         action.addAssignment(assignment)
         assignment
     }
     
     // Create an Assignment and add it sequentially to an action's effects list.
-    def Assignment addAssignment(Action action, Assignment assignment) {
+    def de.cau.cs.kieler.sccharts.Assignment addAssignment(Action action, de.cau.cs.kieler.sccharts.Assignment assignment) {
         // An Assignment is a specialized Effect with a new value and a ValuedObject
         action.addEffect(assignment)
         assignment
     }
 
     // Create a valued Assignment. 
-    def Assignment assign(ValuedObject valuedObject, Expression newValue) {
+    def de.cau.cs.kieler.sccharts.Assignment assign(ValuedObject valuedObject, Expression newValue) {
         val assignment = valuedObject.assign
         assignment.setValuedObject(valuedObject)
         assignment.setExpression(newValue);
@@ -258,7 +274,7 @@ class Transformation {
     }
 
     // Create a valued Assignment and add it sequentially to an action's effects list. 
-    def Assignment createAssignment(Action action, ValuedObject valuedObject, Expression newValue) {
+    def de.cau.cs.kieler.sccharts.Assignment createAssignment(Action action, ValuedObject valuedObject, Expression newValue) {
         val assignment = valuedObject.assign(newValue)
         action.addAssignment(assignment)
         assignment
@@ -699,6 +715,16 @@ class Transformation {
    
    // -------------------------------------------------------------------------   
          
+    HashMap<State, Node> state2surface = new HashMap<State, Node>()         
+    HashMap<State, Node> state2depth = new HashMap<State, Node>()         
+    HashMap<State, Node> state2assignment = new HashMap<State, Node>()         
+    HashMap<State, Node> state2conditional = new HashMap<State, Node>()         
+    HashMap<State, Node> state2fork = new HashMap<State, Node>()         
+    HashMap<State, Node> state2join = new HashMap<State, Node>()         
+    HashMap<Region, Node> state2entry = new HashMap<Region, Node>()         
+    HashMap<Region, Node> state2exit = new HashMap<Region, Node>()         
+    HashMap<Node, EObject> node2state = new HashMap<Node, EObject>()         
+         
     //-------------------------------------------------------------------------
     //--             T R A N S F O R M      T O    S C G                     --
     //-------------------------------------------------------------------------
@@ -706,21 +732,159 @@ class Transformation {
 
     // Transforming Local ValuedObjects.
     def SCGraph transformSCG(Region rootRegion) {
-        // Clone the complete SCCharts region
-        return ScgFactory::eINSTANCE.createSCGraph
-//        val targetRootRegion = rootRegion.copy;
-//        // Traverse all states
-//        for(targetState : targetRootRegion.getAllContainedStates) {
-//            targetState.transformSCG(targetRootRegion);
-//        }
-//        targetRootRegion;
+        // Clear mappings
+        state2surface.clear
+        state2depth.clear
+        state2assignment.clear
+        state2conditional.clear
+        state2fork.clear
+        state2join.clear
+        state2entry.clear
+        state2exit.clear
+        node2state.clear
+        // Create a new SCGraph
+        val sCGraph = ScgFactory::eINSTANCE.createSCGraph
+        // Traverse all states
+        for (region : rootRegion.rootState.regions) {
+           region.transformSCG(sCGraph);
+        }
+        sCGraph;
     }
            
-//    // Traverse all states and transform possible local valuedObjects.
-//    def void transformSCG(State state, Region targetRootRegion) {
-//        if (state == state.rootState) {
-//            state.setLabel("SCHATZ;")
-//        }
-//    }
+   // -------------------------------------------------------------------------   
+           
+   def boolean isPause(State state) {
+       ((state.outgoingTransitions.filter[e|!e.isImmediate &&
+                                             e.trigger == null && 
+                                             e.effects.nullOrEmpty].size == 1) && 
+       (state.outgoingTransitions.size == 1)) 
+   }           
+           
+   def boolean isConditional(State state) {
+       (
+//           (state.outgoingTransitions.filter[e|e.isImmediate && 
+//                                            e.trigger != null && 
+//                                            e.effects.nullOrEmpty].size == 1) &&
+        (state.outgoingTransitions.filter[e|e.isImmediate && 
+                                            e.effects.nullOrEmpty].size == 2) &&                                             
+       (state.outgoingTransitions.size == 2)) 
+   }           
+
+   def boolean isAssignment(State state) {
+       ((state.outgoingTransitions.filter[e|e.isImmediate && 
+                                            e.trigger == null && 
+                                           !e.effects.nullOrEmpty].size == 1) && 
+       (state.outgoingTransitions.size == 1)) 
+   }           
+
+   def boolean isFork(State state) {
+       (!state.regions.nullOrEmpty && state.regions.allContents.filter(typeof(State)).size > 0)
+   }
+           
+   // -------------------------------------------------------------------------   
+           
+   def Surface addSurface(SCGraph sCGraph) {
+        val node = ScgFactory::eINSTANCE.createSurface
+        sCGraph.nodes.add(node)
+        node       
+   }     
+
+   def Depth addDepth(SCGraph sCGraph) {
+        val node = ScgFactory::eINSTANCE.createDepth
+        sCGraph.nodes.add(node)
+        node       
+   }     
+
+   def Assignment addAssignment(SCGraph sCGraph) {
+        val node = ScgFactory::eINSTANCE.createAssignment
+        sCGraph.nodes.add(node)
+        node       
+   }     
+
+   def Conditional addConditional(SCGraph sCGraph) {
+        val node = ScgFactory::eINSTANCE.createConditional
+        sCGraph.nodes.add(node)
+        node       
+   }     
+
+   def Fork addFork(SCGraph sCGraph) {
+        val node = ScgFactory::eINSTANCE.createFork
+        sCGraph.nodes.add(node)
+        node       
+   }     
+
+   def Join addJoin(SCGraph sCGraph) {
+        val node = ScgFactory::eINSTANCE.createJoin
+        sCGraph.nodes.add(node)
+        node       
+   }     
+
+   def Entry addEntry(SCGraph sCGraph) {
+        val node = ScgFactory::eINSTANCE.createEntry
+        sCGraph.nodes.add(node)
+        node       
+   }     
+
+   def Exit addExit(SCGraph sCGraph) {
+        val node = ScgFactory::eINSTANCE.createExit
+        sCGraph.nodes.add(node)
+        node       
+   }     
+
+   // -------------------------------------------------------------------------   
+
+   def void transformSCG(Region region, SCGraph sCGraph) {
+       val entry = sCGraph.addEntry
+       val exit = sCGraph.addExit
+       state2entry.put(region, entry)
+       state2exit.put(region, exit)
+       node2state.put(entry, region)
+       node2state.put(exit, region)
+       entry.setExit(exit)
+       for (state : region.states) {
+           state.transformSCG(sCGraph)
+       }
+   }
+           
+   // Traverse all states and transform possible local valuedObjects.
+   def void transformSCG(State state, SCGraph sCGraph) {
+        System.out.println("Traverse" + state.id)
+        if (state.pause) {
+            val surface = sCGraph.addSurface
+            val depth = sCGraph.addDepth
+            surface.setDepth(depth)
+            state2surface.put(state, surface)
+            state2depth.put(state, depth)
+            node2state.put(surface, state)
+            node2state.put(depth, state)
+        }
+        else if (state.assignment) {
+            val assignment = sCGraph.addAssignment
+            state2assignment.put(state, assignment)
+            node2state.put(assignment, state)
+            //assignment.setAssignment(serializer.serialize(state.outgoingTransitions.get(0).trigger.copy))
+        }
+        else if (state.conditional) {
+            val conditional = sCGraph.addConditional
+            state2conditional.put(state, conditional)
+            node2state.put(conditional, state)
+            //conditional.setCondition(serializer.serialize(state.outgoingTransitions.get(0).trigger.copy))
+        }
+        
+        if (state.fork) {
+            val fork = sCGraph.addFork
+            val join = sCGraph.addJoin
+            fork.setJoin(join)
+            state2fork.put(state, fork)
+            state2join.put(state, join)
+            node2state.put(fork, state)
+            node2state.put(join, state)
+            // Do recursion for all regions
+            for (region : state.regions) {
+                region.transformSCG(sCGraph)
+            }
+        }
+    }
     
+   // -------------------------------------------------------------------------   
 }
