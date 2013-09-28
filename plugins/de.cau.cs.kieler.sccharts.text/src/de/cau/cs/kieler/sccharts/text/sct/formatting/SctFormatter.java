@@ -62,9 +62,6 @@ public class SctFormatter extends ActionsFormatter {
 //        /*
 //         *  STATE
 //         */
-        //EcoreUtil2.
-//        // does work :-), probably due to the mandatory ';'
-          //if (((Grammar) f.getStateRule().eContainer()). .getParentState() != null) {
               c.setLinewrap(2).before(f.getStateAccess().getStateKeyword_3());
               c.setLinewrap(2).before(f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0());
               c.setLinewrap(2).before(f.getStateAccess().getIsInitialInitialKeyword_1_0_0_0());
@@ -74,12 +71,7 @@ public class SctFormatter extends ActionsFormatter {
               c.setNoLinewrap().between(f.getStateAccess().getIsInitialInitialKeyword_1_1_1_0() , f.getStateAccess().getStateKeyword_3());
               c.setNoLinewrap().between(f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0() , f.getStateAccess().getStateKeyword_3());
               c.setNoLinewrap().between(f.getStateAccess().getIsFinalFinalKeyword_1_0_1_0() , f.getStateAccess().getStateKeyword_3());
-          //}
-          //c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_8());
-//
-//        c.setLinewrap(2).between(f.getStateAccess().getSemicolonKeyword_8(), f.getStateAccess().getIsInitialInitKeyword_1_0_0_0());
-//        c.setLinewrap(2).between(f.getStateAccess().getSemicolonKeyword_8(), f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0());
-//        //c.setLinewrap(2).between(f.getStateAccess().getSemicolonKeyword_8(), f.getStateAccess().getStateKeyword_3());
+
 //
 //        c.setLinewrap(2).between(f.getStateAccess().getSemicolonKeyword_8(), f.getRegionAccess().getRegionKeyword_2());
 //        c.setLinewrap(2).between(f.getStateAccess().getSemicolonKeyword_8(), f.getCOMMENT_ANNOTATIONRule());

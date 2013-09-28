@@ -240,14 +240,19 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     }
     
     def List<String> getWords(String text) {
-        text.split(" ")
+        text.split("\\W+")
     }
     
     def KRectangle printHighlightedText(KRectangle parent, String text, EObject lookup) {
             var offset = 8f
+            var remainingText = text;
+            var split = "";
             for (word : text.getWords) {
+              val index = remainingText.indexOf(word);
+              split = remainingText.substring(0, index);
+              remainingText = remainingText.substring(index + word.length, remainingText.length);
               val currentOffset = offset
-              val ktext = parent.addText(word + " ") => [
+              val ktext = parent.addText(split + word) => [
                      if (word.keyword) {
                         it.setForeground(KEYWORD.copy)
                         it.setFontBold(true)
@@ -256,6 +261,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                      it.setPointPlacementData(createKPosition(LEFT, currentOffset, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
               ]
               offset = offset + PlacementUtil.estimateTextSize(ktext).width
+            }
+            if (remainingText != "") {
+                
             }    
         parent
     }

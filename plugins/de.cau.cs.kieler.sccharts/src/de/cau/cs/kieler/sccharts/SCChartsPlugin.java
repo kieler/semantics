@@ -5,7 +5,7 @@ import org.osgi.framework.BundleContext;
 
 public class SCChartsPlugin implements BundleActivator {
 
-        public static String EDITOR_ID = "de.cau.cs.kieler.synccharts.presentation.SyncchartsEditorID";
+        public static String EDITOR_ID = "de.cau.cs.kieler.sccharts.presentation.SCChartsEditorID";
         
         public static String TEXT_EDITOR_ID = "de.cau.cs.kieler.sccharts.text.sct.Sct";
         

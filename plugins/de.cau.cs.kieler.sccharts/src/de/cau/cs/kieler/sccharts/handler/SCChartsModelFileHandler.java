@@ -31,52 +31,52 @@ import de.cau.cs.kieler.sccharts.extensions.CoreTransformation;
 public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandler {
 
     public static final String ALLCORE_TRANSFORMATIONS =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.AllCoreTransformations";
+            "de.cau.cs.kieler.sccharts.commands.AllCoreTransformations";
 
     public static final String ABORT_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.AbortTransformation";
+            "de.cau.cs.kieler.sccharts.commands.AbortTransformation";
 
     public static final String SURFACEDEPTH_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.SurfaceDepthTransformation";
+            "de.cau.cs.kieler.sccharts.commands.SurfaceDepthTransformation";
 
     public static final String TRIGGEREFFECT_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.TriggerEffectTransformation";
+            "de.cau.cs.kieler.sccharts.commands.TriggerEffectTransformation";
 
     public static final String SIGNAL_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.SignalTransformation";
+            "de.cau.cs.kieler.sccharts.commands.SignalTransformation";
 
     public static final String INPUTOUTPUTSIGNAL_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.InputOutputSignalTransformation";
+            "de.cau.cs.kieler.sccharts.commands.InputOutputSignalTransformation";
 
     public static final String ENTRY_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.EntryTransformation";
+            "de.cau.cs.kieler.sccharts.commands.EntryTransformation";
 
     public static final String DURING_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.DuringTransformation";
+            "de.cau.cs.kieler.sccharts.commands.DuringTransformation";
 
     public static final String EXIT_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.ExitTransformation";
+            "de.cau.cs.kieler.sccharts.commands.ExitTransformation";
 
     public static final String HISTORY_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.HistoryTransformation";
+            "de.cau.cs.kieler.sccharts.commands.HistoryTransformation";
 
     public static final String SUSPEND_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.SuspendTransformation";
+            "de.cau.cs.kieler.sccharts.commands.SuspendTransformation";
 
     public static final String COUNTDELAY_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.CountDelayTransformation";
+            "de.cau.cs.kieler.sccharts.commands.CountDelayTransformation";
 
     public static final String PRE_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.PreTransformation";
+            "de.cau.cs.kieler.sccharts.commands.PreTransformation";
 
     public static final String EXPOSELOCALSIGNALS_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.ExposeLocalSignalsTransformation";
+            "de.cau.cs.kieler.sccharts.commands.ExposeLocalSignalsTransformation";
 
     public static final String NORMALTERMINATION_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.NormalTerminationTransformation";
+            "de.cau.cs.kieler.sccharts.commands.NormalTerminationTransformation";
 
     public static final String FINALSTATETRANSITION_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.coresccharts.commands.FinalStateTransitionTransformation";
+            "de.cau.cs.kieler.sccharts.commands.FinalStateTransitionTransformation";
 
     // -------------------------------------------------------------------------
 
