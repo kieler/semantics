@@ -54,7 +54,7 @@ class SCGraphShowDiagramCombination extends UpdateXtextModelKLighDCombination {
                 val IFile file = selection.get(0) as IFile;
                 val path = file.fullPath.toPortableString;
               
-                if ((!path.endsWith("scg")) || (!path.endsWith("scgdep"))) {
+                if (!(path.endsWith("scg") || path.endsWith("scgdep"))) {
                     return;
                 }
                 
