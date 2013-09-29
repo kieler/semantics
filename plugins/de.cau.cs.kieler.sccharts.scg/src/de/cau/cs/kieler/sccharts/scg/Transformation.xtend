@@ -948,11 +948,11 @@ class Transformation {
 
    def void transformSCGConnectNodes(Region region, SCGraph sCGraph) {
        val entry = region.mappedEntry
-       // Connect all entry nodes with the initial state's nodes. 
+       // Connect all entry nodes with the initial state's nodes.
        val initialNode = region.states.filter(e | e.isInitial).get(0).mappedNode
        val controlFlowInitial = initialNode.createControlFlow
        entry.setNext(controlFlowInitial)
-
+       
        for (state : region.states) {
            state.transformSCGConnectNodes(sCGraph)
        }
@@ -1021,9 +1021,9 @@ class Transformation {
                     val controlFlowEntry = otherNodeEntry.createControlFlow
                     fork.next.add(controlFlowEntry)
                 }   
-                val otherNodeExit = otherNodeEntry.exit   
+                val otherNodeExit = region.mappedEntry.exit   
                 if (otherNodeExit != null) {
-                    val controlFlowFinal = otherNodeExit.createControlFlow
+                    val controlFlowFinal = join.createControlFlow
                     otherNodeExit.setNext(controlFlowFinal)
                 }   
                 region.transformSCGConnectNodes(sCGraph)
