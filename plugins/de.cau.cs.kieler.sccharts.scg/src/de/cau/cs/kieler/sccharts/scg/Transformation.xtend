@@ -57,6 +57,7 @@ import de.cau.cs.kieler.scg.Conditional
 import org.eclipse.xtext.serializer.ISerializer import com.google.inject.Injector
 import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
 import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
+import de.cau.cs.kieler.scg.ControlFlow
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -715,15 +716,53 @@ class Transformation {
    
    // -------------------------------------------------------------------------   
          
-    HashMap<State, Node> state2surface = new HashMap<State, Node>()         
-    HashMap<State, Node> state2depth = new HashMap<State, Node>()         
-    HashMap<State, Node> state2assignment = new HashMap<State, Node>()         
-    HashMap<State, Node> state2conditional = new HashMap<State, Node>()         
-    HashMap<State, Node> state2fork = new HashMap<State, Node>()         
-    HashMap<State, Node> state2join = new HashMap<State, Node>()         
-    HashMap<Region, Node> state2entry = new HashMap<Region, Node>()         
-    HashMap<Region, Node> state2exit = new HashMap<Region, Node>()         
-    HashMap<Node, EObject> node2state = new HashMap<Node, EObject>()         
+    HashMap<EObject, Node> stateOrRegion2node = new HashMap<EObject, Node>()    
+    HashMap<Node, EObject> node2state = new HashMap<Node, EObject>()    
+    
+    def Node getMappedNode(State state) {
+        stateOrRegion2node.get(state)
+    }      
+    def Node getMappedNode(Region region) {
+        stateOrRegion2node.get(region)
+    }      
+    def Surface getMappedSurface(State state) {
+        state.mappedNode as Surface
+    }      
+    def Assignment getMappedAssignment(State state) {
+        state.mappedNode as Assignment
+    }      
+    def Conditional getMappedConditional(State state) {
+        state.mappedNode as Conditional
+    }      
+    def Fork getMappedFork(State state) {
+        state.mappedNode as Fork
+    }      
+    def Exit getMappedExit(State state) {
+        state.mappedNode as Exit
+    }      
+    def Entry getMappedEntry(Region region) {
+        region.mappedNode as Entry
+    }    
+    
+    def void map(EObject eObject, Node node) {
+       stateOrRegion2node.put(eObject, node) 
+       node2state.put(node, eObject)
+    }  
+    def void map(Node node, EObject eObject) {
+       node2state.put(node, eObject)
+    }  
+         
+    def void resetMapping() {
+        stateOrRegion2node.clear
+        node2state.clear
+    }     
+    
+    def State getMappedState(Node node) {
+        node2state.get(node) as State
+    }
+    def Region getMappedRegion(Node node) {
+        node2state.get(node) as Region
+    }
          
     //-------------------------------------------------------------------------
     //--             T R A N S F O R M      T O    S C G                     --
@@ -733,20 +772,16 @@ class Transformation {
     // Transforming Local ValuedObjects.
     def SCGraph transformSCG(Region rootRegion) {
         // Clear mappings
-        state2surface.clear
-        state2depth.clear
-        state2assignment.clear
-        state2conditional.clear
-        state2fork.clear
-        state2join.clear
-        state2entry.clear
-        state2exit.clear
-        node2state.clear
+        resetMapping
         // Create a new SCGraph
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph
-        // Traverse all states
+        // Generate nodes and recursively traverse model
         for (region : rootRegion.rootState.regions) {
-           region.transformSCG(sCGraph);
+           region.transformSCGGenerateNodes(sCGraph);
+        }
+        // Generate nodes and recursively traverse model
+        for (region : rootRegion.rootState.regions) {
+           region.transformSCGConnectNodes(sCGraph);
         }
         sCGraph;
     }
@@ -756,7 +791,8 @@ class Transformation {
    def boolean isPause(State state) {
        ((state.outgoingTransitions.filter[e|!e.isImmediate &&
                                              e.trigger == null && 
-                                             e.effects.nullOrEmpty].size == 1) && 
+                                             e.effects.nullOrEmpty &&
+                                             e.type != TransitionType::NORMALTERMINATION].size == 1) && 
        (state.outgoingTransitions.size == 1)) 
    }           
            
@@ -773,7 +809,8 @@ class Transformation {
    def boolean isAssignment(State state) {
        ((state.outgoingTransitions.filter[e|e.isImmediate && 
                                             e.trigger == null && 
-                                           !e.effects.nullOrEmpty].size == 1) && 
+                                           !e.effects.nullOrEmpty &&
+                                            e.type != TransitionType::NORMALTERMINATION].size == 1) && 
        (state.outgoingTransitions.size == 1)) 
    }           
 
@@ -781,6 +818,15 @@ class Transformation {
        (!state.regions.nullOrEmpty && state.regions.allContents.filter(typeof(State)).size > 0)
    }
            
+   def boolean isEntry(State state) {
+       state.isInitial
+   }           
+           
+   def boolean isExit(State state) {
+       state.isFinal
+   }
+ 
+            
    // -------------------------------------------------------------------------   
            
    def Surface addSurface(SCGraph sCGraph) {
@@ -830,61 +876,173 @@ class Transformation {
         sCGraph.nodes.add(node)
         node       
    }     
+   
+   def ControlFlow createControlFlow(Node secondNode) {
+       val controlFlow = ScgFactory::eINSTANCE.createControlFlow
+       controlFlow.setTarget(secondNode)
+       controlFlow
+   }
 
    // -------------------------------------------------------------------------   
+   // --                 G E N E R A T E    N O D E S                        --
+   // -------------------------------------------------------------------------   
 
-   def void transformSCG(Region region, SCGraph sCGraph) {
+   def void transformSCGGenerateNodes(Region region, SCGraph sCGraph) {
        val entry = sCGraph.addEntry
        val exit = sCGraph.addExit
-       state2entry.put(region, entry)
-       state2exit.put(region, exit)
-       node2state.put(entry, region)
-       node2state.put(exit, region)
+       region.map(entry)
        entry.setExit(exit)
+       exit.map(region)
        for (state : region.states) {
-           state.transformSCG(sCGraph)
+           state.transformSCGGenerateNodes(sCGraph)
        }
    }
            
    // Traverse all states and transform possible local valuedObjects.
-   def void transformSCG(State state, SCGraph sCGraph) {
-        System.out.println("Traverse" + state.id)
+   def void transformSCGGenerateNodes(State state, SCGraph sCGraph) {
+        System.out.println("Generate Node for State " + state.id)
         if (state.pause) {
             val surface = sCGraph.addSurface
             val depth = sCGraph.addDepth
             surface.setDepth(depth)
-            state2surface.put(state, surface)
-            state2depth.put(state, depth)
-            node2state.put(surface, state)
-            node2state.put(depth, state)
+            surface.map(state)
+            state.map(surface)
         }
         else if (state.assignment) {
             val assignment = sCGraph.addAssignment
-            state2assignment.put(state, assignment)
-            node2state.put(assignment, state)
-            //assignment.setAssignment(serializer.serialize(state.outgoingTransitions.get(0).trigger.copy))
+            state.map(assignment)
+            val transition = state.outgoingTransitions.get(0)
+            scopeProvider.parent = transition.sourceState
+            val transitionCopy = transition.copy
+            transitionCopy.setIsImmediate(false)
+            assignment.setAssignment(serializer.serialize(transitionCopy))
         }
         else if (state.conditional) {
             val conditional = sCGraph.addConditional
-            state2conditional.put(state, conditional)
-            node2state.put(conditional, state)
-            //conditional.setCondition(serializer.serialize(state.outgoingTransitions.get(0).trigger.copy))
+            state.map(conditional)
+            scopeProvider.parent = state
+            val transition = state.outgoingTransitions.get(0)
+            scopeProvider.parent = transition.sourceState
+            val transitionCopy = transition.copy
+            transitionCopy.setIsImmediate(false)
+            conditional.setCondition(serializer.serialize(transitionCopy))
         }
-        
-        if (state.fork) {
+        else if (state.fork) {
             val fork = sCGraph.addFork
             val join = sCGraph.addJoin
             fork.setJoin(join)
-            state2fork.put(state, fork)
-            state2join.put(state, join)
-            node2state.put(fork, state)
-            node2state.put(join, state)
+            state.map(fork)
+            join.map(state)
             // Do recursion for all regions
             for (region : state.regions) {
-                region.transformSCG(sCGraph)
+                region.transformSCGGenerateNodes(sCGraph)
             }
+        }
+        else if (state.exit) {
+            val exit = sCGraph.addExit
+            state.map(exit)
         }
     }
     
    // -------------------------------------------------------------------------   
+
+   def void transformSCGConnectNodes(Region region, SCGraph sCGraph) {
+       val entry = region.mappedEntry
+       // Connect all entry nodes with the initial state's nodes. 
+       val initialNode = region.states.filter(e | e.isInitial).get(0).mappedNode
+       val controlFlowInitial = initialNode.createControlFlow
+       entry.setNext(controlFlowInitial)
+
+       for (state : region.states) {
+           state.transformSCGConnectNodes(sCGraph)
+       }
+   }
+           
+   // Traverse all states and transform possible local valuedObjects.
+   def void transformSCGConnectNodes(State state, SCGraph sCGraph) {
+        System.out.println("Connect Node for State " + state.id)
+        if (state.pause) {
+            // Connect the depth with the node that belongs to the target of
+            // the single delayed transition outgoing from the current state
+            val surface = state.mappedSurface
+            val depth = surface.depth
+
+            val targetState = state.outgoingTransitions.get(0).targetState
+            val otherNode = targetState.mappedNode   
+            if (otherNode != null) {
+                val controlFlow = otherNode.createControlFlow
+                depth.setNext(controlFlow)    
+            }   
+        }
+        else if (state.assignment) {
+            // Connect the assignment with the node that belongs to the target
+            // of the single immediate assignment transition outgoing  from
+            // the current state
+            val assignment = state.mappedAssignment
+
+            val targetState = state.outgoingTransitions.get(0).targetState
+            val otherNode = targetState.mappedNode   
+            if (otherNode != null) {
+                val controlFlow = otherNode.createControlFlow
+                assignment.setNext(controlFlow)
+            }
+        }
+        else if (state.conditional) {
+            // Connect the conditional Then branch with the node that belongs
+            // to the target of the single immediate transition with a trigger
+            // outgoing  from the current state. Connect the Else branch with the
+            // node that belongs to the target of the (other) single immediate
+            // transition without a trigger outgoing from the current state.
+            val conditional = state.mappedConditional
+
+            val transitionThen = state.outgoingTransitions.filter(e | e.trigger != null).get(0)
+            val transitionElse =  state.outgoingTransitions.filter(e | e.trigger == null).get(0)
+            val otherNodeThen = transitionThen.targetState.mappedNode
+            val otherNodeElse = transitionElse.targetState.mappedNode
+            if (otherNodeThen != null) {
+                val controlFlowThen = otherNodeThen.createControlFlow
+                conditional.setThen(controlFlowThen)
+            }
+            if (otherNodeElse != null) {
+                val controlFlowElse = otherNodeElse.createControlFlow
+                conditional.setElse(controlFlowElse)
+            }
+        }
+        else if (state.fork) {
+            // For all region find the entry node and connect it with the fork. Find the exit node
+            // and connect it with the join. Do the recursive call for the regions. Connect
+            // the join node with the single normal termination target's node.
+            val fork = state.mappedFork
+            val join = fork.join
+            // Do recursion for all regions
+            for (region : state.regions) {
+                val otherNodeEntry = region.mappedEntry
+                if (otherNodeEntry != null) {
+                    val controlFlowEntry = otherNodeEntry.createControlFlow
+                    fork.next.add(controlFlowEntry)
+                }   
+                val otherNodeExit = otherNodeEntry.exit   
+                if (otherNodeExit != null) {
+                    val controlFlowFinal = otherNodeExit.createControlFlow
+                    otherNodeExit.setNext(controlFlowFinal)
+                }   
+                region.transformSCGConnectNodes(sCGraph)
+            }
+            val normalTerminationTargetState = state.outgoingTransitions.get(0).targetState
+            val otherNodeNormalTermination = normalTerminationTargetState.mappedNode   
+            if (otherNodeNormalTermination != null) {
+                val controlFlowNormalTermination = otherNodeNormalTermination.createControlFlow
+                join.setNext(controlFlowNormalTermination)
+            }   
+        }
+        else if (state.exit) {
+            // For a final state connect it's exit node representation with the exit node
+            // of the region.
+            val nodeExit = state.mappedExit
+            val regionExit = state.parentRegion.mappedEntry.exit
+            val controlFlowFinal = regionExit.createControlFlow
+            nodeExit.setNext(controlFlowFinal)
+        }
+    }
+
 }
