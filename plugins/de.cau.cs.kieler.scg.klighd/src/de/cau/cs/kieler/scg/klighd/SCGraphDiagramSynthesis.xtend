@@ -99,8 +99,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject
     extension SCGraphShapes
     
-    private static val TransformationOption SHOW_LABELS
-        = TransformationOption::createCheckOption("Transition labels", true);
+    private static val TransformationOption SHOW_CAPTION
+        = TransformationOption::createCheckOption("Captions", true);
         
     private static val TransformationOption SHOW_SHADOW
         = TransformationOption::createCheckOption("Shadow", true);
@@ -117,12 +117,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     override public getTransformationOptions() {
 //        return ImmutableSet::of(SHOW_LABELS, SHOW_SHADOW, ALIGN_TICK_START, ALIGN_EDGES, FIXATE_EDGES);
-        return ImmutableSet::of(SHOW_LABELS, SHOW_SHADOW, ALIGN_TICK_START);
+        return ImmutableSet::of(SHOW_CAPTION, SHOW_SHADOW, ALIGN_TICK_START);
     }
     
     override public getRecommendedLayoutOptions() {
         return ImmutableMap::<IProperty<?>, Collection<?>>of(
-            LayoutOptions::ALGORITHM, emptyList,
+//            LayoutOptions::ALGORITHM, emptyList,
             LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[ it.name ],
             LayoutOptions::SPACING, newArrayList(0, 255)
         );
@@ -251,7 +251,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25); 
-                node.KRendering.add(factory.createKText.of("surface").putToLookUpWith(s));
+                if (SHOW_CAPTION.optionBooleanValue)
+                    node.KRendering.add(factory.createKText.of("surface").putToLookUpWith(s));
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
@@ -278,7 +279,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25); 
-                node.KRendering.add(factory.createKText.of("depth").putToLookUpWith(s));
+                if (SHOW_CAPTION.optionBooleanValue)
+                    node.KRendering.add(factory.createKText.of("depth").putToLookUpWith(s));
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
@@ -301,7 +303,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25); 
-                node.KRendering.add(factory.createKText.of("entry").putToLookUpWith(s));
+                if (SHOW_CAPTION.optionBooleanValue)
+                    node.KRendering.add(factory.createKText.of("entry").putToLookUpWith(s));
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
@@ -323,8 +326,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             val figure = node.addEllipse();
 //                .background = "white".color;
 
-            figure => [ node.setMinimalNodeSize(75, 25); 
-                node.KRendering.add(factory.createKText.of("exit").putToLookUpWith(s));
+            figure => [ node.setMinimalNodeSize(75, 25);
+                if (SHOW_CAPTION.optionBooleanValue) 
+                    node.KRendering.add(factory.createKText.of("exit").putToLookUpWith(s));
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
@@ -346,8 +350,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             val figure = node.addPolygon().createTriangleShape();
 //                .background = "white".color;
 
-            figure => [ node.setMinimalNodeSize(75, 25); 
-                node.KRendering.add(factory.createKText.of("fork").putToLookUpWith(s));
+            figure => [ node.setMinimalNodeSize(75, 25);
+                if (SHOW_CAPTION.optionBooleanValue) 
+                    node.KRendering.add(factory.createKText.of("fork").putToLookUpWith(s));
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
@@ -368,8 +373,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             val figure = node.addPolygon().createTriangleShapeReversed();
 //                .background = "white".color;
 
-            figure => [ node.setMinimalNodeSize(75, 25); 
-                node.KRendering.add(factory.createKText.of("join").putToLookUpWith(s));
+            figure => [ node.setMinimalNodeSize(75, 25);
+                if (SHOW_CAPTION.optionBooleanValue) 
+                    node.KRendering.add(factory.createKText.of("join").putToLookUpWith(s));
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
