@@ -119,7 +119,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
     private static val TransformationOption HIERARCHY_TRANSPARENCY 
         = TransformationOption::createRangeOption("Hierarchy transparency", Pair::of(0, 255), 50);
-
+        
 //    private static val TransformationOption ALIGN_EDGES
 //        = TransformationOption::createCheckOption("Control flow edge alignment", true);
 //
@@ -136,7 +136,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return ImmutableMap::<IProperty<?>, Collection<?>>of(
 //            LayoutOptions::ALGORITHM, emptyList,
             LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[ it.name ],
-            LayoutOptions::SPACING, newArrayList(0, 255)
+            LayoutOptions::SPACING, newArrayList(0, 255),
+            Properties::NODE_PLACER, NodePlacementStrategy::values
         );
     }
     
