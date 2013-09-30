@@ -70,6 +70,8 @@ import de.cau.cs.kieler.kiml.options.PortSide
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.kiml.options.PortConstraints
 
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
+
 class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
     @Inject
@@ -98,6 +100,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     @Inject
     extension SCGraphShapes
+    
+    @Inject
+    extension SCGExtensions
     
     private static val TransformationOption SHOW_CAPTION
         = TransformationOption::createCheckOption("Captions", true);
@@ -162,6 +167,18 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
              node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);             
             for (s : r.nodes) {
                 node.children += s.translate;
+            }
+            
+            for (s : r.nodes.filter(typeof(Fork))) {
+                val threadEntries = s.getAllNext
+                for (t : threadEntries) {
+                    val threadNodes = (t.target as Entry).getThreadNodes
+                    for(tn : threadNodes) {
+                        val kNode = tn.node
+                        System::out.println(kNode)
+                        kNode.KRendering.background = "red".color
+                    }
+                }
             }
             
             for (s : r.nodes) {
