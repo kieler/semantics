@@ -24,7 +24,7 @@ import de.cau.cs.kieler.scg.Surface
 /**
  * SCG Extensions.
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2013-08-20 proposed 
  * @kieler.rating 2013-08-20 proposed yellow
  */
