@@ -48,7 +48,7 @@ import org.eclipse.xtext.serializer.ISerializer
 import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 import de.cau.cs.kieler.klay.layered.properties.Properties
-
+import de.cau.cs.kieler.core.util.Pair
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.krendering.KColor
@@ -116,6 +116,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
     private static val TransformationOption SHOW_HIERARCHY
         = TransformationOption::createCheckOption("Display hierarchy", true);
+        
+    private static val TransformationOption HIERARCHY_TRANSPARENCY 
+        = TransformationOption::createRangeOption("Hierarchy transparency", Pair::of(0, 255), 50);
 
 //    private static val TransformationOption ALIGN_EDGES
 //        = TransformationOption::createCheckOption("Control flow edge alignment", true);
@@ -126,7 +129,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     override public getTransformationOptions() {
 //        return ImmutableSet::of(SHOW_LABELS, SHOW_SHADOW, ALIGN_TICK_START, ALIGN_EDGES, FIXATE_EDGES);
-        return ImmutableSet::of(SHOW_CAPTION, SHOW_SHADOW, ALIGN_TICK_START, SHOW_HIERARCHY);
+        return ImmutableSet::of(SHOW_CAPTION, SHOW_SHADOW, ALIGN_TICK_START, SHOW_HIERARCHY, HIERARCHY_TRANSPARENCY);
     }
     
     override public getRecommendedLayoutOptions() {
@@ -512,7 +515,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
         kContainer.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
         kContainer.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
-        kContainer.addLayoutParam(LayoutOptions::SEPARATE_CC, false);        
+        kContainer.addLayoutParam(LayoutOptions::SEPARATE_CC, false);      
+        kContainer.addRoundedRectangle(5, 5, 0)
+//        kContainer.KRendering.foreground = "gray".color;
+//        kContainer.KRendering.foreground.alpha = 100;
+        kContainer.KRendering.background = "darkGray".color;
+        kContainer.KRendering.background.alpha = HIERARCHY_TRANSPARENCY.optionValue as Integer
         kContainer.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
 //        kContainer.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::UNDEFINED)            
 //        kContainer.addPort(SCGPORTID_OUTGOING, 37, 0, 3, PortSide::UNDEFINED)
