@@ -258,8 +258,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
             node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING_THEN, 37, 25, 3, PortSide::SOUTH)
-            node.addPort(SCGPORTID_OUTGOING_ELSE, 75, 11, 3, PortSide::EAST)
+            node.addPort(SCGPORTID_OUTGOING_ELSE, 37, 25, 3, PortSide::SOUTH)
+            node.addPort(SCGPORTID_OUTGOING_THEN, 75, 11, 3, PortSide::EAST)
         ]
     }
     
@@ -533,7 +533,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     
         for(tn : nodes) {
             val kNode = tn.node
-            kNode.KRendering.background = "red".color
+            //kNode.KRendering.background = "red".color
             kContainer.children += kNode
         }
         
