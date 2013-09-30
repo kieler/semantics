@@ -434,6 +434,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             val targetObj = t.target
             var sourceNode = sourceObj.node
             var targetNode = targetObj.node
+            var addArrow = true
             
             if (sourceNode.eContainer != targetNode.eContainer) {
                 if (sourceNode.eContainer.eContainer == targetNode.eContainer) {
@@ -467,6 +468,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                             it.addArrowDecorator
                         ]
                     ]
+                    addArrow = false
                 }
             } else {
                 edge.sourcePort = sourceNode.getPort(outgoing)
@@ -489,7 +491,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         autoEdge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
                         autoEdge.addRoundedBendsPolyline(8,2) => [
                             it.lineStyle = LineStyle::SOLID
-                            it.addArrowDecorator
+//                            it.addArrowDecorator
                         ]
                     ]
                 }
@@ -497,9 +499,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 edge.targetPort = targetNode.getPort(SCGPORTID_INCOMING)
             }
       
+            val addArrowFinal = addArrow
             edge.addRoundedBendsPolyline(8,2) => [
                     it.lineStyle = LineStyle::SOLID
-                    it.addArrowDecorator
+                    if (addArrowFinal) it.addArrowDecorator
 //                    it.lineStyle.dashPattern.clear;
 //                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
             ]
@@ -517,8 +520,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         kContainer.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
         kContainer.addLayoutParam(LayoutOptions::SEPARATE_CC, false);      
         kContainer.addRoundedRectangle(5, 5, 0)
-//        kContainer.KRendering.foreground = "gray".color;
-//        kContainer.KRendering.foreground.alpha = 100;
+        kContainer.KRendering.foreground = "darkGray".color;
+        kContainer.KRendering.foreground.alpha = HIERARCHY_TRANSPARENCY.optionValue as Integer
         kContainer.KRendering.background = "darkGray".color;
         kContainer.KRendering.background.alpha = HIERARCHY_TRANSPARENCY.optionValue as Integer
         kContainer.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
