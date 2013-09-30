@@ -62,6 +62,7 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.ControlFlow
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -112,6 +113,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
     private static val TransformationOption ALIGN_TICK_START
         = TransformationOption::createCheckOption("Tick start alignment", true);
+        
+    private static val TransformationOption SHOW_HIERARCHY
+        = TransformationOption::createCheckOption("Display hierarchy", true);
 
 //    private static val TransformationOption ALIGN_EDGES
 //        = TransformationOption::createCheckOption("Control flow edge alignment", true);
@@ -122,7 +126,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     override public getTransformationOptions() {
 //        return ImmutableSet::of(SHOW_LABELS, SHOW_SHADOW, ALIGN_TICK_START, ALIGN_EDGES, FIXATE_EDGES);
-        return ImmutableSet::of(SHOW_CAPTION, SHOW_SHADOW, ALIGN_TICK_START);
+        return ImmutableSet::of(SHOW_CAPTION, SHOW_SHADOW, ALIGN_TICK_START, SHOW_HIERARCHY);
     }
     
     override public getRecommendedLayoutOptions() {
@@ -149,15 +153,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor()=>[it.red=248;it.green=249;it.blue=253];
     private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor()=>[it.red=205;it.green=220;it.blue=243];
     
-    
     private static val String SCGPORTID_INCOMING = "incoming"
     private static val String SCGPORTID_OUTGOING = "outgoing"
     private static val String SCGPORTID_OUTGOING_THEN = "outgoingthen"
     private static val String SCGPORTID_OUTGOING_ELSE = "outgoingelse"
 
+    private KNode rootNode;
 
     def dispatch KNode translate(SCGraph r) {
         return r.createNode().putToLookUpWith(r) => [ node |
+            rootNode = node
             // node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
              node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN);
              node.setLayoutOption(LayoutOptions::SPACING, 25f);
@@ -168,17 +173,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             for (s : r.nodes) {
                 node.children += s.translate;
             }
-            
-            for (s : r.nodes.filter(typeof(Fork))) {
-                val threadEntries = s.getAllNext
-                for (t : threadEntries) {
-                    val threadNodes = (t.target as Entry).getThreadNodes
-                    for(tn : threadNodes) {
-                        val kNode = tn.node
-                        System::out.println(kNode)
-                        kNode.KRendering.background = "red".color
+        
+            if (SHOW_HIERARCHY.optionBooleanValue) {    
+                for (s : r.nodes.filter(typeof(Fork))) {
+                    val threadEntries = s.getAllNext
+                    for(t : threadEntries) {
+                        (t.target as Entry).getThreadNodes.createHierarchy
                     }
-                }
+                }            
             }
             
             for (s : r.nodes) {
@@ -427,8 +429,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return t.createEdge().putToLookUpWith(t) => [ edge |
             val sourceObj = t.eContainer
             val targetObj = t.target
-            edge.source = sourceObj.node
-            edge.target = targetObj.node
+            var sourceNode = sourceObj.node
+            var targetNode = targetObj.node
+            
+            if (sourceNode.eContainer != targetNode.eContainer) {
+                if (sourceNode.eContainer.eContainer == targetNode.eContainer) {
+                    sourceNode = sourceNode.eContainer as KNode
+                } else {
+                    targetNode = targetNode.eContainer as KNode    
+                }
+            }
+            
+            edge.source = sourceNode
+            edge.target = targetNode
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
 
             if (sourceObj instanceof Fork) {
@@ -439,7 +452,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     sourceObj.node.ports += it
                 ]
             } else {
-                edge.sourcePort = sourceObj.node.getPort(outgoing)
+                edge.sourcePort = sourceNode.getPort(outgoing)
             }
             
             if (targetObj instanceof Join) {
@@ -450,7 +463,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     targetObj.node.ports += it
                 ]
             } else {
-                edge.targetPort = targetObj.node.getPort(SCGPORTID_INCOMING)
+                edge.targetPort = targetNode.getPort(SCGPORTID_INCOMING)
             }
       
             edge.addRoundedBendsPolyline(8,2) => [
@@ -462,14 +475,35 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         
         ]
     }    
-   
+
+    def createHierarchy(List<Node> nodes) {
+        val threadEntry = nodes.head as Entry
+        val kParent = threadEntry.node.eContainer as KNode
+        val kContainer = threadEntry.createNode("hierarchy")
+        kContainer.addLayoutParam(LayoutOptions::SPACING, 25.0f)
+        kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
+        kContainer.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+        kContainer.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
+        kContainer.addLayoutParam(LayoutOptions::SEPARATE_CC, false);        
+        kContainer.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+        kContainer.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)            
+        kContainer.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)
+                    
+        for(tn : nodes) {
+            val kNode = tn.node
+            kNode.KRendering.background = "red".color
+            kContainer.children += kNode
+        }
+        
+        kParent.children += kContainer
+    }   
    
     def KPort addPort(KNode node, String mapping, float x, float y, int size, PortSide side) {
       node.createPort(mapping) => [
          it.addLayoutParam(LayoutOptions::PORT_SIDE, side);
          it.setPortPos(x, y)
          it.setPortSize(size,size)
-         it.addRectangle.invisible = true;
+//         it.addRectangle.invisible = true;
          node.ports += it
       ]
     }
