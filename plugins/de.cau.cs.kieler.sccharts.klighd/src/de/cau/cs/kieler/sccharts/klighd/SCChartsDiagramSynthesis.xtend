@@ -70,6 +70,7 @@ import de.cau.cs.kieler.core.krendering.KRectangle
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kiml.options.EdgeLabelPlacement
 import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
@@ -162,6 +163,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             }
             
             node.addRectangle() => [
+                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
                 it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
                 it.setSurroundingSpace(4,0);
                 it.invisible = false;
@@ -188,6 +190,20 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 //                ];
                 it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
             ];
+            node.addRectangle() => [
+                it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
+                it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
+                it.setSurroundingSpace(4,0);
+                it.invisible = false;
+                it.lineWidth = 0;
+                it.addText("[+]" + if (r.label.nullOrEmpty) "" else " "+r.label).putToLookUpWith(r) => [
+                    it.foreground = "gray".color
+                    it.fontSize = 8                  
+                    it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                ];
+                it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
+            ]
         ];
     }
     
@@ -288,6 +304,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth)
                 .background = "white".color;
                 figure.lineWidth = lineWidth;
+                if (SHOW_SHADOW.optionBooleanValue) {
+                    figure.shadow = "black".color;
+//                    figure.shadow.XOffset = 4;
+//                    figure.shadow.YOffset = 4;
+                }
+                
             (
                 if (conditional) figure => [
                     it.background = "black".color;
@@ -308,6 +330,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     // configure the inner one
                     it.background = "white".color;
                     it.styleRef = figure;
+                    it.shadow = null
                     it.lineWidth = if (s.isInitial) 1 else 1;
                     it.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset, 0);
                 ] else figure
@@ -318,9 +341,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 //figure.setSurroundingSpace(5,0);
                 it.invisible = false;
 
-                if (SHOW_SHADOW.optionBooleanValue) {
-                    it.shadow = "black".color;
-                }
                 if (conditional) {
                     return;
                 }
@@ -476,8 +496,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 }
                 if (!label.nullOrEmpty) {
                     t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
-                        label, 5, KlighdConstants::DEFAULT_FONT_NAME
-                    );
+                        label, 10, KlighdConstants::DEFAULT_FONT_NAME
+                    ) => [
+                        it.setLayoutOption(LayoutOptions.FONT_SIZE, 12) ;
+                        it.KRendering.setFontBold(true)
+                    ]
                 }
             }
 //            if (SHOW_PRIORITY_LABELS.optionBooleanValue) {
