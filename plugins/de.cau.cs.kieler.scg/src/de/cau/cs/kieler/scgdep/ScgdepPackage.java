@@ -17,6 +17,7 @@ import de.cau.cs.kieler.scg.ScgPackage;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -434,6 +435,308 @@ public interface ScgdepPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scgdep.impl.ConditionalDepImpl <em>Conditional Dep</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scgdep.impl.ConditionalDepImpl
+     * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getConditionalDep()
+     * @generated
+     */
+    int CONDITIONAL_DEP = 5;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL_DEP__ANNOTATIONS = ScgPackage.CONDITIONAL__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL_DEP__INCOMING = ScgPackage.CONDITIONAL__INCOMING;
+
+    /**
+     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL_DEP__IS_INITIAL = ScgPackage.CONDITIONAL__IS_INITIAL;
+
+    /**
+     * The feature id for the '<em><b>Then</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL_DEP__THEN = ScgPackage.CONDITIONAL__THEN;
+
+    /**
+     * The feature id for the '<em><b>Else</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL_DEP__ELSE = ScgPackage.CONDITIONAL__ELSE;
+
+    /**
+     * The feature id for the '<em><b>Condition</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL_DEP__CONDITION = ScgPackage.CONDITIONAL__CONDITION;
+
+    /**
+     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL_DEP__DEPENDENCIES = ScgPackage.CONDITIONAL_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Conditional Dep</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL_DEP_FEATURE_COUNT = ScgPackage.CONDITIONAL_FEATURE_COUNT + 1;
+
+    /**
+     * The operation id for the '<em>Get Annotation</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL_DEP___GET_ANNOTATION__STRING = ScgPackage.CONDITIONAL___GET_ANNOTATION__STRING;
+
+    /**
+     * The operation id for the '<em>Get All Annotations</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL_DEP___GET_ALL_ANNOTATIONS__STRING = ScgPackage.CONDITIONAL___GET_ALL_ANNOTATIONS__STRING;
+
+    /**
+     * The operation id for the '<em>Remove All Annotations</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL_DEP___REMOVE_ALL_ANNOTATIONS__STRING = ScgPackage.CONDITIONAL___REMOVE_ALL_ANNOTATIONS__STRING;
+
+    /**
+     * The number of operations of the '<em>Conditional Dep</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL_DEP_OPERATION_COUNT = ScgPackage.CONDITIONAL_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scgdep.impl.AssignmentDepImpl <em>Assignment Dep</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scgdep.impl.AssignmentDepImpl
+     * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getAssignmentDep()
+     * @generated
+     */
+    int ASSIGNMENT_DEP = 6;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP__ANNOTATIONS = ScgPackage.ASSIGNMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP__INCOMING = ScgPackage.ASSIGNMENT__INCOMING;
+
+    /**
+     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP__IS_INITIAL = ScgPackage.ASSIGNMENT__IS_INITIAL;
+
+    /**
+     * The feature id for the '<em><b>Next</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP__NEXT = ScgPackage.ASSIGNMENT__NEXT;
+
+    /**
+     * The feature id for the '<em><b>Assignment</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP__ASSIGNMENT = ScgPackage.ASSIGNMENT__ASSIGNMENT;
+
+    /**
+     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP__DEPENDENCIES = ScgPackage.ASSIGNMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Assignment Dep</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP_FEATURE_COUNT = ScgPackage.ASSIGNMENT_FEATURE_COUNT + 1;
+
+    /**
+     * The operation id for the '<em>Get Annotation</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP___GET_ANNOTATION__STRING = ScgPackage.ASSIGNMENT___GET_ANNOTATION__STRING;
+
+    /**
+     * The operation id for the '<em>Get All Annotations</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP___GET_ALL_ANNOTATIONS__STRING = ScgPackage.ASSIGNMENT___GET_ALL_ANNOTATIONS__STRING;
+
+    /**
+     * The operation id for the '<em>Remove All Annotations</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP___REMOVE_ALL_ANNOTATIONS__STRING = ScgPackage.ASSIGNMENT___REMOVE_ALL_ANNOTATIONS__STRING;
+
+    /**
+     * The number of operations of the '<em>Assignment Dep</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP_OPERATION_COUNT = ScgPackage.ASSIGNMENT_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scgdep.impl.NodeDepImpl <em>Node Dep</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scgdep.impl.NodeDepImpl
+     * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getNodeDep()
+     * @generated
+     */
+    int NODE_DEP = 7;
+
+    /**
+     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE_DEP__DEPENDENCIES = 0;
+
+    /**
+     * The number of structural features of the '<em>Node Dep</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE_DEP_FEATURE_COUNT = 1;
+
+    /**
+     * The number of operations of the '<em>Node Dep</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE_DEP_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scgdep.impl.SCGraphDepImpl <em>SC Graph Dep</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scgdep.impl.SCGraphDepImpl
+     * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getSCGraphDep()
+     * @generated
+     */
+    int SC_GRAPH_DEP = 8;
+
+    /**
+     * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPH_DEP__NODES = ScgPackage.SC_GRAPH__NODES;
+
+    /**
+     * The number of structural features of the '<em>SC Graph Dep</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPH_DEP_FEATURE_COUNT = ScgPackage.SC_GRAPH_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>SC Graph Dep</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPH_DEP_OPERATION_COUNT = ScgPackage.SC_GRAPH_OPERATION_COUNT + 0;
+
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scgdep.Dependency <em>Dependency</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -482,6 +785,57 @@ public interface ScgdepPackage extends EPackage {
      * @generated
      */
     EClass getWrite_Write();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scgdep.ConditionalDep <em>Conditional Dep</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Conditional Dep</em>'.
+     * @see de.cau.cs.kieler.scgdep.ConditionalDep
+     * @generated
+     */
+    EClass getConditionalDep();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scgdep.AssignmentDep <em>Assignment Dep</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Assignment Dep</em>'.
+     * @see de.cau.cs.kieler.scgdep.AssignmentDep
+     * @generated
+     */
+    EClass getAssignmentDep();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scgdep.NodeDep <em>Node Dep</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Node Dep</em>'.
+     * @see de.cau.cs.kieler.scgdep.NodeDep
+     * @generated
+     */
+    EClass getNodeDep();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgdep.NodeDep#getDependencies <em>Dependencies</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Dependencies</em>'.
+     * @see de.cau.cs.kieler.scgdep.NodeDep#getDependencies()
+     * @see #getNodeDep()
+     * @generated
+     */
+    EReference getNodeDep_Dependencies();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scgdep.SCGraphDep <em>SC Graph Dep</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>SC Graph Dep</em>'.
+     * @see de.cau.cs.kieler.scgdep.SCGraphDep
+     * @generated
+     */
+    EClass getSCGraphDep();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -555,6 +909,54 @@ public interface ScgdepPackage extends EPackage {
          * @generated
          */
         EClass WRITE_WRITE = eINSTANCE.getWrite_Write();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scgdep.impl.ConditionalDepImpl <em>Conditional Dep</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scgdep.impl.ConditionalDepImpl
+         * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getConditionalDep()
+         * @generated
+         */
+        EClass CONDITIONAL_DEP = eINSTANCE.getConditionalDep();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scgdep.impl.AssignmentDepImpl <em>Assignment Dep</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scgdep.impl.AssignmentDepImpl
+         * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getAssignmentDep()
+         * @generated
+         */
+        EClass ASSIGNMENT_DEP = eINSTANCE.getAssignmentDep();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scgdep.impl.NodeDepImpl <em>Node Dep</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scgdep.impl.NodeDepImpl
+         * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getNodeDep()
+         * @generated
+         */
+        EClass NODE_DEP = eINSTANCE.getNodeDep();
+
+        /**
+         * The meta object literal for the '<em><b>Dependencies</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference NODE_DEP__DEPENDENCIES = eINSTANCE.getNodeDep_Dependencies();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scgdep.impl.SCGraphDepImpl <em>SC Graph Dep</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scgdep.impl.SCGraphDepImpl
+         * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getSCGraphDep()
+         * @generated
+         */
+        EClass SC_GRAPH_DEP = eINSTANCE.getSCGraphDep();
 
     }
 

@@ -15,8 +15,12 @@ package de.cau.cs.kieler.scgdep.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
+import de.cau.cs.kieler.scg.Assignment;
+import de.cau.cs.kieler.scg.Conditional;
 import de.cau.cs.kieler.scg.Link;
 
+import de.cau.cs.kieler.scg.Node;
+import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scgdep.*;
 
 import org.eclipse.emf.ecore.EObject;
@@ -125,6 +129,39 @@ public class ScgdepSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case ScgdepPackage.CONDITIONAL_DEP: {
+                ConditionalDep conditionalDep = (ConditionalDep)theEObject;
+                T result = caseConditionalDep(conditionalDep);
+                if (result == null) result = caseConditional(conditionalDep);
+                if (result == null) result = caseNodeDep(conditionalDep);
+                if (result == null) result = caseNode(conditionalDep);
+                if (result == null) result = caseAnnotatable(conditionalDep);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ScgdepPackage.ASSIGNMENT_DEP: {
+                AssignmentDep assignmentDep = (AssignmentDep)theEObject;
+                T result = caseAssignmentDep(assignmentDep);
+                if (result == null) result = caseAssignment(assignmentDep);
+                if (result == null) result = caseNodeDep(assignmentDep);
+                if (result == null) result = caseNode(assignmentDep);
+                if (result == null) result = caseAnnotatable(assignmentDep);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ScgdepPackage.NODE_DEP: {
+                NodeDep nodeDep = (NodeDep)theEObject;
+                T result = caseNodeDep(nodeDep);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ScgdepPackage.SC_GRAPH_DEP: {
+                SCGraphDep scGraphDep = (SCGraphDep)theEObject;
+                T result = caseSCGraphDep(scGraphDep);
+                if (result == null) result = caseSCGraph(scGraphDep);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -205,6 +242,66 @@ public class ScgdepSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Conditional Dep</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Conditional Dep</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseConditionalDep(ConditionalDep object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Assignment Dep</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Assignment Dep</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseAssignmentDep(AssignmentDep object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Node Dep</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Node Dep</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNodeDep(NodeDep object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>SC Graph Dep</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>SC Graph Dep</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSCGraphDep(SCGraphDep object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -231,6 +328,66 @@ public class ScgdepSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseLink(Link object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Node</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Node</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNode(Node object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Conditional</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Conditional</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseConditional(Conditional object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseAssignment(Assignment object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>SC Graph</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>SC Graph</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSCGraph(SCGraph object) {
         return null;
     }
 

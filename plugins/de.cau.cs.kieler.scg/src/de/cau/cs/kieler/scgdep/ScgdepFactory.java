@@ -78,6 +78,33 @@ public interface ScgdepFactory extends EFactory {
     Write_Write createWrite_Write();
 
     /**
+     * Returns a new object of class '<em>Conditional Dep</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Conditional Dep</em>'.
+     * @generated
+     */
+    ConditionalDep createConditionalDep();
+
+    /**
+     * Returns a new object of class '<em>Assignment Dep</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Assignment Dep</em>'.
+     * @generated
+     */
+    AssignmentDep createAssignmentDep();
+
+    /**
+     * Returns a new object of class '<em>SC Graph Dep</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>SC Graph Dep</em>'.
+     * @generated
+     */
+    SCGraphDep createSCGraphDep();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

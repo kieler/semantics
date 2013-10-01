@@ -198,6 +198,75 @@ public class ScgdepItemProviderAdapterFactory extends ScgdepAdapterFactory imple
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.ConditionalDep} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ConditionalDepItemProvider conditionalDepItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.ConditionalDep}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createConditionalDepAdapter() {
+        if (conditionalDepItemProvider == null) {
+            conditionalDepItemProvider = new ConditionalDepItemProvider(this);
+        }
+
+        return conditionalDepItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.AssignmentDep} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected AssignmentDepItemProvider assignmentDepItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.AssignmentDep}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createAssignmentDepAdapter() {
+        if (assignmentDepItemProvider == null) {
+            assignmentDepItemProvider = new AssignmentDepItemProvider(this);
+        }
+
+        return assignmentDepItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.SCGraphDep} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected SCGraphDepItemProvider scGraphDepItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.SCGraphDep}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createSCGraphDepAdapter() {
+        if (scGraphDepItemProvider == null) {
+            scGraphDepItemProvider = new SCGraphDepItemProvider(this);
+        }
+
+        return scGraphDepItemProvider;
+    }
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -301,6 +370,9 @@ public class ScgdepItemProviderAdapterFactory extends ScgdepAdapterFactory imple
         if (relativeWrite_ReadItemProvider != null) relativeWrite_ReadItemProvider.dispose();
         if (absoluteWrite_RelativeWriteItemProvider != null) absoluteWrite_RelativeWriteItemProvider.dispose();
         if (write_WriteItemProvider != null) write_WriteItemProvider.dispose();
+        if (conditionalDepItemProvider != null) conditionalDepItemProvider.dispose();
+        if (assignmentDepItemProvider != null) assignmentDepItemProvider.dispose();
+        if (scGraphDepItemProvider != null) scGraphDepItemProvider.dispose();
     }
 
 }
