@@ -6185,11 +6185,9 @@ rule__TextualCode__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getTextualCodeAccess().getCodeKeyword_1()); }
-
-	'code' 
-
-{ after(grammarAccess.getTextualCodeAccess().getCodeKeyword_1()); }
+{ before(grammarAccess.getTextualCodeAccess().getTextAssignment_1()); }
+(rule__TextualCode__TextAssignment_1)
+{ after(grammarAccess.getTextualCodeAccess().getTextAssignment_1()); }
 )
 
 ;
@@ -6204,7 +6202,6 @@ rule__TextualCode__Group__2
     }
 :
 	rule__TextualCode__Group__2__Impl
-	rule__TextualCode__Group__3
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -6216,47 +6213,17 @@ rule__TextualCode__Group__2__Impl
     }
 :
 (
-{ before(grammarAccess.getTextualCodeAccess().getColonKeyword_2()); }
+{ before(grammarAccess.getTextualCodeAccess().getSemicolonKeyword_2()); }
 
-	':' 
+	';' 
 
-{ after(grammarAccess.getTextualCodeAccess().getColonKeyword_2()); }
+{ after(grammarAccess.getTextualCodeAccess().getSemicolonKeyword_2()); }
 )
 
 ;
 finally {
 	restoreStackSize(stackSize);
 }
-
-
-rule__TextualCode__Group__3
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__TextualCode__Group__3__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__TextualCode__Group__3__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getTextualCodeAccess().getTextAssignment_3()); }
-(rule__TextualCode__TextAssignment_3)
-{ after(grammarAccess.getTextualCodeAccess().getTextAssignment_3()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
 
 
 
@@ -12224,14 +12191,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TextualCode__TextAssignment_3
+rule__TextualCode__TextAssignment_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getTextualCodeAccess().getTextSTRINGTerminalRuleCall_3_0()); }
-	RULE_STRING{ after(grammarAccess.getTextualCodeAccess().getTextSTRINGTerminalRuleCall_3_0()); }
+{ before(grammarAccess.getTextualCodeAccess().getTextSTRINGTerminalRuleCall_1_0()); }
+	RULE_STRING{ after(grammarAccess.getTextualCodeAccess().getTextSTRINGTerminalRuleCall_1_0()); }
 )
 
 ;

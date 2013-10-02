@@ -50,6 +50,9 @@ public class SctFormatter extends ActionsFormatter {
          */
 
         // Suppress any space between 'region' and ':'
+        c.setLinewrap(2).before(f.getRegionAccess().getRegionKeyword_2());
+        c.setLinewrap(2).before(f.getRootRegionAccess().getRegionKeyword_2_1());
+        c.setLinewrap(2).before(f.getSingleRegionAccess().getRegionKeyword_1_1());
         c.setNoSpace().before(f.getRegionAccess().getColonKeyword_5());
         c.setLinewrap().after(f.getRegionAccess().getColonKeyword_5());
 
@@ -58,7 +61,7 @@ public class SctFormatter extends ActionsFormatter {
 
         c.setNoSpace().before(f.getSingleRegionAccess().getColonKeyword_1_4());
         c.setLinewrap().after(f.getSingleRegionAccess().getColonKeyword_1_4());
-
+        
 //        /*
 //         *  STATE
 //         */
@@ -72,17 +75,10 @@ public class SctFormatter extends ActionsFormatter {
               c.setNoLinewrap().between(f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0() , f.getStateAccess().getStateKeyword_3());
               c.setNoLinewrap().between(f.getStateAccess().getIsFinalFinalKeyword_1_0_1_0() , f.getStateAccess().getStateKeyword_3());
 
-//
-//        c.setLinewrap(2).between(f.getStateAccess().getSemicolonKeyword_8(), f.getRegionAccess().getRegionKeyword_2());
-//        c.setLinewrap(2).between(f.getStateAccess().getSemicolonKeyword_8(), f.getCOMMENT_ANNOTATIONRule());
-//        for (Keyword at : f.findKeywords("@")) {
-//            Grammar g = EcoreUtil2.getContainerOfType(at, Grammar.class);
-//            if (g != null && g.getName().equals(AnnotationsFormatter.LANGUAGE_NAME)) {
-//                // i.e. for all pairs of '(' and ')' declared in the Annotations grammar do...
-//                c.setLinewrap(2).between(f.getStateAccess().getSemicolonKeyword_8(), at);
-//            }
-//        }
 
+              // no linewrap between { and any following keyword!
+              c.setLinewrap(1,1,1).after(f.getStateAccess().getLeftCurlyBracketKeyword_6_1_0());
+              
 
         /*
          * SIGNAL
@@ -95,7 +91,8 @@ public class SctFormatter extends ActionsFormatter {
          */
 
         c.setLinewrap().after(f.getTextualCodeRule());
-        c.setNoSpace().before(f.getTextualCodeAccess().getColonKeyword_2());
+        //c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_8());
+        c.setNoSpace().before(f.getTextualCodeAccess().getSemicolonKeyword_2());
 
         
         /*

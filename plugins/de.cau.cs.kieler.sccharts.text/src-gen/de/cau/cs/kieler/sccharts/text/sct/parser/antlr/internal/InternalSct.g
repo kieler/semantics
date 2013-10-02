@@ -1636,19 +1636,11 @@ ruleTextualCode returns [EObject current=null]
     {
     	newLeafNode(otherlv_0, grammarAccess.getTextualCodeAccess().getTextualKeyword_0());
     }
-	otherlv_1='code' 
-    {
-    	newLeafNode(otherlv_1, grammarAccess.getTextualCodeAccess().getCodeKeyword_1());
-    }
-	otherlv_2=':' 
-    {
-    	newLeafNode(otherlv_2, grammarAccess.getTextualCodeAccess().getColonKeyword_2());
-    }
 (
 (
-		lv_text_3_0=RULE_STRING
+		lv_text_1_0=RULE_STRING
 		{
-			newLeafNode(lv_text_3_0, grammarAccess.getTextualCodeAccess().getTextSTRINGTerminalRuleCall_3_0()); 
+			newLeafNode(lv_text_1_0, grammarAccess.getTextualCodeAccess().getTextSTRINGTerminalRuleCall_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1657,12 +1649,16 @@ ruleTextualCode returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"text",
-        		lv_text_3_0, 
+        		lv_text_1_0, 
         		"STRING");
 	    }
 
 )
-))
+)	otherlv_2=';' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getTextualCodeAccess().getSemicolonKeyword_2());
+    }
+)
 ;
 
 

@@ -487,7 +487,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getTextualCodeAccess().getTextSTRINGTerminalRuleCall_3_0(), semanticObject.getText());
+		feeder.accept(grammarAccess.getTextualCodeAccess().getTextSTRINGTerminalRuleCall_1_0(), semanticObject.getText());
 		feeder.finish();
 	}
 	

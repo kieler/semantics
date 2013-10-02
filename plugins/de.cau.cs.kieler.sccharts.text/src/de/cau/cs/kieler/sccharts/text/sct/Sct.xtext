@@ -172,7 +172,7 @@ ValuedObject returns kexpressions::ValuedObject:
 // ---------------------------------------------------------------------------------------------------
 
 TextualCode returns kexpressions::TextExpression:
-    'textual' 'code' ':' text = STRING;
+    'textual' text = STRING ';';
 
 // ---------------------------------------------------------------------------------------------------
 

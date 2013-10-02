@@ -437,7 +437,18 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 it.addRectangle().invisible = true;
                             ];
                         }
-                        
+                        for (bodyText : s.bodyText) {
+                            it.addRectangle => [
+                                it.invisible = true;
+                                val text = bodyText.text;
+//                                it.printHighlightedText(text, action)
+                                it.addText(text) => [
+                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+                                    it.putToLookUpWith(bodyText);
+                                ]
+                                it.addRectangle().invisible = true;
+                            ];
+                        }
                 }
                 
                 if (s.hasRegionsOrDeclarations) {
