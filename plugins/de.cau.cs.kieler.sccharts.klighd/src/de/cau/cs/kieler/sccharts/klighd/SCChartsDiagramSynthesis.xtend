@@ -141,6 +141,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor()=>[it.red=248;it.green=249;it.blue=253];
     private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor()=>[it.red=205;it.green=220;it.blue=243];
     private static val KColor KEYWORD = RENDERING_FACTORY.createKColor()=>[it.red=115;it.green=0;it.blue=65];
+    private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor()=>[it.red=60;it.green=60;it.blue=60];
     
     
 
@@ -467,7 +468,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             
             edge.addSpline(2) => [
-                if (t.isImmediate) {
+                if (t.isImmediate || t.type == TransitionType::NORMALTERMINATION) {
                     it.lineStyle = LineStyle::CUSTOM;
                     it.lineStyle.dashPattern.clear;
                     it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
@@ -491,6 +492,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 scopeProvider.parent = t.sourceState;
                 var String label = serializer.serialize(t.copy)
                 label = label.replace("immediate", "")
+                // Override if a Label is set for a transition
+                if (!t.label.nullOrEmpty) {
+                    label = t.label
+                }
                 if (t.sourceState.outgoingTransitions.size > 1) {
                     label =  t.sourceState.outgoingTransitions.indexOf(t) + 1 + ": " + label;
                 }
@@ -529,16 +534,19 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
     def KRendering addHistoryDecorator(KContainerRendering line) {
         return line.addEllipse() => [
-            it.lineWidth = 1;
-            it.background = "gray".color
-            it.setDecoratorPlacementData(12, 12, -6, 1, false);
+            it.lineWidth = 0;
+            it.setForeground(DARKGRAY.copy)
+            it.background = DARKGRAY.copy
+            it.setDecoratorPlacementData(16, 16, -6, 1, false);
             it.addPolyline(1) => [
-                it.points += createKPosition(LEFT, 4, 0, TOP, 3, 0);
-                it.points += createKPosition(LEFT, 4, 0, BOTTOM, 3, 0);
-                it.points += createKPosition(LEFT, 4, 0, TOP, 0, 0.5f);
-                it.points += createKPosition(RIGHT, 4, 0, TOP, 0, 0.5f);
-                it.points += createKPosition(RIGHT, 4, 0, BOTTOM, 3, 0);
-                it.points += createKPosition(RIGHT, 4, 0, TOP, 3, 0);
+                it.lineWidth = 2;
+                it.points += createKPosition(LEFT, 5, 0, TOP, 4, 0);
+                it.points += createKPosition(LEFT, 5, 0, BOTTOM, 4, 0);
+                it.points += createKPosition(LEFT, 5, 0, TOP, 0, 0.5f);
+                it.points += createKPosition(RIGHT, 5, 0, TOP, 0, 0.5f);
+                it.points += createKPosition(RIGHT, 5, 0, BOTTOM, 4, 0);
+                it.points += createKPosition(RIGHT, 5, 0, TOP, 4, 0);
+                it.setForeground("white".color);
             ];
         ];
     }
