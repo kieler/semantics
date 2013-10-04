@@ -537,7 +537,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         return line.addEllipse() => [
             it.lineWidth = 1;
             it.background = "red".color
-            it.setDecoratorPlacementData(7, 7, 3, 0, false);
+            it.setDecoratorPlacementData(10, 10, 4, 0, false);
         ];
     }
     
@@ -545,7 +545,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         return line.drawTriangle() => [
             it.lineWidth = 1;
             it.background = "green".color
-            it.setDecoratorPlacementData(8, 8, 4, 0, true);
+            it.setDecoratorPlacementData(11, 11, 5, 0, true);
         ];
     }
     
