@@ -71,6 +71,7 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kiml.options.EdgeLabelPlacement
 import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import org.eclipse.xtext.formatting.IFormatter
 
 class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
@@ -507,6 +508,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 scopeProvider.parent = t.sourceState;
                 var String label = serializer.serialize(t.copy)
                 label = label.replace("immediate", "")
+                System::out.println(label)
                 // Override if a Label is set for a transition
                 if (!t.label.nullOrEmpty) {
                     label = t.label

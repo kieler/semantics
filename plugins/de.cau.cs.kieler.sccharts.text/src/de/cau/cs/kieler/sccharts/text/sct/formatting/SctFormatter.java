@@ -101,18 +101,6 @@ public class SctFormatter extends ActionsFormatter {
         c.setNoSpace().before(f.getValuedObjectAccess().getSemicolonKeyword_9());
         
 
-        /*
-         * ACTIONS
-         */
-        c.setLinewrap().after(f.getEntryActionRule());
-        c.setLinewrap().after(f.getDuringActionRule());
-        c.setLinewrap().after(f.getExitActionRule());
-        c.setLinewrap().after(f.getSuspendActionRule());
-        c.setNoSpace().before(f.getEntryActionAccess().getSemicolonKeyword_4());
-        c.setNoSpace().before(f.getDuringActionAccess().getSemicolonKeyword_5());
-        c.setNoSpace().before(f.getExitActionAccess().getSemicolonKeyword_4());
-        c.setNoSpace().before(f.getSuspendActionAccess().getSemicolonKeyword_4());
-        c.setNoSpace().after(f.getNotExpressionAccess().getOperatorNotOperatorEnumRuleCall_0_1_0());
         
         /*
          * TRANSITION

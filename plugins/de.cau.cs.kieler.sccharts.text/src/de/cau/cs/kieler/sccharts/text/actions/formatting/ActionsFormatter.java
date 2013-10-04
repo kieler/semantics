@@ -42,6 +42,22 @@ public class ActionsFormatter extends KExpressionsFormatter {
         // There is no type any more
         // avoid space in textual effect like '/ "foo" (java)' -> '/ "foo"(java)'
         //c.setNoSpace().before(f.getTextEffectAccess().getLeftParenthesisKeyword_1_0());
-
+        
+        /*
+         * ACTIONS
+         */
+        c.setLinewrap().after(f.getEntryActionRule());
+        c.setLinewrap().after(f.getDuringActionRule());
+        c.setLinewrap().after(f.getExitActionRule());
+        c.setLinewrap().after(f.getSuspendActionRule());
+        c.setNoSpace().before(f.getEntryActionAccess().getSemicolonKeyword_4());
+        c.setNoSpace().before(f.getDuringActionAccess().getSemicolonKeyword_5());
+        c.setNoSpace().before(f.getExitActionAccess().getSemicolonKeyword_4());
+        c.setNoSpace().before(f.getSuspendActionAccess().getSemicolonKeyword_4());
+        c.setNoSpace().after(f.getNotExpressionAccess().getOperatorNotOperatorEnumRuleCall_0_1_0());
+       
+       c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_5_2_0());
+       c.setNoSpace().before(f.getDuringActionAccess().getSemicolonKeyword_4_2_0());
+       c.setNoSpace().before(f.getExitActionAccess().getSemicolonKeyword_3_2_0());
     }
 }
