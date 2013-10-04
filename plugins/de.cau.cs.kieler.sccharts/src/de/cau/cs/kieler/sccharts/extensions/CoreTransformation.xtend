@@ -255,6 +255,11 @@ class CoreTransformation {
         assignment
     }
 
+    // Create a valued relative Assignment. 
+    def Assignment assignRelative(ValuedObject valuedObject, Expression newValue) {
+        valuedObject.assign(valuedObject.reference.or(newValue))
+    }
+
     // Create a valued Assignment and add it sequentially to an action's effects list. 
     def Assignment createAssignment(Action action, ValuedObject valuedObject, Expression newValue) {
         val assignment = valuedObject.assign(newValue)
@@ -868,6 +873,9 @@ class CoreTransformation {
     //--                             S I G N A L S                           --
     //-------------------------------------------------------------------------
     
+    // TODO: for inputs no during action!
+    // TODO: relative writes!!
+    
     private static val String variableValueExtension = "_val";
 
     // @requires: during actions
@@ -954,25 +962,29 @@ class CoreTransformation {
                   val allSignalEmissions = action.getAllContainedEmissions.filter[e|e.valuedObject == signal].toList
                   for (Emission signalEmission : allSignalEmissions.immutableCopy) {
                            // Assign the emitted valued
-                           val variableAssignment = presentVariable.assign(TRUE)
+                           val variableAssignment = presentVariable.assignRelative(TRUE)
                            // Remove the signal emission value (because it will be the presentValue emission)
                            // Put it in right order
-                           val index = action.effects.indexOf(signalEmission);
-                           action.effects.add(index, variableAssignment);
+                           val index = action.effects.indexOf(signalEmission)
+                           action.effects.add(index, variableAssignment)
                            // Remove emission
                            action.effects.remove(signalEmission)
                  }
                  // Wherever a present test is, put an Operator Expression (presentVariable == TRUE) there instead
                  val allSignalTests = action.eAllContents.filter(typeof(ValuedObjectReference)).filter(e|e.valuedObject == signal).toList
                  for (ValuedObjectReference signalTest : allSignalTests.immutableCopy) {
-                        val presentVariableTest = signalTest.valuedObject.reference.isEqual(TRUE);
-                        action.replace(signalTest, presentVariableTest);
+                        val presentVariableTest = signalTest.valuedObject.reference //.isEqual(TRUE);
+                        action.replace(signalTest, presentVariableTest)
                  }
             }
             
-            // Add a during reset action for the presentVariable
-            val duringAction = state.createDuringAction
-            duringAction.createAssignment(presentVariable, FALSE)
+            // Add a during reset action for the presentVariable if it is an output or local variable.
+            // Do not do this for only-input-variables.
+            if (presentVariable.isInput && !presentVariable.isOutput) {
+                val duringAction = state.createDuringAction
+                duringAction.createAssignment(presentVariable, FALSE)
+                duringAction.setIsImmediate(true)
+            }
         }
     }
            
