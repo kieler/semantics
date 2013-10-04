@@ -371,7 +371,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         it.fontSize = 11;
                         it.setFontBold(true);
                         it.setGridPlacementData().setMaxCellHeightEx(40)
-                            .from(LEFT, 8, 0, TOP, 8f, 0)
+                            .from(LEFT, 9, 0, TOP, 8f, 0)
                             .to(RIGHT, 8, 0, BOTTOM, 8, 0);
                     ];
                  }
