@@ -168,7 +168,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
                 it.setSurroundingSpace(4,0);
                 it.invisible = false;
-                it.lineWidth = 0;
+                it.foreground = "gray".color
+                it.lineWidth = 1;
                 it.addText("[-]" + if (r.label.nullOrEmpty) "" else " "+r.label).putToLookUpWith(r) => [
                     it.foreground = "gray".color
                     it.fontSize = 8                  
@@ -196,7 +197,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
                 it.setSurroundingSpace(4,0);
                 it.invisible = false;
-                it.lineWidth = 0;
+                it.foreground = "gray".color
+                it.lineWidth = 1;
                 it.addText("[+]" + if (r.label.nullOrEmpty) "" else " "+r.label).putToLookUpWith(r) => [
                     it.foreground = "gray".color
                     it.fontSize = 8                  
@@ -242,6 +244,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         return (text == "scchart")||
                (text == "entry")||
                (text == "during")||
+               (text == "suspend")||
                (text == "exit")||
                (text == "signal")||
                (text == "int")||
@@ -305,6 +308,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth)
                 .background = "white".color;
                 figure.lineWidth = lineWidth;
+                figure.foreground = if (s.isInitial || s.isFinal) "black".color else "gray".color
                 if (SHOW_SHADOW.optionBooleanValue) {
                     figure.shadow = "black".color;
 //                    figure.shadow.XOffset = 4;
@@ -326,7 +330,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     // re-configure the outer rounded rectangle
                     val offset = figure.lineWidthValue + if (s.isInitial) 1 else 2;
                     figure.setCornerSize(offset + cornerRadius, offset + cornerRadius)
-                    figure.lineWidth = if (s.isInitial) 2 else 1;
+                    figure.lineWidth = if (s.isInitial) 3 else 1;
 
                     // configure the inner one
                     it.background = "white".color;
@@ -354,7 +358,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                  if (s.hasRegionsOrDeclarations) {
                     // Get a smaller window-title-bare if this a macro state 
                     it.addText(" " + s.label).putToLookUpWith(s) => [
-                        it.fontSize = 10;
+                        it.fontSize = 11;
                         it.setFontBold(true);
                         it.setGridPlacementData().setMaxCellHeightEx(40)
                             .from(LEFT, 0, 0, TOP, 0f, 0)
@@ -364,11 +368,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                  else {
                     // For simple states we want a larger area 
                     it.addText(s.label).putToLookUpWith(s) => [
-                        it.fontSize = 10;
+                        it.fontSize = 11;
                         it.setFontBold(true);
                         it.setGridPlacementData().setMaxCellHeightEx(40)
-                            .from(LEFT, 10, 0, TOP, 9f, 0)
-                            .to(RIGHT, 10, 0, BOTTOM, 10, 0);
+                            .from(LEFT, 8, 0, TOP, 8f, 0)
+                            .to(RIGHT, 8, 0, BOTTOM, 8, 0);
                     ];
                  }
                 
@@ -452,9 +456,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 }
                 
                 if (s.hasRegionsOrDeclarations) {
-                    it.addHorizontalLine(1, 1)
-                        .setGridPlacementData() //.from(LEFT, 0, 0, TOP, 30, 0).to(RIGHT, 0, 0, TOP, 30, 0)
-                        .maxCellHeight = 1;                        
+//                    it.addHorizontalLine(1, 1)
+//                        .setGridPlacementData() //.from(LEFT, 0, 0, TOP, 30, 0).to(RIGHT, 0, 0, TOP, 30, 0)
+//                        .maxCellHeight = 1;                        
                     
                     it.addChildArea().setGridPlacementData() => [
                         from(LEFT, 3, 0, TOP, 3, 0).to(RIGHT, 3, 0, BOTTOM, 3, 0)
