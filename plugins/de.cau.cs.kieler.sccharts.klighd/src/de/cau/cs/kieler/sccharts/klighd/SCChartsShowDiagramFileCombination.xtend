@@ -24,8 +24,9 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import de.cau.cs.kieler.klighd.xtext.UpdateXtextModelKLighDCombination
 
-class SCChartsShowDiagramFileCombination extends SCChartsShowDiagramCombination {
+class SCChartsShowDiagramFileCombination extends UpdateXtextModelKLighDCombination {
     
     private static val ResourceSet resSet = new ResourceSetImpl();
 
@@ -36,7 +37,7 @@ class SCChartsShowDiagramFileCombination extends SCChartsShowDiagramCombination 
     /**
      * The 'execute()' method, see doc of {@link AbstractCombination}.
      */    
-    override def public void execute(PartTrigger$PartState es, SelectionTrigger$SelectionState selectionState) {
+    def public void execute(PartTrigger$PartState es, SelectionTrigger$SelectionState selectionState) {
             
         // do not react on partStates as well as on selectionStates in case
         //  a view part has been deactivated recently, as an potentially out-dated selection
