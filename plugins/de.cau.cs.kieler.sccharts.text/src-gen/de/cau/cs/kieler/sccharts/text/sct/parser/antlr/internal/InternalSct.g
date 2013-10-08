@@ -4560,10 +4560,10 @@ ruleStateType returns [Enumerator current=null]
         newLeafNode(enumLiteral_0, grammarAccess.getStateTypeAccess().getNORMALEnumLiteralDeclaration_0()); 
     }
 )
-    |(	enumLiteral_1='conditional' 
+    |(	enumLiteral_1='connector' 
 	{
-        $current = grammarAccess.getStateTypeAccess().getCONDITIONALEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_1, grammarAccess.getStateTypeAccess().getCONDITIONALEnumLiteralDeclaration_1()); 
+        $current = grammarAccess.getStateTypeAccess().getCONNECTOREnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_1, grammarAccess.getStateTypeAccess().getCONNECTOREnumLiteralDeclaration_1()); 
     }
 )
     |(	enumLiteral_2='reference' 

@@ -1103,7 +1103,7 @@ class CoreTransformation {
 
          // Modify surfaceState (the original state)
          val surfaceState = state;
-         surfaceState.setType(StateType::CONDITIONAL);
+         surfaceState.setType(StateType::CONNECTOR);
          surfaceState.setId(stateId + "Surface");
          surfaceState.setLabel(stateLabel + "Surface");
          
@@ -1114,7 +1114,7 @@ class CoreTransformation {
          var State surfState = null;
          for (transition : orderedTransitionList) {
             surfState  = SCChartsFactory::eINSTANCE.createState();
-            surfState.setType(StateType::CONDITIONAL);
+            surfState.setType(StateType::CONNECTOR);
             surfState.setId(stateId + transition.id("Surface"));
             surfState.setLabel(stateLabel + "Surface");
             parentRegion.states.add(surfState);
@@ -1200,7 +1200,7 @@ class CoreTransformation {
              val triggeredState  = SCChartsFactory::eINSTANCE.createState();
              triggeredState.setId(targetState.id + "_Triggered_" + targetState.id);
              triggeredState.setLabel( targetState.id + "_Triggered"); 
-             triggeredState.setType(StateType::CONDITIONAL);
+             triggeredState.setType(StateType::CONNECTOR);
              parentRegion.states.add(triggeredState);
              // Create new effect transition             
              val effectTransition = SCChartsFactory::eINSTANCE.createTransition();
@@ -2788,7 +2788,7 @@ class CoreTransformation {
             // a normal termination transition
             val conditionalState = SCChartsFactory::eINSTANCE.createState();
             conditionalState.setId(state.id("_Conditional"));
-            conditionalState.setType(StateType::CONDITIONAL);
+            conditionalState.setType(StateType::CONNECTOR);
             state.parentRegion.states.add(conditionalState);
             val normalTerminationTransition = SCChartsFactory::eINSTANCE.createTransition();
                 normalTerminationTransition.setTargetState(conditionalState);

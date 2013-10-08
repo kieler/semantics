@@ -2292,10 +2292,10 @@ rule__StateType__Alternatives
 )
 
     |(
-{ before(grammarAccess.getStateTypeAccess().getCONDITIONALEnumLiteralDeclaration_1()); }
-(	'conditional' 
+{ before(grammarAccess.getStateTypeAccess().getCONNECTOREnumLiteralDeclaration_1()); }
+(	'connector' 
 )
-{ after(grammarAccess.getStateTypeAccess().getCONDITIONALEnumLiteralDeclaration_1()); }
+{ after(grammarAccess.getStateTypeAccess().getCONNECTOREnumLiteralDeclaration_1()); }
 )
 
     |(

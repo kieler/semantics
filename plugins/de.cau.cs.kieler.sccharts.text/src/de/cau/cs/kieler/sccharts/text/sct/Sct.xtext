@@ -182,7 +182,7 @@ Substitution returns sccharts::Substitution:
 // ---------------------------------------------------------------------------------------------------
 
 enum StateType returns sccharts::StateType:
-	NORMAL = 'normal' | CONDITIONAL = 'conditional' | REFERENCE = 'reference' | TEXTUAL = 'textual';
+	NORMAL = 'normal' | CONNECTOR = 'connector' | REFERENCE = 'reference' | TEXTUAL = 'textual';
 
 enum TransitionType returns sccharts::TransitionType:
 	WEAKABORT = '-->' | STRONGABORT = 'o->' | NORMALTERMINATION = '>->';

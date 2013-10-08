@@ -81,7 +81,7 @@
         <details key="documentation" value="Simple or&#xA;macro States are of type NORMAL."/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="CONDITIONAL" value="1">
+    <eLiterals name="CONNECTOR" value="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A CONDITIONAL State is only a&#xA;pseudostate in a sense that it will be left immediately within&#xA;one tick. Its outgoing transitions have to be immediate."/>
       </eAnnotations>

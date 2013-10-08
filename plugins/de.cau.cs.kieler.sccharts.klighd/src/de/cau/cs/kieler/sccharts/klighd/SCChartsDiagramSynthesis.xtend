@@ -292,8 +292,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 node.setParent(node.parent)
             }
 
-            val conditional = s.type == StateType::CONDITIONAL;
-            val cornerRadius = if (conditional) 10 else if (!s.hasRegionsOrDeclarations) 17 else 8;
+            val connector = s.type == StateType::CONNECTOR;
+            val cornerRadius = if (connector) 10 else if (!s.hasRegionsOrDeclarations) 17 else 8;
             val lineWidth = if (s.isInitial) 4 else 1;
 
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth)
@@ -307,7 +307,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 }
                 
             (
-                if (conditional) figure => [
+                if (connector) figure => [
                     it.background = "black".color;
                     it.addArc => [
                         it.foreground = "white".color;
@@ -333,13 +333,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 
              ) => [
                 node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
-                it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
                 //figure.setSurroundingSpace(5,0);
                 it.invisible = false;
 
-                if (conditional) {
+                if (connector) {
                     return;
                 }
+
+                it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
                 
                 if (s.hasRegionsOrDeclarations) {
                     it.setGridPlacement(1);

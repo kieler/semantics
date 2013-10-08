@@ -45,16 +45,14 @@ public enum StateType implements Enumerator {
     NORMAL(0, "NORMAL", "NORMAL"),
 
     /**
-     * The '<em><b>CONDITIONAL</b></em>' literal object.
+     * The '<em><b>CONNECTOR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #CONDITIONAL_VALUE
+     * @see #CONNECTOR_VALUE
      * @generated
      * @ordered
      */
-    CONDITIONAL(1, "CONDITIONAL", "CONDITIONAL"),
-
-    /**
+    CONNECTOR(1, "CONNECTOR", "CONNECTOR"), /**
      * The '<em><b>REFERENCE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -97,7 +95,7 @@ public enum StateType implements Enumerator {
     public static final int NORMAL_VALUE = 0;
 
     /**
-     * The '<em><b>CONDITIONAL</b></em>' literal value.
+     * The '<em><b>CONNECTOR</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -105,12 +103,12 @@ public enum StateType implements Enumerator {
      * pseudostate in a sense that it will be left immediately within
      * one tick. Its outgoing transitions have to be immediate.
      * <!-- end-model-doc -->
-     * @see #CONDITIONAL
+     * @see #CONNECTOR
      * @model
      * @generated
      * @ordered
      */
-    public static final int CONDITIONAL_VALUE = 1;
+    public static final int CONNECTOR_VALUE = 1;
 
     /**
      * The '<em><b>REFERENCE</b></em>' literal value.
@@ -155,7 +153,7 @@ public enum StateType implements Enumerator {
     private static final StateType[] VALUES_ARRAY =
         new StateType[] {
             NORMAL,
-            CONDITIONAL,
+            CONNECTOR,
             REFERENCE,
             TEXTUAL,
         };
@@ -209,7 +207,7 @@ public enum StateType implements Enumerator {
     public static StateType get(int value) {
         switch (value) {
             case NORMAL_VALUE: return NORMAL;
-            case CONDITIONAL_VALUE: return CONDITIONAL;
+            case CONNECTOR_VALUE: return CONNECTOR;
         }
         return null;
     }
