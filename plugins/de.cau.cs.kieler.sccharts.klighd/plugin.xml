@@ -20,7 +20,7 @@
       <combination
             active="true"
             class="de.cau.cs.kieler.sccharts.klighd.SCChartsShowDiagramCombination"
-            name="Show SCCharts Diagrams with KLighD">
+            name="Show SCCharts SCT Diagrams with KLighD">
       </combination>
    </extension>
    <extension
@@ -97,6 +97,14 @@
             class="de.cau.cs.kieler.sccharts.State"
             config="de.cau.cs.kieler.sccharts.klighd.layout.StateLayoutConfig">
       </semanticOption>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.core.kivi.combinations">
+      <combination
+            active="false"
+            class="de.cau.cs.kieler.sccharts.klighd.SCChartsShowDiagramFileCombination"
+            name="Show SCCharts Diagram Files with KLighD">
+      </combination>
    </extension>
 
 </plugin>
