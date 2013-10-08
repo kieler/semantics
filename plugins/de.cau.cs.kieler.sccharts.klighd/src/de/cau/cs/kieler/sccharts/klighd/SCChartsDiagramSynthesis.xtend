@@ -505,7 +505,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     label = t.label
                 }
                 if (t.sourceState.outgoingTransitions.size > 1) {
-                    label =  t.sourceState.outgoingTransitions.indexOf(t) + 1 + ": " + label;
+                    label =  t.sourceState.outgoingTransitions.indexOf(t) + 1 + ": " + label.trim;
                 }
                 if (!label.nullOrEmpty) {
                     t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
