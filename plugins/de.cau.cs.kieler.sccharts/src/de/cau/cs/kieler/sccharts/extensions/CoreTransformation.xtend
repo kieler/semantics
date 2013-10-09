@@ -85,6 +85,11 @@ class CoreTransformation {
         region.eAllContents().toIterable().filter(typeof(State)).toList()
     }
     
+    // Return the list of all contained Transitions.
+    def List<Transition> getAllContainedTransitions(Region region) {
+        region.eAllContents().toIterable().filter(typeof(Transition)).toList()
+    }
+
     // Return the list of contained Emissions.
     def List<Emission> getAllContainedEmissions(Action action) {
         action.eAllContents().toIterable().
@@ -136,6 +141,168 @@ class CoreTransformation {
         state.parentRegion.rootState;   
     }
     
+    //========== STATES ===========
+    
+    def State createState(String id) {
+        val state  = SCChartsFactory::eINSTANCE.createState();
+        state.setId(id)
+        state.setLabel("")
+        state
+    }
+    
+    def State createState(Region region, String id) {
+        val state = createState(id)
+        region.states.add(state)
+        state
+    }
+    
+    def State setIsInitial(State state) {
+        state.setIsInitial(true)
+        state
+    }
+
+    def State setIsFinal(State state) {
+        state.setIsFinal(true)
+        state
+    }
+
+    def State createInitialState(String id) {
+        createState(id).setIsInitial
+    }
+    
+    def State createFinalState(String id) {
+        createState(id).setIsFinal
+    }
+    
+    def State createInitialState(Region region, String id) {
+        region.createState(id).setIsInitial
+    }
+    
+    def State createFinalState(Region region, String id) {
+        region.createState(id).setIsFinal
+    }
+    
+    def State setLabel2(State state, String label) {
+        state.setLabel(label)
+        state
+    }
+
+    def State setTypeConnector(State state) {
+        state.setType(StateType::CONNECTOR);
+        state
+    }
+
+    def State setTypeNormal(State state) {
+        state.setType(StateType::NORMAL);
+        state
+    }
+
+    def State setTypeReference(State state) {
+        state.setType(StateType::REFERENCE);
+        state
+    }
+
+    def State setTypeTextual(State state) {
+        state.setType(StateType::TEXTUAL);
+        state
+    }
+
+    //========== REGIONS ===========
+    
+    def Region createRegion(String id) {
+        val region  = SCChartsFactory::eINSTANCE.createRegion();
+        region.setId(id)
+        region.setLabel("")
+        region
+    }
+    
+    def Region createRegion(State state, String id) {
+        val region = createRegion(id)
+        state.regions.add(region)
+        region
+    }
+    
+    def Region setLabel2(Region region, String label) {
+        region.setLabel(label)
+        region
+    }
+
+    //========== TRANSITIONS ===========
+    
+    def Transition createTransition() {
+        val transition = SCChartsFactory::eINSTANCE.createTransition()
+        transition.setPriority2(1)
+    }
+
+    def Transition createImmediateTransition() {
+        createTransition.setIsImmediate
+    }
+
+    def Transition createTransitionTo(State sourceState, State targetState) {
+        val transition = createTransition()
+        transition.setTargetState(targetState)
+        sourceState.outgoingTransitions.add(transition)
+        transition.trimPriorities
+    }
+    
+    def Transition setTargetState2(Transition transition, State targetState) {
+        transition.setTargetState(targetState)
+        transition
+    }
+
+    def Transition setSourceState(Transition transition, State sourceState) {
+        sourceState.outgoingTransitions.add(transition)
+        transition.trimPriorities
+    }
+    
+    def Transition createImmediateTransitionTo(State sourceState, State targetState) {
+        sourceState.createTransitionTo(targetState).setIsImmediate
+    }
+    
+    def Transition setTrigger2(Transition transition, Expression expression) {
+        transition.setTrigger(expression)
+        transition
+    }
+
+    def Transition addEffect(Transition transition, Effect effect) {
+        transition.effects.add(effect)
+        transition
+    }
+    
+    def Transition clearEffects(Transition transition) {
+        transition.effects.clear
+        transition
+    }
+    
+    def Transition setPriority2(Transition transition, int priority) {
+        transition.setPriority(priority)
+        transition
+    }
+
+    def Transition setHighestPriority(Transition transition) {
+        val maxPriority = transition.sourceState.outgoingTransitions.length 
+        transition.setPriority2(maxPriority).trimPriorities
+    }
+
+    def Transition setLowestPriority(Transition transition) {
+        transition.setPriority2(0).trimPriorities
+    }
+    
+    def Transition trimPriorities(Transition transition) {
+        var prio = 1
+        val transitions = transition.sourceState.outgoingTransitions.sortBy(e | e.priority)
+        for (outgoingTransition : transitions) {
+            outgoingTransition.setPriority(prio)
+            prio = prio + 1
+        }
+        transition
+    }
+
+    def Transition setIsImmediate(Transition transition) {
+        transition.setIsImmediate(true)
+        transition
+    }
+
     //========== STATE ACTIONS ===========
 
     // Apply attributes from one local action to another
@@ -615,10 +782,10 @@ class CoreTransformation {
     //-------------------------------------------------------------------------
 
     // Prefixes a name with the hash code of an eObject
-    def String id(EObject eObject) {
-        eObject.hashCode + ""
+    def int id(EObject eObject) {
+        eObject.hashCode
     }
-    
+
     // Prefixes a name with the hash code of an eObject
     def String id(EObject eObject, String string) {
         string + eObject.id  
@@ -988,27 +1155,7 @@ class CoreTransformation {
         }
     }
            
-           
-           
-           
-           
-           
-           
-           
-           
-           
-   ////////////////////////////////////////////////////////////////////////////////////////           
-   ////////////////////////////////////////////////////////////////////////////////////////           
-   ////////////////////////////////////////////////////////////////////////////////////////           
-   //                                                                                    //
-   //                                       O  L  D                                      //
-   //                                                                                    //
-   ////////////////////////////////////////////////////////////////////////////////////////           
-   ////////////////////////////////////////////////////////////////////////////////////////           
-   ////////////////////////////////////////////////////////////////////////////////////////           
-              
-           
-           
+
 
     //-------------------------------------------------------------------------
     //--                S U R F A C E  &   D E P T H                         --
@@ -1077,6 +1224,7 @@ class CoreTransformation {
          var isDepthValuedObjectUID = "isDepth_" + parentRegion.id + "_" + state.id;
          val isDepthValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
          isDepthValuedObject.setName(isDepthValuedObjectUID);
+         isDepthValuedObject.setIsSignal(true)
          isDepthValuedObject.setIsInput(false);
          isDepthValuedObject.setIsOutput(false);
          isDepthValuedObject.setType(ValueType::PURE);
@@ -1169,20 +1317,18 @@ class CoreTransformation {
     //-------------------------------------------------------------------------
 
     // For every transition T that has both, a trigger and an effect do the following:
-    // Create a conditional C and add it to the parent of T's source state S_src.
-    // Create a new true triggered immediate effect transition T_eff and move all effects of T to T_eff.
-    // Set the T_eff to have T's target state. Set T to have the target C.
-    // Add T_eff to C's outgoing transitions. 
+    //   For every effect:
+    //     Create a conditional C and add it to the parent of T's source state S_src.
+    //     create a new true triggered immediate effect transition T_eff and move all effects of T to T_eff.
+    //     Set the T_eff to have T's target state. Set T to have the target C.
+    //     Add T_eff to C's outgoing transitions. 
     
     def Region transformTriggerEffect (Region rootRegion) {
         // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
 
-        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
-
-        // For every transition in the SyncChart do the transformation
-        // Iterate over a copy of the list  
-        for(targetTransition : targetTransitions) {
+        // Traverse all transitions
+        for(targetTransition : targetRootRegion.getAllContainedTransitions) {
             targetTransition.transformTriggerEffect(targetRootRegion);
         }
         
@@ -1190,34 +1336,256 @@ class CoreTransformation {
     }
          
      def void transformTriggerEffect(Transition transition, Region targetRootRegion) {
-         
-         // Only apply this to transition that have both, a trigger and effects!
+         // Only apply this to transition that have both, a trigger and one or more effects!
          if (transition.trigger != null && !transition.effects.nullOrEmpty) {
-              val targetState = transition.targetState;
-              val parentRegion = targetState.parentRegion;
-              val triggerTransition = transition;
+              val targetState = transition.targetState
+              val parentRegion = targetState.parentRegion
+              val transitionOriginalTarget = transition.targetState
+              var Transition lastTransition = transition
              
-             val triggeredState  = SCChartsFactory::eINSTANCE.createState();
-             triggeredState.setId(targetState.id + "_Triggered_" + targetState.id);
-             triggeredState.setLabel( targetState.id + "_Triggered"); 
-             triggeredState.setType(StateType::CONNECTOR);
-             parentRegion.states.add(triggeredState);
-             // Create new effect transition             
-             val effectTransition = SCChartsFactory::eINSTANCE.createTransition();
-             effectTransition.setIsImmediate(true);
-             effectTransition.setLabel("#");
-             effectTransition.setPriority(1);
-             // Move effect to effect transition
-             for (effect : transition.effects) {
-                 effectTransition.addEffect(effect.copy);
-             } 
-             transition.effects.clear;
-             // Re-connect
-             effectTransition.setTargetState(transition.targetState);
-             triggerTransition.setTargetState(triggeredState);
-             triggeredState.outgoingTransitions.add(effectTransition);
+             for (effect : transition.effects.immutableCopy) {
+                 val effectState  = parentRegion.createState(targetState.id + effect.id)
+                 effectState.setTypeConnector
+                 val effectTransition = createImmediateTransition.addEffect(effect)
+                 effectTransition.setSourceState(effectState)
+                 lastTransition.setTargetState(effectState)
+                 lastTransition = effectTransition
+             }
+             
+             lastTransition.setTargetState(transitionOriginalTarget)
          }
      }
+    
+           
+           
+           
+           
+           
+           
+           
+           
+   ////////////////////////////////////////////////////////////////////////////////////////           
+   ////////////////////////////////////////////////////////////////////////////////////////           
+   ////////////////////////////////////////////////////////////////////////////////////////           
+   //                                                                                    //
+   //                                       O  L  D                                      //
+   //                                                                                    //
+   ////////////////////////////////////////////////////////////////////////////////////////           
+   ////////////////////////////////////////////////////////////////////////////////////////           
+   ////////////////////////////////////////////////////////////////////////////////////////           
+              
+           
+           
+
+//    //-------------------------------------------------------------------------
+//    //--                S U R F A C E  &   D E P T H                         --
+//    //-------------------------------------------------------------------------
+//    //@requires: abort transformation (there must not be any weak or strong aborts outgoing from
+//    //                                 macro state, hence we just consider simple states here)
+//
+//    // For every non-hierarchical state S that has outgoing transitions and is of type NORMAL:
+//    // Create an auxiliary valuedObject isDepth_S that indicates that the state was
+//    // entered in an earlier tick and add it to the parent state P of the parent region R of S.
+//    // Modify all triggers of outgoing non-immediate transitions T of S: 1. set them to be
+//    // immediate and 2. add "isDepth_S &&" to its trigger.
+//    // Modify state S and make it a conditional.
+//    // Now walk through all n transitions T_1..n outgoing from S (ordered ascended by their priority):
+//    // For T_i create a conditional C_i. Connect C_i-1 and C_i with a true triggered immediate transition
+//    // of priority 2. Set priority of T_i to 1. Note that T_i's original priority is now implicitly encoded
+//    // by the sequential order of evaluating the conditionals C_1..n.
+//    // The last conditional C_n connect with a new a normal state D (the explicit depth of S).
+//    // Connect D with C_1 using a transition that emits isDepth_S.
+//    
+//    // Note that conditionals cannot be marked to be initial. Hence, if a state S is marked initial 
+//    // then an additional initial state I with a true triggered immediate transition to S will
+//    // be inserted. \code{S} is then marked not to be initial. This is a necessary pre-processing for
+//    // the above transformation.
+//    
+//    def Region transformSurfaceDepth (Region rootRegion) {
+//        // Clone the complete SCCharts region 
+//        var targetRootRegion = rootRegion.copy;
+//
+//        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).filter(e | !e.hierarchical).toList();
+//
+//        // For every state in the SyncChart do the transformation
+//        // Iterate over a copy of the list  
+//        for(targetState : targetStates) {
+//            targetState.transformSurfaceDepth(targetRootRegion);
+//        }
+//        
+//        targetRootRegion;
+//    }
+//         
+//     def void transformSurfaceDepth(State state, Region targetRootRegion) {
+//       if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL) {
+//         val parentRegion = state.parentRegion;
+//         val stateId = state.id;
+//         val stateLabel = state.label;
+//
+//         // SPECIAL CASE OF INITIAL STATES 
+//         // Insert a state and a transition here because conditional states cannot be initial
+//         if (state.isInitial) {
+//             val initialState  = SCChartsFactory::eINSTANCE.createState();
+//             initialState.setId(state.id("Initial"));
+//             initialState.setLabel("I"); 
+//             initialState.setIsInitial(true);
+//             parentRegion.states.add(initialState);
+//             state.setIsInitial(false);
+//             // Connect             
+//             val connect = SCChartsFactory::eINSTANCE.createTransition();
+//             connect.setIsImmediate(true);
+//             connect.setLabel("#");
+//             connect.setPriority(1);
+//             connect.setTargetState(state);
+//             initialState.outgoingTransitions.add(connect);
+//         }             
+//           
+//         // Create auxiliary valuedObject
+//         var isDepthValuedObjectUID = "isDepth_" + parentRegion.id + "_" + state.id;
+//         val isDepthValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+//         isDepthValuedObject.setName(isDepthValuedObjectUID);
+//         isDepthValuedObject.setIsSignal(true)
+//         isDepthValuedObject.setIsInput(false);
+//         isDepthValuedObject.setIsOutput(false);
+//         isDepthValuedObject.setType(ValueType::PURE);
+//         parentRegion.parentState.valuedObjects.add(isDepthValuedObject);  
+//
+//         // Modify triggers of non immediate transitions and make them immediate
+//         val nonImmediateTransitions = state.outgoingTransitions.filter(e | !e.isImmediate).toList;
+//         val auxiliaryTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
+//             auxiliaryTrigger.setValuedObject(isDepthValuedObject);
+//         for (transition : nonImmediateTransitions) {
+//             // Make this transition immediate now
+//             transition.setIsImmediate(true);
+//             // Modify trigger if any
+//             if (transition.trigger != null) {
+//                 val andAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+//                 andAuxiliaryTrigger.setOperator(OperatorType::AND);
+//                 andAuxiliaryTrigger.add(auxiliaryTrigger.copy);
+//                 andAuxiliaryTrigger.add(transition.trigger);
+//                 transition.setTrigger(andAuxiliaryTrigger);
+//             }  else {
+//                 transition.setTrigger(auxiliaryTrigger.copy);
+//             }
+//         } 
+//
+//         // Modify surfaceState (the original state)
+//         val surfaceState = state;
+//         surfaceState.setType(StateType::CONNECTOR);
+//         surfaceState.setId(stateId + "Surface");
+//         surfaceState.setLabel(stateLabel + "Surface");
+//         
+//         // For every state create a number of surface nodes
+//         val orderedTransitionList = state.outgoingTransitions.sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
+//         
+//         var previousSurfState = surfaceState;
+//         var State surfState = null;
+//         for (transition : orderedTransitionList) {
+//            surfState  = SCChartsFactory::eINSTANCE.createState();
+//            surfState.setType(StateType::CONNECTOR);
+//            surfState.setId(stateId + transition.id("Surface"));
+//            surfState.setLabel(stateLabel + "Surface");
+//            parentRegion.states.add(surfState);
+//            // Move transition to this state
+//            surfState.outgoingTransitions.add(transition);
+//            // We can now set the transition priority to 1 (it is reflected implicityly by the sequential order now)
+//            transition.setPriority(1);
+//            // Connect
+//            val connect = SCChartsFactory::eINSTANCE.createTransition();
+//            connect.setIsImmediate(true);
+//            connect.setLabel("#");
+//            connect.setPriority(2);
+//            connect.setTargetState(surfState);
+//            previousSurfState.outgoingTransitions.add(connect);
+//            // Next cycle
+//            previousSurfState = surfState; 
+//         }
+//         
+//         // Add an additional last state that will become depth State
+//         val depthState  = SCChartsFactory::eINSTANCE.createState();
+//         depthState.setType(StateType::NORMAL);
+//         depthState.setId(stateId); // + "Depth");
+//         depthState.setLabel(stateLabel); // + "Depth");
+//         parentRegion.states.add(depthState);
+//         // Connect
+//         val connect = SCChartsFactory::eINSTANCE.createTransition();
+//         connect.setIsImmediate(true);
+//         connect.setLabel("#");
+//         connect.setPriority(2);
+//         connect.setTargetState(depthState);
+//         surfState.outgoingTransitions.add(connect);
+//         
+//         // Connect back depth with surface state
+//         val connectBack = SCChartsFactory::eINSTANCE.createTransition();
+//         // This MUST be highest priority so that the control flow restarts and takes other 
+//         // outgoing transition.
+//         // There should not be any other outgoing transition.
+//         connectBack.setPriority(1);
+//         connectBack.setTargetState(surfaceState);
+//         depthState.outgoingTransitions.add(connectBack);
+//         val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
+//         auxiliaryEmission.setValuedObject(isDepthValuedObject);
+//         connectBack.addEmission(auxiliaryEmission);
+//         
+//       }
+//     }
+//
+//
+//
+//    //-------------------------------------------------------------------------
+//    //--                 S P L I T   T R A N S I T I O N                     --
+//    //-------------------------------------------------------------------------
+//
+//    // For every transition T that has both, a trigger and an effect do the following:
+//    // Create a conditional C and add it to the parent of T's source state S_src.
+//    // Create a new true triggered immediate effect transition T_eff and move all effects of T to T_eff.
+//    // Set the T_eff to have T's target state. Set T to have the target C.
+//    // Add T_eff to C's outgoing transitions. 
+//    
+//    def Region transformTriggerEffect (Region rootRegion) {
+//        // Clone the complete SCCharts region 
+//        var targetRootRegion = rootRegion.copy;
+//
+//        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
+//
+//        // For every transition in the SyncChart do the transformation
+//        // Iterate over a copy of the list  
+//        for(targetTransition : targetTransitions) {
+//            targetTransition.transformTriggerEffect(targetRootRegion);
+//        }
+//        
+//        targetRootRegion;
+//    }
+//         
+//     def void transformTriggerEffect(Transition transition, Region targetRootRegion) {
+//         
+//         // Only apply this to transition that have both, a trigger and effects!
+//         if (transition.trigger != null && !transition.effects.nullOrEmpty) {
+//              val targetState = transition.targetState;
+//              val parentRegion = targetState.parentRegion;
+//              val triggerTransition = transition;
+//             
+//             val triggeredState  = SCChartsFactory::eINSTANCE.createState();
+//             triggeredState.setId(targetState.id + "_Triggered_" + targetState.id);
+//             triggeredState.setLabel( targetState.id + "_Triggered"); 
+//             triggeredState.setType(StateType::CONNECTOR);
+//             parentRegion.states.add(triggeredState);
+//             // Create new effect transition             
+//             val effectTransition = SCChartsFactory::eINSTANCE.createTransition();
+//             effectTransition.setIsImmediate(true);
+//             effectTransition.setLabel("#");
+//             effectTransition.setPriority(1);
+//             // Move effect to effect transition
+//             for (effect : transition.effects) {
+//                 effectTransition.addEffect(effect.copy);
+//             } 
+//             transition.effects.clear;
+//             // Re-connect
+//             effectTransition.setTargetState(transition.targetState);
+//             triggerTransition.setTargetState(triggeredState);
+//             triggeredState.outgoingTransitions.add(effectTransition);
+//         }
+//     }
 
 
 
