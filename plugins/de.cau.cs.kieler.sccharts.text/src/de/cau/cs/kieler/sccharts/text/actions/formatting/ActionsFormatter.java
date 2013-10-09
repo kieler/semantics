@@ -59,5 +59,9 @@ public class ActionsFormatter extends KExpressionsFormatter {
        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_5_2_0());
        c.setNoSpace().before(f.getDuringActionAccess().getSemicolonKeyword_4_2_0());
        c.setNoSpace().before(f.getExitActionAccess().getSemicolonKeyword_3_2_0());
+       
+       // Emission ( value ) -> (value)
+       c.setNoSpace().after(f.getEmissionAccess().getLeftParenthesisKeyword_1_0());
+       c.setNoSpace().before(f.getEmissionAccess().getRightParenthesisKeyword_1_2());
     }
 }
