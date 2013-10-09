@@ -478,7 +478,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     text=STRING
+	 *     text=HOSTCODE
 	 */
 	protected void sequence_TextualCode(EObject context, TextExpression semanticObject) {
 		if(errorAcceptor != null) {
@@ -487,7 +487,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getTextualCodeAccess().getTextSTRINGTerminalRuleCall_1_0(), semanticObject.getText());
+		feeder.accept(grammarAccess.getTextualCodeAccess().getTextHOSTCODETerminalRuleCall_0_0(), semanticObject.getText());
 		feeder.finish();
 	}
 	

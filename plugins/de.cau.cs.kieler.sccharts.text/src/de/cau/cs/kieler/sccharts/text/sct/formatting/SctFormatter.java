@@ -92,7 +92,7 @@ public class SctFormatter extends ActionsFormatter {
 
         c.setLinewrap().after(f.getTextualCodeRule());
         //c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_8());
-        c.setNoSpace().before(f.getTextualCodeAccess().getSemicolonKeyword_2());
+        c.setNoSpace().before(f.getTextualCodeAccess().getSemicolonKeyword_1());
 
         
         /*

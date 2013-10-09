@@ -499,13 +499,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 scopeProvider.parent = t.sourceState;
                 var String label = serializer.serialize(t.copy)
                 label = label.replace("immediate", "")
-                System::out.println(label)
                 // Override if a Label is set for a transition
                 if (!t.label.nullOrEmpty) {
                     label = t.label
                 }
                 if (t.sourceState.outgoingTransitions.size > 1) {
-                    label =  t.sourceState.outgoingTransitions.indexOf(t) + 1 + ": " + label.trim;
+                    label =  t.sourceState.outgoingTransitions.indexOf(t) + 1 + ": " + label.trim.replace("'", "");
                 }
                 if (!label.nullOrEmpty) {
                     t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(

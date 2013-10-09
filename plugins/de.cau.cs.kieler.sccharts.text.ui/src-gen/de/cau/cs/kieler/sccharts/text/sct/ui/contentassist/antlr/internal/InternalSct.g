@@ -6154,11 +6154,9 @@ rule__TextualCode__Group__0__Impl
     }
 :
 (
-{ before(grammarAccess.getTextualCodeAccess().getTextualKeyword_0()); }
-
-	'textual' 
-
-{ after(grammarAccess.getTextualCodeAccess().getTextualKeyword_0()); }
+{ before(grammarAccess.getTextualCodeAccess().getTextAssignment_0()); }
+(rule__TextualCode__TextAssignment_0)
+{ after(grammarAccess.getTextualCodeAccess().getTextAssignment_0()); }
 )
 
 ;
@@ -6173,7 +6171,6 @@ rule__TextualCode__Group__1
     }
 :
 	rule__TextualCode__Group__1__Impl
-	rule__TextualCode__Group__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -6185,47 +6182,17 @@ rule__TextualCode__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getTextualCodeAccess().getTextAssignment_1()); }
-(rule__TextualCode__TextAssignment_1)
-{ after(grammarAccess.getTextualCodeAccess().getTextAssignment_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__TextualCode__Group__2
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__TextualCode__Group__2__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__TextualCode__Group__2__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getTextualCodeAccess().getSemicolonKeyword_2()); }
+{ before(grammarAccess.getTextualCodeAccess().getSemicolonKeyword_1()); }
 
 	';' 
 
-{ after(grammarAccess.getTextualCodeAccess().getSemicolonKeyword_2()); }
+{ after(grammarAccess.getTextualCodeAccess().getSemicolonKeyword_1()); }
 )
 
 ;
 finally {
 	restoreStackSize(stackSize);
 }
-
-
 
 
 
@@ -12191,14 +12158,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TextualCode__TextAssignment_1
+rule__TextualCode__TextAssignment_0
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getTextualCodeAccess().getTextSTRINGTerminalRuleCall_1_0()); }
-	RULE_STRING{ after(grammarAccess.getTextualCodeAccess().getTextSTRINGTerminalRuleCall_1_0()); }
+{ before(grammarAccess.getTextualCodeAccess().getTextHOSTCODETerminalRuleCall_0_0()); }
+	RULE_HOSTCODE{ after(grammarAccess.getTextualCodeAccess().getTextHOSTCODETerminalRuleCall_0_0()); }
 )
 
 ;

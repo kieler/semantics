@@ -988,10 +988,9 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	public class TextualCodeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TextualCode");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cTextualKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cTextAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cTextSTRINGTerminalRuleCall_1_0 = (RuleCall)cTextAssignment_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cTextAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cTextHOSTCODETerminalRuleCall_0_0 = (RuleCall)cTextAssignment_0.eContents().get(0);
+		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		////Variable returns kexpressions::Variable:
@@ -1007,23 +1006,20 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		////    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
 		//// ---------------------------------------------------------------------------------------------------
 		//TextualCode returns kexpressions::TextExpression:
-		//	"textual" text=STRING ";";
+		//	text=HOSTCODE ";";
 		public ParserRule getRule() { return rule; }
 
-		//"textual" text=STRING ";"
+		//text=HOSTCODE ";"
 		public Group getGroup() { return cGroup; }
 
-		//"textual"
-		public Keyword getTextualKeyword_0() { return cTextualKeyword_0; }
+		//text=HOSTCODE
+		public Assignment getTextAssignment_0() { return cTextAssignment_0; }
 
-		//text=STRING
-		public Assignment getTextAssignment_1() { return cTextAssignment_1; }
-
-		//STRING
-		public RuleCall getTextSTRINGTerminalRuleCall_1_0() { return cTextSTRINGTerminalRuleCall_1_0; }
+		//HOSTCODE
+		public RuleCall getTextHOSTCODETerminalRuleCall_0_0() { return cTextHOSTCODETerminalRuleCall_0_0; }
 
 		//";"
-		public Keyword getSemicolonKeyword_2() { return cSemicolonKeyword_2; }
+		public Keyword getSemicolonKeyword_1() { return cSemicolonKeyword_1; }
 	}
 
 	public class SubstitutionElements extends AbstractParserRuleElementFinder {
@@ -1327,7 +1323,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	////    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
 	//// ---------------------------------------------------------------------------------------------------
 	//TextualCode returns kexpressions::TextExpression:
-	//	"textual" text=STRING ";";
+	//	text=HOSTCODE ";";
 	public TextualCodeElements getTextualCodeAccess() {
 		return (pTextualCode != null) ? pTextualCode : (pTextualCode = new TextualCodeElements());
 	}
