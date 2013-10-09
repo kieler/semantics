@@ -274,7 +274,16 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
               offset = offset + PlacementUtil.estimateTextSize(ktext).width
             }
             if (remainingText != "") {
-                
+              val word = remainingText
+              val currentOffset = offset
+              val ktext = parent.addText(word) => [
+                     if (word.keyword) {
+                        it.setForeground(KEYWORD.copy)
+                        it.setFontBold(true)
+                     }
+                     it.putToLookUpWith(lookup);
+                     it.setPointPlacementData(createKPosition(LEFT, currentOffset, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+              ]
             }    
         parent
     }
@@ -404,7 +413,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 declaration = declaration.trim + " "
                             }
 
-                              it.printHighlightedText(declaration + type + sig.name + init +  combine + ";", sig) => [
+                              it.printHighlightedText(declaration + type + sig.name + init +  combine, sig) => [
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
                               ]
 //                            it.addText(declaration + type + sig.name + init +  combine + ";") => [
