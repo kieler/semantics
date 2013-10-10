@@ -1,15 +1,10 @@
 package de.cau.cs.kieler.sccharts.text.sct.formatting;
 
-import org.eclipse.xtext.EcoreUtil2;
-import org.eclipse.xtext.Grammar;
-import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.IFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.eclipse.xtext.util.Pair;
 
-import de.cau.cs.kieler.core.annotations.text.formatting.AnnotationsFormatter;
-import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.text.actions.formatting.ActionsFormatter;
 import de.cau.cs.kieler.sccharts.text.sct.services.SctGrammarAccess;
 
@@ -75,7 +70,13 @@ public class SctFormatter extends ActionsFormatter {
               c.setNoLinewrap().between(f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0() , f.getStateAccess().getStateKeyword_3());
               c.setNoLinewrap().between(f.getStateAccess().getIsFinalFinalKeyword_1_0_1_0() , f.getStateAccess().getStateKeyword_3());
 
+//            /*
+//            *  CONNECTOR
+//            */
+              c.setLinewrap(2).before(f.getStateTypeRule());
+              c.setNoLinewrap().between(f.getStateTypeRule(), f.getStateAccess().getStateKeyword_3());
 
+              
               // no linewrap between { and any following keyword!
               c.setLinewrap(1,1,1).after(f.getStateAccess().getLeftCurlyBracketKeyword_6_1_0());
               
