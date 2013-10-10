@@ -20,7 +20,12 @@
       <combination
             active="true"
             class="de.cau.cs.kieler.sccharts.klighd.SCChartsShowDiagramCombination"
-            name="Show SCCharts Diagrams with KLighD">
+            name="Show SCCharts SCT Diagrams with KLighD">
+      </combination>
+      <combination
+            active="false"
+            class="de.cau.cs.kieler.sccharts.klighd.SCChartsShowDiagramFileCombination"
+            name="Show SCCharts Diagram Files with KLighD">
       </combination>
    </extension>
    <extension

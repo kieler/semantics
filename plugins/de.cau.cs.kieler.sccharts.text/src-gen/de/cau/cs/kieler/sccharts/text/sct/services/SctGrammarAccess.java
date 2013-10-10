@@ -988,11 +988,9 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	public class TextualCodeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TextualCode");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cTextualKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Keyword cCodeKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cTextAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTextSTRINGTerminalRuleCall_3_0 = (RuleCall)cTextAssignment_3.eContents().get(0);
+		private final Assignment cTextAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cTextHOSTCODETerminalRuleCall_0_0 = (RuleCall)cTextAssignment_0.eContents().get(0);
+		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		////Variable returns kexpressions::Variable:
@@ -1008,26 +1006,20 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		////    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
 		//// ---------------------------------------------------------------------------------------------------
 		//TextualCode returns kexpressions::TextExpression:
-		//	"textual" "code" ":" text=STRING;
+		//	text=HOSTCODE ";";
 		public ParserRule getRule() { return rule; }
 
-		//"textual" "code" ":" text=STRING
+		//text=HOSTCODE ";"
 		public Group getGroup() { return cGroup; }
 
-		//"textual"
-		public Keyword getTextualKeyword_0() { return cTextualKeyword_0; }
+		//text=HOSTCODE
+		public Assignment getTextAssignment_0() { return cTextAssignment_0; }
 
-		//"code"
-		public Keyword getCodeKeyword_1() { return cCodeKeyword_1; }
+		//HOSTCODE
+		public RuleCall getTextHOSTCODETerminalRuleCall_0_0() { return cTextHOSTCODETerminalRuleCall_0_0; }
 
-		//":"
-		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
-
-		//text=STRING
-		public Assignment getTextAssignment_3() { return cTextAssignment_3; }
-
-		//STRING
-		public RuleCall getTextSTRINGTerminalRuleCall_3_0() { return cTextSTRINGTerminalRuleCall_3_0; }
+		//";"
+		public Keyword getSemicolonKeyword_1() { return cSemicolonKeyword_1; }
 	}
 
 	public class SubstitutionElements extends AbstractParserRuleElementFinder {
@@ -1069,8 +1061,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cNORMALEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
 		private final Keyword cNORMALNormalKeyword_0_0 = (Keyword)cNORMALEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cCONDITIONALEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cCONDITIONALConditionalKeyword_1_0 = (Keyword)cCONDITIONALEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cCONNECTOREnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cCONNECTORConnectorKeyword_1_0 = (Keyword)cCONNECTOREnumLiteralDeclaration_1.eContents().get(0);
 		private final EnumLiteralDeclaration cREFERENCEEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
 		private final Keyword cREFERENCEReferenceKeyword_2_0 = (Keyword)cREFERENCEEnumLiteralDeclaration_2.eContents().get(0);
 		private final EnumLiteralDeclaration cTEXTUALEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
@@ -1078,10 +1070,10 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//enum StateType returns sccharts::StateType:
-		//	NORMAL="normal" | CONDITIONAL="conditional" | REFERENCE="reference" | TEXTUAL="textual";
+		//	NORMAL="normal" | CONNECTOR="connector" | REFERENCE="reference" | TEXTUAL="textual";
 		public EnumRule getRule() { return rule; }
 
-		//NORMAL="normal" | CONDITIONAL="conditional" | REFERENCE="reference" | TEXTUAL="textual"
+		//NORMAL="normal" | CONNECTOR="connector" | REFERENCE="reference" | TEXTUAL="textual"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//NORMAL="normal"
@@ -1090,11 +1082,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//"normal"
 		public Keyword getNORMALNormalKeyword_0_0() { return cNORMALNormalKeyword_0_0; }
 
-		//CONDITIONAL="conditional"
-		public EnumLiteralDeclaration getCONDITIONALEnumLiteralDeclaration_1() { return cCONDITIONALEnumLiteralDeclaration_1; }
+		//CONNECTOR="connector"
+		public EnumLiteralDeclaration getCONNECTOREnumLiteralDeclaration_1() { return cCONNECTOREnumLiteralDeclaration_1; }
 
-		//"conditional"
-		public Keyword getCONDITIONALConditionalKeyword_1_0() { return cCONDITIONALConditionalKeyword_1_0; }
+		//"connector"
+		public Keyword getCONNECTORConnectorKeyword_1_0() { return cCONNECTORConnectorKeyword_1_0; }
 
 		//REFERENCE="reference"
 		public EnumLiteralDeclaration getREFERENCEEnumLiteralDeclaration_2() { return cREFERENCEEnumLiteralDeclaration_2; }
@@ -1331,7 +1323,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	////    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
 	//// ---------------------------------------------------------------------------------------------------
 	//TextualCode returns kexpressions::TextExpression:
-	//	"textual" "code" ":" text=STRING;
+	//	text=HOSTCODE ";";
 	public TextualCodeElements getTextualCodeAccess() {
 		return (pTextualCode != null) ? pTextualCode : (pTextualCode = new TextualCodeElements());
 	}
@@ -1353,7 +1345,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//enum StateType returns sccharts::StateType:
-	//	NORMAL="normal" | CONDITIONAL="conditional" | REFERENCE="reference" | TEXTUAL="textual";
+	//	NORMAL="normal" | CONNECTOR="connector" | REFERENCE="reference" | TEXTUAL="textual";
 	public StateTypeElements getStateTypeAccess() {
 		return (unknownRuleStateType != null) ? unknownRuleStateType : (unknownRuleStateType = new StateTypeElements());
 	}

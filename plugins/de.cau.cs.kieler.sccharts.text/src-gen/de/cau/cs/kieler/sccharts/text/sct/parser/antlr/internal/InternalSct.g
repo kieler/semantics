@@ -1632,23 +1632,11 @@ ruleTextualCode returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='textual' 
-    {
-    	newLeafNode(otherlv_0, grammarAccess.getTextualCodeAccess().getTextualKeyword_0());
-    }
-	otherlv_1='code' 
-    {
-    	newLeafNode(otherlv_1, grammarAccess.getTextualCodeAccess().getCodeKeyword_1());
-    }
-	otherlv_2=':' 
-    {
-    	newLeafNode(otherlv_2, grammarAccess.getTextualCodeAccess().getColonKeyword_2());
-    }
+((
 (
-(
-		lv_text_3_0=RULE_STRING
+		lv_text_0_0=RULE_HOSTCODE
 		{
-			newLeafNode(lv_text_3_0, grammarAccess.getTextualCodeAccess().getTextSTRINGTerminalRuleCall_3_0()); 
+			newLeafNode(lv_text_0_0, grammarAccess.getTextualCodeAccess().getTextHOSTCODETerminalRuleCall_0_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1657,12 +1645,16 @@ ruleTextualCode returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"text",
-        		lv_text_3_0, 
-        		"STRING");
+        		lv_text_0_0, 
+        		"HOSTCODE");
 	    }
 
 )
-))
+)	otherlv_1=';' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getTextualCodeAccess().getSemicolonKeyword_1());
+    }
+)
 ;
 
 
@@ -4564,10 +4556,10 @@ ruleStateType returns [Enumerator current=null]
         newLeafNode(enumLiteral_0, grammarAccess.getStateTypeAccess().getNORMALEnumLiteralDeclaration_0()); 
     }
 )
-    |(	enumLiteral_1='conditional' 
+    |(	enumLiteral_1='connector' 
 	{
-        $current = grammarAccess.getStateTypeAccess().getCONDITIONALEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_1, grammarAccess.getStateTypeAccess().getCONDITIONALEnumLiteralDeclaration_1()); 
+        $current = grammarAccess.getStateTypeAccess().getCONNECTOREnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_1, grammarAccess.getStateTypeAccess().getCONNECTOREnumLiteralDeclaration_1()); 
     }
 )
     |(	enumLiteral_2='reference' 

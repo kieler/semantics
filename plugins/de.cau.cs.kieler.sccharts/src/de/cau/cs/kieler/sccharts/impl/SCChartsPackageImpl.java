@@ -933,7 +933,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         // Initialize enums and add enum literals
         initEEnum(stateTypeEEnum, StateType.class, "StateType");
         addEEnumLiteral(stateTypeEEnum, StateType.NORMAL);
-        addEEnumLiteral(stateTypeEEnum, StateType.CONDITIONAL);
+        addEEnumLiteral(stateTypeEEnum, StateType.CONNECTOR);
         addEEnumLiteral(stateTypeEEnum, StateType.REFERENCE);
         addEEnumLiteral(stateTypeEEnum, StateType.TEXTUAL);
 
