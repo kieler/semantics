@@ -777,13 +777,14 @@ class Transformation {
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph
         // Generate nodes and recursively traverse model
         for (region : rootRegion.rootState.regions) {
-           region.transformSCGGenerateNodes(sCGraph);
+           region.transformSCGGenerateNodes(sCGraph)
         }
         // Generate nodes and recursively traverse model
         for (region : rootRegion.rootState.regions) {
-           region.transformSCGConnectNodes(sCGraph);
+           region.transformSCGConnectNodes(sCGraph)
         }
-        sCGraph;
+        // Fix superfluous exit nodes
+        sCGraph.trimExitNodes
     }
            
    // -------------------------------------------------------------------------   
@@ -882,6 +883,30 @@ class Transformation {
        controlFlow.setTarget(secondNode)
        controlFlow
    }
+   
+   
+   // -------------------------------------------------------------------------
+   
+   def SCGraph trimExitNodes(SCGraph sCGraph) {
+       val exitNodes = sCGraph.eAllContents.filter(typeof(Exit)).toList
+       val superfluousExitNodes = exitNodes.filter(e | e.next != null && e.next.target instanceof Exit).toList
+       for (exitNode : superfluousExitNodes.immutableCopy) {
+          val links = sCGraph.eAllContents.filter(typeof(ControlFlow))
+                                          .filter( e | e.target == exitNode).toList
+          for (link : links) {
+              link.setTarget(exitNode.next.target)
+          }                             
+          
+          if (exitNode.next != null) {
+              val link = exitNode.next
+              // The removal of the EOpposite realtion is necessary
+              link.target.incoming.remove(link)
+          }
+          sCGraph.nodes.remove(exitNode)
+       }                    
+       sCGraph
+   }   
+   
 
    // -------------------------------------------------------------------------   
    // --                 G E N E R A T E    N O D E S                        --
