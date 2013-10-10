@@ -161,6 +161,11 @@ class CoreTransformation {
         state
     }
 
+    def State setIsNotInitial(State state) {
+        state.setIsInitial(false)
+        state
+    }
+
     def State setIsFinal(State state) {
         state.setIsFinal(true)
         state
@@ -185,6 +190,10 @@ class CoreTransformation {
     def State setLabel2(State state, String label) {
         state.setLabel(label)
         state
+    }
+
+    def State setDefaultLabel(State state) {
+        state.setLabel2(state.id)
     }
 
     def State setTypeConnector(State state) {
@@ -279,18 +288,42 @@ class CoreTransformation {
         transition
     }
 
-    def Transition setHighestPriority(Transition transition) {
+    def Transition setLowestPriority(Transition transition) {
         val maxPriority = transition.sourceState.outgoingTransitions.length 
         transition.setPriority2(maxPriority).trimPriorities
     }
 
-    def Transition setLowestPriority(Transition transition) {
+    def Transition setHighestPriority(Transition transition) {
         transition.setPriority2(0).trimPriorities
     }
     
+    def Region fixAllPriorities(Region region) {
+        for (state : region.allContainedStates) {
+            var prio = 1
+            for (transition : state.outgoingTransitions) {
+                transition.setPriority(prio)
+                prio = prio + 1
+            }
+        }
+        region
+    }
+    
+    def Region fixAllTextualOrdersByPriorities(Region region) {
+        for (state : region.allContainedStates) {
+            val transitions = state.outgoingTransitions.sortBy[priority].toList.immutableCopy;
+            for (transition : transitions) {
+                state.outgoingTransitions.remove(transition)
+                state.outgoingTransitions.add(transition)
+                transition.setPriority(0)
+            }
+        }
+        region
+    }
+    
+    
     def Transition trimPriorities(Transition transition) {
         var prio = 1
-        val transitions = transition.sourceState.outgoingTransitions.sortBy(e | e.priority)
+        val transitions = transition.sourceState.outgoingTransitions.toList.sortBy[priority]
         for (outgoingTransition : transitions) {
             outgoingTransition.setPriority(prio)
             prio = prio + 1
@@ -300,6 +333,11 @@ class CoreTransformation {
 
     def Transition setIsImmediate(Transition transition) {
         transition.setIsImmediate(true)
+        transition
+    }
+
+    def Transition setIsNotImmediate(Transition transition) {
+        transition.setIsImmediate(false)
         transition
     }
 
@@ -1183,130 +1221,88 @@ class CoreTransformation {
     
     def Region transformSurfaceDepth (Region rootRegion) {
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
 
-        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).filter(e | !e.hierarchical).toList();
+        var targetStates = targetRootRegion.allContainedStates
 
-        // For every state in the SyncChart do the transformation
-        // Iterate over a copy of the list  
+        // Traverse all states
         for(targetState : targetStates) {
             targetState.transformSurfaceDepth(targetRootRegion);
         }
         
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
          
      def void transformSurfaceDepth(State state, Region targetRootRegion) {
        if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL) {
          val parentRegion = state.parentRegion;
          val stateId = state.id;
-         val stateLabel = state.label;
 
-         // SPECIAL CASE OF INITIAL STATES 
-         // Insert a state and a transition here because conditional states cannot be initial
-         if (state.isInitial) {
-             val initialState  = SCChartsFactory::eINSTANCE.createState();
-             initialState.setId(state.id("Initial"));
-             initialState.setLabel("I"); 
-             initialState.setIsInitial(true);
-             parentRegion.states.add(initialState);
-             state.setIsInitial(false);
-             // Connect             
-             val connect = SCChartsFactory::eINSTANCE.createTransition();
-             connect.setIsImmediate(true);
-             connect.setLabel("#");
-             connect.setPriority(1);
-             connect.setTargetState(state);
-             initialState.outgoingTransitions.add(connect);
-         }             
+//         // SPECIAL CASE OF INITIAL STATES 
+//         // Insert a state and a transition here because conditional states cannot be initial
+//         if (state.isInitial) {
+//             val newInitialState  = parentRegion.createInitialState(state.id("Initial"))
+//             state.setIsNotInitial
+//             newInitialState.createTransitionTo(state).setIsImmediate             
+//         }             
            
-         // Create auxiliary valuedObject
-         var isDepthValuedObjectUID = "isDepth_" + parentRegion.id + "_" + state.id;
-         val isDepthValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-         isDepthValuedObject.setName(isDepthValuedObjectUID);
-         isDepthValuedObject.setIsSignal(true)
-         isDepthValuedObject.setIsInput(false);
-         isDepthValuedObject.setIsOutput(false);
-         isDepthValuedObject.setType(ValueType::PURE);
-         parentRegion.parentState.valuedObjects.add(isDepthValuedObject);  
-
-         // Modify triggers of non immediate transitions and make them immediate
-         val nonImmediateTransitions = state.outgoingTransitions.filter(e | !e.isImmediate).toList;
-         val auxiliaryTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
-             auxiliaryTrigger.setValuedObject(isDepthValuedObject);
-         for (transition : nonImmediateTransitions) {
-             // Make this transition immediate now
-             transition.setIsImmediate(true);
-             // Modify trigger if any
-             if (transition.trigger != null) {
-                 val andAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
-                 andAuxiliaryTrigger.setOperator(OperatorType::AND);
-                 andAuxiliaryTrigger.add(auxiliaryTrigger.copy);
-                 andAuxiliaryTrigger.add(transition.trigger);
-                 transition.setTrigger(andAuxiliaryTrigger);
-             }  else {
-                 transition.setTrigger(auxiliaryTrigger.copy);
-             }
+         // Duplicate immediate transitions
+         val immediateTransitions = state.outgoingTransitions.filter[isImmediate].sortBy[-priority].toList;
+         for (transition : immediateTransitions) {
+             val transitionCopy = transition.copy
+             transitionCopy.setSourceState(transition.sourceState)
+             transitionCopy.setTargetState(transition.targetState)
+             transitionCopy.setHighestPriority
+             transition.setIsNotImmediate
          } 
-
+         
          // Modify surfaceState (the original state)
-         val surfaceState = state;
-         surfaceState.setType(StateType::CONNECTOR);
-         surfaceState.setId(stateId + "Surface");
-         surfaceState.setLabel(stateLabel + "Surface");
+         val surfaceState = state
+         surfaceState.setId(state.id("Surface"))
+         surfaceState.setLabel2(stateId+"_S")
          
          // For every state create a number of surface nodes
-         val orderedTransitionList = state.outgoingTransitions.sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
+         val orderedTransitionList = state.outgoingTransitions.sortBy[priority]
          
-         var previousSurfState = surfaceState;
-         var State surfState = null;
+         var tickBoundaryInserted = false
+         var nextTransitionNotImmediate = false
+         
+         var previousState = surfaceState
+         var State surfState = null
          for (transition : orderedTransitionList) {
-            surfState  = SCChartsFactory::eINSTANCE.createState();
-            surfState.setType(StateType::CONNECTOR);
-            surfState.setId(stateId + transition.id("Surface"));
-            surfState.setLabel(stateLabel + "Surface");
-            parentRegion.states.add(surfState);
+            
+            nextTransitionNotImmediate = false
+            if (!(transition.isImmediate) && !tickBoundaryInserted) {
+                tickBoundaryInserted = true
+                nextTransitionNotImmediate = true
+
+                // Add an additional last state that will become depth State
+                val depthState = parentRegion.createState(state.id("Depth")).setLabel2(stateId+"_D")
+                val connect = previousState.createImmediateTransitionTo(depthState)
+                previousState = depthState
+                connect.setPriority(2)
+            } 
+             
+            surfState = parentRegion.createState(stateId + transition.id("Surface")).setTypeConnector
             // Move transition to this state
-            surfState.outgoingTransitions.add(transition);
+            surfState.outgoingTransitions.add(transition)
+            // Ensure the transition is immediate
+            transition.setIsImmediate
             // We can now set the transition priority to 1 (it is reflected implicityly by the sequential order now)
-            transition.setPriority(1);
+            transition.setPriority(1)
             // Connect
-            val connect = SCChartsFactory::eINSTANCE.createTransition();
-            connect.setIsImmediate(true);
-            connect.setLabel("#");
-            connect.setPriority(2);
-            connect.setTargetState(surfState);
-            previousSurfState.outgoingTransitions.add(connect);
+            val connect = previousState.createTransitionTo(surfState)
+            connect.setIsImmediate(!nextTransitionNotImmediate)
+            connect.setPriority(2)
             // Next cycle
-            previousSurfState = surfState; 
+            previousState = surfState 
          }
          
-         // Add an additional last state that will become depth State
-         val depthState  = SCChartsFactory::eINSTANCE.createState();
-         depthState.setType(StateType::NORMAL);
-         depthState.setId(stateId); // + "Depth");
-         depthState.setLabel(stateLabel); // + "Depth");
-         parentRegion.states.add(depthState);
-         // Connect
-         val connect = SCChartsFactory::eINSTANCE.createTransition();
-         connect.setIsImmediate(true);
-         connect.setLabel("#");
-         connect.setPriority(2);
-         connect.setTargetState(depthState);
-         surfState.outgoingTransitions.add(connect);
-         
          // Connect back depth with surface state
-         val connectBack = SCChartsFactory::eINSTANCE.createTransition();
+         previousState.createImmediateTransitionTo(surfaceState)
          // This MUST be highest priority so that the control flow restarts and takes other 
          // outgoing transition.
          // There should not be any other outgoing transition.
-         connectBack.setPriority(1);
-         connectBack.setTargetState(surfaceState);
-         depthState.outgoingTransitions.add(connectBack);
-         val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
-         auxiliaryEmission.setValuedObject(isDepthValuedObject);
-         connectBack.addEmission(auxiliaryEmission);
-         
        }
      }
 
@@ -1345,8 +1341,13 @@ class CoreTransformation {
              
              for (effect : transition.effects.immutableCopy) {
                  val effectState  = parentRegion.createState(targetState.id + effect.id)
-                 effectState.setTypeConnector
+                 //effectState.setTypeConnector
                  val effectTransition = createImmediateTransition.addEffect(effect)
+                 
+                 if (!effectTransition.isImmediate) {
+                     
+                 }
+                 
                  effectTransition.setSourceState(effectState)
                  lastTransition.setTargetState(effectState)
                  lastTransition = effectTransition
