@@ -218,18 +218,6 @@ litigation.
       <update label="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/"/>
    </url>
 
-   <includes
-         id="de.cau.cs.kieler.kiml.gmf.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kiml.graphviz.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.klighd.feature"
-         version="0.0.0"/>
-
    <requires>
       <import feature="com.google.guava.runtime.feature" version="9.0.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.emf" version="2.6.0" match="greaterOrEqual"/>
@@ -239,6 +227,9 @@ litigation.
       <import feature="org.eclipse.xtend" version="1.0.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.runtime" version="2.1.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.ui" version="2.1.0" match="greaterOrEqual"/>
+      <import feature="de.cau.cs.kieler.kiml.gmf.feature" version="0.9.0" match="greaterOrEqual"/>
+      <import feature="de.cau.cs.kieler.kiml.graphviz.feature" version="0.7.0" match="greaterOrEqual"/>
+      <import feature="de.cau.cs.kieler.klighd.feature" version="0.2.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
