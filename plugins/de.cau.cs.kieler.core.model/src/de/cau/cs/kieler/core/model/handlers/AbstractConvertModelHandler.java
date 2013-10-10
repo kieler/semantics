@@ -289,7 +289,7 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
             postProcess(transformedObject);
 
         } catch (IOException e) {
-            throw new ExecutionException("Cannot write output SCChart file.");
+            throw new ExecutionException("Cannot write output SCChart file: " + e.getMessage());
         }
 
         // Refresh the file explorer
