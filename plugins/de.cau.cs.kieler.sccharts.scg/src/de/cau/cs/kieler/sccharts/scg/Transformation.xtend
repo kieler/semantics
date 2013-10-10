@@ -14,7 +14,8 @@
  package de.cau.cs.kieler.sccharts.scg
 
 import com.google.common.collect.ImmutableList
-//import com.google.inject.Inject
+import com.google.inject.Injector
+import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
@@ -23,41 +24,39 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.Effect
 import de.cau.cs.kieler.sccharts.Emission
+import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.ExitAction
+import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.StateType
+import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
-import java.util.List
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.Effect
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.sccharts.DuringAction
-import de.cau.cs.kieler.sccharts.EntryAction
-import de.cau.cs.kieler.sccharts.ExitAction
-import de.cau.cs.kieler.sccharts.SuspendAction
-import de.cau.cs.kieler.sccharts.LocalAction
+import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
+import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.Depth
-import de.cau.cs.kieler.scg.Assignment
 import java.util.HashMap
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.Conditional
-import org.eclipse.xtext.serializer.ISerializer import com.google.inject.Injector
-import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
-import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
-import de.cau.cs.kieler.scg.ControlFlow
+import java.util.List
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.serializer.ISerializer
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -974,10 +973,11 @@ class Transformation {
    def void transformSCGConnectNodes(Region region, SCGraph sCGraph) {
        val entry = region.mappedEntry
        // Connect all entry nodes with the initial state's nodes.
-       val initialNode = region.states.filter(e | e.isInitial).get(0).mappedNode
+       val initialState = region.states.filter(e | e.isInitial).get(0)
+       val initialNode = initialState.mappedNode
        val controlFlowInitial = initialNode.createControlFlow
        entry.setNext(controlFlowInitial)
-       
+        
        for (state : region.states) {
            state.transformSCGConnectNodes(sCGraph)
        }
