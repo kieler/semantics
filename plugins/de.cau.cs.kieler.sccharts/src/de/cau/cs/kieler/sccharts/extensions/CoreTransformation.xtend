@@ -1238,14 +1238,6 @@ class CoreTransformation {
          val parentRegion = state.parentRegion;
          val stateId = state.id;
 
-//         // SPECIAL CASE OF INITIAL STATES 
-//         // Insert a state and a transition here because conditional states cannot be initial
-//         if (state.isInitial) {
-//             val newInitialState  = parentRegion.createInitialState(state.id("Initial"))
-//             state.setIsNotInitial
-//             newInitialState.createTransitionTo(state).setIsImmediate             
-//         }             
-           
          // Duplicate immediate transitions
          val immediateTransitions = state.outgoingTransitions.filter[isImmediate].sortBy[-priority].toList;
          for (transition : immediateTransitions) {
@@ -1267,8 +1259,8 @@ class CoreTransformation {
          var tickBoundaryInserted = false
          var nextTransitionNotImmediate = false
          
-         var previousState = surfaceState
-         var State surfState = null
+         var State previousState = null
+         var State currentState = surfaceState
          for (transition : orderedTransitionList) {
             
             nextTransitionNotImmediate = false
@@ -1283,19 +1275,23 @@ class CoreTransformation {
                 connect.setPriority(2)
             } 
              
-            surfState = parentRegion.createState(stateId + transition.id("Surface")).setTypeConnector
-            // Move transition to this state
-            surfState.outgoingTransitions.add(transition)
+            if (currentState == null) {
+                // Create a new state
+                currentState = parentRegion.createState(stateId + transition.id("Surface"))//.setTypeConnector
+                // Connect
+                val connect = previousState.createTransitionTo(currentState)
+                connect.setIsImmediate(!nextTransitionNotImmediate)
+                connect.setPriority(2)
+                // Move transition to this state
+                currentState.outgoingTransitions.add(transition)
+            }
             // Ensure the transition is immediate
             transition.setIsImmediate
             // We can now set the transition priority to 1 (it is reflected implicityly by the sequential order now)
             transition.setPriority(1)
-            // Connect
-            val connect = previousState.createTransitionTo(surfState)
-            connect.setIsImmediate(!nextTransitionNotImmediate)
-            connect.setPriority(2)
             // Next cycle
-            previousState = surfState 
+            previousState = currentState
+            currentState = null 
          }
          
          // Connect back depth with surface state
@@ -1341,12 +1337,8 @@ class CoreTransformation {
              
              for (effect : transition.effects.immutableCopy) {
                  val effectState  = parentRegion.createState(targetState.id + effect.id)
-                 //effectState.setTypeConnector
+                 effectState.setTypeConnector
                  val effectTransition = createImmediateTransition.addEffect(effect)
-                 
-                 if (!effectTransition.isImmediate) {
-                     
-                 }
                  
                  effectTransition.setSourceState(effectState)
                  lastTransition.setTargetState(effectState)
