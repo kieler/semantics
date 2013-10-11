@@ -191,7 +191,7 @@ class Transformation {
     // Create an immediate entry action for a state.
     def EntryAction createImmediateEntryAction(State state) {
         val action = state.createEntryAction
-        action.setIsImmediate(true);
+        action.setIsImmediate(true); 
         action
     }
 
@@ -783,7 +783,7 @@ class Transformation {
            region.transformSCGConnectNodes(sCGraph)
         }
         // Fix superfluous exit nodes
-        sCGraph.trimExitNodes
+        sCGraph.trimExitNodes.trimConditioanlNodes
     }
            
    // -------------------------------------------------------------------------   
@@ -884,8 +884,11 @@ class Transformation {
    }
    
    
-   // -------------------------------------------------------------------------
+   // -------------------------------------------------------------------------   
+   // --                  O P T I M I Z A T I O N S                          --
+   // -------------------------------------------------------------------------   
    
+   // If two exit nodes follow each other, remove the first one.
    def SCGraph trimExitNodes(SCGraph sCGraph) {
        val exitNodes = sCGraph.eAllContents.filter(typeof(Exit)).toList
        val superfluousExitNodes = exitNodes.filter(e | e.next != null && e.next.target instanceof Exit).toList
@@ -898,7 +901,7 @@ class Transformation {
           
           if (exitNode.next != null) {
               val link = exitNode.next
-              // The removal of the EOpposite realtion is necessary
+              // The removal of the EOpposite relation is necessary
               link.target.incoming.remove(link)
           }
           sCGraph.nodes.remove(exitNode)
@@ -906,6 +909,34 @@ class Transformation {
        sCGraph
    }   
    
+   // -------------------------------------------------------------------------
+
+   // If two conditional nodes  with the same condition and the same then branch follow each other, remove the first one.
+   def SCGraph trimConditioanlNodes(SCGraph sCGraph) {
+       val conditionalNodes = sCGraph.eAllContents.filter(typeof(Conditional)).toList
+       val superfluousConditionalNodes = conditionalNodes.filter(e | e.getElse != null 
+                                                                  && e.getElse.target instanceof Conditional
+                                                                  && (e.getElse.target as Conditional).condition.equals(e.condition)
+                                                                  && (e.getElse.target as Conditional).then.target == e.then.target
+       ).toList
+       for (conditionalNode : superfluousConditionalNodes.immutableCopy) {
+          val links = sCGraph.eAllContents.filter(typeof(ControlFlow))
+                                          .filter( e | e.target == conditionalNode).toList
+          for (link : links) {
+              link.setTarget(conditionalNode.getElse.target)
+          }                             
+          
+          if (conditionalNode.getElse != null) {
+              val linkThen = conditionalNode.getThen
+              val linkElse = conditionalNode.getElse
+              // The removal of the EOpposite relation is necessary
+              linkThen.target.incoming.remove(linkThen)
+              linkElse.target.incoming.remove(linkElse)
+          }
+          sCGraph.nodes.remove(conditionalNode)
+       }                    
+       sCGraph
+   }   
 
    // -------------------------------------------------------------------------   
    // --                 G E N E R A T E    N O D E S                        --
@@ -922,6 +953,8 @@ class Transformation {
        }
    }
            
+   // -------------------------------------------------------------------------   
+
    // Traverse all states and transform possible local valuedObjects.
    def void transformSCGGenerateNodes(State state, SCGraph sCGraph) {
         System.out.println("Generate Node for State " + state.id)
@@ -968,6 +1001,9 @@ class Transformation {
         }
     }
     
+
+   // -------------------------------------------------------------------------   
+   // --                  C O N N E C T    N O D E S                         --
    // -------------------------------------------------------------------------   
 
    def void transformSCGConnectNodes(Region region, SCGraph sCGraph) {
@@ -983,6 +1019,8 @@ class Transformation {
        }
    }
            
+   // -------------------------------------------------------------------------   
+
    // Traverse all states and transform possible local valuedObjects.
    def void transformSCGConnectNodes(State state, SCGraph sCGraph) {
         System.out.println("Connect Node for State " + state.id)
@@ -1070,4 +1108,5 @@ class Transformation {
         }
     }
 
+   // -------------------------------------------------------------------------   
 }
