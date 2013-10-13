@@ -5,6 +5,7 @@ import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
 import "http://kieler.cs.cau.de/sccharts/0.1.0" as sccharts
 
+// ---------------------------------------------------------------------------------------------------
 
 RootRegion returns sccharts::Region:
 	{sccharts::Region}
@@ -63,6 +64,7 @@ SCChart returns sccharts::State:
      )?
 ;
 
+// ---------------------------------------------------------------------------------------------------
 
 State returns sccharts::State:
     (annotations += Annotation)*
@@ -91,13 +93,14 @@ State returns sccharts::State:
           '}') 
      )?
     (outgoingTransitions+=Transition)* ';';
+
     
+// ---------------------------------------------------------------------------------------------------
 
 LocalAction returns sccharts::LocalAction:
     EntryAction | DuringAction | ExitAction | SuspendAction
 ;    
     
-
 // ---------------------------------------------------------------------------------------------------
 
 Transition returns sccharts::Transition:
@@ -114,34 +117,6 @@ Transition returns sccharts::Transition:
 
 // ---------------------------------------------------------------------------------------------------
 
-//Signal returns kexpressions::Signal:
-//    aSignal
-//    | ISignal;
-//
-//aSignal returns kexpressions::Signal:
-//    (annotations+=Annotation)*
-//    (isInput?='input')?
-//	(isOutput?='output')?
-//	'signal' name=ID (':=' initialValue=AnyType)?
-//    ((':' (type = ValueType | hostType = STRING))
-//      |
-//     (':' 'combine' (type = ValueType | hostType = STRING) 'with'
-//        (combineOperator = CombineOperator | hostCombineOperator = STRING))
-//    )?;
-//
-//ISignal returns kexpressions::ISignal:
-//    (annotations+=Annotation)*
-//    (isInput?='input')?
-//	(isOutput?='output')?
-//	'signal' name=ID (':=' initialValue=AnyType)?
-//    ((':' (type = ValueType | hostType = STRING))
-//      |
-//     (':' 'combine' (type = ValueType | hostType = STRING) 'with'
-//        (combineOperator = CombineOperator | hostCombineOperator = STRING))
-//    )?;
-
-
-
 ValuedObject returns kexpressions::ValuedObject:
     (annotations+=Annotation)*
     (isInput?='input')?
@@ -154,20 +129,6 @@ ValuedObject returns kexpressions::ValuedObject:
       (combineOperator = CombineOperator)
     )? ';' ;
 
-
-// ---------------------------------------------------------------------------------------------------
-
-//Variable returns kexpressions::Variable:
-//    aVariable
-//    | IVariable;
-//    
-//aVariable returns kexpressions::Variable:
-//    (annotations += Annotation)*
-//    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
-//
-//IVariable returns kexpressions::IVariable:
-//    (annotations += Annotation)*
-//    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
 
 // ---------------------------------------------------------------------------------------------------
 
