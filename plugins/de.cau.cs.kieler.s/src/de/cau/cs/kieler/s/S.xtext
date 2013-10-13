@@ -58,16 +58,31 @@ Thread:
 
 
 ValuedObject returns kexpressions::ValuedObject:
+    (annotations+=Annotation)*
     (isInput?='input')?
-	(isOutput?='output')?
-	(isSignal?='signal')?
-	(name=EString)
-	(':=' initialValue=Expression)?
-    ((':' type=ValueType)
-      |
-     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator) )
-    )? ";";
-//    )?;
+    (isOutput?='output')?
+    (isStatic?='static')?
+    (isSignal?='signal')?
+    (type = ValueType)?
+    name=ID ('=' initialValue=Expression)?
+    ( 'combine'
+      (combineOperator = CombineOperator)
+    )? ';' ;
+
+//
+// OLD S DECLARATION
+//
+//ValuedObject returns kexpressions::ValuedObject:
+//    (isInput?='input')?
+//	(isOutput?='output')?
+//	(isSignal?='signal')?
+//	(name=EString)
+//	(':=' initialValue=Expression)?
+//    ((':' type=ValueType)
+//      |
+//     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator) )
+//    )? ";";
+////    )?;
     
 
 //---------------------------------------------------------------------

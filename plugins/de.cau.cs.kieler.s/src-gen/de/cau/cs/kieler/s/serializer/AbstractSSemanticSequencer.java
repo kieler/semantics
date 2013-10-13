@@ -591,12 +591,15 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	/**
 	 * Constraint:
 	 *     (
+	 *         annotations+=Annotation* 
 	 *         isInput?='input'? 
 	 *         isOutput?='output'? 
+	 *         isStatic?='static'? 
 	 *         isSignal?='signal'? 
-	 *         name=EString 
+	 *         type=ValueType? 
+	 *         name=ID 
 	 *         initialValue=Expression? 
-	 *         (type=ValueType | (type=ValueType combineOperator=CombineOperator))?
+	 *         combineOperator=CombineOperator?
 	 *     )
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {

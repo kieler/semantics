@@ -37,7 +37,6 @@ public class SParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getValuedObjectAccess().getAlternatives_5(), "rule__ValuedObject__Alternatives_5");
 					put(grammarAccess.getContinuationAccess().getAlternatives(), "rule__Continuation__Alternatives");
 					put(grammarAccess.getInstructionAccess().getAlternatives(), "rule__Instruction__Alternatives");
 					put(grammarAccess.getSExpressionAccess().getAlternatives(), "rule__SExpression__Alternatives");
@@ -67,9 +66,8 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getThreadAccess().getGroup_5(), "rule__Thread__Group_5__0");
 					put(grammarAccess.getThreadAccess().getGroup_6(), "rule__Thread__Group_6__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup(), "rule__ValuedObject__Group__0");
-					put(grammarAccess.getValuedObjectAccess().getGroup_4(), "rule__ValuedObject__Group_4__0");
-					put(grammarAccess.getValuedObjectAccess().getGroup_5_0(), "rule__ValuedObject__Group_5_0__0");
-					put(grammarAccess.getValuedObjectAccess().getGroup_5_1(), "rule__ValuedObject__Group_5_1__0");
+					put(grammarAccess.getValuedObjectAccess().getGroup_7(), "rule__ValuedObject__Group_7__0");
+					put(grammarAccess.getValuedObjectAccess().getGroup_8(), "rule__ValuedObject__Group_8__0");
 					put(grammarAccess.getPrioAccess().getGroup(), "rule__Prio__Group__0");
 					put(grammarAccess.getPrioAccess().getGroup_3(), "rule__Prio__Group_3__0");
 					put(grammarAccess.getTransAccess().getGroup(), "rule__Trans__Group__0");
@@ -137,14 +135,15 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getThreadAccess().getNameAssignment_2(), "rule__Thread__NameAssignment_2");
 					put(grammarAccess.getThreadAccess().getValuedObjectsAssignment_5_0(), "rule__Thread__ValuedObjectsAssignment_5_0");
 					put(grammarAccess.getThreadAccess().getStatesAssignment_6_0(), "rule__Thread__StatesAssignment_6_0");
-					put(grammarAccess.getValuedObjectAccess().getIsInputAssignment_0(), "rule__ValuedObject__IsInputAssignment_0");
-					put(grammarAccess.getValuedObjectAccess().getIsOutputAssignment_1(), "rule__ValuedObject__IsOutputAssignment_1");
-					put(grammarAccess.getValuedObjectAccess().getIsSignalAssignment_2(), "rule__ValuedObject__IsSignalAssignment_2");
-					put(grammarAccess.getValuedObjectAccess().getNameAssignment_3(), "rule__ValuedObject__NameAssignment_3");
-					put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_4_1(), "rule__ValuedObject__InitialValueAssignment_4_1");
-					put(grammarAccess.getValuedObjectAccess().getTypeAssignment_5_0_1(), "rule__ValuedObject__TypeAssignment_5_0_1");
-					put(grammarAccess.getValuedObjectAccess().getTypeAssignment_5_1_2(), "rule__ValuedObject__TypeAssignment_5_1_2");
-					put(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_5_1_4(), "rule__ValuedObject__CombineOperatorAssignment_5_1_4");
+					put(grammarAccess.getValuedObjectAccess().getAnnotationsAssignment_0(), "rule__ValuedObject__AnnotationsAssignment_0");
+					put(grammarAccess.getValuedObjectAccess().getIsInputAssignment_1(), "rule__ValuedObject__IsInputAssignment_1");
+					put(grammarAccess.getValuedObjectAccess().getIsOutputAssignment_2(), "rule__ValuedObject__IsOutputAssignment_2");
+					put(grammarAccess.getValuedObjectAccess().getIsStaticAssignment_3(), "rule__ValuedObject__IsStaticAssignment_3");
+					put(grammarAccess.getValuedObjectAccess().getIsSignalAssignment_4(), "rule__ValuedObject__IsSignalAssignment_4");
+					put(grammarAccess.getValuedObjectAccess().getTypeAssignment_5(), "rule__ValuedObject__TypeAssignment_5");
+					put(grammarAccess.getValuedObjectAccess().getNameAssignment_6(), "rule__ValuedObject__NameAssignment_6");
+					put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_7_1(), "rule__ValuedObject__InitialValueAssignment_7_1");
+					put(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_8_1(), "rule__ValuedObject__CombineOperatorAssignment_8_1");
 					put(grammarAccess.getHostCodeInstructionAccess().getHostCodeAssignment(), "rule__HostCodeInstruction__HostCodeAssignment");
 					put(grammarAccess.getPrioAccess().getPriorityAssignment_2(), "rule__Prio__PriorityAssignment_2");
 					put(grammarAccess.getPrioAccess().getContinuationAssignment_3_1(), "rule__Prio__ContinuationAssignment_3_1");
