@@ -27,6 +27,7 @@ public class Dependency {
     
     private State stateDependeing;
     private State stateToDependOn;
+    private int priority = -1;
     
     public Dependency() {
     }
@@ -44,12 +45,20 @@ public class Dependency {
         return stateToDependOn;
     }
     
+    public int getPriority() {
+        return priority;
+    }
+    
     public void setStateDepending(State stateDependeing) {
         this.stateDependeing = stateDependeing;
     }
     
     public void setStateToDependOn(State stateToDependOn) {
         this.stateToDependOn = stateToDependOn;
+    }
+    
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
 }
