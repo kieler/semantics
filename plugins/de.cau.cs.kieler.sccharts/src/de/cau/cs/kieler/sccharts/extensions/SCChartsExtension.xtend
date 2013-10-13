@@ -11,72 +11,55 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
- package de.cau.cs.kieler.sccharts.scg
+ package de.cau.cs.kieler.sccharts.extensions
 
-import com.google.common.collect.ImmutableList
-import com.google.inject.Injector
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.DuringAction
-import de.cau.cs.kieler.sccharts.Effect
-import de.cau.cs.kieler.sccharts.Emission
-import de.cau.cs.kieler.sccharts.EntryAction
-import de.cau.cs.kieler.sccharts.ExitAction
-import de.cau.cs.kieler.sccharts.LocalAction
-import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.SuspendAction
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.TransitionType
-import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
-import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.Depth
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.Surface
-import java.util.HashMap
-import java.util.List
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import com.google.common.collect.ImmutableList
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.TransitionType
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.Emission
+import java.util.List
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.StateType
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.sccharts.Effect
+import de.cau.cs.kieler.sccharts.LocalAction
+import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.ExitAction
+import de.cau.cs.kieler.sccharts.SuspendAction
+import de.cau.cs.kieler.sccharts.Assignment
+import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.core.kexpressions.BoolValue
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.sccharts.Scope
 
-/** 
- * SCCharts CoreTransformation Extensions.
+/**
+ * SCCharts Extensions.
  * 
  * @author cmot
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Transformation { 
+class SCChartsExtension { 
 
-    //@Inject
-    //extension Extension
-    
-    private static val Injector i = ActionsStandaloneSetup::doSetup();
-    private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
-    private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
-    
     // This prefix is used for namings of all generated signals, states and regions
     static final String GENERATED_PREFIX = "_"
     
+//    public val Injector i = ActionsStandaloneSetup::doSetup();
+//    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
+//    public val ISerializer serializer = i.getInstance(typeof(ISerializer));
+    
+
     //-------------------------------------------------------------------------
     //--             B A S I C   C R E A T I O N   M E T H O D S             --
     //-------------------------------------------------------------------------
@@ -103,6 +86,11 @@ class Transformation {
         region.eAllContents().toIterable().filter(typeof(State)).toList()
     }
     
+    // Return the list of all contained Transitions.
+    def List<Transition> getAllContainedTransitions(Region region) {
+        region.eAllContents().toIterable().filter(typeof(Transition)).toList()
+    }
+
     // Return the list of contained Emissions.
     def List<Emission> getAllContainedEmissions(Action action) {
         action.eAllContents().toIterable().
@@ -154,6 +142,206 @@ class Transformation {
         state.parentRegion.rootState;   
     }
     
+    //========== STATES ===========
+    
+    def State createState(String id) {
+        val state  = SCChartsFactory::eINSTANCE.createState();
+        state.setId(id)
+        state.setLabel("")
+        state
+    }
+    
+    def State createState(Region region, String id) {
+        val state = createState(id)
+        region.states.add(state)
+        state
+    }
+    
+    def State setIsInitial(State state) {
+        state.setIsInitial(true)
+        state
+    }
+
+    def State setIsNotInitial(State state) {
+        state.setIsInitial(false)
+        state
+    }
+
+    def State setIsFinal(State state) {
+        state.setIsFinal(true)
+        state
+    }
+
+    def State createInitialState(String id) {
+        createState(id).setIsInitial
+    }
+    
+    def State createFinalState(String id) {
+        createState(id).setIsFinal
+    }
+    
+    def State createInitialState(Region region, String id) {
+        region.createState(id).setIsInitial
+    }
+    
+    def State createFinalState(Region region, String id) {
+        region.createState(id).setIsFinal
+    }
+    
+    def State setLabel2(State state, String label) {
+        state.setLabel(label)
+        state
+    }
+
+    def State setDefaultLabel(State state) {
+        state.setLabel2(state.id)
+    }
+
+    def State setTypeConnector(State state) {
+        state.setType(StateType::CONNECTOR);
+        state
+    }
+
+    def State setTypeNormal(State state) {
+        state.setType(StateType::NORMAL);
+        state
+    }
+
+    def State setTypeReference(State state) {
+        state.setType(StateType::REFERENCE);
+        state
+    }
+
+    def State setTypeTextual(State state) {
+        state.setType(StateType::TEXTUAL);
+        state
+    }
+
+    //========== REGIONS ===========
+    
+    def Region createRegion(String id) {
+        val region  = SCChartsFactory::eINSTANCE.createRegion();
+        region.setId(id)
+        region.setLabel("")
+        region
+    }
+    
+    def Region createRegion(State state, String id) {
+        val region = createRegion(id)
+        state.regions.add(region)
+        region
+    }
+    
+    def Region setLabel2(Region region, String label) {
+        region.setLabel(label)
+        region
+    }
+
+    //========== TRANSITIONS ===========
+    
+    def Transition createTransition() {
+        val transition = SCChartsFactory::eINSTANCE.createTransition()
+        transition.setPriority2(1)
+    }
+
+    def Transition createImmediateTransition() {
+        createTransition.setIsImmediate
+    }
+
+    def Transition createTransitionTo(State sourceState, State targetState) {
+        val transition = createTransition()
+        transition.setTargetState(targetState)
+        sourceState.outgoingTransitions.add(transition)
+        transition.trimPriorities
+    }
+    
+    def Transition setTargetState2(Transition transition, State targetState) {
+        transition.setTargetState(targetState)
+        transition
+    }
+
+    def Transition setSourceState(Transition transition, State sourceState) {
+        sourceState.outgoingTransitions.add(transition)
+        transition.trimPriorities
+    }
+    
+    def Transition createImmediateTransitionTo(State sourceState, State targetState) {
+        sourceState.createTransitionTo(targetState).setIsImmediate
+    }
+    
+    def Transition setTrigger2(Transition transition, Expression expression) {
+        transition.setTrigger(expression)
+        transition
+    }
+
+    def Transition addEffect(Transition transition, Effect effect) {
+        transition.effects.add(effect)
+        transition
+    }
+    
+    def Transition clearEffects(Transition transition) {
+        transition.effects.clear
+        transition
+    }
+    
+    def Transition setPriority2(Transition transition, int priority) {
+        transition.setPriority(priority)
+        transition
+    }
+
+    def Transition setLowestPriority(Transition transition) {
+        val maxPriority = transition.sourceState.outgoingTransitions.length 
+        transition.setPriority2(maxPriority).trimPriorities
+    }
+
+    def Transition setHighestPriority(Transition transition) {
+        transition.setPriority2(0).trimPriorities
+    }
+    
+    def Region fixAllPriorities(Region region) {
+        for (state : region.allContainedStates) {
+            var prio = 1
+            for (transition : state.outgoingTransitions) {
+                transition.setPriority(prio)
+                prio = prio + 1
+            }
+        }
+        region
+    }
+    
+    def Region fixAllTextualOrdersByPriorities(Region region) {
+        for (state : region.allContainedStates) {
+            val transitions = state.outgoingTransitions.sortBy[priority].toList.immutableCopy;
+            for (transition : transitions) {
+                state.outgoingTransitions.remove(transition)
+                state.outgoingTransitions.add(transition)
+                transition.setPriority(0)
+            }
+        }
+        region
+    }
+    
+    
+    def Transition trimPriorities(Transition transition) {
+        var prio = 1
+        val transitions = transition.sourceState.outgoingTransitions.toList.sortBy[priority]
+        for (outgoingTransition : transitions) {
+            outgoingTransition.setPriority(prio)
+            prio = prio + 1
+        }
+        transition
+    }
+
+    def Transition setIsImmediate(Transition transition) {
+        transition.setIsImmediate(true)
+        transition
+    }
+
+    def Transition setIsNotImmediate(Transition transition) {
+        transition.setIsImmediate(false)
+        transition
+    }
+
     //========== STATE ACTIONS ===========
 
     // Apply attributes from one local action to another
@@ -191,7 +379,7 @@ class Transformation {
     // Create an immediate entry action for a state.
     def EntryAction createImmediateEntryAction(State state) {
         val action = state.createEntryAction
-        action.setIsImmediate(true); 
+        action.setIsImmediate(true);
         action
     }
 
@@ -245,36 +433,41 @@ class Transformation {
     //========== ASSIGNMENTS ============
     
     // Create an Assignment.
-    def de.cau.cs.kieler.sccharts.Assignment assign(ValuedObject valuedObject) {
+    def Assignment assign(ValuedObject valuedObject) {
         val assignment = SCChartsFactory::eINSTANCE.createAssignment()
         assignment.setValuedObject(valuedObject)
         assignment
     }
 
     // Create an Assignment and add it sequentially to an action's effects list.
-    def de.cau.cs.kieler.sccharts.Assignment createAssignment(Action action, ValuedObject valuedObject) {
+    def Assignment createAssignment(Action action, ValuedObject valuedObject) {
         val assignment = valuedObject.assign
         action.addAssignment(assignment)
         assignment
     }
     
     // Create an Assignment and add it sequentially to an action's effects list.
-    def de.cau.cs.kieler.sccharts.Assignment addAssignment(Action action, de.cau.cs.kieler.sccharts.Assignment assignment) {
+    def Assignment addAssignment(Action action, Assignment assignment) {
         // An Assignment is a specialized Effect with a new value and a ValuedObject
         action.addEffect(assignment)
         assignment
     }
 
     // Create a valued Assignment. 
-    def de.cau.cs.kieler.sccharts.Assignment assign(ValuedObject valuedObject, Expression newValue) {
+    def Assignment assign(ValuedObject valuedObject, Expression newValue) {
         val assignment = valuedObject.assign
         assignment.setValuedObject(valuedObject)
         assignment.setExpression(newValue);
         assignment
     }
 
+    // Create a valued relative Assignment. 
+    def Assignment assignRelative(ValuedObject valuedObject, Expression newValue) {
+        valuedObject.assign(valuedObject.reference.or(newValue))
+    }
+
     // Create a valued Assignment and add it sequentially to an action's effects list. 
-    def de.cau.cs.kieler.sccharts.Assignment createAssignment(Action action, ValuedObject valuedObject, Expression newValue) {
+    def Assignment createAssignment(Action action, ValuedObject valuedObject, Expression newValue) {
         val assignment = valuedObject.assign(newValue)
         action.addAssignment(assignment)
         assignment
@@ -326,15 +519,15 @@ class Transformation {
 
     //=======  STATIC EXPRESSIONS  ======
     
-    def static BoolValue TRUE() {
+    def public BoolValue TRUE() {
         createBooleanValue(true)
     }
 
-    def static BoolValue FALSE() {
+    def public BoolValue FALSE() {
         createBooleanValue(false)
     }
 
-    def static BoolValue createBooleanValue(boolean value) {
+    def public BoolValue createBooleanValue(boolean value) {
         val booleanValue = KExpressionsFactory::eINSTANCE.createBoolValue
         booleanValue.setValue(value)
         booleanValue
@@ -628,10 +821,10 @@ class Transformation {
     //-------------------------------------------------------------------------
 
     // Prefixes a name with the hash code of an eObject
-    def String id(EObject eObject) {
-        eObject.hashCode + ""
+    def int id(EObject eObject) {
+        eObject.hashCode
     }
-    
+
     // Prefixes a name with the hash code of an eObject
     def String id(EObject eObject, String string) {
         string + eObject.id  
@@ -714,399 +907,5 @@ class Transformation {
     }
    
    // -------------------------------------------------------------------------   
-         
-    HashMap<EObject, Node> stateOrRegion2node = new HashMap<EObject, Node>()    
-    HashMap<Node, EObject> node2state = new HashMap<Node, EObject>()    
-    
-    def Node getMappedNode(State state) {
-        stateOrRegion2node.get(state)
-    }      
-    def Node getMappedNode(Region region) {
-        stateOrRegion2node.get(region)
-    }      
-    def Surface getMappedSurface(State state) {
-        state.mappedNode as Surface
-    }      
-    def Assignment getMappedAssignment(State state) {
-        state.mappedNode as Assignment
-    }      
-    def Conditional getMappedConditional(State state) {
-        state.mappedNode as Conditional
-    }      
-    def Fork getMappedFork(State state) {
-        state.mappedNode as Fork
-    }      
-    def Exit getMappedExit(State state) {
-        state.mappedNode as Exit
-    }      
-    def Entry getMappedEntry(Region region) {
-        region.mappedNode as Entry
-    }    
-    
-    def void map(EObject eObject, Node node) {
-       stateOrRegion2node.put(eObject, node) 
-       node2state.put(node, eObject)
-    }  
-    def void map(Node node, EObject eObject) {
-       node2state.put(node, eObject)
-    }  
-         
-    def void resetMapping() {
-        stateOrRegion2node.clear
-        node2state.clear
-    }     
-    
-    def State getMappedState(Node node) {
-        node2state.get(node) as State
-    }
-    def Region getMappedRegion(Node node) {
-        node2state.get(node) as Region
-    }
-         
-    //-------------------------------------------------------------------------
-    //--             T R A N S F O R M      T O    S C G                     --
-    //-------------------------------------------------------------------------
-    // @requires: none
-
-    // Transforming Local ValuedObjects.
-    def SCGraph transformSCG(Region rootRegion) {
-        // Clear mappings
-        resetMapping
-        // Create a new SCGraph
-        val sCGraph = ScgFactory::eINSTANCE.createSCGraph
-        // Generate nodes and recursively traverse model
-        for (region : rootRegion.rootState.regions) {
-           region.transformSCGGenerateNodes(sCGraph)
-        }
-        // Generate nodes and recursively traverse model
-        for (region : rootRegion.rootState.regions) {
-           region.transformSCGConnectNodes(sCGraph)
-        }
-        // Fix superfluous exit nodes
-        sCGraph.trimExitNodes.trimConditioanlNodes
-    }
-           
-   // -------------------------------------------------------------------------   
-           
-   def boolean isPause(State state) {
-       ((state.outgoingTransitions.filter[e|!e.isImmediate &&
-                                             e.trigger == null && 
-                                             e.effects.nullOrEmpty &&
-                                             e.type != TransitionType::NORMALTERMINATION].size == 1) && 
-       (state.outgoingTransitions.size == 1)) 
-   }           
-           
-   def boolean isConditional(State state) {
-       (
-//           (state.outgoingTransitions.filter[e|e.isImmediate && 
-//                                            e.trigger != null && 
-//                                            e.effects.nullOrEmpty].size == 1) &&
-        (state.outgoingTransitions.filter[e|e.isImmediate && 
-                                            e.effects.nullOrEmpty].size == 2) &&                                             
-       (state.outgoingTransitions.size == 2)) 
-   }           
-
-   def boolean isAssignment(State state) {
-       ((state.outgoingTransitions.filter[e|e.isImmediate && 
-                                            e.trigger == null && 
-                                           !e.effects.nullOrEmpty &&
-                                            e.type != TransitionType::NORMALTERMINATION].size == 1) && 
-       (state.outgoingTransitions.size == 1)) 
-   }           
-
-   def boolean isFork(State state) {
-       (!state.regions.nullOrEmpty && state.regions.allContents.filter(typeof(State)).size > 0)
-   }
-           
-   def boolean isEntry(State state) {
-       state.isInitial
-   }           
-           
-   def boolean isExit(State state) {
-       state.isFinal
-   }
- 
-            
-   // -------------------------------------------------------------------------   
-           
-   def Surface addSurface(SCGraph sCGraph) {
-        val node = ScgFactory::eINSTANCE.createSurface
-        sCGraph.nodes.add(node)
-        node       
-   }     
-
-   def Depth addDepth(SCGraph sCGraph) {
-        val node = ScgFactory::eINSTANCE.createDepth
-        sCGraph.nodes.add(node)
-        node       
-   }     
-
-   def Assignment addAssignment(SCGraph sCGraph) {
-        val node = ScgFactory::eINSTANCE.createAssignment
-        sCGraph.nodes.add(node)
-        node       
-   }     
-
-   def Conditional addConditional(SCGraph sCGraph) {
-        val node = ScgFactory::eINSTANCE.createConditional
-        sCGraph.nodes.add(node)
-        node       
-   }     
-
-   def Fork addFork(SCGraph sCGraph) {
-        val node = ScgFactory::eINSTANCE.createFork
-        sCGraph.nodes.add(node)
-        node       
-   }     
-
-   def Join addJoin(SCGraph sCGraph) {
-        val node = ScgFactory::eINSTANCE.createJoin
-        sCGraph.nodes.add(node)
-        node       
-   }     
-
-   def Entry addEntry(SCGraph sCGraph) {
-        val node = ScgFactory::eINSTANCE.createEntry
-        sCGraph.nodes.add(node)
-        node       
-   }     
-
-   def Exit addExit(SCGraph sCGraph) {
-        val node = ScgFactory::eINSTANCE.createExit
-        sCGraph.nodes.add(node)
-        node       
-   }     
-   
-   def ControlFlow createControlFlow(Node secondNode) {
-       val controlFlow = ScgFactory::eINSTANCE.createControlFlow
-       controlFlow.setTarget(secondNode)
-       controlFlow
-   }
-   
-   
-   // -------------------------------------------------------------------------   
-   // --                  O P T I M I Z A T I O N S                          --
-   // -------------------------------------------------------------------------   
-   
-   // If two exit nodes follow each other, remove the first one.
-   def SCGraph trimExitNodes(SCGraph sCGraph) {
-       val exitNodes = sCGraph.eAllContents.filter(typeof(Exit)).toList
-       val superfluousExitNodes = exitNodes.filter(e | e.next != null && e.next.target instanceof Exit).toList
-       for (exitNode : superfluousExitNodes.immutableCopy) {
-          val links = sCGraph.eAllContents.filter(typeof(ControlFlow))
-                                          .filter( e | e.target == exitNode).toList
-          for (link : links) {
-              link.setTarget(exitNode.next.target)
-          }                             
-          
-          if (exitNode.next != null) {
-              val link = exitNode.next
-              // The removal of the EOpposite relation is necessary
-              link.target.incoming.remove(link)
-          }
-          sCGraph.nodes.remove(exitNode)
-       }                    
-       sCGraph
-   }   
-   
-   // -------------------------------------------------------------------------
-
-   // If two conditional nodes  with the same condition and the same then branch follow each other, remove the first one.
-   def SCGraph trimConditioanlNodes(SCGraph sCGraph) {
-       val conditionalNodes = sCGraph.eAllContents.filter(typeof(Conditional)).toList
-       val superfluousConditionalNodes = conditionalNodes.filter(e | e.getElse != null 
-                                                                  && e.getElse.target instanceof Conditional
-                                                                  && (e.getElse.target as Conditional).condition.equals(e.condition)
-                                                                  && (e.getElse.target as Conditional).then.target == e.then.target
-       ).toList
-       for (conditionalNode : superfluousConditionalNodes.immutableCopy) {
-          val links = sCGraph.eAllContents.filter(typeof(ControlFlow))
-                                          .filter( e | e.target == conditionalNode).toList
-          for (link : links) {
-              link.setTarget(conditionalNode.getElse.target)
-          }                             
-          
-          if (conditionalNode.getElse != null) {
-              val linkThen = conditionalNode.getThen
-              val linkElse = conditionalNode.getElse
-              // The removal of the EOpposite relation is necessary
-              linkThen.target.incoming.remove(linkThen)
-              linkElse.target.incoming.remove(linkElse)
-          }
-          sCGraph.nodes.remove(conditionalNode)
-       }                    
-       sCGraph
-   }   
-
-   // -------------------------------------------------------------------------   
-   // --                 G E N E R A T E    N O D E S                        --
-   // -------------------------------------------------------------------------   
-
-   def void transformSCGGenerateNodes(Region region, SCGraph sCGraph) {
-       val entry = sCGraph.addEntry
-       val exit = sCGraph.addExit
-       region.map(entry)
-       entry.setExit(exit)
-       exit.map(region)
-       for (state : region.states) {
-           state.transformSCGGenerateNodes(sCGraph)
-       }
-   }
-           
-   // -------------------------------------------------------------------------   
-
-   // Traverse all states and transform possible local valuedObjects.
-   def void transformSCGGenerateNodes(State state, SCGraph sCGraph) {
-        System.out.println("Generate Node for State " + state.id)
-        if (state.pause) {
-            val surface = sCGraph.addSurface
-            val depth = sCGraph.addDepth
-            surface.setDepth(depth)
-            surface.map(state)
-            state.map(surface)
-        }
-        else if (state.assignment) {
-            val assignment = sCGraph.addAssignment
-            state.map(assignment)
-            val transition = state.outgoingTransitions.get(0)
-            scopeProvider.parent = transition.sourceState
-            val transitionCopy = transition.copy
-            transitionCopy.setIsImmediate(false)
-            assignment.setAssignment(serializer.serialize(transitionCopy))
-        }
-        else if (state.conditional) {
-            val conditional = sCGraph.addConditional
-            state.map(conditional)
-            scopeProvider.parent = state
-            val transition = state.outgoingTransitions.get(0)
-            scopeProvider.parent = transition.sourceState
-            val transitionCopy = transition.copy
-            transitionCopy.setIsImmediate(false)
-            conditional.setCondition(serializer.serialize(transitionCopy))
-        }
-        else if (state.fork) {
-            val fork = sCGraph.addFork
-            val join = sCGraph.addJoin
-            fork.setJoin(join)
-            state.map(fork)
-            join.map(state)
-            // Do recursion for all regions
-            for (region : state.regions) {
-                region.transformSCGGenerateNodes(sCGraph)
-            }
-        }
-        else if (state.exit) {
-            val exit = sCGraph.addExit
-            state.map(exit)
-        }
-    }
-    
-
-   // -------------------------------------------------------------------------   
-   // --                  C O N N E C T    N O D E S                         --
-   // -------------------------------------------------------------------------   
-
-   def void transformSCGConnectNodes(Region region, SCGraph sCGraph) {
-       val entry = region.mappedEntry
-       // Connect all entry nodes with the initial state's nodes.
-       val initialState = region.states.filter(e | e.isInitial).get(0)
-       val initialNode = initialState.mappedNode
-       val controlFlowInitial = initialNode.createControlFlow
-       entry.setNext(controlFlowInitial)
-        
-       for (state : region.states) {
-           state.transformSCGConnectNodes(sCGraph)
-       }
-   }
-           
-   // -------------------------------------------------------------------------   
-
-   // Traverse all states and transform possible local valuedObjects.
-   def void transformSCGConnectNodes(State state, SCGraph sCGraph) {
-        System.out.println("Connect Node for State " + state.id)
-        if (state.pause) {
-            // Connect the depth with the node that belongs to the target of
-            // the single delayed transition outgoing from the current state
-            val surface = state.mappedSurface
-            val depth = surface.depth
-
-            val targetState = state.outgoingTransitions.get(0).targetState
-            val otherNode = targetState.mappedNode   
-            if (otherNode != null) {
-                val controlFlow = otherNode.createControlFlow
-                depth.setNext(controlFlow)    
-            }   
-        }
-        else if (state.assignment) {
-            // Connect the assignment with the node that belongs to the target
-            // of the single immediate assignment transition outgoing  from
-            // the current state
-            val assignment = state.mappedAssignment
-
-            val targetState = state.outgoingTransitions.get(0).targetState
-            val otherNode = targetState.mappedNode   
-            if (otherNode != null) {
-                val controlFlow = otherNode.createControlFlow
-                assignment.setNext(controlFlow)
-            }
-        }
-        else if (state.conditional) {
-            // Connect the conditional Then branch with the node that belongs
-            // to the target of the single immediate transition with a trigger
-            // outgoing  from the current state. Connect the Else branch with the
-            // node that belongs to the target of the (other) single immediate
-            // transition without a trigger outgoing from the current state.
-            val conditional = state.mappedConditional
-
-            val transitionThen = state.outgoingTransitions.filter(e | e.trigger != null).get(0)
-            val transitionElse =  state.outgoingTransitions.filter(e | e.trigger == null).get(0)
-            val otherNodeThen = transitionThen.targetState.mappedNode
-            val otherNodeElse = transitionElse.targetState.mappedNode
-            if (otherNodeThen != null) {
-                val controlFlowThen = otherNodeThen.createControlFlow
-                conditional.setThen(controlFlowThen)
-            }
-            if (otherNodeElse != null) {
-                val controlFlowElse = otherNodeElse.createControlFlow
-                conditional.setElse(controlFlowElse)
-            }
-        }
-        else if (state.fork) {
-            // For all region find the entry node and connect it with the fork. Find the exit node
-            // and connect it with the join. Do the recursive call for the regions. Connect
-            // the join node with the single normal termination target's node.
-            val fork = state.mappedFork
-            val join = fork.join
-            // Do recursion for all regions
-            for (region : state.regions) {
-                val otherNodeEntry = region.mappedEntry
-                if (otherNodeEntry != null) {
-                    val controlFlowEntry = otherNodeEntry.createControlFlow
-                    fork.next.add(controlFlowEntry)
-                }   
-                val otherNodeExit = region.mappedEntry.exit   
-                if (otherNodeExit != null) {
-                    val controlFlowFinal = join.createControlFlow
-                    otherNodeExit.setNext(controlFlowFinal)
-                }   
-                region.transformSCGConnectNodes(sCGraph)
-            }
-            val normalTerminationTargetState = state.outgoingTransitions.get(0).targetState
-            val otherNodeNormalTermination = normalTerminationTargetState.mappedNode   
-            if (otherNodeNormalTermination != null) {
-                val controlFlowNormalTermination = otherNodeNormalTermination.createControlFlow
-                join.setNext(controlFlowNormalTermination)
-            }   
-        }
-        else if (state.exit) {
-            // For a final state connect it's exit node representation with the exit node
-            // of the region.
-            val nodeExit = state.mappedExit
-            val regionExit = state.parentRegion.mappedEntry.exit
-            val controlFlowFinal = regionExit.createControlFlow
-            nodeExit.setNext(controlFlowFinal)
-        }
-    }
-
-   // -------------------------------------------------------------------------   
+      
 }
