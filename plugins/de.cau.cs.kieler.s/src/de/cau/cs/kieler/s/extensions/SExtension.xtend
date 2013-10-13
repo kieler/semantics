@@ -28,7 +28,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 
 /**
- * S Extensions.
+ * S Extensions. 
  * 
  * @author cmot
  * @kieler.design 2013-09-05 proposed 
@@ -50,7 +50,7 @@ class SExtension {
     
     // Create an immutable list copy
     def ImmutableList<Object> immutableCopy(Iterable<Object> object) {
-        ImmutableList::copyOf(object)
+        ImmutableList::copyOf(object)    
     }
     
    
