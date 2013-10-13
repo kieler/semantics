@@ -119,7 +119,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         = TransformationOption::createCheckOption("Display hierarchy", true);
         
     private static val TransformationOption HIERARCHY_TRANSPARENCY 
-        = TransformationOption::createRangeOption("Hierarchy transparency", Pair::of(0, 255), 50);
+        = TransformationOption::createRangeOption("Hierarchy transparency", Pair::of(0, 255), 128);
         
 //    private static val TransformationOption ALIGN_EDGES
 //        = TransformationOption::createCheckOption("Control flow edge alignment", true);
@@ -157,6 +157,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor SCCHARTSGRAY = RENDERING_FACTORY.createKColor()=>[it.red=240;it.green=240;it.blue=240];
     private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor()=>[it.red=248;it.green=249;it.blue=253];
     private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor()=>[it.red=205;it.green=220;it.blue=243];
+    private static val KColor KEYWORD = RENDERING_FACTORY.createKColor()=>[it.red=115;it.green=0;it.blue=65];
+    private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor()=>[it.red=60;it.green=60;it.blue=60];
     
     private static val String SCGPORTID_INCOMING = "incoming"
     private static val String SCGPORTID_OUTGOING = "outgoing"
@@ -237,8 +239,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ];
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
+            node.addPort(SCGPORTID_INCOMING, 36, -1, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)          
             
         ]
     }
@@ -261,9 +263,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
 
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
-            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING_ELSE, 37, 25, 3, PortSide::SOUTH)
-            node.addPort(SCGPORTID_OUTGOING_THEN, 75, 11, 3, PortSide::EAST)
+            node.addPort(SCGPORTID_INCOMING, 36, -1, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING_ELSE, 36, 22, 3, PortSide::SOUTH)
+            node.addPort(SCGPORTID_OUTGOING_THEN, 70, 11, 3, PortSide::EAST)
         ]
     }
     
@@ -286,8 +288,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
+            node.addPort(SCGPORTID_INCOMING, 36, -1, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)          
             
         ]
     }
@@ -314,8 +316,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
+            node.addPort(SCGPORTID_INCOMING, 36, -1, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)          
         ]
     }
     
@@ -338,8 +340,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
 
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
+            node.addPort(SCGPORTID_INCOMING, 36, 0, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)          
         ]
     }    
  
@@ -362,8 +364,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)          
+            node.addPort(SCGPORTID_INCOMING, 36, -1, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)          
         ]
     }
 
@@ -386,8 +388,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
-            node.addPort(SCGPORTID_INCOMING, 37, 0, 3, PortSide::NORTH)
-        ]
+            node.addPort(SCGPORTID_INCOMING, 36, 0, 3, PortSide::NORTH)
+        ];
     }
 
     def dispatch KNode translate(Join s) {
@@ -409,7 +411,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
-            node.addPort(SCGPORTID_OUTGOING, 37, 25, 3, PortSide::SOUTH)
+            node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)
         ]
     }
 
@@ -528,9 +530,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         kContainer.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
         kContainer.addLayoutParam(LayoutOptions::SEPARATE_CC, false);      
         kContainer.addRoundedRectangle(5, 5, 0)
-        kContainer.KRendering.foreground = "darkGray".color;
+        kContainer.KRendering.foreground = SCCHARTSBLUE2.copy;
         kContainer.KRendering.foreground.alpha = HIERARCHY_TRANSPARENCY.optionValue as Integer
-        kContainer.KRendering.background = "darkGray".color;
+        kContainer.KRendering.background = SCCHARTSBLUE2.copy;
         kContainer.KRendering.background.alpha = HIERARCHY_TRANSPARENCY.optionValue as Integer
         kContainer.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
                     
@@ -576,7 +578,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
          it.addLayoutParam(LayoutOptions::PORT_SIDE, side);
          it.setPortPos(x, y)
          it.setPortSize(size,size)
-//         it.addRectangle.invisible = true;
+         it.addRectangle.invisible = true;
          node.ports += it
       ]
     }
