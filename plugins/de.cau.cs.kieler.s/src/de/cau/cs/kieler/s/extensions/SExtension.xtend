@@ -26,6 +26,9 @@ import de.cau.cs.kieler.core.kexpressions.BoolValue
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.s.s.SFactory
+import de.cau.cs.kieler.s.s.State
+import de.cau.cs.kieler.s.s.Program
 
 /**
  * S Extensions. 
@@ -53,7 +56,25 @@ class SExtension {
         ImmutableList::copyOf(object)    
     }
     
+    def State createSState() {
+        return SFactory::eINSTANCE.createState
+    }
+    
+    def State setName2(State state, String name) {
+        state.setName(name)
+        state
+    }
+    
+    def State createSState(String name) {
+        return createSState.setName2(name)
+    }
    
+    def State createSState(Program program, String name) {
+        val state = createSState.setName2(name)
+        program.states.add(state)
+        state
+    }
+
    // -------------------------------------------------------------------------   
       
 }

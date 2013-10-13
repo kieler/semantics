@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.s.extensions.SExtension
 
 /**
  * Converts a SyncChart into an S program.
@@ -33,6 +34,9 @@ class SCCharts2STransformation {
     
     static String LabelSymbol = "L"
     static String LocalSignalSymbol = "S"
+    
+    @Inject
+    extension SExtension
     
     @Inject
     extension SCChartsExtension
@@ -66,6 +70,8 @@ class SCCharts2STransformation {
         
         // set s program name (as the root state's name)
         target.setName(rootState.id)
+        
+        target.createSState("root")
 
 //        // add interface signals to s program (as the root state's signals)
 //        for (ssignal : rootState.signals) {

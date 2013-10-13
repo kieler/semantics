@@ -4,6 +4,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelection;
 
+import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
@@ -43,11 +44,15 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
     protected Object transform(EObject model, ExecutionEvent event, ISelection selection) {
         String commandString = event.getCommand().getId().toString();
         EObject transformed = null;
+        
+        SCCharts2STransformation transformation =
+        Guice.createInjector().getInstance(SCCharts2STransformation.class);
+        
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         transformed = model;
         if (commandString.equals(S_TRANSFORMATION)) {
-            transformed = (new SCCharts2STransformation()).transformS((Region) model);
+            transformed = transformation.transformS((Region) model);
         } 
         return transformed;
     }

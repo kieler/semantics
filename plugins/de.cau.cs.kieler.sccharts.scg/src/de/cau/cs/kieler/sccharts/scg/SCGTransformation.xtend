@@ -46,7 +46,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Transformation { 
+class SCGTransformation { 
 
     @Inject
     extension SCChartsExtension

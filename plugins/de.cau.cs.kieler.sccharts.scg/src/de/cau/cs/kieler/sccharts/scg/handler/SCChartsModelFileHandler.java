@@ -4,11 +4,12 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelection;
 
+import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.Region;
-import de.cau.cs.kieler.sccharts.scg.Transformation;
+import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
 //import org.eclipse.xtext.Constants;
@@ -46,11 +47,15 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
     protected Object transform(EObject model, ExecutionEvent event, ISelection selection) {
         String commandString = event.getCommand().getId().toString();
         EObject transformed = null;
+
+        SCGTransformation transformation =
+        Guice.createInjector().getInstance(SCGTransformation.class);
+        
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         transformed = model;
         if (commandString.equals(SCG_TRANSFORMATION)) {
-            transformed = (new Transformation()).transformSCG((Region) model);
+            transformed = transformation.transformSCG((Region) model);
         } 
         return transformed;
     }
