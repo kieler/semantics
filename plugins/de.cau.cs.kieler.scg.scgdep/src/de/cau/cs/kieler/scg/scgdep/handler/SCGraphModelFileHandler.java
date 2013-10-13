@@ -24,16 +24,16 @@ import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
 
 /**
- * @author J
+ * @author ssm
  *
  */
 public class SCGraphModelFileHandler extends AbstractConvertModelHandler {
 
     public static final String SCGDEP_TRANSFORMATION =
-            "de.cau.cs.kieler.scg.scgdep.commands.SCGDEPTransformation";
+            "de.cau.cs.kieler.scg.scgdep.commands.SCGToSCGDEPTransformation";
 
-    private static Injector injector = new SctStandaloneSetup()
-        .createInjectorAndDoEMFRegistration();
+//    private static Injector injector = new SctStandaloneSetup()
+//        .createInjectorAndDoEMFRegistration();
 
     /**
      * {@inheritDoc}
@@ -48,7 +48,7 @@ public class SCGraphModelFileHandler extends AbstractConvertModelHandler {
      */
     @Override
     protected Injector createResourceInjector() {
-        return injector;
+        return null;
     }
 
     public String getDiagramEditorID() {
