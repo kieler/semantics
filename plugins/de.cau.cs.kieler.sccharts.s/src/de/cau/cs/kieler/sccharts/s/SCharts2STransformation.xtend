@@ -71,12 +71,12 @@ class SCCharts2STransformation {
         // set s program name (as the root state's name)
         target.setName(rootState.id)
         
-        target.createSState("root")
+        target.createSState("root2")
 
-//        // add interface signals to s program (as the root state's signals)
-//        for (ssignal : rootState.signals) {
-//            target.valuedObjects.add(ssignal.copy);
-//        }
+        // add interface signals to s program (as the root state's signals)
+        for (valuedObject : rootState.valuedObjects) {
+            target.valuedObjects.add(valuedObject.copy);
+        }
 //        
 //        // add all local signals also to s program (as the root state's signals)
 //        for (region : rootState.regions) {
