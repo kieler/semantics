@@ -206,7 +206,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 for (s : r.nodes.filter(typeof(Fork))) {
                     val threadEntries = s.getAllNext
                     for(t : threadEntries) {
-                        (t.target as Entry).getThreadNodes.createHierarchy
+                        if (t instanceof Entry) (t.target as Entry).getThreadNodes.createHierarchy
                     }
                 }            
             }
