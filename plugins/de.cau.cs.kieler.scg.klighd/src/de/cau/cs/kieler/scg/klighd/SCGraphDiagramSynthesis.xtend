@@ -119,7 +119,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         = TransformationOption::createCheckOption("Display hierarchy", true);
         
     private static val TransformationOption HIERARCHY_TRANSPARENCY 
-        = TransformationOption::createRangeOption("Hierarchy transparency", Pair::of(0, 255), 128);
+        = TransformationOption::createRangeOption("Hierarchy transparency", Pair::of(0f, 255f), 128f);
         
 //    private static val TransformationOption ALIGN_EDGES
 //        = TransformationOption::createCheckOption("Control flow edge alignment", true);
@@ -534,9 +534,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         kContainer.addLayoutParam(LayoutOptions::SEPARATE_CC, false);      
         kContainer.addRoundedRectangle(5, 5, 0)
         kContainer.KRendering.foreground = SCCHARTSBLUE2.copy;
-        kContainer.KRendering.foreground.alpha = HIERARCHY_TRANSPARENCY.optionValue as Integer
+        kContainer.KRendering.foreground.alpha = Math.round(HIERARCHY_TRANSPARENCY.optionValue as Float)
         kContainer.KRendering.background = SCCHARTSBLUE2.copy;
-        kContainer.KRendering.background.alpha = HIERARCHY_TRANSPARENCY.optionValue as Integer
+        kContainer.KRendering.background.alpha = Math.round(HIERARCHY_TRANSPARENCY.optionValue as Float)
         kContainer.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
                     
         for(tn : nodes) {
