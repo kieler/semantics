@@ -256,7 +256,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25); 
-                node.KRendering.add(factory.createKText.of(s.condition).putToLookUpWith(s));
+                node.KRendering.add(factory.createKText.of(s.condition)
+                    .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0)
+                    .putToLookUpWith(s)
+                );
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
@@ -309,7 +312,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             figure => [ node.setMinimalNodeSize(75, 25); 
                 if (SHOW_CAPTION.optionBooleanValue)
-                    node.KRendering.add(factory.createKText.of("depth").putToLookUpWith(s));
+                    node.KRendering.add(factory.createKText.of("depth")
+                        .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0)
+                        .putToLookUpWith(s)
+                    );
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
@@ -333,7 +339,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             figure => [ node.setMinimalNodeSize(75, 25); 
                 if (SHOW_CAPTION.optionBooleanValue)
-                    node.KRendering.add(factory.createKText.of("entry").putToLookUpWith(s));
+                    node.KRendering.add(factory.createKText.of("entry")
+                        .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 1, 0)
+                        .putToLookUpWith(s)
+                    );
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
@@ -357,7 +366,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             figure => [ node.setMinimalNodeSize(75, 25);
                 if (SHOW_CAPTION.optionBooleanValue) 
-                    node.KRendering.add(factory.createKText.of("exit").putToLookUpWith(s));
+                    node.KRendering.add(factory.createKText.of("exit")
+                        .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 1, 0)
+                        .putToLookUpWith(s)
+                    );
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
@@ -381,7 +393,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             figure => [ node.setMinimalNodeSize(75, 25);
                 if (SHOW_CAPTION.optionBooleanValue) 
-                    node.KRendering.add(factory.createKText.of("fork").putToLookUpWith(s));
+                    node.KRendering.add(factory.createKText.of("fork")
+                        .setAreaPlacementData.from(LEFT, 0, 0, TOP, 4, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+                        .putToLookUpWith(s)
+                    );
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
@@ -390,7 +405,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
             val port = node.addPort(SCGPORTID_INCOMING, 36, 0, 3, PortSide::NORTH)
             port.addLayoutParam(LayoutOptions::OFFSET, -2f)
-        ];
+        ]
     }
 
     def dispatch KNode translate(Join s) {
@@ -405,7 +420,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             figure => [ node.setMinimalNodeSize(75, 25);
                 if (SHOW_CAPTION.optionBooleanValue) 
-                    node.KRendering.add(factory.createKText.of("join").putToLookUpWith(s));
+                    node.KRendering.add(factory.createKText.of("join")
+                        .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0)
+                        .putToLookUpWith(s)
+                    );
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
