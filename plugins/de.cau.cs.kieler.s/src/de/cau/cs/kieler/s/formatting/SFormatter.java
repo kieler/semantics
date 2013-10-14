@@ -83,9 +83,6 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         c.setLinewrap().before(f.getIfAccess().getRightCurlyBracketKeyword_7());
         
         
-        // No space for state identifier
-        c.setNoSpace().after(f.getStateAccess().getLeftParenthesisKeyword_1());
-        c.setNoSpace().before(f.getStateAccess().getRightParenthesisKeyword_3());
         
         // No spae before ( for state and instructions
         c.setNoSpace().before(f.getStateAccess().getLeftParenthesisKeyword_1());
@@ -99,6 +96,36 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         c.setNoSpace().before(f.getThreadAccess().getLeftParenthesisKeyword_1());
         c.setNoSpace().before(f.getTransAccess().getLeftParenthesisKeyword_1());
         
+        // No space behind ( and before ) for state identifier and instruction
+        c.setNoSpace().after(f.getProgramAccess().getLeftParenthesisKeyword_2());
+        c.setNoSpace().before(f.getProgramAccess().getRightParenthesisKeyword_4());
+        
+        c.setNoSpace().after(f.getStateAccess().getLeftParenthesisKeyword_1());
+        c.setNoSpace().before(f.getStateAccess().getRightParenthesisKeyword_3());
+        
+        c.setNoSpace().after(f.getPauseAccess().getLeftParenthesisKeyword_2());
+        c.setNoSpace().before(f.getPauseAccess().getRightParenthesisKeyword_4());
+
+        c.setNoSpace().after(f.getEmitAccess().getLeftParenthesisKeyword_1());
+        c.setNoSpace().after(f.getEmitAccess().getLeftParenthesisKeyword_3_0());
+        c.setNoSpace().before(f.getEmitAccess().getRightParenthesisKeyword_3_2());
+        c.setNoSpace().before(f.getEmitAccess().getRightParenthesisKeyword_5());
+
+        c.setNoSpace().after(f.getIfAccess().getLeftParenthesisKeyword_1());
+        c.setNoSpace().before(f.getIfAccess().getRightParenthesisKeyword_4());
+
+        c.setNoSpace().after(f.getJoinAccess().getLeftParenthesisKeyword_2());
+        c.setNoSpace().before(f.getJoinAccess().getRightParenthesisKeyword_4());
+
+        c.setNoSpace().after(f.getTermAccess().getLeftParenthesisKeyword_2());
+        c.setNoSpace().before(f.getTermAccess().getRightParenthesisKeyword_4());
+
+        c.setNoSpace().after(f.getThreadAccess().getLeftParenthesisKeyword_1());
+        c.setNoSpace().before(f.getThreadAccess().getRightParenthesisKeyword_3());
+
+        c.setNoSpace().after(f.getTransAccess().getLeftParenthesisKeyword_1());
+        c.setNoSpace().before(f.getTransAccess().getRightParenthesisKeyword_3());
+
         /*
          * DECLARATIONS
          */
