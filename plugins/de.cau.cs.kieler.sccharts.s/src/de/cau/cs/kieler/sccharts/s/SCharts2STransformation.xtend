@@ -22,6 +22,23 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.s.extensions.SExtension
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.TransitionType
+import java.util.HashMap
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.s.s.If
+import de.cau.cs.kieler.sccharts.Emission
+import de.cau.cs.kieler.sccharts.Assignment
+import de.cau.cs.kieler.sccharts.TextEffect
+import java.util.List
 
 /**
  * Converts a SyncChart into an S program.
@@ -36,27 +53,72 @@ class SCCharts2STransformation {
     static String LocalSignalSymbol = "S"
     
     @Inject
+    extension KExpressionsExtension
+
+    @Inject
     extension SExtension
     
     @Inject
     extension SCChartsExtension
 
+    @Inject
+    extension DependencyTransformation
+
+    static HashMap<State, de.cau.cs.kieler.s.s.State> STATES_SCCharts2S  = new HashMap<State, de.cau.cs.kieler.s.s.State>()
+    static HashMap<de.cau.cs.kieler.s.s.State, State> STATES_S2SCCharts  = new HashMap<de.cau.cs.kieler.s.s.State, State>()
+    
+    def map(de.cau.cs.kieler.s.s.State sState, State state) {
+        STATES_SCCharts2S.put(state, sState)
+        STATES_S2SCCharts.put(sState, state)
+    }
+    def clearStatesMapping() {
+        STATES_SCCharts2S.clear
+        STATES_S2SCCharts.clear
+    }
+    def sState(State state) {
+        STATES_SCCharts2S.get(state)
+    }
+    def state(de.cau.cs.kieler.s.s.State sState) {
+        STATES_S2SCCharts.get(sState)
+    }
+    
+
+    static HashMap<ValuedObject, ValuedObject> VALUEDOBJECTS_SCCharts2S  = new HashMap<ValuedObject, ValuedObject>()
+    static HashMap<ValuedObject, ValuedObject> VALUEDOBJECTS_S2SCCharts  = new HashMap<ValuedObject, ValuedObject>()
+
+    def map(ValuedObject sValuedObject, ValuedObject valuedObject) {
+        VALUEDOBJECTS_SCCharts2S.put(valuedObject, sValuedObject)
+        VALUEDOBJECTS_S2SCCharts.put(sValuedObject, valuedObject)
+    }
+    def clearValuedObjectMapping() {
+        VALUEDOBJECTS_SCCharts2S.clear
+        VALUEDOBJECTS_S2SCCharts.clear
+    }
+    def sValuedObject(ValuedObject valuedObject) {
+        VALUEDOBJECTS_SCCharts2S.get(valuedObject)
+    }
+    def valuedObject(ValuedObject sValuedObject) {
+        VALUEDOBJECTS_S2SCCharts.get(sValuedObject)
+    }
+    
     // ======================================================================================================
-    // ==                                        M A I N   T R A N S F O R M A T I O N                     ==
+    // ==                              M A I N   T R A N S F O R M A T I O N                               ==
     // ======================================================================================================
 
     def create target : SFactory::eINSTANCE.createProgram() transformS (Region rootRegion) {
         val rootState = rootRegion.states.head();
 
-//        // clear traces
-//        TraceComponent::clearTrace();
+        // clear traces
+        clearStatesMapping
+        clearValuedObjectMapping
         
-//        // dependency analysis
-//        val dependencies = DependencyFactory::eINSTANCE.createDependencies();
-//        Synccharts2Dependenies.transform(dependencies, rootRegion);
+        // Dependency analysis
+        val dependencies = rootRegion.transformAllDependencies
+          
+        val allStates = rootRegion.allContainedStates
         
-//        // set highest priority
-//        target.setPriority(dependencies.nodes.size);
+        // Set highest priority
+        target.setPriority(dependencies.size);
         
 //        // create mapping from SyncChart states to dependency nodes
 //        for (node : dependencies.nodes) {
@@ -68,15 +130,29 @@ class SCCharts2STransformation {
 //            }
 //        }
         
-        // set s program name (as the root state's name)
+        // Set s program name (as the root state's name)
         target.setName(rootState.id)
         
-        target.createSState("root2")
-
-        // add interface signals to s program (as the root state's signals)
+        // Add interface signals to s program (as the root state's signals)
         for (valuedObject : rootState.valuedObjects) {
-            target.valuedObjects.add(valuedObject.copy);
+            val sValuedObject = valuedObject.copy
+            sValuedObject.map(valuedObject)
+            target.valuedObjects.add(sValuedObject)
         }
+
+        // Create all states and a mapping
+        for (state : allStates) { 
+            target.createSState(state.id).map(state)
+        }
+        
+        // Now traverse all states again and fill them
+        for (state : allStates) { 
+            state.handleState
+        }
+        
+     }
+
+
 //        
 //        // add all local signals also to s program (as the root state's signals)
 //        for (region : rootState.regions) {
@@ -90,8 +166,185 @@ class SCCharts2STransformation {
 //        }
 
 
+    // ======================================================================================================
+    // ==                                   H A N D L E   S T A T E                             ==
+    // ======================================================================================================
+
+    def void handleState(State state) {
+        
+        val sState = state.sState
+        
+        if (state.hierarchical) {
+            /////////////////////////
+            // Handle macro states //
+            /////////////////////////
+            if (state.outgoingTransitions.length > 0) {
+                val transition = state.outgoingTransitions.get(0)
+
+                if (transition.type == TransitionType::NORMALTERMINATION) {
+                    // if not joined yet - continue at state depth
+                    val sjoin = joinElseContinueAt(transition.sourceState.sState)
+                    sState.addInstruction(sjoin);
+                }
+            }
+            
+            
+        } else {
+            ///////////////////////////
+            // Handle simples states //
+            ///////////////////////////
+            // Consider immediate transitions
+            for (transition : state.outgoingTransitions.filter[!isImmediate]) {
+               sState.handleTransition(transition)
+            }
+            // Consider delayed transitions, if any
+            val delayedTransitions = state.outgoingTransitions.filter[isImmediate]
+            if (!delayedTransitions.nullOrEmpty) {
+                // If there are delayed transitions create a pause
+                sState.addInstruction(createPause)
+                for (transition : delayedTransitions) {
+                   sState.handleTransition(transition)
+                }
+            }
+            
+        }
+        
+        
+    }
+
+    // ======================================================================================================
+    // ==                                   H A N D L E   T R A N S I T I O N                              ==
+    // ======================================================================================================
+
+    def void handleTransition(de.cau.cs.kieler.s.s.State sState, Transition transition) {
+                val If sIf = createIf(TRUE) 
+                if (transition.trigger != null) {
+                    sIf.setExpression(transition.trigger.convertToSExpression);
+                }
+                
+                // handle transition effect - convert to s-effect
+                if (!transition.effects.nullOrEmpty) {
+                    for (effect : transition.effects) {
+                        effect.convertToSEffect(sIf.instructions);
+                    }
+                }
+        
+    }
+    
+//    def void handleTransition2(Transition transition, de.cau.cs.kieler.s.s.State sState) {
+//            val sif = SFactory::eINSTANCE.createIf();
+//            val strans = SFactory::eINSTANCE.createTrans();
+//            val sabort = SFactory::eINSTANCE.createAbort();
+//            
+//            // handle transition trigger - convert to s-expression
+//            if (transition.type == TransitionType::NORMALTERMINATION) {
+//                val sjoin = joinElseContinueAt(transition.sourceState)
+//                // if not joined yet - continue at state depth
+//                sjoin.setContinuation(transition.sourceState.depthSState);
+//                sState.instructions.add(sjoin);
+//            }
+//            
+//            if (transition.trigger != null) {
+//                sif.setExpression(transition.trigger.convertToSExpression);
+//            }
+//            else {
+//                sif.setExpression(getTrueBooleanValue());
+//            }
+//            
+//            // handle transition effect - convert to s-effect
+//            if (!transition.effects.nullOrEmpty) {
+//                for (effect : transition.effects) {
+//                    effect.convertToSEffect(sif.instructions);
+//                }
+//            }
+//            
+//            // if leaving a macro state, first abort it
+//            // for weak abortions we know because of the lowered priority that
+//            // all internal behavior (of this tick!) has already executed and
+//            // we can safely abort the state.
+//            if (transition.sourceState.hierarchical) {
+//                sif.instructions.add(sabort);
+//            }    
+//
+//            // add transition to if-branch and add if-branch to sState
+//            strans.setContinuation(transition.targetState.surfaceSState);
+//            sif.instructions.add(strans);
+//            sState.instructions.add(sif);
+//    }    
 
 
+    // ======================================================================================================
+    // ==                            C O N V E R T   E X P R E S S I O N S                                 ==
+    // ======================================================================================================
+
+    // Create a new reference Expression to the corresponding sValuedObject of the expression
+    def dispatch Expression convertToSExpression(ValuedObjectReference expression) {
+        expression.valuedObject.sValuedObject.reference
+    }
+
+    // Apply conversion to operator expressions like and, equals, not, greater, val, pre, add, etc.
+    def dispatch Expression convertToSExpression(OperatorExpression expression) {
+        val newExpression = createOperatorExpression(expression.operator)
+        for (subExpression : expression.subExpressions) {
+            newExpression.subExpressions.add(subExpression.convertToSExpression)
+        }
+        return newExpression;
+    }
+
+    // Apply conversion to integer values
+    def dispatch Expression convertToSExpression(IntValue expression) {
+        createIntValue(expression.value)
+    }
+
+    // Apply conversion to float values
+    def dispatch Expression convertToSExpression(FloatValue expression) {
+        createFloatValue(expression.value)
+    }
+
+    // Apply conversion to boolean values
+    def dispatch Expression convertToSExpression(BoolValue expression) {
+        createBoolValue(expression.value)
+    }    
+
+    // Apply conversion to textual host code 
+    def dispatch Expression convertToSExpression(TextExpression expression) {
+        createTextExpression(expression.text)
+    }    
+    
+    // Apply conversion to the default case
+    def dispatch Expression convertToSExpression(Expression expression) {
+        createExpression
+    }
+
+    // ======================================================================================================
+    // ==                               C O N V E R T    E F F E C T S                                     ==
+    // ======================================================================================================
+
+    // Convert SyncChart transition effects and add them to an instructions list.
+    def dispatch void convertToSEffect(Emission effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
+        val sSignal = effect.valuedObject.sValuedObject
+        val sEmit = sSignal.emit
+        if (effect.newValue != null) {
+            val sSignalValue = effect.newValue.convertToSExpression;
+            sEmit.setValue(sSignalValue);
+        }
+        sEmit.setSignal(sSignal);
+        instructions.add(sEmit);
+    }
+    
+    // Convert SyncChart variable assignments and add them to an instructions list.
+    def dispatch void convertToSEffect(Assignment effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
+        // TODO
+    }
+
+    // Convert SyncChart text effects and add them to an instructions list.
+    def dispatch void convertToSEffect(TextEffect effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
+        val sHostCode = SFactory::eINSTANCE.createHostCodeInstruction;
+        sHostCode.setHostCode("'" + effect.text + ";'");
+        instructions.add(sHostCode);
+    }
+
+    // ======================================================================================================
 
 
 //        // add interface variables to s program (as the global host code)
@@ -154,7 +407,6 @@ class SCCharts2STransformation {
 //        }
 //         
 //        
-    }        
 
 
 //    // ======================================================================================================
