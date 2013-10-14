@@ -93,6 +93,7 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         c.setNoSpace().before(f.getJoinAccess().getLeftParenthesisKeyword_2());
         c.setNoSpace().before(f.getPauseAccess().getLeftParenthesisKeyword_2());
         c.setNoSpace().before(f.getTermAccess().getLeftParenthesisKeyword_2());
+        c.setNoSpace().before(f.getHaltAccess().getLeftParenthesisKeyword_2());
         c.setNoSpace().before(f.getTransAccess().getLeftParenthesisKeyword_1());
         c.setNoSpace().before(f.getForkAccess().getLeftParenthesisKeyword_1());
         
@@ -119,6 +120,9 @@ public class SFormatter extends AbstractDeclarativeFormatter {
 
         c.setNoSpace().after(f.getTermAccess().getLeftParenthesisKeyword_2());
         c.setNoSpace().before(f.getTermAccess().getRightParenthesisKeyword_4());
+
+        c.setNoSpace().after(f.getHaltAccess().getLeftParenthesisKeyword_2());
+        c.setNoSpace().before(f.getHaltAccess().getRightParenthesisKeyword_4());
 
         c.setNoSpace().after(f.getTransAccess().getLeftParenthesisKeyword_1());
         c.setNoSpace().before(f.getTransAccess().getRightParenthesisKeyword_3());

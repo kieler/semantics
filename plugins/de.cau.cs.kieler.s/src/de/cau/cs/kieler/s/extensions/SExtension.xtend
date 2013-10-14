@@ -37,6 +37,8 @@ import de.cau.cs.kieler.s.s.Abort
 import de.cau.cs.kieler.s.s.Emit
 import de.cau.cs.kieler.s.s.Pause
 import de.cau.cs.kieler.s.s.Fork
+import de.cau.cs.kieler.s.s.Term
+import de.cau.cs.kieler.s.s.Halt
 
 /**
  * S Extensions. 
@@ -132,11 +134,19 @@ class SExtension {
          transition
     }
     
-    
-    
     // Create an abort instruction.
     def Abort createAbort() {
-         SFactory::eINSTANCE.createAbort()
+         SFactory::eINSTANCE.createAbort
+    }
+
+    // Create an term instruction.
+    def Term createTerm() {
+         SFactory::eINSTANCE.createTerm
+    }
+
+    // Create an term instruction.
+    def Halt createHalt() {
+         SFactory::eINSTANCE.createHalt
     }
     
     // Create a pure emission.
