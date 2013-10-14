@@ -534,7 +534,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     if (addArrowFinal) it.addArrowDecorator
 //                    it.lineStyle.dashPattern.clear;
 //                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
-            ]               
+            ]
+            
+            if (outgoing == SCGPORTID_OUTGOING_THEN) {
+                edge.createLabel.configureTailLabel('true', 9, KlighdConstants::DEFAULT_FONT_NAME)
+            }               
         ]
     }    
 
