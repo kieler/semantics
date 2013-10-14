@@ -157,7 +157,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
                 it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
-                it.setSurroundingSpace(4,0);
+                it.setSurroundingSpace(2,0);
                 it.invisible = false;
                 it.foreground = "gray".color
                 it.lineWidth = 1;
@@ -358,12 +358,16 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 
                  if (s.hasRegionsOrDeclarations) {
                     // Get a smaller window-title-bare if this a macro state 
-                    it.addText(" " + s.label).putToLookUpWith(s) => [
+                    if (!s.label.empty)
+                    it.addRectangle => [
+                        it.invisible = true
                         it.fontSize = 11;
+                        it.fontSize.propagateToChildren = true
                         it.setFontBold(true);
-                        it.setGridPlacementData().setMaxCellHeightEx(40)
-                            .from(LEFT, 0, 0, TOP, 0f, 0)
-                            .to(RIGHT, 10, 0, BOTTOM, 0, 0);
+                        it.setGridPlacementData().setMaxCellHeightEx(5)
+                            .from(LEFT, 0, 0, TOP, 8f, 0)
+                            .to(RIGHT, 0, 0, BOTTOM, 0, 0);
+                        addText(" " + s.label).putToLookUpWith(s);
                     ];
                  }
                  else {
@@ -382,6 +386,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         for (sig : s.valuedObjects) {
                     it.addRectangle => [
                         it.invisible = true;
+                        it.setGridPlacementData()
+                            .from(LEFT, 0, 0, TOP, 3, 0)
+                            .to(RIGHT, 0, 0, BOTTOM, 0, 0);
                         scopeProvider.parent = s;
                             var declaration = "";
                             var type = "";
@@ -413,16 +420,15 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 declaration = declaration.trim + " "
                             }
 
-                              it.printHighlightedText(declaration + type + sig.name + init +  combine, sig) => [
-                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
-                              ]
+                              it.printHighlightedText(declaration + type + sig.name + init +  combine, sig);
+//                              it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+                              
 //                            it.addText(declaration + type + sig.name + init +  combine + ";") => [
 //                                    it.setForeground(KEYWORD.copy)
 //                                    it.setFontBold(true)
 //                                    it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
 //                                    it.putToLookUpWith(sig);
 //                            ]
-                            it.addRectangle().invisible = true;
                             ];
                         }
                         
