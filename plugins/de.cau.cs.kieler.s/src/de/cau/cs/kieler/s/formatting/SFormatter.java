@@ -94,6 +94,7 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         c.setNoSpace().before(f.getPauseAccess().getLeftParenthesisKeyword_2());
         c.setNoSpace().before(f.getTermAccess().getLeftParenthesisKeyword_2());
         c.setNoSpace().before(f.getTransAccess().getLeftParenthesisKeyword_1());
+        c.setNoSpace().before(f.getForkAccess().getLeftParenthesisKeyword_1());
         
         // No space behind ( and before ) for state identifier and instruction
         c.setNoSpace().after(f.getProgramAccess().getLeftParenthesisKeyword_2());
@@ -121,6 +122,10 @@ public class SFormatter extends AbstractDeclarativeFormatter {
 
         c.setNoSpace().after(f.getTransAccess().getLeftParenthesisKeyword_1());
         c.setNoSpace().before(f.getTransAccess().getRightParenthesisKeyword_3());
+
+        c.setNoSpace().after(f.getForkAccess().getLeftParenthesisKeyword_1());
+        c.setNoSpace().before(f.getForkAccess().getRightParenthesisKeyword_5());
+        c.setNoSpace().before(f.getForkAccess().getCommaKeyword_3());
 
         // No space before ; separating instructions
         c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_5_1());
