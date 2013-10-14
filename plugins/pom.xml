@@ -85,12 +85,14 @@
     <module>de.cau.cs.kieler.sccharts.edit</module>
     <module>de.cau.cs.kieler.sccharts.editor</module>
     <module>de.cau.cs.kieler.sccharts.klighd</module>
+    <module>de.cau.cs.kieler.sccharts.s</module>
+    <module>de.cau.cs.kieler.sccharts.scg</module>
     <module>de.cau.cs.kieler.sccharts.text</module>
     <module>de.cau.cs.kieler.sccharts.text.ui</module>
-	<module>de.cau.cs.kieler.scg</module>
-	<module>de.cau.cs.kieler.scg.edit</module>
-	<module>de.cau.cs.kieler.scg.editor</module>
-	<module>de.cau.cs.kieler.scg.klighd</module>
+    <module>de.cau.cs.kieler.scg</module>
+    <module>de.cau.cs.kieler.scg.edit</module>
+    <module>de.cau.cs.kieler.scg.editor</module>
+   <module>de.cau.cs.kieler.scg.klighd</module>
     <module>org.json</module>
   </modules>
 
