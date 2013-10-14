@@ -129,6 +129,7 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         // No space before ; separating instructions
         c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_5_1());
         c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_6_1());
+        c.setNoSpace().before(f.getIfAccess().getSemicolonKeyword_6_1());
         
         /*
          * DECLARATIONS

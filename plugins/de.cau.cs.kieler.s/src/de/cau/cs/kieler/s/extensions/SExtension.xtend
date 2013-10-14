@@ -113,6 +113,14 @@ class SExtension {
          state.instructions.add(transition)
          transition
     }
+
+    // Create a transition to a continuation label.
+    def Trans transitionTo(If ifInstruction, Continuation continuation) {
+         val transition = SFactory::eINSTANCE.createTrans()
+         transition.setContinuation(continuation)
+         ifInstruction.instructions.add(transition)
+         transition
+    }
     
     // Create an abort instruction.
     def Abort createAbort() {
