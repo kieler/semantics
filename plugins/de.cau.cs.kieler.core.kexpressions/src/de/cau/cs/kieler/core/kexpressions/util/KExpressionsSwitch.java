@@ -139,6 +139,14 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KExpressionsPackage.DOUBLE_VALUE: {
+                DoubleValue doubleValue = (DoubleValue)theEObject;
+                T result = caseDoubleValue(doubleValue);
+                if (result == null) result = caseValue(doubleValue);
+                if (result == null) result = caseExpression(doubleValue);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -275,6 +283,21 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseTextExpression(TextExpression object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Double Value</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Double Value</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDoubleValue(DoubleValue object) {
         return null;
     }
 

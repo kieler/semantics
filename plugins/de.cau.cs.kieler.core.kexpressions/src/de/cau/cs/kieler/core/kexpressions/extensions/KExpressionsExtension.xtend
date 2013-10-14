@@ -24,6 +24,10 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.kexpressions.DoubleValue
 
 /**
  * S Extensions. 
@@ -130,12 +134,14 @@ class KExpressionsExtension {
         expression.setOperator(OperatorType::EQ)
         expression
     }
+    
     // Create an EQ Expression as a sub expression.
     def OperatorExpression createEQExpression(OperatorExpression operatorExpression) {
         val expression = createEQExpression()
         operatorExpression.add(expression)
         expression
     }
+    
     // Create an EQ Expression add expressionFirst and expressionSecond as a sub expression.
     def OperatorExpression isEqual(Expression expressionFirst, Expression expressionSecond) {
         val eqExpression = createEQExpression()
@@ -150,12 +156,14 @@ class KExpressionsExtension {
         expression.setOperator(OperatorType::AND)
         expression
     }
+    
     // Create an AND Expression as a sub expression.
     def OperatorExpression createAndExpression(OperatorExpression operatorExpression) {
         val expression = createAndExpression()
         operatorExpression.add(expression)
         expression
     }
+    
     // Create an AND Expression add expressionFirst and expressionSecond as a sub expression.
     def OperatorExpression and(Expression expressionFirst, Expression expressionSecond) {
         val andExpression = createAndExpression()
@@ -170,12 +178,14 @@ class KExpressionsExtension {
         expression.setOperator(OperatorType::OR)
         expression
     }
+    
     // Create an OR Expression as a sub expression.
     def OperatorExpression createOrExpression(OperatorExpression operatorExpression) {
         val expression = createOrExpression()
         operatorExpression.add(expression)
         expression
     }
+    
     // Create an OR Expression add expressionFirst or expressionSecond as a sub expression.
     def OperatorExpression or(Expression expressionFirst, Expression expressionSecond) {
         val orExpression = createOrExpression()
@@ -190,12 +200,14 @@ class KExpressionsExtension {
         expression.setOperator(OperatorType::NOT)
         expression
     }
+    
     // Create an NOT Expression as a sub expression.
     def OperatorExpression createNotExpression(OperatorExpression operatorExpression) {
         val expression = createNotExpression()
         operatorExpression.add(expression)
         expression
     }
+    
     // Create an NOT Expression and add expression as a sub expression.
     def OperatorExpression not(Expression expression) {
         val notExpression = createNotExpression()
@@ -219,41 +231,56 @@ class KExpressionsExtension {
 
     //=========  VALUED OBJECT  =========
 
-    // Creates a new ValuedObject in a scope.
+    // Creates a new ValuedObject.
     def ValuedObject createValuedObject(String valuedObjectName) {
          val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
          valuedObject.setName(valuedObjectName)
          valuedObject
     }
     
+    // Set the ValuedObject to be a signal.
     def ValuedObject setIsSignal(ValuedObject valuedObject, boolean isSignal) {
         valuedObject.setIsSignal(isSignal)
         valuedObject
     }
+    
+    // Set the ValuedObject to be an input.
     def ValuedObject setIsInput(ValuedObject valuedObject) {
          valuedObject.setIsInput(true)
          valuedObject
     }    
+    
+    // Set the ValuedObject to be an output.
     def ValuedObject setIsOutput(ValuedObject valuedObject) {
          valuedObject.setIsOutput(true)
          valuedObject
     }    
+    
+    // Set the ValuedObject to be of type PURE.
     def ValuedObject setTypePure(ValuedObject valuedObject) {
          valuedObject.setType(ValueType::PURE)
          valuedObject
     }    
+
+    // Set the ValuedObject to be of type INT.
     def ValuedObject setTypeInt(ValuedObject valuedObject) {
          valuedObject.setType(ValueType::INT)
          valuedObject
     }   
+    
+    // Set the ValuedObject to be of type BOOL.
     def ValuedObject setTypeBool(ValuedObject valuedObject) {
          valuedObject.setType(ValueType::BOOL)
          valuedObject
     }    
+    
+    // Set the ValuedObject to be of type DOUBLE.
     def ValuedObject setTypeDouble(ValuedObject valuedObject) {
          valuedObject.setType(ValueType::DOUBLE)
          valuedObject
     }    
+    
+    // Set the ValuedObject to be of type FLOAT.
     def ValuedObject setTypeFloat(ValuedObject valuedObject) {
          valuedObject.setType(ValueType::FLOAT)
          valuedObject
@@ -345,5 +372,41 @@ class KExpressionsExtension {
          valuedObject.setTypeFloat
     }
     
+    //===========  VALUES  ===========
+    
+    // Create an int value.
+    def IntValue createIntValue(int value) {
+         val expression = KExpressionsFactory::eINSTANCE.createIntValue()
+         expression.setValue(value)
+         expression
+    }
+    
+    // Create a float value.
+    def FloatValue createFloatValue(float value) {
+         val expression = KExpressionsFactory::eINSTANCE.createFloatValue()
+         expression.setValue(value)
+         expression
+    }
+
+    // Create a double value.
+    def DoubleValue createDoubleValue(float value) {
+         val expression = KExpressionsFactory::eINSTANCE.createDoubleValue
+         expression.setValue(value)
+         expression
+    }
+
+    // Create a boolean value.
+    def BoolValue createBoolValue(boolean value) {
+         val expression = KExpressionsFactory::eINSTANCE.createBoolValue()
+         expression.setValue(value)
+         expression
+    }
+
+    // Create a text expression.
+    def TextExpression createTextExpression(int text) {
+         val expression = KExpressionsFactory::eINSTANCE.createTextExpression()
+         expression.setText("'" + text + "'")
+         expression
+    }
       
 }

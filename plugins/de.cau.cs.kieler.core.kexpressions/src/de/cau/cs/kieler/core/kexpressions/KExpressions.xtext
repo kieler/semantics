@@ -124,7 +124,7 @@ AtomicExpression returns Expression:
 
 AtomicValuedExpression returns Expression:
     IntValue
-    | FloatValue
+    | FloatValue | DoubleValue
 //    | '(' DivExpression ')'
     | => '(' ValuedExpression ')'
     | AtomicExpression 
@@ -162,6 +162,9 @@ FloatValue returns FloatValue:
 BoolValue returns BoolValue:
 	value=BOOLEAN;
 
+
+DoubleValue returns DoubleValue:
+    value=FLOAT;
 
 // data type rule allowing any kind of value to be accepted,
 // e.g. as initialValues of valuedObjects
