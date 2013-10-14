@@ -116,7 +116,7 @@ class KExpressionsExtension {
     //==========  EXPRESSIONS  ==========
 
     // Create an Expression.
-    def Expression createExpression(OperatorType operatorType) {
+    def Expression createExpression() {
         val expression = KExpressionsFactory::eINSTANCE.createExpression()
         expression
     }
