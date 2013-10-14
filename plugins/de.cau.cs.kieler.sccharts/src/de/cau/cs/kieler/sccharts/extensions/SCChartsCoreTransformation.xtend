@@ -33,6 +33,7 @@ import de.cau.cs.kieler.sccharts.TransitionType
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /**
  * SCCharts CoreTransformation Extensions.
@@ -42,6 +43,9 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class CoreTransformation { 
+
+    @Inject
+    extension KExpressionsExtension
 
     @Inject
     extension SCChartsExtension

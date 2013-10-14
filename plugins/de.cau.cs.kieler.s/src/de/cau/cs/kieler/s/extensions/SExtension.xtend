@@ -29,6 +29,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.s.s.SFactory
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Program
+import de.cau.cs.kieler.s.s.Join
+import de.cau.cs.kieler.s.s.Continuation
 
 /**
  * S Extensions. 
@@ -74,7 +76,17 @@ class SExtension {
         program.states.add(state)
         state
     }
-
-   // -------------------------------------------------------------------------   
+    
+    def Join createJoin() {
+        SFactory::eINSTANCE.createJoin()
+    }
+    
+    def Join joinElseContinueAt(Continuation continuation) {
+        val join = createJoin
+        join.setContinuation(continuation)
+        join
+    }
+    
+    // -------------------------------------------------------------------------   
       
 }

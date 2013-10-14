@@ -13,35 +13,34 @@
  */
  package de.cau.cs.kieler.sccharts.extensions
 
+import com.google.common.collect.ImmutableList
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import com.google.common.collect.ImmutableList
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.TransitionType
-import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.Emission
-import java.util.List
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.sccharts.StateType
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.sccharts.Effect
-import de.cau.cs.kieler.sccharts.LocalAction
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.Assignment
 import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.Effect
+import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
-import de.cau.cs.kieler.sccharts.SuspendAction
-import de.cau.cs.kieler.sccharts.Assignment
-import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.sccharts.LocalAction
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.StateType
+import de.cau.cs.kieler.sccharts.SuspendAction
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.TransitionType
+import java.util.List
+import org.eclipse.emf.ecore.EObject
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * SCCharts Extensions.
@@ -51,6 +50,9 @@ import de.cau.cs.kieler.sccharts.Scope
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class SCChartsExtension { 
+
+    @Inject
+    extension KExpressionsExtension
 
     // This prefix is used for namings of all generated signals, states and regions
     static final String GENERATED_PREFIX = "_"
@@ -235,6 +237,10 @@ class SCChartsExtension {
     def Region setLabel2(Region region, String label) {
         region.setLabel(label)
         region
+    }
+    
+    def boolean isHierarchical(State state) {
+        return (state.regions != null && state.regions.size != 0 && state.eAllContents.filter(typeof(State)).size > 0)
     }
 
     //========== TRANSITIONS ===========
@@ -517,302 +523,86 @@ class SCChartsExtension {
         emission
     }
 
-    //=======  STATIC EXPRESSIONS  ======
-    
-    def public BoolValue TRUE() {
-        createBooleanValue(true)
-    }
-
-    def public BoolValue FALSE() {
-        createBooleanValue(false)
-    }
-
-    def public BoolValue createBooleanValue(boolean value) {
-        val booleanValue = KExpressionsFactory::eINSTANCE.createBoolValue
-        booleanValue.setValue(value)
-        booleanValue
-    }
+    //-------------------------------------------------------------------------
+    //--                     K E X P R E S S I O N S                         --
+    //-------------------------------------------------------------------------
 
     //==  EXPRESSION MODIFICATIONS  ==
-
-    def void replace(EObject eObject, Expression searchExpression, Expression replaceExpression) {
-        for (Expression expression : eObject.eAllContents.filter(typeof(Expression)).toList) {
-            expression.replace(searchExpression, replaceExpression)
-        }
-    }
 
     def void replace(Action action, Expression searchExpression, Expression replaceExpression) {
         action.setTrigger(action.trigger.replace(searchExpression, replaceExpression))
     }
-    
-    def Expression replace(Expression expression, Expression searchExpression, Expression replaceExpression) {
-        if (expression == searchExpression) {
-            return replaceExpression
-        }
-        else if (searchExpression instanceof OperatorExpression) {
-            val operatorExpression = searchExpression as OperatorExpression
-            for (Expression subExpression : operatorExpression.subExpressions) { 
-                subExpression.replace(searchExpression, replaceExpression)
-            }
-        }
-        expression
-    }
-    
-    
-
-    // Trim all AND/OR Expressions if it contains only a single sub expression
-    def dispatch Expression trim(Expression expression) {
-        expression
-    }
-    
-    // Trim an AND/OR Expression if it contains only a single sub expression.
-    def dispatch Expression trim(OperatorExpression operatorExpression) {
-        if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty) {
-            return operatorExpression
-        }
-        if (operatorExpression.subExpressions.size == 1 && 
-            ((operatorExpression.operator == OperatorType::AND) || (operatorExpression.operator == OperatorType::OR))
-        ) {
-               // if there is just one sub expression, we do not need an AND/OR!
-               val innerExpression = operatorExpression.subExpressions.get(0);
-               if (innerExpression != null) {
-                   return innerExpression.trim
-               }
-               return innerExpression
-        }
-        else if (operatorExpression.subExpressions.size > 1 ) {
-               for (Expression subExpression : operatorExpression.subExpressions.immutableCopy) {
-                   operatorExpression.add(subExpression.trim.copy)
-                   operatorExpression.subExpressions.remove(subExpression)
-               }
-        }
-        operatorExpression;
-    }
-
-    //==========  EXPRESSIONS  ==========
-
-    // Create an EQ Expression.
-    def OperatorExpression createEQExpression() {
-        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
-        expression.setOperator(OperatorType::EQ)
-        expression
-    }
-    // Create an EQ Expression as a sub expression.
-    def OperatorExpression createEQExpression(OperatorExpression operatorExpression) {
-        val expression = createEQExpression()
-        operatorExpression.add(expression)
-        expression
-    }
-    // Create an EQ Expression add expressionFirst and expressionSecond as a sub expression.
-    def OperatorExpression isEqual(Expression expressionFirst, Expression expressionSecond) {
-        val eqExpression = createEQExpression()
-        eqExpression.add(expressionFirst)
-        eqExpression.add(expressionSecond)
-        eqExpression
-    }
-
-    // Create an AND Expression.
-    def OperatorExpression createAndExpression() {
-        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
-        expression.setOperator(OperatorType::AND)
-        expression
-    }
-    // Create an AND Expression as a sub expression.
-    def OperatorExpression createAndExpression(OperatorExpression operatorExpression) {
-        val expression = createAndExpression()
-        operatorExpression.add(expression)
-        expression
-    }
-    // Create an AND Expression add expressionFirst and expressionSecond as a sub expression.
-    def OperatorExpression and(Expression expressionFirst, Expression expressionSecond) {
-        val andExpression = createAndExpression()
-        andExpression.add(expressionFirst)
-        andExpression.add(expressionSecond)
-        andExpression
-    }
-
-    // Create an OR Expression.
-    def OperatorExpression createOrExpression() {
-        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
-        expression.setOperator(OperatorType::OR)
-        expression
-    }
-    // Create an OR Expression as a sub expression.
-    def OperatorExpression createOrExpression(OperatorExpression operatorExpression) {
-        val expression = createOrExpression()
-        operatorExpression.add(expression)
-        expression
-    }
-    // Create an OR Expression add expressionFirst or expressionSecond as a sub expression.
-    def OperatorExpression or(Expression expressionFirst, Expression expressionSecond) {
-        val orExpression = createOrExpression()
-        orExpression.add(expressionFirst)
-        orExpression.add(expressionSecond)
-        orExpression
-    }
-
-    // Create an NOT Expression.
-    def OperatorExpression createNotExpression() {
-        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
-        expression.setOperator(OperatorType::NOT)
-        expression
-    }
-    // Create an NOT Expression as a sub expression.
-    def OperatorExpression createNotExpression(OperatorExpression operatorExpression) {
-        val expression = createNotExpression()
-        operatorExpression.add(expression)
-        expression
-    }
-    // Create an NOT Expression and add expression as a sub expression.
-    def OperatorExpression not(Expression expression) {
-        val notExpression = createNotExpression()
-        notExpression.add(expression)
-        notExpression
-    }
-    
-    // Add a sub expression to an OperatorExpression.
-    def OperatorExpression add(OperatorExpression operatorExpression, Expression expression) {
-        operatorExpression.subExpressions.add(expression)
-        operatorExpression
-    }
-    
-    // Create a ValuedObjectReference to a valuedObject
-    def ValuedObjectReference reference (ValuedObject valuedObject) {
-         val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-         valuedObjectReference.setValuedObject(valuedObject);
-         valuedObjectReference
-    }
-    
 
     //=========  VALUED OBJECT  =========
 
     // Creates a new ValuedObject in a scope.
     def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
-         val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-         valuedObject.setName(valuedObjectName)
+         val valuedObject = createValuedObject(valuedObjectName)
          scope.valuedObjects.add(valuedObject)
          valuedObject
     }
-    
-    def ValuedObject setIsSignal(ValuedObject valuedObject, boolean isSignal) {
-        valuedObject.setIsSignal(isSignal)
-        valuedObject
-    }
-    def ValuedObject setIsInput(ValuedObject valuedObject) {
-         valuedObject.setIsInput(true)
-         valuedObject
-    }    
-    def ValuedObject setIsOutput(ValuedObject valuedObject) {
-         valuedObject.setIsOutput(true)
-         valuedObject
-    }    
-    def ValuedObject setTypePure(ValuedObject valuedObject) {
-         valuedObject.setType(ValueType::PURE)
-         valuedObject
-    }    
-    def ValuedObject setTypeInt(ValuedObject valuedObject) {
-         valuedObject.setType(ValueType::INT)
-         valuedObject
-    }   
-    def ValuedObject setTypeBool(ValuedObject valuedObject) {
-         valuedObject.setType(ValueType::BOOL)
-         valuedObject
-    }    
-    def ValuedObject setTypeDouble(ValuedObject valuedObject) {
-         valuedObject.setType(ValueType::DOUBLE)
-         valuedObject
-    }    
-    def ValuedObject setTypeFloat(ValuedObject valuedObject) {
-         valuedObject.setType(ValueType::FLOAT)
-         valuedObject
-    }    
 
     //===========  VARIABLES  ===========
 
     // Creates a new variable ValuedObject in a Scope.
-    def ValuedObject createVariable(Scope scope, String variableName) {
-         val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-         valuedObject.setName(variableName)
-         valuedObject.setIsSignal(false)
+   def ValuedObject createVariable(Scope scope, String variableName) {
+         val valuedObject = variableName.createVariable
          scope.valuedObjects.add(valuedObject)
          valuedObject;
     }
-    
+
     // Creates a new Int variable ValuedObject in a Scope.
     def ValuedObject createIntVariable(Scope scope, String variableName) {
-         val valuedObject = scope.createVariable(variableName)
-         valuedObject.setTypeInt
+         scope.createIntVariable(variableName)
     }
     
     // Creates a new Bool variable ValuedObject in a Scope.
     def ValuedObject createBoolVariable(Scope scope, String variableName) {
-         val valuedObject = scope.createVariable(variableName)
-         valuedObject.setTypeBool
+        scope.createBoolVariable(variableName)
     }
 
     // Creates a new Double variable ValuedObject in a Scope.
     def ValuedObject createDoubleVariable(Scope scope, String variableName) {
-         val valuedObject = scope.createVariable(variableName)
-         valuedObject.setTypeDouble
+        scope.createDoubleVariable(variableName)
     }
 
     // Creates a new Float variable ValuedObject in a Scope.
     def ValuedObject createFloatVariable(Scope scope, String variableName) {
-         val valuedObject = scope.createVariable(variableName)
-         valuedObject.setTypeFloat
+         scope.createFloatVariable(variableName)
     }
-
-    // Apply attributes of another ValuedObject.
-    def ValuedObject applyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
-        valuedObject.setIsInput(valuedObjectWithAttributes.isInput)
-        valuedObject.setIsOutput(valuedObjectWithAttributes.isOutput)
-        valuedObject.setIsStatic(valuedObjectWithAttributes.isStatic)
-        valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
-        valuedObject.setType(valuedObjectWithAttributes.type)
-        valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
-        valuedObject
-    }
-    
 
     //============  SIGNALS  ============
-    
-    // Creates a new signal ValuedObject in a Scope.
-    def ValuedObject createSignal(Scope scope, String signalName) {
-         val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject()
-         valuedObject.setName(signalName)
-         valuedObject.setIsSignal(true)
+
+    // Creates a new variable ValuedObject in a Scope.
+   def ValuedObject createSignal(Scope scope, String variableName) {
+         val valuedObject = variableName.createSignal
          scope.valuedObjects.add(valuedObject)
-         valuedObject
+         valuedObject;
     }
 
     // Creates a new pure signal ValuedObject in a Scope.
     def ValuedObject createPureSignal(Scope scope, String variableName) {
-         val valuedObject = scope.createSignal(variableName)
-         valuedObject.setTypePure
+         scope.createPureSignal(variableName)
     }
 
     // Creates a new Int signal ValuedObject in a Scope.
     def ValuedObject createIntSignal(Scope scope, String variableName) {
-         val valuedObject = scope.createSignal(variableName)
-         valuedObject.setTypeInt
+        scope.createIntSignal(variableName)
     }
 
     // Creates a new Bool signal ValuedObject in a Scope.
     def ValuedObject createBoolSignal(Scope scope, String variableName) {
-         val valuedObject = scope.createSignal(variableName)
-         valuedObject.setTypeBool
+         scope.createBoolSignal(variableName)
     }
 
     // Creates a new Double signal ValuedObject in a Scope.
     def ValuedObject createDoubleSignal(Scope scope, String variableName) {
-         val valuedObject = scope.createSignal(variableName)
-         valuedObject.setTypeDouble
+         scope.createDoubleSignal(variableName)
     }
 
     // Creates a new Float signal ValuedObject in a Scope.
     def ValuedObject createFloatSignal(Scope scope, String variableName) {
-         val valuedObject = scope.createSignal(variableName)
-         valuedObject.setTypeFloat
+         scope.createFloatSignal(variableName)
     }
 
 
