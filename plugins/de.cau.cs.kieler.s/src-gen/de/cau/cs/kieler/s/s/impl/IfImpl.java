@@ -4,10 +4,10 @@ package de.cau.cs.kieler.s.s.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
 
-import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.If;
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.SPackage;
+import de.cau.cs.kieler.s.s.State;
 
 import java.util.Collection;
 
@@ -59,7 +59,7 @@ public class IfImpl extends InstructionImpl implements If
    * @generated
    * @ordered
    */
-  protected Continuation continuation;
+  protected State continuation;
 
   /**
    * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference list.
@@ -145,12 +145,12 @@ public class IfImpl extends InstructionImpl implements If
    * <!-- end-user-doc -->
    * @generated
    */
-  public Continuation getContinuation()
+  public State getContinuation()
   {
     if (continuation != null && continuation.eIsProxy())
     {
       InternalEObject oldContinuation = (InternalEObject)continuation;
-      continuation = (Continuation)eResolveProxy(oldContinuation);
+      continuation = (State)eResolveProxy(oldContinuation);
       if (continuation != oldContinuation)
       {
         if (eNotificationRequired())
@@ -165,7 +165,7 @@ public class IfImpl extends InstructionImpl implements If
    * <!-- end-user-doc -->
    * @generated
    */
-  public Continuation basicGetContinuation()
+  public State basicGetContinuation()
   {
     return continuation;
   }
@@ -175,9 +175,9 @@ public class IfImpl extends InstructionImpl implements If
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setContinuation(Continuation newContinuation)
+  public void setContinuation(State newContinuation)
   {
-    Continuation oldContinuation = continuation;
+    State oldContinuation = continuation;
     continuation = newContinuation;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SPackage.IF__CONTINUATION, oldContinuation, continuation));
@@ -251,7 +251,7 @@ public class IfImpl extends InstructionImpl implements If
         setExpression((Expression)newValue);
         return;
       case SPackage.IF__CONTINUATION:
-        setContinuation((Continuation)newValue);
+        setContinuation((State)newValue);
         return;
       case SPackage.IF__INSTRUCTIONS:
         getInstructions().clear();
@@ -275,7 +275,7 @@ public class IfImpl extends InstructionImpl implements If
         setExpression((Expression)null);
         return;
       case SPackage.IF__CONTINUATION:
-        setContinuation((Continuation)null);
+        setContinuation((State)null);
         return;
       case SPackage.IF__INSTRUCTIONS:
         getInstructions().clear();

@@ -11,9 +11,8 @@ package de.cau.cs.kieler.s.s;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.s.s.Fork#getThread <em>Thread</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.Fork#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Fork#getContinuation <em>Continuation</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.Fork#getPriority <em>Priority</em>}</li>
  * </ul>
  * </p>
  *
@@ -24,30 +23,30 @@ package de.cau.cs.kieler.s.s;
 public interface Fork extends Instruction
 {
   /**
-   * Returns the value of the '<em><b>Thread</b></em>' reference.
+   * Returns the value of the '<em><b>Continuation</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Thread</em>' reference isn't clear,
+   * If the meaning of the '<em>Continuation</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Thread</em>' reference.
-   * @see #setThread(Continuation)
-   * @see de.cau.cs.kieler.s.s.SPackage#getFork_Thread()
+   * @return the value of the '<em>Continuation</em>' reference.
+   * @see #setContinuation(State)
+   * @see de.cau.cs.kieler.s.s.SPackage#getFork_Continuation()
    * @model
    * @generated
    */
-  Continuation getThread();
+  State getContinuation();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Fork#getThread <em>Thread</em>}' reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Fork#getContinuation <em>Continuation</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Thread</em>' reference.
-   * @see #getThread()
+   * @param value the new value of the '<em>Continuation</em>' reference.
+   * @see #getContinuation()
    * @generated
    */
-  void setThread(Continuation value);
+  void setContinuation(State value);
 
   /**
    * Returns the value of the '<em><b>Priority</b></em>' attribute.
@@ -74,31 +73,5 @@ public interface Fork extends Instruction
    * @generated
    */
   void setPriority(int value);
-
-  /**
-   * Returns the value of the '<em><b>Continuation</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Continuation</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Continuation</em>' reference.
-   * @see #setContinuation(Continuation)
-   * @see de.cau.cs.kieler.s.s.SPackage#getFork_Continuation()
-   * @model
-   * @generated
-   */
-  Continuation getContinuation();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Fork#getContinuation <em>Continuation</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Continuation</em>' reference.
-   * @see #getContinuation()
-   * @generated
-   */
-  void setContinuation(Continuation value);
 
 } // Fork

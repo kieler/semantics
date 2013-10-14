@@ -14,31 +14,31 @@
 package de.cau.cs.kieler.sccharts.s
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.s.extensions.SExtension
+import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.SFactory
+import de.cau.cs.kieler.sccharts.Assignment
+import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.s.extensions.SExtension
+import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.HashMap
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.s.s.If
-import de.cau.cs.kieler.sccharts.Emission
-import de.cau.cs.kieler.sccharts.Assignment
-import de.cau.cs.kieler.sccharts.TextEffect
 import java.util.List
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.s.s.Fork
 
 /**
  * Converts a SyncChart into an S program.
@@ -49,8 +49,8 @@ import java.util.List
  */
 class SCCharts2STransformation {
     
-    static String LabelSymbol = "L"
-    static String LocalSignalSymbol = "S"
+//    static String LabelSymbol = "L"
+//    static String LocalSignalSymbol = "S"
     
     @Inject
     extension KExpressionsExtension
@@ -66,17 +66,25 @@ class SCCharts2STransformation {
 
     static HashMap<State, de.cau.cs.kieler.s.s.State> STATES_SCCharts2S  = new HashMap<State, de.cau.cs.kieler.s.s.State>()
     static HashMap<de.cau.cs.kieler.s.s.State, State> STATES_S2SCCharts  = new HashMap<de.cau.cs.kieler.s.s.State, State>()
+    static HashMap<State, de.cau.cs.kieler.s.s.State> STATES_JOIN_SCCharts2S  = new HashMap<State, de.cau.cs.kieler.s.s.State>()
     
     def map(de.cau.cs.kieler.s.s.State sState, State state) {
         STATES_SCCharts2S.put(state, sState)
         STATES_S2SCCharts.put(sState, state)
     }
+    def mapJoin(de.cau.cs.kieler.s.s.State sState, State state) {
+        STATES_JOIN_SCCharts2S.put(state, sState)
+    }
     def clearStatesMapping() {
         STATES_SCCharts2S.clear
         STATES_S2SCCharts.clear
+        STATES_JOIN_SCCharts2S.clear
     }
     def sState(State state) {
         STATES_SCCharts2S.get(state)
+    }
+    def sJoinState(State state) {
+        STATES_JOIN_SCCharts2S.get(state)
     }
     def state(de.cau.cs.kieler.s.s.State sState) {
         STATES_S2SCCharts.get(sState)
@@ -142,7 +150,10 @@ class SCCharts2STransformation {
 
         // Create all states and a mapping
         for (state : allStates) { 
-            target.createSState(state.id).map(state)
+            target.createSState(state.getHierarchicalName(rootState.id)).map(state)
+            if (state.hierarchical) {
+                target.createSState(state.getHierarchicalName(rootState.id) + "_JOIN").mapJoin(state)
+            }
         }
         
         // Now traverse all states again and fill them
@@ -167,7 +178,7 @@ class SCCharts2STransformation {
 
 
     // ======================================================================================================
-    // ==                                   H A N D L E   S T A T E                             ==
+    // ==                                     H A N D L E   S T A T E                                      ==
     // ======================================================================================================
 
     def void handleState(State state) {
@@ -178,27 +189,37 @@ class SCCharts2STransformation {
             /////////////////////////
             // Handle macro states //
             /////////////////////////
+            val sJoinState = state.sJoinState
+
             if (state.outgoingTransitions.length > 0) {
                 val transition = state.outgoingTransitions.get(0)
 
                 if (transition.type == TransitionType::NORMALTERMINATION) {
                     // if not joined yet - continue at state depth
-                    val sjoin = joinElseContinueAt(transition.sourceState.sState)
-                    sState.addInstruction(sjoin);
+                    val sjoin = joinElseContinueAt(transition.sourceState.sJoinState)
+                    sJoinState.addInstruction(sjoin);
+                    sJoinState.transitionTo(transition.targetState.sState)
                 }
+            } else {
+                sJoinState.addInstruction(createHalt)
             }
             
+            sState.forkTo(sJoinState, 0)
+            for (region : state.regions) {
+                val initialState = region.states.filter[isInitial].get(0)
+                sState.forkTo(initialState.sState, 0)
+            }
             
         } else {
             ///////////////////////////
             // Handle simples states //
             ///////////////////////////
             // Consider immediate transitions
-            for (transition : state.outgoingTransitions.filter[!isImmediate]) {
+            for (transition : state.outgoingTransitions.filter[isImmediate]) {
                sState.handleTransition(transition)
             }
             // Consider delayed transitions, if any
-            val delayedTransitions = state.outgoingTransitions.filter[isImmediate]
+            val delayedTransitions = state.outgoingTransitions.filter[!isImmediate]
             if (!delayedTransitions.nullOrEmpty) {
                 // If there are delayed transitions create a pause
                 sState.addInstruction(createPause)
@@ -207,70 +228,51 @@ class SCCharts2STransformation {
                 }
             }
             
+            // Final states imply a TERM instructions, non-final-states a HALT
+            if (state.isFinal) {
+                sState.addInstruction(createTerm)
+            } else {
+                // Optimization: Do not put a halt if the instruction before is a transition,
+                // or a fork.
+                if (!(sState.instructions.length > 0 && 
+                       (sState.instructions.get(sState.instructions.length-1) instanceof Transition || 
+                       sState.instructions.get(sState.instructions.length-1) instanceof Fork))) {
+                   sState.addInstruction(createHalt)
+                }
+            }
+            
+            
         }
         
         
     }
+
+
 
     // ======================================================================================================
     // ==                                   H A N D L E   T R A N S I T I O N                              ==
     // ======================================================================================================
 
     def void handleTransition(de.cau.cs.kieler.s.s.State sState, Transition transition) {
-                val If sIf = createIf(TRUE) 
-                if (transition.trigger != null) {
-                    sIf.setExpression(transition.trigger.convertToSExpression);
+        if (transition.trigger != null) {
+            val sIf = createIf(transition.trigger.convertToSExpression);
+            sState.addInstruction(sIf)
+            if (!transition.effects.nullOrEmpty) {
+               for (effect : transition.effects) {
+                   effect.convertToSEffect(sIf.instructions);
+               }
+            }
+            sIf.transitionTo(transition.targetState.sState)
+        } else {
+            if (!transition.effects.nullOrEmpty) {
+                for (effect : transition.effects) {
+                    effect.convertToSEffect(sState.instructions);
                 }
-                
-                // handle transition effect - convert to s-effect
-                if (!transition.effects.nullOrEmpty) {
-                    for (effect : transition.effects) {
-                        effect.convertToSEffect(sIf.instructions);
-                    }
-                }
-        
+            }
+            sState.transitionTo(transition.targetState.sState)
+        }
     }
-    
-//    def void handleTransition2(Transition transition, de.cau.cs.kieler.s.s.State sState) {
-//            val sif = SFactory::eINSTANCE.createIf();
-//            val strans = SFactory::eINSTANCE.createTrans();
-//            val sabort = SFactory::eINSTANCE.createAbort();
-//            
-//            // handle transition trigger - convert to s-expression
-//            if (transition.type == TransitionType::NORMALTERMINATION) {
-//                val sjoin = joinElseContinueAt(transition.sourceState)
-//                // if not joined yet - continue at state depth
-//                sjoin.setContinuation(transition.sourceState.depthSState);
-//                sState.instructions.add(sjoin);
-//            }
-//            
-//            if (transition.trigger != null) {
-//                sif.setExpression(transition.trigger.convertToSExpression);
-//            }
-//            else {
-//                sif.setExpression(getTrueBooleanValue());
-//            }
-//            
-//            // handle transition effect - convert to s-effect
-//            if (!transition.effects.nullOrEmpty) {
-//                for (effect : transition.effects) {
-//                    effect.convertToSEffect(sif.instructions);
-//                }
-//            }
-//            
-//            // if leaving a macro state, first abort it
-//            // for weak abortions we know because of the lowered priority that
-//            // all internal behavior (of this tick!) has already executed and
-//            // we can safely abort the state.
-//            if (transition.sourceState.hierarchical) {
-//                sif.instructions.add(sabort);
-//            }    
-//
-//            // add transition to if-branch and add if-branch to sState
-//            strans.setContinuation(transition.targetState.surfaceSState);
-//            sif.instructions.add(strans);
-//            sState.instructions.add(sif);
-//    }    
+
 
 
     // ======================================================================================================
@@ -316,12 +318,14 @@ class SCCharts2STransformation {
         createExpression
     }
 
+
+
     // ======================================================================================================
     // ==                               C O N V E R T    E F F E C T S                                     ==
     // ======================================================================================================
 
     // Convert SyncChart transition effects and add them to an instructions list.
-    def dispatch void convertToSEffect(Emission effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
+    def dispatch void convertToSEffect(Emission effect, List<Instruction> instructions) {
         val sSignal = effect.valuedObject.sValuedObject
         val sEmit = sSignal.emit
         if (effect.newValue != null) {
@@ -333,19 +337,22 @@ class SCCharts2STransformation {
     }
     
     // Convert SyncChart variable assignments and add them to an instructions list.
-    def dispatch void convertToSEffect(Assignment effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
+    def dispatch void convertToSEffect(Assignment effect, List<Instruction> instructions) {
         // TODO
     }
 
     // Convert SyncChart text effects and add them to an instructions list.
-    def dispatch void convertToSEffect(TextEffect effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
+    def dispatch void convertToSEffect(TextEffect effect, List<Instruction> instructions) {
         val sHostCode = SFactory::eINSTANCE.createHostCodeInstruction;
         sHostCode.setHostCode("'" + effect.text + ";'");
         instructions.add(sHostCode);
     }
 
-    // ======================================================================================================
 
+
+    // ======================================================================================================
+    // ======================================================================================================
+    // ======================================================================================================
 
 //        // add interface variables to s program (as the global host code)
 //        target.setGlobalHostCodeInstruction(rootState.getStateVariables);

@@ -25,7 +25,6 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.s.s.Abort
 import de.cau.cs.kieler.s.s.Await
-import de.cau.cs.kieler.s.s.Continuation
 import de.cau.cs.kieler.s.s.Emit
 import de.cau.cs.kieler.s.s.Fork
 import de.cau.cs.kieler.s.s.Halt
@@ -73,7 +72,7 @@ class S2SJ {
 
    // -------------------------------------------------------------------------   
    
-   def String listContinuations(List<Continuation> continuationList) {
+   def String listContinuations(List<State> continuationList) {
        '''
     «FOR continuation : continuationList SEPARATOR ","» 
              «continuation.name»
@@ -135,7 +134,7 @@ import static '''  + packageName + '''.''' + className + '''.State.*;
 public class ''' + className + ''' extends SJLProgramWithSignals<State> implements Cloneable {
     
     enum State {
-        ''' + program.eAllContents.filter(typeof(Continuation)).toList.listContinuations + '''
+        ''' + program.eAllContents.filter(typeof(State)).toList.listContinuations + '''
     }
 
 ''' + program.valuedObjects.filter[e|e.isSignal].toList.listSignals + ''' 
@@ -270,10 +269,10 @@ break;
    // Expand a FORK instruction.
    def dispatch CharSequence expand(Fork forkInstruction) {
        '''«IF forkInstruction.getLastFork != forkInstruction» 
-             fork(«forkInstruction.thread.name»,«forkInstruction.priority»);
+             fork(«forkInstruction.continuation.name»,«forkInstruction.priority»);
           «ENDIF»
           «IF forkInstruction.getLastFork == forkInstruction» 
-             gotoB(«forkInstruction.thread.name»);
+             gotoB(«forkInstruction.continuation.name»);
 break;
           «ENDIF»
        '''

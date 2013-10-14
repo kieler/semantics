@@ -12,7 +12,7 @@ RootRegion returns sccharts::Region:
     (annotations+=ImportAnnotation)*
     (
       (annotations += Annotation)*
-      'region' (id=ID)? (label=STRING)? ':'
+      'region' id=ID (label=STRING)? ':'
       (valuedObjects+=ValuedObject)*
       (bodyText+=TextualCode)* 
      )?

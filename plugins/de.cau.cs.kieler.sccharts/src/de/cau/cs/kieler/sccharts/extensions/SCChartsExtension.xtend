@@ -641,6 +641,10 @@ class SCChartsExtension {
     
     // This helper method returns the hierarchical name of a state considering all hierarchical
     // higher states. A string is formed by the traversed state IDs.
+    def String getHierarchicalName(State state) {
+        state.getHierarchicalName(null)
+    }
+    
     def String getHierarchicalName(State state, String StartSymbol) {
         if (state.parentRegion != null) {
             if (state.parentRegion.parentState != null) {
@@ -653,7 +657,7 @@ class SCChartsExtension {
                     stateId = state.id
                 }
                 if (regionId.nullOrEmpty) {
-                    regionId = state.parentRegion.id
+                    regionId = "REGION" + (state.parentRegion.parentState.regions.indexOf(state.parentRegion) + 1)
                 }
                 if (!higherHierarchyReturnedName.nullOrEmpty) {
                     higherHierarchyReturnedName = higherHierarchyReturnedName + "_";
@@ -670,7 +674,10 @@ class SCChartsExtension {
                 }
             }
         }
-        return StartSymbol + "_";
+        if (StartSymbol != null) {
+            return StartSymbol; // +  "_";
+        }
+        return ""
     }
 
     //-------------------------------------------------------------------------

@@ -2772,7 +2772,7 @@ rule__RootRegion__Group_2__2__Impl
 :
 (
 { before(grammarAccess.getRootRegionAccess().getIdAssignment_2_2()); }
-(rule__RootRegion__IdAssignment_2_2)?
+(rule__RootRegion__IdAssignment_2_2)
 { after(grammarAccess.getRootRegionAccess().getIdAssignment_2_2()); }
 )
 

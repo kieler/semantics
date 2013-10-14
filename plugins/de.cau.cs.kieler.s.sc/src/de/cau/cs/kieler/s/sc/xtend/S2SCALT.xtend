@@ -392,12 +392,12 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    // if the LAST fork instruction is reached, process these lists and clear them. 
    def dispatch CharSequence expand(Fork forkInstruction) {
    	'''«IF forkInstruction.getLastFork != forkInstruction»
-   	     «forkThreadNameList.add(forkInstruction.thread.name).suppress» 
-   	     «forkThreadPrioMap.put(forkInstruction.thread.name, forkInstruction.priority)» 
+   	     «forkThreadNameList.add(forkInstruction.continuation.name).suppress» 
+   	     «forkThreadPrioMap.put(forkInstruction.continuation.name, forkInstruction.priority)» 
    	   «ENDIF»
    	   «IF forkInstruction.getLastFork == forkInstruction» 
-«forkThreadNameList.add(forkInstruction.thread.name).suppress» 
-«forkThreadPrioMap.put(forkInstruction.thread.name, forkInstruction.priority)»
+«forkThreadNameList.add(forkInstruction.continuation.name).suppress» 
+«forkThreadPrioMap.put(forkInstruction.continuation.name, forkInstruction.priority)»
 «/*NOW PROCESS THE FILLED LISTS*/»
 FORK«forkThreadNameList.size»(«FOR forkThreadName : forkThreadNameList SEPARATOR ", "»«forkThreadName»,«forkThreadPrioMap.get(forkThreadName)»«ENDFOR»);
    	      «// clear for the next usage

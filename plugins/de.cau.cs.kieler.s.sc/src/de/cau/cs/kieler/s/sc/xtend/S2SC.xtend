@@ -366,10 +366,10 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    // Expand a FORK instruction.
    def dispatch CharSequence expand(Fork forkInstruction) {
    	'''«IF forkInstruction.getLastFork != forkInstruction» 
-   	      FORK(«forkInstruction.thread.name»,«forkInstruction.priority»);
+   	      FORK(«forkInstruction.continuation.name»,«forkInstruction.priority»);
    	   «ENDIF»
    	   «IF forkInstruction.getLastFork == forkInstruction» 
-   	      FORKE(«forkInstruction.thread.name»);
+   	      FORKE(«forkInstruction.continuation.name»);
    	   «ENDIF»
    	'''
    }   

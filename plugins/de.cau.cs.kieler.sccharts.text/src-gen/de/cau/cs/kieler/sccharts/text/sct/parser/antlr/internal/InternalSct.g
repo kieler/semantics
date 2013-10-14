@@ -151,7 +151,7 @@ ruleRootRegion returns [EObject current=null]
 	    }
 
 )
-)?(
+)(
 (
 		lv_label_5_0=RULE_STRING
 		{

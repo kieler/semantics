@@ -30,12 +30,12 @@ public interface Trans extends Instruction
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Continuation</em>' reference.
-   * @see #setContinuation(Continuation)
+   * @see #setContinuation(State)
    * @see de.cau.cs.kieler.s.s.SPackage#getTrans_Continuation()
    * @model
    * @generated
    */
-  Continuation getContinuation();
+  State getContinuation();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.s.s.Trans#getContinuation <em>Continuation</em>}' reference.
@@ -45,6 +45,6 @@ public interface Trans extends Instruction
    * @see #getContinuation()
    * @generated
    */
-  void setContinuation(Continuation value);
+  void setContinuation(State value);
 
 } // Trans
