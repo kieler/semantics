@@ -81,5 +81,16 @@ public class SFormatter extends AbstractDeclarativeFormatter {
                          f.getIfAccess().getRightCurlyBracketKeyword_7());
         //c.setLinewrap().after(f.getIfAccess().getLeftCurlyBracketKeyword_5());
         c.setLinewrap().before(f.getIfAccess().getRightCurlyBracketKeyword_7());
+        
+        
+        // No space for state identifier
+        c.setNoSpace().after(f.getStateAccess().getLeftParenthesisKeyword_1());
+        c.setNoSpace().before(f.getStateAccess().getRightParenthesisKeyword_3());
+
+        /*
+         * DECLARATIONS
+         */
+        c.setNoSpace().before(f.getValuedObjectAccess().getSemicolonKeyword_9());
+    
     }
 }
