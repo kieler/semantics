@@ -388,7 +388,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
-            node.addPort(SCGPORTID_INCOMING, 36, 0, 3, PortSide::NORTH)
+            val port = node.addPort(SCGPORTID_INCOMING, 36, 0, 3, PortSide::NORTH)
+            port.addLayoutParam(LayoutOptions::OFFSET, -2f)
         ];
     }
 
@@ -411,7 +412,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
-            node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)
+            val port = node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)
+            port.addLayoutParam(LayoutOptions::OFFSET, -3f)
         ]
     }
 
@@ -460,6 +462,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
                     it.setPortSize(3,3)
                     it.addRectangle.invisible = true;
+                    it.addLayoutParam(LayoutOptions::OFFSET, -3f)
                     sourceObj.node.ports += it
                 ]
 //                if (SHOW_HIERARCHY.optionBooleanValue) {
@@ -486,6 +489,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
                     it.setPortSize(3,3)
                     it.addRectangle.invisible = true;
+                    it.addLayoutParam(LayoutOptions::OFFSET, -2f)
                     targetObj.node.ports += it
                 ]
 //                if (SHOW_HIERARCHY.optionBooleanValue) {
@@ -512,8 +516,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     if (addArrowFinal) it.addArrowDecorator
 //                    it.lineStyle.dashPattern.clear;
 //                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
-            ]
-                        
+            ]               
         ]
     }    
 
