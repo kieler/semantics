@@ -38,6 +38,7 @@ import java.util.HashMap
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.s.s.Fork
 
 /**
  * Converts a SyncChart into an S program.
@@ -195,14 +196,17 @@ class SCCharts2STransformation {
 
                 if (transition.type == TransitionType::NORMALTERMINATION) {
                     // if not joined yet - continue at state depth
-                    val sjoin = joinElseContinueAt(transition.sourceState.sState)
+                    val sjoin = joinElseContinueAt(transition.sourceState.sJoinState)
                     sJoinState.addInstruction(sjoin);
+                    sJoinState.transitionTo(transition.targetState.sState)
                 }
+            } else {
+                sJoinState.addInstruction(createHalt)
             }
             
             sState.forkTo(sJoinState, 0)
             for (region : state.regions) {
-                val initialState = state.regions.get(0).states.filter[isInitial].get(0)
+                val initialState = region.states.filter[isInitial].get(0)
                 sState.forkTo(initialState.sState, 0)
             }
             
@@ -223,6 +227,20 @@ class SCCharts2STransformation {
                    sState.handleTransition(transition)
                 }
             }
+            
+            // Final states imply a TERM instructions, non-final-states a HALT
+            if (state.isFinal) {
+                sState.addInstruction(createTerm)
+            } else {
+                // Optimization: Do not put a halt if the instruction before is a transition,
+                // or a fork.
+                if (!(sState.instructions.length > 0 && 
+                       (sState.instructions.get(sState.instructions.length-1) instanceof Transition || 
+                       sState.instructions.get(sState.instructions.length-1) instanceof Fork))) {
+                   sState.addInstruction(createHalt)
+                }
+            }
+            
             
         }
         
