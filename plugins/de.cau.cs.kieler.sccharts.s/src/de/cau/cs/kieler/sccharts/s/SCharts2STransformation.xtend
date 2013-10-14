@@ -217,18 +217,21 @@ class SCCharts2STransformation {
     // ======================================================================================================
 
     def void handleTransition(de.cau.cs.kieler.s.s.State sState, Transition transition) {
-                val If sIf = createIf(TRUE) 
-                if (transition.trigger != null) {
-                    sIf.setExpression(transition.trigger.convertToSExpression);
-                }
-                
-                // handle transition effect - convert to s-effect
-                if (!transition.effects.nullOrEmpty) {
-                    for (effect : transition.effects) {
-                        effect.convertToSEffect(sIf.instructions);
-                    }
-                }
-        
+        var instructions = sState.instructions
+        if (transition.trigger != null) {
+            val sIf = createIf(transition.trigger.convertToSExpression);
+            sState.addInstruction(sIf)
+            instructions = sIf.instructions
+        }
+
+        // handle transition effect - convert to s-effect
+       if (!transition.effects.nullOrEmpty) {
+           for (effect : transition.effects) {
+               effect.convertToSEffect(instructions);
+           }
+       }
+       
+       sState.transitionTo(transition.targetState.sState)
     }
     
 //    def void handleTransition2(Transition transition, de.cau.cs.kieler.s.s.State sState) {

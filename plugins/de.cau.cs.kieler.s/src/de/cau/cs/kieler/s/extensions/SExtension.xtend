@@ -107,9 +107,10 @@ class SExtension {
     }
     
     // Create a transition to a continuation label.
-    def Trans transitionTo(Continuation continuation) {
+    def Trans transitionTo(State state, Continuation continuation) {
          val transition = SFactory::eINSTANCE.createTrans()
          transition.setContinuation(continuation)
+         state.instructions.add(transition)
          transition
     }
     
