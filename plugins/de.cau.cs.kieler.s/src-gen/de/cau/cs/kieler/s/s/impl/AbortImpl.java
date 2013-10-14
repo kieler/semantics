@@ -3,8 +3,8 @@
 package de.cau.cs.kieler.s.s.impl;
 
 import de.cau.cs.kieler.s.s.Abort;
-import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.SPackage;
+import de.cau.cs.kieler.s.s.State;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -36,7 +36,7 @@ public class AbortImpl extends InstructionImpl implements Abort
    * @generated
    * @ordered
    */
-  protected Continuation continuation;
+  protected State continuation;
 
   /**
    * <!-- begin-user-doc -->
@@ -64,12 +64,12 @@ public class AbortImpl extends InstructionImpl implements Abort
    * <!-- end-user-doc -->
    * @generated
    */
-  public Continuation getContinuation()
+  public State getContinuation()
   {
     if (continuation != null && continuation.eIsProxy())
     {
       InternalEObject oldContinuation = (InternalEObject)continuation;
-      continuation = (Continuation)eResolveProxy(oldContinuation);
+      continuation = (State)eResolveProxy(oldContinuation);
       if (continuation != oldContinuation)
       {
         if (eNotificationRequired())
@@ -84,7 +84,7 @@ public class AbortImpl extends InstructionImpl implements Abort
    * <!-- end-user-doc -->
    * @generated
    */
-  public Continuation basicGetContinuation()
+  public State basicGetContinuation()
   {
     return continuation;
   }
@@ -94,9 +94,9 @@ public class AbortImpl extends InstructionImpl implements Abort
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setContinuation(Continuation newContinuation)
+  public void setContinuation(State newContinuation)
   {
-    Continuation oldContinuation = continuation;
+    State oldContinuation = continuation;
     continuation = newContinuation;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SPackage.ABORT__CONTINUATION, oldContinuation, continuation));
@@ -130,7 +130,7 @@ public class AbortImpl extends InstructionImpl implements Abort
     switch (featureID)
     {
       case SPackage.ABORT__CONTINUATION:
-        setContinuation((Continuation)newValue);
+        setContinuation((State)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -147,7 +147,7 @@ public class AbortImpl extends InstructionImpl implements Abort
     switch (featureID)
     {
       case SPackage.ABORT__CONTINUATION:
-        setContinuation((Continuation)null);
+        setContinuation((State)null);
         return;
     }
     super.eUnset(featureID);

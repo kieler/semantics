@@ -37,7 +37,6 @@ public class SParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getContinuationAccess().getAlternatives(), "rule__Continuation__Alternatives");
 					put(grammarAccess.getInstructionAccess().getAlternatives(), "rule__Instruction__Alternatives");
 					put(grammarAccess.getSExpressionAccess().getAlternatives(), "rule__SExpression__Alternatives");
 					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
@@ -62,9 +61,6 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getGroup(), "rule__State__Group__0");
 					put(grammarAccess.getStateAccess().getGroup_5(), "rule__State__Group_5__0");
 					put(grammarAccess.getStateAccess().getGroup_6(), "rule__State__Group_6__0");
-					put(grammarAccess.getThreadAccess().getGroup(), "rule__Thread__Group__0");
-					put(grammarAccess.getThreadAccess().getGroup_5(), "rule__Thread__Group_5__0");
-					put(grammarAccess.getThreadAccess().getGroup_6(), "rule__Thread__Group_6__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup(), "rule__ValuedObject__Group__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup_7(), "rule__ValuedObject__Group_7__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup_8(), "rule__ValuedObject__Group_8__0");
@@ -72,7 +68,6 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPrioAccess().getGroup_3(), "rule__Prio__Group_3__0");
 					put(grammarAccess.getTransAccess().getGroup(), "rule__Trans__Group__0");
 					put(grammarAccess.getForkAccess().getGroup(), "rule__Fork__Group__0");
-					put(grammarAccess.getForkAccess().getGroup_5(), "rule__Fork__Group_5__0");
 					put(grammarAccess.getJoinAccess().getGroup(), "rule__Join__Group__0");
 					put(grammarAccess.getPauseAccess().getGroup(), "rule__Pause__Group__0");
 					put(grammarAccess.getTermAccess().getGroup(), "rule__Term__Group__0");
@@ -132,9 +127,6 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getNameAssignment_2(), "rule__State__NameAssignment_2");
 					put(grammarAccess.getStateAccess().getValuedObjectsAssignment_5_0(), "rule__State__ValuedObjectsAssignment_5_0");
 					put(grammarAccess.getStateAccess().getInstructionsAssignment_6_0(), "rule__State__InstructionsAssignment_6_0");
-					put(grammarAccess.getThreadAccess().getNameAssignment_2(), "rule__Thread__NameAssignment_2");
-					put(grammarAccess.getThreadAccess().getValuedObjectsAssignment_5_0(), "rule__Thread__ValuedObjectsAssignment_5_0");
-					put(grammarAccess.getThreadAccess().getStatesAssignment_6_0(), "rule__Thread__StatesAssignment_6_0");
 					put(grammarAccess.getValuedObjectAccess().getAnnotationsAssignment_0(), "rule__ValuedObject__AnnotationsAssignment_0");
 					put(grammarAccess.getValuedObjectAccess().getIsInputAssignment_1(), "rule__ValuedObject__IsInputAssignment_1");
 					put(grammarAccess.getValuedObjectAccess().getIsOutputAssignment_2(), "rule__ValuedObject__IsOutputAssignment_2");
@@ -148,9 +140,8 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPrioAccess().getPriorityAssignment_2(), "rule__Prio__PriorityAssignment_2");
 					put(grammarAccess.getPrioAccess().getContinuationAssignment_3_1(), "rule__Prio__ContinuationAssignment_3_1");
 					put(grammarAccess.getTransAccess().getContinuationAssignment_2(), "rule__Trans__ContinuationAssignment_2");
-					put(grammarAccess.getForkAccess().getThreadAssignment_2(), "rule__Fork__ThreadAssignment_2");
+					put(grammarAccess.getForkAccess().getContinuationAssignment_2(), "rule__Fork__ContinuationAssignment_2");
 					put(grammarAccess.getForkAccess().getPriorityAssignment_4(), "rule__Fork__PriorityAssignment_4");
-					put(grammarAccess.getForkAccess().getContinuationAssignment_5_1(), "rule__Fork__ContinuationAssignment_5_1");
 					put(grammarAccess.getJoinAccess().getContinuationAssignment_3(), "rule__Join__ContinuationAssignment_3");
 					put(grammarAccess.getPauseAccess().getContinuationAssignment_3(), "rule__Pause__ContinuationAssignment_3");
 					put(grammarAccess.getTermAccess().getContinuationAssignment_3(), "rule__Term__ContinuationAssignment_3");

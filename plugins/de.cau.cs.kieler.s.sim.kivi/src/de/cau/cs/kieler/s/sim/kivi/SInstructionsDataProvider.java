@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.graphics.RGB;
 
 import de.cau.cs.kieler.s.s.Instruction;
-import de.cau.cs.kieler.s.s.Continuation;
+import de.cau.cs.kieler.s.s.State;
 import de.cau.cs.kieler.s.s.Fork;
 import de.cau.cs.kieler.sim.instructions.IInstructionsDataProvider;
 import de.cau.cs.kieler.sim.instructions.InstructionsData;
@@ -76,8 +76,8 @@ public class SInstructionsDataProvider implements IInstructionsDataProvider {
 
             String label = "";
             EObject container = instruction.eContainer();
-            if (container instanceof Continuation) {
-                label = ((Continuation) container).getName();
+            if (container instanceof State) {
+                label = ((State) container).getName();
             }
 
             if (instruction instanceof Trans) {
@@ -85,7 +85,7 @@ public class SInstructionsDataProvider implements IInstructionsDataProvider {
             }
 
             if (instruction instanceof Fork) {
-                instructionName += " (" + ((Fork) instruction).getThread().getName() + ")";
+                instructionName += " (" + ((Fork) instruction).getContinuation().getName() + ")";
             }
 
             if (instruction instanceof Prio) {

@@ -2,9 +2,9 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.Fork;
 import de.cau.cs.kieler.s.s.SPackage;
+import de.cau.cs.kieler.s.s.State;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -20,9 +20,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.ForkImpl#getThread <em>Thread</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.ForkImpl#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ForkImpl#getContinuation <em>Continuation</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.ForkImpl#getPriority <em>Priority</em>}</li>
  * </ul>
  * </p>
  *
@@ -31,14 +30,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class ForkImpl extends InstructionImpl implements Fork
 {
   /**
-   * The cached value of the '{@link #getThread() <em>Thread</em>}' reference.
+   * The cached value of the '{@link #getContinuation() <em>Continuation</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getThread()
+   * @see #getContinuation()
    * @generated
    * @ordered
    */
-  protected Continuation thread;
+  protected State continuation;
 
   /**
    * The default value of the '{@link #getPriority() <em>Priority</em>}' attribute.
@@ -59,16 +58,6 @@ public class ForkImpl extends InstructionImpl implements Fork
    * @ordered
    */
   protected int priority = PRIORITY_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getContinuation() <em>Continuation</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getContinuation()
-   * @generated
-   * @ordered
-   */
-  protected Continuation continuation;
 
   /**
    * <!-- begin-user-doc -->
@@ -96,19 +85,19 @@ public class ForkImpl extends InstructionImpl implements Fork
    * <!-- end-user-doc -->
    * @generated
    */
-  public Continuation getThread()
+  public State getContinuation()
   {
-    if (thread != null && thread.eIsProxy())
+    if (continuation != null && continuation.eIsProxy())
     {
-      InternalEObject oldThread = (InternalEObject)thread;
-      thread = (Continuation)eResolveProxy(oldThread);
-      if (thread != oldThread)
+      InternalEObject oldContinuation = (InternalEObject)continuation;
+      continuation = (State)eResolveProxy(oldContinuation);
+      if (continuation != oldContinuation)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.FORK__THREAD, oldThread, thread));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.FORK__CONTINUATION, oldContinuation, continuation));
       }
     }
-    return thread;
+    return continuation;
   }
 
   /**
@@ -116,9 +105,9 @@ public class ForkImpl extends InstructionImpl implements Fork
    * <!-- end-user-doc -->
    * @generated
    */
-  public Continuation basicGetThread()
+  public State basicGetContinuation()
   {
-    return thread;
+    return continuation;
   }
 
   /**
@@ -126,12 +115,12 @@ public class ForkImpl extends InstructionImpl implements Fork
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setThread(Continuation newThread)
+  public void setContinuation(State newContinuation)
   {
-    Continuation oldThread = thread;
-    thread = newThread;
+    State oldContinuation = continuation;
+    continuation = newContinuation;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.FORK__THREAD, oldThread, thread));
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.FORK__CONTINUATION, oldContinuation, continuation));
   }
 
   /**
@@ -162,62 +151,16 @@ public class ForkImpl extends InstructionImpl implements Fork
    * <!-- end-user-doc -->
    * @generated
    */
-  public Continuation getContinuation()
-  {
-    if (continuation != null && continuation.eIsProxy())
-    {
-      InternalEObject oldContinuation = (InternalEObject)continuation;
-      continuation = (Continuation)eResolveProxy(oldContinuation);
-      if (continuation != oldContinuation)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.FORK__CONTINUATION, oldContinuation, continuation));
-      }
-    }
-    return continuation;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Continuation basicGetContinuation()
-  {
-    return continuation;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setContinuation(Continuation newContinuation)
-  {
-    Continuation oldContinuation = continuation;
-    continuation = newContinuation;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.FORK__CONTINUATION, oldContinuation, continuation));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
-      case SPackage.FORK__THREAD:
-        if (resolve) return getThread();
-        return basicGetThread();
-      case SPackage.FORK__PRIORITY:
-        return getPriority();
       case SPackage.FORK__CONTINUATION:
         if (resolve) return getContinuation();
         return basicGetContinuation();
+      case SPackage.FORK__PRIORITY:
+        return getPriority();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -232,14 +175,11 @@ public class ForkImpl extends InstructionImpl implements Fork
   {
     switch (featureID)
     {
-      case SPackage.FORK__THREAD:
-        setThread((Continuation)newValue);
+      case SPackage.FORK__CONTINUATION:
+        setContinuation((State)newValue);
         return;
       case SPackage.FORK__PRIORITY:
         setPriority((Integer)newValue);
-        return;
-      case SPackage.FORK__CONTINUATION:
-        setContinuation((Continuation)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -255,14 +195,11 @@ public class ForkImpl extends InstructionImpl implements Fork
   {
     switch (featureID)
     {
-      case SPackage.FORK__THREAD:
-        setThread((Continuation)null);
+      case SPackage.FORK__CONTINUATION:
+        setContinuation((State)null);
         return;
       case SPackage.FORK__PRIORITY:
         setPriority(PRIORITY_EDEFAULT);
-        return;
-      case SPackage.FORK__CONTINUATION:
-        setContinuation((Continuation)null);
         return;
     }
     super.eUnset(featureID);
@@ -278,12 +215,10 @@ public class ForkImpl extends InstructionImpl implements Fork
   {
     switch (featureID)
     {
-      case SPackage.FORK__THREAD:
-        return thread != null;
-      case SPackage.FORK__PRIORITY:
-        return priority != PRIORITY_EDEFAULT;
       case SPackage.FORK__CONTINUATION:
         return continuation != null;
+      case SPackage.FORK__PRIORITY:
+        return priority != PRIORITY_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }

@@ -14,31 +14,30 @@
 package de.cau.cs.kieler.sccharts.s
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.s.extensions.SExtension
+import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.SFactory
+import de.cau.cs.kieler.sccharts.Assignment
+import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.s.extensions.SExtension
+import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.HashMap
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.s.s.If
-import de.cau.cs.kieler.sccharts.Emission
-import de.cau.cs.kieler.sccharts.Assignment
-import de.cau.cs.kieler.sccharts.TextEffect
 import java.util.List
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Converts a SyncChart into an S program.
@@ -49,8 +48,8 @@ import java.util.List
  */
 class SCCharts2STransformation {
     
-    static String LabelSymbol = "L"
-    static String LocalSignalSymbol = "S"
+//    static String LabelSymbol = "L"
+//    static String LocalSignalSymbol = "S"
     
     @Inject
     extension KExpressionsExtension
@@ -66,17 +65,25 @@ class SCCharts2STransformation {
 
     static HashMap<State, de.cau.cs.kieler.s.s.State> STATES_SCCharts2S  = new HashMap<State, de.cau.cs.kieler.s.s.State>()
     static HashMap<de.cau.cs.kieler.s.s.State, State> STATES_S2SCCharts  = new HashMap<de.cau.cs.kieler.s.s.State, State>()
+    static HashMap<State, de.cau.cs.kieler.s.s.State> STATES_JOIN_SCCharts2S  = new HashMap<State, de.cau.cs.kieler.s.s.State>()
     
     def map(de.cau.cs.kieler.s.s.State sState, State state) {
         STATES_SCCharts2S.put(state, sState)
         STATES_S2SCCharts.put(sState, state)
     }
+    def mapJoin(de.cau.cs.kieler.s.s.State sState, State state) {
+        STATES_JOIN_SCCharts2S.put(state, sState)
+    }
     def clearStatesMapping() {
         STATES_SCCharts2S.clear
         STATES_S2SCCharts.clear
+        STATES_JOIN_SCCharts2S.clear
     }
     def sState(State state) {
         STATES_SCCharts2S.get(state)
+    }
+    def sJoinState(State state) {
+        STATES_JOIN_SCCharts2S.get(state)
     }
     def state(de.cau.cs.kieler.s.s.State sState) {
         STATES_S2SCCharts.get(sState)
@@ -143,6 +150,9 @@ class SCCharts2STransformation {
         // Create all states and a mapping
         for (state : allStates) { 
             target.createSState(state.getHierarchicalName(rootState.id)).map(state)
+            if (state.hierarchical) {
+                target.createSState(state.getHierarchicalName(rootState.id) + "_JOIN").mapJoin(state)
+            }
         }
         
         // Now traverse all states again and fill them
@@ -178,16 +188,23 @@ class SCCharts2STransformation {
             /////////////////////////
             // Handle macro states //
             /////////////////////////
+            val sJoinState = state.sJoinState
+
             if (state.outgoingTransitions.length > 0) {
                 val transition = state.outgoingTransitions.get(0)
 
                 if (transition.type == TransitionType::NORMALTERMINATION) {
                     // if not joined yet - continue at state depth
                     val sjoin = joinElseContinueAt(transition.sourceState.sState)
-                    sState.addInstruction(sjoin);
+                    sJoinState.addInstruction(sjoin);
                 }
             }
             
+            sState.forkTo(sJoinState, 0)
+            for (region : state.regions) {
+                val initialState = state.regions.get(0).states.filter[isInitial].get(0)
+                sState.forkTo(initialState.sState, 0)
+            }
             
         } else {
             ///////////////////////////
@@ -290,7 +307,7 @@ class SCCharts2STransformation {
     // ======================================================================================================
 
     // Convert SyncChart transition effects and add them to an instructions list.
-    def dispatch void convertToSEffect(Emission effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
+    def dispatch void convertToSEffect(Emission effect, List<Instruction> instructions) {
         val sSignal = effect.valuedObject.sValuedObject
         val sEmit = sSignal.emit
         if (effect.newValue != null) {
@@ -302,12 +319,12 @@ class SCCharts2STransformation {
     }
     
     // Convert SyncChart variable assignments and add them to an instructions list.
-    def dispatch void convertToSEffect(Assignment effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
+    def dispatch void convertToSEffect(Assignment effect, List<Instruction> instructions) {
         // TODO
     }
 
     // Convert SyncChart text effects and add them to an instructions list.
-    def dispatch void convertToSEffect(TextEffect effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
+    def dispatch void convertToSEffect(TextEffect effect, List<Instruction> instructions) {
         val sHostCode = SFactory::eINSTANCE.createHostCodeInstruction;
         sHostCode.setHostCode("'" + effect.text + ";'");
         instructions.add(sHostCode);

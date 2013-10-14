@@ -30,13 +30,13 @@ import de.cau.cs.kieler.s.s.SFactory
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.Join
-import de.cau.cs.kieler.s.s.Continuation
 import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.If
 import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.s.s.Abort
 import de.cau.cs.kieler.s.s.Emit
 import de.cau.cs.kieler.s.s.Pause
+import de.cau.cs.kieler.s.s.Fork
 
 /**
  * S Extensions. 
@@ -87,7 +87,7 @@ class SExtension {
         SFactory::eINSTANCE.createJoin()
     }
     
-    def Join joinElseContinueAt(Continuation continuation) {
+    def Join joinElseContinueAt(State continuation) {
         val join = createJoin
         join.setContinuation(continuation)
         join
@@ -105,9 +105,19 @@ class SExtension {
         instruction.setExpression(expression)
         instruction
     }
+
+    // Create a fork to a continuation label.
+    def Fork forkTo(State state, State continuation, int priority) {
+         val fork = SFactory::eINSTANCE.createFork()
+         fork.setContinuation(continuation)
+         fork.setPriority(priority)
+         state.instructions.add(fork)
+         fork
+    }
+
     
     // Create a transition to a continuation label.
-    def Trans transitionTo(State state, Continuation continuation) {
+    def Trans transitionTo(State state, State continuation) {
          val transition = SFactory::eINSTANCE.createTrans()
          transition.setContinuation(continuation)
          state.instructions.add(transition)
@@ -115,12 +125,14 @@ class SExtension {
     }
 
     // Create a transition to a continuation label.
-    def Trans transitionTo(If ifInstruction, Continuation continuation) {
+    def Trans transitionTo(If ifInstruction, State continuation) {
          val transition = SFactory::eINSTANCE.createTrans()
          transition.setContinuation(continuation)
          ifInstruction.instructions.add(transition)
          transition
     }
+    
+    
     
     // Create an abort instruction.
     def Abort createAbort() {

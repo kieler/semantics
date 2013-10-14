@@ -61,12 +61,12 @@ public interface If extends Instruction
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Continuation</em>' reference.
-   * @see #setContinuation(Continuation)
+   * @see #setContinuation(State)
    * @see de.cau.cs.kieler.s.s.SPackage#getIf_Continuation()
    * @model
    * @generated
    */
-  Continuation getContinuation();
+  State getContinuation();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.s.s.If#getContinuation <em>Continuation</em>}' reference.
@@ -76,7 +76,7 @@ public interface If extends Instruction
    * @see #getContinuation()
    * @generated
    */
-  void setContinuation(Continuation value);
+  void setContinuation(State value);
 
   /**
    * Returns the value of the '<em><b>Instructions</b></em>' containment reference list.

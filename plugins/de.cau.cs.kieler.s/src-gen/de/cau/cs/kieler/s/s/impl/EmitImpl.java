@@ -5,9 +5,9 @@ package de.cau.cs.kieler.s.s.impl;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
-import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.Emit;
 import de.cau.cs.kieler.s.s.SPackage;
+import de.cau.cs.kieler.s.s.State;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -62,7 +62,7 @@ public class EmitImpl extends InstructionImpl implements Emit
    * @generated
    * @ordered
    */
-  protected Continuation continuation;
+  protected State continuation;
 
   /**
    * <!-- begin-user-doc -->
@@ -181,12 +181,12 @@ public class EmitImpl extends InstructionImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public Continuation getContinuation()
+  public State getContinuation()
   {
     if (continuation != null && continuation.eIsProxy())
     {
       InternalEObject oldContinuation = (InternalEObject)continuation;
-      continuation = (Continuation)eResolveProxy(oldContinuation);
+      continuation = (State)eResolveProxy(oldContinuation);
       if (continuation != oldContinuation)
       {
         if (eNotificationRequired())
@@ -201,7 +201,7 @@ public class EmitImpl extends InstructionImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public Continuation basicGetContinuation()
+  public State basicGetContinuation()
   {
     return continuation;
   }
@@ -211,9 +211,9 @@ public class EmitImpl extends InstructionImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setContinuation(Continuation newContinuation)
+  public void setContinuation(State newContinuation)
   {
-    Continuation oldContinuation = continuation;
+    State oldContinuation = continuation;
     continuation = newContinuation;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SPackage.EMIT__CONTINUATION, oldContinuation, continuation));
@@ -274,7 +274,7 @@ public class EmitImpl extends InstructionImpl implements Emit
         setValue((Expression)newValue);
         return;
       case SPackage.EMIT__CONTINUATION:
-        setContinuation((Continuation)newValue);
+        setContinuation((State)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -297,7 +297,7 @@ public class EmitImpl extends InstructionImpl implements Emit
         setValue((Expression)null);
         return;
       case SPackage.EMIT__CONTINUATION:
-        setContinuation((Continuation)null);
+        setContinuation((State)null);
         return;
     }
     super.eUnset(featureID);
