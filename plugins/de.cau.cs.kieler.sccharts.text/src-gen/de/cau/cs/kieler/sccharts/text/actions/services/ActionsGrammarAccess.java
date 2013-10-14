@@ -851,7 +851,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//AtomicValuedExpression returns Expression:
 	//	IntValue //    | '(' DivExpression ')'
-	//	| FloatValue | "(" ValuedExpression ")" | AtomicExpression;
+	//	| FloatValue | DoubleValue | "(" ValuedExpression ")" | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaKExpressions.getAtomicValuedExpressionAccess();
 	}
@@ -924,6 +924,16 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getBoolValueRule() {
 		return getBoolValueAccess().getRule();
+	}
+
+	//DoubleValue:
+	//	value=FLOAT;
+	public KExpressionsGrammarAccess.DoubleValueElements getDoubleValueAccess() {
+		return gaKExpressions.getDoubleValueAccess();
+	}
+	
+	public ParserRule getDoubleValueRule() {
+		return getDoubleValueAccess().getRule();
 	}
 
 	//// data type rule allowing any kind of value to be accepted,

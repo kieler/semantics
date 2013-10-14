@@ -31,6 +31,12 @@ import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.Join
 import de.cau.cs.kieler.s.s.Continuation
+import de.cau.cs.kieler.s.s.Instruction
+import de.cau.cs.kieler.s.s.If
+import de.cau.cs.kieler.s.s.Trans
+import de.cau.cs.kieler.s.s.Abort
+import de.cau.cs.kieler.s.s.Emit
+import de.cau.cs.kieler.s.s.Pause
 
 /**
  * S Extensions. 
@@ -87,6 +93,50 @@ class SExtension {
         join
     }
     
+    def State addInstruction(State state, Instruction instruction) {
+        state.instructions.add(instruction)
+        state
+    }
+    
+   
+    // Create IF instruction. 
+    def If createIf(Expression expression) {
+        val instruction = SFactory::eINSTANCE.createIf()
+        instruction.setExpression(expression)
+        instruction
+    }
+    
+    // Create a transition to a continuation label.
+    def Trans transitionTo(Continuation continuation) {
+         val transition = SFactory::eINSTANCE.createTrans()
+         transition.setContinuation(continuation)
+         transition
+    }
+    
+    // Create an abort instruction.
+    def Abort createAbort() {
+         SFactory::eINSTANCE.createAbort()
+    }
+    
+    // Create a pure emission.
+    def Emit emit(ValuedObject valuedObject) {
+        val emitInstruction = SFactory::eINSTANCE.createEmit
+        emitInstruction.setSignal(valuedObject)
+        emitInstruction
+    }
+    
+    // Create a valued emission.
+    def Emit emit(ValuedObject valuedObject, Expression expression) {
+        val emitInstruction = valuedObject.emit
+        emitInstruction.setValue(expression)
+        emitInstruction
+    }
+    
+    def Pause createPause() {
+        val pauseInstruction = SFactory::eINSTANCE.createPause
+        pauseInstruction
+    }
+
     // -------------------------------------------------------------------------   
       
 }

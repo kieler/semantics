@@ -42,6 +42,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cStatesAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cStatesSCChartParserRuleCall_3_0 = (RuleCall)cStatesAssignment_3.eContents().get(0);
 		
+		//// ---------------------------------------------------------------------------------------------------
 		//RootRegion returns sccharts::Region:
 		//	{sccharts::Region} annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID? label=STRING? ":"
 		//	valuedObjects+=ValuedObject* bodyText+=TextualCode*)? states+=SCChart*;
@@ -499,6 +500,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOutgoingTransitionsTransitionParserRuleCall_7_0 = (RuleCall)cOutgoingTransitionsAssignment_7.eContents().get(0);
 		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
+		//// ---------------------------------------------------------------------------------------------------
 		//State returns sccharts::State:
 		//	annotations+=Annotation* (isInitial?="initial" isFinal?="final"? | isFinal?="final" isInitial?="initial"?)?
 		//	type=StateType? "state" id=ID label=STRING? ("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution (","
@@ -687,6 +689,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExitActionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cSuspendActionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
+		//// ---------------------------------------------------------------------------------------------------
 		//LocalAction returns sccharts::LocalAction:
 		//	EntryAction | DuringAction | ExitAction | SuspendAction;
 		public ParserRule getRule() { return rule; }
@@ -881,31 +884,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_9 = (Keyword)cGroup.eContents().get(9);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		////Signal returns kexpressions::Signal:
-		////    aSignal
-		////    | ISignal;
-		////
-		////aSignal returns kexpressions::Signal:
-		////    (annotations+=Annotation)*
-		////    (isInput?='input')?
-		////	(isOutput?='output')?
-		////	'signal' name=ID (':=' initialValue=AnyType)?
-		////    ((':' (type = ValueType | hostType = STRING))
-		////      |
-		////     (':' 'combine' (type = ValueType | hostType = STRING) 'with'
-		////        (combineOperator = CombineOperator | hostCombineOperator = STRING))
-		////    )?;
-		////
-		////ISignal returns kexpressions::ISignal:
-		////    (annotations+=Annotation)*
-		////    (isInput?='input')?
-		////	(isOutput?='output')?
-		////	'signal' name=ID (':=' initialValue=AnyType)?
-		////    ((':' (type = ValueType | hostType = STRING))
-		////      |
-		////     (':' 'combine' (type = ValueType | hostType = STRING) 'with'
-		////        (combineOperator = CombineOperator | hostCombineOperator = STRING))
-		////    )?;
 		//ValuedObject returns kexpressions::ValuedObject:
 		//	annotations+=Annotation* isInput?="input"? isOutput?="output"? isStatic?="static"? isSignal?="signal"?
 		//	type=ValueType? name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";";
@@ -992,18 +970,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTextHOSTCODETerminalRuleCall_0_0 = (RuleCall)cTextAssignment_0.eContents().get(0);
 		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
-		//// ---------------------------------------------------------------------------------------------------
-		////Variable returns kexpressions::Variable:
-		////    aVariable
-		////    | IVariable;
-		////    
-		////aVariable returns kexpressions::Variable:
-		////    (annotations += Annotation)*
-		////    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
-		////
-		////IVariable returns kexpressions::IVariable:
-		////    (annotations += Annotation)*
-		////    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
 		//// ---------------------------------------------------------------------------------------------------
 		//TextualCode returns kexpressions::TextExpression:
 		//	text=HOSTCODE ";";
@@ -1188,6 +1154,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
+	//// ---------------------------------------------------------------------------------------------------
 	//RootRegion returns sccharts::Region:
 	//	{sccharts::Region} annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID? label=STRING? ":"
 	//	valuedObjects+=ValuedObject* bodyText+=TextualCode*)? states+=SCChart*;
@@ -1236,6 +1203,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getSCChartAccess().getRule();
 	}
 
+	//// ---------------------------------------------------------------------------------------------------
 	//State returns sccharts::State:
 	//	annotations+=Annotation* (isInitial?="initial" isFinal?="final"? | isFinal?="final" isInitial?="initial"?)?
 	//	type=StateType? "state" id=ID label=STRING? ("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution (","
@@ -1249,6 +1217,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getStateAccess().getRule();
 	}
 
+	//// ---------------------------------------------------------------------------------------------------
 	//LocalAction returns sccharts::LocalAction:
 	//	EntryAction | DuringAction | ExitAction | SuspendAction;
 	public LocalActionElements getLocalActionAccess() {
@@ -1273,31 +1242,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	////Signal returns kexpressions::Signal:
-	////    aSignal
-	////    | ISignal;
-	////
-	////aSignal returns kexpressions::Signal:
-	////    (annotations+=Annotation)*
-	////    (isInput?='input')?
-	////	(isOutput?='output')?
-	////	'signal' name=ID (':=' initialValue=AnyType)?
-	////    ((':' (type = ValueType | hostType = STRING))
-	////      |
-	////     (':' 'combine' (type = ValueType | hostType = STRING) 'with'
-	////        (combineOperator = CombineOperator | hostCombineOperator = STRING))
-	////    )?;
-	////
-	////ISignal returns kexpressions::ISignal:
-	////    (annotations+=Annotation)*
-	////    (isInput?='input')?
-	////	(isOutput?='output')?
-	////	'signal' name=ID (':=' initialValue=AnyType)?
-	////    ((':' (type = ValueType | hostType = STRING))
-	////      |
-	////     (':' 'combine' (type = ValueType | hostType = STRING) 'with'
-	////        (combineOperator = CombineOperator | hostCombineOperator = STRING))
-	////    )?;
 	//ValuedObject returns kexpressions::ValuedObject:
 	//	annotations+=Annotation* isInput?="input"? isOutput?="output"? isStatic?="static"? isSignal?="signal"?
 	//	type=ValueType? name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";";
@@ -1309,18 +1253,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectAccess().getRule();
 	}
 
-	//// ---------------------------------------------------------------------------------------------------
-	////Variable returns kexpressions::Variable:
-	////    aVariable
-	////    | IVariable;
-	////    
-	////aVariable returns kexpressions::Variable:
-	////    (annotations += Annotation)*
-	////    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
-	////
-	////IVariable returns kexpressions::IVariable:
-	////    (annotations += Annotation)*
-	////    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
 	//// ---------------------------------------------------------------------------------------------------
 	//TextualCode returns kexpressions::TextExpression:
 	//	text=HOSTCODE ";";
@@ -1654,7 +1586,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//AtomicValuedExpression returns Expression:
 	//	IntValue //    | '(' DivExpression ')'
-	//	| FloatValue | "(" ValuedExpression ")" | AtomicExpression;
+	//	| FloatValue | DoubleValue | "(" ValuedExpression ")" | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaActions.getAtomicValuedExpressionAccess();
 	}
@@ -1727,6 +1659,16 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getBoolValueRule() {
 		return getBoolValueAccess().getRule();
+	}
+
+	//DoubleValue:
+	//	value=FLOAT;
+	public KExpressionsGrammarAccess.DoubleValueElements getDoubleValueAccess() {
+		return gaActions.getDoubleValueAccess();
+	}
+	
+	public ParserRule getDoubleValueRule() {
+		return getDoubleValueAccess().getRule();
 	}
 
 	//// data type rule allowing any kind of value to be accepted,
