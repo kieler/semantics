@@ -142,7 +142,7 @@ class SCCharts2STransformation {
 
         // Create all states and a mapping
         for (state : allStates) { 
-            target.createSState(state.id).map(state)
+            target.createSState(state.getHierarchicalName(rootState.id)).map(state)
         }
         
         // Now traverse all states again and fill them
@@ -167,7 +167,7 @@ class SCCharts2STransformation {
 
 
     // ======================================================================================================
-    // ==                                   H A N D L E   S T A T E                             ==
+    // ==                                     H A N D L E   S T A T E                                      ==
     // ======================================================================================================
 
     def void handleState(State state) {
@@ -194,11 +194,11 @@ class SCCharts2STransformation {
             // Handle simples states //
             ///////////////////////////
             // Consider immediate transitions
-            for (transition : state.outgoingTransitions.filter[!isImmediate]) {
+            for (transition : state.outgoingTransitions.filter[isImmediate]) {
                sState.handleTransition(transition)
             }
             // Consider delayed transitions, if any
-            val delayedTransitions = state.outgoingTransitions.filter[isImmediate]
+            val delayedTransitions = state.outgoingTransitions.filter[!isImmediate]
             if (!delayedTransitions.nullOrEmpty) {
                 // If there are delayed transitions create a pause
                 sState.addInstruction(createPause)
@@ -212,68 +212,32 @@ class SCCharts2STransformation {
         
     }
 
+
+
     // ======================================================================================================
     // ==                                   H A N D L E   T R A N S I T I O N                              ==
     // ======================================================================================================
 
     def void handleTransition(de.cau.cs.kieler.s.s.State sState, Transition transition) {
-        var instructions = sState.instructions
         if (transition.trigger != null) {
             val sIf = createIf(transition.trigger.convertToSExpression);
             sState.addInstruction(sIf)
-            instructions = sIf.instructions
+            if (!transition.effects.nullOrEmpty) {
+               for (effect : transition.effects) {
+                   effect.convertToSEffect(sIf.instructions);
+               }
+            }
+            sIf.transitionTo(transition.targetState.sState)
+        } else {
+            if (!transition.effects.nullOrEmpty) {
+                for (effect : transition.effects) {
+                    effect.convertToSEffect(sState.instructions);
+                }
+            }
+            sState.transitionTo(transition.targetState.sState)
         }
-
-        // handle transition effect - convert to s-effect
-       if (!transition.effects.nullOrEmpty) {
-           for (effect : transition.effects) {
-               effect.convertToSEffect(instructions);
-           }
-       }
-       
-       sState.transitionTo(transition.targetState.sState)
     }
-    
-//    def void handleTransition2(Transition transition, de.cau.cs.kieler.s.s.State sState) {
-//            val sif = SFactory::eINSTANCE.createIf();
-//            val strans = SFactory::eINSTANCE.createTrans();
-//            val sabort = SFactory::eINSTANCE.createAbort();
-//            
-//            // handle transition trigger - convert to s-expression
-//            if (transition.type == TransitionType::NORMALTERMINATION) {
-//                val sjoin = joinElseContinueAt(transition.sourceState)
-//                // if not joined yet - continue at state depth
-//                sjoin.setContinuation(transition.sourceState.depthSState);
-//                sState.instructions.add(sjoin);
-//            }
-//            
-//            if (transition.trigger != null) {
-//                sif.setExpression(transition.trigger.convertToSExpression);
-//            }
-//            else {
-//                sif.setExpression(getTrueBooleanValue());
-//            }
-//            
-//            // handle transition effect - convert to s-effect
-//            if (!transition.effects.nullOrEmpty) {
-//                for (effect : transition.effects) {
-//                    effect.convertToSEffect(sif.instructions);
-//                }
-//            }
-//            
-//            // if leaving a macro state, first abort it
-//            // for weak abortions we know because of the lowered priority that
-//            // all internal behavior (of this tick!) has already executed and
-//            // we can safely abort the state.
-//            if (transition.sourceState.hierarchical) {
-//                sif.instructions.add(sabort);
-//            }    
-//
-//            // add transition to if-branch and add if-branch to sState
-//            strans.setContinuation(transition.targetState.surfaceSState);
-//            sif.instructions.add(strans);
-//            sState.instructions.add(sif);
-//    }    
+
 
 
     // ======================================================================================================
@@ -319,6 +283,8 @@ class SCCharts2STransformation {
         createExpression
     }
 
+
+
     // ======================================================================================================
     // ==                               C O N V E R T    E F F E C T S                                     ==
     // ======================================================================================================
@@ -347,8 +313,11 @@ class SCCharts2STransformation {
         instructions.add(sHostCode);
     }
 
-    // ======================================================================================================
 
+
+    // ======================================================================================================
+    // ======================================================================================================
+    // ======================================================================================================
 
 //        // add interface variables to s program (as the global host code)
 //        target.setGlobalHostCodeInstruction(rootState.getStateVariables);

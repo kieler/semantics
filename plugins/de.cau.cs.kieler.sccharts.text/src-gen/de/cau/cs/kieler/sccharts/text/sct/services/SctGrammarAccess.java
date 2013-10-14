@@ -44,11 +44,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//RootRegion returns sccharts::Region:
-		//	{sccharts::Region} annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID? label=STRING? ":"
+		//	{sccharts::Region} annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID label=STRING? ":"
 		//	valuedObjects+=ValuedObject* bodyText+=TextualCode*)? states+=SCChart*;
 		public ParserRule getRule() { return rule; }
 
-		//{sccharts::Region} annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID? label=STRING? ":"
+		//{sccharts::Region} annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID label=STRING? ":"
 		//valuedObjects+=ValuedObject* bodyText+=TextualCode*)? states+=SCChart*
 		public Group getGroup() { return cGroup; }
 
@@ -61,7 +61,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//ImportAnnotation
 		public RuleCall getAnnotationsImportAnnotationParserRuleCall_1_0() { return cAnnotationsImportAnnotationParserRuleCall_1_0; }
 
-		//(annotations+=Annotation* "region" id=ID? label=STRING? ":" valuedObjects+=ValuedObject* bodyText+=TextualCode*)?
+		//(annotations+=Annotation* "region" id=ID label=STRING? ":" valuedObjects+=ValuedObject* bodyText+=TextualCode*)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//annotations+=Annotation*
@@ -73,7 +73,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//"region"
 		public Keyword getRegionKeyword_2_1() { return cRegionKeyword_2_1; }
 
-		//id=ID?
+		//id=ID
 		public Assignment getIdAssignment_2_2() { return cIdAssignment_2_2; }
 
 		//ID
@@ -1156,7 +1156,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// ---------------------------------------------------------------------------------------------------
 	//RootRegion returns sccharts::Region:
-	//	{sccharts::Region} annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID? label=STRING? ":"
+	//	{sccharts::Region} annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID label=STRING? ":"
 	//	valuedObjects+=ValuedObject* bodyText+=TextualCode*)? states+=SCChart*;
 	public RootRegionElements getRootRegionAccess() {
 		return (pRootRegion != null) ? pRootRegion : (pRootRegion = new RootRegionElements());
