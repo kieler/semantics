@@ -403,7 +403,7 @@ class KExpressionsExtension {
     }
 
     // Create a text expression.
-    def TextExpression createTextExpression(int text) {
+    def TextExpression createTextExpression(String text) {
          val expression = KExpressionsFactory::eINSTANCE.createTextExpression()
          expression.setText("'" + text + "'")
          expression
