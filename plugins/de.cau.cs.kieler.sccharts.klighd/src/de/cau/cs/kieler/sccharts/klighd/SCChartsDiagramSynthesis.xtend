@@ -62,6 +62,14 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.s.DependencyTransformation
+import de.cau.cs.kieler.sccharts.s.Dependency
+import java.util.HashMap
+import java.util.ArrayList
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.kiml.options.EdgeType
+import de.cau.cs.kieler.sccharts.s.DataDependency
+import de.cau.cs.kieler.sccharts.s.DependencyState
 
 class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
@@ -91,6 +99,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
     @Inject
     extension KColorExtensions
+
+    @Inject
+    extension SCChartsExtension
+
+    @Inject
+    extension DependencyTransformation
     
     private static val TransformationOption SHOW_SIGNAL_DECLARATIONS
         = TransformationOption::createCheckOption("Declarations", true);
@@ -100,12 +114,18 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
     private static val TransformationOption SHOW_LABELS
         = TransformationOption::createCheckOption("Transition labels", true);
+
+    private static val TransformationOption SHOW_DEPENDENCIES
+        = TransformationOption::createCheckOption("Show Dependencies", false);
+        
+    List<DependencyState> dependencyStates = null
+    List<Dependency> dependencies = null        
         
     private static val TransformationOption SHOW_SHADOW
         = TransformationOption::createCheckOption("Shadow", true);
 
     override public getTransformationOptions() {
-        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_SHADOW);
+        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_SHADOW);
     }
     
     override public getRecommendedLayoutOptions() {
@@ -134,6 +154,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     private static val KColor KEYWORD = RENDERING_FACTORY.createKColor()=>[it.red=115;it.green=0;it.blue=65];
     private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor()=>[it.red=60;it.green=60;it.blue=60];
     
+    private static val KColor RED = RENDERING_FACTORY.createKColor()=>[it.red=255;it.green=0;it.blue=0];
+    private static val KColor BLUE = RENDERING_FACTORY.createKColor()=>[it.red=0;it.green=0;it.blue=255];
     
 
 
@@ -291,6 +313,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
     
     def dispatch KNode translate(State s) {
+        if (SHOW_DEPENDENCIES.optionBooleanValue) {
+            if (dependencyStates == null) {
+                // Calculate only once
+                dependencies = s.rootRegion.getAllDependencies
+                dependencyStates = s.rootRegion.getAllDependencyStates(dependencies)
+            }
+        }
+        
         return s.createNode().putToLookUpWith(s) => [ node |
 //            node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
 //            node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
@@ -355,6 +385,43 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.setGridPlacement(1);
                 } 
                 
+                var priority = ""
+                if (SHOW_DEPENDENCIES.optionBooleanValue) {
+                    if (dependencyStates.filter(e|e.state == s && !e.isJoin).size > 0) {
+                        priority = "(" + dependencyStates.filter(e|e.state == s && !e.isJoin).get(0).priority
+                        if (s.hierarchical) {
+                            if (dependencyStates.filter(e|e.state == s && e.isJoin).size > 0) {
+                                priority = priority + ", " + dependencyStates.filter(e|e.state == s && e.isJoin).get(0).priority
+                            }
+                        }
+                        priority = priority + ")"
+                    }
+                    
+                    for (dependency : dependencies.filter[stateToDependOn.state == s].toList) {
+                        if  (dependency instanceof Dependency) {
+                        val join1 = if (dependency.stateDepending.isJoin) "j" else ""
+                        val join2 = if (dependency.stateToDependOn.isJoin) "j" else ""
+                        System.out.println("Dependency: " + dependency.stateDepending.state.id + join1 + "-->" + dependency.stateToDependOn.state.id + join2)
+                        s.createEdge() => [ edge |
+                                edge.target = dependency.stateDepending.state.node;
+                                edge.source = dependency.stateToDependOn.state.node;
+                                edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+                                //edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true);
+                                edge.addPolyline(3)  => [
+                                    if (dependency instanceof DataDependency) {
+                                        it.setForeground("red".color)
+                                    } else {
+                                        it.setForeground("blue".color)
+                                    }
+                                    it.addArrowDecorator()
+                                ];
+                        ];
+                        }
+                    }
+                    
+                    
+                }
+                val priorityToShow = priority
                 
                  if (s.hasRegionsOrDeclarations) {
                     // Get a smaller window-title-bare if this a macro state 
@@ -367,12 +434,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         it.setGridPlacementData().setMaxCellHeightEx(5)
                             .from(LEFT, 0, 0, TOP, 8f, 0)
                             .to(RIGHT, 0, 0, BOTTOM, 0, 0);
-                        addText(" " + s.label).putToLookUpWith(s);
+                        addText(" " + s.label + priorityToShow).putToLookUpWith(s);
                     ];
                  }
                  else {
                     // For simple states we want a larger area 
-                    it.addText(s.label).putToLookUpWith(s) => [
+                    it.addText(s.label + priorityToShow).putToLookUpWith(s) => [
                         it.fontSize = 11;
                         it.setFontBold(true);
                         it.setGridPlacementData().setMaxCellHeightEx(40)

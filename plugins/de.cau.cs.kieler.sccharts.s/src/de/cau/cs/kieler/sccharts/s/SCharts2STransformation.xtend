@@ -39,6 +39,7 @@ import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.s.s.Fork
+import de.cau.cs.kieler.s.s.Trans
 
 /**
  * Converts a SyncChart into an S program.
@@ -121,22 +122,13 @@ class SCCharts2STransformation {
         clearValuedObjectMapping
         
         // Dependency analysis
-        val dependencies = rootRegion.transformAllDependencies
+        val dependencies = rootRegion.getAllDependencies
+        val dependencyStates = rootRegion.getAllDependencyStates(dependencies)
           
-        val allStates = rootRegion.allContainedStates
+        val sortedDependencyStates = dependencyStates.pioritySortedStates
         
         // Set highest priority
         target.setPriority(dependencies.size);
-        
-//        // create mapping from SyncChart states to dependency nodes
-//        for (node : dependencies.nodes) {
-//            if (node.type == NodeType::WEAK) {
-//                TraceComponent::createTrace(node.state, node, "DependencyWeak");
-//            }
-//            else {
-//                TraceComponent::createTrace(node.state, node, "DependencyStrong");
-//            }
-//        }
         
         // Set s program name (as the root state's name)
         target.setName(rootState.id)
@@ -149,16 +141,18 @@ class SCCharts2STransformation {
         }
 
         // Create all states and a mapping
-        for (state : allStates) { 
-            target.createSState(state.getHierarchicalName(rootState.id)).map(state)
-            if (state.hierarchical) {
-                target.createSState(state.getHierarchicalName(rootState.id) + "_JOIN").mapJoin(state)
+        for (dependencyState : sortedDependencyStates) { 
+            if (!dependencyState.isJoin) {
+                target.createSState(dependencyState.state.getHierarchicalName(rootState.id)).map(dependencyState.state)
+            }
+            else {
+                target.createSState(dependencyState.state.getHierarchicalName(rootState.id) + "_JOIN").mapJoin(dependencyState.state)
             }
         }
         
         // Now traverse all states again and fill them
-        for (state : allStates) { 
-            state.handleState
+        for (dependencyState : sortedDependencyStates) { 
+            dependencyState.handleState
         }
         
      }
@@ -181,8 +175,9 @@ class SCCharts2STransformation {
     // ==                                     H A N D L E   S T A T E                                      ==
     // ======================================================================================================
 
-    def void handleState(State state) {
+    def void handleState(DependencyState dependencyState) {
         
+        val state = dependencyState.state
         val sState = state.sState
         
         if (state.hierarchical) {
@@ -235,7 +230,7 @@ class SCCharts2STransformation {
                 // Optimization: Do not put a halt if the instruction before is a transition,
                 // or a fork.
                 if (!(sState.instructions.length > 0 && 
-                       (sState.instructions.get(sState.instructions.length-1) instanceof Transition || 
+                       (sState.instructions.get(sState.instructions.length-1) instanceof Trans || 
                        sState.instructions.get(sState.instructions.length-1) instanceof Fork))) {
                    sState.addInstruction(createHalt)
                 }

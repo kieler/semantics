@@ -23,42 +23,34 @@ import de.cau.cs.kieler.sccharts.State;
  * @kieler.rating 2013-10-10 proposed yellow
  *
  */
-public class Dependency {
+public abstract class Dependency {
     
-    private State stateDependeing;
-    private State stateToDependOn;
-    private int priority = -1;
+    private DependencyState stateDependeing;
+    private DependencyState stateToDependOn;
     
     public Dependency() {
     }
     
-    public Dependency(State stateDependeing, State stateToDependOn) {
+    public Dependency(DependencyState stateDependeing, DependencyState stateToDependOn) {
         this.stateDependeing = stateDependeing;
         this.stateToDependOn = stateToDependOn;
     }
     
-    public State getStateDepending() {
+    public DependencyState getStateDepending() {
         return stateDependeing;
     }
     
-    public State getStateToDependOn() {
+    public DependencyState getStateToDependOn() {
         return stateToDependOn;
     }
     
-    public int getPriority() {
-        return priority;
-    }
-    
-    public void setStateDepending(State stateDependeing) {
+    public void setStateDepending(DependencyState stateDependeing) {
         this.stateDependeing = stateDependeing;
     }
     
-    public void setStateToDependOn(State stateToDependOn) {
+    public void setStateToDependOn(DependencyState stateToDependOn) {
         this.stateToDependOn = stateToDependOn;
     }
     
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
+    
 }
