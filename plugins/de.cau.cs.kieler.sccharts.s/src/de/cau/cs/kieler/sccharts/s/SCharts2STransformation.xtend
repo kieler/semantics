@@ -143,10 +143,10 @@ class SCCharts2STransformation {
         // Create all states and a mapping
         for (dependencyState : sortedDependencyStates) { 
             if (!dependencyState.isJoin) {
-                target.createSState(dependencyState.state.getHierarchicalName(rootState.id)).map(dependencyState.state)
+                target.createSState(dependencyState.state.getHierarchicalName("")).map(dependencyState.state)
             }
             else {
-                target.createSState(dependencyState.state.getHierarchicalName(rootState.id) + "_JOIN").mapJoin(dependencyState.state)
+                target.createSState(dependencyState.state.getHierarchicalName("") + "_JOIN").mapJoin(dependencyState.state)
             }
         }
         

@@ -116,7 +116,7 @@ class DependencyTransformation {
             if (!dependencyStates.contains(dependencyState)) {
                 dependencyStates.add(dependencyState)
             }
-            val dependencyState2 = dependency.stateDepending
+            val dependencyState2 = dependency.stateToDependOn
             if (!dependencyStates.contains(dependencyState2)) {
                 dependencyStates.add(dependencyState2)
             }
@@ -192,7 +192,7 @@ class DependencyTransformation {
                         dependencies.add(newControlFlowDependency)
                     }
                 }
-            } else {
+            }// else {
                 if (transition.sourceState.hierarchical) {
                     val newControlFlowDependency = new ControlflowDependency(state.dependencyState, transition.sourceState.joinDependencyState)
                     dependencies.add(newControlFlowDependency)
@@ -200,7 +200,7 @@ class DependencyTransformation {
                     val newControlFlowDependency = new ControlflowDependency(state.dependencyState, transition.sourceState.dependencyState)
                     dependencies.add(newControlFlowDependency)
                 }
-            }
+            //}
         }
         // Go thru all regions and states recursively and build up dependencies
         for (region : state.regions) {
@@ -234,11 +234,11 @@ class DependencyTransformation {
    
    
    def private List<Dependency> outgoingDependencies(DependencyState dependencyState, List<Dependency> dependencies) {
-       dependencies.filter[stateDepending == dependencyState.state].toList 
+       dependencies.filter[stateDepending == dependencyState].toList 
    }
 
    def private List<Dependency> incomingDependencies(DependencyState dependencyState, List<Dependency> dependencies) {
-       dependencies.filter[stateToDependOn == dependencyState.state].toList 
+       dependencies.filter[stateToDependOn == dependencyState].toList 
    }
 
    //-------------------------------------------------------------------------
@@ -278,8 +278,6 @@ class DependencyTransformation {
             //node.setPriority(-1);
             tmpPrio = dependencyState.visit(tmpPrio, dependencies);
         }
-        //TODO: possible optimization: delete all unconnected strong-representations and in the S code generation, use
-        //skip the prio statement.
         
         // calculate priorities for all connected nodes (including the root)
         // now start with priority 0                                              
@@ -308,7 +306,6 @@ class DependencyTransformation {
     // Visit helper function for topological sorting the dependency nodes.
     def private int visit(DependencyState dependencyState, int priority, List<Dependency> dependencies) {
         if (dependencyState.priority == -1) {
-//            System::out.println(node.id + "("+node.incomingDependencies.size +  ") ... ");
             dependencyState.setPriority(-2);
             var tmpPrio = priority;
             for (incomingDependency : dependencyState.incomingDependencies(dependencies)) {
@@ -317,8 +314,6 @@ class DependencyTransformation {
                         tmpPrio = nextNode.visit(tmpPrio, dependencies);
                 }
             }
-//            node.setPriority(1 + (node.eContainer as Dependencies).nodes.size - (tmpPrio + 1)); // REVERSE ORDERING
-//            System::out.println(node.id + "("+node.incomingDependencies.size +  ")" +  ": " + (tmpPrio + 1));
             dependencyState.setPriority((tmpPrio + 1));
             return tmpPrio + 1;
         }

@@ -398,7 +398,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     }
                     
                     for (dependency : dependencies.filter[stateToDependOn.state == s].toList) {
-                        if  (dependency instanceof Dependency) {
+                        if  (dependency instanceof DataDependency) {
                         val join1 = if (dependency.stateDepending.isJoin) "j" else ""
                         val join2 = if (dependency.stateToDependOn.isJoin) "j" else ""
                         System.out.println("Dependency: " + dependency.stateDepending.state.id + join1 + "-->" + dependency.stateToDependOn.state.id + join2)
