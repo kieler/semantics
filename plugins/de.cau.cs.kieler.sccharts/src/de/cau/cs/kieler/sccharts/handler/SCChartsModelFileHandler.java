@@ -12,6 +12,7 @@ import org.eclipse.jface.viewers.ISelection;
 //import org.eclipse.xtext.resource.SaveOptions;
 //import org.eclipse.xtext.serializer.ISerializer;
 
+import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
@@ -122,40 +123,44 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
         commandString = commandString.replace("commands.Scc", "commands.");
         commandString = commandString.replace("commands.Sct", "commands.");
         System.out.println(commandString);
+        
+        CoreTransformation transformation =
+        Guice.createInjector().getInstance(CoreTransformation.class);
+        
         transformed = model;
         if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {
             // TODO
         } else if (commandString.equals(ABORT_TRANSFORMATION)) {
-            transformed = (new CoreTransformation()).transformSCCAborts((Region) model);
+            transformed = transformation.transformSCCAborts((Region) model);
         } else if (commandString.equals(SURFACEDEPTH_TRANSFORMATION)) {
-            transformed = (new CoreTransformation()).transformSurfaceDepth((Region) model);
+            transformed = transformation.transformSurfaceDepth((Region) model);
         } else if (commandString.equals(TRIGGEREFFECT_TRANSFORMATION)) {
-            transformed = (new CoreTransformation()).transformTriggerEffect((Region) model);
+            transformed = transformation.transformTriggerEffect((Region) model);
         } else if (commandString.equals(SIGNAL_TRANSFORMATION)) {
-            transformed = (new CoreTransformation()).transformSignal((Region) model);
+            transformed = transformation.transformSignal((Region) model);
         } else if (commandString.equals(INPUTOUTPUTSIGNAL_TRANSFORMATION)) {
             // TODO
-            //transformed = (new CoreTransformation()).transformInputOutputSignal((Region) model);
+            //transformed = transformation.transformInputOutputSignal((Region) model);
         } else if (commandString.equals(ENTRY_TRANSFORMATION)) {
-            transformed = (new CoreTransformation()).transformEntry((Region) model);
+            transformed = transformation.transformEntry((Region) model);
         } else if (commandString.equals(DURING_TRANSFORMATION)) {
-            transformed = (new CoreTransformation()).transformDuring((Region) model);
+            transformed = transformation.transformDuring((Region) model);
         } else if (commandString.equals(EXIT_TRANSFORMATION)) {
-            transformed = (new CoreTransformation()).transformExit((Region) model);
+            transformed = transformation.transformExit((Region) model);
         } else if (commandString.equals(HISTORY_TRANSFORMATION)) {
-            transformed = (new CoreTransformation()).transformHistory((Region) model);
+            transformed = transformation.transformHistory((Region) model);
         } else if (commandString.equals(SUSPEND_TRANSFORMATION)) {
-            transformed = (new CoreTransformation()).transformSuspend((Region) model);
+            transformed = transformation.transformSuspend((Region) model);
         } else if (commandString.equals(COUNTDELAY_TRANSFORMATION)) {
-            transformed = (new CoreTransformation()).transformCountDelay((Region) model);
+            transformed = transformation.transformCountDelay((Region) model);
         } else if (commandString.equals(PRE_TRANSFORMATION)) {
-            transformed = (new CoreTransformation()).transformPre((Region) model);
+            transformed = transformation.transformPre((Region) model);
         } else if (commandString.equals(EXPOSELOCALSIGNALS_TRANSFORMATION)) {
-            transformed = (new CoreTransformation()).transformExposeLocalValuedObject((Region) model);
+            transformed = transformation.transformExposeLocalValuedObject((Region) model);
         } else if (commandString.equals(NORMALTERMINATION_TRANSFORMATION)) {
-            transformed = (new CoreTransformation()).transformNormalTermination((Region) model);
+            transformed = transformation.transformNormalTermination((Region) model);
         } else if (commandString.equals(FINALSTATETRANSITION_TRANSFORMATION)) {
-            transformed = (new CoreTransformation()).transformFinalStateTransition((Region) model);
+            transformed = transformation.transformFinalStateTransition((Region) model);
         }
         return transformed;
     }

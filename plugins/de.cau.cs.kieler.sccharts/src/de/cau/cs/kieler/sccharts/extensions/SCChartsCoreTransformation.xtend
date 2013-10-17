@@ -462,6 +462,8 @@ class CoreTransformation {
         // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
 
+//        val size = targetRootRegion.eAllContents().toList().filter(typeof(State)).toList()
+
         // Traverse all transitions
         for(targetTransition : targetRootRegion.getAllContainedTransitions) {
             targetTransition.transformTriggerEffect(targetRootRegion);
