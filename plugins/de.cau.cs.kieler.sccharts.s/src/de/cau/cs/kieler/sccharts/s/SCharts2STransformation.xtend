@@ -126,7 +126,7 @@ class SCCharts2STransformation {
         val dependencies = dependencyGraph.dependencies
         val dependencyStates = dependencyGraph.dependencyNodes
           
-        val sortedDependencyStates = dependencyStates.pioritySortedStates
+        val sortedDependencyStates = dependencyStates.orderSortedStates
         
         // Set highest priority
         target.setPriority(dependencies.size);

@@ -207,16 +207,28 @@ class DependencyTransformation {
    def public List<DependencyNode> getPioritySortedStates(List<DependencyNode> dependencyNodes) {
         dependencyNodes.sort(e1, e2 | comparePriorities(e1,e2));
    }
+
+   // Get a list of states sorted by their order with highest order first.
+   def public List<DependencyNode> getOrderSortedStates(List<DependencyNode> dependencyNodes) {
+        dependencyNodes.sort(e1, e2 | compareOrders(e1,e2));
+   }
    
+   // Compare two priorities.
    def private int comparePriorities(DependencyNode e1, DependencyNode e2) {
         if (e1.getPriority > e2.getPriority) {-1} else {1}    
    }
+
+   // Compare two orders.
+   def private int compareOrders(DependencyNode e1, DependencyNode e2) {
+        if (e1.getOrder > e2.getOrder) {-1} else {1}    
+   }
    
-   
+   // Gets a list of outgoing dependencies for a dependency node.
    def private List<Dependency> outgoingDependencies(DependencyNode dependencyNode, List<Dependency> dependencies) {
        dependencies.filter[stateDepending == dependencyNode].toList 
    }
 
+   // Gets a list of incoming dependencies for a dependency node.
    def private List<Dependency> incomingDependencies(DependencyNode dependencyNode, List<Dependency> dependencies) {
        dependencies.filter[stateToDependOn == dependencyNode].toList 
    }
@@ -225,6 +237,10 @@ class DependencyTransformation {
    //-------------------------------------------------------------------------
    //--                  T O P O L O G I C A L    S O R T                   --
    //-------------------------------------------------------------------------
+   
+   // This implementation sets the priority as well as the order of the dependency nodes representing
+   // SCCharts states. The priority is optimized in contrast to the order. 
+   // The implementatiation
    
    //    L <- Empty list that will contain the sorted nodes
    //    S <- Set of all nodes with no outgoing edges
@@ -251,60 +267,54 @@ class DependencyTransformation {
                                              && e.incomingDependencies(dependencies).nullOrEmpty
         )
 
-        // calculate priorities for all connected nodes (including the root)
+        // Calculate priorities for all connected nodes (including the root)
         // now start with priority 0                                              
-        var tmpPrio = 0;
+        var PriorityAndOrder tmpPrioOrder = new PriorityAndOrder(0, 0);
         val dependencyNodesWithoutOutgoingEdges = allDependencyStates.filter(e | 
                                                     e.outgoingDependencies(dependencies).nullOrEmpty 
                                                 && !e.incomingDependencies(dependencies).nullOrEmpty
         )
             
         for (dependencyNode : dependencyNodesWithoutOutgoingEdges) {
-            tmpPrio = dependencyNode.visit(tmpPrio, dependencies);
+            tmpPrioOrder = dependencyNode.visit(tmpPrioOrder, dependencies);
         }
 
-        // visit these unconnected nodes (these have prio -1) with the max-priority
-        var maxPrio = tmpPrio + 1
+        // Visit these unconnected nodes (these have prio -1) with the max-priority
+        var PriorityAndOrder maxPrioOrder = new PriorityAndOrder(tmpPrioOrder)
         for (dependencyNode : dependencyNodesWithNoEdges) {
-            maxPrio = dependencyNode.visit(maxPrio, dependencies);
+            maxPrioOrder = dependencyNode.visit(maxPrioOrder, dependencies);
         }
         
         dependencyNodes
     }
     
     // Visit helper function for topological sorting the dependency nodes.
-    def private int visit(DependencyNode dependencyNode, int priority, List<Dependency> dependencies) {
+    def private PriorityAndOrder visit(DependencyNode dependencyNode, PriorityAndOrder prioOrder, List<Dependency> dependencies) {
         if (dependencyNode.getPriority == -1) {
             dependencyNode.setPriority(-2);
-            var tmpPrio = priority;
+            var tmpPrioOrder = prioOrder;
             for (incomingDependency : dependencyNode.incomingDependencies(dependencies)) {
-                val nextNode = incomingDependency.stateDepending // sourceNode;
+                val nextNode = incomingDependency.stateDepending 
                 if (nextNode != dependencyNode) {
-                        tmpPrio = nextNode.visit(tmpPrio, dependencies);
+                     tmpPrioOrder = nextNode.visit(tmpPrioOrder, dependencies);
                 }
             }
-            dependencyNode.setPriority((tmpPrio + 1));
-            var nextPrio = tmpPrio + 1
+            dependencyNode.setPriority((tmpPrioOrder.priority + 1));
+            dependencyNode.setOrder((tmpPrioOrder.order + 1));
+            tmpPrioOrder.incrementOrder
             // =============================
             // Optimization for dependencies
             // =============================
             // This implicitly forms (splitted-) "basic blocks" of the same priority
-            if (dependencyNode.outgoingDependencies(dependencies).filter(typeof(DataDependency)).size == 0) {
-                nextPrio = tmpPrio
+            if (dependencyNode.outgoingDependencies(dependencies).filter(typeof(DataDependency)).size != 0) {
+                tmpPrioOrder.incrementPriority
             }
-            return nextPrio;
+            return tmpPrioOrder;
         }
         else {
-           return priority;
+           return new PriorityAndOrder(dependencyNode.priority, dependencyNode.order);
         }
     }
-    
 
-   //-------------------------------------------------------------------------
-   //--           D E P E N D E N C Y   O P T I M I Z A T I O N             --
-   //-------------------------------------------------------------------------
-   
-   // Dependencies between control flow ONLY does not need to be    
-    
    // -------------------------------------------------------------------------   
 }
