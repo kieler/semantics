@@ -20,47 +20,56 @@ import org.osgi.framework.BundleContext;
  * The activator class controls the plug-in life cycle.
  * 
  * @author cmot
- * @kieler.design 2013-10-10 proposed 
+ * @kieler.design 2013-10-10 proposed
  * @kieler.rating 2013-10-10 proposed yellow
  */
 public class SCChartsSPlugin extends AbstractUIPlugin {
 
+    /** The Constant PLUGIN_ID. */
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.s"; //$NON-NLS-1$
 
-	public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.s"; //$NON-NLS-1$
+    /** The plugin. */
+    private static SCChartsSPlugin plugin;
 
-	private static SCChartsSPlugin plugin;
-	
-	/**
-	 * The constructor
-	 */
-	public SCChartsSPlugin() {
-	}
+    // -------------------------------------------------------------------------
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-	 */
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
-	}
+    /**
+     * The constructor of the SCCharts to S Code Generation Plugin.
+     */
+    public SCChartsSPlugin() {
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-	 */
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
-	public static SCChartsSPlugin getDefault() {
-		return plugin;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        plugin = this;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public void stop(BundleContext context) throws Exception {
+        plugin = null;
+        super.stop(context);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the single shared instance.
+     * 
+     * @return the shared instance
+     */
+    public static SCChartsSPlugin getDefault() {
+        return plugin;
+    }
+
+    // -------------------------------------------------------------------------
 
 }

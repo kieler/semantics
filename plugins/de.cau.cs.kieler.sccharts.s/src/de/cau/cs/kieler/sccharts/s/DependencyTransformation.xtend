@@ -14,15 +14,16 @@
  package de.cau.cs.kieler.sccharts.s
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import java.util.ArrayList
-import java.util.List
-import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.sccharts.Emission
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import java.util.ArrayList
+import java.util.HashMap
+import java.util.List
 
 /** 
  * SCCharts DependencyTransformation Extension builds up a sorted list of dependencies between states
@@ -34,87 +35,289 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
  */
 class DependencyTransformation { 
 
+    // -------------------------------------------------------------------------
+    // SCCharts extensions are necessary   
+
     @Inject
     extension SCChartsExtension
-    
-    // Create an empty dependency list
-    List<Dependency> dependencies = new ArrayList<Dependency>
     
     //-------------------------------------------------------------------------
     //--      T R A N S F O R M      T O      D E P E N D E N C I E S        --
     //-------------------------------------------------------------------------
-
-    def List<Dependency> transformAllDependencies(Region rootRegion) {
+    
+    // Calculate all dependencies and retrieve them as a list.
+    def public DependencyGraph getDependencyGraph(Region rootRegion) {
         // Clear dependencies
-        dependencies.clear
+        val dependencyGraph = new DependencyGraph() 
+        val dependencies = dependencyGraph.dependencies
+        val dependencyNodes = dependencyGraph.dependencyNodes
+        states2DependencyNodes = new HashMap<State, DependencyNode>
+        statesJoin2DependencyNodes = new HashMap<State, DependencyNode>
+        
+        // Go thru all states and create a dependency representation for it (DepenedencyState)
+        for (state : rootRegion.allContainedStates) {
+            if (state != rootRegion.rootState) {
+                val dependencyNode = (new DependencyNode(state)).map(state, false)
+                dependencyNodes.add(dependencyNode)
+                if (state.hierarchical) {
+                    // For hierarchical states additionally create a join-representation
+                    val joinDependencyState = (new DependencyNode(state)).map(state, true)
+                    joinDependencyState.setIsJoin(true)
+                    dependencyNodes.add(joinDependencyState)
+                }
+            }
+        }
         
         // Go thru all regions and states recursively and build up dependencies
         for (region : rootRegion.rootState.regions) {
-           region.transformDependencies
+           region.transformDependencies(dependencies)
         }
-        
-        dependencies
-    }
-           
-   // -------------------------------------------------------------------------   
-   // -------------------------------------------------------------------------   
 
-   // For all valued object references within a transition's trigger, find and return all states that
-   // emit or write to these valued objects.   
-   def List<State> statesToDependOn(Transition transition) {
+        // Topological Sort
+        dependencyNodes.topologicalSort(dependencies)
+
+        dependencyGraph
+    }    
+
+    // -------------------------------------------------------------------------   
+
+    // For all valued object references within a transition's trigger, find and return all states that
+    // emit or write to these valued objects.   
+    def private List<State> statesToDependOn(Transition transition) {
        var stateList = new ArrayList<State>
        
        if (transition.trigger != null) {
            // All valuedObject references in the trigger of this transition
-           val valuedObjectReferences = transition.trigger.eAllContents.filter(typeof(ValuedObjectReference)).toList
+           var List<ValuedObjectReference> valuedObjectReferences
+           if (transition.trigger instanceof ValuedObjectReference) {
+               valuedObjectReferences = new ArrayList<ValuedObjectReference> 
+               valuedObjectReferences.add(transition.trigger as ValuedObjectReference)
+           } 
+           else {
+              valuedObjectReferences = transition.trigger.eAllContents.filter(typeof(ValuedObjectReference)).toList
+           }
            
            for (valuedObjectReference : valuedObjectReferences) {
                // The valuedObject we search for
                val valuedObject = valuedObjectReference.valuedObject
                // Search ALL actions of the mode
                val allActions = transition.sourceState.rootState.eAllContents.filter(typeof(Action)).toList
-               // Consider only those who write to the valuedObject we search for
-               val actions = allActions.filter(e | e.effects.filter(typeof(ValuedObject)).
-                                                             filter(ee | ee == valuedObject) .length > 0
-               )
-               
-               for (action : actions) {
-                   // We consider only SCG normalized SCCharts, hence only transitions
-                   if (action.eContainer instanceof Transition) {
-                       val state = (action.eContainer as Transition).sourceState
-                       if (!stateList.contains(state)) {
-                           stateList.add(state)
+
+               for (action : allActions) {
+                   for (effect : action.effects) {
+                       if (effect instanceof Emission && ((effect as Emission).valuedObject == valuedObject)) {
+                           // We consider only SCG normalized SCCharts, hence only transitions
+                           if (action instanceof Transition) {
+                               val state = (action as Transition).sourceState
+                               if (!stateList.contains(state)) {
+                                   stateList.add(state)
+                               }
+                           }
                        }
                    }
                }
            }
        }
        stateList
-   }
+    }
 
-   // -------------------------------------------------------------------------   
+    // -------------------------------------------------------------------------   
 
-    def private void transformDependencies(State state) {
+    def private void transformDependencies(State state, List<Dependency> dependencies) {
+        // Data dependencies
         for (transition : state.outgoingTransitions) {
             for (stateToDependOn : transition.statesToDependOn) {
-               val newDependency = new Dependency(state, stateToDependOn)
-               dependencies.add(newDependency)
+               val newDataDependency = new DataDependency(state.dependencyNode, stateToDependOn.dependencyNode)
+               dependencies.add(newDataDependency)
             } 
+        }
+        // Control Flow dependencies
+        for (transition : state.incomingTransitions) {
+            if (state.hierarchical) {
+                for (region : state.regions) {
+                    for (initialState : region.states.filter[isInitial]) {
+                        val newControlFlowDependency = new ControlflowDependency(initialState.dependencyNode, state.dependencyNode)
+                        dependencies.add(newControlFlowDependency)
+                    }
+                    for (finalState : region.states.filter[isFinal]) {
+                        val newControlFlowDependency = new ControlflowDependency(state.joinDependencyState, finalState.dependencyNode)
+                        dependencies.add(newControlFlowDependency)
+                    }
+                }
+            }// else {
+                if (transition.sourceState.hierarchical) {
+                    val newControlFlowDependency = new ControlflowDependency(state.dependencyNode, transition.sourceState.joinDependencyState)
+                    dependencies.add(newControlFlowDependency)
+                } else {
+                    if (transition.isImmediate) {
+                        val newControlFlowDependency = new ControlflowDependency(state.dependencyNode, transition.sourceState.dependencyNode)
+                        dependencies.add(newControlFlowDependency)
+                    }
+                }
+            //}
         }
         // Go thru all regions and states recursively and build up dependencies
         for (region : state.regions) {
-           region.transformDependencies
+           region.transformDependencies(dependencies)
         }
     }
 
-   // -------------------------------------------------------------------------   
+    // -------------------------------------------------------------------------   
 
-    def private void transformDependencies(Region region) {
+    def private void transformDependencies(Region region, List<Dependency> dependencies) {
         // Go thru all states and states recursively and build up dependencies
         for (state : region.states) {
-           state.transformDependencies()
+           state.transformDependencies(dependencies)
         }
     }
-           
-   // -------------------------------------------------------------------------   
+
+    
+    //-------------------------------------------------------------------------
+    //--                M A P P I N G    F U N C T I O N S                   --
+    //-------------------------------------------------------------------------
+
+    // Create an empty dependency list
+    HashMap<State, DependencyNode> states2DependencyNodes
+    HashMap<State, DependencyNode> statesJoin2DependencyNodes
+
+    // Get a dependency representation for a state. For hierarchical states also a
+    // join-representation can be retrieved.
+    def private DependencyNode getDependencyNode(State state) {
+       states2DependencyNodes.get(state)
+    }
+
+    // Get a  join dependency representation for a hierarchical state.
+    def private DependencyNode getJoinDependencyState(State state) {
+      statesJoin2DependencyNodes.get(state)
+    }
+    
+    // Map a new dependency representation of a state to a state.
+    def private DependencyNode map(DependencyNode dependencyNode, State state, boolean isJoin) {
+        if (!isJoin) {
+            states2DependencyNodes.put(state, dependencyNode)
+        } else {
+            statesJoin2DependencyNodes.put(state, dependencyNode)
+        }
+        dependencyNode
+    }
+
+
+    //-------------------------------------------------------------------------
+    //--                  A C C E S S    F U N C T I O N S                   --
+    //-------------------------------------------------------------------------
+   
+    // Get a list of states sorted by their priority with highest priority first.
+    def public List<DependencyNode> getPioritySortedStates(List<DependencyNode> dependencyNodes) {
+        dependencyNodes.sort(e1, e2 | comparePriorities(e1,e2));
+    }
+
+    // Get a list of states sorted by their order with highest order first.
+    def public List<DependencyNode> getOrderSortedStates(List<DependencyNode> dependencyNodes) {
+        dependencyNodes.sort(e1, e2 | compareOrders(e1,e2));
+    }
+   
+    // Compare two priorities.
+    def private int comparePriorities(DependencyNode e1, DependencyNode e2) {
+        if (e1.getPriority > e2.getPriority) {-1} else {1}    
+    }
+
+    // Compare two orders.
+    def private int compareOrders(DependencyNode e1, DependencyNode e2) {
+        if (e1.getOrder > e2.getOrder) {-1} else {1}    
+    }
+   
+    // Gets a list of outgoing dependencies for a dependency node.
+    def private List<Dependency> outgoingDependencies(DependencyNode dependencyNode, List<Dependency> dependencies) {
+       dependencies.filter[stateDepending == dependencyNode].toList 
+    }
+
+    // Gets a list of incoming dependencies for a dependency node.
+    def private List<Dependency> incomingDependencies(DependencyNode dependencyNode, List<Dependency> dependencies) {
+       dependencies.filter[stateToDependOn == dependencyNode].toList 
+    }
+
+
+    //-------------------------------------------------------------------------
+    //--                  T O P O L O G I C A L    S O R T                   --
+    //-------------------------------------------------------------------------
+   
+    // This implementation sets the priority as well as the order of the dependency nodes representing
+    // SCCharts states. The priority is optimized in contrast to the order. 
+    // The implementatiation
+   
+    //    L <- Empty list that will contain the sorted nodes
+    //    S <- Set of all nodes with no outgoing edges
+    //    for each node n in S do
+    //        visit(n) 
+    //    function visit(node n)
+    //        if n has not been visited yet then
+    //            mark n as visited
+    //            for each node m with an edge from m to n do
+    //                visit(m)
+    //            add n to L    
+    
+    // Starting the topological sort.
+    def private List<DependencyNode> topologicalSort(List<DependencyNode> dependencyNodes, List<Dependency> dependencies) {
+        val allDependencyStates = dependencyNodes
+       
+        // Reset dependencies and initialize with default priority -1
+        for (dependencyNode : allDependencyStates) {
+            dependencyNode.setPriority(-1)
+        }
+        
+        val dependencyNodesWithNoEdges = allDependencyStates.filter(e | 
+                                                e.outgoingDependencies(dependencies).nullOrEmpty 
+                                             && e.incomingDependencies(dependencies).nullOrEmpty
+        )
+
+        // Calculate priorities for all connected nodes (including the root)
+        // now start with priority 0                                              
+        var PriorityAndOrder tmpPrioOrder = new PriorityAndOrder(0, 0);
+        val dependencyNodesWithoutOutgoingEdges = allDependencyStates.filter(e | 
+                                                    e.outgoingDependencies(dependencies).nullOrEmpty 
+                                                && !e.incomingDependencies(dependencies).nullOrEmpty
+        )
+            
+        for (dependencyNode : dependencyNodesWithoutOutgoingEdges) {
+            tmpPrioOrder = dependencyNode.visit(tmpPrioOrder, dependencies);
+        }
+
+        // Visit these unconnected nodes (these have prio -1) with the max-priority
+        var PriorityAndOrder maxPrioOrder = new PriorityAndOrder(tmpPrioOrder)
+        for (dependencyNode : dependencyNodesWithNoEdges) {
+            maxPrioOrder = dependencyNode.visit(maxPrioOrder, dependencies);
+        }
+        
+        dependencyNodes
+    }
+    
+    // Visit helper function for topological sorting the dependency nodes.
+    def private PriorityAndOrder visit(DependencyNode dependencyNode, PriorityAndOrder prioOrder, List<Dependency> dependencies) {
+        if (dependencyNode.getPriority == -1) {
+            dependencyNode.setPriority(-2);
+            var tmpPrioOrder = prioOrder;
+            for (incomingDependency : dependencyNode.incomingDependencies(dependencies)) {
+                val nextNode = incomingDependency.stateDepending 
+                if (nextNode != dependencyNode) {
+                     tmpPrioOrder = nextNode.visit(tmpPrioOrder, dependencies);
+                }
+            }
+            dependencyNode.setPriority((tmpPrioOrder.priority + 1));
+            dependencyNode.setOrder((tmpPrioOrder.order + 1));
+            tmpPrioOrder.incrementOrder
+            // =============================
+            // Optimization for dependencies
+            // =============================
+            // This implicitly forms (splitted-) "basic blocks" of the same priority
+            if (dependencyNode.outgoingDependencies(dependencies).filter(typeof(DataDependency)).size != 0) {
+                tmpPrioOrder.incrementPriority
+            }
+            return tmpPrioOrder;
+        }
+        else {
+           return new PriorityAndOrder(dependencyNode.priority, dependencyNode.order);
+        }
+    }
+
+    // -------------------------------------------------------------------------   
 }
