@@ -16,11 +16,31 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
+import com.google.inject.Injector
+import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup
+import org.eclipse.xtext.parser.IParser
+import org.eclipse.xtext.parser.IParseResult
+import org.eclipse.xtext.util.StringInputStream
+import java.util.List
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.core.kexpressions.Expression
+import java.io.StringReader
+import org.eclipse.xtext.nodemodel.INode
 
 class SCGToSCGDEPTransformation {
  
-    def SCGraphDep transformSCGToSCGDEP(SCGraph scg) {
+//    IMPORTANT STUFF
+//    Injector guiceInjector = new KExpressionsStandaloneSetup().createInjectorAndDoEMFRegistration();
+//    IParser parser = guiceInjector.getInstance(typeof(IParser));
+//    IParseResult result = parser.parse(new StringReader("O = true"));
+//    Iterable<INode> errors = result.getSyntaxErrors();
+//    EObject eRoot = result.getRootASTElement();
+//    Expression root = eRoot as Expression;
+        
+     def SCGraphDep transformSCGToSCGDEP(SCGraph scg) {
         val scgdep = ScgdepFactory::eINSTANCE.createSCGraphDep()
+   
+//        if (root != null) {}
         
         val nodeMapping = new HashMap<Node, Node>
         val revNodeMapping = new HashMap<Node, Node>
