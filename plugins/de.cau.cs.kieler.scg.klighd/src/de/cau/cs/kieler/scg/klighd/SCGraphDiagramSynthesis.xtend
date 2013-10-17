@@ -75,6 +75,10 @@ import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import java.util.ArrayList
 import de.cau.cs.kieler.scgdep.SCGraphDep
 import de.cau.cs.kieler.scgdep.Dependency
+import de.cau.cs.kieler.scgdep.AbsoluteWrite_Read
+import de.cau.cs.kieler.scgdep.RelativeWrite_Read
+import de.cau.cs.kieler.scgdep.AbsoluteWrite_RelativeWrite
+import de.cau.cs.kieler.scgdep.Write_Write
 
 class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
@@ -174,7 +178,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor KEYWORD = RENDERING_FACTORY.createKColor()=>[it.red=115;it.green=0;it.blue=65];
     private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor()=>[it.red=60;it.green=60;it.blue=60];
     
-    private static val KColor DEPENDENCY_WRITEREAD = RENDERING_FACTORY.createKColor()=>[it.red = 0; it.green = 192; it.blue = 0;]
+    private static val KColor DEPENDENCY_ABSWRITEREAD = RENDERING_FACTORY.createKColor()=>[it.red = 0; it.green = 192; it.blue = 0;]
+    private static val KColor DEPENDENCY_RELWRITEREAD = RENDERING_FACTORY.createKColor()=>[it.red = 0; it.green = 192; it.blue = 192;]
+    private static val KColor DEPENDENCY_ABSWRITERELWRITE = RENDERING_FACTORY.createKColor()=>[it.red = 0; it.green = 0; it.blue = 255;]
+    private static val KColor DEPENDENCY_ABSWRITEABSWRITE = RENDERING_FACTORY.createKColor()=>[it.red = 255; it.green = 0; it.blue = 0;]
     
     private static val String SCGPORTID_INCOMING = "incoming"
     private static val String SCGPORTID_OUTGOING = "outgoing"
@@ -548,7 +555,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.source = sourceNode
             edge.target = targetNode
             edge.addRoundedBendsPolyline(8,2) => [    
-                it.foreground = DEPENDENCY_WRITEREAD.copy
+                if (dependency instanceof AbsoluteWrite_Read) it.foreground = DEPENDENCY_ABSWRITEREAD.copy
+                if (dependency instanceof RelativeWrite_Read) it.foreground = DEPENDENCY_RELWRITEREAD.copy
+                if (dependency instanceof AbsoluteWrite_RelativeWrite) it.foreground = DEPENDENCY_ABSWRITERELWRITE.copy
+                if (dependency instanceof Write_Write) it.foreground = DEPENDENCY_ABSWRITEABSWRITE.copy
                 it.lineStyle = LineStyle::DASH
                 it.addArrowDecorator
             ]  
