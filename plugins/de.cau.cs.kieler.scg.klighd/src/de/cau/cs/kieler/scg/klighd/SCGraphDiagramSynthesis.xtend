@@ -114,6 +114,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
     private static val TransformationOption ALIGN_TICK_START
         = TransformationOption::createCheckOption("Tick start alignment", true);
+
+    private static val TransformationOption ALIGN_ENTRYEXIT_NODES
+        = TransformationOption::createCheckOption("Entry/Exit alignment", false);
         
     private static val TransformationOption SHOW_HIERARCHY
         = TransformationOption::createCheckOption("Display hierarchy", true);
@@ -130,7 +133,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     override public getTransformationOptions() {
 //        return ImmutableSet::of(SHOW_LABELS, SHOW_SHADOW, ALIGN_TICK_START, ALIGN_EDGES, FIXATE_EDGES);
-        return ImmutableSet::of(SHOW_CAPTION, SHOW_SHADOW, ALIGN_TICK_START, SHOW_HIERARCHY, HIERARCHY_TRANSPARENCY);
+        return ImmutableSet::of(SHOW_CAPTION, SHOW_SHADOW, ALIGN_TICK_START, ALIGN_ENTRYEXIT_NODES, 
+            SHOW_HIERARCHY, HIERARCHY_TRANSPARENCY
+        );
     }
     
     override public getRecommendedLayoutOptions() {
@@ -206,7 +211,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 for (s : r.nodes.filter(typeof(Fork))) {
                     val threadEntries = s.getAllNext
                     for(t : threadEntries) {
-                        if (t instanceof Entry) (t.target as Entry).getThreadNodes.createHierarchy
+                        if (t.target instanceof Entry) (t.target as Entry).getThreadNodes.createHierarchy
                     }
                 }            
             }
@@ -333,6 +338,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
             // node.setLayoutOption(LayoutOptions::SPACING, 0f);
 //            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+            if (ALIGN_ENTRYEXIT_NODES.optionBooleanValue)
+                node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
 
             val figure = node.addEllipse();
 //                .background = "white".color;
@@ -360,6 +367,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
             // node.setLayoutOption(LayoutOptions::SPACING, 0f);
 //            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+            if (ALIGN_ENTRYEXIT_NODES.optionBooleanValue)
+                node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
 
             val figure = node.addEllipse();
 //                .background = "white".color;
