@@ -73,6 +73,8 @@ import de.cau.cs.kieler.kiml.options.PortConstraints
 
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import java.util.ArrayList
+import de.cau.cs.kieler.scgdep.SCGraphDep
+import de.cau.cs.kieler.scgdep.Dependency
 
 class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
@@ -109,6 +111,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val TransformationOption SHOW_CAPTION
         = TransformationOption::createCheckOption("Captions", true);
         
+    private static val TransformationOption SHOW_DEPENDENCIES
+        = TransformationOption::createCheckOption("Show dependencies", true);
+
+    private static val TransformationOption LAYOUT_DEPENDENCIES
+        = TransformationOption::createCheckOption("Layout dependencies", true);
+        
     private static val TransformationOption SHOW_SHADOW
         = TransformationOption::createCheckOption("Shadow", true);
         
@@ -133,8 +141,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     override public getTransformationOptions() {
 //        return ImmutableSet::of(SHOW_LABELS, SHOW_SHADOW, ALIGN_TICK_START, ALIGN_EDGES, FIXATE_EDGES);
-        return ImmutableSet::of(SHOW_CAPTION, SHOW_SHADOW, ALIGN_TICK_START, ALIGN_ENTRYEXIT_NODES, 
-            SHOW_HIERARCHY, HIERARCHY_TRANSPARENCY
+        return ImmutableSet::of(SHOW_CAPTION, SHOW_DEPENDENCIES, LAYOUT_DEPENDENCIES, 
+            ALIGN_TICK_START, ALIGN_ENTRYEXIT_NODES, 
+            SHOW_HIERARCHY, HIERARCHY_TRANSPARENCY, SHOW_SHADOW
         );
     }
     
@@ -164,6 +173,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor()=>[it.red=205;it.green=220;it.blue=243];
     private static val KColor KEYWORD = RENDERING_FACTORY.createKColor()=>[it.red=115;it.green=0;it.blue=65];
     private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor()=>[it.red=60;it.green=60;it.blue=60];
+    
+    private static val KColor DEPENDENCY_WRITEREAD = RENDERING_FACTORY.createKColor()=>[it.red = 0; it.green = 192; it.blue = 0;]
     
     private static val String SCGPORTID_INCOMING = "incoming"
     private static val String SCGPORTID_OUTGOING = "outgoing"
@@ -206,6 +217,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     (s as Conditional).getElse()?.translateControlFlow(SCGPORTID_OUTGOING_ELSE)
                 }
             }
+
+            if (r instanceof SCGraphDep && SHOW_DEPENDENCIES.optionBooleanValue &&
+                LAYOUT_DEPENDENCIES.optionBooleanValue
+            ) {
+                r.eAllContents.filter(Dependency).forEach[ it.drawDependency ]
+            }
             
             if (SHOW_HIERARCHY.optionBooleanValue) {    
                 for (s : r.nodes.filter(typeof(Fork))) {
@@ -214,6 +231,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         if (t.target instanceof Entry) (t.target as Entry).getThreadNodes.createHierarchy
                     }
                 }            
+            }
+            
+            if (r instanceof SCGraphDep && SHOW_DEPENDENCIES.optionBooleanValue &&
+                !LAYOUT_DEPENDENCIES.optionBooleanValue
+            ) {
+                r.eAllContents.filter(Dependency).forEach[ it.drawDependency ]
             }
             
         ]
@@ -472,14 +495,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             var targetNode = targetObj.node
             var addArrow = true
             
-//            if (sourceNode.eContainer != targetNode.eContainer) {
-//                if (sourceNode.eContainer.eContainer == targetNode.eContainer) {
-//                    sourceNode = sourceNode.eContainer as KNode
-//                } else {
-//                    targetNode = targetNode.eContainer as KNode    
-//                }
-//            }
-            
             edge.source = sourceNode
             edge.target = targetNode
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
@@ -492,21 +507,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.addLayoutParam(LayoutOptions::OFFSET, -3f)
                     sourceObj.node.ports += it
                 ]
-//                if (SHOW_HIERARCHY.optionBooleanValue) {
-//                    val targetNodeFinal = targetNode
-//                    val helperEdge = t.createEdge("forkAutoEdge") => [ autoEdge |
-//                        autoEdge.source = targetNodeFinal
-//                        autoEdge.sourcePort = targetNodeFinal.getPort(SCGPORTID_INCOMING)
-//                        autoEdge.target = targetObj.node
-//                        autoEdge.targetPort = targetObj.node.getPort(SCGPORTID_INCOMING)
-//                        autoEdge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-//                        autoEdge.addRoundedBendsPolyline(8,2) => [
-//                            it.lineStyle = LineStyle::SOLID
-//                            it.addArrowDecorator
-//                        ]
-//                    ]
-//                    addArrow = false
-//                }
             } else {
                 edge.sourcePort = sourceNode.getPort(outgoing)
             }
@@ -519,20 +519,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.addLayoutParam(LayoutOptions::OFFSET, -2f)
                     targetObj.node.ports += it
                 ]
-//                if (SHOW_HIERARCHY.optionBooleanValue) {
-//                    val targetNodeFinal = targetNode
-//                    val helperEdge = t.createEdge("forkAutoEdge") => [ autoEdge |
-//                        autoEdge.source = sourceObj.node
-//                        autoEdge.sourcePort = sourceObj.node.getPort(SCGPORTID_OUTGOING)
-//                        autoEdge.target = sourceObj.node.eContainer as KNode
-//                        autoEdge.targetPort = autoEdge.target.getPort(SCGPORTID_OUTGOING)
-//                        autoEdge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-//                        autoEdge.addRoundedBendsPolyline(8,2) => [
-//                            it.lineStyle = LineStyle::SOLID
-////                            it.addArrowDecorator
-//                        ]
-//                    ]
-//                }
             } else {
                 edge.targetPort = targetNode.getPort(SCGPORTID_INCOMING)
             }
@@ -541,8 +527,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.addRoundedBendsPolyline(8,2) => [
                     it.lineStyle = LineStyle::SOLID
                     if (addArrowFinal) it.addArrowDecorator
-//                    it.lineStyle.dashPattern.clear;
-//                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
             ]
             
             if (outgoing == SCGPORTID_OUTGOING_THEN) {
@@ -550,6 +534,23 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }               
         ]
     }    
+    
+    def Dependency drawDependency(Dependency dependency) {
+        val sourceNode = (dependency.eContainer as Node).node
+        val targetNode = dependency.target.node
+        
+        sourceNode.createEdge() => [ edge |
+            edge.source = sourceNode
+            edge.target = targetNode
+            edge.addRoundedBendsPolyline(8,2) => [    
+                it.foreground = DEPENDENCY_WRITEREAD.copy
+                it.lineStyle = LineStyle::DASH
+                it.addArrowDecorator
+            ]            
+        ]
+        
+        dependency
+    }
 
     def createHierarchy(List<Node> nodes) {
         val threadEntry = nodes.head as Entry
@@ -593,14 +594,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ne.source = kContainer
             ne.sourcePort = hPort 
             val helperEdge = kParent.createEdge(SCGPORTID_HIERARCHYEDGE + 
-                ne.hashCode.toString()) => [ autoEdge |
+                ne.hashCode.toString() + origSource.hashCode.toString()) => [ autoEdge |
                 autoEdge.source = origSource
                 autoEdge.sourcePort = origSourcePort
                 autoEdge.target = kContainer
                 autoEdge.targetPort = kContainer.getPort(portName)
                 autoEdge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
                 autoEdge.addRoundedBendsPolyline(8,2) => [
-                    it.lineStyle = LineStyle::SOLID
+                    it.lineStyle = ne.KRendering.lineStyleValue
+                    it.foreground = ne.KRendering.foreground
                 ]
             ]
         }     
