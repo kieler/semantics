@@ -546,7 +546,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 it.foreground = DEPENDENCY_WRITEREAD.copy
                 it.lineStyle = LineStyle::DASH
                 it.addArrowDecorator
-            ]            
+            ]  
+            
+            if (LAYOUT_DEPENDENCIES.optionBooleanValue) {
+                edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOING)
+                edge.targetPort = targetNode.getPort(SCGPORTID_INCOMING)
+            }          
         ]
         
         dependency
