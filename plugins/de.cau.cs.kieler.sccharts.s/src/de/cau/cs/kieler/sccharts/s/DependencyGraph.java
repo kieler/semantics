@@ -27,25 +27,46 @@ import java.util.List;
  */
 public class DependencyGraph {
 
+    /** The dependencies. */
     List<Dependency> dependencies;
+
+    /** The dependency nodes. */
     List<DependencyNode> dependencyNodes;
 
-    // Create a new dependency graph consisting of a bunch of dependency nodes (representation
-    // SCChart states) and a bunch of dependency edges between these nodes.
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new dependency graph consisting of a bunch of dependency nodes (representation
+     * SCChart states) and a bunch of dependency edges between these nodes.
+     */
     public DependencyGraph() {
         dependencies = new ArrayList<Dependency>();
         dependencyNodes = new ArrayList<DependencyNode>();
     }
 
-    // Get all dependency edges between dependency nodes. These could be of type DataDependency or
-    // ControlFlowDependency.
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets all dependency edges between dependency nodes. These could be of type DataDependency or
+     * ControlFlowDependency.
+     * 
+     * @return the dependencies
+     */
     public List<Dependency> getDependencies() {
         return dependencies;
     }
 
-    // Get all dependency nodes.
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets all dependency nodes.
+     * 
+     * @return the dependency nodes
+     */
     public List<DependencyNode> getDependencyNodes() {
         return dependencyNodes;
     }
+
+    // -------------------------------------------------------------------------
 
 }
