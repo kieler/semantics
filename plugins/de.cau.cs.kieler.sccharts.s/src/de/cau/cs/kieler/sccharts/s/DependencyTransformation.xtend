@@ -251,18 +251,9 @@ class DependencyTransformation {
                                              && e.incomingDependencies(dependencies).nullOrEmpty
         )
 
-        // pre-visit these nodes with some max-priority,
-        // because we can always LOWER a priority (to a possible weak abort representation) but not ENLARGE a prio within a tick.
-        // -1 because we reserve the MAXIMAL priority for the (connected) root node, we will re-arrange the root node's prio                                                 
-        var tmpPrio = allDependencyStates.size - dependencyNodesWithNoEdges.size - 1;
-        for (dependencyNode : dependencyNodesWithNoEdges) {
-            //node.setPriority(-1);
-            tmpPrio = dependencyNode.visit(tmpPrio, dependencies);
-        }
-        
         // calculate priorities for all connected nodes (including the root)
         // now start with priority 0                                              
-        tmpPrio = 0;
+        var tmpPrio = 0;
         val dependencyNodesWithoutOutgoingEdges = allDependencyStates.filter(e | 
                                                     e.outgoingDependencies(dependencies).nullOrEmpty 
                                                 && !e.incomingDependencies(dependencies).nullOrEmpty
@@ -271,14 +262,11 @@ class DependencyTransformation {
         for (dependencyNode : dependencyNodesWithoutOutgoingEdges) {
             tmpPrio = dependencyNode.visit(tmpPrio, dependencies);
         }
-        
-        // re-set the root node's priority to be the maximal priority (above all unconnected nodesWithNoEdges
-        val rootDependencyStates = allDependencyStates.filter(e | 
-                                                (e.getPriority == (allDependencyStates.size - dependencyNodesWithNoEdges.size)) 
-                                             && !e.incomingDependencies(dependencies).nullOrEmpty)
 
-        if (rootDependencyStates.head != null) {
-            rootDependencyStates.head.setPriority(allDependencyStates.size);
+        // visit these unconnected nodes (these have prio -1) with the max-priority
+        var maxPrio = tmpPrio + 1
+        for (dependencyNode : dependencyNodesWithNoEdges) {
+            maxPrio = dependencyNode.visit(maxPrio, dependencies);
         }
         
         dependencyNodes
@@ -296,12 +284,27 @@ class DependencyTransformation {
                 }
             }
             dependencyNode.setPriority((tmpPrio + 1));
-            return tmpPrio + 1;
+            var nextPrio = tmpPrio + 1
+            // =============================
+            // Optimization for dependencies
+            // =============================
+            // This implicitly forms (splitted-) "basic blocks" of the same priority
+            if (dependencyNode.outgoingDependencies(dependencies).filter(typeof(DataDependency)).size == 0) {
+                nextPrio = tmpPrio
+            }
+            return nextPrio;
         }
         else {
            return priority;
         }
     }
     
-    // -------------------------------------------------------------------------   
+
+   //-------------------------------------------------------------------------
+   //--           D E P E N D E N C Y   O P T I M I Z A T I O N             --
+   //-------------------------------------------------------------------------
+   
+   // Dependencies between control flow ONLY does not need to be    
+    
+   // -------------------------------------------------------------------------   
 }
