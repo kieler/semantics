@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.s;
 
-import de.cau.cs.kieler.sccharts.State;
 
 /**
  * This class holds a dependency between an SCCharts State and another SCCharts State. 
@@ -25,30 +24,30 @@ import de.cau.cs.kieler.sccharts.State;
  */
 public abstract class Dependency {
     
-    private DependencyState stateDependeing;
-    private DependencyState stateToDependOn;
+    private DependencyNode stateDependeing;
+    private DependencyNode stateToDependOn;
     
     public Dependency() {
     }
     
-    public Dependency(DependencyState stateDependeing, DependencyState stateToDependOn) {
+    public Dependency(DependencyNode stateDependeing, DependencyNode stateToDependOn) {
         this.stateDependeing = stateDependeing;
         this.stateToDependOn = stateToDependOn;
     }
     
-    public DependencyState getStateDepending() {
+    public DependencyNode getStateDepending() {
         return stateDependeing;
     }
     
-    public DependencyState getStateToDependOn() {
+    public DependencyNode getStateToDependOn() {
         return stateToDependOn;
     }
     
-    public void setStateDepending(DependencyState stateDependeing) {
+    public void setStateDepending(DependencyNode stateDependeing) {
         this.stateDependeing = stateDependeing;
     }
     
-    public void setStateToDependOn(DependencyState stateToDependOn) {
+    public void setStateToDependOn(DependencyNode stateToDependOn) {
         this.stateToDependOn = stateToDependOn;
     }
     

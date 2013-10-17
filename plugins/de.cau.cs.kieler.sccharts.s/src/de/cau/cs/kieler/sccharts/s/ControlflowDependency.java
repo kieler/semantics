@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.s;
 
-import de.cau.cs.kieler.sccharts.State;
 
 /**
  * This class holds a control flow dependency between an SCCharts State and another SCCharts State. 
@@ -25,11 +24,13 @@ import de.cau.cs.kieler.sccharts.State;
  */
 public class ControlflowDependency extends Dependency {
  
+    // Create a new control flow dependency edge.
     public ControlflowDependency() {
     }
     
-    public ControlflowDependency(DependencyState stateDependeing, DependencyState stateToDependOn) {
-        super(stateDependeing, stateToDependOn);
+    // Create a new control flow dependency edge between two dependency nodes.
+    public ControlflowDependency(DependencyNode nodeDependeing, DependencyNode nodeToDependOn) {
+        super(nodeDependeing, nodeToDependOn);
     }
     
 }

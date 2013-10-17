@@ -23,16 +23,16 @@ import de.cau.cs.kieler.sccharts.State;
  * @kieler.rating 2013-10-10 proposed yellow
  *
  */
-public class DependencyState {
+public class DependencyNode {
     
     private State state;
     private boolean isJoin;
     private int priority;
     
-    public DependencyState() {
+    public DependencyNode() {
     }
     
-    public DependencyState(State state) {
+    public DependencyNode(State state) {
         this.state = state;
     }
     

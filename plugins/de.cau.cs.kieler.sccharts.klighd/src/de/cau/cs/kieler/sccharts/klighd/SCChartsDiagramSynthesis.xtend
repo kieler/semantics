@@ -69,7 +69,8 @@ import java.util.ArrayList
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.kiml.options.EdgeType
 import de.cau.cs.kieler.sccharts.s.DataDependency
-import de.cau.cs.kieler.sccharts.s.DependencyState
+import de.cau.cs.kieler.sccharts.s.DependencyNode
+import de.cau.cs.kieler.sccharts.s.DependencyGraph
 
 class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
@@ -118,8 +119,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     private static val TransformationOption SHOW_DEPENDENCIES
         = TransformationOption::createCheckOption("Show Dependencies", false);
         
-    List<DependencyState> dependencyStates = null
-    List<Dependency> dependencies = null        
+    DependencyGraph dependencyGraph = null
         
     private static val TransformationOption SHOW_SHADOW
         = TransformationOption::createCheckOption("Shadow", true);
@@ -314,10 +314,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     
     def dispatch KNode translate(State s) {
         if (SHOW_DEPENDENCIES.optionBooleanValue) {
-            if (dependencyStates == null) {
+            if (dependencyGraph == null) {
                 // Calculate only once
-                dependencies = s.rootRegion.getAllDependencies
-                dependencyStates = s.rootRegion.getAllDependencyStates(dependencies)
+                dependencyGraph = s.rootRegion.getDependencyGraph
             }
         }
         
@@ -387,24 +386,24 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 
                 var priority = ""
                 if (SHOW_DEPENDENCIES.optionBooleanValue) {
-                    if (dependencyStates.filter(e|e.state == s && !e.isJoin).size > 0) {
-                        priority = "(" + dependencyStates.filter(e|e.state == s && !e.isJoin).get(0).priority
+                    if (dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).size > 0) {
+                        priority = "(" + dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).get(0).getPriority
                         if (s.hierarchical) {
-                            if (dependencyStates.filter(e|e.state == s && e.isJoin).size > 0) {
-                                priority = priority + ", " + dependencyStates.filter(e|e.state == s && e.isJoin).get(0).priority
+                            if (dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).size > 0) {
+                                priority = priority + ", " + dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).get(0).getPriority
                             }
                         }
                         priority = priority + ")"
                     }
                     
-                    for (dependency : dependencies.filter[stateToDependOn.state == s].toList) {
+                    for (dependency : dependencyGraph.dependencies.filter[stateToDependOn.getState == s].toList) {
                         if  (dependency instanceof DataDependency) {
-                        val join1 = if (dependency.stateDepending.isJoin) "j" else ""
-                        val join2 = if (dependency.stateToDependOn.isJoin) "j" else ""
-                        System.out.println("Dependency: " + dependency.stateDepending.state.id + join1 + "-->" + dependency.stateToDependOn.state.id + join2)
+                        val join1 = if (dependency.stateDepending.getIsJoin) "j" else ""
+                        val join2 = if (dependency.stateToDependOn.getIsJoin) "j" else ""
+                        System.out.println("Dependency: " + dependency.stateDepending.getState.id + join1 + "-->" + dependency.stateToDependOn.getState.id + join2)
                         s.createEdge() => [ edge |
-                                edge.target = dependency.stateDepending.state.node;
-                                edge.source = dependency.stateToDependOn.state.node;
+                                edge.target = dependency.stateDepending.getState.node;
+                                edge.source = dependency.stateToDependOn.getState.node;
                                 edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
                                 //edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true);
                                 edge.addPolyline(3)  => [

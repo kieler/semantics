@@ -122,8 +122,9 @@ class SCCharts2STransformation {
         clearValuedObjectMapping
         
         // Dependency analysis
-        val dependencies = rootRegion.getAllDependencies
-        val dependencyStates = rootRegion.getAllDependencyStates(dependencies)
+        val dependencyGraph = rootRegion.dependencyGraph
+        val dependencies = dependencyGraph.dependencies
+        val dependencyStates = dependencyGraph.dependencyNodes
           
         val sortedDependencyStates = dependencyStates.pioritySortedStates
         
@@ -142,11 +143,11 @@ class SCCharts2STransformation {
 
         // Create all states and a mapping
         for (dependencyState : sortedDependencyStates) { 
-            if (!dependencyState.isJoin) {
-                target.createSState(dependencyState.state.getHierarchicalName("")).map(dependencyState.state)
+            if (!dependencyState.getIsJoin) {
+                target.createSState(dependencyState.getState.getHierarchicalName("")).map(dependencyState.getState)
             }
             else {
-                target.createSState(dependencyState.state.getHierarchicalName("") + "_JOIN").mapJoin(dependencyState.state)
+                target.createSState(dependencyState.getState.getHierarchicalName("") + "_JOIN").mapJoin(dependencyState.getState)
             }
         }
         
@@ -175,9 +176,9 @@ class SCCharts2STransformation {
     // ==                                     H A N D L E   S T A T E                                      ==
     // ======================================================================================================
 
-    def void handleState(DependencyState dependencyState) {
+    def void handleState(DependencyNode dependencyState) {
         
-        val state = dependencyState.state
+        val state = dependencyState.getState
         val sState = state.sState
         
         if (state.hierarchical) {

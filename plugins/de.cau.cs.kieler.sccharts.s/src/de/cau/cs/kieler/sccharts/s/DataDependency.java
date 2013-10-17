@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.s;
 
-import de.cau.cs.kieler.sccharts.State;
 
 /**
  * This class holds a data dependency between an SCCharts State and another SCCharts State. 
@@ -25,11 +24,13 @@ import de.cau.cs.kieler.sccharts.State;
  */
 public class DataDependency extends Dependency {
  
+    // Create a new data dependency edge.
     public DataDependency() {
     }
     
-    public DataDependency(DependencyState stateDependeing, DependencyState stateToDependOn) {
-        super(stateDependeing, stateToDependOn);
+    // Create a new data dependency edge between two dependency nodes.
+    public DataDependency(DependencyNode nodeDependeing, DependencyNode nodeToDependOn) {
+        super(nodeDependeing, nodeToDependOn);
     }    
     
 }
