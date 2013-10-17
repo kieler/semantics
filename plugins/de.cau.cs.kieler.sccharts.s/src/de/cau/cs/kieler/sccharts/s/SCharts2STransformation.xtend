@@ -49,9 +49,9 @@ import de.cau.cs.kieler.s.s.Trans
  * @kieler.rating 2012-10-08 proposed yellow
  */
 class SCCharts2STransformation {
-    
-//    static String LabelSymbol = "L"
-//    static String LocalSignalSymbol = "S"
+
+    // -------------------------------------------------------------------------
+    // Other extensions necessary
     
     @Inject
     extension KExpressionsExtension
@@ -65,59 +65,73 @@ class SCCharts2STransformation {
     @Inject
     extension DependencyTransformation
 
+    // -------------------------------------------------------------------------
+
+    //-------------------------------------------------------------------------
+    //--                M A P P I N G    F U N C T I O N S                   --
+    //-------------------------------------------------------------------------
+
     static HashMap<State, de.cau.cs.kieler.s.s.State> STATES_SCCharts2S  = new HashMap<State, de.cau.cs.kieler.s.s.State>()
-    static HashMap<de.cau.cs.kieler.s.s.State, State> STATES_S2SCCharts  = new HashMap<de.cau.cs.kieler.s.s.State, State>()
+//    static HashMap<de.cau.cs.kieler.s.s.State, State> STATES_S2SCCharts  = new HashMap<de.cau.cs.kieler.s.s.State, State>()
     static HashMap<State, de.cau.cs.kieler.s.s.State> STATES_JOIN_SCCharts2S  = new HashMap<State, de.cau.cs.kieler.s.s.State>()
     
+    // Map from an S state to an SCCharts state.
     def map(de.cau.cs.kieler.s.s.State sState, State state) {
         STATES_SCCharts2S.put(state, sState)
-        STATES_S2SCCharts.put(sState, state)
+//        STATES_S2SCCharts.put(sState, state)
     }
+    // Map from an S join state to a (hierarchical) SCCharts state.
     def mapJoin(de.cau.cs.kieler.s.s.State sState, State state) {
         STATES_JOIN_SCCharts2S.put(state, sState)
     }
+    // Clear the states mappings.
     def clearStatesMapping() {
         STATES_SCCharts2S.clear
-        STATES_S2SCCharts.clear
+//        STATES_S2SCCharts.clear
         STATES_JOIN_SCCharts2S.clear
     }
+    // Gets an S state from an SCCharts state.
     def sState(State state) {
         STATES_SCCharts2S.get(state)
     }
+    // Gets an S join state from a (hierarchical) SCCharts state.
     def sJoinState(State state) {
         STATES_JOIN_SCCharts2S.get(state)
     }
-    def state(de.cau.cs.kieler.s.s.State sState) {
-        STATES_S2SCCharts.get(sState)
-    }
+//    // Gets the SCCharts state from an S state
+//    def state(de.cau.cs.kieler.s.s.State sState) {
+//        STATES_S2SCCharts.get(sState)
+//    }
     
-
     static HashMap<ValuedObject, ValuedObject> VALUEDOBJECTS_SCCharts2S  = new HashMap<ValuedObject, ValuedObject>()
-    static HashMap<ValuedObject, ValuedObject> VALUEDOBJECTS_S2SCCharts  = new HashMap<ValuedObject, ValuedObject>()
+//    static HashMap<ValuedObject, ValuedObject> VALUEDOBJECTS_S2SCCharts  = new HashMap<ValuedObject, ValuedObject>()
 
+    // Map from an S valued object to an SCCharts valued object.
     def map(ValuedObject sValuedObject, ValuedObject valuedObject) {
         VALUEDOBJECTS_SCCharts2S.put(valuedObject, sValuedObject)
-        VALUEDOBJECTS_S2SCCharts.put(sValuedObject, valuedObject)
+//        VALUEDOBJECTS_S2SCCharts.put(sValuedObject, valuedObject)
     }
+    // Clear the valued object mapping.
     def clearValuedObjectMapping() {
         VALUEDOBJECTS_SCCharts2S.clear
-        VALUEDOBJECTS_S2SCCharts.clear
+//        VALUEDOBJECTS_S2SCCharts.clear
     }
+    // Get the S valued object for an SCCharts valued object.
     def sValuedObject(ValuedObject valuedObject) {
         VALUEDOBJECTS_SCCharts2S.get(valuedObject)
     }
-    def valuedObject(ValuedObject sValuedObject) {
-        VALUEDOBJECTS_S2SCCharts.get(sValuedObject)
-    }
+//    def valuedObject(ValuedObject sValuedObject) {
+//        VALUEDOBJECTS_S2SCCharts.get(sValuedObject)
+//    }
     
-    // ======================================================================================================
-    // ==                              M A I N   T R A N S F O R M A T I O N                               ==
-    // ======================================================================================================
+    //-------------------------------------------------------------------------
+    //--              M A I N   T R A N S F O R M A T I O N                  --
+    //-------------------------------------------------------------------------
 
     def create target : SFactory::eINSTANCE.createProgram() transformS (Region rootRegion) {
         val rootState = rootRegion.states.head();
 
-        // clear traces
+        // Clear traces
         clearStatesMapping
         clearValuedObjectMapping
         
@@ -172,9 +186,9 @@ class SCCharts2STransformation {
 //        }
 
 
-    // ======================================================================================================
-    // ==                                     H A N D L E   S T A T E                                      ==
-    // ======================================================================================================
+    //-------------------------------------------------------------------------
+    //--                    H A N D L E    S T A T E                         --
+    //-------------------------------------------------------------------------
 
     def void handleState(DependencyNode dependencyState) {
         
@@ -245,9 +259,9 @@ class SCCharts2STransformation {
 
 
 
-    // ======================================================================================================
-    // ==                                   H A N D L E   T R A N S I T I O N                              ==
-    // ======================================================================================================
+    //-------------------------------------------------------------------------
+    //--                H A N D L E    T R A N S I T I O N                   --
+    //-------------------------------------------------------------------------
 
     def void handleTransition(de.cau.cs.kieler.s.s.State sState, Transition transition) {
         if (transition.trigger != null) {
@@ -271,9 +285,9 @@ class SCCharts2STransformation {
 
 
 
-    // ======================================================================================================
-    // ==                            C O N V E R T   E X P R E S S I O N S                                 ==
-    // ======================================================================================================
+    //-------------------------------------------------------------------------
+    //--              C O N V E R T   E X P R E S S I O N S                  --
+    //-------------------------------------------------------------------------
 
     // Create a new reference Expression to the corresponding sValuedObject of the expression
     def dispatch Expression convertToSExpression(ValuedObjectReference expression) {
@@ -316,9 +330,9 @@ class SCCharts2STransformation {
 
 
 
-    // ======================================================================================================
-    // ==                               C O N V E R T    E F F E C T S                                     ==
-    // ======================================================================================================
+    //-------------------------------------------------------------------------
+    //--                   C O N V E R T    E F F E C T S                    --
+    //-------------------------------------------------------------------------
 
     // Convert SyncChart transition effects and add them to an instructions list.
     def dispatch void convertToSEffect(Emission effect, List<Instruction> instructions) {

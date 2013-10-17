@@ -35,12 +35,11 @@ import java.util.List
  */
 class DependencyTransformation { 
 
+    // -------------------------------------------------------------------------
+    // SCCharts extensions are necessary   
+
     @Inject
     extension SCChartsExtension
-    
-    // Create an empty dependency list
-    HashMap<State, DependencyNode> states2DependencyNodes
-    HashMap<State, DependencyNode> statesJoin2DependencyNodes
     
     //-------------------------------------------------------------------------
     //--      T R A N S F O R M      T O      D E P E N D E N C I E S        --
@@ -173,9 +172,13 @@ class DependencyTransformation {
     }
 
     
-   //-------------------------------------------------------------------------
-   //--                M A P P I N G    F U N C T I O N S                   --
-   //-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
+    //--                M A P P I N G    F U N C T I O N S                   --
+    //-------------------------------------------------------------------------
+
+    // Create an empty dependency list
+    HashMap<State, DependencyNode> states2DependencyNodes
+    HashMap<State, DependencyNode> statesJoin2DependencyNodes
 
     // Get a dependency representation for a state. For hierarchical states also a
     // join-representation can be retrieved.
@@ -199,62 +202,62 @@ class DependencyTransformation {
     }
 
 
-   //-------------------------------------------------------------------------
-   //--                  A C C E S S    F U N C T I O N S                   --
-   //-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
+    //--                  A C C E S S    F U N C T I O N S                   --
+    //-------------------------------------------------------------------------
    
-   // Get a list of states sorted by their priority with highest priority first.
-   def public List<DependencyNode> getPioritySortedStates(List<DependencyNode> dependencyNodes) {
+    // Get a list of states sorted by their priority with highest priority first.
+    def public List<DependencyNode> getPioritySortedStates(List<DependencyNode> dependencyNodes) {
         dependencyNodes.sort(e1, e2 | comparePriorities(e1,e2));
-   }
+    }
 
-   // Get a list of states sorted by their order with highest order first.
-   def public List<DependencyNode> getOrderSortedStates(List<DependencyNode> dependencyNodes) {
+    // Get a list of states sorted by their order with highest order first.
+    def public List<DependencyNode> getOrderSortedStates(List<DependencyNode> dependencyNodes) {
         dependencyNodes.sort(e1, e2 | compareOrders(e1,e2));
-   }
+    }
    
-   // Compare two priorities.
-   def private int comparePriorities(DependencyNode e1, DependencyNode e2) {
+    // Compare two priorities.
+    def private int comparePriorities(DependencyNode e1, DependencyNode e2) {
         if (e1.getPriority > e2.getPriority) {-1} else {1}    
-   }
+    }
 
-   // Compare two orders.
-   def private int compareOrders(DependencyNode e1, DependencyNode e2) {
+    // Compare two orders.
+    def private int compareOrders(DependencyNode e1, DependencyNode e2) {
         if (e1.getOrder > e2.getOrder) {-1} else {1}    
-   }
+    }
    
-   // Gets a list of outgoing dependencies for a dependency node.
-   def private List<Dependency> outgoingDependencies(DependencyNode dependencyNode, List<Dependency> dependencies) {
+    // Gets a list of outgoing dependencies for a dependency node.
+    def private List<Dependency> outgoingDependencies(DependencyNode dependencyNode, List<Dependency> dependencies) {
        dependencies.filter[stateDepending == dependencyNode].toList 
-   }
+    }
 
-   // Gets a list of incoming dependencies for a dependency node.
-   def private List<Dependency> incomingDependencies(DependencyNode dependencyNode, List<Dependency> dependencies) {
+    // Gets a list of incoming dependencies for a dependency node.
+    def private List<Dependency> incomingDependencies(DependencyNode dependencyNode, List<Dependency> dependencies) {
        dependencies.filter[stateToDependOn == dependencyNode].toList 
-   }
+    }
 
 
-   //-------------------------------------------------------------------------
-   //--                  T O P O L O G I C A L    S O R T                   --
-   //-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
+    //--                  T O P O L O G I C A L    S O R T                   --
+    //-------------------------------------------------------------------------
    
-   // This implementation sets the priority as well as the order of the dependency nodes representing
-   // SCCharts states. The priority is optimized in contrast to the order. 
-   // The implementatiation
+    // This implementation sets the priority as well as the order of the dependency nodes representing
+    // SCCharts states. The priority is optimized in contrast to the order. 
+    // The implementatiation
    
-   //    L <- Empty list that will contain the sorted nodes
-   //    S <- Set of all nodes with no outgoing edges
-   //    for each node n in S do
-   //        visit(n) 
-   //    function visit(node n)
-   //        if n has not been visited yet then
-   //            mark n as visited
-   //            for each node m with an edge from m to n do
-   //                visit(m)
-   //            add n to L    
+    //    L <- Empty list that will contain the sorted nodes
+    //    S <- Set of all nodes with no outgoing edges
+    //    for each node n in S do
+    //        visit(n) 
+    //    function visit(node n)
+    //        if n has not been visited yet then
+    //            mark n as visited
+    //            for each node m with an edge from m to n do
+    //                visit(m)
+    //            add n to L    
     
-   // Starting the topological sort.
-   def private List<DependencyNode> topologicalSort(List<DependencyNode> dependencyNodes, List<Dependency> dependencies) {
+    // Starting the topological sort.
+    def private List<DependencyNode> topologicalSort(List<DependencyNode> dependencyNodes, List<Dependency> dependencies) {
         val allDependencyStates = dependencyNodes
        
         // Reset dependencies and initialize with default priority -1
@@ -316,5 +319,5 @@ class DependencyTransformation {
         }
     }
 
-   // -------------------------------------------------------------------------   
+    // -------------------------------------------------------------------------   
 }
