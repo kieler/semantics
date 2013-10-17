@@ -399,13 +399,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 var priority = ""
                 if (SHOW_DEPENDENCIES.optionBooleanValue) {
                     if (dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).size > 0) {
-                        priority = "(" + dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).get(0).getPriority
+                        priority = "" + dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).get(0).getPriority
                         if (s.hierarchical) {
                             if (dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).size > 0) {
                                 priority = priority + ", " + dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).get(0).getPriority
                             }
                         }
-                        priority = priority + ")"
+                        priority = priority + ""
                     }
                     
                     for (dependency : dependencyGraph.dependencies.filter[stateToDependOn.getState == s].toList) {
@@ -420,7 +420,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 //edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true);
                                 edge.addPolyline(3)  => [
                                     if (dependency instanceof DataDependency) {
-                                        it.setForeground("red".color)
+                                        it.setForeground("blue".color)
                                     } else {
                                         it.setForeground("blue".color)
                                     }
@@ -445,18 +445,30 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         it.setGridPlacementData().setMaxCellHeightEx(5)
                             .from(LEFT, 0, 0, TOP, 8f, 0)
                             .to(RIGHT, 0, 0, BOTTOM, 0, 0);
-                        addText(" " + s.label + priorityToShow).putToLookUpWith(s);
+                        addText(" " + s.label).putToLookUpWith(s);
+                        addText(priorityToShow)=> [
+                        it.fontSize = 7; ]
                     ];
                  }
                  else {
                     // For simple states we want a larger area 
-                    it.addText(s.label + priorityToShow).putToLookUpWith(s) => [
+                    val ktext = it.addText(s.label).putToLookUpWith(s) => [
                         it.fontSize = 11;
                         it.setFontBold(true);
                         it.setGridPlacementData().setMaxCellHeightEx(40)
                             .from(LEFT, 9, 0, TOP, 8f, 0)
                             .to(RIGHT, 8, 0, BOTTOM, 8, 0);
                     ];
+                    val estimatedWidth = PlacementUtil.estimateTextSize(ktext).width
+                    it.addText(priorityToShow)=> [
+                      it.fontSize = 9; 
+                      it.setFontBold(true);
+                      it.setForeground("blue".color)
+                      it.setGridPlacementData().setMaxCellHeightEx(40)
+                            .from(LEFT, estimatedWidth + 15, 0, TOP, 15f, 0)
+                            .to(RIGHT, 8, 0, BOTTOM, 8, 0);                      
+                    ]
+                    
                  }
                 
                 
