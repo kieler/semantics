@@ -115,7 +115,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         = TransformationOption::createCheckOption("Show dependencies", true);
 
     private static val TransformationOption LAYOUT_DEPENDENCIES
-        = TransformationOption::createCheckOption("Layout dependencies", true);
+        = TransformationOption::createCheckOption("Layout dependencies", false);
         
     private static val TransformationOption SHOW_SHADOW
         = TransformationOption::createCheckOption("Shadow", true);
@@ -183,6 +183,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val String SCGPORTID_HIERARCHY = "hierarchy"
     private static val String SCGPORTID_HIERARCHYEDGE = "hierarchyEdge"
     private static val String SCGPORTID_HIERARCHYPORTS = "hierarchyPorts"
+    private static val String SCGPORTID_INCOMINGDEPENDENCY = "incomingDependency"
+    private static val String SCGPORTID_OUTGOINGDEPENDENCY = "outgoingDependency"
 
     private KNode rootNode;
 
@@ -269,7 +271,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             node.addPort(SCGPORTID_INCOMING, 36, -1, 3, PortSide::NORTH)
             node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)          
-            
+            node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 46, -1, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 46, 22, 3, PortSide::SOUTH)                      
         ]
     }
     
@@ -297,6 +300,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.addPort(SCGPORTID_INCOMING, 36, -1, 3, PortSide::NORTH)
             node.addPort(SCGPORTID_OUTGOING_ELSE, 36, 22, 3, PortSide::SOUTH)
             node.addPort(SCGPORTID_OUTGOING_THEN, 70, 11, 3, PortSide::EAST)
+            node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 46, 5, 3, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 46, 17, 3, PortSide::SOUTH)                      
         ]
     }
     
@@ -549,8 +554,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]  
             
             if (LAYOUT_DEPENDENCIES.optionBooleanValue) {
-                edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOING)
-                edge.targetPort = targetNode.getPort(SCGPORTID_INCOMING)
+                edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOINGDEPENDENCY)
+                edge.targetPort = targetNode.getPort(SCGPORTID_INCOMINGDEPENDENCY)
             }          
         ]
         
