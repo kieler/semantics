@@ -26,21 +26,23 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.core.kexpressions.Expression
 import java.io.StringReader
 import org.eclipse.xtext.nodemodel.INode
+import de.cau.cs.kieler.core.kexpressions.scoping.KExpressionsScopeProvider
 
 class SCGToSCGDEPTransformation {
  
 //    IMPORTANT STUFF
-//    Injector guiceInjector = new KExpressionsStandaloneSetup().createInjectorAndDoEMFRegistration();
-//    IParser parser = guiceInjector.getInstance(typeof(IParser));
-//    IParseResult result = parser.parse(new StringReader("O = true"));
-//    Iterable<INode> errors = result.getSyntaxErrors();
-//    EObject eRoot = result.getRootASTElement();
-//    Expression root = eRoot as Expression;
+    Injector guiceInjector = new KExpressionsStandaloneSetup().createInjectorAndDoEMFRegistration();
+    IParser parser = guiceInjector.getInstance(typeof(IParser));
+    KExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(typeof(KExpressionsScopeProvider));
+    IParseResult result = parser.parse(new StringReader("true | true"));
+    Iterable<INode> errors = result.getSyntaxErrors();
+    EObject eRoot = result.getRootASTElement();
+    Expression root = eRoot as Expression;
         
      def SCGraphDep transformSCGToSCGDEP(SCGraph scg) {
         val scgdep = ScgdepFactory::eINSTANCE.createSCGraphDep()
    
-//        if (root != null) {}
+        if (root != null) {}
         
         val nodeMapping = new HashMap<Node, Node>
         val revNodeMapping = new HashMap<Node, Node>
