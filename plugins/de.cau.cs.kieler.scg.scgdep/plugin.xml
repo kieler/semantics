@@ -16,7 +16,7 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.cau.cs.kieler.scg.scgdep.handler.SCGraphModelFileHandler.java"
+            class="de.cau.cs.kieler.scg.scgdep.handler.SCGraphModelFileHandler"
             commandId="de.cau.cs.kieler.scg.scgdep.commands.SCGToSCGDEPTransformation">
       </handler>
    </extension>
