@@ -128,7 +128,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         = TransformationOption::createCheckOption("Transition labels", true);
 
     private static val TransformationOption SHOW_DEPENDENCIES
-        = TransformationOption::createCheckOption("Show Dependencies", false);
+        = TransformationOption::createCheckOption("Dependencies", false);
+
+    private static val TransformationOption SHOW_ORDER
+        = TransformationOption::createCheckOption("Execution order", false);
         
     DependencyGraph dependencyGraph = null
         
@@ -136,7 +139,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         = TransformationOption::createCheckOption("Shadow", true);
 
     override public getTransformationOptions() {
-        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_SHADOW);
+        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER, SHOW_SHADOW);
     }
     
     override public getRecommendedLayoutOptions() {
@@ -328,7 +331,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     // Transform a state    
     
     def dispatch KNode translate(State s) {
-        if (SHOW_DEPENDENCIES.optionBooleanValue) {
+        if (SHOW_ORDER.optionBooleanValue || SHOW_DEPENDENCIES.optionBooleanValue) {
             if (dependencyGraph == null) {
                 // Calculate only once
                 dependencyGraph = s.rootRegion.getDependencyGraph
@@ -397,12 +400,15 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 } 
                 
                 var priority = ""
-                if (SHOW_DEPENDENCIES.optionBooleanValue) {
-                    if (dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).size > 0) {
-                        priority = "" + dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).get(0).getPriority
+                if (SHOW_ORDER.optionBooleanValue || SHOW_DEPENDENCIES.optionBooleanValue) {
+                    if (!dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).nullOrEmpty) {
+                        val dependencyNode = dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).get(0)
+                        priority = if (SHOW_DEPENDENCIES.optionBooleanValue) dependencyNode.getPriority + "" else dependencyNode.getOrder + "" 
                         if (s.hierarchical) {
-                            if (dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).size > 0) {
-                                priority = priority + ", " + dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).get(0).getPriority
+                            if (!dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).nullOrEmpty) {
+                                val dependencyNodeJoin = dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).get(0)
+                                priority = priority + ", " + if (SHOW_DEPENDENCIES.optionBooleanValue) dependencyNodeJoin.getPriority + "" else dependencyNodeJoin.getOrder + "" 
+                                //priority = priority + ", " + dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).get(0).getPriority
                             }
                         }
                         priority = priority + ""
@@ -412,17 +418,17 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         if  (dependency instanceof DataDependency) {
                         val join1 = if (dependency.stateDepending.getIsJoin) "j" else ""
                         val join2 = if (dependency.stateToDependOn.getIsJoin) "j" else ""
-                        System.out.println("Dependency: " + dependency.stateDepending.getState.id + join1 + "-->" + dependency.stateToDependOn.getState.id + join2)
+//                        System.out.println("Dependency: " + dependency.stateDepending.getState.id + join1 + "-->" + dependency.stateToDependOn.getState.id + join2)
                         s.createEdge() => [ edge |
                                 edge.target = dependency.stateDepending.getState.node;
                                 edge.source = dependency.stateToDependOn.getState.node;
                                 edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
                                 //edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true);
                                 edge.addPolyline(3)  => [
-                                    if (dependency instanceof DataDependency) {
+                                     if (SHOW_DEPENDENCIES.optionBooleanValue) {
                                         it.setForeground("blue".color)
                                     } else {
-                                        it.setForeground("blue".color)
+                                        it.setForeground("red".color)
                                     }
                                     it.addArrowDecorator()
                                 ];
