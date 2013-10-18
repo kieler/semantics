@@ -39,6 +39,7 @@ import de.cau.cs.kieler.s.s.Pause
 import de.cau.cs.kieler.s.s.Fork
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Halt
+import de.cau.cs.kieler.s.s.Prio
 
 /**
  * S Extensions. 
@@ -163,9 +164,17 @@ class SExtension {
         emitInstruction
     }
     
+    // Create a pause instruction.
     def Pause createPause() {
         val pauseInstruction = SFactory::eINSTANCE.createPause
         pauseInstruction
+    }
+
+    // Create an Prio instruction.
+    def Prio createPrio(int priority) {
+         val priorityInstruction = SFactory::eINSTANCE.createPrio
+         priorityInstruction.setPriority(priority)
+         priorityInstruction
     }
 
     // -------------------------------------------------------------------------   
