@@ -128,10 +128,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         = TransformationOption::createCheckOption("Transition labels", true);
 
     private static val TransformationOption SHOW_DEPENDENCIES
-        = TransformationOption::createCheckOption("Dependencies & priorities", false);
+        = TransformationOption::createCheckOption("Dependencies && optimized priorities", false);
 
     private static val TransformationOption SHOW_ORDER
-        = TransformationOption::createCheckOption("Dependencies & execution order", false);
+        = TransformationOption::createCheckOption("Dependencies && priorities", false);
         
     DependencyGraph dependencyGraph = null
         
@@ -403,11 +403,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 if (SHOW_ORDER.optionBooleanValue || SHOW_DEPENDENCIES.optionBooleanValue) {
                     if (!dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).nullOrEmpty) {
                         val dependencyNode = dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).get(0)
-                        priority = if (SHOW_DEPENDENCIES.optionBooleanValue) dependencyNode.getPriority + "" else (dependencyGraph.dependencyNodes.size-dependencyNode.getOrder) + "" 
+                        priority = if (SHOW_DEPENDENCIES.optionBooleanValue) dependencyNode.getPriority + "" else (dependencyNode.getOrder) + "" 
                         if (s.hierarchical) {
                             if (!dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).nullOrEmpty) {
                                 val dependencyNodeJoin = dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).get(0)
-                                priority = priority + ", " + if (SHOW_DEPENDENCIES.optionBooleanValue) dependencyNodeJoin.getPriority + "" else (dependencyGraph.dependencyNodes.size-dependencyNodeJoin.getOrder) + "" 
+                                priority = priority + ", " + if (SHOW_DEPENDENCIES.optionBooleanValue) dependencyNodeJoin.getPriority + "" else (dependencyNodeJoin.getOrder) + "" 
                                 //priority = priority + ", " + dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).get(0).getPriority
                             }
                         }
