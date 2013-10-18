@@ -657,7 +657,7 @@ class SCChartsExtension {
                     stateId = state.id
                 }
                 if (regionId.nullOrEmpty) {
-                    regionId = "REGION" + (state.parentRegion.parentState.regions.indexOf(state.parentRegion) + 1)
+                    regionId = "R" + (state.parentRegion.parentState.regions.indexOf(state.parentRegion) + 1)
                 }
                 if (!higherHierarchyReturnedName.nullOrEmpty) {
                     higherHierarchyReturnedName = higherHierarchyReturnedName + "_";

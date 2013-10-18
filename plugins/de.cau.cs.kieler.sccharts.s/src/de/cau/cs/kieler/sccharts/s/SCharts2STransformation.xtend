@@ -40,6 +40,7 @@ import java.util.List
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.s.s.Fork
 import de.cau.cs.kieler.s.s.Trans
+import de.cau.cs.kieler.s.s.Prio
 
 /**
  * Converts a SyncChart into an S program.
@@ -71,9 +72,47 @@ class SCCharts2STransformation {
     //--                M A P P I N G    F U N C T I O N S                   --
     //-------------------------------------------------------------------------
 
-    static HashMap<State, de.cau.cs.kieler.s.s.State> STATES_SCCharts2S  = new HashMap<State, de.cau.cs.kieler.s.s.State>()
+    // Dependency graph    
+    DependencyGraph dependencyGraph;
+
+    // Get the priority of the representation of an SCCharts state.
+    def priority (State state) {
+        state.priority(false)
+    }
+    // Get the priority of the Join representation of a hierarchical SCCharts state.
+    def priorityJoin (State state) {
+        state.priority(true)
+    }
+    // Get the priority of the normal and the Join representation of an SCCharts state.
+    def priority (State state, boolean isJoin) {
+        val dependencyNodes = dependencyGraph.dependencyNodes.filter(e | e.state == state && e.isJoin == isJoin)
+        if (dependencyNodes.size != 1) {
+            return -1
+        }
+        dependencyNodes.get(0).priority
+    }
+    
+    // Get the order of the representation of an SCCharts state.
+    def order (State state) {
+        state.order(false)
+    }
+    // Get the order of the Join representation of a hierarchical SCCharts state.
+    def orderJoin (State state) {
+        state.order(true)
+    }
+    // Get the order of the normal and the Join representation of an SCCharts state.
+    def order (State state, boolean isJoin) {
+        val dependencyNodes = dependencyGraph.dependencyNodes.filter(e | e.state == state && e.isJoin == isJoin)
+        if (dependencyNodes.size != 1) {
+            return -1
+        }
+        dependencyNodes.get(0).order
+    }
+    
+
+    HashMap<State, de.cau.cs.kieler.s.s.State> STATES_SCCharts2S  = new HashMap<State, de.cau.cs.kieler.s.s.State>()
 //    static HashMap<de.cau.cs.kieler.s.s.State, State> STATES_S2SCCharts  = new HashMap<de.cau.cs.kieler.s.s.State, State>()
-    static HashMap<State, de.cau.cs.kieler.s.s.State> STATES_JOIN_SCCharts2S  = new HashMap<State, de.cau.cs.kieler.s.s.State>()
+    HashMap<State, de.cau.cs.kieler.s.s.State> STATES_JOIN_SCCharts2S  = new HashMap<State, de.cau.cs.kieler.s.s.State>()
     
     // Map from an S state to an SCCharts state.
     def map(de.cau.cs.kieler.s.s.State sState, State state) {
@@ -136,14 +175,14 @@ class SCCharts2STransformation {
         clearValuedObjectMapping
         
         // Dependency analysis
-        val dependencyGraph = rootRegion.dependencyGraph
+        dependencyGraph = rootRegion.dependencyGraph
         val dependencies = dependencyGraph.dependencies
         val dependencyStates = dependencyGraph.dependencyNodes
           
         val sortedDependencyStates = dependencyStates.orderSortedStates
         
         // Set highest priority
-        target.setPriority(dependencies.size);
+        target.setPriority(sortedDependencyStates.get(0).priority);
         
         // Set s program name (as the root state's name)
         target.setName(rootState.id)
@@ -166,7 +205,7 @@ class SCCharts2STransformation {
         }
         
         // Now traverse all states again and fill them
-        for (dependencyState : sortedDependencyStates) { 
+        for (dependencyState : sortedDependencyStates.filter[!isJoin]) {
             dependencyState.handleState
         }
         
@@ -214,10 +253,10 @@ class SCCharts2STransformation {
                 sJoinState.addInstruction(createHalt)
             }
             
-            sState.forkTo(sJoinState, 0)
+            sState.forkTo(sJoinState, state.priorityJoin)
             for (region : state.regions) {
                 val initialState = region.states.filter[isInitial].get(0)
-                sState.forkTo(initialState.sState, 0)
+                sState.forkTo(initialState.sState, initialState.priority)
             }
             
         } else {
@@ -226,7 +265,7 @@ class SCCharts2STransformation {
             ///////////////////////////
             // Consider immediate transitions
             for (transition : state.outgoingTransitions.filter[isImmediate]) {
-               sState.handleTransition(transition)
+               state.handleTransition(transition)
             }
             // Consider delayed transitions, if any
             val delayedTransitions = state.outgoingTransitions.filter[!isImmediate]
@@ -234,20 +273,24 @@ class SCCharts2STransformation {
                 // If there are delayed transitions create a pause
                 sState.addInstruction(createPause)
                 for (transition : delayedTransitions) {
-                   sState.handleTransition(transition)
+                   state.handleTransition(transition)
                 }
             }
             
-            // Final states imply a TERM instructions, non-final-states a HALT
+            // Final states imply a TERM instructions, non-final-states a IMPLICIT SELF LOOP
             if (state.isFinal) {
                 sState.addInstruction(createTerm)
             } else {
                 // Optimization: Do not put a halt if the instruction before is a transition,
-                // or a fork.
+                // or a fork or a prio.
                 if (!(sState.instructions.length > 0 && 
                        (sState.instructions.get(sState.instructions.length-1) instanceof Trans || 
-                       sState.instructions.get(sState.instructions.length-1) instanceof Fork))) {
-                   sState.addInstruction(createHalt)
+                       sState.instructions.get(sState.instructions.length-1) instanceof Fork || 
+                       sState.instructions.get(sState.instructions.length-1) instanceof Prio))) {
+                   
+                   
+                   sState.addInstruction(createPause)
+                   sState.transitionTo(sState)
                 }
             }
             
@@ -263,10 +306,10 @@ class SCCharts2STransformation {
     //--                H A N D L E    T R A N S I T I O N                   --
     //-------------------------------------------------------------------------
 
-    def void handleTransition(de.cau.cs.kieler.s.s.State sState, Transition transition) {
+    def void handleTransition(State state, Transition transition) {
         if (transition.trigger != null) {
             val sIf = createIf(transition.trigger.convertToSExpression);
-            sState.addInstruction(sIf)
+            state.sState.addInstruction(sIf)
             if (!transition.effects.nullOrEmpty) {
                for (effect : transition.effects) {
                    effect.convertToSEffect(sIf.instructions);
@@ -276,10 +319,20 @@ class SCCharts2STransformation {
         } else {
             if (!transition.effects.nullOrEmpty) {
                 for (effect : transition.effects) {
-                    effect.convertToSEffect(sState.instructions);
+                    effect.convertToSEffect(state.sState.instructions);
                 }
             }
-            sState.transitionTo(transition.targetState.sState)
+            
+            // If necessary, insert a prio statement
+            var sourcePriority = state.priority(state.hierarchical)
+            var targetPriority = transition.targetState.priority
+            if (sourcePriority != targetPriority) {
+                // Change priority
+                state.sState.addInstruction(createPrio(targetPriority));
+            }
+
+            // Transition to target state
+            state.sState.transitionTo(transition.targetState.sState)
         }
     }
 
