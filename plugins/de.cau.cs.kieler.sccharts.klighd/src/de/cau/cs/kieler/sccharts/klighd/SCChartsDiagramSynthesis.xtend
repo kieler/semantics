@@ -128,10 +128,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         = TransformationOption::createCheckOption("Transition labels", true);
 
     private static val TransformationOption SHOW_DEPENDENCIES
-        = TransformationOption::createCheckOption("Dependencies", false);
+        = TransformationOption::createCheckOption("Dependencies & priorities", false);
 
     private static val TransformationOption SHOW_ORDER
-        = TransformationOption::createCheckOption("Execution order", false);
+        = TransformationOption::createCheckOption("Dependencies & execution order", false);
         
     DependencyGraph dependencyGraph = null
         
@@ -403,11 +403,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 if (SHOW_ORDER.optionBooleanValue || SHOW_DEPENDENCIES.optionBooleanValue) {
                     if (!dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).nullOrEmpty) {
                         val dependencyNode = dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).get(0)
-                        priority = if (SHOW_DEPENDENCIES.optionBooleanValue) dependencyNode.getPriority + "" else dependencyNode.getOrder + "" 
+                        priority = if (SHOW_DEPENDENCIES.optionBooleanValue) dependencyNode.getPriority + "" else (dependencyGraph.dependencyNodes.size-dependencyNode.getOrder) + "" 
                         if (s.hierarchical) {
                             if (!dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).nullOrEmpty) {
                                 val dependencyNodeJoin = dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).get(0)
-                                priority = priority + ", " + if (SHOW_DEPENDENCIES.optionBooleanValue) dependencyNodeJoin.getPriority + "" else dependencyNodeJoin.getOrder + "" 
+                                priority = priority + ", " + if (SHOW_DEPENDENCIES.optionBooleanValue) dependencyNodeJoin.getPriority + "" else (dependencyGraph.dependencyNodes.size-dependencyNodeJoin.getOrder) + "" 
                                 //priority = priority + ", " + dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).get(0).getPriority
                             }
                         }
@@ -416,8 +416,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     
                     for (dependency : dependencyGraph.dependencies.filter[stateToDependOn.getState == s].toList) {
                         if  (dependency instanceof DataDependency) {
-                        val join1 = if (dependency.stateDepending.getIsJoin) "j" else ""
-                        val join2 = if (dependency.stateToDependOn.getIsJoin) "j" else ""
+//                        val join1 = if (dependency.stateDepending.getIsJoin) "j" else ""
+//                        val join2 = if (dependency.stateToDependOn.getIsJoin) "j" else ""
 //                        System.out.println("Dependency: " + dependency.stateDepending.getState.id + join1 + "-->" + dependency.stateToDependOn.getState.id + join2)
                         s.createEdge() => [ edge |
                                 edge.target = dependency.stateDepending.getState.node;
@@ -425,11 +425,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
                                 //edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true);
                                 edge.addPolyline(3)  => [
-                                     if (SHOW_DEPENDENCIES.optionBooleanValue) {
-                                        it.setForeground("blue".color)
-                                    } else {
-                                        it.setForeground("red".color)
-                                    }
+                                    it.setForeground("blue".color)
                                     it.addArrowDecorator()
                                 ];
                         ];
@@ -458,7 +454,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                             it.addText(priorityToShow)=> [
                               it.fontSize = 9; 
                               it.setFontBold(true);
-                              it.setForeground("blue".color)
+                              if (SHOW_DEPENDENCIES.optionBooleanValue) {
+                                  it.setForeground("blue".color)
+                              } else {
+                                  it.setForeground("red".color)
+                              }
                               it.setGridPlacementData().setMaxCellHeightEx(40)
                                 .from(LEFT, estimatedWidth + 15, 0, TOP, 15f, 0)
                                 .to(RIGHT, 8, 0, BOTTOM, 8, 0);                      
@@ -480,7 +480,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         it.addText(priorityToShow)=> [
                           it.fontSize = 9; 
                           it.setFontBold(true);
-                          it.setForeground("blue".color)
+                          if (SHOW_DEPENDENCIES.optionBooleanValue) {
+                              it.setForeground("blue".color)
+                          } else {
+                              it.setForeground("red".color)
+                          }
                           it.setGridPlacementData().setMaxCellHeightEx(40)
                                 .from(LEFT, estimatedWidth + 9, 0, TOP, 15f, 0)
                                 .to(RIGHT, 8, 0, BOTTOM, 8, 0);                      
