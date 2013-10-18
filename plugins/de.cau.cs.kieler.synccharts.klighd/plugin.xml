@@ -18,7 +18,7 @@
    <extension
          point="de.cau.cs.kieler.core.kivi.combinations">
       <combination
-            active="false"
+            active="true"
             class="de.cau.cs.kieler.synccharts.klighd.SyncChartsShowDiagramCombination"
             name="Show SyncCharts Diagrams with KLighD">
       </combination>

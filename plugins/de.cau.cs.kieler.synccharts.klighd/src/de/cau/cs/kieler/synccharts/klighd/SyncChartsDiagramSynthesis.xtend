@@ -141,6 +141,18 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
+                it.addText("Test:").putToLookUpWith(r) => [
+                    it.foreground = "gray".color
+                    it.fontSize = 11                    
+                    it.setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 2, 0), H_CENTRAL, V_TOP, 10, 10, 0, 0);
+                    it.addDoubleClickAction("de.cau.cs.kieler.klighd.actions.TestAction");
+                ];
+                it.addText("Test2:").putToLookUpWith(r) => [
+                    it.foreground = "gray".color
+                    it.fontSize = 11                    
+                    it.setPointPlacementData(createKPosition(LEFT, 0, 1f, TOP, 2, 0), H_RIGHT, V_TOP, 10, 10, 0, 0);
+                    it.addDoubleClickAction("de.cau.cs.kieler.klighd.actions.TestAction2");
+                ];
                 it.addVerticalLine(LEFT, 1, 1) => [
                     it.lineStyle = LineStyle::CUSTOM;
                     it.lineStyle.dashPattern.clear;
@@ -158,6 +170,14 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
             ];
         ];
+    }
+    
+    def KNode translate2(State s) {
+        return s.createNode().putToLookUpWith(s) => [ node |
+            for (r : s.regions) node.children += r.translate;
+            
+            for (t : s.outgoingTransitions) t.translateTransition();
+        ]
     }
     
     def dispatch KNode translate(State s) {
@@ -208,7 +228,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 
                 it.addText(s.label).putToLookUpWith(s) => [
                     it.fontSize = 11;
-                    it.setGridPlacementData().setMaxCellHeightEx(40)
+                    it.setGridPlacementData()//.setMaxCellHeightEx(40)
                         .from(LEFT, 10, 0, TOP, 9f, 0)
                         .to(RIGHT, 10, 0, BOTTOM, 10, 0);
                 ];
@@ -217,7 +237,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 if (SHOW_SIGNAL_DECLARATIONS.optionBooleanValue && !s.signals.empty) {
                     it.addRectangle => [
                         it.invisible = true;
-                        it.setGridPlacementData.setMaxCellHeight(40);
+                        it.setGridPlacementData//.setMaxCellHeight(40);
                         it.setGridPlacement(s.signals.size + 2);
                         it.addText("Signals:")
                             .setGridPlacementData.from(LEFT, 5, 0, TOP, 0, 0).to(RIGHT, 2, 0, BOTTOM, 5, 0);
@@ -232,7 +252,6 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 if (!s.regions.empty) {
                     it.addHorizontalLine(1, 1)
                         .setGridPlacementData() //.from(LEFT, 0, 0, TOP, 30, 0).to(RIGHT, 0, 0, TOP, 30, 0)
-                        .maxCellHeight = 1;                        
                     
                     it.addChildArea().setGridPlacementData() => [
                         from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)

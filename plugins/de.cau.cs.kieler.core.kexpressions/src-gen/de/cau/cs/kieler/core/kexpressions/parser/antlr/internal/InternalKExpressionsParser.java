@@ -10412,8 +10412,8 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             "\1\1\23\uffff\1\2",
             "",
             "\1\3",
-            "\1\6\1\uffff\1\10\1\7\1\11\1\5\1\6\5\uffff\2\5\13\uffff\1"+
-            "\5\1\12\1\uffff\1\4",
+            "\1\6\1\uffff\1\10\1\7\1\11\1\5\1\6\5\uffff\2\5\13\uffff\1\5"+
+            "\1\12\1\uffff\1\4",
             "\1\13",
             "",
             "",
@@ -10421,8 +10421,8 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             "",
             "",
             "",
-            "\1\6\1\uffff\1\10\1\7\1\11\1\5\1\6\5\uffff\2\5\13\uffff\1"+
-            "\5\1\12\1\uffff\1\4"
+            "\1\6\1\uffff\1\10\1\7\1\11\1\5\1\6\5\uffff\2\5\13\uffff\1\5"+
+            "\1\12\1\uffff\1\4"
     };
 
     static final short[] DFA31_eot = DFA.unpackEncodedString(DFA31_eotS);

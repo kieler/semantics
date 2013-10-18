@@ -29013,8 +29013,8 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
     static final String DFA22_specialS =
         "\1\uffff\1\0\14\uffff}>";
     static final String[] DFA22_transitionS = {
-            "\1\2\1\1\3\2\7\uffff\1\2\2\uffff\1\2\1\uffff\1\2\2\uffff\1"+
-            "\2\21\uffff\1\2\1\uffff\1\2",
+            "\1\2\1\1\3\2\7\uffff\1\2\2\uffff\1\2\1\uffff\1\2\2\uffff\1\2"+
+            "\21\uffff\1\2\1\uffff\1\2",
             "\1\uffff",
             "",
             "",

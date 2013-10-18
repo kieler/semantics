@@ -41,22 +41,15 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEffectsEffectParserRuleCall_5_2_1_0 = (RuleCall)cEffectsAssignment_5_2_1.eContents().get(0);
 		
 		//// haf: We need a Rule for transitions in order to serialize them
-		//
 		//// here we only want to have the features isImmediate, delay, trigger and effects
-		//
 		//// the features type, targetState, priority, isHistory are ignored and set as transient
-		//
 		//// you need to override the rule to support transitions properly
-		//
 		//Transition returns synccharts::Transition:
-		//
 		//	{synccharts::Transition} annotations+=Annotation* isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/"
-		//
 		//	effects+=Effect ("," effects+=Effect)*)?;
 		public ParserRule getRule() { return rule; }
 
 		//{synccharts::Transition} annotations+=Annotation* isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/"
-		//
 		//effects+=Effect ("," effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
@@ -132,16 +125,12 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEffectsEffectParserRuleCall_4_2_1_0 = (RuleCall)cEffectsAssignment_4_2_1.eContents().get(0);
 		
 		//// chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
-		//
 		//Action returns synccharts::Action:
-		//
 		//	{synccharts::Action} //    (annotations += Annotation)*
-		//
 		//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?;
 		public ParserRule getRule() { return rule; }
 
 		//{synccharts::Action} //    (annotations += Annotation)*
-		//
 		//isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
@@ -199,7 +188,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTextEffectParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//Effect returns synccharts::Effect:
-		//
 		//	Emission | Assignment | TextEffect;
 		public ParserRule getRule() { return rule; }
 
@@ -229,7 +217,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
 		//Emission returns synccharts::Emission:
-		//
 		//	signal=[kexpressions::Signal] ("(" newValue=Expression ")")?;
 		public ParserRule getRule() { return rule; }
 
@@ -272,7 +259,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
 		
 		//Assignment returns synccharts::Assignment:
-		//
 		//	variable=[kexpressions::Variable] ":=" expression=Expression;
 		public ParserRule getRule() { return rule; }
 
@@ -310,7 +296,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
 		//TextEffect returns synccharts::TextEffect:
-		//
 		//	code=HOSTCODE ("(" type=ID ")")?;
 		public ParserRule getRule() { return rule; }
 
@@ -346,7 +331,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cDIVColonKeyword_0 = (Keyword)cDIVEnumLiteralDeclaration.eContents().get(0);
 		
 		//enum DivOperator returns kexpressions::OperatorType:
-		//
 		//	DIV=":";
 		public EnumRule getRule() { return rule; }
 
@@ -404,17 +388,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//// haf: We need a Rule for transitions in order to serialize them
-	//
 	//// here we only want to have the features isImmediate, delay, trigger and effects
-	//
 	//// the features type, targetState, priority, isHistory are ignored and set as transient
-	//
 	//// you need to override the rule to support transitions properly
-	//
 	//Transition returns synccharts::Transition:
-	//
 	//	{synccharts::Transition} annotations+=Annotation* isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/"
-	//
 	//	effects+=Effect ("," effects+=Effect)*)?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
@@ -425,11 +403,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
-	//
 	//Action returns synccharts::Action:
-	//
 	//	{synccharts::Action} //    (annotations += Annotation)*
-	//
 	//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?;
 	public ActionElements getActionAccess() {
 		return (pAction != null) ? pAction : (pAction = new ActionElements());
@@ -440,7 +415,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Effect returns synccharts::Effect:
-	//
 	//	Emission | Assignment | TextEffect;
 	public EffectElements getEffectAccess() {
 		return (pEffect != null) ? pEffect : (pEffect = new EffectElements());
@@ -451,7 +425,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Emission returns synccharts::Emission:
-	//
 	//	signal=[kexpressions::Signal] ("(" newValue=Expression ")")?;
 	public EmissionElements getEmissionAccess() {
 		return (pEmission != null) ? pEmission : (pEmission = new EmissionElements());
@@ -462,7 +435,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Assignment returns synccharts::Assignment:
-	//
 	//	variable=[kexpressions::Variable] ":=" expression=Expression;
 	public AssignmentElements getAssignmentAccess() {
 		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
@@ -473,7 +445,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TextEffect returns synccharts::TextEffect:
-	//
 	//	code=HOSTCODE ("(" type=ID ")")?;
 	public TextEffectElements getTextEffectAccess() {
 		return (pTextEffect != null) ? pTextEffect : (pTextEffect = new TextEffectElements());
@@ -484,7 +455,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum DivOperator returns kexpressions::OperatorType:
-	//
 	//	DIV=":";
 	public DivOperatorElements getDivOperatorAccess() {
 		return (unknownRuleDivOperator != null) ? unknownRuleDivOperator : (unknownRuleDivOperator = new DivOperatorElements());
@@ -495,7 +465,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Root returns ecore::EObject:
-	//
 	//	Expression | InterfaceDeclaration;
 	public KExpressionsGrammarAccess.RootElements getRootAccess() {
 		return gaKExpressions.getRootAccess();
@@ -506,21 +475,13 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////Variable returns annotations::Annotatable:
-	//
 	////    (annotations += StringAnnotation)*;
-	//
 	//// --------------------------
-	//
 	////
-	//
 	////   EXPRESSIONS
-	//
 	////
-	//
 	//// --------------------------
-	//
 	//Expression:
-	//
 	//	BooleanExpression | ValuedExpression;
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
 		return gaKExpressions.getExpressionAccess();
@@ -531,9 +492,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: not D and C or ?E = 42 or not (A and (B or C))
-	//
 	//BooleanExpression returns Expression:
-	//
 	//	OrExpression;
 	public KExpressionsGrammarAccess.BooleanExpressionElements getBooleanExpressionAccess() {
 		return gaKExpressions.getBooleanExpressionAccess();
@@ -544,9 +503,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: A or B, A and B and C, C and B or D and not E, A and B and C
-	//
 	//OrExpression returns Expression:
-	//
 	//	AndExpression ({OperatorExpression.subExpressions+=current} operator=OrOperator subExpressions+=AndExpression)*;
 	public KExpressionsGrammarAccess.OrExpressionElements getOrExpressionAccess() {
 		return gaKExpressions.getOrExpressionAccess();
@@ -557,11 +514,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: A and B, not C and 42 <= ?D
-	//
 	//AndExpression returns Expression:
-	//
 	//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator
-	//
 	//	subExpressions+=CompareOperation)*;
 	public KExpressionsGrammarAccess.AndExpressionElements getAndExpressionAccess() {
 		return gaKExpressions.getAndExpressionAccess();
@@ -572,11 +526,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: 42 <= ?A
-	//
 	//CompareOperation returns Expression:
-	//
 	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
-	//
 	//	subExpressions+=NotOrValuedExpression) | NotExpression;
 	public KExpressionsGrammarAccess.CompareOperationElements getCompareOperationAccess() {
 		return gaKExpressions.getCompareOperationAccess();
@@ -587,9 +538,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// order IS IMPORTANT
-	//
 	//NotOrValuedExpression returns Expression:
-	//
 	//	ValuedExpression | NotExpression;
 	public KExpressionsGrammarAccess.NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
 		return gaKExpressions.getNotOrValuedExpressionAccess();
@@ -600,11 +549,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: not A, not false, not (A or B)
-	//
 	//// at the latter we need the parans to indicate the right binding
-	//
 	//NotExpression returns Expression:
-	//
 	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
 	public KExpressionsGrammarAccess.NotExpressionElements getNotExpressionAccess() {
 		return gaKExpressions.getNotExpressionAccess();
@@ -615,9 +561,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// everything that evaluates to a primitive number value
-	//
 	//ValuedExpression returns Expression:
-	//
 	//	AddExpression;
 	public KExpressionsGrammarAccess.ValuedExpressionElements getValuedExpressionAccess() {
 		return gaKExpressions.getValuedExpressionAccess();
@@ -628,9 +572,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: 1 + 2
-	//
 	//AddExpression returns Expression:
-	//
 	//	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
 	public KExpressionsGrammarAccess.AddExpressionElements getAddExpressionAccess() {
 		return gaKExpressions.getAddExpressionAccess();
@@ -641,9 +583,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: varA - ?B
-	//
 	//SubExpression returns Expression:
-	//
 	//	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
 	public KExpressionsGrammarAccess.SubExpressionElements getSubExpressionAccess() {
 		return gaKExpressions.getSubExpressionAccess();
@@ -654,15 +594,10 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////    ({OperatorExpression} subExpressions+=MultExpression (operator=SubOperator subExpressions+=MultExpression)+)
-	//
 	////	| ({OperatorExpression} subExpressions+=MultExpression subExpressions+=NIntValue)
-	//
 	////    | MultExpression;
-	//
 	//// Example: 2 * 4
-	//
 	//MultExpression returns Expression:
-	//
 	//	DivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=DivExpression)*;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
@@ -673,11 +608,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: (2 / 4)
-	//
 	//// note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
-	//
 	//DivExpression returns Expression:
-	//
 	//	ModExpression ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?;
 	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
 		return gaKExpressions.getDivExpressionAccess();
@@ -688,11 +620,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: varA mod ?B
-	//
 	//ModExpression returns Expression:
-	//
 	//	NegExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
-	//
 	//	subExpressions+=AtomicValuedExpression)?;
 	public KExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
 		return gaKExpressions.getModExpressionAccess();
@@ -703,11 +632,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: not A, not false, not (A or B)
-	//
 	//// at the latter we need the parans to indicate the right binding
-	//
 	//NegExpression returns Expression:
-	//
 	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | AtomicValuedExpression;
 	public KExpressionsGrammarAccess.NegExpressionElements getNegExpressionAccess() {
 		return gaKExpressions.getNegExpressionAccess();
@@ -718,7 +644,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicExpression returns Expression:
-	//
 	//	BooleanValue | ValuedObjectTestExpression | "(" BooleanExpression ")" | TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
@@ -729,9 +654,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicValuedExpression returns Expression:
-	//
 	//	IntValue //    | '(' DivExpression ')'
-	//
 	//	| FloatValue | "(" ValuedExpression ")" | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaKExpressions.getAtomicValuedExpressionAccess();
@@ -742,11 +665,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
-	//
 	//ValuedObjectTestExpression returns Expression:
-	//
 	//	{OperatorExpression} operator=PreOperator "(" subExpressions+=ValuedObjectTestExpression ")" | {OperatorExpression}
-	//
 	//	operator=ValueTestOperator subExpressions+=ValuedObjectReference | ValuedObjectReference;
 	public KExpressionsGrammarAccess.ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
 		return gaKExpressions.getValuedObjectTestExpressionAccess();
@@ -757,9 +677,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: A, varB
-	//
 	//ValuedObjectReference:
-	//
 	//	valuedObject=[ValuedObject];
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKExpressions.getValuedObjectReferenceAccess();
@@ -770,9 +688,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: 'printf(...)'(C)
-	//
 	//TextExpression:
-	//
 	//	code=HOSTCODE ("(" type=ID ")")?;
 	public KExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
 		return gaKExpressions.getTextExpressionAccess();
@@ -783,7 +699,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//IntValue:
-	//
 	//	value=INT;
 	public KExpressionsGrammarAccess.IntValueElements getIntValueAccess() {
 		return gaKExpressions.getIntValueAccess();
@@ -794,11 +709,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////NIntValue returns IntValue:
-	//
 	////	value=NINT;
-	//
 	//FloatValue:
-	//
 	//	value=FLOAT;
 	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
 		return gaKExpressions.getFloatValueAccess();
@@ -809,7 +721,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//BooleanValue:
-	//
 	//	value=BOOLEAN;
 	public KExpressionsGrammarAccess.BooleanValueElements getBooleanValueAccess() {
 		return gaKExpressions.getBooleanValueAccess();
@@ -820,13 +731,9 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// data type rule allowing any kind of value to be accepted,
-	//
 	//// e.g. as initialValues of valuedObjects
-	//
 	//// used in Kits.xtext 
-	//
 	//AnyType returns ecore::EString:
-	//
 	//	BOOLEAN | INT | FLOAT | ID | STRING;
 	public KExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
 		return gaKExpressions.getAnyTypeAccess();
@@ -837,17 +744,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// --------------------------
-	//
 	////
-	//
 	////  Interface Declarations
-	//
 	////
-	//
 	//// --------------------------
-	//
 	//InterfaceDeclaration:
-	//
 	//	InterfaceSignalDecl | InterfaceVariableDecl;
 	public KExpressionsGrammarAccess.InterfaceDeclarationElements getInterfaceDeclarationAccess() {
 		return gaKExpressions.getInterfaceDeclarationAccess();
@@ -858,7 +759,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ISignal:
-	//
 	//	name=ID channelDescr=ChannelDescription?;
 	public KExpressionsGrammarAccess.ISignalElements getISignalAccess() {
 		return gaKExpressions.getISignalAccess();
@@ -869,11 +769,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//InterfaceSignalDecl:
-	//
 	//	{Input} "input" signals+=ISignal ("," signals+=ISignal)* ";" | {Output} "output" signals+=ISignal (","
-	//
 	//	signals+=ISignal)* ";" | {InputOutput} "inputoutput" signals+=ISignal ("," signals+=ISignal)* ";" | {Return} "return"
-	//
 	//	signals+=ISignal ("," signals+=ISignal)* ";";
 	public KExpressionsGrammarAccess.InterfaceSignalDeclElements getInterfaceSignalDeclAccess() {
 		return gaKExpressions.getInterfaceSignalDeclAccess();
@@ -884,7 +781,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ChannelDescription:
-	//
 	//	":" type=TypeIdentifier | "(" type=TypeIdentifier ")" | ":=" expression=Expression ":" type=TypeIdentifier;
 	public KExpressionsGrammarAccess.ChannelDescriptionElements getChannelDescriptionAccess() {
 		return gaKExpressions.getChannelDescriptionAccess();
@@ -895,9 +791,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Variables
-	//
 	//InterfaceVariableDecl:
-	//
 	//	"var" varDecls+=VariableDecl ("," varDecls+=VariableDecl)*;
 	public KExpressionsGrammarAccess.InterfaceVariableDeclElements getInterfaceVariableDeclAccess() {
 		return gaKExpressions.getInterfaceVariableDeclAccess();
@@ -908,7 +802,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VariableDecl:
-	//
 	//	variables+=IVariable ("," variables+=IVariable)* ":" type=TypeIdentifier;
 	public KExpressionsGrammarAccess.VariableDeclElements getVariableDeclAccess() {
 		return gaKExpressions.getVariableDeclAccess();
@@ -919,7 +812,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//IVariable:
-	//
 	//	name=ID (":=" expression=Expression)?;
 	public KExpressionsGrammarAccess.IVariableElements getIVariableAccess() {
 		return gaKExpressions.getIVariableAccess();
@@ -930,9 +822,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// transform ID to hostcode
-	//
 	//TypeIdentifier:
-	//
 	//	type=ValueType | typeID=ID | "combine" (type=ValueType | typeID=ID) "with" operator=CombineOperator;
 	public KExpressionsGrammarAccess.TypeIdentifierElements getTypeIdentifierAccess() {
 		return gaKExpressions.getTypeIdentifierAccess();
@@ -943,17 +833,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// --------------------------
-	//
 	////
-	//
 	////  Terminals...
-	//
 	////
-	//
 	//// --------------------------
-	//
 	//enum CompareOperator returns OperatorType:
-	//
 	//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 	public KExpressionsGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {
 		return gaKExpressions.getCompareOperatorAccess();
@@ -964,7 +848,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum PreOperator returns OperatorType:
-	//
 	//	PRE="pre";
 	public KExpressionsGrammarAccess.PreOperatorElements getPreOperatorAccess() {
 		return gaKExpressions.getPreOperatorAccess();
@@ -975,7 +858,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum OrOperator returns OperatorType:
-	//
 	//	OR="or";
 	public KExpressionsGrammarAccess.OrOperatorElements getOrOperatorAccess() {
 		return gaKExpressions.getOrOperatorAccess();
@@ -986,7 +868,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum AndOperator returns OperatorType:
-	//
 	//	AND="and";
 	public KExpressionsGrammarAccess.AndOperatorElements getAndOperatorAccess() {
 		return gaKExpressions.getAndOperatorAccess();
@@ -997,7 +878,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum NotOperator returns OperatorType:
-	//
 	//	NOT="not";
 	public KExpressionsGrammarAccess.NotOperatorElements getNotOperatorAccess() {
 		return gaKExpressions.getNotOperatorAccess();
@@ -1008,7 +888,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum AddOperator returns OperatorType:
-	//
 	//	ADD="+";
 	public KExpressionsGrammarAccess.AddOperatorElements getAddOperatorAccess() {
 		return gaKExpressions.getAddOperatorAccess();
@@ -1019,7 +898,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum SubOperator returns OperatorType:
-	//
 	//	SUB="-";
 	public KExpressionsGrammarAccess.SubOperatorElements getSubOperatorAccess() {
 		return gaKExpressions.getSubOperatorAccess();
@@ -1030,7 +908,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum MultOperator returns OperatorType:
-	//
 	//	MULT="*";
 	public KExpressionsGrammarAccess.MultOperatorElements getMultOperatorAccess() {
 		return gaKExpressions.getMultOperatorAccess();
@@ -1041,7 +918,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum ModOperator returns OperatorType:
-	//
 	//	MOD="mod";
 	public KExpressionsGrammarAccess.ModOperatorElements getModOperatorAccess() {
 		return gaKExpressions.getModOperatorAccess();
@@ -1052,7 +928,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum ValueTestOperator returns OperatorType:
-	//
 	//	VAL="?";
 	public KExpressionsGrammarAccess.ValueTestOperatorElements getValueTestOperatorAccess() {
 		return gaKExpressions.getValueTestOperatorAccess();
@@ -1063,14 +938,10 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// *
-	//
 	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
-	//
 	// * / enum ValueType:
-	//
-	//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" | INT="integer" | FLOAT="float" | DOUBLE="double" |
-	//
-	//	STRING="string" | HOST="host";
+	//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" | INT="integer" | FLOAT="float" | DOUBLE="double" | STRING="string"
+	//	| HOST="host";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaKExpressions.getValueTypeAccess();
 	}
@@ -1080,7 +951,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum CombineOperator:
-	//
 	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
 	public KExpressionsGrammarAccess.CombineOperatorElements getCombineOperatorAccess() {
 		return gaKExpressions.getCombineOperatorAccess();
@@ -1091,28 +961,19 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// custom terminal rule allowing to save transition label string as they are
-	//
 	//terminal HOSTCODE:
-	//
 	//	"\'" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
 	public TerminalRule getHOSTCODERule() {
 		return gaKExpressions.getHOSTCODERule();
 	} 
 
 	//// --------------------------
-	//
 	////
-	//
 	////   ANNOTATIONS
-	//
 	////
-	//
 	//// --------------------------
-	//
 	//Annotation:
-	//
 	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
-	//
 	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
 		return gaKExpressions.getAnnotationAccess();
@@ -1123,9 +984,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ValuedAnnotation returns Annotation:
-	//
 	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
-	//
 	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
 	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
 		return gaKExpressions.getValuedAnnotationAccess();
@@ -1136,9 +995,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: / ** semantic comment * /
-	//
 	//CommentAnnotation returns StringAnnotation:
-	//
 	//	value=COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotationElements getCommentAnnotationAccess() {
 		return gaKExpressions.getCommentAnnotationAccess();
@@ -1149,9 +1006,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @HVlayout
-	//
 	//TagAnnotation returns Annotation:
-	//
 	//	"@" name=ExtendedID ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaKExpressions.getTagAnnotationAccess();
@@ -1162,9 +1017,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @layouter dot;   
-	//
 	//KeyStringValueAnnotation returns StringAnnotation:
-	//
 	//	"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaKExpressions.getKeyStringValueAnnotationAccess();
@@ -1175,9 +1028,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-	//
 	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-	//
 	//	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaKExpressions.getTypedKeyStringValueAnnotationAccess();
@@ -1188,9 +1039,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @visible true;
-	//
 	//KeyBooleanValueAnnotation returns BooleanAnnotation:
-	//
 	//	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
 		return gaKExpressions.getKeyBooleanValueAnnotationAccess();
@@ -1201,9 +1050,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @minSpace 10;    
-	//
 	//KeyIntValueAnnotation returns IntAnnotation:
-	//
 	//	"@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
 		return gaKExpressions.getKeyIntValueAnnotationAccess();
@@ -1214,9 +1061,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @minSpace 10.0;    
-	//
 	//KeyFloatValueAnnotation returns FloatAnnotation:
-	//
 	//	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
 		return gaKExpressions.getKeyFloatValueAnnotationAccess();
@@ -1227,9 +1072,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// needed for importing other resources
-	//
 	//ImportAnnotation:
-	//
 	//	"import" importURI=STRING;
 	public AnnotationsGrammarAccess.ImportAnnotationElements getImportAnnotationAccess() {
 		return gaKExpressions.getImportAnnotationAccess();
@@ -1240,9 +1083,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// allow strings without quotes as they don'c contain spaces
-	//
 	//EString returns ecore::EString:
-	//
 	//	STRING | ID;
 	public AnnotationsGrammarAccess.EStringElements getEStringAccess() {
 		return gaKExpressions.getEStringAccess();
@@ -1253,7 +1094,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ExtendedID returns ecore::EString:
-	//
 	//	ID ("." ID)*;
 	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
 		return gaKExpressions.getExtendedIDAccess();
@@ -1264,105 +1104,80 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// --------------------------
-	//
 	////
-	//
 	////  Terminals...
-	//
 	////
-	//
 	//// --------------------------
-	//
 	//// custom terminals
-	//
 	//// custom terminal rule introducing semantic comments
-	//
 	//terminal COMMENT_ANNOTATION:
-	//
 	//	"/ **"->"* /";
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return gaKExpressions.getCOMMENT_ANNOTATIONRule();
 	} 
 
 	//// modified version of Terminals.ML_COMMENT as
-	//
 	//// COMMENT_ANNOTATION is not recognized correctly with original one 
-	//
 	//terminal ML_COMMENT:
-	//
 	//	"/ *" !"*"->"* /";
 	public TerminalRule getML_COMMENTRule() {
 		return gaKExpressions.getML_COMMENTRule();
 	} 
 
 	//// generic terminals
-	//
 	//terminal fragment NUMBER:
-	//
 	//	"0".."9";
 	public TerminalRule getNUMBERRule() {
 		return gaKExpressions.getNUMBERRule();
 	} 
 
 	//// redefine INT terminal to allow negative numbers
-	//
 	//terminal INT returns ecore::EInt:
-	//
 	//	"-"? NUMBER+;
 	public TerminalRule getINTRule() {
 		return gaKExpressions.getINTRule();
 	} 
 
 	//// make sure the Float rule does not shadow the INT rule
-	//
 	//terminal FLOAT returns ecore::EFloatObject:
-	//
 	//	"-"? NUMBER+ ("." NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? "f"? | "-"? NUMBER+ "f";
 	public TerminalRule getFLOATRule() {
 		return gaKExpressions.getFLOATRule();
 	} 
 
 	//// introduce boolean values
-	//
 	//terminal BOOLEAN returns ecore::EBooleanObject:
-	//
 	//	"true" | "false";
 	public TerminalRule getBOOLEANRule() {
 		return gaKExpressions.getBOOLEANRule();
 	} 
 
 	//// custom terminal rule for strings
-	//
 	//terminal STRING:
-	//
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
 	public TerminalRule getSTRINGRule() {
 		return gaKExpressions.getSTRINGRule();
 	} 
 
 	//terminal ID:
-	//
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaKExpressions.getIDRule();
 	} 
 
 	//terminal SL_COMMENT:
-	//
 	//	"//" !("\n" | "\r")* ("\r"? "\n")?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaKExpressions.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:
-	//
 	//	(" " | "\t" | "\r" | "\n")+;
 	public TerminalRule getWSRule() {
 		return gaKExpressions.getWSRule();
 	} 
 
 	//terminal ANY_OTHER:
-	//
 	//	.;
 	public TerminalRule getANY_OTHERRule() {
 		return gaKExpressions.getANY_OTHERRule();
