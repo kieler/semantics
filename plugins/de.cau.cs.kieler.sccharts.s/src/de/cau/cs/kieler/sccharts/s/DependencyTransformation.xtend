@@ -101,7 +101,7 @@ class DependencyTransformation {
                 // The valuedObject we search for
                 val valuedObject = valuedObjectReference.valuedObject
 
-                // Search ALL actions of the mode
+                // Search ALL actions of the node
                 val allActions = transition.sourceState.rootState.eAllContents.filter(typeof(Action)).toList
 
                 for (action : allActions) {
@@ -126,17 +126,69 @@ class DependencyTransformation {
     // -------------------------------------------------------------------------
     // This method returns true if two states have a common fork/macro state but are in
     // a different thread.
-    def private boolean isDifferentThread(State state, State state2) {
-        if (state.parentRegion != null && state2.parentRegion != null &&
-            state.parentRegion.parentState != null && state2.parentRegion.parentState != null) {
-            if ((state.parentRegion.parentState == state2.parentRegion.parentState)
-               && (state.parentRegion != state2.parentRegion)) {
-                return true;
-            }
-        } else {
+    ArrayList<State> visited = new ArrayList<State>
+    def private boolean canReach(State state, State state2) {
+        // Clear visited hash map
+        visited.clear
+        // Start with state and try to reach state2
+        return state.canReach(state2, state)
+    }
+
+    def private boolean canReach(State state, State state2, State tmpState) {
+        // Test if visited
+        if (visited.contains(tmpState)) {
             return false
         }
-        return state.parentRegion.parentState.isDifferentThread(state2.parentRegion.parentState)
+        // Mark as visited
+        visited.add(tmpState)
+        // This is a HIT
+        if (state2 == tmpState) {
+            return true
+        }
+        // Follow control flow
+        for (transition : tmpState.outgoingTransitions) {
+            if (state.canReach(state2, transition.targetState)) {
+                return true
+            }
+            // Hierarchical extension FORK
+            if (transition.targetState.hierarchical) {
+                for (region : transition.targetState.regions) {
+                    for (initialState : region.states.filter[isInitial]) {
+                        if (state.canReach(state2, initialState)) {
+                            return true
+                        }
+                    }
+                }
+            }
+        }
+        // Hierarchical extension JOIN
+        if (tmpState.isFinal && tmpState.parentRegion != null) {
+            val tmpStateParent = tmpState.parentRegion.parentState
+            if (tmpStateParent != null) {
+                // We know that tmpStateParent must be hierarchical because tmpState is IN one of its
+                // regions.
+                if (!tmpStateParent.outgoingTransitions.nullOrEmpty) {
+                    val normalTerminationTransition = tmpStateParent.outgoingTransitions.get(0)
+                    if (state.canReach(state2, normalTerminationTransition.targetState)) {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+
+    static HashMap<Integer, Boolean> differentThreadCache = new HashMap<Integer, Boolean>
+
+    // This is a complex operation that should be cached iff possible
+    def private boolean isDifferentThread(State state, State state2) {
+        val stateAndState2Hash = state.hashCode + state2.hashCode
+        var returnValue = differentThreadCache.get(stateAndState2Hash)
+        if (returnValue == null) {
+            returnValue = !(state.canReach(state2) || state2.canReach(state))
+            differentThreadCache.put(stateAndState2Hash, returnValue)
+        }
+        return returnValue
     }
 
     // -------------------------------------------------------------------------   
@@ -144,7 +196,8 @@ class DependencyTransformation {
 
         // Data dependencies
         for (transition : state.outgoingTransitions) {
-            for (stateToDependOn : transition.statesToDependOn) {
+            // It is important to consider only those states, that are in a different thread
+            for (stateToDependOn : transition.statesToDependOn.filter(e | e.isDifferentThread(state))) {
                 val newDataDependency = new DataDependency(state.dependencyNode, stateToDependOn.dependencyNode)
                 dependencies.add(newDataDependency)
             }
