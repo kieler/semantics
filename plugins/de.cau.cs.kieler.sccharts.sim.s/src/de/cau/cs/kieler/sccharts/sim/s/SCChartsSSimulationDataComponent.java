@@ -99,6 +99,16 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
 
     /** The simulation DataComponent. */
     private JSONObjectSimulationDataComponent sSimDataComponent = null;
+    
+    private SCChartsSimulation simulationTransformation =
+            Guice.createInjector().getInstance(SCChartsSimulation.class);
+
+    private SCChartsCoreTransformation coreTransformation =
+            Guice.createInjector().getInstance(SCChartsCoreTransformation.class);
+
+    private SCCharts2STransformation sCodeGenerationTransformation =
+            Guice.createInjector().getInstance(SCCharts2STransformation.class);
+    
 
     // -------------------------------------------------------------------------
 
@@ -341,12 +351,6 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
         String compile = "";
 
         try {
-            SCChartsSimulation simulationTransformation =
-                    Guice.createInjector().getInstance(SCChartsSimulation.class);
-
-            SCChartsCoreTransformation coreTransformation =
-                    Guice.createInjector().getInstance(SCChartsCoreTransformation.class);
-
             // get active editor
             myModel = (Region) this.getModelRootElement();
 
@@ -475,8 +479,6 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
                         .transformSurfaceDepth(transformedModel);
             
             // Transform SyncChart into S code
-            SCCharts2STransformation sCodeGenerationTransformation =
-                    Guice.createInjector().getInstance(SCCharts2STransformation.class);
             Program program = sCodeGenerationTransformation.transformS(transformedModel);
 
             // Calculate out path
