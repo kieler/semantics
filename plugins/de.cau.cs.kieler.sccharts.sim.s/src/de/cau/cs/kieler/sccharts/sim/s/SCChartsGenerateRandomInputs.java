@@ -43,8 +43,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
-import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.sccharts.Region;
 
 /**
  * SCCharts random input generation, generates an ESO file with random inputs for the SyncChart
@@ -249,9 +249,9 @@ public class SCChartsGenerateRandomInputs implements IHandler {
     private List<String> getInputSignalList(final Region rootRegion) {
         List<String> returnList = new LinkedList<String>();
         if (rootRegion.getStates() != null && rootRegion.getStates().size() > 0) {
-            for (Signal signal : rootRegion.getStates().get(0).getSignals()) {
-                if (signal.isIsInput()) {
-                    returnList.add(signal.getName());
+            for (ValuedObject valuedObject : rootRegion.getStates().get(0).getValuedObjects()) {
+                if (valuedObject.isIsInput()) {
+                    returnList.add(valuedObject.getName());
                 }
             }
         }

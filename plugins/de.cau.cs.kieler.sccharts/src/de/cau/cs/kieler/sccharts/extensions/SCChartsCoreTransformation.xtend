@@ -42,7 +42,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class CoreTransformation { 
+class SCChartsCoreTransformation { 
 
     @Inject
     extension KExpressionsExtension

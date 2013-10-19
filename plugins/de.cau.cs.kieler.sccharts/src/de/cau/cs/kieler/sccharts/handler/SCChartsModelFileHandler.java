@@ -20,7 +20,7 @@ import com.google.inject.name.Named;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPlugin;
-import de.cau.cs.kieler.sccharts.extensions.CoreTransformation;
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation;
 
 /**
  * The abstract handler for SCCharts file formats scc and sct.
@@ -124,8 +124,8 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
         commandString = commandString.replace("commands.Sct", "commands.");
         System.out.println(commandString);
         
-        CoreTransformation transformation =
-        Guice.createInjector().getInstance(CoreTransformation.class);
+        SCChartsCoreTransformation transformation =
+        Guice.createInjector().getInstance(SCChartsCoreTransformation.class);
         
         transformed = model;
         if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {

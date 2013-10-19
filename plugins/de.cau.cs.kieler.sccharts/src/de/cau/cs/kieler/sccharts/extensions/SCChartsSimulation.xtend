@@ -31,7 +31,7 @@ import de.cau.cs.kieler.sccharts.SCChartsPlugin
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Simulation { 
+class SCChartsSimulation { 
 
     @Inject
     extension Extension
