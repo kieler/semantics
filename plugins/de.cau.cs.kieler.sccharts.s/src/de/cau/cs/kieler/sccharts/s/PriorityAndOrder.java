@@ -104,5 +104,26 @@ public class PriorityAndOrder {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Sets the order.
+     *
+     * @param order the new order
+     */
+    public void setOrder(int order) {
+        this.order = order;
+    }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the priority.
+     *
+     * @param priority the new priority
+     */
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    // -------------------------------------------------------------------------
 }

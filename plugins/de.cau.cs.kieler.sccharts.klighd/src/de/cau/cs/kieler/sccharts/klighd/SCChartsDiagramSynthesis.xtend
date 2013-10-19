@@ -66,6 +66,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.s.Dependency
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -422,8 +423,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         s.createEdge() => [ edge |
                                 edge.target = dependency.stateDepending.getState.node;
                                 edge.source = dependency.stateToDependOn.getState.node;
-                                edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-                                //edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true);
+                                //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+                                edge.setLayoutOption(LayoutOptions::NO_LAYOUT, false);
                                 edge.addPolyline(3)  => [
                                     it.setForeground("blue".color)
                                     it.addArrowDecorator()

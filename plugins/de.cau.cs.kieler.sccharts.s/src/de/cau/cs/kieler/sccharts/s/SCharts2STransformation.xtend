@@ -176,7 +176,6 @@ class SCCharts2STransformation {
         
         // Dependency analysis
         dependencyGraph = rootRegion.dependencyGraph
-        val dependencies = dependencyGraph.dependencies
         val dependencyStates = dependencyGraph.dependencyNodes
           
         val sortedDependencyStates = dependencyStates.orderSortedStates
@@ -253,11 +252,12 @@ class SCCharts2STransformation {
                 sJoinState.addInstruction(createHalt)
             }
             
-            sState.forkTo(sJoinState, state.priorityJoin)
             for (region : state.regions) {
                 val initialState = region.states.filter[isInitial].get(0)
                 sState.forkTo(initialState.sState, initialState.priority)
             }
+            //As the LAST Fork, fork to the JOIN state
+            sState.forkTo(sJoinState, state.priorityJoin)
             
         } else {
             ///////////////////////////
@@ -270,8 +270,6 @@ class SCCharts2STransformation {
             // Consider delayed transitions, if any
             val delayedTransitions = state.outgoingTransitions.filter[!isImmediate]
             if (!delayedTransitions.nullOrEmpty) {
-                // If there are delayed transitions create a pause
-                sState.addInstruction(createPause)
                 for (transition : delayedTransitions) {
                    state.handleTransition(transition)
                 }
@@ -287,8 +285,6 @@ class SCCharts2STransformation {
                        (sState.instructions.get(sState.instructions.length-1) instanceof Trans || 
                        sState.instructions.get(sState.instructions.length-1) instanceof Fork || 
                        sState.instructions.get(sState.instructions.length-1) instanceof Prio))) {
-                   
-                   
                    sState.addInstruction(createPause)
                    sState.transitionTo(sState)
                 }
@@ -322,13 +318,18 @@ class SCCharts2STransformation {
                     effect.convertToSEffect(state.sState.instructions);
                 }
             }
-            
+
             // If necessary, insert a prio statement
             var sourcePriority = state.priority(state.hierarchical)
             var targetPriority = transition.targetState.priority
             if (sourcePriority != targetPriority) {
                 // Change priority
                 state.sState.addInstruction(createPrio(targetPriority));
+            }
+
+            // If there are delayed transitions create a pause
+            if (!transition.isImmediate) {
+                state.sState.addInstruction(createPause)
             }
 
             // Transition to target state

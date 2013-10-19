@@ -349,7 +349,8 @@ class DependencyTransformation {
         )
 
         // Calculate priorities for all connected nodes (including the root)
-        // now start with priority 0                                              
+        // now start with priority 0                                   
+        // It is necessary that this is the only instance           
         var PriorityAndOrder tmpPrioOrder = new PriorityAndOrder(0, 0);
         val dependencyNodesWithoutOutgoingEdges = allDependencyStates.filter(
             e|
@@ -357,20 +358,20 @@ class DependencyTransformation {
         )
 
         for (dependencyNode : dependencyNodesWithoutOutgoingEdges) {
-            tmpPrioOrder = dependencyNode.visit(tmpPrioOrder, dependencies);
+            dependencyNode.visit(tmpPrioOrder, dependencies);
         }
 
         // Visit these unconnected nodes (these have prio -1) with the max-priority
-        var PriorityAndOrder maxPrioOrder = new PriorityAndOrder(tmpPrioOrder)
+        var maxPrioOrder = tmpPrioOrder
         for (dependencyNode : dependencyNodesWithNoEdges) {
-            maxPrioOrder = dependencyNode.visit(maxPrioOrder, dependencies);
+            dependencyNode.visit(maxPrioOrder, dependencies);
         }
 
         dependencyNodes
     }
 
     // Visit helper function for topological sorting the dependency nodes.
-    def private PriorityAndOrder visit(DependencyNode dependencyNode, PriorityAndOrder prioOrder,
+    def private void visit(DependencyNode dependencyNode, PriorityAndOrder prioOrder,
         List<Dependency> dependencies) {
         if (dependencyNode.getPriority == -1) {
             dependencyNode.setPriority(-2);
@@ -378,7 +379,7 @@ class DependencyTransformation {
             for (incomingDependency : dependencyNode.incomingDependencies(dependencies)) {
                 val nextNode = incomingDependency.stateDepending
                 if (nextNode != dependencyNode) {
-                    tmpPrioOrder = nextNode.visit(tmpPrioOrder, dependencies);
+                    nextNode.visit(tmpPrioOrder, dependencies);
                 }
             }
             dependencyNode.setPriority((tmpPrioOrder.priority + 1));
@@ -389,12 +390,16 @@ class DependencyTransformation {
             // Optimization for dependencies
             // =============================
             // This implicitly forms (splitted-) "basic blocks" of the same priority
-            if (dependencyNode.outgoingDependencies(dependencies).filter(typeof(DataDependency)).size != 0) {
+            if (dependencyNode.outgoingDependencies(dependencies).filter(typeof(DataDependency)).size != 0 ||
+                dependencyNode.state.isFinal ||  dependencyNode.state.isInitial || dependencyNode.state.hierarchical 
+            ) {
                 tmpPrioOrder.incrementPriority
             }
-            return tmpPrioOrder;
+            return // tmpPrioOrder;
         } else {
-            return new PriorityAndOrder(dependencyNode.priority, dependencyNode.order);
+//            prioOrder.setOrder(dependencyNode.order)
+//            prioOrder.setPriority(dependencyNode.priority)
+            return //prioOrder; // new PriorityAndOrder(dependencyNode.priority, dependencyNode.order);
         }
     }
 
