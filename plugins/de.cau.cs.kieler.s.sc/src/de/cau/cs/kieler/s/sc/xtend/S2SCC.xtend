@@ -453,6 +453,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
              FORK(«forkInstruction.continuation.name»,«forkInstruction.priority»);
           «ENDIF»
           «IF forkInstruction.getLastFork == forkInstruction» 
+             PRIO(«forkInstruction.priority»);
              FORKE(«forkInstruction.continuation.name»);
           «ENDIF»
        '''
