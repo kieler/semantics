@@ -66,7 +66,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.s.Dependency
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -436,7 +435,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     
                 }
                 val priorityToShow = priority
-                val prioritySpace = if (priorityToShow.length > 0) " " else ""
+                val prioritySpace = if (priorityToShow.length > 0) "  " else " "
                 
                  if (s.hasRegionsOrDeclarations) {
                     // Get a smaller window-title-bare if this a macro state 
@@ -449,7 +448,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         it.setGridPlacementData().setMaxCellHeightEx(5)
                             .from(LEFT, 0, 0, TOP, 8f, 0)
                             .to(RIGHT, 0, 0, BOTTOM, 0, 0);
-                        val ktext = it.addText(" " + s.label + prioritySpace + prioritySpace).putToLookUpWith(s);
+                        val ktext = it.addText("   " + s.label + prioritySpace + " ").putToLookUpWith(s);
                         if (priorityToShow.length > 0) {
                             val estimatedWidth = PlacementUtil.estimateTextSize(ktext).width
                             it.addText(priorityToShow)=> [
@@ -461,7 +460,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                   it.setForeground("red".color)
                               }
                               it.setGridPlacementData().setMaxCellHeightEx(40)
-                                .from(LEFT, estimatedWidth + 15, 0, TOP, 15f, 0)
+                                .from(LEFT, estimatedWidth + 12, 0, TOP, 15f, 0)
                                 .to(RIGHT, 8, 0, BOTTOM, 8, 0);                      
                             ];
                         }
@@ -469,7 +468,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                  }
                  else {
                     // For simple states we want a larger area 
-                    val ktext = it.addText(s.label + prioritySpace).putToLookUpWith(s) => [
+                    val ktext = it.addText(" " + s.label + prioritySpace).putToLookUpWith(s) => [
                         it.fontSize = 11;
                         it.setFontBold(true);
                         it.setGridPlacementData().setMaxCellHeightEx(40)
@@ -487,7 +486,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                               it.setForeground("red".color)
                           }
                           it.setGridPlacementData().setMaxCellHeightEx(40)
-                                .from(LEFT, estimatedWidth + 9, 0, TOP, 15f, 0)
+                                .from(LEFT, estimatedWidth + 6, 0, TOP, 15f, 0)
                                 .to(RIGHT, 8, 0, BOTTOM, 8, 0);                      
                         ]
                     }
