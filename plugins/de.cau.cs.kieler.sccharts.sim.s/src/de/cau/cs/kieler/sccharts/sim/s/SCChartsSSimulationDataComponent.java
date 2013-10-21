@@ -368,7 +368,7 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
             // Make a copy of the S program in case it was from
             // an active Editor
 
-            URI syncChartOutput = URI.createURI("");
+            URI sCChartOutput = URI.createURI("");
             URI sOutput = URI.createURI("");
             // By default there is not always an additional transformation necessary
             Region transformedModel = myModel;
@@ -377,7 +377,7 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
             // FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
             String inputPathString = this.getModelFilePath().toString();
             URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
-            syncChartOutput = URI.createURI(input.toString());
+            sCChartOutput = URI.createURI(input.toString());
 
             debugConsole = this.getProperties()[KIEM_PROPERTY_RUNTIMEDEBUGCONSOLE
                     + KIEM_PROPERTY_DIFF].getValueAsBoolean();
@@ -405,17 +405,17 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
 
                 // Because we transformed the S program we need to save a different file
                 // and pass this new file to the SC simulation instead.
-                syncChartOutput = syncChartOutput.trimFragment();
-                syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
-                        "simulation.kixs");
+                sCChartOutput = sCChartOutput.trimFragment();
+                sCChartOutput = sCChartOutput.trimFileExtension().appendFileExtension(
+                        "simulation.scc");
 
                 try {
-                    // Write out copy/transformation of syncchart program
+                    // Write out copy/transformation of scchart program
                     Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
                     Map<String, Object> m = reg.getExtensionToFactoryMap();
                     m.put("daform", new XMIResourceFactoryImpl());
                     ResourceSet resSet = new ResourceSetImpl();
-                    Resource resource = resSet.createResource(syncChartOutput);
+                    Resource resource = resSet.createResource(sCChartOutput);
                     resource.getContents().add(transformedModel);
                     resource.save(Collections.EMPTY_MAP);
                 } catch (IOException e) {
@@ -474,9 +474,9 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
             transformedModel = coreTransformation
                         .transformTriggerEffect(transformedModel);
 
-            // SCG-normalize: Surface Depth (@requires: none)
-            transformedModel = coreTransformation
-                        .transformSurfaceDepth(transformedModel);
+//            // SCG-normalize: Surface Depth (@requires: none)
+//            transformedModel = coreTransformation
+//                        .transformSurfaceDepth(transformedModel);
             
             // Transform SyncChart into S code
             Program program = sCodeGenerationTransformation.transformS(transformedModel);

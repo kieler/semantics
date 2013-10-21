@@ -16,6 +16,12 @@ package de.cau.cs.kieler.sccharts.sim.s;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import com.google.inject.Guice;
+
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation;
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSimulation;
+import de.cau.cs.kieler.sccharts.s.SCCharts2STransformation;
+
 /**
  * The activator class controls the plug-in life cycle.
  *

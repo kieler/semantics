@@ -13,16 +13,15 @@
  */
  package de.cau.cs.kieler.sccharts.extensions
 
-import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.SCChartsPlugin
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.SCChartsPlugin
 
 /**
  * SCCharts Extensions.
@@ -33,8 +32,8 @@ import de.cau.cs.kieler.sccharts.SCChartsPlugin
  */
 class SCChartsSimulation { 
 
-    @Inject
-    extension Extension
+//    @Inject
+//    extension Extension
     
     //-------------------------------------------------------------------------
     //--         S I M U L A T I O N    V I S U A L I Z A T I O N            --
@@ -122,6 +121,7 @@ class SCChartsSimulation {
           
           // Setup the auxiliaryValuedObject as an OUTPUT to the module
           auxiliaryValuedObject.setName(UID);
+          auxiliaryValuedObject.setIsSignal(true);
           auxiliaryValuedObject.setIsInput(false);
           auxiliaryValuedObject.setIsOutput(true);
           auxiliaryValuedObject.setType(ValueType::PURE);
@@ -153,6 +153,7 @@ class SCChartsSimulation {
           
                // Setup the auxiliaryValuedObject as an OUTPUT to the module
                auxiliaryValuedObject.setName(UID);
+               auxiliaryValuedObject.setIsSignal(true);
                auxiliaryValuedObject.setIsInput(false);
                auxiliaryValuedObject.setIsOutput(true);
                auxiliaryValuedObject.setType(ValueType::PURE);
