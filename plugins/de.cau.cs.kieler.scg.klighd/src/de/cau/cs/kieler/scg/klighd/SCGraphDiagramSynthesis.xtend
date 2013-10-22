@@ -79,9 +79,21 @@ import de.cau.cs.kieler.scgdep.AbsoluteWrite_Read
 import de.cau.cs.kieler.scgdep.RelativeWrite_Read
 import de.cau.cs.kieler.scgdep.AbsoluteWrite_RelativeWrite
 import de.cau.cs.kieler.scgdep.Write_Write
+import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup
+import com.google.inject.Guice
+import de.cau.cs.kieler.core.kexpressions.KExpressionsRuntimeModule
+import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetupGenerated
 
 class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
+    private static var Injector guiceInjector;
+    private static val KExpressionsStandaloneSetup setup = new KExpressionsStandaloneSetup() => [
+        guiceInjector = Guice.createInjector(new KExpressionsRuntimeModule);
+        it.register(guiceInjector);        
+    ]
+//    private val Injector i = KExpressionsStandaloneSetup::createInjectorAndDoEMFRegistration();
+    private static val ISerializer serializer = guiceInjector.getInstance(typeof(ISerializer));
+    
     @Inject
     extension KNodeExtensions
     
@@ -271,9 +283,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.shadow = "black".color;
                 }
                 it.setGridPlacement(1);
-                it.addText(s.assignment).putToLookUpWith(s);
-
-            ];
+                if (s.valuedObject != null && s.assignment != null)
+                    it.addText(serializer.serialize(s.valuedObject) + " = " + serializer.serialize(s.assignment))
+                        .putToLookUpWith(s);
+            ]
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             node.addPort(SCGPORTID_INCOMING, 36, -1, 3, PortSide::NORTH)
@@ -293,11 +306,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             val figure = node.addPolygon().createDiamondShape();
 //                .background = "white".color;
 
-            figure => [ node.setMinimalNodeSize(75, 25); 
-                node.KRendering.add(factory.createKText.of(s.condition)
-                    .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0)
-                    .putToLookUpWith(s)
-                );
+            figure => [ node.setMinimalNodeSize(75, 25);
+                if (s.condition != null)  
+                    node.KRendering.add(factory.createKText.of(serializer.serialize(s.condition))
+                        .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0)
+                        .putToLookUpWith(s)
+                    );
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }

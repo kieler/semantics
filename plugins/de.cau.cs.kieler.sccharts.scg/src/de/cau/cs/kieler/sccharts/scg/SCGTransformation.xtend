@@ -38,6 +38,9 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -47,6 +50,12 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class SCGTransformation { 
+
+    @Inject
+    extension KExpressionsExtension
+
+    @Inject
+    extension SCGExtensions
 
     @Inject
     extension SCChartsExtension
@@ -59,6 +68,7 @@ class SCGTransformation {
     //--                         U T I L I T Y                               --
     //-------------------------------------------------------------------------
          
+    // State mappings         
     HashMap<EObject, Node> stateOrRegion2node = new HashMap<EObject, Node>()    
     HashMap<Node, EObject> node2state = new HashMap<Node, EObject>()    
     
@@ -98,6 +108,7 @@ class SCGTransformation {
     def void resetMapping() {
         stateOrRegion2node.clear
         node2state.clear
+        valuedObjectSSChart2SCG.clear
     }     
     
     def State getMappedState(Node node) {
@@ -106,7 +117,16 @@ class SCGTransformation {
     def Region getMappedRegion(Node node) {
         node2state.get(node) as Region
     }
-         
+    
+    // ValuedObject mappings
+    HashMap<ValuedObject, ValuedObject> valuedObjectSSChart2SCG = new HashMap<ValuedObject, ValuedObject>()
+    def void map(ValuedObject valuedObjectSCG, ValuedObject valuedObjectSCChart) {
+        valuedObjectSSChart2SCG.put(valuedObjectSCChart, valuedObjectSCG)
+    }
+    def ValuedObject getSCGValuedObject(ValuedObject valuedObjectSCChart) {
+        valuedObjectSSChart2SCG.get(valuedObjectSCChart)
+    }    
+    
     //-------------------------------------------------------------------------
     //--             T R A N S F O R M      T O    S C G                     --
     //-------------------------------------------------------------------------
@@ -118,6 +138,12 @@ class SCGTransformation {
         resetMapping
         // Create a new SCGraph
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph
+        // Handle declarations
+        for (valuedObject : rootRegion.rootState.valuedObjects) {
+            val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
+            valuedObjectSCG.applyAttributes(valuedObject)
+            valuedObjectSCG.map(valuedObject)
+        }
         // Generate nodes and recursively traverse model
         for (region : rootRegion.rootState.regions) {
            region.transformSCGGenerateNodes(sCGraph)
@@ -316,7 +342,11 @@ class SCGTransformation {
             scopeProvider.parent = transition.sourceState
             val transitionCopy = transition.copy
             transitionCopy.setIsImmediate(false)
-            assignment.setAssignment(serializer.serialize(transitionCopy))
+            // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
+            val effect = transitionCopy.effects.get(0)
+            assignment.setValuedObject((effect as de.cau.cs.kieler.sccharts.Assignment).valuedObject.getSCGValuedObject)
+            // TODO
+            //assignment.setAssignment(serializer.serialize(transitionCopy))
         }
         else if (state.conditional) {
             val conditional = sCGraph.addConditional
@@ -326,7 +356,8 @@ class SCGTransformation {
             scopeProvider.parent = transition.sourceState
             val transitionCopy = transition.copy
             transitionCopy.setIsImmediate(false)
-            conditional.setCondition(serializer.serialize(transitionCopy))
+            // TODO
+            // conditional.setCondition(serializer.serialize(transitionCopy))
         }
         else if (state.fork) {
             val fork = sCGraph.addFork
