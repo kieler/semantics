@@ -445,7 +445,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         it.fontSize = 11;
                         it.fontSize.propagateToChildren = true
                         it.setFontBold(true);
-                        it.setGridPlacementData().setMaxCellHeightEx(5)
+                        it.setGridPlacementData()//.setMaxCellHeightEx(5) -- NOT COMPATIBLE WITH CURRENT KLIGHT IMPLEMENTATION
                             .from(LEFT, 0, 0, TOP, 8f, 0)
                             .to(RIGHT, 0, 0, BOTTOM, 0, 0);
                         val ktext = it.addText("   " + s.label + prioritySpace + " ").putToLookUpWith(s);
@@ -459,7 +459,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                               } else {
                                   it.setForeground("red".color)
                               }
-                              it.setGridPlacementData().setMaxCellHeightEx(40)
+                              it.setGridPlacementData()//.setMaxCellHeightEx(40) -- NOT COMPATIBLE WITH CURRENT KLIGHT IMPLEMENTATION
                                 .from(LEFT, estimatedWidth + 12, 0, TOP, 15f, 0)
                                 .to(RIGHT, 8, 0, BOTTOM, 8, 0);                      
                             ];
@@ -471,7 +471,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     val ktext = it.addText(" " + s.label + prioritySpace).putToLookUpWith(s) => [
                         it.fontSize = 11;
                         it.setFontBold(true);
-                        it.setGridPlacementData().setMaxCellHeightEx(40)
+                        it.setGridPlacementData()//.setMaxCellHeightEx(40)-- NOT COMPATIBLE WITH CURRENT KLIGHT IMPLEMENTATION
                             .from(LEFT, 9, 0, TOP, 8f, 0)
                             .to(RIGHT, 8, 0, BOTTOM, 8, 0);
                     ];
@@ -485,7 +485,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                           } else {
                               it.setForeground("red".color)
                           }
-                          it.setGridPlacementData().setMaxCellHeightEx(40)
+                          it.setGridPlacementData()//.setMaxCellHeightEx(40)-- NOT COMPATIBLE WITH CURRENT KLIGHT IMPLEMENTATION    
                                 .from(LEFT, estimatedWidth + 6, 0, TOP, 15f, 0)
                                 .to(RIGHT, 8, 0, BOTTOM, 8, 0);                      
                         ]
