@@ -18,6 +18,9 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Surface
 import java.util.List
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 
 /**
  * SCG Extensions.
@@ -27,6 +30,23 @@ import java.util.List
  * @kieler.rating 2013-08-20 proposed yellow
  */
 class SCGExtensions { 
+
+   // -------------------------------------------------------------------------
+
+    // Creates a new ValuedObject.
+    def ValuedObject createValuedObject(String valuedObjectName) {
+         val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+         valuedObject.setName(valuedObjectName)
+         valuedObject
+    }
+   
+    // Creates a new ValuedObject in an SCG.
+    def ValuedObject createValuedObject(SCGraph sCGraph, String valuedObjectName) {
+         val valuedObject = createValuedObject(valuedObjectName)
+         sCGraph.valuedObjects.add(valuedObject)
+         valuedObject
+    }
+   
 
    // -------------------------------------------------------------------------
    
