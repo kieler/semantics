@@ -13,6 +13,10 @@
  */
 package de.cau.cs.kieler.scg;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+
+
 
 /**
  * <!-- begin-user-doc -->
@@ -24,6 +28,7 @@ package de.cau.cs.kieler.scg;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Assignment#getNext <em>Next</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Assignment#getAssignment <em>Assignment</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Assignment#getValuedObject <em>Valued Object</em>}</li>
  * </ul>
  * </p>
  *
@@ -59,29 +64,55 @@ public interface Assignment extends Node {
     void setNext(ControlFlow value);
 
     /**
-     * Returns the value of the '<em><b>Assignment</b></em>' attribute.
+     * Returns the value of the '<em><b>Assignment</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Assignment</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Assignment</em>' attribute.
-     * @see #setAssignment(String)
+     * @return the value of the '<em>Assignment</em>' containment reference.
+     * @see #setAssignment(Expression)
      * @see de.cau.cs.kieler.scg.ScgPackage#getAssignment_Assignment()
-     * @model
+     * @model containment="true"
      * @generated
      */
-    String getAssignment();
+    Expression getAssignment();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.Assignment#getAssignment <em>Assignment</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Assignment#getAssignment <em>Assignment</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Assignment</em>' attribute.
+     * @param value the new value of the '<em>Assignment</em>' containment reference.
      * @see #getAssignment()
      * @generated
      */
-    void setAssignment(String value);
+    void setAssignment(Expression value);
+
+    /**
+     * Returns the value of the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Valued Object</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Valued Object</em>' reference.
+     * @see #setValuedObject(ValuedObject)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getAssignment_ValuedObject()
+     * @model
+     * @generated
+     */
+    ValuedObject getValuedObject();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Assignment#getValuedObject <em>Valued Object</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Valued Object</em>' reference.
+     * @see #getValuedObject()
+     * @generated
+     */
+    void setValuedObject(ValuedObject value);
 
 } // Assignment

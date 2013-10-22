@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.scg;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
+
+
 
 /**
  * <!-- begin-user-doc -->
@@ -86,29 +89,29 @@ public interface Conditional extends Node {
     void setElse(ControlFlow value);
 
     /**
-     * Returns the value of the '<em><b>Condition</b></em>' attribute.
+     * Returns the value of the '<em><b>Condition</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Condition</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Condition</em>' attribute.
-     * @see #setCondition(String)
+     * @return the value of the '<em>Condition</em>' containment reference.
+     * @see #setCondition(Expression)
      * @see de.cau.cs.kieler.scg.ScgPackage#getConditional_Condition()
-     * @model
+     * @model containment="true"
      * @generated
      */
-    String getCondition();
+    Expression getCondition();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.Conditional#getCondition <em>Condition</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Conditional#getCondition <em>Condition</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Condition</em>' attribute.
+     * @param value the new value of the '<em>Condition</em>' containment reference.
      * @see #getCondition()
      * @generated
      */
-    void setCondition(String value);
+    void setCondition(Expression value);
 
 } // Conditional
