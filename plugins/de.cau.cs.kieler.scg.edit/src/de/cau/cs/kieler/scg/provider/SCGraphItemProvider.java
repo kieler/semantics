@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.scg.provider;
 
 
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
@@ -89,6 +90,7 @@ public class SCGraphItemProvider
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
             childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__NODES);
+            childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__VALUED_OBJECTS);
         }
         return childrenFeatures;
     }
@@ -141,6 +143,7 @@ public class SCGraphItemProvider
 
         switch (notification.getFeatureID(SCGraph.class)) {
             case ScgPackage.SC_GRAPH__NODES:
+            case ScgPackage.SC_GRAPH__VALUED_OBJECTS:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -202,6 +205,11 @@ public class SCGraphItemProvider
             (createChildParameter
                 (ScgPackage.Literals.SC_GRAPH__NODES,
                  ScgFactory.eINSTANCE.createExit()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.SC_GRAPH__VALUED_OBJECTS,
+                 KExpressionsFactory.eINSTANCE.createValuedObject()));
     }
 
     /**

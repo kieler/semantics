@@ -490,7 +490,7 @@ public interface ScgdepPackage extends EPackage {
     int CONDITIONAL_DEP__ELSE = ScgPackage.CONDITIONAL__ELSE;
 
     /**
-     * The feature id for the '<em><b>Condition</b></em>' attribute.
+     * The feature id for the '<em><b>Condition</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -599,13 +599,22 @@ public interface ScgdepPackage extends EPackage {
     int ASSIGNMENT_DEP__NEXT = ScgPackage.ASSIGNMENT__NEXT;
 
     /**
-     * The feature id for the '<em><b>Assignment</b></em>' attribute.
+     * The feature id for the '<em><b>Assignment</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
     int ASSIGNMENT_DEP__ASSIGNMENT = ScgPackage.ASSIGNMENT__ASSIGNMENT;
+
+    /**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP__VALUED_OBJECT = ScgPackage.ASSIGNMENT__VALUED_OBJECT;
 
     /**
      * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
@@ -716,6 +725,15 @@ public interface ScgdepPackage extends EPackage {
      * @ordered
      */
     int SC_GRAPH_DEP__NODES = ScgPackage.SC_GRAPH__NODES;
+
+    /**
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPH_DEP__VALUED_OBJECTS = ScgPackage.SC_GRAPH__VALUED_OBJECTS;
 
     /**
      * The number of structural features of the '<em>SC Graph Dep</em>' class.

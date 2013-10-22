@@ -70,7 +70,6 @@ public class DepthItemProvider
             super.getPropertyDescriptors(object);
 
             addSurfacePropertyDescriptor(object);
-            addNextPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -89,28 +88,6 @@ public class DepthItemProvider
                  getString("_UI_Depth_surface_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_Depth_surface_feature", "_UI_Depth_type"),
                  ScgPackage.Literals.DEPTH__SURFACE,
-                 true,
-                 false,
-                 true,
-                 null,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Next feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addNextPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_Depth_next_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Depth_next_feature", "_UI_Depth_type"),
-                 ScgPackage.Literals.DEPTH__NEXT,
                  true,
                  false,
                  true,

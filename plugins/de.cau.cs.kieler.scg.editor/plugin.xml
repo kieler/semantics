@@ -34,6 +34,18 @@
    </extension>
 
    <extension point="org.eclipse.ui.editors">
+      <!-- @generated scg -->
+      <editor
+            id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+            name="%_UI_ScgEditor_label"
+            icon="icons/full/obj16/ScgModelFile.gif"
+            extensions="scg"
+            class="de.cau.cs.kieler.scg.presentation.ScgEditor"
+            contributorClass="de.cau.cs.kieler.scg.presentation.ScgActionBarContributor">
+      </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
       <!-- @generated scgdep -->
       <editor
             id="de.cau.cs.kieler.scgdep.presentation.ScgdepEditorID"
@@ -42,18 +54,6 @@
             extensions="scgdep"
             class="de.cau.cs.kieler.scgdep.presentation.ScgdepEditor"
             contributorClass="de.cau.cs.kieler.scgdep.presentation.ScgdepActionBarContributor">
-      </editor>
-   </extension>
-
-   <extension point="org.eclipse.ui.editors">
-      <!-- @generated scg -->
-      <editor
-            id="de.cau.cs.kieler.scg.presentation.SCGEditorID"
-            name="%_UI_ScgEditor_label"
-            icon="icons/full/obj16/ScgModelFile.gif"
-            extensions="scg"
-            class="de.cau.cs.kieler.scg.presentation.ScgEditor"
-            contributorClass="de.cau.cs.kieler.scg.presentation.ScgActionBarContributor">
       </editor>
    </extension>
 

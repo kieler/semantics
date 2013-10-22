@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.scg.provider;
 
 
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
@@ -32,7 +33,6 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -70,52 +70,29 @@ public class AssignmentItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addNextPropertyDescriptor(object);
-            addAssignmentPropertyDescriptor(object);
+            addValuedObjectPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Next feature.
+     * This adds a property descriptor for the Valued Object feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addNextPropertyDescriptor(Object object) {
+    protected void addValuedObjectPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_Assignment_next_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Assignment_next_feature", "_UI_Assignment_type"),
-                 ScgPackage.Literals.ASSIGNMENT__NEXT,
+                 getString("_UI_Assignment_valuedObject_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Assignment_valuedObject_feature", "_UI_Assignment_type"),
+                 ScgPackage.Literals.ASSIGNMENT__VALUED_OBJECT,
                  true,
                  false,
                  true,
                  null,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Assignment feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addAssignmentPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_Assignment_Assignment_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Assignment_Assignment_feature", "_UI_Assignment_type"),
-                 ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
                  null));
     }
@@ -133,6 +110,7 @@ public class AssignmentItemProvider
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
             childrenFeatures.add(ScgPackage.Literals.ASSIGNMENT__NEXT);
+            childrenFeatures.add(ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT);
         }
         return childrenFeatures;
     }
@@ -185,10 +163,8 @@ public class AssignmentItemProvider
         updateChildren(notification);
 
         switch (notification.getFeatureID(Assignment.class)) {
-            case ScgPackage.ASSIGNMENT__ASSIGNMENT:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-                return;
             case ScgPackage.ASSIGNMENT__NEXT:
+            case ScgPackage.ASSIGNMENT__ASSIGNMENT:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -210,6 +186,51 @@ public class AssignmentItemProvider
             (createChildParameter
                 (ScgPackage.Literals.ASSIGNMENT__NEXT,
                  ScgFactory.eINSTANCE.createControlFlow()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT,
+                 KExpressionsFactory.eINSTANCE.createExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT,
+                 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT,
+                 KExpressionsFactory.eINSTANCE.createValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT,
+                 KExpressionsFactory.eINSTANCE.createIntValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT,
+                 KExpressionsFactory.eINSTANCE.createFloatValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT,
+                 KExpressionsFactory.eINSTANCE.createBoolValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT,
+                 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT,
+                 KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT,
+                 KExpressionsFactory.eINSTANCE.createDoubleValue()));
     }
 
 }

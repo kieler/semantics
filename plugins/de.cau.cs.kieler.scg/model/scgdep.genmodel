@@ -3,7 +3,7 @@
     modelDirectory="/de.cau.cs.kieler.scg/src" modelPluginID="de.cau.cs.kieler.scgdep"
     modelName="Scgdep" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
-    usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.scg/model/scg.genmodel#//scg"
+    usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions ../../de.cau.cs.kieler.scg/model/scg.genmodel#//scg"
     operationReflection="true">
   <foreignModel>scgdep.ecore</foreignModel>
   <genPackages prefix="Scgdep" basePackage="de.cau.cs.kieler" disposableProviderFactory="true" ecorePackage="scgdep.ecore#/">

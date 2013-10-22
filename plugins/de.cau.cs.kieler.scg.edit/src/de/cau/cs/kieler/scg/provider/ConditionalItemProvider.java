@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.scg.provider;
 
 
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.scg.Conditional;
 import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
@@ -25,14 +26,12 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -70,77 +69,8 @@ public class ConditionalItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addThenPropertyDescriptor(object);
-            addElsePropertyDescriptor(object);
-            addConditionPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
-    }
-
-    /**
-     * This adds a property descriptor for the Then feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addThenPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_Conditional_then_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Conditional_then_feature", "_UI_Conditional_type"),
-                 ScgPackage.Literals.CONDITIONAL__THEN,
-                 true,
-                 false,
-                 true,
-                 null,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Else feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addElsePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_Conditional_else_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Conditional_else_feature", "_UI_Conditional_type"),
-                 ScgPackage.Literals.CONDITIONAL__ELSE,
-                 true,
-                 false,
-                 true,
-                 null,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Condition feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addConditionPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_Conditional_Condition_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Conditional_Condition_feature", "_UI_Conditional_type"),
-                 ScgPackage.Literals.CONDITIONAL__CONDITION,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
     }
 
     /**
@@ -157,6 +87,7 @@ public class ConditionalItemProvider
             super.getChildrenFeatures(object);
             childrenFeatures.add(ScgPackage.Literals.CONDITIONAL__THEN);
             childrenFeatures.add(ScgPackage.Literals.CONDITIONAL__ELSE);
+            childrenFeatures.add(ScgPackage.Literals.CONDITIONAL__CONDITION);
         }
         return childrenFeatures;
     }
@@ -209,11 +140,9 @@ public class ConditionalItemProvider
         updateChildren(notification);
 
         switch (notification.getFeatureID(Conditional.class)) {
-            case ScgPackage.CONDITIONAL__CONDITION:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-                return;
             case ScgPackage.CONDITIONAL__THEN:
             case ScgPackage.CONDITIONAL__ELSE:
+            case ScgPackage.CONDITIONAL__CONDITION:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -240,6 +169,51 @@ public class ConditionalItemProvider
             (createChildParameter
                 (ScgPackage.Literals.CONDITIONAL__ELSE,
                  ScgFactory.eINSTANCE.createControlFlow()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.CONDITIONAL__CONDITION,
+                 KExpressionsFactory.eINSTANCE.createExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.CONDITIONAL__CONDITION,
+                 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.CONDITIONAL__CONDITION,
+                 KExpressionsFactory.eINSTANCE.createValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.CONDITIONAL__CONDITION,
+                 KExpressionsFactory.eINSTANCE.createIntValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.CONDITIONAL__CONDITION,
+                 KExpressionsFactory.eINSTANCE.createFloatValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.CONDITIONAL__CONDITION,
+                 KExpressionsFactory.eINSTANCE.createBoolValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.CONDITIONAL__CONDITION,
+                 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.CONDITIONAL__CONDITION,
+                 KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.CONDITIONAL__CONDITION,
+                 KExpressionsFactory.eINSTANCE.createDoubleValue()));
     }
 
     /**

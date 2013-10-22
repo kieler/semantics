@@ -169,6 +169,7 @@ import de.cau.cs.kieler.scgdep.provider.ScgdepItemProviderAdapterFactory;
 
 import de.cau.cs.kieler.core.annotations.provider.AnnotationsItemProviderAdapterFactory;
 
+import de.cau.cs.kieler.core.kexpressions.provider.KExpressionsItemProviderAdapterFactory;
 import de.cau.cs.kieler.scg.provider.ScgItemProviderAdapterFactory;
 
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
@@ -718,6 +719,7 @@ public class ScgdepEditor
         adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new ScgdepItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new AnnotationsItemProviderAdapterFactory());
+        adapterFactory.addAdapterFactory(new KExpressionsItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new ScgItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
