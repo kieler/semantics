@@ -1,48 +1,94 @@
 package de.cau.cs.kieler.scg.scgdep
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.SCGraph;
-import de.cau.cs.kieler.scgdep.SCGraphDep
-import de.cau.cs.kieler.scgdep.ScgdepFactory
-import java.util.HashMap
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Surface
+import com.google.inject.Guice
+import com.google.inject.Injector
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.KExpressionsRuntimeModule
+import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.ControlFlow
-import com.google.inject.Injector
-import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup
-import org.eclipse.xtext.parser.IParser
-import org.eclipse.xtext.parser.IParseResult
-import org.eclipse.xtext.util.StringInputStream
-import java.util.List
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scgdep.SCGraphDep
+import de.cau.cs.kieler.scgdep.ScgdepFactory
 import java.io.StringReader
+import java.util.HashMap
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.linking.ILinker
 import org.eclipse.xtext.nodemodel.INode
-import de.cau.cs.kieler.core.kexpressions.scoping.KExpressionsScopeProvider
+import org.eclipse.xtext.parser.IParseResult
+import org.eclipse.xtext.parser.IParser
+import org.eclipse.xtext.resource.impl.ListBasedDiagnosticConsumer
+import org.eclipse.xtext.scoping.IScopeProvider
+import org.eclipse.xtext.util.StringInputStream
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import org.eclipse.xtext.service.SingletonBinding
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+
+class MyModule extends KExpressionsRuntimeModule {
+    
+    @SingletonBinding
+    override Class<? extends IScopeProvider> bindIScopeProvider() {
+        return typeof(SCGKExpressionsScopeProvider);
+    }
+
+//override configure(Binder binder) {
+//        binder.bind(typeof(IScopeProvider)).to(typeof(SCGKExpressionsScopeProvider)).asEagerSingleton;
+//    }
+    
+}
 
 class SCGToSCGDEPTransformation {
  
 //    IMPORTANT STUFF
-    Injector guiceInjector = new KExpressionsStandaloneSetup().createInjectorAndDoEMFRegistration();
-    IParser parser = guiceInjector.getInstance(typeof(IParser));
-    KExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(typeof(KExpressionsScopeProvider));
-    IParseResult result = parser.parse(new StringReader("true | true"));
-    Iterable<INode> errors = result.getSyntaxErrors();
-    EObject eRoot = result.getRootASTElement();
-    Expression root = eRoot as Expression;
+    var static Injector guiceInjector;
+    val static KExpressionsStandaloneSetup setup = new KExpressionsStandaloneSetup() => [
+        guiceInjector = Guice.createInjector(new MyModule);
+        it.register(guiceInjector);        
+    ]
+//    val IParser parser = guiceInjector.getInstance(typeof(IParser));
+    val SCGKExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(typeof(IScopeProvider)) as SCGKExpressionsScopeProvider;
+//    val IParseResult result = parser.parse(new StringReader("O | true"));
+//    val Iterable<INode> errors = result.getSyntaxErrors();
+//    val EObject eRoot = result.getRootASTElement();
+//    val Expression root = eRoot as Expression;
+    
+//    val ILinker linker = guiceInjector.getInstance(typeof(ILinker));
+    
+    
+    private static val Resource TMP_RES = guiceInjector.getInstance(typeof(ResourceSet))
+            .createResource(URI::createFileURI("dummy.expr"));
         
-     def SCGraphDep transformSCGToSCGDEP(SCGraph scg) {
+    def SCGraphDep transformSCGToSCGDEP(SCGraph scg) {
         val scgdep = ScgdepFactory::eINSTANCE.createSCGraphDep()
    
-        if (root != null) {}
+//        val IParseResult result = parser.parse(new StringReader("O | true"));
+    //        linker.linkModel(result.getRootASTElement(), new ListBasedDiagnosticConsumer());
+    
+        scopeProvider.setParent(scg);
+    
+        TMP_RES.contents.removeAll;
+        TMP_RES.load(new StringInputStream("O = true"), emptyMap);
+    
+//        val Iterable<INode> errors = result.getSyntaxErrors();
+        val EObject eRoot = TMP_RES.contents.head; //result.getRootASTElement();
+        val Expression root = eRoot as Expression;
+        if (root != null) {
+            var ^var = (root as OperatorExpression).subExpressions.head as ValuedObjectReference;
+            System.out.println(^var.valuedObject);
+            ^var = (root as OperatorExpression).subExpressions.tail.head as ValuedObjectReference;
+            System.out.println(^var.valuedObject);
+        }
         
         val nodeMapping = new HashMap<Node, Node>
         val revNodeMapping = new HashMap<Node, Node>
