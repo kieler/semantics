@@ -13,13 +13,11 @@
  */
 package de.cau.cs.kieler.scg.extensions
 
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.scg.Node
-import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.ControlFlow
-import java.util.List
 import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Surface
+import java.util.List
 
 /**
  * SCG Extensions.
