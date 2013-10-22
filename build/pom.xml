@@ -25,9 +25,9 @@
   <profiles>
   
   
-      <!-- The Semantics updatesite. -->
+      <!-- The Semantics product. -->
     <profile>
-      <id>semantics</id>
+      <id>semantics.product</id>
       
       <activation>
         <activeByDefault>true</activeByDefault>
@@ -45,7 +45,7 @@
           <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_0.9.1/</url>
         </repository>
         <repository>
-          <id>p2.kieler-pragmatics</id>
+          <id>p2.kieler-semantics</id>
           <layout>p2</layout>
           <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics</url>
         </repository>
@@ -62,9 +62,9 @@
     </profile>
   
   
-    <!-- The Semantics product. -->
+    <!-- The Semantics updatesite. -->
     <profile>
-      <id>semantics.product</id>
+      <id>semantics</id>
       
       <activation>
         <activeByDefault>true</activeByDefault>
