@@ -231,13 +231,6 @@ litigation.
    </requires>
 
    <plugin
-         id="de.cau.cs.kieler.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="de.cau.cs.kieler.core.annotations"
          download-size="0"
          install-size="0"
@@ -266,20 +259,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.kgraph"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.core.kivi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="de.cau.cs.kieler.core.model"
          download-size="0"
          install-size="0"
@@ -295,13 +274,6 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.core.model.xtext"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.core.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -327,7 +299,6 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
 
    <plugin
          id="de.cau.cs.kieler.sim.kiem"
@@ -420,7 +391,6 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
-
    <plugin
          id="de.cau.cs.kieler.esterel.kexpressions"
          download-size="0"
@@ -441,7 +411,6 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
 
    <plugin
          id="de.cau.cs.kieler.esterel.cec.linux.x86"
