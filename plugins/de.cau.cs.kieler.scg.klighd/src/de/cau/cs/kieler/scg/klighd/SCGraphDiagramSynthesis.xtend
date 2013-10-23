@@ -83,15 +83,32 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup
 import com.google.inject.Guice
 import de.cau.cs.kieler.core.kexpressions.KExpressionsRuntimeModule
 import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetupGenerated
+import org.eclipse.xtext.service.SingletonBinding
+import org.eclipse.xtext.scoping.IScopeProvider
+import org.eclipse.xtext.serializer.sequencer.IContextFinder
+import javax.inject.Singleton
+
+class SCGRuntimeModule extends KExpressionsRuntimeModule {
+    
+    @Singleton
+    override Class<? extends IScopeProvider> bindIScopeProvider() {
+        return typeof(SCGKExpressionsScopeProvider);
+    }    
+    
+//    def Class<? extends IContextFinder> bindIContextFinder() {
+//        return typeof(SCGKExpressionsContextFinder)
+//    }
+}
 
 class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
     private static var Injector guiceInjector;
     private static val KExpressionsStandaloneSetup setup = new KExpressionsStandaloneSetup() => [
-        guiceInjector = Guice.createInjector(new KExpressionsRuntimeModule);
+        guiceInjector = Guice.createInjector(new SCGRuntimeModule);
         it.register(guiceInjector);        
     ]
 //    private val Injector i = KExpressionsStandaloneSetup::createInjectorAndDoEMFRegistration();
+    private static val SCGKExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(typeof(SCGKExpressionsScopeProvider));
     private static val ISerializer serializer = guiceInjector.getInstance(typeof(ISerializer));
     
     @Inject
@@ -173,6 +190,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
     
     override transform(SCGraph model) {
+        scopeProvider.parent = model;
         return model.translate();
     }
     
@@ -284,7 +302,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
                 it.setGridPlacement(1);
                 if (s.valuedObject != null && s.assignment != null)
-                    it.addText(serializer.serialize(s.valuedObject) + " = " + serializer.serialize(s.assignment))
+                    it.addText(s.valuedObject.name + " = " + serializer.serialize(s.assignment.copy))
                         .putToLookUpWith(s);
             ]
             
