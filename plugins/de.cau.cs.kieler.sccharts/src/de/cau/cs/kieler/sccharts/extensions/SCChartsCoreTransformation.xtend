@@ -740,6 +740,8 @@ class SCChartsCoreTransformation {
     // For every final state S with outgoing transitions inside R do the following:
     // Finally add an immediate transition with maximal (lowest) priority from S to F triggered by Abort.
 
+    // Optimization: We dont need to watch final states with outgoing transitions! These states are transformed 
+    // anyway
 
     def Region transformFinalStateTransition (Region rootRegion) {
         // Clone the complete SCCharts region 
@@ -756,13 +758,14 @@ class SCChartsCoreTransformation {
          
        if (!parentStatesIsConsidered.nullOrEmpty) {
             // Auxiliary reset valuedObject
-            var auxiliaryResetValuedObjectUID = parentState.id("Abort");
-            val auxiliaryResetValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-            auxiliaryResetValuedObject.setName(auxiliaryResetValuedObjectUID);
-            auxiliaryResetValuedObject.setIsInput(false);
-            auxiliaryResetValuedObject.setIsOutput(false);
-            auxiliaryResetValuedObject.setType(ValueType::PURE);
-            parentState.valuedObjects.add(auxiliaryResetValuedObject);
+            //var auxiliaryResetValuedObjectUID = parentState.id("Abort");
+            val auxiliaryResetValuedObject = parentState.createPureSignal(parentState.id("Abort"))
+            //val auxiliaryResetValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+            //auxiliaryResetValuedObject.setName(auxiliaryResetValuedObjectUID);
+            //auxiliaryResetValuedObject.setIsInput(false);
+            //auxiliaryResetValuedObject.setIsOutput(false);
+            //auxiliaryResetValuedObject.setType(ValueType::PURE);
+            //parentState.valuedObjects.add(auxiliaryResetValuedObject);
             
             // Auxiliary watch master region with macro WatchMasterState and AbortedState
             val auxiliaryWatchMasterRegion  = SCChartsFactory::eINSTANCE.createRegion();

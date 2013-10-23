@@ -582,7 +582,7 @@ class SCChartsExtension {
 
     // Creates a new pure signal ValuedObject in a Scope.
     def ValuedObject createPureSignal(Scope scope, String variableName) {
-         scope.createPureSignal(variableName)
+         scope.createSignal(variableName)
     }
 
     // Creates a new Int signal ValuedObject in a Scope.
