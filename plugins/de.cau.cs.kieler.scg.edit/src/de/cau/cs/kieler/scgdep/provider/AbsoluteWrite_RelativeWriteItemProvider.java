@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.scgdep.provider;
 
 
+import de.cau.cs.kieler.scgdep.AbsoluteWrite_RelativeWrite;
 import java.util.Collection;
 import java.util.List;
 
@@ -85,7 +86,8 @@ public class AbsoluteWrite_RelativeWriteItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_AbsoluteWrite_RelativeWrite_type");
+        AbsoluteWrite_RelativeWrite absoluteWrite_RelativeWrite = (AbsoluteWrite_RelativeWrite)object;
+        return getString("_UI_AbsoluteWrite_RelativeWrite_type") + " " + absoluteWrite_RelativeWrite.isConcurrent();
     }
 
     /**

@@ -14,6 +14,7 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scgdep.AssignmentDep
 import de.cau.cs.kieler.scgdep.SCGraphDep
 import de.cau.cs.kieler.scgdep.ScgdepFactory
+import de.cau.cs.kieler.scgdep.Dependency
 import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -22,7 +23,6 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.scgdep.Dependency
 
 class SCGToSCGDEPTransformation {
          

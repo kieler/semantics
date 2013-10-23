@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.scgdep.provider;
 
 
+import de.cau.cs.kieler.scgdep.AbsoluteWrite_Read;
 import java.util.Collection;
 import java.util.List;
 
@@ -85,7 +86,8 @@ public class AbsoluteWrite_ReadItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_AbsoluteWrite_Read_type");
+        AbsoluteWrite_Read absoluteWrite_Read = (AbsoluteWrite_Read)object;
+        return getString("_UI_AbsoluteWrite_Read_type") + " " + absoluteWrite_Read.isConcurrent();
     }
 
     /**
