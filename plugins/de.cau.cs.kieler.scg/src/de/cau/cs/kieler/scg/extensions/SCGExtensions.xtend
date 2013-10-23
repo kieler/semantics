@@ -21,6 +21,9 @@ import java.util.List
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Depth
 
 /**
  * SCG Extensions.
@@ -60,6 +63,14 @@ class SCGExtensions {
        return returnList;
    }
    
+   // -------------------------------------------------------------------------
+   
+   def List<ControlFlow> getAllPrevious (Node node) {
+       var List<ControlFlow> returnList = <ControlFlow> newLinkedList;
+       returnList.addAll(node.incoming.filter(typeof(ControlFlow)))
+       return returnList;
+   }
+      
    // -------------------------------------------------------------------------   
     
     def List<Node> getThreadNodes (Entry entry) {
@@ -84,5 +95,38 @@ class SCGExtensions {
         returnList.add(exit)
         return returnList
     }    
-      
+
+   // -------------------------------------------------------------------------   
+
+   def List<Fork> getAncestorForks(Node node) {
+       val List<Fork> returnList = <Fork> newLinkedList
+       val List<ControlFlow> controlFlows = <ControlFlow> newLinkedList
+       val List<ControlFlow> marked = <ControlFlow> newLinkedList
+       
+       controlFlows.addAll(node.getAllPrevious)
+       while(!controlFlows.empty) {
+           val nextControlFlow = controlFlows.head
+           var prevNode = nextControlFlow.eContainer as Node
+           marked.add(nextControlFlow);
+           controlFlows.remove(0)
+           
+           if (prevNode instanceof Join) { 
+               controlFlows.addAll((prevNode as Join).fork.getAllPrevious);
+           }
+           else if (prevNode instanceof Fork) {
+               returnList.add(prevNode as Fork)
+           } 
+           else if (prevNode instanceof Depth) {
+               controlFlows.addAll((prevNode as Depth).surface.getAllPrevious)
+           } else {
+               controlFlows.addAll(prevNode.getAllPrevious)           
+           }
+           
+           for(m : marked) {
+               if (controlFlows.contains(m)) controlFlows.remove(m)
+           }
+       }
+       
+       return returnList
+   }      
 }

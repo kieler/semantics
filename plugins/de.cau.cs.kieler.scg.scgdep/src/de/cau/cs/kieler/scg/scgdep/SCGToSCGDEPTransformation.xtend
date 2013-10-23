@@ -24,8 +24,14 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.scgdep.ConditionalDep
+import org.eclipse.emf.ecore.EObject
+import com.google.inject.Inject
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
 
 class SCGToSCGDEPTransformation {
+    
+    @Inject
+    extension SCGExtensions
          
     private val nodeMapping = new HashMap<Node, Node>
     private val revNodeMapping = new HashMap<Node, Node>
@@ -79,6 +85,7 @@ class SCGToSCGDEPTransformation {
                 }
                 if (dependency != null) {
                     dependency.target = node;
+                    if (assignment.hasLCAF(node)) dependency.concurrent = true
                     assignment.dependencies.add(dependency);
                 }
             }
@@ -92,6 +99,7 @@ class SCGToSCGDEPTransformation {
             }
             if (dependency != null) {
                 dependency.target = node;
+                if (assignment.hasLCAF(node)) dependency.concurrent = true
                 assignment.dependencies.add(dependency);
             }
         ]
@@ -110,6 +118,15 @@ class SCGToSCGDEPTransformation {
             return expression.eAllContents.filter(typeof(ValuedObjectReference)).filter[ e |
                 e.valuedObject == valuedObject].size > 0
         }
+    }
+    
+    def boolean hasLCAF(Node node1, Node node2) {
+        var node1AF = node1.getAncestorForks
+        var node2AF = node2.getAncestorForks
+        for (node : node1AF) {
+            if (node2AF.contains(node)) return true
+        }
+        return false
     }
 
     def dispatch Node addControlFlow(Entry entry) {

@@ -570,7 +570,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         val sourceNode = (dependency.eContainer as Node).node
         val targetNode = dependency.target.node
         
-        sourceNode.createEdge() => [ edge |
+        sourceNode.createEdge("dependency " + sourceNode.toString + targetNode.toString) => [ edge |
             edge.source = sourceNode
             edge.target = targetNode
             edge.addRoundedBendsPolyline(8,2) => [    
