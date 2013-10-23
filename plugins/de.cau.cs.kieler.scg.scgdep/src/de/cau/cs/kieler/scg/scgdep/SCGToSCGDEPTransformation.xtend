@@ -23,6 +23,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.scgdep.ConditionalDep
 
 class SCGToSCGDEPTransformation {
          
@@ -59,7 +60,6 @@ class SCGToSCGDEPTransformation {
     
     
     def createDependencies(AssignmentDep assignment, SCGraphDep scg) {
-        val valuedObject = assignment.valuedObject
         val iAmAbsoluteWriter = !assignment.isRelativeWriter
         
         scg.nodes.filter(typeof(AssignmentDep)).forEach[ node |
@@ -73,7 +73,7 @@ class SCGToSCGDEPTransformation {
                         dependency = ScgdepFactory::eINSTANCE.createWrite_Write       
                     }
                 } else
-                if (node.isReader(assignment.valuedObject)) {
+                if (node.assignment.isReader(assignment.valuedObject)) {
                     if (iAmAbsoluteWriter) dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_Read
                     else dependency = ScgdepFactory::eINSTANCE.createRelativeWrite_Read    
                 }
@@ -81,6 +81,18 @@ class SCGToSCGDEPTransformation {
                     dependency.target = node;
                     assignment.dependencies.add(dependency);
                 }
+            }
+        ]
+        
+        scg.nodes.filter(typeof(ConditionalDep)).forEach[ node |
+            var Dependency dependency = null
+            if (node.condition.isReader(assignment.valuedObject)) {
+                if (iAmAbsoluteWriter) dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_Read
+                else dependency = ScgdepFactory::eINSTANCE.createRelativeWrite_Read    
+            }
+            if (dependency != null) {
+                dependency.target = node;
+                assignment.dependencies.add(dependency);
             }
         ]
     }
@@ -91,11 +103,11 @@ class SCGToSCGDEPTransformation {
             e.valuedObject == assignment.valuedObject ].size > 0
     }
     
-    def boolean isReader(AssignmentDep assignment, ValuedObject valuedObject) {
-        if (assignment.assignment instanceof ValuedObjectReference) {
-            return (assignment.assignment as ValuedObjectReference).valuedObject == valuedObject
+    def boolean isReader(Expression expression, ValuedObject valuedObject) {
+        if (expression instanceof ValuedObjectReference) {
+            return (expression as ValuedObjectReference).valuedObject == valuedObject
         } else {
-            return assignment.assignment.eAllContents.filter(typeof(ValuedObjectReference)).filter[ e |
+            return expression.eAllContents.filter(typeof(ValuedObjectReference)).filter[ e |
                 e.valuedObject == valuedObject].size > 0
         }
     }
