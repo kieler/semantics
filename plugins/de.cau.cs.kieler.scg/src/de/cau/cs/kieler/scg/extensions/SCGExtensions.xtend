@@ -65,6 +65,7 @@ class SCGExtensions {
    
    // -------------------------------------------------------------------------
    
+   // Retrieves all incoming control flows at once.
    def List<ControlFlow> getAllPrevious (Node node) {
        var List<ControlFlow> returnList = <ControlFlow> newLinkedList;
        returnList.addAll(node.incoming.filter(typeof(ControlFlow)))
@@ -98,6 +99,7 @@ class SCGExtensions {
 
    // -------------------------------------------------------------------------   
 
+   // Finds all ancestor forks of a node.
    def List<Fork> getAncestorForks(Node node) {
        val List<Fork> returnList = <Fork> newLinkedList
        val List<ControlFlow> controlFlows = <ControlFlow> newLinkedList

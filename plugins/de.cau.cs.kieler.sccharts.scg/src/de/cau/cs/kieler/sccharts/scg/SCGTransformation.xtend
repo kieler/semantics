@@ -52,7 +52,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 /** 
  * SCCharts CoreTransformation Extensions.
  * 
- * @author cmot, ssm
+ * @author cmot ssm
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */

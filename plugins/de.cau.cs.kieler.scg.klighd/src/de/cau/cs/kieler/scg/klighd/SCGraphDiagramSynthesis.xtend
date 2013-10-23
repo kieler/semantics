@@ -33,7 +33,6 @@ import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
@@ -73,20 +72,34 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
+/** 
+ * SCCGraph KlighD synthesis 
+ * 
+ * @author ssm
+ * @kieler.design 2013-10-23 proposed 
+ * @kieler.rating 2013-10-23 proposed yellow
+ */
+ 
+ // Specialized SCG runtime module
+ // This is necessary to override the default KExpression scope provider. 
+ // IMPORTANT: The binding has to be a singleton!
 class SCGRuntimeModule extends KExpressionsRuntimeModule {
     
     @Singleton
     override Class<? extends IScopeProvider> bindIScopeProvider() {
         return typeof(SCGKExpressionsScopeProvider);
     }    
-    
-//    def Class<? extends IContextFinder> bindIContextFinder() {
-//        return typeof(SCGKExpressionsContextFinder)
-//    }
 }
 
+
+// Main synthesis class
 class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
+    // -------------------------------------------------------------------------
+    // -- GUICE 
+    // -------------------------------------------------------------------------
+
+    // Retrieve an injector and instances for serialization.
     private static var Injector guiceInjector;
     private static val KExpressionsStandaloneSetup setup = new KExpressionsStandaloneSetup() => [
         guiceInjector = Guice.createInjector(new SCGRuntimeModule);
@@ -95,6 +108,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //    private val Injector i = KExpressionsStandaloneSetup::createInjectorAndDoEMFRegistration();
     private static val SCGKExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(typeof(SCGKExpressionsScopeProvider));
     private static val ISerializer serializer = guiceInjector.getInstance(typeof(ISerializer));
+    
+    
+    // -------------------------------------------------------------------------
+    // -- EXTENSIONS 
+    // -------------------------------------------------------------------------
     
     @Inject
     extension KNodeExtensions
@@ -126,6 +144,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject
     extension SCGExtensions
     
+
+    // -------------------------------------------------------------------------
+    // -- KLIGHD OPTIONS 
+    // -------------------------------------------------------------------------
+
     private static val TransformationOption SHOW_CAPTION
         = TransformationOption::createCheckOption("Captions", true);
         
@@ -153,15 +176,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val TransformationOption HIERARCHY_TRANSPARENCY 
         = TransformationOption::createRangeOption("Hierarchy transparency", 0f, 255f, 128f);
         
-//    private static val TransformationOption ALIGN_EDGES
-//        = TransformationOption::createCheckOption("Control flow edge alignment", true);
-//
-//    private static val TransformationOption FIXATE_EDGES
-//        = TransformationOption::createCheckOption("Fixate control flow edge", true);
-
-
     override public getTransformationOptions() {
-//        return ImmutableSet::of(SHOW_LABELS, SHOW_SHADOW, ALIGN_TICK_START, ALIGN_EDGES, FIXATE_EDGES);
         return ImmutableSet::of(SHOW_CAPTION, 
             SHOW_DEPENDENCIES, LAYOUT_DEPENDENCIES, HIDE_NONCONCURRENT, 
             ALIGN_TICK_START, ALIGN_ENTRYEXIT_NODES, 
@@ -171,26 +186,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     override public getRecommendedLayoutOptions() {
         return ImmutableMap::<IProperty<?>, Collection<?>>of(
-//            LayoutOptions::ALGORITHM, emptyList,
-            LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[ it.name ],
             LayoutOptions::SPACING, newArrayList(0, 255),
             Properties::NODE_PLACER, NodePlacementStrategy::values
         );
     }
     
-    override transform(SCGraph model) {
-        scopeProvider.parent = model;
-        return model.translate();
-    }
-    
-    
-    private static val float REGION_DASH_BLACK = 10;
-    private static val float REGION_DASH_WHITE = 5;
-    private static val List<Float> REGION_DASH_PATTERN = newArrayList(REGION_DASH_BLACK, REGION_DASH_WHITE); 
-    private static val float TRANSITION_DASH_BLACK = 7;
-    private static val float TRANSITION_DASH_WHITE = 3;
-    private static val List<Float> TRANSITION_DASH_PATTERN = newArrayList(TRANSITION_DASH_BLACK, TRANSITION_DASH_WHITE); 
 
+    // -------------------------------------------------------------------------
+    // -- STATIC DECLARATIONS 
+    // -------------------------------------------------------------------------
+    
     private static val KColor SCCHARTSGRAY = RENDERING_FACTORY.createKColor()=>[it.red=240;it.green=240;it.blue=240];
     private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor()=>[it.red=248;it.green=249;it.blue=253];
     private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor()=>[it.red=205;it.green=220;it.blue=243];
@@ -214,20 +219,40 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     private KNode rootNode;
 
+
+    // -------------------------------------------------------------------------
+    // -- MAIN ENTRY POINT 
+    // -------------------------------------------------------------------------
+
+    override transform(SCGraph model) {
+        scopeProvider.parent = model;
+        return model.translate();
+    }
+    
+    
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM SCGraph 
+    // -------------------------------------------------------------------------
+    
     def dispatch KNode translate(SCGraph r) {
         return r.createNode().putToLookUpWith(r) => [ node |
+            
+            // Set root node and layout options.
             rootNode = node
-            // node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
-             node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN);
-             node.setLayoutOption(LayoutOptions::SPACING, 25f);
-             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-             node.addLayoutParam(Properties::THOROUGHNESS, 100)
-             node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);             
+            node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN);
+            node.setLayoutOption(LayoutOptions::SPACING, 25f);
+            node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+            node.addLayoutParam(Properties::THOROUGHNESS, 100)
+            node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
+            
+            // Transform all children             
             for (s : r.nodes) {
                 node.children += s.translate;
             }
         
+            // For each node transform the control flow edges.
+            // This must be done after all nodes have been created.
             for (s : r.nodes) {
                 if (s instanceof Surface)    (s as Surface).depth?.translateTickEdge
                 if (s instanceof Assignment) (s as Assignment).next?.translateControlFlow(SCGPORTID_OUTGOING)
@@ -246,12 +271,17 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             }
 
+            // If the dependency edges shall be layouted as well, they must be drawn before any 
+            // hierarchy management. The hierarchy methods break edges in half and connect them via a port.
             if (r instanceof SCGraphDep && SHOW_DEPENDENCIES.optionBooleanValue &&
                 LAYOUT_DEPENDENCIES.optionBooleanValue
             ) {
                 r.eAllContents.filter(Dependency).forEach[ it.drawDependency ]
             }
             
+            // Apply any hierarchy if the corresponding option is set. Since layout of edges between nodes
+            // in different hierarchies is not supported, the synthesis splits these edges at the hierarchy
+            // border and connects them via a port. Thus, a kind of pseudo hierarchical edge layout is archived. 
             if (SHOW_HIERARCHY.optionBooleanValue) {    
                 for (s : r.nodes.filter(typeof(Fork))) {
                     val threadEntries = s.getAllNext
@@ -261,31 +291,32 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }            
             }
             
+            // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
             if (r instanceof SCGraphDep && SHOW_DEPENDENCIES.optionBooleanValue &&
                 !LAYOUT_DEPENDENCIES.optionBooleanValue
             ) {
                 r.eAllContents.filter(Dependency).forEach[ it.drawDependency ]
-            }
-            
+            }            
         ]
     }
     
+
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM Assignment 
+    // -------------------------------------------------------------------------
+    
     def dispatch KNode translate(Assignment s) {
         return s.createNode().putToLookUpWith(s) => [ node |
-            //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
-            // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
-            // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
-
+            // pre-defined values for assignments
             val cornerRadius = 2;
             val lineWidth = 1.0f;
 
+            // straightforward rectangle drawing...
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth)
                 .background = "white".color;
 
             (figure) => [
                 node.setMinimalNodeSize(75, 25);
-//                it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
                 if (SHOW_SHADOW.optionBooleanValue) {
                     it.shadow = "black".color;
                 }
@@ -295,6 +326,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         .putToLookUpWith(s);
             ]
             
+            // Add ports for control-flow and dependency routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
             node.addPort(SCGPORTID_OUTGOING, 37, 24, 0, PortSide::SOUTH)          
@@ -303,15 +335,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         ]
     }
     
+
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM Conditional 
+    // -------------------------------------------------------------------------
+    
     def dispatch KNode translate(Conditional s) {
         return s.createNode().putToLookUpWith(s) => [ node |
-            //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
-            // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
-            // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
-
+            
+            // Draw a diamond figure for conditionals.
             val figure = node.addPolygon().createDiamondShape();
-//                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25);
                 if (s.condition != null)  
@@ -324,6 +357,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
 
+            // Add ports for control-flow and dependency routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
             node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
             node.addPort(SCGPORTID_OUTGOING_ELSE, 37.5f, 24, 0, PortSide::SOUTH)
@@ -333,16 +367,17 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             port.addLayoutParam(LayoutOptions::OFFSET, -1.5f)
         ];
     }
-    
+
+
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM Surface 
+    // -------------------------------------------------------------------------
+
     def dispatch KNode translate(Surface s) {
         return s.createNode().putToLookUpWith(s) => [ node |
-            //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
-            // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
-            // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
+            // Draw a surface node...
             val figure = node.addPolygon().createSurfaceShape();
-//                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25); 
                 if (SHOW_CAPTION.optionBooleanValue)
@@ -352,6 +387,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
             
+            // Add ports for control-flow/tick edge routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             val port = node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
             node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)          
@@ -359,18 +395,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         ]
     }
 
+
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM Depth 
+    // -------------------------------------------------------------------------
+    
     def dispatch KNode translate(Depth s) {
         return s.createNode().putToLookUpWith(s) => [ node |
-            //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
-            // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
-            // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+
+            // If the corresponding option is set to true, depth nodes are placed in the first layer.
             if (ALIGN_TICK_START.optionBooleanValue) {
                 node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
             }
 
+            // Draw a depth figure;
             val figure = node.addPolygon().createDepthShape();
-//                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25); 
                 if (SHOW_CAPTION.optionBooleanValue)
@@ -383,6 +422,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
             
+            // Add ports for control-flow/tick edge routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             node.addPort(SCGPORTID_INCOMING, 37,  0, 1, PortSide::NORTH)
             val port = node.addPort(SCGPORTID_OUTGOING, 37.5f, 25, 0, PortSide::SOUTH)          
@@ -390,17 +430,20 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         ]
     }
     
+    
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM Entry 
+    // -------------------------------------------------------------------------
+    
     def dispatch KNode translate(Entry s) {
         return s.createNode().putToLookUpWith(s) => [ node |
-            //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
-            // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
-            // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+            
+            // If the corresponding option is set to true, exit nodes are placed in the first layer;
             if (ALIGN_ENTRYEXIT_NODES.optionBooleanValue)
                 node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
 
+            // Draw an ellipse figure for exit nodes...
             val figure = node.addEllipse();
-//                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25); 
                 if (SHOW_CAPTION.optionBooleanValue)
@@ -413,23 +456,27 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
 
+            // Add ports for control-flow routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             node.addPort(SCGPORTID_INCOMING, 37,  0, 1, PortSide::NORTH)
             node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)          
         ]
     }    
  
+
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM Exit 
+    // -------------------------------------------------------------------------
+    
     def dispatch KNode translate(Exit s) {
         return s.createNode().putToLookUpWith(s) => [ node |
-            //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
-            // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
-            // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+            
+            // If the corresponding option is set to true, exit nodes are placed in the last layer.
             if (ALIGN_ENTRYEXIT_NODES.optionBooleanValue)
                 node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
 
+            // Draw an ellipse for an exit node...
             val figure = node.addEllipse();
-//                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25);
                 if (SHOW_CAPTION.optionBooleanValue) 
@@ -442,21 +489,23 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
             
+            // Add ports for control-flow routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
             node.addPort(SCGPORTID_INCOMING, 37,  0, 1, PortSide::NORTH)
             node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)          
         ]
     }
 
+
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM Fork 
+    // -------------------------------------------------------------------------
+    
     def dispatch KNode translate(Fork s) {
         return s.createNode().putToLookUpWith(s) => [ node |
-            //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
-            // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
-            // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
+            // Draw a fork triangle...
             val figure = node.addPolygon().createTriangleShape();
-//                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25);
                 if (SHOW_CAPTION.optionBooleanValue) 
@@ -469,21 +518,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
             
+            // Only add one port for incoming control flow edges.
+            // Outgoing ports are added by the control flows.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
             val port = node.addPort(SCGPORTID_INCOMING, 36, 0, 1, PortSide::NORTH)
             port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
         ]
     }
 
+
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM Join 
+    // -------------------------------------------------------------------------
+    
     def dispatch KNode translate(Join s) {
         return s.createNode().putToLookUpWith(s) => [ node |
-            //node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box");
-            // node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
-            // node.setLayoutOption(LayoutOptions::SPACING, 0f);
-//            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
 
+            // Draw a join triangle...
             val figure = node.addPolygon().createTriangleShapeReversed();
-//                .background = "white".color;
 
             figure => [ node.setMinimalNodeSize(75, 25);
                 if (SHOW_CAPTION.optionBooleanValue) 
@@ -496,6 +548,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
             ]
             
+            // Only add one port for an outgoing control flow edge.
+            // Incoming ports are added by the control flows.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
             val port = node.addPort(SCGPORTID_OUTGOING, 36, 25, 0, PortSide::SOUTH)
             port.addLayoutParam(LayoutOptions::OFFSET, -0.5f)
@@ -503,6 +557,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
 
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM Tick edge 
+    // -------------------------------------------------------------------------
+    
+    // Draw a dotted line from the corresponding surface node to the given depth node.
     def KEdge translateTickEdge(Depth t) {
         return t.createEdge().putToLookUpWith(t) => [ edge |
             edge.source = t.surface?.node;
@@ -513,27 +572,32 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
       
             edge.addRoundedBendsPolyline(8,2) => [
                     it.lineStyle = LineStyle::DOT;
-//                    it.lineStyle.dashPattern.clear;
-//                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
             ]
-                        
         ]
     }
     
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM Control flow 
+    // -------------------------------------------------------------------------
+    
+    // Draw a control flow edge from one node to another.
+    // Use the outgoing port description as port identifier. 
     def KEdge translateControlFlow(ControlFlow t, String outgoing) {
         if (t.target == null || t.eContainer == null) return null;
         
         return t.createEdge().putToLookUpWith(t) => [ edge |
+            // Get and set source and target information.
             val sourceObj = t.eContainer
             val targetObj = t.target
             var sourceNode = sourceObj.node
             var targetNode = targetObj.node
-            var addArrow = true
             
             edge.source = sourceNode
             edge.target = targetNode
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
 
+            // If the source is a fork node, create a new port for this control flow and attach it.
+            // Otherwise, use the outgoing port identified by the given parameter.
             if (sourceObj instanceof Fork) {
                 edge.sourcePort = sourceObj.node.createPort("fork" + targetObj.hashCode()) => [
                     it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
@@ -546,6 +610,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 edge.sourcePort = sourceNode.getPort(outgoing)
             }
             
+            // If the target is a join node, create a new port for this control flow and attach it.
+            // Otherwise, use the default incoming port.
             if (targetObj instanceof Join) {
                 edge.targetPort = targetObj.node.createPort("join" + sourceObj.hashCode()) => [
                     it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
@@ -558,29 +624,40 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 edge.targetPort = targetNode.getPort(SCGPORTID_INCOMING)
             }
       
-            val addArrowFinal = addArrow
+            // Finally, draw the solid edge and add a decorator.
             edge.addRoundedBendsPolyline(8,2) => [
                     it.lineStyle = LineStyle::SOLID
-                    if (addArrowFinal) it.addArrowDecorator
+                    it.addArrowDecorator
             ]
             
+            // If the outgoing identifier indicates a 'then branch', add a 'then label'.
             if (outgoing == SCGPORTID_OUTGOING_THEN) {
                 edge.createLabel.configureTailLabel('true', 9, KlighdConstants::DEFAULT_FONT_NAME)
             }               
         ]
     }    
     
+
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM Dependency (edge) 
+    // -------------------------------------------------------------------------
+
+    // Draw a single dependency (edge).    
     def Dependency drawDependency(Dependency dependency) {
         
+        // If non concurrent dependency are hidden and the given dependency is not concurrent, exit at once.
         if (HIDE_NONCONCURRENT.optionBooleanValue && !dependency.isConcurrent) return dependency;
         
+        // Retrieve node information.
         val sourceNode = (dependency.eContainer as Node).node
         val targetNode = dependency.target.node
         
+        // Draw the dashed dependency edge....
         sourceNode.createEdge("dependency " + sourceNode.toString + targetNode.toString) => [ edge |
             edge.source = sourceNode
             edge.target = targetNode
-            edge.addRoundedBendsPolyline(8,2) => [    
+            edge.addRoundedBendsPolyline(8,2) => [
+                // ... and use the predefined color for the different dependency types.    
                 if (dependency instanceof AbsoluteWrite_Read) it.foreground = DEPENDENCY_ABSWRITEREAD.copy
                 if (dependency instanceof RelativeWrite_Read) it.foreground = DEPENDENCY_RELWRITEREAD.copy
                 if (dependency instanceof AbsoluteWrite_RelativeWrite) it.foreground = DEPENDENCY_ABSWRITERELWRITE.copy
@@ -589,10 +666,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 it.addArrowDecorator
             ]  
             
+            // If dependency edges are layouted, use the dependency ports to attach the edges.
             if (LAYOUT_DEPENDENCIES.optionBooleanValue) {
                 edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOINGDEPENDENCY)
                 edge.targetPort = targetNode.getPort(SCGPORTID_INCOMINGDEPENDENCY)
             } else {
+                // Otherwise, add NO_LAYOUT as layout option to trigger node-to-node hierarchy-crossover
+                // drawing.
                 edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
             }          
         ]
@@ -600,13 +680,25 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         dependency
     }
 
+
+    // -------------------------------------------------------------------------
+    // -- CREATE Hierarchy 
+    // -------------------------------------------------------------------------
+
+    // This method takes a list of nodes and creates a new container around them. 
+    // All edges between nodes inside this container and nodes on the outside of the container a split up
+    // and connected via ports on the container border. 
+    // At the moment the new container is always a scg thread hierarchy container, but this will probably
+    // change when basic blocks are re-introduced. 
     def createHierarchy(List<Node> nodes) {
+        // Gather mandatory information.
         val threadEntry = nodes.head as Entry
         val kParent = threadEntry.node.eContainer as KNode
         val kContainer = threadEntry.createNode("hierarchy")
         val kNodeList = new ArrayList<KNode>
         nodes.forEach[e|kNodeList.add(e.node)]
         
+        // Set options for the container.
         kContainer.addLayoutParam(LayoutOptions::SPACING, 25.0f)
         kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
         kContainer.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
@@ -619,21 +711,23 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         kContainer.KRendering.background.alpha = Math.round(HIERARCHY_TRANSPARENCY.optionValue as Float)
         kContainer.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
                     
+        // Add the nodes to the container.
+        // They will be removed from the original parent!
         for(tn : nodes) {
-            val kNode = tn.node
-            //kNode.KRendering.background = "red".color            
-            
-            kContainer.children += kNode
+            kContainer.children += tn.node
         }
-
+        // Add the container to the original parent.
         kParent.children += kContainer
-        
+
+        // Determine all interleaving edges...        
         val iSecEdges = new ArrayList<KEdge>
-         
         for(rc : kParent.children) {
             iSecEdges.addAll(rc.outgoingEdges.filter[edge | kNodeList.contains(edge.target)])
             iSecEdges.addAll(rc.incomingEdges.filter[edge | kNodeList.contains(edge.source)])
         }
+        // ... and split them up. This is done by re-routing the edge. The source of the edge is now the
+        // container. A new edge is then created to attach the original source with the corresponding 
+        // port on the border of the container.
         for(ne : iSecEdges) {
             val portName = SCGPORTID_HIERARCHYPORTS + ne.hashCode.toString();
             val hPort = kContainer.addHelperPort(portName)
@@ -657,6 +751,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         
     }   
    
+
+    // -------------------------------------------------------------------------
+    // -- HELPER: Add ports 
+    // -------------------------------------------------------------------------
+
     def KPort addPort(KNode node, String mapping, float x, float y, int size, PortSide side) {
       node.createPort(mapping) => [
          it.addLayoutParam(LayoutOptions::PORT_SIDE, side);
@@ -678,6 +777,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
       ]
     }  
    
+
+    // -------------------------------------------------------------------------
+    // -- HELPER: Remove parenthesis 
+    // -------------------------------------------------------------------------
+    
    def String removeParenthesis(String str) {
        var String s = "";
        if (str.startsWith("(")) s = str.substring(1) else s = str;

@@ -1,5 +1,23 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.scg.scgdep
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Depth
@@ -11,43 +29,52 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scgdep.AssignmentDep
+import de.cau.cs.kieler.scgdep.ConditionalDep
+import de.cau.cs.kieler.scgdep.Dependency
 import de.cau.cs.kieler.scgdep.SCGraphDep
 import de.cau.cs.kieler.scgdep.ScgdepFactory
-import de.cau.cs.kieler.scgdep.Dependency
 import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.scgdep.ConditionalDep
-import org.eclipse.emf.ecore.EObject
-import com.google.inject.Inject
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 
+/** 
+ * SCG to SCGDEP Transformation 
+ * 
+ * @author ssm
+ * @kieler.design 2013-10-23 proposed 
+ * @kieler.rating 2013-10-23 proposed yellow
+ */
+
+// This class contians all mandatory methods for the SCG-to-SCGDEP-Transformation.
 class SCGToSCGDEPTransformation {
     
+    // Inject SCG Extensions.    
     @Inject
     extension SCGExtensions
          
+    // M2M Mapping
     private val nodeMapping = new HashMap<Node, Node>
     private val revNodeMapping = new HashMap<Node, Node>
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
     
+    // -------------------------------------------------------------------------
+    // -- M2M Transformation 
+    // -------------------------------------------------------------------------
+    
     def SCGraphDep transformSCGToSCGDEP(SCGraph scg) {
+        // Create new SCGDEP...
         val scgdep = ScgdepFactory::eINSTANCE.createSCGraphDep()
                   
+        // ... and copy declarations.
         for(valuedObject : scg.valuedObjects) {
-//            val newValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
-//            newValuedObject.name = valuedObject.name
             val newValuedObject = valuedObject.copy
             scgdep.valuedObjects.add(newValuedObject)
             valuedObjectMapping.put(valuedObject, newValuedObject)
         }
         
+        // Additionally, copy all nodes and fill the mapping structures.
         for(node : scg.nodes) {
             val nodeCopy = node.copySCGNode
             nodeMapping.put(node, nodeCopy)
@@ -55,23 +82,36 @@ class SCGToSCGDEPTransformation {
             scgdep.nodes.add(nodeCopy)
         }
 
+        // Add all control flows.
         scgdep.nodes.forEach[ it.addControlFlow ]
         
+        // Resolves all cross references.
         scgdep.nodes.forEach[ it.adjustCrossReferences ]
         
+        // Finally, add all dependencies.
         scgdep.nodes.filter(typeof(AssignmentDep)).forEach[ it.createDependencies(scgdep) ]
         
         return scgdep;
     }   
     
     
+    // -------------------------------------------------------------------------
+    // -- DEPENDENCIES 
+    // -------------------------------------------------------------------------
+    
+    // All dependencies are originating at assignment nodes. 
+    // Thus, it is sufficient to check all assignments for dependencies and add them as child.
     def createDependencies(AssignmentDep assignment, SCGraphDep scg) {
+        // Cache own absolute/relative state.
         val iAmAbsoluteWriter = !assignment.isRelativeWriter
         
+        // Filter all other assignments...
         scg.nodes.filter(typeof(AssignmentDep)).forEach[ node |
             if (node != assignment) {
                 var Dependency dependency = null
+                // If they write to the same variable...
                 if (node.valuedObject == assignment.valuedObject) {
+                    // check absolute / relative writes and add the corresponding dependency.
                     if (iAmAbsoluteWriter && node.isRelativeWriter) {
                         dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_RelativeWrite                        
                     } else 
@@ -79,10 +119,14 @@ class SCGToSCGDEPTransformation {
                         dependency = ScgdepFactory::eINSTANCE.createWrite_Write       
                     }
                 } else
+                // Otherwise, check if the assignment reads the variable and add the dependency
+                // if necessary.
                 if (node.assignment.isReader(assignment.valuedObject)) {
                     if (iAmAbsoluteWriter) dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_Read
                     else dependency = ScgdepFactory::eINSTANCE.createRelativeWrite_Read    
                 }
+                // If a dependency was created, add the target, the concurrency state and update the 
+                // assignment.
                 if (dependency != null) {
                     dependency.target = node;
                     if (assignment.areConcurrent(node)) dependency.concurrent = true
@@ -91,6 +135,8 @@ class SCGToSCGDEPTransformation {
             }
         ]
         
+        // Basically, do the same stuff with conditionals as target. 
+        // Conditionals will never write a variable, so it's sufficient to check the reader.
         scg.nodes.filter(typeof(ConditionalDep)).forEach[ node |
             var Dependency dependency = null
             if (node.condition.isReader(assignment.valuedObject)) {
@@ -105,12 +151,14 @@ class SCGToSCGDEPTransformation {
         ]
     }
     
+    // Checks whether or not an assignment is a relative writer.
     def boolean isRelativeWriter(AssignmentDep assignment) {
         assignment.assignment instanceof OperatorExpression &&
         assignment.assignment.eAllContents.filter(typeof(ValuedObjectReference)).filter[ e |
             e.valuedObject == assignment.valuedObject ].size > 0
     }
     
+    // Checks whether or not an expression reads a specific ValuedObject.
     def boolean isReader(Expression expression, ValuedObject valuedObject) {
         if (expression instanceof ValuedObjectReference) {
             return (expression as ValuedObjectReference).valuedObject == valuedObject
@@ -120,6 +168,9 @@ class SCGToSCGDEPTransformation {
         }
     }
     
+    // Checks whether or not two nodes are concurrent.
+    // By DATE'13 definition two statements are concurrent if and only if they are not in the same thread
+    // and share a least common ancestor fork node. 
     def boolean areConcurrent(Node node1, Node node2) {
         var node1AF = node1.getAncestorForks
         var node2AF = node2.getAncestorForks
@@ -139,6 +190,13 @@ class SCGToSCGDEPTransformation {
         return false
     }
 
+
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM Control flow 
+    // -------------------------------------------------------------------------
+    
+    // The control flow dispatcher copy each control flow element according to the node mapping. 
+    
     def dispatch Node addControlFlow(Entry entry) {
         val sourceEntry = revNodeMapping.get(entry) as Entry
         if (sourceEntry.next != null) {
@@ -211,7 +269,12 @@ class SCGToSCGDEPTransformation {
         conditional
     }
     
+
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM Cross references 
+    // -------------------------------------------------------------------------
     
+    // The adjust dispatcher correct all encapsulated references (e.g. opposite relations).
     
     def dispatch adjustCrossReferences(Entry entry) {
         entry.exit = nodeMapping.get((revNodeMapping.get(entry) as Entry).exit) as Exit
@@ -242,6 +305,12 @@ class SCGToSCGDEPTransformation {
     def dispatch adjustCrossReferences(Conditional conditional) { }
     
     
+    // -------------------------------------------------------------------------
+    // -- TRANSFORM Copy SCG 
+    // -------------------------------------------------------------------------
+
+    // Create corresponding SCGDEP nodes for each SCG element.
+    
     def dispatch Entry       copySCGNode(Entry       node) { ScgFactory::eINSTANCE.createEntry() }
     def dispatch Exit        copySCGNode(Exit        node) { ScgFactory::eINSTANCE.createExit() }
     def dispatch Surface     copySCGNode(Surface     node) { ScgFactory::eINSTANCE.createSurface() }
@@ -249,25 +318,27 @@ class SCGToSCGDEPTransformation {
     def dispatch Fork        copySCGNode(Fork        node) { ScgFactory::eINSTANCE.createFork() }
     def dispatch Join        copySCGNode(Join        node) { ScgFactory::eINSTANCE.createJoin() }
     
+    // Don't forget to copy the assignment expression and the valued object in assignments.
     def dispatch Assignment  copySCGNode(Assignment  node) { 
-//        val assignment = ScgFactory::eINSTANCE.createAssignment()
         val assignment = ScgdepFactory::eINSTANCE.createAssignmentDep()
         assignment.assignment = node.assignment.copyExpression
         assignment.valuedObject = node.valuedObject.copyValuedObject;
         assignment
     }
     
+    // Same goes for conditionals...   
     def dispatch Conditional copySCGNode(Conditional node) { 
-//        val conditional = ScgFactory::eINSTANCE.createConditional()
         val conditional = ScgdepFactory::eINSTANCE.createConditionalDep();
         conditional.condition = node.condition.copyExpression
         conditional
     }
     
+    // Valued objects must be set according to the mapping!
     def ValuedObject copyValuedObject(ValuedObject valuedObject) {
         valuedObjectMapping.get(valuedObject)
     }
     
+    // References in expressions must be corrected as well!
     def Expression copyExpression(Expression expression) {
         val newExpression = expression.copy
         if (newExpression instanceof ValuedObjectReference) {
