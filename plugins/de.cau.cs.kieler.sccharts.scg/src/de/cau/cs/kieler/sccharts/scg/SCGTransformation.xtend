@@ -38,6 +38,16 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -47,6 +57,12 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class SCGTransformation { 
+
+    @Inject
+    extension KExpressionsExtension
+
+    @Inject
+    extension SCGExtensions
 
     @Inject
     extension SCChartsExtension
@@ -59,6 +75,7 @@ class SCGTransformation {
     //--                         U T I L I T Y                               --
     //-------------------------------------------------------------------------
          
+    // State mappings         
     HashMap<EObject, Node> stateOrRegion2node = new HashMap<EObject, Node>()    
     HashMap<Node, EObject> node2state = new HashMap<Node, EObject>()    
     
@@ -98,6 +115,7 @@ class SCGTransformation {
     def void resetMapping() {
         stateOrRegion2node.clear
         node2state.clear
+        valuedObjectSSChart2SCG.clear
     }     
     
     def State getMappedState(Node node) {
@@ -106,7 +124,16 @@ class SCGTransformation {
     def Region getMappedRegion(Node node) {
         node2state.get(node) as Region
     }
-         
+    
+    // ValuedObject mappings
+    HashMap<ValuedObject, ValuedObject> valuedObjectSSChart2SCG = new HashMap<ValuedObject, ValuedObject>()
+    def void map(ValuedObject valuedObjectSCG, ValuedObject valuedObjectSCChart) {
+        valuedObjectSSChart2SCG.put(valuedObjectSCChart, valuedObjectSCG)
+    }
+    def ValuedObject getSCGValuedObject(ValuedObject valuedObjectSCChart) {
+        valuedObjectSSChart2SCG.get(valuedObjectSCChart)
+    }    
+    
     //-------------------------------------------------------------------------
     //--             T R A N S F O R M      T O    S C G                     --
     //-------------------------------------------------------------------------
@@ -118,6 +145,12 @@ class SCGTransformation {
         resetMapping
         // Create a new SCGraph
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph
+        // Handle declarations
+        for (valuedObject : rootRegion.rootState.valuedObjects) {
+            val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
+            valuedObjectSCG.applyAttributes(valuedObject)
+            valuedObjectSCG.map(valuedObject)
+        }
         // Generate nodes and recursively traverse model
         for (region : rootRegion.rootState.regions) {
            region.transformSCGGenerateNodes(sCGraph)
@@ -316,7 +349,12 @@ class SCGTransformation {
             scopeProvider.parent = transition.sourceState
             val transitionCopy = transition.copy
             transitionCopy.setIsImmediate(false)
-            assignment.setAssignment(serializer.serialize(transitionCopy))
+            // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
+            val effect = transitionCopy.effects.get(0)
+            val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
+            assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
+            // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
+            assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
         }
         else if (state.conditional) {
             val conditional = sCGraph.addConditional
@@ -326,7 +364,8 @@ class SCGTransformation {
             scopeProvider.parent = transition.sourceState
             val transitionCopy = transition.copy
             transitionCopy.setIsImmediate(false)
-            conditional.setCondition(serializer.serialize(transitionCopy))
+            // TODO  Test if this works correct? Was before:  conditional.setCondition(serializer.serialize(transitionCopy))
+            conditional.setCondition(transitionCopy.trigger.convertToSCGExpression)
         }
         else if (state.fork) {
             val fork = sCGraph.addFork
@@ -450,6 +489,49 @@ class SCGTransformation {
             val controlFlowFinal = regionExit.createControlFlow
             nodeExit.setNext(controlFlowFinal)
         }
+    }
+
+    //-------------------------------------------------------------------------
+    //--              C O N V E R T   E X P R E S S I O N S                  --
+    //-------------------------------------------------------------------------
+
+    // Create a new reference Expression to the corresponding sValuedObject of the expression
+    def dispatch Expression convertToSCGExpression(ValuedObjectReference expression) {
+        expression.valuedObject.SCGValuedObject.reference
+    }
+
+    // Apply conversion to operator expressions like and, equals, not, greater, val, pre, add, etc.
+    def dispatch Expression convertToSCGExpression(OperatorExpression expression) {
+        val newExpression = createOperatorExpression(expression.operator)
+        for (subExpression : expression.subExpressions) {
+            newExpression.subExpressions.add(subExpression.convertToSCGExpression)
+        }
+        return newExpression;
+    }
+
+    // Apply conversion to integer values
+    def dispatch Expression convertToSCGExpression(IntValue expression) {
+        createIntValue(expression.value)
+    }
+
+    // Apply conversion to float values
+    def dispatch Expression convertToSCGExpression(FloatValue expression) {
+        createFloatValue(expression.value)
+    }
+
+    // Apply conversion to boolean values
+    def dispatch Expression convertToSCGExpression(BoolValue expression) {
+        createBoolValue(expression.value)
+    }    
+
+    // Apply conversion to textual host code 
+    def dispatch Expression convertToSCGExpression(TextExpression expression) {
+        createTextExpression(expression.text)
+    }    
+    
+    // Apply conversion to the default case
+    def dispatch Expression convertToSCGExpression(Expression expression) {
+        createExpression
     }
 
    // -------------------------------------------------------------------------   
