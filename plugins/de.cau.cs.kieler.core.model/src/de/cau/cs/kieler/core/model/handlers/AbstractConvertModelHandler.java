@@ -63,7 +63,7 @@ import de.cau.cs.kieler.core.model.util.ModelUtil;
  * This abstract command handler can be used to convert models to models or text files.
  * If necessary the handler creates a diagram for the transformed model and opens an associated editor.
  * Multiple resource selection is supported and class injection is implemented.
- * All information must be provided in the abstract methods. No further menu extensions are 
+ * All information must be provided in the abstract methods. No further extensions are 
  * necessary (on purpose).
  * 
  * @author ssm
@@ -100,6 +100,9 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * 
      * @return PreferencesHint
      */
     protected PreferencesHint getPreferencesHint() {
@@ -107,13 +110,13 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
     }
 
     /**
-     * At every selected item this method decides, if a diagram must be created. 
-     * By default, a diagram is created, if diagram ID is not null.
+     * At each selected item this method decides if a diagram must be created. 
+     * By default, a diagram is created if diagram ID is not null.
      * 
      * @param model 
      * @param event command menu event
      * @param selection resource selection
-     * @return set to true, if you want to create a diagram for this model.
+     * @return Set to true if you want to create a diagram for this model.
      */
     protected boolean doCreateDiagram(final EObject model, final ExecutionEvent event, 
             final ISelection selection) {
@@ -121,12 +124,12 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
     }
 
     /**
-     * At every selected item this method decides, if an associated editor must be opened. 
+     * At each selected item this method decides if an associated editor must be opened. 
      * 
      * @param modelObject model
      * @param event command menu event
      * @param selection resource selection
-     * @return set to true, if you want to open an editor for this model.
+     * @return Set to true if you want to open an editor for this model.
      */
     protected boolean doOpenEditor(final Object modelObject, final ExecutionEvent event, 
             final ISelection selection) {
@@ -134,7 +137,7 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
     }
 
     /**
-     * Override this method, if you want to do any post-processing.
+     * Override this method if you want to do any post-processing.
      * 
      * @param modelObject the model
      */
