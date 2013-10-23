@@ -287,7 +287,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
                 it.setGridPlacement(1);
                 if (s.valuedObject != null && s.assignment != null)
-                    it.addText(s.valuedObject.name + " = " + serializer.serialize(s.assignment.copy))
+                    it.addText(s.valuedObject.name + " = " + serializer.serialize(s.assignment.copy).removeParenthesis)
                         .putToLookUpWith(s);
             ]
             
@@ -311,7 +311,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             figure => [ node.setMinimalNodeSize(75, 25);
                 if (s.condition != null)  
-                    node.KRendering.add(factory.createKText.of(serializer.serialize(s.condition.copy))
+                    node.KRendering.add(factory.createKText.of(serializer.serialize(s.condition.copy).removeParenthesis)
                         .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0)
                         .putToLookUpWith(s)
                     );
@@ -667,4 +667,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
       ]
     }  
    
+   def String removeParenthesis(String str) {
+       var String s = "";
+       if (str.startsWith("(")) s = str.substring(1) else s = str;
+       if (str.endsWith(")")) s = s.substring(0, s.length - 1);
+       return s;
+   }
 }
