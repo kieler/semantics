@@ -34,62 +34,13 @@ import org.eclipse.xtext.util.StringInputStream
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import org.eclipse.xtext.service.SingletonBinding
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-
-class MyModule extends KExpressionsRuntimeModule {
-    
-    @SingletonBinding
-    override Class<? extends IScopeProvider> bindIScopeProvider() {
-        return typeof(SCGKExpressionsScopeProvider);
-    }
-
-//override configure(Binder binder) {
-//        binder.bind(typeof(IScopeProvider)).to(typeof(SCGKExpressionsScopeProvider)).asEagerSingleton;
-//    }
-    
-}
+import de.cau.cs.kieler.scgdep.AssignmentDep
 
 class SCGToSCGDEPTransformation {
- 
-//    IMPORTANT STUFF
-    var static Injector guiceInjector;
-    val static KExpressionsStandaloneSetup setup = new KExpressionsStandaloneSetup() => [
-        guiceInjector = Guice.createInjector(new MyModule);
-        it.register(guiceInjector);        
-    ]
-//    val IParser parser = guiceInjector.getInstance(typeof(IParser));
-    val SCGKExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(typeof(IScopeProvider)) as SCGKExpressionsScopeProvider;
-//    val IParseResult result = parser.parse(new StringReader("O | true"));
-//    val Iterable<INode> errors = result.getSyntaxErrors();
-//    val EObject eRoot = result.getRootASTElement();
-//    val Expression root = eRoot as Expression;
-    
-//    val ILinker linker = guiceInjector.getInstance(typeof(ILinker));
-    
-    
-    private static val Resource TMP_RES = guiceInjector.getInstance(typeof(ResourceSet))
-            .createResource(URI::createFileURI("dummy.expr"));
-        
+         
     def SCGraphDep transformSCGToSCGDEP(SCGraph scg) {
         val scgdep = ScgdepFactory::eINSTANCE.createSCGraphDep()
-   
-//        val IParseResult result = parser.parse(new StringReader("O | true"));
-    //        linker.linkModel(result.getRootASTElement(), new ListBasedDiagnosticConsumer());
-    
-        scopeProvider.setParent(scg);
-    
-        TMP_RES.contents.removeAll;
-        TMP_RES.load(new StringInputStream("O = true"), emptyMap);
-    
-//        val Iterable<INode> errors = result.getSyntaxErrors();
-        val EObject eRoot = TMP_RES.contents.head; //result.getRootASTElement();
-        val Expression root = eRoot as Expression;
-        if (root != null) {
-            var ^var = (root as OperatorExpression).subExpressions.head as ValuedObjectReference;
-            System.out.println(^var.valuedObject);
-            ^var = (root as OperatorExpression).subExpressions.tail.head as ValuedObjectReference;
-            System.out.println(^var.valuedObject);
-        }
-        
+          
         val nodeMapping = new HashMap<Node, Node>
         val revNodeMapping = new HashMap<Node, Node>
         for(node : scg.nodes) {
@@ -103,9 +54,23 @@ class SCGToSCGDEPTransformation {
         
         scgdep.nodes.forEach[ it.adjustCrossReferences(nodeMapping, revNodeMapping) ]
         
+        scgdep.nodes.filter(typeof(AssignmentDep)).forEach[ it.createDependencies(scgdep) ]
+        
         return scgdep;
     }   
     
+    
+    def createDependencies(AssignmentDep assignment, SCGraphDep scg) {
+        val valuedObject = assignment.valuedObject
+        
+        scg.nodes.filter(typeof(AssignmentDep)).forEach[ node |
+            if (node != assignment) {
+                val wwDependency = ScgdepFactory::eINSTANCE.createWrite_Write();
+                wwDependency.target = node;
+                assignment.dependencies.add(wwDependency);
+            }
+        ]
+    }
 
     def dispatch Node addControlFlow(Entry entry, HashMap<Node, Node> nodeMapping, HashMap<Node, Node> revNodeMapping) {
         val sourceEntry = revNodeMapping.get(entry) as Entry
