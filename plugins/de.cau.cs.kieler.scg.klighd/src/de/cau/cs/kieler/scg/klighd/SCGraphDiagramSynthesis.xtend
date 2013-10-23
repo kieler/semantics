@@ -134,6 +134,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     private static val TransformationOption LAYOUT_DEPENDENCIES
         = TransformationOption::createCheckOption("Layout dependencies", false);
+
+    private static val TransformationOption HIDE_NONCONCURRENT
+        = TransformationOption::createCheckOption("Hide non-concurrent dependencies", false);
         
     private static val TransformationOption SHOW_SHADOW
         = TransformationOption::createCheckOption("Shadow", true);
@@ -159,7 +162,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     override public getTransformationOptions() {
 //        return ImmutableSet::of(SHOW_LABELS, SHOW_SHADOW, ALIGN_TICK_START, ALIGN_EDGES, FIXATE_EDGES);
-        return ImmutableSet::of(SHOW_CAPTION, SHOW_DEPENDENCIES, LAYOUT_DEPENDENCIES, 
+        return ImmutableSet::of(SHOW_CAPTION, 
+            SHOW_DEPENDENCIES, LAYOUT_DEPENDENCIES, HIDE_NONCONCURRENT, 
             ALIGN_TICK_START, ALIGN_ENTRYEXIT_NODES, 
             SHOW_HIERARCHY, HIERARCHY_TRANSPARENCY, SHOW_SHADOW
         );
@@ -567,6 +571,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }    
     
     def Dependency drawDependency(Dependency dependency) {
+        
+        if (HIDE_NONCONCURRENT.optionBooleanValue && !dependency.isConcurrent) return dependency;
+        
         val sourceNode = (dependency.eContainer as Node).node
         val targetNode = dependency.target.node
         
