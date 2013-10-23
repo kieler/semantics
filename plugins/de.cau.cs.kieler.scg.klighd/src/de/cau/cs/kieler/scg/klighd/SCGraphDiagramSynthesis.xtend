@@ -292,10 +292,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            node.addPort(SCGPORTID_INCOMING, 36, -1, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)          
-            node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 46, -1, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 46, 22, 3, PortSide::SOUTH)                      
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 37, 24, 0, PortSide::SOUTH)          
+            node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 24, 0, PortSide::SOUTH)                      
         ]
     }
     
@@ -321,12 +321,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
 
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
-            node.addPort(SCGPORTID_INCOMING, 36, -1, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING_ELSE, 36, 22, 3, PortSide::SOUTH)
-            node.addPort(SCGPORTID_OUTGOING_THEN, 70, 11, 3, PortSide::EAST)
-            node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 46, 5, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 46, 17, 3, PortSide::SOUTH)                      
-        ]
+            node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING_ELSE, 37.5f, 24, 0, PortSide::SOUTH)
+            val port = node.addPort(SCGPORTID_OUTGOING_THEN, 68, 12.5f, 0, PortSide::EAST)
+            node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 21, 1, PortSide::SOUTH)                      
+            port.addLayoutParam(LayoutOptions::OFFSET, -1.5f)
+        ];
     }
     
     def dispatch KNode translate(Surface s) {
@@ -348,9 +349,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            node.addPort(SCGPORTID_INCOMING, 36, -1, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)          
-            
+            val port = node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)          
+            port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)           
         ]
     }
 
@@ -379,8 +380,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            node.addPort(SCGPORTID_INCOMING, 36, -1, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)          
+            node.addPort(SCGPORTID_INCOMING, 37,  0, 1, PortSide::NORTH)
+            val port = node.addPort(SCGPORTID_OUTGOING, 37.5f, 25, 0, PortSide::SOUTH)          
+            port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
         ]
     }
     
@@ -408,8 +410,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
 
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            node.addPort(SCGPORTID_INCOMING, 36, 0, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)          
+            node.addPort(SCGPORTID_INCOMING, 37,  0, 1, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)          
         ]
     }    
  
@@ -437,8 +439,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            node.addPort(SCGPORTID_INCOMING, 36, -1, 3, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)          
+            node.addPort(SCGPORTID_INCOMING, 37,  0, 1, PortSide::NORTH)
+            node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)          
         ]
     }
 
@@ -464,8 +466,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
-            val port = node.addPort(SCGPORTID_INCOMING, 36, 0, 3, PortSide::NORTH)
-            port.addLayoutParam(LayoutOptions::OFFSET, -2f)
+            val port = node.addPort(SCGPORTID_INCOMING, 36, 0, 1, PortSide::NORTH)
+            port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
         ]
     }
 
@@ -491,8 +493,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
-            val port = node.addPort(SCGPORTID_OUTGOING, 36, 22, 3, PortSide::SOUTH)
-            port.addLayoutParam(LayoutOptions::OFFSET, -3f)
+            val port = node.addPort(SCGPORTID_OUTGOING, 36, 25, 0, PortSide::SOUTH)
+            port.addLayoutParam(LayoutOptions::OFFSET, -0.5f)
         ]
     }
 
@@ -545,7 +547,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
                     it.setPortSize(3,3)
                     it.addRectangle.invisible = true;
-                    it.addLayoutParam(LayoutOptions::OFFSET, -2f)
+                    it.addLayoutParam(LayoutOptions::OFFSET, -1.5f)
                     targetObj.node.ports += it
                 ]
             } else {
