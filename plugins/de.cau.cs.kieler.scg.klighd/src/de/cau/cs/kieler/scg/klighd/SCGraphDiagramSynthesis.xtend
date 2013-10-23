@@ -15,14 +15,14 @@ package de.cau.cs.kieler.scg.klighd
 
 import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
+import com.google.inject.Guice
 import com.google.inject.Injector
+import de.cau.cs.kieler.core.kexpressions.KExpressionsRuntimeModule
+import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KContainerRendering
-import de.cau.cs.kieler.core.krendering.KDecoratorPlacementData
-import de.cau.cs.kieler.core.krendering.KPolygon
-import de.cau.cs.kieler.core.krendering.KPolyline
-import de.cau.cs.kieler.core.krendering.KRendering
+import de.cau.cs.kieler.core.kgraph.KPort
+import de.cau.cs.kieler.core.krendering.KColor
 import de.cau.cs.kieler.core.krendering.LineStyle
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
@@ -30,63 +30,48 @@ import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.klighd.TransformationOption
-import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
-import java.util.Collection
-import java.util.List
-import javax.inject.Inject
-import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.xtext.serializer.ISerializer
+import de.cau.cs.kieler.kiml.options.PortConstraints
+import de.cau.cs.kieler.kiml.options.PortSide
 import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.core.util.Pair
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.krendering.KColor
-import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.TransformationOption
+import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.klighd.SCGraphShapes
-import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scgdep.AbsoluteWrite_Read
+import de.cau.cs.kieler.scgdep.AbsoluteWrite_RelativeWrite
+import de.cau.cs.kieler.scgdep.Dependency
+import de.cau.cs.kieler.scgdep.RelativeWrite_Read
+import de.cau.cs.kieler.scgdep.SCGraphDep
+import de.cau.cs.kieler.scgdep.Write_Write
+import java.util.ArrayList
+import java.util.Collection
+import java.util.List
+import javax.inject.Inject
+import javax.inject.Singleton
+import org.eclipse.xtext.scoping.IScopeProvider
+import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kgraph.KPort
-import de.cau.cs.kieler.kiml.options.PortSide
-import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
-import de.cau.cs.kieler.kiml.options.PortConstraints
-
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import java.util.ArrayList
-import de.cau.cs.kieler.scgdep.SCGraphDep
-import de.cau.cs.kieler.scgdep.Dependency
-import de.cau.cs.kieler.scgdep.AbsoluteWrite_Read
-import de.cau.cs.kieler.scgdep.RelativeWrite_Read
-import de.cau.cs.kieler.scgdep.AbsoluteWrite_RelativeWrite
-import de.cau.cs.kieler.scgdep.Write_Write
-import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup
-import com.google.inject.Guice
-import de.cau.cs.kieler.core.kexpressions.KExpressionsRuntimeModule
-import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetupGenerated
-import org.eclipse.xtext.service.SingletonBinding
-import org.eclipse.xtext.scoping.IScopeProvider
-import org.eclipse.xtext.serializer.sequencer.IContextFinder
-import javax.inject.Singleton
 
 class SCGRuntimeModule extends KExpressionsRuntimeModule {
     
