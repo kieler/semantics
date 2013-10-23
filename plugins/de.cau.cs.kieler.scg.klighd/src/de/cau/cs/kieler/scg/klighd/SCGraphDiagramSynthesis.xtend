@@ -326,7 +326,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             figure => [ node.setMinimalNodeSize(75, 25);
                 if (s.condition != null)  
-                    node.KRendering.add(factory.createKText.of(serializer.serialize(s.condition))
+                    node.KRendering.add(factory.createKText.of(serializer.serialize(s.condition.copy))
                         .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0)
                         .putToLookUpWith(s)
                     );
