@@ -148,7 +148,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         = TransformationOption::createCheckOption("Display hierarchy", true);
         
     private static val TransformationOption HIERARCHY_TRANSPARENCY 
-        = TransformationOption::createRangeOption("Hierarchy transparency", Pair::of(0f, 255f), 128f);
+        = TransformationOption::createRangeOption("Hierarchy transparency", 0f, 255f, 128f);
         
 //    private static val TransformationOption ALIGN_EDGES
 //        = TransformationOption::createCheckOption("Control flow edge alignment", true);
@@ -583,6 +583,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (LAYOUT_DEPENDENCIES.optionBooleanValue) {
                 edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOINGDEPENDENCY)
                 edge.targetPort = targetNode.getPort(SCGPORTID_INCOMINGDEPENDENCY)
+            } else {
+                edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
             }          
         ]
         
