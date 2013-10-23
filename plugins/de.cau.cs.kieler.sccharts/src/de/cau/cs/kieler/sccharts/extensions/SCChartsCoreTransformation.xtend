@@ -852,6 +852,7 @@ class SCChartsCoreTransformation {
                         finalStateAbortTarget.setId(parentRegion.id("final"));
                         finalStateAbortTarget.setLabel("final");
                         finalStateAbortTarget.setIsInitial(false);
+                        finalStateAbortTarget.setIsFinal(true);
                         parentRegion.states.add(finalStateAbortTarget);
                     } else {
                         finalStateAbortTarget = finalStates.head;
