@@ -741,7 +741,7 @@ class SCChartsCoreTransformation {
     // Finally add an immediate transition with maximal (lowest) priority from S to F triggered by Abort.
 
     // Optimization: We dont need to watch final states with outgoing transitions! These states are transformed 
-    // anyway
+    // anyway ***
 
     def Region transformFinalStateTransition (Region rootRegion) {
         // Clone the complete SCCharts region 
@@ -792,8 +792,9 @@ class SCChartsCoreTransformation {
             auxiliaryResetValuedObjectEmission.setValuedObject(auxiliaryResetValuedObject);   
             abortRegionTransition.addEmission(auxiliaryResetValuedObjectEmission);                       
             
-            // For every parallel region W
-            for (parallelRegion : parentState.regions) {
+            // For every parallel region W (that has final states with NO outgoing transitions) ***
+            val consideredRegions = parentState.regions.filter(e | !e.states.filter(ee | ee.isFinal && ee.outgoingTransitions.nullOrEmpty).nullOrEmpty)
+            for (parallelRegion : consideredRegions) {
                    if (parallelRegion != auxiliaryWatchMasterRegion) {
                         // Auxiliary term valuedObject - Try to find existing for parallelRegion
                         val auxiliaryRegionTermValuedObjectUID = parallelRegion.id("Term");
