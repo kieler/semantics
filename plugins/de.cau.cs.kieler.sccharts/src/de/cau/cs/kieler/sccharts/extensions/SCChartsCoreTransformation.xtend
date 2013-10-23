@@ -740,6 +740,7 @@ class SCChartsCoreTransformation {
     // For every final state S with outgoing transitions inside R do the following:
     // Finally add an immediate transition with maximal (lowest) priority from S to F triggered by Abort.
 
+    // NO, THE FOLLOWING SEEMS TO BE WRONG
     // Optimization: We dont need to watch final states with outgoing transitions! These states are transformed 
     // anyway ***
 
@@ -793,7 +794,7 @@ class SCChartsCoreTransformation {
             abortRegionTransition.addEmission(auxiliaryResetValuedObjectEmission);                       
             
             // For every parallel region W (that has final states with NO outgoing transitions) ***
-            val consideredRegions = parentState.regions.filter(e | !e.states.filter(ee | ee.isFinal && ee.outgoingTransitions.nullOrEmpty).nullOrEmpty)
+            val consideredRegions = parentState.regions// parentState.regions.filter(e | !e.states.filter(ee | ee.isFinal && ee.outgoingTransitions.nullOrEmpty).nullOrEmpty)
             for (parallelRegion : consideredRegions) {
                    if (parallelRegion != auxiliaryWatchMasterRegion) {
                         // Auxiliary term valuedObject - Try to find existing for parallelRegion
