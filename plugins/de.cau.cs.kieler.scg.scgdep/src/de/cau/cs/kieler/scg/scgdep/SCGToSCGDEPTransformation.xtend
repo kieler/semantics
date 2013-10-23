@@ -72,6 +72,10 @@ class SCGToSCGDEPTransformation {
                     if (iAmAbsoluteWriter && !node.isRelativeWriter) {
                         dependency = ScgdepFactory::eINSTANCE.createWrite_Write       
                     }
+                } else
+                if (node.isReader(assignment.valuedObject)) {
+                    if (iAmAbsoluteWriter) dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_Read
+                    else dependency = ScgdepFactory::eINSTANCE.createRelativeWrite_Read    
                 }
                 if (dependency != null) {
                     dependency.target = node;
@@ -85,6 +89,15 @@ class SCGToSCGDEPTransformation {
         assignment.assignment instanceof OperatorExpression &&
         assignment.assignment.eAllContents.filter(typeof(ValuedObjectReference)).filter[ e |
             e.valuedObject == assignment.valuedObject ].size > 0
+    }
+    
+    def boolean isReader(AssignmentDep assignment, ValuedObject valuedObject) {
+        if (assignment.assignment instanceof ValuedObjectReference) {
+            return (assignment.assignment as ValuedObjectReference).valuedObject == valuedObject
+        } else {
+            return assignment.assignment.eAllContents.filter(typeof(ValuedObjectReference)).filter[ e |
+                e.valuedObject == valuedObject].size > 0
+        }
     }
 
     def dispatch Node addControlFlow(Entry entry) {
