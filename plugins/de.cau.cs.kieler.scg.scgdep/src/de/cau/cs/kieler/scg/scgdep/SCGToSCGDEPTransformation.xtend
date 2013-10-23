@@ -85,7 +85,7 @@ class SCGToSCGDEPTransformation {
                 }
                 if (dependency != null) {
                     dependency.target = node;
-                    if (assignment.hasLCAF(node)) dependency.concurrent = true
+                    if (assignment.areConcurrent(node)) dependency.concurrent = true
                     assignment.dependencies.add(dependency);
                 }
             }
@@ -99,7 +99,7 @@ class SCGToSCGDEPTransformation {
             }
             if (dependency != null) {
                 dependency.target = node;
-                if (assignment.hasLCAF(node)) dependency.concurrent = true
+                if (assignment.areConcurrent(node)) dependency.concurrent = true
                 assignment.dependencies.add(dependency);
             }
         ]
@@ -120,11 +120,21 @@ class SCGToSCGDEPTransformation {
         }
     }
     
-    def boolean hasLCAF(Node node1, Node node2) {
+    def boolean areConcurrent(Node node1, Node node2) {
         var node1AF = node1.getAncestorForks
         var node2AF = node2.getAncestorForks
         for (node : node1AF) {
-            if (node2AF.contains(node)) return true
+            if (node2AF.contains(node)) {
+                var isConcurrent = true
+                val threadEntries = node.getAllNext
+                for(t : threadEntries) {
+                    if (t.target instanceof Entry 
+                        && (t.target as Entry).getThreadNodes.contains(node1)
+                        && (t.target as Entry).getThreadNodes.contains(node2)
+                    ) isConcurrent = false 
+                }
+                if (isConcurrent) return true
+            }
         }
         return false
     }
