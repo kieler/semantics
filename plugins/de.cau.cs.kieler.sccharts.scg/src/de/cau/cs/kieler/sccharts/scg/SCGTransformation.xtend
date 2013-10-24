@@ -357,7 +357,7 @@ class SCGTransformation {
             val transition = state.outgoingTransitions.get(0)
             scopeProvider.parent = transition.sourceState
             val transitionCopy = transition.copy
-            transitionCopy.setIsImmediate(false)
+            transitionCopy.setImmediate(false)
             // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
             val effect = transitionCopy.effects.get(0)
             val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
@@ -372,7 +372,7 @@ class SCGTransformation {
             val transition = state.outgoingTransitions.get(0)
             scopeProvider.parent = transition.sourceState
             val transitionCopy = transition.copy
-            transitionCopy.setIsImmediate(false)
+            transitionCopy.setImmediate(false)
             // TODO  Test if this works correct? Was before:  conditional.setCondition(serializer.serialize(transitionCopy))
             conditional.setCondition(transitionCopy.trigger.convertToSCGExpression)
         }

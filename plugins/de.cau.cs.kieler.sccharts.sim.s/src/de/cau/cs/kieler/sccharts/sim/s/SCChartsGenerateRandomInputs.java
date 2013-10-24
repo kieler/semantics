@@ -250,7 +250,7 @@ public class SCChartsGenerateRandomInputs implements IHandler {
         List<String> returnList = new LinkedList<String>();
         if (rootRegion.getStates() != null && rootRegion.getStates().size() > 0) {
             for (ValuedObject valuedObject : rootRegion.getStates().get(0).getValuedObjects()) {
-                if (valuedObject.isIsInput()) {
+                if (valuedObject.isInput()) {
                     returnList.add(valuedObject.getName());
                 }
             }
