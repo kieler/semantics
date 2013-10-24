@@ -198,8 +198,8 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionAccess().getPriorityAssignment_2(), "rule__Transition__PriorityAssignment_2");
 					put(grammarAccess.getTransitionAccess().getTargetStateAssignment_3(), "rule__Transition__TargetStateAssignment_3");
 					put(grammarAccess.getTransitionAccess().getImmediateAssignment_4_0(), "rule__Transition__ImmediateAssignment_4_0");
-					put(grammarAccess.getTransitionAccess().getHistoryAssignment_4_1(), "rule__Transition__HistoryAssignment_4_1");
-					put(grammarAccess.getTransitionAccess().getDeferredAssignment_4_2(), "rule__Transition__DeferredAssignment_4_2");
+					put(grammarAccess.getTransitionAccess().getDeferredAssignment_4_1(), "rule__Transition__DeferredAssignment_4_1");
+					put(grammarAccess.getTransitionAccess().getHistoryAssignment_4_2(), "rule__Transition__HistoryAssignment_4_2");
 					put(grammarAccess.getTransitionAccess().getDelayAssignment_4_3_1_0_0(), "rule__Transition__DelayAssignment_4_3_1_0_0");
 					put(grammarAccess.getTransitionAccess().getTriggerAssignment_4_3_1_0_1(), "rule__Transition__TriggerAssignment_4_3_1_0_1");
 					put(grammarAccess.getTransitionAccess().getEffectsAssignment_4_3_1_0_2_1(), "rule__Transition__EffectsAssignment_4_3_1_0_2_1");

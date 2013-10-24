@@ -29,10 +29,10 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cImmediateImmediateKeyword_2_0 = (Keyword)cImmediateAssignment_2.eContents().get(0);
 		private final Assignment cDelayAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cDelayINTTerminalRuleCall_3_0 = (RuleCall)cDelayAssignment_3.eContents().get(0);
-		private final Assignment cHistoryAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cHistoryHistoryTypeEnumRuleCall_4_0 = (RuleCall)cHistoryAssignment_4.eContents().get(0);
-		private final Assignment cDeferredAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final Keyword cDeferredDeferredKeyword_5_0 = (Keyword)cDeferredAssignment_5.eContents().get(0);
+		private final Assignment cDeferredAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cDeferredDeferredKeyword_4_0 = (Keyword)cDeferredAssignment_4.eContents().get(0);
+		private final Assignment cHistoryAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cHistoryHistoryTypeEnumRuleCall_5_0 = (RuleCall)cHistoryAssignment_5.eContents().get(0);
 		private final Assignment cTriggerAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_6_0 = (RuleCall)cTriggerAssignment_6.eContents().get(0);
 		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
@@ -49,12 +49,12 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//// the features type, targetState, priority, isHistory are ignored and set as transient
 		//// you need to override the rule to support transitions properly
 		//Transition returns sccharts::Transition:
-		//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? history=HistoryType?
-		//	deferred?="deferred"? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
+		//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? deferred?="deferred"?
+		//	history=HistoryType? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
 		public ParserRule getRule() { return rule; }
 
-		//{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? history=HistoryType?
-		//deferred?="deferred"? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)?
+		//{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? deferred?="deferred"?
+		//history=HistoryType? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Transition}
@@ -78,17 +78,17 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getDelayINTTerminalRuleCall_3_0() { return cDelayINTTerminalRuleCall_3_0; }
 
-		//history=HistoryType?
-		public Assignment getHistoryAssignment_4() { return cHistoryAssignment_4; }
-
-		//HistoryType
-		public RuleCall getHistoryHistoryTypeEnumRuleCall_4_0() { return cHistoryHistoryTypeEnumRuleCall_4_0; }
-
 		//deferred?="deferred"?
-		public Assignment getDeferredAssignment_5() { return cDeferredAssignment_5; }
+		public Assignment getDeferredAssignment_4() { return cDeferredAssignment_4; }
 
 		//"deferred"
-		public Keyword getDeferredDeferredKeyword_5_0() { return cDeferredDeferredKeyword_5_0; }
+		public Keyword getDeferredDeferredKeyword_4_0() { return cDeferredDeferredKeyword_4_0; }
+
+		//history=HistoryType?
+		public Assignment getHistoryAssignment_5() { return cHistoryAssignment_5; }
+
+		//HistoryType
+		public RuleCall getHistoryHistoryTypeEnumRuleCall_5_0() { return cHistoryHistoryTypeEnumRuleCall_5_0; }
 
 		//trigger=BoolExpression?
 		public Assignment getTriggerAssignment_6() { return cTriggerAssignment_6; }
@@ -604,8 +604,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// the features type, targetState, priority, isHistory are ignored and set as transient
 	//// you need to override the rule to support transitions properly
 	//Transition returns sccharts::Transition:
-	//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? history=HistoryType?
-	//	deferred?="deferred"? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
+	//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? deferred?="deferred"?
+	//	history=HistoryType? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
 	}

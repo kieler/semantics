@@ -1935,9 +1935,9 @@ rule__Transition__Group__4__Impl
     }
 :
 (
-{ before(grammarAccess.getTransitionAccess().getHistoryAssignment_4()); }
-(rule__Transition__HistoryAssignment_4)?
-{ after(grammarAccess.getTransitionAccess().getHistoryAssignment_4()); }
+{ before(grammarAccess.getTransitionAccess().getDeferredAssignment_4()); }
+(rule__Transition__DeferredAssignment_4)?
+{ after(grammarAccess.getTransitionAccess().getDeferredAssignment_4()); }
 )
 
 ;
@@ -1964,9 +1964,9 @@ rule__Transition__Group__5__Impl
     }
 :
 (
-{ before(grammarAccess.getTransitionAccess().getDeferredAssignment_5()); }
-(rule__Transition__DeferredAssignment_5)?
-{ after(grammarAccess.getTransitionAccess().getDeferredAssignment_5()); }
+{ before(grammarAccess.getTransitionAccess().getHistoryAssignment_5()); }
+(rule__Transition__HistoryAssignment_5)?
+{ after(grammarAccess.getTransitionAccess().getHistoryAssignment_5()); }
 )
 
 ;
@@ -5817,14 +5817,22 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Transition__HistoryAssignment_4
+rule__Transition__DeferredAssignment_4
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getTransitionAccess().getHistoryHistoryTypeEnumRuleCall_4_0()); }
-	ruleHistoryType{ after(grammarAccess.getTransitionAccess().getHistoryHistoryTypeEnumRuleCall_4_0()); }
+{ before(grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_4_0()); }
+(
+{ before(grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_4_0()); }
+
+	'deferred' 
+
+{ after(grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_4_0()); }
+)
+
+{ after(grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_4_0()); }
 )
 
 ;
@@ -5832,22 +5840,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Transition__DeferredAssignment_5
+rule__Transition__HistoryAssignment_5
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_5_0()); }
-(
-{ before(grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_5_0()); }
-
-	'deferred' 
-
-{ after(grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_5_0()); }
-)
-
-{ after(grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_5_0()); }
+{ before(grammarAccess.getTransitionAccess().getHistoryHistoryTypeEnumRuleCall_5_0()); }
+	ruleHistoryType{ after(grammarAccess.getTransitionAccess().getHistoryHistoryTypeEnumRuleCall_5_0()); }
 )
 
 ;

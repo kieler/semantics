@@ -453,8 +453,8 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	 *         annotations+=Annotation* 
 	 *         immediate?='immediate'? 
 	 *         delay=INT? 
-	 *         history=HistoryType? 
 	 *         deferred?='deferred'? 
+	 *         history=HistoryType? 
 	 *         trigger=BoolExpression? 
 	 *         (effects+=Effect effects+=Effect*)?
 	 *     )

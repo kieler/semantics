@@ -725,10 +725,10 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Assignment cImmediateAssignment_4_0 = (Assignment)cGroup_4.eContents().get(0);
 		private final Keyword cImmediateImmediateKeyword_4_0_0 = (Keyword)cImmediateAssignment_4_0.eContents().get(0);
-		private final Assignment cHistoryAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cHistoryHistoryTypeEnumRuleCall_4_1_0 = (RuleCall)cHistoryAssignment_4_1.eContents().get(0);
-		private final Assignment cDeferredAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final Keyword cDeferredDeferredKeyword_4_2_0 = (Keyword)cDeferredAssignment_4_2.eContents().get(0);
+		private final Assignment cDeferredAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final Keyword cDeferredDeferredKeyword_4_1_0 = (Keyword)cDeferredAssignment_4_1.eContents().get(0);
+		private final Assignment cHistoryAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
+		private final RuleCall cHistoryHistoryTypeEnumRuleCall_4_2_0 = (RuleCall)cHistoryAssignment_4_2.eContents().get(0);
 		private final Group cGroup_4_3 = (Group)cGroup_4.eContents().get(3);
 		private final Keyword cWithKeyword_4_3_0 = (Keyword)cGroup_4_3.eContents().get(0);
 		private final Alternatives cAlternatives_4_3_1 = (Alternatives)cGroup_4_3.eContents().get(1);
@@ -751,12 +751,12 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//// ---------------------------------------------------------------------------------------------------
 		//Transition returns sccharts::Transition:
 		//	annotations+=Annotation* type=TransitionType priority=INT? targetState=[sccharts::State] (immediate?="immediate"?
-		//	history=HistoryType? deferred?="deferred"? ("with" (delay=INT? trigger=BoolExpression? ("/" effects+=Effect (";"
+		//	deferred?="deferred"? history=HistoryType? ("with" (delay=INT? trigger=BoolExpression? ("/" effects+=Effect (";"
 		//	effects+=Effect)*)? | label=STRING))?)?;
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* type=TransitionType priority=INT? targetState=[sccharts::State] (immediate?="immediate"?
-		//history=HistoryType? deferred?="deferred"? ("with" (delay=INT? trigger=BoolExpression? ("/" effects+=Effect (";"
+		//deferred?="deferred"? history=HistoryType? ("with" (delay=INT? trigger=BoolExpression? ("/" effects+=Effect (";"
 		//effects+=Effect)*)? | label=STRING))?)?
 		public Group getGroup() { return cGroup; }
 
@@ -787,7 +787,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getTargetStateStateIDTerminalRuleCall_3_0_1() { return cTargetStateStateIDTerminalRuleCall_3_0_1; }
 
-		//(immediate?="immediate"? history=HistoryType? deferred?="deferred"? ("with" (delay=INT? trigger=BoolExpression? ("/"
+		//(immediate?="immediate"? deferred?="deferred"? history=HistoryType? ("with" (delay=INT? trigger=BoolExpression? ("/"
 		//effects+=Effect (";" effects+=Effect)*)? | label=STRING))?)?
 		public Group getGroup_4() { return cGroup_4; }
 
@@ -797,17 +797,17 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//"immediate"
 		public Keyword getImmediateImmediateKeyword_4_0_0() { return cImmediateImmediateKeyword_4_0_0; }
 
-		//history=HistoryType?
-		public Assignment getHistoryAssignment_4_1() { return cHistoryAssignment_4_1; }
-
-		//HistoryType
-		public RuleCall getHistoryHistoryTypeEnumRuleCall_4_1_0() { return cHistoryHistoryTypeEnumRuleCall_4_1_0; }
-
 		//deferred?="deferred"?
-		public Assignment getDeferredAssignment_4_2() { return cDeferredAssignment_4_2; }
+		public Assignment getDeferredAssignment_4_1() { return cDeferredAssignment_4_1; }
 
 		//"deferred"
-		public Keyword getDeferredDeferredKeyword_4_2_0() { return cDeferredDeferredKeyword_4_2_0; }
+		public Keyword getDeferredDeferredKeyword_4_1_0() { return cDeferredDeferredKeyword_4_1_0; }
+
+		//history=HistoryType?
+		public Assignment getHistoryAssignment_4_2() { return cHistoryAssignment_4_2; }
+
+		//HistoryType
+		public RuleCall getHistoryHistoryTypeEnumRuleCall_4_2_0() { return cHistoryHistoryTypeEnumRuleCall_4_2_0; }
 
 		//("with" (delay=INT? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? | label=STRING))?
 		public Group getGroup_4_3() { return cGroup_4_3; }
@@ -1239,7 +1239,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// ---------------------------------------------------------------------------------------------------
 	//Transition returns sccharts::Transition:
 	//	annotations+=Annotation* type=TransitionType priority=INT? targetState=[sccharts::State] (immediate?="immediate"?
-	//	history=HistoryType? deferred?="deferred"? ("with" (delay=INT? trigger=BoolExpression? ("/" effects+=Effect (";"
+	//	deferred?="deferred"? history=HistoryType? ("with" (delay=INT? trigger=BoolExpression? ("/" effects+=Effect (";"
 	//	effects+=Effect)*)? | label=STRING))?)?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());

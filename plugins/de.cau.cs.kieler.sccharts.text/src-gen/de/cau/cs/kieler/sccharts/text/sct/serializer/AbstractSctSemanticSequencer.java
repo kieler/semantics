@@ -525,8 +525,8 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         targetState=[State|ID] 
 	 *         (
 	 *             immediate?='immediate'? 
-	 *             history=HistoryType? 
 	 *             deferred?='deferred'? 
+	 *             history=HistoryType? 
 	 *             ((delay=INT? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?) | label=STRING)?
 	 *         )?
 	 *     )

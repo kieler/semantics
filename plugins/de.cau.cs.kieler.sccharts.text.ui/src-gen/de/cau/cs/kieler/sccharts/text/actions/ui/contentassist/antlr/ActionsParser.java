@@ -110,8 +110,8 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionAccess().getAnnotationsAssignment_1(), "rule__Transition__AnnotationsAssignment_1");
 					put(grammarAccess.getTransitionAccess().getImmediateAssignment_2(), "rule__Transition__ImmediateAssignment_2");
 					put(grammarAccess.getTransitionAccess().getDelayAssignment_3(), "rule__Transition__DelayAssignment_3");
-					put(grammarAccess.getTransitionAccess().getHistoryAssignment_4(), "rule__Transition__HistoryAssignment_4");
-					put(grammarAccess.getTransitionAccess().getDeferredAssignment_5(), "rule__Transition__DeferredAssignment_5");
+					put(grammarAccess.getTransitionAccess().getDeferredAssignment_4(), "rule__Transition__DeferredAssignment_4");
+					put(grammarAccess.getTransitionAccess().getHistoryAssignment_5(), "rule__Transition__HistoryAssignment_5");
 					put(grammarAccess.getTransitionAccess().getTriggerAssignment_6(), "rule__Transition__TriggerAssignment_6");
 					put(grammarAccess.getTransitionAccess().getEffectsAssignment_7_1(), "rule__Transition__EffectsAssignment_7_1");
 					put(grammarAccess.getTransitionAccess().getEffectsAssignment_7_2_1(), "rule__Transition__EffectsAssignment_7_2_1");

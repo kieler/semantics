@@ -610,6 +610,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 scopeProvider.parent = t.sourceState;
                 var String label = serializer.serialize(t.copy)
                 label = label.replace("immediate", "")
+                label = label.replace("shallow history", "")
+                label = label.replace("history", "")
+                label = label.replace("deferred", "")
 
                 // Override if a Label is set for a transition
                 if (!t.label.nullOrEmpty) {

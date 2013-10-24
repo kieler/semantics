@@ -1312,27 +1312,9 @@ ruleTransition returns [EObject current=null]
 )
 )?(
 (
-		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getHistoryHistoryTypeEnumRuleCall_4_1_0()); 
-	    }
-		lv_history_5_0=ruleHistoryType		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
-	        }
-       		set(
-       			$current, 
-       			"history",
-        		lv_history_5_0, 
-        		"HistoryType");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)?(
-(
-		lv_deferred_6_0=	'deferred' 
+		lv_deferred_5_0=	'deferred' 
     {
-        newLeafNode(lv_deferred_6_0, grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_4_2_0());
+        newLeafNode(lv_deferred_5_0, grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_4_1_0());
     }
  
 	    {
@@ -1340,6 +1322,24 @@ ruleTransition returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getTransitionRule());
 	        }
        		setWithLastConsumed($current, "deferred", true, "deferred");
+	    }
+
+)
+)?(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getHistoryHistoryTypeEnumRuleCall_4_2_0()); 
+	    }
+		lv_history_6_0=ruleHistoryType		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
+	        }
+       		set(
+       			$current, 
+       			"history",
+        		lv_history_6_0, 
+        		"HistoryType");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
