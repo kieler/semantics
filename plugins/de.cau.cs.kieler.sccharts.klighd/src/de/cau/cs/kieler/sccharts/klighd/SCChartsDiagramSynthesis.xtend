@@ -268,62 +268,25 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
     // Print the highlighted text into a parent and link it to a lookup EObject.
     def KRectangle printHighlightedText(KRectangle parent, String text, EObject lookup) {
-        var offset = 8f
-        var remainingText = text;
-        var split = "";
-        for (word : text.getWords) {
-            val index = remainingText.indexOf(word);
-            split = remainingText.substring(0, index);
-            remainingText = remainingText.substring(index + word.length, remainingText.length);
-            val currentOffset = offset
-            val ktext = parent.addText(split + word) => [
+        var remainingText = text
+        var split = ""
+        val words = text.getWords
+        parent.setGridPlacement(words.length)
+        for (word : words) {
+            val index = remainingText.indexOf(word)
+            split = remainingText.substring(0, index)
+            remainingText = remainingText.substring(index + word.length, remainingText.length)
+            parent.addText(split + word) => [
                 if (word.keyword) {
                     it.setForeground(KEYWORD.copy)
                     it.setFontBold(true)
                 }
-                it.putToLookUpWith(lookup);
-                it.setPointPlacementData(createKPosition(LEFT, currentOffset, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
-            ]
-            offset = offset + PlacementUtil.estimateTextSize(ktext).width
-        }
-        if (remainingText != "") {
-            val word = remainingText
-            val currentOffset = offset
-            parent.addText(word) => [
-                if (word.keyword) {
-                    it.setForeground(KEYWORD.copy)
-                    it.setFontBold(true)
-                }
-                it.putToLookUpWith(lookup);
-                it.setPointPlacementData(createKPosition(LEFT, currentOffset, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+                it.putToLookUpWith(lookup)
+                it.setGridPlacementData()
             ]
         }
-        parent
+         parent
     }
-
-// ALTERNATIVE FUTURE IMPLEMENTATION 
-//    // Print the highlighted text into a parent and link it to a lookup EObject.
-//    def KRectangle printHighlightedText2(KRectangle parent, String text, EObject lookup) {
-//        var remainingText = text;
-//        var split = "";
-//        val words = text.getWords
-//        parent.setGridPlacement(words.length + 1)
-//        for (word : words) {
-//            val index = remainingText.indexOf(word);
-//            split = remainingText.substring(0, index);
-//            remainingText = remainingText.substring(index + word.length, remainingText.length);
-//            val ktext = parent.addText(split + word) => [
-//                if (word.keyword) {
-//                    it.setForeground(KEYWORD.copy)
-//                    it.setFontBold(true)
-//                }
-//                it.putToLookUpWith(lookup);
-//                it.setGridPlacementData();
-//            ]
-//        }
-//        parent.addRectangle.invisible = true
-//        parent
-//    }
 
     // -------------------------------------------------------------------------
     // Transform a state    
@@ -398,15 +361,18 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     if (!dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).nullOrEmpty) {
                         val dependencyNode = dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).
                             get(0)
-                        priority = if(SHOW_DEPENDENCIES.optionBooleanValue) dependencyNode.getPriority + "" else (dependencyNode.
-                            getOrder) + ""
+                        priority = if (SHOW_DEPENDENCIES.optionBooleanValue)
+                            dependencyNode.getPriority + ""
+                        else
+                            (dependencyNode.getOrder) + ""
                         if (s.hierarchical) {
                             if (!dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).nullOrEmpty) {
                                 val dependencyNodeJoin = dependencyGraph.dependencyNodes.filter(
                                     e|e.getState == s && e.getIsJoin).get(0)
-                                priority = priority + ", " +
-                                    if(SHOW_DEPENDENCIES.optionBooleanValue) dependencyNodeJoin.getPriority + "" else (dependencyNodeJoin.
-                                        getOrder) + ""
+                                priority = priority + ", " + if (SHOW_DEPENDENCIES.optionBooleanValue)
+                                    dependencyNodeJoin.getPriority + ""
+                                else
+                                    (dependencyNodeJoin.getOrder) + ""
 
                             //priority = priority + ", " + dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).get(0).getPriority
                             }
@@ -491,39 +457,40 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     for (sig : s.valuedObjects) {
                         it.addRectangle => [
                             it.invisible = true;
-                            it.setGridPlacementData().from(LEFT, 0, 0, TOP, 3, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
-                            scopeProvider.parent = s;
-                            var declaration = "";
-                            var type = "";
-                            var init = "";
-                            var combine = "";
-                            if (sig.type != ValueType::PURE) {
-                                type = sig.type.literal.toLowerCase + " "
-                            }
-                            if (sig.combineOperator != null && sig.combineOperator != CombineOperator::NONE) {
-                                combine = " combine " + sig.combineOperator.literal.toLowerCase
-                            }
-                            if (sig.initialValue != null) {
-                                init = " = " + serializer.serialize(sig.initialValue.copy)
-                            }
-                            if (sig.isInput) {
-                                declaration = declaration + "input ";
-                            }
-                            if (sig.isOutput) {
-                                declaration = declaration + "output "
-                            }
-                            if (sig.isSignal) {
-                                declaration = declaration + "signal ";
-                            }
-                            if (sig.isStatic) {
-                                declaration = declaration + "static ";
-                            }
-                            if (!declaration.equals("")) {
-                                declaration = declaration.trim + " "
-                            }
-                            it.printHighlightedText(declaration + type + sig.name + init + combine, sig)
-                            // TODO: UNCOMMENT THIS IN THE FUTURE WHEN USING ALTERNATIVE IMPLEMENTATION OF PRINT HIGHLIGHTED TEXT
-                            //((it as KContainerRendering).childPlacement as KGridPlacement).from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 0, 0)
+                            it.addRectangle => [
+                                it.invisible = true;
+                                it.setPointPlacementData(LEFT, 8, 0, TOP, 0, 0, H_LEFT, V_TOP, 8, 0, 0, 0);
+                                scopeProvider.parent = s;
+                                var declaration = "";
+                                var type = "";
+                                var init = "";
+                                var combine = "";
+                                if (sig.type != ValueType::PURE) {
+                                    type = sig.type.literal.toLowerCase + " "
+                                }
+                                if (sig.combineOperator != null && sig.combineOperator != CombineOperator::NONE) {
+                                    combine = " combine " + sig.combineOperator.literal.toLowerCase
+                                }
+                                if (sig.initialValue != null) {
+                                    init = " = " + serializer.serialize(sig.initialValue.copy)
+                                }
+                                if (sig.isInput) {
+                                    declaration = declaration + "input ";
+                                }
+                                if (sig.isOutput) {
+                                    declaration = declaration + "output "
+                                }
+                                if (sig.isSignal) {
+                                    declaration = declaration + "signal ";
+                                }
+                                if (sig.isStatic) {
+                                    declaration = declaration + "static ";
+                                }
+                                if (!declaration.equals("")) {
+                                    declaration = declaration.trim + " "
+                                }
+                                it.printHighlightedText(declaration + type + sig.name + init + combine, sig)
+                            ];
                         ];
                     }
 
@@ -608,11 +575,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             ];
             if (SHOW_LABELS.optionBooleanValue) {
                 scopeProvider.parent = t.sourceState;
-                var String label = serializer.serialize(t.copy)
-                label = label.replace("immediate", "")
-                label = label.replace("shallow history", "")
-                label = label.replace("history", "")
-                label = label.replace("deferred", "")
+                // For serialization set these flags to false to ommit them in the transition label
+                val tCopy = t.copy
+                tCopy.setDeferred(false)
+                tCopy.setHistory(HistoryType::RESET)
+                tCopy.setImmediate(false)
+                var String label = serializer.serialize(tCopy)
 
                 // Override if a Label is set for a transition
                 if (!t.label.nullOrEmpty) {
@@ -644,7 +612,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             it.setDecoratorPlacementData(10, 10, 4, 0, false);
         ];
     }
-    
+
     def KRendering addDeferredDecorator(KContainerRendering line, float offset) {
         return line.addEllipse() => [
             it.lineWidth = 1;
@@ -652,7 +620,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             it.setDecoratorPlacementData(10, 10, -4 + offset, 1, false);
         ];
     }
-    
 
     def KPolygon addNormalTerminationDecorator(KPolyline line) {
         return line.drawTriangle() => [
@@ -680,7 +647,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             ];
         ];
     }
-    
+
     def KRendering addDeepHistoryDecorator(KContainerRendering line) {
         return line.addEllipse() => [
             it.lineWidth = 0;
@@ -703,7 +670,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             ]
         ];
     }
-    
 
 // -------------------------------------------------------------------------
 }
