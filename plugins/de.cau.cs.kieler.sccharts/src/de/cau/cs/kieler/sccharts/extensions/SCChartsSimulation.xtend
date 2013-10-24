@@ -121,9 +121,9 @@ class SCChartsSimulation {
           
           // Setup the auxiliaryValuedObject as an OUTPUT to the module
           auxiliaryValuedObject.setName(UID);
-          auxiliaryValuedObject.setIsSignal(true);
-          auxiliaryValuedObject.setIsInput(false);
-          auxiliaryValuedObject.setIsOutput(true);
+          auxiliaryValuedObject.setSignal(true);
+          auxiliaryValuedObject.setInput(false);
+          auxiliaryValuedObject.setOutput(true);
           auxiliaryValuedObject.setType(ValueType::PURE);
           // Set the auxliiaryValuedObject for emission 
           auxiliaryEmission.setValuedObject(auxiliaryValuedObject);
@@ -153,9 +153,9 @@ class SCChartsSimulation {
           
                // Setup the auxiliaryValuedObject as an OUTPUT to the module
                auxiliaryValuedObject.setName(UID);
-               auxiliaryValuedObject.setIsSignal(true);
-               auxiliaryValuedObject.setIsInput(false);
-               auxiliaryValuedObject.setIsOutput(true);
+               auxiliaryValuedObject.setSignal(true);
+               auxiliaryValuedObject.setInput(false);
+               auxiliaryValuedObject.setOutput(true);
                auxiliaryValuedObject.setType(ValueType::PURE);
 
                // Add emission of auxiliary ValuedObject as an immediate during action for this state

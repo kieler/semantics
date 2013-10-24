@@ -104,6 +104,8 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
                 return createStateTypeFromString(eDataType, initialValue);
             case SCChartsPackage.TRANSITION_TYPE:
                 return createTransitionTypeFromString(eDataType, initialValue);
+            case SCChartsPackage.HISTORY_TYPE:
+                return createHistoryTypeFromString(eDataType, initialValue);
             case SCChartsPackage.PARSABLE:
                 return createParsableFromString(eDataType, initialValue);
             default:
@@ -123,6 +125,8 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
                 return convertStateTypeToString(eDataType, instanceValue);
             case SCChartsPackage.TRANSITION_TYPE:
                 return convertTransitionTypeToString(eDataType, instanceValue);
+            case SCChartsPackage.HISTORY_TYPE:
+                return convertHistoryTypeToString(eDataType, instanceValue);
             case SCChartsPackage.PARSABLE:
                 return convertParsableToString(eDataType, instanceValue);
             default:
@@ -287,6 +291,26 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * @generated
      */
     public String convertTransitionTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public HistoryType createHistoryTypeFromString(EDataType eDataType, String initialValue) {
+        HistoryType result = HistoryType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertHistoryTypeToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

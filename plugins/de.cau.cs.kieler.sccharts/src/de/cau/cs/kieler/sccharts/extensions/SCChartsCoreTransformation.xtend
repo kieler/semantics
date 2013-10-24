@@ -34,6 +34,7 @@ import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.sccharts.HistoryType
 
 /**
  * SCCharts CoreTransformation Extensions.
@@ -84,7 +85,7 @@ class SCChartsCoreTransformation {
                     
                     for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
                        val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
-                       val globalValuedObject = targetRootRegion.rootState.createValuedObject(newValuedObjectName).setIsOutput
+                       val globalValuedObject = targetRootRegion.rootState.createValuedObject(newValuedObjectName).setOutput
                        globalValuedObject.applyAttributes(localValuedObject)
                        
                        
@@ -295,7 +296,7 @@ class SCChartsCoreTransformation {
             }
             
             // Change signal to variable
-            presentVariable.setIsSignal(false)
+            presentVariable.setSignal(false)
             presentVariable.setTypeBool
             
             // Reset initial value and combine operator because we want to reset
@@ -582,9 +583,9 @@ class SCChartsCoreTransformation {
 //         var isDepthValuedObjectUID = "isDepth_" + parentRegion.id + "_" + state.id;
 //         val isDepthValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
 //         isDepthValuedObject.setName(isDepthValuedObjectUID);
-//         isDepthValuedObject.setIsSignal(true)
-//         isDepthValuedObject.setIsInput(false);
-//         isDepthValuedObject.setIsOutput(false);
+//         isDepthValuedObject.setSignal(true)
+//         isDepthValuedObject.setInput(false);
+//         isDepthValuedObject.setOutput(false);
 //         isDepthValuedObject.setType(ValueType::PURE);
 //         parentRegion.parentState.valuedObjects.add(isDepthValuedObject);  
 //
@@ -763,8 +764,8 @@ class SCChartsCoreTransformation {
             val auxiliaryResetValuedObject = parentState.createPureSignal(parentState.id("Abort"))
             //val auxiliaryResetValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
             //auxiliaryResetValuedObject.setName(auxiliaryResetValuedObjectUID);
-            //auxiliaryResetValuedObject.setIsInput(false);
-            //auxiliaryResetValuedObject.setIsOutput(false);
+            //auxiliaryResetValuedObject.setInput(false);
+            //auxiliaryResetValuedObject.setOutput(false);
             //auxiliaryResetValuedObject.setType(ValueType::PURE);
             //parentState.valuedObjects.add(auxiliaryResetValuedObject);
             
@@ -802,8 +803,8 @@ class SCChartsCoreTransformation {
                         var ValuedObject auxiliaryRegionTermValuedObject = null; 
                         auxiliaryRegionTermValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
                         auxiliaryRegionTermValuedObject.setName(auxiliaryRegionTermValuedObjectUID);
-                        auxiliaryRegionTermValuedObject.setIsInput(false);
-                        auxiliaryRegionTermValuedObject.setIsOutput(false);
+                        auxiliaryRegionTermValuedObject.setInput(false);
+                        auxiliaryRegionTermValuedObject.setOutput(false);
                         auxiliaryRegionTermValuedObject.setType(ValueType::PURE);
                         parentState.valuedObjects.add(auxiliaryRegionTermValuedObject);
                             
@@ -931,8 +932,8 @@ class SCChartsCoreTransformation {
                var auxiliaryValuedObjectUID = transition.id("countDelay");
                val auxiliaryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
                auxiliaryValuedObject.setName(auxiliaryValuedObjectUID);
-               auxiliaryValuedObject.setIsInput(false);
-               auxiliaryValuedObject.setIsOutput(false);
+               auxiliaryValuedObject.setInput(false);
+               auxiliaryValuedObject.setOutput(false);
                auxiliaryValuedObject.setType(ValueType::PURE);
                targetRootState.valuedObjects.add(auxiliaryValuedObject);
 
@@ -1153,8 +1154,8 @@ class SCChartsCoreTransformation {
                // Add SET and RESET valuedObject valuedObject flag 
                val disabledValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
                disabledValuedObject.setName("disabled" + state.id);
-               disabledValuedObject.setIsInput(false);
-               disabledValuedObject.setIsOutput(false);
+               disabledValuedObject.setInput(false);
+               disabledValuedObject.setOutput(false);
                disabledValuedObject.setType(ValueType::PURE);
                targetRootRegion.rootState.valuedObjects.add(disabledValuedObject);
                
@@ -1298,8 +1299,8 @@ class SCChartsCoreTransformation {
             val auxiliarySuspendValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
             val auxiliarySuspendValuedObjectUID = state.id + "Execute";
             auxiliarySuspendValuedObject.setName(auxiliarySuspendValuedObjectUID);
-            auxiliarySuspendValuedObject.setIsInput(false);
-            auxiliarySuspendValuedObject.setIsOutput(false);
+            auxiliarySuspendValuedObject.setInput(false);
+            auxiliarySuspendValuedObject.setOutput(false);
             auxiliarySuspendValuedObject.setType(ValueType::PURE);
 
             // Add auxiliaryValuedObject to first (and only) root region state SCCharts main interface
@@ -1337,7 +1338,7 @@ class SCChartsCoreTransformation {
             
             // For all history transitions now erase the history marker
             for (historyTransition : historyTransitions) {
-                historyTransition.setIsHistory(false);
+                historyTransition.setHistory(HistoryType::RESET);
             }
             
             // Add a self loop to the original state that emits the auxiliary valuedObject
@@ -1369,8 +1370,8 @@ class SCChartsCoreTransformation {
             val auxiliaryEntryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
             val auxiliaryEntryValuedObjectUID = state.id + "Entry";
             auxiliaryEntryValuedObject.setName(auxiliaryEntryValuedObjectUID);
-            auxiliaryEntryValuedObject.setIsInput(false);
-            auxiliaryEntryValuedObject.setIsOutput(false);
+            auxiliaryEntryValuedObject.setInput(false);
+            auxiliaryEntryValuedObject.setOutput(false);
             auxiliaryEntryValuedObject.setType(ValueType::PURE);
             // Add auxiliaryValuedObject to first (and only) root region state SCCharts main interface
             targetRootRegion.rootState.valuedObjects.add(auxiliaryEntryValuedObject);
@@ -1409,8 +1410,8 @@ class SCChartsCoreTransformation {
             val auxiliaryResetValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
             val auxiliaryResetValuedObjectUID = state.id + "Reset";
             auxiliaryResetValuedObject.setName(auxiliaryResetValuedObjectUID);
-            auxiliaryResetValuedObject.setIsInput(false);
-            auxiliaryResetValuedObject.setIsOutput(false);
+            auxiliaryResetValuedObject.setInput(false);
+            auxiliaryResetValuedObject.setOutput(false);
             auxiliaryResetValuedObject.setType(ValueType::PURE);
 
             // Add auxiliaryValuedObject to first (and only) root region state SCCharts main interface
@@ -1728,8 +1729,8 @@ class SCChartsCoreTransformation {
                // Add SET and SETI and RESETI and RESETN valuedObject valuedObject flag 
                val setValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
                setValuedObject.setName("Set" + state.id);
-               setValuedObject.setIsInput(false);
-               setValuedObject.setIsOutput(false);
+               setValuedObject.setInput(false);
+               setValuedObject.setOutput(false);
                setValuedObject.setType(ValueType::PURE);
                targetRootRegion.rootState.valuedObjects.add(setValuedObject);
 
@@ -1738,22 +1739,22 @@ class SCChartsCoreTransformation {
                // set ---> reset -#-> set
                val setIValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
                setIValuedObject.setName("SetI" + state.id);
-               setIValuedObject.setIsInput(false);
-               setIValuedObject.setIsOutput(false);
+               setIValuedObject.setInput(false);
+               setIValuedObject.setOutput(false);
                setIValuedObject.setType(ValueType::PURE);
                targetRootRegion.rootState.valuedObjects.add(setIValuedObject);
                
                val resetIValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
                resetIValuedObject.setName("ResetI" + state.id);
-               resetIValuedObject.setIsInput(false);
-               resetIValuedObject.setIsOutput(false);
+               resetIValuedObject.setInput(false);
+               resetIValuedObject.setOutput(false);
                resetIValuedObject.setType(ValueType::PURE);
                targetRootRegion.rootState.valuedObjects.add(resetIValuedObject);
 
                val resetNValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
                resetNValuedObject.setName("ResetN" + state.id);
-               resetNValuedObject.setIsInput(false);
-               resetNValuedObject.setIsOutput(false);
+               resetNValuedObject.setInput(false);
+               resetNValuedObject.setOutput(false);
                resetNValuedObject.setType(ValueType::PURE);
                targetRootRegion.rootState.valuedObjects.add(resetNValuedObject);
                
@@ -1872,8 +1873,8 @@ class SCChartsCoreTransformation {
                  // Optimization: only consider strong aborts, because for weak aborts 78 is not a problem!
                  val setValuedObjectInner = KExpressionsFactory::eINSTANCE.createValuedObject();
                  setValuedObjectInner.setName("SetInner" + state.id);
-                 setValuedObjectInner.setIsInput(false);
-                  setValuedObjectInner.setIsOutput(false);
+                 setValuedObjectInner.setInput(false);
+                  setValuedObjectInner.setOutput(false);
                   setValuedObjectInner.setType(ValueType::PURE);
                   targetRootRegion.rootState.valuedObjects.add(setValuedObjectInner);
                   val setValuedObjectInnerReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
@@ -2030,8 +2031,8 @@ class SCChartsCoreTransformation {
             // Create PreS / PreV
             val explicitPreValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
             explicitPreValuedObject.setName("Pre" + preValuedObject.name);
-            explicitPreValuedObject.setIsInput(false);
-            explicitPreValuedObject.setIsOutput(false);
+            explicitPreValuedObject.setInput(false);
+            explicitPreValuedObject.setOutput(false);
             explicitPreValuedObject.setType(preValuedObject.type);
             if (preValuedObject.initialValue != null) {
                 explicitPreValuedObject.setInitialValue(preValuedObject.initialValue);
@@ -2113,8 +2114,8 @@ class SCChartsCoreTransformation {
                 // Additional ValuedObjects                    
                 val explicitPre1ValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
                 explicitPre1ValuedObject.setName("Pre1" + preValuedObject.name);
-                explicitPre1ValuedObject.setIsInput(false);
-                explicitPre1ValuedObject.setIsOutput(false);
+                explicitPre1ValuedObject.setInput(false);
+                explicitPre1ValuedObject.setOutput(false);
                 explicitPre1ValuedObject.setType(preValuedObject.type);
                 if (preValuedObject.initialValue != null) {
                     explicitPre1ValuedObject.setInitialValue(preValuedObject.initialValue);
@@ -2122,8 +2123,8 @@ class SCChartsCoreTransformation {
                 state.valuedObjects.add(explicitPre1ValuedObject);
                 val explicitPre2ValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
                 explicitPre2ValuedObject.setName("Pre2" + preValuedObject.name);
-                explicitPre2ValuedObject.setIsInput(false);
-                explicitPre2ValuedObject.setIsOutput(false);
+                explicitPre2ValuedObject.setInput(false);
+                explicitPre2ValuedObject.setOutput(false);
                 explicitPre2ValuedObject.setType(preValuedObject.type);
                 if (preValuedObject.initialValue != null) {
                     explicitPre2ValuedObject.setInitialValue(preValuedObject.initialValue);
@@ -2335,8 +2336,8 @@ class SCChartsCoreTransformation {
                         transitionValuedObject.setName("_" + state.id + "_W" + transition.priority);
                         weakTriggerOperatorExpression.add(transitionValuedObjectReference.copy);
                     }                    
-                    transitionValuedObject.setIsInput(false);
-                    transitionValuedObject.setIsOutput(false);
+                    transitionValuedObject.setInput(false);
+                    transitionValuedObject.setOutput(false);
                     state.parentRegion.parentState.valuedObjects.add(transitionValuedObject);
                 
                     val watcherTransition =  SCChartsFactory::eINSTANCE.createTransition();

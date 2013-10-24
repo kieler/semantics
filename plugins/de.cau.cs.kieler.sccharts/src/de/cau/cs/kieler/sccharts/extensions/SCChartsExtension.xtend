@@ -41,6 +41,7 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.HistoryType
 
 /**
  * SCCharts Extensions.
@@ -244,6 +245,11 @@ class SCChartsExtension {
     }
 
     //========== TRANSITIONS ===========
+    
+    // A transition is a history transition if it is not a reset transition.
+    def boolean isHistory(Transition transition) {
+        transition.history != HistoryType::RESET
+    }
     
     def Transition createTransition() {
         val transition = SCChartsFactory::eINSTANCE.createTransition()

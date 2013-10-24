@@ -24,6 +24,7 @@ import de.cau.cs.kieler.sccharts.Effect;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
@@ -178,6 +179,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EEnum transitionTypeEEnum = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum historyTypeEEnum = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -534,8 +542,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTransition_TargetState() {
-        return (EReference)transitionEClass.getEStructuralFeatures().get(2);
+    public EAttribute getTransition_Deferred() {
+        return (EAttribute)transitionEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -543,7 +551,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getTransition_IsHistory() {
+    public EAttribute getTransition_History() {
         return (EAttribute)transitionEClass.getEStructuralFeatures().get(3);
     }
 
@@ -552,8 +560,17 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTransition_SourceState() {
+    public EReference getTransition_TargetState() {
         return (EReference)transitionEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getTransition_SourceState() {
+        return (EReference)transitionEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -714,6 +731,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EEnum getHistoryType() {
+        return historyTypeEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EDataType getParsable() {
         return parsableEDataType;
     }
@@ -784,8 +810,9 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         transitionEClass = createEClass(TRANSITION);
         createEAttribute(transitionEClass, TRANSITION__PRIORITY);
         createEAttribute(transitionEClass, TRANSITION__TYPE);
+        createEAttribute(transitionEClass, TRANSITION__DEFERRED);
+        createEAttribute(transitionEClass, TRANSITION__HISTORY);
         createEReference(transitionEClass, TRANSITION__TARGET_STATE);
-        createEAttribute(transitionEClass, TRANSITION__IS_HISTORY);
         createEReference(transitionEClass, TRANSITION__SOURCE_STATE);
 
         scopeEClass = createEClass(SCOPE);
@@ -813,6 +840,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         // Create enums
         stateTypeEEnum = createEEnum(STATE_TYPE);
         transitionTypeEEnum = createEEnum(TRANSITION_TYPE);
+        historyTypeEEnum = createEEnum(HISTORY_TYPE);
 
         // Create data types
         parsableEDataType = createEDataType(PARSABLE);
@@ -904,8 +932,9 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTransition_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTransition_Type(), this.getTransitionType(), "type", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTransition_Deferred(), ecorePackage.getEBoolean(), "deferred", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTransition_History(), this.getHistoryType(), "history", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTransition_TargetState(), this.getState(), this.getState_IncomingTransitions(), "targetState", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getTransition_IsHistory(), ecorePackage.getEBoolean(), "isHistory", null, 0, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTransition_SourceState(), this.getState(), this.getState_OutgoingTransitions(), "sourceState", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scopeEClass, Scope.class, "Scope", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -941,6 +970,11 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         addEEnumLiteral(transitionTypeEEnum, TransitionType.WEAKABORT);
         addEEnumLiteral(transitionTypeEEnum, TransitionType.STRONGABORT);
         addEEnumLiteral(transitionTypeEEnum, TransitionType.NORMALTERMINATION);
+
+        initEEnum(historyTypeEEnum, HistoryType.class, "HistoryType");
+        addEEnumLiteral(historyTypeEEnum, HistoryType.RESET);
+        addEEnumLiteral(historyTypeEEnum, HistoryType.SHALLOW);
+        addEEnumLiteral(historyTypeEEnum, HistoryType.DEEP);
 
         // Initialize data types
         initEDataType(parsableEDataType, String.class, "Parsable", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

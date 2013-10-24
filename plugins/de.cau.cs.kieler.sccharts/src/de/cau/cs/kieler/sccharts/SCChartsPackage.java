@@ -755,22 +755,31 @@ public interface SCChartsPackage extends EPackage {
     int TRANSITION__TYPE = ACTION_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Deferred</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRANSITION__DEFERRED = ACTION_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>History</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRANSITION__HISTORY = ACTION_FEATURE_COUNT + 3;
+
+    /**
      * The feature id for the '<em><b>Target State</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TRANSITION__TARGET_STATE = ACTION_FEATURE_COUNT + 2;
-
-    /**
-     * The feature id for the '<em><b>Is History</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TRANSITION__IS_HISTORY = ACTION_FEATURE_COUNT + 3;
+    int TRANSITION__TARGET_STATE = ACTION_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Source State</b></em>' container reference.
@@ -779,7 +788,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TRANSITION__SOURCE_STATE = ACTION_FEATURE_COUNT + 4;
+    int TRANSITION__SOURCE_STATE = ACTION_FEATURE_COUNT + 5;
 
     /**
      * The number of structural features of the '<em>Transition</em>' class.
@@ -788,7 +797,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TRANSITION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 5;
+    int TRANSITION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 6;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TextEffectImpl <em>Text Effect</em>}' class.
@@ -1204,6 +1213,16 @@ public interface SCChartsPackage extends EPackage {
     int TRANSITION_TYPE = 16;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.HistoryType
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
+     * @generated
+     */
+    int HISTORY_TYPE = 17;
+
+    /**
      * The meta object id for the '<em>Parsable</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1211,7 +1230,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
      * @generated
      */
-    int PARSABLE = 17;
+    int PARSABLE = 18;
 
 
     /**
@@ -1548,6 +1567,28 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getTransition_Type();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#isDeferred <em>Deferred</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Deferred</em>'.
+     * @see de.cau.cs.kieler.sccharts.Transition#isDeferred()
+     * @see #getTransition()
+     * @generated
+     */
+    EAttribute getTransition_Deferred();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#getHistory <em>History</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>History</em>'.
+     * @see de.cau.cs.kieler.sccharts.Transition#getHistory()
+     * @see #getTransition()
+     * @generated
+     */
+    EAttribute getTransition_History();
+
+    /**
      * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Transition#getTargetState <em>Target State</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1557,17 +1598,6 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getTransition_TargetState();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#isIsHistory <em>Is History</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is History</em>'.
-     * @see de.cau.cs.kieler.sccharts.Transition#isIsHistory()
-     * @see #getTransition()
-     * @generated
-     */
-    EAttribute getTransition_IsHistory();
 
     /**
      * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.Transition#getSourceState <em>Source State</em>}'.
@@ -1757,6 +1787,16 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EEnum getTransitionType();
+
+    /**
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>History Type</em>'.
+     * @see de.cau.cs.kieler.sccharts.HistoryType
+     * @generated
+     */
+    EEnum getHistoryType();
 
     /**
      * Returns the meta object for data type '{@link java.lang.String <em>Parsable</em>}'.
@@ -2056,20 +2096,28 @@ public interface SCChartsPackage extends EPackage {
         EAttribute TRANSITION__TYPE = eINSTANCE.getTransition_Type();
 
         /**
+         * The meta object literal for the '<em><b>Deferred</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TRANSITION__DEFERRED = eINSTANCE.getTransition_Deferred();
+
+        /**
+         * The meta object literal for the '<em><b>History</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TRANSITION__HISTORY = eINSTANCE.getTransition_History();
+
+        /**
          * The meta object literal for the '<em><b>Target State</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EReference TRANSITION__TARGET_STATE = eINSTANCE.getTransition_TargetState();
-
-        /**
-         * The meta object literal for the '<em><b>Is History</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute TRANSITION__IS_HISTORY = eINSTANCE.getTransition_IsHistory();
 
         /**
          * The meta object literal for the '<em><b>Source State</b></em>' container reference feature.
@@ -2232,6 +2280,16 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EEnum TRANSITION_TYPE = eINSTANCE.getTransitionType();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.HistoryType
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
+         * @generated
+         */
+        EEnum HISTORY_TYPE = eINSTANCE.getHistoryType();
 
         /**
          * The meta object literal for the '<em>Parsable</em>' data type.
