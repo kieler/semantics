@@ -199,14 +199,14 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
-		private final Assignment cIsInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cIsInputInputKeyword_1_0 = (Keyword)cIsInputAssignment_1.eContents().get(0);
-		private final Assignment cIsOutputAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cIsOutputOutputKeyword_2_0 = (Keyword)cIsOutputAssignment_2.eContents().get(0);
-		private final Assignment cIsStaticAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cIsStaticStaticKeyword_3_0 = (Keyword)cIsStaticAssignment_3.eContents().get(0);
-		private final Assignment cIsSignalAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final Keyword cIsSignalSignalKeyword_4_0 = (Keyword)cIsSignalAssignment_4.eContents().get(0);
+		private final Assignment cInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cInputInputKeyword_1_0 = (Keyword)cInputAssignment_1.eContents().get(0);
+		private final Assignment cOutputAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cOutputOutputKeyword_2_0 = (Keyword)cOutputAssignment_2.eContents().get(0);
+		private final Assignment cStaticAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cStaticStaticKeyword_3_0 = (Keyword)cStaticAssignment_3.eContents().get(0);
+		private final Assignment cSignalAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cSignalSignalKeyword_4_0 = (Keyword)cSignalAssignment_4.eContents().get(0);
 		private final Assignment cTypeAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cTypeValueTypeEnumRuleCall_5_0 = (RuleCall)cTypeAssignment_5.eContents().get(0);
 		private final Assignment cNameAssignment_6 = (Assignment)cGroup.eContents().get(6);
@@ -223,12 +223,12 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// TODO: ensure signal AND variable declaration in top level....
 		//ValuedObject returns kexpressions::ValuedObject:
-		//	annotations+=Annotation* isInput?="input"? isOutput?="output"? isStatic?="static"? isSignal?="signal"?
-		//	type=ValueType? name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";";
+		//	annotations+=Annotation* input?="input"? output?="output"? static?="static"? signal?="signal"? type=ValueType?
+		//	name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* isInput?="input"? isOutput?="output"? isStatic?="static"? isSignal?="signal"? type=ValueType?
-		//name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";"
+		//annotations+=Annotation* input?="input"? output?="output"? static?="static"? signal?="signal"? type=ValueType? name=ID
+		//("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -237,29 +237,29 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
-		//isInput?="input"?
-		public Assignment getIsInputAssignment_1() { return cIsInputAssignment_1; }
+		//input?="input"?
+		public Assignment getInputAssignment_1() { return cInputAssignment_1; }
 
 		//"input"
-		public Keyword getIsInputInputKeyword_1_0() { return cIsInputInputKeyword_1_0; }
+		public Keyword getInputInputKeyword_1_0() { return cInputInputKeyword_1_0; }
 
-		//isOutput?="output"?
-		public Assignment getIsOutputAssignment_2() { return cIsOutputAssignment_2; }
+		//output?="output"?
+		public Assignment getOutputAssignment_2() { return cOutputAssignment_2; }
 
 		//"output"
-		public Keyword getIsOutputOutputKeyword_2_0() { return cIsOutputOutputKeyword_2_0; }
+		public Keyword getOutputOutputKeyword_2_0() { return cOutputOutputKeyword_2_0; }
 
-		//isStatic?="static"?
-		public Assignment getIsStaticAssignment_3() { return cIsStaticAssignment_3; }
+		//static?="static"?
+		public Assignment getStaticAssignment_3() { return cStaticAssignment_3; }
 
 		//"static"
-		public Keyword getIsStaticStaticKeyword_3_0() { return cIsStaticStaticKeyword_3_0; }
+		public Keyword getStaticStaticKeyword_3_0() { return cStaticStaticKeyword_3_0; }
 
-		//isSignal?="signal"?
-		public Assignment getIsSignalAssignment_4() { return cIsSignalAssignment_4; }
+		//signal?="signal"?
+		public Assignment getSignalAssignment_4() { return cSignalAssignment_4; }
 
 		//"signal"
-		public Keyword getIsSignalSignalKeyword_4_0() { return cIsSignalSignalKeyword_4_0; }
+		public Keyword getSignalSignalKeyword_4_0() { return cSignalSignalKeyword_4_0; }
 
 		//type=ValueType?
 		public Assignment getTypeAssignment_5() { return cTypeAssignment_5; }
@@ -1098,8 +1098,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// TODO: ensure signal AND variable declaration in top level....
 	//ValuedObject returns kexpressions::ValuedObject:
-	//	annotations+=Annotation* isInput?="input"? isOutput?="output"? isStatic?="static"? isSignal?="signal"?
-	//	type=ValueType? name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";";
+	//	annotations+=Annotation* input?="input"? output?="output"? static?="static"? signal?="signal"? type=ValueType?
+	//	name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";";
 	public ValuedObjectElements getValuedObjectAccess() {
 		return (pValuedObject != null) ? pValuedObject : (pValuedObject = new ValuedObjectElements());
 	}

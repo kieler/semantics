@@ -128,10 +128,10 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getValuedObjectsAssignment_5_0(), "rule__State__ValuedObjectsAssignment_5_0");
 					put(grammarAccess.getStateAccess().getInstructionsAssignment_6_0(), "rule__State__InstructionsAssignment_6_0");
 					put(grammarAccess.getValuedObjectAccess().getAnnotationsAssignment_0(), "rule__ValuedObject__AnnotationsAssignment_0");
-					put(grammarAccess.getValuedObjectAccess().getIsInputAssignment_1(), "rule__ValuedObject__IsInputAssignment_1");
-					put(grammarAccess.getValuedObjectAccess().getIsOutputAssignment_2(), "rule__ValuedObject__IsOutputAssignment_2");
-					put(grammarAccess.getValuedObjectAccess().getIsStaticAssignment_3(), "rule__ValuedObject__IsStaticAssignment_3");
-					put(grammarAccess.getValuedObjectAccess().getIsSignalAssignment_4(), "rule__ValuedObject__IsSignalAssignment_4");
+					put(grammarAccess.getValuedObjectAccess().getInputAssignment_1(), "rule__ValuedObject__InputAssignment_1");
+					put(grammarAccess.getValuedObjectAccess().getOutputAssignment_2(), "rule__ValuedObject__OutputAssignment_2");
+					put(grammarAccess.getValuedObjectAccess().getStaticAssignment_3(), "rule__ValuedObject__StaticAssignment_3");
+					put(grammarAccess.getValuedObjectAccess().getSignalAssignment_4(), "rule__ValuedObject__SignalAssignment_4");
 					put(grammarAccess.getValuedObjectAccess().getTypeAssignment_5(), "rule__ValuedObject__TypeAssignment_5");
 					put(grammarAccess.getValuedObjectAccess().getNameAssignment_6(), "rule__ValuedObject__NameAssignment_6");
 					put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_7_1(), "rule__ValuedObject__InitialValueAssignment_7_1");

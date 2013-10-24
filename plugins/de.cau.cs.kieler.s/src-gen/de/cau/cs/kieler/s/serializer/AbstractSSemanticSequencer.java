@@ -610,10 +610,10 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         isInput?='input'? 
-	 *         isOutput?='output'? 
-	 *         isStatic?='static'? 
-	 *         isSignal?='signal'? 
+	 *         input?='input'? 
+	 *         output?='output'? 
+	 *         static?='static'? 
+	 *         signal?='signal'? 
 	 *         type=ValueType? 
 	 *         name=ID 
 	 *         initialValue=Expression? 

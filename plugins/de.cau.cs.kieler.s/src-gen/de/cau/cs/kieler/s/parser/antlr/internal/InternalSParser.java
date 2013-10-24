@@ -876,14 +876,14 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValuedObject"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:335:1: ruleValuedObject returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_isInput_1_0= 'input' ) )? ( (lv_isOutput_2_0= 'output' ) )? ( (lv_isStatic_3_0= 'static' ) )? ( (lv_isSignal_4_0= 'signal' ) )? ( (lv_type_5_0= ruleValueType ) )? ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '=' ( (lv_initialValue_8_0= ruleExpression ) ) )? (otherlv_9= 'combine' ( (lv_combineOperator_10_0= ruleCombineOperator ) ) )? otherlv_11= ';' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:335:1: ruleValuedObject returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_input_1_0= 'input' ) )? ( (lv_output_2_0= 'output' ) )? ( (lv_static_3_0= 'static' ) )? ( (lv_signal_4_0= 'signal' ) )? ( (lv_type_5_0= ruleValueType ) )? ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '=' ( (lv_initialValue_8_0= ruleExpression ) ) )? (otherlv_9= 'combine' ( (lv_combineOperator_10_0= ruleCombineOperator ) ) )? otherlv_11= ';' ) ;
     public final EObject ruleValuedObject() throws RecognitionException {
         EObject current = null;
 
-        Token lv_isInput_1_0=null;
-        Token lv_isOutput_2_0=null;
-        Token lv_isStatic_3_0=null;
-        Token lv_isSignal_4_0=null;
+        Token lv_input_1_0=null;
+        Token lv_output_2_0=null;
+        Token lv_static_3_0=null;
+        Token lv_signal_4_0=null;
         Token lv_name_6_0=null;
         Token otherlv_7=null;
         Token otherlv_9=null;
@@ -900,11 +900,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:338:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_isInput_1_0= 'input' ) )? ( (lv_isOutput_2_0= 'output' ) )? ( (lv_isStatic_3_0= 'static' ) )? ( (lv_isSignal_4_0= 'signal' ) )? ( (lv_type_5_0= ruleValueType ) )? ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '=' ( (lv_initialValue_8_0= ruleExpression ) ) )? (otherlv_9= 'combine' ( (lv_combineOperator_10_0= ruleCombineOperator ) ) )? otherlv_11= ';' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:339:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_isInput_1_0= 'input' ) )? ( (lv_isOutput_2_0= 'output' ) )? ( (lv_isStatic_3_0= 'static' ) )? ( (lv_isSignal_4_0= 'signal' ) )? ( (lv_type_5_0= ruleValueType ) )? ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '=' ( (lv_initialValue_8_0= ruleExpression ) ) )? (otherlv_9= 'combine' ( (lv_combineOperator_10_0= ruleCombineOperator ) ) )? otherlv_11= ';' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:338:28: ( ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_input_1_0= 'input' ) )? ( (lv_output_2_0= 'output' ) )? ( (lv_static_3_0= 'static' ) )? ( (lv_signal_4_0= 'signal' ) )? ( (lv_type_5_0= ruleValueType ) )? ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '=' ( (lv_initialValue_8_0= ruleExpression ) ) )? (otherlv_9= 'combine' ( (lv_combineOperator_10_0= ruleCombineOperator ) ) )? otherlv_11= ';' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:339:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_input_1_0= 'input' ) )? ( (lv_output_2_0= 'output' ) )? ( (lv_static_3_0= 'static' ) )? ( (lv_signal_4_0= 'signal' ) )? ( (lv_type_5_0= ruleValueType ) )? ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '=' ( (lv_initialValue_8_0= ruleExpression ) ) )? (otherlv_9= 'combine' ( (lv_combineOperator_10_0= ruleCombineOperator ) ) )? otherlv_11= ';' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:339:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_isInput_1_0= 'input' ) )? ( (lv_isOutput_2_0= 'output' ) )? ( (lv_isStatic_3_0= 'static' ) )? ( (lv_isSignal_4_0= 'signal' ) )? ( (lv_type_5_0= ruleValueType ) )? ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '=' ( (lv_initialValue_8_0= ruleExpression ) ) )? (otherlv_9= 'combine' ( (lv_combineOperator_10_0= ruleCombineOperator ) ) )? otherlv_11= ';' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:339:2: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_isInput_1_0= 'input' ) )? ( (lv_isOutput_2_0= 'output' ) )? ( (lv_isStatic_3_0= 'static' ) )? ( (lv_isSignal_4_0= 'signal' ) )? ( (lv_type_5_0= ruleValueType ) )? ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '=' ( (lv_initialValue_8_0= ruleExpression ) ) )? (otherlv_9= 'combine' ( (lv_combineOperator_10_0= ruleCombineOperator ) ) )? otherlv_11= ';'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:339:1: ( ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_input_1_0= 'input' ) )? ( (lv_output_2_0= 'output' ) )? ( (lv_static_3_0= 'static' ) )? ( (lv_signal_4_0= 'signal' ) )? ( (lv_type_5_0= ruleValueType ) )? ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '=' ( (lv_initialValue_8_0= ruleExpression ) ) )? (otherlv_9= 'combine' ( (lv_combineOperator_10_0= ruleCombineOperator ) ) )? otherlv_11= ';' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:339:2: ( (lv_annotations_0_0= ruleAnnotation ) )* ( (lv_input_1_0= 'input' ) )? ( (lv_output_2_0= 'output' ) )? ( (lv_static_3_0= 'static' ) )? ( (lv_signal_4_0= 'signal' ) )? ( (lv_type_5_0= ruleValueType ) )? ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '=' ( (lv_initialValue_8_0= ruleExpression ) ) )? (otherlv_9= 'combine' ( (lv_combineOperator_10_0= ruleCombineOperator ) ) )? otherlv_11= ';'
             {
             // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:339:2: ( (lv_annotations_0_0= ruleAnnotation ) )*
             loop8:
@@ -959,7 +959,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:357:3: ( (lv_isInput_1_0= 'input' ) )?
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:357:3: ( (lv_input_1_0= 'input' ) )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -968,15 +968,15 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             }
             switch (alt9) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:358:1: (lv_isInput_1_0= 'input' )
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:358:1: (lv_input_1_0= 'input' )
                     {
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:358:1: (lv_isInput_1_0= 'input' )
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:359:3: lv_isInput_1_0= 'input'
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:358:1: (lv_input_1_0= 'input' )
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:359:3: lv_input_1_0= 'input'
                     {
-                    lv_isInput_1_0=(Token)match(input,25,FOLLOW_25_in_ruleValuedObject650); if (state.failed) return current;
+                    lv_input_1_0=(Token)match(input,25,FOLLOW_25_in_ruleValuedObject650); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_isInput_1_0, grammarAccess.getValuedObjectAccess().getIsInputInputKeyword_1_0());
+                              newLeafNode(lv_input_1_0, grammarAccess.getValuedObjectAccess().getInputInputKeyword_1_0());
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -984,7 +984,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                       	        if (current==null) {
                       	            current = createModelElement(grammarAccess.getValuedObjectRule());
                       	        }
-                             		setWithLastConsumed(current, "isInput", true, "input");
+                             		setWithLastConsumed(current, "input", true, "input");
                       	    
                     }
 
@@ -996,7 +996,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:372:3: ( (lv_isOutput_2_0= 'output' ) )?
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:372:3: ( (lv_output_2_0= 'output' ) )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -1005,15 +1005,15 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             }
             switch (alt10) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:373:1: (lv_isOutput_2_0= 'output' )
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:373:1: (lv_output_2_0= 'output' )
                     {
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:373:1: (lv_isOutput_2_0= 'output' )
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:374:3: lv_isOutput_2_0= 'output'
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:373:1: (lv_output_2_0= 'output' )
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:374:3: lv_output_2_0= 'output'
                     {
-                    lv_isOutput_2_0=(Token)match(input,26,FOLLOW_26_in_ruleValuedObject682); if (state.failed) return current;
+                    lv_output_2_0=(Token)match(input,26,FOLLOW_26_in_ruleValuedObject682); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_isOutput_2_0, grammarAccess.getValuedObjectAccess().getIsOutputOutputKeyword_2_0());
+                              newLeafNode(lv_output_2_0, grammarAccess.getValuedObjectAccess().getOutputOutputKeyword_2_0());
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -1021,7 +1021,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                       	        if (current==null) {
                       	            current = createModelElement(grammarAccess.getValuedObjectRule());
                       	        }
-                             		setWithLastConsumed(current, "isOutput", true, "output");
+                             		setWithLastConsumed(current, "output", true, "output");
                       	    
                     }
 
@@ -1033,7 +1033,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:387:3: ( (lv_isStatic_3_0= 'static' ) )?
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:387:3: ( (lv_static_3_0= 'static' ) )?
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -1042,15 +1042,15 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             }
             switch (alt11) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:388:1: (lv_isStatic_3_0= 'static' )
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:388:1: (lv_static_3_0= 'static' )
                     {
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:388:1: (lv_isStatic_3_0= 'static' )
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:389:3: lv_isStatic_3_0= 'static'
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:388:1: (lv_static_3_0= 'static' )
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:389:3: lv_static_3_0= 'static'
                     {
-                    lv_isStatic_3_0=(Token)match(input,27,FOLLOW_27_in_ruleValuedObject714); if (state.failed) return current;
+                    lv_static_3_0=(Token)match(input,27,FOLLOW_27_in_ruleValuedObject714); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_isStatic_3_0, grammarAccess.getValuedObjectAccess().getIsStaticStaticKeyword_3_0());
+                              newLeafNode(lv_static_3_0, grammarAccess.getValuedObjectAccess().getStaticStaticKeyword_3_0());
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -1058,7 +1058,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                       	        if (current==null) {
                       	            current = createModelElement(grammarAccess.getValuedObjectRule());
                       	        }
-                             		setWithLastConsumed(current, "isStatic", true, "static");
+                             		setWithLastConsumed(current, "static", true, "static");
                       	    
                     }
 
@@ -1070,7 +1070,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:402:3: ( (lv_isSignal_4_0= 'signal' ) )?
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:402:3: ( (lv_signal_4_0= 'signal' ) )?
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -1079,15 +1079,15 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             }
             switch (alt12) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:403:1: (lv_isSignal_4_0= 'signal' )
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:403:1: (lv_signal_4_0= 'signal' )
                     {
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:403:1: (lv_isSignal_4_0= 'signal' )
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:404:3: lv_isSignal_4_0= 'signal'
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:403:1: (lv_signal_4_0= 'signal' )
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:404:3: lv_signal_4_0= 'signal'
                     {
-                    lv_isSignal_4_0=(Token)match(input,28,FOLLOW_28_in_ruleValuedObject746); if (state.failed) return current;
+                    lv_signal_4_0=(Token)match(input,28,FOLLOW_28_in_ruleValuedObject746); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_isSignal_4_0, grammarAccess.getValuedObjectAccess().getIsSignalSignalKeyword_4_0());
+                              newLeafNode(lv_signal_4_0, grammarAccess.getValuedObjectAccess().getSignalSignalKeyword_4_0());
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -1095,7 +1095,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                       	        if (current==null) {
                       	            current = createModelElement(grammarAccess.getValuedObjectRule());
                       	        }
-                             		setWithLastConsumed(current, "isSignal", true, "signal");
+                             		setWithLastConsumed(current, "signal", true, "signal");
                       	    
                     }
 

@@ -569,11 +569,11 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
         try {
             if (myModel != null && myModel.getValuedObjects() != null) {
                 for (ValuedObject signal : myModel.getValuedObjects()) {
-                    if (signal.isIsSignal()) {
-                        if (signal.isIsInput()) {
+                    if (signal.isSignal()) {
+                        if (signal.isInput()) {
                             res.accumulate(signal.getName(), JSONSignalValues.newValue(false));
                         }
-                        if (signal.isIsOutput()) {
+                        if (signal.isOutput()) {
                             String signalName = signal.getName();
                             if (!signalName.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)) {
                                 res.accumulate(signalName, JSONSignalValues.newValue(false));

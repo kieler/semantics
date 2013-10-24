@@ -356,61 +356,61 @@ ruleValuedObject returns [EObject current=null]
 )
 )*(
 (
-		lv_isInput_1_0=	'input' 
+		lv_input_1_0=	'input' 
     {
-        newLeafNode(lv_isInput_1_0, grammarAccess.getValuedObjectAccess().getIsInputInputKeyword_1_0());
+        newLeafNode(lv_input_1_0, grammarAccess.getValuedObjectAccess().getInputInputKeyword_1_0());
     }
  
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getValuedObjectRule());
 	        }
-       		setWithLastConsumed($current, "isInput", true, "input");
+       		setWithLastConsumed($current, "input", true, "input");
 	    }
 
 )
 )?(
 (
-		lv_isOutput_2_0=	'output' 
+		lv_output_2_0=	'output' 
     {
-        newLeafNode(lv_isOutput_2_0, grammarAccess.getValuedObjectAccess().getIsOutputOutputKeyword_2_0());
+        newLeafNode(lv_output_2_0, grammarAccess.getValuedObjectAccess().getOutputOutputKeyword_2_0());
     }
  
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getValuedObjectRule());
 	        }
-       		setWithLastConsumed($current, "isOutput", true, "output");
+       		setWithLastConsumed($current, "output", true, "output");
 	    }
 
 )
 )?(
 (
-		lv_isStatic_3_0=	'static' 
+		lv_static_3_0=	'static' 
     {
-        newLeafNode(lv_isStatic_3_0, grammarAccess.getValuedObjectAccess().getIsStaticStaticKeyword_3_0());
+        newLeafNode(lv_static_3_0, grammarAccess.getValuedObjectAccess().getStaticStaticKeyword_3_0());
     }
  
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getValuedObjectRule());
 	        }
-       		setWithLastConsumed($current, "isStatic", true, "static");
+       		setWithLastConsumed($current, "static", true, "static");
 	    }
 
 )
 )?(
 (
-		lv_isSignal_4_0=	'signal' 
+		lv_signal_4_0=	'signal' 
     {
-        newLeafNode(lv_isSignal_4_0, grammarAccess.getValuedObjectAccess().getIsSignalSignalKeyword_4_0());
+        newLeafNode(lv_signal_4_0, grammarAccess.getValuedObjectAccess().getSignalSignalKeyword_4_0());
     }
  
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getValuedObjectRule());
 	        }
-       		setWithLastConsumed($current, "isSignal", true, "signal");
+       		setWithLastConsumed($current, "signal", true, "signal");
 	    }
 
 )
