@@ -137,7 +137,7 @@ class SCGToSCGDEPTransformation {
         
         // Basically, do the same stuff with conditionals as target. 
         // Conditionals will never write a variable, so it's sufficient to check the reader.
-        scg.nodes.filter(typeof(ConditionalDep)).forEach[ node |
+        scg.nodes.filter(typeof(Conditional)).forEach[ node |
             var Dependency dependency = null
             if (node.condition.isReader(assignment.valuedObject)) {
                 if (iAmAbsoluteWriter) dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_Read
@@ -328,7 +328,7 @@ class SCGToSCGDEPTransformation {
     
     // Same goes for conditionals...   
     def dispatch Conditional copySCGNode(Conditional node) { 
-        val conditional = ScgdepFactory::eINSTANCE.createConditionalDep();
+        val conditional = ScgFactory::eINSTANCE.createConditional();
         conditional.condition = node.condition.copyExpression
         conditional
     }
