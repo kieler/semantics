@@ -23,7 +23,7 @@ import de.cau.cs.kieler.klighd.xtext.triggers.XtextBasedEditorActivationChangeTr
 class SCChartsShowDiagramCombination extends UpdateXtextModelKLighDCombination {
     
     override getRequestedUpdateStrategy(XtextModelChangeState state) {
-        return UpdateStrategy::ID;
+        return UpdateStrategy::ID; 
     }
     
     /**

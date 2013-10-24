@@ -305,12 +305,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 node.setParent(node.parent)
             }
             val connector = s.type == StateType::CONNECTOR;
-            val cornerRadius = if(connector) 10 else if(!s.hasRegionsOrDeclarations) 17 else 8;
-            val lineWidth = if(s.isInitial) 4 else 1;
+            val cornerRadius = if(connector) 7 else if(!s.hasRegionsOrDeclarations) 17 else 8;
+            val lineWidth = if(s.isInitial) 3 else 1;
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
             figure.lineWidth = lineWidth;
             figure.foreground = if(s.isInitial || s.isFinal) "black".color else "gray".color
-            if (SHOW_SHADOW.optionBooleanValue) {
+            if (SHOW_SHADOW.optionBooleanValue && !connector) {
                 figure.shadow = "black".color;
                 figure.shadow.XOffset = 4;
                 figure.shadow.YOffset = 4;
@@ -318,15 +318,17 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             (
                 if (connector)
                 figure => [
-                    it.background = "black".color;
-                    it.addArc => [
-                        it.foreground = "white".color;
-                        it.startAngle = 45;
-                        it.arcAngle = 270;
-                        it.lineWidth = 2;
-                        it.setSurroundingSpace(0, 0.3f);
-                    ];
-                    node.setNodeSize(20, 20);
+                    it.background = "black".color
+                    figure.lineWidth = 3
+                    it.foreground = "white".color
+//                    it.addArc => [
+//                        it.foreground = "white".color;
+//                        it.startAngle = 45;
+//                        it.arcAngle = 270;
+//                        it.lineWidth = 2;
+//                        it.setSurroundingSpace(0, 0.3f);
+//                    ];
+                    node.setNodeSize(7, 7);
                 ]
             else if (s.isFinal)
                 figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
@@ -563,7 +565,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     if (t.deferred) {
                         it.parent.addDeferredDecorator(offset);
                         (it.placementData as KDecoratorPlacementData).absolute = -11.0f + offset;
-                    }
+                    } 
                 ];
                 // it.lineCap = LineCap::CAP_ROUND;
                 switch (t.type) {

@@ -29,7 +29,7 @@ import de.cau.cs.kieler.klighd.xtext.UpdateXtextModelKLighDCombination
 class SCChartsShowDiagramFileCombination extends UpdateXtextModelKLighDCombination {
     
     private static val ResourceSet resSet = new ResourceSetImpl();
-
+ 
     override getRequestedUpdateStrategy(XtextModelChangeState state) {
         return UpdateStrategy::ID;
     }
