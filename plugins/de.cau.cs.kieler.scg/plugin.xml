@@ -22,4 +22,12 @@
             genModel="model/scg.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated scgbb -->
+      <package
+            uri="http://kieler.cs.cau.de/scgbb/0.1.0"
+            class="de.cau.cs.kieler.scgbb.ScgbbPackage"
+            genModel="model/scgbb.genmodel"/>
+   </extension>
+
 </plugin>

@@ -22,6 +22,9 @@ Export-Package: de.cau.cs.kieler.scg,
  de.cau.cs.kieler.scg.extensions,
  de.cau.cs.kieler.scgdep,
  de.cau.cs.kieler.scgdep.impl,
- de.cau.cs.kieler.scgdep.util
+ de.cau.cs.kieler.scgdep.util,
+ de.cau.cs.kieler.scgbb,
+ de.cau.cs.kieler.scgbb.impl,
+ de.cau.cs.kieler.scgbb.util
 Bundle-ActivationPolicy: lazy
 
