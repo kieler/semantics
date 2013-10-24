@@ -106,7 +106,7 @@ LocalAction returns sccharts::LocalAction:
 Transition returns sccharts::Transition:
     (annotations += Annotation)*
 	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
-	( (immediate?='immediate')? (history=HistoryType)? (deferred?='deferred')? ('with'
+	( (immediate?='immediate')? (deferred?='deferred')? (history=HistoryType)?  ('with'
 	 (
 	   ( (delay=INT)? (trigger=BoolExpression)? ('/' effects+=Effect (';'effects+=Effect)*)? )
 	  |
@@ -149,7 +149,4 @@ enum TransitionType returns sccharts::TransitionType:
 	WEAKABORT = '-->' | STRONGABORT = 'o->' | NORMALTERMINATION = '>->';
 
 
-enum HistoryType returns sccharts::HistoryType:
-    RESET = 'reset' | SHALLOW = 'shallow history' | DEEP = 'history';
-	
 	

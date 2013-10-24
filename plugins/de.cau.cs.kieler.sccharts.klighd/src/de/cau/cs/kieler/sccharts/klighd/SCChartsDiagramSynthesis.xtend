@@ -582,16 +582,20 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
                 }
                 it.addArrowDecorator() => [
+                    var offset = 0
                     if (t.history == HistoryType::SHALLOW) {
                         it.parent.addShallowHistoryDecorator();
-                        (it.placementData as KDecoratorPlacementData).absolute = -15.0f;
+                        (it.placementData as KDecoratorPlacementData).absolute = -17.0f;
+                        offset = -15
                     }
                     if (t.history == HistoryType::DEEP) {
                         it.parent.addDeepHistoryDecorator();
-                        (it.placementData as KDecoratorPlacementData).absolute = -15.0f;
+                        (it.placementData as KDecoratorPlacementData).absolute = -17.0f;
+                        offset = -15
                     }
                     if (t.deferred) {
-                        it.parent. addDeferredDecorator
+                        it.parent.addDeferredDecorator(offset);
+                        (it.placementData as KDecoratorPlacementData).absolute = -11.0f + offset;
                     }
                 ];
                 // it.lineCap = LineCap::CAP_ROUND;
@@ -606,6 +610,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 scopeProvider.parent = t.sourceState;
                 var String label = serializer.serialize(t.copy)
                 label = label.replace("immediate", "")
+                label = label.replace("shallow history", "")
+                label = label.replace("history", "")
+                label = label.replace("deferred", "")
 
                 // Override if a Label is set for a transition
                 if (!t.label.nullOrEmpty) {
@@ -638,11 +645,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         ];
     }
     
-    def KRendering addDeferredDecorator(KContainerRendering line) {
+    def KRendering addDeferredDecorator(KContainerRendering line, float offset) {
         return line.addEllipse() => [
             it.lineWidth = 1;
             it.background = "blue".color
-            it.setDecoratorPlacementData(10, 10, -4, 0, false);
+            it.setDecoratorPlacementData(10, 10, -4 + offset, 1, false);
         ];
     }
     
@@ -679,17 +686,21 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             it.lineWidth = 0;
             it.setForeground(DARKGRAY.copy)
             it.background = DARKGRAY.copy
-            it.setDecoratorPlacementData(20, 20, -6, 1, false);
+            it.setDecoratorPlacementData(16, 16, -6, 1, false);
             it.addPolyline(1) => [
                 it.lineWidth = 2;
-                it.points += createKPosition(LEFT, 5, 0, TOP, 4, 0);
-                it.points += createKPosition(LEFT, 5, 0, BOTTOM, 4, 0);
-                it.points += createKPosition(LEFT, 5, 0, TOP, 0, 0.5f);
-                it.points += createKPosition(RIGHT, 5, 0, TOP, 0, 0.5f);
-                it.points += createKPosition(RIGHT, 5, 0, BOTTOM, 4, 0);
-                it.points += createKPosition(RIGHT, 5, 0, TOP, 4, 0);
+                it.points += createKPosition(LEFT, 3, 0, TOP, 4, 0);
+                it.points += createKPosition(LEFT, 3, 0, BOTTOM, 4, 0);
+                it.points += createKPosition(LEFT, 3, 0, TOP, 0, 0.5f);
+                it.points += createKPosition(RIGHT, 7, 0, TOP, 0, 0.5f);
+                it.points += createKPosition(RIGHT, 7, 0, BOTTOM, 4, 0);
+                it.points += createKPosition(RIGHT, 7, 0, TOP, 4, 0);
                 it.setForeground("white".color);
             ];
+            it.addText("*") => [
+                it.setForeground("white".color)
+                it.setPointPlacementData(createKPosition(LEFT, 10, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0)
+            ]
         ];
     }
     

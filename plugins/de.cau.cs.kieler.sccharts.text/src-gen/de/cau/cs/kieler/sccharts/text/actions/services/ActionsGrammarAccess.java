@@ -29,28 +29,32 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cImmediateImmediateKeyword_2_0 = (Keyword)cImmediateAssignment_2.eContents().get(0);
 		private final Assignment cDelayAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cDelayINTTerminalRuleCall_3_0 = (RuleCall)cDelayAssignment_3.eContents().get(0);
-		private final Assignment cTriggerAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cTriggerBoolExpressionParserRuleCall_4_0 = (RuleCall)cTriggerAssignment_4.eContents().get(0);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cSolidusKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cEffectsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_5_1_0 = (RuleCall)cEffectsAssignment_5_1.eContents().get(0);
-		private final Group cGroup_5_2 = (Group)cGroup_5.eContents().get(2);
-		private final Keyword cSemicolonKeyword_5_2_0 = (Keyword)cGroup_5_2.eContents().get(0);
-		private final Assignment cEffectsAssignment_5_2_1 = (Assignment)cGroup_5_2.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_5_2_1_0 = (RuleCall)cEffectsAssignment_5_2_1.eContents().get(0);
+		private final Assignment cDeferredAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cDeferredDeferredKeyword_4_0 = (Keyword)cDeferredAssignment_4.eContents().get(0);
+		private final Assignment cHistoryAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cHistoryHistoryTypeEnumRuleCall_5_0 = (RuleCall)cHistoryAssignment_5.eContents().get(0);
+		private final Assignment cTriggerAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_6_0 = (RuleCall)cTriggerAssignment_6.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cSolidusKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Assignment cEffectsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_7_1_0 = (RuleCall)cEffectsAssignment_7_1.eContents().get(0);
+		private final Group cGroup_7_2 = (Group)cGroup_7.eContents().get(2);
+		private final Keyword cSemicolonKeyword_7_2_0 = (Keyword)cGroup_7_2.eContents().get(0);
+		private final Assignment cEffectsAssignment_7_2_1 = (Assignment)cGroup_7_2.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_7_2_1_0 = (RuleCall)cEffectsAssignment_7_2_1.eContents().get(0);
 		
 		//// haf: We need a Rule for transitions in order to serialize them
 		//// here we only want to have the features isImmediate, delay, trigger and effects
 		//// the features type, targetState, priority, isHistory are ignored and set as transient
 		//// you need to override the rule to support transitions properly
 		//Transition returns sccharts::Transition:
-		//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? trigger=BoolExpression? ("/"
-		//	effects+=Effect (";" effects+=Effect)*)?;
+		//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? deferred?="deferred"?
+		//	history=HistoryType? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
 		public ParserRule getRule() { return rule; }
 
-		//{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? trigger=BoolExpression? ("/"
-		//effects+=Effect (";" effects+=Effect)*)?
+		//{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? deferred?="deferred"?
+		//history=HistoryType? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Transition}
@@ -74,35 +78,47 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getDelayINTTerminalRuleCall_3_0() { return cDelayINTTerminalRuleCall_3_0; }
 
+		//deferred?="deferred"?
+		public Assignment getDeferredAssignment_4() { return cDeferredAssignment_4; }
+
+		//"deferred"
+		public Keyword getDeferredDeferredKeyword_4_0() { return cDeferredDeferredKeyword_4_0; }
+
+		//history=HistoryType?
+		public Assignment getHistoryAssignment_5() { return cHistoryAssignment_5; }
+
+		//HistoryType
+		public RuleCall getHistoryHistoryTypeEnumRuleCall_5_0() { return cHistoryHistoryTypeEnumRuleCall_5_0; }
+
 		//trigger=BoolExpression?
-		public Assignment getTriggerAssignment_4() { return cTriggerAssignment_4; }
+		public Assignment getTriggerAssignment_6() { return cTriggerAssignment_6; }
 
 		//BoolExpression
-		public RuleCall getTriggerBoolExpressionParserRuleCall_4_0() { return cTriggerBoolExpressionParserRuleCall_4_0; }
+		public RuleCall getTriggerBoolExpressionParserRuleCall_6_0() { return cTriggerBoolExpressionParserRuleCall_6_0; }
 
 		//("/" effects+=Effect (";" effects+=Effect)*)?
-		public Group getGroup_5() { return cGroup_5; }
+		public Group getGroup_7() { return cGroup_7; }
 
 		//"/"
-		public Keyword getSolidusKeyword_5_0() { return cSolidusKeyword_5_0; }
+		public Keyword getSolidusKeyword_7_0() { return cSolidusKeyword_7_0; }
 
 		//effects+=Effect
-		public Assignment getEffectsAssignment_5_1() { return cEffectsAssignment_5_1; }
+		public Assignment getEffectsAssignment_7_1() { return cEffectsAssignment_7_1; }
 
 		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_5_1_0() { return cEffectsEffectParserRuleCall_5_1_0; }
+		public RuleCall getEffectsEffectParserRuleCall_7_1_0() { return cEffectsEffectParserRuleCall_7_1_0; }
 
 		//(";" effects+=Effect)*
-		public Group getGroup_5_2() { return cGroup_5_2; }
+		public Group getGroup_7_2() { return cGroup_7_2; }
 
 		//";"
-		public Keyword getSemicolonKeyword_5_2_0() { return cSemicolonKeyword_5_2_0; }
+		public Keyword getSemicolonKeyword_7_2_0() { return cSemicolonKeyword_7_2_0; }
 
 		//effects+=Effect
-		public Assignment getEffectsAssignment_5_2_1() { return cEffectsAssignment_5_2_1; }
+		public Assignment getEffectsAssignment_7_2_1() { return cEffectsAssignment_7_2_1; }
 
 		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_5_2_1_0() { return cEffectsEffectParserRuleCall_5_2_1_0; }
+		public RuleCall getEffectsEffectParserRuleCall_7_2_1_0() { return cEffectsEffectParserRuleCall_7_2_1_0; }
 	}
 
 	public class EntryActionElements extends AbstractParserRuleElementFinder {
@@ -496,6 +512,42 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//":"
 		public Keyword getDIVColonKeyword_0() { return cDIVColonKeyword_0; }
 	}
+
+	public class HistoryTypeElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "HistoryType");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cRESETEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cRESETResetKeyword_0_0 = (Keyword)cRESETEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cSHALLOWEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cSHALLOWShallowHistoryKeyword_1_0 = (Keyword)cSHALLOWEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cDEEPEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cDEEPHistoryKeyword_2_0 = (Keyword)cDEEPEnumLiteralDeclaration_2.eContents().get(0);
+		
+		//enum HistoryType returns sccharts::HistoryType:
+		//	RESET="reset" | SHALLOW="shallow history" | DEEP="history";
+		public EnumRule getRule() { return rule; }
+
+		//RESET="reset" | SHALLOW="shallow history" | DEEP="history"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//RESET="reset"
+		public EnumLiteralDeclaration getRESETEnumLiteralDeclaration_0() { return cRESETEnumLiteralDeclaration_0; }
+
+		//"reset"
+		public Keyword getRESETResetKeyword_0_0() { return cRESETResetKeyword_0_0; }
+
+		//SHALLOW="shallow history"
+		public EnumLiteralDeclaration getSHALLOWEnumLiteralDeclaration_1() { return cSHALLOWEnumLiteralDeclaration_1; }
+
+		//"shallow history"
+		public Keyword getSHALLOWShallowHistoryKeyword_1_0() { return cSHALLOWShallowHistoryKeyword_1_0; }
+
+		//DEEP="history"
+		public EnumLiteralDeclaration getDEEPEnumLiteralDeclaration_2() { return cDEEPEnumLiteralDeclaration_2; }
+
+		//"history"
+		public Keyword getDEEPHistoryKeyword_2_0() { return cDEEPHistoryKeyword_2_0; }
+	}
 	
 	private TransitionElements pTransition;
 	private EntryActionElements pEntryAction;
@@ -507,6 +559,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	private AssignmentElements pAssignment;
 	private TextEffectElements pTextEffect;
 	private DivOperatorElements unknownRuleDivOperator;
+	private HistoryTypeElements unknownRuleHistoryType;
 	
 	private final Grammar grammar;
 
@@ -551,8 +604,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// the features type, targetState, priority, isHistory are ignored and set as transient
 	//// you need to override the rule to support transitions properly
 	//Transition returns sccharts::Transition:
-	//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? trigger=BoolExpression? ("/"
-	//	effects+=Effect (";" effects+=Effect)*)?;
+	//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? deferred?="deferred"?
+	//	history=HistoryType? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
 	}
@@ -658,6 +711,16 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getDivOperatorRule() {
 		return getDivOperatorAccess().getRule();
+	}
+
+	//enum HistoryType returns sccharts::HistoryType:
+	//	RESET="reset" | SHALLOW="shallow history" | DEEP="history";
+	public HistoryTypeElements getHistoryTypeAccess() {
+		return (unknownRuleHistoryType != null) ? unknownRuleHistoryType : (unknownRuleHistoryType = new HistoryTypeElements());
+	}
+	
+	public EnumRule getHistoryTypeRule() {
+		return getHistoryTypeAccess().getRule();
 	}
 
 	//Root returns ecore::EObject:
