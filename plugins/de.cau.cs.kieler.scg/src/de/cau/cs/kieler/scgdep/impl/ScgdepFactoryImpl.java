@@ -72,7 +72,6 @@ public class ScgdepFactoryImpl extends EFactoryImpl implements ScgdepFactory {
             case ScgdepPackage.RELATIVE_WRITE_READ: return createRelativeWrite_Read();
             case ScgdepPackage.ABSOLUTE_WRITE_RELATIVE_WRITE: return createAbsoluteWrite_RelativeWrite();
             case ScgdepPackage.WRITE_WRITE: return createWrite_Write();
-            case ScgdepPackage.CONDITIONAL_DEP: return createConditionalDep();
             case ScgdepPackage.ASSIGNMENT_DEP: return createAssignmentDep();
             case ScgdepPackage.SC_GRAPH_DEP: return createSCGraphDep();
             default:
@@ -128,16 +127,6 @@ public class ScgdepFactoryImpl extends EFactoryImpl implements ScgdepFactory {
     public Write_Write createWrite_Write() {
         Write_WriteImpl write_Write = new Write_WriteImpl();
         return write_Write;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ConditionalDep createConditionalDep() {
-        ConditionalDepImpl conditionalDep = new ConditionalDepImpl();
-        return conditionalDep;
     }
 
     /**

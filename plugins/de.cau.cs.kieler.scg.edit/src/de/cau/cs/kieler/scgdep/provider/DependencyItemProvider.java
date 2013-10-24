@@ -72,6 +72,7 @@ public class DependencyItemProvider
             super.getPropertyDescriptors(object);
 
             addConcurrentPropertyDescriptor(object);
+            addConfluentPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -90,6 +91,28 @@ public class DependencyItemProvider
                  getString("_UI_Dependency_concurrent_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_Dependency_concurrent_feature", "_UI_Dependency_type"),
                  ScgdepPackage.Literals.DEPENDENCY__CONCURRENT,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Confluent feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addConfluentPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_Dependency_confluent_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Dependency_confluent_feature", "_UI_Dependency_type"),
+                 ScgdepPackage.Literals.DEPENDENCY__CONFLUENT,
                  true,
                  false,
                  false,
@@ -134,6 +157,7 @@ public class DependencyItemProvider
 
         switch (notification.getFeatureID(Dependency.class)) {
             case ScgdepPackage.DEPENDENCY__CONCURRENT:
+            case ScgdepPackage.DEPENDENCY__CONFLUENT:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

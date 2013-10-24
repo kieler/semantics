@@ -129,16 +129,6 @@ public class ScgdepSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case ScgdepPackage.CONDITIONAL_DEP: {
-                ConditionalDep conditionalDep = (ConditionalDep)theEObject;
-                T result = caseConditionalDep(conditionalDep);
-                if (result == null) result = caseConditional(conditionalDep);
-                if (result == null) result = caseNodeDep(conditionalDep);
-                if (result == null) result = caseNode(conditionalDep);
-                if (result == null) result = caseAnnotatable(conditionalDep);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case ScgdepPackage.ASSIGNMENT_DEP: {
                 AssignmentDep assignmentDep = (AssignmentDep)theEObject;
                 T result = caseAssignmentDep(assignmentDep);
@@ -242,21 +232,6 @@ public class ScgdepSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Conditional Dep</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Conditional Dep</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseConditionalDep(ConditionalDep object) {
-        return null;
-    }
-
-    /**
      * Returns the result of interpreting the object as an instance of '<em>Assignment Dep</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -343,21 +318,6 @@ public class ScgdepSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseNode(Node object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Conditional</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Conditional</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseConditional(Conditional object) {
         return null;
     }
 

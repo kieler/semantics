@@ -107,13 +107,22 @@ public interface ScgdepPackage extends EPackage {
     int DEPENDENCY__CONCURRENT = ScgPackage.LINK_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Confluent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPENDENCY__CONFLUENT = ScgPackage.LINK_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>Dependency</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DEPENDENCY_FEATURE_COUNT = ScgPackage.LINK_FEATURE_COUNT + 1;
+    int DEPENDENCY_FEATURE_COUNT = ScgPackage.LINK_FEATURE_COUNT + 2;
 
     /**
      * The operation id for the '<em>Get Annotation</em>' operation.
@@ -187,6 +196,15 @@ public interface ScgdepPackage extends EPackage {
      * @ordered
      */
     int ABSOLUTE_WRITE_READ__CONCURRENT = DEPENDENCY__CONCURRENT;
+
+    /**
+     * The feature id for the '<em><b>Confluent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ABSOLUTE_WRITE_READ__CONFLUENT = DEPENDENCY__CONFLUENT;
 
     /**
      * The number of structural features of the '<em>Absolute Write Read</em>' class.
@@ -271,6 +289,15 @@ public interface ScgdepPackage extends EPackage {
     int RELATIVE_WRITE_READ__CONCURRENT = DEPENDENCY__CONCURRENT;
 
     /**
+     * The feature id for the '<em><b>Confluent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIVE_WRITE_READ__CONFLUENT = DEPENDENCY__CONFLUENT;
+
+    /**
      * The number of structural features of the '<em>Relative Write Read</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -351,6 +378,15 @@ public interface ScgdepPackage extends EPackage {
      * @ordered
      */
     int ABSOLUTE_WRITE_RELATIVE_WRITE__CONCURRENT = DEPENDENCY__CONCURRENT;
+
+    /**
+     * The feature id for the '<em><b>Confluent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ABSOLUTE_WRITE_RELATIVE_WRITE__CONFLUENT = DEPENDENCY__CONFLUENT;
 
     /**
      * The number of structural features of the '<em>Absolute Write Relative Write</em>' class.
@@ -435,6 +471,15 @@ public interface ScgdepPackage extends EPackage {
     int WRITE_WRITE__CONCURRENT = DEPENDENCY__CONCURRENT;
 
     /**
+     * The feature id for the '<em><b>Confluent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int WRITE_WRITE__CONFLUENT = DEPENDENCY__CONFLUENT;
+
+    /**
      * The number of structural features of the '<em>Write Write</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -481,124 +526,6 @@ public interface ScgdepPackage extends EPackage {
 
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.scgdep.impl.ConditionalDepImpl <em>Conditional Dep</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scgdep.impl.ConditionalDepImpl
-     * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getConditionalDep()
-     * @generated
-     */
-    int CONDITIONAL_DEP = 5;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONDITIONAL_DEP__ANNOTATIONS = ScgPackage.CONDITIONAL__ANNOTATIONS;
-
-    /**
-     * The feature id for the '<em><b>Incoming</b></em>' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONDITIONAL_DEP__INCOMING = ScgPackage.CONDITIONAL__INCOMING;
-
-    /**
-     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONDITIONAL_DEP__IS_INITIAL = ScgPackage.CONDITIONAL__IS_INITIAL;
-
-    /**
-     * The feature id for the '<em><b>Then</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONDITIONAL_DEP__THEN = ScgPackage.CONDITIONAL__THEN;
-
-    /**
-     * The feature id for the '<em><b>Else</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONDITIONAL_DEP__ELSE = ScgPackage.CONDITIONAL__ELSE;
-
-    /**
-     * The feature id for the '<em><b>Condition</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONDITIONAL_DEP__CONDITION = ScgPackage.CONDITIONAL__CONDITION;
-
-    /**
-     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONDITIONAL_DEP__DEPENDENCIES = ScgPackage.CONDITIONAL_FEATURE_COUNT + 0;
-
-    /**
-     * The number of structural features of the '<em>Conditional Dep</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONDITIONAL_DEP_FEATURE_COUNT = ScgPackage.CONDITIONAL_FEATURE_COUNT + 1;
-
-    /**
-     * The operation id for the '<em>Get Annotation</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONDITIONAL_DEP___GET_ANNOTATION__STRING = ScgPackage.CONDITIONAL___GET_ANNOTATION__STRING;
-
-    /**
-     * The operation id for the '<em>Get All Annotations</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONDITIONAL_DEP___GET_ALL_ANNOTATIONS__STRING = ScgPackage.CONDITIONAL___GET_ALL_ANNOTATIONS__STRING;
-
-    /**
-     * The operation id for the '<em>Remove All Annotations</em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONDITIONAL_DEP___REMOVE_ALL_ANNOTATIONS__STRING = ScgPackage.CONDITIONAL___REMOVE_ALL_ANNOTATIONS__STRING;
-
-    /**
-     * The number of operations of the '<em>Conditional Dep</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONDITIONAL_DEP_OPERATION_COUNT = ScgPackage.CONDITIONAL_OPERATION_COUNT + 0;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.scgdep.impl.AssignmentDepImpl <em>Assignment Dep</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -606,7 +533,7 @@ public interface ScgdepPackage extends EPackage {
      * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getAssignmentDep()
      * @generated
      */
-    int ASSIGNMENT_DEP = 6;
+    int ASSIGNMENT_DEP = 5;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -724,7 +651,7 @@ public interface ScgdepPackage extends EPackage {
      * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getNodeDep()
      * @generated
      */
-    int NODE_DEP = 7;
+    int NODE_DEP = 6;
 
     /**
      * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
@@ -761,7 +688,7 @@ public interface ScgdepPackage extends EPackage {
      * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getSCGraphDep()
      * @generated
      */
-    int SC_GRAPH_DEP = 8;
+    int SC_GRAPH_DEP = 7;
 
     /**
      * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
@@ -822,6 +749,17 @@ public interface ScgdepPackage extends EPackage {
     EAttribute getDependency_Concurrent();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgdep.Dependency#isConfluent <em>Confluent</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Confluent</em>'.
+     * @see de.cau.cs.kieler.scgdep.Dependency#isConfluent()
+     * @see #getDependency()
+     * @generated
+     */
+    EAttribute getDependency_Confluent();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scgdep.AbsoluteWrite_Read <em>Absolute Write Read</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -860,16 +798,6 @@ public interface ScgdepPackage extends EPackage {
      * @generated
      */
     EClass getWrite_Write();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.scgdep.ConditionalDep <em>Conditional Dep</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Conditional Dep</em>'.
-     * @see de.cau.cs.kieler.scgdep.ConditionalDep
-     * @generated
-     */
-    EClass getConditionalDep();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scgdep.AssignmentDep <em>Assignment Dep</em>}'.
@@ -954,6 +882,14 @@ public interface ScgdepPackage extends EPackage {
         EAttribute DEPENDENCY__CONCURRENT = eINSTANCE.getDependency_Concurrent();
 
         /**
+         * The meta object literal for the '<em><b>Confluent</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DEPENDENCY__CONFLUENT = eINSTANCE.getDependency_Confluent();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scgdep.impl.AbsoluteWrite_ReadImpl <em>Absolute Write Read</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -992,16 +928,6 @@ public interface ScgdepPackage extends EPackage {
          * @generated
          */
         EClass WRITE_WRITE = eINSTANCE.getWrite_Write();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scgdep.impl.ConditionalDepImpl <em>Conditional Dep</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scgdep.impl.ConditionalDepImpl
-         * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getConditionalDep()
-         * @generated
-         */
-        EClass CONDITIONAL_DEP = eINSTANCE.getConditionalDep();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scgdep.impl.AssignmentDepImpl <em>Assignment Dep</em>}' class.

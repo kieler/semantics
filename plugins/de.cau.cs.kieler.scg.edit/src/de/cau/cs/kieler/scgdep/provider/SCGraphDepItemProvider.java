@@ -123,11 +123,6 @@ public class SCGraphDepItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (ScgPackage.Literals.SC_GRAPH__NODES,
-                 ScgdepFactory.eINSTANCE.createConditionalDep()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ScgPackage.Literals.SC_GRAPH__NODES,
                  ScgdepFactory.eINSTANCE.createAssignmentDep()));
     }
 

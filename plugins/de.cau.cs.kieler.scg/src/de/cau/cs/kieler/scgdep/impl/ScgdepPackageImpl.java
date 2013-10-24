@@ -81,13 +81,6 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass conditionalDepEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     private EClass assignmentDepEClass = null;
 
     /**
@@ -191,6 +184,15 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getDependency_Confluent() {
+        return (EAttribute)dependencyEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getAbsoluteWrite_Read() {
         return absoluteWrite_ReadEClass;
     }
@@ -220,15 +222,6 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
      */
     public EClass getWrite_Write() {
         return write_WriteEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getConditionalDep() {
-        return conditionalDepEClass;
     }
 
     /**
@@ -297,6 +290,7 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
         // Create classes and their features
         dependencyEClass = createEClass(DEPENDENCY);
         createEAttribute(dependencyEClass, DEPENDENCY__CONCURRENT);
+        createEAttribute(dependencyEClass, DEPENDENCY__CONFLUENT);
 
         absoluteWrite_ReadEClass = createEClass(ABSOLUTE_WRITE_READ);
 
@@ -305,8 +299,6 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
         absoluteWrite_RelativeWriteEClass = createEClass(ABSOLUTE_WRITE_RELATIVE_WRITE);
 
         write_WriteEClass = createEClass(WRITE_WRITE);
-
-        conditionalDepEClass = createEClass(CONDITIONAL_DEP);
 
         assignmentDepEClass = createEClass(ASSIGNMENT_DEP);
 
@@ -352,8 +344,6 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
         relativeWrite_ReadEClass.getESuperTypes().add(this.getDependency());
         absoluteWrite_RelativeWriteEClass.getESuperTypes().add(this.getDependency());
         write_WriteEClass.getESuperTypes().add(this.getDependency());
-        conditionalDepEClass.getESuperTypes().add(theScgPackage.getConditional());
-        conditionalDepEClass.getESuperTypes().add(this.getNodeDep());
         assignmentDepEClass.getESuperTypes().add(theScgPackage.getAssignment());
         assignmentDepEClass.getESuperTypes().add(this.getNodeDep());
         scGraphDepEClass.getESuperTypes().add(theScgPackage.getSCGraph());
@@ -361,6 +351,7 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
         // Initialize classes, features, and operations; add parameters
         initEClass(dependencyEClass, Dependency.class, "Dependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDependency_Concurrent(), ecorePackage.getEBoolean(), "concurrent", "false", 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDependency_Confluent(), ecorePackage.getEBoolean(), "confluent", "false", 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(absoluteWrite_ReadEClass, AbsoluteWrite_Read.class, "AbsoluteWrite_Read", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -369,8 +360,6 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
         initEClass(absoluteWrite_RelativeWriteEClass, AbsoluteWrite_RelativeWrite.class, "AbsoluteWrite_RelativeWrite", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(write_WriteEClass, Write_Write.class, "Write_Write", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-        initEClass(conditionalDepEClass, ConditionalDep.class, "ConditionalDep", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(assignmentDepEClass, AssignmentDep.class, "AssignmentDep", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
