@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scgdep;
 
 import de.cau.cs.kieler.scg.ScgPackage;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -97,13 +98,22 @@ public interface ScgdepPackage extends EPackage {
     int DEPENDENCY__TARGET = ScgPackage.LINK__TARGET;
 
     /**
+     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPENDENCY__CONCURRENT = ScgPackage.LINK_FEATURE_COUNT + 0;
+
+    /**
      * The number of structural features of the '<em>Dependency</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DEPENDENCY_FEATURE_COUNT = ScgPackage.LINK_FEATURE_COUNT + 0;
+    int DEPENDENCY_FEATURE_COUNT = ScgPackage.LINK_FEATURE_COUNT + 1;
 
     /**
      * The operation id for the '<em>Get Annotation</em>' operation.
@@ -168,6 +178,15 @@ public interface ScgdepPackage extends EPackage {
      * @ordered
      */
     int ABSOLUTE_WRITE_READ__TARGET = DEPENDENCY__TARGET;
+
+    /**
+     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ABSOLUTE_WRITE_READ__CONCURRENT = DEPENDENCY__CONCURRENT;
 
     /**
      * The number of structural features of the '<em>Absolute Write Read</em>' class.
@@ -243,6 +262,15 @@ public interface ScgdepPackage extends EPackage {
     int RELATIVE_WRITE_READ__TARGET = DEPENDENCY__TARGET;
 
     /**
+     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIVE_WRITE_READ__CONCURRENT = DEPENDENCY__CONCURRENT;
+
+    /**
      * The number of structural features of the '<em>Relative Write Read</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -316,6 +344,15 @@ public interface ScgdepPackage extends EPackage {
     int ABSOLUTE_WRITE_RELATIVE_WRITE__TARGET = DEPENDENCY__TARGET;
 
     /**
+     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ABSOLUTE_WRITE_RELATIVE_WRITE__CONCURRENT = DEPENDENCY__CONCURRENT;
+
+    /**
      * The number of structural features of the '<em>Absolute Write Relative Write</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -387,6 +424,15 @@ public interface ScgdepPackage extends EPackage {
      * @ordered
      */
     int WRITE_WRITE__TARGET = DEPENDENCY__TARGET;
+
+    /**
+     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int WRITE_WRITE__CONCURRENT = DEPENDENCY__CONCURRENT;
 
     /**
      * The number of structural features of the '<em>Write Write</em>' class.
@@ -765,6 +811,17 @@ public interface ScgdepPackage extends EPackage {
     EClass getDependency();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgdep.Dependency#isConcurrent <em>Concurrent</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Concurrent</em>'.
+     * @see de.cau.cs.kieler.scgdep.Dependency#isConcurrent()
+     * @see #getDependency()
+     * @generated
+     */
+    EAttribute getDependency_Concurrent();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scgdep.AbsoluteWrite_Read <em>Absolute Write Read</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -887,6 +944,14 @@ public interface ScgdepPackage extends EPackage {
          * @generated
          */
         EClass DEPENDENCY = eINSTANCE.getDependency();
+
+        /**
+         * The meta object literal for the '<em><b>Concurrent</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DEPENDENCY__CONCURRENT = eINSTANCE.getDependency_Concurrent();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scgdep.impl.AbsoluteWrite_ReadImpl <em>Absolute Write Read</em>}' class.

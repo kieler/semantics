@@ -41,11 +41,18 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 
 /** 
  * SCCharts CoreTransformation Extensions.
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
@@ -144,13 +151,22 @@ class SCGTransformation {
             valuedObjectSCG.applyAttributes(valuedObject)
             valuedObjectSCG.map(valuedObject)
         }
-        // Generate nodes and recursively traverse model
-        for (region : rootRegion.rootState.regions) {
-           region.transformSCGGenerateNodes(sCGraph)
-        }
-        // Generate nodes and recursively traverse model
-        for (region : rootRegion.rootState.regions) {
-           region.transformSCGConnectNodes(sCGraph)
+        // Include top most level of hierarchy 
+        // if the root state itself already contains multiple regions.
+        // Otherwise skip the first layer of hierarchy.
+        if (rootRegion.rootState.regions.size>1) {
+            // Generate nodes and recursively traverse model
+            rootRegion.transformSCGGenerateNodes(sCGraph)
+            rootRegion.transformSCGConnectNodes(sCGraph)        
+        } else {
+            // Generate nodes and recursively traverse model
+            for (region : rootRegion.rootState.regions) {
+               region.transformSCGGenerateNodes(sCGraph)
+            }
+            // Generate nodes and recursively traverse model
+            for (region : rootRegion.rootState.regions) {
+                region.transformSCGConnectNodes(sCGraph)
+            }
         }
         // Fix superfluous exit nodes
         sCGraph.trimExitNodes.trimConditioanlNodes
@@ -344,9 +360,10 @@ class SCGTransformation {
             transitionCopy.setIsImmediate(false)
             // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
             val effect = transitionCopy.effects.get(0)
-            assignment.setValuedObject((effect as de.cau.cs.kieler.sccharts.Assignment).valuedObject.getSCGValuedObject)
-            // TODO
-            //assignment.setAssignment(serializer.serialize(transitionCopy))
+            val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
+            assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
+            // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
+            assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
         }
         else if (state.conditional) {
             val conditional = sCGraph.addConditional
@@ -356,8 +373,8 @@ class SCGTransformation {
             scopeProvider.parent = transition.sourceState
             val transitionCopy = transition.copy
             transitionCopy.setIsImmediate(false)
-            // TODO
-            // conditional.setCondition(serializer.serialize(transitionCopy))
+            // TODO  Test if this works correct? Was before:  conditional.setCondition(serializer.serialize(transitionCopy))
+            conditional.setCondition(transitionCopy.trigger.convertToSCGExpression)
         }
         else if (state.fork) {
             val fork = sCGraph.addFork
@@ -384,7 +401,8 @@ class SCGTransformation {
    def void transformSCGConnectNodes(Region region, SCGraph sCGraph) {
        val entry = region.mappedEntry
        // Connect all entry nodes with the initial state's nodes.
-       val initialState = region.states.filter(e | e.isInitial).get(0)
+       // Also check the parent container in case the "initial" state is the root state.
+       val initialState = region.states.filter(e | e.isInitial || e.eContainer.eContainer == null).get(0)
        val initialNode = initialState.mappedNode
        val controlFlowInitial = initialNode.createControlFlow
        entry.setNext(controlFlowInitial)
@@ -466,12 +484,19 @@ class SCGTransformation {
                 }   
                 region.transformSCGConnectNodes(sCGraph)
             }
-            val normalTerminationTargetState = state.outgoingTransitions.get(0).targetState
-            val otherNodeNormalTermination = normalTerminationTargetState.mappedNode   
-            if (otherNodeNormalTermination != null) {
-                val controlFlowNormalTermination = otherNodeNormalTermination.createControlFlow
-                join.setNext(controlFlowNormalTermination)
-            }   
+            if (state.outgoingTransitions.size>0) {
+                val normalTerminationTargetState = state.outgoingTransitions.get(0).targetState
+                val otherNodeNormalTermination = normalTerminationTargetState.mappedNode   
+                if (otherNodeNormalTermination != null) {
+                    val controlFlowNormalTermination = otherNodeNormalTermination.createControlFlow
+                    join.setNext(controlFlowNormalTermination)
+                }   
+            } else {
+                // The root state does not have a normal termination.
+                // Use the corresponding exit node of the root region in this case. 
+                val controlFlow = (state.eContainer as Region).getMappedEntry.exit.createControlFlow 
+                join.setNext(controlFlow)
+            }
         }
         else if (state.exit) {
             // For a final state connect it's exit node representation with the exit node
@@ -481,6 +506,49 @@ class SCGTransformation {
             val controlFlowFinal = regionExit.createControlFlow
             nodeExit.setNext(controlFlowFinal)
         }
+    }
+
+    //-------------------------------------------------------------------------
+    //--              C O N V E R T   E X P R E S S I O N S                  --
+    //-------------------------------------------------------------------------
+
+    // Create a new reference Expression to the corresponding sValuedObject of the expression
+    def dispatch Expression convertToSCGExpression(ValuedObjectReference expression) {
+        expression.valuedObject.SCGValuedObject.reference
+    }
+
+    // Apply conversion to operator expressions like and, equals, not, greater, val, pre, add, etc.
+    def dispatch Expression convertToSCGExpression(OperatorExpression expression) {
+        val newExpression = createOperatorExpression(expression.operator)
+        for (subExpression : expression.subExpressions) {
+            newExpression.subExpressions.add(subExpression.convertToSCGExpression)
+        }
+        return newExpression;
+    }
+
+    // Apply conversion to integer values
+    def dispatch Expression convertToSCGExpression(IntValue expression) {
+        createIntValue(expression.value)
+    }
+
+    // Apply conversion to float values
+    def dispatch Expression convertToSCGExpression(FloatValue expression) {
+        createFloatValue(expression.value)
+    }
+
+    // Apply conversion to boolean values
+    def dispatch Expression convertToSCGExpression(BoolValue expression) {
+        createBoolValue(expression.value)
+    }    
+
+    // Apply conversion to textual host code 
+    def dispatch Expression convertToSCGExpression(TextExpression expression) {
+        createTextExpression(expression.text)
+    }    
+    
+    // Apply conversion to the default case
+    def dispatch Expression convertToSCGExpression(Expression expression) {
+        createExpression
     }
 
    // -------------------------------------------------------------------------   

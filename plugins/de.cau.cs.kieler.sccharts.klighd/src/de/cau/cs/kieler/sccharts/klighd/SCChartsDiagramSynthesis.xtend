@@ -521,7 +521,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 declaration = declaration.trim + " "
                             }
                             it.printHighlightedText(declaration + type + sig.name + init + combine, sig)
-                            ((it as KContainerRendering).childPlacement as KGridPlacement).from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 0, 0)
+                            // TODO: UNCOMMENT THIS IN THE FUTURE WHEN USING ALTERNATIVE IMPLEMENTATION OF PRINT HIGHLIGHTED TEXT
+                            //((it as KContainerRendering).childPlacement as KGridPlacement).from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 0, 0)
                         ];
                     }
 

@@ -33,7 +33,7 @@ import de.cau.cs.kieler.core.krendering.KPolygon
 /**
  * KRendering Utility class for KLighD visualization.
  * 
- * @author chsch
+ * @author chsch ssm
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
