@@ -25,8 +25,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cTransitionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Assignment cAnnotationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
-		private final Assignment cIsImmediateAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cIsImmediateImmediateKeyword_2_0 = (Keyword)cIsImmediateAssignment_2.eContents().get(0);
+		private final Assignment cImmediateAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cImmediateImmediateKeyword_2_0 = (Keyword)cImmediateAssignment_2.eContents().get(0);
 		private final Assignment cDelayAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cDelayINTTerminalRuleCall_3_0 = (RuleCall)cDelayAssignment_3.eContents().get(0);
 		private final Assignment cTriggerAssignment_4 = (Assignment)cGroup.eContents().get(4);
@@ -45,11 +45,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//// the features type, targetState, priority, isHistory are ignored and set as transient
 		//// you need to override the rule to support transitions properly
 		//Transition returns sccharts::Transition:
-		//	{sccharts::Transition} annotations+=Annotation* isImmediate?="immediate"? delay=INT? trigger=BoolExpression? ("/"
+		//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? trigger=BoolExpression? ("/"
 		//	effects+=Effect (";" effects+=Effect)*)?;
 		public ParserRule getRule() { return rule; }
 
-		//{sccharts::Transition} annotations+=Annotation* isImmediate?="immediate"? delay=INT? trigger=BoolExpression? ("/"
+		//{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? trigger=BoolExpression? ("/"
 		//effects+=Effect (";" effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
@@ -62,11 +62,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0() { return cAnnotationsAnnotationParserRuleCall_1_0; }
 
-		//isImmediate?="immediate"?
-		public Assignment getIsImmediateAssignment_2() { return cIsImmediateAssignment_2; }
+		//immediate?="immediate"?
+		public Assignment getImmediateAssignment_2() { return cImmediateAssignment_2; }
 
 		//"immediate"
-		public Keyword getIsImmediateImmediateKeyword_2_0() { return cIsImmediateImmediateKeyword_2_0; }
+		public Keyword getImmediateImmediateKeyword_2_0() { return cImmediateImmediateKeyword_2_0; }
 
 		//delay=INT?
 		public Assignment getDelayAssignment_3() { return cDelayAssignment_3; }
@@ -181,8 +181,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DuringAction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cDuringActionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cIsImmediateAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cIsImmediateImmediateKeyword_1_0 = (Keyword)cIsImmediateAssignment_1.eContents().get(0);
+		private final Assignment cImmediateAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cImmediateImmediateKeyword_1_0 = (Keyword)cImmediateAssignment_1.eContents().get(0);
 		private final Keyword cDuringKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
@@ -198,21 +198,21 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DuringAction returns sccharts::DuringAction:
 		//	{sccharts::DuringAction} //    (annotations += Annotation)*
-		//	isImmediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+		//	immediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::DuringAction} //    (annotations += Annotation)*
-		//isImmediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"
+		//immediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::DuringAction}
 		public Action getDuringActionAction_0() { return cDuringActionAction_0; }
 
-		//isImmediate?="immediate"?
-		public Assignment getIsImmediateAssignment_1() { return cIsImmediateAssignment_1; }
+		//immediate?="immediate"?
+		public Assignment getImmediateAssignment_1() { return cImmediateAssignment_1; }
 
 		//"immediate"
-		public Keyword getIsImmediateImmediateKeyword_1_0() { return cIsImmediateImmediateKeyword_1_0; }
+		public Keyword getImmediateImmediateKeyword_1_0() { return cImmediateImmediateKeyword_1_0; }
 
 		//"during"
 		public Keyword getDuringKeyword_2() { return cDuringKeyword_2; }
@@ -322,8 +322,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SuspendAction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cSuspendActionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cIsImmediateAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cIsImmediateImmediateKeyword_1_0 = (Keyword)cIsImmediateAssignment_1.eContents().get(0);
+		private final Assignment cImmediateAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cImmediateImmediateKeyword_1_0 = (Keyword)cImmediateAssignment_1.eContents().get(0);
 		private final Keyword cSuspendKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cTriggerBoolExpressionParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
@@ -331,21 +331,21 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SuspendAction returns sccharts::SuspendAction:
 		//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-		//	isImmediate?="immediate"? "suspend" trigger=BoolExpression? ";";
+		//	immediate?="immediate"? "suspend" trigger=BoolExpression? ";";
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::SuspendAction} //    (annotations += Annotation)*
-		//isImmediate?="immediate"? "suspend" trigger=BoolExpression? ";"
+		//immediate?="immediate"? "suspend" trigger=BoolExpression? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::SuspendAction}
 		public Action getSuspendActionAction_0() { return cSuspendActionAction_0; }
 
-		//isImmediate?="immediate"?
-		public Assignment getIsImmediateAssignment_1() { return cIsImmediateAssignment_1; }
+		//immediate?="immediate"?
+		public Assignment getImmediateAssignment_1() { return cImmediateAssignment_1; }
 
 		//"immediate"
-		public Keyword getIsImmediateImmediateKeyword_1_0() { return cIsImmediateImmediateKeyword_1_0; }
+		public Keyword getImmediateImmediateKeyword_1_0() { return cImmediateImmediateKeyword_1_0; }
 
 		//"suspend"
 		public Keyword getSuspendKeyword_2() { return cSuspendKeyword_2; }
@@ -551,7 +551,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// the features type, targetState, priority, isHistory are ignored and set as transient
 	//// you need to override the rule to support transitions properly
 	//Transition returns sccharts::Transition:
-	//	{sccharts::Transition} annotations+=Annotation* isImmediate?="immediate"? delay=INT? trigger=BoolExpression? ("/"
+	//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? trigger=BoolExpression? ("/"
 	//	effects+=Effect (";" effects+=Effect)*)?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
@@ -579,7 +579,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DuringAction returns sccharts::DuringAction:
 	//	{sccharts::DuringAction} //    (annotations += Annotation)*
-	//	isImmediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+	//	immediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
 	public DuringActionElements getDuringActionAccess() {
 		return (pDuringAction != null) ? pDuringAction : (pDuringAction = new DuringActionElements());
 	}
@@ -601,7 +601,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SuspendAction returns sccharts::SuspendAction:
 	//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-	//	isImmediate?="immediate"? "suspend" trigger=BoolExpression? ";";
+	//	immediate?="immediate"? "suspend" trigger=BoolExpression? ";";
 	public SuspendActionElements getSuspendActionAccess() {
 		return (pSuspendAction != null) ? pSuspendAction : (pSuspendAction = new SuspendActionElements());
 	}

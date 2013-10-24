@@ -5631,22 +5631,22 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Transition__Group__2__Impl"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1824:1: rule__Transition__Group__2__Impl : ( ( rule__Transition__IsImmediateAssignment_2 )? ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1824:1: rule__Transition__Group__2__Impl : ( ( rule__Transition__ImmediateAssignment_2 )? ) ;
     public final void rule__Transition__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1828:1: ( ( ( rule__Transition__IsImmediateAssignment_2 )? ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1829:1: ( ( rule__Transition__IsImmediateAssignment_2 )? )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1828:1: ( ( ( rule__Transition__ImmediateAssignment_2 )? ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1829:1: ( ( rule__Transition__ImmediateAssignment_2 )? )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1829:1: ( ( rule__Transition__IsImmediateAssignment_2 )? )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1830:1: ( rule__Transition__IsImmediateAssignment_2 )?
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1829:1: ( ( rule__Transition__ImmediateAssignment_2 )? )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1830:1: ( rule__Transition__ImmediateAssignment_2 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTransitionAccess().getIsImmediateAssignment_2()); 
+               before(grammarAccess.getTransitionAccess().getImmediateAssignment_2()); 
             }
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1831:1: ( rule__Transition__IsImmediateAssignment_2 )?
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1831:1: ( rule__Transition__ImmediateAssignment_2 )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -5655,10 +5655,10 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt15) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1831:2: rule__Transition__IsImmediateAssignment_2
+                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:1831:2: rule__Transition__ImmediateAssignment_2
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Transition__IsImmediateAssignment_2_in_rule__Transition__Group__2__Impl3880);
-                    rule__Transition__IsImmediateAssignment_2();
+                    pushFollow(FollowSets000.FOLLOW_rule__Transition__ImmediateAssignment_2_in_rule__Transition__Group__2__Impl3880);
+                    rule__Transition__ImmediateAssignment_2();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -5669,7 +5669,7 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTransitionAccess().getIsImmediateAssignment_2()); 
+               after(grammarAccess.getTransitionAccess().getImmediateAssignment_2()); 
             }
 
             }
@@ -16189,9 +16189,9 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Transition__AnnotationsAssignment_1"
 
 
-    // $ANTLR start "rule__Transition__IsImmediateAssignment_2"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:5670:1: rule__Transition__IsImmediateAssignment_2 : ( ( 'immediate' ) ) ;
-    public final void rule__Transition__IsImmediateAssignment_2() throws RecognitionException {
+    // $ANTLR start "rule__Transition__ImmediateAssignment_2"
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:5670:1: rule__Transition__ImmediateAssignment_2 : ( ( 'immediate' ) ) ;
+    public final void rule__Transition__ImmediateAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -16203,23 +16203,23 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:5676:1: ( 'immediate' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTransitionAccess().getIsImmediateImmediateKeyword_2_0()); 
+               before(grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_2_0()); 
             }
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:5677:1: ( 'immediate' )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:5678:1: 'immediate'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTransitionAccess().getIsImmediateImmediateKeyword_2_0()); 
+               before(grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_2_0()); 
             }
-            match(input,41,FollowSets000.FOLLOW_41_in_rule__Transition__IsImmediateAssignment_211440); if (state.failed) return ;
+            match(input,41,FollowSets000.FOLLOW_41_in_rule__Transition__ImmediateAssignment_211440); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTransitionAccess().getIsImmediateImmediateKeyword_2_0()); 
+               after(grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_2_0()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTransitionAccess().getIsImmediateImmediateKeyword_2_0()); 
+               after(grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_2_0()); 
             }
 
             }
@@ -16239,7 +16239,7 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Transition__IsImmediateAssignment_2"
+    // $ANTLR end "rule__Transition__ImmediateAssignment_2"
 
 
     // $ANTLR start "rule__Transition__DelayAssignment_3"
@@ -20139,7 +20139,7 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_rule__Transition__AnnotationsAssignment_1_in_rule__Transition__Group__1__Impl3819 = new BitSet(new long[]{0x0000002000000402L});
         public static final BitSet FOLLOW_rule__Transition__Group__2__Impl_in_rule__Transition__Group__23850 = new BitSet(new long[]{0x00000225025207E0L});
         public static final BitSet FOLLOW_rule__Transition__Group__3_in_rule__Transition__Group__23853 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__IsImmediateAssignment_2_in_rule__Transition__Group__2__Impl3880 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__ImmediateAssignment_2_in_rule__Transition__Group__2__Impl3880 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Transition__Group__3__Impl_in_rule__Transition__Group__33911 = new BitSet(new long[]{0x00000225025207E0L});
         public static final BitSet FOLLOW_rule__Transition__Group__4_in_rule__Transition__Group__33914 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Transition__DelayAssignment_3_in_rule__Transition__Group__3__Impl3941 = new BitSet(new long[]{0x0000000000000002L});
@@ -20452,7 +20452,7 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__111339 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl11366 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAnnotation_in_rule__Transition__AnnotationsAssignment_111404 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_41_in_rule__Transition__IsImmediateAssignment_211440 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_41_in_rule__Transition__ImmediateAssignment_211440 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_INT_in_rule__Transition__DelayAssignment_311479 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleBoolExpression_in_rule__Transition__TriggerAssignment_411510 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleEffect_in_rule__Transition__EffectsAssignment_5_111541 = new BitSet(new long[]{0x0000000000000002L});

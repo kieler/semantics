@@ -113,16 +113,16 @@ ruleTransition returns [EObject current=null]
 )
 )*(
 (
-		lv_isImmediate_2_0=	'immediate' 
+		lv_immediate_2_0=	'immediate' 
     {
-        newLeafNode(lv_isImmediate_2_0, grammarAccess.getTransitionAccess().getIsImmediateImmediateKeyword_2_0());
+        newLeafNode(lv_immediate_2_0, grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_2_0());
     }
  
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getTransitionRule());
 	        }
-       		setWithLastConsumed($current, "isImmediate", true, "immediate");
+       		setWithLastConsumed($current, "immediate", true, "immediate");
 	    }
 
 )

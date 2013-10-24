@@ -475,7 +475,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         ((isInitial?='initial' isFinal?='final'?) | (isFinal?='final' isInitial?='initial'?))? 
+	 *         ((initial?='initial' final?='final'?) | (final?='final' initial?='initial'?))? 
 	 *         type=StateType? 
 	 *         id=ID 
 	 *         label=STRING? 
@@ -523,7 +523,12 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         type=TransitionType 
 	 *         priority=INT? 
 	 *         targetState=[State|ID] 
-	 *         (isImmediate?='immediate'? isHistory?='history'? ((delay=INT? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?) | label=STRING)?)?
+	 *         (
+	 *             immediate?='immediate'? 
+	 *             history=HistoryType? 
+	 *             deferred?='deferred'? 
+	 *             ((delay=INT? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?) | label=STRING)?
+	 *         )?
 	 *     )
 	 */
 	protected void sequence_Transition(EObject context, Transition semanticObject) {
@@ -535,10 +540,10 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         isInput?='input'? 
-	 *         isOutput?='output'? 
-	 *         isStatic?='static'? 
-	 *         isSignal?='signal'? 
+	 *         input?='input'? 
+	 *         output?='output'? 
+	 *         static?='static'? 
+	 *         signal?='signal'? 
 	 *         type=ValueType? 
 	 *         name=ID 
 	 *         initialValue=Expression? 

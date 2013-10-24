@@ -61,14 +61,14 @@ public class SctFormatter extends ActionsFormatter {
 //         *  STATE
 //         */
               c.setLinewrap(2).before(f.getStateAccess().getStateKeyword_3());
-              c.setLinewrap(2).before(f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0());
-              c.setLinewrap(2).before(f.getStateAccess().getIsInitialInitialKeyword_1_0_0_0());
+              c.setLinewrap(2).before(f.getStateAccess().getFinalFinalKeyword_1_1_0_0());
+              c.setLinewrap(2).before(f.getStateAccess().getInitialInitialKeyword_1_0_0_0());
 
-              c.setNoLinewrap().between(f.getStateAccess().getIsInitialInitialKeyword_1_0_0_0(), f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0());
-              c.setNoLinewrap().between(f.getStateAccess().getIsInitialInitialKeyword_1_0_0_0(), f.getStateAccess().getStateKeyword_3());
-              c.setNoLinewrap().between(f.getStateAccess().getIsInitialInitialKeyword_1_1_1_0() , f.getStateAccess().getStateKeyword_3());
-              c.setNoLinewrap().between(f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0() , f.getStateAccess().getStateKeyword_3());
-              c.setNoLinewrap().between(f.getStateAccess().getIsFinalFinalKeyword_1_0_1_0() , f.getStateAccess().getStateKeyword_3());
+              c.setNoLinewrap().between(f.getStateAccess().getInitialInitialKeyword_1_0_0_0(), f.getStateAccess().getFinalFinalKeyword_1_1_0_0());
+              c.setNoLinewrap().between(f.getStateAccess().getInitialInitialKeyword_1_0_0_0(), f.getStateAccess().getStateKeyword_3());
+              c.setNoLinewrap().between(f.getStateAccess().getInitialInitialKeyword_1_1_1_0() , f.getStateAccess().getStateKeyword_3());
+              c.setNoLinewrap().between(f.getStateAccess().getFinalFinalKeyword_1_1_0_0() , f.getStateAccess().getStateKeyword_3());
+              c.setNoLinewrap().between(f.getStateAccess().getFinalFinalKeyword_1_0_1_0() , f.getStateAccess().getStateKeyword_3());
 
 //            /*
 //            *  CONNECTOR
@@ -109,9 +109,9 @@ public class SctFormatter extends ActionsFormatter {
 
         // let each transition declaration begin on a new line
         c.setLinewrap().before(f.getTransitionRule());
-        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_4_2_1_0_2_2_0());
-        c.setNoLinewrap().before(f.getTransitionAccess().getSolidusKeyword_4_2_1_0_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
-        c.setNoLinewrap().before(f.getTransitionAccess().getSemicolonKeyword_4_2_1_0_2_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
+        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_4_3_1_0_2_2_0());
+        c.setNoLinewrap().before(f.getTransitionAccess().getSolidusKeyword_4_3_1_0_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
+        c.setNoLinewrap().before(f.getTransitionAccess().getSemicolonKeyword_4_3_1_0_2_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
         c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_8());
 
     }

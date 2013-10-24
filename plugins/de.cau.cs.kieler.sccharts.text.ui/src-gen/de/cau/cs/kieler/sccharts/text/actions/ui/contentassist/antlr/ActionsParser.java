@@ -107,7 +107,7 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExtendedIDAccess().getGroup(), "rule__ExtendedID__Group__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup_1(), "rule__ExtendedID__Group_1__0");
 					put(grammarAccess.getTransitionAccess().getAnnotationsAssignment_1(), "rule__Transition__AnnotationsAssignment_1");
-					put(grammarAccess.getTransitionAccess().getIsImmediateAssignment_2(), "rule__Transition__IsImmediateAssignment_2");
+					put(grammarAccess.getTransitionAccess().getImmediateAssignment_2(), "rule__Transition__ImmediateAssignment_2");
 					put(grammarAccess.getTransitionAccess().getDelayAssignment_3(), "rule__Transition__DelayAssignment_3");
 					put(grammarAccess.getTransitionAccess().getTriggerAssignment_4(), "rule__Transition__TriggerAssignment_4");
 					put(grammarAccess.getTransitionAccess().getEffectsAssignment_5_1(), "rule__Transition__EffectsAssignment_5_1");
@@ -115,14 +115,14 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEntryActionAccess().getTriggerAssignment_2(), "rule__EntryAction__TriggerAssignment_2");
 					put(grammarAccess.getEntryActionAccess().getEffectsAssignment_3_1(), "rule__EntryAction__EffectsAssignment_3_1");
 					put(grammarAccess.getEntryActionAccess().getEffectsAssignment_3_2_1(), "rule__EntryAction__EffectsAssignment_3_2_1");
-					put(grammarAccess.getDuringActionAccess().getIsImmediateAssignment_1(), "rule__DuringAction__IsImmediateAssignment_1");
+					put(grammarAccess.getDuringActionAccess().getImmediateAssignment_1(), "rule__DuringAction__ImmediateAssignment_1");
 					put(grammarAccess.getDuringActionAccess().getTriggerAssignment_3(), "rule__DuringAction__TriggerAssignment_3");
 					put(grammarAccess.getDuringActionAccess().getEffectsAssignment_4_1(), "rule__DuringAction__EffectsAssignment_4_1");
 					put(grammarAccess.getDuringActionAccess().getEffectsAssignment_4_2_1(), "rule__DuringAction__EffectsAssignment_4_2_1");
 					put(grammarAccess.getExitActionAccess().getTriggerAssignment_2(), "rule__ExitAction__TriggerAssignment_2");
 					put(grammarAccess.getExitActionAccess().getEffectsAssignment_3_1(), "rule__ExitAction__EffectsAssignment_3_1");
 					put(grammarAccess.getExitActionAccess().getEffectsAssignment_3_2_1(), "rule__ExitAction__EffectsAssignment_3_2_1");
-					put(grammarAccess.getSuspendActionAccess().getIsImmediateAssignment_1(), "rule__SuspendAction__IsImmediateAssignment_1");
+					put(grammarAccess.getSuspendActionAccess().getImmediateAssignment_1(), "rule__SuspendAction__ImmediateAssignment_1");
 					put(grammarAccess.getSuspendActionAccess().getTriggerAssignment_3(), "rule__SuspendAction__TriggerAssignment_3");
 					put(grammarAccess.getEmissionAccess().getValuedObjectAssignment_0(), "rule__Emission__ValuedObjectAssignment_0");
 					put(grammarAccess.getEmissionAccess().getNewValueAssignment_1_1(), "rule__Emission__NewValueAssignment_1_1");

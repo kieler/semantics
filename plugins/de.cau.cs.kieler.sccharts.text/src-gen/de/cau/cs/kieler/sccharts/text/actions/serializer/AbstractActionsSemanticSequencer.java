@@ -388,7 +388,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     (isImmediate?='immediate'? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
+	 *     (immediate?='immediate'? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
 	protected void sequence_DuringAction(EObject context, DuringAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -424,7 +424,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     (isImmediate?='immediate'? trigger=BoolExpression?)
+	 *     (immediate?='immediate'? trigger=BoolExpression?)
 	 */
 	protected void sequence_SuspendAction(EObject context, SuspendAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -449,7 +449,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* isImmediate?='immediate'? delay=INT? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
+	 *     (annotations+=Annotation* immediate?='immediate'? delay=INT? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
 	protected void sequence_Transition(EObject context, Transition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

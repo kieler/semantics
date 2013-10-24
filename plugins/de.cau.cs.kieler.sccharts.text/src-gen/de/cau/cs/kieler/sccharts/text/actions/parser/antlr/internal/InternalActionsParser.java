@@ -149,11 +149,11 @@ public class InternalActionsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTransition"
-    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:83:1: ruleTransition returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_isImmediate_2_0= 'immediate' ) )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleBoolExpression ) )? (otherlv_5= '/' ( (lv_effects_6_0= ruleEffect ) ) (otherlv_7= ';' ( (lv_effects_8_0= ruleEffect ) ) )* )? ) ;
+    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:83:1: ruleTransition returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_immediate_2_0= 'immediate' ) )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleBoolExpression ) )? (otherlv_5= '/' ( (lv_effects_6_0= ruleEffect ) ) (otherlv_7= ';' ( (lv_effects_8_0= ruleEffect ) ) )* )? ) ;
     public final EObject ruleTransition() throws RecognitionException {
         EObject current = null;
 
-        Token lv_isImmediate_2_0=null;
+        Token lv_immediate_2_0=null;
         Token lv_delay_3_0=null;
         Token otherlv_5=null;
         Token otherlv_7=null;
@@ -169,11 +169,11 @@ public class InternalActionsParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:86:28: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_isImmediate_2_0= 'immediate' ) )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleBoolExpression ) )? (otherlv_5= '/' ( (lv_effects_6_0= ruleEffect ) ) (otherlv_7= ';' ( (lv_effects_8_0= ruleEffect ) ) )* )? ) )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:87:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_isImmediate_2_0= 'immediate' ) )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleBoolExpression ) )? (otherlv_5= '/' ( (lv_effects_6_0= ruleEffect ) ) (otherlv_7= ';' ( (lv_effects_8_0= ruleEffect ) ) )* )? )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:86:28: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_immediate_2_0= 'immediate' ) )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleBoolExpression ) )? (otherlv_5= '/' ( (lv_effects_6_0= ruleEffect ) ) (otherlv_7= ';' ( (lv_effects_8_0= ruleEffect ) ) )* )? ) )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:87:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_immediate_2_0= 'immediate' ) )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleBoolExpression ) )? (otherlv_5= '/' ( (lv_effects_6_0= ruleEffect ) ) (otherlv_7= ';' ( (lv_effects_8_0= ruleEffect ) ) )* )? )
             {
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:87:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_isImmediate_2_0= 'immediate' ) )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleBoolExpression ) )? (otherlv_5= '/' ( (lv_effects_6_0= ruleEffect ) ) (otherlv_7= ';' ( (lv_effects_8_0= ruleEffect ) ) )* )? )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:87:2: () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_isImmediate_2_0= 'immediate' ) )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleBoolExpression ) )? (otherlv_5= '/' ( (lv_effects_6_0= ruleEffect ) ) (otherlv_7= ';' ( (lv_effects_8_0= ruleEffect ) ) )* )?
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:87:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_immediate_2_0= 'immediate' ) )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleBoolExpression ) )? (otherlv_5= '/' ( (lv_effects_6_0= ruleEffect ) ) (otherlv_7= ';' ( (lv_effects_8_0= ruleEffect ) ) )* )? )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:87:2: () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_immediate_2_0= 'immediate' ) )? ( (lv_delay_3_0= RULE_INT ) )? ( (lv_trigger_4_0= ruleBoolExpression ) )? (otherlv_5= '/' ( (lv_effects_6_0= ruleEffect ) ) (otherlv_7= ';' ( (lv_effects_8_0= ruleEffect ) ) )* )?
             {
             // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:87:2: ()
             // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:88:2: 
@@ -246,7 +246,7 @@ public class InternalActionsParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:114:3: ( (lv_isImmediate_2_0= 'immediate' ) )?
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:114:3: ( (lv_immediate_2_0= 'immediate' ) )?
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -255,15 +255,15 @@ public class InternalActionsParser extends AbstractInternalAntlrParser {
             }
             switch (alt2) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:115:1: (lv_isImmediate_2_0= 'immediate' )
+                    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:115:1: (lv_immediate_2_0= 'immediate' )
                     {
-                    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:115:1: (lv_isImmediate_2_0= 'immediate' )
-                    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:116:3: lv_isImmediate_2_0= 'immediate'
+                    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:115:1: (lv_immediate_2_0= 'immediate' )
+                    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/actions/parser/antlr/internal/InternalActions.g:116:3: lv_immediate_2_0= 'immediate'
                     {
-                    lv_isImmediate_2_0=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleTransition168); if (state.failed) return current;
+                    lv_immediate_2_0=(Token)match(input,16,FollowSets000.FOLLOW_16_in_ruleTransition168); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                              newLeafNode(lv_isImmediate_2_0, grammarAccess.getTransitionAccess().getIsImmediateImmediateKeyword_2_0());
+                              newLeafNode(lv_immediate_2_0, grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_2_0());
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -271,7 +271,7 @@ public class InternalActionsParser extends AbstractInternalAntlrParser {
                       	        if (current==null) {
                       	            current = createModelElement(grammarAccess.getTransitionRule());
                       	        }
-                             		setWithLastConsumed(current, "isImmediate", true, "immediate");
+                             		setWithLastConsumed(current, "immediate", true, "immediate");
                       	    
                     }
 

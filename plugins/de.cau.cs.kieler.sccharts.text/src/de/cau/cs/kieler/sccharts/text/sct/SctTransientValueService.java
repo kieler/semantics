@@ -262,7 +262,7 @@ public class SctTransientValueService extends DefaultTransientValueService {
 
 
     private boolean actionIsEmpty(Action a) {
-        return a.getDelay() == 1 && a.isIsImmediate() == false
+        return a.getDelay() == 1 && a.isImmediate() == false
           && a.getTrigger() == null && a.getEffects().isEmpty();
     }
 

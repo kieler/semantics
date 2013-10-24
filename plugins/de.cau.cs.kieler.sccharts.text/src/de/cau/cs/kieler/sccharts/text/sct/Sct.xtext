@@ -69,9 +69,9 @@ SCChart returns sccharts::State:
 State returns sccharts::State:
     (annotations += Annotation)*
     (
-      ((isInitial?='initial') (isFinal?='final')?)
+      ((initial?='initial') (final?='final')?)
      |
-      ((isFinal?='final') (isInitial?='initial')?)
+      ((final?='final') (initial?='initial')?)
      )?
   
     (type=StateType)? ('state') (id=ID) (label=STRING)?
@@ -106,7 +106,7 @@ LocalAction returns sccharts::LocalAction:
 Transition returns sccharts::Transition:
     (annotations += Annotation)*
 	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
-	( (isImmediate?='immediate')? (isHistory?='history')? ('with'
+	( (immediate?='immediate')? (history=HistoryType)? (deferred?='deferred')? ('with'
 	 (
 	   ( (delay=INT)? (trigger=BoolExpression)? ('/' effects+=Effect (';'effects+=Effect)*)? )
 	  |
@@ -119,10 +119,10 @@ Transition returns sccharts::Transition:
 
 ValuedObject returns kexpressions::ValuedObject:
     (annotations+=Annotation)*
-    (isInput?='input')?
-    (isOutput?='output')?
-    (isStatic?='static')?
-    (isSignal?='signal')?
+    (input?='input')?
+    (output?='output')?
+    (static?='static')?
+    (signal?='signal')?
     (type = ValueType)?
     name=ID ('=' initialValue=Expression)?
     ( 'combine'
@@ -147,3 +147,9 @@ enum StateType returns sccharts::StateType:
 
 enum TransitionType returns sccharts::TransitionType:
 	WEAKABORT = '-->' | STRONGABORT = 'o->' | NORMALTERMINATION = '>->';
+
+
+enum HistoryType returns sccharts::HistoryType:
+    RESET = 'reset' | SHALLOW = 'shallow history' | DEEP = 'history';
+	
+	

@@ -1827,9 +1827,9 @@ rule__Transition__Group__2__Impl
     }
 :
 (
-{ before(grammarAccess.getTransitionAccess().getIsImmediateAssignment_2()); }
-(rule__Transition__IsImmediateAssignment_2)?
-{ after(grammarAccess.getTransitionAccess().getIsImmediateAssignment_2()); }
+{ before(grammarAccess.getTransitionAccess().getImmediateAssignment_2()); }
+(rule__Transition__ImmediateAssignment_2)?
+{ after(grammarAccess.getTransitionAccess().getImmediateAssignment_2()); }
 )
 
 ;
@@ -5667,22 +5667,22 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Transition__IsImmediateAssignment_2
+rule__Transition__ImmediateAssignment_2
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getTransitionAccess().getIsImmediateImmediateKeyword_2_0()); }
+{ before(grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_2_0()); }
 (
-{ before(grammarAccess.getTransitionAccess().getIsImmediateImmediateKeyword_2_0()); }
+{ before(grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_2_0()); }
 
 	'immediate' 
 
-{ after(grammarAccess.getTransitionAccess().getIsImmediateImmediateKeyword_2_0()); }
+{ after(grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_2_0()); }
 )
 
-{ after(grammarAccess.getTransitionAccess().getIsImmediateImmediateKeyword_2_0()); }
+{ after(grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_2_0()); }
 )
 
 ;
