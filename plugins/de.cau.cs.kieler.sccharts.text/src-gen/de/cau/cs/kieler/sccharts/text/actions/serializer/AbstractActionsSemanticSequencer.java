@@ -449,7 +449,15 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* immediate?='immediate'? delay=INT? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         immediate?='immediate'? 
+	 *         delay=INT? 
+	 *         history=HistoryType? 
+	 *         deferred?='deferred'? 
+	 *         trigger=BoolExpression? 
+	 *         (effects+=Effect effects+=Effect*)?
+	 *     )
 	 */
 	protected void sequence_Transition(EObject context, Transition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

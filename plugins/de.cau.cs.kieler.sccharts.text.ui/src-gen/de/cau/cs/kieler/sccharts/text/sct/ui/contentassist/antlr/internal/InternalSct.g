@@ -1558,25 +1558,6 @@ finally {
 
 
 
-// Rule HistoryType
-ruleHistoryType
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getHistoryTypeAccess().getAlternatives()); }
-(rule__HistoryType__Alternatives)
-{ after(grammarAccess.getHistoryTypeAccess().getAlternatives()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
 // Rule DivOperator
 ruleDivOperator
     @init {
@@ -1588,6 +1569,25 @@ ruleDivOperator
 (	':' 
 )
 { after(grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
+// Rule HistoryType
+ruleHistoryType
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getHistoryTypeAccess().getAlternatives()); }
+(rule__HistoryType__Alternatives)
+{ after(grammarAccess.getHistoryTypeAccess().getAlternatives()); }
 )
 
 ;

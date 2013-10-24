@@ -4653,26 +4653,73 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "ruleTransitionType"
 
 
+    // $ANTLR start "ruleDivOperator"
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1562:1: ruleDivOperator : ( ( ':' ) ) ;
+    public final void ruleDivOperator() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1566:1: ( ( ( ':' ) ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1567:1: ( ( ':' ) )
+            {
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1567:1: ( ( ':' ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1568:1: ( ':' )
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration()); 
+            }
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1569:1: ( ':' )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1569:3: ':'
+            {
+            match(input,16,FollowSets000.FOLLOW_16_in_ruleDivOperator3274); if (state.failed) return ;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "ruleDivOperator"
+
+
     // $ANTLR start "ruleHistoryType"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1562:1: ruleHistoryType : ( ( rule__HistoryType__Alternatives ) ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1582:1: ruleHistoryType : ( ( rule__HistoryType__Alternatives ) ) ;
     public final void ruleHistoryType() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1566:1: ( ( ( rule__HistoryType__Alternatives ) ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1567:1: ( ( rule__HistoryType__Alternatives ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1586:1: ( ( ( rule__HistoryType__Alternatives ) ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1587:1: ( ( rule__HistoryType__Alternatives ) )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1567:1: ( ( rule__HistoryType__Alternatives ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1568:1: ( rule__HistoryType__Alternatives )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1587:1: ( ( rule__HistoryType__Alternatives ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1588:1: ( rule__HistoryType__Alternatives )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getHistoryTypeAccess().getAlternatives()); 
             }
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1569:1: ( rule__HistoryType__Alternatives )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1569:2: rule__HistoryType__Alternatives
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1589:1: ( rule__HistoryType__Alternatives )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1589:2: rule__HistoryType__Alternatives
             {
-            pushFollow(FollowSets000.FOLLOW_rule__HistoryType__Alternatives_in_ruleHistoryType3273);
+            pushFollow(FollowSets000.FOLLOW_rule__HistoryType__Alternatives_in_ruleHistoryType3312);
             rule__HistoryType__Alternatives();
 
             state._fsp--;
@@ -4702,53 +4749,6 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         return ;
     }
     // $ANTLR end "ruleHistoryType"
-
-
-    // $ANTLR start "ruleDivOperator"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1581:1: ruleDivOperator : ( ( ':' ) ) ;
-    public final void ruleDivOperator() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1585:1: ( ( ( ':' ) ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1586:1: ( ( ':' ) )
-            {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1586:1: ( ( ':' ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1587:1: ( ':' )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration()); 
-            }
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1588:1: ( ':' )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:1588:3: ':'
-            {
-            match(input,16,FollowSets000.FOLLOW_16_in_ruleDivOperator3310); if (state.failed) return ;
-
-            }
-
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "ruleDivOperator"
 
 
     // $ANTLR start "ruleCompareOperator"
@@ -41929,8 +41929,8 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_rule__ExtendedID__Group__0_in_ruleExtendedID3164 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__StateType__Alternatives_in_ruleStateType3201 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TransitionType__Alternatives_in_ruleTransitionType3237 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__HistoryType__Alternatives_in_ruleHistoryType3273 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_ruleDivOperator3310 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_16_in_ruleDivOperator3274 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__HistoryType__Alternatives_in_ruleHistoryType3312 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__CompareOperator__Alternatives_in_ruleCompareOperator3348 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_17_in_rulePreOperator3385 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_18_in_ruleOrOperator3424 = new BitSet(new long[]{0x0000000000000002L});

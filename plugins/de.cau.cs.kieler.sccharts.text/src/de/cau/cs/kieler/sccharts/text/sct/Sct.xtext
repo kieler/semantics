@@ -149,7 +149,4 @@ enum TransitionType returns sccharts::TransitionType:
 	WEAKABORT = '-->' | STRONGABORT = 'o->' | NORMALTERMINATION = '>->';
 
 
-enum HistoryType returns sccharts::HistoryType:
-    RESET = 'reset' | SHALLOW = 'shallow history' | DEEP = 'history';
-	
 	

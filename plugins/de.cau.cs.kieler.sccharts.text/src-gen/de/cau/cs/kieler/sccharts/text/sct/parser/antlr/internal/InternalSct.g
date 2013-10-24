@@ -4672,6 +4672,19 @@ ruleTransitionType returns [Enumerator current=null]
 
 
 
+// Rule DivOperator
+ruleDivOperator returns [Enumerator current=null] 
+    @init { enterRule(); }
+    @after { leaveRule(); }:
+(	enumLiteral_0=':' 
+	{
+        $current = grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_0, grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration()); 
+    }
+);
+
+
+
 // Rule HistoryType
 ruleHistoryType returns [Enumerator current=null] 
     @init { enterRule(); }
@@ -4694,19 +4707,6 @@ ruleHistoryType returns [Enumerator current=null]
         newLeafNode(enumLiteral_2, grammarAccess.getHistoryTypeAccess().getDEEPEnumLiteralDeclaration_2()); 
     }
 ));
-
-
-
-// Rule DivOperator
-ruleDivOperator returns [Enumerator current=null] 
-    @init { enterRule(); }
-    @after { leaveRule(); }:
-(	enumLiteral_0=':' 
-	{
-        $current = grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration().getEnumLiteral().getInstance();
-        newLeafNode(enumLiteral_0, grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration()); 
-    }
-);
 
 
 

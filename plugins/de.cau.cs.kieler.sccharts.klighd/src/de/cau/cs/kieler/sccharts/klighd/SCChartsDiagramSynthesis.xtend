@@ -591,7 +591,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         (it.placementData as KDecoratorPlacementData).absolute = -15.0f;
                     }
                     if (t.deferred) {
-                        it.parent. addDeferredDecorator
+                        it.parent.addDeferredDecorator();
+                        (it.placementData as KDecoratorPlacementData).absolute = -11.0f;
                     }
                 ];
                 // it.lineCap = LineCap::CAP_ROUND;
@@ -642,7 +643,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         return line.addEllipse() => [
             it.lineWidth = 1;
             it.background = "blue".color
-            it.setDecoratorPlacementData(10, 10, -4, 0, false);
+            it.setDecoratorPlacementData(10, 10, -4, 1, false);
         ];
     }
     

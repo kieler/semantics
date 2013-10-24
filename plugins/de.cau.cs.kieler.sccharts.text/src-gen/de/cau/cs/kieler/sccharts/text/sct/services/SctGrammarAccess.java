@@ -1110,42 +1110,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//">->"
 		public Keyword getNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0() { return cNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0; }
 	}
-
-	public class HistoryTypeElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "HistoryType");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cRESETEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cRESETResetKeyword_0_0 = (Keyword)cRESETEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cSHALLOWEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cSHALLOWShallowHistoryKeyword_1_0 = (Keyword)cSHALLOWEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cDEEPEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cDEEPHistoryKeyword_2_0 = (Keyword)cDEEPEnumLiteralDeclaration_2.eContents().get(0);
-		
-		//enum HistoryType returns sccharts::HistoryType:
-		//	RESET="reset" | SHALLOW="shallow history" | DEEP="history";
-		public EnumRule getRule() { return rule; }
-
-		//RESET="reset" | SHALLOW="shallow history" | DEEP="history"
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//RESET="reset"
-		public EnumLiteralDeclaration getRESETEnumLiteralDeclaration_0() { return cRESETEnumLiteralDeclaration_0; }
-
-		//"reset"
-		public Keyword getRESETResetKeyword_0_0() { return cRESETResetKeyword_0_0; }
-
-		//SHALLOW="shallow history"
-		public EnumLiteralDeclaration getSHALLOWEnumLiteralDeclaration_1() { return cSHALLOWEnumLiteralDeclaration_1; }
-
-		//"shallow history"
-		public Keyword getSHALLOWShallowHistoryKeyword_1_0() { return cSHALLOWShallowHistoryKeyword_1_0; }
-
-		//DEEP="history"
-		public EnumLiteralDeclaration getDEEPEnumLiteralDeclaration_2() { return cDEEPEnumLiteralDeclaration_2; }
-
-		//"history"
-		public Keyword getDEEPHistoryKeyword_2_0() { return cDEEPHistoryKeyword_2_0; }
-	}
 	
 	private RootRegionElements pRootRegion;
 	private SingleRegionElements pSingleRegion;
@@ -1159,7 +1123,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	private SubstitutionElements pSubstitution;
 	private StateTypeElements unknownRuleStateType;
 	private TransitionTypeElements unknownRuleTransitionType;
-	private HistoryTypeElements unknownRuleHistoryType;
 	
 	private final Grammar grammar;
 
@@ -1341,16 +1304,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getTransitionTypeAccess().getRule();
 	}
 
-	//enum HistoryType returns sccharts::HistoryType:
-	//	RESET="reset" | SHALLOW="shallow history" | DEEP="history";
-	public HistoryTypeElements getHistoryTypeAccess() {
-		return (unknownRuleHistoryType != null) ? unknownRuleHistoryType : (unknownRuleHistoryType = new HistoryTypeElements());
-	}
-	
-	public EnumRule getHistoryTypeRule() {
-		return getHistoryTypeAccess().getRule();
-	}
-
 	////// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
 	////Action returns sccharts::Action:
 	////    {sccharts::Action}
@@ -1448,6 +1401,16 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getDivOperatorRule() {
 		return getDivOperatorAccess().getRule();
+	}
+
+	//enum HistoryType returns sccharts::HistoryType:
+	//	RESET="reset" | SHALLOW="shallow history" | DEEP="history";
+	public ActionsGrammarAccess.HistoryTypeElements getHistoryTypeAccess() {
+		return gaActions.getHistoryTypeAccess();
+	}
+	
+	public EnumRule getHistoryTypeRule() {
+		return getHistoryTypeAccess().getRule();
 	}
 
 	//Root returns ecore::EObject:
