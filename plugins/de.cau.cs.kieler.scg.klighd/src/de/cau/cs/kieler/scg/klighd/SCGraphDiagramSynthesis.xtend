@@ -72,6 +72,7 @@ import org.eclipse.xtext.serializer.ISerializer
 import de.cau.cs.kieler.core.util.Pair
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scgbb.SCGraphBB
 
 /** 
  * SCCGraph KlighD synthesis 
@@ -162,6 +163,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val TransformationOption HIDE_NONCONCURRENT
         = TransformationOption::createCheckOption("Hide non-concurrent dependencies", false);
         
+    private static val TransformationOption SHOW_BASICBLOCKS 
+        = TransformationOption::createCheckOption("Show Basic Blocks", true);
+        
     private static val TransformationOption SHOW_SHADOW
         = TransformationOption::createCheckOption("Shadow", true);
         
@@ -180,6 +184,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     override public getTransformationOptions() {
         return ImmutableSet::of(SHOW_CAPTION, 
             SHOW_DEPENDENCIES, LAYOUT_DEPENDENCIES, HIDE_NONCONCURRENT, 
+            SHOW_BASICBLOCKS,
             ALIGN_TICK_START, ALIGN_ENTRYEXIT_NODES, 
             SHOW_HIERARCHY, HIERARCHY_TRANSPARENCY, SHOW_SHADOW
         );
@@ -202,6 +207,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor()=>[it.red=205;it.green=220;it.blue=243];
     private static val KColor KEYWORD = RENDERING_FACTORY.createKColor()=>[it.red=115;it.green=0;it.blue=65];
     private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor()=>[it.red=60;it.green=60;it.blue=60];
+    private static val KColor BASICBLOCKBORDER = RENDERING_FACTORY.createKColor()=>[it.red=248;it.green=0;it.blue=253];
+    private static val KColor SCHEDULINGBLOCKBORDER = RENDERING_FACTORY.createKColor()=>[it.red=128;it.green=0;it.blue=243];
     
     private static val KColor DEPENDENCY_ABSWRITEREAD = RENDERING_FACTORY.createKColor()=>[it.red = 0; it.green = 192; it.blue = 0;]
     private static val KColor DEPENDENCY_RELWRITEREAD = RENDERING_FACTORY.createKColor()=>[it.red = 0; it.green = 192; it.blue = 192;]
@@ -218,6 +225,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val String SCGPORTID_INCOMINGDEPENDENCY = "incomingDependency"
     private static val String SCGPORTID_OUTGOINGDEPENDENCY = "outgoingDependency"
 
+    private static val int NODEGROUPING_HIERARCHY = 0;
+    private static val int NODEGROUPING_BASICBLOCK = 1;
+    private static val int NODEGROUPING_SCHEDULINGBLOCK = 2;
+    
     private KNode rootNode;
 
 
@@ -287,9 +298,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 for (s : r.nodes.filter(typeof(Fork))) {
                     val threadEntries = s.getAllNext
                     for(t : threadEntries) {
-                        if (t.target instanceof Entry) (t.target as Entry).getThreadNodes.createHierarchy
+                        if (t.target instanceof Entry) 
+                            (t.target as Entry).getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY)
                     }
                 }            
+            }
+            
+            if (r instanceof SCGraphBB && SHOW_BASICBLOCKS.optionBooleanValue) {
+                for (s : (r as SCGraphBB).basicBlocks) {
+                    s.schedulingBlocks.head.nodes.createHierarchy(NODEGROUPING_BASICBLOCK)                    
+                }                
             }
             
             // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
@@ -691,13 +709,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // and connected via ports on the container border. 
     // At the moment the new container is always a scg thread hierarchy container, but this will probably
     // change when basic blocks are re-introduced. 
-    def createHierarchy(List<Node> nodes) {
+    def createHierarchy(List<Node> nodes, int nodeGrouping) {
         // Gather mandatory information.
-        val threadEntry = nodes.head as Entry
-        val kParent = threadEntry.node.eContainer as KNode
-        val kContainer = threadEntry.createNode("hierarchy")
+        val firstNode = nodes.head
+        val kParent = firstNode.node.eContainer as KNode
+        val kContainer = firstNode.createNode("hierarchy" + nodeGrouping.toString)
         val kNodeList = new ArrayList<KNode>
         nodes.forEach[e|kNodeList.add(e.node)]
+        // Determine all interleaving edges...        
+        val iSecEdges = new ArrayList<KEdge>
+        for(rc : kNodeList) {
+            iSecEdges.addAll(rc.outgoingEdges.filter[ !kNodeList.contains(it.target)])
+            iSecEdges.addAll(rc.incomingEdges.filter[ !kNodeList.contains(it.source)])
+        }
         
         // Set options for the container.
         kContainer.addLayoutParam(LayoutOptions::SPACING, 25.0f)
@@ -705,12 +729,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         kContainer.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
         kContainer.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
         kContainer.addLayoutParam(LayoutOptions::SEPARATE_CC, false);      
-        kContainer.addRoundedRectangle(5, 5, 0)
-        kContainer.KRendering.foreground = SCCHARTSBLUE2.copy;
-        kContainer.KRendering.foreground.alpha = Math.round(HIERARCHY_TRANSPARENCY.optionValue as Float)
-        kContainer.KRendering.background = SCCHARTSBLUE2.copy;
-        kContainer.KRendering.background.alpha = Math.round(HIERARCHY_TRANSPARENCY.optionValue as Float)
         kContainer.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
+        
+        if (nodeGrouping == NODEGROUPING_HIERARCHY) {
+            kContainer.addRoundedRectangle(5, 5, 0)
+            kContainer.KRendering.foreground = SCCHARTSBLUE2.copy;
+            kContainer.KRendering.foreground.alpha = Math.round(HIERARCHY_TRANSPARENCY.optionValue as Float)
+            kContainer.KRendering.background = SCCHARTSBLUE2.copy;
+            kContainer.KRendering.background.alpha = Math.round(HIERARCHY_TRANSPARENCY.optionValue as Float)
+        }
+        if (nodeGrouping == NODEGROUPING_BASICBLOCK) {
+            kContainer.addRoundedRectangle(1, 1, 1) => [
+                it.lineStyle = LineStyle::DOT
+            ]
+            kContainer.KRendering.foreground = BASICBLOCKBORDER.copy;
+            kContainer.KRendering.foreground.alpha = Math.round(255f)
+            kContainer.KRendering.background = SCCHARTSBLUE2.copy;
+            kContainer.KRendering.background.alpha = Math.round(0f)
+        }
                     
         // Add the nodes to the container.
         // They will be removed from the original parent!
@@ -721,16 +757,18 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         kParent.children += kContainer
 
         // Determine all interleaving edges...        
-        val iSecEdges = new ArrayList<KEdge>
-        for(rc : kParent.children) {
-            iSecEdges.addAll(rc.outgoingEdges.filter[edge | kNodeList.contains(edge.target)])
-            iSecEdges.addAll(rc.incomingEdges.filter[edge | kNodeList.contains(edge.source)])
-        }
+//        val iSecEdges = new ArrayList<KEdge>
+//        for(rc : kParent.children) {
+//            iSecEdges.addAll(rc.outgoingEdges.filter[edge | kNodeList.contains(edge.target)])
+//            iSecEdges.addAll(rc.incomingEdges.filter[edge | kNodeList.contains(edge.source)])
+//        }
         // ... and split them up. This is done by re-routing the edge. The source of the edge is now the
         // container. A new edge is then created to attach the original source with the corresponding 
         // port on the border of the container.
         for(ne : iSecEdges) {
-            val portName = SCGPORTID_HIERARCHYPORTS + ne.hashCode.toString();
+            val portName = SCGPORTID_HIERARCHYPORTS + ne.hashCode.toString + nodeGrouping.toString + 
+              ne.source.hashCode.toString + kContainer.hashCode.toString
+//            System.out.println("Creating helper port: " + portName)
             val hPort = kContainer.addHelperPort(portName)
             val origSource = ne.source
             val origSourcePort = ne.sourcePort            
@@ -747,6 +785,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.lineStyle = ne.KRendering.lineStyleValue
                     it.foreground = ne.KRendering.foreground
                 ]
+                
             ]
         }     
                         
