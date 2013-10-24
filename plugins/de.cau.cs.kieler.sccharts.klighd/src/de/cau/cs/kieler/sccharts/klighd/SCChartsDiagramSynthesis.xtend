@@ -67,6 +67,7 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.krendering.KGridPlacement
+import de.cau.cs.kieler.sccharts.HistoryType
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -581,9 +582,16 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
                 }
                 it.addArrowDecorator() => [
-                    if (t.isHistory) {
-                        it.parent.addHistoryDecorator();
+                    if (t.history == HistoryType::SHALLOW) {
+                        it.parent.addShallowHistoryDecorator();
                         (it.placementData as KDecoratorPlacementData).absolute = -15.0f;
+                    }
+                    if (t.history == HistoryType::DEEP) {
+                        it.parent.addDeepHistoryDecorator();
+                        (it.placementData as KDecoratorPlacementData).absolute = -15.0f;
+                    }
+                    if (t.deferred) {
+                        it.parent. addDeferredDecorator
                     }
                 ];
                 // it.lineCap = LineCap::CAP_ROUND;
@@ -629,6 +637,15 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             it.setDecoratorPlacementData(10, 10, 4, 0, false);
         ];
     }
+    
+    def KRendering addDeferredDecorator(KContainerRendering line) {
+        return line.addEllipse() => [
+            it.lineWidth = 1;
+            it.background = "blue".color
+            it.setDecoratorPlacementData(10, 10, -4, 0, false);
+        ];
+    }
+    
 
     def KPolygon addNormalTerminationDecorator(KPolyline line) {
         return line.drawTriangle() => [
@@ -638,7 +655,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         ];
     }
 
-    def KRendering addHistoryDecorator(KContainerRendering line) {
+    def KRendering addShallowHistoryDecorator(KContainerRendering line) {
         return line.addEllipse() => [
             it.lineWidth = 0;
             it.setForeground(DARKGRAY.copy)
@@ -656,6 +673,26 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             ];
         ];
     }
+    
+    def KRendering addDeepHistoryDecorator(KContainerRendering line) {
+        return line.addEllipse() => [
+            it.lineWidth = 0;
+            it.setForeground(DARKGRAY.copy)
+            it.background = DARKGRAY.copy
+            it.setDecoratorPlacementData(20, 20, -6, 1, false);
+            it.addPolyline(1) => [
+                it.lineWidth = 2;
+                it.points += createKPosition(LEFT, 5, 0, TOP, 4, 0);
+                it.points += createKPosition(LEFT, 5, 0, BOTTOM, 4, 0);
+                it.points += createKPosition(LEFT, 5, 0, TOP, 0, 0.5f);
+                it.points += createKPosition(RIGHT, 5, 0, TOP, 0, 0.5f);
+                it.points += createKPosition(RIGHT, 5, 0, BOTTOM, 4, 0);
+                it.points += createKPosition(RIGHT, 5, 0, TOP, 4, 0);
+                it.setForeground("white".color);
+            ];
+        ];
+    }
+    
 
 // -------------------------------------------------------------------------
 }
