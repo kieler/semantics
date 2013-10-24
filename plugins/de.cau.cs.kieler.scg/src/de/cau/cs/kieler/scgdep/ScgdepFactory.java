@@ -78,15 +78,6 @@ public interface ScgdepFactory extends EFactory {
     Write_Write createWrite_Write();
 
     /**
-     * Returns a new object of class '<em>Conditional Dep</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Conditional Dep</em>'.
-     * @generated
-     */
-    ConditionalDep createConditionalDep();
-
-    /**
      * Returns a new object of class '<em>Assignment Dep</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

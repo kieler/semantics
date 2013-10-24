@@ -24,6 +24,7 @@ import de.cau.cs.kieler.scg.Link;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scgdep.Dependency#isConcurrent <em>Concurrent</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgdep.Dependency#isConfluent <em>Confluent</em>}</li>
  * </ul>
  * </p>
  *
@@ -59,4 +60,31 @@ public interface Dependency extends Link {
      * @generated
      */
     void setConcurrent(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Confluent</b></em>' attribute.
+     * The default value is <code>"false"</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Confluent</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Confluent</em>' attribute.
+     * @see #setConfluent(boolean)
+     * @see de.cau.cs.kieler.scgdep.ScgdepPackage#getDependency_Confluent()
+     * @model default="false"
+     * @generated
+     */
+    boolean isConfluent();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scgdep.Dependency#isConfluent <em>Confluent</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Confluent</em>' attribute.
+     * @see #isConfluent()
+     * @generated
+     */
+    void setConfluent(boolean value);
 } // Dependency

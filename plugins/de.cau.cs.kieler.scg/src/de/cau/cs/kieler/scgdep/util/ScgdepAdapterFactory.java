@@ -107,10 +107,6 @@ public class ScgdepAdapterFactory extends AdapterFactoryImpl {
                 return createWrite_WriteAdapter();
             }
             @Override
-            public Adapter caseConditionalDep(ConditionalDep object) {
-                return createConditionalDepAdapter();
-            }
-            @Override
             public Adapter caseAssignmentDep(AssignmentDep object) {
                 return createAssignmentDepAdapter();
             }
@@ -133,10 +129,6 @@ public class ScgdepAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseNode(Node object) {
                 return createNodeAdapter();
-            }
-            @Override
-            public Adapter caseConditional(Conditional object) {
-                return createConditionalAdapter();
             }
             @Override
             public Adapter caseAssignment(Assignment object) {
@@ -237,20 +229,6 @@ public class ScgdepAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgdep.ConditionalDep <em>Conditional Dep</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scgdep.ConditionalDep
-     * @generated
-     */
-    public Adapter createConditionalDepAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgdep.AssignmentDep <em>Assignment Dep</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -331,20 +309,6 @@ public class ScgdepAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createNodeAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Conditional <em>Conditional</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.Conditional
-     * @generated
-     */
-    public Adapter createConditionalAdapter() {
         return null;
     }
 
