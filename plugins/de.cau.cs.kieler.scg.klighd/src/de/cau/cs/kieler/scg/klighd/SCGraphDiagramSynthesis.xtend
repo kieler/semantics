@@ -69,6 +69,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import org.eclipse.xtext.scoping.IScopeProvider
 import org.eclipse.xtext.serializer.ISerializer
+import de.cau.cs.kieler.core.util.Pair
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -174,7 +175,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         = TransformationOption::createCheckOption("Display hierarchy", true);
         
     private static val TransformationOption HIERARCHY_TRANSPARENCY 
-        = TransformationOption::createRangeOption("Hierarchy transparency", 0f, 255f, 128f);
+        = TransformationOption::createRangeOption("Hierarchy transparency", Pair::of(0f, 255f), 128f);
         
     override public getTransformationOptions() {
         return ImmutableSet::of(SHOW_CAPTION, 

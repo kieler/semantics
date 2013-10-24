@@ -66,7 +66,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.krendering.KGridPlacement
 import de.cau.cs.kieler.sccharts.HistoryType
 
 /**
@@ -461,7 +460,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                             it.invisible = true;
                             it.addRectangle => [
                                 it.invisible = true;
-                                it.setPointPlacementData(LEFT, 8, 0, TOP, 0, 0, H_LEFT, V_TOP, 8, 0, 0, 0);
+                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0, 0);
                                 scopeProvider.parent = s;
                                 var declaration = "";
                                 var type = "";
