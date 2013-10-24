@@ -160,7 +160,7 @@ class SCChartsSimulation {
 
                // Add emission of auxiliary ValuedObject as an immediate during action for this state
                val immediateDuringAction = SCChartsFactory::eINSTANCE.createDuringAction();
-               immediateDuringAction.setIsImmediate(true);
+               immediateDuringAction.setImmediate(true);
                val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
                    auxiliaryEmission.setValuedObject(auxiliaryValuedObject);
                immediateDuringAction.effects.add(auxiliaryEmission);

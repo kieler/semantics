@@ -199,14 +199,14 @@ class SCChartsCoreTransformation {
                          for (finalState : finalStates) {
                               finalState.createImmediateDuringAction.addEmission(finishedValuedObject.emit);
                               // Set the final state flag to false
-                              finalState.setIsFinal(false);
+                              finalState.setFinal(false);
                          }
                     
                          triggerExpression.add(finishedValuedObject.reference);
                     }
                
                     // A normal termination should immediately be triggerable! (test 145) 
-                    normalTerminationTransition.setIsImmediate(true);
+                    normalTerminationTransition.setImmediate(true);
                     
                    // if there is just one valuedObject, we do not need an AND!
                    if (triggerExpression != null) {
@@ -332,7 +332,7 @@ class SCChartsCoreTransformation {
             if (presentVariable.isInput && !presentVariable.isOutput) {
                 val duringAction = state.createDuringAction
                 duringAction.createAssignment(presentVariable, FALSE)
-                duringAction.setIsImmediate(true)
+                duringAction.setImmediate(true)
             }
         }
     }
@@ -389,7 +389,7 @@ class SCChartsCoreTransformation {
              transitionCopy.setSourceState(transition.sourceState)
              transitionCopy.setTargetState(transition.targetState)
              transitionCopy.setHighestPriority
-             transition.setIsNotImmediate
+             transition.setNotImmediate
          } 
          
          // Modify surfaceState (the original state)
@@ -424,13 +424,13 @@ class SCChartsCoreTransformation {
                 currentState = parentRegion.createState(stateId + transition.id("Surface"))//.setTypeConnector
                 // Connect
                 val connect = previousState.createTransitionTo(currentState)
-                connect.setIsImmediate(!nextTransitionNotImmediate)
+                connect.setImmediate(!nextTransitionNotImmediate)
                 connect.setPriority(2)
                 // Move transition to this state
                 currentState.outgoingTransitions.add(transition)
             }
             // Ensure the transition is immediate
-            transition.setIsImmediate
+            transition.setImmediate(true)
             // We can now set the transition priority to 1 (it is reflected implicityly by the sequential order now)
             transition.setPriority(1)
             // Next cycle
@@ -567,12 +567,12 @@ class SCChartsCoreTransformation {
 //             val initialState  = SCChartsFactory::eINSTANCE.createState();
 //             initialState.setId(state.id("Initial"));
 //             initialState.setLabel("I"); 
-//             initialState.setIsInitial(true);
+//             initialState.setInitial(true);
 //             parentRegion.states.add(initialState);
-//             state.setIsInitial(false);
+//             state.setInitial(false);
 //             // Connect             
 //             val connect = SCChartsFactory::eINSTANCE.createTransition();
-//             connect.setIsImmediate(true);
+//             connect.setImmediate(true);
 //             connect.setLabel("#");
 //             connect.setPriority(1);
 //             connect.setTargetState(state);
@@ -595,7 +595,7 @@ class SCChartsCoreTransformation {
 //             auxiliaryTrigger.setValuedObject(isDepthValuedObject);
 //         for (transition : nonImmediateTransitions) {
 //             // Make this transition immediate now
-//             transition.setIsImmediate(true);
+//             transition.setImmediate(true);
 //             // Modify trigger if any
 //             if (transition.trigger != null) {
 //                 val andAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
@@ -631,7 +631,7 @@ class SCChartsCoreTransformation {
 //            transition.setPriority(1);
 //            // Connect
 //            val connect = SCChartsFactory::eINSTANCE.createTransition();
-//            connect.setIsImmediate(true);
+//            connect.setImmediate(true);
 //            connect.setLabel("#");
 //            connect.setPriority(2);
 //            connect.setTargetState(surfState);
@@ -648,7 +648,7 @@ class SCChartsCoreTransformation {
 //         parentRegion.states.add(depthState);
 //         // Connect
 //         val connect = SCChartsFactory::eINSTANCE.createTransition();
-//         connect.setIsImmediate(true);
+//         connect.setImmediate(true);
 //         connect.setLabel("#");
 //         connect.setPriority(2);
 //         connect.setTargetState(depthState);
@@ -711,7 +711,7 @@ class SCChartsCoreTransformation {
 //             parentRegion.states.add(triggeredState);
 //             // Create new effect transition             
 //             val effectTransition = SCChartsFactory::eINSTANCE.createTransition();
-//             effectTransition.setIsImmediate(true);
+//             effectTransition.setImmediate(true);
 //             effectTransition.setLabel("#");
 //             effectTransition.setPriority(1);
 //             // Move effect to effect transition
@@ -777,12 +777,12 @@ class SCChartsCoreTransformation {
             auxiliaryWatchMasterRegion.states.add(auxiliaryWatchMasterState);
             auxiliaryWatchMasterState.setId(parentState.id("Watch"));
             auxiliaryWatchMasterState.setLabel("Watch");
-            auxiliaryWatchMasterState.setIsInitial(true);
+            auxiliaryWatchMasterState.setInitial(true);
             val auxiliaryAbortedState  = SCChartsFactory::eINSTANCE.createState();
             auxiliaryWatchMasterRegion.states.add(auxiliaryAbortedState);
             auxiliaryAbortedState.setId(parentState.id("Aborted"));
             auxiliaryAbortedState.setLabel("Aborted");
-            auxiliaryAbortedState.setIsFinal(true);
+            auxiliaryAbortedState.setFinal(true);
             // Connect WatchMaster and Aborted state
             val abortRegionTransition = SCChartsFactory::eINSTANCE.createTransition();
             abortRegionTransition.setPriority(1)
@@ -824,18 +824,18 @@ class SCChartsCoreTransformation {
                         auxiliaryWatchRegion.states.add(auxiliaryWatchState);
                         auxiliaryWatchState.setId(parallelRegion.id("I"));
                         auxiliaryWatchState.setLabel("I");
-                        auxiliaryWatchState.setIsInitial(true);
+                        auxiliaryWatchState.setInitial(true);
                         val auxiliaryTerminatedState  = SCChartsFactory::eINSTANCE.createState();
                         auxiliaryWatchRegion.states.add(auxiliaryTerminatedState);
                         auxiliaryTerminatedState.setId(parallelRegion.id("T"));
                         auxiliaryTerminatedState.setLabel("T");
-                        auxiliaryTerminatedState.setIsFinal(true);
+                        auxiliaryTerminatedState.setFinal(true);
                         // Connect
                         val terminatedRegionTransition = SCChartsFactory::eINSTANCE.createTransition();
                         val terminatedRegionTransitionTrigger =  KExpressionsFactory::eINSTANCE.createValuedObjectReference
                         terminatedRegionTransitionTrigger.setValuedObject(auxiliaryRegionTermValuedObject);
                         terminatedRegionTransition.setPriority(1)
-                        terminatedRegionTransition.setIsImmediate(true);
+                        terminatedRegionTransition.setImmediate(true);
                         terminatedRegionTransition.setTrigger(terminatedRegionTransitionTrigger);
                         terminatedRegionTransition.setTargetState(auxiliaryTerminatedState);
                         auxiliaryWatchState.outgoingTransitions.add(terminatedRegionTransition);
@@ -857,8 +857,8 @@ class SCChartsCoreTransformation {
                         finalStateAbortTarget  = SCChartsFactory::eINSTANCE.createState();
                         finalStateAbortTarget.setId(parentRegion.id("final"));
                         finalStateAbortTarget.setLabel("final");
-                        finalStateAbortTarget.setIsInitial(false);
-                        finalStateAbortTarget.setIsFinal(true);
+                        finalStateAbortTarget.setInitial(false);
+                        finalStateAbortTarget.setFinal(true);
                         parentRegion.states.add(finalStateAbortTarget);
                     } else {
                         finalStateAbortTarget = finalStates.head;
@@ -870,7 +870,7 @@ class SCChartsCoreTransformation {
                         val maxPrio = sourceState.outgoingTransitions.size + 1;
                
                         // Set source state not to be final any more
-                        sourceState.setIsFinal(false);
+                        sourceState.setFinal(false);
                
                         // Add aborting transition
                         val resetTransition = SCChartsFactory::eINSTANCE.createTransition();
@@ -878,7 +878,7 @@ class SCChartsCoreTransformation {
                         auxiliaryResetTrigger.setValuedObject(auxiliaryResetValuedObject);
                         resetTransition.setTrigger(auxiliaryResetTrigger);
                         resetTransition.setPriority(maxPrio)
-                        resetTransition.setIsImmediate(true);
+                        resetTransition.setImmediate(true);
                         resetTransition.setLabel("#");
                         resetTransition.setTargetState(finalStateAbortTarget);
                         sourceState.outgoingTransitions.add(resetTransition);
@@ -955,7 +955,7 @@ class SCChartsCoreTransformation {
                    auxiliaryState  = SCChartsFactory::eINSTANCE.createState();
                    auxiliaryState.setId("delay" + delay);
                    auxiliaryState.setLabel(delay + "");
-                   auxiliaryState.setIsInitial(delay == 1);
+                   auxiliaryState.setInitial(delay == 1);
                    auxiliaryRegion.states.add(auxiliaryState);
                    
                    if (previousAuxiliaryState != null) {
@@ -974,7 +974,7 @@ class SCChartsCoreTransformation {
                        // Make state final (just in case, because there could be
                        // a normal termination outgoing)
                        if (existsNormalTermination) {
-                          auxiliaryState.setIsFinal(true);
+                          auxiliaryState.setFinal(true);
                        }
                    }
                }
@@ -1043,7 +1043,7 @@ class SCChartsCoreTransformation {
 //               
 //               // disable old delay, set it to be immediate
 //               transition.setDelay(1);
-//               transition.setIsImmediate(true);
+//               transition.setImmediate(true);
 //               
 //            // reset the variable for all incoming transition
 //            val resetEffect = SCChartsFactory::eINSTANCE.createTextEffect;
@@ -1163,14 +1163,14 @@ class SCChartsCoreTransformation {
                val runningState = SCChartsFactory::eINSTANCE.createState();
                runningState.setId(state.id("NonSuspended"));
                runningState.setLabel(state.id + "Running");
-               runningState.setIsInitial(true);
+               runningState.setInitial(true);
                val disabledState = SCChartsFactory::eINSTANCE.createState();
                disabledState.setId(state.id("Suspended"));
                disabledState.setLabel(state.id + "Disabled");
                
                // Add during action that emits the disable valuedObject 
                val immediateDuringAction = disabledState.createImmediateDuringAction
-               immediateDuringAction.setIsImmediate(true);
+               immediateDuringAction.setImmediate(true);
                val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
                    auxiliaryEmission.setValuedObject(disabledValuedObject);
                immediateDuringAction.addEmission(auxiliaryEmission);
@@ -1183,7 +1183,7 @@ class SCChartsCoreTransformation {
                // For every entry action: Create a region
                for (entryAction : state.entryActions) {
                      val entryActionCopy = entryAction.copy;
-                     entryActionCopy.setIsImmediate(true);
+                     entryActionCopy.setImmediate(true);
                      actionState.localActions.add(entryActionCopy); 
                }               
                
@@ -1191,7 +1191,7 @@ class SCChartsCoreTransformation {
                val disabled2actionTransition =  SCChartsFactory::eINSTANCE.createTransition();
                    disabled2actionTransition.setTargetState(actionState);
                    disabled2actionTransition.setTrigger(notSuspendTrigger.copy);
-                   disabled2actionTransition.setIsImmediate(!immediateSuspension);
+                   disabled2actionTransition.setImmediate(!immediateSuspension);
                    disabled2actionTransition.setPriority(1);
                    disabledState.outgoingTransitions.add(disabled2actionTransition);
                    // Do not emit the disableValuedObject when the suspend trigger is not true any more!
@@ -1199,12 +1199,12 @@ class SCChartsCoreTransformation {
                val action2runningTransition =  SCChartsFactory::eINSTANCE.createTransition();
                    action2runningTransition.setTargetState(runningState);
                    action2runningTransition.setLabel("#");
-                   action2runningTransition.setIsImmediate(true);
+                   action2runningTransition.setImmediate(true);
                    action2runningTransition.setPriority(1);
                    actionState.outgoingTransitions.add(action2runningTransition);
                val running2disabledTransition =  SCChartsFactory::eINSTANCE.createTransition();
                    running2disabledTransition.setTargetState(disabledState);
-                   running2disabledTransition.setIsImmediate(immediateSuspension);
+                   running2disabledTransition.setImmediate(immediateSuspension);
                    running2disabledTransition.setTrigger(suspendTrigger.copy);
                    running2disabledTransition.setPriority(1);
                    runningState.outgoingTransitions.add(running2disabledTransition);
@@ -1284,7 +1284,7 @@ class SCChartsCoreTransformation {
             val auxiliaryState  = SCChartsFactory::eINSTANCE.createState();
             auxiliaryState.setId(state.id + "History");
             auxiliaryState.setLabel(state.id + "History");
-            auxiliaryState.setIsInitial(true);
+            auxiliaryState.setInitial(true);
             
             // Move local valuedObject declaration to auxiliary state (test 139)
             auxiliaryState.valuedObjects.addAll(state.valuedObjects);
@@ -1469,7 +1469,7 @@ class SCChartsCoreTransformation {
                      val dummyInternalState2 = SCChartsFactory::eINSTANCE.createState();
                      dummyInternalState1.setId(state.id("During1Internal"));
                      dummyInternalState1.setLabel("i");
-                     dummyInternalState1.setIsInitial(true);
+                     dummyInternalState1.setInitial(true);
                      dummyInternalState2.setId(state.id("During2Internal"));
                      dummyInternalState2.setLabel("f");
                      // Add action dummyTransition
@@ -1477,7 +1477,7 @@ class SCChartsCoreTransformation {
                      dummyInternalTransition.setTargetState(dummyInternalState2);
                      dummyInternalTransition.setPriority(1);
                      dummyInternalTransition.setDelay(innerAction.delay);
-                     dummyInternalTransition.setIsImmediate(innerAction.isImmediate);
+                     dummyInternalTransition.setImmediate(innerAction.isImmediate);
                      dummyInternalTransition.setTrigger(innerAction.trigger.copy);
                      for (action : innerAction.effects) {
                         dummyInternalTransition.addEffect(action.copy);
@@ -1487,7 +1487,7 @@ class SCChartsCoreTransformation {
                      val dummyInternalLoopTransition = SCChartsFactory::eINSTANCE.createTransition();
                      dummyInternalLoopTransition.setTargetState(dummyInternalState1);
                      dummyInternalLoopTransition.setPriority(1);
-                     dummyInternalLoopTransition.setIsImmediate(!innerAction.isImmediate);
+                     dummyInternalLoopTransition.setImmediate(!innerAction.isImmediate);
                      if (!innerAction.isImmediate) {
                          dummyInternalLoopTransition.setLabel("#");
                      }
@@ -1549,7 +1549,7 @@ class SCChartsCoreTransformation {
                 state.parentRegion.states.add(surroundState);
                 // If the original state is an initial stat then the new surround state must also be
                 // marked to be initial
-                surroundState.setIsInitial(state.isInitial);
+                surroundState.setInitial(state.isInitial);
                 // Move transitions to the new state
                 for (transition : ImmutableList::copyOf(state.incomingTransitions)) {
                     surroundState.incomingTransitions.add(transition);
@@ -1573,9 +1573,9 @@ class SCChartsCoreTransformation {
                 initialTransition.setLabel("#");
                 initialTransition.setTargetState(state);
                 initialTransition.setPriority(1);
-                initialTransition.setIsImmediate(true);
-                initialState.setIsInitial(true);
-                state.setIsInitial(false);
+                initialTransition.setImmediate(true);
+                initialState.setInitial(true);
+                state.setInitial(false);
                 initialState.outgoingTransitions.add(initialTransition);
                 surroundRegion.states.add(initialState);
                 
@@ -1583,7 +1583,7 @@ class SCChartsCoreTransformation {
                 // For every entry action: Create a region
                 for (entryAction : state.entryActions) {
                     val entryActionCopy = entryAction.copy;
-                    entryActionCopy.setIsImmediate(true);
+                    entryActionCopy.setImmediate(true);
                     // Create during actions for the initial state
                     initialState.localActions.add(entryActionCopy);
                 }
@@ -1765,7 +1765,7 @@ class SCChartsCoreTransformation {
                val setState = SCChartsFactory::eINSTANCE.createState();
                setState.setId(state.id("ExitSet"));
                // The Set state has to be the initial state
-               setState.setIsInitial(true);
+               setState.setInitial(true);
                setState.setLabel("s");
                
 
@@ -1819,7 +1819,7 @@ class SCChartsCoreTransformation {
                
                // (D)
                reset2setITransition.setTrigger(setIValuedObjectReference.copy);
-               reset2setITransition.setIsImmediate(true);
+               reset2setITransition.setImmediate(true);
                reset2setITransition.setPriority(1);
                
                // Create a region with two states set and reset 
@@ -1835,7 +1835,7 @@ class SCChartsCoreTransformation {
                // the during action is triggered by Set and ResetI and ResetN
                for (exitAction : state.exitActions) {
                      val entryAction  = exitAction.copy;
-                     entryAction.setIsImmediate(true);
+                     entryAction.setImmediate(true);
                      var entryActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                          entryActionTrigger.setOperator(OperatorType::AND);
                          entryActionTrigger.add(setValuedObjectReference.copy); // (C)
@@ -1848,7 +1848,7 @@ class SCChartsCoreTransformation {
                      setState.createEntryAction.applyAttributes(entryAction);
 
                      val duringAction = exitAction.copy;
-                     duringAction.setIsImmediate(true);
+                     duringAction.setImmediate(true);
                      var duringActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
                          duringActionTrigger.setOperator(OperatorType::AND);
                          duringActionTrigger.add(set2setTrigger.copy); // (B)
@@ -1882,7 +1882,7 @@ class SCChartsCoreTransformation {
                  //Create In state and Out state
                  val inState = SCChartsFactory::eINSTANCE.createState();
                  inState.setId(state.id("ExitIn"));
-                 inState.setIsInitial(true);
+                 inState.setInitial(true);
                  inState.setLabel("in");
                  val outState = SCChartsFactory::eINSTANCE.createState();
                  outState.setId(state.id("ExitOut"));
@@ -1890,7 +1890,7 @@ class SCChartsCoreTransformation {
                  // Connect In and Out states with transitions triggered #SetCC
                  val in2outTransition =  SCChartsFactory::eINSTANCE.createTransition();
                      in2outTransition.setTargetState(outState);
-                     in2outTransition.setIsImmediate(true);
+                     in2outTransition.setImmediate(true);
                      inState.outgoingTransitions.add(in2outTransition);
                      in2outTransition.setTrigger(setValuedObjectInnerReference.copy);
                  // Create InOut region    
@@ -1917,7 +1917,7 @@ class SCChartsCoreTransformation {
                // more specifically add an immediate during action for resetI
                //                   and a  normal during action for resetN
                val duringIAction = state.createDuringAction
-               duringIAction.setIsImmediate(true);
+               duringIAction.setImmediate(true);
                val resetIEmission = SCChartsFactory::eINSTANCE.createEmission();
                    resetIEmission.setValuedObject(resetIValuedObject);
                duringIAction.addEmission(resetIEmission);
@@ -1936,11 +1936,11 @@ class SCChartsCoreTransformation {
 //                   val newInitialState = SCChartsFactory::eINSTANCE.createState();
 //                   newInitialState.setId("initial" + state.hashCode);
 //                   newInitialState.setLabel("i");
-//                   newInitialState.setIsInitial(true);
-//                   state.setIsInitial(false);
+//                   newInitialState.setInitial(true);
+//                   state.setInitial(false);
 //                   state.parentRegion.states.add(newInitialState);
 //                   val immediateTransition =  SCChartsFactory::eINSTANCE.createTransition();
-//                   immediateTransition.setIsImmediate(true);
+//                   immediateTransition.setImmediate(true);
 //                   immediateTransition.setLabel("#");
 //                   immediateTransition.setTargetState(state);
 //                   newInitialState.outgoingTransitions.add(immediateTransition);
@@ -2052,7 +2052,7 @@ class SCChartsCoreTransformation {
             preState.setLabel("Pre");
             val notPreState = SCChartsFactory::eINSTANCE.createState();
             notPreState.setId(preValuedObject.id("NotPre"));
-            notPreState.setIsInitial(true);
+            notPreState.setInitial(true);
             notPreState.setLabel("NotPre");       
             
             // Add a region     
@@ -2282,12 +2282,12 @@ class SCChartsCoreTransformation {
             val runState = SCChartsFactory::eINSTANCE.createState();
             runState.setId(state.id("Run"));
             runState.setLabel("Run");
-            runState.setIsInitial(true);
-            //runState.setIsFinal(true);  // DO NOT SET THE RUN STATE AS FINAL! //
+            runState.setInitial(true);
+            //runState.setFinal(true);  // DO NOT SET THE RUN STATE AS FINAL! //
             val abortState = SCChartsFactory::eINSTANCE.createState();
             abortState.setId(state.id("Abort"));
             abortState.setLabel("Abort");             
-            abortState.setIsFinal(true);
+            abortState.setFinal(true);
             val watcherRegion = SCChartsFactory::eINSTANCE.createRegion();
             watcherRegion.setId(state.id("Ctrl"));
             watcherRegion.states.add(runState);
@@ -2347,7 +2347,7 @@ class SCChartsCoreTransformation {
                     watcherTransition.setTrigger(transition.trigger.copy);
                     // Watcher transition gets the same priority / immediate / delay
                     watcherTransition.setPriority(transition.priority);
-                    watcherTransition.setIsImmediate(transition.isImmediate);
+                    watcherTransition.setImmediate(transition.isImmediate);
                     watcherTransition.setDelay(transition.delay);
                     // Watcher transition emits the auxiliary valuedObject
                     val transitionValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
@@ -2362,7 +2362,7 @@ class SCChartsCoreTransformation {
                 // put immediate attribute
                 conditionalState.outgoingTransitions.add(transition);
                 transition.setType(TransitionType::WEAKABORT);
-                transition.setIsImmediate(true); 
+                transition.setImmediate(true); 
             }
             
             // Simplify triggers (if they only consist of one valuedObject reference)
@@ -2389,7 +2389,7 @@ class SCChartsCoreTransformation {
                 val abortedState = SCChartsFactory::eINSTANCE.createState();
                 abortedState.setId(state.id("_Aborted"));
                 abortedState.setLabel("_Aborted");             
-                abortedState.setIsFinal(true);
+                abortedState.setFinal(true);
                 val needAbortedState = ((outgoingStrongTransitions.size > 0 || 
                                          outgoingWeakTransitions.size > 0
                                         ) && (regionStates.filter(e | !e.isFinal).size > 0));
@@ -2407,7 +2407,7 @@ class SCChartsCoreTransformation {
                             // Create a transition ending up in _Aborted
                             val strongAbortTransition =  SCChartsFactory::eINSTANCE.createTransition();
                             strongAbortTransition.setTargetState(abortedState);
-                            strongAbortTransition.setIsImmediate(true);
+                            strongAbortTransition.setImmediate(true);
                             // Now add all strong abort watcher valuedObjects as a trigger
                             strongAbortTransition.setTrigger(strongTrigger.copy);
                             // Set the highest priority
@@ -2428,7 +2428,7 @@ class SCChartsCoreTransformation {
                             // Create a transition ending up in _Aborted
                             val weakAbortTransition =  SCChartsFactory::eINSTANCE.createTransition();
                             weakAbortTransition.setTargetState(abortedState);
-                            weakAbortTransition.setIsImmediate(true);
+                            weakAbortTransition.setImmediate(true);
                             // Now add all weak abort watcher valuedObjects as a trigger
                             weakAbortTransition.setTrigger(weakTrigger.copy);
                             // Set the lowest priority
@@ -2457,7 +2457,7 @@ class SCChartsCoreTransformation {
                 runState.outgoingTransitions.add(watcherTransition);
                 watcherTransition.setTrigger(exitValuedObjectReference);
                 watcherTransition.setPriority(runState.maxPriority + 1);
-                watcherTransition.setIsImmediate(true);
+                watcherTransition.setImmediate(true);
                 watcherTransition.setDelay(0);
                               
                 val mainRegion = SCChartsFactory::eINSTANCE.createRegion();
@@ -2465,11 +2465,11 @@ class SCChartsCoreTransformation {
                 val mainState = SCChartsFactory::eINSTANCE.createState();
                 mainState.setId(state.id("Main"));
                 mainState.setLabel("Main");
-                mainState.setIsInitial(true);
+                mainState.setInitial(true);
                 val termState = SCChartsFactory::eINSTANCE.createState();
                 termState.setId(state.id("Term"));
                 termState.setLabel("Term");
-                termState.setIsFinal(true);
+                termState.setFinal(true);
                 // Move all inner regions of the state to the mainState
                 val regions = ImmutableList::copyOf(state.regions);
                 for (region : regions) {

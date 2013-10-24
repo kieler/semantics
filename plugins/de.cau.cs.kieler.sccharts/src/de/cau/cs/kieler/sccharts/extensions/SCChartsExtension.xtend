@@ -160,35 +160,35 @@ class SCChartsExtension {
         state
     }
     
-    def State setIsInitial(State state) {
-        state.setIsInitial(true)
+    def State setInitial(State state) {
+        state.setInitial(true)
         state
     }
 
-    def State setIsNotInitial(State state) {
-        state.setIsInitial(false)
+    def State setNotInitial(State state) {
+        state.setInitial(false)
         state
     }
 
-    def State setIsFinal(State state) {
-        state.setIsFinal(true)
+    def State setFinal(State state) {
+        state.setFinal(true)
         state
     }
 
     def State createInitialState(String id) {
-        createState(id).setIsInitial
+        createState(id).setInitial
     }
     
     def State createFinalState(String id) {
-        createState(id).setIsFinal
+        createState(id).setFinal
     }
     
     def State createInitialState(Region region, String id) {
-        region.createState(id).setIsInitial
+        region.createState(id).setInitial
     }
     
     def State createFinalState(Region region, String id) {
-        region.createState(id).setIsFinal
+        region.createState(id).setFinal
     }
     
     def State setLabel2(State state, String label) {
@@ -257,7 +257,7 @@ class SCChartsExtension {
     }
 
     def Transition createImmediateTransition() {
-        createTransition.setIsImmediate
+        createTransition.setImmediate
     }
 
     def Transition createTransitionTo(State sourceState, State targetState) {
@@ -278,7 +278,7 @@ class SCChartsExtension {
     }
     
     def Transition createImmediateTransitionTo(State sourceState, State targetState) {
-        sourceState.createTransitionTo(targetState).setIsImmediate
+        sourceState.createTransitionTo(targetState).setImmediate
     }
     
     def Transition setTrigger2(Transition transition, Expression expression) {
@@ -344,13 +344,13 @@ class SCChartsExtension {
         transition
     }
 
-    def Transition setIsImmediate(Transition transition) {
-        transition.setIsImmediate(true)
+    def Transition setImmediate(Transition transition) {
+        transition.setImmediate(true)
         transition
     }
 
-    def Transition setIsNotImmediate(Transition transition) {
-        transition.setIsImmediate(false)
+    def Transition setNotImmediate(Transition transition) {
+        transition.setImmediate(false)
         transition
     }
 
@@ -358,7 +358,7 @@ class SCChartsExtension {
 
     // Apply attributes from one local action to another
     def LocalAction applyAttributes(LocalAction localAction, LocalAction locationActionWithAttributes) {
-        localAction.setIsImmediate(locationActionWithAttributes.isImmediate)
+        localAction.setImmediate(locationActionWithAttributes.isImmediate)
         localAction.setDelay(locationActionWithAttributes.delay)
         localAction.setLabel(locationActionWithAttributes.label)
         localAction.setTrigger(locationActionWithAttributes.trigger)
@@ -378,7 +378,7 @@ class SCChartsExtension {
     // Create an immediate during action for a state.
     def DuringAction createImmediateDuringAction(State state) {
         val action = state.createDuringAction
-        action.setIsImmediate(true);
+        action.setImmediate(true);
         action
     }
 
@@ -391,7 +391,7 @@ class SCChartsExtension {
     // Create an immediate entry action for a state.
     def EntryAction createImmediateEntryAction(State state) {
         val action = state.createEntryAction
-        action.setIsImmediate(true);
+        action.setImmediate(true);
         action
     }
 
@@ -404,7 +404,7 @@ class SCChartsExtension {
     // Create an immediate exit action for a state.
     def ExitAction createImmediateExitAction(State state) {
         val action = state.createExitAction
-        action.setIsImmediate(true);
+        action.setImmediate(true);
         action
     }
 
@@ -418,7 +418,7 @@ class SCChartsExtension {
     // Create an immediate suspend action for a state.
     def SuspendAction createImmediateSuspendAction(State state) {
         val action = state.createSuspendAction
-        action.setIsImmediate(true);
+        action.setImmediate(true);
         action
     }
     

@@ -126,13 +126,13 @@ public interface SCChartsPackage extends EPackage {
     int ACTION__DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ACTION__IS_IMMEDIATE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int ACTION__IMMEDIATE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -628,22 +628,22 @@ public interface SCChartsPackage extends EPackage {
     int STATE__PARENT_REGION = SCOPE_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * The feature id for the '<em><b>Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__IS_INITIAL = SCOPE_FEATURE_COUNT + 3;
+    int STATE__INITIAL = SCOPE_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Is Final</b></em>' attribute.
+     * The feature id for the '<em><b>Final</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__IS_FINAL = SCOPE_FEATURE_COUNT + 4;
+    int STATE__FINAL = SCOPE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Outgoing Transitions</b></em>' containment reference list.
@@ -719,13 +719,13 @@ public interface SCChartsPackage extends EPackage {
     int TRANSITION__DELAY = ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TRANSITION__IS_IMMEDIATE = ACTION__IS_IMMEDIATE;
+    int TRANSITION__IMMEDIATE = ACTION__IMMEDIATE;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -874,13 +874,13 @@ public interface SCChartsPackage extends EPackage {
     int LOCAL_ACTION__DELAY = ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LOCAL_ACTION__IS_IMMEDIATE = ACTION__IS_IMMEDIATE;
+    int LOCAL_ACTION__IMMEDIATE = ACTION__IMMEDIATE;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -947,13 +947,13 @@ public interface SCChartsPackage extends EPackage {
     int ENTRY_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ENTRY_ACTION__IS_IMMEDIATE = LOCAL_ACTION__IS_IMMEDIATE;
+    int ENTRY_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -1020,13 +1020,13 @@ public interface SCChartsPackage extends EPackage {
     int DURING_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DURING_ACTION__IS_IMMEDIATE = LOCAL_ACTION__IS_IMMEDIATE;
+    int DURING_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -1093,13 +1093,13 @@ public interface SCChartsPackage extends EPackage {
     int EXIT_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int EXIT_ACTION__IS_IMMEDIATE = LOCAL_ACTION__IS_IMMEDIATE;
+    int EXIT_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -1166,13 +1166,13 @@ public interface SCChartsPackage extends EPackage {
     int SUSPEND_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SUSPEND_ACTION__IS_IMMEDIATE = LOCAL_ACTION__IS_IMMEDIATE;
+    int SUSPEND_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -1277,15 +1277,15 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getAction_Delay();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#isIsImmediate <em>Is Immediate</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#isImmediate <em>Immediate</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Immediate</em>'.
-     * @see de.cau.cs.kieler.sccharts.Action#isIsImmediate()
+     * @return the meta object for the attribute '<em>Immediate</em>'.
+     * @see de.cau.cs.kieler.sccharts.Action#isImmediate()
      * @see #getAction()
      * @generated
      */
-    EAttribute getAction_IsImmediate();
+    EAttribute getAction_Immediate();
 
     /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#getLabel <em>Label</em>}'.
@@ -1491,26 +1491,26 @@ public interface SCChartsPackage extends EPackage {
     EReference getState_ParentRegion();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#isIsInitial <em>Is Initial</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#isInitial <em>Initial</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Initial</em>'.
-     * @see de.cau.cs.kieler.sccharts.State#isIsInitial()
+     * @return the meta object for the attribute '<em>Initial</em>'.
+     * @see de.cau.cs.kieler.sccharts.State#isInitial()
      * @see #getState()
      * @generated
      */
-    EAttribute getState_IsInitial();
+    EAttribute getState_Initial();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#isIsFinal <em>Is Final</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#isFinal <em>Final</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Final</em>'.
-     * @see de.cau.cs.kieler.sccharts.State#isIsFinal()
+     * @return the meta object for the attribute '<em>Final</em>'.
+     * @see de.cau.cs.kieler.sccharts.State#isFinal()
      * @see #getState()
      * @generated
      */
-    EAttribute getState_IsFinal();
+    EAttribute getState_Final();
 
     /**
      * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}'.
@@ -1866,12 +1866,12 @@ public interface SCChartsPackage extends EPackage {
         EAttribute ACTION__DELAY = eINSTANCE.getAction_Delay();
 
         /**
-         * The meta object literal for the '<em><b>Is Immediate</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Immediate</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute ACTION__IS_IMMEDIATE = eINSTANCE.getAction_IsImmediate();
+        EAttribute ACTION__IMMEDIATE = eINSTANCE.getAction_Immediate();
 
         /**
          * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
@@ -2038,20 +2038,20 @@ public interface SCChartsPackage extends EPackage {
         EReference STATE__PARENT_REGION = eINSTANCE.getState_ParentRegion();
 
         /**
-         * The meta object literal for the '<em><b>Is Initial</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Initial</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute STATE__IS_INITIAL = eINSTANCE.getState_IsInitial();
+        EAttribute STATE__INITIAL = eINSTANCE.getState_Initial();
 
         /**
-         * The meta object literal for the '<em><b>Is Final</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Final</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute STATE__IS_FINAL = eINSTANCE.getState_IsFinal();
+        EAttribute STATE__FINAL = eINSTANCE.getState_Final();
 
         /**
          * The meta object literal for the '<em><b>Outgoing Transitions</b></em>' containment reference list feature.
