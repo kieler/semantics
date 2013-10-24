@@ -239,20 +239,20 @@ class KExpressionsExtension {
     }
     
     // Set the ValuedObject to be a signal.
-    def ValuedObject setIsSignal(ValuedObject valuedObject, boolean isSignal) {
-        valuedObject.setIsSignal(isSignal)
+    def ValuedObject setSignal(ValuedObject valuedObject, boolean isSignal) {
+        valuedObject.setSignal(isSignal)
         valuedObject
     }
     
     // Set the ValuedObject to be an input.
-    def ValuedObject setIsInput(ValuedObject valuedObject) {
-         valuedObject.setIsInput(true)
+    def ValuedObject setInput(ValuedObject valuedObject) {
+         valuedObject.setInput(true)
          valuedObject
     }    
     
     // Set the ValuedObject to be an output.
-    def ValuedObject setIsOutput(ValuedObject valuedObject) {
-         valuedObject.setIsOutput(true)
+    def ValuedObject setOutput(ValuedObject valuedObject) {
+         valuedObject.setOutput(true)
          valuedObject
     }    
     
@@ -292,7 +292,7 @@ class KExpressionsExtension {
     def ValuedObject createVariable(String variableName) {
          val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
          valuedObject.setName(variableName)
-         valuedObject.setIsSignal(false)
+         valuedObject.setSignal(false)
          valuedObject;
     }
     
@@ -322,9 +322,9 @@ class KExpressionsExtension {
 
     // Apply attributes of another ValuedObject.
     def ValuedObject applyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
-        valuedObject.setIsInput(valuedObjectWithAttributes.isInput)
-        valuedObject.setIsOutput(valuedObjectWithAttributes.isOutput)
-        valuedObject.setIsStatic(valuedObjectWithAttributes.isStatic)
+        valuedObject.setInput(valuedObjectWithAttributes.isInput)
+        valuedObject.setOutput(valuedObjectWithAttributes.isOutput)
+        valuedObject.setStatic(valuedObjectWithAttributes.isStatic)
         valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
         valuedObject.setType(valuedObjectWithAttributes.type)
         valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
@@ -338,7 +338,7 @@ class KExpressionsExtension {
     def ValuedObject createSignal(String signalName) {
          val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject()
          valuedObject.setName(signalName)
-         valuedObject.setIsSignal(true)
+         valuedObject.setSignal(true)
          valuedObject
     }
 

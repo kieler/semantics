@@ -235,16 +235,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getValuedObject_InitialValue() {
-        return (EReference)valuedObjectEClass.getEStructuralFeatures().get(7);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getValuedObject_IsInput() {
+    public EAttribute getValuedObject_Input() {
         return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(2);
     }
 
@@ -253,7 +244,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getValuedObject_IsOutput() {
+    public EAttribute getValuedObject_Output() {
         return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(3);
     }
 
@@ -262,7 +253,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getValuedObject_IsStatic() {
+    public EAttribute getValuedObject_Static() {
         return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(4);
     }
 
@@ -271,8 +262,17 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getValuedObject_IsSignal() {
+    public EAttribute getValuedObject_Signal() {
         return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getValuedObject_InitialValue() {
+        return (EReference)valuedObjectEClass.getEStructuralFeatures().get(7);
     }
 
     /**
@@ -488,10 +488,10 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         valuedObjectEClass = createEClass(VALUED_OBJECT);
         createEAttribute(valuedObjectEClass, VALUED_OBJECT__NAME);
         createEAttribute(valuedObjectEClass, VALUED_OBJECT__TYPE);
-        createEAttribute(valuedObjectEClass, VALUED_OBJECT__IS_INPUT);
-        createEAttribute(valuedObjectEClass, VALUED_OBJECT__IS_OUTPUT);
-        createEAttribute(valuedObjectEClass, VALUED_OBJECT__IS_STATIC);
-        createEAttribute(valuedObjectEClass, VALUED_OBJECT__IS_SIGNAL);
+        createEAttribute(valuedObjectEClass, VALUED_OBJECT__INPUT);
+        createEAttribute(valuedObjectEClass, VALUED_OBJECT__OUTPUT);
+        createEAttribute(valuedObjectEClass, VALUED_OBJECT__STATIC);
+        createEAttribute(valuedObjectEClass, VALUED_OBJECT__SIGNAL);
         createEAttribute(valuedObjectEClass, VALUED_OBJECT__COMBINE_OPERATOR);
         createEReference(valuedObjectEClass, VALUED_OBJECT__INITIAL_VALUE);
 
@@ -572,10 +572,10 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(valuedObjectEClass, ValuedObject.class, "ValuedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getValuedObject_Name(), ecorePackage.getEString(), "name", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getValuedObject_Type(), this.getValueType(), "type", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getValuedObject_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getValuedObject_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getValuedObject_IsStatic(), ecorePackage.getEBoolean(), "isStatic", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getValuedObject_IsSignal(), ecorePackage.getEBoolean(), "isSignal", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getValuedObject_Input(), ecorePackage.getEBoolean(), "input", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getValuedObject_Output(), ecorePackage.getEBoolean(), "output", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getValuedObject_Static(), ecorePackage.getEBoolean(), "static", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getValuedObject_Signal(), ecorePackage.getEBoolean(), "signal", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getValuedObject_CombineOperator(), this.getCombineOperator(), "combineOperator", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getValuedObject_InitialValue(), this.getExpression(), null, "initialValue", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
