@@ -85,7 +85,7 @@ public class ActionItemProvider
             super.getPropertyDescriptors(object);
 
             addDelayPropertyDescriptor(object);
-            addIsImmediatePropertyDescriptor(object);
+            addImmediatePropertyDescriptor(object);
             addLabelPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
@@ -114,19 +114,19 @@ public class ActionItemProvider
     }
 
     /**
-     * This adds a property descriptor for the Is Immediate feature.
+     * This adds a property descriptor for the Immediate feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addIsImmediatePropertyDescriptor(Object object) {
+    protected void addImmediatePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_Action_isImmediate_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Action_isImmediate_feature", "_UI_Action_type"),
-                 SCChartsPackage.Literals.ACTION__IS_IMMEDIATE,
+                 getString("_UI_Action_immediate_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Action_immediate_feature", "_UI_Action_type"),
+                 SCChartsPackage.Literals.ACTION__IMMEDIATE,
                  true,
                  false,
                  false,
@@ -224,7 +224,7 @@ public class ActionItemProvider
 
         switch (notification.getFeatureID(Action.class)) {
             case SCChartsPackage.ACTION__DELAY:
-            case SCChartsPackage.ACTION__IS_IMMEDIATE:
+            case SCChartsPackage.ACTION__IMMEDIATE:
             case SCChartsPackage.ACTION__LABEL:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
@@ -306,6 +306,11 @@ public class ActionItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.ACTION__TRIGGER,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ACTION__TRIGGER,
+                 KExpressionsFactory.eINSTANCE.createDoubleValue()));
     }
 
     /**

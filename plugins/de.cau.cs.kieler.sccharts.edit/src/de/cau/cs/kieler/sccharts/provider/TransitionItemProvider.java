@@ -77,8 +77,9 @@ public class TransitionItemProvider
 
             addPriorityPropertyDescriptor(object);
             addTypePropertyDescriptor(object);
+            addDeferredPropertyDescriptor(object);
+            addHistoryPropertyDescriptor(object);
             addTargetStatePropertyDescriptor(object);
-            addIsHistoryPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -128,6 +129,50 @@ public class TransitionItemProvider
     }
 
     /**
+     * This adds a property descriptor for the Deferred feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addDeferredPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_Transition_deferred_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Transition_deferred_feature", "_UI_Transition_type"),
+                 SCChartsPackage.Literals.TRANSITION__DEFERRED,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the History feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addHistoryPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_Transition_history_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Transition_history_feature", "_UI_Transition_type"),
+                 SCChartsPackage.Literals.TRANSITION__HISTORY,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
      * This adds a property descriptor for the Target State feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -145,28 +190,6 @@ public class TransitionItemProvider
                  false,
                  true,
                  null,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Is History feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addIsHistoryPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_Transition_isHistory_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Transition_isHistory_feature", "_UI_Transition_type"),
-                 SCChartsPackage.Literals.TRANSITION__IS_HISTORY,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
                  null,
                  null));
     }
@@ -208,7 +231,8 @@ public class TransitionItemProvider
         switch (notification.getFeatureID(Transition.class)) {
             case SCChartsPackage.TRANSITION__PRIORITY:
             case SCChartsPackage.TRANSITION__TYPE:
-            case SCChartsPackage.TRANSITION__IS_HISTORY:
+            case SCChartsPackage.TRANSITION__DEFERRED:
+            case SCChartsPackage.TRANSITION__HISTORY:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }
