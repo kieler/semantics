@@ -26,6 +26,14 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 
+
+/** 
+ * SCG Combination
+ * 
+ * @author ssm
+ * @kieler.design 2013-10-23 proposed 
+ * @kieler.rating 2013-10-23 proposed yellow
+ */
 class SCGraphShowDiagramCombination extends UpdateXtextModelKLighDCombination {
     
     private static val ResourceSet resSet = new ResourceSetImpl();

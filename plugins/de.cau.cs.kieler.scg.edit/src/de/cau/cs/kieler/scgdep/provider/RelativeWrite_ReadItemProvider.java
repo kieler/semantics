@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.scgdep.provider;
 
 
+import de.cau.cs.kieler.scgdep.RelativeWrite_Read;
 import java.util.Collection;
 import java.util.List;
 
@@ -85,7 +86,8 @@ public class RelativeWrite_ReadItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_RelativeWrite_Read_type");
+        RelativeWrite_Read relativeWrite_Read = (RelativeWrite_Read)object;
+        return getString("_UI_RelativeWrite_Read_type") + " " + relativeWrite_Read.isConcurrent();
     }
 
     /**

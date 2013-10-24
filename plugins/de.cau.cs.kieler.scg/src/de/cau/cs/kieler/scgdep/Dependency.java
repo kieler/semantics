@@ -20,10 +20,43 @@ import de.cau.cs.kieler.scg.Link;
  * A representation of the model object '<em><b>Dependency</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <p>
+ * The following features are supported:
+ * <ul>
+ *   <li>{@link de.cau.cs.kieler.scgdep.Dependency#isConcurrent <em>Concurrent</em>}</li>
+ * </ul>
+ * </p>
  *
  * @see de.cau.cs.kieler.scgdep.ScgdepPackage#getDependency()
  * @model
  * @generated
  */
 public interface Dependency extends Link {
+
+    /**
+     * Returns the value of the '<em><b>Concurrent</b></em>' attribute.
+     * The default value is <code>"false"</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Concurrent</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Concurrent</em>' attribute.
+     * @see #setConcurrent(boolean)
+     * @see de.cau.cs.kieler.scgdep.ScgdepPackage#getDependency_Concurrent()
+     * @model default="false"
+     * @generated
+     */
+    boolean isConcurrent();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scgdep.Dependency#isConcurrent <em>Concurrent</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Concurrent</em>' attribute.
+     * @see #isConcurrent()
+     * @generated
+     */
+    void setConcurrent(boolean value);
 } // Dependency

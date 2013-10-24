@@ -27,6 +27,7 @@ import de.cau.cs.kieler.scgdep.ScgdepFactory;
 import de.cau.cs.kieler.scgdep.ScgdepPackage;
 import de.cau.cs.kieler.scgdep.Write_Write;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -181,6 +182,15 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getDependency_Concurrent() {
+        return (EAttribute)dependencyEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getAbsoluteWrite_Read() {
         return absoluteWrite_ReadEClass;
     }
@@ -286,6 +296,7 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
 
         // Create classes and their features
         dependencyEClass = createEClass(DEPENDENCY);
+        createEAttribute(dependencyEClass, DEPENDENCY__CONCURRENT);
 
         absoluteWrite_ReadEClass = createEClass(ABSOLUTE_WRITE_READ);
 
@@ -349,6 +360,7 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
 
         // Initialize classes, features, and operations; add parameters
         initEClass(dependencyEClass, Dependency.class, "Dependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getDependency_Concurrent(), ecorePackage.getEBoolean(), "concurrent", "false", 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(absoluteWrite_ReadEClass, AbsoluteWrite_Read.class, "AbsoluteWrite_Read", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

@@ -18,18 +18,43 @@ import de.cau.cs.kieler.scg.impl.LinkImpl;
 import de.cau.cs.kieler.scgdep.Dependency;
 import de.cau.cs.kieler.scgdep.ScgdepPackage;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Dependency</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * The following features are implemented:
+ * <ul>
+ *   <li>{@link de.cau.cs.kieler.scgdep.impl.DependencyImpl#isConcurrent <em>Concurrent</em>}</li>
+ * </ul>
  * </p>
  *
  * @generated
  */
 public class DependencyImpl extends LinkImpl implements Dependency {
+    /**
+     * The default value of the '{@link #isConcurrent() <em>Concurrent</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isConcurrent()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean CONCURRENT_EDEFAULT = false;
+    /**
+     * The cached value of the '{@link #isConcurrent() <em>Concurrent</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isConcurrent()
+     * @generated
+     * @ordered
+     */
+    protected boolean concurrent = CONCURRENT_EDEFAULT;
+
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -47,6 +72,101 @@ public class DependencyImpl extends LinkImpl implements Dependency {
     @Override
     protected EClass eStaticClass() {
         return ScgdepPackage.Literals.DEPENDENCY;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isConcurrent() {
+        return concurrent;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setConcurrent(boolean newConcurrent) {
+        boolean oldConcurrent = concurrent;
+        concurrent = newConcurrent;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgdepPackage.DEPENDENCY__CONCURRENT, oldConcurrent, concurrent));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case ScgdepPackage.DEPENDENCY__CONCURRENT:
+                return isConcurrent();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case ScgdepPackage.DEPENDENCY__CONCURRENT:
+                setConcurrent((Boolean)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case ScgdepPackage.DEPENDENCY__CONCURRENT:
+                setConcurrent(CONCURRENT_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case ScgdepPackage.DEPENDENCY__CONCURRENT:
+                return concurrent != CONCURRENT_EDEFAULT;
+        }
+        return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (concurrent: ");
+        result.append(concurrent);
+        result.append(')');
+        return result.toString();
     }
 
 } //DependencyImpl

@@ -52,7 +52,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 /** 
  * SCCharts CoreTransformation Extensions.
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
@@ -151,13 +151,22 @@ class SCGTransformation {
             valuedObjectSCG.applyAttributes(valuedObject)
             valuedObjectSCG.map(valuedObject)
         }
-        // Generate nodes and recursively traverse model
-        for (region : rootRegion.rootState.regions) {
-           region.transformSCGGenerateNodes(sCGraph)
-        }
-        // Generate nodes and recursively traverse model
-        for (region : rootRegion.rootState.regions) {
-           region.transformSCGConnectNodes(sCGraph)
+        // Include top most level of hierarchy 
+        // if the root state itself already contains multiple regions.
+        // Otherwise skip the first layer of hierarchy.
+        if (rootRegion.rootState.regions.size>1) {
+            // Generate nodes and recursively traverse model
+            rootRegion.transformSCGGenerateNodes(sCGraph)
+            rootRegion.transformSCGConnectNodes(sCGraph)        
+        } else {
+            // Generate nodes and recursively traverse model
+            for (region : rootRegion.rootState.regions) {
+               region.transformSCGGenerateNodes(sCGraph)
+            }
+            // Generate nodes and recursively traverse model
+            for (region : rootRegion.rootState.regions) {
+                region.transformSCGConnectNodes(sCGraph)
+            }
         }
         // Fix superfluous exit nodes
         sCGraph.trimExitNodes.trimConditioanlNodes
@@ -392,7 +401,8 @@ class SCGTransformation {
    def void transformSCGConnectNodes(Region region, SCGraph sCGraph) {
        val entry = region.mappedEntry
        // Connect all entry nodes with the initial state's nodes.
-       val initialState = region.states.filter(e | e.isInitial).get(0)
+       // Also check the parent container in case the "initial" state is the root state.
+       val initialState = region.states.filter(e | e.isInitial || e.eContainer.eContainer == null).get(0)
        val initialNode = initialState.mappedNode
        val controlFlowInitial = initialNode.createControlFlow
        entry.setNext(controlFlowInitial)
@@ -474,12 +484,19 @@ class SCGTransformation {
                 }   
                 region.transformSCGConnectNodes(sCGraph)
             }
-            val normalTerminationTargetState = state.outgoingTransitions.get(0).targetState
-            val otherNodeNormalTermination = normalTerminationTargetState.mappedNode   
-            if (otherNodeNormalTermination != null) {
-                val controlFlowNormalTermination = otherNodeNormalTermination.createControlFlow
-                join.setNext(controlFlowNormalTermination)
-            }   
+            if (state.outgoingTransitions.size>0) {
+                val normalTerminationTargetState = state.outgoingTransitions.get(0).targetState
+                val otherNodeNormalTermination = normalTerminationTargetState.mappedNode   
+                if (otherNodeNormalTermination != null) {
+                    val controlFlowNormalTermination = otherNodeNormalTermination.createControlFlow
+                    join.setNext(controlFlowNormalTermination)
+                }   
+            } else {
+                // The root state does not have a normal termination.
+                // Use the corresponding exit node of the root region in this case. 
+                val controlFlow = (state.eContainer as Region).getMappedEntry.exit.createControlFlow 
+                join.setNext(controlFlow)
+            }
         }
         else if (state.exit) {
             // For a final state connect it's exit node representation with the exit node
