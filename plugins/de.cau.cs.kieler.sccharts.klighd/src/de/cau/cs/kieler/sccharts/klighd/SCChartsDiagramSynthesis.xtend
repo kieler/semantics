@@ -195,7 +195,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
-                it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
+                if (!r.allContainedStates.nullOrEmpty) {
+                    it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
+                }
             ];
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
@@ -210,7 +212,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
-                it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
+                if (!r.allContainedStates.nullOrEmpty) {
+                    it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
+                }
             ]
         ];
     }
@@ -501,9 +505,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     for (action : s.localActions) {
                         it.addRectangle => [
                             it.invisible = true;
-                            val text = serializer.serialize(action.copy);
-                            it.printHighlightedText(text, action)
-                            it.addRectangle().invisible = true;
+                            it.addRectangle => [
+                                it.invisible = true;
+                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0, 0);
+                                val text = serializer.serialize(action.copy);
+                                it.printHighlightedText(text, action)
+                            ]
+                            //it.addRectangle().invisible = true;
                         ];
                     }
                     for (bodyText : s.bodyText) {
@@ -522,7 +530,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 if (s.hasRegionsOrDeclarations) {
                     it.addChildArea().setGridPlacementData() => [
                         from(LEFT, 3, 0, TOP, 3, 0).to(RIGHT, 3, 0, BOTTOM, 3, 0)
-                        minCellHeight = 36;
+                        minCellHeight = 6;
                         minCellWidth = 36;
                     ];
                 }
