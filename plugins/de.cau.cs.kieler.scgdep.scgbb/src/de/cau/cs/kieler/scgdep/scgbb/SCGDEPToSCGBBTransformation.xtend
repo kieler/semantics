@@ -41,16 +41,22 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scgbb.ScgbbFactory
 import de.cau.cs.kieler.scgbb.SCGraphBB
 import de.cau.cs.kieler.scgdep.NodeDep
+import java.util.List
+import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.scgbb.SchedulingBlock
+import de.cau.cs.kieler.scgbb.BasicBlock
+import java.util.ArrayList
 
 /** 
- * SCG to SCGDEP Transformation 
+ * SCGDEP to SCGBB Transformation 
  * 
  * @author ssm
  * @kieler.design 2013-10-24 proposed 
  * @kieler.rating 2013-10-24 proposed yellow
  */
 
-// This class contians all mandatory methods for the SCG-to-SCGDEP-Transformation.
+// This class contians all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
 class SCGDEPToSCGBBTransformation {
     
     // Inject SCG Extensions.    
@@ -91,13 +97,78 @@ class SCGDEPToSCGBBTransformation {
         // Resolves all cross references.
         scgbb.nodes.forEach[ it.adjustCrossReferences ]
         
-        // Copy all dependencies
+        // Copy all dependencies.
         scgdep.eAllContents.filter(typeof(Dependency)).forEach[ it.copyDependency(scgbb) ]
+        
+        // Create basic blocks.
+        scgbb.createBasicBlocks(scgbb.nodes.head, 0)
         
         return scgbb;
     }   
     
+
+    // -------------------------------------------------------------------------
+    // -- CREATE Basic Blocks 
+    // -------------------------------------------------------------------------
     
+    def int createBasicBlocks(SCGraphBB scg, Node rootNode, int guardIndex) {
+        var newIndex = guardIndex
+        var node = rootNode
+        
+        val List<Node> nodes = new ArrayList<Node> => [ n |
+            scg.basicBlocks.forEach[bb|bb.schedulingBlocks.forEach[sb|n.addAll(sb.nodes)]]
+        ]
+        if (nodes.contains(rootNode)) return newIndex;
+        
+        val guard = KExpressionsFactory::eINSTANCE.createValuedObject
+        guard.name = 'guard' + newIndex.toString
+        newIndex = newIndex + 1
+        
+        var schedulingBlock = ScgbbFactory::eINSTANCE.createSchedulingBlock
+        while(node != null) {
+            schedulingBlock.nodes.add(node)
+            
+            if (node instanceof Conditional) {
+                scg.insertBasicBlock(guard, schedulingBlock)
+                newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex)
+                newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex)
+                node = null
+            } else 
+            if (node instanceof Surface) {
+                scg.insertBasicBlock(guard, schedulingBlock)
+                newIndex = scg.createBasicBlocks((node as Surface).depth, newIndex)
+                node = null
+            }  else
+            if (node.eAllContents.filter(typeof(ControlFlow)).size != 1) {
+                scg.insertBasicBlock(guard, schedulingBlock)
+                if (node instanceof Fork) {
+                    newIndex = scg.createBasicBlocks((node as Fork).join, newIndex)
+                }
+                for(flow : node.eAllContents.filter(typeof(ControlFlow)).toList) {
+                    newIndex = scg.createBasicBlocks(flow.target, newIndex)
+                }
+                node = null                
+            } else {
+                val next = node.eAllContents.filter(typeof(ControlFlow)).head.target
+                if (next instanceof Join) {
+                    scg.insertBasicBlock(guard, schedulingBlock)
+                    node = null
+                } else {
+                    node = next
+                }
+            }
+        }
+                
+        newIndex
+    }
+    
+    def BasicBlock insertBasicBlock(SCGraphBB scg, ValuedObject guard, SchedulingBlock schedulingBlock) {
+        val basicBlock = ScgbbFactory::eINSTANCE.createBasicBlock
+        basicBlock.schedulingBlocks.add(schedulingBlock)
+        basicBlock.guard = guard
+        scg.basicBlocks.add(basicBlock)
+        basicBlock
+    }
 
 
     // -------------------------------------------------------------------------
