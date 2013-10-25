@@ -36,6 +36,9 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
     /** the name of the annotation that must be present to activate this config. */
     public static final String HV_ANNOTATION = "HVLayout";
 
+    /** the name of the annotation that must be present to activate this config. */
+    public static final String VH_ANNOTATION = "VHLayout";
+
     /** the priority for this semantic layout configuration. */
     public static final int PRIORITY = 15;
 
@@ -69,13 +72,29 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
         }
         return -1;
     }
+    
+    private int getVHDistance(final Scope scope) {
+        Annotation annotation = scope.getAnnotation(VH_ANNOTATION);
+        if (annotation != null) {
+            return 0;
+        } else if (scope.eContainer() instanceof Scope) {
+            Scope parent = (Scope) scope.eContainer();
+            int parentDist = getVHDistance(parent);
+            if (parentDist >= 0 && parent instanceof Region) {
+                return parentDist + 1;
+            } else {
+                return parentDist;
+            }
+        }
+        return -1;
+    }    
 
     /**
      * {@inheritDoc}
      */
     @Override
     protected IProperty<?>[] getAffectedOptions(final EObject semanticElem) {
-        if (semanticElem instanceof Scope && getHVDistance((Scope) semanticElem) >= 0) {
+        if (semanticElem instanceof Scope && (getHVDistance((Scope) semanticElem) >= 0 || getVHDistance((Scope) semanticElem) >= 0)) {
             return new IProperty<?>[] { LayoutOptions.DIRECTION };
         }
         return null;
@@ -94,6 +113,16 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
                     return Direction.RIGHT;
                 } else {
                     return Direction.DOWN;
+                }
+            }
+        }
+        if (semanticElem instanceof Scope && layoutOption.equals(LayoutOptions.DIRECTION)) {
+            int dist = getVHDistance((Scope) semanticElem);
+            if (dist >= 0) {
+                if (dist % 2 == 0) {
+                    return Direction.DOWN;
+                } else {
+                    return Direction.RIGHT;
                 }
             }
         }
