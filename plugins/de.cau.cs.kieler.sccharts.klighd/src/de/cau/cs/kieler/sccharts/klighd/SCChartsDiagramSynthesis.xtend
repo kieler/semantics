@@ -530,8 +530,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 if (s.hasRegionsOrDeclarations) {
                     it.addChildArea().setGridPlacementData() => [
                         from(LEFT, 3, 0, TOP, 3, 0).to(RIGHT, 3, 0, BOTTOM, 3, 0)
-                        minCellHeight = 6;
-                        minCellWidth = 36;
+                        minCellHeight = 5;
+                        minCellWidth = 5;
                     ];
                 }
             ];
