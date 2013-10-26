@@ -166,6 +166,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
     private static val TransformationOption SHOW_BASICBLOCKS 
         = TransformationOption::createCheckOption("Show Basic Blocks", true);
+
+    private static val TransformationOption SHOW_SCHEDULINGBLOCKS 
+        = TransformationOption::createCheckOption("Show Scheduling Blocks", true);
+
+    private static val TransformationOption SHOW_SINGLESCHEDULINGBLOCKS
+        = TransformationOption::createCheckOption("Show Single Scheduling Blocks", false);
         
     private static val TransformationOption SHOW_SHADOW
         = TransformationOption::createCheckOption("Shadow", true);
@@ -188,7 +194,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     override public getTransformationOptions() {
         return ImmutableSet::of(SHOW_CAPTION, 
             SHOW_DEPENDENCIES, LAYOUT_DEPENDENCIES, HIDE_NONCONCURRENT, 
-            SHOW_BASICBLOCKS,
+            SHOW_BASICBLOCKS, SHOW_SCHEDULINGBLOCKS, SHOW_SINGLESCHEDULINGBLOCKS,
             ALIGN_TICK_START, ALIGN_ENTRYEXIT_NODES, 
             SHOW_HIERARCHY, HIERARCHY_TRANSPARENCY,
             ORIENTATION, 
@@ -318,9 +324,18 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }            
             }
             
-            if (r instanceof SCGraphBB && SHOW_BASICBLOCKS.optionBooleanValue) {
+            if (r instanceof SCGraphBB && (SHOW_BASICBLOCKS.optionBooleanValue || SHOW_SCHEDULINGBLOCKS.optionBooleanValue)) {
                 for (s : (r as SCGraphBB).basicBlocks) {
-                    s.schedulingBlocks.head.nodes.createHierarchy(NODEGROUPING_BASICBLOCK)                    
+                    if (SHOW_BASICBLOCKS.optionBooleanValue) {
+                        val bbNodes = <Node> newLinkedList
+                        s.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
+                        bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
+                    }
+                    if (SHOW_SCHEDULINGBLOCKS.optionBooleanValue && 
+                        (s.schedulingBlocks.size>1 || SHOW_SINGLESCHEDULINGBLOCKS.optionBooleanValue))
+                        for(schedulingBlock : s.schedulingBlocks) {
+                             schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
+                         }                    
                 }                
             }
             
@@ -844,7 +859,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         }
         
         // Set options for the container.
-        kContainer.addLayoutParam(LayoutOptions::SPACING, 25.0f)
+        kContainer.addLayoutParam(LayoutOptions::SPACING, 10.0f)
         if (topdown()) kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
             else kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT)
         kContainer.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
@@ -853,6 +868,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         kContainer.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
         
         if (nodeGrouping == NODEGROUPING_HIERARCHY) {
+            kContainer.addLayoutParam(LayoutOptions::SPACING, 25.0f)
             kContainer.addRoundedRectangle(5, 5, 0)
             kContainer.KRendering.foreground = SCCHARTSBLUE2.copy;
             kContainer.KRendering.foreground.alpha = Math.round(HIERARCHY_TRANSPARENCY.optionValue as Float)
@@ -860,10 +876,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.KRendering.background.alpha = Math.round(HIERARCHY_TRANSPARENCY.optionValue as Float)
         }
         if (nodeGrouping == NODEGROUPING_BASICBLOCK) {
+            kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
                 it.lineStyle = LineStyle::DOT
             ]
             kContainer.KRendering.foreground = BASICBLOCKBORDER.copy;
+            kContainer.KRendering.foreground.alpha = Math.round(255f)
+            kContainer.KRendering.background = SCCHARTSBLUE2.copy;
+            kContainer.KRendering.background.alpha = Math.round(0f)
+        }
+        if (nodeGrouping == NODEGROUPING_SCHEDULINGBLOCK) {
+            kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
+            kContainer.addRoundedRectangle(1, 1, 1) => [
+                it.lineStyle = LineStyle::DOT
+            ]
+            kContainer.KRendering.foreground = SCHEDULINGBLOCKBORDER.copy;
             kContainer.KRendering.foreground.alpha = Math.round(255f)
             kContainer.KRendering.background = SCCHARTSBLUE2.copy;
             kContainer.KRendering.background.alpha = Math.round(0f)
