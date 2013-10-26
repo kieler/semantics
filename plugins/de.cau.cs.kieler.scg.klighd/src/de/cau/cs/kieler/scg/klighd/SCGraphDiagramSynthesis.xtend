@@ -73,6 +73,7 @@ import de.cau.cs.kieler.core.util.Pair
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scgbb.SCGraphBB
+import de.cau.cs.kieler.core.krendering.KPolygon
 
 /** 
  * SCCGraph KlighD synthesis 
@@ -181,12 +182,17 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val TransformationOption HIERARCHY_TRANSPARENCY 
         = TransformationOption::createRangeOption("Hierarchy transparency", Pair::of(0f, 255f), 128f);
         
+    private static val TransformationOption ORIENTATION
+        = TransformationOption::createChoiceOption("Orientation", <String> newLinkedList("Top-Down", "Left-Right"), "Top-Down");
+        
     override public getTransformationOptions() {
         return ImmutableSet::of(SHOW_CAPTION, 
             SHOW_DEPENDENCIES, LAYOUT_DEPENDENCIES, HIDE_NONCONCURRENT, 
             SHOW_BASICBLOCKS,
             ALIGN_TICK_START, ALIGN_ENTRYEXIT_NODES, 
-            SHOW_HIERARCHY, HIERARCHY_TRANSPARENCY, SHOW_SHADOW
+            SHOW_HIERARCHY, HIERARCHY_TRANSPARENCY,
+            ORIENTATION, 
+            SHOW_SHADOW
         );
     }
     
@@ -225,11 +231,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val String SCGPORTID_INCOMINGDEPENDENCY = "incomingDependency"
     private static val String SCGPORTID_OUTGOINGDEPENDENCY = "outgoingDependency"
 
-    private static val int NODEGROUPING_HIERARCHY = 0;
-    private static val int NODEGROUPING_BASICBLOCK = 1;
-    private static val int NODEGROUPING_SCHEDULINGBLOCK = 2;
+    private static val int NODEGROUPING_HIERARCHY = 0
+    private static val int NODEGROUPING_BASICBLOCK = 1
+    private static val int NODEGROUPING_SCHEDULINGBLOCK = 2
+    
+    private static val int ORIENTATION_PORTRAIT = 0
+    private static val int ORIENTATION_LANDSCAPE = 1
     
     private KNode rootNode;
+    private int orientation;
 
 
     // -------------------------------------------------------------------------
@@ -251,7 +261,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             // Set root node and layout options.
             rootNode = node
-            node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN);
+            if (ORIENTATION.getOptionValue == "Left-Right") orientation = ORIENTATION_LANDSCAPE
+                else orientation = ORIENTATION_PORTRAIT
+            
+            if (topdown()) node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
+                else node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT)
             node.setLayoutOption(LayoutOptions::SPACING, 25f);
             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
@@ -347,10 +361,17 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             // Add ports for control-flow and dependency routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING, 37, 24, 0, PortSide::SOUTH)          
-            node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 24, 0, PortSide::SOUTH)                      
+            if (topdown()) {
+                node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOING, 37, 24, 0, PortSide::SOUTH)          
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 24, 0, PortSide::SOUTH)
+            } else {
+                node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 1, PortSide::EAST)          
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST)
+            }                      
         ]
     }
     
@@ -378,13 +399,22 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             // Add ports for control-flow and dependency routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
-            node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING_ELSE, 37.5f, 24, 0, PortSide::SOUTH)
-            val port = node.addPort(SCGPORTID_OUTGOING_THEN, 68, 12.5f, 0, PortSide::EAST)
-            node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 21, 1, PortSide::SOUTH)                      
-            port.addLayoutParam(LayoutOptions::OFFSET, -1.5f)
-        ];
+            if (topdown()) {
+                node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOING_ELSE, 37.5f, 24, 0, PortSide::SOUTH)
+                val port = node.addPort(SCGPORTID_OUTGOING_THEN, 68, 12.5f, 0, PortSide::EAST)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 21, 1, PortSide::SOUTH)                      
+                port.addLayoutParam(LayoutOptions::OFFSET, -1.5f)
+            } else {
+                node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOING_ELSE, 75, 12.5f, 0, PortSide::EAST)
+                val port = node.addPort(SCGPORTID_OUTGOING_THEN, 37.5f, 20, 0, PortSide::SOUTH)
+                node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST)                      
+                port.addLayoutParam(LayoutOptions::OFFSET, 0f)
+            }
+        ]
     }
 
 
@@ -396,21 +426,41 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return s.createNode().putToLookUpWith(s) => [ node |
 
             // Draw a surface node...
-            val figure = node.addPolygon().createSurfaceShape();
-
-            figure => [ node.setMinimalNodeSize(75, 25); 
-                if (SHOW_CAPTION.optionBooleanValue)
-                    node.KRendering.add(factory.createKText.of("surface").putToLookUpWith(s));
-                if (SHOW_SHADOW.optionBooleanValue) {
-                    it.shadow = "black".color;
-                }
-            ]
+            var KPolygon figure; 
+            if (topdown()) { 
+                figure = node.addPolygon().createSurfaceShape() 
+                figure => [ node.setMinimalNodeSize(75, 25); 
+                    if (SHOW_CAPTION.optionBooleanValue)
+                        node.KRendering.add(factory.createKText.of("surface").putToLookUpWith(s));
+                    if (SHOW_SHADOW.optionBooleanValue) {
+                        it.shadow = "black".color;
+                    }
+                ]
+            } else { 
+                figure = node.addPolygon().createSurfaceLandscapeShape()
+                figure => [ node.setMinimalNodeSize(75, 25); 
+                    if (SHOW_CAPTION.optionBooleanValue)
+                        node.KRendering.add(factory.createKText.of("surface")
+                            .setAreaPlacementData.from(LEFT, 10, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 3, 0)
+                            .putToLookUpWith(s)
+                        );
+                    if (SHOW_SHADOW.optionBooleanValue) {
+                        it.shadow = "black".color;
+                    }
+                ]
+            }
             
             // Add ports for control-flow/tick edge routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            val port = node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)          
-            port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)           
+            if (topdown()) {
+                val port = node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)          
+                port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+            } else {
+                val port = node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)          
+                port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+            }           
         ]
     }
 
@@ -428,24 +478,44 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
 
             // Draw a depth figure;
-            val figure = node.addPolygon().createDepthShape();
-
-            figure => [ node.setMinimalNodeSize(75, 25); 
-                if (SHOW_CAPTION.optionBooleanValue)
-                    node.KRendering.add(factory.createKText.of("depth")
-                        .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0)
-                        .putToLookUpWith(s)
-                    );
-                if (SHOW_SHADOW.optionBooleanValue) {
-                    it.shadow = "black".color;
-                }
-            ]
+            var KPolygon figure;
+            if (topdown()) {            
+                figure = node.addPolygon().createDepthShape();
+                figure => [ node.setMinimalNodeSize(75, 25); 
+                    if (SHOW_CAPTION.optionBooleanValue)
+                        node.KRendering.add(factory.createKText.of("depth")
+                            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0)
+                            .putToLookUpWith(s)
+                        );
+                    if (SHOW_SHADOW.optionBooleanValue) {
+                        it.shadow = "black".color;
+                    }
+                ]
+            } else {
+                figure = node.addPolygon().createDepthLandscapeShape();
+                figure => [ node.setMinimalNodeSize(75, 25); 
+                    if (SHOW_CAPTION.optionBooleanValue)
+                        node.KRendering.add(factory.createKText.of("depth")
+                            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 10, 0, BOTTOM, 2, 0)
+                            .putToLookUpWith(s)
+                        );
+                    if (SHOW_SHADOW.optionBooleanValue) {
+                        it.shadow = "black".color;
+                    }
+                ]
+            }
             
             // Add ports for control-flow/tick edge routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            node.addPort(SCGPORTID_INCOMING, 37,  0, 1, PortSide::NORTH)
-            val port = node.addPort(SCGPORTID_OUTGOING, 37.5f, 25, 0, PortSide::SOUTH)          
-            port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+            if (topdown()) {
+                node.addPort(SCGPORTID_INCOMING, 37,  0, 1, PortSide::NORTH)
+                val port = node.addPort(SCGPORTID_OUTGOING, 37.5f, 25, 0, PortSide::SOUTH)          
+                port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+            } else {
+                node.addPort(SCGPORTID_INCOMING, 0,  12.5f, 1, PortSide::WEST)
+                val port = node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)          
+                port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+            }
         ]
     }
     
@@ -477,8 +547,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             // Add ports for control-flow routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            node.addPort(SCGPORTID_INCOMING, 37,  0, 1, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)          
+            if (topdown()) {
+                node.addPort(SCGPORTID_INCOMING, 37,  0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
+            } else {
+                node.addPort(SCGPORTID_INCOMING, 0,  12.5f, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
+            }          
         ]
     }    
  
@@ -510,8 +585,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             // Add ports for control-flow routing.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS);
-            node.addPort(SCGPORTID_INCOMING, 37,  0, 1, PortSide::NORTH)
-            node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)          
+            if (topdown()) {
+                node.addPort(SCGPORTID_INCOMING, 37,  0, 1, PortSide::NORTH)
+                node.addPort(SCGPORTID_OUTGOING, 37, 25, 0, PortSide::SOUTH)
+            } else {
+                node.addPort(SCGPORTID_INCOMING, 0,  12.5f, 1, PortSide::WEST)
+                node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
+            }          
         ]
     }
 
@@ -524,24 +604,43 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return s.createNode().putToLookUpWith(s) => [ node |
 
             // Draw a fork triangle...
-            val figure = node.addPolygon().createTriangleShape();
-
-            figure => [ node.setMinimalNodeSize(75, 25);
-                if (SHOW_CAPTION.optionBooleanValue) 
-                    node.KRendering.add(factory.createKText.of("fork")
-                        .setAreaPlacementData.from(LEFT, 0, 0, TOP, 4, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)
-                        .putToLookUpWith(s)
-                    );
-                if (SHOW_SHADOW.optionBooleanValue) {
-                    it.shadow = "black".color;
-                }
-            ]
+            var KPolygon figure;
+            if (topdown()) {
+                figure = node.addPolygon().createTriangleShape();
+                figure => [ node.setMinimalNodeSize(75, 25);
+                    if (SHOW_CAPTION.optionBooleanValue) 
+                        node.KRendering.add(factory.createKText.of("fork")
+                            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 4, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+                            .putToLookUpWith(s)
+                        );
+                    if (SHOW_SHADOW.optionBooleanValue) {
+                        it.shadow = "black".color;
+                    }
+                ]
+            } else {
+                figure = node.addPolygon().createTriangleLandscapeShape();
+                figure => [ node.setMinimalNodeSize(25, 75);
+                    if (SHOW_CAPTION.optionBooleanValue) 
+                        node.KRendering.add(factory.createKText.of("fork")
+                            .setAreaPlacementData.from(LEFT, 2, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 2, 0)
+                            .putToLookUpWith(s)
+                        );
+                    if (SHOW_SHADOW.optionBooleanValue) {
+                        it.shadow = "black".color;
+                    }
+                ]
+            }
             
             // Only add one port for incoming control flow edges.
             // Outgoing ports are added by the control flows.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
-            val port = node.addPort(SCGPORTID_INCOMING, 36, 0, 1, PortSide::NORTH)
-            port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+            if (topdown()) {
+                val port = node.addPort(SCGPORTID_INCOMING, 36, 0, 1, PortSide::NORTH)
+                port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+            } else {
+                val port = node.addPort(SCGPORTID_INCOMING, 0, 37.5f, 1, PortSide::WEST)
+                port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+            }
         ]
     }
 
@@ -554,24 +653,43 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return s.createNode().putToLookUpWith(s) => [ node |
 
             // Draw a join triangle...
-            val figure = node.addPolygon().createTriangleShapeReversed();
-
-            figure => [ node.setMinimalNodeSize(75, 25);
-                if (SHOW_CAPTION.optionBooleanValue) 
-                    node.KRendering.add(factory.createKText.of("join")
-                        .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0)
-                        .putToLookUpWith(s)
-                    );
-                if (SHOW_SHADOW.optionBooleanValue) {
-                    it.shadow = "black".color;
-                }
-            ]
+            var KPolygon figure
+            if (topdown()) {
+                figure = node.addPolygon().createTriangleShapeReversed();
+                figure => [ node.setMinimalNodeSize(75, 25);
+                    if (SHOW_CAPTION.optionBooleanValue) 
+                        node.KRendering.add(factory.createKText.of("join")
+                            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0)
+                            .putToLookUpWith(s)
+                        );
+                    if (SHOW_SHADOW.optionBooleanValue) {
+                        it.shadow = "black".color;
+                    }
+                ]
+            } else {
+                figure = node.addPolygon().createTriangleLandscapeShapeReversed();
+                figure => [ node.setMinimalNodeSize(25, 75);
+                    if (SHOW_CAPTION.optionBooleanValue) 
+                        node.KRendering.add(factory.createKText.of("join")
+                            .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0)
+                            .putToLookUpWith(s)
+                        );
+                    if (SHOW_SHADOW.optionBooleanValue) {
+                        it.shadow = "black".color;
+                    }
+                ]
+            }
             
             // Only add one port for an outgoing control flow edge.
             // Incoming ports are added by the control flows.
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
-            val port = node.addPort(SCGPORTID_OUTGOING, 36, 25, 0, PortSide::SOUTH)
-            port.addLayoutParam(LayoutOptions::OFFSET, -0.5f)
+            if (topdown()) {
+                val port = node.addPort(SCGPORTID_OUTGOING, 36, 25, 0, PortSide::SOUTH)
+                port.addLayoutParam(LayoutOptions::OFFSET, -0.5f)
+            } else {
+                val port = node.addPort(SCGPORTID_OUTGOING, 0, 37.5f, 0, PortSide::EAST)
+                port.addLayoutParam(LayoutOptions::OFFSET, -0.5f)
+            }
         ]
     }
 
@@ -619,7 +737,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // Otherwise, use the outgoing port identified by the given parameter.
             if (sourceObj instanceof Fork) {
                 edge.sourcePort = sourceObj.node.createPort("fork" + targetObj.hashCode()) => [
-                    it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH);
+                    if (topdown()) it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH)
+                        else it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::EAST)
                     it.setPortSize(3,3)
                     it.addRectangle.invisible = true;
                     it.addLayoutParam(LayoutOptions::OFFSET, -3f)
@@ -633,7 +752,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // Otherwise, use the default incoming port.
             if (targetObj instanceof Join) {
                 edge.targetPort = targetObj.node.createPort("join" + sourceObj.hashCode()) => [
-                    it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH);
+                    if (topdown()) it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH)
+                        else it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::WEST)
                     it.setPortSize(3,3)
                     it.addRectangle.invisible = true;
                     it.addLayoutParam(LayoutOptions::OFFSET, -1.5f)
@@ -725,7 +845,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
         // Set options for the container.
         kContainer.addLayoutParam(LayoutOptions::SPACING, 25.0f)
-        kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
+        if (topdown()) kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
+            else kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT)
         kContainer.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
         kContainer.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
         kContainer.addLayoutParam(LayoutOptions::SEPARATE_CC, false);      
@@ -827,5 +948,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
        if (str.startsWith("(")) s = str.substring(1) else s = str;
        if (str.endsWith(")")) s = s.substring(0, s.length - 1);
        return s;
+   }
+   
+   def boolean topdown() {
+       orientation == ORIENTATION_PORTRAIT
+   }
+   
+   def boolean leftright() {
+       orientation == ORIENTATION_LANDSCAPE
    }
 }
