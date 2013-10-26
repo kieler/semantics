@@ -175,9 +175,10 @@ class SCGDEPToSCGBBTransformation {
         val schedulingBlocks = <SchedulingBlock> newLinkedList
         var SchedulingBlock block = null
         for (node : schedulingblock.nodes) {
-            if (block == null || (node instanceof Node && (node as Node).incoming.filter(typeof(Dependency)).size > 0)) {
+            if (block == null || (node.incoming.filter(typeof(Dependency)).size > 0)) {
                 if (block != null) schedulingBlocks.add(block)
-                block = ScgbbFactory::eINSTANCE.createSchedulingBlock()                
+                block = ScgbbFactory::eINSTANCE.createSchedulingBlock()
+                block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))                
             }
             block.nodes.add(node)
         }
