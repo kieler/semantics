@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.scl/src-gen" editDirectory="/de.cau.cs.kieler.scl.edit/src"
+    editorDirectory="/de.cau.cs.kieler.scl.editor/src" modelPluginID="de.cau.cs.kieler.scl"
+    forceOverwrite="true" modelName="SCL" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.scl.edit"
+    editorPluginID="de.cau.cs.kieler.scl.editor" runtimeVersion="2.9">
+  <genPackages prefix="Scl" basePackage="de.cau.cs.kieler.scl" disposableProviderFactory="true"
+      ecorePackage="file:/D:/KIELER/workspace-sccharts/de.cau.cs.kieler.sclmodel/SCL.ecore#/">
+    <genClasses ecoreClass="file:/D:/KIELER/workspace-sccharts/de.cau.cs.kieler.sclmodel/SCL.ecore#//Module">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute file:/D:/KIELER/workspace-sccharts/de.cau.cs.kieler.sclmodel/SCL.ecore#//Module/name"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
