@@ -519,7 +519,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                             it.addRectangle => [
                                 it.invisible = true;
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0, 0);
-                                val text = serializer.serialize(action.copy);
+                                var text = serializer.serialize(action.copy);
+                                text = text.replace("'", "")
+                                if (text.length > 1 && text.substring(text.length - 1, text.length).equals(";")) {
+                                    text = text.substring(0, text.length - 1)
+                                }
                                 it.printHighlightedText(text, action)
                             ]
                             //it.addRectangle().invisible = true;
