@@ -261,7 +261,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         return (text == "scchart") || (text == "entry") || (text == "during") || (text == "suspend") ||
             (text == "exit") || (text == "signal") || (text == "int") || (text == "bool") ||
             (text == "float") || (text == "unsigned") || (text == "immediate") || (text == "input") ||
-            (text == "output") || (text == "pre") || (text == "val") || (text == "combine")
+            (text == "output") || (text == "pre") || (text == "val") || (text == "combine") || (text == "static")
     }
 
     // Get a list of words of a text String parsed by a regular expression.
@@ -606,6 +606,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 tCopy.setHistory(HistoryType::RESET)
                 tCopy.setImmediate(false)
                 var String label = serializer.serialize(tCopy)
+                label = label.replace("'", "")
 
                 // Override if a Label is set for a transition
                 if (!t.label.nullOrEmpty) {
