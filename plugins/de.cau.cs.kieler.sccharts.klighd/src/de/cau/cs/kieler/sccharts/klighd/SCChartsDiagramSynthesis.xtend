@@ -274,13 +274,24 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         var remainingText = text
         var split = ""
         val words = text.getWords
-        parent.setGridPlacement(words.length)
+        parent.setGridPlacement(words.length + 1)
         for (word : words) {
             val index = remainingText.indexOf(word)
             split = remainingText.substring(0, index)
             remainingText = remainingText.substring(index + word.length, remainingText.length)
             parent.addText(split + word) => [
                 if (word.keyword) {
+                    it.setForeground(KEYWORD.copy)
+                    it.setFontBold(true)
+                }
+                it.putToLookUpWith(lookup)
+                it.setGridPlacementData()
+            ]
+        }
+        val remainingText2 = remainingText
+        if (remainingText2.length > 0) {
+            parent.addText(remainingText2) => [
+                if (remainingText2.keyword) {
                     it.setForeground(KEYWORD.copy)
                     it.setFontBold(true)
                 }
@@ -552,7 +563,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             edge.target = t.targetState.node;
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             edge.addSpline(2) => [
-                if (t.isImmediate || t.type == TransitionType::NORMALTERMINATION) {
+                // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
+                if (t.isImmediate2) {
                     it.lineStyle = LineStyle::CUSTOM;
                     it.lineStyle.dashPattern.clear;
                     it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
