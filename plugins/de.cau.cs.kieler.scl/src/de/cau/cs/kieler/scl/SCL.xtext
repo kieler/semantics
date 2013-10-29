@@ -11,6 +11,110 @@ import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 
 generate scl "http://kieler.cs.cau.de/scl/scl"
 
-Module: 
-    'module' name=ID
+Program:
+    'module' name = ID
+    (valuedObjects+=ValuedObject)*
+    '{'
+        (
+            ((statements += InstructionStatement';') | statements += EmptyStatement)*
+            (statements +=  InstructionStatement statements += EmptyStatement*)?
+         )
+    '}' 
+;
+
+ValuedObject returns kexpressions::ValuedObject:
+    (annotations+=Annotation)*
+    (input?='input')?
+    (output?='output')?
+    (static?='static')?
+    (signal?='signal')?
+    (type = ValueType)?
+    name=ID ('=' initialValue=Expression)?
+    ( 'combine'
+      (combineOperator = CombineOperator)
+    )? ';'
+;
+
+Statement:
+    EmptyStatement | InstructionStatement
+;
+
+EmptyStatement:
+//    (annotations += Annotation)*
+    (label = ID ':')
+;
+
+InstructionStatement:    
+    (
+//        (annotations += Annotation)*
+        instruction = (Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
+    )
+;
+
+Instruction:
+    Assignment | Conditional | Goto | Parallel | Pause | StatementScope
+;
+
+Assignment:
+//    assignment = kexpressions::Expression
+    valuedObject = [kexpressions::ValuedObject] 
+    '=' 
+    expression = Expression
+;
+
+Conditional:
+    'if' expression = Expression 'then'
+        (valuedObjects+=ValuedObject)*
+        (
+            ((statements += InstructionStatement';') | statements += EmptyStatement)*
+            (statements +=  InstructionStatement statements += EmptyStatement*)?
+         )
+     ('else'
+        (valuedObjects+=ValuedObject)*
+        (
+            ((elseStatements += InstructionStatement';') | elseStatements += EmptyStatement)*
+            (elseStatements +=  InstructionStatement elseStatements += EmptyStatement*)?
+         )
+         )?
+    'end' 
+;
+
+Goto:
+    'goto' targetLabel = ID 
+;
+
+StatementSequence:
+    Thread | Program | Conditional | StatementScope
+;
+
+Thread:
+    {Thread}
+        (
+            ((statements += InstructionStatement';') | statements += EmptyStatement)*
+            (statements +=  InstructionStatement statements += EmptyStatement*)?
+         )
+;
+
+Parallel:
+    'fork'
+    (    threads += Thread
+    ('par'
+         threads += Thread)*)
+    'join'
+;
+
+
+Pause:
+    'pause' {Pause}
+;
+
+StatementScope:
+    {StatementScope}
+    '{'
+        (valuedObjects+=ValuedObject)*
+        (
+            ((statements += InstructionStatement';') | statements += EmptyStatement)*
+            (statements +=  InstructionStatement statements += EmptyStatement*)?
+         )
+    '}'    
 ;

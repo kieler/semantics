@@ -2,7 +2,20 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.scl.scl.*;
+import de.cau.cs.kieler.scl.scl.Assignment;
+import de.cau.cs.kieler.scl.scl.Conditional;
+import de.cau.cs.kieler.scl.scl.EmptyStatement;
+import de.cau.cs.kieler.scl.scl.Goto;
+import de.cau.cs.kieler.scl.scl.Instruction;
+import de.cau.cs.kieler.scl.scl.InstructionStatement;
+import de.cau.cs.kieler.scl.scl.Parallel;
+import de.cau.cs.kieler.scl.scl.Pause;
+import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.SclFactory;
+import de.cau.cs.kieler.scl.scl.SclPackage;
+import de.cau.cs.kieler.scl.scl.Statement;
+import de.cau.cs.kieler.scl.scl.StatementScope;
+import de.cau.cs.kieler.scl.scl.StatementSequence;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -64,7 +77,19 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     switch (eClass.getClassifierID())
     {
-      case SclPackage.MODULE: return createModule();
+      case SclPackage.PROGRAM: return createProgram();
+      case SclPackage.STATEMENT: return createStatement();
+      case SclPackage.EMPTY_STATEMENT: return createEmptyStatement();
+      case SclPackage.INSTRUCTION_STATEMENT: return createInstructionStatement();
+      case SclPackage.INSTRUCTION: return createInstruction();
+      case SclPackage.ASSIGNMENT: return createAssignment();
+      case SclPackage.CONDITIONAL: return createConditional();
+      case SclPackage.GOTO: return createGoto();
+      case SclPackage.STATEMENT_SEQUENCE: return createStatementSequence();
+      case SclPackage.THREAD: return createThread();
+      case SclPackage.PARALLEL: return createParallel();
+      case SclPackage.PAUSE: return createPause();
+      case SclPackage.STATEMENT_SCOPE: return createStatementScope();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -75,10 +100,142 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Module createModule()
+  public Program createProgram()
   {
-    ModuleImpl module = new ModuleImpl();
-    return module;
+    ProgramImpl program = new ProgramImpl();
+    return program;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Statement createStatement()
+  {
+    StatementImpl statement = new StatementImpl();
+    return statement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EmptyStatement createEmptyStatement()
+  {
+    EmptyStatementImpl emptyStatement = new EmptyStatementImpl();
+    return emptyStatement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public InstructionStatement createInstructionStatement()
+  {
+    InstructionStatementImpl instructionStatement = new InstructionStatementImpl();
+    return instructionStatement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Instruction createInstruction()
+  {
+    InstructionImpl instruction = new InstructionImpl();
+    return instruction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Assignment createAssignment()
+  {
+    AssignmentImpl assignment = new AssignmentImpl();
+    return assignment;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Conditional createConditional()
+  {
+    ConditionalImpl conditional = new ConditionalImpl();
+    return conditional;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Goto createGoto()
+  {
+    GotoImpl goto_ = new GotoImpl();
+    return goto_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public StatementSequence createStatementSequence()
+  {
+    StatementSequenceImpl statementSequence = new StatementSequenceImpl();
+    return statementSequence;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public de.cau.cs.kieler.scl.scl.Thread createThread()
+  {
+    ThreadImpl thread = new ThreadImpl();
+    return thread;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Parallel createParallel()
+  {
+    ParallelImpl parallel = new ParallelImpl();
+    return parallel;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Pause createPause()
+  {
+    PauseImpl pause = new PauseImpl();
+    return pause;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public StatementScope createStatementScope()
+  {
+    StatementScopeImpl statementScope = new StatementScopeImpl();
+    return statementScope;
   }
 
   /**
