@@ -500,7 +500,29 @@ class SCChartsCoreTransformation {
            
            
            
+    //-------------------------------------------------------------------------
+    //--             D E F E R R E D     T R A N S I T I O N                 --
+    //-------------------------------------------------------------------------
+
+    // TODO
+    
+    def Region transformDeferred (Region rootRegion) {
+        // Clone the complete SCCharts region 
+        var targetRootRegion = rootRegion.copy;
+        // Traverse all transitions
+        for(targetTransition : targetRootRegion.getAllContainedTransitions) {
+            targetTransition.transformDeferred(targetRootRegion);
+        }
+        targetRootRegion;
+    }
+         
+     def void transformDeferred(Transition transition, Region targetRootRegion) {
+         // TODO
+     }
+    
            
+           
+                      
            
            
    ////////////////////////////////////////////////////////////////////////////////////////           

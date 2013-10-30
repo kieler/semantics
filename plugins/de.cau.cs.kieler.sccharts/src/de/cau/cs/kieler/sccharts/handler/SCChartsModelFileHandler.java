@@ -67,6 +67,9 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     public static final String COUNTDELAY_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.CountDelayTransformation";
 
+    public static final String DEFERRED_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.DeferredTransformation";
+
     public static final String PRE_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.PreTransformation";
 
@@ -153,6 +156,8 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
             transformed = transformation.transformSuspend((Region) model);
         } else if (commandString.equals(COUNTDELAY_TRANSFORMATION)) {
             transformed = transformation.transformCountDelay((Region) model);
+        } else if (commandString.equals(DEFERRED_TRANSFORMATION)) {
+            transformed = transformation.transformDeferred((Region) model);
         } else if (commandString.equals(PRE_TRANSFORMATION)) {
             transformed = transformation.transformPre((Region) model);
         } else if (commandString.equals(EXPOSELOCALSIGNALS_TRANSFORMATION)) {
