@@ -35,5 +35,17 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap(0, 1, 2).before(f.getSL_COMMENTRule());
 		c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
 		c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());
-	}
+
+		c.setLinewrap().before(f.getProgramAccess().getValuedObjectsAssignment_2());
+		
+		for(Keyword semicolon: f.findKeywords(";")) {
+		    c.setNoSpace().before(semicolon);
+		    c.setLinewrap().after(semicolon);
+		}
+
+		for(Keyword semicolon: f.findKeywords(":")) {
+                    c.setNoSpace().before(semicolon);
+                    c.setLinewrap().after(semicolon);
+                }
+        }
 }
