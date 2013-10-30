@@ -521,11 +521,11 @@ class SCChartsCoreTransformation {
      def void transformDeferred(Transition transition, Region targetRootRegion) {
          if (transition.deferred) {
              // Create a new state _S
-             val newState = transition.targetState.parentRegion.createState(transition.id("_S"))
+             val _S = transition.targetState.parentRegion.createState(transition.id("_S"))
              // Create a new transition _T
-             newState.createTransitionTo(transition.targetState)
+             _S.createTransitionTo(transition.targetState)
              // Re-target transition T
-             transition.setTargetState(newState)
+             transition.setTargetState(_S)
              // Remove deferred flag
              transition.setDeferred(false)
          }
