@@ -51,7 +51,7 @@ Workflow {
 //             referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
 //                generateEdit = true
                 genModel = "model/SCL.genmodel"
-                xmiModelDirectory = "${runtimeProject}model"
+                xmiModelDirectory = "${runtimeProject}/model"
             }
 			// the serialization component
 			// Old serializer			
