@@ -128,18 +128,18 @@ class SCGToSCLTransformation {
     }
 
     def dispatch Program transform(Conditional conditional, Program scl) {
-//        if (conditional.marked) return scl
-//        scl.createLabel(conditional.label)
-//        val statement = SclFactory::eINSTANCE.createInstructionStatement
-//        statement.instruction = SclFactory::eINSTANCE.createConditional => [
-//            it.expression = conditional.condition.copyExpression
-//            it.statements.createJump(conditional.then)
-//            it.elseStatements.createJump(conditional.getElse)
-//        ]
-//        scl.statements.add(statement)
-//        conditional.then.target.transform(scl)
-//        conditional.getElse.target.transform(scl)
-//        scl
+        if (conditional.marked) return scl
+        scl.createLabel(conditional.label)
+        val statement = SclFactory::eINSTANCE.createInstructionStatement
+        statement.instruction = SclFactory::eINSTANCE.createConditional => [
+            it.expression = conditional.condition.copyExpression
+            it.statements.createJump(conditional.then)
+            it.elseStatements.createJump(conditional.getElse)
+        ]
+        scl.statements.add(statement)
+        conditional.then.target.transform(scl)
+        conditional.getElse.target.transform(scl)
+        scl
     }
 
     def dispatch Program transform(Fork fork, Program scl) {
