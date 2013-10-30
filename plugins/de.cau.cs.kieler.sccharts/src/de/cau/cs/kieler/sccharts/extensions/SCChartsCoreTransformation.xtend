@@ -513,12 +513,12 @@ class SCChartsCoreTransformation {
         var targetRootRegion = rootRegion.copy;
         // Traverse all transitions
         for(targetTransition : targetRootRegion.getAllContainedTransitions) {
-            targetTransition.transformDeferred(targetRootRegion);
+            targetTransition.transformDeferred;
         }
         targetRootRegion;
     }
          
-     def void transformDeferred(Transition transition, Region targetRootRegion) {
+     def void transformDeferred(Transition transition) {
          if (transition.deferred) {
              // Create a new state _S
              val _S = transition.targetState.parentRegion.createState(transition.id("_S"))
