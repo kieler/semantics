@@ -2093,31 +2093,46 @@ ruleSuspendAction returns [EObject current=null]
 	    }
 
 )
-)?	otherlv_2='suspend' 
+)?(
+(
+		lv_weak_2_0=	'weak' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getSuspendActionAccess().getSuspendKeyword_2());
+        newLeafNode(lv_weak_2_0, grammarAccess.getSuspendActionAccess().getWeakWeakKeyword_2_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getSuspendActionRule());
+	        }
+       		setWithLastConsumed($current, "weak", true, "weak");
+	    }
+
+)
+)?	otherlv_3='suspend' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getSuspendActionAccess().getSuspendKeyword_3());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSuspendActionAccess().getTriggerBoolExpressionParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getSuspendActionAccess().getTriggerBoolExpressionParserRuleCall_4_0()); 
 	    }
-		lv_trigger_3_0=ruleBoolExpression		{
+		lv_trigger_4_0=ruleBoolExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSuspendActionRule());
 	        }
        		set(
        			$current, 
        			"trigger",
-        		lv_trigger_3_0, 
+        		lv_trigger_4_0, 
         		"BoolExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)?	otherlv_4=';' 
+)?	otherlv_5=';' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getSuspendActionAccess().getSemicolonKeyword_4());
+    	newLeafNode(otherlv_5, grammarAccess.getSuspendActionAccess().getSemicolonKeyword_5());
     }
 )
 ;

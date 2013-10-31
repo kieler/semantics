@@ -126,7 +126,8 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExitActionAccess().getEffectsAssignment_3_1(), "rule__ExitAction__EffectsAssignment_3_1");
 					put(grammarAccess.getExitActionAccess().getEffectsAssignment_3_2_1(), "rule__ExitAction__EffectsAssignment_3_2_1");
 					put(grammarAccess.getSuspendActionAccess().getImmediateAssignment_1(), "rule__SuspendAction__ImmediateAssignment_1");
-					put(grammarAccess.getSuspendActionAccess().getTriggerAssignment_3(), "rule__SuspendAction__TriggerAssignment_3");
+					put(grammarAccess.getSuspendActionAccess().getWeakAssignment_2(), "rule__SuspendAction__WeakAssignment_2");
+					put(grammarAccess.getSuspendActionAccess().getTriggerAssignment_4(), "rule__SuspendAction__TriggerAssignment_4");
 					put(grammarAccess.getEmissionAccess().getValuedObjectAssignment_0(), "rule__Emission__ValuedObjectAssignment_0");
 					put(grammarAccess.getEmissionAccess().getNewValueAssignment_1_1(), "rule__Emission__NewValueAssignment_1_1");
 					put(grammarAccess.getAssignmentAccess().getValuedObjectAssignment_0(), "rule__Assignment__ValuedObjectAssignment_0");

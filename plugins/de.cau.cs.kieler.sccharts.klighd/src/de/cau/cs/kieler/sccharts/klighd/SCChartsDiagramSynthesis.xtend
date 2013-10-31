@@ -258,7 +258,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     // Keyword highlighting in declarations
     // Returns true if the text is a keyword.
     def boolean isKeyword(String text) {
-        return (text == "scchart") || (text == "entry") || (text == "during") || (text == "suspend") ||
+        return (text == "scchart") || (text == "entry") || (text == "during") || (text == "suspend") || (text == "weak") ||
             (text == "exit") || (text == "signal") || (text == "int") || (text == "bool") ||
             (text == "float") || (text == "unsigned") || (text == "immediate") || (text == "input") ||
             (text == "output") || (text == "pre") || (text == "val") || (text == "combine") || (text == "static")

@@ -340,18 +340,20 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cSuspendActionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Assignment cImmediateAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final Keyword cImmediateImmediateKeyword_1_0 = (Keyword)cImmediateAssignment_1.eContents().get(0);
-		private final Keyword cSuspendKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTriggerBoolExpressionParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
-		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cWeakAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cWeakWeakKeyword_2_0 = (Keyword)cWeakAssignment_2.eContents().get(0);
+		private final Keyword cSuspendKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cTriggerAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cTriggerBoolExpressionParserRuleCall_4_0 = (RuleCall)cTriggerAssignment_4.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//SuspendAction returns sccharts::SuspendAction:
 		//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-		//	immediate?="immediate"? "suspend" trigger=BoolExpression? ";";
+		//	immediate?="immediate"? weak?="weak"? "suspend" trigger=BoolExpression? ";";
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::SuspendAction} //    (annotations += Annotation)*
-		//immediate?="immediate"? "suspend" trigger=BoolExpression? ";"
+		//immediate?="immediate"? weak?="weak"? "suspend" trigger=BoolExpression? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::SuspendAction}
@@ -363,17 +365,23 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"immediate"
 		public Keyword getImmediateImmediateKeyword_1_0() { return cImmediateImmediateKeyword_1_0; }
 
+		//weak?="weak"?
+		public Assignment getWeakAssignment_2() { return cWeakAssignment_2; }
+
+		//"weak"
+		public Keyword getWeakWeakKeyword_2_0() { return cWeakWeakKeyword_2_0; }
+
 		//"suspend"
-		public Keyword getSuspendKeyword_2() { return cSuspendKeyword_2; }
+		public Keyword getSuspendKeyword_3() { return cSuspendKeyword_3; }
 
 		//trigger=BoolExpression?
-		public Assignment getTriggerAssignment_3() { return cTriggerAssignment_3; }
+		public Assignment getTriggerAssignment_4() { return cTriggerAssignment_4; }
 
 		//BoolExpression
-		public RuleCall getTriggerBoolExpressionParserRuleCall_3_0() { return cTriggerBoolExpressionParserRuleCall_3_0; }
+		public RuleCall getTriggerBoolExpressionParserRuleCall_4_0() { return cTriggerBoolExpressionParserRuleCall_4_0; }
 
 		//";"
-		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
 	}
 
 	public class EffectElements extends AbstractParserRuleElementFinder {
@@ -654,7 +662,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SuspendAction returns sccharts::SuspendAction:
 	//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-	//	immediate?="immediate"? "suspend" trigger=BoolExpression? ";";
+	//	immediate?="immediate"? weak?="weak"? "suspend" trigger=BoolExpression? ";";
 	public SuspendActionElements getSuspendActionAccess() {
 		return (pSuspendAction != null) ? pSuspendAction : (pSuspendAction = new SuspendActionElements());
 	}

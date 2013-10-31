@@ -5912,6 +5912,7 @@ finally {
 
 
 
+
 rule__Emission__ValuedObjectAssignment_0
     @init {
 		int stackSize = keepStackSize();

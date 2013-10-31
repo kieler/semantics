@@ -424,7 +424,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     (immediate?='immediate'? trigger=BoolExpression?)
+	 *     (immediate?='immediate'? weak?='weak'? trigger=BoolExpression?)
 	 */
 	protected void sequence_SuspendAction(EObject context, SuspendAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
