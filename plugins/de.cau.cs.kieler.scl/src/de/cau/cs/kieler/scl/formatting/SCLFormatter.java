@@ -47,5 +47,15 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
                     c.setNoSpace().before(semicolon);
                     c.setLinewrap().after(semicolon);
                 }
+		
+	        c.setLinewrap(1).after(f.getParallelAccess().getForkKeyword_0());
+	        c.setLinewrap(1).after(f.getParallelAccess().getParKeyword_1_1_0());
+	        c.setLinewrap(1).after(f.getParallelAccess().getJoinKeyword_2());
+	        c.setLinewrap(1).before(f.getParallelAccess().getParKeyword_1_1_0());
+	        c.setLinewrap(1).before(f.getParallelAccess().getJoinKeyword_2());
+	        c.setIndentation(f.getParallelAccess().getForkKeyword_0(), 
+	                         f.getParallelAccess().getParKeyword_1_1_0());
+	        c.setIndentation(f.getParallelAccess().getParKeyword_1_1_0(), 
+	                         f.getParallelAccess().getJoinKeyword_2());		
         }
 }

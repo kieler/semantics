@@ -39,7 +39,7 @@ import java.util.List
 import de.cau.cs.kieler.scl.scl.Statement
 
 /** 
- * SCGDEP to SCGBB Transformation 
+ * SCG to SCL Transformation 
  * 
  * @author ssm
  * @kieler.design 2013-10-24 proposed 
@@ -80,74 +80,90 @@ class SCGToSCLTransformation {
         return scl;
     }
     
-    def dispatch Program transform(SCGraph scg, Program scl) {
-       if (scg.nodes.size == 0) return scl
-       scg.nodes.head.transform(scl)
-       scl 
+    def dispatch StatementSequence transform(SCGraph scg, StatementSequence sSeq) {
+       if (scg.nodes.size == 0) return sSeq
+       scg.nodes.head.transform(sSeq)
+       sSeq
     }
        
-    def dispatch Program transform(Entry entry, Program scl) {
-        if (entry.marked) return scl
-        scl.createLabel(entry.label)
-        scl.createJump(entry.next)
-        entry.next.target.transform(scl)
-        scl
+    def dispatch StatementSequence transform(Entry entry, StatementSequence sSeq) {
+        if (entry.marked) return sSeq
+        sSeq.createLabel(entry.label)
+        sSeq.createJump(entry.next)
+        entry.next.target.transform(sSeq)
+        sSeq
     }
 
-    def dispatch Program transform(Exit exit, Program scl) {
-        if (exit.marked) return scl
-        scl.createLabel(exit.label)
-        scl
+    def dispatch StatementSequence transform(Exit exit, StatementSequence sSeq) {
+        if (exit.marked) return sSeq
+        sSeq.createLabel(exit.label)
+        sSeq
     }
 
-    def dispatch Program transform(Surface surface, Program scl) {
-        if (surface.marked) return scl
-        scl.createLabel(surface.label)
+    def dispatch StatementSequence transform(Surface surface, StatementSequence sSeq) {
+        if (surface.marked) return sSeq
+        sSeq.createLabel(surface.label)
         val statement = SclFactory::eINSTANCE.createInstructionStatement
         statement.instruction = SclFactory::eINSTANCE.createPause;
-        scl.statements.add(statement)
-        surface.depth.next.target.transform(scl)
-        scl
+        sSeq.statements.add(statement)
+        surface.depth.next.target.transform(sSeq)
+        sSeq
     }
     
-    def dispatch Program transform(Depth depth, Program scl) {
-        if (depth.marked) return scl
+    def dispatch StatementSequence transform(Depth depth, StatementSequence sSeq) {
+        if (depth.marked) return sSeq
+        sSeq
     }
     
-    def dispatch Program transform(Assignment assignment, Program scl) {
-        if (assignment.marked) return scl
-        scl.createLabel(assignment.label)
+    def dispatch StatementSequence transform(Assignment assignment, StatementSequence sSeq) {
+        if (assignment.marked) return sSeq
+        sSeq.createLabel(assignment.label)
         val statement = SclFactory::eINSTANCE.createInstructionStatement
         statement.instruction = SclFactory::eINSTANCE.createAssignment => [
             it.valuedObject = assignment.valuedObject.copyValuedObject
             it.expression = assignment.assignment.copyExpression
         ]
-        scl.statements.add(statement)
-        assignment.next.target.transform(scl)
-        scl
+        sSeq.statements.add(statement)
+        assignment.next.target.transform(sSeq)
+        sSeq
     }
 
-    def dispatch Program transform(Conditional conditional, Program scl) {
-        if (conditional.marked) return scl
-        scl.createLabel(conditional.label)
+    def dispatch StatementSequence transform(Conditional conditional, StatementSequence sSeq) {
+        if (conditional.marked) return sSeq
+        sSeq.createLabel(conditional.label)
         val statement = SclFactory::eINSTANCE.createInstructionStatement
         statement.instruction = SclFactory::eINSTANCE.createConditional => [
             it.expression = conditional.condition.copyExpression
             it.statements.createJump(conditional.then)
             it.elseStatements.createJump(conditional.getElse)
         ]
-        scl.statements.add(statement)
-        conditional.then.target.transform(scl)
-        conditional.getElse.target.transform(scl)
-        scl
+        sSeq.statements.add(statement)
+        conditional.then.target.transform(sSeq)
+        conditional.getElse.target.transform(sSeq)
+        sSeq
     }
 
-    def dispatch Program transform(Fork fork, Program scl) {
-        if (fork.marked) return scl
+    def dispatch StatementSequence transform(Fork fork, StatementSequence sSeq) {
+        if (fork.marked) return sSeq
+        sSeq.createLabel(fork.label)
+        val statement = SclFactory::eINSTANCE.createInstructionStatement
+        statement.instruction = SclFactory::eINSTANCE.createParallel => [
+            for(next : fork.getAllNext) {
+                val thread = SclFactory::eINSTANCE.createThread
+                if (next.target instanceof Entry) 
+                    (next.target as Entry).getThreadNodes.head.transform(thread)
+                it.threads.add(thread)
+            }
+        ]
+        sSeq.statements.add(statement)
+        fork.join.transform(sSeq)
+        sSeq
     }
 
-    def dispatch Program transform(Join join, Program scl) {
-        if (join.marked) return scl
+    def dispatch StatementSequence transform(Join join, StatementSequence sSeq) {
+        if (join.marked) return sSeq
+        join.next.target.transform(sSeq)
+        sSeq
     }
     
     
