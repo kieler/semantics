@@ -1184,13 +1184,22 @@ public interface SCChartsPackage extends EPackage {
     int SUSPEND_ACTION__LABEL = LOCAL_ACTION__LABEL;
 
     /**
+     * The feature id for the '<em><b>Weak</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__WEAK = LOCAL_ACTION_FEATURE_COUNT + 0;
+
+    /**
      * The number of structural features of the '<em>Suspend Action</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SUSPEND_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
+    int SUSPEND_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.
@@ -1769,6 +1778,17 @@ public interface SCChartsPackage extends EPackage {
     EClass getSuspendAction();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.SuspendAction#isWeak <em>Weak</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Weak</em>'.
+     * @see de.cau.cs.kieler.sccharts.SuspendAction#isWeak()
+     * @see #getSuspendAction()
+     * @generated
+     */
+    EAttribute getSuspendAction_Weak();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2260,6 +2280,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EClass SUSPEND_ACTION = eINSTANCE.getSuspendAction();
+
+        /**
+         * The meta object literal for the '<em><b>Weak</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SUSPEND_ACTION__WEAK = eINSTANCE.getSuspendAction_Weak();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.

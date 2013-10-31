@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
- package de.cau.cs.kieler.sccharts.extensions
+package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
@@ -50,45 +50,42 @@ import de.cau.cs.kieler.sccharts.HistoryType
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class SCChartsExtension { 
+class SCChartsExtension {
 
     @Inject
     extension KExpressionsExtension
 
     // This prefix is used for namings of all generated signals, states and regions
     static final String GENERATED_PREFIX = "_"
-    
-//    public val Injector i = ActionsStandaloneSetup::doSetup();
-//    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
-//    public val ISerializer serializer = i.getInstance(typeof(ISerializer));
-    
 
+    //    public val Injector i = ActionsStandaloneSetup::doSetup();
+    //    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
+    //    public val ISerializer serializer = i.getInstance(typeof(ISerializer));
     //-------------------------------------------------------------------------
     //--             B A S I C   C R E A T I O N   M E T H O D S             --
     //-------------------------------------------------------------------------
-    
     // Create an immutable list copy
     def ImmutableList<Object> immutableCopy(Iterable<Object> object) {
         ImmutableList::copyOf(object)
     }
-    
+
     //====== GENERAL MODEL ELEMENTS =====
-    
     // Get the single normal termination Transition. Return null if there is 
     // no outgoing normal termination Transition.
     def Transition getNormalTerminationTransitions(State state) {
-        val allNormalTerminationTransitions = state.outgoingTransitions.filter(e | e.type == TransitionType::NORMALTERMINATION);
+        val allNormalTerminationTransitions = state.outgoingTransitions.filter(
+            e|e.type == TransitionType::NORMALTERMINATION);
         if (allNormalTerminationTransitions.size == 0) {
             return null;
         }
         allNormalTerminationTransitions.head;
     }
-    
+
     // Return the list of all contained States.
     def List<State> getAllContainedStates(Region region) {
         region.eAllContents().toList().filter(typeof(State)).toList()
     }
-    
+
     // Return the list of all contained Transitions.
     def List<Transition> getAllContainedTransitions(Region region) {
         region.eAllContents().toList().filter(typeof(Transition)).toList()
@@ -96,10 +93,9 @@ class SCChartsExtension {
 
     // Return the list of contained Emissions.
     def List<Emission> getAllContainedEmissions(Action action) {
-        action.eAllContents().toIterable().
-                           filter(typeof(Emission)).toList();
+        action.eAllContents().toIterable().filter(typeof(Emission)).toList();
     }
-    
+
     // Return the list of pure signals of a state.
     def List<ValuedObject> getPureSignals(State state) {
         state.valuedObjects.filter[e|e.isSignal && e.type == ValueType::PURE].toList
@@ -109,57 +105,58 @@ class SCChartsExtension {
     def List<ValuedObject> getValuedSignals(State state) {
         state.valuedObjects.filter[e|e.isSignal && e.type != ValueType::PURE].toList
     }
-    
+
     // Return the list of all signals of a state.
     def List<ValuedObject> getSignals(State state) {
         state.valuedObjects.filter[e|e.isSignal].toList
     }
-    
+
     // Return true if the valued Object is a pure signal
     def boolean isPureSignal(ValuedObject valuedObject) {
         valuedObject.isSignal && valuedObject.type == ValueType::PURE
     }
-    
+
     // Return the root region.
     def Region getRootRegion(Region region) {
+
         // Recursively find the root region 
         if (region.parentState == null) {
-             return region;
-        }   
+            return region;
+        }
         region.parentState.parentRegion.rootRegion;
     }
-    
+
     // Return the root region.
     def Region getRootRegion(State state) {
         state.parentRegion.rootRegion;
     }
-    
+
     // Return the root state.
     def State getRootState(Region region) {
+
         // There should exactly be one state in the root region
         region.rootRegion.states.get(0)
     }
-    
+
     // Return the root state.
     def State getRootState(State state) {
-        state.parentRegion.rootState;   
+        state.parentRegion.rootState;
     }
-    
+
     //========== STATES ===========
-    
     def State createState(String id) {
-        val state  = SCChartsFactory::eINSTANCE.createState();
+        val state = SCChartsFactory::eINSTANCE.createState();
         state.setId(id)
         state.setLabel("")
         state
     }
-    
+
     def State createState(Region region, String id) {
         val state = createState(id)
         region.states.add(state)
         state
     }
-    
+
     def State setInitial(State state) {
         state.setInitial(true)
         state
@@ -178,19 +175,19 @@ class SCChartsExtension {
     def State createInitialState(String id) {
         createState(id).setInitial
     }
-    
+
     def State createFinalState(String id) {
         createState(id).setFinal
     }
-    
+
     def State createInitialState(Region region, String id) {
         region.createState(id).setInitial
     }
-    
+
     def State createFinalState(Region region, String id) {
         region.createState(id).setFinal
     }
-    
+
     def State setLabel2(State state, String label) {
         state.setLabel(label)
         state
@@ -221,36 +218,34 @@ class SCChartsExtension {
     }
 
     //========== REGIONS ===========
-    
     def Region createRegion(String id) {
-        val region  = SCChartsFactory::eINSTANCE.createRegion();
+        val region = SCChartsFactory::eINSTANCE.createRegion();
         region.setId(id)
         region.setLabel("")
         region
     }
-    
+
     def Region createRegion(State state, String id) {
         val region = createRegion(id)
         state.regions.add(region)
         region
     }
-    
+
     def Region setLabel2(Region region, String label) {
         region.setLabel(label)
         region
     }
-    
+
     def boolean isHierarchical(State state) {
         return (state.regions != null && state.regions.size != 0 && state.eAllContents.filter(typeof(State)).size > 0)
     }
 
     //========== TRANSITIONS ===========
-    
     // A transition is a history transition if it is not a reset transition.
     def boolean isHistory(Transition transition) {
         transition.history != HistoryType::RESET
     }
-    
+
     def Transition createTransition() {
         val transition = SCChartsFactory::eINSTANCE.createTransition()
         transition.setPriority2(1)
@@ -266,7 +261,7 @@ class SCChartsExtension {
         sourceState.outgoingTransitions.add(transition)
         transition.trimPriorities
     }
-    
+
     def Transition setTargetState2(Transition transition, State targetState) {
         transition.setTargetState(targetState)
         transition
@@ -276,11 +271,11 @@ class SCChartsExtension {
         sourceState.outgoingTransitions.add(transition)
         transition.trimPriorities
     }
-    
+
     def Transition createImmediateTransitionTo(State sourceState, State targetState) {
         sourceState.createTransitionTo(targetState).setImmediate
     }
-    
+
     def Transition setTrigger2(Transition transition, Expression expression) {
         transition.setTrigger(expression)
         transition
@@ -290,26 +285,26 @@ class SCChartsExtension {
         transition.effects.add(effect)
         transition
     }
-    
+
     def Transition clearEffects(Transition transition) {
         transition.effects.clear
         transition
     }
-    
+
     def Transition setPriority2(Transition transition, int priority) {
         transition.setPriority(priority)
         transition
     }
 
     def Transition setLowestPriority(Transition transition) {
-        val maxPriority = transition.sourceState.outgoingTransitions.length 
+        val maxPriority = transition.sourceState.outgoingTransitions.length
         transition.setPriority2(maxPriority).trimPriorities
     }
 
     def Transition setHighestPriority(Transition transition) {
         transition.setPriority2(0).trimPriorities
     }
-    
+
     def Region fixAllPriorities(Region region) {
         for (state : region.allContainedStates) {
             var prio = 1
@@ -320,7 +315,7 @@ class SCChartsExtension {
         }
         region
     }
-    
+
     def Region fixAllTextualOrdersByPriorities(Region region) {
         for (state : region.allContainedStates) {
             val transitions = state.outgoingTransitions.sortBy[priority].toList.immutableCopy;
@@ -332,8 +327,7 @@ class SCChartsExtension {
         }
         region
     }
-    
-    
+
     def Transition trimPriorities(Transition transition) {
         var prio = 1
         val transitions = transition.sourceState.outgoingTransitions.toList.sortBy[priority]
@@ -355,6 +349,16 @@ class SCChartsExtension {
     }
 
     //========== STATE ACTIONS ===========
+    // Return wether a transition is immediate. This should return the
+    // immediate flag of a transition unless
+    // 1. the source state is a connector node, then the transition is always (implicityly) immediate OR
+    // 2. the transition is a normal termination and has NOT trigger, then it is also (implicityly) immediate.
+    def Boolean isImmediate2(Transition transition) {
+        (transition.immediate) || 
+        (transition.sourceState.type == StateType::CONNECTOR) || 
+        (transition.type == TransitionType::NORMALTERMINATION && transition.trigger == null
+        )
+    }
 
     // Apply attributes from one local action to another
     def LocalAction applyAttributes(LocalAction localAction, LocalAction locationActionWithAttributes) {
@@ -375,6 +379,7 @@ class SCChartsExtension {
         state.localActions.add(action);
         action
     }
+
     // Create an immediate during action for a state.
     def DuringAction createImmediateDuringAction(State state) {
         val action = state.createDuringAction
@@ -388,6 +393,7 @@ class SCChartsExtension {
         state.localActions.add(action);
         action
     }
+
     // Create an immediate entry action for a state.
     def EntryAction createImmediateEntryAction(State state) {
         val action = state.createEntryAction
@@ -401,6 +407,7 @@ class SCChartsExtension {
         state.localActions.add(action);
         action
     }
+
     // Create an immediate exit action for a state.
     def ExitAction createImmediateExitAction(State state) {
         val action = state.createExitAction
@@ -421,7 +428,7 @@ class SCChartsExtension {
         action.setImmediate(true);
         action
     }
-    
+
     // Return all EntryAction actions of a state.
     def List<EntryAction> getEntryActions(State state) {
         state.localActions.filter(typeof(EntryAction)).toList
@@ -443,7 +450,6 @@ class SCChartsExtension {
     }
 
     //========== ASSIGNMENTS ============
-    
     // Create an Assignment.
     def Assignment assign(ValuedObject valuedObject) {
         val assignment = SCChartsFactory::eINSTANCE.createAssignment()
@@ -457,9 +463,10 @@ class SCChartsExtension {
         action.addAssignment(assignment)
         assignment
     }
-    
+
     // Create an Assignment and add it sequentially to an action's effects list.
     def Assignment addAssignment(Action action, Assignment assignment) {
+
         // An Assignment is a specialized Effect with a new value and a ValuedObject
         action.addEffect(assignment)
         assignment
@@ -484,25 +491,25 @@ class SCChartsExtension {
         action.addAssignment(assignment)
         assignment
     }
-    
-    //=========== EMISSIONS =============
 
+    //=========== EMISSIONS =============
     // Create an Emission.
     def Emission emit(ValuedObject valuedObject) {
         val emission = SCChartsFactory::eINSTANCE.createEmission()
         emission.setValuedObject(valuedObject)
         emission
     }
-    
+
     // Create an Emission and add it sequentially to an action's effects list.
     def Emission createEmission(Action action, ValuedObject valuedObject) {
         val emission = valuedObject.emit
         action.addEmission(emission)
         emission
     }
-    
+
     // Create an Emission and add it sequentially to an action's effects list.
     def Emission addEmission(Action action, Emission emission) {
+
         // An Emission is a specialized Effect with a new value and a ValuedObject
         action.addEffect(emission)
         emission
@@ -532,36 +539,32 @@ class SCChartsExtension {
     //-------------------------------------------------------------------------
     //--                     K E X P R E S S I O N S                         --
     //-------------------------------------------------------------------------
-
     //==  EXPRESSION MODIFICATIONS  ==
-
     def void replace(Action action, Expression searchExpression, Expression replaceExpression) {
         action.setTrigger(action.trigger.replace(searchExpression, replaceExpression))
     }
 
     //=========  VALUED OBJECT  =========
-
     // Creates a new ValuedObject in a scope.
     def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
-         val valuedObject = createValuedObject(valuedObjectName)
-         scope.valuedObjects.add(valuedObject)
-         valuedObject
+        val valuedObject = createValuedObject(valuedObjectName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
     }
 
     //===========  VARIABLES  ===========
-
     // Creates a new variable ValuedObject in a Scope.
-   def ValuedObject createVariable(Scope scope, String variableName) {
-         val valuedObject = variableName.createVariable
-         scope.valuedObjects.add(valuedObject)
+    def ValuedObject createVariable(Scope scope, String variableName) {
+        val valuedObject = variableName.createVariable
+        scope.valuedObjects.add(valuedObject)
          valuedObject;
     }
 
     // Creates a new Int variable ValuedObject in a Scope.
     def ValuedObject createIntVariable(Scope scope, String variableName) {
-         scope.createIntVariable(variableName)
+        scope.createIntVariable(variableName)
     }
-    
+
     // Creates a new Bool variable ValuedObject in a Scope.
     def ValuedObject createBoolVariable(Scope scope, String variableName) {
         scope.createBoolVariable(variableName)
@@ -574,21 +577,20 @@ class SCChartsExtension {
 
     // Creates a new Float variable ValuedObject in a Scope.
     def ValuedObject createFloatVariable(Scope scope, String variableName) {
-         scope.createFloatVariable(variableName)
+        scope.createFloatVariable(variableName)
     }
 
     //============  SIGNALS  ============
-
     // Creates a new variable ValuedObject in a Scope.
-   def ValuedObject createSignal(Scope scope, String variableName) {
-         val valuedObject = variableName.createSignal
-         scope.valuedObjects.add(valuedObject)
+    def ValuedObject createSignal(Scope scope, String variableName) {
+        val valuedObject = variableName.createSignal
+        scope.valuedObjects.add(valuedObject)
          valuedObject;
     }
 
     // Creates a new pure signal ValuedObject in a Scope.
     def ValuedObject createPureSignal(Scope scope, String variableName) {
-         scope.createSignal(variableName)
+        scope.createSignal(variableName)
     }
 
     // Creates a new Int signal ValuedObject in a Scope.
@@ -598,24 +600,22 @@ class SCChartsExtension {
 
     // Creates a new Bool signal ValuedObject in a Scope.
     def ValuedObject createBoolSignal(Scope scope, String variableName) {
-         scope.createBoolSignal(variableName)
+        scope.createBoolSignal(variableName)
     }
 
     // Creates a new Double signal ValuedObject in a Scope.
     def ValuedObject createDoubleSignal(Scope scope, String variableName) {
-         scope.createDoubleSignal(variableName)
+        scope.createDoubleSignal(variableName)
     }
 
     // Creates a new Float signal ValuedObject in a Scope.
     def ValuedObject createFloatSignal(Scope scope, String variableName) {
-         scope.createFloatSignal(variableName)
+        scope.createFloatSignal(variableName)
     }
-
 
     //-------------------------------------------------------------------------
     //--                           N A M I N G S                             --
     //-------------------------------------------------------------------------
-
     // Prefixes a name with the hash code of an eObject
     def int id(EObject eObject) {
         eObject.hashCode
@@ -623,40 +623,39 @@ class SCChartsExtension {
 
     // Prefixes a name with the hash code of an eObject
     def String id(EObject eObject, String string) {
-        string + eObject.id  
+        string + eObject.id
     }
-    
+
     // Prefixes a name with the generated prefix string
     def String id(String string) {
         GENERATED_PREFIX + string;
     }
-    
+
     // For C variables it is necessary to remove special characters, this may lead
     // to name clashes in unlikely cases. 
     def String removeSpecialCharacters(String string) {
         if (string == null) {
             return null;
         }
-        return string.replace("-","").replace("_","").replace(" ","").replace("+","")
-               .replace("#","").replace("$","").replace("?","")
-               .replace("!","").replace("%","").replace("&","")
-               .replace("[","").replace("]","").replace("<","")
-               .replace(">","").replace(".","").replace(",","")
-               .replace(":","").replace(";","").replace("=","");
+        return string.replace("-", "").replace("_", "").replace(" ", "").replace("+", "").replace("#", "").
+            replace("$", "").replace("?", "").replace("!", "").replace("%", "").replace("&", "").replace("[", "").
+            replace("]", "").replace("<", "").replace(">", "").replace(".", "").replace(",", "").replace(":", "").
+            replace(";", "").replace("=", "");
     }
-    
+
     // This helper method returns the hierarchical name of a state considering all hierarchical
     // higher states. A string is formed by the traversed state IDs.
     def String getHierarchicalName(State state) {
         state.getHierarchicalName(null)
     }
-    
+
     def String getHierarchicalName(State state, String StartSymbol) {
         if (state.parentRegion != null) {
             if (state.parentRegion.parentState != null) {
                 var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalName(StartSymbol);
                 var regionId = state.parentRegion.id.removeSpecialCharacters;
                 var stateId = state.id.removeSpecialCharacters;
+
                 // Region IDs can be empty, state IDs normally aren't but the code generation handles 
                 // also this case. 
                 if (stateId.nullOrEmpty) {
@@ -669,14 +668,12 @@ class SCChartsExtension {
                     higherHierarchyReturnedName = higherHierarchyReturnedName + "_";
                 }
                 if (state.parentRegion.parentState.regions.size > 1) {
-                    return higherHierarchyReturnedName 
-                           + regionId  + "_" +  stateId;
-                }
-                else {
+                    return higherHierarchyReturnedName + regionId + "_" + stateId;
+                } else {
+
                     // this is the simplified case, where there is just one region and we can
                     // omit the region id
-                    return higherHierarchyReturnedName  
-                           + stateId;
+                    return higherHierarchyReturnedName + stateId;
                 }
             }
         }
@@ -694,21 +691,24 @@ class SCChartsExtension {
     // an OperatorExpression of such kind.
     // Test 141
     def OperatorExpression fixForOperatorExpressionLists(OperatorExpression operatorExpression) {
-        if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty || operatorExpression.subExpressions.size <= 2) {
+        if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty ||
+            operatorExpression.subExpressions.size <= 2) {
+
             // In this case we do not need the fix
             return operatorExpression;
         }
+
         // Here we apply the fix recursively
         val operatorExpressionCopy = operatorExpression.copy;
         val newOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
         newOperatorExpression.setOperator(operatorExpression.operator);
         newOperatorExpression.subExpressions.add(operatorExpression.subExpressions.head);
+
         // Call recursively without the first element
         operatorExpressionCopy.subExpressions.remove(0);
         newOperatorExpression.subExpressions.add(operatorExpressionCopy.fixForOperatorExpressionLists);
         return newOperatorExpression;
     }
-   
-   // -------------------------------------------------------------------------   
-      
+
+// -------------------------------------------------------------------------   
 }

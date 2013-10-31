@@ -53,7 +53,7 @@ public class ActionsFormatter extends KExpressionsFormatter {
         c.setNoSpace().before(f.getEntryActionAccess().getSemicolonKeyword_4());
         c.setNoSpace().before(f.getDuringActionAccess().getSemicolonKeyword_5());
         c.setNoSpace().before(f.getExitActionAccess().getSemicolonKeyword_4());
-        c.setNoSpace().before(f.getSuspendActionAccess().getSemicolonKeyword_4());
+        c.setNoSpace().before(f.getSuspendActionAccess().getSemicolonKeyword_5());
         c.setNoSpace().after(f.getNotExpressionAccess().getOperatorNotOperatorEnumRuleCall_0_1_0());
        
        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_7_2_0());

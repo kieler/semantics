@@ -1344,7 +1344,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SuspendAction returns sccharts::SuspendAction:
 	//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-	//	immediate?="immediate"? "suspend" trigger=BoolExpression? ";";
+	//	immediate?="immediate"? weak?="weak"? "suspend" trigger=BoolExpression? ";";
 	public ActionsGrammarAccess.SuspendActionElements getSuspendActionAccess() {
 		return gaActions.getSuspendActionAccess();
 	}

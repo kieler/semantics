@@ -472,6 +472,10 @@
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.text.ui.handler.SctModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.commands.SctDeferredTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.text.ui.handler.SctModelFileHandler"
             commandId="de.cau.cs.kieler.sccharts.commands.SctPreTransformation">
       </handler>
       <handler
@@ -770,6 +774,29 @@
          <command
                commandId="de.cau.cs.kieler.sccharts.commands.SctCountDelayTransformation"
                label="Count Delay Transitions"
+               mnemonic="D"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="sct">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.commands.SctDeferredTransformation"
+               label="Deferred Transitions"
                mnemonic="D"
                style="push">
             <visibleWhen>

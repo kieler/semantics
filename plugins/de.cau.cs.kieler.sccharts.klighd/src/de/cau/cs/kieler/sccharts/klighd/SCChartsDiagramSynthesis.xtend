@@ -258,10 +258,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     // Keyword highlighting in declarations
     // Returns true if the text is a keyword.
     def boolean isKeyword(String text) {
-        return (text == "scchart") || (text == "entry") || (text == "during") || (text == "suspend") ||
+        return (text == "scchart") || (text == "entry") || (text == "during") || (text == "suspend") || (text == "weak") ||
             (text == "exit") || (text == "signal") || (text == "int") || (text == "bool") ||
             (text == "float") || (text == "unsigned") || (text == "immediate") || (text == "input") ||
-            (text == "output") || (text == "pre") || (text == "val") || (text == "combine")
+            (text == "output") || (text == "pre") || (text == "val") || (text == "combine") || (text == "static")
     }
 
     // Get a list of words of a text String parsed by a regular expression.
@@ -274,13 +274,24 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         var remainingText = text
         var split = ""
         val words = text.getWords
-        parent.setGridPlacement(words.length)
+        parent.setGridPlacement(words.length + 1)
         for (word : words) {
             val index = remainingText.indexOf(word)
             split = remainingText.substring(0, index)
             remainingText = remainingText.substring(index + word.length, remainingText.length)
             parent.addText(split + word) => [
                 if (word.keyword) {
+                    it.setForeground(KEYWORD.copy)
+                    it.setFontBold(true)
+                }
+                it.putToLookUpWith(lookup)
+                it.setGridPlacementData()
+            ]
+        }
+        val remainingText2 = remainingText
+        if (remainingText2.length > 0) {
+            parent.addText(remainingText2) => [
+                if (remainingText2.keyword) {
                     it.setForeground(KEYWORD.copy)
                     it.setFontBold(true)
                 }
@@ -508,7 +519,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                             it.addRectangle => [
                                 it.invisible = true;
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0, 0);
-                                val text = serializer.serialize(action.copy);
+                                var text = serializer.serialize(action.copy);
+                                text = text.replace("'", "")
+                                if (text.length > 1 && text.substring(text.length - 1, text.length).equals(";")) {
+                                    text = text.substring(0, text.length - 1)
+                                }
                                 it.printHighlightedText(text, action)
                             ]
                             //it.addRectangle().invisible = true;
@@ -552,7 +567,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             edge.target = t.targetState.node;
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             edge.addSpline(2) => [
-                if (t.isImmediate || t.type == TransitionType::NORMALTERMINATION) {
+                // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
+                if (t.isImmediate2) {
                     it.lineStyle = LineStyle::CUSTOM;
                     it.lineStyle.dashPattern.clear;
                     it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
@@ -590,6 +606,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 tCopy.setHistory(HistoryType::RESET)
                 tCopy.setImmediate(false)
                 var String label = serializer.serialize(tCopy)
+                label = label.replace("'", "")
 
                 // Override if a Label is set for a transition
                 if (!t.label.nullOrEmpty) {

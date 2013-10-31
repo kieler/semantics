@@ -713,6 +713,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getSuspendAction_Weak() {
+        return (EAttribute)suspendActionEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EEnum getStateType() {
         return stateTypeEEnum;
     }
@@ -836,6 +845,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         exitActionEClass = createEClass(EXIT_ACTION);
 
         suspendActionEClass = createEClass(SUSPEND_ACTION);
+        createEAttribute(suspendActionEClass, SUSPEND_ACTION__WEAK);
 
         // Create enums
         stateTypeEEnum = createEEnum(STATE_TYPE);
@@ -958,6 +968,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEClass(exitActionEClass, ExitAction.class, "ExitAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(suspendActionEClass, SuspendAction.class, "SuspendAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getSuspendAction_Weak(), ecorePackage.getEBoolean(), "weak", null, 0, 1, SuspendAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(stateTypeEEnum, StateType.class, "StateType");

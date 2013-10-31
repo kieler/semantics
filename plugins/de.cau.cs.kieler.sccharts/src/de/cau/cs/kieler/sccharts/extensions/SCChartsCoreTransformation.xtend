@@ -500,7 +500,40 @@ class SCChartsCoreTransformation {
            
            
            
+    //-------------------------------------------------------------------------
+    //--             D E F E R R E D     T R A N S I T I O N                 --
+    //-------------------------------------------------------------------------
+
+    // For all deferred transitions T from S1 to S2, create a new State _S
+    // create a new transition _T from _S to S2 and change T's target to _S.
+    // Remove the deferred flag from T.
+    
+    def Region transformDeferred (Region rootRegion) {
+        // Clone the complete SCCharts region 
+        var targetRootRegion = rootRegion.copy;
+        // Traverse all transitions
+        for(targetTransition : targetRootRegion.getAllContainedTransitions) {
+            targetTransition.transformDeferred;
+        }
+        targetRootRegion;
+    }
+         
+     def void transformDeferred(Transition transition) {
+         if (transition.deferred) {
+             // Create a new state _S
+             val _S = transition.targetState.parentRegion.createState(transition.id("_S"))
+             // Create a new transition _T
+             _S.createTransitionTo(transition.targetState)
+             // Re-target transition T
+             transition.setTargetState(_S)
+             // Remove deferred flag
+             transition.setDeferred(false)
+         }
+     }
+    
            
+           
+                      
            
            
    ////////////////////////////////////////////////////////////////////////////////////////           
