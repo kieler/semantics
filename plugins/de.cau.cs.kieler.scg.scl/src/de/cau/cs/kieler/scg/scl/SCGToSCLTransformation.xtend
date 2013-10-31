@@ -37,6 +37,7 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import java.util.List
 import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.extensions.SCLExtensions
 
 /** 
  * SCG to SCL Transformation 
@@ -52,6 +53,9 @@ class SCGToSCLTransformation {
     // Inject SCG Extensions.    
     @Inject
     extension SCGExtensions
+    
+    @Inject 
+    extension SCLExtensions
          
     // M2M Mapping
 //    private val nodeMapping = new HashMap<Node, Node>
@@ -76,6 +80,8 @@ class SCGToSCLTransformation {
         }
         
         scg.transform(scl)
+        
+        scl.optimizeGotos
         
         return scl;
     }
