@@ -164,10 +164,27 @@ class SCGDEPToSCGBBTransformation {
     
     def BasicBlock insertBasicBlock(SCGraphBB scg, ValuedObject guard, SchedulingBlock schedulingBlock) {
         val basicBlock = ScgbbFactory::eINSTANCE.createBasicBlock
-        basicBlock.schedulingBlocks.add(schedulingBlock)
+      
+        basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock)
         basicBlock.guard = guard
         scg.basicBlocks.add(basicBlock)
         basicBlock
+    }
+    
+    def List<SchedulingBlock> splitSchedulingBlock(SchedulingBlock schedulingblock) {
+        val schedulingBlocks = <SchedulingBlock> newLinkedList
+        var SchedulingBlock block = null
+        for (node : schedulingblock.nodes) {
+            if (block == null || (node.incoming.filter(typeof(Dependency)).size > 0)) {
+                if (block != null) schedulingBlocks.add(block)
+                block = ScgbbFactory::eINSTANCE.createSchedulingBlock()
+                block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))                
+            }
+            block.nodes.add(node)
+        }
+        if (block != null) schedulingBlocks.add(block)
+        
+        schedulingBlocks
     }
 
 

@@ -2,7 +2,6 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.scl.scl.Annotation;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -17,7 +16,6 @@ import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.StatementSequence;
-import de.cau.cs.kieler.scl.scl.VariableDefinition;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -45,7 +43,7 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     try
     {
-      SclFactory theSclFactory = (SclFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.cau.de/cs/kieler/scl/scl"); 
+      SclFactory theSclFactory = (SclFactory)EPackage.Registry.INSTANCE.getEFactory(SclPackage.eNS_URI);
       if (theSclFactory != null)
       {
         return theSclFactory;
@@ -80,12 +78,10 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
     switch (eClass.getClassifierID())
     {
       case SclPackage.PROGRAM: return createProgram();
-      case SclPackage.VARIABLE_DEFINITION: return createVariableDefinition();
       case SclPackage.STATEMENT: return createStatement();
       case SclPackage.EMPTY_STATEMENT: return createEmptyStatement();
       case SclPackage.INSTRUCTION_STATEMENT: return createInstructionStatement();
       case SclPackage.INSTRUCTION: return createInstruction();
-      case SclPackage.ANNOTATION: return createAnnotation();
       case SclPackage.ASSIGNMENT: return createAssignment();
       case SclPackage.CONDITIONAL: return createConditional();
       case SclPackage.GOTO: return createGoto();
@@ -108,17 +104,6 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     ProgramImpl program = new ProgramImpl();
     return program;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public VariableDefinition createVariableDefinition()
-  {
-    VariableDefinitionImpl variableDefinition = new VariableDefinitionImpl();
-    return variableDefinition;
   }
 
   /**
@@ -163,17 +148,6 @@ public class SclFactoryImpl extends EFactoryImpl implements SclFactory
   {
     InstructionImpl instruction = new InstructionImpl();
     return instruction;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Annotation createAnnotation()
-  {
-    AnnotationImpl annotation = new AnnotationImpl();
-    return annotation;
   }
 
   /**

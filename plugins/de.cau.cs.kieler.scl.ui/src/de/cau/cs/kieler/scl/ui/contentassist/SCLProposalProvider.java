@@ -3,10 +3,9 @@
 */
 package de.cau.cs.kieler.scl.ui.contentassist;
 
-import de.cau.cs.kieler.scl.ui.contentassist.AbstractSCLProposalProvider;
 /**
- * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
+ * see http://www.eclipse.org/Xtext/documentation.html#contentAssist on how to customize content assistant
  */
-public class SCLProposalProvider extends AbstractSCLProposalProvider {
+public class SCLProposalProvider extends de.cau.cs.kieler.scl.ui.contentassist.AbstractSCLProposalProvider {
 
 }

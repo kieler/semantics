@@ -2,6 +2,9 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 
@@ -13,8 +16,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.yakindu.sct.model.stext.stext.Expression;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Assignment</b></em>'.
@@ -22,7 +23,8 @@ import org.yakindu.sct.model.stext.stext.Expression;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getAssignment <em>Assignment</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -31,14 +33,24 @@ import org.yakindu.sct.model.stext.stext.Expression;
 public class AssignmentImpl extends InstructionImpl implements Assignment
 {
   /**
-   * The cached value of the '{@link #getAssignment() <em>Assignment</em>}' containment reference.
+   * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getAssignment()
+   * @see #getValuedObject()
    * @generated
    * @ordered
    */
-  protected Expression assignment;
+  protected ValuedObject valuedObject;
+
+  /**
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExpression()
+   * @generated
+   * @ordered
+   */
+  protected Expression expression;
 
   /**
    * <!-- begin-user-doc -->
@@ -66,9 +78,19 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getAssignment()
+  public ValuedObject getValuedObject()
   {
-    return assignment;
+    if (valuedObject != null && valuedObject.eIsProxy())
+    {
+      InternalEObject oldValuedObject = (InternalEObject)valuedObject;
+      valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
+      if (valuedObject != oldValuedObject)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SclPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
+      }
+    }
+    return valuedObject;
   }
 
   /**
@@ -76,13 +98,46 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetAssignment(Expression newAssignment, NotificationChain msgs)
+  public ValuedObject basicGetValuedObject()
   {
-    Expression oldAssignment = assignment;
-    assignment = newAssignment;
+    return valuedObject;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setValuedObject(ValuedObject newValuedObject)
+  {
+    ValuedObject oldValuedObject = valuedObject;
+    valuedObject = newValuedObject;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Expression getExpression()
+  {
+    return expression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
+  {
+    Expression oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.ASSIGNMENT__ASSIGNMENT, oldAssignment, newAssignment);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SclPackage.ASSIGNMENT__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -93,20 +148,20 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setAssignment(Expression newAssignment)
+  public void setExpression(Expression newExpression)
   {
-    if (newAssignment != assignment)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (assignment != null)
-        msgs = ((InternalEObject)assignment).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.ASSIGNMENT__ASSIGNMENT, null, msgs);
-      if (newAssignment != null)
-        msgs = ((InternalEObject)newAssignment).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.ASSIGNMENT__ASSIGNMENT, null, msgs);
-      msgs = basicSetAssignment(newAssignment, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SclPackage.ASSIGNMENT__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SclPackage.ASSIGNMENT__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.ASSIGNMENT__ASSIGNMENT, newAssignment, newAssignment));
+      eNotify(new ENotificationImpl(this, Notification.SET, SclPackage.ASSIGNMENT__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -119,8 +174,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
-      case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        return basicSetAssignment(null, msgs);
+      case SclPackage.ASSIGNMENT__EXPRESSION:
+        return basicSetExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -135,8 +190,11 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
-      case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        return getAssignment();
+      case SclPackage.ASSIGNMENT__VALUED_OBJECT:
+        if (resolve) return getValuedObject();
+        return basicGetValuedObject();
+      case SclPackage.ASSIGNMENT__EXPRESSION:
+        return getExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -151,8 +209,11 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
-      case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        setAssignment((Expression)newValue);
+      case SclPackage.ASSIGNMENT__VALUED_OBJECT:
+        setValuedObject((ValuedObject)newValue);
+        return;
+      case SclPackage.ASSIGNMENT__EXPRESSION:
+        setExpression((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -168,8 +229,11 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
-      case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        setAssignment((Expression)null);
+      case SclPackage.ASSIGNMENT__VALUED_OBJECT:
+        setValuedObject((ValuedObject)null);
+        return;
+      case SclPackage.ASSIGNMENT__EXPRESSION:
+        setExpression((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -185,8 +249,10 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
-      case SclPackage.ASSIGNMENT__ASSIGNMENT:
-        return assignment != null;
+      case SclPackage.ASSIGNMENT__VALUED_OBJECT:
+        return valuedObject != null;
+      case SclPackage.ASSIGNMENT__EXPRESSION:
+        return expression != null;
     }
     return super.eIsSet(featureID);
   }

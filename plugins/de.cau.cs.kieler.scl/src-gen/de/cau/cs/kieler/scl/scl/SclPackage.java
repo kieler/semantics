@@ -7,8 +7,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
-import org.yakindu.sct.model.stext.stext.StextPackage;
-
 /**
  * <!-- begin-user-doc -->
  * The <b>Package</b> for the model.
@@ -40,7 +38,7 @@ public interface SclPackage extends EPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  String eNS_URI = "http://www.cau.de/cs/kieler/scl/scl";
+  String eNS_URI = "http://kieler.cs.cau.de/scl/scl";
 
   /**
    * The package namespace name.
@@ -66,7 +64,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getStatementSequence()
    * @generated
    */
-  int STATEMENT_SEQUENCE = 10;
+  int STATEMENT_SEQUENCE = 8;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -115,13 +113,13 @@ public interface SclPackage extends EPackage
   int PROGRAM__NAME = STATEMENT_SEQUENCE_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Definitions</b></em>' containment reference list.
+   * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__DEFINITIONS = STATEMENT_SEQUENCE_FEATURE_COUNT + 1;
+  int PROGRAM__VALUED_OBJECTS = STATEMENT_SEQUENCE_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Program</em>' class.
@@ -133,106 +131,6 @@ public interface SclPackage extends EPackage
   int PROGRAM_FEATURE_COUNT = STATEMENT_SEQUENCE_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.scl.scl.impl.VariableDefinitionImpl
-   * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getVariableDefinition()
-   * @generated
-   */
-  int VARIABLE_DEFINITION = 1;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__NAME = StextPackage.VARIABLE_DEFINITION__NAME;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__TYPE = StextPackage.VARIABLE_DEFINITION__TYPE;
-
-  /**
-   * The feature id for the '<em><b>Owning Type</b></em>' container reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__OWNING_TYPE = StextPackage.VARIABLE_DEFINITION__OWNING_TYPE;
-
-  /**
-   * The feature id for the '<em><b>Readonly</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__READONLY = StextPackage.VARIABLE_DEFINITION__READONLY;
-
-  /**
-   * The feature id for the '<em><b>External</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__EXTERNAL = StextPackage.VARIABLE_DEFINITION__EXTERNAL;
-
-  /**
-   * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__INITIAL_VALUE = StextPackage.VARIABLE_DEFINITION__INITIAL_VALUE;
-
-  /**
-   * The feature id for the '<em><b>Input</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__INPUT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Output</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__OUTPUT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Static</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION__STATIC = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 2;
-
-  /**
-   * The number of structural features of the '<em>Variable Definition</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_DEFINITION_FEATURE_COUNT = StextPackage.VARIABLE_DEFINITION_FEATURE_COUNT + 3;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.StatementImpl <em>Statement</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -240,16 +138,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getStatement()
    * @generated
    */
-  int STATEMENT = 2;
-
-  /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATEMENT__ANNOTATIONS = 0;
+  int STATEMENT = 1;
 
   /**
    * The number of structural features of the '<em>Statement</em>' class.
@@ -258,7 +147,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATEMENT_FEATURE_COUNT = 1;
+  int STATEMENT_FEATURE_COUNT = 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.EmptyStatementImpl <em>Empty Statement</em>}' class.
@@ -268,16 +157,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getEmptyStatement()
    * @generated
    */
-  int EMPTY_STATEMENT = 3;
-
-  /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EMPTY_STATEMENT__ANNOTATIONS = STATEMENT__ANNOTATIONS;
+  int EMPTY_STATEMENT = 2;
 
   /**
    * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -305,16 +185,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getInstructionStatement()
    * @generated
    */
-  int INSTRUCTION_STATEMENT = 4;
-
-  /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INSTRUCTION_STATEMENT__ANNOTATIONS = STATEMENT__ANNOTATIONS;
+  int INSTRUCTION_STATEMENT = 3;
 
   /**
    * The feature id for the '<em><b>Instruction</b></em>' containment reference.
@@ -342,7 +213,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getInstruction()
    * @generated
    */
-  int INSTRUCTION = 5;
+  int INSTRUCTION = 4;
 
   /**
    * The number of structural features of the '<em>Instruction</em>' class.
@@ -354,43 +225,6 @@ public interface SclPackage extends EPackage
   int INSTRUCTION_FEATURE_COUNT = 0;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.AnnotationImpl <em>Annotation</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.scl.scl.impl.AnnotationImpl
-   * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getAnnotation()
-   * @generated
-   */
-  int ANNOTATION = 6;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANNOTATION__NAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Parameter</b></em>' attribute list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANNOTATION__PARAMETER = 1;
-
-  /**
-   * The number of structural features of the '<em>Annotation</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANNOTATION_FEATURE_COUNT = 2;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl <em>Assignment</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -398,16 +232,25 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getAssignment()
    * @generated
    */
-  int ASSIGNMENT = 7;
+  int ASSIGNMENT = 5;
 
   /**
-   * The feature id for the '<em><b>Assignment</b></em>' containment reference.
+   * The feature id for the '<em><b>Valued Object</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASSIGNMENT__ASSIGNMENT = INSTRUCTION_FEATURE_COUNT + 0;
+  int ASSIGNMENT__VALUED_OBJECT = INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Assignment</em>' class.
@@ -416,7 +259,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
+  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -426,7 +269,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getConditional()
    * @generated
    */
-  int CONDITIONAL = 8;
+  int CONDITIONAL = 6;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -447,13 +290,22 @@ public interface SclPackage extends EPackage
   int CONDITIONAL__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL__VALUED_OBJECTS = INSTRUCTION_FEATURE_COUNT + 2;
+
+  /**
    * The feature id for the '<em><b>Else Statements</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONDITIONAL__ELSE_STATEMENTS = INSTRUCTION_FEATURE_COUNT + 2;
+  int CONDITIONAL__ELSE_STATEMENTS = INSTRUCTION_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Conditional</em>' class.
@@ -462,7 +314,7 @@ public interface SclPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONDITIONAL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 3;
+  int CONDITIONAL_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.scl.scl.impl.GotoImpl <em>Goto</em>}' class.
@@ -472,7 +324,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getGoto()
    * @generated
    */
-  int GOTO = 9;
+  int GOTO = 7;
 
   /**
    * The feature id for the '<em><b>Target Label</b></em>' attribute.
@@ -500,7 +352,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getThread()
    * @generated
    */
-  int THREAD = 11;
+  int THREAD = 9;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -528,7 +380,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getParallel()
    * @generated
    */
-  int PARALLEL = 12;
+  int PARALLEL = 10;
 
   /**
    * The feature id for the '<em><b>Threads</b></em>' containment reference list.
@@ -556,7 +408,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getPause()
    * @generated
    */
-  int PAUSE = 13;
+  int PAUSE = 11;
 
   /**
    * The number of structural features of the '<em>Pause</em>' class.
@@ -575,7 +427,7 @@ public interface SclPackage extends EPackage
    * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getStatementScope()
    * @generated
    */
-  int STATEMENT_SCOPE = 14;
+  int STATEMENT_SCOPE = 12;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -587,13 +439,13 @@ public interface SclPackage extends EPackage
   int STATEMENT_SCOPE__STATEMENTS = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Definitions</b></em>' containment reference list.
+   * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATEMENT_SCOPE__DEFINITIONS = INSTRUCTION_FEATURE_COUNT + 1;
+  int STATEMENT_SCOPE__VALUED_OBJECTS = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Statement Scope</em>' class.
@@ -627,58 +479,15 @@ public interface SclPackage extends EPackage
   EAttribute getProgram_Name();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Program#getDefinitions <em>Definitions</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Program#getValuedObjects <em>Valued Objects</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Definitions</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Program#getDefinitions()
+   * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Program#getValuedObjects()
    * @see #getProgram()
    * @generated
    */
-  EReference getProgram_Definitions();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.VariableDefinition <em>Variable Definition</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Variable Definition</em>'.
-   * @see de.cau.cs.kieler.scl.scl.VariableDefinition
-   * @generated
-   */
-  EClass getVariableDefinition();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.VariableDefinition#isInput <em>Input</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Input</em>'.
-   * @see de.cau.cs.kieler.scl.scl.VariableDefinition#isInput()
-   * @see #getVariableDefinition()
-   * @generated
-   */
-  EAttribute getVariableDefinition_Input();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.VariableDefinition#isOutput <em>Output</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Output</em>'.
-   * @see de.cau.cs.kieler.scl.scl.VariableDefinition#isOutput()
-   * @see #getVariableDefinition()
-   * @generated
-   */
-  EAttribute getVariableDefinition_Output();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.VariableDefinition#isStatic <em>Static</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Static</em>'.
-   * @see de.cau.cs.kieler.scl.scl.VariableDefinition#isStatic()
-   * @see #getVariableDefinition()
-   * @generated
-   */
-  EAttribute getVariableDefinition_Static();
+  EReference getProgram_ValuedObjects();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Statement <em>Statement</em>}'.
@@ -689,17 +498,6 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EClass getStatement();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Statement#getAnnotations <em>Annotations</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Annotations</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Statement#getAnnotations()
-   * @see #getStatement()
-   * @generated
-   */
-  EReference getStatement_Annotations();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.EmptyStatement <em>Empty Statement</em>}'.
@@ -754,38 +552,6 @@ public interface SclPackage extends EPackage
   EClass getInstruction();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Annotation <em>Annotation</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Annotation</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Annotation
-   * @generated
-   */
-  EClass getAnnotation();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scl.scl.Annotation#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Annotation#getName()
-   * @see #getAnnotation()
-   * @generated
-   */
-  EAttribute getAnnotation_Name();
-
-  /**
-   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.scl.scl.Annotation#getParameter <em>Parameter</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Parameter</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Annotation#getParameter()
-   * @see #getAnnotation()
-   * @generated
-   */
-  EAttribute getAnnotation_Parameter();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Assignment <em>Assignment</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -796,15 +562,26 @@ public interface SclPackage extends EPackage
   EClass getAssignment();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scl.scl.Assignment#getAssignment <em>Assignment</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.scl.scl.Assignment#getValuedObject <em>Valued Object</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Assignment</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Assignment#getAssignment()
+   * @return the meta object for the reference '<em>Valued Object</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Assignment#getValuedObject()
    * @see #getAssignment()
    * @generated
    */
-  EReference getAssignment_Assignment();
+  EReference getAssignment_ValuedObject();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scl.scl.Assignment#getExpression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Assignment#getExpression()
+   * @see #getAssignment()
+   * @generated
+   */
+  EReference getAssignment_Expression();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Conditional <em>Conditional</em>}'.
@@ -826,6 +603,17 @@ public interface SclPackage extends EPackage
    * @generated
    */
   EReference getConditional_Expression();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Conditional#getValuedObjects <em>Valued Objects</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Conditional#getValuedObjects()
+   * @see #getConditional()
+   * @generated
+   */
+  EReference getConditional_ValuedObjects();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Conditional#getElseStatements <em>Else Statements</em>}'.
@@ -932,15 +720,15 @@ public interface SclPackage extends EPackage
   EClass getStatementScope();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.StatementScope#getDefinitions <em>Definitions</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.StatementScope#getValuedObjects <em>Valued Objects</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Definitions</em>'.
-   * @see de.cau.cs.kieler.scl.scl.StatementScope#getDefinitions()
+   * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
+   * @see de.cau.cs.kieler.scl.scl.StatementScope#getValuedObjects()
    * @see #getStatementScope()
    * @generated
    */
-  EReference getStatementScope_Definitions();
+  EReference getStatementScope_ValuedObjects();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -984,46 +772,12 @@ public interface SclPackage extends EPackage
     EAttribute PROGRAM__NAME = eINSTANCE.getProgram_Name();
 
     /**
-     * The meta object literal for the '<em><b>Definitions</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PROGRAM__DEFINITIONS = eINSTANCE.getProgram_Definitions();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.VariableDefinitionImpl <em>Variable Definition</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scl.scl.impl.VariableDefinitionImpl
-     * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getVariableDefinition()
-     * @generated
-     */
-    EClass VARIABLE_DEFINITION = eINSTANCE.getVariableDefinition();
-
-    /**
-     * The meta object literal for the '<em><b>Input</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute VARIABLE_DEFINITION__INPUT = eINSTANCE.getVariableDefinition_Input();
-
-    /**
-     * The meta object literal for the '<em><b>Output</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute VARIABLE_DEFINITION__OUTPUT = eINSTANCE.getVariableDefinition_Output();
-
-    /**
-     * The meta object literal for the '<em><b>Static</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute VARIABLE_DEFINITION__STATIC = eINSTANCE.getVariableDefinition_Static();
+    EReference PROGRAM__VALUED_OBJECTS = eINSTANCE.getProgram_ValuedObjects();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.StatementImpl <em>Statement</em>}' class.
@@ -1034,14 +788,6 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EClass STATEMENT = eINSTANCE.getStatement();
-
-    /**
-     * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATEMENT__ANNOTATIONS = eINSTANCE.getStatement_Annotations();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.EmptyStatementImpl <em>Empty Statement</em>}' class.
@@ -1090,32 +836,6 @@ public interface SclPackage extends EPackage
     EClass INSTRUCTION = eINSTANCE.getInstruction();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.AnnotationImpl <em>Annotation</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scl.scl.impl.AnnotationImpl
-     * @see de.cau.cs.kieler.scl.scl.impl.SclPackageImpl#getAnnotation()
-     * @generated
-     */
-    EClass ANNOTATION = eINSTANCE.getAnnotation();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ANNOTATION__NAME = eINSTANCE.getAnnotation_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Parameter</b></em>' attribute list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ANNOTATION__PARAMETER = eINSTANCE.getAnnotation_Parameter();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.AssignmentImpl <em>Assignment</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1126,12 +846,20 @@ public interface SclPackage extends EPackage
     EClass ASSIGNMENT = eINSTANCE.getAssignment();
 
     /**
-     * The meta object literal for the '<em><b>Assignment</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ASSIGNMENT__ASSIGNMENT = eINSTANCE.getAssignment_Assignment();
+    EReference ASSIGNMENT__VALUED_OBJECT = eINSTANCE.getAssignment_ValuedObject();
+
+    /**
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ASSIGNMENT__EXPRESSION = eINSTANCE.getAssignment_Expression();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -1150,6 +878,14 @@ public interface SclPackage extends EPackage
      * @generated
      */
     EReference CONDITIONAL__EXPRESSION = eINSTANCE.getConditional_Expression();
+
+    /**
+     * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONDITIONAL__VALUED_OBJECTS = eINSTANCE.getConditional_ValuedObjects();
 
     /**
      * The meta object literal for the '<em><b>Else Statements</b></em>' containment reference list feature.
@@ -1244,12 +980,12 @@ public interface SclPackage extends EPackage
     EClass STATEMENT_SCOPE = eINSTANCE.getStatementScope();
 
     /**
-     * The meta object literal for the '<em><b>Definitions</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference STATEMENT_SCOPE__DEFINITIONS = eINSTANCE.getStatementScope_Definitions();
+    EReference STATEMENT_SCOPE__VALUED_OBJECTS = eINSTANCE.getStatementScope_ValuedObjects();
 
   }
 

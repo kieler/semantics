@@ -2,7 +2,24 @@ package de.cau.cs.kieler.scl.serializer;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import de.cau.cs.kieler.scl.scl.Annotation;
+import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
+import de.cau.cs.kieler.core.annotations.FloatAnnotation;
+import de.cau.cs.kieler.core.annotations.ImportAnnotation;
+import de.cau.cs.kieler.core.annotations.IntAnnotation;
+import de.cau.cs.kieler.core.annotations.StringAnnotation;
+import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
+import de.cau.cs.kieler.core.kexpressions.BoolValue;
+import de.cau.cs.kieler.core.kexpressions.DoubleValue;
+import de.cau.cs.kieler.core.kexpressions.FloatValue;
+import de.cau.cs.kieler.core.kexpressions.IntValue;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.core.kexpressions.serializer.KExpressionsSemanticSequencer;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
@@ -13,7 +30,6 @@ import de.cau.cs.kieler.scl.scl.Pause;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.StatementScope;
-import de.cau.cs.kieler.scl.scl.VariableDefinition;
 import de.cau.cs.kieler.scl.services.SCLGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -25,74 +41,297 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEOb
 import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
-import org.yakindu.base.types.Parameter;
-import org.yakindu.base.types.TypesPackage;
-import org.yakindu.sct.model.stext.serializer.STextSemanticSequencer;
-import org.yakindu.sct.model.stext.stext.ActiveStateReferenceExpression;
-import org.yakindu.sct.model.stext.stext.AlwaysEvent;
-import org.yakindu.sct.model.stext.stext.AssignmentExpression;
-import org.yakindu.sct.model.stext.stext.BitwiseAndExpression;
-import org.yakindu.sct.model.stext.stext.BitwiseOrExpression;
-import org.yakindu.sct.model.stext.stext.BitwiseXorExpression;
-import org.yakindu.sct.model.stext.stext.BoolLiteral;
-import org.yakindu.sct.model.stext.stext.ConditionalExpression;
-import org.yakindu.sct.model.stext.stext.DefaultTrigger;
-import org.yakindu.sct.model.stext.stext.ElementReferenceExpression;
-import org.yakindu.sct.model.stext.stext.EntryEvent;
-import org.yakindu.sct.model.stext.stext.EntryPointSpec;
-import org.yakindu.sct.model.stext.stext.EventDefinition;
-import org.yakindu.sct.model.stext.stext.EventRaisingExpression;
-import org.yakindu.sct.model.stext.stext.EventValueReferenceExpression;
-import org.yakindu.sct.model.stext.stext.ExitEvent;
-import org.yakindu.sct.model.stext.stext.ExitPointSpec;
-import org.yakindu.sct.model.stext.stext.FeatureCall;
-import org.yakindu.sct.model.stext.stext.HexLiteral;
-import org.yakindu.sct.model.stext.stext.IntLiteral;
-import org.yakindu.sct.model.stext.stext.InterfaceScope;
-import org.yakindu.sct.model.stext.stext.InternalScope;
-import org.yakindu.sct.model.stext.stext.LocalReaction;
-import org.yakindu.sct.model.stext.stext.LogicalAndExpression;
-import org.yakindu.sct.model.stext.stext.LogicalNotExpression;
-import org.yakindu.sct.model.stext.stext.LogicalOrExpression;
-import org.yakindu.sct.model.stext.stext.LogicalRelationExpression;
-import org.yakindu.sct.model.stext.stext.NumericalAddSubtractExpression;
-import org.yakindu.sct.model.stext.stext.NumericalMultiplyDivideExpression;
-import org.yakindu.sct.model.stext.stext.NumericalUnaryExpression;
-import org.yakindu.sct.model.stext.stext.OperationDefinition;
-import org.yakindu.sct.model.stext.stext.ParenthesizedExpression;
-import org.yakindu.sct.model.stext.stext.PrimitiveValueExpression;
-import org.yakindu.sct.model.stext.stext.ReactionEffect;
-import org.yakindu.sct.model.stext.stext.ReactionTrigger;
-import org.yakindu.sct.model.stext.stext.RealLiteral;
-import org.yakindu.sct.model.stext.stext.RegularEventSpec;
-import org.yakindu.sct.model.stext.stext.Root;
-import org.yakindu.sct.model.stext.stext.ShiftExpression;
-import org.yakindu.sct.model.stext.stext.SimpleScope;
-import org.yakindu.sct.model.stext.stext.StateRoot;
-import org.yakindu.sct.model.stext.stext.StateSpecification;
-import org.yakindu.sct.model.stext.stext.StatechartRoot;
-import org.yakindu.sct.model.stext.stext.StatechartSpecification;
-import org.yakindu.sct.model.stext.stext.StextPackage;
-import org.yakindu.sct.model.stext.stext.StringLiteral;
-import org.yakindu.sct.model.stext.stext.TimeEventSpec;
-import org.yakindu.sct.model.stext.stext.TransitionReaction;
-import org.yakindu.sct.model.stext.stext.TransitionRoot;
-import org.yakindu.sct.model.stext.stext.TransitionSpecification;
 
 @SuppressWarnings("all")
-public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequencer {
+public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticSequencer {
 
 	@Inject
 	private SCLGrammarAccess grammarAccess;
 	
 	public void createSequence(EObject context, EObject semanticObject) {
-		if(semanticObject.eClass().getEPackage() == SclPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case SclPackage.ANNOTATION:
-				if(context == grammarAccess.getAnnotationRule()) {
-					sequence_Annotation(context, (Annotation) semanticObject); 
+		if(semanticObject.eClass().getEPackage() == AnnotationsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case AnnotationsPackage.ANNOTATION:
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getTagAnnotationRule()) {
+					sequence_TagAnnotation(context, (Annotation) semanticObject); 
 					return; 
 				}
 				else break;
+			case AnnotationsPackage.BOOLEAN_ANNOTATION:
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getKeyBooleanValueAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
+					sequence_KeyBooleanValueAnnotation(context, (BooleanAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
+			case AnnotationsPackage.FLOAT_ANNOTATION:
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getKeyFloatValueAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
+					sequence_KeyFloatValueAnnotation(context, (FloatAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
+			case AnnotationsPackage.IMPORT_ANNOTATION:
+				if(context == grammarAccess.getImportAnnotationRule()) {
+					sequence_ImportAnnotation(context, (ImportAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
+			case AnnotationsPackage.INT_ANNOTATION:
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getKeyIntValueAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
+					sequence_KeyIntValueAnnotation(context, (IntAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
+			case AnnotationsPackage.STRING_ANNOTATION:
+				if(context == grammarAccess.getAnnotationRule()) {
+					sequence_Annotation_CommentAnnotation_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getValuedAnnotationRule()) {
+					sequence_CommentAnnotation_KeyStringValueAnnotation_ValuedAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getCommentAnnotationRule()) {
+					sequence_CommentAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getKeyStringValueAnnotationRule()) {
+					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
+			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getTypedKeyStringValueAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
+					sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
+			}
+		else if(semanticObject.eClass().getEPackage() == KExpressionsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case KExpressionsPackage.BOOL_VALUE:
+				if(context == grammarAccess.getAddExpressionRule() ||
+				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAndExpressionRule() ||
+				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicExpressionRule() ||
+				   context == grammarAccess.getAtomicValuedExpressionRule() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
+				   context == grammarAccess.getBoolValueRule() ||
+				   context == grammarAccess.getCompareOperationRule() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getDivExpressionRule() ||
+				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getModExpressionRule() ||
+				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getMultExpressionRule() ||
+				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getNegExpressionRule() ||
+				   context == grammarAccess.getNotExpressionRule() ||
+				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getOrExpressionRule() ||
+				   context == grammarAccess.getOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getRootRule() ||
+				   context == grammarAccess.getSubExpressionRule() ||
+				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getValuedExpressionRule()) {
+					sequence_BoolValue(context, (BoolValue) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.DOUBLE_VALUE:
+				if(context == grammarAccess.getAddExpressionRule() ||
+				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicValuedExpressionRule() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getDivExpressionRule() ||
+				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getDoubleValueRule() ||
+				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getModExpressionRule() ||
+				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getMultExpressionRule() ||
+				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getNegExpressionRule() ||
+				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getRootRule() ||
+				   context == grammarAccess.getSubExpressionRule() ||
+				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getValuedExpressionRule()) {
+					sequence_DoubleValue(context, (DoubleValue) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.FLOAT_VALUE:
+				if(context == grammarAccess.getAddExpressionRule() ||
+				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicValuedExpressionRule() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getDivExpressionRule() ||
+				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getFloatValueRule() ||
+				   context == grammarAccess.getModExpressionRule() ||
+				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getMultExpressionRule() ||
+				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getNegExpressionRule() ||
+				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getRootRule() ||
+				   context == grammarAccess.getSubExpressionRule() ||
+				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getValuedExpressionRule()) {
+					sequence_FloatValue(context, (FloatValue) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.INT_VALUE:
+				if(context == grammarAccess.getAddExpressionRule() ||
+				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicValuedExpressionRule() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getDivExpressionRule() ||
+				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getIntValueRule() ||
+				   context == grammarAccess.getModExpressionRule() ||
+				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getMultExpressionRule() ||
+				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getNegExpressionRule() ||
+				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getRootRule() ||
+				   context == grammarAccess.getSubExpressionRule() ||
+				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getValuedExpressionRule()) {
+					sequence_IntValue(context, (IntValue) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.OPERATOR_EXPRESSION:
+				if(context == grammarAccess.getAtomicValuedExpressionRule()) {
+					sequence_AddExpression_AndExpression_AtomicValuedExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getRootRule()) {
+					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_Expression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getAddExpressionRule() ||
+				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getDivExpressionRule() ||
+				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getModExpressionRule() ||
+				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getMultExpressionRule() ||
+				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getNegExpressionRule() ||
+				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getSubExpressionRule() ||
+				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getValuedExpressionRule()) {
+					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getAtomicExpressionRule()) {
+					sequence_AndExpression_AtomicExpression_CompareOperation_NotExpression_OrExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getAndExpressionRule() ||
+				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
+				   context == grammarAccess.getCompareOperationRule() ||
+				   context == grammarAccess.getNotExpressionRule() ||
+				   context == grammarAccess.getOrExpressionRule() ||
+				   context == grammarAccess.getOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
+					sequence_AndExpression_CompareOperation_NotExpression_OrExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getValuedObjectTestExpressionRule()) {
+					sequence_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.TEXT_EXPRESSION:
+				if(context == grammarAccess.getAddExpressionRule() ||
+				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAndExpressionRule() ||
+				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicExpressionRule() ||
+				   context == grammarAccess.getAtomicValuedExpressionRule() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
+				   context == grammarAccess.getCompareOperationRule() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getDivExpressionRule() ||
+				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getModExpressionRule() ||
+				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getMultExpressionRule() ||
+				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getNegExpressionRule() ||
+				   context == grammarAccess.getNotExpressionRule() ||
+				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getOrExpressionRule() ||
+				   context == grammarAccess.getOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getRootRule() ||
+				   context == grammarAccess.getSubExpressionRule() ||
+				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getTextExpressionRule() ||
+				   context == grammarAccess.getValuedExpressionRule()) {
+					sequence_TextExpression(context, (TextExpression) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.VALUED_OBJECT:
+				if(context == grammarAccess.getValuedObjectRule()) {
+					sequence_ValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
+				if(context == grammarAccess.getAddExpressionRule() ||
+				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAndExpressionRule() ||
+				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicExpressionRule() ||
+				   context == grammarAccess.getAtomicValuedExpressionRule() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
+				   context == grammarAccess.getCompareOperationRule() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getDivExpressionRule() ||
+				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getModExpressionRule() ||
+				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getMultExpressionRule() ||
+				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getNegExpressionRule() ||
+				   context == grammarAccess.getNotExpressionRule() ||
+				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getOrExpressionRule() ||
+				   context == grammarAccess.getOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getRootRule() ||
+				   context == grammarAccess.getSubExpressionRule() ||
+				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getValuedExpressionRule() ||
+				   context == grammarAccess.getValuedObjectReferenceRule() ||
+				   context == grammarAccess.getValuedObjectTestExpressionRule()) {
+					sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+					return; 
+				}
+				else break;
+			}
+		else if(semanticObject.eClass().getEPackage() == SclPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case SclPackage.ASSIGNMENT:
 				if(context == grammarAccess.getAssignmentRule() ||
 				   context == grammarAccess.getInstructionRule()) {
@@ -165,729 +404,25 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 					return; 
 				}
 				else break;
-			case SclPackage.VARIABLE_DEFINITION:
-				if(context == grammarAccess.getDeclarationRule() ||
-				   context == grammarAccess.getVariableDeclarationRule() ||
-				   context == grammarAccess.getVariableDefinitionRule() ||
-				   context == grammarAccess.getVariableFeatureRule()) {
-					sequence_VariableDefinition(context, (VariableDefinition) semanticObject); 
-					return; 
-				}
-				else break;
-			}
-		else if(semanticObject.eClass().getEPackage() == StextPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case StextPackage.ACTIVE_STATE_REFERENCE_EXPRESSION:
-				if(context == grammarAccess.getActiveStateReferenceExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseAndExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalRelationExpressionRule() ||
-				   context == grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionRule() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalAddSubtractExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionRule() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalMultiplyDivideExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalUnaryExpressionRule() ||
-				   context == grammarAccess.getPrimaryExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_ActiveStateReferenceExpression(context, (ActiveStateReferenceExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.ALWAYS_EVENT:
-				if(context == grammarAccess.getAlwaysEventRule() ||
-				   context == grammarAccess.getBuiltinEventSpecRule() ||
-				   context == grammarAccess.getEventSpecRule()) {
-					sequence_AlwaysEvent(context, (AlwaysEvent) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.ASSIGNMENT_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_AssignmentExpression(context, (AssignmentExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.BITWISE_AND_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseAndExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_BitwiseAndExpression(context, (BitwiseAndExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.BITWISE_OR_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_BitwiseOrExpression(context, (BitwiseOrExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.BITWISE_XOR_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_BitwiseXorExpression(context, (BitwiseXorExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.BOOL_LITERAL:
-				if(context == grammarAccess.getBoolLiteralRule() ||
-				   context == grammarAccess.getLiteralRule()) {
-					sequence_BoolLiteral(context, (BoolLiteral) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.CONDITIONAL_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_ConditionalExpression(context, (ConditionalExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.DEFAULT_TRIGGER:
-				if(context == grammarAccess.getDefaultTriggerRule() ||
-				   context == grammarAccess.getStextTriggerRule()) {
-					sequence_DefaultTrigger(context, (DefaultTrigger) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.ELEMENT_REFERENCE_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseAndExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getElementReferenceExpressionRule() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getFeatureCallRule() ||
-				   context == grammarAccess.getFeatureCallAccess().getFeatureCallOwnerAction_1_0() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalRelationExpressionRule() ||
-				   context == grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionRule() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalAddSubtractExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionRule() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalMultiplyDivideExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalUnaryExpressionRule() ||
-				   context == grammarAccess.getPrimaryExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_ElementReferenceExpression(context, (ElementReferenceExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.ENTRY_EVENT:
-				if(context == grammarAccess.getBuiltinEventSpecRule() ||
-				   context == grammarAccess.getEntryEventRule() ||
-				   context == grammarAccess.getEventSpecRule()) {
-					sequence_EntryEvent(context, (EntryEvent) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.ENTRY_POINT_SPEC:
-				if(context == grammarAccess.getEntryPointSpecRule() ||
-				   context == grammarAccess.getTransitionPropertyRule()) {
-					sequence_EntryPointSpec(context, (EntryPointSpec) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.EVENT_DEFINITION:
-				if(context == grammarAccess.getDeclarationRule() ||
-				   context == grammarAccess.getEventDeclarartionRule() ||
-				   context == grammarAccess.getEventDefinitionRule() ||
-				   context == grammarAccess.getEventFeatureRule()) {
-					sequence_EventDefinition(context, (EventDefinition) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.EVENT_RAISING_EXPRESSION:
-				if(context == grammarAccess.getEventRaisingExpressionRule()) {
-					sequence_EventRaisingExpression(context, (EventRaisingExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.EVENT_VALUE_REFERENCE_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseAndExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getEventValueReferenceExpressionRule() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalRelationExpressionRule() ||
-				   context == grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionRule() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalAddSubtractExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionRule() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalMultiplyDivideExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalUnaryExpressionRule() ||
-				   context == grammarAccess.getPrimaryExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_EventValueReferenceExpression(context, (EventValueReferenceExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.EXIT_EVENT:
-				if(context == grammarAccess.getBuiltinEventSpecRule() ||
-				   context == grammarAccess.getEventSpecRule() ||
-				   context == grammarAccess.getExitEventRule()) {
-					sequence_ExitEvent(context, (ExitEvent) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.EXIT_POINT_SPEC:
-				if(context == grammarAccess.getExitPointSpecRule() ||
-				   context == grammarAccess.getTransitionPropertyRule()) {
-					sequence_ExitPointSpec(context, (ExitPointSpec) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.FEATURE_CALL:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseAndExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getFeatureCallRule() ||
-				   context == grammarAccess.getFeatureCallAccess().getFeatureCallOwnerAction_1_0() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalRelationExpressionRule() ||
-				   context == grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionRule() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalAddSubtractExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionRule() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalMultiplyDivideExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalUnaryExpressionRule() ||
-				   context == grammarAccess.getPrimaryExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_FeatureCall(context, (FeatureCall) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.HEX_LITERAL:
-				if(context == grammarAccess.getHexLiteralRule() ||
-				   context == grammarAccess.getLiteralRule()) {
-					sequence_HexLiteral(context, (HexLiteral) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.INT_LITERAL:
-				if(context == grammarAccess.getIntLiteralRule() ||
-				   context == grammarAccess.getLiteralRule()) {
-					sequence_IntLiteral(context, (IntLiteral) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.INTERFACE_SCOPE:
-				if(context == grammarAccess.getInterfaceScopeRule() ||
-				   context == grammarAccess.getNamedInterfaceScopeRule() ||
-				   context == grammarAccess.getScopeRule() ||
-				   context == grammarAccess.getStatechartScopeRule()) {
-					sequence_InterfaceScope(context, (InterfaceScope) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.INTERNAL_SCOPE:
-				if(context == grammarAccess.getInternalScopeRule() ||
-				   context == grammarAccess.getScopeRule() ||
-				   context == grammarAccess.getStatechartScopeRule()) {
-					sequence_InternalScope(context, (InternalScope) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.LOCAL_REACTION:
-				if(context == grammarAccess.getDeclarationRule() ||
-				   context == grammarAccess.getLocalReactionRule() ||
-				   context == grammarAccess.getReactionRule()) {
-					sequence_LocalReaction(context, (LocalReaction) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.LOGICAL_AND_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_LogicalAndExpression(context, (LogicalAndExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.LOGICAL_NOT_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_LogicalNotExpression(context, (LogicalNotExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.LOGICAL_OR_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_LogicalOrExpression(context, (LogicalOrExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.LOGICAL_RELATION_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseAndExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalRelationExpressionRule() ||
-				   context == grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_LogicalRelationExpression(context, (LogicalRelationExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.NUMERICAL_ADD_SUBTRACT_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseAndExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalRelationExpressionRule() ||
-				   context == grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionRule() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalAddSubtractExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getShiftExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_NumericalAddSubtractExpression(context, (NumericalAddSubtractExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.NUMERICAL_MULTIPLY_DIVIDE_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseAndExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalRelationExpressionRule() ||
-				   context == grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionRule() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalAddSubtractExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionRule() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalMultiplyDivideExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getShiftExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_NumericalMultiplyDivideExpression(context, (NumericalMultiplyDivideExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.NUMERICAL_UNARY_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseAndExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalRelationExpressionRule() ||
-				   context == grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionRule() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalAddSubtractExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionRule() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalMultiplyDivideExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalUnaryExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_NumericalUnaryExpression(context, (NumericalUnaryExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.OPERATION_DEFINITION:
-				if(context == grammarAccess.getDeclarationRule() ||
-				   context == grammarAccess.getOperationDeclarationRule() ||
-				   context == grammarAccess.getOperationDefinitionRule() ||
-				   context == grammarAccess.getOperationFeatureRule()) {
-					sequence_OperationDefinition(context, (OperationDefinition) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.PARENTHESIZED_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseAndExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalRelationExpressionRule() ||
-				   context == grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionRule() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalAddSubtractExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionRule() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalMultiplyDivideExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalUnaryExpressionRule() ||
-				   context == grammarAccess.getParenthesizedExpressionRule() ||
-				   context == grammarAccess.getPrimaryExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_ParenthesizedExpression(context, (ParenthesizedExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.PRIMITIVE_VALUE_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseAndExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalRelationExpressionRule() ||
-				   context == grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionRule() ||
-				   context == grammarAccess.getNumericalAddSubtractExpressionAccess().getNumericalAddSubtractExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionRule() ||
-				   context == grammarAccess.getNumericalMultiplyDivideExpressionAccess().getNumericalMultiplyDivideExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getNumericalUnaryExpressionRule() ||
-				   context == grammarAccess.getPrimaryExpressionRule() ||
-				   context == grammarAccess.getPrimitiveValueExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_PrimitiveValueExpression(context, (PrimitiveValueExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.REACTION_EFFECT:
-				if(context == grammarAccess.getReactionEffectRule()) {
-					sequence_ReactionEffect(context, (ReactionEffect) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.REACTION_TRIGGER:
-				if(context == grammarAccess.getReactionTriggerRule() ||
-				   context == grammarAccess.getStextTriggerRule()) {
-					sequence_ReactionTrigger(context, (ReactionTrigger) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.REAL_LITERAL:
-				if(context == grammarAccess.getLiteralRule() ||
-				   context == grammarAccess.getRealLiteralRule()) {
-					sequence_RealLiteral(context, (RealLiteral) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.REGULAR_EVENT_SPEC:
-				if(context == grammarAccess.getEventSpecRule() ||
-				   context == grammarAccess.getRegularEventSpecRule()) {
-					sequence_RegularEventSpec(context, (RegularEventSpec) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.ROOT:
-				if(context == grammarAccess.getRootRule()) {
-					sequence_Root(context, (Root) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.SHIFT_EXPRESSION:
-				if(context == grammarAccess.getAssignmentExpressionRule() ||
-				   context == grammarAccess.getAssignmentExpressionAccess().getAssignmentExpressionVarRefAction_1_0() ||
-				   context == grammarAccess.getBitwiseAndExpressionRule() ||
-				   context == grammarAccess.getBitwiseAndExpressionAccess().getBitwiseAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseOrExpressionRule() ||
-				   context == grammarAccess.getBitwiseOrExpressionAccess().getBitwiseOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getBitwiseXorExpressionRule() ||
-				   context == grammarAccess.getBitwiseXorExpressionAccess().getBitwiseXorExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getConditionalExpressionRule() ||
-				   context == grammarAccess.getConditionalExpressionAccess().getConditionalExpressionConditionAction_1_0() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionRule() ||
-				   context == grammarAccess.getLogicalAndExpressionAccess().getLogicalAndExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalNotExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionRule() ||
-				   context == grammarAccess.getLogicalOrExpressionAccess().getLogicalOrExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getLogicalRelationExpressionRule() ||
-				   context == grammarAccess.getLogicalRelationExpressionAccess().getLogicalRelationExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getShiftExpressionRule() ||
-				   context == grammarAccess.getShiftExpressionAccess().getShiftExpressionLeftOperandAction_1_0() ||
-				   context == grammarAccess.getStatementExpressionRule()) {
-					sequence_ShiftExpression(context, (ShiftExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.SIMPLE_SCOPE:
-				if(context == grammarAccess.getScopeRule() ||
-				   context == grammarAccess.getStateScopeRule()) {
-					sequence_StateScope(context, (SimpleScope) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.STATE_ROOT:
-				if(context == grammarAccess.getDefRootRule() ||
-				   context == grammarAccess.getStateRootRule()) {
-					sequence_StateRoot(context, (StateRoot) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.STATE_SPECIFICATION:
-				if(context == grammarAccess.getStateSpecificationRule()) {
-					sequence_StateSpecification(context, (StateSpecification) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.STATECHART_ROOT:
-				if(context == grammarAccess.getDefRootRule() ||
-				   context == grammarAccess.getStatechartRootRule()) {
-					sequence_StatechartRoot(context, (StatechartRoot) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.STATECHART_SPECIFICATION:
-				if(context == grammarAccess.getScopedElementRule() ||
-				   context == grammarAccess.getStatechartSpecificationRule()) {
-					sequence_StatechartSpecification(context, (StatechartSpecification) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.STRING_LITERAL:
-				if(context == grammarAccess.getLiteralRule() ||
-				   context == grammarAccess.getStringLiteralRule()) {
-					sequence_StringLiteral(context, (StringLiteral) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.TIME_EVENT_SPEC:
-				if(context == grammarAccess.getEventSpecRule() ||
-				   context == grammarAccess.getTimeEventSpecRule()) {
-					sequence_TimeEventSpec(context, (TimeEventSpec) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.TRANSITION_REACTION:
-				if(context == grammarAccess.getReactionRule() ||
-				   context == grammarAccess.getTransitionReactionRule()) {
-					sequence_TransitionReaction(context, (TransitionReaction) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.TRANSITION_ROOT:
-				if(context == grammarAccess.getDefRootRule() ||
-				   context == grammarAccess.getTransitionRootRule()) {
-					sequence_TransitionRoot(context, (TransitionRoot) semanticObject); 
-					return; 
-				}
-				else break;
-			case StextPackage.TRANSITION_SPECIFICATION:
-				if(context == grammarAccess.getTransitionSpecificationRule()) {
-					sequence_TransitionSpecification(context, (TransitionSpecification) semanticObject); 
-					return; 
-				}
-				else break;
-			}
-		else if(semanticObject.eClass().getEPackage() == TypesPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case TypesPackage.PARAMETER:
-				if(context == grammarAccess.getParameterRule()) {
-					sequence_Parameter(context, (Parameter) semanticObject); 
-					return; 
-				}
-				else break;
 			}
 		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
 	
 	/**
 	 * Constraint:
-	 *     (name=ID (parameter+=ID parameter+=ID*)?)
-	 */
-	protected void sequence_Annotation(EObject context, Annotation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     assignment=Expression
+	 *     (valuedObject=[ValuedObject|ID] expression=Expression)
 	 */
 	protected void sequence_Assignment(EObject context, Assignment semanticObject) {
 		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.ASSIGNMENT__ASSIGNMENT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.ASSIGNMENT__ASSIGNMENT));
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.ASSIGNMENT__VALUED_OBJECT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.ASSIGNMENT__VALUED_OBJECT));
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.ASSIGNMENT__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.ASSIGNMENT__EXPRESSION));
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getAssignmentAccess().getAssignmentExpressionParserRuleCall_0(), semanticObject.getAssignment());
+		feeder.accept(grammarAccess.getAssignmentAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1(), semanticObject.getValuedObject());
+		feeder.accept(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_2_0(), semanticObject.getExpression());
 		feeder.finish();
 	}
 	
@@ -896,9 +431,11 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         expression=Expression 
+	 *         valuedObjects+=ValuedObject* 
 	 *         (statements+=InstructionStatement | statements+=EmptyStatement)* 
 	 *         (statements+=InstructionStatement statements+=EmptyStatement*)? 
 	 *         (
+	 *             valuedObjects+=ValuedObject* 
 	 *             (elseStatements+=InstructionStatement | elseStatements+=EmptyStatement)* 
 	 *             (elseStatements+=InstructionStatement elseStatements+=EmptyStatement*)?
 	 *         )?
@@ -911,10 +448,17 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* label=ID)
+	 *     label=ID
 	 */
 	protected void sequence_EmptyStatement(EObject context, EmptyStatement semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.EMPTY_STATEMENT__LABEL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.EMPTY_STATEMENT__LABEL));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getEmptyStatementAccess().getLabelIDTerminalRuleCall_0_0(), semanticObject.getLabel());
+		feeder.finish();
 	}
 	
 	
@@ -937,15 +481,12 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	/**
 	 * Constraint:
 	 *     (
-	 *         annotations+=Annotation* 
-	 *         (
-	 *             instruction=Assignment | 
-	 *             instruction=Conditional | 
-	 *             instruction=Goto | 
-	 *             instruction=Parallel | 
-	 *             instruction=Pause | 
-	 *             instruction=StatementScope
-	 *         )
+	 *         instruction=Assignment | 
+	 *         instruction=Conditional | 
+	 *         instruction=Goto | 
+	 *         instruction=Parallel | 
+	 *         instruction=Pause | 
+	 *         instruction=StatementScope
 	 *     )
 	 */
 	protected void sequence_InstructionStatement(EObject context, InstructionStatement semanticObject) {
@@ -975,7 +516,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         name=ID 
-	 *         definitions+=VariableDefinition* 
+	 *         valuedObjects+=ValuedObject* 
 	 *         (statements+=InstructionStatement | statements+=EmptyStatement)* 
 	 *         (statements+=InstructionStatement statements+=EmptyStatement*)?
 	 *     )
@@ -988,7 +529,7 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	/**
 	 * Constraint:
 	 *     (
-	 *         definitions+=VariableDefinition* 
+	 *         valuedObjects+=ValuedObject* 
 	 *         (statements+=InstructionStatement | statements+=EmptyStatement)* 
 	 *         (statements+=InstructionStatement statements+=EmptyStatement*)?
 	 *     )
@@ -1010,15 +551,18 @@ public abstract class AbstractSCLSemanticSequencer extends STextSemanticSequence
 	/**
 	 * Constraint:
 	 *     (
+	 *         annotations+=Annotation* 
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 
-	 *         type=[Type|FQN] 
+	 *         signal?='signal'? 
+	 *         type=ValueType? 
 	 *         name=ID 
-	 *         initialValue=Expression?
+	 *         initialValue=Expression? 
+	 *         combineOperator=CombineOperator?
 	 *     )
 	 */
-	protected void sequence_VariableDefinition(EObject context, VariableDefinition semanticObject) {
+	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }
