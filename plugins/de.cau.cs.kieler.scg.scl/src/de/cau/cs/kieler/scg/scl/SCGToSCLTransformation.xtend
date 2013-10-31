@@ -82,6 +82,7 @@ class SCGToSCLTransformation {
         scg.transform(scl)
         
         scl.optimizeGotos
+        scl.optimizeLabels
         
         return scl;
     }

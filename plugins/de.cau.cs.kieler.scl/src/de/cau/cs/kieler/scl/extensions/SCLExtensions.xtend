@@ -43,9 +43,17 @@ class SCLExtensions {
                     }
             }
         }
-        for(goto : toDelete) {
-            goto.eContainer.remove
-        }
+        toDelete.forEach[it.eContainer.remove]
+        sSeq
+    }
+    
+    def StatementSequence optimizeLabels(StatementSequence sSeq) {
+        val gotos = sSeq.eAllContents.toList.filter(typeof(Goto))
+        val toDelete = <EmptyStatement> newLinkedList
+        sSeq.eAllContents.filter(typeof(EmptyStatement)).forEach[
+            if (!gotos.exists(f | f.targetLabel == it.label)) toDelete.add(it)
+        ]
+        toDelete.forEach[it.remove]
         sSeq
     }
             
