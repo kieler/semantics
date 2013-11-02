@@ -47,6 +47,7 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.scgbb.SchedulingBlock
 import de.cau.cs.kieler.scgbb.BasicBlock
 import java.util.ArrayList
+import de.cau.cs.kieler.core.kexpressions.ValueType
 
 /** 
  * SCGDEP to SCGBB Transformation 
@@ -99,9 +100,15 @@ class SCGDEPToSCGBBTransformation {
         
         // Copy all dependencies.
         scgdep.eAllContents.filter(typeof(Dependency)).forEach[ it.copyDependency(scgbb) ]
+
+        // Create GO signal
+        val go = KExpressionsFactory::eINSTANCE.createValuedObject
+        go.name = '_GO'
+        go.type = ValueType::BOOL;
+        scgbb.valuedObjects.add(go)
         
         // Create basic blocks.
-        scgbb.createBasicBlocks(scgbb.nodes.head, 0)
+        scgbb.createBasicBlocks(scgbb.nodes.head, 0, null, go.reference)
         
         return scgbb;
     }   
@@ -111,17 +118,23 @@ class SCGDEPToSCGBBTransformation {
     // -- CREATE Basic Blocks 
     // -------------------------------------------------------------------------
     
-    def int createBasicBlocks(SCGraphBB scg, Node rootNode, int guardIndex) {
+    def int createBasicBlocks(SCGraphBB scg, Node rootNode, int guardIndex, 
+        BasicBlock predecessorBlock, Expression activationExpression
+    ) {
         var newIndex = guardIndex
         var node = rootNode
         
         val List<Node> nodes = new ArrayList<Node> => [ n |
             scg.basicBlocks.forEach[bb|bb.schedulingBlocks.forEach[sb|n.addAll(sb.nodes)]]
         ]
-        if (nodes.contains(rootNode)) return newIndex;
+        if (nodes.contains(rootNode)) {
+            
+            return newIndex;
+        }
         
         val guard = KExpressionsFactory::eINSTANCE.createValuedObject
         guard.name = 'guard' + newIndex.toString
+        guard.type = ValueType::BOOL;
         newIndex = newIndex + 1
         
         var schedulingBlock = ScgbbFactory::eINSTANCE.createSchedulingBlock
@@ -129,29 +142,29 @@ class SCGDEPToSCGBBTransformation {
             schedulingBlock.nodes.add(node)
             
             if (node instanceof Conditional) {
-                scg.insertBasicBlock(guard, schedulingBlock)
-                newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex)
-                newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex)
+                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
+                newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex, block, guard.reference)
+                newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex, block, guard.reference)
                 node = null
             } else 
             if (node instanceof Surface) {
-                scg.insertBasicBlock(guard, schedulingBlock)
-                newIndex = scg.createBasicBlocks((node as Surface).depth, newIndex)
+                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
+                newIndex = scg.createBasicBlocks((node as Surface).depth, newIndex, block, guard.reference)
                 node = null
             }  else
             if (node.eAllContents.filter(typeof(ControlFlow)).size != 1) {
-                scg.insertBasicBlock(guard, schedulingBlock)
+                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
                 if (node instanceof Fork) {
-                    newIndex = scg.createBasicBlocks((node as Fork).join, newIndex)
+                    newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, block, guard.reference)
                 }
                 for(flow : node.eAllContents.filter(typeof(ControlFlow)).toList) {
-                    newIndex = scg.createBasicBlocks(flow.target, newIndex)
+                    newIndex = scg.createBasicBlocks(flow.target, newIndex, block, guard.reference)
                 }
                 node = null                
             } else {
                 val next = node.eAllContents.filter(typeof(ControlFlow)).head.target
                 if (next instanceof Join) {
-                    scg.insertBasicBlock(guard, schedulingBlock)
+                    scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
                     node = null
                 } else {
                     node = next
@@ -162,11 +175,19 @@ class SCGDEPToSCGBBTransformation {
         newIndex
     }
     
-    def BasicBlock insertBasicBlock(SCGraphBB scg, ValuedObject guard, SchedulingBlock schedulingBlock) {
+    def BasicBlock insertBasicBlock(SCGraphBB scg, ValuedObject guard, SchedulingBlock schedulingBlock,
+        BasicBlock predecessorBlock, Expression activationExpression
+    ) {
         val basicBlock = ScgbbFactory::eINSTANCE.createBasicBlock
       
         basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock)
         basicBlock.guard = guard
+        
+        val newExpression = ScgbbFactory::eINSTANCE.createActivationExpression
+        newExpression.setBasicBlock(predecessorBlock)
+        newExpression.setExpression(activationExpression)
+        basicBlock.activationExpressions.add(newExpression)
+        
         scg.basicBlocks.add(basicBlock)
         basicBlock
     }
@@ -357,6 +378,12 @@ class SCGDEPToSCGBBTransformation {
                 vor.valuedObject = vor.valuedObject.copyValuedObject ]        
         }
         newExpression
+    }
+    
+    def Expression reference (ValuedObject valuedObject) {
+        val expression = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+        expression.valuedObject = valuedObject
+        expression
     }
 
    // -------------------------------------------------------------------------   
