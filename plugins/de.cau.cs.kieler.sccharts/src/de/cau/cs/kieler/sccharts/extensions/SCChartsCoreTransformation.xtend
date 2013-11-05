@@ -497,7 +497,35 @@ class SCChartsCoreTransformation {
     
            
            
-           
+
+    //-------------------------------------------------------------------------
+    //--                       C O N N E C T O R S                           --
+    //-------------------------------------------------------------------------
+
+    // Turn every connector into a simple state and turn all outgoing 
+    // transitions into immediate transitions.
+    
+    def Region transformConnector (Region rootRegion) {
+        // Clone the complete SCCharts region 
+        var targetRootRegion = rootRegion.copy;
+
+        // Traverse all states
+        for(targetTransition : targetRootRegion.allContainedStates) {
+            targetTransition.transformConnector(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+         
+     def void transformConnector(State state, Region targetRootRegion) {
+         if (state.type == StateType::CONNECTOR) {
+             state.setTypeNormal
+             for (transition : state.outgoingTransitions) {
+                 transition.setImmediate(true)
+             }
+         }
+     }
+    
            
            
     //-------------------------------------------------------------------------

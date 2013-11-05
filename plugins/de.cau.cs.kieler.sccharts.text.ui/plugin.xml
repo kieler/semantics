@@ -460,6 +460,10 @@
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.text.ui.handler.SctModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.commands.SctConnectorTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.text.ui.handler.SctModelFileHandler"
             commandId="de.cau.cs.kieler.sccharts.commands.SctHistoryTransformation">
       </handler>
       <handler
@@ -706,6 +710,29 @@
                commandId="de.cau.cs.kieler.sccharts.commands.SctExitTransformation"
                label="Exit Actions"
                mnemonic="X"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="sct">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.commands.SctConnectorTransformation"
+               label="Connector States"
+               mnemonic="H"
                style="push">
             <visibleWhen>
                <iterate

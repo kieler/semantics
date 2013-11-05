@@ -75,6 +75,10 @@
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.commands.SccConnectorTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
             commandId="de.cau.cs.kieler.sccharts.commands.SccHistoryTransformation">
       </handler>
       <handler
@@ -319,6 +323,29 @@
          <command
                commandId="de.cau.cs.kieler.sccharts.commands.SccExitTransformation"
                label="Exit Actions"
+               mnemonic="X"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scc">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.commands.SccConnectorTransformation"
+               label="Connector States"
                mnemonic="X"
                style="push">
             <visibleWhen>
