@@ -528,7 +528,7 @@ class SCChartsCoreTransformation {
          // If there are any such transitions 
          if (!incomingDeferredTransitions.nullOrEmpty) {
              // Add a new deferVariable to the outer state, set it initially to FALSE and
-             // add a during action in the state to reset it to false
+             // add a during action in the state to reset it to FALSE
              val deferVariable= state.parentRegion.parentState.createBoolVariable(state.id("_deferred"))
              deferVariable.setInitialValue(FALSE)
              val resetDeferSignalAction = state.createDuringAction
