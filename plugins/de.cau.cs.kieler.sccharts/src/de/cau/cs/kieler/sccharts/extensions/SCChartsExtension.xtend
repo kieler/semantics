@@ -562,22 +562,30 @@ class SCChartsExtension {
 
     // Creates a new Int variable ValuedObject in a Scope.
     def ValuedObject createIntVariable(Scope scope, String variableName) {
-        scope.createIntVariable(variableName)
+        val valuedObject = createIntVariable(variableName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
     }
 
     // Creates a new Bool variable ValuedObject in a Scope.
     def ValuedObject createBoolVariable(Scope scope, String variableName) {
-        scope.createBoolVariable(variableName)
+        val valuedObject = createBoolVariable(variableName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
     }
 
     // Creates a new Double variable ValuedObject in a Scope.
     def ValuedObject createDoubleVariable(Scope scope, String variableName) {
-        scope.createDoubleVariable(variableName)
+        val valuedObject = createDoubleVariable(variableName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
     }
 
     // Creates a new Float variable ValuedObject in a Scope.
     def ValuedObject createFloatVariable(Scope scope, String variableName) {
-        scope.createFloatVariable(variableName)
+        val valuedObject = createFloatVariable(variableName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
     }
 
     //============  SIGNALS  ============
