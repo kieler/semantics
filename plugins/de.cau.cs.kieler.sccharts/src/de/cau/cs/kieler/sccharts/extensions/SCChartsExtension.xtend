@@ -82,13 +82,13 @@ class SCChartsExtension {
     }
 
     // Return the list of all contained States.
-    def List<State> getAllContainedStates(Region region) {
-        region.eAllContents().toList().filter(typeof(State)).toList()
+    def List<State> getAllContainedStates(Scope scope) {
+        scope.eAllContents().toList().filter(typeof(State)).toList()
     }
 
     // Return the list of all contained Transitions.
-    def List<Transition> getAllContainedTransitions(Region region) {
-        region.eAllContents().toList().filter(typeof(Transition)).toList()
+    def List<Transition> getAllContainedTransitions(Scope scope) {
+        scope.eAllContents().toList().filter(typeof(Transition)).toList()
     }
 
     // Return the list of contained Emissions.

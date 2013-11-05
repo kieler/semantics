@@ -516,7 +516,7 @@ class SCChartsCoreTransformation {
         // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
         // Traverse all states
-        for(targetTransition : targetRootRegion.getAllContainedStates) {
+        for(targetTransition : targetRootRegion.allContainedStates) {
             targetTransition.transformDeferred;
         }
         targetRootRegion;
@@ -544,9 +544,9 @@ class SCChartsCoreTransformation {
              // Prevent any immediate internal behavior of the state and any immediate outgoing
              // transition in case deferVariable is set to TRUE, i.e., the state was entered
              // by a deferred transition
-            val allInternalImmediateTransitions = state.eAllContents.filter(typeof(Transition)).filter[immediate].toList
+            val allInternalImmediateTransitions = state.allContainedTransitions.filter[immediate].toList
             for (transition : allInternalImmediateTransitions) {
-                val deferTest = deferVariable.reference.not
+                val deferTest = not(deferVariable.reference)
                 if (transition.trigger != null) {
                     transition.setTrigger(deferTest.and(transition.trigger))    
                 } else {
