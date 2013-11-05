@@ -24,6 +24,10 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Depth
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.scgbb.SchedulingBlock
+import de.cau.cs.kieler.scgbb.SCGraphBB
+import java.util.InputMismatchException
 
 /**
  * SCG Extensions.
@@ -130,6 +134,28 @@ class SCGExtensions {
        }
        
        return returnList
+   }
+
+   // -------------------------------------------------------------------------
+   
+   def SCGraph graph(Node node) {
+       var EObject nodeObj = node
+       while(nodeObj != null) {
+           if (nodeObj.eContainer instanceof SCGraph) return nodeObj.eContainer as SCGraph;
+           nodeObj = nodeObj.eContainer
+       }
+       null
+   }   
+
+   // Finds all ancestor forks of a node.
+   def SchedulingBlock schedulingBlock(Node node) {
+       val scg = node.graph
+       var SchedulingBlock myBlock = null
+       if (!(scg instanceof SCGraphBB)) return null
+       for (block : scg.eAllContents.toList.filter(typeof(SchedulingBlock))) {
+           if (block.nodes.contains(node)) { myBlock = block }
+       }
+       myBlock
    }
             
 }
