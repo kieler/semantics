@@ -196,7 +196,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
     override public getTransformationOptions() {
         return ImmutableSet::of(
-            TransformationOption::createSeparator("Visibility"),
+//            TransformationOption::createSeparator("Visibility"),
             SHOW_CAPTION, 
             SHOW_HIERARCHY, 
             SHOW_DEPENDENCIES, 
@@ -207,10 +207,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //            SHOW_SINGLESCHEDULINGBLOCKS,
             SHOW_SHADOW,
             HIERARCHY_TRANSPARENCY,
-            TransformationOption::createSeparator("Alignment"),
+//            TransformationOption::createSeparator("Alignment"),
             ALIGN_TICK_START, 
             ALIGN_ENTRYEXIT_NODES, 
-            TransformationOption::createSeparator("Layout"),
+//            TransformationOption::createSeparator("Layout"),
             LAYOUT_DEPENDENCIES, 
             ORIENTATION 
         );
