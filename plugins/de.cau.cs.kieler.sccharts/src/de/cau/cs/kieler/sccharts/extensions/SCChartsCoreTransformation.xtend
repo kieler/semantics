@@ -2393,10 +2393,10 @@ class SCChartsCoreTransformation {
                 transitionTriggerVariable.setInitialValue(FALSE)
                 transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                 if (transition.typeStrongAbort) {
-                    strongAbortTrigger = strongAbortTrigger.or2(transition.trigger)
+                    strongAbortTrigger = strongAbortTrigger.or2(transitionTriggerVariable.reference)
                 }
                 if (transition.typeWeakAbort) {
-                    weakAbortTrigger = weakAbortTrigger.or2(transition.trigger)
+                    weakAbortTrigger = weakAbortTrigger.or2(transitionTriggerVariable.reference)
                 }
             }
 
@@ -2409,7 +2409,7 @@ class SCChartsCoreTransformation {
                 val mainRegion = state.createRegion(region.id("_Main"))
                 val mainState = mainRegion.createState(region.id("_Main"))
                 mainState.regions.add(region)
-                val termState = mainRegion.createState(region.id("_Term"))
+                val termState = mainRegion.createFinalState(region.id("_Term"))
                 val termVariable = state.createBoolVariable(region.id("_Term"))
                 mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).setTypeNormalTermination
                 if (normalTerminationTrigger != null) {
