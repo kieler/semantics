@@ -156,49 +156,63 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         = TransformationOption::createCheckOption("Captions", true);
         
     private static val TransformationOption SHOW_DEPENDENCIES
-        = TransformationOption::createCheckOption("Show dependencies", true);
+        = TransformationOption::createCheckOption("Dependencies", true);
 
     private static val TransformationOption LAYOUT_DEPENDENCIES
-        = TransformationOption::createCheckOption("Layout dependencies", false);
+        = TransformationOption::createCheckOption("Dependencies", false);
 
-    private static val TransformationOption HIDE_NONCONCURRENT
-        = TransformationOption::createCheckOption("Hide non-concurrent dependencies", false);
+    private static val TransformationOption SHOW_NONCONCURRENT
+        = TransformationOption::createCheckOption("Non-concurrent dependencies", false);
+
+    private static val TransformationOption SHOW_CONFLUENT
+        = TransformationOption::createCheckOption("Confluent dependencies", false);
         
     private static val TransformationOption SHOW_BASICBLOCKS 
-        = TransformationOption::createCheckOption("Show Basic Blocks", true);
+        = TransformationOption::createCheckOption("Basic Blocks", false);
 
     private static val TransformationOption SHOW_SCHEDULINGBLOCKS 
-        = TransformationOption::createCheckOption("Show Scheduling Blocks", true);
+        = TransformationOption::createCheckOption("Scheduling Blocks", true);
 
-    private static val TransformationOption SHOW_SINGLESCHEDULINGBLOCKS
-        = TransformationOption::createCheckOption("Show Single Scheduling Blocks", false);
+//    private static val TransformationOption SHOW_SINGLESCHEDULINGBLOCKS
+//        = TransformationOption::createCheckOption("Show Single Scheduling Blocks", false);
         
     private static val TransformationOption SHOW_SHADOW
         = TransformationOption::createCheckOption("Shadow", true);
         
     private static val TransformationOption ALIGN_TICK_START
-        = TransformationOption::createCheckOption("Tick start alignment", true);
+        = TransformationOption::createCheckOption("Tick start", true);
 
     private static val TransformationOption ALIGN_ENTRYEXIT_NODES
-        = TransformationOption::createCheckOption("Entry/Exit alignment", false);
+        = TransformationOption::createCheckOption("Entry & Exit nodes", true);
         
     private static val TransformationOption SHOW_HIERARCHY
-        = TransformationOption::createCheckOption("Display hierarchy", true);
+        = TransformationOption::createCheckOption("Hierarchy", true);
         
     private static val TransformationOption HIERARCHY_TRANSPARENCY 
-        = TransformationOption::createRangeOption("Hierarchy transparency", Pair::of(0f, 255f), 128f);
+        = TransformationOption::createRangeOption("Hierarchy", Pair::of(0f, 255f), 128f);
         
     private static val TransformationOption ORIENTATION
         = TransformationOption::createChoiceOption("Orientation", <String> newLinkedList("Top-Down", "Left-Right"), "Top-Down");
         
     override public getTransformationOptions() {
-        return ImmutableSet::of(SHOW_CAPTION, 
-            SHOW_DEPENDENCIES, LAYOUT_DEPENDENCIES, HIDE_NONCONCURRENT, 
-            SHOW_BASICBLOCKS, SHOW_SCHEDULINGBLOCKS, SHOW_SINGLESCHEDULINGBLOCKS,
-            ALIGN_TICK_START, ALIGN_ENTRYEXIT_NODES, 
-            SHOW_HIERARCHY, HIERARCHY_TRANSPARENCY,
-            ORIENTATION, 
-            SHOW_SHADOW
+        return ImmutableSet::of(
+            TransformationOption::createSeparator("Visibility"),
+            SHOW_CAPTION, 
+            SHOW_HIERARCHY, 
+            SHOW_DEPENDENCIES, 
+            SHOW_NONCONCURRENT, 
+            SHOW_CONFLUENT,
+            SHOW_BASICBLOCKS, 
+            SHOW_SCHEDULINGBLOCKS, 
+//            SHOW_SINGLESCHEDULINGBLOCKS,
+            SHOW_SHADOW,
+            HIERARCHY_TRANSPARENCY,
+            TransformationOption::createSeparator("Alignment"),
+            ALIGN_TICK_START, 
+            ALIGN_ENTRYEXIT_NODES, 
+            TransformationOption::createSeparator("Layout"),
+            LAYOUT_DEPENDENCIES, 
+            ORIENTATION 
         );
     }
     
@@ -331,8 +345,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         s.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
                         bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
                     }
-                    if (SHOW_SCHEDULINGBLOCKS.optionBooleanValue && 
-                        (s.schedulingBlocks.size>1 || SHOW_SINGLESCHEDULINGBLOCKS.optionBooleanValue))
+                    if (SHOW_SCHEDULINGBLOCKS.optionBooleanValue)
+//                        (s.schedulingBlocks.size>1 || SHOW_SINGLESCHEDULINGBLOCKS.optionBooleanValue))
                         for(schedulingBlock : s.schedulingBlocks) {
                              schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
                          }                    
@@ -800,7 +814,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     def Dependency drawDependency(Dependency dependency) {
         
         // If non concurrent dependency are hidden and the given dependency is not concurrent, exit at once.
-        if (HIDE_NONCONCURRENT.optionBooleanValue && !dependency.isConcurrent) return dependency;
+        if (!SHOW_NONCONCURRENT.optionBooleanValue && !dependency.isConcurrent) return dependency;
+        if (!SHOW_CONFLUENT.optionBooleanValue && dependency.confluent) return dependency;
         
         // Retrieve node information.
         val sourceNode = (dependency.eContainer as Node).node
