@@ -143,6 +143,36 @@ class SCChartsExtension {
         state.parentRegion.rootState;
     }
 
+
+    //========== TRANSITIONS ===========
+    
+    def Transition setTypeNormalTermination(Transition transition) {
+        transition.setType(TransitionType::NORMALTERMINATION)
+        transition
+    }
+
+    def Transition setTypeStrongAbort(Transition transition) {
+        transition.setType(TransitionType::STRONGABORT)
+        transition
+    }
+
+    def Transition setTypeWeakAbort(Transition transition) {
+        transition.setType(TransitionType::WEAKABORT)
+        transition
+    }
+    
+    def boolean isTypeNormalTermination(Transition transition) {
+        return transition.type == TransitionType::NORMALTERMINATION
+    }
+
+    def boolean isTypeStrongAbort(Transition transition) {
+        return transition.type == TransitionType::STRONGABORT
+    }
+
+    def boolean isTypeWeakAbort(Transition transition) {
+        return transition.type == TransitionType::WEAKABORT
+    }
+
     //========== STATES ===========
     def State createState(String id) {
         val state = SCChartsFactory::eINSTANCE.createState();

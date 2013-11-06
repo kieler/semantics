@@ -22,19 +22,20 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Emission
+import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
+import java.util.HashMap
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.sccharts.HistoryType
 
 /**
  * SCCharts CoreTransformation Extensions.
@@ -2340,6 +2341,7 @@ class SCChartsCoreTransformation {
     //-------------------------------------------------------------------------
     //--          S C C -  A B O R T S -  T R A N S F O R M A T I O N        --
     //-------------------------------------------------------------------------
+    
            
     // Transforming SCC Aborts.
     def Region transformSCCAborts(Region rootRegion) {
@@ -2364,8 +2366,107 @@ class SCChartsCoreTransformation {
         priority;
     }
 
+
     // Traverse all states 
     def void transformSCCAborts(State state, Region targetRootRegion) {
+        
+        val stateHasUntransformedAborts = !state.outgoingTransitions.
+                                         filter[!typeNormalTermination].nullOrEmpty
+        
+        if (state.hierarchical && stateHasUntransformedAborts) {
+            val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
+            
+            // Remember all outgoing transitions and regions
+            val outgoingTransitions = state.outgoingTransitions.immutableCopy
+            val regions = state.regions.immutableCopy
+            
+            val ctrlRegion = state.createRegion(state.id("_Ctrl"))
+            val runState = ctrlRegion.createInitialState(state.id("_Run"))
+            val doneState = ctrlRegion.createFinalState(state.id("_Done"))
+
+            // Build up weak and strong abort triggers
+            var Expression strongAbortTrigger;
+            var Expression weakAbortTrigger;
+            for (transition : outgoingTransitions) {
+                // Create a new _transitionTrigger valuedObject
+                val transitionTriggerVariable = state.parentRegion.parentState.createBoolVariable(transition.id("_"))
+                transitionTriggerVariable.setInitialValue(FALSE)
+                transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
+                if (transition.typeStrongAbort) {
+                    strongAbortTrigger = strongAbortTrigger.or2(transition.trigger)
+                }
+                if (transition.typeWeakAbort) {
+                    weakAbortTrigger = weakAbortTrigger.or2(transition.trigger)
+                }
+            }
+
+            
+            var Expression normalTerminationTrigger;
+
+            // For each region encapsulate it into a _Main state and add a _Term variable
+            // also to the normalTerminationTrigger
+            for (region : regions) {
+                val mainRegion = state.createRegion(region.id("_Main"))
+                val mainState = mainRegion.createState(region.id("_Main"))
+                mainState.regions.add(region)
+                val termState = mainRegion.createState(region.id("_Term"))
+                val termVariable = state.createBoolVariable(region.id("_Term"))
+                mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).setTypeNormalTermination
+                if (normalTerminationTrigger != null) {
+                    normalTerminationTrigger = normalTerminationTrigger.and(termVariable.reference)
+                } else {
+                    normalTerminationTrigger = termVariable.reference
+                }
+                state.createEntryAction.addEffect(termVariable.assign(FALSE))
+                
+                // Inside every region create a _Aborted
+                val abortedState = region.createFinalState(region.id("_Aborted"))
+                for (innerState : region.states.filter[!final]) {
+                    if (innerState != abortedState) {
+                        val weakAbort = innerState.createTransitionTo(abortedState)
+                        val strongAbort = innerState.createTransitionTo(abortedState)
+                        strongAbort.setPriority(1)
+                        strongAbort.setTrigger(strongAbortTrigger.copy)
+                        weakAbort.setTrigger(weakAbortTrigger.copy)
+                    }
+                }
+                
+            }
+            
+            // Create a single outgoing normal termination to a new connector state
+            val outgoingConnectorState = state.parentRegion.createState(state.id("_C")).setTypeConnector
+            state.createTransitionTo(outgoingConnectorState).setTypeNormalTermination
+            
+            for (transition : outgoingTransitions) {
+                // Get the _transitionTrigger that was created earlier
+                val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
+                // Create a ctrlTransition in the ctrlRegion
+                val ctrlTransition = runState.createTransitionTo(doneState)
+                if (transition.typeNormalTermination) {
+                    if (transition.trigger != null) {
+                        ctrlTransition.setTrigger(normalTerminationTrigger.copy.and(transition.trigger))
+                    } else {
+                        ctrlTransition.setTrigger(normalTerminationTrigger.copy)
+                    }
+                } else {
+                    ctrlTransition.setTrigger(transition.trigger)
+                }
+                if (transition.immediate2) {
+                    ctrlTransition.setImmediate(true)
+                }
+                ctrlTransition.addEffect(transitionTriggerVariable.assign(TRUE))
+                // Modify the outgoing transition
+                transition.setSourceState(outgoingConnectorState)
+                transition.setTrigger2(transitionTriggerVariable.reference)
+                transition.setTypeWeakAbort
+            }
+            
+        }
+    }
+
+    // -- OLD IMPLEMENTATION --
+    // Traverse all states 
+    def void transformSCCAborts_OLD_IMPLEMENTATION_(State state, Region targetRootRegion) {
         
         if (state.hierarchical && state.outgoingTransitions.size() > 0) {
             // Remember all outgoing transitions
