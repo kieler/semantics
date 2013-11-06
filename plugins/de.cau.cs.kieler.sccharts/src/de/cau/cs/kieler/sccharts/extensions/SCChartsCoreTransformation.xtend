@@ -2385,8 +2385,8 @@ class SCChartsCoreTransformation {
             val doneState = ctrlRegion.createFinalState(state.id("_Done"))
 
             // Build up weak and strong abort triggers
-            var Expression strongAbortTrigger;
-            var Expression weakAbortTrigger;
+            var Expression strongAbortTrigger = null;
+            var Expression weakAbortTrigger = null;
             for (transition : outgoingTransitions) {
                 // Create a new _transitionTrigger valuedObject
                 val transitionTriggerVariable = state.parentRegion.parentState.createBoolVariable(transition.id("_"))
@@ -2400,7 +2400,6 @@ class SCChartsCoreTransformation {
                 }
             }
 
-            
             var Expression normalTerminationTrigger;
 
             // For each region encapsulate it into a _Main state and add a _Term variable
@@ -2423,11 +2422,15 @@ class SCChartsCoreTransformation {
                 val abortedState = region.createFinalState(region.id("_Aborted"))
                 for (innerState : region.states.filter[!final]) {
                     if (innerState != abortedState) {
-                        val weakAbort = innerState.createTransitionTo(abortedState)
-                        val strongAbort = innerState.createTransitionTo(abortedState)
-                        strongAbort.setPriority(1)
-                        strongAbort.setTrigger(strongAbortTrigger.copy)
-                        weakAbort.setTrigger(weakAbortTrigger.copy)
+                        if (strongAbortTrigger != null) {
+                            val strongAbort = innerState.createTransitionTo(abortedState)
+                            strongAbort.setPriority(1)
+                            strongAbort.setTrigger(strongAbortTrigger.copy)
+                        }
+                        if (weakAbortTrigger != null) {
+                            val weakAbort = innerState.createTransitionTo(abortedState)
+                            weakAbort.setTrigger(weakAbortTrigger.copy)
+                        }
                     }
                 }
                 
