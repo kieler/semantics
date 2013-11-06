@@ -291,6 +291,13 @@ class SCChartsExtension {
         sourceState.outgoingTransitions.add(transition)
         transition.trimPriorities
     }
+    
+    def Transition createTransitionTo(State sourceState, State targetState, int index) {
+        val transition = createTransition()
+        transition.setTargetState(targetState)
+        sourceState.outgoingTransitions.add(index, transition)
+        transition.trimPriorities
+    }    
 
     def Transition setTargetState2(Transition transition, State targetState) {
         transition.setTargetState(targetState)
