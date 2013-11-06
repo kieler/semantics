@@ -172,6 +172,18 @@ class KExpressionsExtension {
         andExpression
     }
 
+    // Create an AND Expression add expressionFirst and expressionSecond as a sub expression. 
+    // If expressionFirst is null, just return expressionSecond.
+    def Expression and2(Expression expressionFirst, Expression expressionSecond) {
+        if (expressionFirst == null) {
+            return expressionSecond
+        }
+        val andExpression = createAndExpression()
+        andExpression.add(expressionFirst)
+        andExpression.add(expressionSecond)
+        andExpression
+    }
+
     // Create an OR Expression.
     def OperatorExpression createOrExpression() {
         val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
@@ -194,6 +206,18 @@ class KExpressionsExtension {
         orExpression
     }
 
+    // Create an OR Expression add expressionFirst or expressionSecond as a sub expression.
+    // If expressionFirst is null, just return expressionSecond.    
+    def Expression or2(Expression expressionFirst, Expression expressionSecond) {
+        if (expressionFirst == null) {
+            return expressionSecond
+        }
+        val orExpression = createOrExpression()
+        orExpression.add(expressionFirst)
+        orExpression.add(expressionSecond)
+        orExpression
+    }
+    
     // Create an NOT Expression.
     def OperatorExpression createNotExpression() {
         val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()

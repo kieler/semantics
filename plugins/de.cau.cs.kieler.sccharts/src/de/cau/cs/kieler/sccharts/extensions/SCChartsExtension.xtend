@@ -82,13 +82,13 @@ class SCChartsExtension {
     }
 
     // Return the list of all contained States.
-    def List<State> getAllContainedStates(Region region) {
-        region.eAllContents().toList().filter(typeof(State)).toList()
+    def List<State> getAllContainedStates(Scope scope) {
+        scope.eAllContents().toList().filter(typeof(State)).toList()
     }
 
     // Return the list of all contained Transitions.
-    def List<Transition> getAllContainedTransitions(Region region) {
-        region.eAllContents().toList().filter(typeof(Transition)).toList()
+    def List<Transition> getAllContainedTransitions(Scope scope) {
+        scope.eAllContents().toList().filter(typeof(Transition)).toList()
     }
 
     // Return the list of contained Emissions.
@@ -141,6 +141,36 @@ class SCChartsExtension {
     // Return the root state.
     def State getRootState(State state) {
         state.parentRegion.rootState;
+    }
+
+
+    //========== TRANSITIONS ===========
+    
+    def Transition setTypeNormalTermination(Transition transition) {
+        transition.setType(TransitionType::NORMALTERMINATION)
+        transition
+    }
+
+    def Transition setTypeStrongAbort(Transition transition) {
+        transition.setType(TransitionType::STRONGABORT)
+        transition
+    }
+
+    def Transition setTypeWeakAbort(Transition transition) {
+        transition.setType(TransitionType::WEAKABORT)
+        transition
+    }
+    
+    def boolean isTypeNormalTermination(Transition transition) {
+        return transition.type == TransitionType::NORMALTERMINATION
+    }
+
+    def boolean isTypeStrongAbort(Transition transition) {
+        return transition.type == TransitionType::STRONGABORT
+    }
+
+    def boolean isTypeWeakAbort(Transition transition) {
+        return transition.type == TransitionType::WEAKABORT
     }
 
     //========== STATES ===========
@@ -261,6 +291,13 @@ class SCChartsExtension {
         sourceState.outgoingTransitions.add(transition)
         transition.trimPriorities
     }
+    
+    def Transition createTransitionTo(State sourceState, State targetState, int index) {
+        val transition = createTransition()
+        transition.setTargetState(targetState)
+        sourceState.outgoingTransitions.add(index, transition)
+        transition.trimPriorities
+    }    
 
     def Transition setTargetState2(Transition transition, State targetState) {
         transition.setTargetState(targetState)
@@ -562,22 +599,30 @@ class SCChartsExtension {
 
     // Creates a new Int variable ValuedObject in a Scope.
     def ValuedObject createIntVariable(Scope scope, String variableName) {
-        scope.createIntVariable(variableName)
+        val valuedObject = createIntVariable(variableName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
     }
 
     // Creates a new Bool variable ValuedObject in a Scope.
     def ValuedObject createBoolVariable(Scope scope, String variableName) {
-        scope.createBoolVariable(variableName)
+        val valuedObject = createBoolVariable(variableName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
     }
 
     // Creates a new Double variable ValuedObject in a Scope.
     def ValuedObject createDoubleVariable(Scope scope, String variableName) {
-        scope.createDoubleVariable(variableName)
+        val valuedObject = createDoubleVariable(variableName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
     }
 
     // Creates a new Float variable ValuedObject in a Scope.
     def ValuedObject createFloatVariable(Scope scope, String variableName) {
-        scope.createFloatVariable(variableName)
+        val valuedObject = createFloatVariable(variableName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
     }
 
     //============  SIGNALS  ============

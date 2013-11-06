@@ -58,6 +58,9 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     public static final String EXIT_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.ExitTransformation";
 
+    public static final String CONNECTOR_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.ConnectorTransformation";
+
     public static final String HISTORY_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.HistoryTransformation";
 
@@ -126,10 +129,10 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
         commandString = commandString.replace("commands.Scc", "commands.");
         commandString = commandString.replace("commands.Sct", "commands.");
         System.out.println(commandString);
-        
+
         SCChartsCoreTransformation transformation =
-        Guice.createInjector().getInstance(SCChartsCoreTransformation.class);
-        
+                Guice.createInjector().getInstance(SCChartsCoreTransformation.class);
+
         transformed = model;
         if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {
             // TODO
@@ -143,13 +146,15 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
             transformed = transformation.transformSignal((Region) model);
         } else if (commandString.equals(INPUTOUTPUTSIGNAL_TRANSFORMATION)) {
             // TODO
-            //transformed = transformation.transformInputOutputSignal((Region) model);
+            // transformed = transformation.transformInputOutputSignal((Region) model);
         } else if (commandString.equals(ENTRY_TRANSFORMATION)) {
             transformed = transformation.transformEntry((Region) model);
         } else if (commandString.equals(DURING_TRANSFORMATION)) {
             transformed = transformation.transformDuring((Region) model);
         } else if (commandString.equals(EXIT_TRANSFORMATION)) {
             transformed = transformation.transformExit((Region) model);
+        } else if (commandString.equals(CONNECTOR_TRANSFORMATION)) {
+            transformed = transformation.transformConnector((Region) model);
         } else if (commandString.equals(HISTORY_TRANSFORMATION)) {
             transformed = transformation.transformHistory((Region) model);
         } else if (commandString.equals(SUSPEND_TRANSFORMATION)) {
