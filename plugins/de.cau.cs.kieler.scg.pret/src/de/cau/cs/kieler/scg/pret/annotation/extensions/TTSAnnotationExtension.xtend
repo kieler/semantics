@@ -13,7 +13,8 @@
  */
  package de.cau.cs.kieler.scg.pret.annotation.extensions
 
-
+import de.cau.cs.kieler.scg.Node
+import java.util.List
 
 /**
  * Dedicated annotation extensions for the Time Triggered Scheduling.
@@ -22,11 +23,12 @@
  * @kieler.design 
  * @kieler.rating 
  */
-class Extension { 
+class TTSAnnotationExtension { 
 
    // -------------------------------------------------------------------------
-   
-  
+  def List<Boolean> getBranchVec(Node node){
+      
+  }
    
    // -------------------------------------------------------------------------   
       

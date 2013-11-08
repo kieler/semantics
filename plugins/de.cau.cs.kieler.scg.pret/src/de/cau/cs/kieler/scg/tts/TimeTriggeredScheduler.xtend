@@ -19,7 +19,9 @@ import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Node
 import java.util.List
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.pret.annotation.extensions.Extension
+
+
 
 /**
  * This class is intended to assign timing values to an SCG with dependencies such, that an execution 
@@ -78,6 +80,7 @@ class TimeTriggeredScheduler {
            if (node instanceof Conditional){
               val thenEdge = (node as Conditional).getThen();
               val thenTarget = thenEdge.target;
+              val targetBranchVec = getBranchVec(thenTarget);
            }
         }
         
