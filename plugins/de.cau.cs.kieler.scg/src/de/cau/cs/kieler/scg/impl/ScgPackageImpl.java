@@ -1,19 +1,10 @@
 /**
- * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- * 
- * http://www.informatik.uni-kiel.de/rtsys/kieler/
- * 
- * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
- *   + Department of Computer Science
- *     + Real-Time and Embedded Systems Group
- * 
- * This code is provided under the terms of the Eclipse Public License (EPL).
- * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.Conditional;
@@ -175,7 +166,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         isInited = true;
 
         // Initialize simple dependencies
-        AnnotationsPackage.eINSTANCE.eClass();
+        KExpressionsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theScgPackage.createPackageContents();
@@ -251,8 +242,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getConditional_Condition() {
-        return (EAttribute)conditionalEClass.getEStructuralFeatures().get(2);
+    public EReference getConditional_Condition() {
+        return (EReference)conditionalEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -323,8 +314,17 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getAssignment_Assignment() {
-        return (EAttribute)assignmentEClass.getEStructuralFeatures().get(1);
+    public EReference getAssignment_Assignment() {
+        return (EReference)assignmentEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getAssignment_ValuedObject() {
+        return (EReference)assignmentEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -415,6 +415,15 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      */
     public EReference getSCGraph_Nodes() {
         return (EReference)scGraphEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getSCGraph_ValuedObjects() {
+        return (EReference)scGraphEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -515,7 +524,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         conditionalEClass = createEClass(CONDITIONAL);
         createEReference(conditionalEClass, CONDITIONAL__THEN);
         createEReference(conditionalEClass, CONDITIONAL__ELSE);
-        createEAttribute(conditionalEClass, CONDITIONAL__CONDITION);
+        createEReference(conditionalEClass, CONDITIONAL__CONDITION);
 
         surfaceEClass = createEClass(SURFACE);
         createEReference(surfaceEClass, SURFACE__DEPTH);
@@ -526,7 +535,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         assignmentEClass = createEClass(ASSIGNMENT);
         createEReference(assignmentEClass, ASSIGNMENT__NEXT);
-        createEAttribute(assignmentEClass, ASSIGNMENT__ASSIGNMENT);
+        createEReference(assignmentEClass, ASSIGNMENT__ASSIGNMENT);
+        createEReference(assignmentEClass, ASSIGNMENT__VALUED_OBJECT);
 
         forkEClass = createEClass(FORK);
         createEReference(forkEClass, FORK__JOIN);
@@ -541,6 +551,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         scGraphEClass = createEClass(SC_GRAPH);
         createEReference(scGraphEClass, SC_GRAPH__NODES);
+        createEReference(scGraphEClass, SC_GRAPH__VALUED_OBJECTS);
 
         entryEClass = createEClass(ENTRY);
         createEReference(entryEClass, ENTRY__EXIT);
@@ -578,6 +589,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         // Obtain other dependent packages
         AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
+        KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
 
         // Create type parameters
 
@@ -604,7 +616,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEClass(conditionalEClass, Conditional.class, "Conditional", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getConditional_Then(), this.getControlFlow(), null, "then", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getConditional_Else(), this.getControlFlow(), null, "else", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getConditional_Condition(), ecorePackage.getEString(), "Condition", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getConditional_Condition(), theKExpressionsPackage.getExpression(), null, "condition", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(surfaceEClass, Surface.class, "Surface", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSurface_Depth(), this.getDepth(), this.getDepth_Surface(), "depth", null, 1, 1, Surface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -615,7 +627,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getAssignment_Next(), this.getControlFlow(), null, "next", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getAssignment_Assignment(), ecorePackage.getEString(), "Assignment", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getAssignment_Assignment(), theKExpressionsPackage.getExpression(), null, "assignment", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getAssignment_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(forkEClass, Fork.class, "Fork", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getFork_Join(), this.getJoin(), this.getJoin_Fork(), "join", null, 1, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -630,6 +643,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         initEClass(scGraphEClass, SCGraph.class, "SCGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSCGraph_Nodes(), this.getNode(), null, "nodes", null, 0, -1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSCGraph_ValuedObjects(), theKExpressionsPackage.getValuedObject(), null, "valuedObjects", null, 0, -1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(entryEClass, Entry.class, "Entry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getEntry_Exit(), this.getExit(), this.getExit_Entry(), "exit", null, 1, 1, Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -156,7 +156,7 @@ public class ValuedObjectItemProvider
                  getResourceLocator(),
                  getString("_UI_ValuedObject_isInput_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_isInput_feature", "_UI_ValuedObject_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT__IS_INPUT,
+                 KExpressionsPackage.Literals.VALUED_OBJECT__INPUT,
                  true,
                  false,
                  false,
@@ -178,7 +178,7 @@ public class ValuedObjectItemProvider
                  getResourceLocator(),
                  getString("_UI_ValuedObject_isOutput_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_isOutput_feature", "_UI_ValuedObject_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT__IS_OUTPUT,
+                 KExpressionsPackage.Literals.VALUED_OBJECT__OUTPUT,
                  true,
                  false,
                  false,
@@ -200,7 +200,7 @@ public class ValuedObjectItemProvider
                  getResourceLocator(),
                  getString("_UI_ValuedObject_isStatic_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_isStatic_feature", "_UI_ValuedObject_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT__IS_STATIC,
+                 KExpressionsPackage.Literals.VALUED_OBJECT__STATIC,
                  true,
                  false,
                  false,
@@ -222,7 +222,7 @@ public class ValuedObjectItemProvider
                  getResourceLocator(),
                  getString("_UI_ValuedObject_isSignal_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_isSignal_feature", "_UI_ValuedObject_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT__IS_SIGNAL,
+                 KExpressionsPackage.Literals.VALUED_OBJECT__SIGNAL,
                  true,
                  false,
                  false,
@@ -292,10 +292,10 @@ public class ValuedObjectItemProvider
         switch (notification.getFeatureID(ValuedObject.class)) {
             case KExpressionsPackage.VALUED_OBJECT__NAME:
             case KExpressionsPackage.VALUED_OBJECT__TYPE:
-            case KExpressionsPackage.VALUED_OBJECT__IS_INPUT:
-            case KExpressionsPackage.VALUED_OBJECT__IS_OUTPUT:
-            case KExpressionsPackage.VALUED_OBJECT__IS_STATIC:
-            case KExpressionsPackage.VALUED_OBJECT__IS_SIGNAL:
+            case KExpressionsPackage.VALUED_OBJECT__INPUT:
+            case KExpressionsPackage.VALUED_OBJECT__OUTPUT:
+            case KExpressionsPackage.VALUED_OBJECT__STATIC:
+            case KExpressionsPackage.VALUED_OBJECT__SIGNAL:
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

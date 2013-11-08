@@ -46,8 +46,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getRegions <em>Regions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getParentRegion <em>Parent Region</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isIsInitial <em>Is Initial</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isIsFinal <em>Is Final</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isInitial <em>Initial</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isFinal <em>Final</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getIncomingTransitions <em>Incoming Transitions</em>}</li>
  * </ul>
@@ -94,44 +94,44 @@ public class StateImpl extends ScopeImpl implements State {
     protected EList<Region> regions;
 
     /**
-     * The default value of the '{@link #isIsInitial() <em>Is Initial</em>}' attribute.
+     * The default value of the '{@link #isInitial() <em>Initial</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isIsInitial()
+     * @see #isInitial()
      * @generated
      * @ordered
      */
-    protected static final boolean IS_INITIAL_EDEFAULT = false;
+    protected static final boolean INITIAL_EDEFAULT = false;
 
     /**
-     * The cached value of the '{@link #isIsInitial() <em>Is Initial</em>}' attribute.
+     * The cached value of the '{@link #isInitial() <em>Initial</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isIsInitial()
+     * @see #isInitial()
      * @generated
      * @ordered
      */
-    protected boolean isInitial = IS_INITIAL_EDEFAULT;
+    protected boolean initial = INITIAL_EDEFAULT;
 
     /**
-     * The default value of the '{@link #isIsFinal() <em>Is Final</em>}' attribute.
+     * The default value of the '{@link #isFinal() <em>Final</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isIsFinal()
+     * @see #isFinal()
      * @generated
      * @ordered
      */
-    protected static final boolean IS_FINAL_EDEFAULT = false;
+    protected static final boolean FINAL_EDEFAULT = false;
 
     /**
-     * The cached value of the '{@link #isIsFinal() <em>Is Final</em>}' attribute.
+     * The cached value of the '{@link #isFinal() <em>Final</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isIsFinal()
+     * @see #isFinal()
      * @generated
      * @ordered
      */
-    protected boolean isFinal = IS_FINAL_EDEFAULT;
+    protected boolean final_ = FINAL_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getOutgoingTransitions() <em>Outgoing Transitions</em>}' containment reference list.
@@ -251,8 +251,8 @@ public class StateImpl extends ScopeImpl implements State {
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isIsInitial() {
-        return isInitial;
+    public boolean isInitial() {
+        return initial;
     }
 
     /**
@@ -260,11 +260,11 @@ public class StateImpl extends ScopeImpl implements State {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setIsInitial(boolean newIsInitial) {
-        boolean oldIsInitial = isInitial;
-        isInitial = newIsInitial;
+    public void setInitial(boolean newInitial) {
+        boolean oldInitial = initial;
+        initial = newInitial;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__IS_INITIAL, oldIsInitial, isInitial));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__INITIAL, oldInitial, initial));
     }
 
     /**
@@ -272,8 +272,8 @@ public class StateImpl extends ScopeImpl implements State {
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isIsFinal() {
-        return isFinal;
+    public boolean isFinal() {
+        return final_;
     }
 
     /**
@@ -281,11 +281,11 @@ public class StateImpl extends ScopeImpl implements State {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setIsFinal(boolean newIsFinal) {
-        boolean oldIsFinal = isFinal;
-        isFinal = newIsFinal;
+    public void setFinal(boolean newFinal) {
+        boolean oldFinal = final_;
+        final_ = newFinal;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__IS_FINAL, oldIsFinal, isFinal));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__FINAL, oldFinal, final_));
     }
 
     /**
@@ -383,10 +383,10 @@ public class StateImpl extends ScopeImpl implements State {
                 return getRegions();
             case SCChartsPackage.STATE__PARENT_REGION:
                 return getParentRegion();
-            case SCChartsPackage.STATE__IS_INITIAL:
-                return isIsInitial();
-            case SCChartsPackage.STATE__IS_FINAL:
-                return isIsFinal();
+            case SCChartsPackage.STATE__INITIAL:
+                return isInitial();
+            case SCChartsPackage.STATE__FINAL:
+                return isFinal();
             case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 return getOutgoingTransitions();
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
@@ -414,11 +414,11 @@ public class StateImpl extends ScopeImpl implements State {
             case SCChartsPackage.STATE__PARENT_REGION:
                 setParentRegion((Region)newValue);
                 return;
-            case SCChartsPackage.STATE__IS_INITIAL:
-                setIsInitial((Boolean)newValue);
+            case SCChartsPackage.STATE__INITIAL:
+                setInitial((Boolean)newValue);
                 return;
-            case SCChartsPackage.STATE__IS_FINAL:
-                setIsFinal((Boolean)newValue);
+            case SCChartsPackage.STATE__FINAL:
+                setFinal((Boolean)newValue);
                 return;
             case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 getOutgoingTransitions().clear();
@@ -449,11 +449,11 @@ public class StateImpl extends ScopeImpl implements State {
             case SCChartsPackage.STATE__PARENT_REGION:
                 setParentRegion((Region)null);
                 return;
-            case SCChartsPackage.STATE__IS_INITIAL:
-                setIsInitial(IS_INITIAL_EDEFAULT);
+            case SCChartsPackage.STATE__INITIAL:
+                setInitial(INITIAL_EDEFAULT);
                 return;
-            case SCChartsPackage.STATE__IS_FINAL:
-                setIsFinal(IS_FINAL_EDEFAULT);
+            case SCChartsPackage.STATE__FINAL:
+                setFinal(FINAL_EDEFAULT);
                 return;
             case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 getOutgoingTransitions().clear();
@@ -479,10 +479,10 @@ public class StateImpl extends ScopeImpl implements State {
                 return regions != null && !regions.isEmpty();
             case SCChartsPackage.STATE__PARENT_REGION:
                 return getParentRegion() != null;
-            case SCChartsPackage.STATE__IS_INITIAL:
-                return isInitial != IS_INITIAL_EDEFAULT;
-            case SCChartsPackage.STATE__IS_FINAL:
-                return isFinal != IS_FINAL_EDEFAULT;
+            case SCChartsPackage.STATE__INITIAL:
+                return initial != INITIAL_EDEFAULT;
+            case SCChartsPackage.STATE__FINAL:
+                return final_ != FINAL_EDEFAULT;
             case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 return outgoingTransitions != null && !outgoingTransitions.isEmpty();
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
@@ -503,10 +503,10 @@ public class StateImpl extends ScopeImpl implements State {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (type: ");
         result.append(type);
-        result.append(", isInitial: ");
-        result.append(isInitial);
-        result.append(", isFinal: ");
-        result.append(isFinal);
+        result.append(", initial: ");
+        result.append(initial);
+        result.append(", final: ");
+        result.append(final_);
         result.append(')');
         return result.toString();
     }

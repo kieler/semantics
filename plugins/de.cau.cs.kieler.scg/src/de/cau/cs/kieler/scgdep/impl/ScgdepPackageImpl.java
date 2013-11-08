@@ -17,15 +17,21 @@ import de.cau.cs.kieler.scg.ScgPackage;
 
 import de.cau.cs.kieler.scgdep.AbsoluteWrite_Read;
 import de.cau.cs.kieler.scgdep.AbsoluteWrite_RelativeWrite;
+import de.cau.cs.kieler.scgdep.AssignmentDep;
+import de.cau.cs.kieler.scgdep.ConditionalDep;
 import de.cau.cs.kieler.scgdep.Dependency;
+import de.cau.cs.kieler.scgdep.NodeDep;
 import de.cau.cs.kieler.scgdep.RelativeWrite_Read;
+import de.cau.cs.kieler.scgdep.SCGraphDep;
 import de.cau.cs.kieler.scgdep.ScgdepFactory;
 import de.cau.cs.kieler.scgdep.ScgdepPackage;
 import de.cau.cs.kieler.scgdep.Write_Write;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -69,6 +75,27 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
      * @generated
      */
     private EClass write_WriteEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass assignmentDepEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass nodeDepEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass scGraphDepEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -148,6 +175,24 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getDependency_Concurrent() {
+        return (EAttribute)dependencyEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDependency_Confluent() {
+        return (EAttribute)dependencyEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getAbsoluteWrite_Read() {
         return absoluteWrite_ReadEClass;
     }
@@ -184,6 +229,42 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getAssignmentDep() {
+        return assignmentDepEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getNodeDep() {
+        return nodeDepEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getNodeDep_Dependencies() {
+        return (EReference)nodeDepEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getSCGraphDep() {
+        return scGraphDepEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public ScgdepFactory getScgdepFactory() {
         return (ScgdepFactory)getEFactoryInstance();
     }
@@ -208,6 +289,8 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
 
         // Create classes and their features
         dependencyEClass = createEClass(DEPENDENCY);
+        createEAttribute(dependencyEClass, DEPENDENCY__CONCURRENT);
+        createEAttribute(dependencyEClass, DEPENDENCY__CONFLUENT);
 
         absoluteWrite_ReadEClass = createEClass(ABSOLUTE_WRITE_READ);
 
@@ -216,6 +299,13 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
         absoluteWrite_RelativeWriteEClass = createEClass(ABSOLUTE_WRITE_RELATIVE_WRITE);
 
         write_WriteEClass = createEClass(WRITE_WRITE);
+
+        assignmentDepEClass = createEClass(ASSIGNMENT_DEP);
+
+        nodeDepEClass = createEClass(NODE_DEP);
+        createEReference(nodeDepEClass, NODE_DEP__DEPENDENCIES);
+
+        scGraphDepEClass = createEClass(SC_GRAPH_DEP);
     }
 
     /**
@@ -254,9 +344,14 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
         relativeWrite_ReadEClass.getESuperTypes().add(this.getDependency());
         absoluteWrite_RelativeWriteEClass.getESuperTypes().add(this.getDependency());
         write_WriteEClass.getESuperTypes().add(this.getDependency());
+        assignmentDepEClass.getESuperTypes().add(theScgPackage.getAssignment());
+        assignmentDepEClass.getESuperTypes().add(this.getNodeDep());
+        scGraphDepEClass.getESuperTypes().add(theScgPackage.getSCGraph());
 
         // Initialize classes, features, and operations; add parameters
         initEClass(dependencyEClass, Dependency.class, "Dependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getDependency_Concurrent(), ecorePackage.getEBoolean(), "concurrent", "false", 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDependency_Confluent(), ecorePackage.getEBoolean(), "confluent", "false", 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(absoluteWrite_ReadEClass, AbsoluteWrite_Read.class, "AbsoluteWrite_Read", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -265,6 +360,13 @@ public class ScgdepPackageImpl extends EPackageImpl implements ScgdepPackage {
         initEClass(absoluteWrite_RelativeWriteEClass, AbsoluteWrite_RelativeWrite.class, "AbsoluteWrite_RelativeWrite", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(write_WriteEClass, Write_Write.class, "Write_Write", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(assignmentDepEClass, AssignmentDep.class, "AssignmentDep", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(nodeDepEClass, NodeDep.class, "NodeDep", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getNodeDep_Dependencies(), theScgPackage.getLink(), null, "dependencies", null, 0, -1, NodeDep.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(scGraphDepEClass, SCGraphDep.class, "SCGraphDep", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Create resource
         createResource(eNS_URI);

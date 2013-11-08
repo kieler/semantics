@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 
 import de.cau.cs.kieler.sccharts.Action;
+import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 /**
@@ -46,7 +47,7 @@ public class ActionsTransientValueService implements ITransientValueService {
     public boolean isTransient(EObject owner, EStructuralFeature feature, int index) {
         if (feature.equals(SCChartsPackage.eINSTANCE.getTransition_Priority())
             || feature.equals(SCChartsPackage.eINSTANCE.getTransition_Type())
-            || feature.equals(SCChartsPackage.eINSTANCE.getTransition_IsHistory())
+            || feature.equals(SCChartsPackage.eINSTANCE.getTransition_History().equals(HistoryType.RESET))
             || feature.equals(SCChartsPackage.eINSTANCE.getTransition_SourceState())
             || feature.equals(SCChartsPackage.eINSTANCE.getTransition_TargetState())
             || feature.equals(SCChartsPackage.eINSTANCE.getAction_Label()))

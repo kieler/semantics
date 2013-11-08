@@ -15,8 +15,12 @@ package de.cau.cs.kieler.scgdep.util;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
+import de.cau.cs.kieler.scg.Assignment;
+import de.cau.cs.kieler.scg.Conditional;
 import de.cau.cs.kieler.scg.Link;
 
+import de.cau.cs.kieler.scg.Node;
+import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scgdep.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -103,12 +107,36 @@ public class ScgdepAdapterFactory extends AdapterFactoryImpl {
                 return createWrite_WriteAdapter();
             }
             @Override
+            public Adapter caseAssignmentDep(AssignmentDep object) {
+                return createAssignmentDepAdapter();
+            }
+            @Override
+            public Adapter caseNodeDep(NodeDep object) {
+                return createNodeDepAdapter();
+            }
+            @Override
+            public Adapter caseSCGraphDep(SCGraphDep object) {
+                return createSCGraphDepAdapter();
+            }
+            @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
             }
             @Override
             public Adapter caseLink(Link object) {
                 return createLinkAdapter();
+            }
+            @Override
+            public Adapter caseNode(Node object) {
+                return createNodeAdapter();
+            }
+            @Override
+            public Adapter caseAssignment(Assignment object) {
+                return createAssignmentAdapter();
+            }
+            @Override
+            public Adapter caseSCGraph(SCGraph object) {
+                return createSCGraphAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -201,6 +229,48 @@ public class ScgdepAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgdep.AssignmentDep <em>Assignment Dep</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scgdep.AssignmentDep
+     * @generated
+     */
+    public Adapter createAssignmentDepAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgdep.NodeDep <em>Node Dep</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scgdep.NodeDep
+     * @generated
+     */
+    public Adapter createNodeDepAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgdep.SCGraphDep <em>SC Graph Dep</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scgdep.SCGraphDep
+     * @generated
+     */
+    public Adapter createSCGraphDepAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -225,6 +295,48 @@ public class ScgdepAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createLinkAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Node <em>Node</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.Node
+     * @generated
+     */
+    public Adapter createNodeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Assignment <em>Assignment</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.Assignment
+     * @generated
+     */
+    public Adapter createAssignmentAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.SCGraph <em>SC Graph</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.SCGraph
+     * @generated
+     */
+    public Adapter createSCGraphAdapter() {
         return null;
     }
 

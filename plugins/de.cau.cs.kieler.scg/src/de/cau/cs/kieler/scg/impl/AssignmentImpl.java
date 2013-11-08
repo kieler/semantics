@@ -1,25 +1,20 @@
 /**
- * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- * 
- * http://www.informatik.uni-kiel.de/rtsys/kieler/
- * 
- * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
- *   + Department of Computer Science
- *     + Real-Time and Embedded Systems Group
- * 
- * This code is provided under the terms of the Eclipse Public License (EPL).
- * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.scg.impl;
+
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.ScgPackage;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -31,6 +26,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getNext <em>Next</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getAssignment <em>Assignment</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
  * </ul>
  * </p>
  *
@@ -48,24 +44,24 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
     protected ControlFlow next;
 
     /**
-     * The default value of the '{@link #getAssignment() <em>Assignment</em>}' attribute.
+     * The cached value of the '{@link #getAssignment() <em>Assignment</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getAssignment()
      * @generated
      * @ordered
      */
-    protected static final String ASSIGNMENT_EDEFAULT = null;
+    protected Expression assignment;
 
     /**
-     * The cached value of the '{@link #getAssignment() <em>Assignment</em>}' attribute.
+     * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getAssignment()
+     * @see #getValuedObject()
      * @generated
      * @ordered
      */
-    protected String assignment = ASSIGNMENT_EDEFAULT;
+    protected ValuedObject valuedObject;
 
     /**
      * <!-- begin-user-doc -->
@@ -134,7 +130,7 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getAssignment() {
+    public Expression getAssignment() {
         return assignment;
     }
 
@@ -143,11 +139,71 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setAssignment(String newAssignment) {
-        String oldAssignment = assignment;
+    public NotificationChain basicSetAssignment(Expression newAssignment, NotificationChain msgs) {
+        Expression oldAssignment = assignment;
         assignment = newAssignment;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__ASSIGNMENT, oldAssignment, newAssignment);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setAssignment(Expression newAssignment) {
+        if (newAssignment != assignment) {
+            NotificationChain msgs = null;
+            if (assignment != null)
+                msgs = ((InternalEObject)assignment).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__ASSIGNMENT, null, msgs);
+            if (newAssignment != null)
+                msgs = ((InternalEObject)newAssignment).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.ASSIGNMENT__ASSIGNMENT, null, msgs);
+            msgs = basicSetAssignment(newAssignment, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__ASSIGNMENT, newAssignment, newAssignment));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ValuedObject getValuedObject() {
+        if (valuedObject != null && valuedObject.eIsProxy()) {
+            InternalEObject oldValuedObject = (InternalEObject)valuedObject;
+            valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
+            if (valuedObject != oldValuedObject) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
+            }
+        }
+        return valuedObject;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ValuedObject basicGetValuedObject() {
+        return valuedObject;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setValuedObject(ValuedObject newValuedObject) {
+        ValuedObject oldValuedObject = valuedObject;
+        valuedObject = newValuedObject;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__ASSIGNMENT, oldAssignment, assignment));
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.ASSIGNMENT__VALUED_OBJECT, oldValuedObject, valuedObject));
     }
 
     /**
@@ -160,6 +216,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
         switch (featureID) {
             case ScgPackage.ASSIGNMENT__NEXT:
                 return basicSetNext(null, msgs);
+            case ScgPackage.ASSIGNMENT__ASSIGNMENT:
+                return basicSetAssignment(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -176,6 +234,9 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 return getNext();
             case ScgPackage.ASSIGNMENT__ASSIGNMENT:
                 return getAssignment();
+            case ScgPackage.ASSIGNMENT__VALUED_OBJECT:
+                if (resolve) return getValuedObject();
+                return basicGetValuedObject();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -192,7 +253,10 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 setNext((ControlFlow)newValue);
                 return;
             case ScgPackage.ASSIGNMENT__ASSIGNMENT:
-                setAssignment((String)newValue);
+                setAssignment((Expression)newValue);
+                return;
+            case ScgPackage.ASSIGNMENT__VALUED_OBJECT:
+                setValuedObject((ValuedObject)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -210,7 +274,10 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
                 setNext((ControlFlow)null);
                 return;
             case ScgPackage.ASSIGNMENT__ASSIGNMENT:
-                setAssignment(ASSIGNMENT_EDEFAULT);
+                setAssignment((Expression)null);
+                return;
+            case ScgPackage.ASSIGNMENT__VALUED_OBJECT:
+                setValuedObject((ValuedObject)null);
                 return;
         }
         super.eUnset(featureID);
@@ -227,25 +294,11 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
             case ScgPackage.ASSIGNMENT__NEXT:
                 return next != null;
             case ScgPackage.ASSIGNMENT__ASSIGNMENT:
-                return ASSIGNMENT_EDEFAULT == null ? assignment != null : !ASSIGNMENT_EDEFAULT.equals(assignment);
+                return assignment != null;
+            case ScgPackage.ASSIGNMENT__VALUED_OBJECT:
+                return valuedObject != null;
         }
         return super.eIsSet(featureID);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String toString() {
-        if (eIsProxy()) return super.toString();
-
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (Assignment: ");
-        result.append(assignment);
-        result.append(')');
-        return result.toString();
     }
 
 } //AssignmentImpl

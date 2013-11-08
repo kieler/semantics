@@ -2,24 +2,7 @@
  */
 package de.cau.cs.kieler.s.s.util;
 
-import de.cau.cs.kieler.s.s.Abort;
-import de.cau.cs.kieler.s.s.Await;
-import de.cau.cs.kieler.s.s.Continuation;
-import de.cau.cs.kieler.s.s.Emit;
-import de.cau.cs.kieler.s.s.Fork;
-import de.cau.cs.kieler.s.s.Halt;
-import de.cau.cs.kieler.s.s.HostCodeInstruction;
-import de.cau.cs.kieler.s.s.If;
-import de.cau.cs.kieler.s.s.Instruction;
-import de.cau.cs.kieler.s.s.Join;
-import de.cau.cs.kieler.s.s.LocalSignal;
-import de.cau.cs.kieler.s.s.Pause;
-import de.cau.cs.kieler.s.s.Prio;
-import de.cau.cs.kieler.s.s.Program;
-import de.cau.cs.kieler.s.s.SPackage;
-import de.cau.cs.kieler.s.s.State;
-import de.cau.cs.kieler.s.s.Term;
-import de.cau.cs.kieler.s.s.Trans;
+import de.cau.cs.kieler.s.s.*;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -102,19 +85,9 @@ public class SAdapterFactory extends AdapterFactoryImpl
         return createStateAdapter();
       }
       @Override
-      public Adapter caseThread(de.cau.cs.kieler.s.s.Thread object)
-      {
-        return createThreadAdapter();
-      }
-      @Override
       public Adapter caseHostCodeInstruction(HostCodeInstruction object)
       {
         return createHostCodeInstructionAdapter();
-      }
-      @Override
-      public Adapter caseContinuation(Continuation object)
-      {
-        return createContinuationAdapter();
       }
       @Override
       public Adapter caseInstruction(Instruction object)
@@ -234,21 +207,6 @@ public class SAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Thread <em>Thread</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.s.s.Thread
-   * @generated
-   */
-  public Adapter createThreadAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.HostCodeInstruction <em>Host Code Instruction</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -259,21 +217,6 @@ public class SAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createHostCodeInstructionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Continuation <em>Continuation</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.s.s.Continuation
-   * @generated
-   */
-  public Adapter createContinuationAdapter()
   {
     return null;
   }

@@ -30,13 +30,13 @@ Root returns ecore::EObject:
 // --------------------------
 
 Expression returns Expression:
-	=> BooleanExpression
+	=> BoolExpression
 	| ValuedExpression
 	;
 
 
 // Example: not D and C or val(E) = 42 or not (A and (B or C))
-BooleanExpression returns Expression:
+BoolExpression returns Expression:
 	OrExpression;
 
 
@@ -115,16 +115,16 @@ NegExpression returns Expression:
   
     
 AtomicExpression returns Expression:
-    BooleanValue
+    BoolValue
     | ValuedObjectTestExpression
-    | '(' BooleanExpression ')'
+    | '(' BoolExpression ')'
     | TextExpression
     ;
 
 
 AtomicValuedExpression returns Expression:
     IntValue
-    | FloatValue
+    | FloatValue | DoubleValue
 //    | '(' DivExpression ')'
     | => '(' ValuedExpression ')'
     | AtomicExpression 
@@ -159,9 +159,12 @@ FloatValue returns FloatValue:
 	value=FLOAT;
 
 
-BooleanValue returns BooleanValue:
+BoolValue returns BoolValue:
 	value=BOOLEAN;
 
+
+DoubleValue returns DoubleValue:
+    value=FLOAT;
 
 // data type rule allowing any kind of value to be accepted,
 // e.g. as initialValues of valuedObjects
@@ -248,7 +251,7 @@ AnyType returns ecore::EString:
 
 
 enum CompareOperator returns OperatorType:
-	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 
 enum PreOperator returns OperatorType:
     PRE="pre";
@@ -285,8 +288,8 @@ enum ValOperator returns OperatorType:
    the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 */
 enum ValueType returns ValueType:
-	PURE="pure" | BOOLEAN="boolean" | UNSIGNED="unsigned"	| 
-	INTEGER="integer" | FLOAT="float" | DOUBLE="double" |
+	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned"	| 
+	INT="int" | FLOAT="float" | DOUBLE="double" |
 	STRING="string" | HOST="host";
 
 

@@ -119,40 +119,40 @@ public interface KExpressionsPackage extends EPackage {
     int VALUED_OBJECT__TYPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Is Input</b></em>' attribute.
+     * The feature id for the '<em><b>Input</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__IS_INPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+    int VALUED_OBJECT__INPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Is Output</b></em>' attribute.
+     * The feature id for the '<em><b>Output</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__IS_OUTPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int VALUED_OBJECT__OUTPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Is Static</b></em>' attribute.
+     * The feature id for the '<em><b>Static</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__IS_STATIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int VALUED_OBJECT__STATIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
-     * The feature id for the '<em><b>Is Signal</b></em>' attribute.
+     * The feature id for the '<em><b>Signal</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__IS_SIGNAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int VALUED_OBJECT__SIGNAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
@@ -285,14 +285,14 @@ public interface KExpressionsPackage extends EPackage {
     int FLOAT_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.BooleanValueImpl <em>Boolean Value</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl <em>Bool Value</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.core.kexpressions.impl.BooleanValueImpl
-     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getBooleanValue()
+     * @see de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl
+     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getBoolValue()
      * @generated
      */
-    int BOOLEAN_VALUE = 6;
+    int BOOL_VALUE = 6;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -301,16 +301,16 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BOOLEAN_VALUE__VALUE = VALUE_FEATURE_COUNT + 0;
+    int BOOL_VALUE__VALUE = VALUE_FEATURE_COUNT + 0;
 
     /**
-     * The number of structural features of the '<em>Boolean Value</em>' class.
+     * The number of structural features of the '<em>Bool Value</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BOOLEAN_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+    int BOOL_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.OperatorExpressionImpl <em>Operator Expression</em>}' class.
@@ -378,6 +378,34 @@ public interface KExpressionsPackage extends EPackage {
     int TEXT_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.DoubleValueImpl <em>Double Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.impl.DoubleValueImpl
+     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getDoubleValue()
+     * @generated
+     */
+    int DOUBLE_VALUE = 9;
+
+    /**
+     * The feature id for the '<em><b>Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DOUBLE_VALUE__VALUE = VALUE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Double Value</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DOUBLE_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -385,7 +413,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 9;
+    int COMBINE_OPERATOR = 10;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -395,7 +423,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 10;
+    int OPERATOR_TYPE = 11;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -405,7 +433,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 11;
+    int VALUE_TYPE = 12;
 
 
     /**
@@ -451,6 +479,50 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getValuedObject_Type();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isInput <em>Input</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Input</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#isInput()
+     * @see #getValuedObject()
+     * @generated
+     */
+    EAttribute getValuedObject_Input();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isOutput <em>Output</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Output</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#isOutput()
+     * @see #getValuedObject()
+     * @generated
+     */
+    EAttribute getValuedObject_Output();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isStatic <em>Static</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Static</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#isStatic()
+     * @see #getValuedObject()
+     * @generated
+     */
+    EAttribute getValuedObject_Static();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isSignal <em>Signal</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Signal</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#isSignal()
+     * @see #getValuedObject()
+     * @generated
+     */
+    EAttribute getValuedObject_Signal();
+
+    /**
      * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -460,50 +532,6 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EReference getValuedObject_InitialValue();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsInput <em>Is Input</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Input</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsInput()
-     * @see #getValuedObject()
-     * @generated
-     */
-    EAttribute getValuedObject_IsInput();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsOutput <em>Is Output</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Output</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsOutput()
-     * @see #getValuedObject()
-     * @generated
-     */
-    EAttribute getValuedObject_IsOutput();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsStatic <em>Is Static</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Static</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsStatic()
-     * @see #getValuedObject()
-     * @generated
-     */
-    EAttribute getValuedObject_IsStatic();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsSignal <em>Is Signal</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Signal</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsSignal()
-     * @see #getValuedObject()
-     * @generated
-     */
-    EAttribute getValuedObject_IsSignal();
 
     /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}'.
@@ -590,25 +618,25 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getFloatValue_Value();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.BooleanValue <em>Boolean Value</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.BoolValue <em>Bool Value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Boolean Value</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.BooleanValue
+     * @return the meta object for class '<em>Bool Value</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.BoolValue
      * @generated
      */
-    EClass getBooleanValue();
+    EClass getBoolValue();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.BooleanValue#getValue <em>Value</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.BoolValue#getValue <em>Value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Value</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.BooleanValue#getValue()
-     * @see #getBooleanValue()
+     * @see de.cau.cs.kieler.core.kexpressions.BoolValue#getValue()
+     * @see #getBoolValue()
      * @generated
      */
-    EAttribute getBooleanValue_Value();
+    EAttribute getBoolValue_Value();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.OperatorExpression <em>Operator Expression</em>}'.
@@ -662,6 +690,27 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EAttribute getTextExpression_Text();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.DoubleValue <em>Double Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Double Value</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.DoubleValue
+     * @generated
+     */
+    EClass getDoubleValue();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.DoubleValue#getValue <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Value</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.DoubleValue#getValue()
+     * @see #getDoubleValue()
+     * @generated
+     */
+    EAttribute getDoubleValue_Value();
 
     /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}'.
@@ -752,44 +801,44 @@ public interface KExpressionsPackage extends EPackage {
         EAttribute VALUED_OBJECT__TYPE = eINSTANCE.getValuedObject_Type();
 
         /**
+         * The meta object literal for the '<em><b>Input</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute VALUED_OBJECT__INPUT = eINSTANCE.getValuedObject_Input();
+
+        /**
+         * The meta object literal for the '<em><b>Output</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute VALUED_OBJECT__OUTPUT = eINSTANCE.getValuedObject_Output();
+
+        /**
+         * The meta object literal for the '<em><b>Static</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute VALUED_OBJECT__STATIC = eINSTANCE.getValuedObject_Static();
+
+        /**
+         * The meta object literal for the '<em><b>Signal</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute VALUED_OBJECT__SIGNAL = eINSTANCE.getValuedObject_Signal();
+
+        /**
          * The meta object literal for the '<em><b>Initial Value</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EReference VALUED_OBJECT__INITIAL_VALUE = eINSTANCE.getValuedObject_InitialValue();
-
-        /**
-         * The meta object literal for the '<em><b>Is Input</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute VALUED_OBJECT__IS_INPUT = eINSTANCE.getValuedObject_IsInput();
-
-        /**
-         * The meta object literal for the '<em><b>Is Output</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute VALUED_OBJECT__IS_OUTPUT = eINSTANCE.getValuedObject_IsOutput();
-
-        /**
-         * The meta object literal for the '<em><b>Is Static</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute VALUED_OBJECT__IS_STATIC = eINSTANCE.getValuedObject_IsStatic();
-
-        /**
-         * The meta object literal for the '<em><b>Is Signal</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute VALUED_OBJECT__IS_SIGNAL = eINSTANCE.getValuedObject_IsSignal();
 
         /**
          * The meta object literal for the '<em><b>Combine Operator</b></em>' attribute feature.
@@ -864,14 +913,14 @@ public interface KExpressionsPackage extends EPackage {
         EAttribute FLOAT_VALUE__VALUE = eINSTANCE.getFloatValue_Value();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.BooleanValueImpl <em>Boolean Value</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl <em>Bool Value</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.core.kexpressions.impl.BooleanValueImpl
-         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getBooleanValue()
+         * @see de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl
+         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getBoolValue()
          * @generated
          */
-        EClass BOOLEAN_VALUE = eINSTANCE.getBooleanValue();
+        EClass BOOL_VALUE = eINSTANCE.getBoolValue();
 
         /**
          * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
@@ -879,7 +928,7 @@ public interface KExpressionsPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute BOOLEAN_VALUE__VALUE = eINSTANCE.getBooleanValue_Value();
+        EAttribute BOOL_VALUE__VALUE = eINSTANCE.getBoolValue_Value();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.OperatorExpressionImpl <em>Operator Expression</em>}' class.
@@ -924,6 +973,24 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EAttribute TEXT_EXPRESSION__TEXT = eINSTANCE.getTextExpression_Text();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.DoubleValueImpl <em>Double Value</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.kexpressions.impl.DoubleValueImpl
+         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getDoubleValue()
+         * @generated
+         */
+        EClass DOUBLE_VALUE = eINSTANCE.getDoubleValue();
+
+        /**
+         * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DOUBLE_VALUE__VALUE = eINSTANCE.getDoubleValue_Value();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.

@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scgdep.provider;
 
 import de.cau.cs.kieler.core.annotations.provider.AnnotationsEditPlugin;
 
+import de.cau.cs.kieler.core.kexpressions.provider.KExpressionsEditPlugin;
 import de.cau.cs.kieler.scg.provider.ScgEditPlugin;
 
 import org.eclipse.emf.common.EMFPlugin;
@@ -54,6 +55,7 @@ public final class ScgdepEditPlugin extends EMFPlugin {
         super
           (new ResourceLocator [] {
              AnnotationsEditPlugin.INSTANCE,
+             KExpressionsEditPlugin.INSTANCE,
              ScgEditPlugin.INSTANCE,
            });
     }

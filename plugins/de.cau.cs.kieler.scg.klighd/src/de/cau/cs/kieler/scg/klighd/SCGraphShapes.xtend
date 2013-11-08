@@ -33,7 +33,7 @@ import de.cau.cs.kieler.core.krendering.KPolygon
 /**
  * KRendering Utility class for KLighD visualization.
  * 
- * @author chsch
+ * @author chsch ssm
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
@@ -139,12 +139,32 @@ class SCGraphShapes {
          ];
     }	
 
+    def KPolygon createTriangleLandscapeShape(KPolygon poly) {
+        poly => [
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.5f);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.0f);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.5f);
+            it.background = "white".color
+         ];
+    }   
+
     def KPolygon createTriangleShapeReversed(KPolygon poly) {
         poly => [
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
             it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
+            it.background = "white".color
+        ];
+    }   
+
+    def KPolygon createTriangleLandscapeShapeReversed(KPolygon poly) {
+        poly => [
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.0f);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.5f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.0f);
             it.background = "white".color
         ];
     }   
@@ -172,6 +192,18 @@ class SCGraphShapes {
         ];
     }   
 
+    def KPolygon createSurfaceLandscapeShape(KPolygon poly) {
+        poly => [
+            it.points += createKPosition(LEFT,  0, 0.25f, TOP,  0, 0);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0.25f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.5f);
+            it.points += createKPosition(LEFT,  0, 0.25f, TOP,  0, 0);
+            it.background = "white".color
+        ];
+    }   
+
     def KPolygon createDepthShape(KPolygon poly) {
         poly => [
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
@@ -180,6 +212,18 @@ class SCGraphShapes {
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.0f);
             it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.66f);
             it.points += createKPosition(LEFT,  0, 0.5f, TOP,  0, 1.0f);
+            it.background = "white".color
+         ];
+    }   
+
+    def KPolygon createDepthLandscapeShape(KPolygon poly) {
+        poly => [
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.0f);
+            it.points += createKPosition(LEFT,  0, 0.75f, TOP,  0, 0.0f);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.5f);
+            it.points += createKPosition(LEFT,  0, 0.75f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.0f);
             it.background = "white".color
          ];
     }   

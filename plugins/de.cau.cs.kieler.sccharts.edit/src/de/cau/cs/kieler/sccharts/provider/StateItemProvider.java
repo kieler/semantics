@@ -81,8 +81,8 @@ public class StateItemProvider
             super.getPropertyDescriptors(object);
 
             addTypePropertyDescriptor(object);
-            addIsInitialPropertyDescriptor(object);
-            addIsFinalPropertyDescriptor(object);
+            addInitialPropertyDescriptor(object);
+            addFinalPropertyDescriptor(object);
             addIncomingTransitionsPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
@@ -111,19 +111,19 @@ public class StateItemProvider
     }
 
     /**
-     * This adds a property descriptor for the Is Initial feature.
+     * This adds a property descriptor for the Initial feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addIsInitialPropertyDescriptor(Object object) {
+    protected void addInitialPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_State_isInitial_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_State_isInitial_feature", "_UI_State_type"),
-                 SCChartsPackage.Literals.STATE__IS_INITIAL,
+                 getString("_UI_State_initial_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_State_initial_feature", "_UI_State_type"),
+                 SCChartsPackage.Literals.STATE__INITIAL,
                  true,
                  false,
                  false,
@@ -133,19 +133,19 @@ public class StateItemProvider
     }
 
     /**
-     * This adds a property descriptor for the Is Final feature.
+     * This adds a property descriptor for the Final feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addIsFinalPropertyDescriptor(Object object) {
+    protected void addFinalPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_State_isFinal_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_State_isFinal_feature", "_UI_State_type"),
-                 SCChartsPackage.Literals.STATE__IS_FINAL,
+                 getString("_UI_State_final_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_State_final_feature", "_UI_State_type"),
+                 SCChartsPackage.Literals.STATE__FINAL,
                  true,
                  false,
                  false,
@@ -245,8 +245,8 @@ public class StateItemProvider
 
         switch (notification.getFeatureID(State.class)) {
             case SCChartsPackage.STATE__TYPE:
-            case SCChartsPackage.STATE__IS_INITIAL:
-            case SCChartsPackage.STATE__IS_FINAL:
+            case SCChartsPackage.STATE__INITIAL:
+            case SCChartsPackage.STATE__FINAL:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
             case SCChartsPackage.STATE__REGIONS:
@@ -294,13 +294,10 @@ public class StateItemProvider
             childFeature == AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__BODY_CONTENTS ||
             childFeature == SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__SUSPENSION_TRIGGER ||
-            childFeature == SCChartsPackage.Literals.SCOPE__EXIT_ACTIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__DURING_ACTIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__ENTRY_ACTIONS ||
-            childFeature == SCChartsPackage.Literals.STATE__OUTGOING_TRANSITIONS ||
+            childFeature == SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS ||
             childFeature == SCChartsPackage.Literals.STATE__REGIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__RENAMINGS ||
+            childFeature == SCChartsPackage.Literals.STATE__OUTGOING_TRANSITIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT;
 
         if (qualify) {

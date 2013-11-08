@@ -214,26 +214,26 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.BooleanValue} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.BoolValue} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected BooleanValueItemProvider booleanValueItemProvider;
+    protected BoolValueItemProvider boolValueItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.BooleanValue}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.BoolValue}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public Adapter createBooleanValueAdapter() {
-        if (booleanValueItemProvider == null) {
-            booleanValueItemProvider = new BooleanValueItemProvider(this);
+    public Adapter createBoolValueAdapter() {
+        if (boolValueItemProvider == null) {
+            boolValueItemProvider = new BoolValueItemProvider(this);
         }
 
-        return booleanValueItemProvider;
+        return boolValueItemProvider;
     }
 
     /**
@@ -387,7 +387,7 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
         if (valueItemProvider != null) valueItemProvider.dispose();
         if (intValueItemProvider != null) intValueItemProvider.dispose();
         if (floatValueItemProvider != null) floatValueItemProvider.dispose();
-        if (booleanValueItemProvider != null) booleanValueItemProvider.dispose();
+        if (boolValueItemProvider != null) boolValueItemProvider.dispose();
         if (operatorExpressionItemProvider != null) operatorExpressionItemProvider.dispose();
         if (textExpressionItemProvider != null) textExpressionItemProvider.dispose();
     }

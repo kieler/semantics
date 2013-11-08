@@ -3,25 +3,20 @@
 */
 package de.cau.cs.kieler.scl.ui.labeling;
 
-import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
-
 /**
  * Provides labels for a IEObjectDescriptions and IResourceDescriptions.
  * 
- * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
+ * see http://www.eclipse.org/Xtext/documentation.html#labelProvider
  */
-public class SCLDescriptionLabelProvider extends DefaultDescriptionLabelProvider {
+public class SCLDescriptionLabelProvider extends org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider {
 
-/*
-	//Labels and icons can be computed like this:
+	// Labels and icons can be computed like this:
 	
-	String text(IEObjectDescription ele) {
-	  return "my "+ele.getName();
-	}
-	 
-    String image(IEObjectDescription ele) {
-      return ele.getEClass().getName() + ".gif";
-    }	 
-*/
-
+//	String text(IEObjectDescription ele) {
+//	   return ele.getName();
+//	}
+//	 
+//  String image(IEObjectDescription ele) {
+//     return ele.getEClass().getName() + ".gif";
+//  }	 
 }

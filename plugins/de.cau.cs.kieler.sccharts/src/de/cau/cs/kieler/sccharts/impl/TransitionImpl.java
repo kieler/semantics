@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
@@ -37,8 +38,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#isDeferred <em>Deferred</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getHistory <em>History</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getTargetState <em>Target State</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#isIsHistory <em>Is History</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl#getSourceState <em>Source State</em>}</li>
  * </ul>
  * </p>
@@ -94,6 +96,46 @@ public class TransitionImpl extends ActionImpl implements Transition {
     protected TransitionType type = TYPE_EDEFAULT;
 
     /**
+     * The default value of the '{@link #isDeferred() <em>Deferred</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isDeferred()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean DEFERRED_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isDeferred() <em>Deferred</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isDeferred()
+     * @generated
+     * @ordered
+     */
+    protected boolean deferred = DEFERRED_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getHistory() <em>History</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getHistory()
+     * @generated
+     * @ordered
+     */
+    protected static final HistoryType HISTORY_EDEFAULT = HistoryType.RESET;
+
+    /**
+     * The cached value of the '{@link #getHistory() <em>History</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getHistory()
+     * @generated
+     * @ordered
+     */
+    protected HistoryType history = HISTORY_EDEFAULT;
+
+    /**
      * The cached value of the '{@link #getTargetState() <em>Target State</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -102,26 +144,6 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * @ordered
      */
     protected State targetState;
-
-    /**
-     * The default value of the '{@link #isIsHistory() <em>Is History</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isIsHistory()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean IS_HISTORY_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isIsHistory() <em>Is History</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isIsHistory()
-     * @generated
-     * @ordered
-     */
-    protected boolean isHistory = IS_HISTORY_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -189,6 +211,48 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isDeferred() {
+        return deferred;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setDeferred(boolean newDeferred) {
+        boolean oldDeferred = deferred;
+        deferred = newDeferred;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__DEFERRED, oldDeferred, deferred));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public HistoryType getHistory() {
+        return history;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setHistory(HistoryType newHistory) {
+        HistoryType oldHistory = history;
+        history = newHistory == null ? HISTORY_EDEFAULT : newHistory;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__HISTORY, oldHistory, history));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public State getTargetState() {
         if (targetState != null && targetState.eIsProxy()) {
             InternalEObject oldTargetState = (InternalEObject)targetState;
@@ -242,27 +306,6 @@ public class TransitionImpl extends ActionImpl implements Transition {
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__TARGET_STATE, newTargetState, newTargetState));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isIsHistory() {
-        return isHistory;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setIsHistory(boolean newIsHistory) {
-        boolean oldIsHistory = isHistory;
-        isHistory = newIsHistory;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TRANSITION__IS_HISTORY, oldIsHistory, isHistory));
     }
 
     /**
@@ -368,11 +411,13 @@ public class TransitionImpl extends ActionImpl implements Transition {
                 return getPriority();
             case SCChartsPackage.TRANSITION__TYPE:
                 return getType();
+            case SCChartsPackage.TRANSITION__DEFERRED:
+                return isDeferred();
+            case SCChartsPackage.TRANSITION__HISTORY:
+                return getHistory();
             case SCChartsPackage.TRANSITION__TARGET_STATE:
                 if (resolve) return getTargetState();
                 return basicGetTargetState();
-            case SCChartsPackage.TRANSITION__IS_HISTORY:
-                return isIsHistory();
             case SCChartsPackage.TRANSITION__SOURCE_STATE:
                 return getSourceState();
         }
@@ -393,11 +438,14 @@ public class TransitionImpl extends ActionImpl implements Transition {
             case SCChartsPackage.TRANSITION__TYPE:
                 setType((TransitionType)newValue);
                 return;
+            case SCChartsPackage.TRANSITION__DEFERRED:
+                setDeferred((Boolean)newValue);
+                return;
+            case SCChartsPackage.TRANSITION__HISTORY:
+                setHistory((HistoryType)newValue);
+                return;
             case SCChartsPackage.TRANSITION__TARGET_STATE:
                 setTargetState((State)newValue);
-                return;
-            case SCChartsPackage.TRANSITION__IS_HISTORY:
-                setIsHistory((Boolean)newValue);
                 return;
             case SCChartsPackage.TRANSITION__SOURCE_STATE:
                 setSourceState((State)newValue);
@@ -420,11 +468,14 @@ public class TransitionImpl extends ActionImpl implements Transition {
             case SCChartsPackage.TRANSITION__TYPE:
                 setType(TYPE_EDEFAULT);
                 return;
+            case SCChartsPackage.TRANSITION__DEFERRED:
+                setDeferred(DEFERRED_EDEFAULT);
+                return;
+            case SCChartsPackage.TRANSITION__HISTORY:
+                setHistory(HISTORY_EDEFAULT);
+                return;
             case SCChartsPackage.TRANSITION__TARGET_STATE:
                 setTargetState((State)null);
-                return;
-            case SCChartsPackage.TRANSITION__IS_HISTORY:
-                setIsHistory(IS_HISTORY_EDEFAULT);
                 return;
             case SCChartsPackage.TRANSITION__SOURCE_STATE:
                 setSourceState((State)null);
@@ -445,10 +496,12 @@ public class TransitionImpl extends ActionImpl implements Transition {
                 return priority != PRIORITY_EDEFAULT;
             case SCChartsPackage.TRANSITION__TYPE:
                 return type != TYPE_EDEFAULT;
+            case SCChartsPackage.TRANSITION__DEFERRED:
+                return deferred != DEFERRED_EDEFAULT;
+            case SCChartsPackage.TRANSITION__HISTORY:
+                return history != HISTORY_EDEFAULT;
             case SCChartsPackage.TRANSITION__TARGET_STATE:
                 return targetState != null;
-            case SCChartsPackage.TRANSITION__IS_HISTORY:
-                return isHistory != IS_HISTORY_EDEFAULT;
             case SCChartsPackage.TRANSITION__SOURCE_STATE:
                 return getSourceState() != null;
         }
@@ -469,8 +522,10 @@ public class TransitionImpl extends ActionImpl implements Transition {
         result.append(priority);
         result.append(", type: ");
         result.append(type);
-        result.append(", isHistory: ");
-        result.append(isHistory);
+        result.append(", deferred: ");
+        result.append(deferred);
+        result.append(", history: ");
+        result.append(history);
         result.append(')');
         return result.toString();
     }

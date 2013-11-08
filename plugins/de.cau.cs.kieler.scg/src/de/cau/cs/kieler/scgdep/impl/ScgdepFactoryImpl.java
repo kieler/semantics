@@ -72,6 +72,8 @@ public class ScgdepFactoryImpl extends EFactoryImpl implements ScgdepFactory {
             case ScgdepPackage.RELATIVE_WRITE_READ: return createRelativeWrite_Read();
             case ScgdepPackage.ABSOLUTE_WRITE_RELATIVE_WRITE: return createAbsoluteWrite_RelativeWrite();
             case ScgdepPackage.WRITE_WRITE: return createWrite_Write();
+            case ScgdepPackage.ASSIGNMENT_DEP: return createAssignmentDep();
+            case ScgdepPackage.SC_GRAPH_DEP: return createSCGraphDep();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -125,6 +127,26 @@ public class ScgdepFactoryImpl extends EFactoryImpl implements ScgdepFactory {
     public Write_Write createWrite_Write() {
         Write_WriteImpl write_Write = new Write_WriteImpl();
         return write_Write;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public AssignmentDep createAssignmentDep() {
+        AssignmentDepImpl assignmentDep = new AssignmentDepImpl();
+        return assignmentDep;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SCGraphDep createSCGraphDep() {
+        SCGraphDepImpl scGraphDep = new SCGraphDepImpl();
+        return scGraphDep;
     }
 
     /**

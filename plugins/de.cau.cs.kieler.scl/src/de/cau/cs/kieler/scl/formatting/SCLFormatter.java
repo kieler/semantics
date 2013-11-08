@@ -5,11 +5,13 @@ package de.cau.cs.kieler.scl.formatting;
 
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
+import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.util.Pair;
 
 /**
  * This class contains custom formatting description.
  * 
- * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#formatting
+ * see : http://www.eclipse.org/Xtext/documentation.html#formatting
  * on how and when to use it 
  * 
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
@@ -18,62 +20,42 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
 	
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
-// It's usually a good idea to activate the following three statements.
-// They will add and preserve newlines around comments
-//		c.setLinewrap(0, 1, 2).before(getGrammarAccess().getSL_COMMENTRule());
-//		c.setLinewrap(0, 1, 2).before(getGrammarAccess().getML_COMMENTRule());
-//		c.setLinewrap(0, 1, 1).after(getGrammarAccess().getML_COMMENTRule());
-	    
-	    de.cau.cs.kieler.scl.services.SCLGrammarAccess f = 
-	            (de.cau.cs.kieler.scl.services.SCLGrammarAccess) getGrammarAccess();
-	        
-	    // Program
-            c.setLinewrap(1).after(f.getProgramAccess().getNameAssignment_1());
-	    c.setLinewrap(1).after(f.getProgramAccess().getLeftCurlyBracketKeyword_3());
-            c.setLinewrap(1).after(f.getProgramAccess().getRightCurlyBracketKeyword_5());
-            c.setLinewrap(1).before(f.getProgramAccess().getRightCurlyBracketKeyword_5());
-            c.setIndentation(f.getProgramAccess().getLeftCurlyBracketKeyword_3(), 
-                             f.getProgramAccess().getRightCurlyBracketKeyword_5());
-            
-//            c.setNoSpace().before(f.getVariableDeclarationAccess().getColonKeyword_4_0());
+		de.cau.cs.kieler.scl.services.SCLGrammarAccess f = (de.cau.cs.kieler.scl.services.SCLGrammarAccess) getGrammarAccess();
+		for(Pair<Keyword, Keyword> pair: f.findKeywordPairs("{", "}")) {
+			c.setIndentation(pair.getFirst(), pair.getSecond());
+			c.setLinewrap(1).after(pair.getFirst());
+			c.setLinewrap(1).before(pair.getSecond());
+			c.setLinewrap(1).after(pair.getSecond());
+		}
+		for(Keyword comma: f.findKeywords(",")) {
+			c.setNoLinewrap().before(comma);
+			c.setNoSpace().before(comma);
+			c.setLinewrap().after(comma);
+		}
+		c.setLinewrap(0, 1, 2).before(f.getSL_COMMENTRule());
+		c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
+		c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());
 
-            c.setLinewrap(1).after(f.getInstructionStatementRule());
-            
-            c.setNoSpace().before(f.getProgramAccess().getSemicolonKeyword_4_0_0_1());
-            c.setNoSpace().before(f.getConditionalAccess().getSemicolonKeyword_3_0_0_1());
-            c.setNoSpace().before(f.getConditionalAccess().getSemicolonKeyword_4_1_0_0_1());
-            c.setNoSpace().before(f.getThreadAccess().getSemicolonKeyword_1_0_0_1());
-            
-            c.setLinewrap(1).after(f.getProgramAccess().getSemicolonKeyword_4_0_0_1());
-            c.setLinewrap(1).after(f.getConditionalAccess().getSemicolonKeyword_3_0_0_1());
-            c.setLinewrap(1).after(f.getConditionalAccess().getSemicolonKeyword_4_1_0_0_1());
-            c.setLinewrap(1).after(f.getThreadAccess().getSemicolonKeyword_1_0_0_1());
-            
-            c.setNoSpace().before(f.getEmptyStatementAccess().getColonKeyword_1_1());
-            c.setLinewrap(1).after(f.getEmptyStatementAccess().getColonKeyword_1_1());
-//            c.setLinewrap(1).after(f.getInstructionStatementAccess().getColonKeyword_1_1());
-          
-            // Conditional
-            c.setLinewrap(1).after(f.getConditionalAccess().getThenKeyword_2());
-            c.setLinewrap(1).before(f.getConditionalAccess().getEndKeyword_5());
-            c.setIndentation(f.getConditionalAccess().getThenKeyword_2(), 
-                             f.getConditionalAccess().getEndKeyword_5());
-            
-   
-            // Variable Declaration
-//            c.setNoSpace().before(f.getVariableDeclarationAccess().getSemicolonKeyword);
-//            c.setLinewrap(1).after(f.getVariableDeclarationRule());
-        
-            // Parallel
-            c.setLinewrap(1).after(f.getParallelAccess().getForkKeyword_0());
-            c.setLinewrap(1).after(f.getParallelAccess().getParKeyword_1_1_0());
-            c.setLinewrap(1).after(f.getParallelAccess().getJoinKeyword_2());
-            c.setLinewrap(1).before(f.getParallelAccess().getParKeyword_1_1_0());
-            c.setLinewrap(1).before(f.getParallelAccess().getJoinKeyword_2());
-            c.setIndentation(f.getParallelAccess().getForkKeyword_0(), 
-                             f.getParallelAccess().getParKeyword_1_1_0());
-            c.setIndentation(f.getParallelAccess().getParKeyword_1_1_0(), 
-                             f.getParallelAccess().getJoinKeyword_2());
-            
-	}
+		c.setLinewrap().before(f.getProgramAccess().getValuedObjectsAssignment_2());
+		
+		for(Keyword semicolon: f.findKeywords(";")) {
+		    c.setNoSpace().before(semicolon);
+		    c.setLinewrap().after(semicolon);
+		}
+
+		for(Keyword semicolon: f.findKeywords(":")) {
+                    c.setNoSpace().before(semicolon);
+                    c.setLinewrap().after(semicolon);
+                }
+		
+	        c.setLinewrap(1).after(f.getParallelAccess().getForkKeyword_0());
+	        c.setLinewrap(1).after(f.getParallelAccess().getParKeyword_1_1_0());
+	        c.setLinewrap(1).after(f.getParallelAccess().getJoinKeyword_2());
+	        c.setLinewrap(1).before(f.getParallelAccess().getParKeyword_1_1_0());
+	        c.setLinewrap(1).before(f.getParallelAccess().getJoinKeyword_2());
+	        c.setIndentation(f.getParallelAccess().getForkKeyword_0(), 
+	                         f.getParallelAccess().getParKeyword_1_1_0());
+	        c.setIndentation(f.getParallelAccess().getParKeyword_1_1_0(), 
+	                         f.getParallelAccess().getJoinKeyword_2());		
+        }
 }

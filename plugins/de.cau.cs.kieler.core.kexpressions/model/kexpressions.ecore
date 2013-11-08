@@ -31,12 +31,12 @@
         <details key="documentation" value="The minimum function. Takes the lesser of the given two."/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="OR" value="4" literal="or">
+    <eLiterals name="OR" value="4" literal="|">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Logical or function for boolean valued signals."/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="AND" value="3" literal="and">
+    <eLiterals name="AND" value="3" literal="&amp;">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Logical and for boolean valued signals."/>
       </eAnnotations>
@@ -56,7 +56,7 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="OperatorTypes are used for OperatorExpressions. &#xA;The types may reference any corresponding&#xA;operator or function that may make use of&#xA;an arbitrary number of subExpressions. Hence it&#xA;contains unary and binary operators."/>
     </eAnnotations>
-    <eLiterals name="EQ" value="1" literal="=">
+    <eLiterals name="EQ" value="1" literal="==">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Equals operator"/>
       </eAnnotations>
@@ -143,13 +143,12 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//ValueType"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInput" lowerBound="1"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="input" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOutput" lowerBound="1"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="static" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isStatic" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSignal" lowerBound="1"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="signal" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="combineOperator" lowerBound="1"
         eType="#//CombineOperator"/>
@@ -165,9 +164,9 @@
         <details key="documentation" value="Default value is the PURE type which means that the&#xA;ValuedObject does not contain any value at all (only&#xA;makes sense for Signals)."/>
       </eAnnotations>
     </eLiterals>
-    <eLiterals name="BOOLEAN" value="1" literal="boolean"/>
+    <eLiterals name="BOOL" value="1" literal="bool"/>
     <eLiterals name="UNSIGNED" value="2" literal="unsigned"/>
-    <eLiterals name="INTEGER" value="3" literal="integer"/>
+    <eLiterals name="INT" value="3" literal="int"/>
     <eLiterals name="FLOAT" value="4" literal="float"/>
     <eLiterals name="HOST" value="7" literal="host">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -201,7 +200,7 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloatObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="BooleanValue" eSuperTypes="#//Value">
+  <eClassifiers xsi:type="ecore:EClass" name="BoolValue" eSuperTypes="#//Value">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An Boolean value object."/>
     </eAnnotations>
@@ -220,5 +219,11 @@
       <details key="documentation" value="A TextExpression is an Expression containing arbitrary text. It is used to&#xA;escape to a host language such as C or Java. This way arbitrary host code&#xA;can be used as parameters for operators, other functions or values."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DoubleValue" eSuperTypes="#//Value">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="An Double value object."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloatObject"/>
   </eClassifiers>
 </ecore:EPackage>

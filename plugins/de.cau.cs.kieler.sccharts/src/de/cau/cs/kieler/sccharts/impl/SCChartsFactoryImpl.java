@@ -83,6 +83,10 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.STATE: return createState();
             case SCChartsPackage.TRANSITION: return createTransition();
             case SCChartsPackage.TEXT_EFFECT: return createTextEffect();
+            case SCChartsPackage.ENTRY_ACTION: return createEntryAction();
+            case SCChartsPackage.DURING_ACTION: return createDuringAction();
+            case SCChartsPackage.EXIT_ACTION: return createExitAction();
+            case SCChartsPackage.SUSPEND_ACTION: return createSuspendAction();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -100,6 +104,8 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
                 return createStateTypeFromString(eDataType, initialValue);
             case SCChartsPackage.TRANSITION_TYPE:
                 return createTransitionTypeFromString(eDataType, initialValue);
+            case SCChartsPackage.HISTORY_TYPE:
+                return createHistoryTypeFromString(eDataType, initialValue);
             case SCChartsPackage.PARSABLE:
                 return createParsableFromString(eDataType, initialValue);
             default:
@@ -119,6 +125,8 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
                 return convertStateTypeToString(eDataType, instanceValue);
             case SCChartsPackage.TRANSITION_TYPE:
                 return convertTransitionTypeToString(eDataType, instanceValue);
+            case SCChartsPackage.HISTORY_TYPE:
+                return convertHistoryTypeToString(eDataType, instanceValue);
             case SCChartsPackage.PARSABLE:
                 return convertParsableToString(eDataType, instanceValue);
             default:
@@ -211,6 +219,46 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    public EntryAction createEntryAction() {
+        EntryActionImpl entryAction = new EntryActionImpl();
+        return entryAction;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DuringAction createDuringAction() {
+        DuringActionImpl duringAction = new DuringActionImpl();
+        return duringAction;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ExitAction createExitAction() {
+        ExitActionImpl exitAction = new ExitActionImpl();
+        return exitAction;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public SuspendAction createSuspendAction() {
+        SuspendActionImpl suspendAction = new SuspendActionImpl();
+        return suspendAction;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public StateType createStateTypeFromString(EDataType eDataType, String initialValue) {
         StateType result = StateType.get(initialValue);
         if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
@@ -243,6 +291,26 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * @generated
      */
     public String convertTransitionTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public HistoryType createHistoryTypeFromString(EDataType eDataType, String initialValue) {
+        HistoryType result = HistoryType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertHistoryTypeToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

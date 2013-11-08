@@ -2,25 +2,7 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.s.s.Abort;
-import de.cau.cs.kieler.s.s.Await;
-import de.cau.cs.kieler.s.s.Continuation;
-import de.cau.cs.kieler.s.s.Emit;
-import de.cau.cs.kieler.s.s.Fork;
-import de.cau.cs.kieler.s.s.Halt;
-import de.cau.cs.kieler.s.s.HostCodeInstruction;
-import de.cau.cs.kieler.s.s.If;
-import de.cau.cs.kieler.s.s.Instruction;
-import de.cau.cs.kieler.s.s.Join;
-import de.cau.cs.kieler.s.s.LocalSignal;
-import de.cau.cs.kieler.s.s.Pause;
-import de.cau.cs.kieler.s.s.Prio;
-import de.cau.cs.kieler.s.s.Program;
-import de.cau.cs.kieler.s.s.SFactory;
-import de.cau.cs.kieler.s.s.SPackage;
-import de.cau.cs.kieler.s.s.State;
-import de.cau.cs.kieler.s.s.Term;
-import de.cau.cs.kieler.s.s.Trans;
+import de.cau.cs.kieler.s.s.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -84,9 +66,7 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
     {
       case SPackage.PROGRAM: return createProgram();
       case SPackage.STATE: return createState();
-      case SPackage.THREAD: return createThread();
       case SPackage.HOST_CODE_INSTRUCTION: return createHostCodeInstruction();
-      case SPackage.CONTINUATION: return createContinuation();
       case SPackage.INSTRUCTION: return createInstruction();
       case SPackage.PRIO: return createPrio();
       case SPackage.TRANS: return createTrans();
@@ -132,32 +112,10 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public de.cau.cs.kieler.s.s.Thread createThread()
-  {
-    ThreadImpl thread = new ThreadImpl();
-    return thread;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public HostCodeInstruction createHostCodeInstruction()
   {
     HostCodeInstructionImpl hostCodeInstruction = new HostCodeInstructionImpl();
     return hostCodeInstruction;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Continuation createContinuation()
-  {
-    ContinuationImpl continuation = new ContinuationImpl();
-    return continuation;
   }
 
   /**

@@ -5,8 +5,8 @@ package de.cau.cs.kieler.s.s.impl;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.s.s.Await;
-import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.SPackage;
+import de.cau.cs.kieler.s.s.State;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -49,7 +49,7 @@ public class AwaitImpl extends InstructionImpl implements Await
    * @generated
    * @ordered
    */
-  protected Continuation continuation;
+  protected State continuation;
 
   /**
    * <!-- begin-user-doc -->
@@ -120,12 +120,12 @@ public class AwaitImpl extends InstructionImpl implements Await
    * <!-- end-user-doc -->
    * @generated
    */
-  public Continuation getContinuation()
+  public State getContinuation()
   {
     if (continuation != null && continuation.eIsProxy())
     {
       InternalEObject oldContinuation = (InternalEObject)continuation;
-      continuation = (Continuation)eResolveProxy(oldContinuation);
+      continuation = (State)eResolveProxy(oldContinuation);
       if (continuation != oldContinuation)
       {
         if (eNotificationRequired())
@@ -140,7 +140,7 @@ public class AwaitImpl extends InstructionImpl implements Await
    * <!-- end-user-doc -->
    * @generated
    */
-  public Continuation basicGetContinuation()
+  public State basicGetContinuation()
   {
     return continuation;
   }
@@ -150,9 +150,9 @@ public class AwaitImpl extends InstructionImpl implements Await
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setContinuation(Continuation newContinuation)
+  public void setContinuation(State newContinuation)
   {
-    Continuation oldContinuation = continuation;
+    State oldContinuation = continuation;
     continuation = newContinuation;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SPackage.AWAIT__CONTINUATION, oldContinuation, continuation));
@@ -192,7 +192,7 @@ public class AwaitImpl extends InstructionImpl implements Await
         setSignal((ValuedObject)newValue);
         return;
       case SPackage.AWAIT__CONTINUATION:
-        setContinuation((Continuation)newValue);
+        setContinuation((State)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -212,7 +212,7 @@ public class AwaitImpl extends InstructionImpl implements Await
         setSignal((ValuedObject)null);
         return;
       case SPackage.AWAIT__CONTINUATION:
-        setContinuation((Continuation)null);
+        setContinuation((State)null);
         return;
     }
     super.eUnset(featureID);

@@ -48,7 +48,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getEffects <em>Effects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getTrigger <em>Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getDelay <em>Delay</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Action#isIsImmediate <em>Is Immediate</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Action#isImmediate <em>Immediate</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
@@ -135,30 +135,30 @@ public interface Action extends Annotatable {
     void setDelay(int value);
 
     /**
-     * Returns the value of the '<em><b>Is Immediate</b></em>' attribute.
+     * Returns the value of the '<em><b>Immediate</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Is Immediate</em>' attribute isn't clear,
+     * If the meaning of the '<em>Immediate</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Is Immediate</em>' attribute.
-     * @see #setIsImmediate(boolean)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_IsImmediate()
+     * @return the value of the '<em>Immediate</em>' attribute.
+     * @see #setImmediate(boolean)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAction_Immediate()
      * @model
      * @generated
      */
-    boolean isIsImmediate();
+    boolean isImmediate();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Action#isIsImmediate <em>Is Immediate</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Action#isImmediate <em>Immediate</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is Immediate</em>' attribute.
-     * @see #isIsImmediate()
+     * @param value the new value of the '<em>Immediate</em>' attribute.
+     * @see #isImmediate()
      * @generated
      */
-    void setIsImmediate(boolean value);
+    void setImmediate(boolean value);
 
     /**
      * Returns the value of the '<em><b>Label</b></em>' attribute.

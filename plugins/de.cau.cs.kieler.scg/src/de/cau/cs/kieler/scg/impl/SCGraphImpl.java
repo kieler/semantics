@@ -1,18 +1,8 @@
 /**
- * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- * 
- * http://www.informatik.uni-kiel.de/rtsys/kieler/
- * 
- * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
- *   + Department of Computer Science
- *     + Real-Time and Embedded Systems Group
- * 
- * This code is provided under the terms of the Eclipse Public License (EPL).
- * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.scg.impl;
 
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.ScgPackage;
@@ -39,6 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getNodes <em>Nodes</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getValuedObjects <em>Valued Objects</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,6 +45,16 @@ public class SCGraphImpl extends MinimalEObjectImpl.Container implements SCGraph
      * @ordered
      */
     protected EList<Node> nodes;
+
+    /**
+     * The cached value of the '{@link #getValuedObjects() <em>Valued Objects</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getValuedObjects()
+     * @generated
+     * @ordered
+     */
+    protected EList<ValuedObject> valuedObjects;
 
     /**
      * <!-- begin-user-doc -->
@@ -91,11 +92,25 @@ public class SCGraphImpl extends MinimalEObjectImpl.Container implements SCGraph
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<ValuedObject> getValuedObjects() {
+        if (valuedObjects == null) {
+            valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, ScgPackage.SC_GRAPH__VALUED_OBJECTS);
+        }
+        return valuedObjects;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case ScgPackage.SC_GRAPH__NODES:
                 return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
+            case ScgPackage.SC_GRAPH__VALUED_OBJECTS:
+                return ((InternalEList<?>)getValuedObjects()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -110,6 +125,8 @@ public class SCGraphImpl extends MinimalEObjectImpl.Container implements SCGraph
         switch (featureID) {
             case ScgPackage.SC_GRAPH__NODES:
                 return getNodes();
+            case ScgPackage.SC_GRAPH__VALUED_OBJECTS:
+                return getValuedObjects();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -127,6 +144,10 @@ public class SCGraphImpl extends MinimalEObjectImpl.Container implements SCGraph
                 getNodes().clear();
                 getNodes().addAll((Collection<? extends Node>)newValue);
                 return;
+            case ScgPackage.SC_GRAPH__VALUED_OBJECTS:
+                getValuedObjects().clear();
+                getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -142,6 +163,9 @@ public class SCGraphImpl extends MinimalEObjectImpl.Container implements SCGraph
             case ScgPackage.SC_GRAPH__NODES:
                 getNodes().clear();
                 return;
+            case ScgPackage.SC_GRAPH__VALUED_OBJECTS:
+                getValuedObjects().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -156,6 +180,8 @@ public class SCGraphImpl extends MinimalEObjectImpl.Container implements SCGraph
         switch (featureID) {
             case ScgPackage.SC_GRAPH__NODES:
                 return nodes != null && !nodes.isEmpty();
+            case ScgPackage.SC_GRAPH__VALUED_OBJECTS:
+                return valuedObjects != null && !valuedObjects.isEmpty();
         }
         return super.eIsSet(featureID);
     }

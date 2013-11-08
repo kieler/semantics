@@ -208,7 +208,7 @@ public interface ScgPackage extends EPackage {
     int CONDITIONAL__ELSE = NODE_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Condition</b></em>' attribute.
+     * The feature id for the '<em><b>Condition</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -499,7 +499,7 @@ public interface ScgPackage extends EPackage {
     int ASSIGNMENT__NEXT = NODE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Assignment</b></em>' attribute.
+     * The feature id for the '<em><b>Assignment</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -508,13 +508,22 @@ public interface ScgPackage extends EPackage {
     int ASSIGNMENT__ASSIGNMENT = NODE_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__VALUED_OBJECT = NODE_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Assignment</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ASSIGNMENT_FEATURE_COUNT = NODE_FEATURE_COUNT + 2;
+    int ASSIGNMENT_FEATURE_COUNT = NODE_FEATURE_COUNT + 3;
 
     /**
      * The operation id for the '<em>Get Annotation</em>' operation.
@@ -845,13 +854,22 @@ public interface ScgPackage extends EPackage {
     int SC_GRAPH__NODES = 0;
 
     /**
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPH__VALUED_OBJECTS = 1;
+
+    /**
      * The number of structural features of the '<em>SC Graph</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SC_GRAPH_FEATURE_COUNT = 1;
+    int SC_GRAPH_FEATURE_COUNT = 2;
 
     /**
      * The number of operations of the '<em>SC Graph</em>' class.
@@ -1202,15 +1220,15 @@ public interface ScgPackage extends EPackage {
     EReference getConditional_Else();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Conditional#getCondition <em>Condition</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scg.Conditional#getCondition <em>Condition</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Condition</em>'.
+     * @return the meta object for the containment reference '<em>Condition</em>'.
      * @see de.cau.cs.kieler.scg.Conditional#getCondition()
      * @see #getConditional()
      * @generated
      */
-    EAttribute getConditional_Condition();
+    EReference getConditional_Condition();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Surface <em>Surface</em>}'.
@@ -1287,15 +1305,26 @@ public interface ScgPackage extends EPackage {
     EReference getAssignment_Next();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Assignment#getAssignment <em>Assignment</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scg.Assignment#getAssignment <em>Assignment</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Assignment</em>'.
+     * @return the meta object for the containment reference '<em>Assignment</em>'.
      * @see de.cau.cs.kieler.scg.Assignment#getAssignment()
      * @see #getAssignment()
      * @generated
      */
-    EAttribute getAssignment_Assignment();
+    EReference getAssignment_Assignment();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.Assignment#getValuedObject <em>Valued Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Valued Object</em>'.
+     * @see de.cau.cs.kieler.scg.Assignment#getValuedObject()
+     * @see #getAssignment()
+     * @generated
+     */
+    EReference getAssignment_ValuedObject();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Fork <em>Fork</em>}'.
@@ -1402,6 +1431,17 @@ public interface ScgPackage extends EPackage {
      * @generated
      */
     EReference getSCGraph_Nodes();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.SCGraph#getValuedObjects <em>Valued Objects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
+     * @see de.cau.cs.kieler.scg.SCGraph#getValuedObjects()
+     * @see #getSCGraph()
+     * @generated
+     */
+    EReference getSCGraph_ValuedObjects();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Entry <em>Entry</em>}'.
@@ -1553,12 +1593,12 @@ public interface ScgPackage extends EPackage {
         EReference CONDITIONAL__ELSE = eINSTANCE.getConditional_Else();
 
         /**
-         * The meta object literal for the '<em><b>Condition</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute CONDITIONAL__CONDITION = eINSTANCE.getConditional_Condition();
+        EReference CONDITIONAL__CONDITION = eINSTANCE.getConditional_Condition();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.SurfaceImpl <em>Surface</em>}' class.
@@ -1623,12 +1663,20 @@ public interface ScgPackage extends EPackage {
         EReference ASSIGNMENT__NEXT = eINSTANCE.getAssignment_Next();
 
         /**
-         * The meta object literal for the '<em><b>Assignment</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Assignment</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute ASSIGNMENT__ASSIGNMENT = eINSTANCE.getAssignment_Assignment();
+        EReference ASSIGNMENT__ASSIGNMENT = eINSTANCE.getAssignment_Assignment();
+
+        /**
+         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ASSIGNMENT__VALUED_OBJECT = eINSTANCE.getAssignment_ValuedObject();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ForkImpl <em>Fork</em>}' class.
@@ -1717,6 +1765,14 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
         EReference SC_GRAPH__NODES = eINSTANCE.getSCGraph_Nodes();
+
+        /**
+         * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SC_GRAPH__VALUED_OBJECTS = eINSTANCE.getSCGraph_ValuedObjects();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.EntryImpl <em>Entry</em>}' class.

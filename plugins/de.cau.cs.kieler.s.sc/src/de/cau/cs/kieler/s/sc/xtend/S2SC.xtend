@@ -13,7 +13,7 @@
  */
  package de.cau.cs.kieler.s.sc.xtend
 
-import de.cau.cs.kieler.core.kexpressions.BooleanValue
+import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValueType
@@ -277,7 +277,7 @@ void setInputs(){
 		void OUTPUT_«signal.name»(int status){
 		value = cJSON_CreateObject();
 		cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
-	«IF signal.type == ValueType::INTEGER»
+	«IF signal.type == ValueType::INT»
 cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»)));
 	«ENDIF»
 		cJSON_AddItemToObject(output, "«signal.name»", value);
@@ -366,10 +366,10 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    // Expand a FORK instruction.
    def dispatch CharSequence expand(Fork forkInstruction) {
    	'''«IF forkInstruction.getLastFork != forkInstruction» 
-   	      FORK(«forkInstruction.thread.name»,«forkInstruction.priority»);
+   	      FORK(«forkInstruction.continuation.name»,«forkInstruction.priority»);
    	   «ENDIF»
    	   «IF forkInstruction.getLastFork == forkInstruction» 
-   	      FORKE(«forkInstruction.thread.name»);
+   	      FORKE(«forkInstruction.continuation.name»);
    	   «ENDIF»
    	'''
    }   
@@ -507,7 +507,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    }
 
    // Expand a boolean expression value (true or false).
-   def dispatch CharSequence expand(BooleanValue expression) {
+   def dispatch CharSequence expand(BoolValue expression) {
    	 '''«IF expression.value == true »1«ENDIF»«IF expression.value == false»0«ENDIF»'''
    }
 

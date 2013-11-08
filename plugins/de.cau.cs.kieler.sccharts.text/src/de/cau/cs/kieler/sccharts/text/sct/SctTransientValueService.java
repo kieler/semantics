@@ -76,7 +76,7 @@ public class SctTransientValueService extends DefaultTransientValueService {
 
         /* suppress the implicit (mostly EOpposites) features */
         if (feature == SCChartsPackage.eINSTANCE.getState_ParentRegion()
-                || feature == SCChartsPackage.eINSTANCE.getScope_InterfaceDeclaration()
+//                || feature == SCChartsPackage.eINSTANCE.getScope_InterfaceDeclaration()
                 || feature == SCChartsPackage.eINSTANCE.getState_IncomingTransitions()
                 || feature == SCChartsPackage.eINSTANCE.getRegion_ParentState()
                 || feature == SCChartsPackage.eINSTANCE.getTransition_SourceState()
@@ -262,7 +262,7 @@ public class SctTransientValueService extends DefaultTransientValueService {
 
 
     private boolean actionIsEmpty(Action a) {
-        return a.getDelay() == 1 && a.isIsImmediate() == false
+        return a.getDelay() == 1 && a.isImmediate() == false
           && a.getTrigger() == null && a.getEffects().isEmpty();
     }
 

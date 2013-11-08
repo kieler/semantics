@@ -117,11 +117,11 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case KExpressionsPackage.BOOLEAN_VALUE: {
-                BooleanValue booleanValue = (BooleanValue)theEObject;
-                T result = caseBooleanValue(booleanValue);
-                if (result == null) result = caseValue(booleanValue);
-                if (result == null) result = caseExpression(booleanValue);
+            case KExpressionsPackage.BOOL_VALUE: {
+                BoolValue boolValue = (BoolValue)theEObject;
+                T result = caseBoolValue(boolValue);
+                if (result == null) result = caseValue(boolValue);
+                if (result == null) result = caseExpression(boolValue);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -136,6 +136,14 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 TextExpression textExpression = (TextExpression)theEObject;
                 T result = caseTextExpression(textExpression);
                 if (result == null) result = caseExpression(textExpression);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.DOUBLE_VALUE: {
+                DoubleValue doubleValue = (DoubleValue)theEObject;
+                T result = caseDoubleValue(doubleValue);
+                if (result == null) result = caseValue(doubleValue);
+                if (result == null) result = caseExpression(doubleValue);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -234,17 +242,17 @@ public class KExpressionsSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Boolean Value</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Bool Value</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Boolean Value</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Bool Value</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseBooleanValue(BooleanValue object) {
+    public T caseBoolValue(BoolValue object) {
         return null;
     }
 
@@ -275,6 +283,21 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseTextExpression(TextExpression object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Double Value</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Double Value</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDoubleValue(DoubleValue object) {
         return null;
     }
 

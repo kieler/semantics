@@ -3,32 +3,27 @@
 */
 package de.cau.cs.kieler.scl.ui.labeling;
 
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider; 
- 
 import com.google.inject.Inject;
 
 /**
  * Provides labels for a EObjects.
  * 
- * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
+ * see http://www.eclipse.org/Xtext/documentation.html#labelProvider
  */
-public class SCLLabelProvider extends DefaultEObjectLabelProvider {
+public class SCLLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider {
 
 	@Inject
-	public SCLLabelProvider(AdapterFactoryLabelProvider delegate) {
+	public SCLLabelProvider(org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider delegate) {
 		super(delegate);
 	}
 
-/*
-	//Labels and icons can be computed like this:
+	// Labels and icons can be computed like this:
 	
-	String text(MyModel ele) {
-	  return "my "+ele.getName();
-	}
-	 
-    String image(MyModel ele) {
-      return "MyModel.gif";
-    }
-*/
+//	String text(Greeting ele) {
+//		return "A greeting to " + ele.getName();
+//	}
+//
+//	String image(Greeting ele) {
+//		return "Greeting.gif";
+//	}
 }

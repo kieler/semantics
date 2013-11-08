@@ -7,6 +7,14 @@
 <plugin>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated scgdep -->
+      <package
+            uri="http://kieler.cs.cau.de/scgdep/0.1.0"
+            class="de.cau.cs.kieler.scgdep.ScgdepPackage"
+            genModel="model/scgdep.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated scg -->
       <package
             uri="http://kieler.cs.cau.de/scg/0.1.0"
@@ -15,11 +23,11 @@
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated scgdep -->
+      <!-- @generated scgbb -->
       <package
-            uri="http://kieler.cs.cau.de/scgdep/0.1.0"
-            class="de.cau.cs.kieler.scgdep.ScgdepPackage"
-            genModel="model/scgdep.genmodel"/>
+            uri="http://kieler.cs.cau.de/scgbb/0.1.0"
+            class="de.cau.cs.kieler.scgbb.ScgbbPackage"
+            genModel="model/scgbb.genmodel"/>
    </extension>
 
 </plugin>

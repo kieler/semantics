@@ -49,25 +49,32 @@ State:
 // TODO: ensure signal AND variable declaration in top level....
 
 
-Thread:
-	'thread' '(' name = ID ')' '{'
-	(((valuedObjects+=ValuedObject)+ ';')*)? 
-	(states+=State';')*
-	'}'
-;
-
-
 ValuedObject returns kexpressions::ValuedObject:
-    (isInput?='input')?
-	(isOutput?='output')?
-	(isSignal?='signal')?
-	(name=EString)
-	(':=' initialValue=Expression)?
-    ((':' type=ValueType)
-      |
-     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator) )
-    )? ";";
-//    )?;
+    (annotations+=Annotation)*
+    (input?='input')?
+    (output?='output')?
+    (static?='static')?
+    (signal?='signal')?
+    (type = ValueType)?
+    name=ID ('=' initialValue=Expression)?
+    ( 'combine'
+      (combineOperator = CombineOperator)
+    )? ';' ;
+
+//
+// OLD S DECLARATION
+//
+//ValuedObject returns kexpressions::ValuedObject:
+//    (isInput?='input')?
+//	(isOutput?='output')?
+//	(isSignal?='signal')?
+//	(name=EString)
+//	(':=' initialValue=Expression)?
+//    ((':' type=ValueType)
+//      |
+//     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator) )
+//    )? ";";
+////    )?;
     
 
 //---------------------------------------------------------------------
@@ -83,51 +90,47 @@ terminal HOSTCODESTRINGTERMINAL returns ecore::EString:
     '$' ('a'..'z'|'A'..'Z'|'_'|'.'|'"'|'0'..'9')+ '$';
     
 
-Continuation:
-	 State | Thread
-;
-
 Instruction:
    Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction
 ;
 
 // Change priority
 Prio:
-	'prio' '('priority=INT (',' continuation=[Continuation])?')'
+	'prio' '('priority=INT (',' continuation=[State])?')'
 ;
 
 // Transition to anothe Thread or State   
 Trans :
-	'trans''(' continuation=[Continuation] ')'
+	'trans''(' continuation=[State] ')'
 ;
   
 // Forking new Threads
 Fork :
-	'fork''('thread=[Continuation] ',' priority=INT (',' continuation=[Continuation])?')'
+	'fork''('continuation=[State] ',' priority=INT ')'
 ;
 
 
 // Joining Threads
 Join : 
 	{Join}
-	'join' '('continuation=[Continuation]?')'
+	'join' '('continuation=[State]?')'
 ;
    
 
 // Simple instructions
 Pause :
 	{Pause} 
-	'pause''('continuation=[Continuation]?')'
+	'pause''('continuation=[State]?')'
 ;
   
 Term : 
 	{Term}
-	'term''('continuation=[Continuation]?')'
+	'term''('continuation=[State]?')'
 ;
   
 Halt : 
 	{Halt}
-	'halt''('continuation=[Continuation]?')'
+	'halt''('continuation=[State]?')'
 ;
   
   
@@ -136,24 +139,24 @@ LocalSignal: // For handling local signal re-initialization (taking care or rein
 ;
 
 Emit:
-	'emit''('signal= [kexpressions::ValuedObject] ('(' value=SExpression ')')? (',' continuation=[Continuation])?')'
+	'emit''('signal= [kexpressions::ValuedObject] ('(' value=SExpression ')')? (',' continuation=[State])?')'
 ;
   
 Abort : 
 	{Abort}
-	'abort''('continuation=[Continuation]?')'
+	'abort''('continuation=[State]?')'
 ;
 
 // Conditioned execution of instructions  
 If : 
-	'if''('expression = SExpression (',' continuation=[Continuation])?')' '{'
+	'if''('expression = SExpression (',' continuation=[State])?')' '{'
 		(instructions += Instruction';')*
 	'}'
 ;
   
 // Complex instruction
 Await:
-	'await' '('signal= [kexpressions::ValuedObject] (',' continuation=[Continuation])?')'
+	'await' '('signal= [kexpressions::ValuedObject] (',' continuation=[State])?')'
 ;
 
 

@@ -44,8 +44,8 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.State#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.State#getRegions <em>Regions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.State#getParentRegion <em>Parent Region</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.State#isIsInitial <em>Is Initial</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.State#isIsFinal <em>Is Final</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.State#isInitial <em>Initial</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.State#isFinal <em>Final</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.State#getIncomingTransitions <em>Incoming Transitions</em>}</li>
  * </ul>
@@ -139,56 +139,56 @@ public interface State extends Scope {
     void setParentRegion(Region value);
 
     /**
-     * Returns the value of the '<em><b>Is Initial</b></em>' attribute.
+     * Returns the value of the '<em><b>Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Is Initial</em>' attribute isn't clear,
+     * If the meaning of the '<em>Initial</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Is Initial</em>' attribute.
-     * @see #setIsInitial(boolean)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_IsInitial()
+     * @return the value of the '<em>Initial</em>' attribute.
+     * @see #setInitial(boolean)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_Initial()
      * @model
      * @generated
      */
-    boolean isIsInitial();
+    boolean isInitial();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.State#isIsInitial <em>Is Initial</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.State#isInitial <em>Initial</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is Initial</em>' attribute.
-     * @see #isIsInitial()
+     * @param value the new value of the '<em>Initial</em>' attribute.
+     * @see #isInitial()
      * @generated
      */
-    void setIsInitial(boolean value);
+    void setInitial(boolean value);
 
     /**
-     * Returns the value of the '<em><b>Is Final</b></em>' attribute.
+     * Returns the value of the '<em><b>Final</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Is Final</em>' attribute isn't clear,
+     * If the meaning of the '<em>Final</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Is Final</em>' attribute.
-     * @see #setIsFinal(boolean)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_IsFinal()
+     * @return the value of the '<em>Final</em>' attribute.
+     * @see #setFinal(boolean)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_Final()
      * @model
      * @generated
      */
-    boolean isIsFinal();
+    boolean isFinal();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.State#isIsFinal <em>Is Final</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.State#isFinal <em>Final</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is Final</em>' attribute.
-     * @see #isIsFinal()
+     * @param value the new value of the '<em>Final</em>' attribute.
+     * @see #isFinal()
      * @generated
      */
-    void setIsFinal(boolean value);
+    void setFinal(boolean value);
 
     /**
      * Returns the value of the '<em><b>Outgoing Transitions</b></em>' containment reference list.

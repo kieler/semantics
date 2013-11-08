@@ -162,6 +162,50 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case SCChartsPackage.LOCAL_ACTION: {
+                LocalAction localAction = (LocalAction)theEObject;
+                T result = caseLocalAction(localAction);
+                if (result == null) result = caseAction(localAction);
+                if (result == null) result = caseAnnotatable(localAction);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.ENTRY_ACTION: {
+                EntryAction entryAction = (EntryAction)theEObject;
+                T result = caseEntryAction(entryAction);
+                if (result == null) result = caseLocalAction(entryAction);
+                if (result == null) result = caseAction(entryAction);
+                if (result == null) result = caseAnnotatable(entryAction);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.DURING_ACTION: {
+                DuringAction duringAction = (DuringAction)theEObject;
+                T result = caseDuringAction(duringAction);
+                if (result == null) result = caseLocalAction(duringAction);
+                if (result == null) result = caseAction(duringAction);
+                if (result == null) result = caseAnnotatable(duringAction);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.EXIT_ACTION: {
+                ExitAction exitAction = (ExitAction)theEObject;
+                T result = caseExitAction(exitAction);
+                if (result == null) result = caseLocalAction(exitAction);
+                if (result == null) result = caseAction(exitAction);
+                if (result == null) result = caseAnnotatable(exitAction);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.SUSPEND_ACTION: {
+                SuspendAction suspendAction = (SuspendAction)theEObject;
+                T result = caseSuspendAction(suspendAction);
+                if (result == null) result = caseLocalAction(suspendAction);
+                if (result == null) result = caseAction(suspendAction);
+                if (result == null) result = caseAnnotatable(suspendAction);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -313,6 +357,81 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseTextEffect(TextEffect object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Local Action</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Local Action</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseLocalAction(LocalAction object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Entry Action</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Entry Action</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseEntryAction(EntryAction object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>During Action</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>During Action</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDuringAction(DuringAction object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Exit Action</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Exit Action</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseExitAction(ExitAction object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Suspend Action</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Suspend Action</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSuspendAction(SuspendAction object) {
         return null;
     }
 

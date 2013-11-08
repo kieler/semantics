@@ -26,10 +26,10 @@ import de.cau.cs.kieler.core.annotations.Annotatable;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsInput <em>Is Input</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsOutput <em>Is Output</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsStatic <em>Is Static</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsSignal <em>Is Signal</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isInput <em>Input</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isOutput <em>Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isStatic <em>Static</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}</li>
  * </ul>
@@ -96,6 +96,110 @@ public interface ValuedObject extends Annotatable {
     void setType(ValueType value);
 
     /**
+     * Returns the value of the '<em><b>Input</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Input</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Input</em>' attribute.
+     * @see #setInput(boolean)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_Input()
+     * @model required="true"
+     * @generated
+     */
+    boolean isInput();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isInput <em>Input</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Input</em>' attribute.
+     * @see #isInput()
+     * @generated
+     */
+    void setInput(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Output</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Output</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Output</em>' attribute.
+     * @see #setOutput(boolean)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_Output()
+     * @model required="true"
+     * @generated
+     */
+    boolean isOutput();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isOutput <em>Output</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Output</em>' attribute.
+     * @see #isOutput()
+     * @generated
+     */
+    void setOutput(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Static</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Static</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Static</em>' attribute.
+     * @see #setStatic(boolean)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_Static()
+     * @model required="true"
+     * @generated
+     */
+    boolean isStatic();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isStatic <em>Static</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Static</em>' attribute.
+     * @see #isStatic()
+     * @generated
+     */
+    void setStatic(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Signal</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Signal</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Signal</em>' attribute.
+     * @see #setSignal(boolean)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_Signal()
+     * @model required="true"
+     * @generated
+     */
+    boolean isSignal();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isSignal <em>Signal</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Signal</em>' attribute.
+     * @see #isSignal()
+     * @generated
+     */
+    void setSignal(boolean value);
+
+    /**
      * Returns the value of the '<em><b>Initial Value</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
@@ -120,110 +224,6 @@ public interface ValuedObject extends Annotatable {
      * @generated
      */
     void setInitialValue(Expression value);
-
-    /**
-     * Returns the value of the '<em><b>Is Input</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Is Input</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Is Input</em>' attribute.
-     * @see #setIsInput(boolean)
-     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_IsInput()
-     * @model required="true"
-     * @generated
-     */
-    boolean isIsInput();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsInput <em>Is Input</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is Input</em>' attribute.
-     * @see #isIsInput()
-     * @generated
-     */
-    void setIsInput(boolean value);
-
-    /**
-     * Returns the value of the '<em><b>Is Output</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Is Output</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Is Output</em>' attribute.
-     * @see #setIsOutput(boolean)
-     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_IsOutput()
-     * @model required="true"
-     * @generated
-     */
-    boolean isIsOutput();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsOutput <em>Is Output</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is Output</em>' attribute.
-     * @see #isIsOutput()
-     * @generated
-     */
-    void setIsOutput(boolean value);
-
-    /**
-     * Returns the value of the '<em><b>Is Static</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Is Static</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Is Static</em>' attribute.
-     * @see #setIsStatic(boolean)
-     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_IsStatic()
-     * @model required="true"
-     * @generated
-     */
-    boolean isIsStatic();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsStatic <em>Is Static</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is Static</em>' attribute.
-     * @see #isIsStatic()
-     * @generated
-     */
-    void setIsStatic(boolean value);
-
-    /**
-     * Returns the value of the '<em><b>Is Signal</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Is Signal</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Is Signal</em>' attribute.
-     * @see #setIsSignal(boolean)
-     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_IsSignal()
-     * @model required="true"
-     * @generated
-     */
-    boolean isIsSignal();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isIsSignal <em>Is Signal</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is Signal</em>' attribute.
-     * @see #isIsSignal()
-     * @generated
-     */
-    void setIsSignal(boolean value);
 
     /**
      * Returns the value of the '<em><b>Combine Operator</b></em>' attribute.

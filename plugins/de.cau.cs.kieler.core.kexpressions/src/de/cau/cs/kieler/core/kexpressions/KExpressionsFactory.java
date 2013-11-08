@@ -80,13 +80,13 @@ public interface KExpressionsFactory extends EFactory {
     FloatValue createFloatValue();
 
     /**
-     * Returns a new object of class '<em>Boolean Value</em>'.
+     * Returns a new object of class '<em>Bool Value</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Boolean Value</em>'.
+     * @return a new object of class '<em>Bool Value</em>'.
      * @generated
      */
-    BooleanValue createBooleanValue();
+    BoolValue createBoolValue();
 
     /**
      * Returns a new object of class '<em>Operator Expression</em>'.
@@ -105,6 +105,15 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     TextExpression createTextExpression();
+
+    /**
+     * Returns a new object of class '<em>Double Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Double Value</em>'.
+     * @generated
+     */
+    DoubleValue createDoubleValue();
 
     /**
      * Returns the package supported by this factory.

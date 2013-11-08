@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.scgdep.provider;
 
 
+import de.cau.cs.kieler.scgdep.Write_Write;
 import java.util.Collection;
 import java.util.List;
 
@@ -85,7 +86,8 @@ public class Write_WriteItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_Write_Write_type");
+        Write_Write write_Write = (Write_Write)object;
+        return getString("_UI_Write_Write_type") + " " + write_Write.isConcurrent();
     }
 
     /**

@@ -188,10 +188,7 @@ public class RegionItemProvider
             childFeature == AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__BODY_CONTENTS ||
             childFeature == SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__SUSPENSION_TRIGGER ||
-            childFeature == SCChartsPackage.Literals.SCOPE__EXIT_ACTIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__DURING_ACTIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__ENTRY_ACTIONS ||
+            childFeature == SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__RENAMINGS ||
             childFeature == SCChartsPackage.Literals.REGION__STATES ||
             childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT;

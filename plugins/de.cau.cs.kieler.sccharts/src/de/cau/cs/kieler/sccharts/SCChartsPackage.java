@@ -126,13 +126,13 @@ public interface SCChartsPackage extends EPackage {
     int ACTION__DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ACTION__IS_IMMEDIATE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int ACTION__IMMEDIATE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -292,40 +292,13 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__VALUED_OBJECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Suspension Trigger</b></em>' containment reference.
+     * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE__SUSPENSION_TRIGGER = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
-
-    /**
-     * The feature id for the '<em><b>Exit Actions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__EXIT_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
-
-    /**
-     * The feature id for the '<em><b>During Actions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__DURING_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
-
-    /**
-     * The feature id for the '<em><b>Entry Actions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__ENTRY_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+    int SCOPE__LOCAL_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Body Reference</b></em>' reference.
@@ -334,7 +307,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__BODY_REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
+    int SCOPE__BODY_REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Body Contents</b></em>' containment reference.
@@ -343,7 +316,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__BODY_CONTENTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
+    int SCOPE__BODY_CONTENTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
@@ -352,7 +325,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__BODY_TEXT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
+    int SCOPE__BODY_TEXT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
     /**
      * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
@@ -361,16 +334,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__RENAMINGS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 10;
-
-    /**
-     * The feature id for the '<em><b>Interface Declaration</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__INTERFACE_DECLARATION = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 11;
+    int SCOPE__RENAMINGS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
      * The number of structural features of the '<em>Scope</em>' class.
@@ -379,7 +343,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 12;
+    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
@@ -428,40 +392,13 @@ public interface SCChartsPackage extends EPackage {
     int REGION__VALUED_OBJECTS = SCOPE__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Suspension Trigger</b></em>' containment reference.
+     * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REGION__SUSPENSION_TRIGGER = SCOPE__SUSPENSION_TRIGGER;
-
-    /**
-     * The feature id for the '<em><b>Exit Actions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__EXIT_ACTIONS = SCOPE__EXIT_ACTIONS;
-
-    /**
-     * The feature id for the '<em><b>During Actions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__DURING_ACTIONS = SCOPE__DURING_ACTIONS;
-
-    /**
-     * The feature id for the '<em><b>Entry Actions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__ENTRY_ACTIONS = SCOPE__ENTRY_ACTIONS;
+    int REGION__LOCAL_ACTIONS = SCOPE__LOCAL_ACTIONS;
 
     /**
      * The feature id for the '<em><b>Body Reference</b></em>' reference.
@@ -498,15 +435,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int REGION__RENAMINGS = SCOPE__RENAMINGS;
-
-    /**
-     * The feature id for the '<em><b>Interface Declaration</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__INTERFACE_DECLARATION = SCOPE__INTERFACE_DECLARATION;
 
     /**
      * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -628,40 +556,13 @@ public interface SCChartsPackage extends EPackage {
     int STATE__VALUED_OBJECTS = SCOPE__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Suspension Trigger</b></em>' containment reference.
+     * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__SUSPENSION_TRIGGER = SCOPE__SUSPENSION_TRIGGER;
-
-    /**
-     * The feature id for the '<em><b>Exit Actions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STATE__EXIT_ACTIONS = SCOPE__EXIT_ACTIONS;
-
-    /**
-     * The feature id for the '<em><b>During Actions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STATE__DURING_ACTIONS = SCOPE__DURING_ACTIONS;
-
-    /**
-     * The feature id for the '<em><b>Entry Actions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STATE__ENTRY_ACTIONS = SCOPE__ENTRY_ACTIONS;
+    int STATE__LOCAL_ACTIONS = SCOPE__LOCAL_ACTIONS;
 
     /**
      * The feature id for the '<em><b>Body Reference</b></em>' reference.
@@ -700,15 +601,6 @@ public interface SCChartsPackage extends EPackage {
     int STATE__RENAMINGS = SCOPE__RENAMINGS;
 
     /**
-     * The feature id for the '<em><b>Interface Declaration</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STATE__INTERFACE_DECLARATION = SCOPE__INTERFACE_DECLARATION;
-
-    /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -736,22 +628,22 @@ public interface SCChartsPackage extends EPackage {
     int STATE__PARENT_REGION = SCOPE_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * The feature id for the '<em><b>Initial</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__IS_INITIAL = SCOPE_FEATURE_COUNT + 3;
+    int STATE__INITIAL = SCOPE_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Is Final</b></em>' attribute.
+     * The feature id for the '<em><b>Final</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__IS_FINAL = SCOPE_FEATURE_COUNT + 4;
+    int STATE__FINAL = SCOPE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Outgoing Transitions</b></em>' containment reference list.
@@ -827,13 +719,13 @@ public interface SCChartsPackage extends EPackage {
     int TRANSITION__DELAY = ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Is Immediate</b></em>' attribute.
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TRANSITION__IS_IMMEDIATE = ACTION__IS_IMMEDIATE;
+    int TRANSITION__IMMEDIATE = ACTION__IMMEDIATE;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -863,22 +755,31 @@ public interface SCChartsPackage extends EPackage {
     int TRANSITION__TYPE = ACTION_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Deferred</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRANSITION__DEFERRED = ACTION_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>History</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRANSITION__HISTORY = ACTION_FEATURE_COUNT + 3;
+
+    /**
      * The feature id for the '<em><b>Target State</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TRANSITION__TARGET_STATE = ACTION_FEATURE_COUNT + 2;
-
-    /**
-     * The feature id for the '<em><b>Is History</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TRANSITION__IS_HISTORY = ACTION_FEATURE_COUNT + 3;
+    int TRANSITION__TARGET_STATE = ACTION_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Source State</b></em>' container reference.
@@ -887,7 +788,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TRANSITION__SOURCE_STATE = ACTION_FEATURE_COUNT + 4;
+    int TRANSITION__SOURCE_STATE = ACTION_FEATURE_COUNT + 5;
 
     /**
      * The number of structural features of the '<em>Transition</em>' class.
@@ -896,7 +797,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TRANSITION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 5;
+    int TRANSITION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 6;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TextEffectImpl <em>Text Effect</em>}' class.
@@ -927,6 +828,380 @@ public interface SCChartsPackage extends EPackage {
     int TEXT_EFFECT_FEATURE_COUNT = KExpressionsPackage.TEXT_EXPRESSION_FEATURE_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.LocalActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getLocalAction()
+     * @generated
+     */
+    int LOCAL_ACTION = 10;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION__ANNOTATIONS = ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION__EFFECTS = ACTION__EFFECTS;
+
+    /**
+     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION__TRIGGER = ACTION__TRIGGER;
+
+    /**
+     * The feature id for the '<em><b>Delay</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION__DELAY = ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION__IMMEDIATE = ACTION__IMMEDIATE;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION__LABEL = ACTION__LABEL;
+
+    /**
+     * The number of structural features of the '<em>Local Action</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.EntryActionImpl <em>Entry Action</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.EntryActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEntryAction()
+     * @generated
+     */
+    int ENTRY_ACTION = 11;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
+
+    /**
+     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
+
+    /**
+     * The feature id for the '<em><b>Delay</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__LABEL = LOCAL_ACTION__LABEL;
+
+    /**
+     * The number of structural features of the '<em>Entry Action</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DuringActionImpl <em>During Action</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.DuringActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDuringAction()
+     * @generated
+     */
+    int DURING_ACTION = 12;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
+
+    /**
+     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
+
+    /**
+     * The feature id for the '<em><b>Delay</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION__LABEL = LOCAL_ACTION__LABEL;
+
+    /**
+     * The number of structural features of the '<em>During Action</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ExitActionImpl <em>Exit Action</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.ExitActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getExitAction()
+     * @generated
+     */
+    int EXIT_ACTION = 13;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
+
+    /**
+     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
+
+    /**
+     * The feature id for the '<em><b>Delay</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__LABEL = LOCAL_ACTION__LABEL;
+
+    /**
+     * The number of structural features of the '<em>Exit Action</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.SuspendActionImpl <em>Suspend Action</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.SuspendActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSuspendAction()
+     * @generated
+     */
+    int SUSPEND_ACTION = 14;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
+
+    /**
+     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
+
+    /**
+     * The feature id for the '<em><b>Delay</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__DELAY = LOCAL_ACTION__DELAY;
+
+    /**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__LABEL = LOCAL_ACTION__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Weak</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__WEAK = LOCAL_ACTION_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Suspend Action</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 1;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -934,7 +1209,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
      * @generated
      */
-    int STATE_TYPE = 10;
+    int STATE_TYPE = 15;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}' enum.
@@ -944,7 +1219,17 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransitionType()
      * @generated
      */
-    int TRANSITION_TYPE = 11;
+    int TRANSITION_TYPE = 16;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.HistoryType
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
+     * @generated
+     */
+    int HISTORY_TYPE = 17;
 
     /**
      * The meta object id for the '<em>Parsable</em>' data type.
@@ -954,7 +1239,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
      * @generated
      */
-    int PARSABLE = 12;
+    int PARSABLE = 18;
 
 
     /**
@@ -1001,15 +1286,15 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getAction_Delay();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#isIsImmediate <em>Is Immediate</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#isImmediate <em>Immediate</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Immediate</em>'.
-     * @see de.cau.cs.kieler.sccharts.Action#isIsImmediate()
+     * @return the meta object for the attribute '<em>Immediate</em>'.
+     * @see de.cau.cs.kieler.sccharts.Action#isImmediate()
      * @see #getAction()
      * @generated
      */
-    EAttribute getAction_IsImmediate();
+    EAttribute getAction_Immediate();
 
     /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#getLabel <em>Label</em>}'.
@@ -1215,26 +1500,26 @@ public interface SCChartsPackage extends EPackage {
     EReference getState_ParentRegion();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#isIsInitial <em>Is Initial</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#isInitial <em>Initial</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Initial</em>'.
-     * @see de.cau.cs.kieler.sccharts.State#isIsInitial()
+     * @return the meta object for the attribute '<em>Initial</em>'.
+     * @see de.cau.cs.kieler.sccharts.State#isInitial()
      * @see #getState()
      * @generated
      */
-    EAttribute getState_IsInitial();
+    EAttribute getState_Initial();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#isIsFinal <em>Is Final</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#isFinal <em>Final</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Final</em>'.
-     * @see de.cau.cs.kieler.sccharts.State#isIsFinal()
+     * @return the meta object for the attribute '<em>Final</em>'.
+     * @see de.cau.cs.kieler.sccharts.State#isFinal()
      * @see #getState()
      * @generated
      */
-    EAttribute getState_IsFinal();
+    EAttribute getState_Final();
 
     /**
      * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}'.
@@ -1291,6 +1576,28 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getTransition_Type();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#isDeferred <em>Deferred</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Deferred</em>'.
+     * @see de.cau.cs.kieler.sccharts.Transition#isDeferred()
+     * @see #getTransition()
+     * @generated
+     */
+    EAttribute getTransition_Deferred();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#getHistory <em>History</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>History</em>'.
+     * @see de.cau.cs.kieler.sccharts.Transition#getHistory()
+     * @see #getTransition()
+     * @generated
+     */
+    EAttribute getTransition_History();
+
+    /**
      * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Transition#getTargetState <em>Target State</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1300,17 +1607,6 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getTransition_TargetState();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#isIsHistory <em>Is History</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is History</em>'.
-     * @see de.cau.cs.kieler.sccharts.Transition#isIsHistory()
-     * @see #getTransition()
-     * @generated
-     */
-    EAttribute getTransition_IsHistory();
 
     /**
      * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.Transition#getSourceState <em>Source State</em>}'.
@@ -1367,48 +1663,15 @@ public interface SCChartsPackage extends EPackage {
     EReference getScope_ValuedObjects();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Scope#getSuspensionTrigger <em>Suspension Trigger</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getLocalActions <em>Local Actions</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Suspension Trigger</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getSuspensionTrigger()
+     * @return the meta object for the containment reference list '<em>Local Actions</em>'.
+     * @see de.cau.cs.kieler.sccharts.Scope#getLocalActions()
      * @see #getScope()
      * @generated
      */
-    EReference getScope_SuspensionTrigger();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getExitActions <em>Exit Actions</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Exit Actions</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getExitActions()
-     * @see #getScope()
-     * @generated
-     */
-    EReference getScope_ExitActions();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getDuringActions <em>During Actions</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>During Actions</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getDuringActions()
-     * @see #getScope()
-     * @generated
-     */
-    EReference getScope_DuringActions();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getEntryActions <em>Entry Actions</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Entry Actions</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getEntryActions()
-     * @see #getScope()
-     * @generated
-     */
-    EReference getScope_EntryActions();
+    EReference getScope_LocalActions();
 
     /**
      * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Scope#getBodyReference <em>Body Reference</em>}'.
@@ -1455,17 +1718,6 @@ public interface SCChartsPackage extends EPackage {
     EReference getScope_Renamings();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Scope#getInterfaceDeclaration <em>Interface Declaration</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Interface Declaration</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getInterfaceDeclaration()
-     * @see #getScope()
-     * @generated
-     */
-    EAttribute getScope_InterfaceDeclaration();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.TextEffect <em>Text Effect</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1474,6 +1726,67 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EClass getTextEffect();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.LocalAction <em>Local Action</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Local Action</em>'.
+     * @see de.cau.cs.kieler.sccharts.LocalAction
+     * @generated
+     */
+    EClass getLocalAction();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.EntryAction <em>Entry Action</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Entry Action</em>'.
+     * @see de.cau.cs.kieler.sccharts.EntryAction
+     * @generated
+     */
+    EClass getEntryAction();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DuringAction <em>During Action</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>During Action</em>'.
+     * @see de.cau.cs.kieler.sccharts.DuringAction
+     * @generated
+     */
+    EClass getDuringAction();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ExitAction <em>Exit Action</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Exit Action</em>'.
+     * @see de.cau.cs.kieler.sccharts.ExitAction
+     * @generated
+     */
+    EClass getExitAction();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.SuspendAction <em>Suspend Action</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Suspend Action</em>'.
+     * @see de.cau.cs.kieler.sccharts.SuspendAction
+     * @generated
+     */
+    EClass getSuspendAction();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.SuspendAction#isWeak <em>Weak</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Weak</em>'.
+     * @see de.cau.cs.kieler.sccharts.SuspendAction#isWeak()
+     * @see #getSuspendAction()
+     * @generated
+     */
+    EAttribute getSuspendAction_Weak();
 
     /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}'.
@@ -1494,6 +1807,16 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EEnum getTransitionType();
+
+    /**
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>History Type</em>'.
+     * @see de.cau.cs.kieler.sccharts.HistoryType
+     * @generated
+     */
+    EEnum getHistoryType();
 
     /**
      * Returns the meta object for data type '{@link java.lang.String <em>Parsable</em>}'.
@@ -1563,12 +1886,12 @@ public interface SCChartsPackage extends EPackage {
         EAttribute ACTION__DELAY = eINSTANCE.getAction_Delay();
 
         /**
-         * The meta object literal for the '<em><b>Is Immediate</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Immediate</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute ACTION__IS_IMMEDIATE = eINSTANCE.getAction_IsImmediate();
+        EAttribute ACTION__IMMEDIATE = eINSTANCE.getAction_Immediate();
 
         /**
          * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
@@ -1735,20 +2058,20 @@ public interface SCChartsPackage extends EPackage {
         EReference STATE__PARENT_REGION = eINSTANCE.getState_ParentRegion();
 
         /**
-         * The meta object literal for the '<em><b>Is Initial</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Initial</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute STATE__IS_INITIAL = eINSTANCE.getState_IsInitial();
+        EAttribute STATE__INITIAL = eINSTANCE.getState_Initial();
 
         /**
-         * The meta object literal for the '<em><b>Is Final</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Final</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute STATE__IS_FINAL = eINSTANCE.getState_IsFinal();
+        EAttribute STATE__FINAL = eINSTANCE.getState_Final();
 
         /**
          * The meta object literal for the '<em><b>Outgoing Transitions</b></em>' containment reference list feature.
@@ -1793,20 +2116,28 @@ public interface SCChartsPackage extends EPackage {
         EAttribute TRANSITION__TYPE = eINSTANCE.getTransition_Type();
 
         /**
+         * The meta object literal for the '<em><b>Deferred</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TRANSITION__DEFERRED = eINSTANCE.getTransition_Deferred();
+
+        /**
+         * The meta object literal for the '<em><b>History</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TRANSITION__HISTORY = eINSTANCE.getTransition_History();
+
+        /**
          * The meta object literal for the '<em><b>Target State</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EReference TRANSITION__TARGET_STATE = eINSTANCE.getTransition_TargetState();
-
-        /**
-         * The meta object literal for the '<em><b>Is History</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute TRANSITION__IS_HISTORY = eINSTANCE.getTransition_IsHistory();
 
         /**
          * The meta object literal for the '<em><b>Source State</b></em>' container reference feature.
@@ -1851,36 +2182,12 @@ public interface SCChartsPackage extends EPackage {
         EReference SCOPE__VALUED_OBJECTS = eINSTANCE.getScope_ValuedObjects();
 
         /**
-         * The meta object literal for the '<em><b>Suspension Trigger</b></em>' containment reference feature.
+         * The meta object literal for the '<em><b>Local Actions</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference SCOPE__SUSPENSION_TRIGGER = eINSTANCE.getScope_SuspensionTrigger();
-
-        /**
-         * The meta object literal for the '<em><b>Exit Actions</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SCOPE__EXIT_ACTIONS = eINSTANCE.getScope_ExitActions();
-
-        /**
-         * The meta object literal for the '<em><b>During Actions</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SCOPE__DURING_ACTIONS = eINSTANCE.getScope_DuringActions();
-
-        /**
-         * The meta object literal for the '<em><b>Entry Actions</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SCOPE__ENTRY_ACTIONS = eINSTANCE.getScope_EntryActions();
+        EReference SCOPE__LOCAL_ACTIONS = eINSTANCE.getScope_LocalActions();
 
         /**
          * The meta object literal for the '<em><b>Body Reference</b></em>' reference feature.
@@ -1915,14 +2222,6 @@ public interface SCChartsPackage extends EPackage {
         EReference SCOPE__RENAMINGS = eINSTANCE.getScope_Renamings();
 
         /**
-         * The meta object literal for the '<em><b>Interface Declaration</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute SCOPE__INTERFACE_DECLARATION = eINSTANCE.getScope_InterfaceDeclaration();
-
-        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TextEffectImpl <em>Text Effect</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1931,6 +2230,64 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EClass TEXT_EFFECT = eINSTANCE.getTextEffect();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.LocalActionImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getLocalAction()
+         * @generated
+         */
+        EClass LOCAL_ACTION = eINSTANCE.getLocalAction();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.EntryActionImpl <em>Entry Action</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.EntryActionImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEntryAction()
+         * @generated
+         */
+        EClass ENTRY_ACTION = eINSTANCE.getEntryAction();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DuringActionImpl <em>During Action</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.DuringActionImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDuringAction()
+         * @generated
+         */
+        EClass DURING_ACTION = eINSTANCE.getDuringAction();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ExitActionImpl <em>Exit Action</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.ExitActionImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getExitAction()
+         * @generated
+         */
+        EClass EXIT_ACTION = eINSTANCE.getExitAction();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.SuspendActionImpl <em>Suspend Action</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.SuspendActionImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSuspendAction()
+         * @generated
+         */
+        EClass SUSPEND_ACTION = eINSTANCE.getSuspendAction();
+
+        /**
+         * The meta object literal for the '<em><b>Weak</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SUSPEND_ACTION__WEAK = eINSTANCE.getSuspendAction_Weak();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.
@@ -1951,6 +2308,16 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EEnum TRANSITION_TYPE = eINSTANCE.getTransitionType();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.HistoryType
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
+         * @generated
+         */
+        EEnum HISTORY_TYPE = eINSTANCE.getHistoryType();
 
         /**
          * The meta object literal for the '<em>Parsable</em>' data type.

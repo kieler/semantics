@@ -102,13 +102,13 @@ class S2Simulation {
                   
             // auxiliary signal
             var auxiliarySignal = KExpressionsFactory::eINSTANCE.createValuedObject();
-            auxiliarySignal.setIsSignal(true);
+            auxiliarySignal.setSignal(true);
             var auxiliaryEmitInstruction = SFactory::eINSTANCE.createEmit
                   
             // Setup the auxiliarySignal as an OUTPUT to the module
             auxiliarySignal.setName(UID);
-            auxiliarySignal.setIsInput(false);
-            auxiliarySignal.setIsOutput(true);
+            auxiliarySignal.setInput(false);
+            auxiliarySignal.setOutput(true);
             auxiliarySignal.setType(ValueType::PURE);
             // Set the auxiliarySignal for emission 
             auxiliaryEmitInstruction.setSignal(auxiliarySignal);

@@ -41,15 +41,6 @@ public interface SFactory extends EFactory
   State createState();
 
   /**
-   * Returns a new object of class '<em>Thread</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Thread</em>'.
-   * @generated
-   */
-  Thread createThread();
-
-  /**
    * Returns a new object of class '<em>Host Code Instruction</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -57,15 +48,6 @@ public interface SFactory extends EFactory
    * @generated
    */
   HostCodeInstruction createHostCodeInstruction();
-
-  /**
-   * Returns a new object of class '<em>Continuation</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Continuation</em>'.
-   * @generated
-   */
-  Continuation createContinuation();
 
   /**
    * Returns a new object of class '<em>Instruction</em>'.

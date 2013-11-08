@@ -169,6 +169,7 @@ import de.cau.cs.kieler.scg.provider.ScgItemProviderAdapterFactory;
 
 import de.cau.cs.kieler.core.annotations.provider.AnnotationsItemProviderAdapterFactory;
 
+import de.cau.cs.kieler.core.kexpressions.provider.KExpressionsItemProviderAdapterFactory;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
 
@@ -716,6 +717,7 @@ public class ScgEditor
         adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new ScgItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new AnnotationsItemProviderAdapterFactory());
+        adapterFactory.addAdapterFactory(new KExpressionsItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
         // Create the command stack that will notify this editor as commands are executed.

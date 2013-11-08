@@ -2,24 +2,7 @@
  */
 package de.cau.cs.kieler.s.s.util;
 
-import de.cau.cs.kieler.s.s.Abort;
-import de.cau.cs.kieler.s.s.Await;
-import de.cau.cs.kieler.s.s.Continuation;
-import de.cau.cs.kieler.s.s.Emit;
-import de.cau.cs.kieler.s.s.Fork;
-import de.cau.cs.kieler.s.s.Halt;
-import de.cau.cs.kieler.s.s.HostCodeInstruction;
-import de.cau.cs.kieler.s.s.If;
-import de.cau.cs.kieler.s.s.Instruction;
-import de.cau.cs.kieler.s.s.Join;
-import de.cau.cs.kieler.s.s.LocalSignal;
-import de.cau.cs.kieler.s.s.Pause;
-import de.cau.cs.kieler.s.s.Prio;
-import de.cau.cs.kieler.s.s.Program;
-import de.cau.cs.kieler.s.s.SPackage;
-import de.cau.cs.kieler.s.s.State;
-import de.cau.cs.kieler.s.s.Term;
-import de.cau.cs.kieler.s.s.Trans;
+import de.cau.cs.kieler.s.s.*;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -100,15 +83,6 @@ public class SSwitch<T> extends Switch<T>
       {
         State state = (State)theEObject;
         T result = caseState(state);
-        if (result == null) result = caseContinuation(state);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SPackage.THREAD:
-      {
-        de.cau.cs.kieler.s.s.Thread thread = (de.cau.cs.kieler.s.s.Thread)theEObject;
-        T result = caseThread(thread);
-        if (result == null) result = caseContinuation(thread);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -117,13 +91,6 @@ public class SSwitch<T> extends Switch<T>
         HostCodeInstruction hostCodeInstruction = (HostCodeInstruction)theEObject;
         T result = caseHostCodeInstruction(hostCodeInstruction);
         if (result == null) result = caseInstruction(hostCodeInstruction);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SPackage.CONTINUATION:
-      {
-        Continuation continuation = (Continuation)theEObject;
-        T result = caseContinuation(continuation);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -267,22 +234,6 @@ public class SSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Thread</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Thread</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseThread(de.cau.cs.kieler.s.s.Thread object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Host Code Instruction</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -294,22 +245,6 @@ public class SSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseHostCodeInstruction(HostCodeInstruction object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Continuation</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Continuation</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseContinuation(Continuation object)
   {
     return null;
   }

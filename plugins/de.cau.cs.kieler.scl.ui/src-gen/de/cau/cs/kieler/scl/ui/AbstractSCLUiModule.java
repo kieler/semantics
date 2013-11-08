@@ -68,11 +68,6 @@ public abstract class AbstractSCLUiModule extends DefaultUiModule {
 		return de.cau.cs.kieler.scl.ui.outline.SCLOutlineTreeProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.ui.generator.quickfix.QuickfixProviderFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.quickfix.IssueResolutionProvider> bindIssueResolutionProvider() {
-		return de.cau.cs.kieler.scl.ui.quickfix.SCLQuickfixProvider.class;
-	}
-
 	// contributed by org.eclipse.xtext.ui.generator.contentAssist.JavaBasedContentAssistFragment
 	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.IContentProposalProvider> bindIContentProposalProvider() {
 		return de.cau.cs.kieler.scl.ui.contentassist.SCLProposalProvider.class;
@@ -96,6 +91,11 @@ public abstract class AbstractSCLUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment
 	public void configureContentAssistLexer(com.google.inject.Binder binder) {
 		binder.bind(org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.ui.LexerUIBindings.CONTENT_ASSIST)).to(de.cau.cs.kieler.scl.ui.contentassist.antlr.internal.InternalSCLLexer.class);
+	}
+
+	// contributed by org.eclipse.xtext.ui.generator.quickfix.QuickfixProviderFragment
+	public Class<? extends org.eclipse.xtext.ui.editor.quickfix.IssueResolutionProvider> bindIssueResolutionProvider() {
+		return de.cau.cs.kieler.scl.ui.quickfix.SCLQuickfixProvider.class;
 	}
 
 

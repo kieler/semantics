@@ -8,8 +8,9 @@ package de.cau.cs.kieler.core.kexpressions.impl;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 
-import de.cau.cs.kieler.core.kexpressions.BooleanValue;
+import de.cau.cs.kieler.core.kexpressions.BoolValue;
 import de.cau.cs.kieler.core.kexpressions.CombineOperator;
+import de.cau.cs.kieler.core.kexpressions.DoubleValue;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
@@ -85,7 +86,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass booleanValueEClass = null;
+    private EClass boolValueEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -100,6 +101,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     private EClass textExpressionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass doubleValueEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -227,16 +235,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getValuedObject_InitialValue() {
-        return (EReference)valuedObjectEClass.getEStructuralFeatures().get(7);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getValuedObject_IsInput() {
+    public EAttribute getValuedObject_Input() {
         return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(2);
     }
 
@@ -245,7 +244,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getValuedObject_IsOutput() {
+    public EAttribute getValuedObject_Output() {
         return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(3);
     }
 
@@ -254,7 +253,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getValuedObject_IsStatic() {
+    public EAttribute getValuedObject_Static() {
         return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(4);
     }
 
@@ -263,8 +262,17 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getValuedObject_IsSignal() {
+    public EAttribute getValuedObject_Signal() {
         return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getValuedObject_InitialValue() {
+        return (EReference)valuedObjectEClass.getEStructuralFeatures().get(7);
     }
 
     /**
@@ -344,8 +352,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getBooleanValue() {
-        return booleanValueEClass;
+    public EClass getBoolValue() {
+        return boolValueEClass;
     }
 
     /**
@@ -353,8 +361,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getBooleanValue_Value() {
-        return (EAttribute)booleanValueEClass.getEStructuralFeatures().get(0);
+    public EAttribute getBoolValue_Value() {
+        return (EAttribute)boolValueEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -400,6 +408,24 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      */
     public EAttribute getTextExpression_Text() {
         return (EAttribute)textExpressionEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getDoubleValue() {
+        return doubleValueEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDoubleValue_Value() {
+        return (EAttribute)doubleValueEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -462,10 +488,10 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         valuedObjectEClass = createEClass(VALUED_OBJECT);
         createEAttribute(valuedObjectEClass, VALUED_OBJECT__NAME);
         createEAttribute(valuedObjectEClass, VALUED_OBJECT__TYPE);
-        createEAttribute(valuedObjectEClass, VALUED_OBJECT__IS_INPUT);
-        createEAttribute(valuedObjectEClass, VALUED_OBJECT__IS_OUTPUT);
-        createEAttribute(valuedObjectEClass, VALUED_OBJECT__IS_STATIC);
-        createEAttribute(valuedObjectEClass, VALUED_OBJECT__IS_SIGNAL);
+        createEAttribute(valuedObjectEClass, VALUED_OBJECT__INPUT);
+        createEAttribute(valuedObjectEClass, VALUED_OBJECT__OUTPUT);
+        createEAttribute(valuedObjectEClass, VALUED_OBJECT__STATIC);
+        createEAttribute(valuedObjectEClass, VALUED_OBJECT__SIGNAL);
         createEAttribute(valuedObjectEClass, VALUED_OBJECT__COMBINE_OPERATOR);
         createEReference(valuedObjectEClass, VALUED_OBJECT__INITIAL_VALUE);
 
@@ -480,8 +506,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         floatValueEClass = createEClass(FLOAT_VALUE);
         createEAttribute(floatValueEClass, FLOAT_VALUE__VALUE);
 
-        booleanValueEClass = createEClass(BOOLEAN_VALUE);
-        createEAttribute(booleanValueEClass, BOOLEAN_VALUE__VALUE);
+        boolValueEClass = createEClass(BOOL_VALUE);
+        createEAttribute(boolValueEClass, BOOL_VALUE__VALUE);
 
         operatorExpressionEClass = createEClass(OPERATOR_EXPRESSION);
         createEAttribute(operatorExpressionEClass, OPERATOR_EXPRESSION__OPERATOR);
@@ -489,6 +515,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         textExpressionEClass = createEClass(TEXT_EXPRESSION);
         createEAttribute(textExpressionEClass, TEXT_EXPRESSION__TEXT);
+
+        doubleValueEClass = createEClass(DOUBLE_VALUE);
+        createEAttribute(doubleValueEClass, DOUBLE_VALUE__VALUE);
 
         // Create enums
         combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
@@ -532,9 +561,10 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         valueEClass.getESuperTypes().add(this.getExpression());
         intValueEClass.getESuperTypes().add(this.getValue());
         floatValueEClass.getESuperTypes().add(this.getValue());
-        booleanValueEClass.getESuperTypes().add(this.getValue());
+        boolValueEClass.getESuperTypes().add(this.getValue());
         operatorExpressionEClass.getESuperTypes().add(this.getExpression());
         textExpressionEClass.getESuperTypes().add(this.getExpression());
+        doubleValueEClass.getESuperTypes().add(this.getValue());
 
         // Initialize classes and features; add operations and parameters
         initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -542,10 +572,10 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(valuedObjectEClass, ValuedObject.class, "ValuedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getValuedObject_Name(), ecorePackage.getEString(), "name", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getValuedObject_Type(), this.getValueType(), "type", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getValuedObject_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getValuedObject_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getValuedObject_IsStatic(), ecorePackage.getEBoolean(), "isStatic", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getValuedObject_IsSignal(), ecorePackage.getEBoolean(), "isSignal", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getValuedObject_Input(), ecorePackage.getEBoolean(), "input", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getValuedObject_Output(), ecorePackage.getEBoolean(), "output", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getValuedObject_Static(), ecorePackage.getEBoolean(), "static", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getValuedObject_Signal(), ecorePackage.getEBoolean(), "signal", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getValuedObject_CombineOperator(), this.getCombineOperator(), "combineOperator", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getValuedObject_InitialValue(), this.getExpression(), null, "initialValue", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -560,8 +590,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(floatValueEClass, FloatValue.class, "FloatValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getFloatValue_Value(), ecorePackage.getEFloatObject(), "value", null, 1, 1, FloatValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(booleanValueEClass, BooleanValue.class, "BooleanValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getBooleanValue_Value(), ecorePackage.getEBooleanObject(), "value", null, 1, 1, BooleanValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(boolValueEClass, BoolValue.class, "BoolValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getBoolValue_Value(), ecorePackage.getEBooleanObject(), "value", null, 1, 1, BoolValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(operatorExpressionEClass, OperatorExpression.class, "OperatorExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getOperatorExpression_Operator(), this.getOperatorType(), "operator", null, 0, 1, OperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -569,6 +599,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(textExpressionEClass, TextExpression.class, "TextExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTextExpression_Text(), ecorePackage.getEString(), "text", null, 0, 1, TextExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(doubleValueEClass, DoubleValue.class, "DoubleValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getDoubleValue_Value(), ecorePackage.getEFloatObject(), "value", null, 1, 1, DoubleValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");
@@ -601,9 +634,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEEnum(valueTypeEEnum, ValueType.class, "ValueType");
         addEEnumLiteral(valueTypeEEnum, ValueType.PURE);
-        addEEnumLiteral(valueTypeEEnum, ValueType.BOOLEAN);
+        addEEnumLiteral(valueTypeEEnum, ValueType.BOOL);
         addEEnumLiteral(valueTypeEEnum, ValueType.UNSIGNED);
-        addEEnumLiteral(valueTypeEEnum, ValueType.INTEGER);
+        addEEnumLiteral(valueTypeEEnum, ValueType.INT);
         addEEnumLiteral(valueTypeEEnum, ValueType.FLOAT);
         addEEnumLiteral(valueTypeEEnum, ValueType.HOST);
         addEEnumLiteral(valueTypeEEnum, ValueType.DOUBLE);

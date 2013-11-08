@@ -67,9 +67,10 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.VALUE: return createValue();
             case KExpressionsPackage.INT_VALUE: return createIntValue();
             case KExpressionsPackage.FLOAT_VALUE: return createFloatValue();
-            case KExpressionsPackage.BOOLEAN_VALUE: return createBooleanValue();
+            case KExpressionsPackage.BOOL_VALUE: return createBoolValue();
             case KExpressionsPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
             case KExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
+            case KExpressionsPackage.DOUBLE_VALUE: return createDoubleValue();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -178,9 +179,9 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public BooleanValue createBooleanValue() {
-        BooleanValueImpl booleanValue = new BooleanValueImpl();
-        return booleanValue;
+    public BoolValue createBoolValue() {
+        BoolValueImpl boolValue = new BoolValueImpl();
+        return boolValue;
     }
 
     /**
@@ -201,6 +202,16 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public TextExpression createTextExpression() {
         TextExpressionImpl textExpression = new TextExpressionImpl();
         return textExpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DoubleValue createDoubleValue() {
+        DoubleValueImpl doubleValue = new DoubleValueImpl();
+        return doubleValue;
     }
 
     /**

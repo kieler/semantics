@@ -44,14 +44,14 @@ public enum ValueType implements Enumerator {
     PURE(0, "PURE", "pure"),
 
     /**
-     * The '<em><b>BOOLEAN</b></em>' literal object.
+     * The '<em><b>BOOL</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #BOOLEAN_VALUE
+     * @see #BOOL_VALUE
      * @generated
      * @ordered
      */
-    BOOLEAN(1, "BOOLEAN", "boolean"), /**
+    BOOL(1, "BOOL", "bool"), /**
      * The '<em><b>UNSIGNED</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -62,14 +62,14 @@ public enum ValueType implements Enumerator {
     UNSIGNED(2, "UNSIGNED", "unsigned"),
 
     /**
-     * The '<em><b>INTEGER</b></em>' literal object.
+     * The '<em><b>INT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #INTEGER_VALUE
+     * @see #INT_VALUE
      * @generated
      * @ordered
      */
-    INTEGER(3, "INTEGER", "integer"), /**
+    INT(3, "INT", "int"), /**
      * The '<em><b>FLOAT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -126,19 +126,19 @@ public enum ValueType implements Enumerator {
     public static final int PURE_VALUE = 0;
 
     /**
-     * The '<em><b>BOOLEAN</b></em>' literal value.
+     * The '<em><b>BOOL</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of '<em><b>BOOLEAN</b></em>' literal object isn't clear,
+     * If the meaning of '<em><b>BOOL</b></em>' literal object isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @see #BOOLEAN
-     * @model literal="boolean"
+     * @see #BOOL
+     * @model literal="bool"
      * @generated
      * @ordered
      */
-    public static final int BOOLEAN_VALUE = 1;
+    public static final int BOOL_VALUE = 1;
 
     /**
      * The '<em><b>UNSIGNED</b></em>' literal value.
@@ -156,19 +156,19 @@ public enum ValueType implements Enumerator {
     public static final int UNSIGNED_VALUE = 2;
 
     /**
-     * The '<em><b>INTEGER</b></em>' literal value.
+     * The '<em><b>INT</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of '<em><b>INTEGER</b></em>' literal object isn't clear,
+     * If the meaning of '<em><b>INT</b></em>' literal object isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @see #INTEGER
-     * @model literal="integer"
+     * @see #INT
+     * @model literal="int"
      * @generated
      * @ordered
      */
-    public static final int INTEGER_VALUE = 3;
+    public static final int INT_VALUE = 3;
 
     /**
      * The '<em><b>FLOAT</b></em>' literal value.
@@ -240,9 +240,9 @@ public enum ValueType implements Enumerator {
     private static final ValueType[] VALUES_ARRAY =
         new ValueType[] {
             PURE,
-            BOOLEAN,
+            BOOL,
             UNSIGNED,
-            INTEGER,
+            INT,
             FLOAT,
             HOST,
             DOUBLE,
@@ -298,9 +298,9 @@ public enum ValueType implements Enumerator {
     public static ValueType get(int value) {
         switch (value) {
             case PURE_VALUE: return PURE;
-            case BOOLEAN_VALUE: return BOOLEAN;
+            case BOOL_VALUE: return BOOL;
             case UNSIGNED_VALUE: return UNSIGNED;
-            case INTEGER_VALUE: return INTEGER;
+            case INT_VALUE: return INT;
             case FLOAT_VALUE: return FLOAT;
             case HOST_VALUE: return HOST;
             case DOUBLE_VALUE: return DOUBLE;

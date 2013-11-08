@@ -5,17 +5,18 @@ import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
 import "http://kieler.cs.cau.de/sccharts/0.1.0" as sccharts
 
+// ---------------------------------------------------------------------------------------------------
 
 RootRegion returns sccharts::Region:
 	{sccharts::Region}
     (annotations+=ImportAnnotation)*
     (
       (annotations += Annotation)*
-      'region' (id=ID)? (label=STRING)? ':'
+      'region' id=ID (label=STRING)? ':'
       (valuedObjects+=ValuedObject)*
       (bodyText+=TextualCode)* 
      )?
-    (states+=State)*;
+    (states+=SCChart)*;
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -41,12 +42,36 @@ Region returns sccharts::Region:
 
 // ---------------------------------------------------------------------------------------------------
 
+SCChart returns sccharts::State:
+    (annotations += Annotation)*
+    (type=StateType)? ('scchart') (id=ID) (label=STRING)?
+  
+    (
+      ('@' bodyReference = [sccharts::State|ID]
+        ('[' renamings+= Substitution (',' renamings+= Substitution)* ']')?
+       )
+     | 
+      ('{'
+          (
+            (valuedObjects+=ValuedObject |
+             localActions+=LocalAction)*
+            (bodyText += TextualCode)*
+            (
+             (regions+=SingleRegion)(regions+=Region)*
+             )?
+            )
+          '}') 
+     )?
+;
+
+// ---------------------------------------------------------------------------------------------------
+
 State returns sccharts::State:
     (annotations += Annotation)*
     (
-      ((isInitial?='init') (isFinal?='final')?)
+      ((initial?='initial') (final?='final')?)
      |
-      ((isFinal?='final') (isInitial?='init')?)
+      ((final?='final') (initial?='initial')?)
      )?
   
     (type=StateType)? ('state') (id=ID) (label=STRING)?
@@ -58,11 +83,8 @@ State returns sccharts::State:
      | 
       ('{'
           (
-            (valuedObjects+=ValuedObject    |
-             'entry' entryActions+=Action |
-             'during' duringActions+=Action |
-             'exit'  exitActions+=Action  |
-             'suspend' suspensionTrigger=Action)*
+            (valuedObjects+=ValuedObject |
+             localActions+=LocalAction)*
             (bodyText += TextualCode)*
             (
              (regions+=SingleRegion)(regions+=Region)*
@@ -72,82 +94,46 @@ State returns sccharts::State:
      )?
     (outgoingTransitions+=Transition)* ';';
 
+    
+// ---------------------------------------------------------------------------------------------------
+
+LocalAction returns sccharts::LocalAction:
+    EntryAction | DuringAction | ExitAction | SuspendAction
+;    
+    
 // ---------------------------------------------------------------------------------------------------
 
 Transition returns sccharts::Transition:
     (annotations += Annotation)*
 	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
-	( 'with'
+	( (immediate?='immediate')? (deferred?='deferred')? (history=HistoryType)?  ('with'
 	 (
-	   ( (isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ('/' effects+=Effect (';'effects+=Effect)*)? )
+	   ( (delay=INT)? (trigger=BoolExpression)? ('/' effects+=Effect (';'effects+=Effect)*)? )
 	  |
 	   ( label=STRING )
 	  )
-	 )? 	
-	(isHistory?='history')?;
+	 )?)? 	
+	;
 
 // ---------------------------------------------------------------------------------------------------
-
-//Signal returns kexpressions::Signal:
-//    aSignal
-//    | ISignal;
-//
-//aSignal returns kexpressions::Signal:
-//    (annotations+=Annotation)*
-//    (isInput?='input')?
-//	(isOutput?='output')?
-//	'signal' name=ID (':=' initialValue=AnyType)?
-//    ((':' (type = ValueType | hostType = STRING))
-//      |
-//     (':' 'combine' (type = ValueType | hostType = STRING) 'with'
-//        (combineOperator = CombineOperator | hostCombineOperator = STRING))
-//    )?;
-//
-//ISignal returns kexpressions::ISignal:
-//    (annotations+=Annotation)*
-//    (isInput?='input')?
-//	(isOutput?='output')?
-//	'signal' name=ID (':=' initialValue=AnyType)?
-//    ((':' (type = ValueType | hostType = STRING))
-//      |
-//     (':' 'combine' (type = ValueType | hostType = STRING) 'with'
-//        (combineOperator = CombineOperator | hostCombineOperator = STRING))
-//    )?;
-
-
 
 ValuedObject returns kexpressions::ValuedObject:
     (annotations+=Annotation)*
-    (isInput?='input')?
-    (isOutput?='output')?
-    (isStatic?='static')?
-    (isSignal?='signal')?
-    name=ID (':=' initialValue=Expression)?
-    ((':' (type = ValueType))
-      |
-     (':' 'combine' (type = ValueType) 'with'
-        (combineOperator = CombineOperator))
-    )?;
+    (input?='input')?
+    (output?='output')?
+    (static?='static')?
+    (signal?='signal')?
+    (type = ValueType)?
+    name=ID ('=' initialValue=Expression)?
+    ( 'combine'
+      (combineOperator = CombineOperator)
+    )? ';' ;
 
-
-// ---------------------------------------------------------------------------------------------------
-
-//Variable returns kexpressions::Variable:
-//    aVariable
-//    | IVariable;
-//    
-//aVariable returns kexpressions::Variable:
-//    (annotations += Annotation)*
-//    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
-//
-//IVariable returns kexpressions::IVariable:
-//    (annotations += Annotation)*
-//    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
 
 // ---------------------------------------------------------------------------------------------------
 
 TextualCode returns kexpressions::TextExpression:
-    'textual' 'code' ':' text = STRING;
+    text = HOSTCODE ';';
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -157,7 +143,10 @@ Substitution returns sccharts::Substitution:
 // ---------------------------------------------------------------------------------------------------
 
 enum StateType returns sccharts::StateType:
-	NORMAL = 'normal' | CONDITIONAL = 'conditional' | REFERENCE = 'reference' | TEXTUAL = 'textual';
+	NORMAL = 'normal' | CONNECTOR = 'connector' | REFERENCE = 'reference' | TEXTUAL = 'textual';
 
 enum TransitionType returns sccharts::TransitionType:
 	WEAKABORT = '-->' | STRONGABORT = 'o->' | NORMALTERMINATION = '>->';
+
+
+	

@@ -4,7 +4,7 @@ Bundle-Name: SCCharts KLighD binding
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.klighd;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: com.google.guava;bundle-version="[10.0.1,11.0.0)",
+Require-Bundle: com.google.guava;bundle-version="10.0.1",
  javax.inject;bundle-version="1.0.0",
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.core.kivi,
@@ -22,6 +22,7 @@ Require-Bundle: com.google.guava;bundle-version="[10.0.1,11.0.0)",
  de.cau.cs.kieler.klighd.incremental,
  de.cau.cs.kieler.sccharts.text;bundle-version="0.5.1",
  de.cau.cs.kieler.kiml.graphviz.dot;bundle-version="0.6.2",
- de.cau.cs.kieler.kiml.graphviz.layouter;bundle-version="0.6.3"
+ de.cau.cs.kieler.kiml.graphviz.layouter;bundle-version="0.6.3",
+ de.cau.cs.kieler.sccharts.s;bundle-version="0.1.0"
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 

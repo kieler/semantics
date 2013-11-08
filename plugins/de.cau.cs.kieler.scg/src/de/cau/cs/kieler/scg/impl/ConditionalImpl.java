@@ -1,25 +1,19 @@
 /**
- * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- * 
- * http://www.informatik.uni-kiel.de/rtsys/kieler/
- * 
- * Copyright 2013 by
- * + Christian-Albrechts-University of Kiel
- *   + Department of Computer Science
- *     + Real-Time and Embedded Systems Group
- * 
- * This code is provided under the terms of the Eclipse Public License (EPL).
- * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.scg.impl;
+
+import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import de.cau.cs.kieler.scg.Conditional;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.ScgPackage;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -59,24 +53,14 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
     protected ControlFlow else_;
 
     /**
-     * The default value of the '{@link #getCondition() <em>Condition</em>}' attribute.
+     * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getCondition()
      * @generated
      * @ordered
      */
-    protected static final String CONDITION_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getCondition() <em>Condition</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getCondition()
-     * @generated
-     * @ordered
-     */
-    protected String condition = CONDITION_EDEFAULT;
+    protected Expression condition;
 
     /**
      * <!-- begin-user-doc -->
@@ -188,7 +172,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getCondition() {
+    public Expression getCondition() {
         return condition;
     }
 
@@ -197,11 +181,33 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setCondition(String newCondition) {
-        String oldCondition = condition;
+    public NotificationChain basicSetCondition(Expression newCondition, NotificationChain msgs) {
+        Expression oldCondition = condition;
         condition = newCondition;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__CONDITION, oldCondition, condition));
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__CONDITION, oldCondition, newCondition);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setCondition(Expression newCondition) {
+        if (newCondition != condition) {
+            NotificationChain msgs = null;
+            if (condition != null)
+                msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.CONDITIONAL__CONDITION, null, msgs);
+            if (newCondition != null)
+                msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.CONDITIONAL__CONDITION, null, msgs);
+            msgs = basicSetCondition(newCondition, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.CONDITIONAL__CONDITION, newCondition, newCondition));
     }
 
     /**
@@ -216,6 +222,8 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
                 return basicSetThen(null, msgs);
             case ScgPackage.CONDITIONAL__ELSE:
                 return basicSetElse(null, msgs);
+            case ScgPackage.CONDITIONAL__CONDITION:
+                return basicSetCondition(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -253,7 +261,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
                 setElse((ControlFlow)newValue);
                 return;
             case ScgPackage.CONDITIONAL__CONDITION:
-                setCondition((String)newValue);
+                setCondition((Expression)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -274,7 +282,7 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
                 setElse((ControlFlow)null);
                 return;
             case ScgPackage.CONDITIONAL__CONDITION:
-                setCondition(CONDITION_EDEFAULT);
+                setCondition((Expression)null);
                 return;
         }
         super.eUnset(featureID);
@@ -293,25 +301,9 @@ public class ConditionalImpl extends NodeImpl implements Conditional {
             case ScgPackage.CONDITIONAL__ELSE:
                 return else_ != null;
             case ScgPackage.CONDITIONAL__CONDITION:
-                return CONDITION_EDEFAULT == null ? condition != null : !CONDITION_EDEFAULT.equals(condition);
+                return condition != null;
         }
         return super.eIsSet(featureID);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String toString() {
-        if (eIsProxy()) return super.toString();
-
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (Condition: ");
-        result.append(condition);
-        result.append(')');
-        return result.toString();
     }
 
 } //ConditionalImpl

@@ -6,7 +6,7 @@
   <version>0.8.0-SNAPSHOT</version>
   <artifactId>de.cau.cs.kieler.semantics.repository</artifactId>
   <packaging>eclipse-repository</packaging>
-  <name>KIELER Repository</name>
+  <name>KIELER Semantics Repository</name>
 
   <parent>
     <groupId>de.cau.cs.kieler</groupId>
@@ -15,69 +15,49 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
 
+<!-- These are a few properties we use for the small update site index.html that is generated. -->
+  <properties>
+    <update.site.name>KIELER Semantics</update.site.name>
+    <update.site.description>Nightly</update.site.description>
+    <update.site.version>0.8.0</update.site.version>
+    <target.eclipse.version>4.2 (Juno)</target.eclipse.version>
+  </properties>
+  
   <build>
     <plugins>
+      <!-- This plug-in generates a nice index.html for our update site and adds associate update
+           sites, which is at the time of writing not possible with Tycho alone. For how this stuff
+           works, see the bottom two links in comment 6 on this ticket:
+           https://bugs.eclipse.org/bugs/show_bug.cgi?id=391033-->
       <plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-p2-director-plugin</artifactId>
-        <version>${tycho-version}</version>
+        <groupId>org.jboss.tools.tycho-plugins</groupId>
+        <artifactId>repository-utils</artifactId>
+        <version>0.16.0.CR1</version>
         <executions>
           <execution>
-            <id>materialize-products</id>
+            <id>generate-facade</id>
+            <phase>package</phase>
             <goals>
-              <goal>materialize-products</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>archive-products</id>
-            <goals>
-              <goal>archive-products</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <products>
-            <product>
-              <id>de.cau.cs.kieler.product</id>
-              <rootFolder>kieler</rootFolder>
-              <archiveFileName>kieler_nightly_${buildQualifier}</archiveFileName>
-            </product>
-          </products>
-        </configuration>
-      </plugin>
-      
-      <!-- Fix for broken product icons.
-           The problem is that the product file contains paths to icons that are interpreted differently by
-           the Eclipse PDE and Maven/Tycho. To fix this, we use Maven's resources plugin to copy the files
-           to the location they have to be in for Tycho to find them.
-           Yes, this is ugly. -->
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.5</version>
-        <executions>
-          <execution>
-            <id>copy-resources</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
+              <goal>generate-repository-facade</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/products/de.cau.cs.kieler.product/de.cau.cs.kieler.core.product/icons/</outputDirectory>
-              <nonFilteredFileExtensions>
-                <nonFilteredFileExtension>gif</nonFilteredFileExtension>
-                <nonFilteredFileExtension>icns</nonFilteredFileExtension>
-                <nonFilteredFileExtension>ico</nonFilteredFileExtension>
-                <nonFilteredFileExtension>xpm</nonFilteredFileExtension>
-              </nonFilteredFileExtensions>
-              <resources>
-                <resource>
-                  <directory>icons</directory>
-                </resource>
-              </resources>
+              <associateSites>
+                <associateSite>http://guava-osgi.googlecode.com/svn/trunk/repository/</associateSite>
+                <associateSite>http://download.eclipse.org/graphiti/updates/0.8.1</associateSite>
+                <associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy</associateSite>
+                <associateSite>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_0.9.1/</associateSite>
+              </associateSites>
+              <siteTemplateFolder>siteTemplate</siteTemplateFolder>
+              <symbols>
+                <update.site.name>${update.site.name}</update.site.name>
+                <update.site.description>${update.site.description}</update.site.description>
+                <update.site.version>${update.site.version}</update.site.version>
+                <target.eclipse.version>${target.eclipse.version}</target.eclipse.version>
+              </symbols>
             </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
-  </build> 
+  </build>
 </project>

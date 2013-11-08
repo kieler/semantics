@@ -25,7 +25,15 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 
+/** 
+ * SCG Combination
+ * 
+ * @author ssm
+ * @kieler.design 2013-10-23 proposed 
+ * @kieler.rating 2013-10-23 proposed yellow
+ */
 class SCGraphShowDiagramCombination extends UpdateXtextModelKLighDCombination {
     
     private static val ResourceSet resSet = new ResourceSetImpl();
@@ -54,7 +62,7 @@ class SCGraphShowDiagramCombination extends UpdateXtextModelKLighDCombination {
                 val IFile file = selection.get(0) as IFile;
                 val path = file.fullPath.toPortableString;
               
-                if ((!path.endsWith("scg")) || (!path.endsWith("scgdep"))) {
+                if (!(path.endsWith("scg") || path.endsWith("scgdep") || path.endsWith("scgbb"))) {
                     return;
                 }
                 
@@ -65,7 +73,7 @@ class SCGraphShowDiagramCombination extends UpdateXtextModelKLighDCombination {
                 ])?.contents?.head;
                 if (eObject != null) {
                     this.schedule(new KlighdDiagramEffect("volatile.scg.outline", eObject) => [
-                        it.setProperty(LightDiagramServices::REQUESTED_UPDATE_STRATEGY, UpdateStrategy::ID);
+                        it.setProperty(LightDiagramServices::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
                     ]);
                 }
             }

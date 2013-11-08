@@ -15,8 +15,10 @@ package de.cau.cs.kieler.scgdep;
 
 import de.cau.cs.kieler.scg.ScgPackage;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -96,13 +98,31 @@ public interface ScgdepPackage extends EPackage {
     int DEPENDENCY__TARGET = ScgPackage.LINK__TARGET;
 
     /**
+     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPENDENCY__CONCURRENT = ScgPackage.LINK_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Confluent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPENDENCY__CONFLUENT = ScgPackage.LINK_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>Dependency</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DEPENDENCY_FEATURE_COUNT = ScgPackage.LINK_FEATURE_COUNT + 0;
+    int DEPENDENCY_FEATURE_COUNT = ScgPackage.LINK_FEATURE_COUNT + 2;
 
     /**
      * The operation id for the '<em>Get Annotation</em>' operation.
@@ -167,6 +187,24 @@ public interface ScgdepPackage extends EPackage {
      * @ordered
      */
     int ABSOLUTE_WRITE_READ__TARGET = DEPENDENCY__TARGET;
+
+    /**
+     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ABSOLUTE_WRITE_READ__CONCURRENT = DEPENDENCY__CONCURRENT;
+
+    /**
+     * The feature id for the '<em><b>Confluent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ABSOLUTE_WRITE_READ__CONFLUENT = DEPENDENCY__CONFLUENT;
 
     /**
      * The number of structural features of the '<em>Absolute Write Read</em>' class.
@@ -242,6 +280,24 @@ public interface ScgdepPackage extends EPackage {
     int RELATIVE_WRITE_READ__TARGET = DEPENDENCY__TARGET;
 
     /**
+     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIVE_WRITE_READ__CONCURRENT = DEPENDENCY__CONCURRENT;
+
+    /**
+     * The feature id for the '<em><b>Confluent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIVE_WRITE_READ__CONFLUENT = DEPENDENCY__CONFLUENT;
+
+    /**
      * The number of structural features of the '<em>Relative Write Read</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -313,6 +369,24 @@ public interface ScgdepPackage extends EPackage {
      * @ordered
      */
     int ABSOLUTE_WRITE_RELATIVE_WRITE__TARGET = DEPENDENCY__TARGET;
+
+    /**
+     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ABSOLUTE_WRITE_RELATIVE_WRITE__CONCURRENT = DEPENDENCY__CONCURRENT;
+
+    /**
+     * The feature id for the '<em><b>Confluent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ABSOLUTE_WRITE_RELATIVE_WRITE__CONFLUENT = DEPENDENCY__CONFLUENT;
 
     /**
      * The number of structural features of the '<em>Absolute Write Relative Write</em>' class.
@@ -388,6 +462,24 @@ public interface ScgdepPackage extends EPackage {
     int WRITE_WRITE__TARGET = DEPENDENCY__TARGET;
 
     /**
+     * The feature id for the '<em><b>Concurrent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int WRITE_WRITE__CONCURRENT = DEPENDENCY__CONCURRENT;
+
+    /**
+     * The feature id for the '<em><b>Confluent</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int WRITE_WRITE__CONFLUENT = DEPENDENCY__CONFLUENT;
+
+    /**
      * The number of structural features of the '<em>Write Write</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -434,6 +526,208 @@ public interface ScgdepPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scgdep.impl.AssignmentDepImpl <em>Assignment Dep</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scgdep.impl.AssignmentDepImpl
+     * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getAssignmentDep()
+     * @generated
+     */
+    int ASSIGNMENT_DEP = 5;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP__ANNOTATIONS = ScgPackage.ASSIGNMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Incoming</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP__INCOMING = ScgPackage.ASSIGNMENT__INCOMING;
+
+    /**
+     * The feature id for the '<em><b>Is Initial</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP__IS_INITIAL = ScgPackage.ASSIGNMENT__IS_INITIAL;
+
+    /**
+     * The feature id for the '<em><b>Next</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP__NEXT = ScgPackage.ASSIGNMENT__NEXT;
+
+    /**
+     * The feature id for the '<em><b>Assignment</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP__ASSIGNMENT = ScgPackage.ASSIGNMENT__ASSIGNMENT;
+
+    /**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP__VALUED_OBJECT = ScgPackage.ASSIGNMENT__VALUED_OBJECT;
+
+    /**
+     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP__DEPENDENCIES = ScgPackage.ASSIGNMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Assignment Dep</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP_FEATURE_COUNT = ScgPackage.ASSIGNMENT_FEATURE_COUNT + 1;
+
+    /**
+     * The operation id for the '<em>Get Annotation</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP___GET_ANNOTATION__STRING = ScgPackage.ASSIGNMENT___GET_ANNOTATION__STRING;
+
+    /**
+     * The operation id for the '<em>Get All Annotations</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP___GET_ALL_ANNOTATIONS__STRING = ScgPackage.ASSIGNMENT___GET_ALL_ANNOTATIONS__STRING;
+
+    /**
+     * The operation id for the '<em>Remove All Annotations</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP___REMOVE_ALL_ANNOTATIONS__STRING = ScgPackage.ASSIGNMENT___REMOVE_ALL_ANNOTATIONS__STRING;
+
+    /**
+     * The number of operations of the '<em>Assignment Dep</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT_DEP_OPERATION_COUNT = ScgPackage.ASSIGNMENT_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scgdep.impl.NodeDepImpl <em>Node Dep</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scgdep.impl.NodeDepImpl
+     * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getNodeDep()
+     * @generated
+     */
+    int NODE_DEP = 6;
+
+    /**
+     * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE_DEP__DEPENDENCIES = 0;
+
+    /**
+     * The number of structural features of the '<em>Node Dep</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE_DEP_FEATURE_COUNT = 1;
+
+    /**
+     * The number of operations of the '<em>Node Dep</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE_DEP_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scgdep.impl.SCGraphDepImpl <em>SC Graph Dep</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scgdep.impl.SCGraphDepImpl
+     * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getSCGraphDep()
+     * @generated
+     */
+    int SC_GRAPH_DEP = 7;
+
+    /**
+     * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPH_DEP__NODES = ScgPackage.SC_GRAPH__NODES;
+
+    /**
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPH_DEP__VALUED_OBJECTS = ScgPackage.SC_GRAPH__VALUED_OBJECTS;
+
+    /**
+     * The number of structural features of the '<em>SC Graph Dep</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPH_DEP_FEATURE_COUNT = ScgPackage.SC_GRAPH_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>SC Graph Dep</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPH_DEP_OPERATION_COUNT = ScgPackage.SC_GRAPH_OPERATION_COUNT + 0;
+
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scgdep.Dependency <em>Dependency</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -442,6 +736,28 @@ public interface ScgdepPackage extends EPackage {
      * @generated
      */
     EClass getDependency();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgdep.Dependency#isConcurrent <em>Concurrent</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Concurrent</em>'.
+     * @see de.cau.cs.kieler.scgdep.Dependency#isConcurrent()
+     * @see #getDependency()
+     * @generated
+     */
+    EAttribute getDependency_Concurrent();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgdep.Dependency#isConfluent <em>Confluent</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Confluent</em>'.
+     * @see de.cau.cs.kieler.scgdep.Dependency#isConfluent()
+     * @see #getDependency()
+     * @generated
+     */
+    EAttribute getDependency_Confluent();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scgdep.AbsoluteWrite_Read <em>Absolute Write Read</em>}'.
@@ -484,6 +800,47 @@ public interface ScgdepPackage extends EPackage {
     EClass getWrite_Write();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scgdep.AssignmentDep <em>Assignment Dep</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Assignment Dep</em>'.
+     * @see de.cau.cs.kieler.scgdep.AssignmentDep
+     * @generated
+     */
+    EClass getAssignmentDep();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scgdep.NodeDep <em>Node Dep</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Node Dep</em>'.
+     * @see de.cau.cs.kieler.scgdep.NodeDep
+     * @generated
+     */
+    EClass getNodeDep();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgdep.NodeDep#getDependencies <em>Dependencies</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Dependencies</em>'.
+     * @see de.cau.cs.kieler.scgdep.NodeDep#getDependencies()
+     * @see #getNodeDep()
+     * @generated
+     */
+    EReference getNodeDep_Dependencies();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scgdep.SCGraphDep <em>SC Graph Dep</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>SC Graph Dep</em>'.
+     * @see de.cau.cs.kieler.scgdep.SCGraphDep
+     * @generated
+     */
+    EClass getSCGraphDep();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -515,6 +872,22 @@ public interface ScgdepPackage extends EPackage {
          * @generated
          */
         EClass DEPENDENCY = eINSTANCE.getDependency();
+
+        /**
+         * The meta object literal for the '<em><b>Concurrent</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DEPENDENCY__CONCURRENT = eINSTANCE.getDependency_Concurrent();
+
+        /**
+         * The meta object literal for the '<em><b>Confluent</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DEPENDENCY__CONFLUENT = eINSTANCE.getDependency_Confluent();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scgdep.impl.AbsoluteWrite_ReadImpl <em>Absolute Write Read</em>}' class.
@@ -555,6 +928,44 @@ public interface ScgdepPackage extends EPackage {
          * @generated
          */
         EClass WRITE_WRITE = eINSTANCE.getWrite_Write();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scgdep.impl.AssignmentDepImpl <em>Assignment Dep</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scgdep.impl.AssignmentDepImpl
+         * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getAssignmentDep()
+         * @generated
+         */
+        EClass ASSIGNMENT_DEP = eINSTANCE.getAssignmentDep();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scgdep.impl.NodeDepImpl <em>Node Dep</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scgdep.impl.NodeDepImpl
+         * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getNodeDep()
+         * @generated
+         */
+        EClass NODE_DEP = eINSTANCE.getNodeDep();
+
+        /**
+         * The meta object literal for the '<em><b>Dependencies</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference NODE_DEP__DEPENDENCIES = eINSTANCE.getNodeDep_Dependencies();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scgdep.impl.SCGraphDepImpl <em>SC Graph Dep</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scgdep.impl.SCGraphDepImpl
+         * @see de.cau.cs.kieler.scgdep.impl.ScgdepPackageImpl#getSCGraphDep()
+         * @generated
+         */
+        EClass SC_GRAPH_DEP = eINSTANCE.getSCGraphDep();
 
     }
 

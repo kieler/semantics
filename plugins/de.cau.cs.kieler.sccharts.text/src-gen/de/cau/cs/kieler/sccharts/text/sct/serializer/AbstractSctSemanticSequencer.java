@@ -10,7 +10,8 @@ import de.cau.cs.kieler.core.annotations.ImportAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
-import de.cau.cs.kieler.core.kexpressions.BooleanValue;
+import de.cau.cs.kieler.core.kexpressions.BoolValue;
+import de.cau.cs.kieler.core.kexpressions.DoubleValue;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
@@ -18,13 +19,16 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.Assignment;
+import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.Emission;
+import de.cau.cs.kieler.sccharts.EntryAction;
+import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Substitution;
+import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.TextEffect;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.text.actions.serializer.ActionsSemanticSequencer;
@@ -110,15 +114,15 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == KExpressionsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case KExpressionsPackage.BOOLEAN_VALUE:
+			case KExpressionsPackage.BOOL_VALUE:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAndExpressionRule() ||
 				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
-				   context == grammarAccess.getBooleanExpressionRule() ||
-				   context == grammarAccess.getBooleanValueRule() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
+				   context == grammarAccess.getBoolValueRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
 				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
@@ -137,7 +141,30 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
-					sequence_BooleanValue(context, (BooleanValue) semanticObject); 
+					sequence_BoolValue(context, (BoolValue) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.DOUBLE_VALUE:
+				if(context == grammarAccess.getAddExpressionRule() ||
+				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicValuedExpressionRule() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getDivExpressionRule() ||
+				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getDoubleValueRule() ||
+				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getModExpressionRule() ||
+				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getMultExpressionRule() ||
+				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getNegExpressionRule() ||
+				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getRootRule() ||
+				   context == grammarAccess.getSubExpressionRule() ||
+				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getValuedExpressionRule()) {
+					sequence_DoubleValue(context, (DoubleValue) semanticObject); 
 					return; 
 				}
 				else break;
@@ -211,7 +238,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				else if(context == grammarAccess.getAndExpressionRule() ||
 				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
-				   context == grammarAccess.getBooleanExpressionRule() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getOrExpressionRule() ||
@@ -231,7 +258,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
-				   context == grammarAccess.getBooleanExpressionRule() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
 				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
@@ -272,7 +299,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
-				   context == grammarAccess.getBooleanExpressionRule() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
 				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
@@ -299,12 +326,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == SCChartsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case SCChartsPackage.ACTION:
-				if(context == grammarAccess.getActionRule()) {
-					sequence_Action(context, (Action) semanticObject); 
-					return; 
-				}
-				else break;
 			case SCChartsPackage.ASSIGNMENT:
 				if(context == grammarAccess.getAssignmentRule() ||
 				   context == grammarAccess.getEffectRule()) {
@@ -312,10 +333,31 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					return; 
 				}
 				else break;
+			case SCChartsPackage.DURING_ACTION:
+				if(context == grammarAccess.getDuringActionRule() ||
+				   context == grammarAccess.getLocalActionRule()) {
+					sequence_DuringAction(context, (DuringAction) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCChartsPackage.EMISSION:
 				if(context == grammarAccess.getEffectRule() ||
 				   context == grammarAccess.getEmissionRule()) {
 					sequence_Emission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.ENTRY_ACTION:
+				if(context == grammarAccess.getEntryActionRule() ||
+				   context == grammarAccess.getLocalActionRule()) {
+					sequence_EntryAction(context, (EntryAction) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.EXIT_ACTION:
+				if(context == grammarAccess.getExitActionRule() ||
+				   context == grammarAccess.getLocalActionRule()) {
+					sequence_ExitAction(context, (ExitAction) semanticObject); 
 					return; 
 				}
 				else break;
@@ -334,7 +376,11 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else break;
 			case SCChartsPackage.STATE:
-				if(context == grammarAccess.getStateRule()) {
+				if(context == grammarAccess.getSCChartRule()) {
+					sequence_SCChart(context, (State) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getStateRule()) {
 					sequence_State(context, (State) semanticObject); 
 					return; 
 				}
@@ -342,6 +388,13 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 			case SCChartsPackage.SUBSTITUTION:
 				if(context == grammarAccess.getSubstitutionRule()) {
 					sequence_Substitution(context, (Substitution) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.SUSPEND_ACTION:
+				if(context == grammarAccess.getLocalActionRule() ||
+				   context == grammarAccess.getSuspendActionRule()) {
+					sequence_SuspendAction(context, (SuspendAction) semanticObject); 
 					return; 
 				}
 				else break;
@@ -382,11 +435,29 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=ImportAnnotation* 
-	 *         (annotations+=Annotation* id=ID? label=STRING? valuedObjects+=ValuedObject* bodyText+=TextualCode*)? 
-	 *         states+=State*
+	 *         (annotations+=Annotation* id=ID label=STRING? valuedObjects+=ValuedObject* bodyText+=TextualCode*)? 
+	 *         states+=SCChart*
 	 *     )
 	 */
 	protected void sequence_RootRegion(EObject context, Region semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         type=StateType? 
+	 *         id=ID 
+	 *         label=STRING? 
+	 *         (
+	 *             (bodyReference=[State|ID] (renamings+=Substitution renamings+=Substitution*)?) | 
+	 *             ((valuedObjects+=ValuedObject | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
+	 *         )?
+	 *     )
+	 */
+	protected void sequence_SCChart(EObject context, State semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -404,17 +475,13 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         ((isInitial?='init' isFinal?='final'?) | (isFinal?='final' isInitial?='init'?))? 
+	 *         ((initial?='initial' final?='final'?) | (final?='final' initial?='initial'?))? 
 	 *         type=StateType? 
 	 *         id=ID 
 	 *         label=STRING? 
 	 *         (
 	 *             (bodyReference=[State|ID] (renamings+=Substitution renamings+=Substitution*)?) | 
-	 *             (
-	 *                 (valuedObjects+=ValuedObject | entryActions+=Action | duringActions+=Action | exitActions+=Action | suspensionTrigger=Action)* 
-	 *                 bodyText+=TextualCode* 
-	 *                 (regions+=SingleRegion regions+=Region*)?
-	 *             )
+	 *             ((valuedObjects+=ValuedObject | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
 	 *         )? 
 	 *         outgoingTransitions+=Transition*
 	 *     )
@@ -435,7 +502,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     text=STRING
+	 *     text=HOSTCODE
 	 */
 	protected void sequence_TextualCode(EObject context, TextExpression semanticObject) {
 		if(errorAcceptor != null) {
@@ -444,7 +511,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getTextualCodeAccess().getTextSTRINGTerminalRuleCall_3_0(), semanticObject.getText());
+		feeder.accept(grammarAccess.getTextualCodeAccess().getTextHOSTCODETerminalRuleCall_0_0(), semanticObject.getText());
 		feeder.finish();
 	}
 	
@@ -456,8 +523,12 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         type=TransitionType 
 	 *         priority=INT? 
 	 *         targetState=[State|ID] 
-	 *         ((isImmediate?='#'? delay=INT? trigger=BooleanExpression? (effects+=Effect effects+=Effect*)?) | label=STRING)? 
-	 *         isHistory?='history'?
+	 *         (
+	 *             immediate?='immediate'? 
+	 *             deferred?='deferred'? 
+	 *             history=HistoryType? 
+	 *             ((delay=INT? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?) | label=STRING)?
+	 *         )?
 	 *     )
 	 */
 	protected void sequence_Transition(EObject context, Transition semanticObject) {
@@ -469,13 +540,14 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         isInput?='input'? 
-	 *         isOutput?='output'? 
-	 *         isStatic?='static'? 
-	 *         isSignal?='signal'? 
+	 *         input?='input'? 
+	 *         output?='output'? 
+	 *         static?='static'? 
+	 *         signal?='signal'? 
+	 *         type=ValueType? 
 	 *         name=ID 
 	 *         initialValue=Expression? 
-	 *         (type=ValueType | (type=ValueType combineOperator=CombineOperator))?
+	 *         combineOperator=CombineOperator?
 	 *     )
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {

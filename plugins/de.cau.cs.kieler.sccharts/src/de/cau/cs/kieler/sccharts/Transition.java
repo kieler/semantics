@@ -46,8 +46,9 @@ package de.cau.cs.kieler.sccharts;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getPriority <em>Priority</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Transition#isDeferred <em>Deferred</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getHistory <em>History</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getTargetState <em>Target State</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Transition#isIsHistory <em>Is History</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Transition#getSourceState <em>Source State</em>}</li>
  * </ul>
  * </p>
@@ -120,6 +121,61 @@ public interface Transition extends Action {
     void setType(TransitionType value);
 
     /**
+     * Returns the value of the '<em><b>Deferred</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Deferred</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Deferred</em>' attribute.
+     * @see #setDeferred(boolean)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_Deferred()
+     * @model
+     * @generated
+     */
+    boolean isDeferred();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#isDeferred <em>Deferred</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Deferred</em>' attribute.
+     * @see #isDeferred()
+     * @generated
+     */
+    void setDeferred(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>History</b></em>' attribute.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.sccharts.HistoryType}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>History</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>History</em>' attribute.
+     * @see de.cau.cs.kieler.sccharts.HistoryType
+     * @see #setHistory(HistoryType)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_History()
+     * @model
+     * @generated
+     */
+    HistoryType getHistory();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#getHistory <em>History</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>History</em>' attribute.
+     * @see de.cau.cs.kieler.sccharts.HistoryType
+     * @see #getHistory()
+     * @generated
+     */
+    void setHistory(HistoryType value);
+
+    /**
      * Returns the value of the '<em><b>Target State</b></em>' reference.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getIncomingTransitions <em>Incoming Transitions</em>}'.
      * <!-- begin-user-doc -->
@@ -146,32 +202,6 @@ public interface Transition extends Action {
      * @generated
      */
     void setTargetState(State value);
-
-    /**
-     * Returns the value of the '<em><b>Is History</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Is History</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Is History</em>' attribute.
-     * @see #setIsHistory(boolean)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getTransition_IsHistory()
-     * @model
-     * @generated
-     */
-    boolean isIsHistory();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Transition#isIsHistory <em>Is History</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is History</em>' attribute.
-     * @see #isIsHistory()
-     * @generated
-     */
-    void setIsHistory(boolean value);
 
     /**
      * Returns the value of the '<em><b>Source State</b></em>' container reference.

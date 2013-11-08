@@ -1,13 +1,10 @@
 package de.cau.cs.kieler.sccharts.text.sct.formatting;
 
-import org.eclipse.xtext.EcoreUtil2;
-import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.IFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.eclipse.xtext.util.Pair;
 
-import de.cau.cs.kieler.core.annotations.text.formatting.AnnotationsFormatter;
 import de.cau.cs.kieler.sccharts.text.actions.formatting.ActionsFormatter;
 import de.cau.cs.kieler.sccharts.text.sct.services.SctGrammarAccess;
 
@@ -48,6 +45,9 @@ public class SctFormatter extends ActionsFormatter {
          */
 
         // Suppress any space between 'region' and ':'
+        c.setLinewrap(2).before(f.getRegionAccess().getRegionKeyword_2());
+        c.setLinewrap(2).before(f.getRootRegionAccess().getRegionKeyword_2_1());
+        c.setLinewrap(2).before(f.getSingleRegionAccess().getRegionKeyword_1_1());
         c.setNoSpace().before(f.getRegionAccess().getColonKeyword_5());
         c.setLinewrap().after(f.getRegionAccess().getColonKeyword_5());
 
@@ -56,154 +56,62 @@ public class SctFormatter extends ActionsFormatter {
 
         c.setNoSpace().before(f.getSingleRegionAccess().getColonKeyword_1_4());
         c.setLinewrap().after(f.getSingleRegionAccess().getColonKeyword_1_4());
+        
+//        /*
+//         *  STATE
+//         */
+              c.setLinewrap(2).before(f.getStateAccess().getStateKeyword_3());
+              c.setLinewrap(2).before(f.getStateAccess().getFinalFinalKeyword_1_1_0_0());
+              c.setLinewrap(2).before(f.getStateAccess().getInitialInitialKeyword_1_0_0_0());
 
-        // this does not work, probably due to the absence of any common tail terminal
-        // c.setLinewrap(2).between(f.getSingleRegionRule(), f.getRegionRule());
-        // c.setLinewrap(2).between(f.getRegionRule(), f.getRegionRule());
+              c.setNoLinewrap().between(f.getStateAccess().getInitialInitialKeyword_1_0_0_0(), f.getStateAccess().getFinalFinalKeyword_1_1_0_0());
+              c.setNoLinewrap().between(f.getStateAccess().getInitialInitialKeyword_1_0_0_0(), f.getStateAccess().getStateKeyword_3());
+              c.setNoLinewrap().between(f.getStateAccess().getInitialInitialKeyword_1_1_1_0() , f.getStateAccess().getStateKeyword_3());
+              c.setNoLinewrap().between(f.getStateAccess().getFinalFinalKeyword_1_1_0_0() , f.getStateAccess().getStateKeyword_3());
+              c.setNoLinewrap().between(f.getStateAccess().getFinalFinalKeyword_1_0_1_0() , f.getStateAccess().getStateKeyword_3());
 
+//            /*
+//            *  CONNECTOR
+//            */
+              c.setLinewrap(2).before(f.getStateTypeRule());
+              c.setNoLinewrap().between(f.getStateTypeRule(), f.getStateAccess().getStateKeyword_3());
 
-        // works but is wrong in many cases
-////        c.setLinewrap(2).before(f.getRegionAccess().getRegionKeyword_2());
-//
-//        // does not work! :-(
-////        c.setLinewrap(1, 1, 1).between(f.getRegionAccess().getRegionKeyword_2(),
-////                f.getRegionAccess().getAnnotationsAssignment_1());
-//
-//        // does not work!
-////        c.setLinewrap(2, 2, 2).between(f.getStateAccess().getRegionsAssignment_6_1_1_2_0(),
-////                f.getStateAccess().getRegionsAssignment_6_1_1_2_1());
-////
-////        c.setLinewrap(2, 2, 2).between(f.getStateAccess().getRegionsSingleRegionParserRuleCall_6_1_1_2_0_0(),
-////                f.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_2_1_0());
-////
-////        c.setLinewrap(2, 2, 2).between(f.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_2_1_0(),
-////                f.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_2_1_0());
+              
+              // no linewrap between { and any following keyword!
+              c.setLinewrap(1,1,1).after(f.getStateAccess().getLeftCurlyBracketKeyword_6_1_0());
+              
 
-        /*
-         *  STATE
-         */
-        // does work :-), probably due to the mandatory ';'
-        c.setLinewrap(1).after(f.getStateRule());
-
-        c.setLinewrap(2).between(f.getStateAccess().getSemicolonKeyword_8(), f.getStateAccess().getIsInitialInitKeyword_1_0_0_0());
-        c.setLinewrap(2).between(f.getStateAccess().getSemicolonKeyword_8(), f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0());
-        c.setLinewrap(2).between(f.getStateAccess().getSemicolonKeyword_8(), f.getStateAccess().getStateKeyword_3());
-
-        c.setLinewrap(2).between(f.getStateAccess().getSemicolonKeyword_8(), f.getRegionAccess().getRegionKeyword_2());
-        c.setLinewrap(2).between(f.getStateAccess().getSemicolonKeyword_8(), f.getCOMMENT_ANNOTATIONRule());
-        for (Keyword at : f.findKeywords("@")) {
-            Grammar g = EcoreUtil2.getContainerOfType(at, Grammar.class);
-            if (g != null && g.getName().equals(AnnotationsFormatter.LANGUAGE_NAME)) {
-                // i.e. for all pairs of '(' and ')' declared in the Annotations grammar do...
-                c.setLinewrap(2).between(f.getStateAccess().getSemicolonKeyword_8(), at);
-            }
-        }
-
-
-
-
-//        c.setLinewrap(2).between(f.getStateAccess().getRegionsAssignment_6_1_1_2_0(), f.getStateAccess().getRegionsAssignment_6_1_1_2_1());
-//        c.setLinewrap(2).between(f.getSingleRegionRule(), f.getRegionRule());
-
-//
-//        // introduce a line wrap before 'initial' and 'final' but not in between
-//        c.setLinewrap().before(f.getStateAccess().getIsInitialInitKeyword_1_0_0_0());
-//        c.setLinewrap().before(f.getStateAccess().getIsFinalFinalKeyword_1_0_1_0());
-//        c.setNoLinewrap().between(f.getStateAccess().getIsInitialInitKeyword_1_0_0_0(),
-//                f.getStateAccess().getIsFinalFinalKeyword_1_0_1_0());
-//
-//        // introduce a line wrap before 'initial' and 'final' but not in between
-//        c.setLinewrap().before(f.getStateAccess().getIsInitialInitKeyword_1_1_1_0());
-//        c.setLinewrap().before(f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0());
-//        c.setNoLinewrap().between(f.getStateAccess().getIsInitialInitKeyword_1_1_1_0(),
-//                f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0());
-//
-//        // introduce a line wrap before state type keyword and 'state'
-//        c.setLinewrap().before(f.getStateAccess().getTypeStateTypeEnumRuleCall_2_0());
-//        c.setLinewrap().before(f.getStateAccess().getStateKeyword_3());
-//
-//        // suppress line wraps in between the first line keywords
-//        c.setNoLinewrap().between(f.getStateAccess().getIsInitialInitKeyword_1_0_0_0(),
-//                f.getStateAccess().getStateKeyword_3());
-//        c.setNoLinewrap().between(f.getStateAccess().getIsInitialInitKeyword_1_1_1_0(),
-//                f.getStateAccess().getStateKeyword_3());
-//        c.setNoLinewrap().between(f.getStateAccess().getIsFinalFinalKeyword_1_0_1_0(),
-//                f.getStateAccess().getStateKeyword_3());
-//        c.setNoLinewrap().between(f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0(),
-//                f.getStateAccess().getStateKeyword_3());
-//
-//        c.setNoLinewrap().between(f.getStateAccess().getTypeStateTypeEnumRuleCall_2_0(),
-//                f.getStateAccess().getStateKeyword_3());
-//
-//
-//        // does not work :-(!
-//        c.setLinewrap(2, 2, 2).between(f.getRegionAccess().getStatesAssignment_8(),
-//                f.getRegionAccess().getStatesAssignment_8().getTerminal());
-//
-//
         /*
          * SIGNAL
          */
         // does work :-)
         c.setLinewrap().after(f.getValuedObjectRule());
-//
-//        // an alternative formulation of the formatting instructions
-//        c.setLinewrap().before(f.getAValuedObjectAccess().getAnnotationsAssignment_0().getTerminal());
-//        c.setLinewrap().before(f.getAValuedObjectAccess().getIsInputInputKeyword_1_0());
-//        c.setLinewrap().before(f.getAValuedObjectAccess().getIsOutputOutputKeyword_2_0());
-//        c.setLinewrap().before(f.getAValuedObjectAccess().getValuedObjectKeyword_3());
-//        c.setNoLinewrap().between(f.getAValuedObjectAccess().getIsInputInputKeyword_1_0(),
-//                f.getAValuedObjectAccess().getIsOutputOutputKeyword_2_0());
-//        c.setNoLinewrap().between(f.getAValuedObjectAccess().getIsInputInputKeyword_1_0(),
-//                f.getAValuedObjectAccess().getValuedObjectKeyword_3());
-//        c.setNoLinewrap().between(f.getAValuedObjectAccess().getIsOutputOutputKeyword_2_0(),
-//                f.getAValuedObjectAccess().getValuedObjectKeyword_3());
-//
-//        c.setLinewrap().before(f.getIValuedObjectAccess().getAnnotationsAssignment_0().getTerminal());
-//        c.setLinewrap().before(f.getIValuedObjectAccess().getIsInputInputKeyword_1_0());
-//        c.setLinewrap().before(f.getIValuedObjectAccess().getIsOutputOutputKeyword_2_0());
-//        c.setLinewrap().before(f.getIValuedObjectAccess().getValuedObjectKeyword_3());
-//        c.setNoLinewrap().between(f.getIValuedObjectAccess().getIsInputInputKeyword_1_0(),
-//                f.getIValuedObjectAccess().getIsOutputOutputKeyword_2_0());
-//        c.setNoLinewrap().between(f.getIValuedObjectAccess().getIsInputInputKeyword_1_0(),
-//                f.getIValuedObjectAccess().getValuedObjectKeyword_3());
-//        c.setNoLinewrap().between(f.getIValuedObjectAccess().getIsOutputOutputKeyword_2_0(),
-//                f.getIValuedObjectAccess().getValuedObjectKeyword_3());
-//
-//
-//        /*
-//         * VARIABLE
-//         */
-//        c.setLinewrap().after(f.getVariableRule());
-//
-//        c.setLinewrap().before(f.getAVariableAccess().getAnnotationsAssignment_0().getTerminal());
-//        c.setLinewrap().before(f.getAVariableAccess().getVarKeyword_1());
-//        c.setLinewrap().before(f.getIVariableAccess().getAnnotationsAssignment_0().getTerminal());
-//        c.setLinewrap().before(f.getIVariableAccess().getVarKeyword_1());
-//
-//
-//        c.setLinewrap().after(f.getActionRule());
-//        c.setLinewrap().before(f.getStateAccess().getOnentryKeyword_6_1_1_0_2_0());
-//        c.setLinewrap().before(f.getStateAccess().getOninnerKeyword_6_1_1_0_3_0());
-//        c.setLinewrap().before(f.getStateAccess().getOnexitKeyword_6_1_1_0_4_0());
-//        c.setLinewrap().before(f.getStateAccess().getSuspensionKeyword_6_1_1_0_5_0());
-//
+
         /*
          * TEXTUAL CODE
          */
 
         c.setLinewrap().after(f.getTextualCodeRule());
-        c.setNoSpace().before(f.getTextualCodeAccess().getColonKeyword_2());
+        //c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_8());
+        c.setNoSpace().before(f.getTextualCodeAccess().getSemicolonKeyword_1());
 
+        
+        /*
+         * DECLARATIONS
+         */
+        c.setNoSpace().before(f.getValuedObjectAccess().getSemicolonKeyword_9());
+        
 
+        
         /*
          * TRANSITION
          */
 
         // let each transition declaration begin on a new line
         c.setLinewrap().before(f.getTransitionRule());
-        c.setLinewrap().after(f.getTransitionRule());
-        c.setNoLinewrap().before(f.getTransitionAccess().getSolidusKeyword_4_1_0_3_0());
+        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_4_3_1_0_2_2_0());
+        c.setNoLinewrap().before(f.getTransitionAccess().getSolidusKeyword_4_3_1_0_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
+        c.setNoLinewrap().before(f.getTransitionAccess().getSemicolonKeyword_4_3_1_0_2_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
         c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_8());
 
     }

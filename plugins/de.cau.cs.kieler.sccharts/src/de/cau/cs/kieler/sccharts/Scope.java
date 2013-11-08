@@ -51,15 +51,11 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getValuedObjects <em>Valued Objects</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getSuspensionTrigger <em>Suspension Trigger</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getExitActions <em>Exit Actions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getDuringActions <em>During Actions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getEntryActions <em>Entry Actions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLocalActions <em>Local Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBodyReference <em>Body Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBodyContents <em>Body Contents</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBodyText <em>Body Text</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getRenamings <em>Renamings</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getInterfaceDeclaration <em>Interface Declaration</em>}</li>
  * </ul>
  * </p>
  *
@@ -144,78 +140,20 @@ public interface Scope extends Annotatable {
     EList<ValuedObject> getValuedObjects();
 
     /**
-     * Returns the value of the '<em><b>Suspension Trigger</b></em>' containment reference.
+     * Returns the value of the '<em><b>Local Actions</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.sccharts.LocalAction}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Suspension Trigger</em>' containment reference isn't clear,
+     * If the meaning of the '<em>Local Actions</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Suspension Trigger</em>' containment reference.
-     * @see #setSuspensionTrigger(Action)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_SuspensionTrigger()
+     * @return the value of the '<em>Local Actions</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_LocalActions()
      * @model containment="true"
      * @generated
      */
-    Action getSuspensionTrigger();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Scope#getSuspensionTrigger <em>Suspension Trigger</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Suspension Trigger</em>' containment reference.
-     * @see #getSuspensionTrigger()
-     * @generated
-     */
-    void setSuspensionTrigger(Action value);
-
-    /**
-     * Returns the value of the '<em><b>Exit Actions</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.sccharts.Action}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Exit Actions</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Exit Actions</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_ExitActions()
-     * @model containment="true"
-     * @generated
-     */
-    EList<Action> getExitActions();
-
-    /**
-     * Returns the value of the '<em><b>During Actions</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.sccharts.Action}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>During Actions</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>During Actions</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_DuringActions()
-     * @model containment="true"
-     * @generated
-     */
-    EList<Action> getDuringActions();
-
-    /**
-     * Returns the value of the '<em><b>Entry Actions</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.sccharts.Action}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Entry Actions</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Entry Actions</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_EntryActions()
-     * @model containment="true"
-     * @generated
-     */
-    EList<Action> getEntryActions();
+    EList<LocalAction> getLocalActions();
 
     /**
      * Returns the value of the '<em><b>Body Reference</b></em>' reference.
@@ -302,31 +240,5 @@ public interface Scope extends Annotatable {
      * @generated
      */
     EList<Substitution> getRenamings();
-
-    /**
-     * Returns the value of the '<em><b>Interface Declaration</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Interface Declaration</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Interface Declaration</em>' attribute.
-     * @see #setInterfaceDeclaration(String)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_InterfaceDeclaration()
-     * @model dataType="de.cau.cs.kieler.sccharts.Parsable"
-     * @generated
-     */
-    String getInterfaceDeclaration();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Scope#getInterfaceDeclaration <em>Interface Declaration</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Interface Declaration</em>' attribute.
-     * @see #getInterfaceDeclaration()
-     * @generated
-     */
-    void setInterfaceDeclaration(String value);
 
 } // Scope
