@@ -19,7 +19,7 @@ import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Node
 import java.util.List
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.pret.annotation.extensions.Extension
+import de.cau.cs.kieler.scg.pret.annotation.extensions.TTSAnnotationExtension
 
 
 
