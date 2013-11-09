@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scgdep.scgbb
+package de.cau.cs.kieler.scg.transformations
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
@@ -38,27 +38,19 @@ import de.cau.cs.kieler.scgdep.ScgdepFactory
 import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scgbb.ScgbbFactory
-import de.cau.cs.kieler.scgbb.SCGraphBB
-import de.cau.cs.kieler.scgdep.NodeDep
-import java.util.List
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.scgbb.SchedulingBlock
-import de.cau.cs.kieler.scgbb.BasicBlock
-import java.util.ArrayList
-import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.core.kexpressions.IntValue
 
 /** 
- * SCGDEP to SCGBB Transformation 
+ * SCG to SCGDEP Transformation 
  * 
  * @author ssm
- * @kieler.design 2013-10-24 proposed 
- * @kieler.rating 2013-10-24 proposed yellow
+ * @kieler.design 2013-10-23 proposed 
+ * @kieler.rating 2013-10-23 proposed yellow
  */
 
-// This class contians all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
-class SCGDEPToSCGBBTransformation {
+// This class contians all mandatory methods for the SCG-to-SCGDEP-Transformation.
+class SCGToSCGDEPTransformation {
     
     // Inject SCG Extensions.    
     @Inject
@@ -73,151 +65,150 @@ class SCGDEPToSCGBBTransformation {
     // -- M2M Transformation 
     // -------------------------------------------------------------------------
     
-    def SCGraphDep transformSCGDEPToSCGBB(SCGraphDep scgdep) {
+    def SCGraphDep transformSCGToSCGDEP(SCGraph scg) {
         // Create new SCGDEP...
-        val scgbb = ScgbbFactory::eINSTANCE.createSCGraphBB()
+        val scgdep = ScgdepFactory::eINSTANCE.createSCGraphDep()
                   
         // ... and copy declarations.
-        for(valuedObject : scgdep.valuedObjects) {
+        for(valuedObject : scg.valuedObjects) {
             val newValuedObject = valuedObject.copy
-            scgbb.valuedObjects.add(newValuedObject)
+            scgdep.valuedObjects.add(newValuedObject)
             valuedObjectMapping.put(valuedObject, newValuedObject)
         }
         
         // Additionally, copy all nodes and fill the mapping structures.
-        for(node : scgdep.nodes) {
+        for(node : scg.nodes) {
             val nodeCopy = node.copySCGNode
             nodeMapping.put(node, nodeCopy)
             revNodeMapping.put(nodeCopy, node)
-            scgbb.nodes.add(nodeCopy)
+            scgdep.nodes.add(nodeCopy)
         }
 
         // Add all control flows.
-        scgbb.nodes.forEach[ it.addControlFlow ]
+        scgdep.nodes.forEach[ it.addControlFlow ]
         
         // Resolves all cross references.
-        scgbb.nodes.forEach[ it.adjustCrossReferences ]
+        scgdep.nodes.forEach[ it.adjustCrossReferences ]
         
-        // Copy all dependencies.
-        scgdep.eAllContents.filter(typeof(Dependency)).forEach[ it.copyDependency(scgbb) ]
-
-        // Create GO signal
-        val go = KExpressionsFactory::eINSTANCE.createValuedObject
-        go.name = '_GO'
-        go.type = ValueType::BOOL;
-        scgbb.valuedObjects.add(go)
+        // Finally, add all dependencies.
+        scgdep.nodes.filter(typeof(AssignmentDep)).forEach[ it.createDependencies(scgdep) ]
         
-        // Create basic blocks.
-        scgbb.createBasicBlocks(scgbb.nodes.head, 0, null, go.reference)
-        
-        return scgbb;
+        return scgdep;
     }   
     
-
+    
     // -------------------------------------------------------------------------
-    // -- CREATE Basic Blocks 
+    // -- DEPENDENCIES 
     // -------------------------------------------------------------------------
     
-    def int createBasicBlocks(SCGraphBB scg, Node rootNode, int guardIndex, 
-        BasicBlock predecessorBlock, Expression activationExpression
-    ) {
-        var newIndex = guardIndex
-        var node = rootNode
+    // All dependencies are originating at assignment nodes. 
+    // Thus, it is sufficient to check all assignments for dependencies and add them as children.
+    def createDependencies(AssignmentDep assignment, SCGraphDep scg) {
+        // Cache own absolute/relative state.
+        val iAmAbsoluteWriter = !assignment.isRelativeWriter
         
-        val List<Node> nodes = new ArrayList<Node> => [ n |
-            scg.basicBlocks.forEach[bb|bb.schedulingBlocks.forEach[sb|n.addAll(sb.nodes)]]
+        // Filter all other assignments...
+        scg.nodes.filter(typeof(AssignmentDep)).forEach[ node |
+            if (node != assignment) {
+                var Dependency dependency = null
+                // If they write to the same variable...
+                if (node.valuedObject == assignment.valuedObject) {
+                    // check absolute / relative writes and add the corresponding dependency.
+                    if (iAmAbsoluteWriter && node.isRelativeWriter) {
+                        dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_RelativeWrite                        
+                    } else 
+                    if (iAmAbsoluteWriter && !node.isRelativeWriter) {
+                        dependency = ScgdepFactory::eINSTANCE.createWrite_Write       
+                    }
+                } else
+                // Otherwise, check if the assignment reads the variable and add the dependency
+                // if necessary.
+                if (node.assignment.isReader(assignment.valuedObject)) {
+                    if (iAmAbsoluteWriter) dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_Read
+                    else dependency = ScgdepFactory::eINSTANCE.createRelativeWrite_Read    
+                }
+                // If a dependency was created, add the target, the concurrency state and update the 
+                // assignment.
+                if (dependency != null) {
+                    dependency.target = node;
+                    if (assignment.areConcurrent(node)) dependency.concurrent = true
+                    if (assignment.areConfluent(node)) dependency.confluent = true
+                    assignment.dependencies.add(dependency);
+                }
+            }
         ]
-        if (nodes.contains(rootNode)) {
-            
-            return newIndex;
-        }
         
-        val guard = KExpressionsFactory::eINSTANCE.createValuedObject
-        guard.name = 'guard' + newIndex.toString
-        guard.type = ValueType::BOOL;
-        newIndex = newIndex + 1
-        
-        var schedulingBlock = ScgbbFactory::eINSTANCE.createSchedulingBlock
-        while(node != null) {
-            schedulingBlock.nodes.add(node)
-            
-            if (node instanceof Conditional) {
-                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
-                newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex, block, guard.reference)
-                newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex, block, guard.reference)
-                node = null
-            } else 
-            if (node instanceof Surface) {
-                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
-                newIndex = scg.createBasicBlocks((node as Surface).depth, newIndex, block, guard.reference)
-                node = null
-            }  else
-            if (node.eAllContents.filter(typeof(ControlFlow)).size != 1) {
-                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
-                if (node instanceof Fork) {
-                    newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, block, guard.reference)
-                }
-                for(flow : node.eAllContents.filter(typeof(ControlFlow)).toList) {
-                    newIndex = scg.createBasicBlocks(flow.target, newIndex, block, guard.reference)
-                }
-                node = null                
-            } else {
-                val next = node.eAllContents.filter(typeof(ControlFlow)).head.target
-                if (next instanceof Join) {
-                    scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
-                    node = null
-                } else {
-                    node = next
-                }
+        // Basically, do the same stuff with conditionals as target. 
+        // Conditionals will never write a variable, so it's sufficient to check the reader.
+        scg.nodes.filter(typeof(Conditional)).forEach[ node |
+            var Dependency dependency = null
+            if (node.condition.isReader(assignment.valuedObject)) {
+                if (iAmAbsoluteWriter) dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_Read
+                else dependency = ScgdepFactory::eINSTANCE.createRelativeWrite_Read    
             }
-        }
-                
-        newIndex
+            if (dependency != null) {
+                dependency.target = node;
+                if (assignment.areConcurrent(node)) dependency.concurrent = true
+                assignment.dependencies.add(dependency);
+            }
+        ]
     }
     
-    def BasicBlock insertBasicBlock(SCGraphBB scg, ValuedObject guard, SchedulingBlock schedulingBlock,
-        BasicBlock predecessorBlock, Expression activationExpression
-    ) {
-        val basicBlock = ScgbbFactory::eINSTANCE.createBasicBlock
-      
-        basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock)
-        basicBlock.guard = guard
-        
-        val newExpression = ScgbbFactory::eINSTANCE.createActivationExpression
-        newExpression.setBasicBlock(predecessorBlock)
-        newExpression.setExpression(activationExpression)
-        basicBlock.activationExpressions.add(newExpression)
-        
-        scg.basicBlocks.add(basicBlock)
-        basicBlock
+    // Checks whether or not an assignment is a relative writer.
+    def boolean isRelativeWriter(AssignmentDep assignment) {
+        assignment.assignment instanceof OperatorExpression &&
+        assignment.assignment.eAllContents.filter(typeof(ValuedObjectReference)).filter[ e |
+            e.valuedObject == assignment.valuedObject ].size > 0
     }
     
-    def List<SchedulingBlock> splitSchedulingBlock(SchedulingBlock schedulingblock) {
-        val schedulingBlocks = <SchedulingBlock> newLinkedList
-        var SchedulingBlock block = null
-        for (node : schedulingblock.nodes) {
-            if (block == null || (node.incoming.filter(typeof(Dependency)).size > 0)) {
-                if (block != null) schedulingBlocks.add(block)
-                block = ScgbbFactory::eINSTANCE.createSchedulingBlock()
-                block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))                
-            }
-            block.nodes.add(node)
+    // Checks whether or not an expression reads a specific ValuedObject.
+    def boolean isReader(Expression expression, ValuedObject valuedObject) {
+        if (expression instanceof ValuedObjectReference) {
+            return (expression as ValuedObjectReference).valuedObject == valuedObject
+        } else {
+            return expression.eAllContents.filter(typeof(ValuedObjectReference)).filter[ e |
+                e.valuedObject == valuedObject].size > 0
         }
-        if (block != null) schedulingBlocks.add(block)
+    }
+    
+    // Checks whether or not two nodes are concurrent.
+    // By DATE'13 definition two statements are concurrent if and only if they are not in the same thread
+    // and share a least common ancestor fork node. 
+    def boolean areConcurrent(Node node1, Node node2) {
+        var node1AF = node1.getAncestorForks
+        var node2AF = node2.getAncestorForks
+        for (node : node1AF) {
+            if (node2AF.contains(node)) {
+                var isConcurrent = true
+                val threadEntries = node.getAllNext
+                for(t : threadEntries) {
+                    if (t.target instanceof Entry 
+                        && (t.target as Entry).getThreadNodes.contains(node1)
+                        && (t.target as Entry).getThreadNodes.contains(node2)
+                    ) isConcurrent = false 
+                }
+                if (isConcurrent) return true
+            }
+        }
+        return false
+    }
+    
+    // Checks whether or not two assignments are confluent.
+    def boolean areConfluent(AssignmentDep asg1, AssignmentDep asg2) {
+        if (asg1.assignment instanceof BoolValue && asg2.assignment instanceof BoolValue &&
+            (asg1.assignment as BoolValue).value == (asg2.assignment as BoolValue).value
+        ) return true
+        if (asg1.assignment instanceof IntValue && asg2.assignment instanceof IntValue &&
+            (asg1.assignment as IntValue).value == (asg2.assignment as IntValue).value
+        ) return true
+        if (asg1.assignment instanceof ValuedObjectReference && asg2.assignment instanceof ValuedObjectReference &&
+            (asg1.assignment as ValuedObjectReference).valuedObject == (asg2.assignment as ValuedObjectReference).valuedObject
+        ) return true
+
         
-        schedulingBlocks
+        false
     }
 
-
-    // -------------------------------------------------------------------------
-    // -- TRANSFORM Dependencies 
-    // -------------------------------------------------------------------------
-
-    def copyDependency(Dependency dependency, SCGraphBB scgbb) {
-        var newDependency = dependency.copy;
-        (nodeMapping.get(dependency.eContainer as Node) as NodeDep).dependencies.add(newDependency)
-        newDependency.target = nodeMapping.get(dependency.target)
-    }
 
     // -------------------------------------------------------------------------
     // -- TRANSFORM Control flow 
@@ -275,7 +266,7 @@ class SCGDEPToSCGBBTransformation {
         join
     }
     
-    def dispatch Node addControlFlow(AssignmentDep assignment) {
+    def dispatch Node addControlFlow(Assignment assignment) {
         val sourceAssignment = revNodeMapping.get(assignment) as Assignment
         if (sourceAssignment.next != null) {
             assignment.next = ScgFactory::eINSTANCE.createControlFlow()
@@ -328,7 +319,7 @@ class SCGDEPToSCGBBTransformation {
         join.fork = nodeMapping.get((revNodeMapping.get(join) as Join).fork) as Fork
     }
     
-    def dispatch adjustCrossReferences(AssignmentDep assignment) { }
+    def dispatch adjustCrossReferences(Assignment assignment) { }
 
     def dispatch adjustCrossReferences(Conditional conditional) { }
     
@@ -347,20 +338,19 @@ class SCGDEPToSCGBBTransformation {
     def dispatch Join        copySCGNode(Join        node) { ScgFactory::eINSTANCE.createJoin() }
     
     // Don't forget to copy the assignment expression and the valued object in assignments.
-    def dispatch Assignment  copySCGNode(AssignmentDep  node) { 
+    def dispatch Assignment  copySCGNode(Assignment  node) { 
         val assignment = ScgdepFactory::eINSTANCE.createAssignmentDep()
         assignment.assignment = node.assignment.copyExpression
         assignment.valuedObject = node.valuedObject.copyValuedObject;
         assignment
     }
-
+    
     // Same goes for conditionals...   
     def dispatch Conditional copySCGNode(Conditional node) { 
         val conditional = ScgFactory::eINSTANCE.createConditional();
         conditional.condition = node.condition.copyExpression
         conditional
     }
-   
     
     // Valued objects must be set according to the mapping!
     def ValuedObject copyValuedObject(ValuedObject valuedObject) {
@@ -378,12 +368,6 @@ class SCGDEPToSCGBBTransformation {
                 vor.valuedObject = vor.valuedObject.copyValuedObject ]        
         }
         newExpression
-    }
-    
-    def Expression reference (ValuedObject valuedObject) {
-        val expression = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-        expression.valuedObject = valuedObject
-        expression
     }
 
    // -------------------------------------------------------------------------   

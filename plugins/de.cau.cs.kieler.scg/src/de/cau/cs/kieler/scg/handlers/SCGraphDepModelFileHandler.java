@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.scgdep.handler;
+package de.cau.cs.kieler.scg.handlers;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
@@ -24,16 +24,17 @@ import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
 import de.cau.cs.kieler.scg.SCGraph;
-import de.cau.cs.kieler.scg.scgdep.SCGToSCGDEPTransformation;
+import de.cau.cs.kieler.scgdep.SCGraphDep;
+import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation;
 
 /**
  * @author ssm
  *
  */
-public class SCGraphModelFileHandler extends AbstractConvertModelHandler {
+public class SCGraphDepModelFileHandler extends AbstractConvertModelHandler {
 
     public static final String SCGDEP_TRANSFORMATION =
-            "de.cau.cs.kieler.scg.scgdep.commands.SCGToSCGDEPTransformation";
+            "de.cau.cs.kieler.scg.commands.SCGDEPToSCGBBTransformation";
 
     private static Injector injector = new SctStandaloneSetup()
         .createInjectorAndDoEMFRegistration();
@@ -43,7 +44,7 @@ public class SCGraphModelFileHandler extends AbstractConvertModelHandler {
      */
     @Override
     protected String getTargetExtension() {
-        return "scgdep";
+        return "scgbb";
     }
 
     /**
@@ -66,14 +67,14 @@ public class SCGraphModelFileHandler extends AbstractConvertModelHandler {
         String commandString = event.getCommand().getId().toString();
         EObject transformed = null;
 
-        SCGToSCGDEPTransformation transformation =
-        Guice.createInjector().getInstance(SCGToSCGDEPTransformation.class);
+        SCGDEPToSCGBBTransformation transformation =
+        Guice.createInjector().getInstance(SCGDEPToSCGBBTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         transformed = model;
         if (commandString.equals(SCGDEP_TRANSFORMATION)) {
-            transformed = transformation.transformSCGToSCGDEP((SCGraph) model);
+            transformed = transformation.transformSCGDEPToSCGBB((SCGraphDep) model);
         } 
         return transformed;
     }
