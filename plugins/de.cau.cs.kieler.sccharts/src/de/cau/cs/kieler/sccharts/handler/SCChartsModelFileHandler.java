@@ -137,7 +137,9 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
         if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {
             // TODO
         } else if (commandString.equals(ABORT_TRANSFORMATION)) {
-            transformed = transformation.transformSCCAborts((Region) model);
+            // There are TWO options for the Aborts transformation
+            // 1. transformAborts1() and 2. transformAborts2()
+            transformed = transformation.transformAborts2((Region) model);
         } else if (commandString.equals(SURFACEDEPTH_TRANSFORMATION)) {
             transformed = transformation.transformSurfaceDepth((Region) model);
         } else if (commandString.equals(TRIGGEREFFECT_TRANSFORMATION)) {
