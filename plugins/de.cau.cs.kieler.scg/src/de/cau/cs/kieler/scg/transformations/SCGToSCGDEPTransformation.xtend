@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.scgdep
+package de.cau.cs.kieler.scg.transformations
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
@@ -38,6 +38,8 @@ import de.cau.cs.kieler.scgdep.ScgdepFactory
 import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.core.kexpressions.IntValue
 
 /** 
  * SCG to SCGDEP Transformation 
@@ -100,7 +102,7 @@ class SCGToSCGDEPTransformation {
     // -------------------------------------------------------------------------
     
     // All dependencies are originating at assignment nodes. 
-    // Thus, it is sufficient to check all assignments for dependencies and add them as child.
+    // Thus, it is sufficient to check all assignments for dependencies and add them as children.
     def createDependencies(AssignmentDep assignment, SCGraphDep scg) {
         // Cache own absolute/relative state.
         val iAmAbsoluteWriter = !assignment.isRelativeWriter
@@ -130,6 +132,7 @@ class SCGToSCGDEPTransformation {
                 if (dependency != null) {
                     dependency.target = node;
                     if (assignment.areConcurrent(node)) dependency.concurrent = true
+                    if (assignment.areConfluent(node)) dependency.confluent = true
                     assignment.dependencies.add(dependency);
                 }
             }
@@ -188,6 +191,22 @@ class SCGToSCGDEPTransformation {
             }
         }
         return false
+    }
+    
+    // Checks whether or not two assignments are confluent.
+    def boolean areConfluent(AssignmentDep asg1, AssignmentDep asg2) {
+        if (asg1.assignment instanceof BoolValue && asg2.assignment instanceof BoolValue &&
+            (asg1.assignment as BoolValue).value == (asg2.assignment as BoolValue).value
+        ) return true
+        if (asg1.assignment instanceof IntValue && asg2.assignment instanceof IntValue &&
+            (asg1.assignment as IntValue).value == (asg2.assignment as IntValue).value
+        ) return true
+        if (asg1.assignment instanceof ValuedObjectReference && asg2.assignment instanceof ValuedObjectReference &&
+            (asg1.assignment as ValuedObjectReference).valuedObject == (asg2.assignment as ValuedObjectReference).valuedObject
+        ) return true
+
+        
+        false
     }
 
 

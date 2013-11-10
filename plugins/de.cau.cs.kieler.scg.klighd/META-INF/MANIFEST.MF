@@ -4,7 +4,7 @@ Bundle-Name: KIELER SC Graph KlighD Binding
 Bundle-SymbolicName: de.cau.cs.kieler.scg.klighd;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Require-Bundle: com.google.guava;bundle-version="[10.0.1,11.0.0)",
+Require-Bundle: com.google.guava;bundle-version="10.0.1",
  javax.inject;bundle-version="1.0.0",
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.core.kivi,

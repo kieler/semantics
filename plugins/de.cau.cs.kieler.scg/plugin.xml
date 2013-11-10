@@ -29,5 +29,84 @@
             class="de.cau.cs.kieler.scgbb.ScgbbPackage"
             genModel="model/scgbb.genmodel"/>
    </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.scg.handlers.SCGraphModelFileHandler"
+            commandId="de.cau.cs.kieler.scg.commands.SCGToSCGDEPTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.scg.handlers.SCGraphDepModelFileHandler"
+            commandId="de.cau.cs.kieler.scg.commands.SCGDEPToSCGBBTransformation">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.scg.commands.SCGToSCGDEPTransformation"
+               label="SCG: Populate Dependency Data"
+               mnemonic="A"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scg">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.scg.commands.SCGDEPToSCGBBTransformation"
+               label="SCG: Populate Basic Block Data"
+               mnemonic="A"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scgdep">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="de.cau.cs.kieler.scg.commands.category"
+            name="SCG Category">
+      </category>
+      <command
+            categoryId="de.cau.cs.kieler.scg.commands.category"
+            id="de.cau.cs.kieler.scg.commands.SCGToSCGDEPTransformation"
+            name="SCG: Populate Dependency Data">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.scg.commands.category"
+            id="de.cau.cs.kieler.scg.commands.SCGDEPToSCGBBTransformation"
+            name="SCG: Populate Basic Block Data">
+      </command>
+   </extension>
 
 </plugin>
