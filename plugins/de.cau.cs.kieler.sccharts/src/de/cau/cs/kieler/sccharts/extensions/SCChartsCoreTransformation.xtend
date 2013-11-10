@@ -389,6 +389,7 @@ class SCChartsCoreTransformation {
         if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL) {
             val parentRegion = state.parentRegion;
             val stateId = state.id;
+            var number = 1;
 
             // Duplicate immediate transitions
             val immediateTransitions = state.outgoingTransitions.filter[isImmediate].sortBy[-priority].toList;
@@ -402,8 +403,9 @@ class SCChartsCoreTransformation {
 
             // Modify surfaceState (the original state)
             val surfaceState = state
+            var depthState = state
             surfaceState.setId(state.id("Surface"))
-            surfaceState.setLabel2(stateId + "_S")
+            surfaceState.setLabel2(stateId)
 
             // For every state create a number of surface nodes
             val orderedTransitionList = state.outgoingTransitions.sortBy[priority]
@@ -421,16 +423,20 @@ class SCChartsCoreTransformation {
                     nextTransitionNotImmediate = true
 
                     // Add an additional last state that will become depth State
-                    val depthState = parentRegion.createState(state.id("Depth")).setLabel2(stateId + "_D")
-                    val connect = previousState.createImmediateTransitionTo(depthState)
-                    previousState = depthState
-                    connect.setPriority(2)
+                    if (previousState != null) { /// IS THIS RIGHT!?!?
+                        depthState = parentRegion.createState(state.id("Depth")).setLabel2("_" + stateId + "_Depth")
+                        val connect = previousState.createImmediateTransitionTo(depthState)
+                        previousState = depthState
+                        connect.setPriority(2)
+                    }
                 }
 
                 if (currentState == null) {
 
                     // Create a new state
-                    currentState = parentRegion.createState(stateId + transition.id("Surface")) //.setTypeConnector
+                    val numberString = "" + number
+                    number = number + 1
+                    currentState = parentRegion.createState(stateId + transition.id(numberString)).setLabel2("_" + stateId + numberString) //.setTypeConnector
 
                     // Connect
                     val connect = previousState.createTransitionTo(currentState)
@@ -444,7 +450,7 @@ class SCChartsCoreTransformation {
                 // Ensure the transition is immediate
                 transition.setImmediate(true)
 
-                // We can now set the transition priority to 1 (it is reflected implicityly by the sequential order now)
+                // We can now set the transition priority to 1 (it is reflected implicitly by the sequential order now)
                 transition.setPriority(1)
 
                 // Next cycle
@@ -453,7 +459,7 @@ class SCChartsCoreTransformation {
             }
 
             // Connect back depth with surface state
-            previousState.createImmediateTransitionTo(surfaceState)
+            previousState.createImmediateTransitionTo(depthState)
 
         // This MUST be highest priority so that the control flow restarts and takes other 
         // outgoing transition.
@@ -486,13 +492,13 @@ class SCChartsCoreTransformation {
 
     def void transformTriggerEffect(Transition transition, Region targetRootRegion) {
 
-        // Only apply this to transition that have both, a trigger and one or more effects!
+        // Only apply this to transition that have both, a trigger and one or more effects 
         if (transition.trigger != null && !transition.effects.nullOrEmpty) {
             val targetState = transition.targetState
             val parentRegion = targetState.parentRegion
             val transitionOriginalTarget = transition.targetState
             var Transition lastTransition = transition
-
+            
             for (effect : transition.effects.immutableCopy) {
                 val effectState = parentRegion.createState(targetState.id + effect.id)
                 effectState.setTypeConnector
@@ -503,6 +509,8 @@ class SCChartsCoreTransformation {
                 lastTransition = effectTransition
             }
 
+            transition.setImmediate
+            
             lastTransition.setTargetState(transitionOriginalTarget)
         }
     }
