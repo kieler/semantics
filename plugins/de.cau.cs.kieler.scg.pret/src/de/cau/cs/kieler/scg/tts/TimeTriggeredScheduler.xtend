@@ -55,7 +55,6 @@ class TimeTriggeredScheduler {
       val initnodes = nodes.filter[it.isIsInitial];
       val initnodeList = initnodes.toList;
       processTiming(initnodeList, false);
-      
   }
   
   /** 
