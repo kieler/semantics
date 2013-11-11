@@ -460,8 +460,48 @@ class SCChartsCoreTransformation {
             }
 
             // Connect back depth with surface state
-            previousState.createImmediateTransitionTo(depthState)
+            var T2tmp = previousState.createImmediateTransitionTo(depthState)
 
+            // Afterwards do the DTO transformation
+            /* Der Knoten S_Depth ist ja besonders ausgezeichnet. Er hat immer zwei
+            eingehende Kanten T1 von der surface und T2 von dem feedback aus der depth.
+            Gehe beide Kanten T1 und T2 rückwärts zu jeweiligen Source-Knoten K1 und
+            K2 entlang und verleiche die ausgehenden Transitionen TK1 und TK2 (die
+            nicht T1 oder T2 sind). Wenn diese gleich sind wird K1 der neue S_Depth
+            Knoten und die eingehende Kanten von K2 zeigt nun auf den neuen S_Depth.
+            K2, T2 und TK2 werden eliminiert.
+            Vergleiche nun rekursiv wieder die eingehenden Kanten von neuen S_Depth
+            bis TK1 und TK2 ungleich sind.*/
+            var stateAfterDepth = depthState
+            var done = false
+            while (!done) {
+                done = true
+                if (stateAfterDepth.incomingTransitions.size == 2) { 
+                    // T1 is the incoming node from the surface
+                    var T1tmp = stateAfterDepth.incomingTransitions.get(0)
+                    if (T1tmp == T2tmp) {
+                        T1tmp = stateAfterDepth.incomingTransitions.get(1)
+                    }
+                    val T1 = T1tmp
+                    val T2 = T2tmp
+                    // T2 is the incoming node from the feedback
+                    val K1 = T1.sourceState
+                    val K2 = T2.sourceState
+                    val TK1 = K1.outgoingTransitions.filter( e | e != T1).get(0)
+                    val TK2 = K2.outgoingTransitions.filter( e | e != T2).get(0)
+                    if ((TK1.targetState == TK2.targetState) && (TK1.trigger.equals2(TK2.trigger))) {
+                        stateAfterDepth = K1
+                        val t = K2.incomingTransitions.get(0)
+                        t.setTargetState(stateAfterDepth)
+                        K2.parentRegion.states.remove(K2)
+                        done = false
+                        T2tmp = t
+                    }
+                }
+            }
+            // End of DTO transformation
+        
+        
         // This MUST be highest priority so that the control flow restarts and takes other 
         // outgoing transition.
         // There should not be any other outgoing transition.
@@ -876,6 +916,7 @@ class SCChartsCoreTransformation {
                             if (strongAbortTrigger != null) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
                                 if (innerState.hierarchical) {
+
                                     // HERE DIFFERENCE TO ABORT1()
                                     // We dig deep in the hierarchy and connect all states with immediate transitions
                                     // to a final state.
@@ -896,7 +937,8 @@ class SCChartsCoreTransformation {
                                         innerStrongAbort.setPriority(0)
                                         innerStrongAbort.setTrigger(strongAbortTrigger.copy)
                                     }
-                                    // END OF DIFFERENCE
+
+                                // END OF DIFFERENCE
                                 }
                                 strongAbort.setPriority(0)
                                 strongAbort.setTrigger(strongAbortTrigger.copy)
