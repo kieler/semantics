@@ -28,8 +28,7 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.rating 
  */
 class TTSAnnotationExtension {
-    AnnotationsFactory af;
-
+    
     // -------------------------------------------------------------------------
     /* Retrieves the value of the local WCET (how long does this element need at most 
    * to be processed) annotation of an annotatable. Returns null, if no such annotation
@@ -45,7 +44,7 @@ class TTSAnnotationExtension {
 
     /* Sets the value of the local WCET (WCET of a single SCG element) annotation. */
     def setLocalWCET(Annotatable annotatable, Integer value) {
-        val lWcet = af.createIntAnnotation;
+        val lWcet = AnnotationsFactory::eINSTANCE.createIntAnnotation;
         lWcet.name = "LocalWCET";
         annotatable.annotations.add(lWcet);
     }
@@ -63,7 +62,7 @@ class TTSAnnotationExtension {
 
     /* Sets the WCET annotation value (WCET up to this point.)*/
     def setWCET(Annotatable annotatable, Integer value) {
-        val wcet = af.createIntAnnotation;
+        val wcet = AnnotationsFactory::eINSTANCE.createIntAnnotation;
         wcet.name = "WCET";
         annotatable.annotations.add(wcet);
     }
@@ -81,13 +80,13 @@ class TTSAnnotationExtension {
 
     /* Sets the Offset value (how much timing padding up to this point?). */
     def setOffset(Annotatable annotatable, Integer value) {
-        val offset = af.createIntAnnotation;
+        val offset = AnnotationsFactory::eINSTANCE.createIntAnnotation;
         offset.name = "Offset";
         annotatable.annotations.add(offset);
     }
 
-    /* Retrieves the Branching Vector, which is used for bookkeeping on threads (right = true,
-   * left = false) and their position in the forking tree.
+    /* Retrieves the Branching Vector, which is used for bookkeeping on threads (then = true,
+   * else = false) and their position in the forking tree.
    */
     def List<Boolean> getBranchVec(Annotatable annotatable) {
         var List<Boolean> retList = null;
@@ -113,13 +112,13 @@ class TTSAnnotationExtension {
    * branchVec. 
    */
     def setBranchvec(Annotatable annotatable, List<Boolean> branchVec) {
-        val refAnn = af.createReferenceAnnotation;
+        val refAnn = AnnotationsFactory::eINSTANCE.createReferenceAnnotation;
         refAnn.name = "BranchVec";
         refAnn.setObject(branchVec as EObject);
         annotatable.annotations.add(refAnn);
     }
 
-    /* Adds a new branch value (right (true) or left (false)) to the Branch Vector. */
+    /* Adds a new branch value (then (true) or else (false)) to the Branch Vector. */
     def addToBranchvec(Annotatable annotatable, Boolean branch) {
         val String key = "BranchVec";
         val annotation = annotatable.getAnnotation(key);
