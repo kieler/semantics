@@ -13,8 +13,7 @@
  */
 package de.cau.cs.kieler.synccharts.klighd
 
-import com.google.common.collect.ImmutableMap
-import com.google.common.collect.ImmutableSet
+import com.google.common.collect.ImmutableList
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
@@ -32,12 +31,13 @@ import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.klighd.TransformationOption
-import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.synccharts.Region
 import de.cau.cs.kieler.synccharts.State
 import de.cau.cs.kieler.synccharts.StateType
@@ -45,7 +45,6 @@ import de.cau.cs.kieler.synccharts.Transition
 import de.cau.cs.kieler.synccharts.TransitionType
 import de.cau.cs.kieler.synccharts.text.actions.ActionsStandaloneSetup
 import de.cau.cs.kieler.synccharts.text.actions.scoping.ActionsScopeProvider
-import java.util.Collection
 import java.util.List
 import javax.inject.Inject
 import org.eclipse.emf.common.util.URI
@@ -84,24 +83,24 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     @Inject
     extension KColorExtensions
     
-    private static val TransformationOption SHOW_LABELS
-        = TransformationOption::createCheckOption("Transition labels", false);
+    private static val SynthesisOption SHOW_LABELS
+        = SynthesisOption::createCheckOption("Transition labels", false);
         
-    private static val TransformationOption SHOW_PRIORITY_LABELS
-        = TransformationOption::createCheckOption("Transition priorities", false);
+    private static val SynthesisOption SHOW_PRIORITY_LABELS
+        = SynthesisOption::createCheckOption("Transition priorities", false);
 
-    private static val TransformationOption SHOW_SIGNAL_DECLARATIONS
-        = TransformationOption::createCheckOption("Signal declarations", false);
+    private static val SynthesisOption SHOW_SIGNAL_DECLARATIONS
+        = SynthesisOption::createCheckOption("Signal declarations", false);
 
-    override public getTransformationOptions() {
-        return ImmutableSet::of(SHOW_LABELS, SHOW_PRIORITY_LABELS, SHOW_SIGNAL_DECLARATIONS);
+    override public getDisplayedSynthesisOptions() {
+        return ImmutableList::of(SHOW_LABELS, SHOW_PRIORITY_LABELS, SHOW_SIGNAL_DECLARATIONS);
     }
     
-    override public getRecommendedLayoutOptions() {
-        return ImmutableMap::<IProperty<?>, Collection<?>>of(
-            LayoutOptions::ALGORITHM, emptyList,
-            LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[ it.name ],
-            LayoutOptions::SPACING, newArrayList(0, 255)
+    override public getDisplayedLayoutOptions() {
+        return <Pair<IProperty<?>, List<?>>>newImmutableList(
+            Pair.of(LayoutOptions::ALGORITHM, emptyList),
+            Pair.of(LayoutOptions::DIRECTION, Direction::values.drop(2).sortBy[ it.name ]),
+            Pair.of(LayoutOptions::SPACING, newArrayList(0, 255))
         );
     }
     
@@ -234,7 +233,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 ];
                 
                 
-                if (SHOW_SIGNAL_DECLARATIONS.optionBooleanValue && !s.signals.empty) {
+                if (SHOW_SIGNAL_DECLARATIONS.booleanValue && !s.signals.empty) {
                     it.addRectangle => [
                         it.invisible = true;
                         it.setGridPlacementData//.setMaxCellHeight(40);
@@ -287,7 +286,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 };
             ];
 
-            if (SHOW_LABELS.optionBooleanValue) {
+            if (SHOW_LABELS.booleanValue) {
                 scopeProvider.parent = t.sourceState;
                 val String label =
                     try {
@@ -303,7 +302,7 @@ class SyncChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     );
                 }
             }
-            if (SHOW_PRIORITY_LABELS.optionBooleanValue) {
+            if (SHOW_PRIORITY_LABELS.booleanValue) {
                 t.createLabel("prio", edge).putToLookUpWith(t).configureTailLabel(String::valueOf(
                     if (t.priority != 0) t.priority else t.sourceState.outgoingTransitions.indexOf(t)
                 ), 11, KlighdConstants::DEFAULT_FONT_NAME);

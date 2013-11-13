@@ -11,7 +11,7 @@
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.transformations.GuiceBasedTransformationFactory:de.cau.cs.kieler.synccharts.klighd.SyncChartsDiagramSynthesis"
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.synccharts.klighd.SyncChartsDiagramSynthesis"
             id="de.cau.cs.kieler.synccharts.klighd.diagramSynthesis">
       </diagramSynthesis>
    </extension>
