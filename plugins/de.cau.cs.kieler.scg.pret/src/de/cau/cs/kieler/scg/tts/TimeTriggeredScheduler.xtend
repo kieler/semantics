@@ -23,6 +23,7 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.pret.annotation.extensions.TTSAnnotationExtension
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scgdep.*
 
 /**
@@ -36,15 +37,15 @@ import de.cau.cs.kieler.scgdep.*
  */
 class TimeTriggeredScheduler { // inject the annotation Extensions for time triggered scheduling
     extension TTSAnnotationExtension;
+    extension SCGExtensions;
 
     /**
    * Annotates value of WCET up to the execution of each statement at any of its node`s outgoing edges. 
    * Calculates timing padding such that the ordering given by the timing is a valid schedule.
    * 
    * Start condition: Each node is annotated with its local WCET (annotation named LocalWCET).
-   * this value is also annotated as WCET. The entry nodes of the threads to be scheduled are 
-   * marked with the isInit-Flag set to true. Those threads do not fork further children. 
-   * No edges from depthnodes to ancestor threads. These 
+   * The entry nodes of the threads to be scheduled are marked with the isInit-Flag set to true. Those 
+   * threads do not fork further children. No edges from depthnodes to ancestor threads. These 
    * conditions relate to the fact, that we want to schedule unnested peer threads for the moment.
    * 
    * @param graph
@@ -54,6 +55,11 @@ class TimeTriggeredScheduler { // inject the annotation Extensions for time trig
     def public doScheduledTiming(SCGraph graph) {
 
         val nodes = graph.getNodes();
+
+        // initialize all controlflow edges with the WCET value of their start node
+        nodes.forEach [ node |
+            node.allNext.forEach[c|c.setWCET(node.localWCET)];
+        ]
 
         // process the depth paths first
         val depthnodes = nodes.filter[it instanceof Depth];
@@ -115,18 +121,28 @@ class TimeTriggeredScheduler { // inject the annotation Extensions for time trig
                     // end of thread, do not propagate further
                 }
             }
+
             // Init possible padding value
             var dependencyOffset = 0;
-            
+
             // Check all dependency edges
             if (node instanceof AssignmentDep) {
-     //       var dependencyList = (node as AssignmentDep).dependencies.filter[it.target == node].forEach[
-     //           e |
-     //           val difference = node.WCET - e.
-     //       ];
-}
+                node.getIncoming().filter[it instanceof Dependency].forEach [ d |
+                    var difference = offset - (d.eContainer as Node).outVal;
+                ]
+            }
         }
 
+    }
+
+    /**
+     * Returns the highest outgoing edge WCET value for the given node.
+     * 
+     * @param node
+     *      The node for which the calculation is done.
+     */
+    def int outVal(Node node) {
+        return node.getAllNext.sortBy[it.WCET].last.WCET
     }
 
     /**
