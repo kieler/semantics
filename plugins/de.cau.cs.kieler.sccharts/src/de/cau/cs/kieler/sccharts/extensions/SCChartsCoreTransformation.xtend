@@ -424,7 +424,9 @@ class SCChartsCoreTransformation {
 
                     // Add an additional last state that will become depth State
                     if (previousState != null) { /// IS THIS RIGHT!?!?
-                        depthState = parentRegion.createState(state.id("Depth")).setLabel2("_" + stateId + "_Depth")
+                        val numberString = "" + number
+                        number = number + 1
+                        depthState = parentRegion.createState(state.id("_Pause")).setLabel2("_" + stateId + numberString)
                         val connect = previousState.createImmediateTransitionTo(depthState)
                         previousState = depthState
                         connect.setPriority(2)
