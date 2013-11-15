@@ -476,7 +476,7 @@ class SCChartsCoreTransformation {
             var done = false
             while (!done) {
                 done = true
-                if (stateAfterDepth.incomingTransitions.size == 2) { 
+                if (stateAfterDepth.incomingTransitions.size == 2) {
                     // T1 is the incoming node from the surface
                     var T1tmp = stateAfterDepth.incomingTransitions.get(0)
                     if (T1tmp == T2tmp) {
@@ -487,8 +487,8 @@ class SCChartsCoreTransformation {
                     // T2 is the incoming node from the feedback
                     val K1 = T1.sourceState
                     val K2 = T2.sourceState
-                    val TK1 = K1.outgoingTransitions.filter( e | e != T1).get(0)
-                    val TK2 = K2.outgoingTransitions.filter( e | e != T2).get(0)
+                    val TK1 = K1.outgoingTransitions.filter(e|e != T1).get(0)
+                    val TK2 = K2.outgoingTransitions.filter(e|e != T2).get(0)
                     if ((TK1.targetState == TK2.targetState) && (TK1.trigger.equals2(TK2.trigger))) {
                         stateAfterDepth = K1
                         val t = K2.incomingTransitions.get(0)
@@ -499,9 +499,8 @@ class SCChartsCoreTransformation {
                     }
                 }
             }
-            // End of DTO transformation
-        
-        
+
+        // End of DTO transformation
         // This MUST be highest priority so that the control flow restarts and takes other 
         // outgoing transition.
         // There should not be any other outgoing transition.
@@ -538,7 +537,7 @@ class SCChartsCoreTransformation {
             val targetState = transition.targetState
             val parentRegion = targetState.parentRegion
             val transitionOriginalTarget = transition.targetState
-            var Transition lastTransition = transition
+            var Transition lastTransition = transition 
 
             for (effect : transition.effects.immutableCopy) {
                 val effectState = parentRegion.createState(targetState.id + effect.id)
