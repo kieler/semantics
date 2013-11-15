@@ -115,13 +115,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     // -------------------------------------------------------------------------
     // Transformation options   
     private static val TransformationOption SHOW_SIGNAL_DECLARATIONS = TransformationOption::
-        createCheckOption("Declarations", true);
+        createCheckOption("Declarations", false);
 
     private static val TransformationOption SHOW_STATE_ACTIONS = TransformationOption::createCheckOption("State actions",
-        true);
+        false);
 
     private static val TransformationOption SHOW_LABELS = TransformationOption::createCheckOption("Transition labels",
-        true);
+        false);
 
     private static val TransformationOption SHOW_DEPENDENCIES = TransformationOption::createCheckOption(
         "Dependencies && optimized priorities", false);
@@ -134,8 +134,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     private static val TransformationOption SHOW_SHADOW = TransformationOption::createCheckOption("Shadow", true);
 
     override public getTransformationOptions() {
-        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_SHADOW);
+        return ImmutableSet::of(
+        	SHOW_SIGNAL_DECLARATIONS,
+        	SHOW_STATE_ACTIONS,
+        	SHOW_LABELS,
+        	SHOW_ORDER,
+        	SHOW_DEPENDENCIES
+//        	, SHOW_SHADOW
+            );
     }
 
     override public getRecommendedLayoutOptions() {
@@ -181,6 +187,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             }
             if (r.eContainer == null) {
                 return;
+            }
+            if (r.getAnnotation("collapsed") != null) {
+            	node.setLayoutOption(KlighdProperties.EXPAND, false);
             }
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
@@ -425,16 +434,18 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         it.addRectangle => [
                             it.invisible = true
                             it.fontSize = 11;
-                            it.fontSize.propagateToChildren = true
+//                            it.fontSize.propagateToChildren = true
                             it.setFontBold(true);
                             it.setGridPlacementData().from(LEFT, 0, 0, TOP, 8f, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                             val ktext = it.addText("   " + s.label + prioritySpace + " ").putToLookUpWith(s) => [
-                                it.fontSize = 11;
+                                it.fontSize = 20;
+                                it.setFontBold(true);
+                    		    it.setProperty(KlighdProperties.KLIGHD_SELECTION_UNPICKABLE, true);
                             ];
                             if (priorityToShow.length > 0) {
                                 val estimatedWidth = PlacementUtil.estimateTextSize(ktext).width
                                 it.addText(priorityToShow) => [
-                                    it.fontSize = 9;
+                                    it.fontSize = 15;
                                     it.setFontBold(true);
                                     if (SHOW_DEPENDENCIES.optionBooleanValue) {
                                         it.setForeground("blue".color)
@@ -450,14 +461,15 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
                     // For simple states we want a larger area 
                     val ktext = it.addText(" " + s.label + prioritySpace).putToLookUpWith(s) => [
-                        it.fontSize = 11;
+                        it.fontSize = 20;
                         it.setFontBold(true);
                         it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+                        it.setProperty(KlighdProperties.KLIGHD_SELECTION_UNPICKABLE, true);
                     ];
                     if (priorityToShow.length > 0) {
                         val estimatedWidth = PlacementUtil.estimateTextSize(ktext).width
                         it.addText(priorityToShow) => [
-                            it.fontSize = 9;
+                            it.fontSize = 15;
                             it.setFontBold(true);
                             if (SHOW_DEPENDENCIES.optionBooleanValue) {
                                 it.setForeground("blue".color)
@@ -618,7 +630,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 if (!label.nullOrEmpty) {
                     t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
                         label,
-                        10,
+                        17,
                         KlighdConstants::DEFAULT_FONT_NAME
                     ) => [
                         it.setLayoutOption(LayoutOptions.FONT_SIZE, 13);
