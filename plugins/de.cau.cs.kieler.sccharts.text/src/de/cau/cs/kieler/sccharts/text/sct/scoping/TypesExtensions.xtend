@@ -53,14 +53,12 @@ class TypesExtensions {
             return null;
         }
         
-        var Resource res = this.resourceSet.getResource(TYPE_RESOURCE_URI, false);
-        if (res == null) {
-            res = createTypes(this.resourceSet);
-        }
+        val res = this.resourceSet.getResource(TYPE_RESOURCE_URI, false)?:createTypes(this.resourceSet);
         
         val PrimitiveType type = res.getContents().filter(typeof(PrimitiveType)).filter[
             it.name.equals(name);
         ].head;
+        
         return type;
     }
     
@@ -79,10 +77,7 @@ class TypesExtensions {
             return null;
         } 
         
-        var Resource res = this.resourceSet.getResource(TYPE_RESOURCE_URI, false);
-        if (res == null) {
-            res = createTypes(this.resourceSet);
-        }
+        var res = this.resourceSet.getResource(TYPE_RESOURCE_URI, false)?:createTypes(this.resourceSet);
         
         return res?.contents?:emptyList
     }
