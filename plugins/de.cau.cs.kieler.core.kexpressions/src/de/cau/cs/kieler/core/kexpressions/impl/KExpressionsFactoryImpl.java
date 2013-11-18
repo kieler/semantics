@@ -71,6 +71,9 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
             case KExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
             case KExpressionsPackage.DOUBLE_VALUE: return createDoubleValue();
+            case KExpressionsPackage.ARRAY_TYPE: return createArrayType();
+            case KExpressionsPackage.PRIMITIVE_TYPE_REFERENCE: return createPrimitiveTypeReference();
+            case KExpressionsPackage.PRIMITIVE_TYPE: return createPrimitiveType();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -212,6 +215,36 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public DoubleValue createDoubleValue() {
         DoubleValueImpl doubleValue = new DoubleValueImpl();
         return doubleValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ArrayType createArrayType() {
+        ArrayTypeImpl arrayType = new ArrayTypeImpl();
+        return arrayType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public PrimitiveTypeReference createPrimitiveTypeReference() {
+        PrimitiveTypeReferenceImpl primitiveTypeReference = new PrimitiveTypeReferenceImpl();
+        return primitiveTypeReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public PrimitiveType createPrimitiveType() {
+        PrimitiveTypeImpl primitiveType = new PrimitiveTypeImpl();
+        return primitiveType;
     }
 
     /**

@@ -223,8 +223,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// TODO: ensure signal AND variable declaration in top level....
 		//ValuedObject returns kexpressions::ValuedObject:
-		//	annotations+=Annotation* input?="input"? output?="output"? static?="static"? signal?="signal"? type=ValueType?
-		//	name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";";
+		//	annotations+=Annotation* input?="input"? output?="output"? static?="static"? signal?="signal"? type=ValueType? name=ID
+		//	("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";";
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* input?="input"? output?="output"? static?="static"? signal?="signal"? type=ValueType? name=ID
@@ -1098,8 +1098,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// TODO: ensure signal AND variable declaration in top level....
 	//ValuedObject returns kexpressions::ValuedObject:
-	//	annotations+=Annotation* input?="input"? output?="output"? static?="static"? signal?="signal"? type=ValueType?
-	//	name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";";
+	//	annotations+=Annotation* input?="input"? output?="output"? static?="static"? signal?="signal"? type=ValueType? name=ID
+	//	("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";";
 	public ValuedObjectElements getValuedObjectAccess() {
 		return (pValuedObject != null) ? pValuedObject : (pValuedObject = new ValuedObjectElements());
 	}
@@ -1504,7 +1504,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: A, varB
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject];
+	//	valuedObject=[ValuedObject] ("[" indexExpressions+=Expression "]")*;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKExpressions.getValuedObjectReferenceAccess();
 	}

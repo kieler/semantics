@@ -37,7 +37,7 @@ public class ActionsFormatter extends KExpressionsFormatter {
         super.customConfigureFormatting(c, f.getKExpressionsGrammarAccess());
 
         // avoid space in valued Emission like 'X (5 + 7)' -> 'X(5 + 7)'
-        c.setNoSpace().before(f.getEmissionAccess().getLeftParenthesisKeyword_1_0());
+        c.setNoSpace().before(f.getEmissionAccess().getLeftParenthesisKeyword_2_0());
 
         // There is no type any more
         // avoid space in textual effect like '/ "foo" (java)' -> '/ "foo"(java)'
@@ -61,7 +61,7 @@ public class ActionsFormatter extends KExpressionsFormatter {
        c.setNoSpace().before(f.getExitActionAccess().getSemicolonKeyword_3_2_0());
        
        // Emission ( value ) -> (value)
-       c.setNoSpace().after(f.getEmissionAccess().getLeftParenthesisKeyword_1_0());
-       c.setNoSpace().before(f.getEmissionAccess().getRightParenthesisKeyword_1_2());
+       c.setNoSpace().after(f.getEmissionAccess().getLeftParenthesisKeyword_2_0());
+       c.setNoSpace().before(f.getEmissionAccess().getRightParenthesisKeyword_2_2());
     }
 }

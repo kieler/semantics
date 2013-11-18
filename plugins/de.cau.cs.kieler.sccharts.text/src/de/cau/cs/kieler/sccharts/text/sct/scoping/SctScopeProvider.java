@@ -19,6 +19,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -28,20 +30,21 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.Scopes;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.OperatorType;
+import de.cau.cs.kieler.core.kexpressions.PrimitiveTypeReference;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.sccharts.Assignment;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
 
 /**
@@ -50,6 +53,20 @@ import de.cau.cs.kieler.sccharts.Transition;
  * @author chsch
  */
 public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
+    
+    @Inject
+    private TypesExtensions types;
+
+    /**
+     * Realizes the scoping of primitive types.
+     * 
+     * @param object
+     * @param reference
+     * @return
+     */
+    public IScope scope_PrimitiveType(PrimitiveTypeReference object, EReference reference) {
+        return Scopes.scopeFor(types.getAvailableTypes());
+    }
 
     /**
      * A implementation of scoping for transitions' targets.

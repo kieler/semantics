@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,6 +33,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Assignment#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Assignment#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Assignment#getIndexExpressions <em>Index Expressions</em>}</li>
  * </ul>
  * </p>
  *
@@ -98,5 +100,21 @@ public interface Assignment extends Effect {
      * @generated
      */
     void setExpression(Expression value);
+
+    /**
+     * Returns the value of the '<em><b>Index Expressions</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Index Expressions</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Index Expressions</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getAssignment_IndexExpressions()
+     * @model containment="true"
+     * @generated
+     */
+    EList<Expression> getIndexExpressions();
 
 } // Assignment

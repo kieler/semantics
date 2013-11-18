@@ -877,8 +877,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cStaticStaticKeyword_3_0 = (Keyword)cStaticAssignment_3.eContents().get(0);
 		private final Assignment cSignalAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final Keyword cSignalSignalKeyword_4_0 = (Keyword)cSignalAssignment_4.eContents().get(0);
-		private final Assignment cTypeAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cTypeValueTypeEnumRuleCall_5_0 = (RuleCall)cTypeAssignment_5.eContents().get(0);
+		private final Assignment cType2Assignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cType2ArrayTypeParserRuleCall_5_0 = (RuleCall)cType2Assignment_5.eContents().get(0);
 		private final Assignment cNameAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final RuleCall cNameIDTerminalRuleCall_6_0 = (RuleCall)cNameAssignment_6.eContents().get(0);
 		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
@@ -893,12 +893,12 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//ValuedObject returns kexpressions::ValuedObject:
-		//	annotations+=Annotation* input?="input"? output?="output"? static?="static"? signal?="signal"? type=ValueType?
-		//	name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";";
+		//	annotations+=Annotation* input?="input"? output?="output"? static?="static"? signal?="signal"? //    (type = ValueType)?
+		//	type2=ArrayType? name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";";
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* input?="input"? output?="output"? static?="static"? signal?="signal"? type=ValueType? name=ID
-		//("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";"
+		//annotations+=Annotation* input?="input"? output?="output"? static?="static"? signal?="signal"? //    (type = ValueType)?
+		//type2=ArrayType? name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";"
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -931,11 +931,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//"signal"
 		public Keyword getSignalSignalKeyword_4_0() { return cSignalSignalKeyword_4_0; }
 
-		//type=ValueType?
-		public Assignment getTypeAssignment_5() { return cTypeAssignment_5; }
+		//type2=ArrayType?
+		public Assignment getType2Assignment_5() { return cType2Assignment_5; }
 
-		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_5_0() { return cTypeValueTypeEnumRuleCall_5_0; }
+		//ArrayType
+		public RuleCall getType2ArrayTypeParserRuleCall_5_0() { return cType2ArrayTypeParserRuleCall_5_0; }
 
 		//name=ID
 		public Assignment getNameAssignment_6() { return cNameAssignment_6; }
@@ -969,6 +969,118 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 		//";"
 		public Keyword getSemicolonKeyword_9() { return cSemicolonKeyword_9; }
+	}
+
+	public class ArrayTypeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ArrayType");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cPrimitiveTypeReferenceParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cArrayTypeElementTypeAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cCardinalityAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cCardinalityINTTerminalRuleCall_1_2_0 = (RuleCall)cCardinalityAssignment_1_2.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
+		
+		//ArrayType returns kexpressions::Type:
+		//	PrimitiveTypeReference ({kexpressions::ArrayType.elementType=current} "[" cardinality=INT "]")?;
+		public ParserRule getRule() { return rule; }
+
+		//PrimitiveTypeReference ({kexpressions::ArrayType.elementType=current} "[" cardinality=INT "]")?
+		public Group getGroup() { return cGroup; }
+
+		//PrimitiveTypeReference
+		public RuleCall getPrimitiveTypeReferenceParserRuleCall_0() { return cPrimitiveTypeReferenceParserRuleCall_0; }
+
+		//({kexpressions::ArrayType.elementType=current} "[" cardinality=INT "]")?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{kexpressions::ArrayType.elementType=current}
+		public Action getArrayTypeElementTypeAction_1_0() { return cArrayTypeElementTypeAction_1_0; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1_1() { return cLeftSquareBracketKeyword_1_1; }
+
+		//cardinality=INT
+		public Assignment getCardinalityAssignment_1_2() { return cCardinalityAssignment_1_2; }
+
+		//INT
+		public RuleCall getCardinalityINTTerminalRuleCall_1_2_0() { return cCardinalityINTTerminalRuleCall_1_2_0; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_1_3() { return cRightSquareBracketKeyword_1_3; }
+	}
+
+	public class PrimitiveTypeReferenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PrimitiveTypeReference");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cPrimitiveTypeReferenceAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cPrimitiveTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cPrimitiveTypePrimitiveTypeCrossReference_1_0 = (CrossReference)cPrimitiveTypeAssignment_1.eContents().get(0);
+		private final RuleCall cPrimitiveTypePrimitiveTypeValueTypeLiteralParserRuleCall_1_0_1 = (RuleCall)cPrimitiveTypePrimitiveTypeCrossReference_1_0.eContents().get(1);
+		
+		//PrimitiveTypeReference returns kexpressions::Type:
+		//	{kexpressions::PrimitiveTypeReference} primitiveType=[kexpressions::PrimitiveType|ValueTypeLiteral];
+		public ParserRule getRule() { return rule; }
+
+		//{kexpressions::PrimitiveTypeReference} primitiveType=[kexpressions::PrimitiveType|ValueTypeLiteral]
+		public Group getGroup() { return cGroup; }
+
+		//{kexpressions::PrimitiveTypeReference}
+		public Action getPrimitiveTypeReferenceAction_0() { return cPrimitiveTypeReferenceAction_0; }
+
+		//primitiveType=[kexpressions::PrimitiveType|ValueTypeLiteral]
+		public Assignment getPrimitiveTypeAssignment_1() { return cPrimitiveTypeAssignment_1; }
+
+		//[kexpressions::PrimitiveType|ValueTypeLiteral]
+		public CrossReference getPrimitiveTypePrimitiveTypeCrossReference_1_0() { return cPrimitiveTypePrimitiveTypeCrossReference_1_0; }
+
+		//ValueTypeLiteral
+		public RuleCall getPrimitiveTypePrimitiveTypeValueTypeLiteralParserRuleCall_1_0_1() { return cPrimitiveTypePrimitiveTypeValueTypeLiteralParserRuleCall_1_0_1; }
+	}
+
+	public class ValueTypeLiteralElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValueTypeLiteral");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cPureKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cBoolKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cUnsignedKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cIntKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		private final Keyword cFloatKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
+		private final Keyword cDoubleKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
+		private final Keyword cStringKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
+		private final Keyword cHostKeyword_7 = (Keyword)cAlternatives.eContents().get(7);
+		
+		//ValueTypeLiteral:
+		//	"pure" | "bool" | "unsigned" | "int" | "float" | "double" | "string" | "host";
+		public ParserRule getRule() { return rule; }
+
+		//"pure" | "bool" | "unsigned" | "int" | "float" | "double" | "string" | "host"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//"pure"
+		public Keyword getPureKeyword_0() { return cPureKeyword_0; }
+
+		//"bool"
+		public Keyword getBoolKeyword_1() { return cBoolKeyword_1; }
+
+		//"unsigned"
+		public Keyword getUnsignedKeyword_2() { return cUnsignedKeyword_2; }
+
+		//"int"
+		public Keyword getIntKeyword_3() { return cIntKeyword_3; }
+
+		//"float"
+		public Keyword getFloatKeyword_4() { return cFloatKeyword_4; }
+
+		//"double"
+		public Keyword getDoubleKeyword_5() { return cDoubleKeyword_5; }
+
+		//"string"
+		public Keyword getStringKeyword_6() { return cStringKeyword_6; }
+
+		//"host"
+		public Keyword getHostKeyword_7() { return cHostKeyword_7; }
 	}
 
 	public class TextualCodeElements extends AbstractParserRuleElementFinder {
@@ -1119,6 +1231,9 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	private LocalActionElements pLocalAction;
 	private TransitionElements pTransition;
 	private ValuedObjectElements pValuedObject;
+	private ArrayTypeElements pArrayType;
+	private PrimitiveTypeReferenceElements pPrimitiveTypeReference;
+	private ValueTypeLiteralElements pValueTypeLiteral;
 	private TextualCodeElements pTextualCode;
 	private SubstitutionElements pSubstitution;
 	private StateTypeElements unknownRuleStateType;
@@ -1251,14 +1366,44 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//ValuedObject returns kexpressions::ValuedObject:
-	//	annotations+=Annotation* input?="input"? output?="output"? static?="static"? signal?="signal"? type=ValueType?
-	//	name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";";
+	//	annotations+=Annotation* input?="input"? output?="output"? static?="static"? signal?="signal"? //    (type = ValueType)?
+	//	type2=ArrayType? name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)? ";";
 	public ValuedObjectElements getValuedObjectAccess() {
 		return (pValuedObject != null) ? pValuedObject : (pValuedObject = new ValuedObjectElements());
 	}
 	
 	public ParserRule getValuedObjectRule() {
 		return getValuedObjectAccess().getRule();
+	}
+
+	//ArrayType returns kexpressions::Type:
+	//	PrimitiveTypeReference ({kexpressions::ArrayType.elementType=current} "[" cardinality=INT "]")?;
+	public ArrayTypeElements getArrayTypeAccess() {
+		return (pArrayType != null) ? pArrayType : (pArrayType = new ArrayTypeElements());
+	}
+	
+	public ParserRule getArrayTypeRule() {
+		return getArrayTypeAccess().getRule();
+	}
+
+	//PrimitiveTypeReference returns kexpressions::Type:
+	//	{kexpressions::PrimitiveTypeReference} primitiveType=[kexpressions::PrimitiveType|ValueTypeLiteral];
+	public PrimitiveTypeReferenceElements getPrimitiveTypeReferenceAccess() {
+		return (pPrimitiveTypeReference != null) ? pPrimitiveTypeReference : (pPrimitiveTypeReference = new PrimitiveTypeReferenceElements());
+	}
+	
+	public ParserRule getPrimitiveTypeReferenceRule() {
+		return getPrimitiveTypeReferenceAccess().getRule();
+	}
+
+	//ValueTypeLiteral:
+	//	"pure" | "bool" | "unsigned" | "int" | "float" | "double" | "string" | "host";
+	public ValueTypeLiteralElements getValueTypeLiteralAccess() {
+		return (pValueTypeLiteral != null) ? pValueTypeLiteral : (pValueTypeLiteral = new ValueTypeLiteralElements());
+	}
+	
+	public ParserRule getValueTypeLiteralRule() {
+		return getValueTypeLiteralAccess().getRule();
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
@@ -1354,7 +1499,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Effect returns sccharts::Effect:
-	//	Emission | Assignment | TextEffect;
+	//	Assignment | Emission | TextEffect;
 	public ActionsGrammarAccess.EffectElements getEffectAccess() {
 		return gaActions.getEffectAccess();
 	}
@@ -1364,7 +1509,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Emission returns sccharts::Emission:
-	//	valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
+	//	valuedObject=[kexpressions::ValuedObject] ("[" indexExpressions+=Expression "]")* ("(" newValue=Expression ")")?;
 	public ActionsGrammarAccess.EmissionElements getEmissionAccess() {
 		return gaActions.getEmissionAccess();
 	}
@@ -1374,7 +1519,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Assignment returns sccharts::Assignment:
-	//	valuedObject=[kexpressions::ValuedObject] "=" expression=Expression;
+	//	valuedObject=[kexpressions::ValuedObject] ("[" indexExpressions+=Expression "]")* "=" expression=Expression;
 	public ActionsGrammarAccess.AssignmentElements getAssignmentAccess() {
 		return gaActions.getAssignmentAccess();
 	}
@@ -1627,7 +1772,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: A, varB
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject];
+	//	valuedObject=[ValuedObject] ("[" indexExpressions+=Expression "]")*;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaActions.getValuedObjectReferenceAccess();
 	}

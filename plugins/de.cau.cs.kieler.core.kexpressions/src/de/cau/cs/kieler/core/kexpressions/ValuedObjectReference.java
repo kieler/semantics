@@ -6,6 +6,8 @@
  */
 package de.cau.cs.kieler.core.kexpressions;
 
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -30,6 +32,7 @@ package de.cau.cs.kieler.core.kexpressions;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getIndexExpressions <em>Index Expressions</em>}</li>
  * </ul>
  * </p>
  *
@@ -63,5 +66,21 @@ public interface ValuedObjectReference extends Expression {
      * @generated
      */
     void setValuedObject(ValuedObject value);
+
+    /**
+     * Returns the value of the '<em><b>Index Expressions</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Index Expressions</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Index Expressions</em>' containment reference list.
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObjectReference_IndexExpressions()
+     * @model containment="true"
+     * @generated
+     */
+    EList<Expression> getIndexExpressions();
 
 } // ValuedObjectReference

@@ -140,7 +140,7 @@ ValuedObjectTestExpression returns Expression:
 
 // Example: A, varB
 ValuedObjectReference returns ValuedObjectReference:
-	valuedObject=[ValuedObject|ID];
+	valuedObject=[ValuedObject|ID] ('[' indexExpressions += Expression ']')*;
 
 
 // Example: 'printf(...)'

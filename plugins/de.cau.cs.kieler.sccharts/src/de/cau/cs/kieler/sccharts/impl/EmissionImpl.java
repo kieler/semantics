@@ -19,13 +19,17 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,6 +40,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.EmissionImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.EmissionImpl#getNewValue <em>New Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.EmissionImpl#getIndexExpressions <em>Index Expressions</em>}</li>
  * </ul>
  * </p>
  *
@@ -68,6 +73,16 @@ public class EmissionImpl extends EffectImpl implements Emission {
      * @ordered
      */
     protected Expression newValue;
+
+    /**
+     * The cached value of the '{@link #getIndexExpressions() <em>Index Expressions</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIndexExpressions()
+     * @generated
+     * @ordered
+     */
+    protected EList<Expression> indexExpressions;
 
     /**
      * <!-- begin-user-doc -->
@@ -174,11 +189,25 @@ public class EmissionImpl extends EffectImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<Expression> getIndexExpressions() {
+        if (indexExpressions == null) {
+            indexExpressions = new EObjectContainmentEList<Expression>(Expression.class, this, SCChartsPackage.EMISSION__INDEX_EXPRESSIONS);
+        }
+        return indexExpressions;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case SCChartsPackage.EMISSION__NEW_VALUE:
                 return basicSetNewValue(null, msgs);
+            case SCChartsPackage.EMISSION__INDEX_EXPRESSIONS:
+                return ((InternalEList<?>)getIndexExpressions()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -196,6 +225,8 @@ public class EmissionImpl extends EffectImpl implements Emission {
                 return basicGetValuedObject();
             case SCChartsPackage.EMISSION__NEW_VALUE:
                 return getNewValue();
+            case SCChartsPackage.EMISSION__INDEX_EXPRESSIONS:
+                return getIndexExpressions();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -205,6 +236,7 @@ public class EmissionImpl extends EffectImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
@@ -213,6 +245,10 @@ public class EmissionImpl extends EffectImpl implements Emission {
                 return;
             case SCChartsPackage.EMISSION__NEW_VALUE:
                 setNewValue((Expression)newValue);
+                return;
+            case SCChartsPackage.EMISSION__INDEX_EXPRESSIONS:
+                getIndexExpressions().clear();
+                getIndexExpressions().addAll((Collection<? extends Expression>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -232,6 +268,9 @@ public class EmissionImpl extends EffectImpl implements Emission {
             case SCChartsPackage.EMISSION__NEW_VALUE:
                 setNewValue((Expression)null);
                 return;
+            case SCChartsPackage.EMISSION__INDEX_EXPRESSIONS:
+                getIndexExpressions().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -248,6 +287,8 @@ public class EmissionImpl extends EffectImpl implements Emission {
                 return valuedObject != null;
             case SCChartsPackage.EMISSION__NEW_VALUE:
                 return newValue != null;
+            case SCChartsPackage.EMISSION__INDEX_EXPRESSIONS:
+                return indexExpressions != null && !indexExpressions.isEmpty();
         }
         return super.eIsSet(featureID);
     }

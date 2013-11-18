@@ -32,6 +32,7 @@ import de.cau.cs.kieler.core.annotations.Annotatable;
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getType2 <em>Type2</em>}</li>
  * </ul>
  * </p>
  *
@@ -224,6 +225,32 @@ public interface ValuedObject extends Annotatable {
      * @generated
      */
     void setInitialValue(Expression value);
+
+    /**
+     * Returns the value of the '<em><b>Type2</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Type2</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Type2</em>' containment reference.
+     * @see #setType2(Type)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_Type2()
+     * @model containment="true"
+     * @generated
+     */
+    Type getType2();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getType2 <em>Type2</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Type2</em>' containment reference.
+     * @see #getType2()
+     * @generated
+     */
+    void setType2(Type value);
 
     /**
      * Returns the value of the '<em><b>Combine Operator</b></em>' attribute.

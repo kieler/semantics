@@ -11,6 +11,7 @@ import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.core.kexpressions.CombineOperator;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.Type;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
@@ -37,6 +38,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#isSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getCombineOperator <em>Combine Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getInitialValue <em>Initial Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getType2 <em>Type2</em>}</li>
  * </ul>
  * </p>
  *
@@ -192,6 +194,16 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
      * @ordered
      */
     protected Expression initialValue;
+
+    /**
+     * The cached value of the '{@link #getType2() <em>Type2</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getType2()
+     * @generated
+     * @ordered
+     */
+    protected Type type2;
 
     /**
      * <!-- begin-user-doc -->
@@ -386,11 +398,56 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
      * <!-- end-user-doc -->
      * @generated
      */
+    public Type getType2() {
+        return type2;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetType2(Type newType2, NotificationChain msgs) {
+        Type oldType2 = type2;
+        type2 = newType2;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT__TYPE2, oldType2, newType2);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setType2(Type newType2) {
+        if (newType2 != type2) {
+            NotificationChain msgs = null;
+            if (type2 != null)
+                msgs = ((InternalEObject)type2).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KExpressionsPackage.VALUED_OBJECT__TYPE2, null, msgs);
+            if (newType2 != null)
+                msgs = ((InternalEObject)newType2).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KExpressionsPackage.VALUED_OBJECT__TYPE2, null, msgs);
+            msgs = basicSetType2(newType2, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT__TYPE2, newType2, newType2));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
                 return basicSetInitialValue(null, msgs);
+            case KExpressionsPackage.VALUED_OBJECT__TYPE2:
+                return basicSetType2(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -440,6 +497,8 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
                 return getCombineOperator();
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
                 return getInitialValue();
+            case KExpressionsPackage.VALUED_OBJECT__TYPE2:
+                return getType2();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -475,6 +534,9 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
                 return;
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
                 setInitialValue((Expression)newValue);
+                return;
+            case KExpressionsPackage.VALUED_OBJECT__TYPE2:
+                setType2((Type)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -512,6 +574,9 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
                 setInitialValue((Expression)null);
                 return;
+            case KExpressionsPackage.VALUED_OBJECT__TYPE2:
+                setType2((Type)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -540,6 +605,8 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
                 return combineOperator != COMBINE_OPERATOR_EDEFAULT;
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
                 return initialValue != null;
+            case KExpressionsPackage.VALUED_OBJECT__TYPE2:
+                return type2 != null;
         }
         return super.eIsSet(featureID);
     }

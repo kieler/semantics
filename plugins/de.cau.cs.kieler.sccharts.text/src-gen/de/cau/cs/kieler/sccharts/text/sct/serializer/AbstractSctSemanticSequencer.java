@@ -10,12 +10,14 @@ import de.cau.cs.kieler.core.annotations.ImportAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
+import de.cau.cs.kieler.core.kexpressions.ArrayType;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
 import de.cau.cs.kieler.core.kexpressions.DoubleValue;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.core.kexpressions.PrimitiveTypeReference;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
@@ -114,6 +116,12 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				else break;
 			}
 		else if(semanticObject.eClass().getEPackage() == KExpressionsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case KExpressionsPackage.ARRAY_TYPE:
+				if(context == grammarAccess.getArrayTypeRule()) {
+					sequence_ArrayType(context, (ArrayType) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.BOOL_VALUE:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -248,6 +256,14 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else if(context == grammarAccess.getValuedObjectTestExpressionRule()) {
 					sequence_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.PRIMITIVE_TYPE_REFERENCE:
+				if(context == grammarAccess.getArrayTypeRule() ||
+				   context == grammarAccess.getArrayTypeAccess().getArrayTypeElementTypeAction_1_0() ||
+				   context == grammarAccess.getPrimitiveTypeReferenceRule()) {
+					sequence_PrimitiveTypeReference(context, (PrimitiveTypeReference) semanticObject); 
 					return; 
 				}
 				else break;
@@ -417,6 +433,41 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
+	 *     (elementType=ArrayType_ArrayType_1_0 cardinality=INT)
+	 */
+	protected void sequence_ArrayType(EObject context, ArrayType semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.ARRAY_TYPE__ELEMENT_TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.ARRAY_TYPE__ELEMENT_TYPE));
+			if(transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.ARRAY_TYPE__CARDINALITY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.ARRAY_TYPE__CARDINALITY));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getArrayTypeAccess().getArrayTypeElementTypeAction_1_0(), semanticObject.getElementType());
+		feeder.accept(grammarAccess.getArrayTypeAccess().getCardinalityINTTerminalRuleCall_1_2_0(), semanticObject.getCardinality());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     primitiveType=[PrimitiveType|ValueTypeLiteral]
+	 */
+	protected void sequence_PrimitiveTypeReference(EObject context, PrimitiveTypeReference semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.PRIMITIVE_TYPE_REFERENCE__PRIMITIVE_TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.PRIMITIVE_TYPE_REFERENCE__PRIMITIVE_TYPE));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getPrimitiveTypeReferenceAccess().getPrimitiveTypePrimitiveTypeValueTypeLiteralParserRuleCall_1_0_1(), semanticObject.getPrimitiveType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         id=ID? 
@@ -544,7 +595,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         output?='output'? 
 	 *         static?='static'? 
 	 *         signal?='signal'? 
-	 *         type=ValueType? 
+	 *         type2=ArrayType? 
 	 *         name=ID 
 	 *         initialValue=Expression? 
 	 *         combineOperator=CombineOperator?

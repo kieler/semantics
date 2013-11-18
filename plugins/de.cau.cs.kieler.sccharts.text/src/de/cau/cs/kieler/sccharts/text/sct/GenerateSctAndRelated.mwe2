@@ -1,4 +1,4 @@
-module de.menges.logic.LogicAndIE
+module de.cau.cs.kieler.sccharts.text.sct.SctAndRelated
 
 
 Workflow {

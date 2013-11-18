@@ -42,15 +42,15 @@ SuspendAction returns sccharts::SuspendAction:
    (immediate?='immediate')? (weak?='weak')? 'suspend'  (trigger=BoolExpression)? ';';      
 
 Effect returns sccharts::Effect: 
-	Emission | Assignment | TextEffect;
+	Assignment | Emission | TextEffect;
 
 		
 Emission returns sccharts::Emission:
-	valuedObject=[kexpressions::ValuedObject] ( "(" newValue=Expression ")" )?;
+	valuedObject=[kexpressions::ValuedObject] ("[" indexExpressions += Expression "]")* ( "(" newValue=Expression ")" )?;
 
     
 Assignment returns sccharts::Assignment:
-	valuedObject=[kexpressions::ValuedObject] "=" expression = Expression;
+	valuedObject=[kexpressions::ValuedObject] ("[" indexExpressions += Expression "]")* "=" expression = Expression;
 
 
 TextEffect returns sccharts::TextEffect:

@@ -123,11 +123,23 @@ ValuedObject returns kexpressions::ValuedObject:
     (output?='output')?
     (static?='static')?
     (signal?='signal')?
-    (type = ValueType)?
+//    (type = ValueType)?
+    (type2 = ArrayType)?
     name=ID ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
     )? ';' ;
+
+ArrayType returns kexpressions::Type:
+    PrimitiveTypeReference ({kexpressions::ArrayType.elementType = current} '[' cardinality = INT ']')?
+;
+
+PrimitiveTypeReference returns kexpressions::Type:
+    {kexpressions::PrimitiveTypeReference} primitiveType = [kexpressions::PrimitiveType|ValueTypeLiteral]
+;
+
+ ValueTypeLiteral :
+    "pure" | "bool" | "unsigned" | "int" | "float" | "double" | "string" | "host";
 
 
 // ---------------------------------------------------------------------------------------------------

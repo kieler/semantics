@@ -173,13 +173,22 @@ public interface KExpressionsPackage extends EPackage {
     int VALUED_OBJECT__INITIAL_VALUE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
+     * The feature id for the '<em><b>Type2</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VALUED_OBJECT__TYPE2 = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
+
+    /**
      * The number of structural features of the '<em>Valued Object</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
+    int VALUED_OBJECT_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl <em>Valued Object Reference</em>}' class.
@@ -201,13 +210,22 @@ public interface KExpressionsPackage extends EPackage {
     int VALUED_OBJECT_REFERENCE__VALUED_OBJECT = EXPRESSION_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Index Expressions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VALUED_OBJECT_REFERENCE__INDEX_EXPRESSIONS = EXPRESSION_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>Valued Object Reference</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT_REFERENCE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
+    int VALUED_OBJECT_REFERENCE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ValueImpl <em>Value</em>}' class.
@@ -406,6 +424,127 @@ public interface KExpressionsPackage extends EPackage {
     int DOUBLE_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.TypeImpl <em>Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.impl.TypeImpl
+     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getType()
+     * @generated
+     */
+    int TYPE = 10;
+
+    /**
+     * The number of structural features of the '<em>Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPE_FEATURE_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ArrayTypeImpl <em>Array Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.impl.ArrayTypeImpl
+     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getArrayType()
+     * @generated
+     */
+    int ARRAY_TYPE = 11;
+
+    /**
+     * The feature id for the '<em><b>Element Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ARRAY_TYPE__ELEMENT_TYPE = TYPE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Cardinality</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ARRAY_TYPE__CARDINALITY = TYPE_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Array Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ARRAY_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 2;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.PrimitiveTypeReferenceImpl <em>Primitive Type Reference</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.impl.PrimitiveTypeReferenceImpl
+     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getPrimitiveTypeReference()
+     * @generated
+     */
+    int PRIMITIVE_TYPE_REFERENCE = 12;
+
+    /**
+     * The feature id for the '<em><b>Primitive Type</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_TYPE_REFERENCE__PRIMITIVE_TYPE = TYPE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Primitive Type Reference</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_TYPE_REFERENCE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 1;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.PrimitiveTypeImpl <em>Primitive Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.impl.PrimitiveTypeImpl
+     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getPrimitiveType()
+     * @generated
+     */
+    int PRIMITIVE_TYPE = 13;
+
+    /**
+     * The feature id for the '<em><b>Value Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_TYPE__VALUE_TYPE = TYPE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_TYPE__NAME = TYPE_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Primitive Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRIMITIVE_TYPE_FEATURE_COUNT = TYPE_FEATURE_COUNT + 2;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -413,7 +552,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 10;
+    int COMBINE_OPERATOR = 14;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -423,7 +562,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 11;
+    int OPERATOR_TYPE = 15;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -433,7 +572,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 12;
+    int VALUE_TYPE = 16;
 
 
     /**
@@ -534,6 +673,17 @@ public interface KExpressionsPackage extends EPackage {
     EReference getValuedObject_InitialValue();
 
     /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getType2 <em>Type2</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Type2</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#getType2()
+     * @see #getValuedObject()
+     * @generated
+     */
+    EReference getValuedObject_Type2();
+
+    /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -564,6 +714,17 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EReference getValuedObjectReference_ValuedObject();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getIndexExpressions <em>Index Expressions</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Index Expressions</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getIndexExpressions()
+     * @see #getValuedObjectReference()
+     * @generated
+     */
+    EReference getValuedObjectReference_IndexExpressions();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.Value <em>Value</em>}'.
@@ -713,6 +874,101 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getDoubleValue_Value();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.Type <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Type</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.Type
+     * @generated
+     */
+    EClass getType();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.ArrayType <em>Array Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Array Type</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ArrayType
+     * @generated
+     */
+    EClass getArrayType();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.kexpressions.ArrayType#getElementType <em>Element Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Element Type</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ArrayType#getElementType()
+     * @see #getArrayType()
+     * @generated
+     */
+    EReference getArrayType_ElementType();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ArrayType#getCardinality <em>Cardinality</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Cardinality</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ArrayType#getCardinality()
+     * @see #getArrayType()
+     * @generated
+     */
+    EAttribute getArrayType_Cardinality();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.PrimitiveTypeReference <em>Primitive Type Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Primitive Type Reference</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.PrimitiveTypeReference
+     * @generated
+     */
+    EClass getPrimitiveTypeReference();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.core.kexpressions.PrimitiveTypeReference#getPrimitiveType <em>Primitive Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Primitive Type</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.PrimitiveTypeReference#getPrimitiveType()
+     * @see #getPrimitiveTypeReference()
+     * @generated
+     */
+    EReference getPrimitiveTypeReference_PrimitiveType();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.PrimitiveType <em>Primitive Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Primitive Type</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.PrimitiveType
+     * @generated
+     */
+    EClass getPrimitiveType();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.PrimitiveType#getValueType <em>Value Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Value Type</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.PrimitiveType#getValueType()
+     * @see #getPrimitiveType()
+     * @generated
+     */
+    EAttribute getPrimitiveType_ValueType();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.PrimitiveType#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.PrimitiveType#getName()
+     * @see #getPrimitiveType()
+     * @generated
+     */
+    EAttribute getPrimitiveType_Name();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -841,6 +1097,14 @@ public interface KExpressionsPackage extends EPackage {
         EReference VALUED_OBJECT__INITIAL_VALUE = eINSTANCE.getValuedObject_InitialValue();
 
         /**
+         * The meta object literal for the '<em><b>Type2</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference VALUED_OBJECT__TYPE2 = eINSTANCE.getValuedObject_Type2();
+
+        /**
          * The meta object literal for the '<em><b>Combine Operator</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -865,6 +1129,14 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EReference VALUED_OBJECT_REFERENCE__VALUED_OBJECT = eINSTANCE.getValuedObjectReference_ValuedObject();
+
+        /**
+         * The meta object literal for the '<em><b>Index Expressions</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference VALUED_OBJECT_REFERENCE__INDEX_EXPRESSIONS = eINSTANCE.getValuedObjectReference_IndexExpressions();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ValueImpl <em>Value</em>}' class.
@@ -991,6 +1263,86 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EAttribute DOUBLE_VALUE__VALUE = eINSTANCE.getDoubleValue_Value();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.TypeImpl <em>Type</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.kexpressions.impl.TypeImpl
+         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getType()
+         * @generated
+         */
+        EClass TYPE = eINSTANCE.getType();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ArrayTypeImpl <em>Array Type</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.kexpressions.impl.ArrayTypeImpl
+         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getArrayType()
+         * @generated
+         */
+        EClass ARRAY_TYPE = eINSTANCE.getArrayType();
+
+        /**
+         * The meta object literal for the '<em><b>Element Type</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ARRAY_TYPE__ELEMENT_TYPE = eINSTANCE.getArrayType_ElementType();
+
+        /**
+         * The meta object literal for the '<em><b>Cardinality</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ARRAY_TYPE__CARDINALITY = eINSTANCE.getArrayType_Cardinality();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.PrimitiveTypeReferenceImpl <em>Primitive Type Reference</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.kexpressions.impl.PrimitiveTypeReferenceImpl
+         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getPrimitiveTypeReference()
+         * @generated
+         */
+        EClass PRIMITIVE_TYPE_REFERENCE = eINSTANCE.getPrimitiveTypeReference();
+
+        /**
+         * The meta object literal for the '<em><b>Primitive Type</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference PRIMITIVE_TYPE_REFERENCE__PRIMITIVE_TYPE = eINSTANCE.getPrimitiveTypeReference_PrimitiveType();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.PrimitiveTypeImpl <em>Primitive Type</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.kexpressions.impl.PrimitiveTypeImpl
+         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getPrimitiveType()
+         * @generated
+         */
+        EClass PRIMITIVE_TYPE = eINSTANCE.getPrimitiveType();
+
+        /**
+         * The meta object literal for the '<em><b>Value Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PRIMITIVE_TYPE__VALUE_TYPE = eINSTANCE.getPrimitiveType_ValueType();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PRIMITIVE_TYPE__NAME = eINSTANCE.getPrimitiveType_Name();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.

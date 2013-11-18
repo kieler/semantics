@@ -200,13 +200,22 @@ public interface SCChartsPackage extends EPackage {
     int ASSIGNMENT__EXPRESSION = EFFECT_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Index Expressions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__INDEX_EXPRESSIONS = EFFECT_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Assignment</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ASSIGNMENT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 2;
+    int ASSIGNMENT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.EmissionImpl <em>Emission</em>}' class.
@@ -237,13 +246,22 @@ public interface SCChartsPackage extends EPackage {
     int EMISSION__NEW_VALUE = EFFECT_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Index Expressions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMISSION__INDEX_EXPRESSIONS = EFFECT_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Emission</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int EMISSION_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 2;
+    int EMISSION_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl <em>Scope</em>}' class.
@@ -1340,6 +1358,17 @@ public interface SCChartsPackage extends EPackage {
     EReference getAssignment_Expression();
 
     /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Assignment#getIndexExpressions <em>Index Expressions</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Index Expressions</em>'.
+     * @see de.cau.cs.kieler.sccharts.Assignment#getIndexExpressions()
+     * @see #getAssignment()
+     * @generated
+     */
+    EReference getAssignment_IndexExpressions();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Effect <em>Effect</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1380,6 +1409,17 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getEmission_NewValue();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Emission#getIndexExpressions <em>Index Expressions</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Index Expressions</em>'.
+     * @see de.cau.cs.kieler.sccharts.Emission#getIndexExpressions()
+     * @see #getEmission()
+     * @generated
+     */
+    EReference getEmission_IndexExpressions();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Region <em>Region</em>}'.
@@ -1928,6 +1968,14 @@ public interface SCChartsPackage extends EPackage {
         EReference ASSIGNMENT__EXPRESSION = eINSTANCE.getAssignment_Expression();
 
         /**
+         * The meta object literal for the '<em><b>Index Expressions</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ASSIGNMENT__INDEX_EXPRESSIONS = eINSTANCE.getAssignment_IndexExpressions();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.EffectImpl <em>Effect</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1962,6 +2010,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference EMISSION__NEW_VALUE = eINSTANCE.getEmission_NewValue();
+
+        /**
+         * The meta object literal for the '<em><b>Index Expressions</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EMISSION__INDEX_EXPRESSIONS = eINSTANCE.getEmission_IndexExpressions();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.

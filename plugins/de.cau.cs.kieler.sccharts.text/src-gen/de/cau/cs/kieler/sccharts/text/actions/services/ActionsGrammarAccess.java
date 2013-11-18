@@ -387,22 +387,22 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	public class EffectElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Effect");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cEmissionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cAssignmentParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cAssignmentParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cEmissionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cTextEffectParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//Effect returns sccharts::Effect:
-		//	Emission | Assignment | TextEffect;
+		//	Assignment | Emission | TextEffect;
 		public ParserRule getRule() { return rule; }
 
-		//Emission | Assignment | TextEffect
+		//Assignment | Emission | TextEffect
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//Emission
-		public RuleCall getEmissionParserRuleCall_0() { return cEmissionParserRuleCall_0; }
-
 		//Assignment
-		public RuleCall getAssignmentParserRuleCall_1() { return cAssignmentParserRuleCall_1; }
+		public RuleCall getAssignmentParserRuleCall_0() { return cAssignmentParserRuleCall_0; }
+
+		//Emission
+		public RuleCall getEmissionParserRuleCall_1() { return cEmissionParserRuleCall_1; }
 
 		//TextEffect
 		public RuleCall getTextEffectParserRuleCall_2() { return cTextEffectParserRuleCall_2; }
@@ -415,16 +415,21 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
 		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cNewValueAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cNewValueExpressionParserRuleCall_1_1_0 = (RuleCall)cNewValueAssignment_1_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cIndexExpressionsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cIndexExpressionsExpressionParserRuleCall_1_1_0 = (RuleCall)cIndexExpressionsAssignment_1_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cNewValueAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cNewValueExpressionParserRuleCall_2_1_0 = (RuleCall)cNewValueAssignment_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//Emission returns sccharts::Emission:
-		//	valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
+		//	valuedObject=[kexpressions::ValuedObject] ("[" indexExpressions+=Expression "]")* ("(" newValue=Expression ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?
+		//valuedObject=[kexpressions::ValuedObject] ("[" indexExpressions+=Expression "]")* ("(" newValue=Expression ")")?
 		public Group getGroup() { return cGroup; }
 
 		//valuedObject=[kexpressions::ValuedObject]
@@ -436,20 +441,35 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
 
-		//("(" newValue=Expression ")")?
+		//("[" indexExpressions+=Expression "]")*
 		public Group getGroup_1() { return cGroup_1; }
 
-		//"("
-		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
 
-		//newValue=Expression
-		public Assignment getNewValueAssignment_1_1() { return cNewValueAssignment_1_1; }
+		//indexExpressions+=Expression
+		public Assignment getIndexExpressionsAssignment_1_1() { return cIndexExpressionsAssignment_1_1; }
 
 		//Expression
-		public RuleCall getNewValueExpressionParserRuleCall_1_1_0() { return cNewValueExpressionParserRuleCall_1_1_0; }
+		public RuleCall getIndexExpressionsExpressionParserRuleCall_1_1_0() { return cIndexExpressionsExpressionParserRuleCall_1_1_0; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
+
+		//("(" newValue=Expression ")")?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+
+		//newValue=Expression
+		public Assignment getNewValueAssignment_2_1() { return cNewValueAssignment_2_1; }
+
+		//Expression
+		public RuleCall getNewValueExpressionParserRuleCall_2_1_0() { return cNewValueExpressionParserRuleCall_2_1_0; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
+		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
 	}
 
 	public class AssignmentElements extends AbstractParserRuleElementFinder {
@@ -458,15 +478,20 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
 		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
-		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cIndexExpressionsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cIndexExpressionsExpressionParserRuleCall_1_1_0 = (RuleCall)cIndexExpressionsAssignment_1_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Keyword cEqualsSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cExpressionAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cExpressionExpressionParserRuleCall_3_0 = (RuleCall)cExpressionAssignment_3.eContents().get(0);
 		
 		//Assignment returns sccharts::Assignment:
-		//	valuedObject=[kexpressions::ValuedObject] "=" expression=Expression;
+		//	valuedObject=[kexpressions::ValuedObject] ("[" indexExpressions+=Expression "]")* "=" expression=Expression;
 		public ParserRule getRule() { return rule; }
 
-		//valuedObject=[kexpressions::ValuedObject] "=" expression=Expression
+		//valuedObject=[kexpressions::ValuedObject] ("[" indexExpressions+=Expression "]")* "=" expression=Expression
 		public Group getGroup() { return cGroup; }
 
 		//valuedObject=[kexpressions::ValuedObject]
@@ -478,14 +503,29 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
 
-		//"="
-		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
+		//("[" indexExpressions+=Expression "]")*
+		public Group getGroup_1() { return cGroup_1; }
 
-		//expression=Expression
-		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
+
+		//indexExpressions+=Expression
+		public Assignment getIndexExpressionsAssignment_1_1() { return cIndexExpressionsAssignment_1_1; }
 
 		//Expression
-		public RuleCall getExpressionExpressionParserRuleCall_2_0() { return cExpressionExpressionParserRuleCall_2_0; }
+		public RuleCall getIndexExpressionsExpressionParserRuleCall_1_1_0() { return cIndexExpressionsExpressionParserRuleCall_1_1_0; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_2() { return cEqualsSignKeyword_2; }
+
+		//expression=Expression
+		public Assignment getExpressionAssignment_3() { return cExpressionAssignment_3; }
+
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_3_0() { return cExpressionExpressionParserRuleCall_3_0; }
 	}
 
 	public class TextEffectElements extends AbstractParserRuleElementFinder {
@@ -672,7 +712,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Effect returns sccharts::Effect:
-	//	Emission | Assignment | TextEffect;
+	//	Assignment | Emission | TextEffect;
 	public EffectElements getEffectAccess() {
 		return (pEffect != null) ? pEffect : (pEffect = new EffectElements());
 	}
@@ -682,7 +722,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Emission returns sccharts::Emission:
-	//	valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
+	//	valuedObject=[kexpressions::ValuedObject] ("[" indexExpressions+=Expression "]")* ("(" newValue=Expression ")")?;
 	public EmissionElements getEmissionAccess() {
 		return (pEmission != null) ? pEmission : (pEmission = new EmissionElements());
 	}
@@ -692,7 +732,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Assignment returns sccharts::Assignment:
-	//	valuedObject=[kexpressions::ValuedObject] "=" expression=Expression;
+	//	valuedObject=[kexpressions::ValuedObject] ("[" indexExpressions+=Expression "]")* "=" expression=Expression;
 	public AssignmentElements getAssignmentAccess() {
 		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
 	}
@@ -945,7 +985,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: A, varB
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject];
+	//	valuedObject=[ValuedObject] ("[" indexExpressions+=Expression "]")*;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKExpressions.getValuedObjectReferenceAccess();
 	}

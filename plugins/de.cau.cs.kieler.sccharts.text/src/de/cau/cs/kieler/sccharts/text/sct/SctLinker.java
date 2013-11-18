@@ -64,6 +64,7 @@ public class SctLinker extends AbstractCleaningLinker {
                     || SCChartsPackage.eINSTANCE.getTransition().isInstance(obj)
                     || SCChartsPackage.eINSTANCE.getEmission().isInstance(obj)
                     || SCChartsPackage.eINSTANCE.getAssignment().isInstance(obj)
+                    || KExpressionsPackage.eINSTANCE.getPrimitiveTypeReference().isInstance(obj)
                     || KExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(obj)) {
 
                 /* reveal the dedicated parse tree element */

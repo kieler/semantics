@@ -114,6 +114,22 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createDoubleValueAdapter();
             }
             @Override
+            public Adapter caseType(Type object) {
+                return createTypeAdapter();
+            }
+            @Override
+            public Adapter caseArrayType(ArrayType object) {
+                return createArrayTypeAdapter();
+            }
+            @Override
+            public Adapter casePrimitiveTypeReference(PrimitiveTypeReference object) {
+                return createPrimitiveTypeReferenceAdapter();
+            }
+            @Override
+            public Adapter casePrimitiveType(PrimitiveType object) {
+                return createPrimitiveTypeAdapter();
+            }
+            @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
             }
@@ -274,6 +290,62 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDoubleValueAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Type <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.kexpressions.Type
+     * @generated
+     */
+    public Adapter createTypeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ArrayType <em>Array Type</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.kexpressions.ArrayType
+     * @generated
+     */
+    public Adapter createArrayTypeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.PrimitiveTypeReference <em>Primitive Type Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.kexpressions.PrimitiveTypeReference
+     * @generated
+     */
+    public Adapter createPrimitiveTypeReferenceAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.PrimitiveType <em>Primitive Type</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.kexpressions.PrimitiveType
+     * @generated
+     */
+    public Adapter createPrimitiveTypeAdapter() {
         return null;
     }
 

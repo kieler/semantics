@@ -116,6 +116,33 @@ public interface KExpressionsFactory extends EFactory {
     DoubleValue createDoubleValue();
 
     /**
+     * Returns a new object of class '<em>Array Type</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Array Type</em>'.
+     * @generated
+     */
+    ArrayType createArrayType();
+
+    /**
+     * Returns a new object of class '<em>Primitive Type Reference</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Primitive Type Reference</em>'.
+     * @generated
+     */
+    PrimitiveTypeReference createPrimitiveTypeReference();
+
+    /**
+     * Returns a new object of class '<em>Primitive Type</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Primitive Type</em>'.
+     * @generated
+     */
+    PrimitiveType createPrimitiveType();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
