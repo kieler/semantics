@@ -479,6 +479,7 @@ class SCChartsCoreTransformation {
             while (!done) {
                 done = true
                 if (stateAfterDepth.incomingTransitions.size == 2) {
+
                     // T1 is the incoming node from the surface
                     var T1tmp = stateAfterDepth.incomingTransitions.get(0)
                     if (T1tmp == T2tmp) {
@@ -486,18 +487,23 @@ class SCChartsCoreTransformation {
                     }
                     val T1 = T1tmp
                     val T2 = T2tmp
+
                     // T2 is the incoming node from the feedback
                     val K1 = T1.sourceState
                     val K2 = T2.sourceState
-                    val TK1 = K1.outgoingTransitions.filter(e|e != T1).get(0)
-                    val TK2 = K2.outgoingTransitions.filter(e|e != T2).get(0)
-                    if ((TK1.targetState == TK2.targetState) && (TK1.trigger.equals2(TK2.trigger))) {
-                        stateAfterDepth = K1
-                        val t = K2.incomingTransitions.get(0)
-                        t.setTargetState(stateAfterDepth)
-                        K2.parentRegion.states.remove(K2)
-                        done = false
-                        T2tmp = t
+                    if (!K1.outgoingTransitions.filter(e|e != T1).nullOrEmpty &&
+                        !K2.outgoingTransitions.filter(e|e != T1).nullOrEmpty) {
+                        val TK1 = K1.outgoingTransitions.filter(e|e != T1).get(0)
+                        val TK2 = K2.outgoingTransitions.filter(e|e != T2).get(0)
+                        if ((TK1.targetState == TK2.targetState) &&
+                            ((TK1.trigger == TK2.trigger) || (TK1.trigger.equals2(TK2.trigger)))) {
+                            stateAfterDepth = K1
+                            val t = K2.incomingTransitions.get(0)
+                            t.setTargetState(stateAfterDepth)
+                            K2.parentRegion.states.remove(K2)
+                            done = false
+                            T2tmp = t
+                        }
                     }
                 }
             }
@@ -535,11 +541,12 @@ class SCChartsCoreTransformation {
     def void transformTriggerEffect(Transition transition, Region targetRootRegion) {
 
         // Only apply this to transition that have both, a trigger and one or more effects 
-        if (transition.trigger != null && !transition.effects.nullOrEmpty) {
+        if (((transition.trigger != null || !transition.immediate) && !transition.effects.nullOrEmpty) ||
+            transition.effects.size > 1) {
             val targetState = transition.targetState
             val parentRegion = targetState.parentRegion
             val transitionOriginalTarget = transition.targetState
-            var Transition lastTransition = transition 
+            var Transition lastTransition = transition
 
             for (effect : transition.effects.immutableCopy) {
                 val effectState = parentRegion.createState(targetState.id + effect.id)
@@ -550,8 +557,6 @@ class SCChartsCoreTransformation {
                 lastTransition.setTargetState(effectState)
                 lastTransition = effectTransition
             }
-
-            transition.setImmediate
 
             lastTransition.setTargetState(transitionOriginalTarget)
         }

@@ -624,7 +624,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 }
                 if (!label.nullOrEmpty) {
                     t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
-                        label,
+                        " " + label,
                         11,
                         KlighdConstants::DEFAULT_FONT_NAME
                     ) => [

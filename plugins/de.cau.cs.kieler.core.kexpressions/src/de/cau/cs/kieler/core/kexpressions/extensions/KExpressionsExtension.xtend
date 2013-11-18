@@ -63,6 +63,11 @@ class KExpressionsExtension {
 
 
     // In an EObject replace one expression by another
+//    def dispatch equals2(Object expression1, Object expression2) {
+//        if (expression1 == null && expression2 == null) {
+//            return true
+//        }
+//    }
     def dispatch equals2(OperatorExpression expression1, OperatorExpression expression2) {
         var c = 0
         for (Expression subExpression1 : expression1.subExpressions) {
