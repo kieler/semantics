@@ -117,7 +117,8 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 			}
 		else if(semanticObject.eClass().getEPackage() == KExpressionsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case KExpressionsPackage.ARRAY_TYPE:
-				if(context == grammarAccess.getArrayTypeRule()) {
+				if(context == grammarAccess.getArrayTypeRule() ||
+				   context == grammarAccess.getArrayTypeAccess().getArrayTypeElementTypeAction_1_0()) {
 					sequence_ArrayType(context, (ArrayType) semanticObject); 
 					return; 
 				}

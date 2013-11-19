@@ -19623,42 +19623,49 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ArrayType__Group__1__Impl"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6370:1: rule__ArrayType__Group__1__Impl : ( ( rule__ArrayType__Group_1__0 )? ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6370:1: rule__ArrayType__Group__1__Impl : ( ( rule__ArrayType__Group_1__0 )* ) ;
     public final void rule__ArrayType__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6374:1: ( ( ( rule__ArrayType__Group_1__0 )? ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6375:1: ( ( rule__ArrayType__Group_1__0 )? )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6374:1: ( ( ( rule__ArrayType__Group_1__0 )* ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6375:1: ( ( rule__ArrayType__Group_1__0 )* )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6375:1: ( ( rule__ArrayType__Group_1__0 )? )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6376:1: ( rule__ArrayType__Group_1__0 )?
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6375:1: ( ( rule__ArrayType__Group_1__0 )* )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6376:1: ( rule__ArrayType__Group_1__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getArrayTypeAccess().getGroup_1()); 
             }
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6377:1: ( rule__ArrayType__Group_1__0 )?
-            int alt89=2;
-            int LA89_0 = input.LA(1);
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6377:1: ( rule__ArrayType__Group_1__0 )*
+            loop89:
+            do {
+                int alt89=2;
+                int LA89_0 = input.LA(1);
 
-            if ( (LA89_0==56) ) {
-                alt89=1;
-            }
-            switch (alt89) {
-                case 1 :
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6377:2: rule__ArrayType__Group_1__0
-                    {
-                    pushFollow(FollowSets000.FOLLOW_rule__ArrayType__Group_1__0_in_rule__ArrayType__Group__1__Impl13205);
-                    rule__ArrayType__Group_1__0();
+                if ( (LA89_0==56) ) {
+                    alt89=1;
+                }
 
-                    state._fsp--;
-                    if (state.failed) return ;
 
-                    }
-                    break;
+                switch (alt89) {
+            	case 1 :
+            	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6377:2: rule__ArrayType__Group_1__0
+            	    {
+            	    pushFollow(FollowSets000.FOLLOW_rule__ArrayType__Group_1__0_in_rule__ArrayType__Group__1__Impl13205);
+            	    rule__ArrayType__Group_1__0();
 
-            }
+            	    state._fsp--;
+            	    if (state.failed) return ;
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop89;
+                }
+            } while (true);
 
             if ( state.backtracking==0 ) {
                after(grammarAccess.getArrayTypeAccess().getGroup_1()); 
@@ -42833,34 +42840,34 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
     static final String DFA19_eotS =
         "\15\uffff";
     static final String DFA19_eofS =
-        "\3\uffff\1\5\2\uffff\1\7\5\uffff\1\5";
+        "\3\uffff\1\10\5\uffff\1\13\2\uffff\1\10";
     static final String DFA19_minS =
-        "\1\12\1\uffff\1\5\1\4\1\5\1\uffff\1\5\5\uffff\1\4";
+        "\1\12\1\uffff\1\5\1\4\1\5\4\uffff\1\5\2\uffff\1\4";
     static final String DFA19_maxS =
-        "\1\67\1\uffff\1\5\1\122\1\5\1\uffff\1\122\5\uffff\1\122";
+        "\1\67\1\uffff\1\5\1\122\1\5\4\uffff\1\122\2\uffff\1\122";
     static final String DFA19_acceptS =
-        "\1\uffff\1\1\3\uffff\1\2\1\uffff\1\3\1\5\1\6\1\4\1\7\1\uffff";
+        "\1\uffff\1\1\3\uffff\1\4\1\7\1\5\1\2\1\uffff\1\6\1\3\1\uffff";
     static final String DFA19_specialS =
         "\15\uffff}>";
     static final String[] DFA19_transitionS = {
             "\1\1\54\uffff\1\2",
             "",
             "\1\3",
-            "\1\7\1\6\1\11\1\uffff\1\13\1\10\1\5\17\uffff\17\5\14\uffff"+
-            "\3\5\1\12\4\uffff\1\5\11\uffff\2\5\1\uffff\1\4\2\5\2\uffff\4"+
-            "\5",
+            "\1\13\1\11\1\12\1\uffff\1\6\1\7\1\10\17\uffff\17\10\14\uffff"+
+            "\3\10\1\5\4\uffff\1\10\11\uffff\2\10\1\uffff\1\4\2\10\2\uffff"+
+            "\4\10",
             "\1\14",
             "",
-            "\1\7\4\uffff\1\7\17\uffff\17\7\14\uffff\3\7\5\uffff\1\7\1\5"+
-            "\2\uffff\2\5\4\uffff\2\7\2\uffff\2\7\2\uffff\4\7",
             "",
             "",
             "",
+            "\1\13\4\uffff\1\13\17\uffff\17\13\14\uffff\3\13\5\uffff\1\13"+
+            "\1\10\2\uffff\2\10\4\uffff\2\13\2\uffff\2\13\2\uffff\4\13",
             "",
             "",
-            "\1\7\1\6\1\11\1\uffff\1\13\1\10\1\5\17\uffff\17\5\14\uffff"+
-            "\3\5\1\12\4\uffff\1\5\11\uffff\2\5\1\uffff\1\4\2\5\2\uffff\4"+
-            "\5"
+            "\1\13\1\11\1\12\1\uffff\1\6\1\7\1\10\17\uffff\17\10\14\uffff"+
+            "\3\10\1\5\4\uffff\1\10\11\uffff\2\10\1\uffff\1\4\2\10\2\uffff"+
+            "\4\10"
     };
 
     static final short[] DFA19_eot = DFA.unpackEncodedString(DFA19_eotS);
@@ -43921,7 +43928,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
     static final String DFA72_acceptS =
         "\1\uffff\1\1\7\uffff\1\2";
     static final String DFA72_specialS =
-        "\2\uffff\1\2\1\4\1\3\1\6\1\5\1\1\1\0\1\uffff}>";
+        "\2\uffff\1\3\1\2\1\0\1\4\1\1\1\6\1\5\1\uffff}>";
     static final String[] DFA72_transitionS = {
             "\1\4\33\uffff\1\6\1\7\1\10\3\1\13\uffff\1\5\6\uffff\1\3\1\1"+
             "\15\uffff\2\1",
@@ -43973,51 +43980,6 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA72_8 = input.LA(1);
-
-                         
-                        int index72_8 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred105_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 9;}
-
-                         
-                        input.seek(index72_8);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
-                        int LA72_7 = input.LA(1);
-
-                         
-                        int index72_7 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred105_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 9;}
-
-                         
-                        input.seek(index72_7);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA72_2 = input.LA(1);
-
-                         
-                        int index72_2 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred105_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 9;}
-
-                         
-                        input.seek(index72_2);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 3 : 
                         int LA72_4 = input.LA(1);
 
                          
@@ -44032,22 +43994,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index72_4);
                         if ( s>=0 ) return s;
                         break;
-                    case 4 : 
-                        int LA72_3 = input.LA(1);
-
-                         
-                        int index72_3 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred105_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 9;}
-
-                         
-                        input.seek(index72_3);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 5 : 
+                    case 1 : 
                         int LA72_6 = input.LA(1);
 
                          
@@ -44062,7 +44009,37 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index72_6);
                         if ( s>=0 ) return s;
                         break;
-                    case 6 : 
+                    case 2 : 
+                        int LA72_3 = input.LA(1);
+
+                         
+                        int index72_3 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred105_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index72_3);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 3 : 
+                        int LA72_2 = input.LA(1);
+
+                         
+                        int index72_2 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred105_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index72_2);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 4 : 
                         int LA72_5 = input.LA(1);
 
                          
@@ -44075,6 +44052,36 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
                          
                         input.seek(index72_5);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 5 : 
+                        int LA72_8 = input.LA(1);
+
+                         
+                        int index72_8 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred105_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index72_8);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 6 : 
+                        int LA72_7 = input.LA(1);
+
+                         
+                        int index72_7 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred105_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index72_7);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -44768,7 +44775,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_rule__ArrayType__Group__1_in_rule__ArrayType__Group__013122 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rulePrimitiveTypeReference_in_rule__ArrayType__Group__0__Impl13149 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ArrayType__Group__1__Impl_in_rule__ArrayType__Group__113178 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ArrayType__Group_1__0_in_rule__ArrayType__Group__1__Impl13205 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ArrayType__Group_1__0_in_rule__ArrayType__Group__1__Impl13205 = new BitSet(new long[]{0x0100000000000002L});
         public static final BitSet FOLLOW_rule__ArrayType__Group_1__0__Impl_in_rule__ArrayType__Group_1__013240 = new BitSet(new long[]{0x0100000000000000L});
         public static final BitSet FOLLOW_rule__ArrayType__Group_1__1_in_rule__ArrayType__Group_1__013243 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ArrayType__Group_1__1__Impl_in_rule__ArrayType__Group_1__113301 = new BitSet(new long[]{0x0000000000000040L});

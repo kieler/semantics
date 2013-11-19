@@ -4672,7 +4672,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleArrayType"
-    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1649:1: ruleArrayType returns [EObject current=null] : (this_PrimitiveTypeReference_0= rulePrimitiveTypeReference ( () otherlv_2= '[' ( (lv_cardinality_3_0= RULE_INT ) ) otherlv_4= ']' )? ) ;
+    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1649:1: ruleArrayType returns [EObject current=null] : (this_PrimitiveTypeReference_0= rulePrimitiveTypeReference ( () otherlv_2= '[' ( (lv_cardinality_3_0= RULE_INT ) ) otherlv_4= ']' )* ) ;
     public final EObject ruleArrayType() throws RecognitionException {
         EObject current = null;
 
@@ -4685,11 +4685,11 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1652:28: ( (this_PrimitiveTypeReference_0= rulePrimitiveTypeReference ( () otherlv_2= '[' ( (lv_cardinality_3_0= RULE_INT ) ) otherlv_4= ']' )? ) )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1653:1: (this_PrimitiveTypeReference_0= rulePrimitiveTypeReference ( () otherlv_2= '[' ( (lv_cardinality_3_0= RULE_INT ) ) otherlv_4= ']' )? )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1652:28: ( (this_PrimitiveTypeReference_0= rulePrimitiveTypeReference ( () otherlv_2= '[' ( (lv_cardinality_3_0= RULE_INT ) ) otherlv_4= ']' )* ) )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1653:1: (this_PrimitiveTypeReference_0= rulePrimitiveTypeReference ( () otherlv_2= '[' ( (lv_cardinality_3_0= RULE_INT ) ) otherlv_4= ']' )* )
             {
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1653:1: (this_PrimitiveTypeReference_0= rulePrimitiveTypeReference ( () otherlv_2= '[' ( (lv_cardinality_3_0= RULE_INT ) ) otherlv_4= ']' )? )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1654:2: this_PrimitiveTypeReference_0= rulePrimitiveTypeReference ( () otherlv_2= '[' ( (lv_cardinality_3_0= RULE_INT ) ) otherlv_4= ']' )?
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1653:1: (this_PrimitiveTypeReference_0= rulePrimitiveTypeReference ( () otherlv_2= '[' ( (lv_cardinality_3_0= RULE_INT ) ) otherlv_4= ']' )* )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1654:2: this_PrimitiveTypeReference_0= rulePrimitiveTypeReference ( () otherlv_2= '[' ( (lv_cardinality_3_0= RULE_INT ) ) otherlv_4= ']' )*
             {
             if ( state.backtracking==0 ) {
                
@@ -4712,82 +4712,89 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1665:1: ( () otherlv_2= '[' ( (lv_cardinality_3_0= RULE_INT ) ) otherlv_4= ']' )?
-            int alt66=2;
-            int LA66_0 = input.LA(1);
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1665:1: ( () otherlv_2= '[' ( (lv_cardinality_3_0= RULE_INT ) ) otherlv_4= ']' )*
+            loop66:
+            do {
+                int alt66=2;
+                int LA66_0 = input.LA(1);
 
-            if ( (LA66_0==20) ) {
-                alt66=1;
-            }
-            switch (alt66) {
-                case 1 :
-                    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1665:2: () otherlv_2= '[' ( (lv_cardinality_3_0= RULE_INT ) ) otherlv_4= ']'
-                    {
-                    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1665:2: ()
-                    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1666:2: 
-                    {
-                    if ( state.backtracking==0 ) {
-                       
-                      	  /* */ 
-                      	
-                    }
-                    if ( state.backtracking==0 ) {
-
-                              current = forceCreateModelElementAndSet(
-                                  grammarAccess.getArrayTypeAccess().getArrayTypeElementTypeAction_1_0(),
-                                  current);
-                          
-                    }
-
-                    }
-
-                    otherlv_2=(Token)match(input,20,FollowSets000.FOLLOW_20_in_ruleArrayType2936); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                          	newLeafNode(otherlv_2, grammarAccess.getArrayTypeAccess().getLeftSquareBracketKeyword_1_1());
-                          
-                    }
-                    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1678:1: ( (lv_cardinality_3_0= RULE_INT ) )
-                    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1679:1: (lv_cardinality_3_0= RULE_INT )
-                    {
-                    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1679:1: (lv_cardinality_3_0= RULE_INT )
-                    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1680:3: lv_cardinality_3_0= RULE_INT
-                    {
-                    lv_cardinality_3_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_RULE_INT_in_ruleArrayType2953); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                      			newLeafNode(lv_cardinality_3_0, grammarAccess.getArrayTypeAccess().getCardinalityINTTerminalRuleCall_1_2_0()); 
-                      		
-                    }
-                    if ( state.backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = createModelElement(grammarAccess.getArrayTypeRule());
-                      	        }
-                             		setWithLastConsumed(
-                             			current, 
-                             			"cardinality",
-                              		lv_cardinality_3_0, 
-                              		"INT");
-                      	    
-                    }
-
-                    }
+                if ( (LA66_0==20) ) {
+                    alt66=1;
+                }
 
 
-                    }
+                switch (alt66) {
+            	case 1 :
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1665:2: () otherlv_2= '[' ( (lv_cardinality_3_0= RULE_INT ) ) otherlv_4= ']'
+            	    {
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1665:2: ()
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1666:2: 
+            	    {
+            	    if ( state.backtracking==0 ) {
+            	       
+            	      	  /* */ 
+            	      	
+            	    }
+            	    if ( state.backtracking==0 ) {
 
-                    otherlv_4=(Token)match(input,22,FollowSets000.FOLLOW_22_in_ruleArrayType2970); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
+            	              current = forceCreateModelElementAndSet(
+            	                  grammarAccess.getArrayTypeAccess().getArrayTypeElementTypeAction_1_0(),
+            	                  current);
+            	          
+            	    }
 
-                          	newLeafNode(otherlv_4, grammarAccess.getArrayTypeAccess().getRightSquareBracketKeyword_1_3());
-                          
-                    }
+            	    }
 
-                    }
-                    break;
+            	    otherlv_2=(Token)match(input,20,FollowSets000.FOLLOW_20_in_ruleArrayType2936); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
 
-            }
+            	          	newLeafNode(otherlv_2, grammarAccess.getArrayTypeAccess().getLeftSquareBracketKeyword_1_1());
+            	          
+            	    }
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1678:1: ( (lv_cardinality_3_0= RULE_INT ) )
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1679:1: (lv_cardinality_3_0= RULE_INT )
+            	    {
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1679:1: (lv_cardinality_3_0= RULE_INT )
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:1680:3: lv_cardinality_3_0= RULE_INT
+            	    {
+            	    lv_cardinality_3_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_RULE_INT_in_ruleArrayType2953); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      			newLeafNode(lv_cardinality_3_0, grammarAccess.getArrayTypeAccess().getCardinalityINTTerminalRuleCall_1_2_0()); 
+            	      		
+            	    }
+            	    if ( state.backtracking==0 ) {
+
+            	      	        if (current==null) {
+            	      	            current = createModelElement(grammarAccess.getArrayTypeRule());
+            	      	        }
+            	             		setWithLastConsumed(
+            	             			current, 
+            	             			"cardinality",
+            	              		lv_cardinality_3_0, 
+            	              		"INT");
+            	      	    
+            	    }
+
+            	    }
+
+
+            	    }
+
+            	    otherlv_4=(Token)match(input,22,FollowSets000.FOLLOW_22_in_ruleArrayType2970); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	          	newLeafNode(otherlv_4, grammarAccess.getArrayTypeAccess().getRightSquareBracketKeyword_1_3());
+            	          
+            	    }
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop66;
+                }
+            } while (true);
 
 
             }
@@ -18117,7 +18124,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
     static final String DFA57_acceptS =
         "\1\uffff\1\1\7\uffff\1\2";
     static final String DFA57_specialS =
-        "\2\uffff\1\0\1\6\1\4\1\5\1\1\1\3\1\2\1\uffff}>";
+        "\2\uffff\1\3\1\1\1\4\1\0\1\6\1\2\1\5\1\uffff}>";
     static final String[] DFA57_transitionS = {
             "\1\3\10\uffff\1\4\10\uffff\1\2\3\1\34\uffff\1\5\1\6\1\7\3\1",
             "",
@@ -18168,10 +18175,10 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA57_2 = input.LA(1);
+                        int LA57_5 = input.LA(1);
 
                          
-                        int index57_2 = input.index();
+                        int index57_5 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred64_InternalSct()) ) {s = 1;}
@@ -18179,14 +18186,14 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
                         else if ( (true) ) {s = 9;}
 
                          
-                        input.seek(index57_2);
+                        input.seek(index57_5);
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA57_6 = input.LA(1);
+                        int LA57_3 = input.LA(1);
 
                          
-                        int index57_6 = input.index();
+                        int index57_3 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred64_InternalSct()) ) {s = 1;}
@@ -18194,25 +18201,10 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
                         else if ( (true) ) {s = 9;}
 
                          
-                        input.seek(index57_6);
+                        input.seek(index57_3);
                         if ( s>=0 ) return s;
                         break;
                     case 2 : 
-                        int LA57_8 = input.LA(1);
-
-                         
-                        int index57_8 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred64_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 9;}
-
-                         
-                        input.seek(index57_8);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 3 : 
                         int LA57_7 = input.LA(1);
 
                          
@@ -18225,6 +18217,21 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
 
                          
                         input.seek(index57_7);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 3 : 
+                        int LA57_2 = input.LA(1);
+
+                         
+                        int index57_2 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred64_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index57_2);
                         if ( s>=0 ) return s;
                         break;
                     case 4 : 
@@ -18243,10 +18250,10 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
                         if ( s>=0 ) return s;
                         break;
                     case 5 : 
-                        int LA57_5 = input.LA(1);
+                        int LA57_8 = input.LA(1);
 
                          
-                        int index57_5 = input.index();
+                        int index57_8 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred64_InternalSct()) ) {s = 1;}
@@ -18254,14 +18261,14 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
                         else if ( (true) ) {s = 9;}
 
                          
-                        input.seek(index57_5);
+                        input.seek(index57_8);
                         if ( s>=0 ) return s;
                         break;
                     case 6 : 
-                        int LA57_3 = input.LA(1);
+                        int LA57_6 = input.LA(1);
 
                          
-                        int index57_3 = input.index();
+                        int index57_6 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred64_InternalSct()) ) {s = 1;}
@@ -18269,7 +18276,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
                         else if ( (true) ) {s = 9;}
 
                          
-                        input.seek(index57_3);
+                        input.seek(index57_6);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -19026,34 +19033,34 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
     static final String DFA102_eotS =
         "\15\uffff";
     static final String DFA102_eofS =
-        "\3\uffff\1\11\6\uffff\1\13\1\uffff\1\11";
+        "\3\uffff\1\5\2\uffff\1\13\5\uffff\1\5";
     static final String DFA102_minS =
-        "\1\12\1\uffff\3\4\5\uffff\1\4\1\uffff\1\4";
+        "\1\12\1\uffff\3\4\1\uffff\1\4\5\uffff\1\4";
     static final String DFA102_maxS =
-        "\1\23\1\uffff\1\4\1\76\1\4\5\uffff\1\76\1\uffff\1\76";
+        "\1\23\1\uffff\1\4\1\76\1\4\1\uffff\1\76\5\uffff\1\76";
     static final String DFA102_acceptS =
-        "\1\uffff\1\1\3\uffff\1\6\1\7\1\4\1\5\1\2\1\uffff\1\3\1\uffff";
+        "\1\uffff\1\1\3\uffff\1\2\1\uffff\1\6\1\7\1\5\1\4\1\3\1\uffff";
     static final String DFA102_specialS =
         "\15\uffff}>";
     static final String[] DFA102_transitionS = {
             "\1\1\10\uffff\1\2",
             "",
             "\1\3",
-            "\1\12\1\13\1\5\1\uffff\1\6\1\10\1\11\5\uffff\1\11\1\uffff\2"+
-            "\11\1\7\4\uffff\3\11\5\uffff\4\11\2\uffff\10\11\5\uffff\2\11"+
-            "\1\uffff\1\4\7\11",
+            "\1\6\1\13\1\7\1\uffff\1\10\1\11\1\5\5\uffff\1\5\1\uffff\2\5"+
+            "\1\12\4\uffff\3\5\5\uffff\4\5\2\uffff\10\5\5\uffff\2\5\1\uffff"+
+            "\1\4\7\5",
             "\1\14",
             "",
-            "",
-            "",
-            "",
-            "",
             "\1\13\5\uffff\1\13\5\uffff\1\13\1\uffff\2\13\5\uffff\3\13\1"+
-            "\11\4\uffff\4\13\2\11\10\13\5\uffff\2\13\2\uffff\7\13",
+            "\5\4\uffff\4\13\2\5\10\13\5\uffff\2\13\2\uffff\7\13",
             "",
-            "\1\12\1\13\1\5\1\uffff\1\6\1\10\1\11\5\uffff\1\11\1\uffff\2"+
-            "\11\1\7\4\uffff\3\11\5\uffff\4\11\2\uffff\10\11\5\uffff\2\11"+
-            "\1\uffff\1\4\7\11"
+            "",
+            "",
+            "",
+            "",
+            "\1\6\1\13\1\7\1\uffff\1\10\1\11\1\5\5\uffff\1\5\1\uffff\2\5"+
+            "\1\12\4\uffff\3\5\5\uffff\4\5\2\uffff\10\5\5\uffff\2\5\1\uffff"+
+            "\1\4\7\5"
     };
 
     static final short[] DFA102_eot = DFA.unpackEncodedString(DFA102_eotS);
@@ -19303,7 +19310,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_rulePrimitiveTypeReference_in_ruleArrayType2912 = new BitSet(new long[]{0x0000000000100002L});
         public static final BitSet FOLLOW_20_in_ruleArrayType2936 = new BitSet(new long[]{0x0000000000000040L});
         public static final BitSet FOLLOW_RULE_INT_in_ruleArrayType2953 = new BitSet(new long[]{0x0000000000400000L});
-        public static final BitSet FOLLOW_22_in_ruleArrayType2970 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_22_in_ruleArrayType2970 = new BitSet(new long[]{0x0000000000100002L});
         public static final BitSet FOLLOW_rulePrimitiveTypeReference_in_entryRulePrimitiveTypeReference3008 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRulePrimitiveTypeReference3018 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValueTypeLiteral_in_rulePrimitiveTypeReference3082 = new BitSet(new long[]{0x0000000000000002L});

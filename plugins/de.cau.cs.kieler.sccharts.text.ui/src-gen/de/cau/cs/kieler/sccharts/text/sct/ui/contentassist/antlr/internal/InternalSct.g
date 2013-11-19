@@ -6374,7 +6374,7 @@ rule__ArrayType__Group__1__Impl
 :
 (
 { before(grammarAccess.getArrayTypeAccess().getGroup_1()); }
-(rule__ArrayType__Group_1__0)?
+(rule__ArrayType__Group_1__0)*
 { after(grammarAccess.getArrayTypeAccess().getGroup_1()); }
 )
 

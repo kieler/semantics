@@ -983,16 +983,16 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightSquareBracketKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 		
 		//ArrayType returns kexpressions::Type:
-		//	PrimitiveTypeReference ({kexpressions::ArrayType.elementType=current} "[" cardinality=INT "]")?;
+		//	PrimitiveTypeReference ({kexpressions::ArrayType.elementType=current} "[" cardinality=INT "]")*;
 		public ParserRule getRule() { return rule; }
 
-		//PrimitiveTypeReference ({kexpressions::ArrayType.elementType=current} "[" cardinality=INT "]")?
+		//PrimitiveTypeReference ({kexpressions::ArrayType.elementType=current} "[" cardinality=INT "]")*
 		public Group getGroup() { return cGroup; }
 
 		//PrimitiveTypeReference
 		public RuleCall getPrimitiveTypeReferenceParserRuleCall_0() { return cPrimitiveTypeReferenceParserRuleCall_0; }
 
-		//({kexpressions::ArrayType.elementType=current} "[" cardinality=INT "]")?
+		//({kexpressions::ArrayType.elementType=current} "[" cardinality=INT "]")*
 		public Group getGroup_1() { return cGroup_1; }
 
 		//{kexpressions::ArrayType.elementType=current}
@@ -1377,7 +1377,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ArrayType returns kexpressions::Type:
-	//	PrimitiveTypeReference ({kexpressions::ArrayType.elementType=current} "[" cardinality=INT "]")?;
+	//	PrimitiveTypeReference ({kexpressions::ArrayType.elementType=current} "[" cardinality=INT "]")*;
 	public ArrayTypeElements getArrayTypeAccess() {
 		return (pArrayType != null) ? pArrayType : (pArrayType = new ArrayTypeElements());
 	}

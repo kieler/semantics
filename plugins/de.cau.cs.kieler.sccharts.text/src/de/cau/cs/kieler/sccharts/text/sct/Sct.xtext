@@ -131,7 +131,7 @@ ValuedObject returns kexpressions::ValuedObject:
     )? ';' ;
 
 ArrayType returns kexpressions::Type:
-    PrimitiveTypeReference ({kexpressions::ArrayType.elementType = current} '[' cardinality = INT ']')?
+    PrimitiveTypeReference ({kexpressions::ArrayType.elementType = current} '[' cardinality = INT ']')*
 ;
 
 PrimitiveTypeReference returns kexpressions::Type:

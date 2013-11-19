@@ -1697,7 +1697,7 @@ ruleArrayType returns [EObject current=null]
     {
     	newLeafNode(otherlv_4, grammarAccess.getArrayTypeAccess().getRightSquareBracketKeyword_1_3());
     }
-)?)
+)*)
 ;
 
 
