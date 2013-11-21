@@ -424,7 +424,9 @@ class SCChartsCoreTransformation {
 
                     // Add an additional last state that will become depth State
                     if (previousState != null) { /// IS THIS RIGHT!?!?
-                        depthState = parentRegion.createState(state.id("Depth")).setLabel2("_" + stateId + "_Depth")
+                        val numberString = "" + number
+                        number = number + 1
+                        depthState = parentRegion.createState(state.id("_Pause")).setLabel2("_" + stateId + numberString)
                         val connect = previousState.createImmediateTransitionTo(depthState)
                         previousState = depthState
                         connect.setPriority(2)
@@ -476,7 +478,8 @@ class SCChartsCoreTransformation {
             var done = false
             while (!done) {
                 done = true
-                if (stateAfterDepth.incomingTransitions.size == 2) { 
+                if (stateAfterDepth.incomingTransitions.size == 2) {
+
                     // T1 is the incoming node from the surface
                     var T1tmp = stateAfterDepth.incomingTransitions.get(0)
                     if (T1tmp == T2tmp) {
@@ -484,24 +487,28 @@ class SCChartsCoreTransformation {
                     }
                     val T1 = T1tmp
                     val T2 = T2tmp
+
                     // T2 is the incoming node from the feedback
                     val K1 = T1.sourceState
                     val K2 = T2.sourceState
-                    val TK1 = K1.outgoingTransitions.filter( e | e != T1).get(0)
-                    val TK2 = K2.outgoingTransitions.filter( e | e != T2).get(0)
-                    if ((TK1.targetState == TK2.targetState) && (TK1.trigger.equals2(TK2.trigger))) {
-                        stateAfterDepth = K1
-                        val t = K2.incomingTransitions.get(0)
-                        t.setTargetState(stateAfterDepth)
-                        K2.parentRegion.states.remove(K2)
-                        done = false
-                        T2tmp = t
+                    if (!K1.outgoingTransitions.filter(e|e != T1).nullOrEmpty &&
+                        !K2.outgoingTransitions.filter(e|e != T1).nullOrEmpty) {
+                        val TK1 = K1.outgoingTransitions.filter(e|e != T1).get(0)
+                        val TK2 = K2.outgoingTransitions.filter(e|e != T2).get(0)
+                        if ((TK1.targetState == TK2.targetState) &&
+                            ((TK1.trigger == TK2.trigger) || (TK1.trigger.equals2(TK2.trigger)))) {
+                            stateAfterDepth = K1
+                            val t = K2.incomingTransitions.get(0)
+                            t.setTargetState(stateAfterDepth)
+                            K2.parentRegion.states.remove(K2)
+                            done = false
+                            T2tmp = t
+                        }
                     }
                 }
             }
-            // End of DTO transformation
-        
-        
+
+        // End of DTO transformation
         // This MUST be highest priority so that the control flow restarts and takes other 
         // outgoing transition.
         // There should not be any other outgoing transition.
@@ -534,7 +541,8 @@ class SCChartsCoreTransformation {
     def void transformTriggerEffect(Transition transition, Region targetRootRegion) {
 
         // Only apply this to transition that have both, a trigger and one or more effects 
-        if (transition.trigger != null && !transition.effects.nullOrEmpty) {
+        if (((transition.trigger != null || !transition.immediate) && !transition.effects.nullOrEmpty) ||
+            transition.effects.size > 1) {
             val targetState = transition.targetState
             val parentRegion = targetState.parentRegion
             val transitionOriginalTarget = transition.targetState
@@ -549,8 +557,6 @@ class SCChartsCoreTransformation {
                 lastTransition.setTargetState(effectState)
                 lastTransition = effectTransition
             }
-
-            transition.setImmediate
 
             lastTransition.setTargetState(transitionOriginalTarget)
         }

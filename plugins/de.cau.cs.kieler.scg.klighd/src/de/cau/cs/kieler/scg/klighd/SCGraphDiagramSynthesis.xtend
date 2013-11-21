@@ -74,6 +74,7 @@ import de.cau.cs.kieler.core.util.Pair
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scgbb.SCGraphBB
 import de.cau.cs.kieler.core.krendering.KPolygon
+import de.cau.cs.kieler.core.annotations.StringAnnotation
 
 /** 
  * SCCGraph KlighD synthesis 
@@ -151,7 +152,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -------------------------------------------------------------------------
     // -- KLIGHD OPTIONS 
     // -------------------------------------------------------------------------
-
+    
     private static val TransformationOption SHOW_CAPTION
         = TransformationOption::createCheckOption("Captions", true);
         
@@ -193,6 +194,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
     private static val TransformationOption ORIENTATION
         = TransformationOption::createChoiceOption("Orientation", <String> newLinkedList("Top-Down", "Left-Right"), "Top-Down");
+
+    private static val DEPENDENCYFILTER_ANY               = "Any"
+    private static val DEPENDENCYFILTER_WRITE_WRITE       = "WW"
+    private static val DEPENDENCYFILTER_ABSWRITE_RELWRITE = "WI"
+    private static val DEPENDENCYFILTER_WRITE_READ        = "WR"
+    private static val DEPENDENCYFILTER_RELWRITE_READ     = "RI"
+    
+    private static val TransformationOption DEPENDENCYFILTER
+        = TransformationOption::createChoiceOption("Dependency Filter", <String> newLinkedList(
+            DEPENDENCYFILTER_ANY,
+            DEPENDENCYFILTER_WRITE_WRITE,
+            DEPENDENCYFILTER_ABSWRITE_RELWRITE,
+            DEPENDENCYFILTER_WRITE_READ,
+            DEPENDENCYFILTER_RELWRITE_READ
+            ), DEPENDENCYFILTER_ANY);
         
     override public getTransformationOptions() {
         return ImmutableSet::of(
@@ -207,6 +223,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //            SHOW_SINGLESCHEDULINGBLOCKS,
             SHOW_SHADOW,
             HIERARCHY_TRANSPARENCY,
+            DEPENDENCYFILTER,
 //            TransformationOption::createSeparator("Alignment"),
             ALIGN_TICK_START, 
             ALIGN_ENTRYEXIT_NODES, 
@@ -250,6 +267,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val String SCGPORTID_HIERARCHYPORTS = "hierarchyPorts"
     private static val String SCGPORTID_INCOMINGDEPENDENCY = "incomingDependency"
     private static val String SCGPORTID_OUTGOINGDEPENDENCY = "outgoingDependency"
+    
+    private static val String ANNOTATION_BRANCH = "branch"
 
     private static val int NODEGROUPING_HIERARCHY = 0
     private static val int NODEGROUPING_BASICBLOCK = 1
@@ -427,18 +446,31 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
 
             // Add ports for control-flow and dependency routing.
+            var switchBranch = false
+            val branchAnnotation = s.getAnnotation(ANNOTATION_BRANCH)
+            if (branchAnnotation instanceof StringAnnotation) {
+                val annotationValue = (branchAnnotation as StringAnnotation).getValue
+                if (annotationValue == "switch") { switchBranch = true }
+            }
             node.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_POS)
+            var KPort port
             if (topdown()) {
                 node.addPort(SCGPORTID_INCOMING, 37, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOING_ELSE, 37.5f, 24, 0, PortSide::SOUTH)
-                val port = node.addPort(SCGPORTID_OUTGOING_THEN, 68, 12.5f, 0, PortSide::EAST)
+                if (switchBranch) 
+                    port = node.addPort(SCGPORTID_OUTGOING_THEN, 7, 12.5f, 0, PortSide::WEST)
+                else 
+                    port = node.addPort(SCGPORTID_OUTGOING_THEN, 68, 12.5f, 0, PortSide::EAST)
                 node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 21, 1, PortSide::SOUTH)                      
                 port.addLayoutParam(LayoutOptions::OFFSET, -1.5f)
             } else {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING_ELSE, 75, 12.5f, 0, PortSide::EAST)
-                val port = node.addPort(SCGPORTID_OUTGOING_THEN, 37.5f, 20, 0, PortSide::SOUTH)
+                if (switchBranch) 
+                    port = node.addPort(SCGPORTID_OUTGOING_THEN, 37.5f, 0, 0, PortSide::NORTH)
+                else 
+                    port = node.addPort(SCGPORTID_OUTGOING_THEN, 37.5f, 20, 0, PortSide::SOUTH)
                 node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST)                      
                 port.addLayoutParam(LayoutOptions::OFFSET, 0f)
@@ -816,6 +848,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // If non concurrent dependency are hidden and the given dependency is not concurrent, exit at once.
         if (!SHOW_NONCONCURRENT.optionBooleanValue && !dependency.isConcurrent) return dependency;
         if (!SHOW_CONFLUENT.optionBooleanValue && dependency.confluent) return dependency;
+        
+        if (DEPENDENCYFILTER.optionValue == DEPENDENCYFILTER_WRITE_WRITE && !
+            (dependency instanceof Write_Write)) return dependency; 
+        if (DEPENDENCYFILTER.optionValue == DEPENDENCYFILTER_ABSWRITE_RELWRITE && !
+            (dependency instanceof AbsoluteWrite_RelativeWrite)) return dependency; 
+        if (DEPENDENCYFILTER.optionValue == DEPENDENCYFILTER_WRITE_READ && !
+            (dependency instanceof AbsoluteWrite_Read)) return dependency; 
+        if (DEPENDENCYFILTER.optionValue == DEPENDENCYFILTER_RELWRITE_READ && !
+            (dependency instanceof RelativeWrite_Read)) return dependency; 
         
         // Retrieve node information.
         val sourceNode = (dependency.eContainer as Node).node

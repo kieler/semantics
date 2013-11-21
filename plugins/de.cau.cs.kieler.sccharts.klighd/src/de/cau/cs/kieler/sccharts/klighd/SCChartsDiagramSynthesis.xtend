@@ -71,7 +71,7 @@ import de.cau.cs.kieler.sccharts.HistoryType
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
@@ -162,6 +162,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         [it.red = 205; it.green = 220; it.blue = 243];
     private static val KColor KEYWORD = RENDERING_FACTORY.createKColor() => [it.red = 115; it.green = 0; it.blue = 65];
     private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() => [it.red = 60; it.green = 60; it.blue = 60];
+    
+    private static val String ANNOTATION_LABELBREAK = "break"
 
     // -------------------------------------------------------------------------
     // The Main entry transform function   
@@ -605,8 +607,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 tCopy.setDeferred(false)
                 tCopy.setHistory(HistoryType::RESET)
                 tCopy.setImmediate(false)
+                tCopy.annotations.clear                           // do not serialize copied annotations
                 var String label = serializer.serialize(tCopy)
                 label = label.replace("'", "")
+                // break labels if they are annotated
+                if (t.getAnnotation(ANNOTATION_LABELBREAK)!=null) {
+                    label = label.replace(";", ";\n")
+                }
 
                 // Override if a Label is set for a transition
                 if (!t.label.nullOrEmpty) {
@@ -617,8 +624,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 }
                 if (!label.nullOrEmpty) {
                     t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
-                        label,
-                        10,
+                        " " + label,
+                        11,
                         KlighdConstants::DEFAULT_FONT_NAME
                     ) => [
                         it.setLayoutOption(LayoutOptions.FONT_SIZE, 13);

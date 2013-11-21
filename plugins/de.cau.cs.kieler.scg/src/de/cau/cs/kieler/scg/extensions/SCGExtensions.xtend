@@ -29,6 +29,8 @@ import de.cau.cs.kieler.scgbb.SchedulingBlock
 import de.cau.cs.kieler.scgbb.SCGraphBB
 import java.util.InputMismatchException
 
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+
 /**
  * SCG Extensions.
  * 
@@ -100,7 +102,7 @@ class SCGExtensions {
         returnList.add(exit)
         return returnList
     }    
-
+    
    // -------------------------------------------------------------------------   
 
    // Finds all ancestor forks of a node.
