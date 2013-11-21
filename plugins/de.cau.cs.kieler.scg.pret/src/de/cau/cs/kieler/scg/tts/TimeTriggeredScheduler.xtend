@@ -56,9 +56,12 @@ class TimeTriggeredScheduler { // inject the annotation Extensions for time trig
 
         val nodes = graph.getNodes();
 
-        // initialize all controlflow edges with the WCET value of their start node
+        // initialize all controlflow edges with the WCET value of their start node, it of offset
         nodes.forEach [ node |
-            node.allNext.forEach[c|c.setWCET(node.localWCET)];
+            node.allNext.forEach[c|
+                c.setWCET(node.localWCET)
+                c.setOffset(0);
+            ];
         ]
 
         // process the depth paths first
@@ -127,10 +130,52 @@ class TimeTriggeredScheduler { // inject the annotation Extensions for time trig
 
             // Check all dependency edges
             if (node instanceof AssignmentDep) {
-                node.getIncoming().filter[it instanceof Dependency].forEach [ d |
-                    var difference = offset - (d.eContainer as Node).outVal;
+                // Get the most problematic dependency edge, that is, the dependency edge with the most
+                // problematic relation of source to target timing
+                val worstEdge =
+                node.getIncoming().filter[it instanceof Dependency].sort[a, b |
+                    var aDiff = offset - (a.eContainer as Node).outVal;
+                    var bDiff = offset - (b.eContainer as Node).outVal;
+                    aDiff - bDiff;
+                ].last;
+                // If the execution time of worstEdge's source is after that of worstEdge's target, we
+                // need a padding, so set the offset, otherwise we are fine
+                val difference = (offset-(worstEdge.eContainer as Node).outVal);
+                if (difference < 0) dependencyOffset = -difference;
+                node.setOffset(difference);
+                // Add padding to WCET and offset of outgoing edges
+                node.allNext.forEach[e |
+                    e.setWCET(e.WCET + difference);
+                    e.setOffset(difference);
                 ]
             }
+            // When processing depth paths, end the run at the loop back jump, see assumptions
+            if (depth){
+                // as long as there is no loop back jump, add successors to the list of nodes
+                node.allNext.forEach[c |
+                    if (c.target.incoming.length == 1) {
+                        nodes.add(c.target);
+                    }
+                ]
+            } else {
+                // if not processing depth path, ad all successors until a depth node is reached
+                node.allNext.forEach[c |
+                    if (!(c.target instanceof Depth)){
+                        nodes.add(c.target);
+                    }
+                ]
+            }
+            // In the case the node has outgoing dependency edges, we might have spoiled the relative 
+            // timing of the node and the related dependency targets. So we have to put them on the list
+            // for revision
+           if (node instanceof AssignmentDep){
+               (node as AssignmentDep).dependencies.forEach[d |
+                   if ((offset + node.offset) < d.target.inVal){
+                       
+                   }
+               ]
+           }
+            
         }
 
     }
