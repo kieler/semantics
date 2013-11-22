@@ -21,6 +21,5 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.scg,
  org.eclipse.xtext;bundle-version="2.3.0",
  de.cau.cs.kieler.scl;bundle-version="0.2.0"
-Import-Package: de.cau.cs.kieler.sccharts.scg,
- de.cau.cs.kieler.scgdep,
+Import-Package: de.cau.cs.kieler.scgdep,
  de.cau.cs.kieler.scgbb
