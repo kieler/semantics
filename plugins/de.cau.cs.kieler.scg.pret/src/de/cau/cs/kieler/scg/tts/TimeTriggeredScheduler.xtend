@@ -24,7 +24,9 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.pret.annotation.extensions.TTSAnnotationExtension
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scgdep.*
+import java.util.ArrayList
+import de.cau.cs.kieler.scgdep.AssignmentDep
+import de.cau.cs.kieler.scgdep.Dependency
 
 /**
  * This class is intended to assign timing values to an SCG with dependencies such, that an execution 
@@ -56,9 +58,11 @@ class TimeTriggeredScheduler { // inject the annotation Extensions for time trig
 
         val nodes = graph.getNodes();
 
-        // initialize all controlflow edges with the WCET value of their start node, it of offset
+        // Initialize all controlflow edges with the WCET value of their start node, initialize offset,
+        // initialize visited flag.
         nodes.forEach [ node |
-            node.allNext.forEach[c|
+            node.setVisited(false);
+            node.allNext.forEach [ c |
                 c.setWCET(node.localWCET)
                 c.setOffset(0);
             ];
@@ -94,6 +98,7 @@ class TimeTriggeredScheduler { // inject the annotation Extensions for time trig
 
             // Process nodes in order of execution time
             val node = nodes.remove(0);
+            node.setVisited(true);
             val offset = inVal(node);
 
             /* The switch statement is for the bookkeeping on the branchvector. In case the node is
@@ -130,54 +135,87 @@ class TimeTriggeredScheduler { // inject the annotation Extensions for time trig
 
             // Check all dependency edges
             if (node instanceof AssignmentDep) {
+
                 // Get the most problematic dependency edge, that is, the dependency edge with the most
                 // problematic relation of source to target timing
-                val worstEdge =
-                node.getIncoming().filter[it instanceof Dependency].sort[a, b |
+                val worstEdge = node.getIncoming().filter[it instanceof Dependency].sort [ a, b |
                     var aDiff = offset - (a.eContainer as Node).outVal;
                     var bDiff = offset - (b.eContainer as Node).outVal;
                     aDiff - bDiff;
                 ].last;
+
                 // If the execution time of worstEdge's source is after that of worstEdge's target, we
                 // need a padding, so set the offset, otherwise we are fine
-                val difference = (offset-(worstEdge.eContainer as Node).outVal);
-                if (difference < 0) dependencyOffset = -difference;
-                node.setOffset(difference);
+                val difference = (offset - (worstEdge.eContainer as Node).outVal);
+                if(difference < 0) dependencyOffset = -difference;
+                node.setOffset(node.offset + difference);
+
                 // Add padding to WCET and offset of outgoing edges
-                node.allNext.forEach[e |
-                    e.setWCET(e.WCET + difference);
-                    e.setOffset(difference);
+                node.allNext.forEach [ e |
+                    // e.WCET contains local WCET of this node, difference = padding, offset = WCET up
+                    // to this node
+                    e.setWCET(e.WCET + difference + offset);
+                    e.setOffset(node.offset + difference);
                 ]
             }
+
             // When processing depth paths, end the run at the loop back jump, see assumptions
-            if (depth){
+            if (depth) {
+
                 // as long as there is no loop back jump, add successors to the list of nodes
-                node.allNext.forEach[c |
+                node.allNext.forEach [ c |
                     if (c.target.incoming.length == 1) {
                         nodes.add(c.target);
                     }
                 ]
             } else {
+
                 // if not processing depth path, ad all successors until a depth node is reached
-                node.allNext.forEach[c |
-                    if (!(c.target instanceof Depth)){
+                node.allNext.forEach [ c |
+                    if (!(c.target instanceof Depth)) {
                         nodes.add(c.target);
                     }
                 ]
             }
+
             // In the case the node has outgoing dependency edges, we might have spoiled the relative 
             // timing of the node and the related dependency targets. So we have to put them on the list
             // for revision
-           if (node instanceof AssignmentDep){
-               (node as AssignmentDep).dependencies.forEach[d |
-                   if ((offset + node.offset) < d.target.inVal){
-                       
-                   }
-               ]
-           }
-            
+            if (node instanceof AssignmentDep) {
+                (node as AssignmentDep).dependencies.forEach [ d |
+                    if ((offset + node.offset) < d.target.inVal) {
+                        // if the target has not been visited, it still is to be, so we do not have to
+                        // interfere
+                        if (d.target.visited) {
+                            val newBranch = d.target.branchVec;
+                            val nodesIterator = nodes.iterator;
+                            // remove all successors of the dependency edge target from the nodes list.
+                            while (nodesIterator.hasNext()) {
+                                if (nodesIterator.next.branchVec.hasPrefix(newBranch)) {
+                                    nodesIterator.remove();
+                                }
+                            }
+                            // Set target on nodes list for for revisiting
+                            nodes.add(d.target);
+                        }
+                    }
+                ]
+            }
         }
+    }
 
+    /**
+     * Returns whether the second parameter is a prefix of the first parameter.
+     * 
+     * @param branchVec
+     *          The branchvector, for which we want to check if prefixCandidate is one of its prefixes
+     * @param prefixCandidate
+     *          The possible prefix of branchVec
+     * @return
+     *          returns true if prefixCandidate is prefix of branchVec, else false
+     */
+    def boolean hasPrefix(List<Boolean> branchVec, List<Boolean> prefixCandidate) {
+        return false
     }
 
     /**
@@ -199,5 +237,4 @@ class TimeTriggeredScheduler { // inject the annotation Extensions for time trig
     def int inVal(Node node) {
         return node.incoming.sortBy[it.WCET].last.WCET
     }
-
 }

@@ -107,6 +107,24 @@ class TTSAnnotationExtension {
         }
         return retList;
     }
+    
+    
+    /* Retrieves the value of the visited flag. Returns null, if no such annotation present. */
+    def Boolean getVisited(Annotatable annotatable) {
+        val String key = "Visited";
+        var Boolean annotatedValue = annotatable.getBoolean(key);
+        if (annotatedValue != null) {
+            return annotatedValue;
+        } else
+            return null;
+    }
+
+    /* Sets the visited flag for TTS algorithm.*/
+    def setVisited(Annotatable annotatable, Boolean value) {
+        val visited = AnnotationsFactory::eINSTANCE.createBooleanAnnotation;
+        visited.name = "Visited";
+        annotatable.annotations.add(visited);
+    }
 
     /* Sets the Branching Vector (Bookkeeping of branch position in ancestor tree) to
    * branchVec. 
