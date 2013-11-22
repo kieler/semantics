@@ -42,8 +42,8 @@ import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.klighd.TransformationOption
-import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -153,47 +153,47 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -- KLIGHD OPTIONS 
     // -------------------------------------------------------------------------
     
-    private static val TransformationOption SHOW_CAPTION
-        = TransformationOption::createCheckOption("Captions", true);
+    private static val SynthesisOption SHOW_CAPTION
+        = SynthesisOption::createCheckOption("Captions", true);
         
-    private static val TransformationOption SHOW_DEPENDENCIES
-        = TransformationOption::createCheckOption("Dependencies", true);
+    private static val SynthesisOption SHOW_DEPENDENCIES
+        = SynthesisOption::createCheckOption("Dependencies", true);
 
-    private static val TransformationOption LAYOUT_DEPENDENCIES
-        = TransformationOption::createCheckOption("Dependencies", false);
+    private static val SynthesisOption LAYOUT_DEPENDENCIES
+        = SynthesisOption::createCheckOption("Dependencies", false);
 
-    private static val TransformationOption SHOW_NONCONCURRENT
-        = TransformationOption::createCheckOption("Non-concurrent dependencies", false);
+    private static val SynthesisOption SHOW_NONCONCURRENT
+        = SynthesisOption::createCheckOption("Non-concurrent dependencies", false);
 
-    private static val TransformationOption SHOW_CONFLUENT
-        = TransformationOption::createCheckOption("Confluent dependencies", false);
+    private static val SynthesisOption SHOW_CONFLUENT
+        = SynthesisOption::createCheckOption("Confluent dependencies", false);
         
-    private static val TransformationOption SHOW_BASICBLOCKS 
-        = TransformationOption::createCheckOption("Basic Blocks", false);
+    private static val SynthesisOption SHOW_BASICBLOCKS 
+        = SynthesisOption::createCheckOption("Basic Blocks", false);
 
-    private static val TransformationOption SHOW_SCHEDULINGBLOCKS 
-        = TransformationOption::createCheckOption("Scheduling Blocks", true);
+    private static val SynthesisOption SHOW_SCHEDULINGBLOCKS 
+        = SynthesisOption::createCheckOption("Scheduling Blocks", true);
 
 //    private static val TransformationOption SHOW_SINGLESCHEDULINGBLOCKS
 //        = TransformationOption::createCheckOption("Show Single Scheduling Blocks", false);
         
-    private static val TransformationOption SHOW_SHADOW
-        = TransformationOption::createCheckOption("Shadow", true);
+    private static val SynthesisOption SHOW_SHADOW
+        = SynthesisOption::createCheckOption("Shadow", true);
         
-    private static val TransformationOption ALIGN_TICK_START
-        = TransformationOption::createCheckOption("Tick start", true);
+    private static val SynthesisOption ALIGN_TICK_START
+        = SynthesisOption::createCheckOption("Tick start", true);
 
-    private static val TransformationOption ALIGN_ENTRYEXIT_NODES
-        = TransformationOption::createCheckOption("Entry & Exit nodes", true);
+    private static val SynthesisOption ALIGN_ENTRYEXIT_NODES
+        = SynthesisOption::createCheckOption("Entry & Exit nodes", true);
         
-    private static val TransformationOption SHOW_HIERARCHY
-        = TransformationOption::createCheckOption("Hierarchy", true);
+    private static val SynthesisOption SHOW_HIERARCHY
+        = SynthesisOption::createCheckOption("Hierarchy", true);
         
-    private static val TransformationOption HIERARCHY_TRANSPARENCY 
-        = TransformationOption::createRangeOption("Hierarchy", Pair::of(0f, 255f), 128f);
+    private static val SynthesisOption HIERARCHY_TRANSPARENCY 
+        = SynthesisOption::createRangeOption("Hierarchy", 0f, 255f, 128f);
         
-    private static val TransformationOption ORIENTATION
-        = TransformationOption::createChoiceOption("Orientation", <String> newLinkedList("Top-Down", "Left-Right"), "Top-Down");
+    private static val SynthesisOption ORIENTATION
+        = SynthesisOption::createChoiceOption("Orientation", <String> newLinkedList("Top-Down", "Left-Right"), "Top-Down");
 
     private static val DEPENDENCYFILTER_ANY               = "Any"
     private static val DEPENDENCYFILTER_WRITE_WRITE       = "WW"
@@ -201,8 +201,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val DEPENDENCYFILTER_WRITE_READ        = "WR"
     private static val DEPENDENCYFILTER_RELWRITE_READ     = "RI"
     
-    private static val TransformationOption DEPENDENCYFILTER
-        = TransformationOption::createChoiceOption("Dependency Filter", <String> newLinkedList(
+    private static val SynthesisOption DEPENDENCYFILTER
+        = SynthesisOption::createChoiceOption("Dependency Filter", <String> newLinkedList(
             DEPENDENCYFILTER_ANY,
             DEPENDENCYFILTER_WRITE_WRITE,
             DEPENDENCYFILTER_ABSWRITE_RELWRITE,
@@ -210,9 +210,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             DEPENDENCYFILTER_RELWRITE_READ
             ), DEPENDENCYFILTER_ANY);
         
-    override public getTransformationOptions() {
-        return ImmutableSet::of(
-//            TransformationOption::createSeparator("Visibility"),
+    override public getDisplayedSynthesisOptions() {
+        return newLinkedList(
+            SynthesisOption::createSeparator("Visibility"),
             SHOW_CAPTION, 
             SHOW_HIERARCHY, 
             SHOW_DEPENDENCIES, 
@@ -224,19 +224,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             SHOW_SHADOW,
             HIERARCHY_TRANSPARENCY,
             DEPENDENCYFILTER,
-//            TransformationOption::createSeparator("Alignment"),
+            SynthesisOption::createSeparator("Alignment"),
             ALIGN_TICK_START, 
             ALIGN_ENTRYEXIT_NODES, 
-//            TransformationOption::createSeparator("Layout"),
+            SynthesisOption::createSeparator("Layout"),
             LAYOUT_DEPENDENCIES, 
             ORIENTATION 
         );
     }
     
-    override public getRecommendedLayoutOptions() {
-        return ImmutableMap::<IProperty<?>, Collection<?>>of(
-            LayoutOptions::SPACING, newArrayList(0, 255),
-            Properties::NODE_PLACER, NodePlacementStrategy::values
+    override public getDisplayedLayoutOptions() {
+        return newLinkedList(
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 255)),
+            new Pair<IProperty<?>, List<?>>(Properties::NODE_PLACER, NodePlacementStrategy::values)
         );
     }
     
@@ -300,7 +300,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             // Set root node and layout options.
             rootNode = node
-            if (ORIENTATION.getOptionValue == "Left-Right") orientation = ORIENTATION_LANDSCAPE
+            if (ORIENTATION.objectValue == "Left-Right") orientation = ORIENTATION_LANDSCAPE
                 else orientation = ORIENTATION_PORTRAIT
             
             if (topdown()) node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
@@ -338,8 +338,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             // If the dependency edges shall be layouted as well, they must be drawn before any 
             // hierarchy management. The hierarchy methods break edges in half and connect them via a port.
-            if (r instanceof SCGraphDep && SHOW_DEPENDENCIES.optionBooleanValue &&
-                LAYOUT_DEPENDENCIES.optionBooleanValue
+            if (r instanceof SCGraphDep && SHOW_DEPENDENCIES.booleanValue &&
+                LAYOUT_DEPENDENCIES.booleanValue
             ) {
                 r.eAllContents.filter(Dependency).forEach[ it.drawDependency ]
             }
@@ -347,7 +347,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // Apply any hierarchy if the corresponding option is set. Since layout of edges between nodes
             // in different hierarchies is not supported, the synthesis splits these edges at the hierarchy
             // border and connects them via a port. Thus, a kind of pseudo hierarchical edge layout is archived. 
-            if (SHOW_HIERARCHY.optionBooleanValue) {    
+            if (SHOW_HIERARCHY.booleanValue) {    
                 for (s : r.nodes.filter(typeof(Fork))) {
                     val threadEntries = s.getAllNext
                     for(t : threadEntries) {
@@ -357,14 +357,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }            
             }
             
-            if (r instanceof SCGraphBB && (SHOW_BASICBLOCKS.optionBooleanValue || SHOW_SCHEDULINGBLOCKS.optionBooleanValue)) {
+            if (r instanceof SCGraphBB && (SHOW_BASICBLOCKS.booleanValue || SHOW_SCHEDULINGBLOCKS.booleanValue)) {
                 for (s : (r as SCGraphBB).basicBlocks) {
-                    if (SHOW_BASICBLOCKS.optionBooleanValue) {
+                    if (SHOW_BASICBLOCKS.booleanValue) {
                         val bbNodes = <Node> newLinkedList
                         s.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
                         bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
                     }
-                    if (SHOW_SCHEDULINGBLOCKS.optionBooleanValue)
+                    if (SHOW_SCHEDULINGBLOCKS.booleanValue)
 //                        (s.schedulingBlocks.size>1 || SHOW_SINGLESCHEDULINGBLOCKS.optionBooleanValue))
                         for(schedulingBlock : s.schedulingBlocks) {
                              schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
@@ -373,8 +373,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
-            if (r instanceof SCGraphDep && SHOW_DEPENDENCIES.optionBooleanValue &&
-                !LAYOUT_DEPENDENCIES.optionBooleanValue
+            if (r instanceof SCGraphDep && SHOW_DEPENDENCIES.booleanValue &&
+                !LAYOUT_DEPENDENCIES.booleanValue
             ) {
                 r.eAllContents.filter(Dependency).forEach[ it.drawDependency ]
             }            
@@ -398,7 +398,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             (figure) => [
                 node.setMinimalNodeSize(75, 25);
-                if (SHOW_SHADOW.optionBooleanValue) {
+                if (SHOW_SHADOW.booleanValue) {
                     it.shadow = "black".color;
                 }
                 it.setGridPlacement(1);
@@ -440,7 +440,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0)
                         .putToLookUpWith(s)
                     );
-                if (SHOW_SHADOW.optionBooleanValue) {
+                if (SHOW_SHADOW.booleanValue) {
                     it.shadow = "black".color;
                 }
             ]
@@ -491,21 +491,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (topdown()) { 
                 figure = node.addPolygon().createSurfaceShape() 
                 figure => [ node.setMinimalNodeSize(75, 25); 
-                    if (SHOW_CAPTION.optionBooleanValue)
+                    if (SHOW_CAPTION.booleanValue)
                         node.KRendering.add(factory.createKText.of("surface").putToLookUpWith(s));
-                    if (SHOW_SHADOW.optionBooleanValue) {
+                    if (SHOW_SHADOW.booleanValue) {
                         it.shadow = "black".color;
                     }
                 ]
             } else { 
                 figure = node.addPolygon().createSurfaceLandscapeShape()
                 figure => [ node.setMinimalNodeSize(75, 25); 
-                    if (SHOW_CAPTION.optionBooleanValue)
+                    if (SHOW_CAPTION.booleanValue)
                         node.KRendering.add(factory.createKText.of("surface")
                             .setAreaPlacementData.from(LEFT, 10, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 3, 0)
                             .putToLookUpWith(s)
                         );
-                    if (SHOW_SHADOW.optionBooleanValue) {
+                    if (SHOW_SHADOW.booleanValue) {
                         it.shadow = "black".color;
                     }
                 ]
@@ -534,7 +534,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return s.createNode().putToLookUpWith(s) => [ node |
 
             // If the corresponding option is set to true, depth nodes are placed in the first layer.
-            if (ALIGN_TICK_START.optionBooleanValue) {
+            if (ALIGN_TICK_START.booleanValue) {
                 node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
             }
 
@@ -543,24 +543,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (topdown()) {            
                 figure = node.addPolygon().createDepthShape();
                 figure => [ node.setMinimalNodeSize(75, 25); 
-                    if (SHOW_CAPTION.optionBooleanValue)
+                    if (SHOW_CAPTION.booleanValue)
                         node.KRendering.add(factory.createKText.of("depth")
                             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0)
                             .putToLookUpWith(s)
                         );
-                    if (SHOW_SHADOW.optionBooleanValue) {
+                    if (SHOW_SHADOW.booleanValue) {
                         it.shadow = "black".color;
                     }
                 ]
             } else {
                 figure = node.addPolygon().createDepthLandscapeShape();
                 figure => [ node.setMinimalNodeSize(75, 25); 
-                    if (SHOW_CAPTION.optionBooleanValue)
+                    if (SHOW_CAPTION.booleanValue)
                         node.KRendering.add(factory.createKText.of("depth")
                             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 10, 0, BOTTOM, 2, 0)
                             .putToLookUpWith(s)
                         );
-                    if (SHOW_SHADOW.optionBooleanValue) {
+                    if (SHOW_SHADOW.booleanValue) {
                         it.shadow = "black".color;
                     }
                 ]
@@ -589,19 +589,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return s.createNode().putToLookUpWith(s) => [ node |
             
             // If the corresponding option is set to true, exit nodes are placed in the first layer;
-            if (ALIGN_ENTRYEXIT_NODES.optionBooleanValue)
+            if (ALIGN_ENTRYEXIT_NODES.booleanValue)
                 node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
 
             // Draw an ellipse figure for exit nodes...
             val figure = node.addEllipse();
 
             figure => [ node.setMinimalNodeSize(75, 25); 
-                if (SHOW_CAPTION.optionBooleanValue)
+                if (SHOW_CAPTION.booleanValue)
                     node.KRendering.add(factory.createKText.of("entry")
                         .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 1, 0)
                         .putToLookUpWith(s)
                     );
-                if (SHOW_SHADOW.optionBooleanValue) {
+                if (SHOW_SHADOW.booleanValue) {
                     it.shadow = "black".color;
                 }
             ]
@@ -627,19 +627,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return s.createNode().putToLookUpWith(s) => [ node |
             
             // If the corresponding option is set to true, exit nodes are placed in the last layer.
-            if (ALIGN_ENTRYEXIT_NODES.optionBooleanValue)
+            if (ALIGN_ENTRYEXIT_NODES.booleanValue)
                 node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
 
             // Draw an ellipse for an exit node...
             val figure = node.addEllipse();
 
             figure => [ node.setMinimalNodeSize(75, 25);
-                if (SHOW_CAPTION.optionBooleanValue) 
+                if (SHOW_CAPTION.booleanValue) 
                     node.KRendering.add(factory.createKText.of("exit")
                         .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 1, 0)
                         .putToLookUpWith(s)
                     );
-                if (SHOW_SHADOW.optionBooleanValue) {
+                if (SHOW_SHADOW.booleanValue) {
                     it.shadow = "black".color;
                 }
             ]
@@ -669,24 +669,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (topdown()) {
                 figure = node.addPolygon().createTriangleShape();
                 figure => [ node.setMinimalNodeSize(75, 25);
-                    if (SHOW_CAPTION.optionBooleanValue) 
+                    if (SHOW_CAPTION.booleanValue) 
                         node.KRendering.add(factory.createKText.of("fork")
                             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 4, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)
                             .putToLookUpWith(s)
                         );
-                    if (SHOW_SHADOW.optionBooleanValue) {
+                    if (SHOW_SHADOW.booleanValue) {
                         it.shadow = "black".color;
                     }
                 ]
             } else {
                 figure = node.addPolygon().createTriangleLandscapeShape();
                 figure => [ node.setMinimalNodeSize(25, 75);
-                    if (SHOW_CAPTION.optionBooleanValue) 
+                    if (SHOW_CAPTION.booleanValue) 
                         node.KRendering.add(factory.createKText.of("fork")
                             .setAreaPlacementData.from(LEFT, 2, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 2, 0)
                             .putToLookUpWith(s)
                         );
-                    if (SHOW_SHADOW.optionBooleanValue) {
+                    if (SHOW_SHADOW.booleanValue) {
                         it.shadow = "black".color;
                     }
                 ]
@@ -718,24 +718,24 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (topdown()) {
                 figure = node.addPolygon().createTriangleShapeReversed();
                 figure => [ node.setMinimalNodeSize(75, 25);
-                    if (SHOW_CAPTION.optionBooleanValue) 
+                    if (SHOW_CAPTION.booleanValue) 
                         node.KRendering.add(factory.createKText.of("join")
                             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0)
                             .putToLookUpWith(s)
                         );
-                    if (SHOW_SHADOW.optionBooleanValue) {
+                    if (SHOW_SHADOW.booleanValue) {
                         it.shadow = "black".color;
                     }
                 ]
             } else {
                 figure = node.addPolygon().createTriangleLandscapeShapeReversed();
                 figure => [ node.setMinimalNodeSize(25, 75);
-                    if (SHOW_CAPTION.optionBooleanValue) 
+                    if (SHOW_CAPTION.booleanValue) 
                         node.KRendering.add(factory.createKText.of("join")
                             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0)
                             .putToLookUpWith(s)
                         );
-                    if (SHOW_SHADOW.optionBooleanValue) {
+                    if (SHOW_SHADOW.booleanValue) {
                         it.shadow = "black".color;
                     }
                 ]
@@ -846,16 +846,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     def Dependency drawDependency(Dependency dependency) {
         
         // If non concurrent dependency are hidden and the given dependency is not concurrent, exit at once.
-        if (!SHOW_NONCONCURRENT.optionBooleanValue && !dependency.isConcurrent) return dependency;
-        if (!SHOW_CONFLUENT.optionBooleanValue && dependency.confluent) return dependency;
+        if (!SHOW_NONCONCURRENT.booleanValue && !dependency.isConcurrent) return dependency;
+        if (!SHOW_CONFLUENT.booleanValue && dependency.confluent) return dependency;
         
-        if (DEPENDENCYFILTER.optionValue == DEPENDENCYFILTER_WRITE_WRITE && !
+        if (DEPENDENCYFILTER.objectValue == DEPENDENCYFILTER_WRITE_WRITE && !
             (dependency instanceof Write_Write)) return dependency; 
-        if (DEPENDENCYFILTER.optionValue == DEPENDENCYFILTER_ABSWRITE_RELWRITE && !
+        if (DEPENDENCYFILTER.objectValue == DEPENDENCYFILTER_ABSWRITE_RELWRITE && !
             (dependency instanceof AbsoluteWrite_RelativeWrite)) return dependency; 
-        if (DEPENDENCYFILTER.optionValue == DEPENDENCYFILTER_WRITE_READ && !
+        if (DEPENDENCYFILTER.objectValue == DEPENDENCYFILTER_WRITE_READ && !
             (dependency instanceof AbsoluteWrite_Read)) return dependency; 
-        if (DEPENDENCYFILTER.optionValue == DEPENDENCYFILTER_RELWRITE_READ && !
+        if (DEPENDENCYFILTER.objectValue == DEPENDENCYFILTER_RELWRITE_READ && !
             (dependency instanceof RelativeWrite_Read)) return dependency; 
         
         // Retrieve node information.
@@ -877,7 +877,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]  
             
             // If dependency edges are layouted, use the dependency ports to attach the edges.
-            if (LAYOUT_DEPENDENCIES.optionBooleanValue) {
+            if (LAYOUT_DEPENDENCIES.booleanValue) {
                 edge.sourcePort = sourceNode.getPort(SCGPORTID_OUTGOINGDEPENDENCY)
                 edge.targetPort = targetNode.getPort(SCGPORTID_INCOMINGDEPENDENCY)
             } else {
@@ -927,9 +927,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.addLayoutParam(LayoutOptions::SPACING, 25.0f)
             kContainer.addRoundedRectangle(5, 5, 0)
             kContainer.KRendering.foreground = SCCHARTSBLUE2.copy;
-            kContainer.KRendering.foreground.alpha = Math.round(HIERARCHY_TRANSPARENCY.optionValue as Float)
+            kContainer.KRendering.foreground.alpha = Math.round(HIERARCHY_TRANSPARENCY.objectValue as Float)
             kContainer.KRendering.background = SCCHARTSBLUE2.copy;
-            kContainer.KRendering.background.alpha = Math.round(HIERARCHY_TRANSPARENCY.optionValue as Float)
+            kContainer.KRendering.background.alpha = Math.round(HIERARCHY_TRANSPARENCY.objectValue as Float)
         }
         if (nodeGrouping == NODEGROUPING_BASICBLOCK) {
             kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)

@@ -40,9 +40,9 @@ import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.klighd.TransformationOption
+import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
-import de.cau.cs.kieler.klighd.transformations.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
@@ -66,7 +66,11 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.HistoryTypeimport com.google.common.collect.ImmutableCollection
+import com.google.common.collect.ImmutableList
+import java.util.ArrayList
+import de.cau.cs.kieler.core.util.Pair
+
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -114,38 +118,35 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
     // -------------------------------------------------------------------------
     // Transformation options   
-    private static val TransformationOption SHOW_SIGNAL_DECLARATIONS = TransformationOption::
+    private static val SynthesisOption SHOW_SIGNAL_DECLARATIONS = SynthesisOption::
         createCheckOption("Declarations", true);
 
-    private static val TransformationOption SHOW_STATE_ACTIONS = TransformationOption::createCheckOption("State actions",
+    private static val SynthesisOption SHOW_STATE_ACTIONS = SynthesisOption::createCheckOption("State actions",
         true);
 
-    private static val TransformationOption SHOW_LABELS = TransformationOption::createCheckOption("Transition labels",
+    private static val SynthesisOption SHOW_LABELS = SynthesisOption::createCheckOption("Transition labels",
         true);
 
-    private static val TransformationOption SHOW_DEPENDENCIES = TransformationOption::createCheckOption(
+    private static val SynthesisOption SHOW_DEPENDENCIES = SynthesisOption::createCheckOption(
         "Dependencies && optimized priorities", false);
 
-    private static val TransformationOption SHOW_ORDER = TransformationOption::createCheckOption(
+    private static val SynthesisOption SHOW_ORDER = SynthesisOption::createCheckOption(
         "Dependencies && priorities", false);
 
     DependencyGraph dependencyGraph = null
 
-    private static val TransformationOption SHOW_SHADOW = TransformationOption::createCheckOption("Shadow", true);
+    private static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadow", true);
 
-    override public getTransformationOptions() {
-        return ImmutableSet::of(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
+    override public getDisplayedSynthesisOptions() {
+        return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
             SHOW_SHADOW);
     }
 
-    override public getRecommendedLayoutOptions() {
-        return ImmutableMap::<IProperty<?>, Collection<?>>of(
-            LayoutOptions::ALGORITHM,
-            emptyList,
-            LayoutOptions::DIRECTION,
-            Direction::values.drop(1).sortBy[it.name],
-            LayoutOptions::SPACING,
-            newArrayList(0, 255)
+    override public getDisplayedLayoutOptions() {
+        return newLinkedList(
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::ALGORITHM, emptyList),
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[it.name]), 
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 255))
         );
     }
 
@@ -231,8 +232,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     // Tells if the state needs a macro state rendering because of regions or declarations.
     def boolean hasRegionsOrDeclarations(State state) {
         val returnValue = (!state.hasNoRegionsWithStates ||
-            (!state.localActions.nullOrEmpty && SHOW_STATE_ACTIONS.optionBooleanValue) ||
-            (!state.valuedObjects.nullOrEmpty && SHOW_SIGNAL_DECLARATIONS.optionBooleanValue))
+            (!state.localActions.nullOrEmpty && SHOW_STATE_ACTIONS.booleanValue) ||
+            (!state.valuedObjects.nullOrEmpty && SHOW_SIGNAL_DECLARATIONS.booleanValue))
         return returnValue
     }
 
@@ -307,7 +308,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     // -------------------------------------------------------------------------
     // Transform a state    
     def dispatch KNode translate(State s) {
-        if (SHOW_ORDER.optionBooleanValue || SHOW_DEPENDENCIES.optionBooleanValue) {
+        if (SHOW_ORDER.booleanValue || SHOW_DEPENDENCIES.booleanValue) {
             if (dependencyGraph == null) {
 
                 // Calculate only once
@@ -326,7 +327,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
             figure.lineWidth = lineWidth;
             figure.foreground = if(s.isInitial || s.isFinal) "black".color else "gray".color
-            if (SHOW_SHADOW.optionBooleanValue && !connector) {
+            if (SHOW_SHADOW.booleanValue && !connector) {
                 figure.shadow = "black".color;
                 figure.shadow.XOffset = 4;
                 figure.shadow.YOffset = 4;
@@ -375,11 +376,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.setGridPlacement(1);
                 }
                 var priority = ""
-                if (SHOW_ORDER.optionBooleanValue || SHOW_DEPENDENCIES.optionBooleanValue) {
+                if (SHOW_ORDER.booleanValue || SHOW_DEPENDENCIES.booleanValue) {
                     if (!dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).nullOrEmpty) {
                         val dependencyNode = dependencyGraph.dependencyNodes.filter(e|e.getState == s && !e.getIsJoin).
                             get(0)
-                        priority = if (SHOW_DEPENDENCIES.optionBooleanValue)
+                        priority = if (SHOW_DEPENDENCIES.booleanValue)
                             dependencyNode.getPriority + ""
                         else
                             (dependencyNode.getOrder) + ""
@@ -387,7 +388,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                             if (!dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).nullOrEmpty) {
                                 val dependencyNodeJoin = dependencyGraph.dependencyNodes.filter(
                                     e|e.getState == s && e.getIsJoin).get(0)
-                                priority = priority + ", " + if (SHOW_DEPENDENCIES.optionBooleanValue)
+                                priority = priority + ", " + if (SHOW_DEPENDENCIES.booleanValue)
                                     dependencyNodeJoin.getPriority + ""
                                 else
                                     (dependencyNodeJoin.getOrder) + ""
@@ -438,7 +439,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 it.addText(priorityToShow) => [
                                     it.fontSize = 9;
                                     it.setFontBold(true);
-                                    if (SHOW_DEPENDENCIES.optionBooleanValue) {
+                                    if (SHOW_DEPENDENCIES.booleanValue) {
                                         it.setForeground("blue".color)
                                     } else {
                                         it.setForeground("red".color)
@@ -461,7 +462,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         it.addText(priorityToShow) => [
                             it.fontSize = 9;
                             it.setFontBold(true);
-                            if (SHOW_DEPENDENCIES.optionBooleanValue) {
+                            if (SHOW_DEPENDENCIES.booleanValue) {
                                 it.setForeground("blue".color)
                             } else {
                                 it.setForeground("red".color)
@@ -471,7 +472,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         ]
                     }
                 }
-                if (SHOW_SIGNAL_DECLARATIONS.optionBooleanValue) {
+                if (SHOW_SIGNAL_DECLARATIONS.booleanValue) {
                     for (sig : s.valuedObjects) {
                         it.addRectangle => [
                             it.invisible = true;
@@ -513,7 +514,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     }
 
                 }
-                if (SHOW_STATE_ACTIONS.optionBooleanValue) {
+                if (SHOW_STATE_ACTIONS.booleanValue) {
                     scopeProvider.parent = s;
                     for (action : s.localActions) {
                         it.addRectangle => [
@@ -600,7 +601,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         it.addNormalTerminationDecorator()
                 };
             ];
-            if (SHOW_LABELS.optionBooleanValue) {
+            if (SHOW_LABELS.booleanValue) {
                 scopeProvider.parent = t.sourceState;
                 // For serialization set these flags to false to ommit them in the transition label
                 val tCopy = t.copy
