@@ -24,7 +24,6 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.pret.annotation.extensions.TTSAnnotationExtension
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import java.util.ArrayList
 import de.cau.cs.kieler.scgdep.AssignmentDep
 import de.cau.cs.kieler.scgdep.Dependency
 
@@ -215,7 +214,23 @@ class TimeTriggeredScheduler { // inject the annotation Extensions for time trig
      *          returns true if prefixCandidate is prefix of branchVec, else false
      */
     def boolean hasPrefix(List<Boolean> branchVec, List<Boolean> prefixCandidate) {
-        return false
+        var returnVal = true;
+        val prefixIterator = prefixCandidate.iterator;
+        val branchVecIterator = branchVec.iterator;
+        while (prefixIterator.hasNext()){
+            val boolean prefixBit = prefixIterator.next();
+            if (branchVecIterator.hasNext()){
+               val boolean branchVecBit = branchVecIterator.next();
+               if (prefixBit != branchVecBit){
+                   // prefixCandidate and branchVec differ in this boolean entry
+                   returnVal = false;
+               } 
+            } else {
+                // branchVec is shorter than prefixCandidate
+                returnVal = false;
+            }
+        }
+        return returnVal;
     }
 
     /**
