@@ -74,7 +74,8 @@ import de.cau.cs.kieler.core.util.Pair
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scgbb.SCGraphBB
 import de.cau.cs.kieler.core.krendering.KPolygon
-import de.cau.cs.kieler.core.annotations.StringAnnotation
+import de.cau.cs.kieler.core.annotations.StringAnnotationimport de.cau.cs.kieler.scgbb.BasicBlock
+import java.util.HashMap
 
 /** 
  * SCCGraph KlighD synthesis 
@@ -358,18 +359,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             if (r instanceof SCGraphBB && (SHOW_BASICBLOCKS.booleanValue || SHOW_SCHEDULINGBLOCKS.booleanValue)) {
-                for (s : (r as SCGraphBB).basicBlocks) {
-                    if (SHOW_BASICBLOCKS.booleanValue) {
-                        val bbNodes = <Node> newLinkedList
-                        s.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
-                        bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
-                    }
-                    if (SHOW_SCHEDULINGBLOCKS.booleanValue)
-//                        (s.schedulingBlocks.size>1 || SHOW_SINGLESCHEDULINGBLOCKS.optionBooleanValue))
-                        for(schedulingBlock : s.schedulingBlocks) {
-                             schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
-                         }                    
-                }                
+                (r as SCGraphBB).drawBasicBlocks            
             }
             
             // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
@@ -992,8 +982,46 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 
             ]
         }     
-                        
+        kContainer          
     }   
+    
+    def drawBasicBlocks(SCGraphBB r) {
+        val bbContainerList = new HashMap<BasicBlock, KNode>()
+        for (s : (r as SCGraphBB).basicBlocks) {
+            if (SHOW_BASICBLOCKS.booleanValue) {
+                val bbNodes = <Node> newLinkedList
+                s.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
+                val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
+                bbContainerList.put(s, bbContainer)
+            }
+            if (SHOW_SCHEDULINGBLOCKS.booleanValue)
+                for(schedulingBlock : s.schedulingBlocks) {
+                    schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
+                }                    
+        }            
+        if (SHOW_BASICBLOCKS.booleanValue) 
+        for (s : (r as SCGraphBB).basicBlocks) {
+            val sourceNode = bbContainerList.get(s) 
+            if (sourceNode != null)
+            for (a : s.activationExpressions) {
+                val actBasicBlock = a.basicBlock
+                val targetNode = bbContainerList.get(actBasicBlock)
+                
+                if (targetNode != null)    
+                targetNode.createEdge("predecessor " + sourceNode.toString + targetNode.toString) => [ edge |
+                    edge.source = targetNode
+                    edge.target = sourceNode
+                    edge.addRoundedBendsPolyline(8,5) => [
+                        it.foreground = BASICBLOCKBORDER.copy
+                        it.foreground.alpha = 128
+//                        it.lineStyle = LineStyle::DASH
+                        it.addArrowDecorator
+                    ]  
+                    edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
+                ]
+            }
+        }
+    }
    
 
     // -------------------------------------------------------------------------
