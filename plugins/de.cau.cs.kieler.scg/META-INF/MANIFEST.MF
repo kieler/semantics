@@ -11,7 +11,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  de.cau.cs.kieler.core.annotations;visibility:=reexport,
  de.cau.cs.kieler.core.kexpressions;visibility:=reexport,
- de.cau.cs.kieler.scg;visibility:=reexport,
  org.eclipse.xtend.lib,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
@@ -30,6 +29,9 @@ Export-Package: de.cau.cs.kieler.scg,
  de.cau.cs.kieler.scgdep.util,
  de.cau.cs.kieler.scgbb,
  de.cau.cs.kieler.scgbb.impl,
- de.cau.cs.kieler.scgbb.util
+ de.cau.cs.kieler.scgbb.util,
+ de.cau.cs.kieler.scgsched,
+ de.cau.cs.kieler.scgsched.impl,
+ de.cau.cs.kieler.scgsched.util
 Bundle-ActivationPolicy: lazy
 

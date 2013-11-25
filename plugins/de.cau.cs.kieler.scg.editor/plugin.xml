@@ -34,6 +34,18 @@
    </extension>
 
    <extension point="org.eclipse.ui.editors">
+      <!-- @generated scgsched -->
+      <editor
+            id="de.cau.cs.kieler.scgsched.presentation.ScgschedEditorID"
+            name="%_UI_ScgschedEditor_label"
+            icon="icons/full/obj16/ScgschedModelFile.gif"
+            extensions="scgsched"
+            class="de.cau.cs.kieler.scgsched.presentation.ScgschedEditor"
+            contributorClass="de.cau.cs.kieler.scgsched.presentation.ScgschedActionBarContributor">
+      </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
       <!-- @generated scgbb -->
       <editor
             id="de.cau.cs.kieler.scgbb.presentation.ScgbbEditorID"

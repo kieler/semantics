@@ -109,4 +109,12 @@
       </command>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated scgsched -->
+      <package
+            uri="http://kieler.cs.cau.de/scgsched/0.1.0"
+            class="de.cau.cs.kieler.scgsched.ScgschedPackage"
+            genModel="model/scgsched.genmodel"/>
+   </extension>
+
 </plugin>
