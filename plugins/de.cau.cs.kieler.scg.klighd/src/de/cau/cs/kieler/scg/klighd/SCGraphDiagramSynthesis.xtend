@@ -998,7 +998,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 for(schedulingBlock : s.schedulingBlocks) {
                     schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
                 }                    
-        }            
+        }
+        // deactivated for now...
+        if (false)            
         if (SHOW_BASICBLOCKS.booleanValue) 
         for (s : (r as SCGraphBB).basicBlocks) {
             val sourceNode = bbContainerList.get(s) 

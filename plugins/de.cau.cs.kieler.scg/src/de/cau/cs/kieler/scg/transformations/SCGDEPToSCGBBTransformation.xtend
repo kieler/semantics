@@ -154,15 +154,21 @@ class SCGDEPToSCGBBTransformation {
             }  else
             if (node.eAllContents.filter(typeof(ControlFlow)).size != 1) {
                 val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
-                if (node instanceof Fork) {
-                    newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, block, guard.reference)
-                }
                 for(flow : node.eAllContents.filter(typeof(ControlFlow)).toList) {
                     newIndex = scg.createBasicBlocks(flow.target, newIndex, block, guard.reference)
+                }
+                //TODO: create synchronizer
+                if (node instanceof Fork) {
+                    newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, block, guard.reference)
                 }
                 node = null                
             } else {
                 val next = node.eAllContents.filter(typeof(ControlFlow)).head.target
+                if (next.incoming.filter(typeof(ControlFlow)).size > 1) {
+                    val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
+                    scg.createBasicBlocks(next, newIndex, block, guard.reference) 
+                    node = null;
+                } else 
                 if (next instanceof Join) {
                     scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
                     node = null
@@ -196,7 +202,9 @@ class SCGDEPToSCGBBTransformation {
         val schedulingBlocks = <SchedulingBlock> newLinkedList
         var SchedulingBlock block = null
         for (node : schedulingblock.nodes) {
-            if (block == null || (node.incoming.filter(typeof(Dependency)).size > 0)) {
+            if (block == null || 
+                (node.incoming.filter(typeof(Dependency)).filter[it.concurrent&&!it.confluent].size > 0)
+            ) {
                 if (block != null) schedulingBlocks.add(block)
                 block = ScgbbFactory::eINSTANCE.createSchedulingBlock()
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))                
