@@ -13,17 +13,27 @@
  */
 package de.cau.cs.kieler.scg.schedulers
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.extensions.SCGTransformationExtensions
 import de.cau.cs.kieler.scgsched.SCGraphSched
 
 /**
  * @author ssm
  * 
  */
-class AbstractSCGScheduler {
-    private var SCGraphSched SCGSched  
+abstract class AbstractSCGScheduler {
+
+    @Inject
+    extension SCGTransformationExtensions
     
-    public def void schedule(SCGraph scg) {
-        
+    private var SCGraphSched SCG;  
+    
+    protected abstract def void execute();
+    
+    public def SCGraph schedule(SCGraph scg) {
+        SCG = (scg.upgradeAll as SCGraphSched)
+        execute()
+        SCG
     }    
 }
