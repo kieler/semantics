@@ -31,7 +31,9 @@ class SimpleSCGScheduler extends AbstractSCGScheduler {
     
     override protected execute() {
         val schedule = ScgschedFactory::eINSTANCE.createSchedule
-        var schedulingBlocks = SCG.eAllContents.filter(typeof(SchedulingBlock))
+        val schedulingBlocks = <SchedulingBlock> newLinkedList
+        SCG.basicBlocks.forEach[schedulingBlocks.addAll(it.schedulingBlocks)]
+        //var schedulingBlocks = SCG.eAllContents.filter(typeof(SchedulingBlock))
         
         var fixpoint  = false
         
@@ -49,7 +51,8 @@ class SimpleSCGScheduler extends AbstractSCGScheduler {
                 }
                 if (placeable) {
                     schedule.schedulingBlocks.add(block)
-                    schedulingBlocks.filter[it == block].remove
+//                    schedulingBlocks.filter[it == block].remove
+                    schedulingBlocks.remove(block)
                     fixpoint = false
                 }
             }
