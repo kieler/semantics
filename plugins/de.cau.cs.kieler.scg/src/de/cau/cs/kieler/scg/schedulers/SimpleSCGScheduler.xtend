@@ -45,7 +45,7 @@ class SimpleSCGScheduler extends AbstractSCGScheduler {
                 var placeable = true
                 val parentBB = block.eContainer as BasicBlock
                 for(ae:parentBB.activationExpressions){
-                    for(sb:ae.basicBlock.schedulingBlocks){
+                    if (ae.basicBlock != null) for(sb:ae.basicBlock.schedulingBlocks){
                         if (!schedule.schedulingBlocks.contains(sb)) { placeable = false }
                     }
                 }
@@ -60,6 +60,7 @@ class SimpleSCGScheduler extends AbstractSCGScheduler {
         if (fixpoint) {
             System::out.println("The SCG is NOT ASC-schedulable!")
             SCG.setUnschedulable(true)            
+            SCG.schedules.add(schedule)
         } else {
             System::out.println("The SCG is ASC-schedulable.")
             SCG.setUnschedulable(false)
