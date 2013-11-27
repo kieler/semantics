@@ -241,6 +241,13 @@ class SCGCopyExtensions {
     def dispatch Join        copySCGNode(Join        node) { ScgFactory::eINSTANCE.createJoin() }
     
     // Don't forget to copy the assignment expression and the valued object in assignments.
+    def dispatch Assignment  copySCGNode(Assignment  node) { 
+        val assignment = ScgdepFactory::eINSTANCE.createAssignmentDep()
+        assignment.assignment = node.assignment.copyExpression
+        assignment.valuedObject = node.valuedObject.copyValuedObject;
+        assignment
+    }
+    
     def dispatch Assignment  copySCGNode(AssignmentDep  node) { 
         val assignment = ScgdepFactory::eINSTANCE.createAssignmentDep()
         assignment.assignment = node.assignment.copyExpression
