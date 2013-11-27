@@ -15,7 +15,7 @@ package de.cau.cs.kieler.scg.extensions
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scg.Assignment
@@ -29,25 +29,21 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scgbb.BasicBlock
+import de.cau.cs.kieler.scgbb.SCGraphBB
+import de.cau.cs.kieler.scgbb.ScgbbFactory
+import de.cau.cs.kieler.scgbb.SchedulingBlock
 import de.cau.cs.kieler.scgdep.AssignmentDep
-import de.cau.cs.kieler.scgdep.ConditionalDep
 import de.cau.cs.kieler.scgdep.Dependency
+import de.cau.cs.kieler.scgdep.NodeDep
 import de.cau.cs.kieler.scgdep.SCGraphDep
 import de.cau.cs.kieler.scgdep.ScgdepFactory
+import de.cau.cs.kieler.scgsched.SCGraphSched
+import de.cau.cs.kieler.scgsched.ScgschedFactory
+import de.cau.cs.kieler.scgsched.Schedule
 import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scgbb.ScgbbFactory
-import de.cau.cs.kieler.scgbb.SCGraphBB
-import de.cau.cs.kieler.scgdep.NodeDep
-import java.util.List
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.scgbb.SchedulingBlock
-import de.cau.cs.kieler.scgbb.BasicBlock
-import java.util.ArrayList
-import de.cau.cs.kieler.core.kexpressions.ValueType
 
 /** 
  * SCGCopyExtensions
@@ -70,6 +66,7 @@ class SCGCopyExtensions {
     private val revNodeMapping = new HashMap<Node, Node>
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
     private val revBasicBlockMapping = new HashMap<BasicBlock, BasicBlock>
+    private val schedulingBlockMapping = new HashMap<SchedulingBlock, SchedulingBlock>
     
     // -------------------------------------------------------------------------
     // -- Copy SCG instance 
@@ -110,9 +107,27 @@ class SCGCopyExtensions {
                 ]
             ] 
         }
+        
+        //If source and target are at least a scheduling specialization, copy all scheduling information.
+        if (source instanceof SCGraphSched && target instanceof SCGraphSched) {
+            (target as SCGraphSched).setUnschedulable((source as SCGraphSched).unschedulable)
+            (source as SCGraphSched).schedules.forEach[ it.copySchedule(target as SCGraphSched) ]
+        }
        
         target
     }   
+    
+    // -------------------------------------------------------------------------
+    // -- Copy Schedule 
+    // -------------------------------------------------------------------------
+    def copySchedule(Schedule schedule, SCGraphSched target) {
+        val sched = ScgschedFactory::eINSTANCE.createSchedule
+        
+        schedule.schedulingBlocks.forEach[ sched.schedulingBlocks.add(schedulingBlockMapping.get(it)) ]
+        
+        target.schedules.add(sched)
+        sched
+    }
     
     // -------------------------------------------------------------------------
     // -- Copy Basic Blocks 
@@ -145,7 +160,8 @@ class SCGCopyExtensions {
             sb.nodes.add(tnode)
             sb.dependencies.addAll(tnode.incoming.filter(typeof(Dependency)))  
         ]
-        
+    
+        schedulingBlockMapping.put(schedulingBlock, sb)    
         target.schedulingBlocks.add(sb)
         sb
     }
