@@ -76,6 +76,9 @@ import de.cau.cs.kieler.scgbb.SCGraphBB
 import de.cau.cs.kieler.core.krendering.KPolygon
 import de.cau.cs.kieler.core.annotations.StringAnnotationimport de.cau.cs.kieler.scgbb.BasicBlock
 import java.util.HashMap
+import de.cau.cs.kieler.scgbb.SchedulingBlock
+import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.scgsched.SCGraphSched
 
 /** 
  * SCCGraph KlighD synthesis 
@@ -367,7 +370,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 !LAYOUT_DEPENDENCIES.booleanValue
             ) {
                 r.eAllContents.filter(Dependency).forEach[ it.drawDependency ]
-            }            
+            }     
         ]
     }
     
@@ -986,6 +989,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }   
     
     def drawBasicBlocks(SCGraphBB r) {
+        
+        val schedulingBlockMapping = new HashMap<SchedulingBlock, KNode>  
+        
         val bbContainerList = new HashMap<BasicBlock, KNode>()
         for (s : (r as SCGraphBB).basicBlocks) {
             if (SHOW_BASICBLOCKS.booleanValue) {
@@ -996,9 +1002,34 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
                 for(schedulingBlock : s.schedulingBlocks) {
-                    schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
+                    val kContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
+                    schedulingBlockMapping.put(schedulingBlock, kContainer)
                 }                    
         }
+        
+        if (SHOW_SCHEDULINGBLOCKS.booleanValue && r instanceof SCGraphSched) {
+            var KNode source = null
+            var KNode target = null 
+            for(block : (r as SCGraphSched).getSchedules.head.getSchedulingBlocks) {
+                target = schedulingBlockMapping.get(block)
+                if (target != null && source != null) {
+                    val sourceF = source
+                    val targetF = target
+                    source.createEdge("schedule " + source.toString + target.toString) => [ edge |
+                        edge.source = sourceF
+                        edge.target = targetF
+                        edge.addRoundedBendsPolyline(8,4) => [
+                            it.foreground = SCHEDULINGBLOCKBORDER.copy
+                            it.foreground.alpha = 128
+                            it.addArrowDecorator
+                        ]  
+                        edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
+                    ]
+                }
+                source = target
+            }
+        }
+        
         // deactivated for now...
         if (false)            
         if (SHOW_BASICBLOCKS.booleanValue) 
