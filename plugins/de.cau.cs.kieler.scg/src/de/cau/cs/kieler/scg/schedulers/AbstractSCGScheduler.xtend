@@ -18,16 +18,19 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGTransformationExtensions
 import de.cau.cs.kieler.scgsched.SCGraphSched
 
-/**
- * @author ssm
+/** 
+ * AbstractSCGScheduler
  * 
+ * @author ssm
+ * @kieler.design 2013-11-27 proposed 
+ * @kieler.rating 2013-11-27 proposed yellow
  */
 abstract class AbstractSCGScheduler {
 
     @Inject
     extension SCGTransformationExtensions
     
-    private var SCGraphSched SCG;  
+    protected var SCGraphSched SCG;  
     
     protected abstract def void execute();
     
