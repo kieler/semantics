@@ -45,7 +45,8 @@ class SimpleSCGScheduler extends AbstractSCGScheduler {
                 var placeable = true
                 val parentBB = block.eContainer as BasicBlock
                 for(ae:parentBB.activationExpressions){
-                    if (ae.basicBlock != null) for(sb:ae.basicBlock.schedulingBlocks){
+                    if (ae.basicBlocks.size > 0) for(bb:ae.basicBlocks) 
+                    for(sb:bb.schedulingBlocks){
                         if (!schedule.schedulingBlocks.contains(sb)) { placeable = false }
                     }
                 }

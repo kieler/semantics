@@ -20,8 +20,10 @@
         eType="ecore:EClass scgdep.ecore#//Dependency"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ActivationExpression">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="basicBlock" eType="#//BasicBlock"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="basicBlocks" upperBound="-1"
+        eType="#//BasicBlock"/>
   </eClassifiers>
 </ecore:EPackage>

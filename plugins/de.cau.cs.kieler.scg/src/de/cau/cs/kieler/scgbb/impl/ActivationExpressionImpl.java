@@ -19,14 +19,17 @@ import de.cau.cs.kieler.scgbb.ActivationExpression;
 import de.cau.cs.kieler.scgbb.BasicBlock;
 import de.cau.cs.kieler.scgbb.ScgbbPackage;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,8 +38,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scgbb.impl.ActivationExpressionImpl#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgbb.impl.ActivationExpressionImpl#getBasicBlock <em>Basic Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.impl.ActivationExpressionImpl#getExpressions <em>Expressions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.impl.ActivationExpressionImpl#getBasicBlocks <em>Basic Blocks</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,24 +47,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class ActivationExpressionImpl extends MinimalEObjectImpl.Container implements ActivationExpression {
     /**
-     * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+     * The cached value of the '{@link #getExpressions() <em>Expressions</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getExpression()
+     * @see #getExpressions()
      * @generated
      * @ordered
      */
-    protected Expression expression;
+    protected EList<Expression> expressions;
 
     /**
-     * The cached value of the '{@link #getBasicBlock() <em>Basic Block</em>}' reference.
+     * The cached value of the '{@link #getBasicBlocks() <em>Basic Blocks</em>}' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getBasicBlock()
+     * @see #getBasicBlocks()
      * @generated
      * @ordered
      */
-    protected BasicBlock basicBlock;
+    protected EList<BasicBlock> basicBlocks;
 
     /**
      * <!-- begin-user-doc -->
@@ -87,23 +90,11 @@ public class ActivationExpressionImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
-    public Expression getExpression() {
-        return expression;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
-        Expression oldExpression = expression;
-        expression = newExpression;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSION, oldExpression, newExpression);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
+    public EList<Expression> getExpressions() {
+        if (expressions == null) {
+            expressions = new EObjectContainmentEList<Expression>(Expression.class, this, ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSIONS);
         }
-        return msgs;
+        return expressions;
     }
 
     /**
@@ -111,56 +102,11 @@ public class ActivationExpressionImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setExpression(Expression newExpression) {
-        if (newExpression != expression) {
-            NotificationChain msgs = null;
-            if (expression != null)
-                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSION, null, msgs);
-            if (newExpression != null)
-                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSION, null, msgs);
-            msgs = basicSetExpression(newExpression, msgs);
-            if (msgs != null) msgs.dispatch();
+    public EList<BasicBlock> getBasicBlocks() {
+        if (basicBlocks == null) {
+            basicBlocks = new EObjectResolvingEList<BasicBlock>(BasicBlock.class, this, ScgbbPackage.ACTIVATION_EXPRESSION__BASIC_BLOCKS);
         }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSION, newExpression, newExpression));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public BasicBlock getBasicBlock() {
-        if (basicBlock != null && basicBlock.eIsProxy()) {
-            InternalEObject oldBasicBlock = (InternalEObject)basicBlock;
-            basicBlock = (BasicBlock)eResolveProxy(oldBasicBlock);
-            if (basicBlock != oldBasicBlock) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgbbPackage.ACTIVATION_EXPRESSION__BASIC_BLOCK, oldBasicBlock, basicBlock));
-            }
-        }
-        return basicBlock;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public BasicBlock basicGetBasicBlock() {
-        return basicBlock;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setBasicBlock(BasicBlock newBasicBlock) {
-        BasicBlock oldBasicBlock = basicBlock;
-        basicBlock = newBasicBlock;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.ACTIVATION_EXPRESSION__BASIC_BLOCK, oldBasicBlock, basicBlock));
+        return basicBlocks;
     }
 
     /**
@@ -171,8 +117,8 @@ public class ActivationExpressionImpl extends MinimalEObjectImpl.Container imple
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSION:
-                return basicSetExpression(null, msgs);
+            case ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSIONS:
+                return ((InternalEList<?>)getExpressions()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -185,11 +131,10 @@ public class ActivationExpressionImpl extends MinimalEObjectImpl.Container imple
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSION:
-                return getExpression();
-            case ScgbbPackage.ACTIVATION_EXPRESSION__BASIC_BLOCK:
-                if (resolve) return getBasicBlock();
-                return basicGetBasicBlock();
+            case ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSIONS:
+                return getExpressions();
+            case ScgbbPackage.ACTIVATION_EXPRESSION__BASIC_BLOCKS:
+                return getBasicBlocks();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -199,14 +144,17 @@ public class ActivationExpressionImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSION:
-                setExpression((Expression)newValue);
+            case ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSIONS:
+                getExpressions().clear();
+                getExpressions().addAll((Collection<? extends Expression>)newValue);
                 return;
-            case ScgbbPackage.ACTIVATION_EXPRESSION__BASIC_BLOCK:
-                setBasicBlock((BasicBlock)newValue);
+            case ScgbbPackage.ACTIVATION_EXPRESSION__BASIC_BLOCKS:
+                getBasicBlocks().clear();
+                getBasicBlocks().addAll((Collection<? extends BasicBlock>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -220,11 +168,11 @@ public class ActivationExpressionImpl extends MinimalEObjectImpl.Container imple
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSION:
-                setExpression((Expression)null);
+            case ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSIONS:
+                getExpressions().clear();
                 return;
-            case ScgbbPackage.ACTIVATION_EXPRESSION__BASIC_BLOCK:
-                setBasicBlock((BasicBlock)null);
+            case ScgbbPackage.ACTIVATION_EXPRESSION__BASIC_BLOCKS:
+                getBasicBlocks().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -238,10 +186,10 @@ public class ActivationExpressionImpl extends MinimalEObjectImpl.Container imple
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSION:
-                return expression != null;
-            case ScgbbPackage.ACTIVATION_EXPRESSION__BASIC_BLOCK:
-                return basicBlock != null;
+            case ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSIONS:
+                return expressions != null && !expressions.isEmpty();
+            case ScgbbPackage.ACTIVATION_EXPRESSION__BASIC_BLOCKS:
+                return basicBlocks != null && !basicBlocks.isEmpty();
         }
         return super.eIsSet(featureID);
     }

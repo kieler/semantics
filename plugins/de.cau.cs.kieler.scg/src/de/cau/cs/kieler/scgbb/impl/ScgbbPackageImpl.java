@@ -226,7 +226,7 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getActivationExpression_Expression() {
+    public EReference getActivationExpression_Expressions() {
         return (EReference)activationExpressionEClass.getEStructuralFeatures().get(0);
     }
 
@@ -235,7 +235,7 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getActivationExpression_BasicBlock() {
+    public EReference getActivationExpression_BasicBlocks() {
         return (EReference)activationExpressionEClass.getEStructuralFeatures().get(1);
     }
 
@@ -280,8 +280,8 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
         createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__DEPENDENCIES);
 
         activationExpressionEClass = createEClass(ACTIVATION_EXPRESSION);
-        createEReference(activationExpressionEClass, ACTIVATION_EXPRESSION__EXPRESSION);
-        createEReference(activationExpressionEClass, ACTIVATION_EXPRESSION__BASIC_BLOCK);
+        createEReference(activationExpressionEClass, ACTIVATION_EXPRESSION__EXPRESSIONS);
+        createEReference(activationExpressionEClass, ACTIVATION_EXPRESSION__BASIC_BLOCKS);
     }
 
     /**
@@ -333,8 +333,8 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
         initEReference(getSchedulingBlock_Dependencies(), theScgdepPackage.getDependency(), null, "dependencies", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(activationExpressionEClass, ActivationExpression.class, "ActivationExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getActivationExpression_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, ActivationExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getActivationExpression_BasicBlock(), this.getBasicBlock(), null, "basicBlock", null, 0, 1, ActivationExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getActivationExpression_Expressions(), theKExpressionsPackage.getExpression(), null, "expressions", null, 0, -1, ActivationExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getActivationExpression_BasicBlocks(), this.getBasicBlock(), null, "basicBlocks", null, 0, -1, ActivationExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

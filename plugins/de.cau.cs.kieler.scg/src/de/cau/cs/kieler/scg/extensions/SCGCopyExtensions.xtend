@@ -43,7 +43,8 @@ import de.cau.cs.kieler.scgsched.ScgschedFactory
 import de.cau.cs.kieler.scgsched.Schedule
 import java.util.HashMap
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import com.google.common.collect.ImmutableList
+import java.util.ArrayList
 
 /** 
  * SCGCopyExtensions
@@ -67,6 +68,7 @@ class SCGCopyExtensions {
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
     private val revBasicBlockMapping = new HashMap<BasicBlock, BasicBlock>
     private val schedulingBlockMapping = new HashMap<SchedulingBlock, SchedulingBlock>
+    private val basicBlockMapping = new HashMap<BasicBlock, BasicBlock>
     
     // -------------------------------------------------------------------------
     // -- Copy SCG instance 
@@ -102,8 +104,14 @@ class SCGCopyExtensions {
         if (source instanceof SCGraphBB && target instanceof SCGraphBB) { 
             (source as SCGraphBB).basicBlocks.forEach[ it.copyBasicBlock(target as SCGraphBB) ]
             (target as SCGraphBB).basicBlocks.forEach[
-                it.activationExpressions.forEach[
-                    it.setBasicBlock(revBasicBlockMapping.get(it.basicBlock))
+                it.activationExpressions.forEach[ae|
+                    val bb = <BasicBlock> newLinkedList
+                    ae.basicBlocks.forEach[
+                        val mappedBB = basicBlockMapping.get(it)
+                        bb.add(mappedBB)
+                    ]
+                    ae.basicBlocks.clear
+                    ae.basicBlocks.addAll(bb)
                 ]
             ] 
         }
@@ -142,11 +150,12 @@ class SCGCopyExtensions {
         
         basicBlock.activationExpressions.forEach[
             val actExp = ScgbbFactory::eINSTANCE.createActivationExpression
-            actExp.setBasicBlock(it.basicBlock) 
-            actExp.setExpression(it.expression.copyExpression)
+            it.basicBlocks.forEach[actExp.basicBlocks.add(it)]
+            it.expressions.forEach[actExp.expressions.add(it.copyExpression)]
             bb.activationExpressions.add(actExp)
         ]        
         
+        basicBlockMapping.put(basicBlock, bb)
         revBasicBlockMapping.put(bb, basicBlock)
         target.basicBlocks.add(bb)
         bb

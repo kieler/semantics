@@ -1029,31 +1029,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 source = target
             }
         }
-        
-        // deactivated for now...
-        if (false)            
-        if (SHOW_BASICBLOCKS.booleanValue) 
-        for (s : (r as SCGraphBB).basicBlocks) {
-            val sourceNode = bbContainerList.get(s) 
-            if (sourceNode != null)
-            for (a : s.activationExpressions) {
-                val actBasicBlock = a.basicBlock
-                val targetNode = bbContainerList.get(actBasicBlock)
-                
-                if (targetNode != null)    
-                targetNode.createEdge("predecessor " + sourceNode.toString + targetNode.toString) => [ edge |
-                    edge.source = targetNode
-                    edge.target = sourceNode
-                    edge.addRoundedBendsPolyline(8,5) => [
-                        it.foreground = BASICBLOCKBORDER.copy
-                        it.foreground.alpha = 128
-//                        it.lineStyle = LineStyle::DASH
-                        it.addArrowDecorator
-                    ]  
-                    edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
-                ]
-            }
-        }
     }
    
 

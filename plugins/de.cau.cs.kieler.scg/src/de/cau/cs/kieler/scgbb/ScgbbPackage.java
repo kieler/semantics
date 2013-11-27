@@ -235,22 +235,22 @@ public interface ScgbbPackage extends EPackage {
     int ACTIVATION_EXPRESSION = 3;
 
     /**
-     * The feature id for the '<em><b>Expression</b></em>' containment reference.
+     * The feature id for the '<em><b>Expressions</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ACTIVATION_EXPRESSION__EXPRESSION = 0;
+    int ACTIVATION_EXPRESSION__EXPRESSIONS = 0;
 
     /**
-     * The feature id for the '<em><b>Basic Block</b></em>' reference.
+     * The feature id for the '<em><b>Basic Blocks</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ACTIVATION_EXPRESSION__BASIC_BLOCK = 1;
+    int ACTIVATION_EXPRESSION__BASIC_BLOCKS = 1;
 
     /**
      * The number of structural features of the '<em>Activation Expression</em>' class.
@@ -378,26 +378,26 @@ public interface ScgbbPackage extends EPackage {
     EClass getActivationExpression();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgbb.ActivationExpression#getExpression <em>Expression</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgbb.ActivationExpression#getExpressions <em>Expressions</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Expression</em>'.
-     * @see de.cau.cs.kieler.scgbb.ActivationExpression#getExpression()
+     * @return the meta object for the containment reference list '<em>Expressions</em>'.
+     * @see de.cau.cs.kieler.scgbb.ActivationExpression#getExpressions()
      * @see #getActivationExpression()
      * @generated
      */
-    EReference getActivationExpression_Expression();
+    EReference getActivationExpression_Expressions();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgbb.ActivationExpression#getBasicBlock <em>Basic Block</em>}'.
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scgbb.ActivationExpression#getBasicBlocks <em>Basic Blocks</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Basic Block</em>'.
-     * @see de.cau.cs.kieler.scgbb.ActivationExpression#getBasicBlock()
+     * @return the meta object for the reference list '<em>Basic Blocks</em>'.
+     * @see de.cau.cs.kieler.scgbb.ActivationExpression#getBasicBlocks()
      * @see #getActivationExpression()
      * @generated
      */
-    EReference getActivationExpression_BasicBlock();
+    EReference getActivationExpression_BasicBlocks();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -511,20 +511,20 @@ public interface ScgbbPackage extends EPackage {
         EClass ACTIVATION_EXPRESSION = eINSTANCE.getActivationExpression();
 
         /**
-         * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+         * The meta object literal for the '<em><b>Expressions</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference ACTIVATION_EXPRESSION__EXPRESSION = eINSTANCE.getActivationExpression_Expression();
+        EReference ACTIVATION_EXPRESSION__EXPRESSIONS = eINSTANCE.getActivationExpression_Expressions();
 
         /**
-         * The meta object literal for the '<em><b>Basic Block</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Basic Blocks</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference ACTIVATION_EXPRESSION__BASIC_BLOCK = eINSTANCE.getActivationExpression_BasicBlock();
+        EReference ACTIVATION_EXPRESSION__BASIC_BLOCKS = eINSTANCE.getActivationExpression_BasicBlocks();
 
     }
 

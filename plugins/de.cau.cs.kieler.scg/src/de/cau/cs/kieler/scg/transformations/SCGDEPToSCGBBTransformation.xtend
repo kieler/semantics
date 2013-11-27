@@ -166,8 +166,8 @@ class SCGDEPToSCGBBTransformation {
         basicBlock.guard = guard
         
         val newExpression = ScgbbFactory::eINSTANCE.createActivationExpression
-        newExpression.setBasicBlock(predecessorBlock)
-        newExpression.setExpression(activationExpression)
+        if (predecessorBlock != null) newExpression.basicBlocks.add(predecessorBlock)
+        newExpression.expressions.add(activationExpression)
         basicBlock.activationExpressions.add(newExpression)
         
         scg.basicBlocks.add(basicBlock)
