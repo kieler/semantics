@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.scl.handler;
+package de.cau.cs.kieler.scl.handlers;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
@@ -21,12 +21,9 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
-import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
-import de.cau.cs.kieler.scg.SCGPlugin;
 import de.cau.cs.kieler.scg.SCGraph;
-import de.cau.cs.kieler.scg.scl.SCGToSCLTransformation;
-import de.cau.cs.kieler.scgdep.SCGraphDep;
 import de.cau.cs.kieler.scl.SCLStandaloneSetup;
+import de.cau.cs.kieler.scl.transformations.SCGToSCLTransformation;
 
 /**
  * @author ssm
