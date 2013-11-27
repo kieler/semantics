@@ -116,7 +116,7 @@ public interface ScgschedPackage extends EPackage {
     int SC_GRAPH_SCHED__UNSCHEDULABLE = ScgbbPackage.SC_GRAPH_BB_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Schedules</b></em>' reference list.
+     * The feature id for the '<em><b>Schedules</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -202,10 +202,10 @@ public interface ScgschedPackage extends EPackage {
     EAttribute getSCGraphSched_Unschedulable();
 
     /**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scgsched.SCGraphSched#getSchedules <em>Schedules</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgsched.SCGraphSched#getSchedules <em>Schedules</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Schedules</em>'.
+     * @return the meta object for the containment reference list '<em>Schedules</em>'.
      * @see de.cau.cs.kieler.scgsched.SCGraphSched#getSchedules()
      * @see #getSCGraphSched()
      * @generated
@@ -275,7 +275,7 @@ public interface ScgschedPackage extends EPackage {
         EAttribute SC_GRAPH_SCHED__UNSCHEDULABLE = eINSTANCE.getSCGraphSched_Unschedulable();
 
         /**
-         * The meta object literal for the '<em><b>Schedules</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Schedules</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated

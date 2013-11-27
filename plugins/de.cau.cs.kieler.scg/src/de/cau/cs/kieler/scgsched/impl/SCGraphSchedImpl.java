@@ -23,13 +23,16 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -67,7 +70,7 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
     protected boolean unschedulable = UNSCHEDULABLE_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getSchedules() <em>Schedules</em>}' reference list.
+     * The cached value of the '{@link #getSchedules() <em>Schedules</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getSchedules()
@@ -123,9 +126,23 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
      */
     public EList<Schedule> getSchedules() {
         if (schedules == null) {
-            schedules = new EObjectResolvingEList<Schedule>(Schedule.class, this, ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES);
+            schedules = new EObjectContainmentEList<Schedule>(Schedule.class, this, ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES);
         }
         return schedules;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
+                return ((InternalEList<?>)getSchedules()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
     /**
