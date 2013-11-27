@@ -107,13 +107,13 @@ public interface ScgschedPackage extends EPackage {
     int SC_GRAPH_SCHED__BASIC_BLOCKS = ScgbbPackage.SC_GRAPH_BB__BASIC_BLOCKS;
 
     /**
-     * The feature id for the '<em><b>Schedule Exists</b></em>' attribute.
+     * The feature id for the '<em><b>Unschedulable</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SC_GRAPH_SCHED__SCHEDULE_EXISTS = ScgbbPackage.SC_GRAPH_BB_FEATURE_COUNT + 0;
+    int SC_GRAPH_SCHED__UNSCHEDULABLE = ScgbbPackage.SC_GRAPH_BB_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Schedules</b></em>' reference list.
@@ -191,15 +191,15 @@ public interface ScgschedPackage extends EPackage {
     EClass getSCGraphSched();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgsched.SCGraphSched#isScheduleExists <em>Schedule Exists</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgsched.SCGraphSched#isUnschedulable <em>Unschedulable</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Schedule Exists</em>'.
-     * @see de.cau.cs.kieler.scgsched.SCGraphSched#isScheduleExists()
+     * @return the meta object for the attribute '<em>Unschedulable</em>'.
+     * @see de.cau.cs.kieler.scgsched.SCGraphSched#isUnschedulable()
      * @see #getSCGraphSched()
      * @generated
      */
-    EAttribute getSCGraphSched_ScheduleExists();
+    EAttribute getSCGraphSched_Unschedulable();
 
     /**
      * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scgsched.SCGraphSched#getSchedules <em>Schedules</em>}'.
@@ -267,12 +267,12 @@ public interface ScgschedPackage extends EPackage {
         EClass SC_GRAPH_SCHED = eINSTANCE.getSCGraphSched();
 
         /**
-         * The meta object literal for the '<em><b>Schedule Exists</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Unschedulable</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute SC_GRAPH_SCHED__SCHEDULE_EXISTS = eINSTANCE.getSCGraphSched_ScheduleExists();
+        EAttribute SC_GRAPH_SCHED__UNSCHEDULABLE = eINSTANCE.getSCGraphSched_Unschedulable();
 
         /**
          * The meta object literal for the '<em><b>Schedules</b></em>' reference list feature.

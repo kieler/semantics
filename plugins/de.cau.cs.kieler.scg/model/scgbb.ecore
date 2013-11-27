@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="scgbb" nsURI="http://kieler.cs.cau.de/scgbb/0.1.0" nsPrefix="scgbb">
-  <eClassifiers xsi:type="ecore:EClass" name="SCGraphBB" eSuperTypes="../../de.cau.cs.kieler.scg/model/scgdep.ecore#//SCGraphDep">
+  <eClassifiers xsi:type="ecore:EClass" name="SCGraphBB" eSuperTypes="scgdep.ecore#//SCGraphDep">
     <eStructuralFeatures xsi:type="ecore:EReference" name="basicBlocks" upperBound="-1"
         eType="#//BasicBlock" containment="true"/>
   </eClassifiers>
@@ -15,9 +15,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SchedulingBlock">
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.scg/model/scg.ecore#//Node"/>
+        eType="ecore:EClass scg.ecore#//Node"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.scg/model/scgdep.ecore#//Dependency"/>
+        eType="ecore:EClass scgdep.ecore#//Dependency"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ActivationExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"

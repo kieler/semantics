@@ -25,7 +25,7 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scgsched.SCGraphSched#isScheduleExists <em>Schedule Exists</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.SCGraphSched#isUnschedulable <em>Unschedulable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.SCGraphSched#getSchedules <em>Schedules</em>}</li>
  * </ul>
  * </p>
@@ -36,30 +36,30 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface SCGraphSched extends SCGraphBB {
     /**
-     * Returns the value of the '<em><b>Schedule Exists</b></em>' attribute.
+     * Returns the value of the '<em><b>Unschedulable</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Schedule Exists</em>' attribute isn't clear,
+     * If the meaning of the '<em>Unschedulable</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Schedule Exists</em>' attribute.
-     * @see #setScheduleExists(boolean)
-     * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSCGraphSched_ScheduleExists()
+     * @return the value of the '<em>Unschedulable</em>' attribute.
+     * @see #setUnschedulable(boolean)
+     * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSCGraphSched_Unschedulable()
      * @model
      * @generated
      */
-    boolean isScheduleExists();
+    boolean isUnschedulable();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scgsched.SCGraphSched#isScheduleExists <em>Schedule Exists</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.scgsched.SCGraphSched#isUnschedulable <em>Unschedulable</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Schedule Exists</em>' attribute.
-     * @see #isScheduleExists()
+     * @param value the new value of the '<em>Unschedulable</em>' attribute.
+     * @see #isUnschedulable()
      * @generated
      */
-    void setScheduleExists(boolean value);
+    void setUnschedulable(boolean value);
 
     /**
      * Returns the value of the '<em><b>Schedules</b></em>' reference list.

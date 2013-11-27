@@ -38,7 +38,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scgsched.impl.SCGraphSchedImpl#isScheduleExists <em>Schedule Exists</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.impl.SCGraphSchedImpl#isUnschedulable <em>Unschedulable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.impl.SCGraphSchedImpl#getSchedules <em>Schedules</em>}</li>
  * </ul>
  * </p>
@@ -47,24 +47,24 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  */
 public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
     /**
-     * The default value of the '{@link #isScheduleExists() <em>Schedule Exists</em>}' attribute.
+     * The default value of the '{@link #isUnschedulable() <em>Unschedulable</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isScheduleExists()
+     * @see #isUnschedulable()
      * @generated
      * @ordered
      */
-    protected static final boolean SCHEDULE_EXISTS_EDEFAULT = false;
+    protected static final boolean UNSCHEDULABLE_EDEFAULT = false;
 
     /**
-     * The cached value of the '{@link #isScheduleExists() <em>Schedule Exists</em>}' attribute.
+     * The cached value of the '{@link #isUnschedulable() <em>Unschedulable</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isScheduleExists()
+     * @see #isUnschedulable()
      * @generated
      * @ordered
      */
-    protected boolean scheduleExists = SCHEDULE_EXISTS_EDEFAULT;
+    protected boolean unschedulable = UNSCHEDULABLE_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getSchedules() <em>Schedules</em>}' reference list.
@@ -100,8 +100,8 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isScheduleExists() {
-        return scheduleExists;
+    public boolean isUnschedulable() {
+        return unschedulable;
     }
 
     /**
@@ -109,11 +109,11 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setScheduleExists(boolean newScheduleExists) {
-        boolean oldScheduleExists = scheduleExists;
-        scheduleExists = newScheduleExists;
+    public void setUnschedulable(boolean newUnschedulable) {
+        boolean oldUnschedulable = unschedulable;
+        unschedulable = newUnschedulable;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.SC_GRAPH_SCHED__SCHEDULE_EXISTS, oldScheduleExists, scheduleExists));
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE, oldUnschedulable, unschedulable));
     }
 
     /**
@@ -136,8 +136,8 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULE_EXISTS:
-                return isScheduleExists();
+            case ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE:
+                return isUnschedulable();
             case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
                 return getSchedules();
         }
@@ -153,8 +153,8 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULE_EXISTS:
-                setScheduleExists((Boolean)newValue);
+            case ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE:
+                setUnschedulable((Boolean)newValue);
                 return;
             case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
                 getSchedules().clear();
@@ -172,8 +172,8 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULE_EXISTS:
-                setScheduleExists(SCHEDULE_EXISTS_EDEFAULT);
+            case ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE:
+                setUnschedulable(UNSCHEDULABLE_EDEFAULT);
                 return;
             case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
                 getSchedules().clear();
@@ -190,8 +190,8 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULE_EXISTS:
-                return scheduleExists != SCHEDULE_EXISTS_EDEFAULT;
+            case ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE:
+                return unschedulable != UNSCHEDULABLE_EDEFAULT;
             case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
                 return schedules != null && !schedules.isEmpty();
         }
@@ -208,8 +208,8 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (scheduleExists: ");
-        result.append(scheduleExists);
+        result.append(" (unschedulable: ");
+        result.append(unschedulable);
         result.append(')');
         return result.toString();
     }

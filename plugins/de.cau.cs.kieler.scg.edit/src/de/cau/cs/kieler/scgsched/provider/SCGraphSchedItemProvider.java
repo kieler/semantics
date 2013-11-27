@@ -74,26 +74,26 @@ public class SCGraphSchedItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addScheduleExistsPropertyDescriptor(object);
+            addUnschedulablePropertyDescriptor(object);
             addSchedulesPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Schedule Exists feature.
+     * This adds a property descriptor for the Unschedulable feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addScheduleExistsPropertyDescriptor(Object object) {
+    protected void addUnschedulablePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_SCGraphSched_scheduleExists_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_SCGraphSched_scheduleExists_feature", "_UI_SCGraphSched_type"),
-                 ScgschedPackage.Literals.SC_GRAPH_SCHED__SCHEDULE_EXISTS,
+                 getString("_UI_SCGraphSched_unschedulable_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_SCGraphSched_unschedulable_feature", "_UI_SCGraphSched_type"),
+                 ScgschedPackage.Literals.SC_GRAPH_SCHED__UNSCHEDULABLE,
                  true,
                  false,
                  false,
@@ -144,7 +144,7 @@ public class SCGraphSchedItemProvider
     @Override
     public String getText(Object object) {
         SCGraphSched scGraphSched = (SCGraphSched)object;
-        return getString("_UI_SCGraphSched_type") + " " + scGraphSched.isScheduleExists();
+        return getString("_UI_SCGraphSched_type") + " " + scGraphSched.isUnschedulable();
     }
 
     /**
@@ -159,7 +159,7 @@ public class SCGraphSchedItemProvider
         updateChildren(notification);
 
         switch (notification.getFeatureID(SCGraphSched.class)) {
-            case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULE_EXISTS:
+            case ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

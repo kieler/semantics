@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="scgsched" nsURI="http://kieler.cs.cau.de/scgsched/0.1.0" nsPrefix="scgsched">
   <eClassifiers xsi:type="ecore:EClass" name="SCGraphSched" eSuperTypes="scgbb.ecore#//SCGraphBB">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scheduleExists" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unschedulable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="schedules" upperBound="-1"
         eType="#//Schedule"/>
   </eClassifiers>
