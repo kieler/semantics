@@ -69,9 +69,10 @@ class SCGCopyExtensions {
     private val nodeMapping = new HashMap<Node, Node>
     private val revNodeMapping = new HashMap<Node, Node>
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
+    private val revBasicBlockMapping = new HashMap<BasicBlock, BasicBlock>
     
     // -------------------------------------------------------------------------
-    // -- M2M Transformation 
+    // -- Copy SCG instance 
     // -------------------------------------------------------------------------
     
     def copySCG(SCGraph source, SCGraph target) {
@@ -100,11 +101,57 @@ class SCGCopyExtensions {
         if (source instanceof SCGraphDep && target instanceof SCGraphDep)
             source.eAllContents.filter(typeof(Dependency)).forEach[ it.copyDependency ]
        
+        // If source and target are at least basic block specializations, copy all basic block information.
+        if (source instanceof SCGraphBB && target instanceof SCGraphBB) { 
+            (source as SCGraphBB).basicBlocks.forEach[ it.copyBasicBlock(target as SCGraphBB) ]
+            (target as SCGraphBB).basicBlocks.forEach[
+                it.activationExpressions.forEach[
+                    it.setBasicBlock(revBasicBlockMapping.get(it.basicBlock))
+                ]
+            ] 
+        }
+       
         target
     }   
     
     // -------------------------------------------------------------------------
-    // -- TRANSFORM Dependencies 
+    // -- Copy Basic Blocks 
+    // -------------------------------------------------------------------------
+    def copyBasicBlock(BasicBlock basicBlock, SCGraphBB target) {
+        val bb = ScgbbFactory::eINSTANCE.createBasicBlock
+        val newGuard = basicBlock.guard.copy
+        bb.guard = newGuard
+        valuedObjectMapping.put(basicBlock.guard, newGuard)
+        
+        basicBlock.schedulingBlocks.forEach[ it.copySchedulingBlock(bb) ]
+        
+        basicBlock.activationExpressions.forEach[
+            val actExp = ScgbbFactory::eINSTANCE.createActivationExpression
+            actExp.setBasicBlock(it.basicBlock) 
+            actExp.setExpression(it.expression.copyExpression)
+            bb.activationExpressions.add(actExp)
+        ]        
+        
+        revBasicBlockMapping.put(bb, basicBlock)
+        target.basicBlocks.add(bb)
+        bb
+    }
+    
+    def copySchedulingBlock(SchedulingBlock schedulingBlock, BasicBlock target) {
+        val sb = ScgbbFactory::eINSTANCE.createSchedulingBlock
+        
+        schedulingBlock.nodes.forEach[
+            val tnode = nodeMapping.get(it) 
+            sb.nodes.add(tnode)
+            sb.dependencies.addAll(tnode.incoming.filter(typeof(Dependency)))  
+        ]
+        
+        target.schedulingBlocks.add(sb)
+        sb
+    }
+   
+    // -------------------------------------------------------------------------
+    // -- Copy Dependencies 
     // -------------------------------------------------------------------------
 
     def copyDependency(Dependency dependency) {
@@ -114,7 +161,7 @@ class SCGCopyExtensions {
     }
 
     // -------------------------------------------------------------------------
-    // -- TRANSFORM Control flow 
+    // -- Copy Control flow 
     // -------------------------------------------------------------------------
     
     // The control flow dispatcher copy each control flow element according to the node mapping. 
@@ -228,7 +275,7 @@ class SCGCopyExtensions {
     
     
     // -------------------------------------------------------------------------
-    // -- TRANSFORM Copy SCG 
+    // -- Copy SCG 
     // -------------------------------------------------------------------------
 
     // Create corresponding SCGDEP nodes for each SCG element.
