@@ -39,6 +39,10 @@
             class="de.cau.cs.kieler.scg.handlers.SCGraphDepModelFileHandler"
             commandId="de.cau.cs.kieler.scg.commands.SCGDEPToSCGBBTransformation">
       </handler>
+      <handler
+            class="de.cau.cs.kieler.scg.handlers.SequentialSCGraphModelFileHandler"
+            commandId="de.cau.cs.kieler.scg.commands.SequentialSCGraphTransformation">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -90,6 +94,30 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.scg.commands.SequentialSCGraphTransformation"
+               label="SCG: Generate Sequential SCGraph"
+               mnemonic="A"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scgbb">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -106,6 +134,11 @@
             categoryId="de.cau.cs.kieler.scg.commands.category"
             id="de.cau.cs.kieler.scg.commands.SCGDEPToSCGBBTransformation"
             name="SCG: Populate Basic Block Data">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.scg.commands.category"
+            id="de.cau.cs.kieler.scg.commands.SequentialSCGraphTransformation"
+            name="SCG: Generate Sequential SCGraph">
       </command>
    </extension>
 
