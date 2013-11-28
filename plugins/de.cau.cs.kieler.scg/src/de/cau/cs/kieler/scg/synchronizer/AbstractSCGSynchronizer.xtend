@@ -34,7 +34,8 @@ abstract class AbstractSCGSynchronizer {
     @Inject
     extension SCGExtensions
     
-    protected var ArrayList<BasicBlock> predecessors;
+    protected var Fork originFork
+    protected var ArrayList<BasicBlock> predecessors
     protected var ArrayList<Expression> activationExpressions
     
     protected abstract def void build();
@@ -42,6 +43,7 @@ abstract class AbstractSCGSynchronizer {
     public def Pair<List<BasicBlock>, List<Expression>> synchronize(Fork fork) {
         predecessors = new ArrayList<BasicBlock>
         activationExpressions = new ArrayList<Expression>
+        originFork = fork
         build()
         val returnValue = new Pair<List<BasicBlock>, List<Expression>>(predecessors, activationExpressions)
         returnValue

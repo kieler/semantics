@@ -29,7 +29,7 @@ import de.cau.cs.kieler.scgbb.SchedulingBlock
 import de.cau.cs.kieler.scgbb.SCGraphBB
 import java.util.InputMismatchException
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import de.cau.cs.kieler.scgbb.BasicBlock
 
 /**
  * SCG Extensions.
@@ -149,7 +149,6 @@ class SCGExtensions {
        null
    }   
 
-   // Finds all ancestor forks of a node.
    def SchedulingBlock schedulingBlock(Node node) {
        val scg = node.graph
        var SchedulingBlock myBlock = null
@@ -158,6 +157,14 @@ class SCGExtensions {
            if (block.nodes.contains(node)) { myBlock = block }
        }
        myBlock
+   }
+   
+   def BasicBlock basicBlock(SchedulingBlock schedulingBlock) {
+       schedulingBlock.eContainer as BasicBlock
+   }
+   
+   def BasicBlock basicBlock(Node node) {
+       node.schedulingBlock.basicBlock
    }
             
 }
