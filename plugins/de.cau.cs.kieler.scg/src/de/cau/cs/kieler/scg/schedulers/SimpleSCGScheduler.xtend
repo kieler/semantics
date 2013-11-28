@@ -18,7 +18,9 @@ import de.cau.cs.kieler.scgsched.ScgschedFactory
 import de.cau.cs.kieler.scgbb.BasicBlock
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import com.google.common.collect.ImmutableList
+import com.google.common.collect.ImmutableListimport com.google.inject.Inject
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.Node
 
 /** 
  * SimpleSCGScheduler
@@ -28,6 +30,9 @@ import com.google.common.collect.ImmutableList
  * @kieler.rating 2013-11-27 proposed yellow
  */
 class SimpleSCGScheduler extends AbstractSCGScheduler {
+    
+    @Inject
+    extension SCGExtensions    
     
     override protected execute() {
         val schedule = ScgschedFactory::eINSTANCE.createSchedule
@@ -48,11 +53,14 @@ class SimpleSCGScheduler extends AbstractSCGScheduler {
                     if (ae.basicBlocks.size > 0) for(bb:ae.basicBlocks) 
                     for(sb:bb.schedulingBlocks){
                         if (!schedule.schedulingBlocks.contains(sb)) { placeable = false }
+
                     }
                 }
+                        for(dep:block.dependencies) {
+                            if (!schedule.schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) { placeable = false }
+                        }
                 if (placeable) {
                     schedule.schedulingBlocks.add(block)
-//                    schedulingBlocks.filter[it == block].remove
                     schedulingBlocks.remove(block)
                     fixpoint = false
                 }
