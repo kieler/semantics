@@ -15,39 +15,28 @@ package de.cau.cs.kieler.scg.transformations
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.Depth
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scgdep.AssignmentDep
-import de.cau.cs.kieler.scgdep.ConditionalDep
+import de.cau.cs.kieler.scg.synchronizer.ExitSCGSynchronizer
+import de.cau.cs.kieler.scgbb.BasicBlock
+import de.cau.cs.kieler.scgbb.SCGraphBB
+import de.cau.cs.kieler.scgbb.ScgbbFactory
+import de.cau.cs.kieler.scgbb.SchedulingBlock
 import de.cau.cs.kieler.scgdep.Dependency
 import de.cau.cs.kieler.scgdep.SCGraphDep
-import de.cau.cs.kieler.scgdep.ScgdepFactory
-import java.util.HashMap
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scgbb.ScgbbFactory
-import de.cau.cs.kieler.scgbb.SCGraphBB
-import de.cau.cs.kieler.scgdep.NodeDep
-import java.util.List
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.scgbb.SchedulingBlock
-import de.cau.cs.kieler.scgbb.BasicBlock
 import java.util.ArrayList
-import de.cau.cs.kieler.core.kexpressions.ValueTypeimport de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
+import java.util.List
+import de.cau.cs.kieler.core.util.Pair
+import com.google.inject.Guice
 
 /** 
  * SCGDEP to SCGBB Transformation 
@@ -93,9 +82,20 @@ class SCGDEPToSCGBBTransformation {
     // -------------------------------------------------------------------------
     // -- CREATE Basic Blocks 
     // -------------------------------------------------------------------------
-    
+     def int createBasicBlocks(SCGraphBB scg, Node rootNode, int guardIndex,
+        BasicBlock predecessorBlock, Expression activationExpression) {
+        
+        val predecessorBlocks = <BasicBlock> newLinkedList
+        val activationExpressions = <Expression> newLinkedList
+        
+        if (predecessorBlock != null) predecessorBlocks.add(predecessorBlock)
+        activationExpressions.add(activationExpression)
+        
+        createBasicBlocks(scg, rootNode, guardIndex, predecessorBlocks, activationExpressions)        
+    }   
+        
     def int createBasicBlocks(SCGraphBB scg, Node rootNode, int guardIndex, 
-        BasicBlock predecessorBlock, Expression activationExpression
+        List<BasicBlock> predecessorBlocks, List<Expression> activationExpressions
     ) {
         var newIndex = guardIndex
         var node = rootNode
@@ -118,36 +118,38 @@ class SCGDEPToSCGBBTransformation {
             schedulingBlock.nodes.add(node)
             
             if (node instanceof Conditional) {
-                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
+                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks, activationExpressions)
                 newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex, block, guard.reference)
                 newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex, block, guard.reference)
                 node = null
             } else 
             if (node instanceof Surface) {
-                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
+                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks, activationExpressions)
                 newIndex = scg.createBasicBlocks((node as Surface).depth, newIndex, block, guard.reference)
                 node = null
             }  else
             if (node.eAllContents.filter(typeof(ControlFlow)).size != 1) {
-                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
+                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks, activationExpressions)
                 for(flow : node.eAllContents.filter(typeof(ControlFlow)).toList) {
                     newIndex = scg.createBasicBlocks(flow.target, newIndex, block, guard.reference)
                 }
-                //TODO: create synchronizer
                 if (node instanceof Fork) {
-                    newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, block, guard.reference)
+                    val ExitSCGSynchronizer synchronizer = 
+                        Guice.createInjector().getInstance(typeof(ExitSCGSynchronizer))
+                    val  join = synchronizer.synchronize((node as Fork))
+                    newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, join.first, join.second)
                 }
                 node = null                
             } else {
                 val next = node.eAllContents.filter(typeof(ControlFlow)).head.target
+                if (next instanceof Join) {
+                    scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks, activationExpressions)
+                    node = null
+                } else
                 if (next.incoming.filter(typeof(ControlFlow)).size > 1) {
-                    val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
+                    val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks, activationExpressions)
                     scg.createBasicBlocks(next, newIndex, block, guard.reference) 
                     node = null;
-                } else 
-                if (next instanceof Join) {
-                    scg.insertBasicBlock(guard, schedulingBlock, predecessorBlock, activationExpression)
-                    node = null
                 } else {
                     node = next
                 }

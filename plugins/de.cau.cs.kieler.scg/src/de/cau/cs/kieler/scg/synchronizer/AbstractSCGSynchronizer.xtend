@@ -20,7 +20,7 @@ import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scgbb.BasicBlock
 import java.util.ArrayList
 import java.util.List
-import org.eclipse.xtext.xbase.lib.Pair
+import de.cau.cs.kieler.core.util.Pair
 
 /** 
  * AbstractSCGSynchronizer
