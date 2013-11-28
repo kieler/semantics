@@ -156,9 +156,21 @@ class SCGDEPToSCGBBTransformation {
                 
         newIndex
     }
-    
+ 
+     def BasicBlock insertBasicBlock(SCGraphBB scg, ValuedObject guard, SchedulingBlock schedulingBlock,
+        BasicBlock predecessorBlock, Expression activationExpression) {
+        
+        val predecessorBlocks = <BasicBlock> newLinkedList
+        val activationExpressions = <Expression> newLinkedList
+        
+        if (predecessorBlock != null) predecessorBlocks.add(predecessorBlock)
+        activationExpressions.add(activationExpression)
+        
+        insertBasicBlock(scg, guard, schedulingBlock, predecessorBlocks, activationExpressions)        
+    }   
+        
     def BasicBlock insertBasicBlock(SCGraphBB scg, ValuedObject guard, SchedulingBlock schedulingBlock,
-        BasicBlock predecessorBlock, Expression activationExpression
+        List<BasicBlock> predecessorBlocks, List<Expression> activationExpressions
     ) {
         val basicBlock = ScgbbFactory::eINSTANCE.createBasicBlock
       
@@ -166,8 +178,8 @@ class SCGDEPToSCGBBTransformation {
         basicBlock.guard = guard
         
         val newExpression = ScgbbFactory::eINSTANCE.createActivationExpression
-        if (predecessorBlock != null) newExpression.basicBlocks.add(predecessorBlock)
-        newExpression.expressions.add(activationExpression)
+        if (predecessorBlocks != null) newExpression.basicBlocks.addAll(predecessorBlocks)
+        newExpression.expressions.addAll(activationExpressions)
         basicBlock.activationExpressions.add(newExpression)
         
         scg.basicBlocks.add(basicBlock)
