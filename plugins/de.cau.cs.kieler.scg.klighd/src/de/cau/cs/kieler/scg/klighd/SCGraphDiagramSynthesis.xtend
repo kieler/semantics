@@ -80,6 +80,8 @@ import de.cau.cs.kieler.scgbb.SchedulingBlock
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.scgsched.SCGraphSched
 import de.cau.cs.kieler.core.krendering.KRoundedRectangle
+import de.cau.cs.kieler.core.kgraph.KLabel
+import de.cau.cs.kieler.core.krendering.KText
 
 /** 
  * SCCGraph KlighD synthesis 
@@ -985,8 +987,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     it.lineStyle = ne.KRendering.lineStyleValue
                     it.foreground = ne.KRendering.foreground
                 ]
-                
             ]
+            
+            // correct label affiliation
+//            ne.getData(typeof(KLabel)) => [
+//                helperEdge.getData().add(it)
+//            ]
         }     
         kContainer          
     }   
