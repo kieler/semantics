@@ -79,6 +79,7 @@ import java.util.HashMap
 import de.cau.cs.kieler.scgbb.SchedulingBlock
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.scgsched.SCGraphSched
+import de.cau.cs.kieler.core.krendering.KRoundedRectangle
 
 /** 
  * SCCGraph KlighD synthesis 
@@ -261,6 +262,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor DEPENDENCY_RELWRITEREAD = RENDERING_FACTORY.createKColor()=>[it.red = 0; it.green = 192; it.blue = 192;]
     private static val KColor DEPENDENCY_ABSWRITERELWRITE = RENDERING_FACTORY.createKColor()=>[it.red = 0; it.green = 0; it.blue = 255;]
     private static val KColor DEPENDENCY_ABSWRITEABSWRITE = RENDERING_FACTORY.createKColor()=>[it.red = 255; it.green = 0; it.blue = 0;]
+    
+    private static val KColor SCHEDULING_NOTSCHEDULABLE = RENDERING_FACTORY.createKColor()=>[it.red = 255; it.green = 0; it.blue = 0;]
     
     private static val String SCGPORTID_INCOMING = "incoming"
     private static val String SCGPORTID_OUTGOING = "outgoing"
@@ -1027,6 +1030,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     ]
                 }
                 source = target
+            }
+            
+            // not schedulable blocks!
+            if ((r as SCGraphSched).unschedulable) {
+                val usBlocks = r.allSchedulingBlocks()
+                (r as SCGraphSched).getSchedules.head.getSchedulingBlocks.forEach[usBlocks.remove(it)]
+                usBlocks.forEach[
+                    val node = schedulingBlockMapping.get(it)
+                    node.getData(typeof(KRoundedRectangle)) => [
+                        it.lineStyle = LineStyle::SOLID
+                        it.foreground = SCHEDULING_NOTSCHEDULABLE.copy
+                    ]
+                    node.KRendering.background = SCHEDULING_NOTSCHEDULABLE.copy
+                    node.KRendering.background.alpha = 128
+                ]
             }
         }
     }
