@@ -159,6 +159,11 @@ class SCGExtensions {
        myBlock
    }
    
+   def List<SchedulingBlock> allSchedulingBlocks(SCGraph scg) {
+       if (!(scg instanceof SCGraphBB)) return null
+       scg.eAllContents.toList.filter(typeof(SchedulingBlock)).toList
+   }
+   
    def BasicBlock basicBlock(SchedulingBlock schedulingBlock) {
        schedulingBlock.eContainer as BasicBlock
    }

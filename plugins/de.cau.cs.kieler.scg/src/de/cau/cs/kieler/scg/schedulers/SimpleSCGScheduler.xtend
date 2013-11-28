@@ -35,7 +35,7 @@ class SimpleSCGScheduler extends AbstractSCGScheduler {
     @Inject
     extension SCGExtensions    
     
-    override protected SCGraphSched execute(SCGraphSched SCG) {
+    override protected SCGraphSched build(SCGraphSched SCG) {
         val schedule = ScgschedFactory::eINSTANCE.createSchedule
         val schedulingBlocks = <SchedulingBlock> newLinkedList
         SCG.basicBlocks.forEach[schedulingBlocks.addAll(it.schedulingBlocks)]
