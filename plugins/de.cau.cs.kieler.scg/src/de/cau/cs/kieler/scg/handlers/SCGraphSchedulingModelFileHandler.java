@@ -25,16 +25,18 @@ import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scgdep.SCGraphDep;
+import de.cau.cs.kieler.scg.schedulers.AbstractSCGScheduler;
+import de.cau.cs.kieler.scg.schedulers.SimpleSCGScheduler;
 import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation;
 
 /**
  * @author ssm
  *
  */
-public class SCGraphDepModelFileHandler extends AbstractConvertModelHandler {
+public class SCGraphSchedulingModelFileHandler extends AbstractConvertModelHandler {
 
-    public static final String SCGDEP_TRANSFORMATION =
-            "de.cau.cs.kieler.scg.commands.SCGDEPToSCGBBTransformation";
+    public static final String SCGSCHED_TRANSFORMATION =
+            "de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation";
 
     private static Injector injector = new SctStandaloneSetup()
         .createInjectorAndDoEMFRegistration();
@@ -44,7 +46,7 @@ public class SCGraphDepModelFileHandler extends AbstractConvertModelHandler {
      */
     @Override
     protected String getTargetExtension() {
-        return "scgbb";
+        return "scgsched";
     }
 
     /**
@@ -67,14 +69,12 @@ public class SCGraphDepModelFileHandler extends AbstractConvertModelHandler {
         String commandString = event.getCommand().getId().toString();
         EObject transformed = null;
 
-        SCGDEPToSCGBBTransformation transformation =
-        Guice.createInjector().getInstance(SCGDEPToSCGBBTransformation.class);
+        AbstractSCGScheduler scheduler =
+        Guice.createInjector().getInstance(SimpleSCGScheduler.class);
         
-        // Call the model transformation (this creates a copy of the model containing the
-        // refactored model).
         transformed = model;
-        if (commandString.equals(SCGDEP_TRANSFORMATION)) {
-            transformed = transformation.transformSCGDEPToSCGBB((SCGraphDep) model);
+        if (commandString.equals(SCGSCHED_TRANSFORMATION)) {
+            transformed = scheduler.schedule((SCGraph) model);
         } 
         return transformed;
     }

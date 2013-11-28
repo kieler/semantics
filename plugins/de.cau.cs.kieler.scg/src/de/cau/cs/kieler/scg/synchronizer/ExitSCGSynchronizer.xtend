@@ -20,6 +20,7 @@ import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.scg.Fork
 
 /** 
  * ExitSCGSynchronizer
@@ -34,20 +35,22 @@ class ExitSCGSynchronizer extends AbstractSCGSynchronizer {
      @Inject
     extension SCGExtensions
   
-    override protected build() {
+    override protected SynchronizerData build(Fork originFork) {
+        val SynchronizerData data = new SynchronizerData()
         val scg = originFork.graph
         val exitNodes = <Exit> newLinkedList
         originFork.getAllNext.forEach[exitNodes.add((it.target as Entry).exit)]
         
         exitNodes.forEach[exit|
             val exitBB = exit.basicBlock
-            predecessors.add(exitBB)
+            data.predecessors.add(exitBB)
             
             // TODO: create expressions
 //            val emptyExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
 //            emptyExpression.setOperator(OperatorType::NOT)
 //            emptyExpression.subExpressions.add(exitBB.)
         ]
+        data 
     }
     
 }

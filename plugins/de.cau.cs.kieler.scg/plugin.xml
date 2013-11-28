@@ -32,16 +32,16 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.cau.cs.kieler.scg.handlers.SCGraphModelFileHandler"
+            class="de.cau.cs.kieler.scg.handlers.SCGraphDependencyModelFileHandler"
             commandId="de.cau.cs.kieler.scg.commands.SCGToSCGDEPTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.scg.handlers.SCGraphDepModelFileHandler"
+            class="de.cau.cs.kieler.scg.handlers.SCGraphBasicBlockModelFileHandler"
             commandId="de.cau.cs.kieler.scg.commands.SCGDEPToSCGBBTransformation">
       </handler>
       <handler
-            class="de.cau.cs.kieler.scg.handlers.SequentialSCGraphModelFileHandler"
-            commandId="de.cau.cs.kieler.scg.commands.SequentialSCGraphTransformation">
+            class="de.cau.cs.kieler.scg.handlers.SCGraphSchedulingModelFileHandler"
+            commandId="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation">
       </handler>
    </extension>
    <extension
@@ -97,8 +97,8 @@
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
-               commandId="de.cau.cs.kieler.scg.commands.SequentialSCGraphTransformation"
-               label="SCG: Generate Sequential SCGraph"
+               commandId="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation"
+               label="SCG: Populate Scheduling Data"
                mnemonic="A"
                style="push">
             <visibleWhen
@@ -137,8 +137,8 @@
       </command>
       <command
             categoryId="de.cau.cs.kieler.scg.commands.category"
-            id="de.cau.cs.kieler.scg.commands.SequentialSCGraphTransformation"
-            name="SCG: Generate Sequential SCGraph">
+            id="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation"
+            name="SCG: Populate Scheduling Data">
       </command>
    </extension>
 

@@ -21,6 +21,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import com.google.common.collect.ImmutableListimport com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scgsched.SCGraphSched
 
 /** 
  * SimpleSCGScheduler
@@ -34,7 +35,7 @@ class SimpleSCGScheduler extends AbstractSCGScheduler {
     @Inject
     extension SCGExtensions    
     
-    override protected execute() {
+    override protected SCGraphSched execute(SCGraphSched SCG) {
         val schedule = ScgschedFactory::eINSTANCE.createSchedule
         val schedulingBlocks = <SchedulingBlock> newLinkedList
         SCG.basicBlocks.forEach[schedulingBlocks.addAll(it.schedulingBlocks)]
@@ -56,9 +57,9 @@ class SimpleSCGScheduler extends AbstractSCGScheduler {
 
                     }
                 }
-                        for(dep:block.dependencies) {
-                            if (!schedule.schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) { placeable = false }
-                        }
+                for(dep:block.dependencies) {
+                    if (!schedule.schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) { placeable = false }
+                }
                 if (placeable) {
                     schedule.schedulingBlocks.add(block)
                     schedulingBlocks.remove(block)
@@ -75,6 +76,7 @@ class SimpleSCGScheduler extends AbstractSCGScheduler {
             SCG.setUnschedulable(false)
             SCG.schedules.add(schedule)
         }
+        SCG
     }
     
 }

@@ -136,8 +136,10 @@ class SCGDEPToSCGBBTransformation {
                 if (node instanceof Fork) {
                     val ExitSCGSynchronizer synchronizer = 
                         Guice.createInjector().getInstance(typeof(ExitSCGSynchronizer))
-                    val  join = synchronizer.synchronize((node as Fork))
-                    newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, join.first, join.second)
+                    val join = synchronizer.synchronize((node as Fork))
+                    newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, 
+                        join.predecessors, join.activationExpressions
+                    )
                 }
                 node = null                
             } else {
