@@ -40,8 +40,7 @@ class ExitSCGSynchronizer extends AbstractSCGSynchronizer {
   
     override protected SynchronizerData build(Fork originFork) {
         var data = new SynchronizerData()
-        data.predecessors = new ArrayList<BasicBlock>
-        data.activationExpressions = new ArrayList<Expression>
+
         val scg = originFork.graph
         val exitNodes = <Exit> newLinkedList
         originFork.getAllNext.forEach[exitNodes.add((it.target as Entry).exit)]
