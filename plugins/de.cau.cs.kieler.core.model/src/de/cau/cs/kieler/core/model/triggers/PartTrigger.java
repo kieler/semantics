@@ -544,13 +544,6 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
         /**
          * {@inheritDoc}
          */
-        public void setProperty(final IProperty<?> property, final Object value) {
-            this.delegate.setProperty(property, value);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
         public void copyProperties(final IPropertyHolder holder) {
             this.delegate.copyProperties(holder);
         }
@@ -561,6 +554,14 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
         public Map<IProperty<?>, Object> getAllProperties() {
             return this.delegate.getAllProperties();
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        public <T> void setProperty(IProperty<? super T> property, T value) {
+            this.delegate.setProperty(property, value);
+        }
+
     }
 
     /**
