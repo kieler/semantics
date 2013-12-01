@@ -194,8 +194,6 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
                     switch (theType) {
                     // show the available choices for boolean and enumeration/
                     case BOOLEAN:
-                    case REMOTE_ENUM:
-                    case REMOTE_ENUMSET:
                     case ENUM:
                     case ENUMSET:
                         for (int j = 0; j < optionData.getChoices().length; j++) {
