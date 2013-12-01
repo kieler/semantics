@@ -82,6 +82,7 @@ import de.cau.cs.kieler.scgsched.SCGraphSched
 import de.cau.cs.kieler.core.krendering.KRoundedRectangle
 import de.cau.cs.kieler.core.kgraph.KLabel
 import de.cau.cs.kieler.core.krendering.KText
+import de.cau.cs.kieler.core.krendering.KRoundedBendsPolyline
 
 /** 
  * SCCGraph KlighD synthesis 
@@ -781,7 +782,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     def KEdge translateControlFlow(ControlFlow t, String outgoing) {
         if (t.target == null || t.eContainer == null) return null;
         
-        return t.createEdge().putToLookUpWith(t) => [ edge |
+        return t.createNewEdge().putToLookUpWith(t) => [ edge |
             // Get and set source and target information.
             val sourceObj = t.eContainer
             val targetObj = t.target
@@ -835,6 +836,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         ]
     }    
     
+    // -- Re-color an existing control flow
+    def ControlFlow colorizeControlFlow(ControlFlow t, KColor color) {
+        t.getAllEdges.forEach[
+            it.getData(typeof(KRoundedBendsPolyline)).foreground = color.copy  
+        ]        
+        t
+    } 
 
     // -------------------------------------------------------------------------
     // -- TRANSFORM Dependency (edge) 
@@ -976,8 +984,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             val origSourcePort = ne.sourcePort            
             ne.source = kContainer
             ne.sourcePort = hPort 
-            val helperEdge = kParent.createEdge(SCGPORTID_HIERARCHYEDGE + 
-                ne.hashCode.toString() + origSource.hashCode.toString()) => [ autoEdge |
+            ne.semanticObject.createNewEdge() => [ autoEdge |
                 autoEdge.source = origSource
                 autoEdge.sourcePort = origSourcePort
                 autoEdge.target = kContainer
@@ -1017,25 +1024,32 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         }
         
         if (SHOW_SCHEDULINGBLOCKS.booleanValue && r instanceof SCGraphSched) {
-            var KNode source = null
-            var KNode target = null 
+//            var KNode source = null
+//            var KNode target = null 
+//            for(block : (r as SCGraphSched).getSchedules.head.getSchedulingBlocks) {
+//                target = schedulingBlockMapping.get(block)
+//                if (target != null && source != null) {
+//                    val sourceF = source
+//                    val targetF = target
+//                    source.createEdge("schedule " + source.toString + target.toString) => [ edge |
+//                        edge.source = sourceF
+//                        edge.target = targetF
+//                        edge.addRoundedBendsPolyline(8,4) => [
+//                            it.foreground = SCHEDULINGBLOCKBORDER.copy
+//                            it.foreground.alpha = 128
+//                            it.addArrowDecorator
+//                        ]  
+//                        edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
+//                    ]
+//                }
+//                source = target
+//            }
             for(block : (r as SCGraphSched).getSchedules.head.getSchedulingBlocks) {
-                target = schedulingBlockMapping.get(block)
-                if (target != null && source != null) {
-                    val sourceF = source
-                    val targetF = target
-                    source.createEdge("schedule " + source.toString + target.toString) => [ edge |
-                        edge.source = sourceF
-                        edge.target = targetF
-                        edge.addRoundedBendsPolyline(8,4) => [
-                            it.foreground = SCHEDULINGBLOCKBORDER.copy
-                            it.foreground.alpha = 128
-                            it.addArrowDecorator
-                        ]  
-                        edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
-                    ]
-                }
-                source = target
+                block.nodes.forEach[
+                    it.getAllNext.filter(typeof(ControlFlow)).forEach[
+                        it.colorizeControlFlow(SCHEDULINGBLOCKBORDER)
+                    ]                      
+                ]
             }
             
             // not schedulable blocks!
