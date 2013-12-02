@@ -30,6 +30,7 @@ import de.cau.cs.kieler.scgbb.SCGraphBB
 import java.util.InputMismatchException
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import de.cau.cs.kieler.scgbb.BasicBlock
+import de.cau.cs.kieler.scgsched.Schedule
 
 /**
  * SCG Extensions.
@@ -76,6 +77,10 @@ class SCGExtensions {
        var List<ControlFlow> returnList = <ControlFlow> newLinkedList;
        returnList.addAll(node.incoming.filter(typeof(ControlFlow)))
        return returnList;
+   }
+   
+   def List<ControlFlow> getControlFlows(Node source, Node target) {
+       source.eContents.filter(typeof(ControlFlow)).filter[it.target==target].toList
    }
       
    // -------------------------------------------------------------------------   
@@ -171,5 +176,12 @@ class SCGExtensions {
    def BasicBlock basicBlock(Node node) {
        node.schedulingBlock.basicBlock
    }
+
+   // -------------------------------------------------------------------------
             
+    def List<Node> getScheduleNodes(Schedule schedule) {
+        val nodeList = <Node> newLinkedList
+        schedule.schedulingBlocks.forEach[it.nodes.forEach[nodeList.add(it)]]
+        nodeList
+    }
 }

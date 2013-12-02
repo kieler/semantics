@@ -196,7 +196,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         = SynthesisOption::createRangeOption("Hierarchy", 0f, 255f, 128f);
 
     private static val SynthesisOption CONTROLFLOW_THICKNESS 
-        = SynthesisOption::createRangeOption("Controlflow thickness", 1f, 10f, 1f, 2f);
+        = SynthesisOption::createRangeOption("Controlflow thickness", 1, 10, 1, 2);
         
     private static val SynthesisOption ORIENTATION
         = SynthesisOption::createChoiceOption("Orientation", <String> newLinkedList("Top-Down", "Left-Right"), "Top-Down");
@@ -272,6 +272,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor DEPENDENCY_ABSWRITEABSWRITE = RENDERING_FACTORY.createKColor()=>[it.red = 255; it.green = 0; it.blue = 0;]
     
     private static val KColor SCHEDULING_NOTSCHEDULABLE = RENDERING_FACTORY.createKColor()=>[it.red = 255; it.green = 0; it.blue = 0;]
+    private static val KColor STANDARD_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor()=>[it.red = 0; it.green = 0; it.blue = 0;]
+    private static val KColor SCHEDULING_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor()=>[it.red = 144; it.green = 144; it.blue = 144;]
     
     private static val String SCGPORTID_INCOMING = "incoming"
     private static val String SCGPORTID_OUTGOING = "outgoing"
@@ -291,6 +293,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     private static val int ORIENTATION_PORTRAIT = 0
     private static val int ORIENTATION_LANDSCAPE = 1
+    
+    private static val int CONTROLFLOW_SCHEDULINGEDGE_WIDTH = 4
     
     private KNode rootNode;
     private int orientation;
@@ -372,12 +376,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }            
             }
             
-            if (r instanceof SCGraphBB && (SHOW_BASICBLOCKS.booleanValue || SHOW_SCHEDULINGBLOCKS.booleanValue)) {
+            if (r instanceof SCGraphBB 
+                /* && (SHOW_BASICBLOCKS.booleanValue || SHOW_SCHEDULINGBLOCKS.booleanValue)*/
+            ) {
                 (r as SCGraphBB).drawBasicBlocks            
             }
             
             // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
-            if (r instanceof SCGraphDep && SHOW_DEPENDENCIES.booleanValue &&
+            if (r instanceof SCGraphDep  && 
+                SHOW_DEPENDENCIES.booleanValue &&
                 !LAYOUT_DEPENDENCIES.booleanValue
             ) {
                 r.eAllContents.filter(Dependency).forEach[ it.drawDependency ]
@@ -765,14 +772,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     // Draw a dotted line from the corresponding surface node to the given depth node.
     def KEdge translateTickEdge(Depth t) {
-        return t.createEdge().putToLookUpWith(t) => [ edge |
+        return t.createNewEdge().putToLookUpWith(t) => [ edge |
             edge.source = t.surface?.node;
             edge.target = t.node;
             edge.sourcePort = t.surface?.node.getPort(SCGPORTID_OUTGOING)
             edge.targetPort = t.node.getPort(SCGPORTID_INCOMING)
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
       
-            edge.addRoundedBendsPolyline(8,2) => [
+            edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
                     it.lineStyle = LineStyle::DOT;
             ]
         ]
@@ -829,9 +836,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
       
             // Finally, draw the solid edge and add a decorator.
-            edge.addRoundedBendsPolyline(8,2) => [
+            edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
                     it.lineStyle = LineStyle::SOLID
                     it.addArrowDecorator
+                    if ((t.eContainer as Node).graph instanceof SCGraphSched) 
+                        it.foreground = SCHEDULING_CONTROLFLOWEDGE.copy 
+                        else it.foreground = STANDARD_CONTROLFLOWEDGE.copy
+                    it.foreground.propagateToChildren = true
             ]
             
             // If the outgoing identifier indicates a 'then branch', add a 'then label'.
@@ -846,6 +857,31 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         t.getAllEdges.forEach[
             val polyline = it.getData(typeof(KRoundedBendsPolyline)).foreground = color.copy
             polyline.foreground.propagateToChildren = true  
+        ]        
+        t
+    }
+    
+    def ControlFlow thickenControlFlow(ControlFlow t, int width) {
+        t.getAllEdges.forEach[
+            val polyline = it.getData(typeof(KRoundedBendsPolyline)).lineWidth = width
+            polyline.lineWidth.propagateToChildren = true  
+        ]        
+        t
+    } 
+     
+    
+    def Depth coloizeTickEdge(Depth t, KColor color) {
+        t.getAllEdges.forEach[
+            val polyline = it.getData(typeof(KRoundedBendsPolyline)).foreground = color.copy
+            polyline.foreground.propagateToChildren = true  
+        ]
+        t
+    }
+
+    def Depth thickenTickEdge(Depth t, int width) {
+        t.getAllEdges.forEach[
+            val polyline = it.getData(typeof(KRoundedBendsPolyline)).lineWidth = width
+            polyline.lineWidth.propagateToChildren = true  
         ]        
         t
     } 
@@ -992,7 +1028,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 it.target = kContainer
                 it.targetPort = kContainer.getPort(portName)
                 it.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-                it.addRoundedBendsPolyline(8,2) => [
+                it.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
                     it.lineStyle = ne.KRendering.lineStyleValue
                     it.foreground = ne.KRendering.foreground
                 ]
@@ -1022,37 +1058,41 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }                    
         }
         
-        if (SHOW_SCHEDULINGBLOCKS.booleanValue && r instanceof SCGraphSched) {
-//            var KNode source = null
-//            var KNode target = null 
-//            for(block : (r as SCGraphSched).getSchedules.head.getSchedulingBlocks) {
-//                target = schedulingBlockMapping.get(block)
-//                if (target != null && source != null) {
-//                    val sourceF = source
-//                    val targetF = target
-//                    source.createEdge("schedule " + source.toString + target.toString) => [ edge |
-//                        edge.source = sourceF
-//                        edge.target = targetF
-//                        edge.addRoundedBendsPolyline(8,4) => [
-//                            it.foreground = SCHEDULINGBLOCKBORDER.copy
-//                            it.foreground.alpha = 128
-//                            it.addArrowDecorator
-//                        ]  
-//                        edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
-//                    ]
-//                }
-//                source = target
-//            }
-            for(block : (r as SCGraphSched).getSchedules.head.getSchedulingBlocks) {
-                block.nodes.forEach[
-                    it.getAllNext.filter(typeof(ControlFlow)).forEach[
-                        it.colorizeControlFlow(SCHEDULINGBLOCKBORDER)
-                    ]                      
-                ]
+        if (/*SHOW_SCHEDULINGBLOCKS.booleanValue && */r instanceof SCGraphSched) {
+            var Node source = null
+            var Node target = null 
+            for(node : (r as SCGraphSched).getSchedules.head.scheduleNodes) {
+                target = node 
+                if (target != null && source != null) {
+                    
+                    val controlFlows = source.getControlFlows(target)
+                    if (controlFlows.size>0) {
+                        controlFlows.forEach[it.colorizeControlFlow(SCHEDULINGBLOCKBORDER)]    
+                        controlFlows.forEach[it.thickenControlFlow(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)]
+                    } else if (target instanceof Depth) {
+                        (target as Depth).coloizeTickEdge(SCHEDULINGBLOCKBORDER)                    
+                        (target as Depth).thickenTickEdge(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)                    
+                    } else {
+                        val sourceF = source.node
+                        val targetF = target.node
+                        source.createEdge("schedule " + source.toString + target.toString) => [ edge |
+                            edge.source = sourceF
+                            edge.target = targetF
+                            edge.addRoundedBendsPolyline(8, CONTROLFLOW_SCHEDULINGEDGE_WIDTH) => [
+                                it.foreground = SCHEDULINGBLOCKBORDER.copy
+//                                it.foreground.alpha = 144
+                                it.addArrowDecorator
+                            ]  
+                            edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
+                        ]
+                    }
+                }
+                source = target
             }
+
             
             // not schedulable blocks!
-            if ((r as SCGraphSched).unschedulable) {
+            if (SHOW_SCHEDULINGBLOCKS.booleanValue && (r as SCGraphSched).unschedulable) {
                 val usBlocks = r.allSchedulingBlocks()
                 (r as SCGraphSched).getSchedules.head.getSchedulingBlocks.forEach[usBlocks.remove(it)]
                 usBlocks.forEach[
