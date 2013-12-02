@@ -5,9 +5,16 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unschedulable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="schedules" upperBound="-1"
         eType="#//Schedule" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="problems" upperBound="-1"
+        eType="#//Problem"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Schedule">
     <eStructuralFeatures xsi:type="ecore:EReference" name="schedulingBlocks" upperBound="-1"
         eType="ecore:EClass scgbb.ecore#//SchedulingBlock"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Problem"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PotentialLoopProblem" eSuperTypes="#//Problem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="controlFlows" upperBound="-1"
+        eType="ecore:EClass scg.ecore#//ControlFlow"/>
   </eClassifiers>
 </ecore:EPackage>
