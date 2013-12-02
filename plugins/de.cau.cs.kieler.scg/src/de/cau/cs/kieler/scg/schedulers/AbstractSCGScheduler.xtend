@@ -17,7 +17,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGTransformationExtensions
 import de.cau.cs.kieler.scgsched.SCGraphSched
-import de.cau.cs.kieler.scgbb.SCGraphBB
 
 /** 
  * AbstractSCGScheduler
@@ -31,9 +30,11 @@ abstract class AbstractSCGScheduler {
     @Inject
     extension SCGTransformationExtensions
     
-    protected abstract def SCGraphSched build(SCGraphSched SCG);
+    protected abstract def SCGraphSched analyse(SCGraphSched scg);
+    
+    protected abstract def SCGraphSched build(SCGraphSched scg);
     
     public def SCGraph schedule(SCGraph scg) {
-        build((scg.upgradeAll as SCGraphSched) as SCGraphSched)
+        build(((scg.upgradeAll as SCGraphSched) as SCGraphSched).analyse)
     }    
 }

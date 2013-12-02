@@ -22,18 +22,24 @@ import com.google.common.collect.ImmutableListimport com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scgsched.SCGraphSched
+import com.google.inject.Guice
 
 /** 
- * SimpleSCGScheduler
+ * SimpleScheduler
  * 
  * @author ssm
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-class SimpleSCGScheduler extends AbstractSCGScheduler {
+class SimpleScheduler extends AbstractSCGScheduler {
     
     @Inject
     extension SCGExtensions    
+    
+	override protected analyse(SCGraphSched scg) {
+		val PotentialLoopAnalyser loopAnalyser = Guice.createInjector().getInstance(typeof(PotentialLoopAnalyser))
+		loopAnalyser.analyse(scg)
+    }    
     
     override protected SCGraphSched build(SCGraphSched SCG) {
         val schedule = ScgschedFactory::eINSTANCE.createSchedule
@@ -79,5 +85,5 @@ class SimpleSCGScheduler extends AbstractSCGScheduler {
         }
         SCG
     }
-    
+
 }
