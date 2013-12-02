@@ -148,7 +148,7 @@ class SCGDEPToSCGBBTransformation {
                     scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks, activationExpressions)
                     node = null
                 } else
-                if (next.incoming.filter(typeof(ControlFlow)).size > 1) {
+                if (next != null && next.incoming.filter(typeof(ControlFlow)).size > 1) {
                     val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks, activationExpressions)
                     scg.createBasicBlocks(next, newIndex, block, guard.reference) 
                     node = null;
