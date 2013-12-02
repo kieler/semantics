@@ -58,7 +58,8 @@ class SimpleSCGScheduler extends AbstractSCGScheduler {
                     }
                 }
                 for(dep:block.dependencies) {
-                    if (!schedule.schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) { placeable = false }
+                    if (dep.concurrent && !dep.confluent)
+                      if (!schedule.schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) { placeable = false }
                 }
                 if (placeable) {
                     schedule.schedulingBlocks.add(block)
