@@ -13,16 +13,18 @@
  */
 package de.cau.cs.kieler.scg.klighd
 
-import com.google.common.collect.ImmutableMap
-import com.google.common.collect.ImmutableSet
 import com.google.inject.Guice
 import com.google.inject.Injector
+import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.kexpressions.KExpressionsRuntimeModule
 import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.kgraph.KPort
 import de.cau.cs.kieler.core.krendering.KColor
+import de.cau.cs.kieler.core.krendering.KPolygon
+import de.cau.cs.kieler.core.krendering.KRoundedBendsPolyline
+import de.cau.cs.kieler.core.krendering.KRoundedRectangle
 import de.cau.cs.kieler.core.krendering.LineStyle
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
@@ -33,6 +35,7 @@ import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
@@ -56,33 +59,25 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scgbb.BasicBlock
+import de.cau.cs.kieler.scgbb.SCGraphBB
+import de.cau.cs.kieler.scgbb.SchedulingBlock
 import de.cau.cs.kieler.scgdep.AbsoluteWrite_Read
 import de.cau.cs.kieler.scgdep.AbsoluteWrite_RelativeWrite
 import de.cau.cs.kieler.scgdep.Dependency
 import de.cau.cs.kieler.scgdep.RelativeWrite_Read
 import de.cau.cs.kieler.scgdep.SCGraphDep
 import de.cau.cs.kieler.scgdep.Write_Write
+import de.cau.cs.kieler.scgsched.SCGraphSched
 import java.util.ArrayList
-import java.util.Collection
+import java.util.HashMap
 import java.util.List
 import javax.inject.Inject
 import javax.inject.Singleton
 import org.eclipse.xtext.scoping.IScopeProvider
 import org.eclipse.xtext.serializer.ISerializer
-import de.cau.cs.kieler.core.util.Pair
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scgbb.SCGraphBB
-import de.cau.cs.kieler.core.krendering.KPolygon
-import de.cau.cs.kieler.core.annotations.StringAnnotationimport de.cau.cs.kieler.scgbb.BasicBlock
-import java.util.HashMap
-import de.cau.cs.kieler.scgbb.SchedulingBlock
-import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.scgsched.SCGraphSched
-import de.cau.cs.kieler.core.krendering.KRoundedRectangle
-import de.cau.cs.kieler.core.kgraph.KLabel
-import de.cau.cs.kieler.core.krendering.KText
-import de.cau.cs.kieler.core.krendering.KRoundedBendsPolyline
 
 /** 
  * SCCGraph KlighD synthesis 
@@ -199,24 +194,29 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
     private static val SynthesisOption HIERARCHY_TRANSPARENCY 
         = SynthesisOption::createRangeOption("Hierarchy", 0f, 255f, 128f);
+
+    private static val SynthesisOption CONTROLFLOW_THICKNESS 
+        = SynthesisOption::createRangeOption("Controlflow thickness", 1f, 10f, 1f, 2f);
         
     private static val SynthesisOption ORIENTATION
         = SynthesisOption::createChoiceOption("Orientation", <String> newLinkedList("Top-Down", "Left-Right"), "Top-Down");
 
-    private static val DEPENDENCYFILTER_ANY               = "Any"
-    private static val DEPENDENCYFILTER_WRITE_WRITE       = "WW"
-    private static val DEPENDENCYFILTER_ABSWRITE_RELWRITE = "WI"
-    private static val DEPENDENCYFILTER_WRITE_READ        = "WR"
-    private static val DEPENDENCYFILTER_RELWRITE_READ     = "RI"
+    private static val DEPENDENCYFILTERSTRING_WRITE_WRITE       = "write - write"
+    private static val DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE = "abs. write - rel. write"
+    private static val DEPENDENCYFILTERSTRING_WRITE_READ        = "wrtie - read"
+    private static val DEPENDENCYFILTERSTRING_RELWRITE_READ     = "rel. write - read"
     
-    private static val SynthesisOption DEPENDENCYFILTER
-        = SynthesisOption::createChoiceOption("Dependency Filter", <String> newLinkedList(
-            DEPENDENCYFILTER_ANY,
-            DEPENDENCYFILTER_WRITE_WRITE,
-            DEPENDENCYFILTER_ABSWRITE_RELWRITE,
-            DEPENDENCYFILTER_WRITE_READ,
-            DEPENDENCYFILTER_RELWRITE_READ
-            ), DEPENDENCYFILTER_ANY);
+    private static val SynthesisOption SHOW_DEPENDENCY_WRITE_WRITE 
+        = SynthesisOption::createCheckOption(DEPENDENCYFILTERSTRING_WRITE_WRITE, true);
+
+    private static val SynthesisOption SHOW_DEPENDENCY_ABSWRITE_RELWRITE 
+        = SynthesisOption::createCheckOption(DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE, true);
+
+    private static val SynthesisOption SHOW_DEPENDENCY_WRITE_READ 
+        = SynthesisOption::createCheckOption(DEPENDENCYFILTERSTRING_WRITE_READ, true);
+
+    private static val SynthesisOption SHOW_DEPENDENCY_RELWRITE_READ 
+        = SynthesisOption::createCheckOption(DEPENDENCYFILTERSTRING_RELWRITE_READ, true);
         
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(
@@ -231,7 +231,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //            SHOW_SINGLESCHEDULINGBLOCKS,
             SHOW_SHADOW,
             HIERARCHY_TRANSPARENCY,
-            DEPENDENCYFILTER,
+            CONTROLFLOW_THICKNESS,            
+            SynthesisOption::createSeparator("Dependency Filter"),
+            SHOW_DEPENDENCY_WRITE_WRITE,
+            SHOW_DEPENDENCY_ABSWRITE_RELWRITE,
+            SHOW_DEPENDENCY_WRITE_READ,
+            SHOW_DEPENDENCY_RELWRITE_READ,
             SynthesisOption::createSeparator("Alignment"),
             ALIGN_TICK_START, 
             ALIGN_ENTRYEXIT_NODES, 
@@ -839,7 +844,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -- Re-color an existing control flow
     def ControlFlow colorizeControlFlow(ControlFlow t, KColor color) {
         t.getAllEdges.forEach[
-            it.getData(typeof(KRoundedBendsPolyline)).foreground = color.copy  
+            val polyline = it.getData(typeof(KRoundedBendsPolyline)).foreground = color.copy
+            polyline.foreground.propagateToChildren = true  
         ]        
         t
     } 
@@ -855,14 +861,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         if (!SHOW_NONCONCURRENT.booleanValue && !dependency.isConcurrent) return dependency;
         if (!SHOW_CONFLUENT.booleanValue && dependency.confluent) return dependency;
         
-        if (DEPENDENCYFILTER.objectValue == DEPENDENCYFILTER_WRITE_WRITE && !
-            (dependency instanceof Write_Write)) return dependency; 
-        if (DEPENDENCYFILTER.objectValue == DEPENDENCYFILTER_ABSWRITE_RELWRITE && !
-            (dependency instanceof AbsoluteWrite_RelativeWrite)) return dependency; 
-        if (DEPENDENCYFILTER.objectValue == DEPENDENCYFILTER_WRITE_READ && !
-            (dependency instanceof AbsoluteWrite_Read)) return dependency; 
-        if (DEPENDENCYFILTER.objectValue == DEPENDENCYFILTER_RELWRITE_READ && !
-            (dependency instanceof RelativeWrite_Read)) return dependency; 
+        if (!SHOW_DEPENDENCY_WRITE_WRITE.booleanValue && dependency instanceof Write_Write) return dependency; 
+        if (!SHOW_DEPENDENCY_ABSWRITE_RELWRITE.booleanValue && dependency instanceof AbsoluteWrite_RelativeWrite) return dependency; 
+        if (!SHOW_DEPENDENCY_WRITE_READ.booleanValue && dependency instanceof AbsoluteWrite_Read) return dependency; 
+        if (!SHOW_DEPENDENCY_RELWRITE_READ.booleanValue && dependency instanceof RelativeWrite_Read) return dependency; 
         
         // Retrieve node information.
         val sourceNode = (dependency.eContainer as Node).node
@@ -984,22 +986,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             val origSourcePort = ne.sourcePort            
             ne.source = kContainer
             ne.sourcePort = hPort 
-            ne.semanticObject.createNewEdge() => [ autoEdge |
-                autoEdge.source = origSource
-                autoEdge.sourcePort = origSourcePort
-                autoEdge.target = kContainer
-                autoEdge.targetPort = kContainer.getPort(portName)
-                autoEdge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-                autoEdge.addRoundedBendsPolyline(8,2) => [
+            ne.semanticObject.createNewEdge() => [ 
+                it.source = origSource
+                it.sourcePort = origSourcePort
+                it.target = kContainer
+                it.targetPort = kContainer.getPort(portName)
+                it.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+                it.addRoundedBendsPolyline(8,2) => [
                     it.lineStyle = ne.KRendering.lineStyleValue
                     it.foreground = ne.KRendering.foreground
                 ]
+                it.labels.addAll(ne.labels)
             ]
             
-            // correct label affiliation
-//            ne.getData(typeof(KLabel)) => [
-//                helperEdge.getData().add(it)
-//            ]
         }     
         kContainer          
     }   
