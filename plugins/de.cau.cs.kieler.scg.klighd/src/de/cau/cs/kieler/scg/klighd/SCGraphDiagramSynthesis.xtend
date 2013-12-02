@@ -78,6 +78,7 @@ import org.eclipse.xtext.scoping.IScopeProvider
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scgsched.PotentialLoopProblem
 
 /** 
  * SCCGraph KlighD synthesis 
@@ -274,6 +275,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor SCHEDULING_NOTSCHEDULABLE = RENDERING_FACTORY.createKColor()=>[it.red = 255; it.green = 0; it.blue = 0;]
     private static val KColor STANDARD_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor()=>[it.red = 0; it.green = 0; it.blue = 0;]
     private static val KColor SCHEDULING_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor()=>[it.red = 144; it.green = 144; it.blue = 144;]
+
+    private static val KColor PROBLEM_POTENTIALLOOP_COLOR = RENDERING_FACTORY.createKColor()=>[it.red = 255; it.green = 0; it.blue = 0;]
     
     private static val String SCGPORTID_INCOMING = "incoming"
     private static val String SCGPORTID_OUTGOING = "outgoing"
@@ -295,6 +298,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val int ORIENTATION_LANDSCAPE = 1
     
     private static val int CONTROLFLOW_SCHEDULINGEDGE_WIDTH = 4
+    private static val int PROBLEM_POTENTIALLOOP_WIDTH = 4
     
     private KNode rootNode;
     private int orientation;
@@ -380,6 +384,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 /* && (SHOW_BASICBLOCKS.booleanValue || SHOW_SCHEDULINGBLOCKS.booleanValue)*/
             ) {
                 (r as SCGraphBB).drawBasicBlocks            
+            }
+            
+            if (r instanceof SCGraphSched) {
+            	(r as SCGraphSched).drawProblems
             }
             
             // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
@@ -1106,6 +1114,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 ]
             }
         }
+    }
+    
+    def drawProblems(SCGraphSched scg) {
+    	scg.problems.filter(typeof(PotentialLoopProblem)).forEach[
+    		it.controlFlows.forEach[
+    			it.colorizeControlFlow(PROBLEM_POTENTIALLOOP_COLOR)
+    			it.thickenControlFlow(PROBLEM_POTENTIALLOOP_WIDTH)
+    		]
+    	]
     }
    
 
