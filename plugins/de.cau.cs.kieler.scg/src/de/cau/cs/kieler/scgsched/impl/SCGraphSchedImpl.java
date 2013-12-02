@@ -14,26 +14,18 @@
 package de.cau.cs.kieler.scgsched.impl;
 
 import de.cau.cs.kieler.scgbb.impl.SCGraphBBImpl;
-
 import de.cau.cs.kieler.scgsched.Problem;
 import de.cau.cs.kieler.scgsched.SCGraphSched;
 import de.cau.cs.kieler.scgsched.ScgschedPackage;
 import de.cau.cs.kieler.scgsched.Schedule;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -83,7 +75,7 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
     protected EList<Schedule> schedules;
 
     /**
-	 * The cached value of the '{@link #getProblems() <em>Problems</em>}' reference list.
+	 * The cached value of the '{@link #getProblems() <em>Problems</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getProblems()
@@ -151,7 +143,7 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
 	 */
 	public EList<Problem> getProblems() {
 		if (problems == null) {
-			problems = new EObjectResolvingEList<Problem>(Problem.class, this, ScgschedPackage.SC_GRAPH_SCHED__PROBLEMS);
+			problems = new EObjectContainmentEList<Problem>(Problem.class, this, ScgschedPackage.SC_GRAPH_SCHED__PROBLEMS);
 		}
 		return problems;
 	}
@@ -166,6 +158,8 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
 		switch (featureID) {
 			case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
 				return ((InternalEList<?>)getSchedules()).basicRemove(otherEnd, msgs);
+			case ScgschedPackage.SC_GRAPH_SCHED__PROBLEMS:
+				return ((InternalEList<?>)getProblems()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}

@@ -79,7 +79,7 @@ public interface SCGraphSched extends SCGraphBB {
     EList<Schedule> getSchedules();
 
 				/**
-	 * Returns the value of the '<em><b>Problems</b></em>' reference list.
+	 * Returns the value of the '<em><b>Problems</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.scgsched.Problem}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -87,9 +87,9 @@ public interface SCGraphSched extends SCGraphBB {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Problems</em>' reference list.
+	 * @return the value of the '<em>Problems</em>' containment reference list.
 	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSCGraphSched_Problems()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<Problem> getProblems();

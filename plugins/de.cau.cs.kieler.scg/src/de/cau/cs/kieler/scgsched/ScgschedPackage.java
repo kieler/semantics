@@ -125,7 +125,7 @@ public interface ScgschedPackage extends EPackage {
     int SC_GRAPH_SCHED__SCHEDULES = ScgbbPackage.SC_GRAPH_BB_FEATURE_COUNT + 1;
 
     /**
-	 * The feature id for the '<em><b>Problems</b></em>' reference list.
+	 * The feature id for the '<em><b>Problems</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -288,10 +288,10 @@ public interface ScgschedPackage extends EPackage {
     EReference getSCGraphSched_Schedules();
 
     /**
-	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scgsched.SCGraphSched#getProblems <em>Problems</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgsched.SCGraphSched#getProblems <em>Problems</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Problems</em>'.
+	 * @return the meta object for the containment reference list '<em>Problems</em>'.
 	 * @see de.cau.cs.kieler.scgsched.SCGraphSched#getProblems()
 	 * @see #getSCGraphSched()
 	 * @generated
@@ -400,7 +400,7 @@ public interface ScgschedPackage extends EPackage {
         EReference SC_GRAPH_SCHED__SCHEDULES = eINSTANCE.getSCGraphSched_Schedules();
 
         /**
-		 * The meta object literal for the '<em><b>Problems</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Problems</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
