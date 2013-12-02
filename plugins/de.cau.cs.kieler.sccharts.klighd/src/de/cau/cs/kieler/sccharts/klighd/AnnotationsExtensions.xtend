@@ -41,9 +41,9 @@ class AnnotationsExtensions {
     def void transferAnnotationsOf(KNode node, Annotatable a) {
         val service = LayoutDataService::instance;
         a.annotations.filter[!it.name.nullOrEmpty].forEach[
-            val LayoutOptionData<?> data =
-                service.getOptionData(it.name)?:
-                service.getOptionDataBySuffix(it.name);
+            val LayoutOptionData<Object> data =
+                (service.getOptionData(it.name)?:
+                service.getOptionDataBySuffix(it.name)) as LayoutOptionData<Object>;
             
             if (data != null) {
                 node.getData(typeof(KShapeLayout)).setProperty(data, switch(it.eClass) {

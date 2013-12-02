@@ -49,9 +49,9 @@ import de.cau.cs.kieler.kex.controller.ExampleManager;
 import de.cau.cs.kieler.kex.model.Example;
 import de.cau.cs.kieler.kex.ui.KEXUIPlugin;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
-import de.cau.cs.kieler.kiml.ui.diagram.DiagramLayoutEngine;
-import de.cau.cs.kieler.kiml.ui.diagram.LayoutHandler;
-import de.cau.cs.kieler.kiml.ui.service.EclipseLayoutInfoService;
+import de.cau.cs.kieler.kiml.service.DiagramLayoutEngine;
+import de.cau.cs.kieler.kiml.service.LayoutManagersService;
+import de.cau.cs.kieler.kiml.ui.LayoutHandler;
 
 /**
  * This wizard contains all elements for an kex import wizard.
@@ -277,7 +277,7 @@ public class ExampleImportWizard extends Wizard implements IImportWizard {
                     try {
                         IEditorPart editorPart = page.openEditor(new FileEditorInput(files[0]),
                                 defaultEditor.getId());
-                        if (destinationPage.autoLayout() && EclipseLayoutInfoService.getInstance()
+                        if (destinationPage.autoLayout() && LayoutManagersService.getInstance()
                                 .getManager(editorPart, null) != null) {
                             IPreferenceStore preferenceStore = KimlUiPlugin.getDefault()
                                     .getPreferenceStore();

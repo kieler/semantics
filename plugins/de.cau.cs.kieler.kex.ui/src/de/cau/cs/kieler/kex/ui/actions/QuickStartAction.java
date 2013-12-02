@@ -52,9 +52,10 @@ import de.cau.cs.kieler.kex.model.Example;
 import de.cau.cs.kieler.kex.model.SourceType;
 import de.cau.cs.kieler.kex.ui.KEXUIPlugin;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
-import de.cau.cs.kieler.kiml.ui.diagram.DiagramLayoutEngine;
-import de.cau.cs.kieler.kiml.ui.diagram.LayoutHandler;
-import de.cau.cs.kieler.kiml.ui.service.EclipseLayoutInfoService;
+import de.cau.cs.kieler.kiml.service.DiagramLayoutEngine;
+import de.cau.cs.kieler.kiml.service.LayoutManagersService;
+import de.cau.cs.kieler.kiml.ui.LayoutHandler;
+
 
 /**
  * This class contains the contents to run a quick start example.
@@ -229,7 +230,7 @@ public class QuickStartAction implements IIntroAction {
                     try {
                         IEditorPart editorPart = page.openEditor(new FileEditorInput(files[0]),
                                 defaultEditor.getId());
-                        if (autoLayout && EclipseLayoutInfoService.getInstance()
+                        if (autoLayout && LayoutManagersService.getInstance()
                                 .getManager(editorPart, null) != null) {
                             IPreferenceStore preferenceStore = KimlUiPlugin.getDefault()
                                     .getPreferenceStore();
