@@ -152,7 +152,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -------------------------------------------------------------------------
     // -- KLIGHD OPTIONS 
     // -------------------------------------------------------------------------
-
+    
     private static val TransformationOption SHOW_CAPTION
         = TransformationOption::createCheckOption("Captions", true);
         
@@ -194,6 +194,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
     private static val TransformationOption ORIENTATION
         = TransformationOption::createChoiceOption("Orientation", <String> newLinkedList("Top-Down", "Left-Right"), "Top-Down");
+
+    private static val DEPENDENCYFILTER_ANY               = "Any"
+    private static val DEPENDENCYFILTER_WRITE_WRITE       = "WW"
+    private static val DEPENDENCYFILTER_ABSWRITE_RELWRITE = "WI"
+    private static val DEPENDENCYFILTER_WRITE_READ        = "WR"
+    private static val DEPENDENCYFILTER_RELWRITE_READ     = "RI"
+    
+    private static val TransformationOption DEPENDENCYFILTER
+        = TransformationOption::createChoiceOption("Dependency Filter", <String> newLinkedList(
+            DEPENDENCYFILTER_ANY,
+            DEPENDENCYFILTER_WRITE_WRITE,
+            DEPENDENCYFILTER_ABSWRITE_RELWRITE,
+            DEPENDENCYFILTER_WRITE_READ,
+            DEPENDENCYFILTER_RELWRITE_READ
+            ), DEPENDENCYFILTER_ANY);
         
     override public getTransformationOptions() {
         return ImmutableSet::of(
@@ -208,6 +223,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //            SHOW_SINGLESCHEDULINGBLOCKS,
             SHOW_SHADOW,
             HIERARCHY_TRANSPARENCY,
+            DEPENDENCYFILTER,
 //            TransformationOption::createSeparator("Alignment"),
             ALIGN_TICK_START, 
             ALIGN_ENTRYEXIT_NODES, 
@@ -832,6 +848,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // If non concurrent dependency are hidden and the given dependency is not concurrent, exit at once.
         if (!SHOW_NONCONCURRENT.optionBooleanValue && !dependency.isConcurrent) return dependency;
         if (!SHOW_CONFLUENT.optionBooleanValue && dependency.confluent) return dependency;
+        
+        if (DEPENDENCYFILTER.optionValue == DEPENDENCYFILTER_WRITE_WRITE && !
+            (dependency instanceof Write_Write)) return dependency; 
+        if (DEPENDENCYFILTER.optionValue == DEPENDENCYFILTER_ABSWRITE_RELWRITE && !
+            (dependency instanceof AbsoluteWrite_RelativeWrite)) return dependency; 
+        if (DEPENDENCYFILTER.optionValue == DEPENDENCYFILTER_WRITE_READ && !
+            (dependency instanceof AbsoluteWrite_Read)) return dependency; 
+        if (DEPENDENCYFILTER.optionValue == DEPENDENCYFILTER_RELWRITE_READ && !
+            (dependency instanceof RelativeWrite_Read)) return dependency; 
         
         // Retrieve node information.
         val sourceNode = (dependency.eContainer as Node).node
