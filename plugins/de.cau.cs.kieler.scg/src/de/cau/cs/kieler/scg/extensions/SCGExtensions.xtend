@@ -31,6 +31,8 @@ import java.util.InputMismatchException
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import de.cau.cs.kieler.scgbb.BasicBlock
 import de.cau.cs.kieler.scgsched.Schedule
+import de.cau.cs.kieler.scgsched.PotentialLoopProblem
+import de.cau.cs.kieler.scgsched.ScgschedFactory
 
 /**
  * SCG Extensions.
@@ -62,6 +64,7 @@ class SCGExtensions {
    
    def List<ControlFlow> getAllNext (Node node) {
        var List<ControlFlow> returnList = <ControlFlow> newLinkedList;
+       if (node == null) return returnList
        for (eObject : node.eContents) {
            if (eObject instanceof ControlFlow) {
                returnList.add(eObject as ControlFlow);
@@ -70,20 +73,43 @@ class SCGExtensions {
        return returnList;
    }
    
-   // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
    
-   // Retrieves all incoming control flows at once.
-   def List<ControlFlow> getAllPrevious (Node node) {
-       var List<ControlFlow> returnList = <ControlFlow> newLinkedList;
-       returnList.addAll(node.incoming.filter(typeof(ControlFlow)))
-       return returnList;
-   }
+    // Retrieves all incoming control flows at once.
+    def List<ControlFlow> getAllPrevious (Node node) {
+        var List<ControlFlow> returnList = <ControlFlow> newLinkedList;
+        returnList.addAll(node.incoming.filter(typeof(ControlFlow)))
+        return returnList;
+    }
    
-   def List<ControlFlow> getControlFlows(Node source, Node target) {
-       source.eContents.filter(typeof(ControlFlow)).filter[it.target==target].toList
-   }
+    def List<ControlFlow> getControlFlows(Node source, Node target) {
+        source.eContents.filter(typeof(ControlFlow)).filter[it.target==target].toList
+    }
+   
+    def void accumulateInstantaneousControlFlow(ControlFlow next, List<ControlFlow> myFlow, 
+        List<List<ControlFlow>> list, Node target
+    ) {
+        if (myFlow.contains(next)) return;
+        if (next.target instanceof Surface) return;
+        if (next.target == target) {
+        	myFlow.add(next)
+            list.add(myFlow)
+            return;
+        }
+        myFlow.add(next)
+        next.target.getAllNext.forEach[
+            val newFlow = <ControlFlow> newArrayList(myFlow)       	    
+            it.accumulateInstantaneousControlFlow(newFlow, list, target)
+        ]
+    }
+   
+    def List<List<ControlFlow>> getInstantaneousControlFlows(Node source) {
+   	    val loopList = <List<ControlFlow>> newLinkedList
+   	    source.getAllNext.forEach[it.accumulateInstantaneousControlFlow(newArrayList(), loopList, source)]
+   	    loopList 
+    }
       
-   // -------------------------------------------------------------------------   
+    //  -------------------------------------------------------------------------   
     
     def List<Node> getThreadNodes (Entry entry) {
         val List<Node> returnList = <Node> newLinkedList
@@ -183,5 +209,13 @@ class SCGExtensions {
         val nodeList = <Node> newLinkedList
         schedule.schedulingBlocks.forEach[it.nodes.forEach[nodeList.add(it)]]
         nodeList
+    }
+    
+    // -------------------------------------------------------------------------
+    
+    def PotentialLoopProblem createPotentialLoopProblem(List<ControlFlow> controlFlows) {
+    	val plp = ScgschedFactory::eINSTANCE.createPotentialLoopProblem
+    	plp.controlFlows.addAll(controlFlows)
+    	plp
     }
 }
