@@ -17,7 +17,9 @@ import de.cau.cs.kieler.core.kivi.triggers.PartTrigger
 import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.effects.KlighdDiagramEffect
-import de.cau.cs.kieler.klighd.incremental.UpdateStrategy
+
+// FIX while klighd.incremental is down
+//import de.cau.cs.kieler.klighd.incremental.UpdateStrategy
 import de.cau.cs.kieler.klighd.xtext.triggers.XtextBasedEditorActivationChangeTrigger$XtextModelChangeState
 import java.util.Collections
 import org.eclipse.core.resources.IFile
@@ -25,14 +27,16 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import de.cau.cs.kieler.klighd.xtext.UpdateXtextModelKLighDCombination
+import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 
 class SCChartsShowDiagramFileCombination extends UpdateXtextModelKLighDCombination {
     
     private static val ResourceSet resSet = new ResourceSetImpl();
  
-    override getRequestedUpdateStrategy(XtextModelChangeState state) {
-        return UpdateStrategy::ID;
-    }
+// FIX while klighd.incremental is down
+//    override getRequestedUpdateStrategy(XtextModelChangeState state) {
+//        return UpdateStrategy::ID;
+//    }
     
     /**
      * The 'execute()' method, see doc of {@link AbstractCombination}.
@@ -65,7 +69,9 @@ class SCChartsShowDiagramFileCombination extends UpdateXtextModelKLighDCombinati
                 ])?.contents?.head;
                 if (eObject != null) {
                     this.schedule(new KlighdDiagramEffect("volatile.sccharts.outline", eObject) => [
-                        it.setProperty(LightDiagramServices::REQUESTED_UPDATE_STRATEGY, UpdateStrategy::ID);
+// FIX while klighd.incremental is down
+                        it.setProperty(LightDiagramServices::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
+//                        it.setProperty(LightDiagramServices::REQUESTED_UPDATE_STRATEGY, UpdateStrategy::ID);
                     ]);
                 }
             }
