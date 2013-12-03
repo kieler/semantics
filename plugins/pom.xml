@@ -29,7 +29,6 @@
     <module>de.cau.cs.kieler.core.kexpressions.ui</module>
     <module>de.cau.cs.kieler.core.model</module>
     <module>de.cau.cs.kieler.core.model.gmf</module>
-    <module>de.cau.cs.kieler.core.model.graphiti</module>
     <module>de.cau.cs.kieler.core.model.xtend</module>
     <module>de.cau.cs.kieler.core.model.xtext</module>
     <module>de.cau.cs.kieler.core.product</module>
