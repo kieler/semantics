@@ -37,35 +37,35 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ActivationExpression extends EObject {
     /**
-     * Returns the value of the '<em><b>Expressions</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Expressions</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Expressions</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Expressions</em>' containment reference list.
-     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getActivationExpression_Expressions()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Expressions</em>' containment reference list.
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getActivationExpression_Expressions()
+	 * @model containment="true"
+	 * @generated
+	 */
     EList<Expression> getExpressions();
 
     /**
-     * Returns the value of the '<em><b>Basic Blocks</b></em>' reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scgbb.BasicBlock}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Basic Blocks</b></em>' reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scgbb.BasicBlock}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Basic Blocks</em>' reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Basic Blocks</em>' reference list.
-     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getActivationExpression_BasicBlocks()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Basic Blocks</em>' reference list.
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getActivationExpression_BasicBlocks()
+	 * @model
+	 * @generated
+	 */
     EList<BasicBlock> getBasicBlocks();
 
 } // ActivationExpression

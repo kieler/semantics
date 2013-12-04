@@ -14,9 +14,7 @@
 package de.cau.cs.kieler.scgbb;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -39,61 +37,61 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface BasicBlock extends EObject {
     /**
-     * Returns the value of the '<em><b>Scheduling Blocks</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scgbb.SchedulingBlock}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Scheduling Blocks</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scgbb.SchedulingBlock}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Scheduling Blocks</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Scheduling Blocks</em>' containment reference list.
-     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_SchedulingBlocks()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Scheduling Blocks</em>' containment reference list.
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_SchedulingBlocks()
+	 * @model containment="true"
+	 * @generated
+	 */
     EList<SchedulingBlock> getSchedulingBlocks();
 
     /**
-     * Returns the value of the '<em><b>Activation Expressions</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scgbb.ActivationExpression}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Activation Expressions</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scgbb.ActivationExpression}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Activation Expressions</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Activation Expressions</em>' containment reference list.
-     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_ActivationExpressions()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Activation Expressions</em>' containment reference list.
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_ActivationExpressions()
+	 * @model containment="true"
+	 * @generated
+	 */
     EList<ActivationExpression> getActivationExpressions();
 
     /**
-     * Returns the value of the '<em><b>Guard</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Guard</b></em>' reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Guard</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Guard</em>' containment reference.
-     * @see #setGuard(ValuedObject)
-     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_Guard()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Guard</em>' reference.
+	 * @see #setGuard(ValuedObject)
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_Guard()
+	 * @model
+	 * @generated
+	 */
     ValuedObject getGuard();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuard <em>Guard</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Guard</em>' containment reference.
-     * @see #getGuard()
-     * @generated
-     */
-    void setGuard(ValuedObject value);
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuard <em>Guard</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Guard</em>' reference.
+	 * @see #getGuard()
+	 * @generated
+	 */
+	void setGuard(ValuedObject value);
 
 } // BasicBlock

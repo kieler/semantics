@@ -46,137 +46,137 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  */
 public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements SchedulingBlock {
     /**
-     * The cached value of the '{@link #getNodes() <em>Nodes</em>}' reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getNodes() <em>Nodes</em>}' reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getNodes()
-     * @generated
-     * @ordered
-     */
+	 * @see #getNodes()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<Node> nodes;
 
     /**
-     * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getDependencies()
-     * @generated
-     * @ordered
-     */
+	 * @see #getDependencies()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<Dependency> dependencies;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected SchedulingBlockImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return ScgbbPackage.Literals.SCHEDULING_BLOCK;
-    }
+		return ScgbbPackage.Literals.SCHEDULING_BLOCK;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<Node> getNodes() {
-        if (nodes == null) {
-            nodes = new EObjectResolvingEList<Node>(Node.class, this, ScgbbPackage.SCHEDULING_BLOCK__NODES);
-        }
-        return nodes;
-    }
+		if (nodes == null) {
+			nodes = new EObjectResolvingEList<Node>(Node.class, this, ScgbbPackage.SCHEDULING_BLOCK__NODES);
+		}
+		return nodes;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<Dependency> getDependencies() {
-        if (dependencies == null) {
-            dependencies = new EObjectResolvingEList<Dependency>(Dependency.class, this, ScgbbPackage.SCHEDULING_BLOCK__DEPENDENCIES);
-        }
-        return dependencies;
-    }
+		if (dependencies == null) {
+			dependencies = new EObjectResolvingEList<Dependency>(Dependency.class, this, ScgbbPackage.SCHEDULING_BLOCK__DEPENDENCIES);
+		}
+		return dependencies;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case ScgbbPackage.SCHEDULING_BLOCK__NODES:
-                return getNodes();
-            case ScgbbPackage.SCHEDULING_BLOCK__DEPENDENCIES:
-                return getDependencies();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case ScgbbPackage.SCHEDULING_BLOCK__NODES:
+				return getNodes();
+			case ScgbbPackage.SCHEDULING_BLOCK__DEPENDENCIES:
+				return getDependencies();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case ScgbbPackage.SCHEDULING_BLOCK__NODES:
-                getNodes().clear();
-                getNodes().addAll((Collection<? extends Node>)newValue);
-                return;
-            case ScgbbPackage.SCHEDULING_BLOCK__DEPENDENCIES:
-                getDependencies().clear();
-                getDependencies().addAll((Collection<? extends Dependency>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case ScgbbPackage.SCHEDULING_BLOCK__NODES:
+				getNodes().clear();
+				getNodes().addAll((Collection<? extends Node>)newValue);
+				return;
+			case ScgbbPackage.SCHEDULING_BLOCK__DEPENDENCIES:
+				getDependencies().clear();
+				getDependencies().addAll((Collection<? extends Dependency>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case ScgbbPackage.SCHEDULING_BLOCK__NODES:
-                getNodes().clear();
-                return;
-            case ScgbbPackage.SCHEDULING_BLOCK__DEPENDENCIES:
-                getDependencies().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case ScgbbPackage.SCHEDULING_BLOCK__NODES:
+				getNodes().clear();
+				return;
+			case ScgbbPackage.SCHEDULING_BLOCK__DEPENDENCIES:
+				getDependencies().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case ScgbbPackage.SCHEDULING_BLOCK__NODES:
-                return nodes != null && !nodes.isEmpty();
-            case ScgbbPackage.SCHEDULING_BLOCK__DEPENDENCIES:
-                return dependencies != null && !dependencies.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case ScgbbPackage.SCHEDULING_BLOCK__NODES:
+				return nodes != null && !nodes.isEmpty();
+			case ScgbbPackage.SCHEDULING_BLOCK__DEPENDENCIES:
+				return dependencies != null && !dependencies.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //SchedulingBlockImpl

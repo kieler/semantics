@@ -14,25 +14,18 @@
 package de.cau.cs.kieler.scgbb.impl;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-
 import de.cau.cs.kieler.scgbb.ActivationExpression;
 import de.cau.cs.kieler.scgbb.BasicBlock;
 import de.cau.cs.kieler.scgbb.ScgbbPackage;
 import de.cau.cs.kieler.scgbb.SchedulingBlock;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -53,218 +46,212 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class BasicBlockImpl extends MinimalEObjectImpl.Container implements BasicBlock {
     /**
-     * The cached value of the '{@link #getSchedulingBlocks() <em>Scheduling Blocks</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getSchedulingBlocks() <em>Scheduling Blocks</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getSchedulingBlocks()
-     * @generated
-     * @ordered
-     */
+	 * @see #getSchedulingBlocks()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<SchedulingBlock> schedulingBlocks;
 
     /**
-     * The cached value of the '{@link #getActivationExpressions() <em>Activation Expressions</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getActivationExpressions() <em>Activation Expressions</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getActivationExpressions()
-     * @generated
-     * @ordered
-     */
+	 * @see #getActivationExpressions()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<ActivationExpression> activationExpressions;
 
     /**
-     * The cached value of the '{@link #getGuard() <em>Guard</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getGuard() <em>Guard</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getGuard()
-     * @generated
-     * @ordered
-     */
+	 * @see #getGuard()
+	 * @generated
+	 * @ordered
+	 */
     protected ValuedObject guard;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected BasicBlockImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return ScgbbPackage.Literals.BASIC_BLOCK;
-    }
+		return ScgbbPackage.Literals.BASIC_BLOCK;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<SchedulingBlock> getSchedulingBlocks() {
-        if (schedulingBlocks == null) {
-            schedulingBlocks = new EObjectContainmentEList<SchedulingBlock>(SchedulingBlock.class, this, ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS);
-        }
-        return schedulingBlocks;
-    }
+		if (schedulingBlocks == null) {
+			schedulingBlocks = new EObjectContainmentEList<SchedulingBlock>(SchedulingBlock.class, this, ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS);
+		}
+		return schedulingBlocks;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<ActivationExpression> getActivationExpressions() {
-        if (activationExpressions == null) {
-            activationExpressions = new EObjectContainmentEList<ActivationExpression>(ActivationExpression.class, this, ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS);
-        }
-        return activationExpressions;
-    }
+		if (activationExpressions == null) {
+			activationExpressions = new EObjectContainmentEList<ActivationExpression>(ActivationExpression.class, this, ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS);
+		}
+		return activationExpressions;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ValuedObject getGuard() {
-        return guard;
-    }
+		if (guard != null && guard.eIsProxy()) {
+			InternalEObject oldGuard = (InternalEObject)guard;
+			guard = (ValuedObject)eResolveProxy(oldGuard);
+			if (guard != oldGuard) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgbbPackage.BASIC_BLOCK__GUARD, oldGuard, guard));
+			}
+		}
+		return guard;
+	}
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetGuard(ValuedObject newGuard, NotificationChain msgs) {
-        ValuedObject oldGuard = guard;
-        guard = newGuard;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__GUARD, oldGuard, newGuard);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ValuedObject basicGetGuard() {
+		return guard;
+	}
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setGuard(ValuedObject newGuard) {
-        if (newGuard != guard) {
-            NotificationChain msgs = null;
-            if (guard != null)
-                msgs = ((InternalEObject)guard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgbbPackage.BASIC_BLOCK__GUARD, null, msgs);
-            if (newGuard != null)
-                msgs = ((InternalEObject)newGuard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgbbPackage.BASIC_BLOCK__GUARD, null, msgs);
-            msgs = basicSetGuard(newGuard, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__GUARD, newGuard, newGuard));
-    }
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGuard(ValuedObject newGuard) {
+		ValuedObject oldGuard = guard;
+		guard = newGuard;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__GUARD, oldGuard, guard));
+	}
 
-    /**
-     * <!-- begin-user-doc -->
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
-                return ((InternalEList<?>)getSchedulingBlocks()).basicRemove(otherEnd, msgs);
-            case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
-                return ((InternalEList<?>)getActivationExpressions()).basicRemove(otherEnd, msgs);
-            case ScgbbPackage.BASIC_BLOCK__GUARD:
-                return basicSetGuard(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
+				return ((InternalEList<?>)getSchedulingBlocks()).basicRemove(otherEnd, msgs);
+			case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
+				return ((InternalEList<?>)getActivationExpressions()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
-                return getSchedulingBlocks();
-            case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
-                return getActivationExpressions();
-            case ScgbbPackage.BASIC_BLOCK__GUARD:
-                return getGuard();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
+				return getSchedulingBlocks();
+			case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
+				return getActivationExpressions();
+			case ScgbbPackage.BASIC_BLOCK__GUARD:
+				if (resolve) return getGuard();
+				return basicGetGuard();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
-                getSchedulingBlocks().clear();
-                getSchedulingBlocks().addAll((Collection<? extends SchedulingBlock>)newValue);
-                return;
-            case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
-                getActivationExpressions().clear();
-                getActivationExpressions().addAll((Collection<? extends ActivationExpression>)newValue);
-                return;
-            case ScgbbPackage.BASIC_BLOCK__GUARD:
-                setGuard((ValuedObject)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
+				getSchedulingBlocks().clear();
+				getSchedulingBlocks().addAll((Collection<? extends SchedulingBlock>)newValue);
+				return;
+			case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
+				getActivationExpressions().clear();
+				getActivationExpressions().addAll((Collection<? extends ActivationExpression>)newValue);
+				return;
+			case ScgbbPackage.BASIC_BLOCK__GUARD:
+				setGuard((ValuedObject)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
-                getSchedulingBlocks().clear();
-                return;
-            case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
-                getActivationExpressions().clear();
-                return;
-            case ScgbbPackage.BASIC_BLOCK__GUARD:
-                setGuard((ValuedObject)null);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
+				getSchedulingBlocks().clear();
+				return;
+			case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
+				getActivationExpressions().clear();
+				return;
+			case ScgbbPackage.BASIC_BLOCK__GUARD:
+				setGuard((ValuedObject)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
-                return schedulingBlocks != null && !schedulingBlocks.isEmpty();
-            case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
-                return activationExpressions != null && !activationExpressions.isEmpty();
-            case ScgbbPackage.BASIC_BLOCK__GUARD:
-                return guard != null;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
+				return schedulingBlocks != null && !schedulingBlocks.isEmpty();
+			case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
+				return activationExpressions != null && !activationExpressions.isEmpty();
+			case ScgbbPackage.BASIC_BLOCK__GUARD:
+				return guard != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //BasicBlockImpl

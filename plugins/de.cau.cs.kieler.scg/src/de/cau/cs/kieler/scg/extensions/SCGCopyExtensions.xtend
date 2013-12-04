@@ -142,9 +142,9 @@ class SCGCopyExtensions {
     // -------------------------------------------------------------------------
     def copyBasicBlock(BasicBlock basicBlock, SCGraphBB target) {
         val bb = ScgbbFactory::eINSTANCE.createBasicBlock
-        val newGuard = basicBlock.guard.copy
-        bb.guard = newGuard
-        valuedObjectMapping.put(basicBlock.guard, newGuard)
+//        val newGuard = basicBlock.guard.copy
+//        bb.guard = newGuard
+//        valuedObjectMapping.put(basicBlock.guard, newGuard)
         
         basicBlock.schedulingBlocks.forEach[ it.copySchedulingBlock(bb) ]
         

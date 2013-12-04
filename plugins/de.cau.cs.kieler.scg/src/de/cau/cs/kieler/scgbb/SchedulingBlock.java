@@ -40,35 +40,35 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface SchedulingBlock extends EObject {
     /**
-     * Returns the value of the '<em><b>Nodes</b></em>' reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scg.Node}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Nodes</b></em>' reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scg.Node}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Nodes</em>' reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Nodes</em>' reference list.
-     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getSchedulingBlock_Nodes()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Nodes</em>' reference list.
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getSchedulingBlock_Nodes()
+	 * @model
+	 * @generated
+	 */
     EList<Node> getNodes();
 
     /**
-     * Returns the value of the '<em><b>Dependencies</b></em>' reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scgdep.Dependency}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Dependencies</b></em>' reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scgdep.Dependency}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Dependencies</em>' reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Dependencies</em>' reference list.
-     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getSchedulingBlock_Dependencies()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Dependencies</em>' reference list.
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getSchedulingBlock_Dependencies()
+	 * @model
+	 * @generated
+	 */
     EList<Dependency> getDependencies();
 
 } // SchedulingBlock

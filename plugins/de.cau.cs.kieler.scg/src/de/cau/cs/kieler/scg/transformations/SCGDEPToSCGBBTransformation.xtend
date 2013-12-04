@@ -37,6 +37,7 @@ import java.util.ArrayList
 import java.util.List
 import de.cau.cs.kieler.core.util.Pair
 import com.google.inject.Guice
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 
 /** 
  * SCGDEP to SCGBB Transformation 
@@ -187,6 +188,7 @@ class SCGDEPToSCGBBTransformation {
         basicBlock.activationExpressions.add(newExpression)
         
         scg.basicBlocks.add(basicBlock)
+        scg.valuedObjects.add(guard)
         basicBlock
     }
     
