@@ -82,25 +82,28 @@ class S2SJ {
    
    // -------------------------------------------------------------------------   
 
-   def String listSignals(List<ValuedObject> signalList) {
+   def String listValuedObjects(List<ValuedObject> valuedObjectList) {
        '''
-    «FOR signal : signalList SEPARATOR ""»
-        public boolean «signal.name» = false;
+    «FOR valuedObject : valuedObjectList SEPARATOR ""»
+        public boolean «valuedObject.name» = false;
     «ENDFOR»
-    «FOR signal : signalList SEPARATOR ""»
-        public Object «signal.name»_value = null;
+    «FOR valuedObject : valuedObjectList SEPARATOR ""»
+        «IF valuedObject.isSignal»
+            public Object «valuedObject.name»_value = null;
+        «ENDIF»
     «ENDFOR»
     «IF debug»
-        «FOR signal : signalList SEPARATOR ""»
-            public int «signal.name»_prio = -1;
+        «FOR valuedObject : valuedObjectList SEPARATOR ""»
+            public int «valuedObject.name»_prio = -1;
         «ENDFOR»
         int order = 0;
-        «FOR signal : signalList SEPARATOR ""»
-            public int «signal.name»_order = -1;
+        «FOR valuedObject : valuedObjectList SEPARATOR ""»
+            public int «valuedObject.name»_order = -1;
         «ENDFOR»
     «ENDIF»
        '''
    }
+
    
    // -------------------------------------------------------------------------   
 
@@ -137,7 +140,7 @@ public class ''' + className + ''' extends SJLProgramWithSignals<State> implemen
         ''' + program.eAllContents.filter(typeof(State)).toList.listContinuations + '''
     }
 
-''' + program.valuedObjects.filter[e|e.isSignal].toList.listSignals + ''' 
+''' + program.valuedObjects.toList.listValuedObjects + ''' 
 
     public ''' + className + '''() {
         super(''' + program.states.head.name + ''', ''' + program.priority + ''', ''' + program.priority + ''');
@@ -152,13 +155,13 @@ public class ''' + className + ''' extends SJLProgramWithSignals<State> implemen
    def sResetSignals(Program program) {
     '''
     public void resetInputSignals() {    
-    «FOR signal : program.valuedObjects.filter[e|e.isSignal].filter(e | e.isInput) SEPARATOR ""»
+    «FOR signal : program.valuedObjects.filter(e | e.isInput) SEPARATOR ""»
         «signal.name» = false;
     «ENDFOR»
     }
 
     public void resetOutputSignals() {    
-    «FOR signal : program.valuedObjects.filter[e|e.isSignal].filter(e | !e.isInput) SEPARATOR ""»
+    «FOR signal : program.valuedObjects.filter(e | !e.isInput) SEPARATOR ""»
         «signal.name» = false;
     «ENDFOR»
     }
@@ -462,16 +465,11 @@ break;'''
     
    // Expand a signal.
    def dispatch CharSequence expand(ValuedObject signal) {
-       if (signal.isSignal) {
-         return  '''«signal.name»'''
-       }
+      return  '''«signal.name»'''
    }
    // Expand a signal within a value reference
    def dispatch CharSequence expand_val(ValuedObject signal) {
-       if (signal.isSignal) {
-         return '''«signal.name»'''
-       }
-       return ''''''
+      return '''«signal.name»'''
    }
    def dispatch CharSequence expand_val(ValuedObjectReference valuedObjectReference) {
         '''«valuedObjectReference.valuedObject.expand_val»'''
