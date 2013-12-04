@@ -110,6 +110,9 @@ class S2SCC {
     «/* Signal constants */»
     «sSignalConstants(program)»
     
+   «/* Variables */»
+    «sVariables(program)»    
+    
     // Highest thread id in use;
     // Enforce the LARGEST array option for thread IDs due to problems with the intermediate LONG_BIT option 
     #define _SC_ID_MAX «2*program.priority» 
@@ -191,6 +194,21 @@ class S2SCC {
        
        const char *s2signame[] = {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ", 
 "»"«signal.name»"«ENDFOR»};'''
+   }
+
+   // Generate variables.
+   def sVariables(Program program) {
+       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal] SEPARATOR ";
+ "»«signal.type.expand» «signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»«ENDFOR»;'''
+   }
+
+   def dispatch expand(ValueType valueType) {
+       if (valueType == ValueType::BOOL) {
+           return '''int'''
+       }
+       else {
+           return '''«valueType»'''
+       }
    }
    
    // Generate simple reset.
@@ -636,8 +654,10 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    def dispatch CharSequence expand(ValuedObject signal) {
        if (signal.isSignal) {
             return  '''PRESENT_SCC(«signal.name»)'''
+       } else {
+            // variable case
+            return  '''«signal.name»'''
        }
-       return ''''''
    }
    // Expand a signal within a value reference
    def dispatch CharSequence expand_val(ValuedObject signal) {
@@ -659,16 +679,15 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    }
 
    // Expand a float expression value.
-   def dispatch CharSequenceexpand(FloatValue expression) {
+   def dispatch CharSequence expand(FloatValue expression) {
         '''«expression.value.toString»'''
    }
 
    // Expand a boolean expression value (true or false).
-   def dispatch CharSequenceexpand(BoolValue expression) {
+   def dispatch CharSequence expand(BoolValue expression) {
         '''«IF expression.value == true »1«ENDIF»«IF expression.value == false»0«ENDIF»'''
    }
 
-   
    // Expand an object reference.
    def dispatch CharSequence expand(ValuedObjectReference valuedObjectReference) {
         '''«valuedObjectReference.valuedObject.expand»'''
