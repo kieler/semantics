@@ -97,8 +97,9 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
                 // reset any deferred partState
                 deferredEditorPart = null;
                 if (KIEMExecutionAutoloadCombination.getLastValidEditorId() == null) {
-                  KIEMExecutionAutoloadCombination.setLastValidEditorId(activeEditorPart.getSite()
-                  .getId());
+                  //Is the following right?! By-pass setting this seems to corrupt detection 
+                  //wether this is the first start
+                  //KIEMExecutionAutoloadCombination.setLastValidEditorId(activeEditorPart.getSite().getId());
                 }
                 refreshKIEMActiveAndOpenedModels(activeEditorPart);
             } else {

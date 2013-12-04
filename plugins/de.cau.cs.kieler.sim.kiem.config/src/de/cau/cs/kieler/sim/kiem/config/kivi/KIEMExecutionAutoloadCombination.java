@@ -124,7 +124,7 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination implem
             editorId = new EditorIdWrapper(editor.getId());
             editorName = editor.getRegisteredName();
             
-            // only if editor has been changed to a valid one
+            // only if editor has been changed to a valid one (OR schedules are still empty because of first selection)
             if (editorId == null || (!editorId.equals(lastValidEditorId))) {
                 ScheduleManager scheduleManager = ScheduleManager.getInstance();
                 List<ScheduleData> scheduleDataList = scheduleManager.getMatchingSchedules(
