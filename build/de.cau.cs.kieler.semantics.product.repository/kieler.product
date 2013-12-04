@@ -172,7 +172,6 @@ This Agreement is governed by the laws of the State of New York and the intellec
       <feature id="de.cau.cs.kieler.kiml.graphviz.feature" version="0.0.0"/>
       <feature id="de.cau.cs.kieler.kiml.ogdf.feature" version="0.0.0"/>
       <feature id="de.cau.cs.kieler.klighd.feature" version="0.0.0"/>
-      <feature id="de.cau.cs.kieler.klighd.examples.feature" version="0.0.0"/>
       <feature id="de.cau.cs.kieler.kwebs.client.jaxws.feature" version="0.0.0"/>
       <feature id="de.cau.cs.kieler.ptview.feature" version="0.0.0"/>
       <feature id="de.cau.cs.kieler.dependencies.feature" version="0.0.0"/>
