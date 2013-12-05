@@ -13,17 +13,15 @@
  */
 package de.cau.cs.kieler.scg.klighd
 
+import com.google.inject.Singleton
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.scoping.KExpressionsScopeProvider
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scgbb.SCGraphBB
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
-import com.google.inject.Singleton
-import de.cau.cs.kieler.scgbb.SCGraphBB
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 /** 
  * Specialized SCG KExpression scope provider
