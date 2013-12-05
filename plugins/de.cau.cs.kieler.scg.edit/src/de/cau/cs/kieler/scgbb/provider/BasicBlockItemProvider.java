@@ -94,7 +94,7 @@ public class BasicBlockItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ScgbbPackage.Literals.BASIC_BLOCK__SCHEDULING_BLOCKS);
 			childrenFeatures.add(ScgbbPackage.Literals.BASIC_BLOCK__ACTIVATION_EXPRESSIONS);
-			childrenFeatures.add(ScgbbPackage.Literals.BASIC_BLOCK__GUARD);
+			childrenFeatures.add(ScgbbPackage.Literals.BASIC_BLOCK__GUARDS);
 		}
 		return childrenFeatures;
 	}
@@ -148,7 +148,7 @@ public class BasicBlockItemProvider
 		switch (notification.getFeatureID(BasicBlock.class)) {
 			case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
 			case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
-			case ScgbbPackage.BASIC_BLOCK__GUARD:
+			case ScgbbPackage.BASIC_BLOCK__GUARDS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -178,7 +178,7 @@ public class BasicBlockItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgbbPackage.Literals.BASIC_BLOCK__GUARD,
+				(ScgbbPackage.Literals.BASIC_BLOCK__GUARDS,
 				 KExpressionsFactory.eINSTANCE.createValuedObject()));
 	}
 

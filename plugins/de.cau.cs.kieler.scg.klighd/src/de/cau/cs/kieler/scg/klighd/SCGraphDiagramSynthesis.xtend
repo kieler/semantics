@@ -1061,14 +1061,17 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 s.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
                 val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
                 bbContainerList.put(s, bbContainer)
-                val bbName = serializer.serialize(s.guard.reference)
+                val bbName = serializer.serialize(s.guards.head.reference)
               	bbContainer.addOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = 
               		BASICBLOCKBORDER
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
                 for(schedulingBlock : s.schedulingBlocks) {
-                    val kContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
-                    schedulingBlockMapping.put(schedulingBlock, kContainer)
+                    val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
+                    schedulingBlockMapping.put(schedulingBlock, sbContainer)
+	                val sbName = serializer.serialize(schedulingBlock.guard.reference)
+    	          	sbContainer.addOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = 
+        	      		SCHEDULINGBLOCKBORDER
                 }                    
         }
         

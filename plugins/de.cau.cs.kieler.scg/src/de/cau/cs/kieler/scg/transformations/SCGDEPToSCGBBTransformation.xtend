@@ -179,8 +179,8 @@ class SCGDEPToSCGBBTransformation {
     ) {
         val basicBlock = ScgbbFactory::eINSTANCE.createBasicBlock
       
-        basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock)
-        basicBlock.guard = guard
+        basicBlock.guards.add(guard)
+        basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock(basicBlock))
         
         val newExpression = ScgbbFactory::eINSTANCE.createActivationExpression
         if (predecessorBlocks != null) newExpression.basicBlocks.addAll(predecessorBlocks)
@@ -192,16 +192,26 @@ class SCGDEPToSCGBBTransformation {
         basicBlock
     }
     
-    def List<SchedulingBlock> splitSchedulingBlock(SchedulingBlock schedulingblock) {
+    def List<SchedulingBlock> splitSchedulingBlock(SchedulingBlock schedulingblock, BasicBlock basicBlock) {
         val schedulingBlocks = <SchedulingBlock> newLinkedList
         var SchedulingBlock block = null
+        var ValuedObject guard = null
         for (node : schedulingblock.nodes) {
             if (block == null || 
                 (node.incoming.filter(typeof(Dependency)).filter[it.concurrent&&!it.confluent].size > 0)
             ) {
                 if (block != null) schedulingBlocks.add(block)
+                if (guard == null) {
+                	guard = basicBlock.guards.head
+                } else {
+			        guard = KExpressionsFactory::eINSTANCE.createValuedObject
+        			guard.name = basicBlock.guards.head.name + (96 + schedulingBlocks.size + 1) as char
+        			guard.type = ValueType::BOOL
+                	basicBlock.guards.add(guard)
+                }
                 block = ScgbbFactory::eINSTANCE.createSchedulingBlock()
-                block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))                
+                block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))
+                block.guard = guard                
             }
             block.nodes.add(node)
         }

@@ -10,7 +10,8 @@
         eType="#//SchedulingBlock" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="activationExpressions"
         upperBound="-1" eType="#//ActivationExpression" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="guard" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="guards" lowerBound="1"
+        upperBound="-1" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SchedulingBlock">
@@ -18,6 +19,7 @@
         eType="ecore:EClass scg.ecore#//Node"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
         eType="ecore:EClass scgdep.ecore#//Dependency"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="guard" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ActivationExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"

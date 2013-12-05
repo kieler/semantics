@@ -72,6 +72,7 @@ public class SchedulingBlockItemProvider
 
 			addNodesPropertyDescriptor(object);
 			addDependenciesPropertyDescriptor(object);
+			addGuardPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -121,6 +122,28 @@ public class SchedulingBlockItemProvider
 	}
 
     /**
+	 * This adds a property descriptor for the Guard feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addGuardPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SchedulingBlock_guard_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SchedulingBlock_guard_feature", "_UI_SchedulingBlock_type"),
+				 ScgbbPackage.Literals.SCHEDULING_BLOCK__GUARD,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+				/**
 	 * This returns SchedulingBlock.gif.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

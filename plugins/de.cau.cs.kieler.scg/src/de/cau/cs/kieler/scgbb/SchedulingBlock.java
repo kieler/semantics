@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.scgbb;
 
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.scg.Node;
 
 import de.cau.cs.kieler.scgdep.Dependency;
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scgbb.SchedulingBlock#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.SchedulingBlock#getDependencies <em>Dependencies</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.SchedulingBlock#getGuard <em>Guard</em>}</li>
  * </ul>
  * </p>
  *
@@ -70,5 +72,31 @@ public interface SchedulingBlock extends EObject {
 	 * @generated
 	 */
     EList<Dependency> getDependencies();
+
+				/**
+	 * Returns the value of the '<em><b>Guard</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Guard</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Guard</em>' reference.
+	 * @see #setGuard(ValuedObject)
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getSchedulingBlock_Guard()
+	 * @model
+	 * @generated
+	 */
+	ValuedObject getGuard();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.SchedulingBlock#getGuard <em>Guard</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Guard</em>' reference.
+	 * @see #getGuard()
+	 * @generated
+	 */
+	void setGuard(ValuedObject value);
 
 } // SchedulingBlock

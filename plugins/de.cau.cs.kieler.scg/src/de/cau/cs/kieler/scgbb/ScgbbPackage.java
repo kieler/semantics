@@ -152,15 +152,15 @@ public interface ScgbbPackage extends EPackage {
     int BASIC_BLOCK__ACTIVATION_EXPRESSIONS = 1;
 
     /**
-	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
+	 * The feature id for the '<em><b>Guards</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int BASIC_BLOCK__GUARD = 2;
+	int BASIC_BLOCK__GUARDS = 2;
 
-    /**
+				/**
 	 * The number of structural features of the '<em>Basic Block</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -207,13 +207,22 @@ public interface ScgbbPackage extends EPackage {
     int SCHEDULING_BLOCK__DEPENDENCIES = 1;
 
     /**
+	 * The feature id for the '<em><b>Guard</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULING_BLOCK__GUARD = 2;
+
+				/**
 	 * The number of structural features of the '<em>Scheduling Block</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SCHEDULING_BLOCK_FEATURE_COUNT = 2;
+    int SCHEDULING_BLOCK_FEATURE_COUNT = 3;
 
     /**
 	 * The number of operations of the '<em>Scheduling Block</em>' class.
@@ -325,17 +334,17 @@ public interface ScgbbPackage extends EPackage {
     EReference getBasicBlock_ActivationExpressions();
 
     /**
-	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuard <em>Guard</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuards <em>Guards</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Guard</em>'.
-	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getGuard()
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Guards</em>'.
+	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getGuards()
 	 * @see #getBasicBlock()
 	 * @generated
 	 */
-    EReference getBasicBlock_Guard();
+	EReference getBasicBlock_Guards();
 
-    /**
+				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scgbb.SchedulingBlock <em>Scheduling Block</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -368,6 +377,17 @@ public interface ScgbbPackage extends EPackage {
     EReference getSchedulingBlock_Dependencies();
 
     /**
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgbb.SchedulingBlock#getGuard <em>Guard</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Guard</em>'.
+	 * @see de.cau.cs.kieler.scgbb.SchedulingBlock#getGuard()
+	 * @see #getSchedulingBlock()
+	 * @generated
+	 */
+	EReference getSchedulingBlock_Guard();
+
+				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scgbb.ActivationExpression <em>Activation Expression</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -467,14 +487,14 @@ public interface ScgbbPackage extends EPackage {
         EReference BASIC_BLOCK__ACTIVATION_EXPRESSIONS = eINSTANCE.getBasicBlock_ActivationExpressions();
 
         /**
-		 * The meta object literal for the '<em><b>Guard</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Guards</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference BASIC_BLOCK__GUARD = eINSTANCE.getBasicBlock_Guard();
+		EReference BASIC_BLOCK__GUARDS = eINSTANCE.getBasicBlock_Guards();
 
-        /**
+								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl <em>Scheduling Block</em>}' class.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -501,6 +521,14 @@ public interface ScgbbPackage extends EPackage {
         EReference SCHEDULING_BLOCK__DEPENDENCIES = eINSTANCE.getSchedulingBlock_Dependencies();
 
         /**
+		 * The meta object literal for the '<em><b>Guard</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SCHEDULING_BLOCK__GUARD = eINSTANCE.getSchedulingBlock_Guard();
+
+								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.scgbb.impl.ActivationExpressionImpl <em>Activation Expression</em>}' class.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->

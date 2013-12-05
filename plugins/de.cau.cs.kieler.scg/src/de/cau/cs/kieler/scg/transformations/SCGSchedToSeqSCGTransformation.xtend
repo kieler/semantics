@@ -44,11 +44,11 @@ class SCGSchedToSeqSCGTransformation {
         val scg = ScgFactory::eINSTANCE.createSCGraph()
         
         scgSched.copyDeclarations(scg)
-        scgSched.basicBlocks.forEach[
-        	val newGuard = guard.copy
-        	it.guard.addToValuedObjectMapping(newGuard)
+        scgSched.basicBlocks.forEach[it.guards.forEach[
+        	val newGuard = it.copy
+        	it.addToValuedObjectMapping(newGuard)
         	scg.valuedObjects.add(newGuard)
-        ]
+        ]]
         
         scg       	
     }

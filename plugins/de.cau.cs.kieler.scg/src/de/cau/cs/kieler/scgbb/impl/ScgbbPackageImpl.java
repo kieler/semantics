@@ -178,14 +178,14 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
 
     /**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public EReference getBasicBlock_Guard() {
+	public EReference getBasicBlock_Guards() {
 		return (EReference)basicBlockEClass.getEStructuralFeatures().get(2);
 	}
 
-    /**
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -213,6 +213,15 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
 	}
 
     /**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSchedulingBlock_Guard() {
+		return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(2);
+	}
+
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -273,11 +282,12 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
 		basicBlockEClass = createEClass(BASIC_BLOCK);
 		createEReference(basicBlockEClass, BASIC_BLOCK__SCHEDULING_BLOCKS);
 		createEReference(basicBlockEClass, BASIC_BLOCK__ACTIVATION_EXPRESSIONS);
-		createEReference(basicBlockEClass, BASIC_BLOCK__GUARD);
+		createEReference(basicBlockEClass, BASIC_BLOCK__GUARDS);
 
 		schedulingBlockEClass = createEClass(SCHEDULING_BLOCK);
 		createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__NODES);
 		createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__DEPENDENCIES);
+		createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__GUARD);
 
 		activationExpressionEClass = createEClass(ACTIVATION_EXPRESSION);
 		createEReference(activationExpressionEClass, ACTIVATION_EXPRESSION__EXPRESSIONS);
@@ -326,11 +336,12 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
 		initEClass(basicBlockEClass, BasicBlock.class, "BasicBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getBasicBlock_SchedulingBlocks(), this.getSchedulingBlock(), null, "schedulingBlocks", null, 0, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getBasicBlock_ActivationExpressions(), this.getActivationExpression(), null, "activationExpressions", null, 0, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getBasicBlock_Guard(), theKExpressionsPackage.getValuedObject(), null, "guard", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBasicBlock_Guards(), theKExpressionsPackage.getValuedObject(), null, "guards", null, 1, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(schedulingBlockEClass, SchedulingBlock.class, "SchedulingBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSchedulingBlock_Nodes(), theScgPackage.getNode(), null, "nodes", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSchedulingBlock_Dependencies(), theScgdepPackage.getDependency(), null, "dependencies", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSchedulingBlock_Guard(), theKExpressionsPackage.getValuedObject(), null, "guard", null, 0, 1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(activationExpressionEClass, ActivationExpression.class, "ActivationExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getActivationExpression_Expressions(), theKExpressionsPackage.getExpression(), null, "expressions", null, 0, -1, ActivationExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
