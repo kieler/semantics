@@ -79,6 +79,7 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scgsched.PotentialLoopProblem
+import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 
 /** 
  * SCCGraph KlighD synthesis 
@@ -152,6 +153,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject
     extension SCGExtensions
     
+    @Inject
+    extension SCGCopyExtensions
 
     // -------------------------------------------------------------------------
     // -- KLIGHD OPTIONS 
@@ -962,8 +965,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // Determine all interleaving edges...        
         val iSecEdges = new ArrayList<KEdge>
         for(rc : kNodeList) {
-            iSecEdges.addAll(rc.outgoingEdges.filter[ !kNodeList.contains(it.target)])
-            iSecEdges.addAll(rc.incomingEdges.filter[ !kNodeList.contains(it.source)])
+            iSecEdges.addAll(rc.outgoingEdges.filter[!kNodeList.contains(it.target)])
+            iSecEdges.addAll(rc.incomingEdges.filter[!kNodeList.contains(it.source)])
         }
         
         // Set options for the container.
@@ -986,7 +989,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         if (nodeGrouping == NODEGROUPING_BASICBLOCK) {
             kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
-                it.lineStyle = LineStyle::DOT
+                it.lineStyle = LineStyle::SOLID
             ]
             kContainer.KRendering.foreground = BASICBLOCKBORDER.copy;
             kContainer.KRendering.foreground.alpha = Math.round(255f)
@@ -996,7 +999,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         if (nodeGrouping == NODEGROUPING_SCHEDULINGBLOCK) {
             kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
-                it.lineStyle = LineStyle::DOT
+                it.lineStyle = LineStyle::SOLID
             ]
             kContainer.KRendering.foreground = SCHEDULINGBLOCKBORDER.copy;
             kContainer.KRendering.foreground.alpha = Math.round(255f)
@@ -1058,8 +1061,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 s.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
                 val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
                 bbContainerList.put(s, bbContainer)
-                val bbName = serializer.serialize(s.guard)
-              	bbContainer.createLabel.configureOutsideBottomLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME)
+                val bbName = serializer.serialize(s.guard.reference)
+              	bbContainer.addOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = 
+              		BASICBLOCKBORDER
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
                 for(schedulingBlock : s.schedulingBlocks) {

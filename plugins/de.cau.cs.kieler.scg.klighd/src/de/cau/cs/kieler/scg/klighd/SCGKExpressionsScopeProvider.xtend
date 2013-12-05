@@ -20,6 +20,10 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import com.google.inject.Singleton
+import de.cau.cs.kieler.scgbb.SCGraphBB
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 /** 
  * Specialized SCG KExpression scope provider
@@ -49,7 +53,10 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
 
     // ValuedObjectReference scope
     def IScope scope_ValuedObjectReference_valuedObject(EObject context, EReference reference) {
-        Scopes.scopeFor(parent.getValuedObjects())
+  		val scopeObjects = <ValuedObject> newLinkedList
+  		scopeObjects.addAll(parent.getValuedObjects)
+    	if (parent instanceof SCGraphBB) (parent as SCGraphBB).basicBlocks.forEach[scopeObjects.add(it.guard)]
+        Scopes.scopeFor(scopeObjects)
     }
 
 }
