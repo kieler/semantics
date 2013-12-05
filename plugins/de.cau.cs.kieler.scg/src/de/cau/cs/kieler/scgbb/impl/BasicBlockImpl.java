@@ -66,7 +66,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
     protected EList<ActivationExpression> activationExpressions;
 
     /**
-	 * The cached value of the '{@link #getGuard() <em>Guard</em>}' reference.
+	 * The cached value of the '{@link #getGuard() <em>Guard</em>}' containment reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @see #getGuard()
@@ -124,14 +124,6 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 	 * @generated
 	 */
     public ValuedObject getGuard() {
-		if (guard != null && guard.eIsProxy()) {
-			InternalEObject oldGuard = (InternalEObject)guard;
-			guard = (ValuedObject)eResolveProxy(oldGuard);
-			if (guard != oldGuard) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgbbPackage.BASIC_BLOCK__GUARD, oldGuard, guard));
-			}
-		}
 		return guard;
 	}
 
@@ -140,8 +132,14 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ValuedObject basicGetGuard() {
-		return guard;
+	public NotificationChain basicSetGuard(ValuedObject newGuard, NotificationChain msgs) {
+		ValuedObject oldGuard = guard;
+		guard = newGuard;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__GUARD, oldGuard, newGuard);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
 				/**
@@ -150,10 +148,17 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 	 * @generated
 	 */
 	public void setGuard(ValuedObject newGuard) {
-		ValuedObject oldGuard = guard;
-		guard = newGuard;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__GUARD, oldGuard, guard));
+		if (newGuard != guard) {
+			NotificationChain msgs = null;
+			if (guard != null)
+				msgs = ((InternalEObject)guard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgbbPackage.BASIC_BLOCK__GUARD, null, msgs);
+			if (newGuard != null)
+				msgs = ((InternalEObject)newGuard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgbbPackage.BASIC_BLOCK__GUARD, null, msgs);
+			msgs = basicSetGuard(newGuard, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__GUARD, newGuard, newGuard));
 	}
 
 				/**
@@ -168,6 +173,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				return ((InternalEList<?>)getSchedulingBlocks()).basicRemove(otherEnd, msgs);
 			case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
 				return ((InternalEList<?>)getActivationExpressions()).basicRemove(otherEnd, msgs);
+			case ScgbbPackage.BASIC_BLOCK__GUARD:
+				return basicSetGuard(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -185,8 +192,7 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 			case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
 				return getActivationExpressions();
 			case ScgbbPackage.BASIC_BLOCK__GUARD:
-				if (resolve) return getGuard();
-				return basicGetGuard();
+				return getGuard();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}

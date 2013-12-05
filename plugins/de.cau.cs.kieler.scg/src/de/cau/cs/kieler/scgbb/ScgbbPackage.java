@@ -152,7 +152,7 @@ public interface ScgbbPackage extends EPackage {
     int BASIC_BLOCK__ACTIVATION_EXPRESSIONS = 1;
 
     /**
-	 * The feature id for the '<em><b>Guard</b></em>' reference.
+	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -325,10 +325,10 @@ public interface ScgbbPackage extends EPackage {
     EReference getBasicBlock_ActivationExpressions();
 
     /**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuard <em>Guard</em>}'.
+	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuard <em>Guard</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Guard</em>'.
+	 * @return the meta object for the containment reference '<em>Guard</em>'.
 	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getGuard()
 	 * @see #getBasicBlock()
 	 * @generated
@@ -467,7 +467,7 @@ public interface ScgbbPackage extends EPackage {
         EReference BASIC_BLOCK__ACTIVATION_EXPRESSIONS = eINSTANCE.getBasicBlock_ActivationExpressions();
 
         /**
-		 * The meta object literal for the '<em><b>Guard</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Guard</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
 		 * @generated
