@@ -14,11 +14,20 @@
 package de.cau.cs.kieler.scg.transformations
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scgsched.SCGraphSched
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scgbb.BasicBlock
+import de.cau.cs.kieler.scgsched.SCGraphSched
+import de.cau.cs.kieler.scgsched.Schedule
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /** 
@@ -50,6 +59,74 @@ class SCGSchedToSeqSCGTransformation {
         	scg.valuedObjects.add(newGuard)
         ]]
         
+        val entry = ScgFactory::eINSTANCE.createEntry
+    	val entryFlow = ScgFactory::eINSTANCE.createControlFlow
+    	entry.next = entryFlow
+        scg.nodes.add(entry)
+        val exitFlows = scgSched.schedules.head.transformSchedule(scg, entryFlow)
+        val exit = ScgFactory::eINSTANCE.createExit
+        exitFlows.forEach[it.target = exit]
+        scg.nodes.add(exit)
+        
         scg       	
     }
+    
+    def transformSchedule(Schedule schedule, SCGraph scg, ControlFlow controlFlow) {
+    	val nextFlows = <ControlFlow> newArrayList
+    	nextFlows.add(controlFlow)
+    	for (sb : schedule.schedulingBlocks) {
+    		val basicBlock = sb.eContainer as BasicBlock
+    		val newAssignment = ScgFactory::eINSTANCE.createAssignment
+    		newAssignment.valuedObject = sb.guard.copyValuedObject
+    		var Expression expression
+    		
+    		if (basicBlock.activationExpressions.size>1) {
+    			expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
+    			(expression as OperatorExpression).setOperator(OperatorType::OR)
+    			val myExp = expression
+    			basicBlock.activationExpressions.forEach[
+    				(myExp as OperatorExpression).subExpressions.add(it.expressions.head)
+    			]
+    		} else {
+    			expression = basicBlock.activationExpressions.head.expressions.head
+    		}
+    		
+    		// FIXME: expression should never be null
+    		// This fixes unimplemented features in the synchronizer 
+    		if (expression == null) expression = sb.guard.reference
+    		
+    		newAssignment.assignment = expression.copyExpression
+    		nextFlows.forEach[it.target = newAssignment]
+    		nextFlows.clear
+    		
+    		val nextFlow = ScgFactory::eINSTANCE.createControlFlow
+    		newAssignment.next = nextFlow
+    		nextFlows.add(nextFlow)
+    		
+    		scg.nodes.add(newAssignment)
+    		
+    		if (sb.nodes.filter(typeof(Assignment)).size>0) {
+    			val conditional = ScgFactory::eINSTANCE.createConditional
+    			conditional.condition = sb.guard.reference.copyExpression
+    			conditional.then = ScgFactory::eINSTANCE.createControlFlow
+    			conditional.^else = ScgFactory::eINSTANCE.createControlFlow
+    			nextFlows.head.target = conditional
+    			nextFlows.clear
+    			
+    			scg.nodes.add(conditional)
+    			var nextCFlow = conditional.then
+    			for (assignment : sb.nodes.filter(typeof(Assignment))) {
+    				val Assignment cAssignment = assignment.copySCGNode as Assignment
+    				nextCFlow.target = cAssignment
+    				scg.nodes.add(cAssignment)
+    				nextCFlow = ScgFactory::eINSTANCE.createControlFlow
+    				cAssignment.next = nextCFlow
+    			}
+    			nextFlows.add(nextCFlow)
+    			nextFlows.add(conditional.^else)
+    		}
+    	}
+    	nextFlows
+    }
+    
 }
