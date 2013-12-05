@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.scg.extensions
 
-import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
@@ -43,8 +42,7 @@ import de.cau.cs.kieler.scgsched.ScgschedFactory
 import de.cau.cs.kieler.scgsched.Schedule
 import java.util.HashMap
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import com.google.common.collect.ImmutableList
-import java.util.ArrayList
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /** 
  * SCGCopyExtensions
@@ -57,11 +55,7 @@ import java.util.ArrayList
 // The SCG Copy Extensions manage all the work necessary to copy one SCG instance into another
 // respecting different SCG specializations.
 class SCGCopyExtensions {
-    
-    // Inject SCG Extensions.    
-    @Inject
-    extension SCGExtensions
-         
+     
     // M2M Mapping
     private val nodeMapping = new HashMap<Node, Node>
     private val revNodeMapping = new HashMap<Node, Node>
@@ -76,11 +70,7 @@ class SCGCopyExtensions {
     
     def copySCG(SCGraph source, SCGraph target) {
         // Copy declarations.
-        for(valuedObject : source.valuedObjects) {
-            val newValuedObject = valuedObject.copy
-            target.valuedObjects.add(newValuedObject)
-            valuedObjectMapping.put(valuedObject, newValuedObject)
-        }
+        source.copyDeclarations(target)
         
         // Additionally, copy all nodes and fill the mapping structures.
         for(node : source.nodes) {
@@ -124,6 +114,17 @@ class SCGCopyExtensions {
        
         target
     }   
+    
+    // -------------------------------------------------------------------------
+    // -- Copy Declarations
+    // -------------------------------------------------------------------------
+    def copyDeclarations(SCGraph source, SCGraph target) {
+        for(valuedObject : source.valuedObjects) {
+            val newValuedObject = valuedObject.copy
+            target.valuedObjects.add(newValuedObject)
+            valuedObjectMapping.put(valuedObject, newValuedObject)
+        }    	
+    }
     
     // -------------------------------------------------------------------------
     // -- Copy Schedule 
@@ -359,5 +360,13 @@ class SCGCopyExtensions {
         expression
     }
 
-   // -------------------------------------------------------------------------   
+    // -------------------------------------------------------------------------
+    // -- Copy Helper 
+    // -------------------------------------------------------------------------
+    
+    def addToValuedObjectMapping(ValuedObject object, ValuedObject newObject) {
+		valuedObjectMapping.put(object, newObject)    	
+    }
+
+    // -------------------------------------------------------------------------   
 }

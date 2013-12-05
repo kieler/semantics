@@ -47,7 +47,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
  * @kieler.rating 2013-10-24 proposed yellow
  */
 
-// This class contians all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
+// This class contains all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
 class SCGDEPToSCGBBTransformation {
     
     // Inject SCG Extensions.    
