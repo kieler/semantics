@@ -83,12 +83,12 @@ class SCGExtensions {
     def List<ControlFlow> getControlFlows(Node source, Node target) {
         source.eContents.filter(typeof(ControlFlow)).filter[it.target==target].toList
     }
-   
-    def void accumulateInstantaneousControlFlow(ControlFlow next, List<ControlFlow> myFlow, 
+      
+    def void accumulateIndirectControlFlow(ControlFlow next, List<ControlFlow> myFlow, 
         List<List<ControlFlow>> list, Node target
     ) {
         if (myFlow.contains(next)) return;
-        if (next.target instanceof Surface) return;
+//        if (next.target instanceof Surface) return;
         if (next.target == target) {
         	myFlow.add(next)
             list.add(myFlow)
@@ -97,14 +97,30 @@ class SCGExtensions {
         myFlow.add(next)
         next.target.getAllNext.forEach[
             val newFlow = <ControlFlow> newArrayList(myFlow)       	    
-            it.accumulateInstantaneousControlFlow(newFlow, list, target)
+            it.accumulateIndirectControlFlow(newFlow, list, target)
         ]
     }
    
-    def List<List<ControlFlow>> getInstantaneousControlFlows(Node source) {
+    def List<List<ControlFlow>> getIndirectControlFlows(Node source, Node target) {
    	    val loopList = <List<ControlFlow>> newLinkedList
-   	    source.getAllNext.forEach[it.accumulateInstantaneousControlFlow(newArrayList(), loopList, source)]
+   	    source.getAllNext.forEach[it.accumulateIndirectControlFlow(newArrayList(), loopList, target)]
    	    loopList 
+    }
+    
+    def boolean instantaneousFlow(List<ControlFlow> controlFlows) {
+    	var isInst = true
+    	for(cf : controlFlows) {
+    		if (cf.target instanceof Depth) isInst = false
+    	}
+    	isInst
+    }    
+
+    def List<List<ControlFlow>> getInstantaneousControlFlows(Node source) {
+    	source.getIndirectControlFlows(source).filter[it.instantaneousFlow].toList
+    }
+    
+    def boolean instantaneous(List<List<ControlFlow>> controlFlowsList) {
+    	controlFlowsList.filter[it.instantaneousFlow].size>0
     }
       
     //  -------------------------------------------------------------------------   
