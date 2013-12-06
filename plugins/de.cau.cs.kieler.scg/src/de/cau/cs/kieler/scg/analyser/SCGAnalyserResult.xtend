@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scg.analyser
 import de.cau.cs.kieler.scg.SCGraph
 import java.util.List
 import de.cau.cs.kieler.scgsched.Problem
+import de.cau.cs.kieler.scg.Node
 
 class GenericAnalyserResult {
 	val problems = <Problem> newArrayList
@@ -42,7 +43,8 @@ class GenericAnalyserResult {
 
 class SCGAnalyserResult {
 	
-	public var SCGraph SCG = null;
+	public var SCGraph SCG  = null
+	public var Node    NODE = null
 
 	private val analyserResults = <GenericAnalyserResult> newArrayList
 	

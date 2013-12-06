@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.scg.analyser
 
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.Node
 
 /** 
  * AbstractSCGAnalyser
@@ -29,6 +30,13 @@ abstract class AbstractSCGAnalyser {
     	analyserResult.SCG = scg
     	analyse(analyserResult)
     }
+    
+    def SCGAnalyserResult analyse(SCGraph scg, Node node) {
+    	val analyserResult = new SCGAnalyserResult
+    	analyserResult.SCG = scg
+    	analyserResult.NODE = node
+    	analyse(analyserResult)
+    }    
 
     abstract def SCGAnalyserResult analyse(SCGAnalyserResult analyserChain) 
     
