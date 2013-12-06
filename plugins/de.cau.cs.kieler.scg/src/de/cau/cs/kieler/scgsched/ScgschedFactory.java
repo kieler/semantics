@@ -60,13 +60,13 @@ public interface ScgschedFactory extends EFactory {
 	Problem createProblem();
 
 				/**
-	 * Returns a new object of class '<em>Potential Loop Problem</em>'.
+	 * Returns a new object of class '<em>Potential Instantaneous Loop Problem</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Potential Loop Problem</em>'.
+	 * @return a new object of class '<em>Potential Instantaneous Loop Problem</em>'.
 	 * @generated
 	 */
-	PotentialLoopProblem createPotentialLoopProblem();
+	PotentialInstantaneousLoopProblem createPotentialInstantaneousLoopProblem();
 
 				/**
 	 * Returns the package supported by this factory.

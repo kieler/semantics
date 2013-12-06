@@ -15,7 +15,7 @@ package de.cau.cs.kieler.scgsched.impl;
 
 import de.cau.cs.kieler.scg.ControlFlow;
 
-import de.cau.cs.kieler.scgsched.PotentialLoopProblem;
+import de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem;
 import de.cau.cs.kieler.scgsched.ScgschedPackage;
 
 import java.util.Collection;
@@ -28,18 +28,18 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Potential Loop Problem</b></em>'.
+ * An implementation of the model object '<em><b>Potential Instantaneous Loop Problem</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scgsched.impl.PotentialLoopProblemImpl#getControlFlows <em>Control Flows</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.impl.PotentialInstantaneousLoopProblemImpl#getControlFlows <em>Control Flows</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class PotentialLoopProblemImpl extends ProblemImpl implements PotentialLoopProblem {
+public class PotentialInstantaneousLoopProblemImpl extends ProblemImpl implements PotentialInstantaneousLoopProblem {
 	/**
 	 * The cached value of the '{@link #getControlFlows() <em>Control Flows</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -55,7 +55,7 @@ public class PotentialLoopProblemImpl extends ProblemImpl implements PotentialLo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected PotentialLoopProblemImpl() {
+	protected PotentialInstantaneousLoopProblemImpl() {
 		super();
 	}
 
@@ -66,7 +66,7 @@ public class PotentialLoopProblemImpl extends ProblemImpl implements PotentialLo
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ScgschedPackage.Literals.POTENTIAL_LOOP_PROBLEM;
+		return ScgschedPackage.Literals.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class PotentialLoopProblemImpl extends ProblemImpl implements PotentialLo
 	 */
 	public EList<ControlFlow> getControlFlows() {
 		if (controlFlows == null) {
-			controlFlows = new EObjectResolvingEList<ControlFlow>(ControlFlow.class, this, ScgschedPackage.POTENTIAL_LOOP_PROBLEM__CONTROL_FLOWS);
+			controlFlows = new EObjectResolvingEList<ControlFlow>(ControlFlow.class, this, ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS);
 		}
 		return controlFlows;
 	}
@@ -89,7 +89,7 @@ public class PotentialLoopProblemImpl extends ProblemImpl implements PotentialLo
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ScgschedPackage.POTENTIAL_LOOP_PROBLEM__CONTROL_FLOWS:
+			case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS:
 				return getControlFlows();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -104,7 +104,7 @@ public class PotentialLoopProblemImpl extends ProblemImpl implements PotentialLo
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ScgschedPackage.POTENTIAL_LOOP_PROBLEM__CONTROL_FLOWS:
+			case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS:
 				getControlFlows().clear();
 				getControlFlows().addAll((Collection<? extends ControlFlow>)newValue);
 				return;
@@ -120,7 +120,7 @@ public class PotentialLoopProblemImpl extends ProblemImpl implements PotentialLo
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ScgschedPackage.POTENTIAL_LOOP_PROBLEM__CONTROL_FLOWS:
+			case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS:
 				getControlFlows().clear();
 				return;
 		}
@@ -135,10 +135,10 @@ public class PotentialLoopProblemImpl extends ProblemImpl implements PotentialLo
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ScgschedPackage.POTENTIAL_LOOP_PROBLEM__CONTROL_FLOWS:
+			case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS:
 				return controlFlows != null && !controlFlows.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //PotentialLoopProblemImpl
+} //PotentialInstantaneousLoopProblemImpl

@@ -13,10 +13,13 @@
  */
  package de.cau.cs.kieler.scg.schedulers
 
-import de.cau.cs.kieler.scg.schedulers.AbstractSCGAnalyser
 import de.cau.cs.kieler.scgsched.SCGraphSched
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.analyser.AbstractSCGAnalyser
+import de.cau.cs.kieler.scg.analyser.SCGAnalyserResult
+import de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem
+import de.cau.cs.kieler.scg.analyser.GenericAnalyserResult
 
 /** 
  * PotentialLoopAnalyser
@@ -25,18 +28,25 @@ import de.cau.cs.kieler.scg.extensions.SCGExtensions
  * @kieler.design 2013-12-02 proposed 
  * @kieler.rating 2013-12-02 proposed yellow
  */
-class PotentialLoopAnalyser extends AbstractSCGAnalyser {
+class PotentialInstantaneousLoopAnalyser extends AbstractSCGAnalyser {
 	
 	@Inject
 	extension SCGExtensions
 	
-	override analyse(SCGraphSched scg) {
-		scg.nodes.forEach[
+	override analyse(SCGAnalyserResult analyserChain) {
+		val potentialInstantaneousLoopResult = new PotentialInstantaneousLoopResult
+		analyserChain.SCG.nodes.forEach[
 			it.instantaneousControlFlows.forEach[
-				scg.problems.add(it.createPotentialLoopProblem)
+				val problem = it.createPotentialLoopProblem
+				potentialInstantaneousLoopResult.addProblem(problem)
 			]
 		]
-		scg
+		analyserChain.addResult(potentialInstantaneousLoopResult)
+		analyserChain
 	}
 	
+}
+
+class PotentialInstantaneousLoopResult extends GenericAnalyserResult {
+
 }

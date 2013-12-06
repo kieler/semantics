@@ -152,26 +152,26 @@ public class ScgschedItemProviderAdapterFactory extends ScgschedAdapterFactory i
 	}
 
 				/**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgsched.PotentialLoopProblem} instances.
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected PotentialLoopProblemItemProvider potentialLoopProblemItemProvider;
+	protected PotentialInstantaneousLoopProblemItemProvider potentialInstantaneousLoopProblemItemProvider;
 
 				/**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scgsched.PotentialLoopProblem}.
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createPotentialLoopProblemAdapter() {
-		if (potentialLoopProblemItemProvider == null) {
-			potentialLoopProblemItemProvider = new PotentialLoopProblemItemProvider(this);
+	public Adapter createPotentialInstantaneousLoopProblemAdapter() {
+		if (potentialInstantaneousLoopProblemItemProvider == null) {
+			potentialInstantaneousLoopProblemItemProvider = new PotentialInstantaneousLoopProblemItemProvider(this);
 		}
 
-		return potentialLoopProblemItemProvider;
+		return potentialInstantaneousLoopProblemItemProvider;
 	}
 
 				/**
@@ -276,7 +276,7 @@ public class ScgschedItemProviderAdapterFactory extends ScgschedAdapterFactory i
 		if (scGraphSchedItemProvider != null) scGraphSchedItemProvider.dispose();
 		if (scheduleItemProvider != null) scheduleItemProvider.dispose();
 		if (problemItemProvider != null) problemItemProvider.dispose();
-		if (potentialLoopProblemItemProvider != null) potentialLoopProblemItemProvider.dispose();
+		if (potentialInstantaneousLoopProblemItemProvider != null) potentialInstantaneousLoopProblemItemProvider.dispose();
 	}
 
 }

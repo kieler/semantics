@@ -17,6 +17,9 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGTransformationExtensions
 import de.cau.cs.kieler.scgsched.SCGraphSched
+import de.cau.cs.kieler.scg.analyser.SCGAnalyserResult
+import de.cau.cs.kieler.scg.analyser.GenericAnalyserResult
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /** 
  * AbstractSCGScheduler
@@ -37,4 +40,11 @@ abstract class AbstractSCGScheduler {
     public def SCGraph schedule(SCGraph scg) {
         build(((scg.upgradeAll as SCGraphSched) as SCGraphSched).analyse)
     }    
+    
+    protected def SCGAnalyserResult copyAllProblems(SCGAnalyserResult result, SCGraphSched scg) {
+    	result.getResults(GenericAnalyserResult).forEach[
+    		it.problems.forEach[scg.problems.add(it.copy)]
+    	]
+    	result
+    }
 }

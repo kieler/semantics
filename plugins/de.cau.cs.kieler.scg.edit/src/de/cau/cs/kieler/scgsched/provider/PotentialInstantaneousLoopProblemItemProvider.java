@@ -31,12 +31,12 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.scgsched.PotentialLoopProblem} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class PotentialLoopProblemItemProvider
+public class PotentialInstantaneousLoopProblemItemProvider
 	extends ProblemItemProvider
 	implements
 		IEditingDomainItemProvider,
@@ -50,7 +50,7 @@ public class PotentialLoopProblemItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public PotentialLoopProblemItemProvider(AdapterFactory adapterFactory) {
+	public PotentialInstantaneousLoopProblemItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -81,9 +81,9 @@ public class PotentialLoopProblemItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_PotentialLoopProblem_controlFlows_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_PotentialLoopProblem_controlFlows_feature", "_UI_PotentialLoopProblem_type"),
-				 ScgschedPackage.Literals.POTENTIAL_LOOP_PROBLEM__CONTROL_FLOWS,
+				 getString("_UI_PotentialInstantaneousLoopProblem_controlFlows_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_PotentialInstantaneousLoopProblem_controlFlows_feature", "_UI_PotentialInstantaneousLoopProblem_type"),
+				 ScgschedPackage.Literals.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS,
 				 true,
 				 false,
 				 true,
@@ -93,14 +93,14 @@ public class PotentialLoopProblemItemProvider
 	}
 
 	/**
-	 * This returns PotentialLoopProblem.gif.
+	 * This returns PotentialInstantaneousLoopProblem.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/PotentialLoopProblem"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/PotentialInstantaneousLoopProblem"));
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class PotentialLoopProblemItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_PotentialLoopProblem_type");
+		return getString("_UI_PotentialInstantaneousLoopProblem_type");
 	}
 
 	/**

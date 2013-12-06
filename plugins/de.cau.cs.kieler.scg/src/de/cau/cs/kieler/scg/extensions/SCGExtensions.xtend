@@ -13,26 +13,24 @@
  */
 package de.cau.cs.kieler.scg.extensions
 
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Surface
-import java.util.List
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Depth
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scgbb.SchedulingBlock
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scgbb.BasicBlock
 import de.cau.cs.kieler.scgbb.SCGraphBB
-import java.util.InputMismatchException
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import de.cau.cs.kieler.scgbb.BasicBlock
-import de.cau.cs.kieler.scgsched.Schedule
-import de.cau.cs.kieler.scgsched.PotentialLoopProblem
+import de.cau.cs.kieler.scgbb.SchedulingBlock
+import de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem
 import de.cau.cs.kieler.scgsched.ScgschedFactory
+import de.cau.cs.kieler.scgsched.Schedule
+import java.util.List
+import org.eclipse.emf.ecore.EObject
 
 /**
  * SCG Extensions.
@@ -213,8 +211,8 @@ class SCGExtensions {
     
     // -------------------------------------------------------------------------
     
-    def PotentialLoopProblem createPotentialLoopProblem(List<ControlFlow> controlFlows) {
-    	val plp = ScgschedFactory::eINSTANCE.createPotentialLoopProblem
+    def PotentialInstantaneousLoopProblem createPotentialLoopProblem(List<ControlFlow> controlFlows) {
+    	val plp = ScgschedFactory::eINSTANCE.createPotentialInstantaneousLoopProblem
     	plp.controlFlows.addAll(controlFlows)
     	plp
     }

@@ -104,10 +104,10 @@ public class ScgschedSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ScgschedPackage.POTENTIAL_LOOP_PROBLEM: {
-				PotentialLoopProblem potentialLoopProblem = (PotentialLoopProblem)theEObject;
-				T result = casePotentialLoopProblem(potentialLoopProblem);
-				if (result == null) result = caseProblem(potentialLoopProblem);
+			case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM: {
+				PotentialInstantaneousLoopProblem potentialInstantaneousLoopProblem = (PotentialInstantaneousLoopProblem)theEObject;
+				T result = casePotentialInstantaneousLoopProblem(potentialInstantaneousLoopProblem);
+				if (result == null) result = caseProblem(potentialInstantaneousLoopProblem);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -161,17 +161,17 @@ public class ScgschedSwitch<T> extends Switch<T> {
 	}
 
 				/**
-	 * Returns the result of interpreting the object as an instance of '<em>Potential Loop Problem</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Potential Instantaneous Loop Problem</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Potential Loop Problem</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Potential Instantaneous Loop Problem</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T casePotentialLoopProblem(PotentialLoopProblem object) {
+	public T casePotentialInstantaneousLoopProblem(PotentialInstantaneousLoopProblem object) {
 		return null;
 	}
 

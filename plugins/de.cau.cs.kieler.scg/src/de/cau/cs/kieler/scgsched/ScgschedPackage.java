@@ -218,14 +218,14 @@ public interface ScgschedPackage extends EPackage {
 	int PROBLEM_OPERATION_COUNT = 0;
 
 				/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.scgsched.impl.PotentialLoopProblemImpl <em>Potential Loop Problem</em>}' class.
+	 * The meta object id for the '{@link de.cau.cs.kieler.scgsched.impl.PotentialInstantaneousLoopProblemImpl <em>Potential Instantaneous Loop Problem</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.scgsched.impl.PotentialLoopProblemImpl
-	 * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getPotentialLoopProblem()
+	 * @see de.cau.cs.kieler.scgsched.impl.PotentialInstantaneousLoopProblemImpl
+	 * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getPotentialInstantaneousLoopProblem()
 	 * @generated
 	 */
-	int POTENTIAL_LOOP_PROBLEM = 3;
+	int POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM = 3;
 
 				/**
 	 * The feature id for the '<em><b>Control Flows</b></em>' reference list.
@@ -234,26 +234,25 @@ public interface ScgschedPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int POTENTIAL_LOOP_PROBLEM__CONTROL_FLOWS = PROBLEM_FEATURE_COUNT + 0;
+	int POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS = PROBLEM_FEATURE_COUNT + 0;
 
 				/**
-	 * The number of structural features of the '<em>Potential Loop Problem</em>' class.
+	 * The number of structural features of the '<em>Potential Instantaneous Loop Problem</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int POTENTIAL_LOOP_PROBLEM_FEATURE_COUNT = PROBLEM_FEATURE_COUNT + 1;
+	int POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM_FEATURE_COUNT = PROBLEM_FEATURE_COUNT + 1;
 
 				/**
-	 * The number of operations of the '<em>Potential Loop Problem</em>' class.
+	 * The number of operations of the '<em>Potential Instantaneous Loop Problem</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int POTENTIAL_LOOP_PROBLEM_OPERATION_COUNT = PROBLEM_OPERATION_COUNT + 0;
-
+	int POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM_OPERATION_COUNT = PROBLEM_OPERATION_COUNT + 0;
 
 				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scgsched.SCGraphSched <em>SC Graph Sched</em>}'.
@@ -330,25 +329,25 @@ public interface ScgschedPackage extends EPackage {
 	EClass getProblem();
 
 				/**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.scgsched.PotentialLoopProblem <em>Potential Loop Problem</em>}'.
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem <em>Potential Instantaneous Loop Problem</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Potential Loop Problem</em>'.
-	 * @see de.cau.cs.kieler.scgsched.PotentialLoopProblem
+	 * @return the meta object for class '<em>Potential Instantaneous Loop Problem</em>'.
+	 * @see de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem
 	 * @generated
 	 */
-	EClass getPotentialLoopProblem();
+	EClass getPotentialInstantaneousLoopProblem();
 
 				/**
-	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scgsched.PotentialLoopProblem#getControlFlows <em>Control Flows</em>}'.
+	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem#getControlFlows <em>Control Flows</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Control Flows</em>'.
-	 * @see de.cau.cs.kieler.scgsched.PotentialLoopProblem#getControlFlows()
-	 * @see #getPotentialLoopProblem()
+	 * @see de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem#getControlFlows()
+	 * @see #getPotentialInstantaneousLoopProblem()
 	 * @generated
 	 */
-	EReference getPotentialLoopProblem_ControlFlows();
+	EReference getPotentialInstantaneousLoopProblem_ControlFlows();
 
 				/**
 	 * Returns the factory that creates the instances of the model.
@@ -436,14 +435,14 @@ public interface ScgschedPackage extends EPackage {
 		EClass PROBLEM = eINSTANCE.getProblem();
 
 								/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.scgsched.impl.PotentialLoopProblemImpl <em>Potential Loop Problem</em>}' class.
+		 * The meta object literal for the '{@link de.cau.cs.kieler.scgsched.impl.PotentialInstantaneousLoopProblemImpl <em>Potential Instantaneous Loop Problem</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.scgsched.impl.PotentialLoopProblemImpl
-		 * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getPotentialLoopProblem()
+		 * @see de.cau.cs.kieler.scgsched.impl.PotentialInstantaneousLoopProblemImpl
+		 * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getPotentialInstantaneousLoopProblem()
 		 * @generated
 		 */
-		EClass POTENTIAL_LOOP_PROBLEM = eINSTANCE.getPotentialLoopProblem();
+		EClass POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM = eINSTANCE.getPotentialInstantaneousLoopProblem();
 
 								/**
 		 * The meta object literal for the '<em><b>Control Flows</b></em>' reference list feature.
@@ -451,7 +450,7 @@ public interface ScgschedPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference POTENTIAL_LOOP_PROBLEM__CONTROL_FLOWS = eINSTANCE.getPotentialLoopProblem_ControlFlows();
+		EReference POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS = eINSTANCE.getPotentialInstantaneousLoopProblem_ControlFlows();
 
     }
 

@@ -15,19 +15,16 @@ package de.cau.cs.kieler.scgsched.impl;
 
 import de.cau.cs.kieler.scg.ScgPackage;
 import de.cau.cs.kieler.scgbb.ScgbbPackage;
-
-import de.cau.cs.kieler.scgsched.PotentialLoopProblem;
+import de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem;
 import de.cau.cs.kieler.scgsched.Problem;
 import de.cau.cs.kieler.scgsched.SCGraphSched;
 import de.cau.cs.kieler.scgsched.ScgschedFactory;
 import de.cau.cs.kieler.scgsched.ScgschedPackage;
 import de.cau.cs.kieler.scgsched.Schedule;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -63,7 +60,7 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass potentialLoopProblemEClass = null;
+	private EClass potentialInstantaneousLoopProblemEClass = null;
 
 				/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -197,8 +194,8 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getPotentialLoopProblem() {
-		return potentialLoopProblemEClass;
+	public EClass getPotentialInstantaneousLoopProblem() {
+		return potentialInstantaneousLoopProblemEClass;
 	}
 
 				/**
@@ -206,8 +203,8 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPotentialLoopProblem_ControlFlows() {
-		return (EReference)potentialLoopProblemEClass.getEStructuralFeatures().get(0);
+	public EReference getPotentialInstantaneousLoopProblem_ControlFlows() {
+		return (EReference)potentialInstantaneousLoopProblemEClass.getEStructuralFeatures().get(0);
 	}
 
 				/**
@@ -248,8 +245,8 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 
 		problemEClass = createEClass(PROBLEM);
 
-		potentialLoopProblemEClass = createEClass(POTENTIAL_LOOP_PROBLEM);
-		createEReference(potentialLoopProblemEClass, POTENTIAL_LOOP_PROBLEM__CONTROL_FLOWS);
+		potentialInstantaneousLoopProblemEClass = createEClass(POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM);
+		createEReference(potentialInstantaneousLoopProblemEClass, POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS);
 	}
 
     /**
@@ -285,7 +282,7 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 
 		// Add supertypes to classes
 		scGraphSchedEClass.getESuperTypes().add(theScgbbPackage.getSCGraphBB());
-		potentialLoopProblemEClass.getESuperTypes().add(this.getProblem());
+		potentialInstantaneousLoopProblemEClass.getESuperTypes().add(this.getProblem());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(scGraphSchedEClass, SCGraphSched.class, "SCGraphSched", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -298,8 +295,8 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 
 		initEClass(problemEClass, Problem.class, "Problem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(potentialLoopProblemEClass, PotentialLoopProblem.class, "PotentialLoopProblem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getPotentialLoopProblem_ControlFlows(), theScgPackage.getControlFlow(), null, "controlFlows", null, 0, -1, PotentialLoopProblem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(potentialInstantaneousLoopProblemEClass, PotentialInstantaneousLoopProblem.class, "PotentialInstantaneousLoopProblem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getPotentialInstantaneousLoopProblem_ControlFlows(), theScgPackage.getControlFlow(), null, "controlFlows", null, 0, -1, PotentialInstantaneousLoopProblem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -11,9 +11,9 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.schedulers
+package de.cau.cs.kieler.scg.analyser
 
-import de.cau.cs.kieler.scgsched.SCGraphSched
+import de.cau.cs.kieler.scg.SCGraph
 
 /** 
  * AbstractSCGAnalyser
@@ -24,6 +24,12 @@ import de.cau.cs.kieler.scgsched.SCGraphSched
  */
 abstract class AbstractSCGAnalyser {
   
-    abstract def SCGraphSched analyse(SCGraphSched scg)
+    def SCGAnalyserResult analyse(SCGraph scg) {
+    	val analyserResult = new SCGAnalyserResult
+    	analyserResult.SCG = scg
+    	analyse(analyserResult)
+    }
+
+    abstract def SCGAnalyserResult analyse(SCGAnalyserResult analyserChain) 
     
 }

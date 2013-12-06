@@ -220,7 +220,7 @@ public class SCGraphSchedItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(ScgschedPackage.Literals.SC_GRAPH_SCHED__PROBLEMS,
-				 ScgschedFactory.eINSTANCE.createPotentialLoopProblem()));
+				 ScgschedFactory.eINSTANCE.createPotentialInstantaneousLoopProblem()));
 	}
 
     /**

@@ -70,7 +70,7 @@ public class ScgschedFactoryImpl extends EFactoryImpl implements ScgschedFactory
 			case ScgschedPackage.SC_GRAPH_SCHED: return createSCGraphSched();
 			case ScgschedPackage.SCHEDULE: return createSchedule();
 			case ScgschedPackage.PROBLEM: return createProblem();
-			case ScgschedPackage.POTENTIAL_LOOP_PROBLEM: return createPotentialLoopProblem();
+			case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM: return createPotentialInstantaneousLoopProblem();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -111,9 +111,9 @@ public class ScgschedFactoryImpl extends EFactoryImpl implements ScgschedFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public PotentialLoopProblem createPotentialLoopProblem() {
-		PotentialLoopProblemImpl potentialLoopProblem = new PotentialLoopProblemImpl();
-		return potentialLoopProblem;
+	public PotentialInstantaneousLoopProblem createPotentialInstantaneousLoopProblem() {
+		PotentialInstantaneousLoopProblemImpl potentialInstantaneousLoopProblem = new PotentialInstantaneousLoopProblemImpl();
+		return potentialInstantaneousLoopProblem;
 	}
 
 				/**
