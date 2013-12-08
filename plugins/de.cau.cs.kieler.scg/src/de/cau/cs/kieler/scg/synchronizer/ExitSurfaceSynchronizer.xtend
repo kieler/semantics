@@ -33,7 +33,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression
  * @kieler.rating 2013-11-28 proposed yellow
  */
  // The Exit Synchronizer builds the synchronizer in relation to the exit nodes in the different threads.
-class ExitSCGSynchronizer extends AbstractSCGSynchronizer {
+class ExitSurfaceSynchronizer extends AbstractSCGSynchronizer {
  
      @Inject
     extension SCGExtensions

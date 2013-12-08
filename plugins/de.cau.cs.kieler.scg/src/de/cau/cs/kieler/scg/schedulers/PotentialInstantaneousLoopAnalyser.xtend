@@ -13,13 +13,11 @@
  */
  package de.cau.cs.kieler.scg.schedulers
 
-import de.cau.cs.kieler.scgsched.SCGraphSched
 import com.google.inject.Inject
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.analyser.AbstractSCGAnalyser
-import de.cau.cs.kieler.scg.analyser.SCGAnalyserResult
-import de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem
 import de.cau.cs.kieler.scg.analyser.GenericAnalyserResult
+import de.cau.cs.kieler.scg.analyser.SCGAnalyserResult
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
 
 /** 
  * PotentialLoopAnalyser

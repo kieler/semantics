@@ -26,7 +26,6 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scg.synchronizer.ExitSCGSynchronizer
 import de.cau.cs.kieler.scgbb.BasicBlock
 import de.cau.cs.kieler.scgbb.SCGraphBB
 import de.cau.cs.kieler.scgbb.ScgbbFactory
@@ -38,6 +37,7 @@ import java.util.List
 import de.cau.cs.kieler.core.util.Pair
 import com.google.inject.Guice
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.scg.synchronizer.ExitSurfaceSynchronizer
 
 /** 
  * SCGDEP to SCGBB Transformation 
@@ -135,8 +135,8 @@ class SCGDEPToSCGBBTransformation {
                     newIndex = scg.createBasicBlocks(flow.target, newIndex, block, guard.reference)
                 }
                 if (node instanceof Fork) {
-                    val ExitSCGSynchronizer synchronizer = 
-                        Guice.createInjector().getInstance(typeof(ExitSCGSynchronizer))
+                    val ExitSurfaceSynchronizer synchronizer = 
+                        Guice.createInjector().getInstance(typeof(ExitSurfaceSynchronizer))
                     val join = synchronizer.synchronize((node as Fork))
                     newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, 
                         join.predecessors, join.activationExpressions
