@@ -53,11 +53,23 @@ class SCGSchedToSeqSCGTransformation {
         val scg = ScgFactory::eINSTANCE.createSCGraph()
         
         scgSched.copyDeclarations(scg)
-        scgSched.basicBlocks.forEach[it.guards.forEach[
-        	val newGuard = it.copy
-        	it.addToValuedObjectMapping(newGuard)
-        	scg.valuedObjects.add(newGuard)
-        ]]
+        scgSched.basicBlocks.forEach[
+        	it.guard => [
+        		val newGuard = it.copy
+        		it.addToValuedObjectMapping(newGuard)
+        		scg.valuedObjects.add(newGuard)
+        	]
+        	it.subGuards.forEach[
+        		val newGuard = it.copy
+        		it.addToValuedObjectMapping(newGuard)
+        		scg.valuedObjects.add(newGuard)
+        	]
+        	it.emptyGuards.forEach[
+        		val newGuard = it.copy
+        		it.addToValuedObjectMapping(newGuard)
+        		scg.valuedObjects.add(newGuard)
+        	]
+        ]
         
         val entry = ScgFactory::eINSTANCE.createEntry
     	val entryFlow = ScgFactory::eINSTANCE.createControlFlow
@@ -85,10 +97,10 @@ class SCGSchedToSeqSCGTransformation {
     			(expression as OperatorExpression).setOperator(OperatorType::OR)
     			val myExp = expression
     			basicBlock.activationExpressions.forEach[
-    				(myExp as OperatorExpression).subExpressions.add(it.expressions.head)
+    				(myExp as OperatorExpression).subExpressions.add(it.guardExpression)
     			]
     		} else {
-    			expression = basicBlock.activationExpressions.head.expressions.head
+    			expression = basicBlock.activationExpressions.head.guardExpression
     		}
     		
     		// FIXME: expression should never be null

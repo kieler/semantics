@@ -13,17 +13,17 @@
  */
  package de.cau.cs.kieler.scg.synchronizer
 
-import de.cau.cs.kieler.scg.schedulers.AbstractSCGScheduler
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import com.google.inject.Guice
 import com.google.inject.Inject
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
-import java.util.ArrayList
-import de.cau.cs.kieler.scgbb.BasicBlock
-import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
 
 /** 
  * ExitSCGSynchronizer
@@ -37,22 +37,53 @@ class ExitSurfaceSynchronizer extends AbstractSCGSynchronizer {
  
      @Inject
     extension SCGExtensions
+
+     @Inject
+    extension SCGCopyExtensions
   
-    override protected SynchronizerData build(Fork originFork) {
+    override protected SynchronizerData build(Fork fork) {
         var data = new SynchronizerData()
 
-        val scg = originFork.graph
+		val JoinFeedbackAnalyser feedbackAnalyser = Guice.createInjector().getInstance(typeof(JoinFeedbackAnalyser))
+		
+        val scg = fork.graph
+//		val feedbackResult = feedbackAnalyser.analyse(scg, fork)
+		
         val exitNodes = <Exit> newLinkedList
-        originFork.getAllNext.forEach[exitNodes.add((it.target as Entry).exit)]
+        fork.getAllNext.forEach[exitNodes.add((it.target as Entry).exit)]
         
+        val guardExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+        guardExpression.setOperator(OperatorType::AND)
+//        data.activationGuards.add(fork.join.schedulingBlock.guard)
+        data.guardExpression = (guardExpression)
+        
+        var exitNodeCount = 0
         for(exit:exitNodes){
+        	exitNodeCount = exitNodeCount + 1
             val exitBB = exit.basicBlock
             data.predecessors.add(exitBB)
             
-            // TODO: create expressions
-//            val emptyExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-//            emptyExpression.setOperator(OperatorType::NOT)
-//            emptyExpression.subExpressions.add(exitBB.)
+            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
+            
+			val empty = KExpressionsFactory::eINSTANCE.createValuedObject
+        	empty.name = exitBB.guard.name + 'empty' + exitNodeCount
+      		empty.type = ValueType::BOOL    
+      		data.emptyGuards.add(empty)        
+
+            val emptyExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+            emptyExpression.setOperator(OperatorType::NOT)
+            val emptySubExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+            emptySubExpression.setOperator(OperatorType::OR)
+            threadSurfaces.forEach[emptySubExpression.subExpressions.add(it.schedulingBlock.guard.reference)]
+            emptyExpression.subExpressions.add(emptySubExpression)
+            data.emptyExpressions.add(emptyExpression)
+            
+            val threadExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+            threadExpression.setOperator(OperatorType::OR)
+            threadExpression.subExpressions.add(exit.schedulingBlock.guard.reference)
+            threadExpression.subExpressions.add(empty.reference)
+            
+            guardExpression.subExpressions.add(threadExpression)
         }
         data 
     }

@@ -27,7 +27,9 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getSchedulingBlocks <em>Scheduling Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getActivationExpressions <em>Activation Expressions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuards <em>Guards</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuard <em>Guard</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getSubGuards <em>Sub Guards</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getEmptyGuards <em>Empty Guards</em>}</li>
  * </ul>
  * </p>
  *
@@ -69,19 +71,61 @@ public interface BasicBlock extends EObject {
     EList<ActivationExpression> getActivationExpressions();
 
     /**
-	 * Returns the value of the '<em><b>Guards</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
+	 * Returns the value of the '<em><b>Guard</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Guards</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Guard</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Guards</em>' containment reference list.
-	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_Guards()
+	 * @return the value of the '<em>Guard</em>' containment reference.
+	 * @see #setGuard(ValuedObject)
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_Guard()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	EList<ValuedObject> getGuards();
+	ValuedObject getGuard();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuard <em>Guard</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Guard</em>' containment reference.
+	 * @see #getGuard()
+	 * @generated
+	 */
+	void setGuard(ValuedObject value);
+
+				/**
+	 * Returns the value of the '<em><b>Sub Guards</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Sub Guards</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Sub Guards</em>' containment reference list.
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_SubGuards()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<ValuedObject> getSubGuards();
+
+				/**
+	 * Returns the value of the '<em><b>Empty Guards</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Empty Guards</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Empty Guards</em>' containment reference list.
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_EmptyGuards()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<ValuedObject> getEmptyGuards();
 
 } // BasicBlock

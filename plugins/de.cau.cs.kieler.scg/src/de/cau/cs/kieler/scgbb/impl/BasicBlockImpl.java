@@ -19,10 +19,12 @@ import de.cau.cs.kieler.scgbb.BasicBlock;
 import de.cau.cs.kieler.scgbb.ScgbbPackage;
 import de.cau.cs.kieler.scgbb.SchedulingBlock;
 import java.util.Collection;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -36,7 +38,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getSchedulingBlocks <em>Scheduling Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getActivationExpressions <em>Activation Expressions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getGuards <em>Guards</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getGuard <em>Guard</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getSubGuards <em>Sub Guards</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getEmptyGuards <em>Empty Guards</em>}</li>
  * </ul>
  * </p>
  *
@@ -64,14 +68,34 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
     protected EList<ActivationExpression> activationExpressions;
 
     /**
-	 * The cached value of the '{@link #getGuards() <em>Guards</em>}' containment reference list.
+	 * The cached value of the '{@link #getGuard() <em>Guard</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getGuards()
+	 * @see #getGuard()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ValuedObject> guards;
+	protected ValuedObject guard;
+
+				/**
+	 * The cached value of the '{@link #getSubGuards() <em>Sub Guards</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSubGuards()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ValuedObject> subGuards;
+
+				/**
+	 * The cached value of the '{@link #getEmptyGuards() <em>Empty Guards</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getEmptyGuards()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ValuedObject> emptyGuards;
 
 				/**
 	 * <!-- begin-user-doc -->
@@ -121,11 +145,66 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ValuedObject> getGuards() {
-		if (guards == null) {
-			guards = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, ScgbbPackage.BASIC_BLOCK__GUARDS);
+	public ValuedObject getGuard() {
+		return guard;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetGuard(ValuedObject newGuard, NotificationChain msgs) {
+		ValuedObject oldGuard = guard;
+		guard = newGuard;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__GUARD, oldGuard, newGuard);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
-		return guards;
+		return msgs;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGuard(ValuedObject newGuard) {
+		if (newGuard != guard) {
+			NotificationChain msgs = null;
+			if (guard != null)
+				msgs = ((InternalEObject)guard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgbbPackage.BASIC_BLOCK__GUARD, null, msgs);
+			if (newGuard != null)
+				msgs = ((InternalEObject)newGuard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgbbPackage.BASIC_BLOCK__GUARD, null, msgs);
+			msgs = basicSetGuard(newGuard, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__GUARD, newGuard, newGuard));
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<ValuedObject> getSubGuards() {
+		if (subGuards == null) {
+			subGuards = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, ScgbbPackage.BASIC_BLOCK__SUB_GUARDS);
+		}
+		return subGuards;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<ValuedObject> getEmptyGuards() {
+		if (emptyGuards == null) {
+			emptyGuards = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, ScgbbPackage.BASIC_BLOCK__EMPTY_GUARDS);
+		}
+		return emptyGuards;
 	}
 
 				/**
@@ -140,8 +219,12 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				return ((InternalEList<?>)getSchedulingBlocks()).basicRemove(otherEnd, msgs);
 			case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
 				return ((InternalEList<?>)getActivationExpressions()).basicRemove(otherEnd, msgs);
-			case ScgbbPackage.BASIC_BLOCK__GUARDS:
-				return ((InternalEList<?>)getGuards()).basicRemove(otherEnd, msgs);
+			case ScgbbPackage.BASIC_BLOCK__GUARD:
+				return basicSetGuard(null, msgs);
+			case ScgbbPackage.BASIC_BLOCK__SUB_GUARDS:
+				return ((InternalEList<?>)getSubGuards()).basicRemove(otherEnd, msgs);
+			case ScgbbPackage.BASIC_BLOCK__EMPTY_GUARDS:
+				return ((InternalEList<?>)getEmptyGuards()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -158,8 +241,12 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				return getSchedulingBlocks();
 			case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
 				return getActivationExpressions();
-			case ScgbbPackage.BASIC_BLOCK__GUARDS:
-				return getGuards();
+			case ScgbbPackage.BASIC_BLOCK__GUARD:
+				return getGuard();
+			case ScgbbPackage.BASIC_BLOCK__SUB_GUARDS:
+				return getSubGuards();
+			case ScgbbPackage.BASIC_BLOCK__EMPTY_GUARDS:
+				return getEmptyGuards();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -181,9 +268,16 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				getActivationExpressions().clear();
 				getActivationExpressions().addAll((Collection<? extends ActivationExpression>)newValue);
 				return;
-			case ScgbbPackage.BASIC_BLOCK__GUARDS:
-				getGuards().clear();
-				getGuards().addAll((Collection<? extends ValuedObject>)newValue);
+			case ScgbbPackage.BASIC_BLOCK__GUARD:
+				setGuard((ValuedObject)newValue);
+				return;
+			case ScgbbPackage.BASIC_BLOCK__SUB_GUARDS:
+				getSubGuards().clear();
+				getSubGuards().addAll((Collection<? extends ValuedObject>)newValue);
+				return;
+			case ScgbbPackage.BASIC_BLOCK__EMPTY_GUARDS:
+				getEmptyGuards().clear();
+				getEmptyGuards().addAll((Collection<? extends ValuedObject>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -203,8 +297,14 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 			case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
 				getActivationExpressions().clear();
 				return;
-			case ScgbbPackage.BASIC_BLOCK__GUARDS:
-				getGuards().clear();
+			case ScgbbPackage.BASIC_BLOCK__GUARD:
+				setGuard((ValuedObject)null);
+				return;
+			case ScgbbPackage.BASIC_BLOCK__SUB_GUARDS:
+				getSubGuards().clear();
+				return;
+			case ScgbbPackage.BASIC_BLOCK__EMPTY_GUARDS:
+				getEmptyGuards().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -222,8 +322,12 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				return schedulingBlocks != null && !schedulingBlocks.isEmpty();
 			case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
 				return activationExpressions != null && !activationExpressions.isEmpty();
-			case ScgbbPackage.BASIC_BLOCK__GUARDS:
-				return guards != null && !guards.isEmpty();
+			case ScgbbPackage.BASIC_BLOCK__GUARD:
+				return guard != null;
+			case ScgbbPackage.BASIC_BLOCK__SUB_GUARDS:
+				return subGuards != null && !subGuards.isEmpty();
+			case ScgbbPackage.BASIC_BLOCK__EMPTY_GUARDS:
+				return emptyGuards != null && !emptyGuards.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

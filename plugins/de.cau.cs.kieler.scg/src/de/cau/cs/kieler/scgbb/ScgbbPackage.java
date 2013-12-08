@@ -152,13 +152,31 @@ public interface ScgbbPackage extends EPackage {
     int BASIC_BLOCK__ACTIVATION_EXPRESSIONS = 1;
 
     /**
-	 * The feature id for the '<em><b>Guards</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BASIC_BLOCK__GUARDS = 2;
+	int BASIC_BLOCK__GUARD = 2;
+
+				/**
+	 * The feature id for the '<em><b>Sub Guards</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASIC_BLOCK__SUB_GUARDS = 3;
+
+				/**
+	 * The feature id for the '<em><b>Empty Guards</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASIC_BLOCK__EMPTY_GUARDS = 4;
 
 				/**
 	 * The number of structural features of the '<em>Basic Block</em>' class.
@@ -167,7 +185,7 @@ public interface ScgbbPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int BASIC_BLOCK_FEATURE_COUNT = 3;
+    int BASIC_BLOCK_FEATURE_COUNT = 5;
 
     /**
 	 * The number of operations of the '<em>Basic Block</em>' class.
@@ -244,15 +262,15 @@ public interface ScgbbPackage extends EPackage {
     int ACTIVATION_EXPRESSION = 3;
 
     /**
-	 * The feature id for the '<em><b>Expressions</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Guard Expression</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int ACTIVATION_EXPRESSION__EXPRESSIONS = 0;
+	int ACTIVATION_EXPRESSION__GUARD_EXPRESSION = 0;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Basic Blocks</b></em>' reference list.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -262,13 +280,31 @@ public interface ScgbbPackage extends EPackage {
     int ACTIVATION_EXPRESSION__BASIC_BLOCKS = 1;
 
     /**
+	 * The feature id for the '<em><b>Guard</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVATION_EXPRESSION__GUARD = 2;
+
+				/**
+	 * The feature id for the '<em><b>Empty Expressions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVATION_EXPRESSION__EMPTY_EXPRESSIONS = 3;
+
+				/**
 	 * The number of structural features of the '<em>Activation Expression</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int ACTIVATION_EXPRESSION_FEATURE_COUNT = 2;
+    int ACTIVATION_EXPRESSION_FEATURE_COUNT = 4;
 
     /**
 	 * The number of operations of the '<em>Activation Expression</em>' class.
@@ -334,15 +370,37 @@ public interface ScgbbPackage extends EPackage {
     EReference getBasicBlock_ActivationExpressions();
 
     /**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuards <em>Guards</em>}'.
+	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuard <em>Guard</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Guards</em>'.
-	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getGuards()
+	 * @return the meta object for the containment reference '<em>Guard</em>'.
+	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getGuard()
 	 * @see #getBasicBlock()
 	 * @generated
 	 */
-	EReference getBasicBlock_Guards();
+	EReference getBasicBlock_Guard();
+
+				/**
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgbb.BasicBlock#getSubGuards <em>Sub Guards</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Sub Guards</em>'.
+	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getSubGuards()
+	 * @see #getBasicBlock()
+	 * @generated
+	 */
+	EReference getBasicBlock_SubGuards();
+
+				/**
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgbb.BasicBlock#getEmptyGuards <em>Empty Guards</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Empty Guards</em>'.
+	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getEmptyGuards()
+	 * @see #getBasicBlock()
+	 * @generated
+	 */
+	EReference getBasicBlock_EmptyGuards();
 
 				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scgbb.SchedulingBlock <em>Scheduling Block</em>}'.
@@ -398,17 +456,17 @@ public interface ScgbbPackage extends EPackage {
     EClass getActivationExpression();
 
     /**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgbb.ActivationExpression#getExpressions <em>Expressions</em>}'.
+	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgbb.ActivationExpression#getGuardExpression <em>Guard Expression</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Expressions</em>'.
-	 * @see de.cau.cs.kieler.scgbb.ActivationExpression#getExpressions()
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Guard Expression</em>'.
+	 * @see de.cau.cs.kieler.scgbb.ActivationExpression#getGuardExpression()
 	 * @see #getActivationExpression()
 	 * @generated
 	 */
-    EReference getActivationExpression_Expressions();
+	EReference getActivationExpression_GuardExpression();
 
-    /**
+				/**
 	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scgbb.ActivationExpression#getBasicBlocks <em>Basic Blocks</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -420,6 +478,28 @@ public interface ScgbbPackage extends EPackage {
     EReference getActivationExpression_BasicBlocks();
 
     /**
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgbb.ActivationExpression#getGuard <em>Guard</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Guard</em>'.
+	 * @see de.cau.cs.kieler.scgbb.ActivationExpression#getGuard()
+	 * @see #getActivationExpression()
+	 * @generated
+	 */
+	EReference getActivationExpression_Guard();
+
+				/**
+	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scgbb.ActivationExpression#getEmptyExpressions <em>Empty Expressions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Empty Expressions</em>'.
+	 * @see de.cau.cs.kieler.scgbb.ActivationExpression#getEmptyExpressions()
+	 * @see #getActivationExpression()
+	 * @generated
+	 */
+	EReference getActivationExpression_EmptyExpressions();
+
+				/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -487,12 +567,28 @@ public interface ScgbbPackage extends EPackage {
         EReference BASIC_BLOCK__ACTIVATION_EXPRESSIONS = eINSTANCE.getBasicBlock_ActivationExpressions();
 
         /**
-		 * The meta object literal for the '<em><b>Guards</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Guard</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference BASIC_BLOCK__GUARDS = eINSTANCE.getBasicBlock_Guards();
+		EReference BASIC_BLOCK__GUARD = eINSTANCE.getBasicBlock_Guard();
+
+								/**
+		 * The meta object literal for the '<em><b>Sub Guards</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BASIC_BLOCK__SUB_GUARDS = eINSTANCE.getBasicBlock_SubGuards();
+
+								/**
+		 * The meta object literal for the '<em><b>Empty Guards</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BASIC_BLOCK__EMPTY_GUARDS = eINSTANCE.getBasicBlock_EmptyGuards();
 
 								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl <em>Scheduling Block</em>}' class.
@@ -539,20 +635,36 @@ public interface ScgbbPackage extends EPackage {
         EClass ACTIVATION_EXPRESSION = eINSTANCE.getActivationExpression();
 
         /**
-		 * The meta object literal for the '<em><b>Expressions</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Guard Expression</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference ACTIVATION_EXPRESSION__EXPRESSIONS = eINSTANCE.getActivationExpression_Expressions();
+		EReference ACTIVATION_EXPRESSION__GUARD_EXPRESSION = eINSTANCE.getActivationExpression_GuardExpression();
 
-        /**
+								/**
 		 * The meta object literal for the '<em><b>Basic Blocks</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
 		 * @generated
 		 */
         EReference ACTIVATION_EXPRESSION__BASIC_BLOCKS = eINSTANCE.getActivationExpression_BasicBlocks();
+
+								/**
+		 * The meta object literal for the '<em><b>Guard</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ACTIVATION_EXPRESSION__GUARD = eINSTANCE.getActivationExpression_Guard();
+
+								/**
+		 * The meta object literal for the '<em><b>Empty Expressions</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ACTIVATION_EXPRESSION__EMPTY_EXPRESSIONS = eINSTANCE.getActivationExpression_EmptyExpressions();
 
     }
 

@@ -137,9 +137,11 @@ class SCGDEPToSCGBBTransformation {
                 if (node instanceof Fork) {
                     val ExitSurfaceSynchronizer synchronizer = 
                         Guice.createInjector().getInstance(typeof(ExitSurfaceSynchronizer))
-                    val join = synchronizer.synchronize((node as Fork))
+                    val joinData = synchronizer.synchronize((node as Fork))
+
+					// TODO: Add empty expressions to basic block
                     newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, 
-                        join.predecessors, join.activationExpressions
+                        joinData.predecessors, newArrayList(joinData.guardExpression)
                     )
                 }
                 node = null                
@@ -179,12 +181,13 @@ class SCGDEPToSCGBBTransformation {
     ) {
         val basicBlock = ScgbbFactory::eINSTANCE.createBasicBlock
       
-        basicBlock.guards.add(guard)
+        basicBlock.guard = guard
         basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock(basicBlock))
         
         val newExpression = ScgbbFactory::eINSTANCE.createActivationExpression
         if (predecessorBlocks != null) newExpression.basicBlocks.addAll(predecessorBlocks)
-        newExpression.expressions.addAll(activationExpressions)
+        newExpression.guardExpression = activationExpressions.head
+        newExpression.guard = guard
         basicBlock.activationExpressions.add(newExpression)
         
         scg.basicBlocks.add(basicBlock)
@@ -202,12 +205,12 @@ class SCGDEPToSCGBBTransformation {
             ) {
                 if (block != null) schedulingBlocks.add(block)
                 if (guard == null) {
-                	guard = basicBlock.guards.head
+                	guard = basicBlock.guard
                 } else {
 			        guard = KExpressionsFactory::eINSTANCE.createValuedObject
-        			guard.name = basicBlock.guards.head.name + (96 + schedulingBlocks.size + 1) as char
+        			guard.name = basicBlock.guard.name + (96 + schedulingBlocks.size + 1) as char
         			guard.type = ValueType::BOOL
-                	basicBlock.guards.add(guard)
+                	basicBlock.subGuards.add(guard)
                 }
                 block = ScgbbFactory::eINSTANCE.createSchedulingBlock()
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))

@@ -94,7 +94,9 @@ public class BasicBlockItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ScgbbPackage.Literals.BASIC_BLOCK__SCHEDULING_BLOCKS);
 			childrenFeatures.add(ScgbbPackage.Literals.BASIC_BLOCK__ACTIVATION_EXPRESSIONS);
-			childrenFeatures.add(ScgbbPackage.Literals.BASIC_BLOCK__GUARDS);
+			childrenFeatures.add(ScgbbPackage.Literals.BASIC_BLOCK__GUARD);
+			childrenFeatures.add(ScgbbPackage.Literals.BASIC_BLOCK__SUB_GUARDS);
+			childrenFeatures.add(ScgbbPackage.Literals.BASIC_BLOCK__EMPTY_GUARDS);
 		}
 		return childrenFeatures;
 	}
@@ -148,7 +150,9 @@ public class BasicBlockItemProvider
 		switch (notification.getFeatureID(BasicBlock.class)) {
 			case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
 			case ScgbbPackage.BASIC_BLOCK__ACTIVATION_EXPRESSIONS:
-			case ScgbbPackage.BASIC_BLOCK__GUARDS:
+			case ScgbbPackage.BASIC_BLOCK__GUARD:
+			case ScgbbPackage.BASIC_BLOCK__SUB_GUARDS:
+			case ScgbbPackage.BASIC_BLOCK__EMPTY_GUARDS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -178,11 +182,45 @@ public class BasicBlockItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgbbPackage.Literals.BASIC_BLOCK__GUARDS,
+				(ScgbbPackage.Literals.BASIC_BLOCK__GUARD,
+				 KExpressionsFactory.eINSTANCE.createValuedObject()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgbbPackage.Literals.BASIC_BLOCK__SUB_GUARDS,
+				 KExpressionsFactory.eINSTANCE.createValuedObject()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgbbPackage.Literals.BASIC_BLOCK__EMPTY_GUARDS,
 				 KExpressionsFactory.eINSTANCE.createValuedObject()));
 	}
 
     /**
+	 * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
+		Object childFeature = feature;
+		Object childObject = child;
+
+		boolean qualify =
+			childFeature == ScgbbPackage.Literals.BASIC_BLOCK__GUARD ||
+			childFeature == ScgbbPackage.Literals.BASIC_BLOCK__SUB_GUARDS ||
+			childFeature == ScgbbPackage.Literals.BASIC_BLOCK__EMPTY_GUARDS;
+
+		if (qualify) {
+			return getString
+				("_UI_CreateChild_text2",
+				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+		}
+		return super.getCreateChildText(owner, feature, child, selection);
+	}
+
+				/**
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

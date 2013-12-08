@@ -43,6 +43,7 @@ import de.cau.cs.kieler.scgsched.Schedule
 import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scgbb.ActivationExpression
 
 /** 
  * SCGCopyExtensions
@@ -143,25 +144,40 @@ class SCGCopyExtensions {
     // -------------------------------------------------------------------------
     def copyBasicBlock(BasicBlock basicBlock, SCGraphBB target) {
         val bb = ScgbbFactory::eINSTANCE.createBasicBlock
-        basicBlock.guards.forEach[
+        basicBlock.guard => [
         	val newGuard = it.copy
-            bb.guards.add(newGuard)
+            bb.guard = newGuard
+        	valuedObjectMapping.put(it, newGuard)
+        ]
+        basicBlock.emptyGuards.forEach[
+        	val newGuard = it.copy
+            bb.emptyGuards.add(newGuard)
         	valuedObjectMapping.put(it, newGuard)
         ]
         
         basicBlock.schedulingBlocks.forEach[ it.copySchedulingBlock(bb) ]
         
         basicBlock.activationExpressions.forEach[
-            val actExp = ScgbbFactory::eINSTANCE.createActivationExpression
-            it.basicBlocks.forEach[actExp.basicBlocks.add(it)]
-            it.expressions.forEach[actExp.expressions.add(it.copyExpression)]
-            bb.activationExpressions.add(actExp)
+            bb.activationExpressions.add(it.copyActivationExpression)
         ]        
         
         basicBlockMapping.put(basicBlock, bb)
         revBasicBlockMapping.put(bb, basicBlock)
         target.basicBlocks.add(bb)
         bb
+    }
+    
+    def ActivationExpression copyActivationExpression(ActivationExpression activationExpression) {
+        val actExp = ScgbbFactory::eINSTANCE.createActivationExpression
+        activationExpression.basicBlocks.forEach[actExp.basicBlocks.add(it)]
+        activationExpression.guard => [ 
+            val newGuard = it.copy
+            valuedObjectMapping.put(it, newGuard)
+            actExp.guard = newGuard
+        ]
+        activationExpression.guardExpression => [actExp.guardExpression = it.copyExpression]
+        activationExpression.emptyExpressions.forEach[ actExp.emptyExpressions.add(it.copyActivationExpression) ]
+		actExp    	
     }
     
     def copySchedulingBlock(SchedulingBlock schedulingBlock, BasicBlock target) {

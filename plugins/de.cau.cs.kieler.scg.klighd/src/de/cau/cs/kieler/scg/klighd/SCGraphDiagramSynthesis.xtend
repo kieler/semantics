@@ -1061,7 +1061,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 s.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
                 val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
                 bbContainerList.put(s, bbContainer)
-                val bbName = serializer.serialize(s.guards.head.reference)
+                val bbName = serializer.serialize(s.guard.reference)
               	bbContainer.addOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = 
               		BASICBLOCKBORDER
             }
