@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="transformationmappinggraph" nsURI="http://kieler.cs.cau.de/transformationmappinggraph/0.1.0"
+    nsPrefix="transformationmappinggraph">
+  <eClassifiers xsi:type="ecore:EClass" name="Model">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Abstract representation of a model used in a transformation."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Display name of the referenced model."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transient" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="This flag is set if model's elemets have no {@link Element#referencedObject} entry.&#xA;&lt;p>&#xA;Falg status must be consistent with all elements."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClass">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Type of model as EClass of model's root element."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" lowerBound="1"
+        upperBound="-1" eType="#//Element" containment="true" eOpposite="#//Element/model"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transformedInto" upperBound="-1"
+        eType="#//ModelTransformation" eOpposite="#//ModelTransformation/source"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transformedFrom" eType="#//ModelTransformation"
+        eOpposite="#//ModelTransformation/target"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Element">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Abstract representation of a element in a model."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="model" lowerBound="1" eType="#//Model"
+        eOpposite="#//Model/elements"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Display name of the referenced object."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencedObject" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Concrete Object in Model.&#xA;Can be null if model is transient."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transformedInto" lowerBound="1"
+        upperBound="-1" eType="#//ElementTransformation" eOpposite="#//ElementTransformation/source"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transformedFrom" lowerBound="1"
+        upperBound="-1" eType="#//ElementTransformation" eOpposite="#//ElementTransformation/target"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ModelTransformation">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Transformation relation between two models."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Unique identifier of this {@link ModelTransformation}"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+        eType="#//Model" eOpposite="#//Model/transformedInto"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        eType="#//Model" eOpposite="#//Model/transformedFrom"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elementTransformations"
+        lowerBound="1" upperBound="-1" eType="#//ElementTransformation" containment="true"
+        eOpposite="#//ElementTransformation/modelTransformation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ElementTransformation">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Transformation relation between two elements."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modelTransformation" lowerBound="1"
+        eType="#//ModelTransformation" eOpposite="#//ModelTransformation/elementTransformations"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+        eType="#//Element" eOpposite="#//Element/transformedInto"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        eType="#//Element" eOpposite="#//Element/transformedFrom"/>
+  </eClassifiers>
+</ecore:EPackage>

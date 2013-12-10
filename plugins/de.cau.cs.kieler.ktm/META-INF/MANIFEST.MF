@@ -1,10 +1,16 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Transformation Mapping
-Bundle-SymbolicName: de.cau.cs.kieler.ktm
+Bundle-SymbolicName: de.cau.cs.kieler.ktm;singleton:=true
 Bundle-Version: 0.1.0.qualifier
+Bundle-ClassPath: .
 Bundle-Activator: de.cau.cs.kieler.ktm.Activator
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Require-Bundle: org.eclipse.core.runtime
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: de.cau.cs.kieler.ktm.transformationmappinggraph,
+ de.cau.cs.kieler.ktm.transformationmappinggraph.impl,
+ de.cau.cs.kieler.ktm.transformationmappinggraph.util
 Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
