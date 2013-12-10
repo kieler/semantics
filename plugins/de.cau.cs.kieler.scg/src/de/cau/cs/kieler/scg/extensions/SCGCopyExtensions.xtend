@@ -44,6 +44,7 @@ import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scgbb.ActivationExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 
 /** 
  * SCGCopyExtensions
@@ -391,6 +392,18 @@ class SCGCopyExtensions {
     
     def addToValuedObjectMapping(ValuedObject object, ValuedObject newObject) {
 		valuedObjectMapping.put(object, newObject)    	
+    }
+    
+    def Expression splitOperatorExpression(OperatorExpression expression) {
+        var newExp = expression
+        if (expression.subExpressions.size > 2) {
+            var exp = expression.copy
+            newExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
+            newExp.operator = expression.operator
+            newExp.subExpressions.add(exp.subExpressions.get(0))
+            newExp.subExpressions.add(exp.splitOperatorExpression)
+        }
+        newExp
     }
 
     // -------------------------------------------------------------------------   

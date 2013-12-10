@@ -24,6 +24,7 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 
 /** 
  * ExitSCGSynchronizer
@@ -52,10 +53,10 @@ class ExitSurfaceSynchronizer extends AbstractSCGSynchronizer {
         val exitNodes = <Exit> newLinkedList
         fork.getAllNext.forEach[exitNodes.add((it.target as Entry).exit)]
         
-        val guardExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+        var guardExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
         guardExpression.setOperator(OperatorType::AND)
 //        data.activationGuards.add(fork.join.schedulingBlock.guard)
-        data.guardExpression = (guardExpression)
+//        data.guardExpression = (guardExpression)
         
         var exitNodeCount = 0
         for(exit:exitNodes){
@@ -85,6 +86,10 @@ class ExitSurfaceSynchronizer extends AbstractSCGSynchronizer {
             
             guardExpression.subExpressions.add(threadExpression)
         }
+        
+        val gExp = (guardExpression as OperatorExpression).splitOperatorExpression
+        data.guardExpression = gExp
+        
         data 
     }
     
