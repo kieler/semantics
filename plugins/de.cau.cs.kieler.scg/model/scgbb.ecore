@@ -30,9 +30,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="guardExpression" lowerBound="1"
         eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="guard" lowerBound="1" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="basicBlocks" upperBound="-1"
         eType="#//BasicBlock"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="guard" lowerBound="1" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="emptyExpressions" upperBound="-1"
         eType="#//ActivationExpression"/>
   </eClassifiers>
