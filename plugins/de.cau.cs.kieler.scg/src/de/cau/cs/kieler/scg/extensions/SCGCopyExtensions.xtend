@@ -149,6 +149,11 @@ class SCGCopyExtensions {
             bb.guard = newGuard
         	valuedObjectMapping.put(it, newGuard)
         ]
+        basicBlock.subGuards.forEach[
+            val newGuard = it.copy
+            bb.subGuards.add(newGuard)
+            valuedObjectMapping.put(it, newGuard)
+        ]
         basicBlock.emptyGuards.forEach[
         	val newGuard = it.copy
             bb.emptyGuards.add(newGuard)
@@ -171,8 +176,8 @@ class SCGCopyExtensions {
         val actExp = ScgbbFactory::eINSTANCE.createActivationExpression
         activationExpression.basicBlocks.forEach[actExp.basicBlocks.add(it)]
         activationExpression.guard => [ 
-            val newGuard = it.copy
-            valuedObjectMapping.put(it, newGuard)
+            val newGuard = valuedObjectMapping.get(it)
+//            valuedObjectMapping.put(it, newGuard)
             actExp.guard = newGuard
         ]
         activationExpression.guardExpression => [actExp.guardExpression = it.copyExpression]
