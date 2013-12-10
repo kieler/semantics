@@ -207,7 +207,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     private static val DEPENDENCYFILTERSTRING_WRITE_WRITE       = "write - write"
     private static val DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE = "abs. write - rel. write"
-    private static val DEPENDENCYFILTERSTRING_WRITE_READ        = "wrtie - read"
+    private static val DEPENDENCYFILTERSTRING_WRITE_READ        = "write - read"
     private static val DEPENDENCYFILTERSTRING_RELWRITE_READ     = "rel. write - read"
     
     private static val SynthesisOption SHOW_DEPENDENCY_WRITE_WRITE 
