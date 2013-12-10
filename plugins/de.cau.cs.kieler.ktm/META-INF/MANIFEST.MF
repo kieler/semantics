@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Transformation Mapping
+Bundle-SymbolicName: de.cau.cs.kieler.ktm
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.ktm.Activator
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Require-Bundle: org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
