@@ -34,6 +34,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="basicBlocks" upperBound="-1"
         eType="#//BasicBlock"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="emptyExpressions" upperBound="-1"
-        eType="#//ActivationExpression"/>
+        eType="#//ActivationExpression" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

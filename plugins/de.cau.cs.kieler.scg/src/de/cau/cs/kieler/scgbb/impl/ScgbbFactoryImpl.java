@@ -31,109 +31,109 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class ScgbbFactoryImpl extends EFactoryImpl implements ScgbbFactory {
     /**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static ScgbbFactory init() {
-		try {
-			ScgbbFactory theScgbbFactory = (ScgbbFactory)EPackage.Registry.INSTANCE.getEFactory(ScgbbPackage.eNS_URI);
-			if (theScgbbFactory != null) {
-				return theScgbbFactory;
-			}
-		}
-		catch (Exception exception) {
-			EcorePlugin.INSTANCE.log(exception);
-		}
-		return new ScgbbFactoryImpl();
-	}
+        try {
+            ScgbbFactory theScgbbFactory = (ScgbbFactory)EPackage.Registry.INSTANCE.getEFactory(ScgbbPackage.eNS_URI);
+            if (theScgbbFactory != null) {
+                return theScgbbFactory;
+            }
+        }
+        catch (Exception exception) {
+            EcorePlugin.INSTANCE.log(exception);
+        }
+        return new ScgbbFactoryImpl();
+    }
 
     /**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ScgbbFactoryImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
-			case ScgbbPackage.SC_GRAPH_BB: return createSCGraphBB();
-			case ScgbbPackage.BASIC_BLOCK: return createBasicBlock();
-			case ScgbbPackage.SCHEDULING_BLOCK: return createSchedulingBlock();
-			case ScgbbPackage.ACTIVATION_EXPRESSION: return createActivationExpression();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eClass.getClassifierID()) {
+            case ScgbbPackage.SC_GRAPH_BB: return createSCGraphBB();
+            case ScgbbPackage.BASIC_BLOCK: return createBasicBlock();
+            case ScgbbPackage.SCHEDULING_BLOCK: return createSchedulingBlock();
+            case ScgbbPackage.ACTIVATION_EXPRESSION: return createActivationExpression();
+            default:
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        }
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public SCGraphBB createSCGraphBB() {
-		SCGraphBBImpl scGraphBB = new SCGraphBBImpl();
-		return scGraphBB;
-	}
+        SCGraphBBImpl scGraphBB = new SCGraphBBImpl();
+        return scGraphBB;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public BasicBlock createBasicBlock() {
-		BasicBlockImpl basicBlock = new BasicBlockImpl();
-		return basicBlock;
-	}
+        BasicBlockImpl basicBlock = new BasicBlockImpl();
+        return basicBlock;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public SchedulingBlock createSchedulingBlock() {
-		SchedulingBlockImpl schedulingBlock = new SchedulingBlockImpl();
-		return schedulingBlock;
-	}
+        SchedulingBlockImpl schedulingBlock = new SchedulingBlockImpl();
+        return schedulingBlock;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ActivationExpression createActivationExpression() {
-		ActivationExpressionImpl activationExpression = new ActivationExpressionImpl();
-		return activationExpression;
-	}
+        ActivationExpressionImpl activationExpression = new ActivationExpressionImpl();
+        return activationExpression;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ScgbbPackage getScgbbPackage() {
-		return (ScgbbPackage)getEPackage();
-	}
+        return (ScgbbPackage)getEPackage();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @deprecated
-	 * @generated
-	 */
+     * @deprecated
+     * @generated
+     */
     @Deprecated
     public static ScgbbPackage getPackage() {
-		return ScgbbPackage.eINSTANCE;
-	}
+        return ScgbbPackage.eINSTANCE;
+    }
 
 } //ScgbbFactoryImpl

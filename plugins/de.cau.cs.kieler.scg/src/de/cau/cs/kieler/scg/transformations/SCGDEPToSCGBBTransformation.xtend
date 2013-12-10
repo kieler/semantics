@@ -92,11 +92,12 @@ class SCGDEPToSCGBBTransformation {
         if (predecessorBlock != null) predecessorBlocks.add(predecessorBlock)
         activationExpressions.add(activationExpression)
         
-        createBasicBlocks(scg, rootNode, guardIndex, predecessorBlocks, activationExpressions)        
+        createBasicBlocks(scg, rootNode, guardIndex, predecessorBlocks, activationExpressions, null, null)        
     }   
         
     def int createBasicBlocks(SCGraphBB scg, Node rootNode, int guardIndex, 
-        List<BasicBlock> predecessorBlocks, List<Expression> activationExpressions
+        List<BasicBlock> predecessorBlocks, List<Expression> activationExpressions,
+        List<ValuedObject> emptyGuards, List<Expression> emptyExpressions
     ) {
         var newIndex = guardIndex
         var node = rootNode
@@ -119,18 +120,24 @@ class SCGDEPToSCGBBTransformation {
             schedulingBlock.nodes.add(node)
             
             if (node instanceof Conditional) {
-                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks, activationExpressions)
-                newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex, block, guard.reference)
-                newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex, block, guard.reference)
+                val block = scg.insertBasicBlock(guard, schedulingBlock, 
+                    predecessorBlocks, activationExpressions, emptyGuards, emptyExpressions)
+                newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex, 
+                    block, guard.reference)
+                newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex, 
+                    block, guard.reference)
                 node = null
             } else 
             if (node instanceof Surface) {
-                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks, activationExpressions)
-                newIndex = scg.createBasicBlocks((node as Surface).depth, newIndex, block, guard.reference)
+                val block = scg.insertBasicBlock(guard, schedulingBlock, 
+                    predecessorBlocks, activationExpressions, emptyGuards, emptyExpressions)
+                newIndex = scg.createBasicBlocks((node as Surface).depth, newIndex, 
+                    block, guard.reference)
                 node = null
             }  else
             if (node.eAllContents.filter(typeof(ControlFlow)).size != 1) {
-                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks, activationExpressions)
+                val block = scg.insertBasicBlock(guard, schedulingBlock, 
+                    predecessorBlocks, activationExpressions, emptyGuards, emptyExpressions)
                 for(flow : node.eAllContents.filter(typeof(ControlFlow)).toList) {
                     newIndex = scg.createBasicBlocks(flow.target, newIndex, block, guard.reference)
                 }
@@ -141,18 +148,21 @@ class SCGDEPToSCGBBTransformation {
 
 					// TODO: Add empty expressions to basic block
                     newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, 
-                        joinData.predecessors, newArrayList(joinData.guardExpression)
+                        joinData.predecessors, newArrayList(joinData.guardExpression),
+                        joinData.emptyGuards, joinData.emptyExpressions
                     )
                 }
                 node = null                
             } else {
                 val next = node.eAllContents.filter(typeof(ControlFlow)).head.target
                 if (next instanceof Join) {
-                    scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks, activationExpressions)
+                    scg.insertBasicBlock(guard, schedulingBlock, 
+                        predecessorBlocks, activationExpressions, emptyGuards, emptyExpressions)
                     node = null
                 } else
                 if (next != null && next.incoming.filter(typeof(ControlFlow)).size > 1) {
-                    val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks, activationExpressions)
+                    val block = scg.insertBasicBlock(guard, schedulingBlock, 
+                        predecessorBlocks, activationExpressions, emptyGuards, emptyExpressions)
                     newIndex = scg.createBasicBlocks(next, newIndex, block, guard.reference) 
                     node = null;
                 } else {
@@ -164,20 +174,21 @@ class SCGDEPToSCGBBTransformation {
         newIndex
     }
  
-     def BasicBlock insertBasicBlock(SCGraphBB scg, ValuedObject guard, SchedulingBlock schedulingBlock,
-        BasicBlock predecessorBlock, Expression activationExpression) {
-        
-        val predecessorBlocks = <BasicBlock> newLinkedList
-        val activationExpressions = <Expression> newLinkedList
-        
-        if (predecessorBlock != null) predecessorBlocks.add(predecessorBlock)
-        activationExpressions.add(activationExpression)
-        
-        insertBasicBlock(scg, guard, schedulingBlock, predecessorBlocks, activationExpressions)        
-    }   
+//     def BasicBlock insertBasicBlock(SCGraphBB scg, ValuedObject guard, SchedulingBlock schedulingBlock,
+//        BasicBlock predecessorBlock, Expression activationExpression) {
+//        
+//        val predecessorBlocks = <BasicBlock> newLinkedList
+//        val activationExpressions = <Expression> newLinkedList
+//        
+//        if (predecessorBlock != null) predecessorBlocks.add(predecessorBlock)
+//        activationExpressions.add(activationExpression)
+//        
+//        insertBasicBlock(scg, guard, schedulingBlock, predecessorBlocks, activationExpressions)        
+//    }   
         
     def BasicBlock insertBasicBlock(SCGraphBB scg, ValuedObject guard, SchedulingBlock schedulingBlock,
-        List<BasicBlock> predecessorBlocks, List<Expression> activationExpressions
+        List<BasicBlock> predecessorBlocks, List<Expression> activationExpressions,
+        List<ValuedObject> emptyGuards, List<Expression> emptyExpressions
     ) {
         val basicBlock = ScgbbFactory::eINSTANCE.createBasicBlock
       
@@ -188,6 +199,21 @@ class SCGDEPToSCGBBTransformation {
         if (predecessorBlocks != null) newExpression.basicBlocks.addAll(predecessorBlocks)
         newExpression.guardExpression = activationExpressions.head
         newExpression.guard = guard
+        
+        if (emptyGuards != null && emptyExpressions != null && 
+            emptyGuards.size == emptyExpressions.size
+        ) {
+            var guardCount = 0
+            for(g:emptyGuards) {
+                val emptExp = ScgbbFactory::eINSTANCE.createActivationExpression
+                emptExp.guardExpression =  emptyExpressions.get(guardCount)
+                emptExp.guard = emptyGuards.get(guardCount)     
+                basicBlock.emptyGuards.add(emptExp.guard)          
+                guardCount = guardCount + 1
+                newExpression.emptyExpressions.add(emptExp)
+            }
+        }
+        
         basicBlock.activationExpressions.add(newExpression)
         
         scg.basicBlocks.add(basicBlock)
