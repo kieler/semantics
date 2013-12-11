@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: TransformationMapping KLighD binding
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Version: 0.1.0.qualifier
+Bundle-SymbolicName: de.cau.cs.kieler.ktm.klighd; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: javax.inject,
+ com.google.guava,
+ com.google.inject,
+ org.eclipse.xtext.xbase.lib,
+ de.cau.cs.kieler.core.krendering,
+ de.cau.cs.kieler.core.krendering.extensions,
+ de.cau.cs.kieler.kiml,
+ de.cau.cs.kieler.klay.layered,
+ de.cau.cs.kieler.klighd,
+ de.cau.cs.kieler.klighd.ui,
+ de.cau.cs.kieler.klighd.piccolo,
+ de.cau.cs.kieler.kiml.graphviz.layouter;resolution:=optional,
+ org.eclipse.ui,
+ org.eclipse.ui.ide.application,
+ org.eclipse.ui.navigator.resources,
+ org.eclipse.ui.views.log,
+ de.cau.cs.kieler.ktm;bundle-version="0.1.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
