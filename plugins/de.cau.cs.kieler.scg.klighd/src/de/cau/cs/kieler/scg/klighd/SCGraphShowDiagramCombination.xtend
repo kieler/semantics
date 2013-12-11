@@ -75,7 +75,7 @@ class SCGraphShowDiagramCombination extends UpdateXtextModelKLighDCombination {
                 ])?.contents?.head;
                 if (eObject != null) {
                     this.schedule(new KlighdDiagramEffect("volatile.scg.outline", eObject) => [
-                        it.setProperty(KlighdSynthesisProperties::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
+                        it.setProperty(LightDiagramServices::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
                     ]);
                 }
             }
