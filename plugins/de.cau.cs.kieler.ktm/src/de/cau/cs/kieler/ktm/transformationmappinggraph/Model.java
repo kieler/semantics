@@ -159,7 +159,7 @@ public interface Model extends EObject {
     EList<Element> getElements();
 
     /**
-     * Returns the value of the '<em><b>Transformed Into</b></em>' reference list.
+     * Returns the value of the '<em><b>Transformed Into</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation}.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getSource <em>Source</em>}'.
      * <!-- begin-user-doc -->
@@ -168,16 +168,16 @@ public interface Model extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Transformed Into</em>' reference list.
+     * @return the value of the '<em>Transformed Into</em>' containment reference list.
      * @see de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage#getModel_TransformedInto()
      * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getSource
-     * @model opposite="source"
+     * @model opposite="source" containment="true"
      * @generated
      */
     EList<ModelTransformation> getTransformedInto();
 
     /**
-     * Returns the value of the '<em><b>Transformed From</b></em>' reference.
+     * Returns the value of the '<em><b>Transformed From</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getTarget <em>Target</em>}'.
      * <!-- begin-user-doc -->
      * <p>
@@ -185,20 +185,20 @@ public interface Model extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Transformed From</em>' reference.
+     * @return the value of the '<em>Transformed From</em>' container reference.
      * @see #setTransformedFrom(ModelTransformation)
      * @see de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage#getModel_TransformedFrom()
      * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getTarget
-     * @model opposite="target"
+     * @model opposite="target" transient="false"
      * @generated
      */
     ModelTransformation getTransformedFrom();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedFrom <em>Transformed From</em>}' reference.
+     * Sets the value of the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedFrom <em>Transformed From</em>}' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Transformed From</em>' reference.
+     * @param value the new value of the '<em>Transformed From</em>' container reference.
      * @see #getTransformedFrom()
      * @generated
      */

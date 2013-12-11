@@ -78,7 +78,7 @@ public interface ModelTransformation extends EObject {
     void setId(String value);
 
     /**
-     * Returns the value of the '<em><b>Source</b></em>' reference.
+     * Returns the value of the '<em><b>Source</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedInto <em>Transformed Into</em>}'.
      * <!-- begin-user-doc -->
      * <p>
@@ -86,27 +86,27 @@ public interface ModelTransformation extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Source</em>' reference.
+     * @return the value of the '<em>Source</em>' container reference.
      * @see #setSource(Model)
      * @see de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage#getModelTransformation_Source()
      * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedInto
-     * @model opposite="transformedInto" required="true"
+     * @model opposite="transformedInto" required="true" transient="false"
      * @generated
      */
     Model getSource();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getSource <em>Source</em>}' reference.
+     * Sets the value of the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getSource <em>Source</em>}' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Source</em>' reference.
+     * @param value the new value of the '<em>Source</em>' container reference.
      * @see #getSource()
      * @generated
      */
     void setSource(Model value);
 
     /**
-     * Returns the value of the '<em><b>Target</b></em>' reference.
+     * Returns the value of the '<em><b>Target</b></em>' containment reference.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedFrom <em>Transformed From</em>}'.
      * <!-- begin-user-doc -->
      * <p>
@@ -114,20 +114,20 @@ public interface ModelTransformation extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Target</em>' reference.
+     * @return the value of the '<em>Target</em>' containment reference.
      * @see #setTarget(Model)
      * @see de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage#getModelTransformation_Target()
      * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedFrom
-     * @model opposite="transformedFrom" required="true"
+     * @model opposite="transformedFrom" containment="true" required="true"
      * @generated
      */
     Model getTarget();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getTarget <em>Target</em>}' reference.
+     * Sets the value of the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getTarget <em>Target</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Target</em>' reference.
+     * @param value the new value of the '<em>Target</em>' containment reference.
      * @see #getTarget()
      * @generated
      */

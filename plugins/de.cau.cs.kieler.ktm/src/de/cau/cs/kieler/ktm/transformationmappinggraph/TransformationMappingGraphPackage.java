@@ -120,7 +120,7 @@ public interface TransformationMappingGraphPackage extends EPackage {
     int MODEL__ELEMENTS = 3;
 
     /**
-     * The feature id for the '<em><b>Transformed Into</b></em>' reference list.
+     * The feature id for the '<em><b>Transformed Into</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -129,7 +129,7 @@ public interface TransformationMappingGraphPackage extends EPackage {
     int MODEL__TRANSFORMED_INTO = 4;
 
     /**
-     * The feature id for the '<em><b>Transformed From</b></em>' reference.
+     * The feature id for the '<em><b>Transformed From</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -230,7 +230,7 @@ public interface TransformationMappingGraphPackage extends EPackage {
     int MODEL_TRANSFORMATION__ID = 0;
 
     /**
-     * The feature id for the '<em><b>Source</b></em>' reference.
+     * The feature id for the '<em><b>Source</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -239,7 +239,7 @@ public interface TransformationMappingGraphPackage extends EPackage {
     int MODEL_TRANSFORMATION__SOURCE = 1;
 
     /**
-     * The feature id for the '<em><b>Target</b></em>' reference.
+     * The feature id for the '<em><b>Target</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -367,10 +367,10 @@ public interface TransformationMappingGraphPackage extends EPackage {
     EReference getModel_Elements();
 
     /**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedInto <em>Transformed Into</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedInto <em>Transformed Into</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Transformed Into</em>'.
+     * @return the meta object for the containment reference list '<em>Transformed Into</em>'.
      * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedInto()
      * @see #getModel()
      * @generated
@@ -378,10 +378,10 @@ public interface TransformationMappingGraphPackage extends EPackage {
     EReference getModel_TransformedInto();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedFrom <em>Transformed From</em>}'.
+     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedFrom <em>Transformed From</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Transformed From</em>'.
+     * @return the meta object for the container reference '<em>Transformed From</em>'.
      * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedFrom()
      * @see #getModel()
      * @generated
@@ -475,10 +475,10 @@ public interface TransformationMappingGraphPackage extends EPackage {
     EAttribute getModelTransformation_Id();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getSource <em>Source</em>}'.
+     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getSource <em>Source</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Source</em>'.
+     * @return the meta object for the container reference '<em>Source</em>'.
      * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getSource()
      * @see #getModelTransformation()
      * @generated
@@ -486,10 +486,10 @@ public interface TransformationMappingGraphPackage extends EPackage {
     EReference getModelTransformation_Source();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getTarget <em>Target</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getTarget <em>Target</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Target</em>'.
+     * @return the meta object for the containment reference '<em>Target</em>'.
      * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getTarget()
      * @see #getModelTransformation()
      * @generated
@@ -615,7 +615,7 @@ public interface TransformationMappingGraphPackage extends EPackage {
         EReference MODEL__ELEMENTS = eINSTANCE.getModel_Elements();
 
         /**
-         * The meta object literal for the '<em><b>Transformed Into</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Transformed Into</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -623,7 +623,7 @@ public interface TransformationMappingGraphPackage extends EPackage {
         EReference MODEL__TRANSFORMED_INTO = eINSTANCE.getModel_TransformedInto();
 
         /**
-         * The meta object literal for the '<em><b>Transformed From</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Transformed From</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -699,7 +699,7 @@ public interface TransformationMappingGraphPackage extends EPackage {
         EAttribute MODEL_TRANSFORMATION__ID = eINSTANCE.getModelTransformation_Id();
 
         /**
-         * The meta object literal for the '<em><b>Source</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Source</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -707,7 +707,7 @@ public interface TransformationMappingGraphPackage extends EPackage {
         EReference MODEL_TRANSFORMATION__SOURCE = eINSTANCE.getModelTransformation_Source();
 
         /**
-         * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Target</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated

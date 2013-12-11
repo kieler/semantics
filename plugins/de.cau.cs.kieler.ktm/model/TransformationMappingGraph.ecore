@@ -25,7 +25,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" lowerBound="1"
         upperBound="-1" eType="#//Element" containment="true" eOpposite="#//Element/model"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="transformedInto" upperBound="-1"
-        eType="#//ModelTransformation" eOpposite="#//ModelTransformation/source"/>
+        eType="#//ModelTransformation" containment="true" eOpposite="#//ModelTransformation/source"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="transformedFrom" eType="#//ModelTransformation"
         eOpposite="#//ModelTransformation/target"/>
   </eClassifiers>
@@ -62,7 +62,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
         eType="#//Model" eOpposite="#//Model/transformedInto"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
-        eType="#//Model" eOpposite="#//Model/transformedFrom"/>
+        eType="#//Model" containment="true" eOpposite="#//Model/transformedFrom"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="elementTransformations"
         lowerBound="1" upperBound="-1" eType="#//ElementTransformation" containment="true"
         eOpposite="#//ElementTransformation/modelTransformation"/>
