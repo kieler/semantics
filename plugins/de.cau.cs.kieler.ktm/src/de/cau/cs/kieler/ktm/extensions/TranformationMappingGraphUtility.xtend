@@ -64,8 +64,6 @@ class TranformationMappingGraphUtility {
 	/**
 	 * Returns all succeeding ModelTransformation for given model.
 	 * BFS will be performed on sub tree.
-	 * This function should only be called on valid TM-Graphs (cycles will cause endless loop).
-	 * Call {@link TranformationMappingGraphUtility#validate} to validate.
 	 * @return list of succeeding ModelTransformation.
 	 */
 	def List<ModelTransformation> succeedingTransformations(Model model) {

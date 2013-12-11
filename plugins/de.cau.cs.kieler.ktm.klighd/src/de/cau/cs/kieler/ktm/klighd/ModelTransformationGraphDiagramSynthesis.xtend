@@ -97,7 +97,7 @@ class ModelTransformationGraphDiagramSynthesis extends AbstractDiagramSynthesis<
 	// -------------------------------------------------------------------------
 	// The Main entry transform function
 	/**
-     * Each Model is a element in a tree as doubly linked list.
+     * Each Model is a element in a tree.
      * This will transform the full tree and not only this single element.
      */
 	override KNode transform(Model model) {
@@ -123,6 +123,9 @@ class ModelTransformationGraphDiagramSynthesis extends AbstractDiagramSynthesis<
 		return root;
 	}
 
+	/**
+	 * creates a Node for given model (once) and adds it to given root node.
+	 */
 	def KNode create node : createNode() transformModelAsChildNode(Model model, KNode root) {
 		node.putToLookUpWith(model);
 
