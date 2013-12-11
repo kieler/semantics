@@ -15,8 +15,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TransformationMappingGraph.ecore#//Model/transient"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference TransformationMappingGraph.ecore#//Model/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TransformationMappingGraph.ecore#//Model/elements"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference TransformationMappingGraph.ecore#//Model/transformedInto"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference TransformationMappingGraph.ecore#//Model/transformedFrom"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TransformationMappingGraph.ecore#//Model/transformedInto"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference TransformationMappingGraph.ecore#//Model/transformedFrom"/>
     </genClasses>
     <genClasses ecoreClass="TransformationMappingGraph.ecore#//Element">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference TransformationMappingGraph.ecore#//Element/model"/>
@@ -27,8 +27,8 @@
     </genClasses>
     <genClasses ecoreClass="TransformationMappingGraph.ecore#//ModelTransformation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute TransformationMappingGraph.ecore#//ModelTransformation/id"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference TransformationMappingGraph.ecore#//ModelTransformation/source"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference TransformationMappingGraph.ecore#//ModelTransformation/target"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference TransformationMappingGraph.ecore#//ModelTransformation/source"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TransformationMappingGraph.ecore#//ModelTransformation/target"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference TransformationMappingGraph.ecore#//ModelTransformation/elementTransformations"/>
     </genClasses>
     <genClasses ecoreClass="TransformationMappingGraph.ecore#//ElementTransformation">
