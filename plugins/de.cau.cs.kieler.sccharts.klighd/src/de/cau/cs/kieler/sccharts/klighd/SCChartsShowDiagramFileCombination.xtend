@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import de.cau.cs.kieler.klighd.xtext.UpdateXtextModelKLighDCombination
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 
 class SCChartsShowDiagramFileCombination extends UpdateXtextModelKLighDCombination {
     
@@ -70,7 +71,7 @@ class SCChartsShowDiagramFileCombination extends UpdateXtextModelKLighDCombinati
                 if (eObject != null) {
                     this.schedule(new KlighdDiagramEffect("volatile.sccharts.outline", eObject) => [
 // FIX while klighd.incremental is down
-                        it.setProperty(LightDiagramServices::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
+                        it.setProperty(KlighdSynthesisProperties::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
 //                        it.setProperty(LightDiagramServices::REQUESTED_UPDATE_STRATEGY, UpdateStrategy::ID);
                     ]);
                 }

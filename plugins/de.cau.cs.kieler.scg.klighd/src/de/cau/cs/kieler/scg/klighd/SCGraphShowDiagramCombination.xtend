@@ -25,6 +25,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 
 /** 
  * SCG Combination
@@ -74,7 +75,7 @@ class SCGraphShowDiagramCombination extends UpdateXtextModelKLighDCombination {
                 ])?.contents?.head;
                 if (eObject != null) {
                     this.schedule(new KlighdDiagramEffect("volatile.scg.outline", eObject) => [
-                        it.setProperty(LightDiagramServices::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
+                        it.setProperty(KlighdSynthesisProperties::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
                     ]);
                 }
             }

@@ -200,7 +200,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         = SynthesisOption::createRangeOption("Hierarchy", 0f, 255f, 128f);
 
     private static val SynthesisOption CONTROLFLOW_THICKNESS 
-        = SynthesisOption::createRangeOption("Controlflow thickness", 1, 10, 1, 2);
+        = SynthesisOption::createRangeOption("Controlflow thickness", 0.5f, 5f, 0.5f, 2f);
         
     private static val SynthesisOption ORIENTATION
         = SynthesisOption::createChoiceOption("Orientation", <String> newLinkedList("Top-Down", "Left-Right"), "Top-Down");
