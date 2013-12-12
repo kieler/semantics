@@ -426,7 +426,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if (SHOW_SHADOW.booleanValue) {
                     it.shadow = "black".color;
                 }
-                it.setGridPlacement(1);
+//                it.setGridPlacement(1);
                 if (s.valuedObject != null && s.assignment != null) {
                     var assignmentStr = s.valuedObject.name + " = " + serializer.serialize(s.assignment.copy).removeParenthesis
                     if (assignmentStr.contains("&")) {
@@ -434,8 +434,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
                                             
                     }
-                    it.addText(assignmentStr)
-                        .putToLookUpWith(s);
+                    it.addText(assignmentStr).putToLookUpWith(s).setSurroundingSpace(4, 0, 2, 0)
                     }
             ]
             
