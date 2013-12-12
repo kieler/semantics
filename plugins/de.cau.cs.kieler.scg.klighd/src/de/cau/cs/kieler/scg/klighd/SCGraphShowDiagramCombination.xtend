@@ -16,7 +16,7 @@ package de.cau.cs.kieler.scg.klighd
 import de.cau.cs.kieler.core.kivi.AbstractCombination
 import de.cau.cs.kieler.core.kivi.triggers.PartTrigger
 import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger
-import de.cau.cs.kieler.klighd.effects.KlighdDiagramEffect
+import de.cau.cs.kieler.klighd.kivi.effects.KlighdDiagramEffect
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.klighd.xtext.UpdateXtextModelKLighDCombination
