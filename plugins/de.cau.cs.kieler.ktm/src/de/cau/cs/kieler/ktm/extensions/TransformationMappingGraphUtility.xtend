@@ -24,7 +24,7 @@ import java.util.LinkedList
  * @author als
  *
  */
-class TranformationMappingGraphUtility {
+class TransformationMappingGraphUtility {
 
 	// -------------------------------------------------------------------------
 	// Model Utilities

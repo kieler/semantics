@@ -28,7 +28,7 @@ import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.ktm.extensions.TranformationMappingGraphUtility
+import de.cau.cs.kieler.ktm.extensions.TransformationMappingGraphUtility
 import de.cau.cs.kieler.ktm.transformationmappinggraph.Model
 import java.util.List
 import javax.inject.Inject
@@ -69,7 +69,7 @@ class ModelTransformationGraphDiagramSynthesis extends AbstractDiagramSynthesis<
 	extension KColorExtensions
 
 	@Inject
-	extension TranformationMappingGraphUtility
+	extension TransformationMappingGraphUtility
 
 	// -------------------------------------------------------------------------
 	// Display options
