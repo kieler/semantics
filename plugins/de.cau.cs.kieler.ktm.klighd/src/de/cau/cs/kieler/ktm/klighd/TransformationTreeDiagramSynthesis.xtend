@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.ktm.klighd
 
 import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.core.krendering.KColor
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
@@ -26,15 +27,15 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.ktm.extensions.TransformationMappingGraphUtility
-import de.cau.cs.kieler.ktm.transformationmappinggraph.Model
+import de.cau.cs.kieler.ktm.transformationtree.Model
+import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation
 import java.util.List
 import javax.inject.Inject
-import de.cau.cs.kieler.core.krendering.KColor
-import de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation
-import de.cau.cs.kieler.klighd.KlighdConstants
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
@@ -42,7 +43,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * 
  * @author als
  */
-class ModelTransformationGraphDiagramSynthesis extends AbstractDiagramSynthesis<Model> {
+class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model> {
 
 	@Inject
 	extension KNodeExtensions

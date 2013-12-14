@@ -11,9 +11,9 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.ktm.transformationmappinggraph.impl;
+package de.cau.cs.kieler.ktm.transformationtree.impl;
 
-import de.cau.cs.kieler.ktm.transformationmappinggraph.*;
+import de.cau.cs.kieler.ktm.transformationtree.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * <!-- end-user-doc -->
  * @generated
  */
-public class TransformationMappingGraphFactoryImpl extends EFactoryImpl implements TransformationMappingGraphFactory {
+public class TransformationTreeFactoryImpl extends EFactoryImpl implements TransformationTreeFactory {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -43,17 +43,17 @@ public class TransformationMappingGraphFactoryImpl extends EFactoryImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    public static TransformationMappingGraphFactory init() {
+    public static TransformationTreeFactory init() {
         try {
-            TransformationMappingGraphFactory theTransformationMappingGraphFactory = (TransformationMappingGraphFactory)EPackage.Registry.INSTANCE.getEFactory(TransformationMappingGraphPackage.eNS_URI);
-            if (theTransformationMappingGraphFactory != null) {
-                return theTransformationMappingGraphFactory;
+            TransformationTreeFactory theTransformationTreeFactory = (TransformationTreeFactory)EPackage.Registry.INSTANCE.getEFactory(TransformationTreePackage.eNS_URI);
+            if (theTransformationTreeFactory != null) {
+                return theTransformationTreeFactory;
             }
         }
         catch (Exception exception) {
             EcorePlugin.INSTANCE.log(exception);
         }
-        return new TransformationMappingGraphFactoryImpl();
+        return new TransformationTreeFactoryImpl();
     }
 
     /**
@@ -62,7 +62,7 @@ public class TransformationMappingGraphFactoryImpl extends EFactoryImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    public TransformationMappingGraphFactoryImpl() {
+    public TransformationTreeFactoryImpl() {
         super();
     }
 
@@ -74,10 +74,10 @@ public class TransformationMappingGraphFactoryImpl extends EFactoryImpl implemen
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case TransformationMappingGraphPackage.MODEL: return createModel();
-            case TransformationMappingGraphPackage.ELEMENT: return createElement();
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION: return createModelTransformation();
-            case TransformationMappingGraphPackage.ELEMENT_TRANSFORMATION: return createElementTransformation();
+            case TransformationTreePackage.MODEL: return createModel();
+            case TransformationTreePackage.ELEMENT: return createElement();
+            case TransformationTreePackage.MODEL_TRANSFORMATION: return createModelTransformation();
+            case TransformationTreePackage.ELEMENT_TRANSFORMATION: return createElementTransformation();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -128,8 +128,8 @@ public class TransformationMappingGraphFactoryImpl extends EFactoryImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    public TransformationMappingGraphPackage getTransformationMappingGraphPackage() {
-        return (TransformationMappingGraphPackage)getEPackage();
+    public TransformationTreePackage getTransformationTreePackage() {
+        return (TransformationTreePackage)getEPackage();
     }
 
     /**
@@ -139,8 +139,8 @@ public class TransformationMappingGraphFactoryImpl extends EFactoryImpl implemen
      * @generated
      */
     @Deprecated
-    public static TransformationMappingGraphPackage getPackage() {
-        return TransformationMappingGraphPackage.eINSTANCE;
+    public static TransformationTreePackage getPackage() {
+        return TransformationTreePackage.eINSTANCE;
     }
 
-} //TransformationMappingGraphFactoryImpl
+} //TransformationTreeFactoryImpl

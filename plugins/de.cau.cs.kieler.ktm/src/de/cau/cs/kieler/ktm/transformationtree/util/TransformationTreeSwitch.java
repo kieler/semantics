@@ -11,9 +11,9 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.ktm.transformationmappinggraph.util;
+package de.cau.cs.kieler.ktm.transformationtree.util;
 
-import de.cau.cs.kieler.ktm.transformationmappinggraph.*;
+import de.cau.cs.kieler.ktm.transformationtree.*;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -30,10 +30,10 @@ import org.eclipse.emf.ecore.util.Switch;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage
+ * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage
  * @generated
  */
-public class TransformationMappingGraphSwitch<T> extends Switch<T> {
+public class TransformationTreeSwitch<T> extends Switch<T> {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -47,7 +47,7 @@ public class TransformationMappingGraphSwitch<T> extends Switch<T> {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected static TransformationMappingGraphPackage modelPackage;
+    protected static TransformationTreePackage modelPackage;
 
     /**
      * Creates an instance of the switch.
@@ -55,9 +55,9 @@ public class TransformationMappingGraphSwitch<T> extends Switch<T> {
      * <!-- end-user-doc -->
      * @generated
      */
-    public TransformationMappingGraphSwitch() {
+    public TransformationTreeSwitch() {
         if (modelPackage == null) {
-            modelPackage = TransformationMappingGraphPackage.eINSTANCE;
+            modelPackage = TransformationTreePackage.eINSTANCE;
         }
     }
 
@@ -84,25 +84,25 @@ public class TransformationMappingGraphSwitch<T> extends Switch<T> {
     @Override
     protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
-            case TransformationMappingGraphPackage.MODEL: {
+            case TransformationTreePackage.MODEL: {
                 Model model = (Model)theEObject;
                 T result = caseModel(model);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case TransformationMappingGraphPackage.ELEMENT: {
+            case TransformationTreePackage.ELEMENT: {
                 Element element = (Element)theEObject;
                 T result = caseElement(element);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION: {
+            case TransformationTreePackage.MODEL_TRANSFORMATION: {
                 ModelTransformation modelTransformation = (ModelTransformation)theEObject;
                 T result = caseModelTransformation(modelTransformation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case TransformationMappingGraphPackage.ELEMENT_TRANSFORMATION: {
+            case TransformationTreePackage.ELEMENT_TRANSFORMATION: {
                 ElementTransformation elementTransformation = (ElementTransformation)theEObject;
                 T result = caseElementTransformation(elementTransformation);
                 if (result == null) result = defaultCase(theEObject);
@@ -188,4 +188,4 @@ public class TransformationMappingGraphSwitch<T> extends Switch<T> {
         return null;
     }
 
-} //TransformationMappingGraphSwitch
+} //TransformationTreeSwitch

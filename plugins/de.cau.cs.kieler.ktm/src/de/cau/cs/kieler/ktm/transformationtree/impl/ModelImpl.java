@@ -11,20 +11,26 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.ktm.transformationmappinggraph.impl;
+package de.cau.cs.kieler.ktm.transformationtree.impl;
 
-import de.cau.cs.kieler.ktm.transformationmappinggraph.Element;
-import de.cau.cs.kieler.ktm.transformationmappinggraph.Model;
-import de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation;
-import de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage;
+import de.cau.cs.kieler.ktm.transformationtree.Element;
+import de.cau.cs.kieler.ktm.transformationtree.Model;
+import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation;
+import de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage;
+
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -36,12 +42,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelImpl#isTransient <em>Transient</em>}</li>
- *   <li>{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelImpl#getElements <em>Elements</em>}</li>
- *   <li>{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelImpl#getTransformedInto <em>Transformed Into</em>}</li>
- *   <li>{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelImpl#getTransformedFrom <em>Transformed From</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl#getElements <em>Elements</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl#getTransformedInto <em>Transformed Into</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl#getTransformedFrom <em>Transformed From</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl#isTransient <em>Transient</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -76,6 +82,26 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
     protected String name = NAME_EDEFAULT;
 
     /**
+     * The cached value of the '{@link #getElements() <em>Elements</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getElements()
+     * @generated
+     * @ordered
+     */
+    protected EList<Element> elements;
+
+    /**
+     * The cached value of the '{@link #getTransformedInto() <em>Transformed Into</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTransformedInto()
+     * @generated
+     * @ordered
+     */
+    protected EList<ModelTransformation> transformedInto;
+
+    /**
      * The default value of the '{@link #isTransient() <em>Transient</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -106,26 +132,6 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
     protected EClass type;
 
     /**
-     * The cached value of the '{@link #getElements() <em>Elements</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getElements()
-     * @generated
-     * @ordered
-     */
-    protected EList<Element> elements;
-
-    /**
-     * The cached value of the '{@link #getTransformedInto() <em>Transformed Into</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getTransformedInto()
-     * @generated
-     * @ordered
-     */
-    protected EList<ModelTransformation> transformedInto;
-
-    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -141,7 +147,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
      */
     @Override
     protected EClass eStaticClass() {
-        return TransformationMappingGraphPackage.Literals.MODEL;
+        return TransformationTreePackage.Literals.MODEL;
     }
 
     /**
@@ -162,7 +168,72 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
         String oldName = name;
         name = newName;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, TransformationMappingGraphPackage.MODEL__NAME, oldName, name));
+            eNotify(new ENotificationImpl(this, Notification.SET, TransformationTreePackage.MODEL__NAME, oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Element> getElements() {
+        if (elements == null) {
+            elements = new EObjectContainmentWithInverseEList<Element>(Element.class, this, TransformationTreePackage.MODEL__ELEMENTS, TransformationTreePackage.ELEMENT__MODEL);
+        }
+        return elements;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<ModelTransformation> getTransformedInto() {
+        if (transformedInto == null) {
+            transformedInto = new EObjectContainmentWithInverseEList<ModelTransformation>(ModelTransformation.class, this, TransformationTreePackage.MODEL__TRANSFORMED_INTO, TransformationTreePackage.MODEL_TRANSFORMATION__SOURCE);
+        }
+        return transformedInto;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ModelTransformation getTransformedFrom() {
+        if (eContainerFeatureID() != TransformationTreePackage.MODEL__TRANSFORMED_FROM) return null;
+        return (ModelTransformation)eInternalContainer();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetTransformedFrom(ModelTransformation newTransformedFrom, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newTransformedFrom, TransformationTreePackage.MODEL__TRANSFORMED_FROM, msgs);
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTransformedFrom(ModelTransformation newTransformedFrom) {
+        if (newTransformedFrom != eInternalContainer() || (eContainerFeatureID() != TransformationTreePackage.MODEL__TRANSFORMED_FROM && newTransformedFrom != null)) {
+            if (EcoreUtil.isAncestor(this, newTransformedFrom))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newTransformedFrom != null)
+                msgs = ((InternalEObject)newTransformedFrom).eInverseAdd(this, TransformationTreePackage.MODEL_TRANSFORMATION__TARGET, ModelTransformation.class, msgs);
+            msgs = basicSetTransformedFrom(newTransformedFrom, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, TransformationTreePackage.MODEL__TRANSFORMED_FROM, newTransformedFrom, newTransformedFrom));
     }
 
     /**
@@ -183,7 +254,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
         boolean oldTransient = transient_;
         transient_ = newTransient;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, TransformationMappingGraphPackage.MODEL__TRANSIENT, oldTransient, transient_));
+            eNotify(new ENotificationImpl(this, Notification.SET, TransformationTreePackage.MODEL__TRANSIENT, oldTransient, transient_));
     }
 
     /**
@@ -197,7 +268,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
             type = (EClass)eResolveProxy(oldType);
             if (type != oldType) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, TransformationMappingGraphPackage.MODEL__TYPE, oldType, type));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, TransformationTreePackage.MODEL__TYPE, oldType, type));
             }
         }
         return type;
@@ -221,72 +292,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
         EClass oldType = type;
         type = newType;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, TransformationMappingGraphPackage.MODEL__TYPE, oldType, type));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Element> getElements() {
-        if (elements == null) {
-            elements = new EObjectContainmentWithInverseEList<Element>(Element.class, this, TransformationMappingGraphPackage.MODEL__ELEMENTS, TransformationMappingGraphPackage.ELEMENT__MODEL);
-        }
-        return elements;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<ModelTransformation> getTransformedInto() {
-        if (transformedInto == null) {
-            transformedInto = new EObjectContainmentWithInverseEList<ModelTransformation>(ModelTransformation.class, this, TransformationMappingGraphPackage.MODEL__TRANSFORMED_INTO, TransformationMappingGraphPackage.MODEL_TRANSFORMATION__SOURCE);
-        }
-        return transformedInto;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ModelTransformation getTransformedFrom() {
-        if (eContainerFeatureID() != TransformationMappingGraphPackage.MODEL__TRANSFORMED_FROM) return null;
-        return (ModelTransformation)eInternalContainer();
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetTransformedFrom(ModelTransformation newTransformedFrom, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newTransformedFrom, TransformationMappingGraphPackage.MODEL__TRANSFORMED_FROM, msgs);
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setTransformedFrom(ModelTransformation newTransformedFrom) {
-        if (newTransformedFrom != eInternalContainer() || (eContainerFeatureID() != TransformationMappingGraphPackage.MODEL__TRANSFORMED_FROM && newTransformedFrom != null)) {
-            if (EcoreUtil.isAncestor(this, newTransformedFrom))
-                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-            NotificationChain msgs = null;
-            if (eInternalContainer() != null)
-                msgs = eBasicRemoveFromContainer(msgs);
-            if (newTransformedFrom != null)
-                msgs = ((InternalEObject)newTransformedFrom).eInverseAdd(this, TransformationMappingGraphPackage.MODEL_TRANSFORMATION__TARGET, ModelTransformation.class, msgs);
-            msgs = basicSetTransformedFrom(newTransformedFrom, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, TransformationMappingGraphPackage.MODEL__TRANSFORMED_FROM, newTransformedFrom, newTransformedFrom));
+            eNotify(new ENotificationImpl(this, Notification.SET, TransformationTreePackage.MODEL__TYPE, oldType, type));
     }
 
     /**
@@ -298,11 +304,11 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case TransformationMappingGraphPackage.MODEL__ELEMENTS:
+            case TransformationTreePackage.MODEL__ELEMENTS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getElements()).basicAdd(otherEnd, msgs);
-            case TransformationMappingGraphPackage.MODEL__TRANSFORMED_INTO:
+            case TransformationTreePackage.MODEL__TRANSFORMED_INTO:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getTransformedInto()).basicAdd(otherEnd, msgs);
-            case TransformationMappingGraphPackage.MODEL__TRANSFORMED_FROM:
+            case TransformationTreePackage.MODEL__TRANSFORMED_FROM:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetTransformedFrom((ModelTransformation)otherEnd, msgs);
@@ -318,11 +324,11 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case TransformationMappingGraphPackage.MODEL__ELEMENTS:
+            case TransformationTreePackage.MODEL__ELEMENTS:
                 return ((InternalEList<?>)getElements()).basicRemove(otherEnd, msgs);
-            case TransformationMappingGraphPackage.MODEL__TRANSFORMED_INTO:
+            case TransformationTreePackage.MODEL__TRANSFORMED_INTO:
                 return ((InternalEList<?>)getTransformedInto()).basicRemove(otherEnd, msgs);
-            case TransformationMappingGraphPackage.MODEL__TRANSFORMED_FROM:
+            case TransformationTreePackage.MODEL__TRANSFORMED_FROM:
                 return basicSetTransformedFrom(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -336,8 +342,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
     @Override
     public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
         switch (eContainerFeatureID()) {
-            case TransformationMappingGraphPackage.MODEL__TRANSFORMED_FROM:
-                return eInternalContainer().eInverseRemove(this, TransformationMappingGraphPackage.MODEL_TRANSFORMATION__TARGET, ModelTransformation.class, msgs);
+            case TransformationTreePackage.MODEL__TRANSFORMED_FROM:
+                return eInternalContainer().eInverseRemove(this, TransformationTreePackage.MODEL_TRANSFORMATION__TARGET, ModelTransformation.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
@@ -350,19 +356,19 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case TransformationMappingGraphPackage.MODEL__NAME:
+            case TransformationTreePackage.MODEL__NAME:
                 return getName();
-            case TransformationMappingGraphPackage.MODEL__TRANSIENT:
+            case TransformationTreePackage.MODEL__ELEMENTS:
+                return getElements();
+            case TransformationTreePackage.MODEL__TRANSFORMED_INTO:
+                return getTransformedInto();
+            case TransformationTreePackage.MODEL__TRANSFORMED_FROM:
+                return getTransformedFrom();
+            case TransformationTreePackage.MODEL__TRANSIENT:
                 return isTransient();
-            case TransformationMappingGraphPackage.MODEL__TYPE:
+            case TransformationTreePackage.MODEL__TYPE:
                 if (resolve) return getType();
                 return basicGetType();
-            case TransformationMappingGraphPackage.MODEL__ELEMENTS:
-                return getElements();
-            case TransformationMappingGraphPackage.MODEL__TRANSFORMED_INTO:
-                return getTransformedInto();
-            case TransformationMappingGraphPackage.MODEL__TRANSFORMED_FROM:
-                return getTransformedFrom();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -376,25 +382,25 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case TransformationMappingGraphPackage.MODEL__NAME:
+            case TransformationTreePackage.MODEL__NAME:
                 setName((String)newValue);
                 return;
-            case TransformationMappingGraphPackage.MODEL__TRANSIENT:
-                setTransient((Boolean)newValue);
-                return;
-            case TransformationMappingGraphPackage.MODEL__TYPE:
-                setType((EClass)newValue);
-                return;
-            case TransformationMappingGraphPackage.MODEL__ELEMENTS:
+            case TransformationTreePackage.MODEL__ELEMENTS:
                 getElements().clear();
                 getElements().addAll((Collection<? extends Element>)newValue);
                 return;
-            case TransformationMappingGraphPackage.MODEL__TRANSFORMED_INTO:
+            case TransformationTreePackage.MODEL__TRANSFORMED_INTO:
                 getTransformedInto().clear();
                 getTransformedInto().addAll((Collection<? extends ModelTransformation>)newValue);
                 return;
-            case TransformationMappingGraphPackage.MODEL__TRANSFORMED_FROM:
+            case TransformationTreePackage.MODEL__TRANSFORMED_FROM:
                 setTransformedFrom((ModelTransformation)newValue);
+                return;
+            case TransformationTreePackage.MODEL__TRANSIENT:
+                setTransient((Boolean)newValue);
+                return;
+            case TransformationTreePackage.MODEL__TYPE:
+                setType((EClass)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -408,23 +414,23 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case TransformationMappingGraphPackage.MODEL__NAME:
+            case TransformationTreePackage.MODEL__NAME:
                 setName(NAME_EDEFAULT);
                 return;
-            case TransformationMappingGraphPackage.MODEL__TRANSIENT:
-                setTransient(TRANSIENT_EDEFAULT);
-                return;
-            case TransformationMappingGraphPackage.MODEL__TYPE:
-                setType((EClass)null);
-                return;
-            case TransformationMappingGraphPackage.MODEL__ELEMENTS:
+            case TransformationTreePackage.MODEL__ELEMENTS:
                 getElements().clear();
                 return;
-            case TransformationMappingGraphPackage.MODEL__TRANSFORMED_INTO:
+            case TransformationTreePackage.MODEL__TRANSFORMED_INTO:
                 getTransformedInto().clear();
                 return;
-            case TransformationMappingGraphPackage.MODEL__TRANSFORMED_FROM:
+            case TransformationTreePackage.MODEL__TRANSFORMED_FROM:
                 setTransformedFrom((ModelTransformation)null);
+                return;
+            case TransformationTreePackage.MODEL__TRANSIENT:
+                setTransient(TRANSIENT_EDEFAULT);
+                return;
+            case TransformationTreePackage.MODEL__TYPE:
+                setType((EClass)null);
                 return;
         }
         super.eUnset(featureID);
@@ -438,18 +444,18 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case TransformationMappingGraphPackage.MODEL__NAME:
+            case TransformationTreePackage.MODEL__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-            case TransformationMappingGraphPackage.MODEL__TRANSIENT:
-                return transient_ != TRANSIENT_EDEFAULT;
-            case TransformationMappingGraphPackage.MODEL__TYPE:
-                return type != null;
-            case TransformationMappingGraphPackage.MODEL__ELEMENTS:
+            case TransformationTreePackage.MODEL__ELEMENTS:
                 return elements != null && !elements.isEmpty();
-            case TransformationMappingGraphPackage.MODEL__TRANSFORMED_INTO:
+            case TransformationTreePackage.MODEL__TRANSFORMED_INTO:
                 return transformedInto != null && !transformedInto.isEmpty();
-            case TransformationMappingGraphPackage.MODEL__TRANSFORMED_FROM:
+            case TransformationTreePackage.MODEL__TRANSFORMED_FROM:
                 return getTransformedFrom() != null;
+            case TransformationTreePackage.MODEL__TRANSIENT:
+                return transient_ != TRANSIENT_EDEFAULT;
+            case TransformationTreePackage.MODEL__TYPE:
+                return type != null;
         }
         return super.eIsSet(featureID);
     }

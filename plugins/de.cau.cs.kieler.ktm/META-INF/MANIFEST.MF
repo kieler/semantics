@@ -13,9 +13,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.ktm.extensions,
- de.cau.cs.kieler.ktm.transformationmappinggraph,
- de.cau.cs.kieler.ktm.transformationmappinggraph.impl,
- de.cau.cs.kieler.ktm.transformationmappinggraph.util
+ de.cau.cs.kieler.ktm.transformationtree,
+ de.cau.cs.kieler.ktm.transformationtree.impl,
+ de.cau.cs.kieler.ktm.transformationtree.util
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 

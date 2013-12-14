@@ -17,12 +17,13 @@
 
 <plugin>
 
+
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated TransformationMappingGraph -->
+      <!-- @generated TransformationTree -->
       <package
-            uri="http://kieler.cs.cau.de/transformationmappinggraph/0.1.0"
-            class="de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage"
-            genModel="model/TransformationMappingGraph.genmodel"/>
+            uri="http://kieler.cs.cau.de/transformationtree/0.1.0"
+            class="de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage"
+            genModel="model/TransformationTree.genmodel"/>
    </extension>
 
 </plugin>

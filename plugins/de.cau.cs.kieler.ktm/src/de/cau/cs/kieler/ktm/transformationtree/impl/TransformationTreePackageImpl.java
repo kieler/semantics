@@ -11,14 +11,14 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.ktm.transformationmappinggraph.impl;
+package de.cau.cs.kieler.ktm.transformationtree.impl;
 
-import de.cau.cs.kieler.ktm.transformationmappinggraph.Element;
-import de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation;
-import de.cau.cs.kieler.ktm.transformationmappinggraph.Model;
-import de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation;
-import de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphFactory;
-import de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage;
+import de.cau.cs.kieler.ktm.transformationtree.Element;
+import de.cau.cs.kieler.ktm.transformationtree.ElementTransformation;
+import de.cau.cs.kieler.ktm.transformationtree.Model;
+import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation;
+import de.cau.cs.kieler.ktm.transformationtree.TransformationTreeFactory;
+import de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  * <!-- end-user-doc -->
  * @generated
  */
-public class TransformationMappingGraphPackageImpl extends EPackageImpl implements TransformationMappingGraphPackage {
+public class TransformationTreePackageImpl extends EPackageImpl implements TransformationTreePackage {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -81,12 +81,12 @@ public class TransformationMappingGraphPackageImpl extends EPackageImpl implemen
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.eclipse.emf.ecore.EPackage.Registry
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage#eNS_URI
+     * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#eNS_URI
      * @see #init()
      * @generated
      */
-    private TransformationMappingGraphPackageImpl() {
-        super(eNS_URI, TransformationMappingGraphFactory.eINSTANCE);
+    private TransformationTreePackageImpl() {
+        super(eNS_URI, TransformationTreeFactory.eINSTANCE);
     }
 
     /**
@@ -99,7 +99,7 @@ public class TransformationMappingGraphPackageImpl extends EPackageImpl implemen
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
      * 
-     * <p>This method is used to initialize {@link TransformationMappingGraphPackage#eINSTANCE} when that field is accessed.
+     * <p>This method is used to initialize {@link TransformationTreePackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -108,11 +108,11 @@ public class TransformationMappingGraphPackageImpl extends EPackageImpl implemen
      * @see #initializePackageContents()
      * @generated
      */
-    public static TransformationMappingGraphPackage init() {
-        if (isInited) return (TransformationMappingGraphPackage)EPackage.Registry.INSTANCE.getEPackage(TransformationMappingGraphPackage.eNS_URI);
+    public static TransformationTreePackage init() {
+        if (isInited) return (TransformationTreePackage)EPackage.Registry.INSTANCE.getEPackage(TransformationTreePackage.eNS_URI);
 
         // Obtain or create and register package
-        TransformationMappingGraphPackageImpl theTransformationMappingGraphPackage = (TransformationMappingGraphPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TransformationMappingGraphPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new TransformationMappingGraphPackageImpl());
+        TransformationTreePackageImpl theTransformationTreePackage = (TransformationTreePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TransformationTreePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new TransformationTreePackageImpl());
 
         isInited = true;
 
@@ -120,18 +120,18 @@ public class TransformationMappingGraphPackageImpl extends EPackageImpl implemen
         EcorePackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
-        theTransformationMappingGraphPackage.createPackageContents();
+        theTransformationTreePackage.createPackageContents();
 
         // Initialize created meta-data
-        theTransformationMappingGraphPackage.initializePackageContents();
+        theTransformationTreePackage.initializePackageContents();
 
         // Mark meta-data to indicate it can't be changed
-        theTransformationMappingGraphPackage.freeze();
+        theTransformationTreePackage.freeze();
 
   
         // Update the registry and return the package
-        EPackage.Registry.INSTANCE.put(TransformationMappingGraphPackage.eNS_URI, theTransformationMappingGraphPackage);
-        return theTransformationMappingGraphPackage;
+        EPackage.Registry.INSTANCE.put(TransformationTreePackage.eNS_URI, theTransformationTreePackage);
+        return theTransformationTreePackage;
     }
 
     /**
@@ -157,26 +157,8 @@ public class TransformationMappingGraphPackageImpl extends EPackageImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getModel_Transient() {
-        return (EAttribute)modelEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getModel_Type() {
-        return (EReference)modelEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EReference getModel_Elements() {
-        return (EReference)modelEClass.getEStructuralFeatures().get(3);
+        return (EReference)modelEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -185,7 +167,7 @@ public class TransformationMappingGraphPackageImpl extends EPackageImpl implemen
      * @generated
      */
     public EReference getModel_TransformedInto() {
-        return (EReference)modelEClass.getEStructuralFeatures().get(4);
+        return (EReference)modelEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -194,6 +176,24 @@ public class TransformationMappingGraphPackageImpl extends EPackageImpl implemen
      * @generated
      */
     public EReference getModel_TransformedFrom() {
+        return (EReference)modelEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getModel_Transient() {
+        return (EAttribute)modelEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getModel_Type() {
         return (EReference)modelEClass.getEStructuralFeatures().get(5);
     }
 
@@ -229,7 +229,7 @@ public class TransformationMappingGraphPackageImpl extends EPackageImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getElement_ReferencedObject() {
+    public EReference getElement_TransformedInto() {
         return (EReference)elementEClass.getEStructuralFeatures().get(2);
     }
 
@@ -238,7 +238,7 @@ public class TransformationMappingGraphPackageImpl extends EPackageImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getElement_TransformedInto() {
+    public EReference getElement_TransformedFrom() {
         return (EReference)elementEClass.getEStructuralFeatures().get(3);
     }
 
@@ -247,7 +247,7 @@ public class TransformationMappingGraphPackageImpl extends EPackageImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getElement_TransformedFrom() {
+    public EReference getElement_ReferencedObject() {
         return (EReference)elementEClass.getEStructuralFeatures().get(4);
     }
 
@@ -337,8 +337,8 @@ public class TransformationMappingGraphPackageImpl extends EPackageImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    public TransformationMappingGraphFactory getTransformationMappingGraphFactory() {
-        return (TransformationMappingGraphFactory)getEFactoryInstance();
+    public TransformationTreeFactory getTransformationTreeFactory() {
+        return (TransformationTreeFactory)getEFactoryInstance();
     }
 
     /**
@@ -362,18 +362,18 @@ public class TransformationMappingGraphPackageImpl extends EPackageImpl implemen
         // Create classes and their features
         modelEClass = createEClass(MODEL);
         createEAttribute(modelEClass, MODEL__NAME);
-        createEAttribute(modelEClass, MODEL__TRANSIENT);
-        createEReference(modelEClass, MODEL__TYPE);
         createEReference(modelEClass, MODEL__ELEMENTS);
         createEReference(modelEClass, MODEL__TRANSFORMED_INTO);
         createEReference(modelEClass, MODEL__TRANSFORMED_FROM);
+        createEAttribute(modelEClass, MODEL__TRANSIENT);
+        createEReference(modelEClass, MODEL__TYPE);
 
         elementEClass = createEClass(ELEMENT);
         createEReference(elementEClass, ELEMENT__MODEL);
         createEAttribute(elementEClass, ELEMENT__NAME);
-        createEReference(elementEClass, ELEMENT__REFERENCED_OBJECT);
         createEReference(elementEClass, ELEMENT__TRANSFORMED_INTO);
         createEReference(elementEClass, ELEMENT__TRANSFORMED_FROM);
+        createEReference(elementEClass, ELEMENT__REFERENCED_OBJECT);
 
         modelTransformationEClass = createEClass(MODEL_TRANSFORMATION);
         createEAttribute(modelTransformationEClass, MODEL_TRANSFORMATION__ID);
@@ -422,18 +422,18 @@ public class TransformationMappingGraphPackageImpl extends EPackageImpl implemen
         // Initialize classes and features; add operations and parameters
         initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getModel_Name(), ecorePackage.getEString(), "name", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getModel_Transient(), theEcorePackage.getEBoolean(), "transient", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getModel_Type(), theEcorePackage.getEClass(), null, "type", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getModel_Elements(), this.getElement(), this.getElement_Model(), "elements", null, 1, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getModel_TransformedInto(), this.getModelTransformation(), this.getModelTransformation_Source(), "transformedInto", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getModel_TransformedFrom(), this.getModelTransformation(), this.getModelTransformation_Target(), "transformedFrom", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getModel_Transient(), theEcorePackage.getEBoolean(), "transient", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getModel_Type(), theEcorePackage.getEClass(), null, "type", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(elementEClass, Element.class, "Element", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getElement_Model(), this.getModel(), this.getModel_Elements(), "model", null, 1, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getElement_Name(), ecorePackage.getEString(), "name", null, 1, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getElement_TransformedInto(), this.getElementTransformation(), this.getElementTransformation_Source(), "transformedInto", null, 0, -1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getElement_TransformedFrom(), this.getElementTransformation(), this.getElementTransformation_Target(), "transformedFrom", null, 0, -1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getElement_ReferencedObject(), theEcorePackage.getEObject(), null, "referencedObject", null, 0, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getElement_TransformedInto(), this.getElementTransformation(), this.getElementTransformation_Source(), "transformedInto", null, 1, -1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getElement_TransformedFrom(), this.getElementTransformation(), this.getElementTransformation_Target(), "transformedFrom", null, 1, -1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(modelTransformationEClass, ModelTransformation.class, "ModelTransformation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getModelTransformation_Id(), theEcorePackage.getEString(), "id", null, 1, 1, ModelTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -450,4 +450,4 @@ public class TransformationMappingGraphPackageImpl extends EPackageImpl implemen
         createResource(eNS_URI);
     }
 
-} //TransformationMappingGraphPackageImpl
+} //TransformationTreePackageImpl

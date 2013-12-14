@@ -11,12 +11,12 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.ktm.transformationmappinggraph.impl;
+package de.cau.cs.kieler.ktm.transformationtree.impl;
 
-import de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation;
-import de.cau.cs.kieler.ktm.transformationmappinggraph.Model;
-import de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation;
-import de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage;
+import de.cau.cs.kieler.ktm.transformationtree.ElementTransformation;
+import de.cau.cs.kieler.ktm.transformationtree.Model;
+import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation;
+import de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage;
 
 import java.util.Collection;
 
@@ -42,10 +42,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelTransformationImpl#getId <em>Id</em>}</li>
- *   <li>{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelTransformationImpl#getSource <em>Source</em>}</li>
- *   <li>{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelTransformationImpl#getTarget <em>Target</em>}</li>
- *   <li>{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelTransformationImpl#getElementTransformations <em>Element Transformations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelTransformationImpl#getId <em>Id</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelTransformationImpl#getSource <em>Source</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelTransformationImpl#getTarget <em>Target</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelTransformationImpl#getElementTransformations <em>Element Transformations</em>}</li>
  * </ul>
  * </p>
  *
@@ -115,7 +115,7 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
      */
     @Override
     protected EClass eStaticClass() {
-        return TransformationMappingGraphPackage.Literals.MODEL_TRANSFORMATION;
+        return TransformationTreePackage.Literals.MODEL_TRANSFORMATION;
     }
 
     /**
@@ -136,7 +136,7 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
         String oldId = id;
         id = newId;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, TransformationMappingGraphPackage.MODEL_TRANSFORMATION__ID, oldId, id));
+            eNotify(new ENotificationImpl(this, Notification.SET, TransformationTreePackage.MODEL_TRANSFORMATION__ID, oldId, id));
     }
 
     /**
@@ -145,7 +145,7 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
      * @generated
      */
     public Model getSource() {
-        if (eContainerFeatureID() != TransformationMappingGraphPackage.MODEL_TRANSFORMATION__SOURCE) return null;
+        if (eContainerFeatureID() != TransformationTreePackage.MODEL_TRANSFORMATION__SOURCE) return null;
         return (Model)eInternalContainer();
     }
 
@@ -155,7 +155,7 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
      * @generated
      */
     public NotificationChain basicSetSource(Model newSource, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newSource, TransformationMappingGraphPackage.MODEL_TRANSFORMATION__SOURCE, msgs);
+        msgs = eBasicSetContainer((InternalEObject)newSource, TransformationTreePackage.MODEL_TRANSFORMATION__SOURCE, msgs);
         return msgs;
     }
 
@@ -165,19 +165,19 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
      * @generated
      */
     public void setSource(Model newSource) {
-        if (newSource != eInternalContainer() || (eContainerFeatureID() != TransformationMappingGraphPackage.MODEL_TRANSFORMATION__SOURCE && newSource != null)) {
+        if (newSource != eInternalContainer() || (eContainerFeatureID() != TransformationTreePackage.MODEL_TRANSFORMATION__SOURCE && newSource != null)) {
             if (EcoreUtil.isAncestor(this, newSource))
                 throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
             NotificationChain msgs = null;
             if (eInternalContainer() != null)
                 msgs = eBasicRemoveFromContainer(msgs);
             if (newSource != null)
-                msgs = ((InternalEObject)newSource).eInverseAdd(this, TransformationMappingGraphPackage.MODEL__TRANSFORMED_INTO, Model.class, msgs);
+                msgs = ((InternalEObject)newSource).eInverseAdd(this, TransformationTreePackage.MODEL__TRANSFORMED_INTO, Model.class, msgs);
             msgs = basicSetSource(newSource, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, TransformationMappingGraphPackage.MODEL_TRANSFORMATION__SOURCE, newSource, newSource));
+            eNotify(new ENotificationImpl(this, Notification.SET, TransformationTreePackage.MODEL_TRANSFORMATION__SOURCE, newSource, newSource));
     }
 
     /**
@@ -198,7 +198,7 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
         Model oldTarget = target;
         target = newTarget;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TransformationMappingGraphPackage.MODEL_TRANSFORMATION__TARGET, oldTarget, newTarget);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TransformationTreePackage.MODEL_TRANSFORMATION__TARGET, oldTarget, newTarget);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -213,14 +213,14 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
         if (newTarget != target) {
             NotificationChain msgs = null;
             if (target != null)
-                msgs = ((InternalEObject)target).eInverseRemove(this, TransformationMappingGraphPackage.MODEL__TRANSFORMED_FROM, Model.class, msgs);
+                msgs = ((InternalEObject)target).eInverseRemove(this, TransformationTreePackage.MODEL__TRANSFORMED_FROM, Model.class, msgs);
             if (newTarget != null)
-                msgs = ((InternalEObject)newTarget).eInverseAdd(this, TransformationMappingGraphPackage.MODEL__TRANSFORMED_FROM, Model.class, msgs);
+                msgs = ((InternalEObject)newTarget).eInverseAdd(this, TransformationTreePackage.MODEL__TRANSFORMED_FROM, Model.class, msgs);
             msgs = basicSetTarget(newTarget, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, TransformationMappingGraphPackage.MODEL_TRANSFORMATION__TARGET, newTarget, newTarget));
+            eNotify(new ENotificationImpl(this, Notification.SET, TransformationTreePackage.MODEL_TRANSFORMATION__TARGET, newTarget, newTarget));
     }
 
     /**
@@ -230,7 +230,7 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
      */
     public EList<ElementTransformation> getElementTransformations() {
         if (elementTransformations == null) {
-            elementTransformations = new EObjectContainmentWithInverseEList<ElementTransformation>(ElementTransformation.class, this, TransformationMappingGraphPackage.MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS, TransformationMappingGraphPackage.ELEMENT_TRANSFORMATION__MODEL_TRANSFORMATION);
+            elementTransformations = new EObjectContainmentWithInverseEList<ElementTransformation>(ElementTransformation.class, this, TransformationTreePackage.MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS, TransformationTreePackage.ELEMENT_TRANSFORMATION__MODEL_TRANSFORMATION);
         }
         return elementTransformations;
     }
@@ -244,15 +244,15 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__SOURCE:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__SOURCE:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetSource((Model)otherEnd, msgs);
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__TARGET:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__TARGET:
                 if (target != null)
-                    msgs = ((InternalEObject)target).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TransformationMappingGraphPackage.MODEL_TRANSFORMATION__TARGET, null, msgs);
+                    msgs = ((InternalEObject)target).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TransformationTreePackage.MODEL_TRANSFORMATION__TARGET, null, msgs);
                 return basicSetTarget((Model)otherEnd, msgs);
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getElementTransformations()).basicAdd(otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -266,11 +266,11 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__SOURCE:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__SOURCE:
                 return basicSetSource(null, msgs);
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__TARGET:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__TARGET:
                 return basicSetTarget(null, msgs);
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS:
                 return ((InternalEList<?>)getElementTransformations()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -284,8 +284,8 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
     @Override
     public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
         switch (eContainerFeatureID()) {
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__SOURCE:
-                return eInternalContainer().eInverseRemove(this, TransformationMappingGraphPackage.MODEL__TRANSFORMED_INTO, Model.class, msgs);
+            case TransformationTreePackage.MODEL_TRANSFORMATION__SOURCE:
+                return eInternalContainer().eInverseRemove(this, TransformationTreePackage.MODEL__TRANSFORMED_INTO, Model.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
@@ -298,13 +298,13 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__ID:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__ID:
                 return getId();
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__SOURCE:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__SOURCE:
                 return getSource();
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__TARGET:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__TARGET:
                 return getTarget();
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS:
                 return getElementTransformations();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -319,16 +319,16 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__ID:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__ID:
                 setId((String)newValue);
                 return;
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__SOURCE:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__SOURCE:
                 setSource((Model)newValue);
                 return;
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__TARGET:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__TARGET:
                 setTarget((Model)newValue);
                 return;
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS:
                 getElementTransformations().clear();
                 getElementTransformations().addAll((Collection<? extends ElementTransformation>)newValue);
                 return;
@@ -344,16 +344,16 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__ID:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__ID:
                 setId(ID_EDEFAULT);
                 return;
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__SOURCE:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__SOURCE:
                 setSource((Model)null);
                 return;
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__TARGET:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__TARGET:
                 setTarget((Model)null);
                 return;
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS:
                 getElementTransformations().clear();
                 return;
         }
@@ -368,13 +368,13 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__ID:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__ID:
                 return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__SOURCE:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__SOURCE:
                 return getSource() != null;
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__TARGET:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__TARGET:
                 return target != null;
-            case TransformationMappingGraphPackage.MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS:
+            case TransformationTreePackage.MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS:
                 return elementTransformations != null && !elementTransformations.isEmpty();
         }
         return super.eIsSet(featureID);

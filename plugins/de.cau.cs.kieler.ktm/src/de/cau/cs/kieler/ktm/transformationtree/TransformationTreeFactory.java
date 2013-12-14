@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.ktm.transformationmappinggraph;
+package de.cau.cs.kieler.ktm.transformationtree;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -20,10 +20,10 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage
+ * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage
  * @generated
  */
-public interface TransformationMappingGraphFactory extends EFactory {
+public interface TransformationTreeFactory extends EFactory {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -37,7 +37,7 @@ public interface TransformationMappingGraphFactory extends EFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    TransformationMappingGraphFactory eINSTANCE = de.cau.cs.kieler.ktm.transformationmappinggraph.impl.TransformationMappingGraphFactoryImpl.init();
+    TransformationTreeFactory eINSTANCE = de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreeFactoryImpl.init();
 
     /**
      * Returns a new object of class '<em>Model</em>'.
@@ -82,6 +82,6 @@ public interface TransformationMappingGraphFactory extends EFactory {
      * @return the package supported by this factory.
      * @generated
      */
-    TransformationMappingGraphPackage getTransformationMappingGraphPackage();
+    TransformationTreePackage getTransformationTreePackage();
 
-} //TransformationMappingGraphFactory
+} //TransformationTreeFactory

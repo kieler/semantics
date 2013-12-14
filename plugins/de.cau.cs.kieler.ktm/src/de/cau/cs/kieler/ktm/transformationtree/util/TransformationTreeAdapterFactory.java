@@ -11,9 +11,9 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.ktm.transformationmappinggraph.util;
+package de.cau.cs.kieler.ktm.transformationtree.util;
 
-import de.cau.cs.kieler.ktm.transformationmappinggraph.*;
+import de.cau.cs.kieler.ktm.transformationtree.*;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -27,10 +27,10 @@ import org.eclipse.emf.ecore.EObject;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage
+ * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage
  * @generated
  */
-public class TransformationMappingGraphAdapterFactory extends AdapterFactoryImpl {
+public class TransformationTreeAdapterFactory extends AdapterFactoryImpl {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -44,7 +44,7 @@ public class TransformationMappingGraphAdapterFactory extends AdapterFactoryImpl
      * <!-- end-user-doc -->
      * @generated
      */
-    protected static TransformationMappingGraphPackage modelPackage;
+    protected static TransformationTreePackage modelPackage;
 
     /**
      * Creates an instance of the adapter factory.
@@ -52,9 +52,9 @@ public class TransformationMappingGraphAdapterFactory extends AdapterFactoryImpl
      * <!-- end-user-doc -->
      * @generated
      */
-    public TransformationMappingGraphAdapterFactory() {
+    public TransformationTreeAdapterFactory() {
         if (modelPackage == null) {
-            modelPackage = TransformationMappingGraphPackage.eINSTANCE;
+            modelPackage = TransformationTreePackage.eINSTANCE;
         }
     }
 
@@ -83,8 +83,8 @@ public class TransformationMappingGraphAdapterFactory extends AdapterFactoryImpl
      * <!-- end-user-doc -->
      * @generated
      */
-    protected TransformationMappingGraphSwitch<Adapter> modelSwitch =
-        new TransformationMappingGraphSwitch<Adapter>() {
+    protected TransformationTreeSwitch<Adapter> modelSwitch =
+        new TransformationTreeSwitch<Adapter>() {
             @Override
             public Adapter caseModel(Model object) {
                 return createModelAdapter();
@@ -122,13 +122,13 @@ public class TransformationMappingGraphAdapterFactory extends AdapterFactoryImpl
 
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model <em>Model</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ktm.transformationtree.Model <em>Model</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Model
+     * @see de.cau.cs.kieler.ktm.transformationtree.Model
      * @generated
      */
     public Adapter createModelAdapter() {
@@ -136,13 +136,13 @@ public class TransformationMappingGraphAdapterFactory extends AdapterFactoryImpl
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Element <em>Element</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ktm.transformationtree.Element <em>Element</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Element
+     * @see de.cau.cs.kieler.ktm.transformationtree.Element
      * @generated
      */
     public Adapter createElementAdapter() {
@@ -150,13 +150,13 @@ public class TransformationMappingGraphAdapterFactory extends AdapterFactoryImpl
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation <em>Model Transformation</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation <em>Model Transformation</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelTransformation
      * @generated
      */
     public Adapter createModelTransformationAdapter() {
@@ -164,13 +164,13 @@ public class TransformationMappingGraphAdapterFactory extends AdapterFactoryImpl
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation <em>Element Transformation</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ktm.transformationtree.ElementTransformation <em>Element Transformation</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation
+     * @see de.cau.cs.kieler.ktm.transformationtree.ElementTransformation
      * @generated
      */
     public Adapter createElementTransformationAdapter() {
@@ -189,4 +189,4 @@ public class TransformationMappingGraphAdapterFactory extends AdapterFactoryImpl
         return null;
     }
 
-} //TransformationMappingGraphAdapterFactory
+} //TransformationTreeAdapterFactory

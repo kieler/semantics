@@ -4,8 +4,8 @@
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
    <diagramSynthesis
-         class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.ktm.klighd.ModelTransformationGraphDiagramSynthesis"
-         id="de.cau.cs.kieler.ktm.klighd.ModelTransformationGraphDiagramSynthesis">
+         class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.ktm.klighd.TransformationTreeDiagramSynthesis"
+         id="de.cau.cs.kieler.ktm.klighd.TransformationTreeDiagramSynthesis">
    </diagramSynthesis>
    </extension>
 null</plugin>

@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.ktm.transformationmappinggraph;
+package de.cau.cs.kieler.ktm.transformationtree;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -29,11 +29,11 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphFactory
+ * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreeFactory
  * @model kind="package"
  * @generated
  */
-public interface TransformationMappingGraphPackage extends EPackage {
+public interface TransformationTreePackage extends EPackage {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -47,7 +47,7 @@ public interface TransformationMappingGraphPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNAME = "transformationmappinggraph";
+    String eNAME = "transformationtree";
 
     /**
      * The package namespace URI.
@@ -55,7 +55,7 @@ public interface TransformationMappingGraphPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "http://kieler.cs.cau.de/transformationmappinggraph/0.1.0";
+    String eNS_URI = "http://kieler.cs.cau.de/transformationtree/0.1.0";
 
     /**
      * The package namespace name.
@@ -63,7 +63,7 @@ public interface TransformationMappingGraphPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_PREFIX = "transformationmappinggraph";
+    String eNS_PREFIX = "transformationtree";
 
     /**
      * The singleton instance of the package.
@@ -71,14 +71,14 @@ public interface TransformationMappingGraphPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    TransformationMappingGraphPackage eINSTANCE = de.cau.cs.kieler.ktm.transformationmappinggraph.impl.TransformationMappingGraphPackageImpl.init();
+    TransformationTreePackage eINSTANCE = de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl.init();
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelImpl <em>Model</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl <em>Model</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelImpl
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.TransformationMappingGraphPackageImpl#getModel()
+     * @see de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl
+     * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getModel()
      * @generated
      */
     int MODEL = 0;
@@ -93,31 +93,13 @@ public interface TransformationMappingGraphPackage extends EPackage {
     int MODEL__NAME = 0;
 
     /**
-     * The feature id for the '<em><b>Transient</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MODEL__TRANSIENT = 1;
-
-    /**
-     * The feature id for the '<em><b>Type</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MODEL__TYPE = 2;
-
-    /**
      * The feature id for the '<em><b>Elements</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MODEL__ELEMENTS = 3;
+    int MODEL__ELEMENTS = 1;
 
     /**
      * The feature id for the '<em><b>Transformed Into</b></em>' containment reference list.
@@ -126,7 +108,7 @@ public interface TransformationMappingGraphPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MODEL__TRANSFORMED_INTO = 4;
+    int MODEL__TRANSFORMED_INTO = 2;
 
     /**
      * The feature id for the '<em><b>Transformed From</b></em>' container reference.
@@ -135,7 +117,25 @@ public interface TransformationMappingGraphPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MODEL__TRANSFORMED_FROM = 5;
+    int MODEL__TRANSFORMED_FROM = 3;
+
+    /**
+     * The feature id for the '<em><b>Transient</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODEL__TRANSIENT = 4;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODEL__TYPE = 5;
 
     /**
      * The number of structural features of the '<em>Model</em>' class.
@@ -147,11 +147,11 @@ public interface TransformationMappingGraphPackage extends EPackage {
     int MODEL_FEATURE_COUNT = 6;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ElementImpl <em>Element</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ElementImpl <em>Element</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ElementImpl
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.TransformationMappingGraphPackageImpl#getElement()
+     * @see de.cau.cs.kieler.ktm.transformationtree.impl.ElementImpl
+     * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getElement()
      * @generated
      */
     int ELEMENT = 1;
@@ -175,22 +175,13 @@ public interface TransformationMappingGraphPackage extends EPackage {
     int ELEMENT__NAME = 1;
 
     /**
-     * The feature id for the '<em><b>Referenced Object</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ELEMENT__REFERENCED_OBJECT = 2;
-
-    /**
      * The feature id for the '<em><b>Transformed Into</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ELEMENT__TRANSFORMED_INTO = 3;
+    int ELEMENT__TRANSFORMED_INTO = 2;
 
     /**
      * The feature id for the '<em><b>Transformed From</b></em>' reference list.
@@ -199,7 +190,16 @@ public interface TransformationMappingGraphPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ELEMENT__TRANSFORMED_FROM = 4;
+    int ELEMENT__TRANSFORMED_FROM = 3;
+
+    /**
+     * The feature id for the '<em><b>Referenced Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ELEMENT__REFERENCED_OBJECT = 4;
 
     /**
      * The number of structural features of the '<em>Element</em>' class.
@@ -211,11 +211,11 @@ public interface TransformationMappingGraphPackage extends EPackage {
     int ELEMENT_FEATURE_COUNT = 5;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelTransformationImpl <em>Model Transformation</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelTransformationImpl <em>Model Transformation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelTransformationImpl
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.TransformationMappingGraphPackageImpl#getModelTransformation()
+     * @see de.cau.cs.kieler.ktm.transformationtree.impl.ModelTransformationImpl
+     * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getModelTransformation()
      * @generated
      */
     int MODEL_TRANSFORMATION = 2;
@@ -266,11 +266,11 @@ public interface TransformationMappingGraphPackage extends EPackage {
     int MODEL_TRANSFORMATION_FEATURE_COUNT = 4;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ElementTransformationImpl <em>Element Transformation</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ElementTransformationImpl <em>Element Transformation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ElementTransformationImpl
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.TransformationMappingGraphPackageImpl#getElementTransformation()
+     * @see de.cau.cs.kieler.ktm.transformationtree.impl.ElementTransformationImpl
+     * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getElementTransformation()
      * @generated
      */
     int ELEMENT_TRANSFORMATION = 3;
@@ -313,238 +313,238 @@ public interface TransformationMappingGraphPackage extends EPackage {
 
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model <em>Model</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationtree.Model <em>Model</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Model</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Model
+     * @see de.cau.cs.kieler.ktm.transformationtree.Model
      * @generated
      */
     EClass getModel();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getName <em>Name</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getName <em>Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Name</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getName()
+     * @see de.cau.cs.kieler.ktm.transformationtree.Model#getName()
      * @see #getModel()
      * @generated
      */
     EAttribute getModel_Name();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#isTransient <em>Transient</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Transient</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Model#isTransient()
-     * @see #getModel()
-     * @generated
-     */
-    EAttribute getModel_Transient();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getType <em>Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Type</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getType()
-     * @see #getModel()
-     * @generated
-     */
-    EReference getModel_Type();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getElements <em>Elements</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getElements <em>Elements</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference list '<em>Elements</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getElements()
+     * @see de.cau.cs.kieler.ktm.transformationtree.Model#getElements()
      * @see #getModel()
      * @generated
      */
     EReference getModel_Elements();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedInto <em>Transformed Into</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getTransformedInto <em>Transformed Into</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference list '<em>Transformed Into</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedInto()
+     * @see de.cau.cs.kieler.ktm.transformationtree.Model#getTransformedInto()
      * @see #getModel()
      * @generated
      */
     EReference getModel_TransformedInto();
 
     /**
-     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedFrom <em>Transformed From</em>}'.
+     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getTransformedFrom <em>Transformed From</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Transformed From</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedFrom()
+     * @see de.cau.cs.kieler.ktm.transformationtree.Model#getTransformedFrom()
      * @see #getModel()
      * @generated
      */
     EReference getModel_TransformedFrom();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Element <em>Element</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationtree.Model#isTransient <em>Transient</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Transient</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.Model#isTransient()
+     * @see #getModel()
+     * @generated
+     */
+    EAttribute getModel_Transient();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Type</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.Model#getType()
+     * @see #getModel()
+     * @generated
+     */
+    EReference getModel_Type();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationtree.Element <em>Element</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Element</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Element
+     * @see de.cau.cs.kieler.ktm.transformationtree.Element
      * @generated
      */
     EClass getElement();
 
     /**
-     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Element#getModel <em>Model</em>}'.
+     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationtree.Element#getModel <em>Model</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Model</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Element#getModel()
+     * @see de.cau.cs.kieler.ktm.transformationtree.Element#getModel()
      * @see #getElement()
      * @generated
      */
     EReference getElement_Model();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Element#getName <em>Name</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationtree.Element#getName <em>Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Name</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Element#getName()
+     * @see de.cau.cs.kieler.ktm.transformationtree.Element#getName()
      * @see #getElement()
      * @generated
      */
     EAttribute getElement_Name();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Element#getReferencedObject <em>Referenced Object</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Referenced Object</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Element#getReferencedObject()
-     * @see #getElement()
-     * @generated
-     */
-    EReference getElement_ReferencedObject();
-
-    /**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Element#getTransformedInto <em>Transformed Into</em>}'.
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.ktm.transformationtree.Element#getTransformedInto <em>Transformed Into</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference list '<em>Transformed Into</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Element#getTransformedInto()
+     * @see de.cau.cs.kieler.ktm.transformationtree.Element#getTransformedInto()
      * @see #getElement()
      * @generated
      */
     EReference getElement_TransformedInto();
 
     /**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Element#getTransformedFrom <em>Transformed From</em>}'.
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.ktm.transformationtree.Element#getTransformedFrom <em>Transformed From</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference list '<em>Transformed From</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Element#getTransformedFrom()
+     * @see de.cau.cs.kieler.ktm.transformationtree.Element#getTransformedFrom()
      * @see #getElement()
      * @generated
      */
     EReference getElement_TransformedFrom();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation <em>Model Transformation</em>}'.
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationtree.Element#getReferencedObject <em>Referenced Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Referenced Object</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.Element#getReferencedObject()
+     * @see #getElement()
+     * @generated
+     */
+    EReference getElement_ReferencedObject();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation <em>Model Transformation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Model Transformation</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelTransformation
      * @generated
      */
     EClass getModelTransformation();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getId <em>Id</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getId <em>Id</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Id</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getId()
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getId()
      * @see #getModelTransformation()
      * @generated
      */
     EAttribute getModelTransformation_Id();
 
     /**
-     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getSource <em>Source</em>}'.
+     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getSource <em>Source</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Source</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getSource()
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getSource()
      * @see #getModelTransformation()
      * @generated
      */
     EReference getModelTransformation_Source();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getTarget <em>Target</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getTarget <em>Target</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Target</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getTarget()
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getTarget()
      * @see #getModelTransformation()
      * @generated
      */
     EReference getModelTransformation_Target();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getElementTransformations <em>Element Transformations</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getElementTransformations <em>Element Transformations</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference list '<em>Element Transformations</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getElementTransformations()
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getElementTransformations()
      * @see #getModelTransformation()
      * @generated
      */
     EReference getModelTransformation_ElementTransformations();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation <em>Element Transformation</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationtree.ElementTransformation <em>Element Transformation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Element Transformation</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation
+     * @see de.cau.cs.kieler.ktm.transformationtree.ElementTransformation
      * @generated
      */
     EClass getElementTransformation();
 
     /**
-     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation#getModelTransformation <em>Model Transformation</em>}'.
+     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getModelTransformation <em>Model Transformation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Model Transformation</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation#getModelTransformation()
+     * @see de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getModelTransformation()
      * @see #getElementTransformation()
      * @generated
      */
     EReference getElementTransformation_ModelTransformation();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation#getSource <em>Source</em>}'.
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getSource <em>Source</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Source</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation#getSource()
+     * @see de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getSource()
      * @see #getElementTransformation()
      * @generated
      */
     EReference getElementTransformation_Source();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation#getTarget <em>Target</em>}'.
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getTarget <em>Target</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Target</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation#getTarget()
+     * @see de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getTarget()
      * @see #getElementTransformation()
      * @generated
      */
@@ -557,7 +557,7 @@ public interface TransformationMappingGraphPackage extends EPackage {
      * @return the factory that creates the instances of the model.
      * @generated
      */
-    TransformationMappingGraphFactory getTransformationMappingGraphFactory();
+    TransformationTreeFactory getTransformationTreeFactory();
 
     /**
      * <!-- begin-user-doc -->
@@ -573,11 +573,11 @@ public interface TransformationMappingGraphPackage extends EPackage {
      */
     interface Literals {
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelImpl <em>Model</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl <em>Model</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelImpl
-         * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.TransformationMappingGraphPackageImpl#getModel()
+         * @see de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl
+         * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getModel()
          * @generated
          */
         EClass MODEL = eINSTANCE.getModel();
@@ -589,22 +589,6 @@ public interface TransformationMappingGraphPackage extends EPackage {
          * @generated
          */
         EAttribute MODEL__NAME = eINSTANCE.getModel_Name();
-
-        /**
-         * The meta object literal for the '<em><b>Transient</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute MODEL__TRANSIENT = eINSTANCE.getModel_Transient();
-
-        /**
-         * The meta object literal for the '<em><b>Type</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference MODEL__TYPE = eINSTANCE.getModel_Type();
 
         /**
          * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature.
@@ -631,11 +615,27 @@ public interface TransformationMappingGraphPackage extends EPackage {
         EReference MODEL__TRANSFORMED_FROM = eINSTANCE.getModel_TransformedFrom();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ElementImpl <em>Element</em>}' class.
+         * The meta object literal for the '<em><b>Transient</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ElementImpl
-         * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.TransformationMappingGraphPackageImpl#getElement()
+         * @generated
+         */
+        EAttribute MODEL__TRANSIENT = eINSTANCE.getModel_Transient();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MODEL__TYPE = eINSTANCE.getModel_Type();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ElementImpl <em>Element</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.ktm.transformationtree.impl.ElementImpl
+         * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getElement()
          * @generated
          */
         EClass ELEMENT = eINSTANCE.getElement();
@@ -657,14 +657,6 @@ public interface TransformationMappingGraphPackage extends EPackage {
         EAttribute ELEMENT__NAME = eINSTANCE.getElement_Name();
 
         /**
-         * The meta object literal for the '<em><b>Referenced Object</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference ELEMENT__REFERENCED_OBJECT = eINSTANCE.getElement_ReferencedObject();
-
-        /**
          * The meta object literal for the '<em><b>Transformed Into</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -681,11 +673,19 @@ public interface TransformationMappingGraphPackage extends EPackage {
         EReference ELEMENT__TRANSFORMED_FROM = eINSTANCE.getElement_TransformedFrom();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelTransformationImpl <em>Model Transformation</em>}' class.
+         * The meta object literal for the '<em><b>Referenced Object</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ModelTransformationImpl
-         * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.TransformationMappingGraphPackageImpl#getModelTransformation()
+         * @generated
+         */
+        EReference ELEMENT__REFERENCED_OBJECT = eINSTANCE.getElement_ReferencedObject();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelTransformationImpl <em>Model Transformation</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.ktm.transformationtree.impl.ModelTransformationImpl
+         * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getModelTransformation()
          * @generated
          */
         EClass MODEL_TRANSFORMATION = eINSTANCE.getModelTransformation();
@@ -723,11 +723,11 @@ public interface TransformationMappingGraphPackage extends EPackage {
         EReference MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS = eINSTANCE.getModelTransformation_ElementTransformations();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ElementTransformationImpl <em>Element Transformation</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ElementTransformationImpl <em>Element Transformation</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.ElementTransformationImpl
-         * @see de.cau.cs.kieler.ktm.transformationmappinggraph.impl.TransformationMappingGraphPackageImpl#getElementTransformation()
+         * @see de.cau.cs.kieler.ktm.transformationtree.impl.ElementTransformationImpl
+         * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getElementTransformation()
          * @generated
          */
         EClass ELEMENT_TRANSFORMATION = eINSTANCE.getElementTransformation();
@@ -758,4 +758,4 @@ public interface TransformationMappingGraphPackage extends EPackage {
 
     }
 
-} //TransformationMappingGraphPackage
+} //TransformationTreePackage

@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.ktm.transformationmappinggraph;
+package de.cau.cs.kieler.ktm.transformationtree;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -29,14 +29,14 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getId <em>Id</em>}</li>
- *   <li>{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getSource <em>Source</em>}</li>
- *   <li>{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getTarget <em>Target</em>}</li>
- *   <li>{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getElementTransformations <em>Element Transformations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getId <em>Id</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getSource <em>Source</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getTarget <em>Target</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getElementTransformations <em>Element Transformations</em>}</li>
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage#getModelTransformation()
+ * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModelTransformation()
  * @model
  * @generated
  */
@@ -51,24 +51,20 @@ public interface ModelTransformation extends EObject {
     /**
      * Returns the value of the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Id</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Unique identifier of this {@link ModelTransformation}
      * <!-- end-model-doc -->
      * @return the value of the '<em>Id</em>' attribute.
      * @see #setId(String)
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage#getModelTransformation_Id()
+     * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModelTransformation_Id()
      * @model required="true"
      * @generated
      */
     String getId();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getId <em>Id</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getId <em>Id</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Id</em>' attribute.
@@ -79,24 +75,24 @@ public interface ModelTransformation extends EObject {
 
     /**
      * Returns the value of the '<em><b>Source</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedInto <em>Transformed Into</em>}'.
+     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getTransformedInto <em>Transformed Into</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Source</em>' reference isn't clear,
+     * If the meaning of the '<em>Source</em>' container reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Source</em>' container reference.
      * @see #setSource(Model)
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage#getModelTransformation_Source()
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedInto
+     * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModelTransformation_Source()
+     * @see de.cau.cs.kieler.ktm.transformationtree.Model#getTransformedInto
      * @model opposite="transformedInto" required="true" transient="false"
      * @generated
      */
     Model getSource();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getSource <em>Source</em>}' container reference.
+     * Sets the value of the '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getSource <em>Source</em>}' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Source</em>' container reference.
@@ -107,24 +103,24 @@ public interface ModelTransformation extends EObject {
 
     /**
      * Returns the value of the '<em><b>Target</b></em>' containment reference.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedFrom <em>Transformed From</em>}'.
+     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getTransformedFrom <em>Transformed From</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Target</em>' reference isn't clear,
+     * If the meaning of the '<em>Target</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Target</em>' containment reference.
      * @see #setTarget(Model)
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage#getModelTransformation_Target()
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.Model#getTransformedFrom
+     * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModelTransformation_Target()
+     * @see de.cau.cs.kieler.ktm.transformationtree.Model#getTransformedFrom
      * @model opposite="transformedFrom" containment="true" required="true"
      * @generated
      */
     Model getTarget();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ModelTransformation#getTarget <em>Target</em>}' containment reference.
+     * Sets the value of the '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getTarget <em>Target</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Target</em>' containment reference.
@@ -135,8 +131,8 @@ public interface ModelTransformation extends EObject {
 
     /**
      * Returns the value of the '<em><b>Element Transformations</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation}.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation#getModelTransformation <em>Model Transformation</em>}'.
+     * The list contents are of type {@link de.cau.cs.kieler.ktm.transformationtree.ElementTransformation}.
+     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getModelTransformation <em>Model Transformation</em>}'.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Element Transformations</em>' containment reference list isn't clear,
@@ -144,8 +140,8 @@ public interface ModelTransformation extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Element Transformations</em>' containment reference list.
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.TransformationMappingGraphPackage#getModelTransformation_ElementTransformations()
-     * @see de.cau.cs.kieler.ktm.transformationmappinggraph.ElementTransformation#getModelTransformation
+     * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModelTransformation_ElementTransformations()
+     * @see de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getModelTransformation
      * @model opposite="modelTransformation" containment="true" required="true"
      * @generated
      */
