@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 import static extension com.google.common.collect.Multimaps.*
 import static extension com.google.common.collect.Sets.*
-import de.cau.cs.kieler.ktm.tree.ObjectMapping
+import com.google.common.collect.ImmutableMultimap
 
 /**
  * Extension for creating mappings during transformation.
@@ -29,7 +29,7 @@ import de.cau.cs.kieler.ktm.tree.ObjectMapping
  * @author als
  *
  */
-class TransformationMapping implements ObjectMapping {
+class TransformationMapping {
 
     // internal data-structure for single model transformation
     private val HashMultimap<EObject, EObject> mapping = HashMultimap::create;
@@ -155,9 +155,15 @@ class TransformationMapping implements ObjectMapping {
     }
 
     // -------------------------------------------------------------------------
-    // interface implementation
-    override getMappingData() {
-        return mapping;
+    // mapping data access
+    /**
+     * This will extract mapping data as an immutable copy and clears local mapping afterwards
+     * @return mapping
+     */
+    def extractMappingData() {
+        val map = ImmutableMultimap.builder.putAll(mapping).build();
+        clearMapping();
+        return map;
     }
 
 }
