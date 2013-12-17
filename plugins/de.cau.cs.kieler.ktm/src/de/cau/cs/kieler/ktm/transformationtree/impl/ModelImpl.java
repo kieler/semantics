@@ -48,6 +48,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl#getTransformedFrom <em>Transformed From</em>}</li>
  *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl#isTransient <em>Transient</em>}</li>
  *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl#getRootElement <em>Root Element</em>}</li>
  * </ul>
  * </p>
  *
@@ -130,6 +131,16 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
      * @ordered
      */
     protected EClass type;
+
+    /**
+     * The cached value of the '{@link #getRootElement() <em>Root Element</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getRootElement()
+     * @generated
+     * @ordered
+     */
+    protected Element rootElement;
 
     /**
      * <!-- begin-user-doc -->
@@ -300,6 +311,44 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
      * <!-- end-user-doc -->
      * @generated
      */
+    public Element getRootElement() {
+        if (rootElement != null && rootElement.eIsProxy()) {
+            InternalEObject oldRootElement = (InternalEObject)rootElement;
+            rootElement = (Element)eResolveProxy(oldRootElement);
+            if (rootElement != oldRootElement) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, TransformationTreePackage.MODEL__ROOT_ELEMENT, oldRootElement, rootElement));
+            }
+        }
+        return rootElement;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Element basicGetRootElement() {
+        return rootElement;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setRootElement(Element newRootElement) {
+        Element oldRootElement = rootElement;
+        rootElement = newRootElement;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, TransformationTreePackage.MODEL__ROOT_ELEMENT, oldRootElement, rootElement));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -369,6 +418,9 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
             case TransformationTreePackage.MODEL__TYPE:
                 if (resolve) return getType();
                 return basicGetType();
+            case TransformationTreePackage.MODEL__ROOT_ELEMENT:
+                if (resolve) return getRootElement();
+                return basicGetRootElement();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -402,6 +454,9 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
             case TransformationTreePackage.MODEL__TYPE:
                 setType((EClass)newValue);
                 return;
+            case TransformationTreePackage.MODEL__ROOT_ELEMENT:
+                setRootElement((Element)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -432,6 +487,9 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
             case TransformationTreePackage.MODEL__TYPE:
                 setType((EClass)null);
                 return;
+            case TransformationTreePackage.MODEL__ROOT_ELEMENT:
+                setRootElement((Element)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -456,6 +514,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model {
                 return transient_ != TRANSIENT_EDEFAULT;
             case TransformationTreePackage.MODEL__TYPE:
                 return type != null;
+            case TransformationTreePackage.MODEL__ROOT_ELEMENT:
+                return rootElement != null;
         }
         return super.eIsSet(featureID);
     }

@@ -138,13 +138,22 @@ public interface TransformationTreePackage extends EPackage {
     int MODEL__TYPE = 5;
 
     /**
+     * The feature id for the '<em><b>Root Element</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MODEL__ROOT_ELEMENT = 6;
+
+    /**
      * The number of structural features of the '<em>Model</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MODEL_FEATURE_COUNT = 6;
+    int MODEL_FEATURE_COUNT = 7;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ElementImpl <em>Element</em>}' class.
@@ -389,6 +398,17 @@ public interface TransformationTreePackage extends EPackage {
     EReference getModel_Type();
 
     /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getRootElement <em>Root Element</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Root Element</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.Model#getRootElement()
+     * @see #getModel()
+     * @generated
+     */
+    EReference getModel_RootElement();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationtree.Element <em>Element</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -629,6 +649,14 @@ public interface TransformationTreePackage extends EPackage {
          * @generated
          */
         EReference MODEL__TYPE = eINSTANCE.getModel_Type();
+
+        /**
+         * The meta object literal for the '<em><b>Root Element</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference MODEL__ROOT_ELEMENT = eINSTANCE.getModel_RootElement();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ElementImpl <em>Element</em>}' class.
