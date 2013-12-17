@@ -25,6 +25,7 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.scg.analyser.JoinFeedbackAnalyser
 
 /** 
  * ExitSCGSynchronizer

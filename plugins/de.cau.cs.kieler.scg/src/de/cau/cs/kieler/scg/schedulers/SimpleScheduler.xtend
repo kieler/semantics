@@ -17,12 +17,14 @@ import de.cau.cs.kieler.scgbb.SchedulingBlock
 import de.cau.cs.kieler.scgsched.ScgschedFactory
 import de.cau.cs.kieler.scgbb.BasicBlock
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import com.google.common.collect.ImmutableListimport com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scgsched.SCGraphSched
 import com.google.inject.Guice
+import de.cau.cs.kieler.scg.analyser.PotentialInstantaneousLoopAnalyser
+
+//import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /** 
  * SimpleScheduler
