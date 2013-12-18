@@ -569,7 +569,7 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
         try {
             if (myModel != null && myModel.getValuedObjects() != null) {
                 for (ValuedObject signal : myModel.getValuedObjects()) {
-                    if (signal.isSignal()) {
+                    //if (signal.isSignal()) {
                         if (signal.isInput()) {
                             res.accumulate(signal.getName(), JSONSignalValues.newValue(false));
                         }
@@ -580,7 +580,7 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
                                 outputSignalList.add(signalName);
                             }
                         }
-                    }
+                    //}
                 }
             }
         } catch (JSONException e) {

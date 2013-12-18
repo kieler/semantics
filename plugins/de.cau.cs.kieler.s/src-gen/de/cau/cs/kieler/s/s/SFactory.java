@@ -59,6 +59,15 @@ public interface SFactory extends EFactory
   Instruction createInstruction();
 
   /**
+   * Returns a new object of class '<em>Assignment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Assignment</em>'.
+   * @generated
+   */
+  Assignment createAssignment();
+
+  /**
    * Returns a new object of class '<em>Prio</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

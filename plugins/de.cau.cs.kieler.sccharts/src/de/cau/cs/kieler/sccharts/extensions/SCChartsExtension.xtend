@@ -91,6 +91,11 @@ class SCChartsExtension {
         scope.eAllContents().toList().filter(typeof(Transition)).toList()
     }
 
+    // Return the list of all contained Actions.
+    def List<Action> getAllContainedActions(Scope scope) {
+        scope.eAllContents().toList().filter(typeof(Action)).toList()
+    }
+
     // Return the list of contained Emissions.
     def List<Emission> getAllContainedEmissions(Action action) {
         action.eAllContents().toIterable().filter(typeof(Emission)).toList();

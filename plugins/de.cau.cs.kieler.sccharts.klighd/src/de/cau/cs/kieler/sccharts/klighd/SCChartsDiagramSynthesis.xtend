@@ -644,7 +644,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     def KRendering addDeferredDecorator(KContainerRendering line, float offset) {
         return line.addEllipse() => [
             it.lineWidth = 1;
-            it.background = "blue".color
+            it.background = "red".color
             it.setDecoratorPlacementData(10, 10, -4 + offset, 1, false);
         ];
     }
