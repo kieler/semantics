@@ -13,7 +13,7 @@
         eType="ecore:EClass scgbb.ecore#//SchedulingBlock"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Problem"/>
-  <eClassifiers xsi:type="ecore:EClass" name="PotentialLoopProblem" eSuperTypes="#//Problem">
+  <eClassifiers xsi:type="ecore:EClass" name="PotentialInstantaneousLoopProblem" eSuperTypes="#//Problem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="controlFlows" upperBound="-1"
         eType="ecore:EClass scg.ecore#//ControlFlow"/>
   </eClassifiers>

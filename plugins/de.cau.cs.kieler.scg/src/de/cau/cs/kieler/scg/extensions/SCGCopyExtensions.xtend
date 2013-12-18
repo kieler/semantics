@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.scg.extensions
 
-import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
@@ -43,8 +42,9 @@ import de.cau.cs.kieler.scgsched.ScgschedFactory
 import de.cau.cs.kieler.scgsched.Schedule
 import java.util.HashMap
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import com.google.common.collect.ImmutableList
-import java.util.ArrayList
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scgbb.ActivationExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 
 /** 
  * SCGCopyExtensions
@@ -57,11 +57,7 @@ import java.util.ArrayList
 // The SCG Copy Extensions manage all the work necessary to copy one SCG instance into another
 // respecting different SCG specializations.
 class SCGCopyExtensions {
-    
-    // Inject SCG Extensions.    
-    @Inject
-    extension SCGExtensions
-         
+     
     // M2M Mapping
     private val nodeMapping = new HashMap<Node, Node>
     private val revNodeMapping = new HashMap<Node, Node>
@@ -76,11 +72,7 @@ class SCGCopyExtensions {
     
     def copySCG(SCGraph source, SCGraph target) {
         // Copy declarations.
-        for(valuedObject : source.valuedObjects) {
-            val newValuedObject = valuedObject.copy
-            target.valuedObjects.add(newValuedObject)
-            valuedObjectMapping.put(valuedObject, newValuedObject)
-        }
+        source.copyDeclarations(target)
         
         // Additionally, copy all nodes and fill the mapping structures.
         for(node : source.nodes) {
@@ -126,6 +118,17 @@ class SCGCopyExtensions {
     }   
     
     // -------------------------------------------------------------------------
+    // -- Copy Declarations
+    // -------------------------------------------------------------------------
+    def copyDeclarations(SCGraph source, SCGraph target) {
+        for(valuedObject : source.valuedObjects) {
+            val newValuedObject = valuedObject.copy
+            target.valuedObjects.add(newValuedObject)
+            valuedObjectMapping.put(valuedObject, newValuedObject)
+        }    	
+    }
+    
+    // -------------------------------------------------------------------------
     // -- Copy Schedule 
     // -------------------------------------------------------------------------
     def copySchedule(Schedule schedule, SCGraphSched target) {
@@ -142,17 +145,26 @@ class SCGCopyExtensions {
     // -------------------------------------------------------------------------
     def copyBasicBlock(BasicBlock basicBlock, SCGraphBB target) {
         val bb = ScgbbFactory::eINSTANCE.createBasicBlock
-        val newGuard = basicBlock.guard.copy
-        bb.guard = newGuard
-        valuedObjectMapping.put(basicBlock.guard, newGuard)
+        basicBlock.guard => [
+        	val newGuard = it.copy
+            bb.guard = newGuard
+        	valuedObjectMapping.put(it, newGuard)
+        ]
+        basicBlock.subGuards.forEach[
+            val newGuard = it.copy
+            bb.subGuards.add(newGuard)
+            valuedObjectMapping.put(it, newGuard)
+        ]
+        basicBlock.emptyGuards.forEach[
+        	val newGuard = it.copy
+            bb.emptyGuards.add(newGuard)
+        	valuedObjectMapping.put(it, newGuard)
+        ]
         
         basicBlock.schedulingBlocks.forEach[ it.copySchedulingBlock(bb) ]
         
         basicBlock.activationExpressions.forEach[
-            val actExp = ScgbbFactory::eINSTANCE.createActivationExpression
-            it.basicBlocks.forEach[actExp.basicBlocks.add(it)]
-            it.expressions.forEach[actExp.expressions.add(it.copyExpression)]
-            bb.activationExpressions.add(actExp)
+            bb.activationExpressions.add(it.copyActivationExpression)
         ]        
         
         basicBlockMapping.put(basicBlock, bb)
@@ -161,8 +173,23 @@ class SCGCopyExtensions {
         bb
     }
     
+    def ActivationExpression copyActivationExpression(ActivationExpression activationExpression) {
+        val actExp = ScgbbFactory::eINSTANCE.createActivationExpression
+        activationExpression.basicBlocks.forEach[actExp.basicBlocks.add(it)]
+        activationExpression.guard => [ 
+            val newGuard = valuedObjectMapping.get(it)
+//            valuedObjectMapping.put(it, newGuard)
+            actExp.guard = newGuard
+        ]
+        activationExpression.guardExpression => [actExp.guardExpression = it.copyExpression]
+        activationExpression.emptyExpressions.forEach[ actExp.emptyExpressions.add(it.copyActivationExpression) ]
+		actExp    	
+    }
+    
     def copySchedulingBlock(SchedulingBlock schedulingBlock, BasicBlock target) {
         val sb = ScgbbFactory::eINSTANCE.createSchedulingBlock
+        
+        sb.guard = valuedObjectMapping.get(schedulingBlock.guard)
         
         schedulingBlock.nodes.forEach[
             val tnode = nodeMapping.get(it) 
@@ -359,5 +386,25 @@ class SCGCopyExtensions {
         expression
     }
 
-   // -------------------------------------------------------------------------   
+    // -------------------------------------------------------------------------
+    // -- Copy Helper 
+    // -------------------------------------------------------------------------
+    
+    def addToValuedObjectMapping(ValuedObject object, ValuedObject newObject) {
+		valuedObjectMapping.put(object, newObject)    	
+    }
+    
+    def Expression splitOperatorExpression(OperatorExpression expression) {
+        var newExp = expression
+        if (expression.subExpressions.size > 2) {
+            var exp = expression.copy
+            newExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
+            newExp.operator = expression.operator
+            newExp.subExpressions.add(exp.subExpressions.get(0))
+            newExp.subExpressions.add(exp.splitOperatorExpression)
+        }
+        newExp
+    }
+
+    // -------------------------------------------------------------------------   
 }

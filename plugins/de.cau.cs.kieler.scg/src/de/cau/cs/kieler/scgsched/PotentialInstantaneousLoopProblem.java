@@ -19,35 +19,35 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Potential Loop Problem</b></em>'.
+ * A representation of the model object '<em><b>Potential Instantaneous Loop Problem</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scgsched.PotentialLoopProblem#getControlFlows <em>Control Flows</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem#getControlFlows <em>Control Flows</em>}</li>
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getPotentialLoopProblem()
+ * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getPotentialInstantaneousLoopProblem()
  * @model
  * @generated
  */
-public interface PotentialLoopProblem extends Problem {
+public interface PotentialInstantaneousLoopProblem extends Problem {
 	/**
-	 * Returns the value of the '<em><b>Control Flows</b></em>' reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.scg.ControlFlow}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Control Flows</b></em>' reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.scg.ControlFlow}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Control Flows</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Control Flows</em>' reference list.
-	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getPotentialLoopProblem_ControlFlows()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Control Flows</em>' reference list.
+     * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getPotentialInstantaneousLoopProblem_ControlFlows()
+     * @model
+     * @generated
+     */
 	EList<ControlFlow> getControlFlows();
 
-} // PotentialLoopProblem
+} // PotentialInstantaneousLoopProblem

@@ -49,7 +49,7 @@ import de.cau.cs.kieler.core.kexpressions.IntValueimport de.cau.cs.kieler.scg.e
  * @kieler.rating 2013-10-23 proposed yellow
  */
 
-// This class contians all mandatory methods for the SCG-to-SCGDEP-Transformation.
+// This class contains all mandatory methods for the SCG-to-SCGDEP-Transformation.
 class SCGToSCGDEPTransformation {
     
     // Inject SCG Extensions.    

@@ -34,7 +34,7 @@ abstract class AbstractSCGSynchronizer {
     @Inject
     extension SCGExtensions
     
-    protected abstract def SynchronizerData build(Fork originFork);
+    protected abstract def SynchronizerData build(Fork fork);
     
     public def SynchronizerData synchronize(Fork fork) {
         build(fork)

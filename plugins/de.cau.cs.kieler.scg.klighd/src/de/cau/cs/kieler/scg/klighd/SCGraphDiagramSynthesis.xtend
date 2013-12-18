@@ -78,7 +78,8 @@ import org.eclipse.xtext.scoping.IScopeProvider
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scgsched.PotentialLoopProblem
+import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
+import de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem
 
 /** 
  * SCCGraph KlighD synthesis 
@@ -152,6 +153,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject
     extension SCGExtensions
     
+    @Inject
+    extension SCGCopyExtensions
 
     // -------------------------------------------------------------------------
     // -- KLIGHD OPTIONS 
@@ -197,14 +200,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         = SynthesisOption::createRangeOption("Hierarchy", 0f, 255f, 128f);
 
     private static val SynthesisOption CONTROLFLOW_THICKNESS 
-        = SynthesisOption::createRangeOption("Controlflow thickness", 1, 10, 1, 2);
+        = SynthesisOption::createRangeOption("Controlflow thickness", 0.5f, 5f, 0.5f, 2f);
         
     private static val SynthesisOption ORIENTATION
         = SynthesisOption::createChoiceOption("Orientation", <String> newLinkedList("Top-Down", "Left-Right"), "Top-Down");
 
     private static val DEPENDENCYFILTERSTRING_WRITE_WRITE       = "write - write"
     private static val DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE = "abs. write - rel. write"
-    private static val DEPENDENCYFILTERSTRING_WRITE_READ        = "wrtie - read"
+    private static val DEPENDENCYFILTERSTRING_WRITE_READ        = "write - read"
     private static val DEPENDENCYFILTERSTRING_RELWRITE_READ     = "rel. write - read"
     
     private static val SynthesisOption SHOW_DEPENDENCY_WRITE_WRITE 
@@ -257,7 +260,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     // -------------------------------------------------------------------------
     // -- STATIC DECLARATIONS 
-    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------#
+    
+    private static val String KLIGHDSPACERCHAR = " "
+    private static val String KLIGHDSPACER = KLIGHDSPACERCHAR + KLIGHDSPACERCHAR + KLIGHDSPACERCHAR + KLIGHDSPACERCHAR
     
     private static val KColor SCCHARTSGRAY = RENDERING_FACTORY.createKColor()=>[it.red=240;it.green=240;it.blue=240];
     private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor()=>[it.red=248;it.green=249;it.blue=253];
@@ -420,10 +426,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if (SHOW_SHADOW.booleanValue) {
                     it.shadow = "black".color;
                 }
-                it.setGridPlacement(1);
-                if (s.valuedObject != null && s.assignment != null)
-                    it.addText(s.valuedObject.name + " = " + serializer.serialize(s.assignment.copy).removeParenthesis)
-                        .putToLookUpWith(s);
+//                it.setGridPlacement(1);
+                if (s.valuedObject != null && s.assignment != null) {
+                    var assignmentStr = s.valuedObject.name + " = " + serializer.serialize(s.assignment.copy).removeParenthesis
+                    if (assignmentStr.contains("&")) {
+                        assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
+                        assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
+                                            
+                    }
+                    it.addText(assignmentStr).putToLookUpWith(s).setSurroundingSpace(4, 0, 2, 0)
+                    }
             ]
             
             // Add ports for control-flow and dependency routing.
@@ -962,8 +974,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // Determine all interleaving edges...        
         val iSecEdges = new ArrayList<KEdge>
         for(rc : kNodeList) {
-            iSecEdges.addAll(rc.outgoingEdges.filter[ !kNodeList.contains(it.target)])
-            iSecEdges.addAll(rc.incomingEdges.filter[ !kNodeList.contains(it.source)])
+            iSecEdges.addAll(rc.outgoingEdges.filter[!kNodeList.contains(it.target)])
+            iSecEdges.addAll(rc.incomingEdges.filter[!kNodeList.contains(it.source)])
         }
         
         // Set options for the container.
@@ -986,7 +998,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         if (nodeGrouping == NODEGROUPING_BASICBLOCK) {
             kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
-                it.lineStyle = LineStyle::DOT
+                it.lineStyle = LineStyle::SOLID
             ]
             kContainer.KRendering.foreground = BASICBLOCKBORDER.copy;
             kContainer.KRendering.foreground.alpha = Math.round(255f)
@@ -996,7 +1008,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         if (nodeGrouping == NODEGROUPING_SCHEDULINGBLOCK) {
             kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
-                it.lineStyle = LineStyle::DOT
+                it.lineStyle = LineStyle::SOLID
             ]
             kContainer.KRendering.foreground = SCHEDULINGBLOCKBORDER.copy;
             kContainer.KRendering.foreground.alpha = Math.round(255f)
@@ -1058,11 +1070,17 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 s.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
                 val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
                 bbContainerList.put(s, bbContainer)
+                val bbName = serializer.serialize(s.guard.reference)
+              	bbContainer.addOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = 
+              		BASICBLOCKBORDER
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
                 for(schedulingBlock : s.schedulingBlocks) {
-                    val kContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
-                    schedulingBlockMapping.put(schedulingBlock, kContainer)
+                    val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
+                    schedulingBlockMapping.put(schedulingBlock, sbContainer)
+	                val sbName = serializer.serialize(schedulingBlock.guard.reference)
+    	          	sbContainer.addOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = 
+        	      		SCHEDULINGBLOCKBORDER
                 }                    
         }
         
@@ -1117,7 +1135,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
     
     def drawProblems(SCGraphSched scg) {
-    	scg.problems.filter(typeof(PotentialLoopProblem)).forEach[
+    	scg.problems.filter(typeof(PotentialInstantaneousLoopProblem)).forEach[
     		it.controlFlows.forEach[
     			it.colorizeControlFlow(PROBLEM_POTENTIALLOOP_COLOR)
     			it.thickenControlFlow(PROBLEM_POTENTIALLOOP_WIDTH)
@@ -1158,6 +1176,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
    def String removeParenthesis(String str) {
        var String s = "";
+       if (str.contains("&")) {
+         return str.replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")");  
+       } 
        if (str.startsWith("(")) s = str.substring(1) else s = str;
        if (str.endsWith(")")) s = s.substring(0, s.length - 1);
        return s;

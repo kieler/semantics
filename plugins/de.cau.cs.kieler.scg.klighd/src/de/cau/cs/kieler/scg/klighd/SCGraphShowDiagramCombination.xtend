@@ -13,18 +13,19 @@
  */
 package de.cau.cs.kieler.scg.klighd
 
+import de.cau.cs.kieler.core.kivi.AbstractCombination
 import de.cau.cs.kieler.core.kivi.triggers.PartTrigger
 import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.klighd.effects.KlighdDiagramEffect
+import de.cau.cs.kieler.klighd.kivi.effects.KlighdDiagramEffect
+import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.klighd.xtext.UpdateXtextModelKLighDCombination
-import de.cau.cs.kieler.klighd.xtext.triggers.XtextBasedEditorActivationChangeTrigger$XtextModelChangeState
+import de.cau.cs.kieler.klighd.xtext.triggers.XtextBasedEditorActivationChangeTrigger.XtextModelChangeState
 import java.util.Collections
 import org.eclipse.core.resources.IFile
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 
 /** 
  * SCG Combination
@@ -44,18 +45,18 @@ class SCGraphShowDiagramCombination extends UpdateXtextModelKLighDCombination {
     /**
      * The 'execute()' method, see doc of {@link AbstractCombination}.
      */    
-    def public void execute(PartTrigger$PartState es, SelectionTrigger$SelectionState selectionState) {
+    def public void execute(PartTrigger.PartState es, SelectionTrigger.SelectionState selectionState) {
             
         // do not react on partStates as well as on selectionStates in case
         //  a view part has been deactivated recently, as an potentially out-dated selection
         //  is currently about to be processed
         // most certainly a "part activated" event will follow and subsequently a further
         //  selection event if the selection of the newly active part is changed, too! 
-        if (this.latestState() == es || es.eventType == PartTrigger$EventType::VIEW_DEACTIVATED) {
+        if (this.latestState() == es || es.eventType == PartTrigger.EventType::VIEW_DEACTIVATED) {
            return;
         }
         
-        val selection = selectionState.selection;
+        val selection = selectionState.selectionElements;
         if (!selection.nullOrEmpty) {
             if (selection.size == 1 && typeof(IFile).isInstance(selection.get(0))) {
                 val IFile file = selection.get(0) as IFile;
@@ -74,7 +75,7 @@ class SCGraphShowDiagramCombination extends UpdateXtextModelKLighDCombination {
                 ])?.contents?.head;
                 if (eObject != null) {
                     this.schedule(new KlighdDiagramEffect("volatile.scg.outline", eObject) => [
-                        it.setProperty(LightDiagramServices::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
+                        it.setProperty(KlighdSynthesisProperties::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
                     ]);
                 }
             }

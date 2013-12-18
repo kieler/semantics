@@ -34,25 +34,25 @@ class SCGTransformationExtensions {
     @Inject
     extension SCGCopyExtensions
     
-    def SCGraph upgradeAll(SCGraph scg) {
+    def SCGraph enrichAll(SCGraph scg) {
         var SCGraph newSCG = scg;
-        while (!(newSCG instanceof SCGraphSched)) newSCG = newSCG.upgrade
+        while (!(newSCG instanceof SCGraphSched)) newSCG = newSCG.enrich
         newSCG
     }
     
-    def dispatch SCGraph upgrade(SCGraphBB scg) {
+    def dispatch SCGraph enrich(SCGraphBB scg) {
         val scgsched = ScgschedFactory::eINSTANCE.createSCGraphSched
         scg.copySCG(scgsched)
         scgsched
     }
     
-    def dispatch SCGraph upgrade(SCGraphDep scg) {
+    def dispatch SCGraph enrich(SCGraphDep scg) {
         val scgbb = ScgbbFactory::eINSTANCE.createSCGraphBB
         scg.copySCG(scgbb)
         scgbb
     }
     
-    def dispatch SCGraph upgrade(SCGraph scg) {
+    def dispatch SCGraph enrich(SCGraph scg) {
         val scgdep = ScgdepFactory::eINSTANCE.createSCGraphDep
         scg.copySCG(scgdep)
         scgdep
