@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.tsccharts
 
-import de.cau.cs.kieler.sccharts.tscharts.ktm.extensions.TSCChartsKTMExtension
+//import de.cau.cs.kieler.sccharts.tscharts.ktm.extensions.TSCChartsKTMExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.ktm.transformationtree.Model
 import java.util.Map
@@ -23,8 +23,8 @@ import java.io.FileReader
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
-import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.annotations.IntAnnotation
+
+import de.cau.cs.kieler.sccharts.tsccharts.annotation.extensions.TSCChartsAnnotationExtension
 
 /**
  * This class provides an SCChart with WCRT information by annotating all regions with two values: The
@@ -35,8 +35,8 @@ import de.cau.cs.kieler.core.annotations.IntAnnotation
  * @kieler.design
  * @kieler.rating  
  */
-class TimingAnnotationProvider {
-    extension TSCChartsKTMExtension;
+class TimingAnnotationProvider { //extension TSCChartsKTMExtension;
+    extension TSCChartsAnnotationExtension;
 
     /* This method checks, whether we have timing information for this SCChart. If yes, it provides all 
      * regions of the SCChart with two timing value annotations, one including,
@@ -63,34 +63,27 @@ class TimingAnnotationProvider {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
 
-    /* This method recursively annotates all regions within the given state with timing values
+    /* This method recursively annotates all regions within the given state with timing values, flat 
+     * as well as hierarchical.
      */
     def void annotateRegions(State state, Model model, Map<String, Integer> map) {
-        var Integer regionFlatValue = 0;
-        var Integer regionHierachicalValue = 0;
         val regionList = state.regions;
         val regionListIterator = regionList.iterator;
-        while (regionListIterator.hasNext()){
+        while (regionListIterator.hasNext()) {
             val region = regionListIterator.next();
-            val stateList = region.states;
-            val stateListIterator = stateList.iterator;
-            while(stateListIterator.hasNext()){
-                val childstate = stateListIterator.next();
-                if (!(childstate.regions.empty)){
-                    childstate.annotateRegions(model, map, RunningId + 1);
-                    regionHierarchicalValue = regionHierarchicalValue + 
-                    (childstate.getAnnotation("TimeHierarchical") as IntAnnotation).getValue();
-                } else {
-                    val Integer timeValue = map.get(
-                        (childstate.getAnnotation("TimeDomain") as StringAnnotation).getValue());
-                    regionValue = regionValue + timeValue;
+
+            //Set TimeFlat to the Listvalue
+            region.setTimeFlat(map.get(region.timeDomain));
+
+            //Add own flat time to parent's hierarchical time
+            val parentState = region.parentState;
+            if (parentState != null) {
+                val parentRegion = parentState.parentRegion;
+                if (parentRegion != null) {
+                    parentRegion.addToTimeHierarchical(region.getTimeFlat());
                 }
             }
         }
-        
-        
-         
-
     }
 
     /* Method retrieves the timing information from file and stores them in a Hashmap. The WCRT between 
@@ -126,6 +119,7 @@ class TimingAnnotationProvider {
         } catch (FileNotFoundException e) {
             System.out.println("Timing information could not be found.");
             e.printStackTrace();
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -136,7 +130,6 @@ class TimingAnnotationProvider {
                     e.printStackTrace();
                 }
             }
-            return null;
         }
         return retMap;
     }

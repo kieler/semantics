@@ -11,7 +11,6 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
- 
 /**
   * Annotation extensions for the timing display in SCCharts.
   * 
@@ -46,6 +45,22 @@ class TSCChartsAnnotationExtension {
     }
 
     /*
+ * Adds the given value to the flat WCRT value of the annotatable. If no according annotation is present,
+ * a new annotation with the given value is created.
+ */
+    def addToTimeFlat(Annotatable annotatable, Integer value) {
+        val String key = "TimeFlat";
+        var Integer annotatedValue = annotatable.getInt(key);
+        var Integer newValue;
+        if (annotatedValue == null) {
+            newValue = value;
+        } else {
+            newValue = value + annotatedValue;
+        }
+        setTimeFlat(annotatable, newValue);
+    }
+
+    /*
  * Retrieves the annotated hierarchical WCRT (with timing for children(regions: child regions) value of 
  * this Element. Returns null, if no such Annotation exists.
  */
@@ -62,6 +77,22 @@ class TSCChartsAnnotationExtension {
         val tDeep = AnnotationsFactory::eINSTANCE.createIntAnnotation;
         tDeep.name = "TimeHierarchical";
         annotatable.annotations.add(tDeep);
+    }
+
+    /*
+ * Adds the given value to the hierarchical WCRT value of the annotatable. If no according annotation is present,
+ * a new annotation with the given value is created.
+ */
+    def addToTimeHierarchical(Annotatable annotatable, Integer value) {
+        val String key = "TimeHierarchical";
+        var Integer annotatedValue = annotatable.getInt(key);
+        var Integer newValue;
+        if (annotatedValue == null) {
+            newValue = value;
+        } else {
+            newValue = value + annotatedValue;
+        }
+        setTimeHierarchical(annotatable, newValue);
     }
 
     /*
