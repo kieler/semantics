@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.layout;
 
-import org.eclipse.emf.ecore.EObject;
-
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
 import de.cau.cs.kieler.kiml.config.SemanticLayoutConfig;
@@ -29,7 +27,7 @@ public class StateLayoutConfig extends SemanticLayoutConfig{
 
 
     /** the priority for this semantic layout configuration. */
-    public static final int PRIORITY = 60;
+    public static final int PRIORITY = 100;
 
     /**
      * {@inheritDoc}
@@ -43,7 +41,7 @@ public class StateLayoutConfig extends SemanticLayoutConfig{
      * {@inheritDoc}
      */
     @Override
-    protected IProperty<?>[] getAffectedOptions(final EObject semanticElem) {
+    protected IProperty<?>[] getAffectedOptions(final Object semanticElem) {
         if (semanticElem instanceof State) {
             return new IProperty<?>[] { LayoutOptions.ALGORITHM, LayoutOptions.SPACING };
         }
@@ -54,7 +52,7 @@ public class StateLayoutConfig extends SemanticLayoutConfig{
      * {@inheritDoc}
      */
     @Override
-    protected Object getSemanticValue(final EObject semanticElem,
+    protected Object getSemanticValue(final Object semanticElem,
             final LayoutOptionData<?> layoutOption) {
         if (semanticElem instanceof State) {
             if (layoutOption.equals(LayoutOptions.SPACING)) {
@@ -71,7 +69,7 @@ public class StateLayoutConfig extends SemanticLayoutConfig{
      * {@inheritDoc}
      */
     @Override
-    protected void setSemanticValue(final EObject semanticElem,
+    protected void setSemanticValue(final Object semanticElem,
             final LayoutOptionData<?> layoutOption, final Object value) {
         // not supported by this layout configuration
     }}

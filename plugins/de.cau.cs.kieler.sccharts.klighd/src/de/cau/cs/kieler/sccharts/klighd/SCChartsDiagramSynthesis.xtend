@@ -140,7 +140,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         return newLinkedList(
             new Pair<IProperty<?>, List<?>>(LayoutOptions::ALGORITHM, emptyList),
             new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[it.name]), 
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 255))
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 50))
         );
     }
 

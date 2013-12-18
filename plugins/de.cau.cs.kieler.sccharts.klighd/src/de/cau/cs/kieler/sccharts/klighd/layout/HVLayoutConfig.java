@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.sccharts.klighd.layout;
 
-import org.eclipse.emf.ecore.EObject;
-
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
@@ -93,7 +91,7 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
      * {@inheritDoc}
      */
     @Override
-    protected IProperty<?>[] getAffectedOptions(final EObject semanticElem) {
+    protected IProperty<?>[] getAffectedOptions(final Object semanticElem) {
         if (semanticElem instanceof Scope && (getHVDistance((Scope) semanticElem) >= 0 || getVHDistance((Scope) semanticElem) >= 0)) {
             return new IProperty<?>[] { LayoutOptions.DIRECTION };
         }
@@ -104,7 +102,7 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
      * {@inheritDoc}
      */
     @Override
-    protected Object getSemanticValue(final EObject semanticElem,
+    protected Object getSemanticValue(final Object semanticElem,
             final LayoutOptionData<?> layoutOption) {
         if (semanticElem instanceof Scope && layoutOption.equals(LayoutOptions.DIRECTION)) {
             int dist = getHVDistance((Scope) semanticElem);
@@ -133,7 +131,7 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
      * {@inheritDoc}
      */
     @Override
-    protected void setSemanticValue(final EObject semanticElem,
+    protected void setSemanticValue(final Object semanticElem,
             final LayoutOptionData<?> layoutOption, final Object value) {
         // not supported by this layout configuration
     }
