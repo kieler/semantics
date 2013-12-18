@@ -9,7 +9,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtend.lib,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
- de.cau.cs.kieler.sccharts;bundle-version="0.1.0"
+ de.cau.cs.kieler.sccharts;bundle-version="0.1.0",
+ de.cau.cs.kieler.ktm;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 

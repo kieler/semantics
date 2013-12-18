@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts.tsccharts
 
 import de.cau.cs.kieler.sccharts.tscharts.ktm.extensions.TSCChartsKTMExtension
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.ktm.Model
 
 /**
  * This class provides an SCChart with WCRT information by annotating all regions with two values: The
@@ -29,7 +30,7 @@ import de.cau.cs.kieler.sccharts.State
 class TimingAnnotationProvider {
     extension TSCChartsKTMExtension;
     
-    def public doTimingAnnotations(State scchart){
+    def public doTimingAnnotations(State scchart, Model KTMroot){
         
     }
     
