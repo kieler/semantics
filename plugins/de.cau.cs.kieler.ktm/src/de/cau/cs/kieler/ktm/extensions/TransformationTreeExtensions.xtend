@@ -109,6 +109,68 @@ class TransformationTreeExtensions {
         }
         return transformations;
     }
+    
+    /**
+     * Searches given transformation tree for matching modelNode to given model represented by it's root element.
+     * @return matching modelNode in tree or null
+     */
+    def Model findModelInTree(Model tree, EObject modelRoot){
+        //TODO
+    }    
+
+    // -------------------------------------------------------------------------
+    // Element Utilities
+    
+    /**
+     * Returns all parent elements in source model of transformation associated with given element.
+     * @return List of parent elements.
+     */
+    def List<Element> parents(Element element, ModelTransformation tranformation) {
+        return tranformation.elementTransformations.filter[it.target == element].map[it.source].toList;
+    }
+
+    /**
+     * Returns all child elements in target model of transformation associated with given element.
+     * @return List of child elements.
+     */
+    def List<Element> children(Element element, ModelTransformation tranformation) {
+        return tranformation.elementTransformations.filter[it.source == element].map[it.target].toList;
+    }
+
+    /**
+     * Returns all parent elements in source model at head of transformation path associated with given element.
+     * This function will iterate over each ModelTransformation in path backwards and recursively resolves associated parent elements.
+     * The path must lead from source model where returned elements should be contained to target model where given element is taken from.
+     * If path does not exist returns null.
+     * @param tranformationPath list of model transformations from source model to target model.
+     * @return List of parent elements or null
+     */
+    def List<Element> parents(Element element, List<ModelTransformation> tranformationPath) {       
+        //NOTE leaf leaf paths
+        //return tranformation.elementTransformations.filter[it.target == element].map[it.source].toList;
+    }
+
+    /**
+     * Returns all child elements in target model at tail of transformation path associated with given element.
+     * This function will iterate over each ModelTransformation in path and recursively resolves associated child elements.
+     * The path must lead from source model where given element is taken from to target model where returned elements should be contained .
+     * If path does not exist returns null.
+     * @param tranformationPath list of model transformations from source model to target model.
+     * @return List of parent elements or null
+     */
+    def List<Element> children(Element element, List<ModelTransformation> tranformationPath) {
+        //NOTE leaf leaf paths
+        //return tranformation.elementTransformations.filter[it.source == element].map[it.target].toList;
+    }
+    
+    /**
+     * Returns a path from source model to destination model
+     * @return path as list of ModelTransformations or null
+     */
+    def List<ModelTransformation> getTransformationPath(Model source, Model destination){        
+        //TODO
+        //NOTE leaf leaf paths
+    }
 
     // -------------------------------------------------------------------------
     // Tree Modifiers
@@ -170,7 +232,7 @@ class TransformationTreeExtensions {
 
     /**
      * Appends transformation mapping information about source- and target-model to given tree.
-     * If this is the first transformation use {@link TransformationTreeModifier#initializeTransformationTree initializeTransformationTree}.
+     * If this is the first transformation use {@link TransformationTreeExtensions#initializeTransformationTree initializeTransformationTree}.
      * 
      * New transformation will be appended to modelNode representing source model.
      * Transformations CANNOT appended to transient models!

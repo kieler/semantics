@@ -48,7 +48,6 @@ class TransformationMapping {
 
     /**
      * Maps given parents as source of given child in this transformation
-     * @return true if the mapping changed
      * @throws MappingException when child parent relations were mixed (i.e. when one object is will be mapped as parent when it is already mapped as child)
      */
     def mapParents(EObject child, List<EObject> parents) {
@@ -115,7 +114,7 @@ class TransformationMapping {
     /**
 	 * Removes mapping between given objects.
 	 * Parent child order is arbitrary.
-	 * @param fist - parent or child object depending on chosen order
+	 * @param first - parent or child object depending on chosen order
 	 * @param second - parent or child object depending on chosen order
 	 * @return true if the mapping changed
 	 */
