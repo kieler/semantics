@@ -15,6 +15,10 @@
 
 package de.cau.cs.kieler.sccharts.tscharts.ktm.extensions
 
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.ktm.transformationtree.Model
+
+
 /**
  * Extensions for the KTM dedicated to the providing of timing information for sccharts.
  * 
@@ -24,4 +28,12 @@ package de.cau.cs.kieler.sccharts.tscharts.ktm.extensions
  */
 class TSCChartsKTMExtension {
     
-}
+    /* Finds the corresponding components for this state in the S Model via KTM and annotates them with 
+     * a time Domain annotation that holds the String string. Method annotates the corresponding edges 
+     * as well, if they are not already annotated
+     */
+    def setTimingDomainForSElements(State state, String string, Model model){
+        
+    }
+    
+   }

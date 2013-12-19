@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.tsccharts
 
-//import de.cau.cs.kieler.sccharts.tscharts.ktm.extensions.TSCChartsKTMExtension
+import de.cau.cs.kieler.sccharts.tscharts.ktm.extensions.TSCChartsKTMExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.ktm.transformationtree.Model
 import java.util.Map
@@ -35,7 +35,8 @@ import de.cau.cs.kieler.sccharts.tsccharts.annotation.extensions.TSCChartsAnnota
  * @kieler.design
  * @kieler.rating  
  */
-class TimingAnnotationProvider { //extension TSCChartsKTMExtension;
+class TimingAnnotationProvider { 
+    extension TSCChartsKTMExtension;
     extension TSCChartsAnnotationExtension;
 
     /* This method checks, whether we have timing information for this SCChart. If yes, it provides all 
@@ -56,11 +57,38 @@ class TimingAnnotationProvider { //extension TSCChartsKTMExtension;
         annotateRegions(scchart, KTMRoot, timingInformation);
     }
 
-    /* This message assigns time domains for each region of a state chart and annotates all Objects in
-     * the KTM accordingly.
+    /* This message assigns time domains for each region of a state chart and annotates the 
+     * the corresponding S-Code-Objects in the KTM accordingly.
      */
-    def setTimingDomains(State state, Model model, Integer i) {
-        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+    def Integer setTimingDomains(State state, Model model, Integer currentDomainNumber) {
+        var domainNumber = currentDomainNumber;
+        val regionList = state.regions;
+        val regionListIterator = regionList.iterator;
+        while (regionListIterator.hasNext()) {
+            val region = regionListIterator.next();
+            region.setTimeDomain("@T" + domainNumber);
+            val stateList = region.states;
+            val simpleStates = stateList.filter[it.regions.empty];
+            val macroStates = stateList.filter[!(it.regions.empty)];
+            val simpleStateListIterator = simpleStates.iterator;
+            while (simpleStateListIterator.hasNext()){
+                var simpleState = simpleStateListIterator.next();
+                simpleState.setTimingDomainForSElements("@T" + domainNumber, model);
+            }
+            val macroStateListIterator = macroStates.iterator;
+            while(macroStateListIterator.hasNext()){
+                // If the state has regions of its own, they belong to a new time domain
+                val childState = macroStateListIterator.next();
+                    // recursive call, retrieve the highest DomainNumber that is not free anymore
+                    domainNumber = setTimingDomains(childState, model, domainNumber + 1);
+            }
+            // Count up the DomainNumber for the next region, if there is one
+            if (regionListIterator.hasNext()){
+            domainNumber = domainNumber +1;
+            }
+        }
+        // Return the highest DomainNumber assigned by the Method
+        return domainNumber;
     }
 
     /* This method recursively annotates all regions within the given state with timing values, flat 
@@ -99,9 +127,7 @@ class TimingAnnotationProvider { //extension TSCChartsKTMExtension;
             br = new BufferedReader(new FileReader(new File("timing.txt")));
             var String line = null;
             while ((line = br.readLine()) != null) {
-
-                // Ganze Zeile:
-                // System.out.println(line);                
+         
                 var String[] parts = line.split(";");
 
                 val String key = parts.get(0) as String;
