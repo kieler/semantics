@@ -15,7 +15,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.compare;bundle-version="3.0.1",
  org.eclipse.emf.compare.rcp;bundle-version="2.1.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.ktm.extensions,
+Export-Package: de.cau.cs.kieler.ktm.exceptions,
+ de.cau.cs.kieler.ktm.extensions,
  de.cau.cs.kieler.ktm.transformationtree,
  de.cau.cs.kieler.ktm.transformationtree.impl,
  de.cau.cs.kieler.ktm.transformationtree.util
