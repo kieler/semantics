@@ -14,17 +14,26 @@
 package de.cau.cs.kieler.ktm.extensions
 
 import com.google.common.collect.ImmutableMultimap
+import de.cau.cs.kieler.ktm.exceptions.MappingException
 import de.cau.cs.kieler.ktm.transformationtree.Element
 import de.cau.cs.kieler.ktm.transformationtree.Model
 import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation
 import de.cau.cs.kieler.ktm.transformationtree.TransformationTreeFactory
+import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
-import org.eclipse.emf.ecore.EObject
 import java.util.Map.Entry
+import org.eclipse.emf.compare.EMFCompare
+import org.eclipse.emf.compare.match.DefaultComparisonFactory
+import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory
+import org.eclipse.emf.compare.match.DefaultMatchEngine
+import org.eclipse.emf.compare.rcp.EMFCompareRCPPlugin
+import org.eclipse.emf.compare.utils.UseIdentifiers
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 /**
- * Extension for easier access mand manipulation of TranformationTree.
+ * Extension for easier access and manipulation of TranformationTrees.
  *  
  * @author als
  *
@@ -67,7 +76,7 @@ class TransformationTreeExtensions {
     }
 
     /**
-     * Returns all child models of this nore in tree, where given model is transformed into.
+     * Returns all child models of this node in tree, where given model is transformed into.
      * @return child models
      */
     def List<Model> children(Model model) {
@@ -100,6 +109,68 @@ class TransformationTreeExtensions {
         }
         return transformations;
     }
+    
+    /**
+     * Searches given transformation tree for matching modelNode to given model represented by it's root element.
+     * @return matching modelNode in tree or null
+     */
+    def Model findModelInTree(Model tree, EObject modelRoot){
+        //TODO
+    }    
+
+    // -------------------------------------------------------------------------
+    // Element Utilities
+    
+    /**
+     * Returns all parent elements in source model of transformation associated with given element.
+     * @return List of parent elements.
+     */
+    def List<Element> parents(Element element, ModelTransformation tranformation) {
+        return tranformation.elementTransformations.filter[it.target == element].map[it.source].toList;
+    }
+
+    /**
+     * Returns all child elements in target model of transformation associated with given element.
+     * @return List of child elements.
+     */
+    def List<Element> children(Element element, ModelTransformation tranformation) {
+        return tranformation.elementTransformations.filter[it.source == element].map[it.target].toList;
+    }
+
+    /**
+     * Returns all parent elements in source model at head of transformation path associated with given element.
+     * This function will iterate over each ModelTransformation in path backwards and recursively resolves associated parent elements.
+     * The path must lead from source model where returned elements should be contained to target model where given element is taken from.
+     * If path does not exist returns null.
+     * @param tranformationPath list of model transformations from source model to target model.
+     * @return List of parent elements or null
+     */
+    def List<Element> parents(Element element, List<ModelTransformation> tranformationPath) {       
+        //NOTE leaf leaf paths
+        //return tranformation.elementTransformations.filter[it.target == element].map[it.source].toList;
+    }
+
+    /**
+     * Returns all child elements in target model at tail of transformation path associated with given element.
+     * This function will iterate over each ModelTransformation in path and recursively resolves associated child elements.
+     * The path must lead from source model where given element is taken from to target model where returned elements should be contained .
+     * If path does not exist returns null.
+     * @param tranformationPath list of model transformations from source model to target model.
+     * @return List of parent elements or null
+     */
+    def List<Element> children(Element element, List<ModelTransformation> tranformationPath) {
+        //NOTE leaf leaf paths
+        //return tranformation.elementTransformations.filter[it.source == element].map[it.target].toList;
+    }
+    
+    /**
+     * Returns a path from source model to destination model
+     * @return path as list of ModelTransformations or null
+     */
+    def List<ModelTransformation> getTransformationPath(Model source, Model destination){        
+        //TODO
+        //NOTE leaf leaf paths
+    }
 
     // -------------------------------------------------------------------------
     // Tree Modifiers
@@ -107,48 +178,53 @@ class TransformationTreeExtensions {
 
     /**
      * Creates a new transformation tree containing given mapping as first transformation.
-     * 
-     * If any transient flag is NOT set all elements in that model are referenced and may be resolved to a resource.
-     * So take care that referenced objects are persistent. If flag is set objects are identified by their name only.
-     * 
-     * Returns leaf of new tree as Model representing target model
+     * Returns leaf of new tree as Model representing target model.
      * 
      * @param mapping object mapping data
      * @param transformationID a unique identifier for initial transformation
      * @param sourceModelRoot root element of source model
      * @param sourceModelName display name of source model
-     * @param isSourceModelTransient if true transformation tree will not hold any references to source model
      * @param targetModelRoot root element of target model
      * @param targetModelName display name of target model
-     * @param isTargetModelTransient if true transformation tree will not hold any references to target model
      * @return leaf of new tree
      */
     def Model initializeTransformationTree(ImmutableMultimap<EObject, EObject> mapping, String transformationID,
-        EObject sourceModelRoot, String sourceModelName, boolean isSourceModelTransient, EObject targetModelRoot,
-        String targetModelName, boolean isTargetModelTransient) {
+        EObject sourceModelRoot, String sourceModelName, EObject targetModelRoot, String targetModelName) {
 
-        //create tree
+        //create copies of source and target model, so mapping will be immutable.
+        // This code is taken from ECoreUtil.copy
+        val sourceCopyMap = new Copier();
+        val sourceModelCopy = sourceCopyMap.copy(sourceModelRoot);
+        sourceCopyMap.copyReferences();
+
+        val targetCopyMap = new Copier();
+        val targetModelCopy = targetCopyMap.copy(targetModelRoot);
+        targetCopyMap.copyReferences();
+
+        //create basic tree
         val Model source = factory.createModel();
-        source.type = sourceModelRoot.eClass();
+        source.type = sourceModelCopy.eClass();
+        source.rootElement = sourceModelCopy.createElement(source);
         source.name = sourceModelName;
-        source.transient = isSourceModelTransient;
+        source.transient = false;
 
         val Model target = factory.createModel();
-        target.type = targetModelRoot.eClass();
+        target.type = targetModelCopy.eClass();
+        target.rootElement = targetModelCopy.createElement(target);
         target.name = targetModelName;
-        target.transient = isTargetModelTransient;
+        target.transient = false;
 
         val ModelTransformation transformation = factory.createModelTransformation();
         transformation.id = transformationID;
         transformation.source = source;
         transformation.target = target;
 
-        //create object mapping
+        //create object mapping        
         mapping.entries.forEach [
             val trans = factory.createElementTransformation;
             trans.modelTransformation = transformation;
-            trans.source = it.key.createElement(source, isSourceModelTransient);
-            trans.target = it.value.createElement(target, isTargetModelTransient);
+            trans.source = sourceCopyMap.get(it.key).createElement(source);
+            trans.target = targetCopyMap.get(it.value).createElement(target);
         ]
 
         return target;
@@ -156,15 +232,13 @@ class TransformationTreeExtensions {
 
     /**
      * Appends transformation mapping information about source- and target-model to given tree.
-     * If this is the first transformation use {@link TransformationTreeModifier#initializeTransformationTree initializeTransformationTree}.
+     * If this is the first transformation use {@link TransformationTreeExtensions#initializeTransformationTree initializeTransformationTree}.
      * 
      * New transformation will be appended to modelNode representing source model.
-     * 
-     * If transient flag of target model is NOT set all elements in that model are referenced and may be resolved to a resource.
-     * So take care that referenced objects are persistent. If flag is set objects are identified by their name only.
+     * Transformations CANNOT appended to transient models!
      * 
      * Returns new leaf in tree as Model representing target model.
-     * Return null if sourceModel is not modelNode
+     * Return null if sourceModel is not modelNode or model is transient.
      * 
      * @param mapping object mapping data
      * @param modelNode node in tree to append transformation, representing source model
@@ -172,24 +246,35 @@ class TransformationTreeExtensions {
      * @param sourceModelRoot root element of source model
      * @param targetModelRoot root element of target model
      * @param targetModelName display name of target model
-     * @param isTargetModelTransient if true transformation tree will not hold any references to target model
      * @return newly created leaf in tree
+     * @throws MappingException indicated inconsistent mappings. Appears when Objects in source are mapped to target object but do not exist in source model.
      */
     def Model addTransformationToTree(ImmutableMultimap<EObject, EObject> mapping, Model modelNode,
-        String transformationID, EObject sourceModelRoot, EObject targetModelRoot, String targetModelName,
-        boolean isTargetModelTransient) {
+        String transformationID, EObject sourceModelRoot, EObject targetModelRoot, String targetModelName) {
 
         //check if source model has same type as modelNode
-        //TODO correct identification because type is not unique an don't checks elements
-        if (modelNode != null && modelNode.type.equals(sourceModelRoot.eClass)) {
+        if (modelNode != null && !modelNode.transient && modelNode.type.equals(sourceModelRoot.eClass)) {
+            
+            //TODO check real equality first
+            val sourceModelMap = matchModels(sourceModelRoot, modelNode.rootElement);
+            if (sourceModelMap == null) {
+                return null; //sourceModel and model represented by modelNode don't match
+            }
+
+            //create copies of source and target model, so mapping will be immutable.
+            // This code is taken from ECoreUtil.copy
+            val targetCopyMap = new Copier();
+            val targetModelCopy = targetCopyMap.copy(targetModelRoot);
+            targetCopyMap.copyReferences();
 
             //append new target model to tree
             val Model source = modelNode;
 
             val Model target = factory.createModel();
             target.type = targetModelRoot.eClass();
+            target.rootElement = targetModelCopy.createElement(target);
             target.name = targetModelName;
-            target.transient = isTargetModelTransient;
+            target.transient = false;
 
             val ModelTransformation transformation = factory.createModelTransformation();
             transformation.id = transformationID;
@@ -200,13 +285,13 @@ class TransformationTreeExtensions {
             mapping.entries.forEach [ Entry<EObject, EObject> entry |
                 val trans = factory.createElementTransformation;
                 trans.modelTransformation = transformation;
-                val sourceElem = source.elements.findFirst[it.referencedObject == entry.key]; //TODO this will fail when source model is transient
+                val sourceElem = source.elements.findFirst[it.referencedObject == sourceModelMap.get(entry.key)];
                 if (sourceElem != null) {
                     trans.source = sourceElem;
                 } else {
-                    throw new Exception(); //TODO own Exception
+                    throw new MappingException("Missing Object in source model.", entry.key); //TODO may be irrelevant if model identity check is correct or maybe add missing element
                 }
-                trans.target = entry.value.createElement(target, isTargetModelTransient);
+                trans.target = targetCopyMap.get(entry.value).createElement(target);
             ]
         }
         return null;
@@ -234,14 +319,55 @@ class TransformationTreeExtensions {
         return source;
     }
 
+    /**
+     * Sets Model's transient flag and removes references to concrete Objects in all elements of given model.
+     * Transient model can't be source model of any new transformation and has no association to it's concrete model.
+     * 
+     * This will improve scalability because transient models will not be kept in memory or persistent
+     * 
+     * Can't be reverted.
+     * 
+     * @param modelNode model to convert
+     * @return modelNode itself
+     */
+    def Model makeTransient(Model modelNode) {
+        if (modelNode != null) {
+            modelNode.transient = true;
+            modelNode.elements.forEach[it.referencedObject = null];
+        }
+        return modelNode;
+    }
+
     // -------------------------------------------------------------------------
     // Tree Modifier Helper
-    private def Element create element : factory.createElement() createElement(EObject obj, Model model,
-        boolean isTransient) {
+    private def Element create element : factory.createElement() createElement(EObject obj, Model model) {
         element.model = model;
         element.name = obj.eClass.name;
-        if (!isTransient) {
-            element.referencedObject = obj;
+        element.referencedObject = obj;
+    }
+
+    /**
+     * @return null if models are not identically else mapping between same objects
+     */
+    private def matchModels(EObject left, EObject right) {
+
+        //THIS CODE IS WRONG
+        val matcher = DefaultMatchEngine.createDefaultEObjectMatcher(UseIdentifiers.NEVER);
+        val comparisonFactory = new DefaultComparisonFactory(new DefaultEqualityHelperFactory());
+        val matchEngine = new DefaultMatchEngine(matcher, comparisonFactory);
+        val matchEngineRegistry = EMFCompareRCPPlugin.getDefault().getMatchEngineFactoryRegistry();
+        val postProcessorRegistry = EMFCompareRCPPlugin.getDefault().getPostProcessorRegistry();
+        val comparator = EMFCompare.builder().setMatchEngineFactoryRegistry(matchEngineRegistry).
+            setPostProcessorRegistry(postProcessorRegistry).build();
+
+        val scope = EMFCompare.createDefaultScope(left, right);
+        val comparison = comparator.compare(scope);
+
+        if (comparison.differences.empty) {
+            val map = new HashMap(comparison.matches.length);
+            comparison.matches.forEach[map.put(it.left, it.right)];
+            return map;
         }
+        return null;
     }
 }

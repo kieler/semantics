@@ -202,6 +202,15 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getModel_RootElement() {
+        return (EReference)modelEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getElement() {
         return elementEClass;
     }
@@ -367,6 +376,7 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
         createEReference(modelEClass, MODEL__TRANSFORMED_FROM);
         createEAttribute(modelEClass, MODEL__TRANSIENT);
         createEReference(modelEClass, MODEL__TYPE);
+        createEReference(modelEClass, MODEL__ROOT_ELEMENT);
 
         elementEClass = createEClass(ELEMENT);
         createEReference(elementEClass, ELEMENT__MODEL);
@@ -427,6 +437,7 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
         initEReference(getModel_TransformedFrom(), this.getModelTransformation(), this.getModelTransformation_Target(), "transformedFrom", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getModel_Transient(), theEcorePackage.getEBoolean(), "transient", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getModel_Type(), theEcorePackage.getEClass(), null, "type", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getModel_RootElement(), this.getElement(), null, "rootElement", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(elementEClass, Element.class, "Element", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getElement_Model(), this.getModel(), this.getModel_Elements(), "model", null, 1, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

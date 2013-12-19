@@ -131,8 +131,8 @@
     <styles xmi:type="notation:FontStyle" xmi:id="_2Mml4mSXEeOb0MOqsz1DOg" fontColor="4210752" fontName="Ubuntu" fontHeight="10"/>
     <element xmi:type="ecore:EReference" href="TransformationTree.ecore#//Model/elements"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_2Mml42SXEeOb0MOqsz1DOg" points="[-3, 9, 0, -104]$[-3, 77, 0, -36]$[-3, 113, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2OSn8GSXEeOb0MOqsz1DOg" id="(0.46405228758169936,0.8769230769230769)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2OSn8WSXEeOb0MOqsz1DOg" id="(0.4444444444444444,0.0)"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_GIkNIGcmEeO1i9HP1AYq5g" id="(0.7189542483660131,0.9452054794520548)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_GIk0MGcmEeO1i9HP1AYq5g" id="(0.7777777777777778,0.7564102564102564)"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_2Mn0AmSXEeOb0MOqsz1DOg" type="3002" source="_2Ma_sGSXEeOb0MOqsz1DOg" target="_2MkJomSXEeOb0MOqsz1DOg">
     <children xmi:type="notation:Node" xmi:id="_2Mn0BmSXEeOb0MOqsz1DOg" type="4011">
@@ -164,7 +164,7 @@
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_2MobGmSXEeOb0MOqsz1DOg" type="3002" source="_2MjikGSXEeOb0MOqsz1DOg" target="_2Ma_sGSXEeOb0MOqsz1DOg">
     <children xmi:type="notation:Node" xmi:id="_2MobHmSXEeOb0MOqsz1DOg" type="4011">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_2MobH2SXEeOb0MOqsz1DOg" x="-7" y="13"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_2MobH2SXEeOb0MOqsz1DOg" x="-1" y="27"/>
     </children>
     <children xmi:type="notation:Node" xmi:id="_2MobIGSXEeOb0MOqsz1DOg" type="4012">
       <layoutConstraint xmi:type="notation:Location" xmi:id="_2MobIWSXEeOb0MOqsz1DOg" x="1" y="-19"/>
@@ -173,8 +173,8 @@
     <styles xmi:type="notation:FontStyle" xmi:id="_2MobHGSXEeOb0MOqsz1DOg" fontColor="4210752" fontName="Ubuntu" fontHeight="10"/>
     <element xmi:type="ecore:EReference" href="TransformationTree.ecore#//Element/model"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_2MobHWSXEeOb0MOqsz1DOg" points="[0, 0, -3, 113]$[0, -36, -3, 77]$[0, -104, -3, 9]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TzbrYGSZEeOb0MOqsz1DOg" id="(0.4444444444444444,0.0)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TzbrYWSZEeOb0MOqsz1DOg" id="(0.46405228758169936,0.8769230769230769)"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TzbrYGSZEeOb0MOqsz1DOg" id="(0.7777777777777778,0.7564102564102564)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TzbrYWSZEeOb0MOqsz1DOg" id="(0.7189542483660131,0.9452054794520548)"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_2MobImSXEeOb0MOqsz1DOg" type="3002" source="_2MjikGSXEeOb0MOqsz1DOg" target="_2MlXwGSXEeOb0MOqsz1DOg">
     <children xmi:type="notation:Node" xmi:id="_2MpCIGSXEeOb0MOqsz1DOg" type="4011">
@@ -206,7 +206,7 @@
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_2MpCLGSXEeOb0MOqsz1DOg" type="3002" source="_2MkJomSXEeOb0MOqsz1DOg" target="_2Ma_sGSXEeOb0MOqsz1DOg">
     <children xmi:type="notation:Node" xmi:id="_2MpCMGSXEeOb0MOqsz1DOg" type="4011">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_2MpCMWSXEeOb0MOqsz1DOg" x="-2" y="4"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_2MpCMWSXEeOb0MOqsz1DOg" y="11"/>
     </children>
     <children xmi:type="notation:Node" xmi:id="_2MpCMmSXEeOb0MOqsz1DOg" type="4012">
       <layoutConstraint xmi:type="notation:Location" xmi:id="_2MpCM2SXEeOb0MOqsz1DOg" x="19" y="-16"/>
@@ -248,7 +248,7 @@
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_2MppQGSXEeOb0MOqsz1DOg" type="3002" source="_2MlXwGSXEeOb0MOqsz1DOg" target="_2MkJomSXEeOb0MOqsz1DOg">
     <children xmi:type="notation:Node" xmi:id="_2MqQQGSXEeOb0MOqsz1DOg" type="4011">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_2MqQQWSXEeOb0MOqsz1DOg" x="-18" y="69"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_2MqQQWSXEeOb0MOqsz1DOg" x="-1" y="74"/>
     </children>
     <children xmi:type="notation:Node" xmi:id="_2MqQQmSXEeOb0MOqsz1DOg" type="4012">
       <layoutConstraint xmi:type="notation:Location" xmi:id="_2MqQQ2SXEeOb0MOqsz1DOg" x="5" y="-17"/>
@@ -315,5 +315,19 @@
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_LqDwg2SZEeOb0MOqsz1DOg" points="[-8, 9, 145, 1]$[-151, -11, 2, -19]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_LqGz0GSZEeOb0MOqsz1DOg" id="(0.0457516339869281,0.41025641025641024)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_LqGz0WSZEeOb0MOqsz1DOg" id="(0.8529411764705882,0.3448275862068966)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_HUXR4GcmEeO1i9HP1AYq5g" type="3002" source="_2Ma_sGSXEeOb0MOqsz1DOg" target="_2MjikGSXEeOb0MOqsz1DOg">
+    <children xmi:type="notation:Node" xmi:id="_HUZHEGcmEeO1i9HP1AYq5g" type="4011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_HUZHEWcmEeO1i9HP1AYq5g" x="-21" y="-40"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_HUZuIGcmEeO1i9HP1AYq5g" type="4012">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_HUZuIWcmEeO1i9HP1AYq5g" x="-21" y="17"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_HUXR4WcmEeO1i9HP1AYq5g" lineColor="4210752"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_HUXR4mcmEeO1i9HP1AYq5g" fontColor="4210752" fontName="Ubuntu" fontHeight="10"/>
+    <element xmi:type="ecore:EReference" href="TransformationTree.ecore#//Model/rootElement"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_HUXR42cmEeO1i9HP1AYq5g" points="[-2, 18, 2, -159]$[-2, 148, 2, -29]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_HUa8QGcmEeO1i9HP1AYq5g" id="(0.20915032679738563,0.8082191780821918)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_HUbjUGcmEeO1i9HP1AYq5g" id="(0.1895424836601307,0.3076923076923077)"/>
   </edges>
 </notation:Diagram>

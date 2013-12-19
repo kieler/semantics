@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.Model#getTransformedFrom <em>Transformed From</em>}</li>
  *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.Model#isTransient <em>Transient</em>}</li>
  *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.Model#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.ktm.transformationtree.Model#getRootElement <em>Root Element</em>}</li>
  * </ul>
  * </p>
  *
@@ -192,5 +193,31 @@ public interface Model extends EObject {
      * @generated
      */
     void setType(EClass value);
+
+    /**
+     * Returns the value of the '<em><b>Root Element</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Root Element</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Root Element</em>' reference.
+     * @see #setRootElement(Element)
+     * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModel_RootElement()
+     * @model required="true"
+     * @generated
+     */
+    Element getRootElement();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getRootElement <em>Root Element</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Root Element</em>' reference.
+     * @see #getRootElement()
+     * @generated
+     */
+    void setRootElement(Element value);
 
 } // Model
