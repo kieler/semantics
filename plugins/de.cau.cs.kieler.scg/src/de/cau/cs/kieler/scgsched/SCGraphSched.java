@@ -28,6 +28,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.scgsched.SCGraphSched#isUnschedulable <em>Unschedulable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.SCGraphSched#getSchedules <em>Schedules</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.SCGraphSched#getProblems <em>Problems</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.SCGraphSched#getGuards <em>Guards</em>}</li>
  * </ul>
  * </p>
  *
@@ -37,61 +38,87 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface SCGraphSched extends SCGraphBB {
     /**
-     * Returns the value of the '<em><b>Unschedulable</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Unschedulable</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Unschedulable</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Unschedulable</em>' attribute.
-     * @see #setUnschedulable(boolean)
-     * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSCGraphSched_Unschedulable()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Unschedulable</em>' attribute.
+	 * @see #setUnschedulable(boolean)
+	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSCGraphSched_Unschedulable()
+	 * @model
+	 * @generated
+	 */
     boolean isUnschedulable();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scgsched.SCGraphSched#isUnschedulable <em>Unschedulable</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.SCGraphSched#isUnschedulable <em>Unschedulable</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Unschedulable</em>' attribute.
-     * @see #isUnschedulable()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Unschedulable</em>' attribute.
+	 * @see #isUnschedulable()
+	 * @generated
+	 */
     void setUnschedulable(boolean value);
 
     /**
-     * Returns the value of the '<em><b>Schedules</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scgsched.Schedule}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Schedules</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scgsched.Schedule}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Schedules</em>' reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Schedules</em>' containment reference list.
-     * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSCGraphSched_Schedules()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Schedules</em>' containment reference list.
+	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSCGraphSched_Schedules()
+	 * @model containment="true"
+	 * @generated
+	 */
     EList<Schedule> getSchedules();
 
 				/**
-     * Returns the value of the '<em><b>Problems</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scgsched.Problem}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Problems</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scgsched.Problem}.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Problems</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Problems</em>' containment reference list.
-     * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSCGraphSched_Problems()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Problems</em>' containment reference list.
+	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSCGraphSched_Problems()
+	 * @model containment="true"
+	 * @generated
+	 */
 	EList<Problem> getProblems();
+
+				/**
+	 * Returns the value of the '<em><b>Guards</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Guards</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Guards</em>' containment reference.
+	 * @see #setGuards(GuardExpression)
+	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSCGraphSched_Guards()
+	 * @model containment="true"
+	 * @generated
+	 */
+	GuardExpression getGuards();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.SCGraphSched#getGuards <em>Guards</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Guards</em>' containment reference.
+	 * @see #getGuards()
+	 * @generated
+	 */
+	void setGuards(GuardExpression value);
 
 } // SCGraphSched

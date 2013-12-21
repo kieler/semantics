@@ -41,104 +41,104 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  */
 public class PotentialInstantaneousLoopProblemImpl extends ProblemImpl implements PotentialInstantaneousLoopProblem {
 	/**
-     * The cached value of the '{@link #getControlFlows() <em>Control Flows</em>}' reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getControlFlows() <em>Control Flows</em>}' reference list.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getControlFlows()
-     * @generated
-     * @ordered
-     */
+	 * @see #getControlFlows()
+	 * @generated
+	 * @ordered
+	 */
 	protected EList<ControlFlow> controlFlows;
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	protected PotentialInstantaneousLoopProblemImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	protected EClass eStaticClass() {
-        return ScgschedPackage.Literals.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM;
-    }
+		return ScgschedPackage.Literals.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EList<ControlFlow> getControlFlows() {
-        if (controlFlows == null) {
-            controlFlows = new EObjectResolvingEList<ControlFlow>(ControlFlow.class, this, ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS);
-        }
-        return controlFlows;
-    }
+		if (controlFlows == null) {
+			controlFlows = new EObjectResolvingEList<ControlFlow>(ControlFlow.class, this, ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS);
+		}
+		return controlFlows;
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS:
-                return getControlFlows();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS:
+				return getControlFlows();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS:
-                getControlFlows().clear();
-                getControlFlows().addAll((Collection<? extends ControlFlow>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS:
+				getControlFlows().clear();
+				getControlFlows().addAll((Collection<? extends ControlFlow>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public void eUnset(int featureID) {
-        switch (featureID) {
-            case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS:
-                getControlFlows().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS:
+				getControlFlows().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS:
-                return controlFlows != null && !controlFlows.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS:
+				return controlFlows != null && !controlFlows.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //PotentialInstantaneousLoopProblemImpl

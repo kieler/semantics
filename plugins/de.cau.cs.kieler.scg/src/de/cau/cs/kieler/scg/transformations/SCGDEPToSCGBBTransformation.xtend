@@ -195,26 +195,26 @@ class SCGDEPToSCGBBTransformation {
         basicBlock.guard = guard
         basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock(basicBlock))
         
-        val newExpression = ScgbbFactory::eINSTANCE.createActivationExpression
-        if (predecessorBlocks != null) newExpression.basicBlocks.addAll(predecessorBlocks)
-        newExpression.guardExpression = activationExpressions.head
-        newExpression.guard = guard
-        
-        if (emptyGuards != null && emptyExpressions != null && 
-            emptyGuards.size == emptyExpressions.size
-        ) {
-            var guardCount = 0
-            for(g:emptyGuards) {
-                val emptExp = ScgbbFactory::eINSTANCE.createActivationExpression
-                emptExp.guardExpression =  emptyExpressions.get(guardCount)
-                emptExp.guard = emptyGuards.get(guardCount)     
-                basicBlock.emptyGuards.add(emptExp.guard)          
-                guardCount = guardCount + 1
-                newExpression.emptyExpressions.add(emptExp)
-            }
-        }
-        
-        basicBlock.activationExpressions.add(newExpression)
+//        val newExpression = ScgbbFactory::eINSTANCE.createActivationExpression
+//        if (predecessorBlocks != null) newExpression.basicBlocks.addAll(predecessorBlocks)
+//        newExpression.guardExpression = activationExpressions.head
+//        newExpression.guard = guard
+//        
+//        if (emptyGuards != null && emptyExpressions != null && 
+//            emptyGuards.size == emptyExpressions.size
+//        ) {
+//            var guardCount = 0
+//            for(g:emptyGuards) {
+//                val emptExp = ScgbbFactory::eINSTANCE.createActivationExpression
+//                emptExp.guardExpression =  emptyExpressions.get(guardCount)
+//                emptExp.guard = emptyGuards.get(guardCount)     
+//                basicBlock.emptyGuards.add(emptExp.guard)          
+//                guardCount = guardCount + 1
+//                newExpression.emptyExpressions.add(emptExp)
+//            }
+//        }
+//        
+//        basicBlock.activationExpressions.add(newExpression)
         
         scg.basicBlocks.add(basicBlock)
 //        scg.valuedObjects.add(guard)
@@ -236,7 +236,7 @@ class SCGDEPToSCGBBTransformation {
 			        guard = KExpressionsFactory::eINSTANCE.createValuedObject
         			guard.name = basicBlock.guard.name + (96 + schedulingBlocks.size + 1) as char
         			guard.type = ValueType::BOOL
-                	basicBlock.subGuards.add(guard)
+//                	basicBlock.subGuards.add(guard)
                 }
                 block = ScgbbFactory::eINSTANCE.createSchedulingBlock()
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))

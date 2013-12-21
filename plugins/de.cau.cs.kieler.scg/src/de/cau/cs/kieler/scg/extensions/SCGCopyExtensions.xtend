@@ -95,17 +95,17 @@ class SCGCopyExtensions {
         // If source and target are at least basic block specializations, copy all basic block information.
         if (source instanceof SCGraphBB && target instanceof SCGraphBB) { 
             (source as SCGraphBB).basicBlocks.forEach[ it.copyBasicBlock(target as SCGraphBB) ]
-            (target as SCGraphBB).basicBlocks.forEach[
-                it.activationExpressions.forEach[ae|
-                    val bb = <BasicBlock> newLinkedList
-                    ae.basicBlocks.forEach[
-                        val mappedBB = basicBlockMapping.get(it)
-                        bb.add(mappedBB)
-                    ]
-                    ae.basicBlocks.clear
-                    ae.basicBlocks.addAll(bb)
-                ]
-            ] 
+//            (target as SCGraphBB).basicBlocks.forEach[
+//                it.activationExpressions.forEach[ae|
+//                    val bb = <BasicBlock> newLinkedList
+//                    ae.basicBlocks.forEach[
+//                        val mappedBB = basicBlockMapping.get(it)
+//                        bb.add(mappedBB)
+//                    ]
+//                    ae.basicBlocks.clear
+//                    ae.basicBlocks.addAll(bb)
+//                ]
+//            ] 
         }
         
         //If source and target are at least a scheduling specialization, copy all scheduling information.
@@ -150,22 +150,22 @@ class SCGCopyExtensions {
             bb.guard = newGuard
         	valuedObjectMapping.put(it, newGuard)
         ]
-        basicBlock.subGuards.forEach[
-            val newGuard = it.copy
-            bb.subGuards.add(newGuard)
-            valuedObjectMapping.put(it, newGuard)
-        ]
-        basicBlock.emptyGuards.forEach[
-        	val newGuard = it.copy
-            bb.emptyGuards.add(newGuard)
-        	valuedObjectMapping.put(it, newGuard)
-        ]
+//        basicBlock.subGuards.forEach[
+//            val newGuard = it.copy
+//            bb.subGuards.add(newGuard)
+//            valuedObjectMapping.put(it, newGuard)
+//        ]
+//        basicBlock.emptyGuards.forEach[
+//        	val newGuard = it.copy
+//            bb.emptyGuards.add(newGuard)
+//        	valuedObjectMapping.put(it, newGuard)
+//        ]
         
         basicBlock.schedulingBlocks.forEach[ it.copySchedulingBlock(bb) ]
         
-        basicBlock.activationExpressions.forEach[
-            bb.activationExpressions.add(it.copyActivationExpression)
-        ]        
+//        basicBlock.activationExpressions.forEach[
+//            bb.activationExpressions.add(it.copyActivationExpression)
+//        ]        
         
         basicBlockMapping.put(basicBlock, bb)
         revBasicBlockMapping.put(bb, basicBlock)
@@ -174,16 +174,16 @@ class SCGCopyExtensions {
     }
     
     def ActivationExpression copyActivationExpression(ActivationExpression activationExpression) {
-        val actExp = ScgbbFactory::eINSTANCE.createActivationExpression
-        activationExpression.basicBlocks.forEach[actExp.basicBlocks.add(it)]
-        activationExpression.guard => [ 
-            val newGuard = valuedObjectMapping.get(it)
-//            valuedObjectMapping.put(it, newGuard)
-            actExp.guard = newGuard
-        ]
-        activationExpression.guardExpression => [actExp.guardExpression = it.copyExpression]
-        activationExpression.emptyExpressions.forEach[ actExp.emptyExpressions.add(it.copyActivationExpression) ]
-		actExp    	
+//        val actExp = ScgbbFactory::eINSTANCE.createActivationExpression
+//        activationExpression.basicBlocks.forEach[actExp.basicBlocks.add(it)]
+//        activationExpression.guard => [ 
+//            val newGuard = valuedObjectMapping.get(it)
+////            valuedObjectMapping.put(it, newGuard)
+//            actExp.guard = newGuard
+//        ]
+//        activationExpression.guardExpression => [actExp.guardExpression = it.copyExpression]
+//        activationExpression.emptyExpressions.forEach[ actExp.emptyExpressions.add(it.copyActivationExpression) ]
+//		actExp    	
     }
     
     def copySchedulingBlock(SchedulingBlock schedulingBlock, BasicBlock target) {

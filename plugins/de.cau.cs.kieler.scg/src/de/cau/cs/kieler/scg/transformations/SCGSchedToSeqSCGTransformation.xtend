@@ -59,16 +59,16 @@ class SCGSchedToSeqSCGTransformation {
         		it.addToValuedObjectMapping(newGuard)
         		scg.valuedObjects.add(newGuard)
         	]
-        	it.subGuards.forEach[
-        		val newGuard = it.copy
-        		it.addToValuedObjectMapping(newGuard)
-        		scg.valuedObjects.add(newGuard)
-        	]
-        	it.emptyGuards.forEach[
-        		val newGuard = it.copy
-        		it.addToValuedObjectMapping(newGuard)
-        		scg.valuedObjects.add(newGuard)
-        	]
+//        	it.subGuards.forEach[
+//        		val newGuard = it.copy
+//        		it.addToValuedObjectMapping(newGuard)
+//        		scg.valuedObjects.add(newGuard)
+//        	]
+//        	it.emptyGuards.forEach[
+//        		val newGuard = it.copy
+//        		it.addToValuedObjectMapping(newGuard)
+//        		scg.valuedObjects.add(newGuard)
+//        	]
         ]
         
         val entry = ScgFactory::eINSTANCE.createEntry
@@ -92,16 +92,16 @@ class SCGSchedToSeqSCGTransformation {
     		newAssignment.valuedObject = sb.guard.copyValuedObject
     		var Expression expression
     		
-    		if (basicBlock.activationExpressions.size>1) {
-    			expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
-    			(expression as OperatorExpression).setOperator(OperatorType::OR)
-    			val myExp = expression
-    			basicBlock.activationExpressions.forEach[
-    				(myExp as OperatorExpression).subExpressions.add(it.guardExpression)
-    			]
-    		} else {
-    			expression = basicBlock.activationExpressions.head.guardExpression
-    		}
+//    		if (basicBlock.activationExpressions.size>1) {
+//    			expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
+//    			(expression as OperatorExpression).setOperator(OperatorType::OR)
+//    			val myExp = expression
+//    			basicBlock.activationExpressions.forEach[
+//    				(myExp as OperatorExpression).subExpressions.add(it.guardExpression)
+//    			]
+//    		} else {
+//    			expression = basicBlock.activationExpressions.head.guardExpression
+//    		}
     		
     		// FIXME: expression should never be null
     		// This fixes unimplemented features in the synchronizer 

@@ -31,22 +31,22 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class ProblemImpl extends MinimalEObjectImpl.Container implements Problem {
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	protected ProblemImpl() {
-        super();
-    }
+		super();
+	}
 
 	/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	@Override
 	protected EClass eStaticClass() {
-        return ScgschedPackage.Literals.PROBLEM;
-    }
+		return ScgschedPackage.Literals.PROBLEM;
+	}
 
 } //ProblemImpl

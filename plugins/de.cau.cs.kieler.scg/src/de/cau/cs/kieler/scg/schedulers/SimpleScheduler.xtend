@@ -56,13 +56,13 @@ class SimpleScheduler extends AbstractSCGScheduler {
             for(block : schedulingBlocksCopy) {
                 var placeable = true
                 val parentBB = block.eContainer as BasicBlock
-                for(ae:parentBB.activationExpressions){
-                    if (ae.basicBlocks.size > 0) for(bb:ae.basicBlocks) 
-                    for(sb:bb.schedulingBlocks){
-                        if (!schedule.schedulingBlocks.contains(sb)) { placeable = false }
-
-                    }
-                }
+//                for(ae:parentBB.activationExpressions){
+//                    if (ae.basicBlocks.size > 0) for(bb:ae.basicBlocks) 
+//                    for(sb:bb.schedulingBlocks){
+//                        if (!schedule.schedulingBlocks.contains(sb)) { placeable = false }
+//
+//                    }
+//                }
                 for(dep:block.dependencies) {
                     if (dep.concurrent && !dep.confluent)
                       if (!schedule.schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) { placeable = false }

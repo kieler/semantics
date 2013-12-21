@@ -25,56 +25,47 @@ import org.eclipse.emf.ecore.EFactory;
  */
 public interface ScgbbFactory extends EFactory {
     /**
-     * The singleton instance of the factory.
-     * <!-- begin-user-doc -->
+	 * The singleton instance of the factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     ScgbbFactory eINSTANCE = de.cau.cs.kieler.scgbb.impl.ScgbbFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>SC Graph BB</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>SC Graph BB</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>SC Graph BB</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>SC Graph BB</em>'.
+	 * @generated
+	 */
     SCGraphBB createSCGraphBB();
 
     /**
-     * Returns a new object of class '<em>Basic Block</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Basic Block</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Basic Block</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Basic Block</em>'.
+	 * @generated
+	 */
     BasicBlock createBasicBlock();
 
     /**
-     * Returns a new object of class '<em>Scheduling Block</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Scheduling Block</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Scheduling Block</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Scheduling Block</em>'.
+	 * @generated
+	 */
     SchedulingBlock createSchedulingBlock();
 
     /**
-     * Returns a new object of class '<em>Activation Expression</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns the package supported by this factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Activation Expression</em>'.
-     * @generated
-     */
-    ActivationExpression createActivationExpression();
-
-    /**
-     * Returns the package supported by this factory.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the package supported by this factory.
-     * @generated
-     */
+	 * @return the package supported by this factory.
+	 * @generated
+	 */
     ScgbbPackage getScgbbPackage();
 
 } //ScgbbFactory

@@ -25,56 +25,74 @@ import org.eclipse.emf.ecore.EFactory;
  */
 public interface ScgschedFactory extends EFactory {
     /**
-     * The singleton instance of the factory.
-     * <!-- begin-user-doc -->
+	 * The singleton instance of the factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     ScgschedFactory eINSTANCE = de.cau.cs.kieler.scgsched.impl.ScgschedFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>SC Graph Sched</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>SC Graph Sched</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>SC Graph Sched</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>SC Graph Sched</em>'.
+	 * @generated
+	 */
     SCGraphSched createSCGraphSched();
 
     /**
-     * Returns a new object of class '<em>Schedule</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Empty Expressions</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Empty Expressions</em>'.
+	 * @generated
+	 */
+	EmptyExpressions createEmptyExpressions();
+
+				/**
+	 * Returns a new object of class '<em>Guard Expression</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Guard Expression</em>'.
+	 * @generated
+	 */
+	GuardExpression createGuardExpression();
+
+				/**
+	 * Returns a new object of class '<em>Schedule</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Schedule</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Schedule</em>'.
+	 * @generated
+	 */
     Schedule createSchedule();
 
     /**
-     * Returns a new object of class '<em>Problem</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Problem</em>'.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @return a new object of class '<em>Problem</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Problem</em>'.
+	 * @generated
+	 */
 	Problem createProblem();
 
 				/**
-     * Returns a new object of class '<em>Potential Instantaneous Loop Problem</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Potential Instantaneous Loop Problem</em>'.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @return a new object of class '<em>Potential Instantaneous Loop Problem</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Potential Instantaneous Loop Problem</em>'.
+	 * @generated
+	 */
 	PotentialInstantaneousLoopProblem createPotentialInstantaneousLoopProblem();
 
 				/**
-     * Returns the package supported by this factory.
-     * <!-- begin-user-doc -->
+	 * Returns the package supported by this factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the package supported by this factory.
-     * @generated
-     */
+	 * @return the package supported by this factory.
+	 * @generated
+	 */
     ScgschedPackage getScgschedPackage();
 
 } //ScgschedFactory

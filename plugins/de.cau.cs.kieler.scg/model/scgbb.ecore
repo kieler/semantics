@@ -8,15 +8,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="BasicBlock">
     <eStructuralFeatures xsi:type="ecore:EReference" name="schedulingBlocks" upperBound="-1"
         eType="#//SchedulingBlock" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="activationExpressions"
-        upperBound="-1" eType="#//ActivationExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="guard" lowerBound="1" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subGuards" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="emptyGuards" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SchedulingBlock">
@@ -25,15 +17,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
         eType="ecore:EClass scgdep.ecore#//Dependency"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="guard" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ActivationExpression">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="guardExpression" lowerBound="1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="guard" lowerBound="1" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="basicBlocks" upperBound="-1"
-        eType="#//BasicBlock"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="emptyExpressions" upperBound="-1"
-        eType="#//ActivationExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="surfaceBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="synchronizerBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
 </ecore:EPackage>

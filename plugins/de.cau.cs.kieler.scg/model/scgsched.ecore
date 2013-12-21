@@ -7,6 +7,21 @@
         eType="#//Schedule" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="problems" upperBound="-1"
         eType="#//Problem" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="guards" eType="#//GuardExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EmptyExpressions">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" lowerBound="1" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GuardExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" lowerBound="1" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="emptyExpressions" eType="#//EmptyExpressions"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Schedule">
     <eStructuralFeatures xsi:type="ecore:EReference" name="schedulingBlocks" upperBound="-1"

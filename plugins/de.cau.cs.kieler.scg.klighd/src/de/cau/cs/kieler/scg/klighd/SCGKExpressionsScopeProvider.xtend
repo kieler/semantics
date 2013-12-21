@@ -55,8 +55,8 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
   		scopeObjects.addAll(parent.getValuedObjects)
     	if (parent instanceof SCGraphBB) {
     		(parent as SCGraphBB).basicBlocks.forEach[scopeObjects.add(it.guard)]
-    		(parent as SCGraphBB).basicBlocks.forEach[scopeObjects.addAll(it.subGuards)]
-    		(parent as SCGraphBB).basicBlocks.forEach[scopeObjects.addAll(it.emptyGuards)]
+//    		(parent as SCGraphBB).basicBlocks.forEach[scopeObjects.addAll(it.subGuards)]
+//    		(parent as SCGraphBB).basicBlocks.forEach[scopeObjects.addAll(it.emptyGuards)]
     	}
         Scopes.scopeFor(scopeObjects)
     }
