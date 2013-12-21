@@ -35,10 +35,12 @@ abstract class AbstractSCGScheduler {
     
     protected abstract def SCGraphSched analyse(SCGraphSched scg);
     
+    protected abstract def SCGraphSched optimize(SCGraphSched scg);
+    
     protected abstract def SCGraphSched build(SCGraphSched scg);
     
     public def SCGraph schedule(SCGraph scg) {
-        build(((scg.enrichAll as SCGraphSched) as SCGraphSched).analyse)
+        build(((scg.enrichAll as SCGraphSched) as SCGraphSched).analyse).optimize
     }    
     
     protected def SCGAnalyserResult copyAllProblems(SCGAnalyserResult result, SCGraphSched scg) {

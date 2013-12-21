@@ -23,6 +23,7 @@ import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scgsched.SCGraphSched
 import com.google.inject.Guice
+import de.cau.cs.kieler.scg.analyser.PotentialInstantaneousLoopAnalyser
 
 /** 
  * SimpleScheduler
@@ -41,6 +42,10 @@ class SimpleScheduler extends AbstractSCGScheduler {
 		loopAnalyser.analyse(scg).copyAllProblems(scg).SCG as SCGraphSched
     }    
     
+	override protected optimize(SCGraphSched scg) {
+		scg
+	}
+	
     override protected SCGraphSched build(SCGraphSched SCG) {
         val schedule = ScgschedFactory::eINSTANCE.createSchedule
         val schedulingBlocks = <SchedulingBlock> newLinkedList
