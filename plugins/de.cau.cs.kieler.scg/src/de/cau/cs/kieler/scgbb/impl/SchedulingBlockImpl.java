@@ -46,6 +46,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#getGuard <em>Guard</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#isSurfaceBlock <em>Surface Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#isSynchronizerBlock <em>Synchronizer Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#isGoBlock <em>Go Block</em>}</li>
  * </ul>
  * </p>
  *
@@ -121,6 +122,26 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 	 * @ordered
 	 */
 	protected boolean synchronizerBlock = SYNCHRONIZER_BLOCK_EDEFAULT;
+
+				/**
+	 * The default value of the '{@link #isGoBlock() <em>Go Block</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isGoBlock()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean GO_BLOCK_EDEFAULT = false;
+
+				/**
+	 * The cached value of the '{@link #isGoBlock() <em>Go Block</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isGoBlock()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean goBlock = GO_BLOCK_EDEFAULT;
 
 				/**
 	 * <!-- begin-user-doc -->
@@ -247,6 +268,27 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 
 				/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isGoBlock() {
+		return goBlock;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGoBlock(boolean newGoBlock) {
+		boolean oldGoBlock = goBlock;
+		goBlock = newGoBlock;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.SCHEDULING_BLOCK__GO_BLOCK, oldGoBlock, goBlock));
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -264,6 +306,8 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 				return isSurfaceBlock();
 			case ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK:
 				return isSynchronizerBlock();
+			case ScgbbPackage.SCHEDULING_BLOCK__GO_BLOCK:
+				return isGoBlock();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -294,6 +338,9 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 			case ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK:
 				setSynchronizerBlock((Boolean)newValue);
 				return;
+			case ScgbbPackage.SCHEDULING_BLOCK__GO_BLOCK:
+				setGoBlock((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -321,6 +368,9 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 			case ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK:
 				setSynchronizerBlock(SYNCHRONIZER_BLOCK_EDEFAULT);
 				return;
+			case ScgbbPackage.SCHEDULING_BLOCK__GO_BLOCK:
+				setGoBlock(GO_BLOCK_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -343,6 +393,8 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 				return surfaceBlock != SURFACE_BLOCK_EDEFAULT;
 			case ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK:
 				return synchronizerBlock != SYNCHRONIZER_BLOCK_EDEFAULT;
+			case ScgbbPackage.SCHEDULING_BLOCK__GO_BLOCK:
+				return goBlock != GO_BLOCK_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -361,6 +413,8 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 		result.append(surfaceBlock);
 		result.append(", synchronizerBlock: ");
 		result.append(synchronizerBlock);
+		result.append(", goBlock: ");
+		result.append(goBlock);
 		result.append(')');
 		return result.toString();
 	}

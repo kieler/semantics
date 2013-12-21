@@ -144,13 +144,13 @@ public interface ScgbbPackage extends EPackage {
     int BASIC_BLOCK__SCHEDULING_BLOCKS = 0;
 
     /**
-	 * The feature id for the '<em><b>Guard</b></em>' containment reference.
+	 * The feature id for the '<em><b>Guards</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BASIC_BLOCK__GUARD = 1;
+	int BASIC_BLOCK__GUARDS = 1;
 
 				/**
 	 * The number of structural features of the '<em>Basic Block</em>' class.
@@ -226,13 +226,22 @@ public interface ScgbbPackage extends EPackage {
 	int SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK = 4;
 
 				/**
+	 * The feature id for the '<em><b>Go Block</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULING_BLOCK__GO_BLOCK = 5;
+
+				/**
 	 * The number of structural features of the '<em>Scheduling Block</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SCHEDULING_BLOCK_FEATURE_COUNT = 5;
+    int SCHEDULING_BLOCK_FEATURE_COUNT = 6;
 
     /**
 	 * The number of operations of the '<em>Scheduling Block</em>' class.
@@ -286,15 +295,15 @@ public interface ScgbbPackage extends EPackage {
     EReference getBasicBlock_SchedulingBlocks();
 
     /**
-	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuard <em>Guard</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuards <em>Guards</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Guard</em>'.
-	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getGuard()
+	 * @return the meta object for the containment reference list '<em>Guards</em>'.
+	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getGuards()
 	 * @see #getBasicBlock()
 	 * @generated
 	 */
-	EReference getBasicBlock_Guard();
+	EReference getBasicBlock_Guards();
 
 				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scgbb.SchedulingBlock <em>Scheduling Block</em>}'.
@@ -362,6 +371,17 @@ public interface ScgbbPackage extends EPackage {
 	EAttribute getSchedulingBlock_SynchronizerBlock();
 
 				/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isGoBlock <em>Go Block</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Go Block</em>'.
+	 * @see de.cau.cs.kieler.scgbb.SchedulingBlock#isGoBlock()
+	 * @see #getSchedulingBlock()
+	 * @generated
+	 */
+	EAttribute getSchedulingBlock_GoBlock();
+
+				/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -421,12 +441,12 @@ public interface ScgbbPackage extends EPackage {
         EReference BASIC_BLOCK__SCHEDULING_BLOCKS = eINSTANCE.getBasicBlock_SchedulingBlocks();
 
         /**
-		 * The meta object literal for the '<em><b>Guard</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Guards</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference BASIC_BLOCK__GUARD = eINSTANCE.getBasicBlock_Guard();
+		EReference BASIC_BLOCK__GUARDS = eINSTANCE.getBasicBlock_Guards();
 
 								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl <em>Scheduling Block</em>}' class.
@@ -477,6 +497,14 @@ public interface ScgbbPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK = eINSTANCE.getSchedulingBlock_SynchronizerBlock();
+
+								/**
+		 * The meta object literal for the '<em><b>Go Block</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SCHEDULING_BLOCK__GO_BLOCK = eINSTANCE.getSchedulingBlock_GoBlock();
 
     }
 

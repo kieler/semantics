@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getSchedulingBlocks <em>Scheduling Blocks</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuard <em>Guard</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuards <em>Guards</em>}</li>
  * </ul>
  * </p>
  *
@@ -52,29 +52,19 @@ public interface BasicBlock extends EObject {
     EList<SchedulingBlock> getSchedulingBlocks();
 
     /**
-	 * Returns the value of the '<em><b>Guard</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Guards</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Guard</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Guards</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Guard</em>' containment reference.
-	 * @see #setGuard(ValuedObject)
-	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_Guard()
+	 * @return the value of the '<em>Guards</em>' containment reference list.
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_Guards()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	ValuedObject getGuard();
-
-				/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuard <em>Guard</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Guard</em>' containment reference.
-	 * @see #getGuard()
-	 * @generated
-	 */
-	void setGuard(ValuedObject value);
+	EList<ValuedObject> getGuards();
 
 } // BasicBlock

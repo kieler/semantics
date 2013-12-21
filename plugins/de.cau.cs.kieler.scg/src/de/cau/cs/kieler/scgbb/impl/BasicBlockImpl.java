@@ -18,12 +18,10 @@ import de.cau.cs.kieler.scgbb.BasicBlock;
 import de.cau.cs.kieler.scgbb.ScgbbPackage;
 import de.cau.cs.kieler.scgbb.SchedulingBlock;
 import java.util.Collection;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -36,7 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getSchedulingBlocks <em>Scheduling Blocks</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getGuard <em>Guard</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getGuards <em>Guards</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,14 +52,14 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
     protected EList<SchedulingBlock> schedulingBlocks;
 
     /**
-	 * The cached value of the '{@link #getGuard() <em>Guard</em>}' containment reference.
+	 * The cached value of the '{@link #getGuards() <em>Guards</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getGuard()
+	 * @see #getGuards()
 	 * @generated
 	 * @ordered
 	 */
-	protected ValuedObject guard;
+	protected EList<ValuedObject> guards;
 
 				/**
 	 * <!-- begin-user-doc -->
@@ -99,42 +97,11 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ValuedObject getGuard() {
-		return guard;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetGuard(ValuedObject newGuard, NotificationChain msgs) {
-		ValuedObject oldGuard = guard;
-		guard = newGuard;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__GUARD, oldGuard, newGuard);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+	public EList<ValuedObject> getGuards() {
+		if (guards == null) {
+			guards = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, ScgbbPackage.BASIC_BLOCK__GUARDS);
 		}
-		return msgs;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setGuard(ValuedObject newGuard) {
-		if (newGuard != guard) {
-			NotificationChain msgs = null;
-			if (guard != null)
-				msgs = ((InternalEObject)guard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgbbPackage.BASIC_BLOCK__GUARD, null, msgs);
-			if (newGuard != null)
-				msgs = ((InternalEObject)newGuard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgbbPackage.BASIC_BLOCK__GUARD, null, msgs);
-			msgs = basicSetGuard(newGuard, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__GUARD, newGuard, newGuard));
+		return guards;
 	}
 
 				/**
@@ -147,8 +114,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 		switch (featureID) {
 			case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
 				return ((InternalEList<?>)getSchedulingBlocks()).basicRemove(otherEnd, msgs);
-			case ScgbbPackage.BASIC_BLOCK__GUARD:
-				return basicSetGuard(null, msgs);
+			case ScgbbPackage.BASIC_BLOCK__GUARDS:
+				return ((InternalEList<?>)getGuards()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -163,8 +130,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 		switch (featureID) {
 			case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
 				return getSchedulingBlocks();
-			case ScgbbPackage.BASIC_BLOCK__GUARD:
-				return getGuard();
+			case ScgbbPackage.BASIC_BLOCK__GUARDS:
+				return getGuards();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -182,8 +149,9 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				getSchedulingBlocks().clear();
 				getSchedulingBlocks().addAll((Collection<? extends SchedulingBlock>)newValue);
 				return;
-			case ScgbbPackage.BASIC_BLOCK__GUARD:
-				setGuard((ValuedObject)newValue);
+			case ScgbbPackage.BASIC_BLOCK__GUARDS:
+				getGuards().clear();
+				getGuards().addAll((Collection<? extends ValuedObject>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -200,8 +168,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 			case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
 				getSchedulingBlocks().clear();
 				return;
-			case ScgbbPackage.BASIC_BLOCK__GUARD:
-				setGuard((ValuedObject)null);
+			case ScgbbPackage.BASIC_BLOCK__GUARDS:
+				getGuards().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -217,8 +185,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 		switch (featureID) {
 			case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
 				return schedulingBlocks != null && !schedulingBlocks.isEmpty();
-			case ScgbbPackage.BASIC_BLOCK__GUARD:
-				return guard != null;
+			case ScgbbPackage.BASIC_BLOCK__GUARDS:
+				return guards != null && !guards.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

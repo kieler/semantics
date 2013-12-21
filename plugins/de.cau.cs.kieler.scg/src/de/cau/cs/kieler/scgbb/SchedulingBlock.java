@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.scgbb.SchedulingBlock#getGuard <em>Guard</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isSurfaceBlock <em>Surface Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isSynchronizerBlock <em>Synchronizer Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isGoBlock <em>Go Block</em>}</li>
  * </ul>
  * </p>
  *
@@ -86,7 +87,7 @@ public interface SchedulingBlock extends EObject {
 	 * @return the value of the '<em>Guard</em>' reference.
 	 * @see #setGuard(ValuedObject)
 	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getSchedulingBlock_Guard()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	ValuedObject getGuard();
@@ -152,5 +153,31 @@ public interface SchedulingBlock extends EObject {
 	 * @generated
 	 */
 	void setSynchronizerBlock(boolean value);
+
+				/**
+	 * Returns the value of the '<em><b>Go Block</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Go Block</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Go Block</em>' attribute.
+	 * @see #setGoBlock(boolean)
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getSchedulingBlock_GoBlock()
+	 * @model
+	 * @generated
+	 */
+	boolean isGoBlock();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isGoBlock <em>Go Block</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Go Block</em>' attribute.
+	 * @see #isGoBlock()
+	 * @generated
+	 */
+	void setGoBlock(boolean value);
 
 } // SchedulingBlock

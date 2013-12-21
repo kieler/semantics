@@ -78,6 +78,7 @@ public class SchedulingBlockItemProvider
 			addGuardPropertyDescriptor(object);
 			addSurfaceBlockPropertyDescriptor(object);
 			addSynchronizerBlockPropertyDescriptor(object);
+			addGoBlockPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -193,6 +194,28 @@ public class SchedulingBlockItemProvider
 	}
 
 				/**
+	 * This adds a property descriptor for the Go Block feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addGoBlockPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SchedulingBlock_goBlock_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SchedulingBlock_goBlock_feature", "_UI_SchedulingBlock_type"),
+				 ScgbbPackage.Literals.SCHEDULING_BLOCK__GO_BLOCK,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+				/**
 	 * This returns SchedulingBlock.gif.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -229,6 +252,7 @@ public class SchedulingBlockItemProvider
 		switch (notification.getFeatureID(SchedulingBlock.class)) {
 			case ScgbbPackage.SCHEDULING_BLOCK__SURFACE_BLOCK:
 			case ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK:
+			case ScgbbPackage.SCHEDULING_BLOCK__GO_BLOCK:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

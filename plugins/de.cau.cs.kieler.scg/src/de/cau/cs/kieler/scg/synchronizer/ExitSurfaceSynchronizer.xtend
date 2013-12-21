@@ -67,7 +67,7 @@ class ExitSurfaceSynchronizer extends AbstractSCGSynchronizer {
             val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
             
 			val empty = KExpressionsFactory::eINSTANCE.createValuedObject
-        	empty.name = exitBB.guard.name + 'empty' + exitNodeCount
+        	empty.name = exitBB.guards.head.name + 'empty' + exitNodeCount
       		empty.type = ValueType::BOOL    
       		data.emptyGuards.add(empty)        
 

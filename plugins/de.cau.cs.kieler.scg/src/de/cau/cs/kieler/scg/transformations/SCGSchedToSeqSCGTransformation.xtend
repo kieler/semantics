@@ -54,7 +54,7 @@ class SCGSchedToSeqSCGTransformation {
         
         scgSched.copyDeclarations(scg)
         scgSched.basicBlocks.forEach[
-        	it.guard => [
+        	it.guards.forEach[
         		val newGuard = it.copy
         		it.addToValuedObjectMapping(newGuard)
         		scg.valuedObjects.add(newGuard)
