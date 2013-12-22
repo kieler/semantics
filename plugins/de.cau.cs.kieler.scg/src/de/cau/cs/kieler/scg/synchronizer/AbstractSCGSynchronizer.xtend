@@ -13,9 +13,7 @@
  */
 package de.cau.cs.kieler.scg.synchronizer
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.Join
 
 /** 
  * AbstractSCGSynchronizer
@@ -25,13 +23,10 @@ import de.cau.cs.kieler.scg.extensions.SCGExtensions
  * @kieler.rating 2013-11-28 proposed yellow
  */
 abstract class AbstractSCGSynchronizer {
-
-    @Inject
-    extension SCGExtensions
+   
+    protected abstract def SynchronizerData build(Join join);
     
-    protected abstract def SynchronizerData build(Fork fork);
-    
-    public def SynchronizerData synchronize(Fork fork) {
-        build(fork)
+    public def SynchronizerData synchronize(Join join) {
+        build(join)
     }    
 }

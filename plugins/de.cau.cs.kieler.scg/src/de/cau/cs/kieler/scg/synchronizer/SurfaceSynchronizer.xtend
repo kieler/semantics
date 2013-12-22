@@ -26,6 +26,7 @@ import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.scg.analyser.JoinFeedbackAnalyser
+import de.cau.cs.kieler.scg.Join
 
 /** 
  * ExitSCGSynchronizer
@@ -43,16 +44,14 @@ class SurfaceSynchronizer extends AbstractSCGSynchronizer {
      @Inject
     extension SCGCopyExtensions
   
-    override protected SynchronizerData build(Fork fork) {
+    override protected SynchronizerData build(Join join) {
         var data = new SynchronizerData()
-
-		val JoinFeedbackAnalyser feedbackAnalyser = Guice.createInjector().getInstance(typeof(JoinFeedbackAnalyser))
 		
-        val scg = fork.graph
+        val scg = join.graph
 //		val feedbackResult = feedbackAnalyser.analyse(scg, fork)
 		
         val exitNodes = <Exit> newLinkedList
-        fork.getAllNext.forEach[exitNodes.add((it.target as Entry).exit)]
+        join.fork.getAllNext.forEach[exitNodes.add((it.target as Entry).exit)]
         
         var guardExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
         guardExpression.setOperator(OperatorType::AND)
