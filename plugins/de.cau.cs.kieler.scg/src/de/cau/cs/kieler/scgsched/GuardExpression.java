@@ -90,26 +90,26 @@ public interface GuardExpression extends EObject {
 	void setExpression(Expression value);
 
 	/**
-	 * Returns the value of the '<em><b>Empty Expressions</b></em>' reference.
+	 * Returns the value of the '<em><b>Empty Expressions</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Empty Expressions</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Empty Expressions</em>' reference.
+	 * @return the value of the '<em>Empty Expressions</em>' containment reference.
 	 * @see #setEmptyExpressions(EmptyExpressions)
 	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getGuardExpression_EmptyExpressions()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EmptyExpressions getEmptyExpressions();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.GuardExpression#getEmptyExpressions <em>Empty Expressions</em>}' reference.
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.GuardExpression#getEmptyExpressions <em>Empty Expressions</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Empty Expressions</em>' reference.
+	 * @param value the new value of the '<em>Empty Expressions</em>' containment reference.
 	 * @see #getEmptyExpressions()
 	 * @generated
 	 */

@@ -15,23 +15,15 @@ package de.cau.cs.kieler.scgsched.provider;
 
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
-
 import de.cau.cs.kieler.scg.provider.ScgschedEditPlugin;
-
 import de.cau.cs.kieler.scgsched.EmptyExpressions;
 import de.cau.cs.kieler.scgsched.ScgschedPackage;
-
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -76,31 +68,8 @@ public class EmptyExpressionsItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addExpressionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Expression feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addExpressionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_EmptyExpressions_expression_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_EmptyExpressions_expression_feature", "_UI_EmptyExpressions_type"),
-				 ScgschedPackage.Literals.EMPTY_EXPRESSIONS__EXPRESSION,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
 	}
 
 	/**
@@ -116,6 +85,7 @@ public class EmptyExpressionsItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__NAME);
+			childrenFeatures.add(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__EXPRESSION);
 		}
 		return childrenFeatures;
 	}
@@ -168,6 +138,7 @@ public class EmptyExpressionsItemProvider
 
 		switch (notification.getFeatureID(EmptyExpressions.class)) {
 			case ScgschedPackage.EMPTY_EXPRESSIONS__NAME:
+			case ScgschedPackage.EMPTY_EXPRESSIONS__EXPRESSION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -189,6 +160,51 @@ public class EmptyExpressionsItemProvider
 			(createChildParameter
 				(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__NAME,
 				 KExpressionsFactory.eINSTANCE.createValuedObject()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createIntValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createFloatValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createBoolValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__EXPRESSION,
+				 KExpressionsFactory.eINSTANCE.createDoubleValue()));
 	}
 
 	/**

@@ -66,7 +66,7 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 	protected Expression expression;
 
 	/**
-	 * The cached value of the '{@link #getEmptyExpressions() <em>Empty Expressions</em>}' reference.
+	 * The cached value of the '{@link #getEmptyExpressions() <em>Empty Expressions</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getEmptyExpressions()
@@ -181,14 +181,6 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 	 * @generated
 	 */
 	public EmptyExpressions getEmptyExpressions() {
-		if (emptyExpressions != null && emptyExpressions.eIsProxy()) {
-			InternalEObject oldEmptyExpressions = (InternalEObject)emptyExpressions;
-			emptyExpressions = (EmptyExpressions)eResolveProxy(oldEmptyExpressions);
-			if (emptyExpressions != oldEmptyExpressions) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS, oldEmptyExpressions, emptyExpressions));
-			}
-		}
 		return emptyExpressions;
 	}
 
@@ -197,8 +189,14 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EmptyExpressions basicGetEmptyExpressions() {
-		return emptyExpressions;
+	public NotificationChain basicSetEmptyExpressions(EmptyExpressions newEmptyExpressions, NotificationChain msgs) {
+		EmptyExpressions oldEmptyExpressions = emptyExpressions;
+		emptyExpressions = newEmptyExpressions;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS, oldEmptyExpressions, newEmptyExpressions);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
 	/**
@@ -207,10 +205,17 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 	 * @generated
 	 */
 	public void setEmptyExpressions(EmptyExpressions newEmptyExpressions) {
-		EmptyExpressions oldEmptyExpressions = emptyExpressions;
-		emptyExpressions = newEmptyExpressions;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS, oldEmptyExpressions, emptyExpressions));
+		if (newEmptyExpressions != emptyExpressions) {
+			NotificationChain msgs = null;
+			if (emptyExpressions != null)
+				msgs = ((InternalEObject)emptyExpressions).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS, null, msgs);
+			if (newEmptyExpressions != null)
+				msgs = ((InternalEObject)newEmptyExpressions).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS, null, msgs);
+			msgs = basicSetEmptyExpressions(newEmptyExpressions, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS, newEmptyExpressions, newEmptyExpressions));
 	}
 
 	/**
@@ -223,6 +228,8 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 		switch (featureID) {
 			case ScgschedPackage.GUARD_EXPRESSION__EXPRESSION:
 				return basicSetExpression(null, msgs);
+			case ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS:
+				return basicSetEmptyExpressions(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -241,8 +248,7 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 			case ScgschedPackage.GUARD_EXPRESSION__EXPRESSION:
 				return getExpression();
 			case ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS:
-				if (resolve) return getEmptyExpressions();
-				return basicGetEmptyExpressions();
+				return getEmptyExpressions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}

@@ -19,6 +19,7 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.scg.provider.ScgschedEditPlugin;
 
 import de.cau.cs.kieler.scgsched.GuardExpression;
+import de.cau.cs.kieler.scgsched.ScgschedFactory;
 import de.cau.cs.kieler.scgsched.ScgschedPackage;
 
 import java.util.Collection;
@@ -77,7 +78,6 @@ public class GuardExpressionItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
-			addEmptyExpressionsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -105,28 +105,6 @@ public class GuardExpressionItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Empty Expressions feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addEmptyExpressionsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_GuardExpression_emptyExpressions_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_GuardExpression_emptyExpressions_feature", "_UI_GuardExpression_type"),
-				 ScgschedPackage.Literals.GUARD_EXPRESSION__EMPTY_EXPRESSIONS,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -139,6 +117,7 @@ public class GuardExpressionItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ScgschedPackage.Literals.GUARD_EXPRESSION__EXPRESSION);
+			childrenFeatures.add(ScgschedPackage.Literals.GUARD_EXPRESSION__EMPTY_EXPRESSIONS);
 		}
 		return childrenFeatures;
 	}
@@ -191,6 +170,7 @@ public class GuardExpressionItemProvider
 
 		switch (notification.getFeatureID(GuardExpression.class)) {
 			case ScgschedPackage.GUARD_EXPRESSION__EXPRESSION:
+			case ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -252,6 +232,11 @@ public class GuardExpressionItemProvider
 			(createChildParameter
 				(ScgschedPackage.Literals.GUARD_EXPRESSION__EXPRESSION,
 				 KExpressionsFactory.eINSTANCE.createDoubleValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgschedPackage.Literals.GUARD_EXPRESSION__EMPTY_EXPRESSIONS,
+				 ScgschedFactory.eINSTANCE.createEmptyExpressions()));
 	}
 
 	/**

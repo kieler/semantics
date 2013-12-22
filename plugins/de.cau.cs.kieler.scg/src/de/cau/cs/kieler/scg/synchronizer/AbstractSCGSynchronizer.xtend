@@ -14,13 +14,8 @@
 package de.cau.cs.kieler.scg.synchronizer
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scgbb.BasicBlock
-import java.util.ArrayList
-import java.util.List
-import de.cau.cs.kieler.core.util.Pair
 
 /** 
  * AbstractSCGSynchronizer

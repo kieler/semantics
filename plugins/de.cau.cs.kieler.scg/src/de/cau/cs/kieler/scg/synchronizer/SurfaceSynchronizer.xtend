@@ -35,7 +35,7 @@ import de.cau.cs.kieler.scg.analyser.JoinFeedbackAnalyser
  * @kieler.rating 2013-11-28 proposed yellow
  */
  // The Exit Synchronizer builds the synchronizer in relation to the exit nodes in the different threads.
-class ExitSurfaceSynchronizer extends AbstractSCGSynchronizer {
+class SurfaceSynchronizer extends AbstractSCGSynchronizer {
  
      @Inject
     extension SCGExtensions
@@ -60,36 +60,36 @@ class ExitSurfaceSynchronizer extends AbstractSCGSynchronizer {
 //        data.guardExpression = (guardExpression)
         
         var exitNodeCount = 0
-        for(exit:exitNodes){
-        	exitNodeCount = exitNodeCount + 1
-            val exitBB = exit.basicBlock
-            data.predecessors.add(exitBB)
-            
-            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
-            
-			val empty = KExpressionsFactory::eINSTANCE.createValuedObject
-        	empty.name = exitBB.guards.head.name + 'empty' + exitNodeCount
-      		empty.type = ValueType::BOOL    
-      		data.emptyGuards.add(empty)        
-
-            val emptyExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            emptyExpression.setOperator(OperatorType::NOT)
-            val emptySubExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            emptySubExpression.setOperator(OperatorType::OR)
-            threadSurfaces.forEach[emptySubExpression.subExpressions.add(it.schedulingBlock.guard.reference)]
-            emptyExpression.subExpressions.add(emptySubExpression)
-            data.emptyExpressions.add(emptyExpression)
-            
-            val threadExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            threadExpression.setOperator(OperatorType::OR)
-            threadExpression.subExpressions.add(exit.schedulingBlock.guard.reference)
-            threadExpression.subExpressions.add(empty.reference)
-            
-            guardExpression.subExpressions.add(threadExpression)
-        }
-        
-        val gExp = (guardExpression as OperatorExpression).splitOperatorExpression
-        data.guardExpression = gExp
+//        for(exit:exitNodes){
+//        	exitNodeCount = exitNodeCount + 1
+//            val exitBB = exit.basicBlock
+//            data.predecessors.add(exitBB)
+//            
+//            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
+//            
+//			val empty = KExpressionsFactory::eINSTANCE.createValuedObject
+//        	empty.name = exitBB.guards.head.name + 'empty' + exitNodeCount
+//      		empty.type = ValueType::BOOL    
+//      		data.emptyGuards.add(empty)        
+//
+//            val emptyExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+//            emptyExpression.setOperator(OperatorType::NOT)
+//            val emptySubExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+//            emptySubExpression.setOperator(OperatorType::OR)
+//            threadSurfaces.forEach[emptySubExpression.subExpressions.add(it.schedulingBlock.guard.reference)]
+//            emptyExpression.subExpressions.add(emptySubExpression)
+//            data.emptyExpressions.add(emptyExpression)
+//            
+//            val threadExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+//            threadExpression.setOperator(OperatorType::OR)
+//            threadExpression.subExpressions.add(exit.schedulingBlock.guard.reference)
+//            threadExpression.subExpressions.add(empty.reference)
+//            
+//            guardExpression.subExpressions.add(threadExpression)
+//        }
+//        
+//        val gExp = (guardExpression as OperatorExpression).splitOperatorExpression
+//        data.guardExpression = gExp
         
         data 
     }

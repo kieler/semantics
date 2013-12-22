@@ -180,7 +180,7 @@ public interface ScgschedPackage extends EPackage {
 	int EMPTY_EXPRESSIONS__NAME = 0;
 
 				/**
-	 * The feature id for the '<em><b>Expression</b></em>' reference.
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -235,7 +235,7 @@ public interface ScgschedPackage extends EPackage {
 	int GUARD_EXPRESSION__EXPRESSION = 1;
 
 				/**
-	 * The feature id for the '<em><b>Empty Expressions</b></em>' reference.
+	 * The feature id for the '<em><b>Empty Expressions</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -440,10 +440,10 @@ public interface ScgschedPackage extends EPackage {
 	EReference getEmptyExpressions_Name();
 
 				/**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getExpression <em>Expression</em>}'.
+	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getExpression <em>Expression</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Expression</em>'.
+	 * @return the meta object for the containment reference '<em>Expression</em>'.
 	 * @see de.cau.cs.kieler.scgsched.EmptyExpressions#getExpression()
 	 * @see #getEmptyExpressions()
 	 * @generated
@@ -483,10 +483,10 @@ public interface ScgschedPackage extends EPackage {
 	EReference getGuardExpression_Expression();
 
 				/**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgsched.GuardExpression#getEmptyExpressions <em>Empty Expressions</em>}'.
+	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgsched.GuardExpression#getEmptyExpressions <em>Empty Expressions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Empty Expressions</em>'.
+	 * @return the meta object for the containment reference '<em>Empty Expressions</em>'.
 	 * @see de.cau.cs.kieler.scgsched.GuardExpression#getEmptyExpressions()
 	 * @see #getGuardExpression()
 	 * @generated
@@ -629,7 +629,7 @@ public interface ScgschedPackage extends EPackage {
 		EReference EMPTY_EXPRESSIONS__NAME = eINSTANCE.getEmptyExpressions_Name();
 
 								/**
-		 * The meta object literal for the '<em><b>Expression</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -663,7 +663,7 @@ public interface ScgschedPackage extends EPackage {
 		EReference GUARD_EXPRESSION__EXPRESSION = eINSTANCE.getGuardExpression_Expression();
 
 								/**
-		 * The meta object literal for the '<em><b>Empty Expressions</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Empty Expressions</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
