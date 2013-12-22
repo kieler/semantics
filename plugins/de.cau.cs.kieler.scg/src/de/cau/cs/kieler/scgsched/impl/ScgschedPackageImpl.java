@@ -202,7 +202,7 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getEmptyExpressions_Name() {
+	public EReference getEmptyExpressions_ValuedObject() {
 		return (EReference)emptyExpressionsEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -229,7 +229,7 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getGuardExpression_Name() {
+	public EReference getGuardExpression_ValuedObject() {
 		return (EReference)guardExpressionEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -331,11 +331,11 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 		createEReference(scGraphSchedEClass, SC_GRAPH_SCHED__GUARDS);
 
 		emptyExpressionsEClass = createEClass(EMPTY_EXPRESSIONS);
-		createEReference(emptyExpressionsEClass, EMPTY_EXPRESSIONS__NAME);
+		createEReference(emptyExpressionsEClass, EMPTY_EXPRESSIONS__VALUED_OBJECT);
 		createEReference(emptyExpressionsEClass, EMPTY_EXPRESSIONS__EXPRESSION);
 
 		guardExpressionEClass = createEClass(GUARD_EXPRESSION);
-		createEReference(guardExpressionEClass, GUARD_EXPRESSION__NAME);
+		createEReference(guardExpressionEClass, GUARD_EXPRESSION__VALUED_OBJECT);
 		createEReference(guardExpressionEClass, GUARD_EXPRESSION__EXPRESSION);
 		createEReference(guardExpressionEClass, GUARD_EXPRESSION__EMPTY_EXPRESSIONS);
 
@@ -392,13 +392,13 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 		initEReference(getSCGraphSched_Guards(), this.getGuardExpression(), null, "guards", null, 0, 1, SCGraphSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(emptyExpressionsEClass, EmptyExpressions.class, "EmptyExpressions", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getEmptyExpressions_Name(), theKExpressionsPackage.getValuedObject(), null, "name", null, 1, 1, EmptyExpressions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getEmptyExpressions_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, EmptyExpressions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getEmptyExpressions_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 1, 1, EmptyExpressions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(guardExpressionEClass, GuardExpression.class, "GuardExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getGuardExpression_Name(), theKExpressionsPackage.getValuedObject(), null, "name", null, 1, 1, GuardExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGuardExpression_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, GuardExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getGuardExpression_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 1, 1, GuardExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getGuardExpression_EmptyExpressions(), this.getEmptyExpressions(), null, "emptyExpressions", null, 0, 1, GuardExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGuardExpression_EmptyExpressions(), this.getEmptyExpressions(), null, "emptyExpressions", null, 0, -1, GuardExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(scheduleEClass, Schedule.class, "Schedule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSchedule_SchedulingBlocks(), theScgbbPackage.getSchedulingBlock(), null, "schedulingBlocks", null, 0, -1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

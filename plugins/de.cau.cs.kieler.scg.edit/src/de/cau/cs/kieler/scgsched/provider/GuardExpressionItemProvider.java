@@ -77,25 +77,25 @@ public class GuardExpressionItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
+			addValuedObjectPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature.
+	 * This adds a property descriptor for the Valued Object feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(Object object) {
+	protected void addValuedObjectPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_GuardExpression_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_GuardExpression_name_feature", "_UI_GuardExpression_type"),
-				 ScgschedPackage.Literals.GUARD_EXPRESSION__NAME,
+				 getString("_UI_GuardExpression_valuedObject_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_GuardExpression_valuedObject_feature", "_UI_GuardExpression_type"),
+				 ScgschedPackage.Literals.GUARD_EXPRESSION__VALUED_OBJECT,
 				 true,
 				 false,
 				 true,

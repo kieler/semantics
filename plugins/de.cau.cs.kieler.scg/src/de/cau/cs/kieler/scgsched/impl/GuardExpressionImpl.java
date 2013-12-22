@@ -20,14 +20,18 @@ import de.cau.cs.kieler.scgsched.EmptyExpressions;
 import de.cau.cs.kieler.scgsched.GuardExpression;
 import de.cau.cs.kieler.scgsched.ScgschedPackage;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,7 +40,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scgsched.impl.GuardExpressionImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.impl.GuardExpressionImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.impl.GuardExpressionImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.impl.GuardExpressionImpl#getEmptyExpressions <em>Empty Expressions</em>}</li>
  * </ul>
@@ -46,14 +50,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements GuardExpression {
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' reference.
+	 * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getValuedObject()
 	 * @generated
 	 * @ordered
 	 */
-	protected ValuedObject name;
+	protected ValuedObject valuedObject;
 
 	/**
 	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -66,14 +70,14 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 	protected Expression expression;
 
 	/**
-	 * The cached value of the '{@link #getEmptyExpressions() <em>Empty Expressions</em>}' containment reference.
+	 * The cached value of the '{@link #getEmptyExpressions() <em>Empty Expressions</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getEmptyExpressions()
 	 * @generated
 	 * @ordered
 	 */
-	protected EmptyExpressions emptyExpressions;
+	protected EList<EmptyExpressions> emptyExpressions;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -99,16 +103,16 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ValuedObject getName() {
-		if (name != null && name.eIsProxy()) {
-			InternalEObject oldName = (InternalEObject)name;
-			name = (ValuedObject)eResolveProxy(oldName);
-			if (name != oldName) {
+	public ValuedObject getValuedObject() {
+		if (valuedObject != null && valuedObject.eIsProxy()) {
+			InternalEObject oldValuedObject = (InternalEObject)valuedObject;
+			valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
+			if (valuedObject != oldValuedObject) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgschedPackage.GUARD_EXPRESSION__NAME, oldName, name));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgschedPackage.GUARD_EXPRESSION__VALUED_OBJECT, oldValuedObject, valuedObject));
 			}
 		}
-		return name;
+		return valuedObject;
 	}
 
 	/**
@@ -116,8 +120,8 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ValuedObject basicGetName() {
-		return name;
+	public ValuedObject basicGetValuedObject() {
+		return valuedObject;
 	}
 
 	/**
@@ -125,11 +129,11 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setName(ValuedObject newName) {
-		ValuedObject oldName = name;
-		name = newName;
+	public void setValuedObject(ValuedObject newValuedObject) {
+		ValuedObject oldValuedObject = valuedObject;
+		valuedObject = newValuedObject;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.GUARD_EXPRESSION__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.GUARD_EXPRESSION__VALUED_OBJECT, oldValuedObject, valuedObject));
 	}
 
 	/**
@@ -180,42 +184,11 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EmptyExpressions getEmptyExpressions() {
+	public EList<EmptyExpressions> getEmptyExpressions() {
+		if (emptyExpressions == null) {
+			emptyExpressions = new EObjectContainmentEList<EmptyExpressions>(EmptyExpressions.class, this, ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS);
+		}
 		return emptyExpressions;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetEmptyExpressions(EmptyExpressions newEmptyExpressions, NotificationChain msgs) {
-		EmptyExpressions oldEmptyExpressions = emptyExpressions;
-		emptyExpressions = newEmptyExpressions;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS, oldEmptyExpressions, newEmptyExpressions);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setEmptyExpressions(EmptyExpressions newEmptyExpressions) {
-		if (newEmptyExpressions != emptyExpressions) {
-			NotificationChain msgs = null;
-			if (emptyExpressions != null)
-				msgs = ((InternalEObject)emptyExpressions).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS, null, msgs);
-			if (newEmptyExpressions != null)
-				msgs = ((InternalEObject)newEmptyExpressions).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS, null, msgs);
-			msgs = basicSetEmptyExpressions(newEmptyExpressions, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS, newEmptyExpressions, newEmptyExpressions));
 	}
 
 	/**
@@ -229,7 +202,7 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 			case ScgschedPackage.GUARD_EXPRESSION__EXPRESSION:
 				return basicSetExpression(null, msgs);
 			case ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS:
-				return basicSetEmptyExpressions(null, msgs);
+				return ((InternalEList<?>)getEmptyExpressions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -242,9 +215,9 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ScgschedPackage.GUARD_EXPRESSION__NAME:
-				if (resolve) return getName();
-				return basicGetName();
+			case ScgschedPackage.GUARD_EXPRESSION__VALUED_OBJECT:
+				if (resolve) return getValuedObject();
+				return basicGetValuedObject();
 			case ScgschedPackage.GUARD_EXPRESSION__EXPRESSION:
 				return getExpression();
 			case ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS:
@@ -258,17 +231,19 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ScgschedPackage.GUARD_EXPRESSION__NAME:
-				setName((ValuedObject)newValue);
+			case ScgschedPackage.GUARD_EXPRESSION__VALUED_OBJECT:
+				setValuedObject((ValuedObject)newValue);
 				return;
 			case ScgschedPackage.GUARD_EXPRESSION__EXPRESSION:
 				setExpression((Expression)newValue);
 				return;
 			case ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS:
-				setEmptyExpressions((EmptyExpressions)newValue);
+				getEmptyExpressions().clear();
+				getEmptyExpressions().addAll((Collection<? extends EmptyExpressions>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -282,14 +257,14 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ScgschedPackage.GUARD_EXPRESSION__NAME:
-				setName((ValuedObject)null);
+			case ScgschedPackage.GUARD_EXPRESSION__VALUED_OBJECT:
+				setValuedObject((ValuedObject)null);
 				return;
 			case ScgschedPackage.GUARD_EXPRESSION__EXPRESSION:
 				setExpression((Expression)null);
 				return;
 			case ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS:
-				setEmptyExpressions((EmptyExpressions)null);
+				getEmptyExpressions().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -303,12 +278,12 @@ public class GuardExpressionImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ScgschedPackage.GUARD_EXPRESSION__NAME:
-				return name != null;
+			case ScgschedPackage.GUARD_EXPRESSION__VALUED_OBJECT:
+				return valuedObject != null;
 			case ScgschedPackage.GUARD_EXPRESSION__EXPRESSION:
 				return expression != null;
 			case ScgschedPackage.GUARD_EXPRESSION__EMPTY_EXPRESSIONS:
-				return emptyExpressions != null;
+				return emptyExpressions != null && !emptyExpressions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

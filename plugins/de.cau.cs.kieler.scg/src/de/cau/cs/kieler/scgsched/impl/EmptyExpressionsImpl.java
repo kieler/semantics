@@ -35,7 +35,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scgsched.impl.EmptyExpressionsImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.impl.EmptyExpressionsImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.impl.EmptyExpressionsImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
@@ -44,14 +44,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implements EmptyExpressions {
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' containment reference.
+	 * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getValuedObject()
 	 * @generated
 	 * @ordered
 	 */
-	protected ValuedObject name;
+	protected ValuedObject valuedObject;
 
 	/**
 	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -87,8 +87,8 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ValuedObject getName() {
-		return name;
+	public ValuedObject getValuedObject() {
+		return valuedObject;
 	}
 
 	/**
@@ -96,11 +96,11 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetName(ValuedObject newName, NotificationChain msgs) {
-		ValuedObject oldName = name;
-		name = newName;
+	public NotificationChain basicSetValuedObject(ValuedObject newValuedObject, NotificationChain msgs) {
+		ValuedObject oldValuedObject = valuedObject;
+		valuedObject = newValuedObject;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgschedPackage.EMPTY_EXPRESSIONS__NAME, oldName, newName);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT, oldValuedObject, newValuedObject);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -111,18 +111,18 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setName(ValuedObject newName) {
-		if (newName != name) {
+	public void setValuedObject(ValuedObject newValuedObject) {
+		if (newValuedObject != valuedObject) {
 			NotificationChain msgs = null;
-			if (name != null)
-				msgs = ((InternalEObject)name).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.EMPTY_EXPRESSIONS__NAME, null, msgs);
-			if (newName != null)
-				msgs = ((InternalEObject)newName).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.EMPTY_EXPRESSIONS__NAME, null, msgs);
-			msgs = basicSetName(newName, msgs);
+			if (valuedObject != null)
+				msgs = ((InternalEObject)valuedObject).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT, null, msgs);
+			if (newValuedObject != null)
+				msgs = ((InternalEObject)newValuedObject).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT, null, msgs);
+			msgs = basicSetValuedObject(newValuedObject, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.EMPTY_EXPRESSIONS__NAME, newName, newName));
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT, newValuedObject, newValuedObject));
 	}
 
 	/**
@@ -176,8 +176,8 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ScgschedPackage.EMPTY_EXPRESSIONS__NAME:
-				return basicSetName(null, msgs);
+			case ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT:
+				return basicSetValuedObject(null, msgs);
 			case ScgschedPackage.EMPTY_EXPRESSIONS__EXPRESSION:
 				return basicSetExpression(null, msgs);
 		}
@@ -192,8 +192,8 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ScgschedPackage.EMPTY_EXPRESSIONS__NAME:
-				return getName();
+			case ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT:
+				return getValuedObject();
 			case ScgschedPackage.EMPTY_EXPRESSIONS__EXPRESSION:
 				return getExpression();
 		}
@@ -208,8 +208,8 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ScgschedPackage.EMPTY_EXPRESSIONS__NAME:
-				setName((ValuedObject)newValue);
+			case ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT:
+				setValuedObject((ValuedObject)newValue);
 				return;
 			case ScgschedPackage.EMPTY_EXPRESSIONS__EXPRESSION:
 				setExpression((Expression)newValue);
@@ -226,8 +226,8 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ScgschedPackage.EMPTY_EXPRESSIONS__NAME:
-				setName((ValuedObject)null);
+			case ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT:
+				setValuedObject((ValuedObject)null);
 				return;
 			case ScgschedPackage.EMPTY_EXPRESSIONS__EXPRESSION:
 				setExpression((Expression)null);
@@ -244,8 +244,8 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ScgschedPackage.EMPTY_EXPRESSIONS__NAME:
-				return name != null;
+			case ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT:
+				return valuedObject != null;
 			case ScgschedPackage.EMPTY_EXPRESSIONS__EXPRESSION:
 				return expression != null;
 		}

@@ -84,7 +84,7 @@ public class EmptyExpressionsItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__NAME);
+			childrenFeatures.add(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__VALUED_OBJECT);
 			childrenFeatures.add(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__EXPRESSION);
 		}
 		return childrenFeatures;
@@ -137,7 +137,7 @@ public class EmptyExpressionsItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(EmptyExpressions.class)) {
-			case ScgschedPackage.EMPTY_EXPRESSIONS__NAME:
+			case ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT:
 			case ScgschedPackage.EMPTY_EXPRESSIONS__EXPRESSION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
@@ -158,7 +158,7 @@ public class EmptyExpressionsItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__NAME,
+				(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__VALUED_OBJECT,
 				 KExpressionsFactory.eINSTANCE.createValuedObject()));
 
 		newChildDescriptors.add

@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scgsched;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -26,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scgsched.GuardExpression#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.GuardExpression#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.GuardExpression#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.GuardExpression#getEmptyExpressions <em>Empty Expressions</em>}</li>
  * </ul>
@@ -38,30 +39,30 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface GuardExpression extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Name</b></em>' reference.
+	 * Returns the value of the '<em><b>Valued Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Name</em>' reference isn't clear,
+	 * If the meaning of the '<em>Valued Object</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' reference.
-	 * @see #setName(ValuedObject)
-	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getGuardExpression_Name()
+	 * @return the value of the '<em>Valued Object</em>' reference.
+	 * @see #setValuedObject(ValuedObject)
+	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getGuardExpression_ValuedObject()
 	 * @model required="true"
 	 * @generated
 	 */
-	ValuedObject getName();
+	ValuedObject getValuedObject();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.GuardExpression#getName <em>Name</em>}' reference.
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.GuardExpression#getValuedObject <em>Valued Object</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' reference.
-	 * @see #getName()
+	 * @param value the new value of the '<em>Valued Object</em>' reference.
+	 * @see #getValuedObject()
 	 * @generated
 	 */
-	void setName(ValuedObject value);
+	void setValuedObject(ValuedObject value);
 
 	/**
 	 * Returns the value of the '<em><b>Expression</b></em>' containment reference.
@@ -90,29 +91,19 @@ public interface GuardExpression extends EObject {
 	void setExpression(Expression value);
 
 	/**
-	 * Returns the value of the '<em><b>Empty Expressions</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Empty Expressions</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scgsched.EmptyExpressions}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Empty Expressions</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Empty Expressions</em>' containment reference.
-	 * @see #setEmptyExpressions(EmptyExpressions)
+	 * @return the value of the '<em>Empty Expressions</em>' containment reference list.
 	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getGuardExpression_EmptyExpressions()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EmptyExpressions getEmptyExpressions();
-
-	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.GuardExpression#getEmptyExpressions <em>Empty Expressions</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Empty Expressions</em>' containment reference.
-	 * @see #getEmptyExpressions()
-	 * @generated
-	 */
-	void setEmptyExpressions(EmptyExpressions value);
+	EList<EmptyExpressions> getEmptyExpressions();
 
 } // GuardExpression

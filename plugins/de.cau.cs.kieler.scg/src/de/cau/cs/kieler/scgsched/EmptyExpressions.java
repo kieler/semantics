@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
@@ -37,30 +37,30 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface EmptyExpressions extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Name</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Valued Object</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Name</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Valued Object</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' containment reference.
-	 * @see #setName(ValuedObject)
-	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getEmptyExpressions_Name()
+	 * @return the value of the '<em>Valued Object</em>' containment reference.
+	 * @see #setValuedObject(ValuedObject)
+	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getEmptyExpressions_ValuedObject()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	ValuedObject getName();
+	ValuedObject getValuedObject();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getName <em>Name</em>}' containment reference.
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getValuedObject <em>Valued Object</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' containment reference.
-	 * @see #getName()
+	 * @param value the new value of the '<em>Valued Object</em>' containment reference.
+	 * @see #getValuedObject()
 	 * @generated
 	 */
-	void setName(ValuedObject value);
+	void setValuedObject(ValuedObject value);
 
 	/**
 	 * Returns the value of the '<em><b>Expression</b></em>' containment reference.

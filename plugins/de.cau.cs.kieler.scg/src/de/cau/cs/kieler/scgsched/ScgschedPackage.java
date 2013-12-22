@@ -171,13 +171,13 @@ public interface ScgschedPackage extends EPackage {
 	int EMPTY_EXPRESSIONS = 1;
 
 				/**
-	 * The feature id for the '<em><b>Name</b></em>' containment reference.
+	 * The feature id for the '<em><b>Valued Object</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EMPTY_EXPRESSIONS__NAME = 0;
+	int EMPTY_EXPRESSIONS__VALUED_OBJECT = 0;
 
 				/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -217,13 +217,13 @@ public interface ScgschedPackage extends EPackage {
 	int GUARD_EXPRESSION = 2;
 
 				/**
-	 * The feature id for the '<em><b>Name</b></em>' reference.
+	 * The feature id for the '<em><b>Valued Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GUARD_EXPRESSION__NAME = 0;
+	int GUARD_EXPRESSION__VALUED_OBJECT = 0;
 
 				/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -235,7 +235,7 @@ public interface ScgschedPackage extends EPackage {
 	int GUARD_EXPRESSION__EXPRESSION = 1;
 
 				/**
-	 * The feature id for the '<em><b>Empty Expressions</b></em>' containment reference.
+	 * The feature id for the '<em><b>Empty Expressions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -429,15 +429,15 @@ public interface ScgschedPackage extends EPackage {
 	EClass getEmptyExpressions();
 
 				/**
-	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getName <em>Name</em>}'.
+	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getValuedObject <em>Valued Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Name</em>'.
-	 * @see de.cau.cs.kieler.scgsched.EmptyExpressions#getName()
+	 * @return the meta object for the containment reference '<em>Valued Object</em>'.
+	 * @see de.cau.cs.kieler.scgsched.EmptyExpressions#getValuedObject()
 	 * @see #getEmptyExpressions()
 	 * @generated
 	 */
-	EReference getEmptyExpressions_Name();
+	EReference getEmptyExpressions_ValuedObject();
 
 				/**
 	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getExpression <em>Expression</em>}'.
@@ -461,15 +461,15 @@ public interface ScgschedPackage extends EPackage {
 	EClass getGuardExpression();
 
 				/**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgsched.GuardExpression#getName <em>Name</em>}'.
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgsched.GuardExpression#getValuedObject <em>Valued Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Name</em>'.
-	 * @see de.cau.cs.kieler.scgsched.GuardExpression#getName()
+	 * @return the meta object for the reference '<em>Valued Object</em>'.
+	 * @see de.cau.cs.kieler.scgsched.GuardExpression#getValuedObject()
 	 * @see #getGuardExpression()
 	 * @generated
 	 */
-	EReference getGuardExpression_Name();
+	EReference getGuardExpression_ValuedObject();
 
 				/**
 	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgsched.GuardExpression#getExpression <em>Expression</em>}'.
@@ -483,10 +483,10 @@ public interface ScgschedPackage extends EPackage {
 	EReference getGuardExpression_Expression();
 
 				/**
-	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgsched.GuardExpression#getEmptyExpressions <em>Empty Expressions</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgsched.GuardExpression#getEmptyExpressions <em>Empty Expressions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Empty Expressions</em>'.
+	 * @return the meta object for the containment reference list '<em>Empty Expressions</em>'.
 	 * @see de.cau.cs.kieler.scgsched.GuardExpression#getEmptyExpressions()
 	 * @see #getGuardExpression()
 	 * @generated
@@ -621,12 +621,12 @@ public interface ScgschedPackage extends EPackage {
 		EClass EMPTY_EXPRESSIONS = eINSTANCE.getEmptyExpressions();
 
 								/**
-		 * The meta object literal for the '<em><b>Name</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Valued Object</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference EMPTY_EXPRESSIONS__NAME = eINSTANCE.getEmptyExpressions_Name();
+		EReference EMPTY_EXPRESSIONS__VALUED_OBJECT = eINSTANCE.getEmptyExpressions_ValuedObject();
 
 								/**
 		 * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
@@ -647,12 +647,12 @@ public interface ScgschedPackage extends EPackage {
 		EClass GUARD_EXPRESSION = eINSTANCE.getGuardExpression();
 
 								/**
-		 * The meta object literal for the '<em><b>Name</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference GUARD_EXPRESSION__NAME = eINSTANCE.getGuardExpression_Name();
+		EReference GUARD_EXPRESSION__VALUED_OBJECT = eINSTANCE.getGuardExpression_ValuedObject();
 
 								/**
 		 * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
@@ -663,7 +663,7 @@ public interface ScgschedPackage extends EPackage {
 		EReference GUARD_EXPRESSION__EXPRESSION = eINSTANCE.getGuardExpression_Expression();
 
 								/**
-		 * The meta object literal for the '<em><b>Empty Expressions</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Empty Expressions</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
