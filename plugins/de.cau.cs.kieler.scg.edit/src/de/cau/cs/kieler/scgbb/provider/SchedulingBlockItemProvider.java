@@ -76,7 +76,7 @@ public class SchedulingBlockItemProvider
 			addNodesPropertyDescriptor(object);
 			addDependenciesPropertyDescriptor(object);
 			addGuardPropertyDescriptor(object);
-			addSurfaceBlockPropertyDescriptor(object);
+			addDepthBlockPropertyDescriptor(object);
 			addSynchronizerBlockPropertyDescriptor(object);
 			addGoBlockPropertyDescriptor(object);
 		}
@@ -150,19 +150,19 @@ public class SchedulingBlockItemProvider
 	}
 
 				/**
-	 * This adds a property descriptor for the Surface Block feature.
+	 * This adds a property descriptor for the Depth Block feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addSurfaceBlockPropertyDescriptor(Object object) {
+	protected void addDepthBlockPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_SchedulingBlock_surfaceBlock_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SchedulingBlock_surfaceBlock_feature", "_UI_SchedulingBlock_type"),
-				 ScgbbPackage.Literals.SCHEDULING_BLOCK__SURFACE_BLOCK,
+				 getString("_UI_SchedulingBlock_depthBlock_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SchedulingBlock_depthBlock_feature", "_UI_SchedulingBlock_type"),
+				 ScgbbPackage.Literals.SCHEDULING_BLOCK__DEPTH_BLOCK,
 				 true,
 				 false,
 				 false,
@@ -235,7 +235,7 @@ public class SchedulingBlockItemProvider
     @Override
     public String getText(Object object) {
 		SchedulingBlock schedulingBlock = (SchedulingBlock)object;
-		return getString("_UI_SchedulingBlock_type") + " " + schedulingBlock.isSurfaceBlock();
+		return getString("_UI_SchedulingBlock_type") + " " + schedulingBlock.isDepthBlock();
 	}
 
     /**
@@ -250,7 +250,7 @@ public class SchedulingBlockItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(SchedulingBlock.class)) {
-			case ScgbbPackage.SCHEDULING_BLOCK__SURFACE_BLOCK:
+			case ScgbbPackage.SCHEDULING_BLOCK__DEPTH_BLOCK:
 			case ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK:
 			case ScgbbPackage.SCHEDULING_BLOCK__GO_BLOCK:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

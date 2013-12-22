@@ -10,7 +10,8 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- */package de.cau.cs.kieler.scg.schedulers
+ */
+ package de.cau.cs.kieler.scg.schedulers
 
 import de.cau.cs.kieler.scg.schedulers.AbstractSCGScheduler
 import de.cau.cs.kieler.scgbb.SchedulingBlock
@@ -24,6 +25,12 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scgsched.SCGraphSched
 import com.google.inject.Guice
 import de.cau.cs.kieler.scg.analyser.PotentialInstantaneousLoopAnalyser
+import de.cau.cs.kieler.scgsched.GuardExpression
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.scg.SCGraph
 
 /** 
  * SimpleScheduler
@@ -36,6 +43,11 @@ class SimpleScheduler extends AbstractSCGScheduler {
     
     @Inject
     extension SCGExtensions    
+
+    @Inject
+    extension SCGCopyExtensions    
+    
+    private static val String GOGUARDNAME = "_GO"
     
 	override protected analyse(SCGraphSched scg) {
 		val PotentialInstantaneousLoopAnalyser loopAnalyser = Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyser))
@@ -46,10 +58,16 @@ class SimpleScheduler extends AbstractSCGScheduler {
 		scg
 	}
 	
-    override protected SCGraphSched build(SCGraphSched SCG) {
+    override protected SCGraphSched build(SCGraphSched scg) {
         val schedule = ScgschedFactory::eINSTANCE.createSchedule
         val schedulingBlocks = <SchedulingBlock> newLinkedList
-        SCG.basicBlocks.forEach[schedulingBlocks.addAll(it.schedulingBlocks)]
+        scg.basicBlocks.forEach[schedulingBlocks.addAll(it.schedulingBlocks)]
+        
+        KExpressionsFactory::eINSTANCE.createValuedObject => [
+        	name = GOGUARDNAME
+        	type = ValueType::BOOL
+        	scg.valuedObjects.add(it)
+        ]
         
         var fixpoint  = false
         
@@ -71,6 +89,7 @@ class SimpleScheduler extends AbstractSCGScheduler {
                 }
                 if (placeable) {
                     schedule.schedulingBlocks.add(block)
+                    scg.guards.add(block.createGuardExpression(scg))
                     schedulingBlocks.remove(block)
                     fixpoint = false
                 }
@@ -78,14 +97,47 @@ class SimpleScheduler extends AbstractSCGScheduler {
         }
         if (fixpoint) {
             System::out.println("The SCG is NOT ASC-schedulable!")
-            SCG.setUnschedulable(true)            
-            SCG.schedules.add(schedule)
+            scg.setUnschedulable(true)            
+            scg.schedules.add(schedule)
         } else {
             System::out.println("The SCG is ASC-schedulable.")
-            SCG.setUnschedulable(false)
-            SCG.schedules.add(schedule)
+            scg.setUnschedulable(false)
+            scg.schedules.add(schedule)
         }
-        SCG
+        scg
+    }
+    
+    protected def GuardExpression createGuardExpression(SchedulingBlock schedulingBlock, SCGraph scg) {
+    	val gExpr = ScgschedFactory::eINSTANCE.createGuardExpression
+    	gExpr.valuedObject = schedulingBlock.guard
+    	
+    	if (schedulingBlock.goBlock) {
+    		gExpr.expression = scg.findValuedObjectByName(GOGUARDNAME).reference
+    	} 
+    	else if (schedulingBlock.depthBlock) {
+    		
+    	}
+    	else if (schedulingBlock.synchronizerBlock) {
+
+		} 
+		else {
+			val bb = schedulingBlock.basicBlock
+			if (bb.predecessors.size>1) {
+				val expr = KExpressionsFactory::eINSTANCE.createOperatorExpression
+				expr.setOperator(OperatorType::OR)
+				bb.predecessors.forEach[ expr.subExpressions.add(it.guards.head.reference) ]
+				gExpr.expression = expr
+			} 
+			else if (bb.predecessors.size == 1) {
+				gExpr.expression = bb.predecessors.head.guards.head.reference
+			} 
+			else 
+			{
+				throw new UnsupportedOperationException("Cannot handle standard guard without predecessor information!")
+			}
+		}
+		    	
+    	gExpr
     }
 
 }

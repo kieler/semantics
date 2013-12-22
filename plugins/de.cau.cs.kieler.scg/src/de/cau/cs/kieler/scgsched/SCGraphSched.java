@@ -96,29 +96,19 @@ public interface SCGraphSched extends SCGraphBB {
 	EList<Problem> getProblems();
 
 				/**
-	 * Returns the value of the '<em><b>Guards</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Guards</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scgsched.GuardExpression}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Guards</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Guards</em>' containment reference.
-	 * @see #setGuards(GuardExpression)
+	 * @return the value of the '<em>Guards</em>' containment reference list.
 	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSCGraphSched_Guards()
 	 * @model containment="true"
 	 * @generated
 	 */
-	GuardExpression getGuards();
-
-				/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.SCGraphSched#getGuards <em>Guards</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Guards</em>' containment reference.
-	 * @see #getGuards()
-	 * @generated
-	 */
-	void setGuards(GuardExpression value);
+	EList<GuardExpression> getGuards();
 
 } // SCGraphSched

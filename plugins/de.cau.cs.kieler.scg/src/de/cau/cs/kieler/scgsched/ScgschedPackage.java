@@ -134,7 +134,7 @@ public interface ScgschedPackage extends EPackage {
 	int SC_GRAPH_SCHED__PROBLEMS = ScgbbPackage.SC_GRAPH_BB_FEATURE_COUNT + 2;
 
 				/**
-	 * The feature id for the '<em><b>Guards</b></em>' containment reference.
+	 * The feature id for the '<em><b>Guards</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -408,10 +408,10 @@ public interface ScgschedPackage extends EPackage {
 	EReference getSCGraphSched_Problems();
 
 				/**
-	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgsched.SCGraphSched#getGuards <em>Guards</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgsched.SCGraphSched#getGuards <em>Guards</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Guards</em>'.
+	 * @return the meta object for the containment reference list '<em>Guards</em>'.
 	 * @see de.cau.cs.kieler.scgsched.SCGraphSched#getGuards()
 	 * @see #getSCGraphSched()
 	 * @generated
@@ -603,7 +603,7 @@ public interface ScgschedPackage extends EPackage {
 		EReference SC_GRAPH_SCHED__PROBLEMS = eINSTANCE.getSCGraphSched_Problems();
 
 								/**
-		 * The meta object literal for the '<em><b>Guards</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Guards</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

@@ -7,8 +7,8 @@
         eType="#//Schedule" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="problems" upperBound="-1"
         eType="#//Problem" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="guards" eType="#//GuardExpression"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="guards" upperBound="-1"
+        eType="#//GuardExpression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EmptyExpressions">
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"

@@ -87,14 +87,14 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
 	protected EList<Problem> problems;
 
 				/**
-	 * The cached value of the '{@link #getGuards() <em>Guards</em>}' containment reference.
+	 * The cached value of the '{@link #getGuards() <em>Guards</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getGuards()
 	 * @generated
 	 * @ordered
 	 */
-	protected GuardExpression guards;
+	protected EList<GuardExpression> guards;
 
 				/**
 	 * <!-- begin-user-doc -->
@@ -165,42 +165,11 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GuardExpression getGuards() {
+	public EList<GuardExpression> getGuards() {
+		if (guards == null) {
+			guards = new EObjectContainmentEList<GuardExpression>(GuardExpression.class, this, ScgschedPackage.SC_GRAPH_SCHED__GUARDS);
+		}
 		return guards;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetGuards(GuardExpression newGuards, NotificationChain msgs) {
-		GuardExpression oldGuards = guards;
-		guards = newGuards;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgschedPackage.SC_GRAPH_SCHED__GUARDS, oldGuards, newGuards);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setGuards(GuardExpression newGuards) {
-		if (newGuards != guards) {
-			NotificationChain msgs = null;
-			if (guards != null)
-				msgs = ((InternalEObject)guards).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.SC_GRAPH_SCHED__GUARDS, null, msgs);
-			if (newGuards != null)
-				msgs = ((InternalEObject)newGuards).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.SC_GRAPH_SCHED__GUARDS, null, msgs);
-			msgs = basicSetGuards(newGuards, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.SC_GRAPH_SCHED__GUARDS, newGuards, newGuards));
 	}
 
 				/**
@@ -216,7 +185,7 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
 			case ScgschedPackage.SC_GRAPH_SCHED__PROBLEMS:
 				return ((InternalEList<?>)getProblems()).basicRemove(otherEnd, msgs);
 			case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
-				return basicSetGuards(null, msgs);
+				return ((InternalEList<?>)getGuards()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -262,7 +231,8 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
 				getProblems().addAll((Collection<? extends Problem>)newValue);
 				return;
 			case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
-				setGuards((GuardExpression)newValue);
+				getGuards().clear();
+				getGuards().addAll((Collection<? extends GuardExpression>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -286,7 +256,7 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
 				getProblems().clear();
 				return;
 			case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
-				setGuards((GuardExpression)null);
+				getGuards().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -307,7 +277,7 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
 			case ScgschedPackage.SC_GRAPH_SCHED__PROBLEMS:
 				return problems != null && !problems.isEmpty();
 			case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
-				return guards != null;
+				return guards != null && !guards.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

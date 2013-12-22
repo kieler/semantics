@@ -44,7 +44,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#getDependencies <em>Dependencies</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#getGuard <em>Guard</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#isSurfaceBlock <em>Surface Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#isDepthBlock <em>Depth Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#isSynchronizerBlock <em>Synchronizer Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#isGoBlock <em>Go Block</em>}</li>
  * </ul>
@@ -84,24 +84,24 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 	protected ValuedObject guard;
 
 				/**
-	 * The default value of the '{@link #isSurfaceBlock() <em>Surface Block</em>}' attribute.
+	 * The default value of the '{@link #isDepthBlock() <em>Depth Block</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isSurfaceBlock()
+	 * @see #isDepthBlock()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean SURFACE_BLOCK_EDEFAULT = false;
+	protected static final boolean DEPTH_BLOCK_EDEFAULT = false;
 
 				/**
-	 * The cached value of the '{@link #isSurfaceBlock() <em>Surface Block</em>}' attribute.
+	 * The cached value of the '{@link #isDepthBlock() <em>Depth Block</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isSurfaceBlock()
+	 * @see #isDepthBlock()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean surfaceBlock = SURFACE_BLOCK_EDEFAULT;
+	protected boolean depthBlock = DEPTH_BLOCK_EDEFAULT;
 
 				/**
 	 * The default value of the '{@link #isSynchronizerBlock() <em>Synchronizer Block</em>}' attribute.
@@ -229,8 +229,8 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isSurfaceBlock() {
-		return surfaceBlock;
+	public boolean isDepthBlock() {
+		return depthBlock;
 	}
 
 				/**
@@ -238,11 +238,11 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setSurfaceBlock(boolean newSurfaceBlock) {
-		boolean oldSurfaceBlock = surfaceBlock;
-		surfaceBlock = newSurfaceBlock;
+	public void setDepthBlock(boolean newDepthBlock) {
+		boolean oldDepthBlock = depthBlock;
+		depthBlock = newDepthBlock;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.SCHEDULING_BLOCK__SURFACE_BLOCK, oldSurfaceBlock, surfaceBlock));
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.SCHEDULING_BLOCK__DEPTH_BLOCK, oldDepthBlock, depthBlock));
 	}
 
 				/**
@@ -302,8 +302,8 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 			case ScgbbPackage.SCHEDULING_BLOCK__GUARD:
 				if (resolve) return getGuard();
 				return basicGetGuard();
-			case ScgbbPackage.SCHEDULING_BLOCK__SURFACE_BLOCK:
-				return isSurfaceBlock();
+			case ScgbbPackage.SCHEDULING_BLOCK__DEPTH_BLOCK:
+				return isDepthBlock();
 			case ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK:
 				return isSynchronizerBlock();
 			case ScgbbPackage.SCHEDULING_BLOCK__GO_BLOCK:
@@ -332,8 +332,8 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 			case ScgbbPackage.SCHEDULING_BLOCK__GUARD:
 				setGuard((ValuedObject)newValue);
 				return;
-			case ScgbbPackage.SCHEDULING_BLOCK__SURFACE_BLOCK:
-				setSurfaceBlock((Boolean)newValue);
+			case ScgbbPackage.SCHEDULING_BLOCK__DEPTH_BLOCK:
+				setDepthBlock((Boolean)newValue);
 				return;
 			case ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK:
 				setSynchronizerBlock((Boolean)newValue);
@@ -362,8 +362,8 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 			case ScgbbPackage.SCHEDULING_BLOCK__GUARD:
 				setGuard((ValuedObject)null);
 				return;
-			case ScgbbPackage.SCHEDULING_BLOCK__SURFACE_BLOCK:
-				setSurfaceBlock(SURFACE_BLOCK_EDEFAULT);
+			case ScgbbPackage.SCHEDULING_BLOCK__DEPTH_BLOCK:
+				setDepthBlock(DEPTH_BLOCK_EDEFAULT);
 				return;
 			case ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK:
 				setSynchronizerBlock(SYNCHRONIZER_BLOCK_EDEFAULT);
@@ -389,8 +389,8 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 				return dependencies != null && !dependencies.isEmpty();
 			case ScgbbPackage.SCHEDULING_BLOCK__GUARD:
 				return guard != null;
-			case ScgbbPackage.SCHEDULING_BLOCK__SURFACE_BLOCK:
-				return surfaceBlock != SURFACE_BLOCK_EDEFAULT;
+			case ScgbbPackage.SCHEDULING_BLOCK__DEPTH_BLOCK:
+				return depthBlock != DEPTH_BLOCK_EDEFAULT;
 			case ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK:
 				return synchronizerBlock != SYNCHRONIZER_BLOCK_EDEFAULT;
 			case ScgbbPackage.SCHEDULING_BLOCK__GO_BLOCK:
@@ -409,8 +409,8 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (surfaceBlock: ");
-		result.append(surfaceBlock);
+		result.append(" (depthBlock: ");
+		result.append(depthBlock);
 		result.append(", synchronizerBlock: ");
 		result.append(synchronizerBlock);
 		result.append(", goBlock: ");

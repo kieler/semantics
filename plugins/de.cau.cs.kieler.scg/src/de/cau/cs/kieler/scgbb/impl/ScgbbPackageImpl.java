@@ -214,7 +214,7 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSchedulingBlock_SurfaceBlock() {
+	public EAttribute getSchedulingBlock_DepthBlock() {
 		return (EAttribute)schedulingBlockEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -276,7 +276,7 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
 		createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__NODES);
 		createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__DEPENDENCIES);
 		createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__GUARD);
-		createEAttribute(schedulingBlockEClass, SCHEDULING_BLOCK__SURFACE_BLOCK);
+		createEAttribute(schedulingBlockEClass, SCHEDULING_BLOCK__DEPTH_BLOCK);
 		createEAttribute(schedulingBlockEClass, SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK);
 		createEAttribute(schedulingBlockEClass, SCHEDULING_BLOCK__GO_BLOCK);
 	}
@@ -329,7 +329,7 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
 		initEReference(getSchedulingBlock_Nodes(), theScgPackage.getNode(), null, "nodes", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSchedulingBlock_Dependencies(), theScgdepPackage.getDependency(), null, "dependencies", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSchedulingBlock_Guard(), theKExpressionsPackage.getValuedObject(), null, "guard", null, 1, 1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getSchedulingBlock_SurfaceBlock(), ecorePackage.getEBoolean(), "surfaceBlock", null, 0, 1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSchedulingBlock_DepthBlock(), ecorePackage.getEBoolean(), "depthBlock", null, 0, 1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSchedulingBlock_SynchronizerBlock(), ecorePackage.getEBoolean(), "synchronizerBlock", null, 0, 1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSchedulingBlock_GoBlock(), ecorePackage.getEBoolean(), "goBlock", null, 0, 1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

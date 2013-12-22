@@ -34,6 +34,7 @@ import de.cau.cs.kieler.scgdep.Dependency
 import de.cau.cs.kieler.scgdep.SCGraphDep
 import java.util.ArrayList
 import java.util.List
+import de.cau.cs.kieler.scg.Depth
 
 /** 
  * SCGDEP to SCGBB Transformation 
@@ -64,10 +65,10 @@ class SCGDEPToSCGBBTransformation {
         scgdep.copySCG(scgbb)                  
 
         // Create GO signal
-        val go = KExpressionsFactory::eINSTANCE.createValuedObject
-        go.name = '_GO'
-        go.type = ValueType::BOOL;
-        scgbb.valuedObjects.add(go)
+//        val go = KExpressionsFactory::eINSTANCE.createValuedObject
+//        go.name = '_GO'
+//        go.type = ValueType::BOOL;
+//        scgbb.valuedObjects.add(go)
         
         // Create basic blocks.
         scgbb.createBasicBlocks(scgbb.nodes.head, 0)
@@ -132,6 +133,7 @@ class SCGDEPToSCGBBTransformation {
             } else {
                 val next = node.eAllContents.filter(typeof(ControlFlow)).head.target
                 if (next instanceof Join) {
+                	schedulingBlock.synchronizerBlock = true
                     scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks)
                     node = null
                 } else
@@ -153,6 +155,8 @@ class SCGDEPToSCGBBTransformation {
         List<BasicBlock> predecessorBlocks
     ) {
         val basicBlock = ScgbbFactory::eINSTANCE.createBasicBlock
+        
+        if (schedulingBlock.nodes.head instanceof Depth) { schedulingBlock.depthBlock = true }
       
         basicBlock.guards.add(guard)
         basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock(basicBlock))

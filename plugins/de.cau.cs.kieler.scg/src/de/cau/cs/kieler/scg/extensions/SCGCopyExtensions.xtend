@@ -375,6 +375,10 @@ class SCGCopyExtensions {
         expression.valuedObject = valuedObject
         expression
     }
+    
+    def ValuedObject findValuedObjectByName(SCGraph scg, String name) {
+    	scg.valuedObjects.filter[it.name == name]?.head
+    }
 
     // -------------------------------------------------------------------------
     // -- Copy Helper 

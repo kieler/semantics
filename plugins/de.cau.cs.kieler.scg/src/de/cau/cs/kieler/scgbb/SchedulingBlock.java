@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.scgbb.SchedulingBlock#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.SchedulingBlock#getDependencies <em>Dependencies</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.SchedulingBlock#getGuard <em>Guard</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isSurfaceBlock <em>Surface Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isDepthBlock <em>Depth Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isSynchronizerBlock <em>Synchronizer Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isGoBlock <em>Go Block</em>}</li>
  * </ul>
@@ -103,30 +103,30 @@ public interface SchedulingBlock extends EObject {
 	void setGuard(ValuedObject value);
 
 				/**
-	 * Returns the value of the '<em><b>Surface Block</b></em>' attribute.
+	 * Returns the value of the '<em><b>Depth Block</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Surface Block</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Depth Block</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Surface Block</em>' attribute.
-	 * @see #setSurfaceBlock(boolean)
-	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getSchedulingBlock_SurfaceBlock()
+	 * @return the value of the '<em>Depth Block</em>' attribute.
+	 * @see #setDepthBlock(boolean)
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getSchedulingBlock_DepthBlock()
 	 * @model
 	 * @generated
 	 */
-	boolean isSurfaceBlock();
+	boolean isDepthBlock();
 
 				/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isSurfaceBlock <em>Surface Block</em>}' attribute.
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isDepthBlock <em>Depth Block</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Surface Block</em>' attribute.
-	 * @see #isSurfaceBlock()
+	 * @param value the new value of the '<em>Depth Block</em>' attribute.
+	 * @see #isDepthBlock()
 	 * @generated
 	 */
-	void setSurfaceBlock(boolean value);
+	void setDepthBlock(boolean value);
 
 				/**
 	 * Returns the value of the '<em><b>Synchronizer Block</b></em>' attribute.

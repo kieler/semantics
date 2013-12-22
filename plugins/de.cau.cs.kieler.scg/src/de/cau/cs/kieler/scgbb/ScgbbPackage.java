@@ -217,13 +217,13 @@ public interface ScgbbPackage extends EPackage {
 	int SCHEDULING_BLOCK__GUARD = 2;
 
 				/**
-	 * The feature id for the '<em><b>Surface Block</b></em>' attribute.
+	 * The feature id for the '<em><b>Depth Block</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SCHEDULING_BLOCK__SURFACE_BLOCK = 3;
+	int SCHEDULING_BLOCK__DEPTH_BLOCK = 3;
 
 				/**
 	 * The feature id for the '<em><b>Synchronizer Block</b></em>' attribute.
@@ -369,15 +369,15 @@ public interface ScgbbPackage extends EPackage {
 	EReference getSchedulingBlock_Guard();
 
 				/**
-	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isSurfaceBlock <em>Surface Block</em>}'.
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isDepthBlock <em>Depth Block</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Surface Block</em>'.
-	 * @see de.cau.cs.kieler.scgbb.SchedulingBlock#isSurfaceBlock()
+	 * @return the meta object for the attribute '<em>Depth Block</em>'.
+	 * @see de.cau.cs.kieler.scgbb.SchedulingBlock#isDepthBlock()
 	 * @see #getSchedulingBlock()
 	 * @generated
 	 */
-	EAttribute getSchedulingBlock_SurfaceBlock();
+	EAttribute getSchedulingBlock_DepthBlock();
 
 				/**
 	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isSynchronizerBlock <em>Synchronizer Block</em>}'.
@@ -511,12 +511,12 @@ public interface ScgbbPackage extends EPackage {
 		EReference SCHEDULING_BLOCK__GUARD = eINSTANCE.getSchedulingBlock_Guard();
 
 								/**
-		 * The meta object literal for the '<em><b>Surface Block</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Depth Block</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute SCHEDULING_BLOCK__SURFACE_BLOCK = eINSTANCE.getSchedulingBlock_SurfaceBlock();
+		EAttribute SCHEDULING_BLOCK__DEPTH_BLOCK = eINSTANCE.getSchedulingBlock_DepthBlock();
 
 								/**
 		 * The meta object literal for the '<em><b>Synchronizer Block</b></em>' attribute feature.
