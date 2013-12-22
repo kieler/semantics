@@ -95,17 +95,7 @@ class SCGCopyExtensions {
         // If source and target are at least basic block specializations, copy all basic block information.
         if (source instanceof SCGraphBB && target instanceof SCGraphBB) { 
             (source as SCGraphBB).basicBlocks.forEach[ it.copyBasicBlock(target as SCGraphBB) ]
-//            (target as SCGraphBB).basicBlocks.forEach[
-//                it.activationExpressions.forEach[ae|
-//                    val bb = <BasicBlock> newLinkedList
-//                    ae.basicBlocks.forEach[
-//                        val mappedBB = basicBlockMapping.get(it)
-//                        bb.add(mappedBB)
-//                    ]
-//                    ae.basicBlocks.clear
-//                    ae.basicBlocks.addAll(bb)
-//                ]
-//            ] 
+            (target as SCGraphBB).basicBlocks.forEach[ it.predecessors.add(revBasicBlockMapping.get(it)) ] 
         }
         
         //If source and target are at least a scheduling specialization, copy all scheduling information.
