@@ -35,7 +35,8 @@ import org.eclipse.emf.ecore.EObject
 /**
  * SCG Extensions.
  * 
- * @author cmot ssm
+ * @author ssm
+ * @author cmot
  * @kieler.design 2013-08-20 proposed 
  * @kieler.rating 2013-08-20 proposed yellow
  */
@@ -84,7 +85,7 @@ class SCGExtensions {
         source.eContents.filter(typeof(ControlFlow)).filter[it.target==target].toList
     }
       
-    def void accumulateIndirectControlFlow(ControlFlow next, List<ControlFlow> myFlow, 
+    private def void accumulateIndirectControlFlow(ControlFlow next, List<ControlFlow> myFlow, 
         List<List<ControlFlow>> list, Node target
     ) {
         if (myFlow.contains(next)) return;
@@ -115,8 +116,12 @@ class SCGExtensions {
     	isInst
     }    
 
+    def List<List<ControlFlow>> getInstantaneousControlFlows(Node source, Node target) {
+    	source.getIndirectControlFlows(target).filter[it.instantaneousFlow].toList
+    }
+    
     def List<List<ControlFlow>> getInstantaneousControlFlows(Node source) {
-    	source.getIndirectControlFlows(source).filter[it.instantaneousFlow].toList
+    	source.getInstantaneousControlFlows(source)
     }
     
     def boolean instantaneous(List<List<ControlFlow>> controlFlowsList) {
