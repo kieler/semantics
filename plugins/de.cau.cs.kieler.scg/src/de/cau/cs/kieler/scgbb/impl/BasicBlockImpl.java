@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -35,6 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getSchedulingBlocks <em>Scheduling Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getGuards <em>Guards</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getPredecessors <em>Predecessors</em>}</li>
  * </ul>
  * </p>
  *
@@ -60,6 +62,16 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 	 * @ordered
 	 */
 	protected EList<ValuedObject> guards;
+
+				/**
+	 * The cached value of the '{@link #getPredecessors() <em>Predecessors</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPredecessors()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<BasicBlock> predecessors;
 
 				/**
 	 * <!-- begin-user-doc -->
@@ -106,6 +118,18 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 
 				/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<BasicBlock> getPredecessors() {
+		if (predecessors == null) {
+			predecessors = new EObjectResolvingEList<BasicBlock>(BasicBlock.class, this, ScgbbPackage.BASIC_BLOCK__PREDECESSORS);
+		}
+		return predecessors;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -132,6 +156,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				return getSchedulingBlocks();
 			case ScgbbPackage.BASIC_BLOCK__GUARDS:
 				return getGuards();
+			case ScgbbPackage.BASIC_BLOCK__PREDECESSORS:
+				return getPredecessors();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -153,6 +179,10 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				getGuards().clear();
 				getGuards().addAll((Collection<? extends ValuedObject>)newValue);
 				return;
+			case ScgbbPackage.BASIC_BLOCK__PREDECESSORS:
+				getPredecessors().clear();
+				getPredecessors().addAll((Collection<? extends BasicBlock>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -171,6 +201,9 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 			case ScgbbPackage.BASIC_BLOCK__GUARDS:
 				getGuards().clear();
 				return;
+			case ScgbbPackage.BASIC_BLOCK__PREDECESSORS:
+				getPredecessors().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -187,6 +220,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				return schedulingBlocks != null && !schedulingBlocks.isEmpty();
 			case ScgbbPackage.BASIC_BLOCK__GUARDS:
 				return guards != null && !guards.isEmpty();
+			case ScgbbPackage.BASIC_BLOCK__PREDECESSORS:
+				return predecessors != null && !predecessors.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

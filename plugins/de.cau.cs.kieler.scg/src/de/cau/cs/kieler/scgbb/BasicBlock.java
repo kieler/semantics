@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getSchedulingBlocks <em>Scheduling Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuards <em>Guards</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getPredecessors <em>Predecessors</em>}</li>
  * </ul>
  * </p>
  *
@@ -66,5 +67,21 @@ public interface BasicBlock extends EObject {
 	 * @generated
 	 */
 	EList<ValuedObject> getGuards();
+
+				/**
+	 * Returns the value of the '<em><b>Predecessors</b></em>' reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scgbb.BasicBlock}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Predecessors</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Predecessors</em>' reference list.
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_Predecessors()
+	 * @model
+	 * @generated
+	 */
+	EList<BasicBlock> getPredecessors();
 
 } // BasicBlock

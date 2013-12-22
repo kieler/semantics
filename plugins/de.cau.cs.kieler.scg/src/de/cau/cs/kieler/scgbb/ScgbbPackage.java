@@ -153,13 +153,22 @@ public interface ScgbbPackage extends EPackage {
 	int BASIC_BLOCK__GUARDS = 1;
 
 				/**
+	 * The feature id for the '<em><b>Predecessors</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASIC_BLOCK__PREDECESSORS = 2;
+
+				/**
 	 * The number of structural features of the '<em>Basic Block</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int BASIC_BLOCK_FEATURE_COUNT = 2;
+    int BASIC_BLOCK_FEATURE_COUNT = 3;
 
     /**
 	 * The number of operations of the '<em>Basic Block</em>' class.
@@ -306,6 +315,17 @@ public interface ScgbbPackage extends EPackage {
 	EReference getBasicBlock_Guards();
 
 				/**
+	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scgbb.BasicBlock#getPredecessors <em>Predecessors</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Predecessors</em>'.
+	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getPredecessors()
+	 * @see #getBasicBlock()
+	 * @generated
+	 */
+	EReference getBasicBlock_Predecessors();
+
+				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scgbb.SchedulingBlock <em>Scheduling Block</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -447,6 +467,14 @@ public interface ScgbbPackage extends EPackage {
 		 * @generated
 		 */
 		EReference BASIC_BLOCK__GUARDS = eINSTANCE.getBasicBlock_Guards();
+
+								/**
+		 * The meta object literal for the '<em><b>Predecessors</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BASIC_BLOCK__PREDECESSORS = eINSTANCE.getBasicBlock_Predecessors();
 
 								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl <em>Scheduling Block</em>}' class.

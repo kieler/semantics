@@ -50,7 +50,6 @@ class SimpleScheduler extends AbstractSCGScheduler {
         val schedule = ScgschedFactory::eINSTANCE.createSchedule
         val schedulingBlocks = <SchedulingBlock> newLinkedList
         SCG.basicBlocks.forEach[schedulingBlocks.addAll(it.schedulingBlocks)]
-        //var schedulingBlocks = SCG.eAllContents.filter(typeof(SchedulingBlock))
         
         var fixpoint  = false
         

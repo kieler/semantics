@@ -156,6 +156,7 @@ class SCGDEPToSCGBBTransformation {
       
         basicBlock.guards.add(guard)
         basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock(basicBlock))
+        basicBlock.predecessors.addAll(predecessorBlocks)
         scg.basicBlocks.add(basicBlock)
         
         basicBlock

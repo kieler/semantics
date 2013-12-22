@@ -11,6 +11,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="guards" lowerBound="1"
         upperBound="-1" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="predecessors" upperBound="-1"
+        eType="#//BasicBlock"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SchedulingBlock">
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"

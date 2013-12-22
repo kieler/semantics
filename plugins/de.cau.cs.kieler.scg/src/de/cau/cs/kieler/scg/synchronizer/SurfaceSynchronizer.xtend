@@ -16,14 +16,13 @@
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scgsched.ScgschedFactory
-import de.cau.cs.kieler.scgbb.SchedulingBlock
-import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.core.kexpressions.ValueType
 
 /** 
  * ExitSCGSynchronizer
@@ -45,7 +44,6 @@ class SurfaceSynchronizer extends AbstractSCGSynchronizer {
         var data = new SynchronizerData()
 
 		val joinSB = join.schedulingBlock
-//        val scg = join.graph
 		
         val exitNodes = <Exit> newLinkedList
         join.getAllPrevious.forEach[exitNodes.add(it.eContainer as Exit)]
