@@ -140,40 +140,13 @@ class SCGCopyExtensions {
             bb.guards.add(newGuard)
         	valuedObjectMapping.put(it, newGuard)
         ]
-//        basicBlock.subGuards.forEach[
-//            val newGuard = it.copy
-//            bb.subGuards.add(newGuard)
-//            valuedObjectMapping.put(it, newGuard)
-//        ]
-//        basicBlock.emptyGuards.forEach[
-//        	val newGuard = it.copy
-//            bb.emptyGuards.add(newGuard)
-//        	valuedObjectMapping.put(it, newGuard)
-//        ]
         
         basicBlock.schedulingBlocks.forEach[ it.copySchedulingBlock(bb) ]
-        
-//        basicBlock.activationExpressions.forEach[
-//            bb.activationExpressions.add(it.copyActivationExpression)
-//        ]        
-        
+                
         basicBlockMapping.put(basicBlock, bb)
         revBasicBlockMapping.put(bb, basicBlock)
         target.basicBlocks.add(bb)
         bb
-    }
-    
-    def ActivationExpression copyActivationExpression(ActivationExpression activationExpression) {
-//        val actExp = ScgbbFactory::eINSTANCE.createActivationExpression
-//        activationExpression.basicBlocks.forEach[actExp.basicBlocks.add(it)]
-//        activationExpression.guard => [ 
-//            val newGuard = valuedObjectMapping.get(it)
-////            valuedObjectMapping.put(it, newGuard)
-//            actExp.guard = newGuard
-//        ]
-//        activationExpression.guardExpression => [actExp.guardExpression = it.copyExpression]
-//        activationExpression.emptyExpressions.forEach[ actExp.emptyExpressions.add(it.copyActivationExpression) ]
-//		actExp    	
     }
     
     def copySchedulingBlock(SchedulingBlock schedulingBlock, BasicBlock target) {
@@ -185,6 +158,17 @@ class SCGCopyExtensions {
             val tnode = nodeMapping.get(it) 
             sb.nodes.add(tnode)
             sb.dependencies.addAll(tnode.incoming.filter(typeof(Dependency)))  
+        ]
+        schedulingBlock.dependencies.forEach[ 
+        	val newDependency = it.copy
+        	newDependency.target = nodeMapping.get(it.target)
+        	sb.dependencies.add(newDependency)
+        ]
+        
+        sb => [
+        	goBlock = schedulingBlock.goBlock
+        	depthBlock = schedulingBlock.depthBlock
+        	synchronizerBlock = schedulingBlock.synchronizerBlock
         ]
     
         schedulingBlockMapping.put(schedulingBlock, sb)    
