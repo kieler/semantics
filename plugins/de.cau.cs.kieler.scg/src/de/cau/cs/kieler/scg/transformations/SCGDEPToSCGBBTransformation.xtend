@@ -166,11 +166,12 @@ class SCGDEPToSCGBBTransformation {
         basicBlock
     }
     
-    def List<SchedulingBlock> splitSchedulingBlock(SchedulingBlock schedulingblock, BasicBlock basicBlock) {
+    def List<SchedulingBlock> splitSchedulingBlock(SchedulingBlock schedulingBlock, BasicBlock basicBlock) {
         val schedulingBlocks = <SchedulingBlock> newLinkedList
         var SchedulingBlock block = null
+        var boolean firstBlock = true
         var ValuedObject guard = null
-        for (node : schedulingblock.nodes) {
+        for (node : schedulingBlock.nodes) {
             if (block == null || 
                 (node.incoming.filter(typeof(Dependency)).filter[it.concurrent&&!it.confluent].size > 0)
             ) {
@@ -185,7 +186,15 @@ class SCGDEPToSCGBBTransformation {
                 }
                 block = ScgbbFactory::eINSTANCE.createSchedulingBlock()
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))
-                block.guard = guard                
+                block.guard = guard  
+                if (firstBlock) {
+                	block => [
+						goBlock = schedulingBlock.goBlock
+						depthBlock = schedulingBlock.depthBlock
+						synchronizerBlock = synchronizerBlock                	
+	                ]
+                }
+                firstBlock = false              
             }
             block.nodes.add(node)
         }
