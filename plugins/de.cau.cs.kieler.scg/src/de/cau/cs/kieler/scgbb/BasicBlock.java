@@ -29,9 +29,10 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getSchedulingBlocks <em>Scheduling Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuards <em>Guards</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getPredecessors <em>Predecessors</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#isGoBlock <em>Go Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getBlockType <em>Block Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getConditional <em>Conditional</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#isGoBlock <em>Go Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getPreGuard <em>Pre Guard</em>}</li>
  * </ul>
  * </p>
  *
@@ -142,6 +143,32 @@ public interface BasicBlock extends EObject {
 	 * @generated
 	 */
 	void setConditional(Conditional value);
+
+				/**
+	 * Returns the value of the '<em><b>Pre Guard</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Pre Guard</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Pre Guard</em>' reference.
+	 * @see #setPreGuard(ValuedObject)
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_PreGuard()
+	 * @model
+	 * @generated
+	 */
+	ValuedObject getPreGuard();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#getPreGuard <em>Pre Guard</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Pre Guard</em>' reference.
+	 * @see #getPreGuard()
+	 * @generated
+	 */
+	void setPreGuard(ValuedObject value);
 
 				/**
 	 * Returns the value of the '<em><b>Go Block</b></em>' attribute.

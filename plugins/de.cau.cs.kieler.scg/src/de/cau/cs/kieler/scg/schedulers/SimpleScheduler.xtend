@@ -121,10 +121,9 @@ class SimpleScheduler extends AbstractSCGScheduler {
     			gExpr.expression = scg.findValuedObjectByName(GOGUARDNAME).reference
     		} 
     		else if (basicBlock.blockType == BlockType::DEPTH) {
-    			// FIXME: depth nodes should not be dependent to predecessors!
     			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
     			expression.setOperator(OperatorType::PRE)
-    			expression.subExpressions.add(basicBlock.predecessors.head.guards.last.reference)
+    			expression.subExpressions.add(basicBlock.preGuard.reference)
     			gExpr.expression = expression
     		}
     		else if (basicBlock.blockType == BlockType::TRUEBRANCH) {

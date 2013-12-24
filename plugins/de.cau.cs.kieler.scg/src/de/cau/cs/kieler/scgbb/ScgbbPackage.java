@@ -163,13 +163,22 @@ public interface ScgbbPackage extends EPackage {
 	int BASIC_BLOCK__PREDECESSORS = 2;
 
 				/**
+	 * The feature id for the '<em><b>Go Block</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASIC_BLOCK__GO_BLOCK = 3;
+
+				/**
 	 * The feature id for the '<em><b>Block Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BASIC_BLOCK__BLOCK_TYPE = 3;
+	int BASIC_BLOCK__BLOCK_TYPE = 4;
 
 				/**
 	 * The feature id for the '<em><b>Conditional</b></em>' reference.
@@ -178,16 +187,16 @@ public interface ScgbbPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BASIC_BLOCK__CONDITIONAL = 4;
+	int BASIC_BLOCK__CONDITIONAL = 5;
 
 				/**
-	 * The feature id for the '<em><b>Go Block</b></em>' attribute.
+	 * The feature id for the '<em><b>Pre Guard</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BASIC_BLOCK__GO_BLOCK = 5;
+	int BASIC_BLOCK__PRE_GUARD = 6;
 
 				/**
 	 * The number of structural features of the '<em>Basic Block</em>' class.
@@ -196,7 +205,7 @@ public interface ScgbbPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int BASIC_BLOCK_FEATURE_COUNT = 6;
+    int BASIC_BLOCK_FEATURE_COUNT = 7;
 
     /**
 	 * The number of operations of the '<em>Basic Block</em>' class.
@@ -359,6 +368,17 @@ public interface ScgbbPackage extends EPackage {
 	EReference getBasicBlock_Conditional();
 
 				/**
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgbb.BasicBlock#getPreGuard <em>Pre Guard</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Pre Guard</em>'.
+	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getPreGuard()
+	 * @see #getBasicBlock()
+	 * @generated
+	 */
+	EReference getBasicBlock_PreGuard();
+
+				/**
 	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgbb.BasicBlock#isGoBlock <em>Go Block</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -512,6 +532,14 @@ public interface ScgbbPackage extends EPackage {
 		 * @generated
 		 */
 		EReference BASIC_BLOCK__CONDITIONAL = eINSTANCE.getBasicBlock_Conditional();
+
+								/**
+		 * The meta object literal for the '<em><b>Pre Guard</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BASIC_BLOCK__PRE_GUARD = eINSTANCE.getBasicBlock_PreGuard();
 
 								/**
 		 * The meta object literal for the '<em><b>Go Block</b></em>' attribute feature.

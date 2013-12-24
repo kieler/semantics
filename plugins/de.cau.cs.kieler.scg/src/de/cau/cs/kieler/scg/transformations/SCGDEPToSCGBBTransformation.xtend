@@ -156,27 +156,30 @@ class SCGDEPToSCGBBTransformation {
     ) {
         val basicBlock = ScgbbFactory::eINSTANCE.createBasicBlock
         
-        if (schedulingBlock.nodes.head instanceof Depth) { basicBlock.blockType = BlockType::DEPTH }
+        if (predecessorBlocks.size == 0) {
+        	basicBlock.goBlock = true
+        }
+        if (schedulingBlock.nodes.head instanceof Depth) { 
+        	basicBlock.blockType = BlockType::DEPTH
+        	basicBlock.preGuard = predecessorBlocks.head.guards.head
+        	predecessorBlocks.clear
+        }
         if (schedulingBlock.nodes.head instanceof Join) { basicBlock.blockType = BlockType::SYNCHRONIZER }
       
         basicBlock.guards.add(guard)
         basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock(basicBlock))
         basicBlock.predecessors.addAll(predecessorBlocks)
-        if (basicBlock.predecessors.size == 0) {
-        	basicBlock.goBlock = true
-        } else {
-        	basicBlock.predecessors.forEach[ 
-        		val lastNode = schedulingBlocks.last.nodes.last
-        		if (lastNode instanceof Conditional) {
-        			if (basicBlock.schedulingBlocks.head.nodes.head == (lastNode as Conditional).then.target) {
-	        			basicBlock.blockType =  BlockType::TRUEBRANCH
-        			} else {
-	        			basicBlock.blockType =  BlockType::ELSEBRANCH
-        			}
-        			basicBlock.conditional = lastNode as Conditional
-        		}
-        	]
-        }
+      	basicBlock.predecessors.forEach[ 
+       		val lastNode = schedulingBlocks.last.nodes.last
+       		if (lastNode instanceof Conditional) {
+       			if (basicBlock.schedulingBlocks.head.nodes.head == (lastNode as Conditional).then.target) {
+        			basicBlock.blockType =  BlockType::TRUEBRANCH
+       			} else {
+        			basicBlock.blockType =  BlockType::ELSEBRANCH
+       			}
+       			basicBlock.conditional = lastNode as Conditional
+       		}
+       	]
         scg.basicBlocks.add(basicBlock)
         
         basicBlock

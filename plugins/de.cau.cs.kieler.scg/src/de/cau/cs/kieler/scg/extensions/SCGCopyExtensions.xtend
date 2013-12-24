@@ -153,6 +153,7 @@ class SCGCopyExtensions {
         	blockType = basicBlock.blockType
         	goBlock = basicBlock.goBlock
         	conditional = nodeMapping.get(basicBlock.conditional) as Conditional
+        	preGuard = valuedObjectMapping.get(basicBlock.preGuard)
         ]
                 
         basicBlockMapping.put(basicBlock, bb)

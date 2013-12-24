@@ -15,24 +15,16 @@ package de.cau.cs.kieler.scgbb.provider;
 
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
-
 import de.cau.cs.kieler.scg.provider.ScgbbEditPlugin;
-
 import de.cau.cs.kieler.scgbb.BasicBlock;
-import de.cau.cs.kieler.scgbb.BlockType;
 import de.cau.cs.kieler.scgbb.ScgbbFactory;
 import de.cau.cs.kieler.scgbb.ScgbbPackage;
-
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -80,9 +72,10 @@ public class BasicBlockItemProvider
 			super.getPropertyDescriptors(object);
 
 			addPredecessorsPropertyDescriptor(object);
+			addGoBlockPropertyDescriptor(object);
 			addBlockTypePropertyDescriptor(object);
 			addConditionalPropertyDescriptor(object);
-			addGoBlockPropertyDescriptor(object);
+			addPreGuardPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -145,6 +138,28 @@ public class BasicBlockItemProvider
 				 getString("_UI_BasicBlock_conditional_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_BasicBlock_conditional_feature", "_UI_BasicBlock_type"),
 				 ScgbbPackage.Literals.BASIC_BLOCK__CONDITIONAL,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+				/**
+	 * This adds a property descriptor for the Pre Guard feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addPreGuardPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_BasicBlock_preGuard_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_BasicBlock_preGuard_feature", "_UI_BasicBlock_type"),
+				 ScgbbPackage.Literals.BASIC_BLOCK__PRE_GUARD,
 				 true,
 				 false,
 				 true,
@@ -225,11 +240,8 @@ public class BasicBlockItemProvider
 	 */
     @Override
     public String getText(Object object) {
-		BlockType labelValue = ((BasicBlock)object).getBlockType();
-		String label = labelValue == null ? null : labelValue.toString();
-		return label == null || label.length() == 0 ?
-			getString("_UI_BasicBlock_type") :
-			getString("_UI_BasicBlock_type") + " " + label;
+		BasicBlock basicBlock = (BasicBlock)object;
+		return getString("_UI_BasicBlock_type") + " " + basicBlock.isGoBlock();
 	}
 
     /**
@@ -244,8 +256,8 @@ public class BasicBlockItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(BasicBlock.class)) {
-			case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
 			case ScgbbPackage.BASIC_BLOCK__GO_BLOCK:
+			case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
