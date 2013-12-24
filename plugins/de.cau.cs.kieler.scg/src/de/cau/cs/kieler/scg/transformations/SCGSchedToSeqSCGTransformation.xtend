@@ -29,6 +29,7 @@ import de.cau.cs.kieler.scgsched.SCGraphSched
 import de.cau.cs.kieler.scgsched.Schedule
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scgsched.GuardExpression
 
 /** 
  * SCGSched to Seq SCG Transformation 
@@ -59,17 +60,17 @@ class SCGSchedToSeqSCGTransformation {
         		it.addToValuedObjectMapping(newGuard)
         		scg.valuedObjects.add(newGuard)
         	]
-//        	it.subGuards.forEach[
-//        		val newGuard = it.copy
-//        		it.addToValuedObjectMapping(newGuard)
-//        		scg.valuedObjects.add(newGuard)
-//        	]
-//        	it.emptyGuards.forEach[
-//        		val newGuard = it.copy
-//        		it.addToValuedObjectMapping(newGuard)
-//        		scg.valuedObjects.add(newGuard)
-//        	]
         ]
+//		scgSched.guards.forEach[
+//			val newVO = it.valuedObject.copy
+//			it.valuedObject.addToValuedObjectMapping(newVO)
+//			scg.valuedObjects.add(newVO)
+//			it.emptyExpressions.forEach[
+//				val newEmptyVO = it.valuedObject.copy
+//				it.valuedObject.addToValuedObjectMapping(newEmptyVO)
+//				scg.valuedObjects.add(newEmptyVO)
+//			]
+//		]
         
         val entry = ScgFactory::eINSTANCE.createEntry
     	val entryFlow = ScgFactory::eINSTANCE.createControlFlow
@@ -84,30 +85,22 @@ class SCGSchedToSeqSCGTransformation {
     }
     
     def transformSchedule(Schedule schedule, SCGraph scg, ControlFlow controlFlow) {
+    	val scgSched = schedule.eContainer as SCGraphSched
     	val nextFlows = <ControlFlow> newArrayList
     	nextFlows.add(controlFlow)
     	for (sb : schedule.schedulingBlocks) {
     		val basicBlock = sb.eContainer as BasicBlock
     		val newAssignment = ScgFactory::eINSTANCE.createAssignment
     		newAssignment.valuedObject = sb.guard.copyValuedObject
-    		var Expression expression
     		
-//    		if (basicBlock.activationExpressions.size>1) {
-//    			expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
-//    			(expression as OperatorExpression).setOperator(OperatorType::OR)
-//    			val myExp = expression
-//    			basicBlock.activationExpressions.forEach[
-//    				(myExp as OperatorExpression).subExpressions.add(it.guardExpression)
-//    			]
-//    		} else {
-//    			expression = basicBlock.activationExpressions.head.guardExpression
-//    		}
+    		var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == sb.guard].head
     		
-    		// FIXME: expression should never be null
-    		// This fixes unimplemented features in the synchronizer 
-    		if (expression == null) expression = sb.guard.reference
-    		
-    		newAssignment.assignment = expression.copyExpression
+    		if (guardExpression != null && guardExpression.expression != null) {
+    			newAssignment.assignment = guardExpression.expression.copyExpression
+    		} else {
+    			// TODO: throw exception
+    			newAssignment.assignment = newAssignment.valuedObject.reference
+    		}
     		nextFlows.forEach[it.target = newAssignment]
     		nextFlows.clear
     		

@@ -53,8 +53,8 @@ class SCGraphShowDiagramCombination extends UpdateXtextModelKLighDCombination {
         // most certainly a "part activated" event will follow and subsequently a further
         //  selection event if the selection of the newly active part is changed, too! 
         if (this.latestState() == es 
-//             || es.eventType == PartTrigger.EventType::VIEW_DEACTIVATED) {
-        ) {
+             || es.eventType == PartTrigger.EventType::VIEW_DEACTIVATED) {
+//        ) {
            return;
         }
         
