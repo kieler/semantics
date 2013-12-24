@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scgsched.impl.EmptyExpressionsImpl#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.impl.EmptyExpressionsImpl#getThreadExitObject <em>Thread Exit Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.impl.EmptyExpressionsImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
@@ -44,7 +45,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implements EmptyExpressions {
 	/**
-	 * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' containment reference.
+	 * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getValuedObject()
@@ -52,6 +53,16 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 	 * @ordered
 	 */
 	protected ValuedObject valuedObject;
+
+	/**
+	 * The cached value of the '{@link #getThreadExitObject() <em>Thread Exit Object</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getThreadExitObject()
+	 * @generated
+	 * @ordered
+	 */
+	protected ValuedObject threadExitObject;
 
 	/**
 	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -88,6 +99,14 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 	 * @generated
 	 */
 	public ValuedObject getValuedObject() {
+		if (valuedObject != null && valuedObject.eIsProxy()) {
+			InternalEObject oldValuedObject = (InternalEObject)valuedObject;
+			valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
+			if (valuedObject != oldValuedObject) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT, oldValuedObject, valuedObject));
+			}
+		}
 		return valuedObject;
 	}
 
@@ -96,14 +115,8 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetValuedObject(ValuedObject newValuedObject, NotificationChain msgs) {
-		ValuedObject oldValuedObject = valuedObject;
-		valuedObject = newValuedObject;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT, oldValuedObject, newValuedObject);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
+	public ValuedObject basicGetValuedObject() {
+		return valuedObject;
 	}
 
 	/**
@@ -112,17 +125,48 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 	 * @generated
 	 */
 	public void setValuedObject(ValuedObject newValuedObject) {
-		if (newValuedObject != valuedObject) {
-			NotificationChain msgs = null;
-			if (valuedObject != null)
-				msgs = ((InternalEObject)valuedObject).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT, null, msgs);
-			if (newValuedObject != null)
-				msgs = ((InternalEObject)newValuedObject).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT, null, msgs);
-			msgs = basicSetValuedObject(newValuedObject, msgs);
-			if (msgs != null) msgs.dispatch();
+		ValuedObject oldValuedObject = valuedObject;
+		valuedObject = newValuedObject;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT, oldValuedObject, valuedObject));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ValuedObject getThreadExitObject() {
+		if (threadExitObject != null && threadExitObject.eIsProxy()) {
+			InternalEObject oldThreadExitObject = (InternalEObject)threadExitObject;
+			threadExitObject = (ValuedObject)eResolveProxy(oldThreadExitObject);
+			if (threadExitObject != oldThreadExitObject) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgschedPackage.EMPTY_EXPRESSIONS__THREAD_EXIT_OBJECT, oldThreadExitObject, threadExitObject));
+			}
 		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT, newValuedObject, newValuedObject));
+		return threadExitObject;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ValuedObject basicGetThreadExitObject() {
+		return threadExitObject;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setThreadExitObject(ValuedObject newThreadExitObject) {
+		ValuedObject oldThreadExitObject = threadExitObject;
+		threadExitObject = newThreadExitObject;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.EMPTY_EXPRESSIONS__THREAD_EXIT_OBJECT, oldThreadExitObject, threadExitObject));
 	}
 
 	/**
@@ -176,8 +220,6 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT:
-				return basicSetValuedObject(null, msgs);
 			case ScgschedPackage.EMPTY_EXPRESSIONS__EXPRESSION:
 				return basicSetExpression(null, msgs);
 		}
@@ -193,7 +235,11 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT:
-				return getValuedObject();
+				if (resolve) return getValuedObject();
+				return basicGetValuedObject();
+			case ScgschedPackage.EMPTY_EXPRESSIONS__THREAD_EXIT_OBJECT:
+				if (resolve) return getThreadExitObject();
+				return basicGetThreadExitObject();
 			case ScgschedPackage.EMPTY_EXPRESSIONS__EXPRESSION:
 				return getExpression();
 		}
@@ -210,6 +256,9 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 		switch (featureID) {
 			case ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT:
 				setValuedObject((ValuedObject)newValue);
+				return;
+			case ScgschedPackage.EMPTY_EXPRESSIONS__THREAD_EXIT_OBJECT:
+				setThreadExitObject((ValuedObject)newValue);
 				return;
 			case ScgschedPackage.EMPTY_EXPRESSIONS__EXPRESSION:
 				setExpression((Expression)newValue);
@@ -229,6 +278,9 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 			case ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT:
 				setValuedObject((ValuedObject)null);
 				return;
+			case ScgschedPackage.EMPTY_EXPRESSIONS__THREAD_EXIT_OBJECT:
+				setThreadExitObject((ValuedObject)null);
+				return;
 			case ScgschedPackage.EMPTY_EXPRESSIONS__EXPRESSION:
 				setExpression((Expression)null);
 				return;
@@ -246,6 +298,8 @@ public class EmptyExpressionsImpl extends MinimalEObjectImpl.Container implement
 		switch (featureID) {
 			case ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT:
 				return valuedObject != null;
+			case ScgschedPackage.EMPTY_EXPRESSIONS__THREAD_EXIT_OBJECT:
+				return threadExitObject != null;
 			case ScgschedPackage.EMPTY_EXPRESSIONS__EXPRESSION:
 				return expression != null;
 		}

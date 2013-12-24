@@ -372,12 +372,13 @@ class SCGCopyExtensions {
 		valuedObjectMapping.put(object, newObject)    	
     }
     
-    def Expression splitOperatorExpression(OperatorExpression expression) {
-        var newExp = expression
-        if (expression.subExpressions.size > 2) {
-            var exp = expression.copy
+    def Expression splitOperatorExpression(Expression expression) {
+    	if (!(expression instanceof OperatorExpression)) return expression
+    	var newExp = expression as OperatorExpression
+        if ((expression as OperatorExpression).subExpressions.size > 2) {
+            var exp = expression.copy as OperatorExpression
             newExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            newExp.operator = expression.operator
+            newExp.operator = exp.operator
             newExp.subExpressions.add(exp.subExpressions.get(0))
             newExp.subExpressions.add(exp.splitOperatorExpression)
         }

@@ -211,8 +211,17 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getEmptyExpressions_Expression() {
+	public EReference getEmptyExpressions_ThreadExitObject() {
 		return (EReference)emptyExpressionsEClass.getEStructuralFeatures().get(1);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getEmptyExpressions_Expression() {
+		return (EReference)emptyExpressionsEClass.getEStructuralFeatures().get(2);
 	}
 
 				/**
@@ -332,6 +341,7 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 
 		emptyExpressionsEClass = createEClass(EMPTY_EXPRESSIONS);
 		createEReference(emptyExpressionsEClass, EMPTY_EXPRESSIONS__VALUED_OBJECT);
+		createEReference(emptyExpressionsEClass, EMPTY_EXPRESSIONS__THREAD_EXIT_OBJECT);
 		createEReference(emptyExpressionsEClass, EMPTY_EXPRESSIONS__EXPRESSION);
 
 		guardExpressionEClass = createEClass(GUARD_EXPRESSION);
@@ -392,7 +402,8 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 		initEReference(getSCGraphSched_Guards(), this.getGuardExpression(), null, "guards", null, 0, -1, SCGraphSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(emptyExpressionsEClass, EmptyExpressions.class, "EmptyExpressions", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getEmptyExpressions_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, EmptyExpressions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getEmptyExpressions_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, EmptyExpressions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getEmptyExpressions_ThreadExitObject(), theKExpressionsPackage.getValuedObject(), null, "threadExitObject", null, 1, 1, EmptyExpressions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getEmptyExpressions_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 1, 1, EmptyExpressions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(guardExpressionEClass, GuardExpression.class, "GuardExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

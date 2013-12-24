@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getThreadExitObject <em>Thread Exit Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
@@ -37,30 +38,56 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface EmptyExpressions extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Valued Object</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Valued Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Valued Object</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Valued Object</em>' containment reference.
+	 * @return the value of the '<em>Valued Object</em>' reference.
 	 * @see #setValuedObject(ValuedObject)
 	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getEmptyExpressions_ValuedObject()
-	 * @model containment="true" required="true"
+	 * @model required="true"
 	 * @generated
 	 */
 	ValuedObject getValuedObject();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getValuedObject <em>Valued Object</em>}' containment reference.
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getValuedObject <em>Valued Object</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Valued Object</em>' containment reference.
+	 * @param value the new value of the '<em>Valued Object</em>' reference.
 	 * @see #getValuedObject()
 	 * @generated
 	 */
 	void setValuedObject(ValuedObject value);
+
+	/**
+	 * Returns the value of the '<em><b>Thread Exit Object</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Thread Exit Object</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Thread Exit Object</em>' reference.
+	 * @see #setThreadExitObject(ValuedObject)
+	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getEmptyExpressions_ThreadExitObject()
+	 * @model required="true"
+	 * @generated
+	 */
+	ValuedObject getThreadExitObject();
+
+	/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getThreadExitObject <em>Thread Exit Object</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Thread Exit Object</em>' reference.
+	 * @see #getThreadExitObject()
+	 * @generated
+	 */
+	void setThreadExitObject(ValuedObject value);
 
 	/**
 	 * Returns the value of the '<em><b>Expression</b></em>' containment reference.

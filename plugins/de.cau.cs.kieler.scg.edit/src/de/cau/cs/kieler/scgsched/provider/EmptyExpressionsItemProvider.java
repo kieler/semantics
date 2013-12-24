@@ -24,6 +24,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -68,8 +69,54 @@ public class EmptyExpressionsItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addValuedObjectPropertyDescriptor(object);
+			addThreadExitObjectPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Valued Object feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addValuedObjectPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_EmptyExpressions_valuedObject_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EmptyExpressions_valuedObject_feature", "_UI_EmptyExpressions_type"),
+				 ScgschedPackage.Literals.EMPTY_EXPRESSIONS__VALUED_OBJECT,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Thread Exit Object feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addThreadExitObjectPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_EmptyExpressions_threadExitObject_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_EmptyExpressions_threadExitObject_feature", "_UI_EmptyExpressions_type"),
+				 ScgschedPackage.Literals.EMPTY_EXPRESSIONS__THREAD_EXIT_OBJECT,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
@@ -84,7 +131,6 @@ public class EmptyExpressionsItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__VALUED_OBJECT);
 			childrenFeatures.add(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__EXPRESSION);
 		}
 		return childrenFeatures;
@@ -137,7 +183,6 @@ public class EmptyExpressionsItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(EmptyExpressions.class)) {
-			case ScgschedPackage.EMPTY_EXPRESSIONS__VALUED_OBJECT:
 			case ScgschedPackage.EMPTY_EXPRESSIONS__EXPRESSION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
@@ -155,11 +200,6 @@ public class EmptyExpressionsItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ScgschedPackage.Literals.EMPTY_EXPRESSIONS__VALUED_OBJECT,
-				 KExpressionsFactory.eINSTANCE.createValuedObject()));
 
 		newChildDescriptors.add
 			(createChildParameter

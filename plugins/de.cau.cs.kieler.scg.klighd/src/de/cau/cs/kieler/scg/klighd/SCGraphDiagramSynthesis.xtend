@@ -262,8 +262,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -- STATIC DECLARATIONS 
     // -------------------------------------------------------------------------#
     
-    private static val String KLIGHDSPACERCHAR = " "
-    private static val String KLIGHDSPACER = KLIGHDSPACERCHAR + KLIGHDSPACERCHAR + KLIGHDSPACERCHAR + KLIGHDSPACERCHAR
+    private static val byte KLIGHDSPACERCHARCODE = 255 as byte
+    private static val String KLIGHDSPACERCHAR = "" + KLIGHDSPACERCHARCODE as char
+    private static val String KLIGHDSPACER = KLIGHDSPACERCHAR + KLIGHDSPACERCHAR + KLIGHDSPACERCHAR + KLIGHDSPACERCHAR 
     
     private static val KColor SCCHARTSGRAY = RENDERING_FACTORY.createKColor()=>[it.red=240;it.green=240;it.blue=240];
     private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor()=>[it.red=248;it.green=249;it.blue=253];
@@ -428,7 +429,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
 //                it.setGridPlacement(1);
                 if (s.valuedObject != null && s.assignment != null) {
-                    var assignmentStr = s.valuedObject.name + " = " + serializer.serialize(s.assignment.copy).removeParenthesis
+                    var assignmentStr = s.valuedObject.name + " = " + serializer.serialize(s.assignment.copy.splitOperatorExpression).removeParenthesis
                     if (assignmentStr.contains("&")) {
                         assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
                         assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
@@ -467,7 +468,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             figure => [ node.setMinimalNodeSize(75, 25);
                 if (s.condition != null)  
-                    node.KRendering.add(factory.createKText.of(serializer.serialize(s.condition.copy).removeParenthesis)
+                    node.KRendering.add(factory.createKText.of(serializer.serialize(s.condition.copy.splitOperatorExpression).removeParenthesis)
                         .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0)
                         .putToLookUpWith(s)
                     );

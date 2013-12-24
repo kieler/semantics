@@ -96,6 +96,19 @@ class SCGSchedToSeqSCGTransformation {
     		var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == sb.guard].head
     		
     		if (guardExpression != null && guardExpression.expression != null) {
+    			
+    			guardExpression.emptyExpressions.forEach[
+    				val eeAssignment = ScgFactory::eINSTANCE.createAssignment
+    				eeAssignment.valuedObject = it.valuedObject
+    				eeAssignment.assignment = it.expression.copyExpression
+    				scg.nodes.add(eeAssignment)
+		    		nextFlows.forEach[it.target = eeAssignment]
+		    		nextFlows.clear		    		
+		    		val nextFlow = ScgFactory::eINSTANCE.createControlFlow
+    				eeAssignment.next = nextFlow
+    				nextFlows.add(nextFlow)
+    			]
+    			
     			newAssignment.assignment = guardExpression.expression.copyExpression
     		} else {
     			// TODO: throw exception

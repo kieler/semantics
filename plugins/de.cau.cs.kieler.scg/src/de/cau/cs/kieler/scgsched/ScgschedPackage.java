@@ -171,7 +171,7 @@ public interface ScgschedPackage extends EPackage {
 	int EMPTY_EXPRESSIONS = 1;
 
 				/**
-	 * The feature id for the '<em><b>Valued Object</b></em>' containment reference.
+	 * The feature id for the '<em><b>Valued Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -180,13 +180,22 @@ public interface ScgschedPackage extends EPackage {
 	int EMPTY_EXPRESSIONS__VALUED_OBJECT = 0;
 
 				/**
+	 * The feature id for the '<em><b>Thread Exit Object</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EMPTY_EXPRESSIONS__THREAD_EXIT_OBJECT = 1;
+
+				/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EMPTY_EXPRESSIONS__EXPRESSION = 1;
+	int EMPTY_EXPRESSIONS__EXPRESSION = 2;
 
 				/**
 	 * The number of structural features of the '<em>Empty Expressions</em>' class.
@@ -195,7 +204,7 @@ public interface ScgschedPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EMPTY_EXPRESSIONS_FEATURE_COUNT = 2;
+	int EMPTY_EXPRESSIONS_FEATURE_COUNT = 3;
 
 				/**
 	 * The number of operations of the '<em>Empty Expressions</em>' class.
@@ -429,15 +438,26 @@ public interface ScgschedPackage extends EPackage {
 	EClass getEmptyExpressions();
 
 				/**
-	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getValuedObject <em>Valued Object</em>}'.
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getValuedObject <em>Valued Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Valued Object</em>'.
+	 * @return the meta object for the reference '<em>Valued Object</em>'.
 	 * @see de.cau.cs.kieler.scgsched.EmptyExpressions#getValuedObject()
 	 * @see #getEmptyExpressions()
 	 * @generated
 	 */
 	EReference getEmptyExpressions_ValuedObject();
+
+				/**
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getThreadExitObject <em>Thread Exit Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Thread Exit Object</em>'.
+	 * @see de.cau.cs.kieler.scgsched.EmptyExpressions#getThreadExitObject()
+	 * @see #getEmptyExpressions()
+	 * @generated
+	 */
+	EReference getEmptyExpressions_ThreadExitObject();
 
 				/**
 	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgsched.EmptyExpressions#getExpression <em>Expression</em>}'.
@@ -621,12 +641,20 @@ public interface ScgschedPackage extends EPackage {
 		EClass EMPTY_EXPRESSIONS = eINSTANCE.getEmptyExpressions();
 
 								/**
-		 * The meta object literal for the '<em><b>Valued Object</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference EMPTY_EXPRESSIONS__VALUED_OBJECT = eINSTANCE.getEmptyExpressions_ValuedObject();
+
+								/**
+		 * The meta object literal for the '<em><b>Thread Exit Object</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EMPTY_EXPRESSIONS__THREAD_EXIT_OBJECT = eINSTANCE.getEmptyExpressions_ThreadExitObject();
 
 								/**
 		 * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.

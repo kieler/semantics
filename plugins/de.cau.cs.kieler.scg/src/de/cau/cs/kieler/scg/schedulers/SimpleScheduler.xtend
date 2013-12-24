@@ -32,6 +32,8 @@ import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scgbb.BlockType
+import de.cau.cs.kieler.scg.synchronizer.SurfaceSynchronizer
+import de.cau.cs.kieler.scg.Join
 
 /** 
  * SimpleScheduler
@@ -119,10 +121,17 @@ class SimpleScheduler extends AbstractSCGScheduler {
     			gExpr.expression = scg.findValuedObjectByName(GOGUARDNAME).reference
     		} 
     		else if (basicBlock.blockType == BlockType::DEPTH) {
-    		
+    			// FIXME: depth nodes should not be dependent to predecessors!
+    			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+    			expression.setOperator(OperatorType::PRE)
+    			expression.subExpressions.add(basicBlock.predecessors.head.guards.last.reference)
+    			gExpr.expression = expression
     		}
     		else if (basicBlock.blockType == BlockType::SYNCHRONIZER) {
-
+				val SurfaceSynchronizer synchronizer = Guice.createInjector().getInstance(typeof(SurfaceSynchronizer))
+				val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join)
+				scg.valuedObjects.addAll(joinData.valuedObjects)
+				return joinData.guardExpression			
 			} 
 			else {
 				val bb = schedulingBlock.basicBlock
