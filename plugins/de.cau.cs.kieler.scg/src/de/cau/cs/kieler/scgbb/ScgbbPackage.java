@@ -199,7 +199,7 @@ public interface ScgbbPackage extends EPackage {
     int SCHEDULING_BLOCK__NODES = 0;
 
     /**
-	 * The feature id for the '<em><b>Dependencies</b></em>' reference list.
+	 * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -347,10 +347,10 @@ public interface ScgbbPackage extends EPackage {
     EReference getSchedulingBlock_Nodes();
 
     /**
-	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scgbb.SchedulingBlock#getDependencies <em>Dependencies</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgbb.SchedulingBlock#getDependencies <em>Dependencies</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Dependencies</em>'.
+	 * @return the meta object for the containment reference list '<em>Dependencies</em>'.
 	 * @see de.cau.cs.kieler.scgbb.SchedulingBlock#getDependencies()
 	 * @see #getSchedulingBlock()
 	 * @generated
@@ -495,7 +495,7 @@ public interface ScgbbPackage extends EPackage {
         EReference SCHEDULING_BLOCK__NODES = eINSTANCE.getSchedulingBlock_Nodes();
 
         /**
-		 * The meta object literal for the '<em><b>Dependencies</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Dependencies</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
 		 * @generated

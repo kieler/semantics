@@ -61,7 +61,7 @@ public interface SchedulingBlock extends EObject {
     EList<Node> getNodes();
 
     /**
-	 * Returns the value of the '<em><b>Dependencies</b></em>' reference list.
+	 * Returns the value of the '<em><b>Dependencies</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.scgdep.Dependency}.
 	 * <!-- begin-user-doc -->
      * <p>
@@ -69,9 +69,9 @@ public interface SchedulingBlock extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Dependencies</em>' reference list.
+	 * @return the value of the '<em>Dependencies</em>' containment reference list.
 	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getSchedulingBlock_Dependencies()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
     EList<Dependency> getDependencies();
