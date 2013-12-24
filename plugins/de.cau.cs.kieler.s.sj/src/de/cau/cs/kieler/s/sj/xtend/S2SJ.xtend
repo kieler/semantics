@@ -40,6 +40,7 @@ import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import java.util.List
+import de.cau.cs.kieler.s.s.Assignment
 
 //import static de.cau.cs.kieler.s.sj.xtend.S2SJ.*
 
@@ -224,6 +225,12 @@ public class ''' + className + ''' extends SJLProgramWithSignals<State> implemen
    }
 
    // -------------------------------------------------------------------------   
+
+   // Expand a ASSIGNMENT instruction.
+   def dispatch CharSequence expand(Assignment assignment) {
+       '''«assignment.variable.expand » = «assignment.expression.expand»;'''
+   }   
+
       
    // Expand a PAUSE instruction.
        //«pauseInstruction.continuation.name»

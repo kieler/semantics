@@ -350,12 +350,15 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAwaitParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
 		private final RuleCall cPrioParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
 		private final RuleCall cHostCodeInstructionParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
+		private final RuleCall cAssignmentParserRuleCall_13 = (RuleCall)cAlternatives.eContents().get(13);
 		
 		//Instruction:
-		//	Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction;
+		//	Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction |
+		//	Assignment;
 		public ParserRule getRule() { return rule; }
 
-		//Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction
+		//Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction |
+		//Assignment
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Halt
@@ -396,6 +399,45 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 		//HostCodeInstruction
 		public RuleCall getHostCodeInstructionParserRuleCall_12() { return cHostCodeInstructionParserRuleCall_12; }
+
+		//Assignment
+		public RuleCall getAssignmentParserRuleCall_13() { return cAssignmentParserRuleCall_13; }
+	}
+
+	public class AssignmentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Assignment");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cVariableAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cVariableValuedObjectCrossReference_0_0 = (CrossReference)cVariableAssignment_0.eContents().get(0);
+		private final RuleCall cVariableValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cVariableValuedObjectCrossReference_0_0.eContents().get(1);
+		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
+		
+		//Assignment:
+		//	variable=[kexpressions::ValuedObject] "=" expression=Expression;
+		public ParserRule getRule() { return rule; }
+
+		//variable=[kexpressions::ValuedObject] "=" expression=Expression
+		public Group getGroup() { return cGroup; }
+
+		//variable=[kexpressions::ValuedObject]
+		public Assignment getVariableAssignment_0() { return cVariableAssignment_0; }
+
+		//[kexpressions::ValuedObject]
+		public CrossReference getVariableValuedObjectCrossReference_0_0() { return cVariableValuedObjectCrossReference_0_0; }
+
+		//ID
+		public RuleCall getVariableValuedObjectIDTerminalRuleCall_0_0_1() { return cVariableValuedObjectIDTerminalRuleCall_0_0_1; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
+
+		//expression=Expression
+		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
+
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_2_0() { return cExpressionExpressionParserRuleCall_2_0; }
 	}
 
 	public class PrioElements extends AbstractParserRuleElementFinder {
@@ -1013,6 +1055,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	private HostCodeInstructionElements pHostCodeInstruction;
 	private TerminalRule tHOSTCODESTRINGTERMINAL;
 	private InstructionElements pInstruction;
+	private AssignmentElements pAssignment;
 	private PrioElements pPrio;
 	private TransElements pTrans;
 	private ForkElements pFork;
@@ -1143,13 +1186,24 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//Instruction:
-	//	Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction;
+	//	Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction |
+	//	Assignment;
 	public InstructionElements getInstructionAccess() {
 		return (pInstruction != null) ? pInstruction : (pInstruction = new InstructionElements());
 	}
 	
 	public ParserRule getInstructionRule() {
 		return getInstructionAccess().getRule();
+	}
+
+	//Assignment:
+	//	variable=[kexpressions::ValuedObject] "=" expression=Expression;
+	public AssignmentElements getAssignmentAccess() {
+		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
+	}
+	
+	public ParserRule getAssignmentRule() {
+		return getAssignmentAccess().getRule();
 	}
 
 	//// Change priority

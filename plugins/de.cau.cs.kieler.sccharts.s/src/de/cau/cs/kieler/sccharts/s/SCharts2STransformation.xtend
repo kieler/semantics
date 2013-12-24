@@ -391,7 +391,7 @@ class SCCharts2STransformation {
     // Convert SyncChart transition effects and add them to an instructions list.
     def dispatch void convertToSEffect(Emission effect, List<Instruction> instructions) {
         val sSignal = effect.valuedObject.sValuedObject
-        val sEmit = sSignal.emit
+        val sEmit = sSignal.createEmit
         if (effect.newValue != null) {
             val sSignalValue = effect.newValue.convertToSExpression;
             sEmit.setValue(sSignalValue);

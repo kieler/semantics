@@ -36,6 +36,7 @@ import java.util.HashMap
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.EntryAction
 
 /**
  * SCCharts CoreTransformation Extensions.
@@ -610,6 +611,8 @@ class SCChartsCoreTransformation {
         }
         targetRootRegion;
     }
+    
+    
 
     def void transformDeferred(State state) {
         val incomingDeferredTransitions = state.incomingTransitions.filter[deferred];
@@ -634,13 +637,14 @@ class SCChartsCoreTransformation {
             // Prevent any immediate internal behavior of the state and any immediate outgoing
             // transition in case deferVariable is set to TRUE, i.e., the state was entered
             // by a deferred transition
-            val allInternalImmediateTransitions = state.allContainedTransitions.filter[immediate].toList
-            for (transition : allInternalImmediateTransitions) {
+            val allInternalImmediateActions = state.allContainedActions
+                                            .filter(e | e.immediate || e instanceof EntryAction).toList
+            for (action : allInternalImmediateActions) {
                 val deferTest = not(deferVariable.reference)
-                if (transition.trigger != null) {
-                    transition.setTrigger(deferTest.and(transition.trigger))
+                if (action.trigger != null) {
+                    action.setTrigger(deferTest.and(action.trigger))
                 } else {
-                    transition.setTrigger(deferTest)
+                    action.setTrigger(deferTest)
                 }
             }
         }

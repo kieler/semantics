@@ -214,6 +214,43 @@ public interface SPackage extends EPackage
   int HOST_CODE_INSTRUCTION_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl <em>Assignment</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.s.s.impl.AssignmentImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAssignment()
+   * @generated
+   */
+  int ASSIGNMENT = 4;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__VARIABLE = INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Assignment</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.PrioImpl <em>Prio</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -221,7 +258,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrio()
    * @generated
    */
-  int PRIO = 4;
+  int PRIO = 5;
 
   /**
    * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -258,7 +295,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getTrans()
    * @generated
    */
-  int TRANS = 5;
+  int TRANS = 6;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -286,7 +323,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getFork()
    * @generated
    */
-  int FORK = 6;
+  int FORK = 7;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -323,7 +360,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getJoin()
    * @generated
    */
-  int JOIN = 7;
+  int JOIN = 8;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -351,7 +388,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPause()
    * @generated
    */
-  int PAUSE = 8;
+  int PAUSE = 9;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -379,7 +416,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getTerm()
    * @generated
    */
-  int TERM = 9;
+  int TERM = 10;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -407,7 +444,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getHalt()
    * @generated
    */
-  int HALT = 10;
+  int HALT = 11;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -435,7 +472,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getLocalSignal()
    * @generated
    */
-  int LOCAL_SIGNAL = 11;
+  int LOCAL_SIGNAL = 12;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -463,7 +500,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getEmit()
    * @generated
    */
-  int EMIT = 12;
+  int EMIT = 13;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -509,7 +546,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAbort()
    * @generated
    */
-  int ABORT = 13;
+  int ABORT = 14;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -537,7 +574,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getIf()
    * @generated
    */
-  int IF = 14;
+  int IF = 15;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -583,7 +620,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAwait()
    * @generated
    */
-  int AWAIT = 15;
+  int AWAIT = 16;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -751,6 +788,38 @@ public interface SPackage extends EPackage
    * @generated
    */
   EClass getInstruction();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Assignment <em>Assignment</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Assignment</em>'.
+   * @see de.cau.cs.kieler.s.s.Assignment
+   * @generated
+   */
+  EClass getAssignment();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Assignment#getVariable <em>Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Variable</em>'.
+   * @see de.cau.cs.kieler.s.s.Assignment#getVariable()
+   * @see #getAssignment()
+   * @generated
+   */
+  EReference getAssignment_Variable();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Assignment#getExpression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.s.s.Assignment#getExpression()
+   * @see #getAssignment()
+   * @generated
+   */
+  EReference getAssignment_Expression();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Prio <em>Prio</em>}'.
@@ -1215,6 +1284,32 @@ public interface SPackage extends EPackage
      * @generated
      */
     EClass INSTRUCTION = eINSTANCE.getInstruction();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl <em>Assignment</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.s.s.impl.AssignmentImpl
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAssignment()
+     * @generated
+     */
+    EClass ASSIGNMENT = eINSTANCE.getAssignment();
+
+    /**
+     * The meta object literal for the '<em><b>Variable</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ASSIGNMENT__VARIABLE = eINSTANCE.getAssignment_Variable();
+
+    /**
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ASSIGNMENT__EXPRESSION = eINSTANCE.getAssignment_Expression();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.PrioImpl <em>Prio</em>}' class.

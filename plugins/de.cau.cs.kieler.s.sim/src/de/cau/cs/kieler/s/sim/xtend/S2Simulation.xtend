@@ -35,6 +35,7 @@ import org.eclipse.xtend.util.stdlib.CloningExtensions
 
 import de.cau.cs.kieler.s.sim.SSimPlugin
 import de.cau.cs.kieler.s.s.LocalSignal
+import de.cau.cs.kieler.s.s.Assignment
 
 /**
  * Transformation of S code into S code that is
@@ -86,6 +87,7 @@ class S2Simulation {
         //SIMPLE TEST
         if (
                (instruction instanceof Prio)
+               ||(instruction instanceof Assignment)
                ||(instruction instanceof Trans)
                ||(instruction instanceof Fork)
                ||(instruction instanceof Join)

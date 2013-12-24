@@ -40,6 +40,7 @@ import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.s.s.LocalSignal
+import de.cau.cs.kieler.s.s.Assignment
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -61,7 +62,8 @@ class S2SCC {
        «sTotalResetSignals(program)»
        «sReset(program)»
 
-       «sOutputs(program)»
+       «sOutputSignals(program)»
+       «sOutputVariables(program)»
 
        «/* Generate input functions that are then called my the main function's
        tick function of the module */»
@@ -171,10 +173,10 @@ class S2SCC {
     
     
     #define PRESENT_SCC(name) \
-    ((presentSigInt[name]) == 1) \
+    ((presentSigInt[name]) != 0) \
     
     #define PRE_PRESENT_SCC(name) \
-    ((presentSigIntPre[name]) == 1) \
+    ((presentSigIntPre[name]) != 0) \
 
     #define VAL_SCC(name) \
     (valSigInt[name]) \
@@ -229,7 +231,7 @@ class S2SCC {
    def sSetOutputFunction(Program program) {
        '''
     void callOutputs() {
-    «FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isOutput)»
+    «FOR signal : program.getValuedObjects().filter(e|e.isOutput)»
         OUTPUT_«signal.name»(PRESENT_SCC(«signal.name»));
     «ENDFOR»
         }
@@ -347,8 +349,26 @@ void setInputs(){
    // -------------------------------------------------------------------------   
 
    // Define output functions to return JSON for each s signal.
-   def sOutputs(Program program) {
+   def sOutputSignals(Program program) {
     '''«'''«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e | e.isOutput)»
+        void OUTPUT_«signal.name»(int status){
+        value = cJSON_CreateObject();
+        cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
+    «IF signal.type == ValueType::INT»
+cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
+    «ENDIF»
+        cJSON_AddItemToObject(value, "order", cJSON_CreateNumber(sigOrder[«signal.name»]));
+        cJSON_AddItemToObject(value, "prio", cJSON_CreateNumber(sigPrio[«signal.name»]));
+        cJSON_AddItemToObject(output, "«signal.name»", value);
+        //printf("«signal.name»:%d\n", status);
+        }
+    «ENDFOR»'''»
+    '''
+   }
+
+   // Define output functions to return JSON for each s variable.
+   def sOutputVariables(Program program) {
+    '''«'''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal].filter(e | e.isOutput)»
         void OUTPUT_«signal.name»(int status){
         value = cJSON_CreateObject();
         cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
@@ -427,6 +447,11 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    }
 
    // -------------------------------------------------------------------------   
+
+   // Expand a ASSIGNMENT instruction.
+   def dispatch CharSequence expand(Assignment assignment) {
+       '''«assignment.variable.expand » = «assignment.expression.expand»;'''
+   }   
       
    // Expand a PAUSE instruction.
    def dispatch CharSequence expand(Pause pauseInstruction) {
