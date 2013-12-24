@@ -96,7 +96,11 @@ class SCGCopyExtensions {
         // If source and target are at least basic block specializations, copy all basic block information.
         if (source instanceof SCGraphBB && target instanceof SCGraphBB) { 
             (source as SCGraphBB).basicBlocks.forEach[ it.copyBasicBlock(target as SCGraphBB) ]
-            (target as SCGraphBB).basicBlocks.forEach[ it.predecessors.add(revBasicBlockMapping.get(it)) ] 
+            (target as SCGraphBB).basicBlocks.forEach[bb|
+            	revBasicBlockMapping.get(bb).predecessors.forEach[
+   	           		bb.predecessors.add(basicBlockMapping.get(it))
+            	]
+            ] 
         }
         
         //If source and target are at least a scheduling specialization, copy all scheduling information.
@@ -160,7 +164,7 @@ class SCGCopyExtensions {
             sb.nodes.add(tnode)
             sb.dependencies.addAll(tnode.incoming.filter(typeof(Dependency)))  
         ]
-        schedulingBlock.dependencies.forEach[ sb.dependencies.add(dependencyMapping.get(it)) ]
+        //schedulingBlock.dependencies.forEach[ sb.dependencies.add(dependencyMapping.get(it)) ]
         
         sb => [
         	goBlock = schedulingBlock.goBlock
