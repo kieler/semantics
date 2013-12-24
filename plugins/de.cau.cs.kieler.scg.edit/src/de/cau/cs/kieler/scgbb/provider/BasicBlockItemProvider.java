@@ -81,7 +81,7 @@ public class BasicBlockItemProvider
 
 			addPredecessorsPropertyDescriptor(object);
 			addBlockTypePropertyDescriptor(object);
-			addConditionPropertyDescriptor(object);
+			addConditionalPropertyDescriptor(object);
 			addGoBlockPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
@@ -132,19 +132,19 @@ public class BasicBlockItemProvider
 	}
 
 				/**
-	 * This adds a property descriptor for the Condition feature.
+	 * This adds a property descriptor for the Conditional feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addConditionPropertyDescriptor(Object object) {
+	protected void addConditionalPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_BasicBlock_condition_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_BasicBlock_condition_feature", "_UI_BasicBlock_type"),
-				 ScgbbPackage.Literals.BASIC_BLOCK__CONDITION,
+				 getString("_UI_BasicBlock_conditional_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_BasicBlock_conditional_feature", "_UI_BasicBlock_type"),
+				 ScgbbPackage.Literals.BASIC_BLOCK__CONDITIONAL,
 				 true,
 				 false,
 				 true,

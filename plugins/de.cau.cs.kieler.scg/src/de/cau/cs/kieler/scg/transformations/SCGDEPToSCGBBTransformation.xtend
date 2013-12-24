@@ -36,6 +36,7 @@ import java.util.ArrayList
 import java.util.List
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scgbb.BlockType
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /** 
  * SCGDEP to SCGBB Transformation 
@@ -167,8 +168,12 @@ class SCGDEPToSCGBBTransformation {
         	basicBlock.predecessors.forEach[ 
         		val lastNode = schedulingBlocks.last.nodes.last
         		if (lastNode instanceof Conditional) {
-        			basicBlock.blockType =  BlockType::BRANCH
-        			basicBlock.condition = (lastNode as Conditional).condition
+        			if (basicBlock.schedulingBlocks.head.nodes.head == (lastNode as Conditional).then.target) {
+	        			basicBlock.blockType =  BlockType::TRUEBRANCH
+        			} else {
+	        			basicBlock.blockType =  BlockType::ELSEBRANCH
+        			}
+        			basicBlock.conditional = lastNode as Conditional
         		}
         	]
         }

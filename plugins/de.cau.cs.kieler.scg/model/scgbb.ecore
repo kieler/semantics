@@ -14,7 +14,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="predecessors" upperBound="-1"
         eType="#//BasicBlock"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockType" eType="#//BlockType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="conditional" eType="ecore:EClass scg.ecore#//Conditional"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="goBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SchedulingBlock">
@@ -27,7 +27,8 @@
   <eClassifiers xsi:type="ecore:EEnum" name="BlockType">
     <eLiterals name="NORMAL"/>
     <eLiterals name="DEPTH" value="1"/>
-    <eLiterals name="BRANCH" value="2"/>
-    <eLiterals name="SYNCHRONIZER" value="3"/>
+    <eLiterals name="TRUEBRANCH" value="2"/>
+    <eLiterals name="ELSEBRANCH" value="3"/>
+    <eLiterals name="SYNCHRONIZER" value="4"/>
   </eClassifiers>
 </ecore:EPackage>

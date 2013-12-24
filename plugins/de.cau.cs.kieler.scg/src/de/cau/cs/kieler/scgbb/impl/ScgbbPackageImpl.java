@@ -196,7 +196,7 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getBasicBlock_Condition() {
+	public EReference getBasicBlock_Conditional() {
 		return (EReference)basicBlockEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -290,7 +290,7 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
 		createEReference(basicBlockEClass, BASIC_BLOCK__GUARDS);
 		createEReference(basicBlockEClass, BASIC_BLOCK__PREDECESSORS);
 		createEAttribute(basicBlockEClass, BASIC_BLOCK__BLOCK_TYPE);
-		createEReference(basicBlockEClass, BASIC_BLOCK__CONDITION);
+		createEReference(basicBlockEClass, BASIC_BLOCK__CONDITIONAL);
 		createEAttribute(basicBlockEClass, BASIC_BLOCK__GO_BLOCK);
 
 		schedulingBlockEClass = createEClass(SCHEDULING_BLOCK);
@@ -346,7 +346,7 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
 		initEReference(getBasicBlock_Guards(), theKExpressionsPackage.getValuedObject(), null, "guards", null, 1, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getBasicBlock_Predecessors(), this.getBasicBlock(), null, "predecessors", null, 0, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getBasicBlock_BlockType(), this.getBlockType(), "blockType", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getBasicBlock_Condition(), theKExpressionsPackage.getExpression(), null, "condition", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBasicBlock_Conditional(), theScgPackage.getConditional(), null, "conditional", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getBasicBlock_GoBlock(), ecorePackage.getEBoolean(), "goBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(schedulingBlockEClass, SchedulingBlock.class, "SchedulingBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -358,7 +358,8 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
 		initEEnum(blockTypeEEnum, BlockType.class, "BlockType");
 		addEEnumLiteral(blockTypeEEnum, BlockType.NORMAL);
 		addEEnumLiteral(blockTypeEEnum, BlockType.DEPTH);
-		addEEnumLiteral(blockTypeEEnum, BlockType.BRANCH);
+		addEEnumLiteral(blockTypeEEnum, BlockType.TRUEBRANCH);
+		addEEnumLiteral(blockTypeEEnum, BlockType.ELSEBRANCH);
 		addEEnumLiteral(blockTypeEEnum, BlockType.SYNCHRONIZER);
 
 		// Create resource

@@ -172,13 +172,13 @@ public interface ScgbbPackage extends EPackage {
 	int BASIC_BLOCK__BLOCK_TYPE = 3;
 
 				/**
-	 * The feature id for the '<em><b>Condition</b></em>' reference.
+	 * The feature id for the '<em><b>Conditional</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BASIC_BLOCK__CONDITION = 4;
+	int BASIC_BLOCK__CONDITIONAL = 4;
 
 				/**
 	 * The feature id for the '<em><b>Go Block</b></em>' attribute.
@@ -348,15 +348,15 @@ public interface ScgbbPackage extends EPackage {
 	EAttribute getBasicBlock_BlockType();
 
 				/**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgbb.BasicBlock#getCondition <em>Condition</em>}'.
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgbb.BasicBlock#getConditional <em>Conditional</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Condition</em>'.
-	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getCondition()
+	 * @return the meta object for the reference '<em>Conditional</em>'.
+	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getConditional()
 	 * @see #getBasicBlock()
 	 * @generated
 	 */
-	EReference getBasicBlock_Condition();
+	EReference getBasicBlock_Conditional();
 
 				/**
 	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgbb.BasicBlock#isGoBlock <em>Go Block</em>}'.
@@ -506,12 +506,12 @@ public interface ScgbbPackage extends EPackage {
 		EAttribute BASIC_BLOCK__BLOCK_TYPE = eINSTANCE.getBasicBlock_BlockType();
 
 								/**
-		 * The meta object literal for the '<em><b>Condition</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Conditional</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference BASIC_BLOCK__CONDITION = eINSTANCE.getBasicBlock_Condition();
+		EReference BASIC_BLOCK__CONDITIONAL = eINSTANCE.getBasicBlock_Conditional();
 
 								/**
 		 * The meta object literal for the '<em><b>Go Block</b></em>' attribute feature.

@@ -45,6 +45,7 @@ import java.util.HashMap
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scgbb.ActivationExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
 
 /** 
  * SCGCopyExtensions
@@ -151,6 +152,7 @@ class SCGCopyExtensions {
         bb => [
         	blockType = basicBlock.blockType
         	goBlock = basicBlock.goBlock
+        	conditional = nodeMapping.get(basicBlock.conditional) as Conditional
         ]
                 
         basicBlockMapping.put(basicBlock, bb)
@@ -383,6 +385,13 @@ class SCGCopyExtensions {
             newExp.subExpressions.add(exp.splitOperatorExpression)
         }
         newExp
+    }
+    
+    def Expression negate(Expression expression) {
+    	val nExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
+    	nExp.setOperator(OperatorType::NOT)
+    	nExp.subExpressions.add(expression)
+    	nExp
     }
 
     // -------------------------------------------------------------------------   

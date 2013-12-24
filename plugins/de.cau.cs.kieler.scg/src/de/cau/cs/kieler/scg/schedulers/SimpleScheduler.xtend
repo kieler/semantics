@@ -127,6 +127,20 @@ class SimpleScheduler extends AbstractSCGScheduler {
     			expression.subExpressions.add(basicBlock.predecessors.head.guards.last.reference)
     			gExpr.expression = expression
     		}
+    		else if (basicBlock.blockType == BlockType::TRUEBRANCH) {
+    			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+    			expression.setOperator(OperatorType::AND)
+    			expression.subExpressions.add(basicBlock.predecessors.head.guards.last.reference)
+    			expression.subExpressions.add(basicBlock.conditional.condition.copy)
+    			gExpr.expression = expression
+    		}
+    		else if (basicBlock.blockType == BlockType::ELSEBRANCH) {
+    			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+    			expression.setOperator(OperatorType::AND)
+    			expression.subExpressions.add(basicBlock.predecessors.head.guards.last.reference)
+    			expression.subExpressions.add(basicBlock.conditional.condition.copy.negate)
+    			gExpr.expression = expression
+    		}
     		else if (basicBlock.blockType == BlockType::SYNCHRONIZER) {
 				val SurfaceSynchronizer synchronizer = Guice.createInjector().getInstance(typeof(SurfaceSynchronizer))
 				val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join)

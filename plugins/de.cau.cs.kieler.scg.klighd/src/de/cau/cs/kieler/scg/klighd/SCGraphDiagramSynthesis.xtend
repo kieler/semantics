@@ -430,13 +430,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //                it.setGridPlacement(1);
                 if (s.valuedObject != null && s.assignment != null) {
                     var assignmentStr = s.valuedObject.name + " = " + serializer.serialize(s.assignment.copy.splitOperatorExpression).removeParenthesis
-                    if (assignmentStr.contains("&")) {
+                    if (assignmentStr.contains("&") && assignmentStr.indexOf("&") != assignmentStr.lastIndexOf("&")) {
                         assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
                         assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
                                             
                     }
                     it.addText(assignmentStr).putToLookUpWith(s).setSurroundingSpace(4, 0, 2, 0)
-                    }
+                }
             ]
             
             // Add ports for control-flow and dependency routing.
@@ -1175,21 +1175,25 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -- HELPER: Remove parenthesis 
     // -------------------------------------------------------------------------
     
-   def String removeParenthesis(String str) {
-       var String s = "";
-       if (str.contains("&")) {
-         return str.replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")");  
-       } 
-       if (str.startsWith("(")) s = str.substring(1) else s = str;
-       if (str.endsWith(")")) s = s.substring(0, s.length - 1);
-       return s;
-   }
+    def String removeParenthesis(String str) {
+        var String s = "";
+        if (str.contains("&")) {
+          return str.replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")");  
+        } 
+        if (str.startsWith("(") && str.endsWith(")")) {
+            s = str.substring(1)
+            s = s.substring(0, s.length - 1);
+        } else {
+  	 		s = str
+        }
+        return s;
+    }
    
-   def boolean topdown() {
-       orientation == ORIENTATION_PORTRAIT
-   }
+    def boolean topdown() {
+        orientation == ORIENTATION_PORTRAIT
+    }
    
-   def boolean leftright() {
-       orientation == ORIENTATION_LANDSCAPE
-   }
+    def boolean leftright() {
+        orientation == ORIENTATION_LANDSCAPE
+    }
 }

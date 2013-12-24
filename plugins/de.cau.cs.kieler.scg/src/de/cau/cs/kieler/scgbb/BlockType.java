@@ -50,16 +50,22 @@ public enum BlockType implements Enumerator {
 	DEPTH(1, "DEPTH", "DEPTH"),
 
 	/**
-	 * The '<em><b>BRANCH</b></em>' literal object.
+	 * The '<em><b>TRUEBRANCH</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #BRANCH_VALUE
+	 * @see #TRUEBRANCH_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	BRANCH(2, "BRANCH", "BRANCH"),
-
-	/**
+	TRUEBRANCH(2, "TRUEBRANCH", "TRUEBRANCH"), /**
+	 * The '<em><b>ELSEBRANCH</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #ELSEBRANCH_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	ELSEBRANCH(3, "ELSEBRANCH", "ELSEBRANCH"), /**
 	 * The '<em><b>SYNCHRONIZER</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -67,7 +73,7 @@ public enum BlockType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	SYNCHRONIZER(3, "SYNCHRONIZER", "SYNCHRONIZER");
+	SYNCHRONIZER(4, "SYNCHRONIZER", "SYNCHRONIZER");
 
 	/**
 	 * The '<em><b>NORMAL</b></em>' literal value.
@@ -100,19 +106,34 @@ public enum BlockType implements Enumerator {
 	public static final int DEPTH_VALUE = 1;
 
 	/**
-	 * The '<em><b>BRANCH</b></em>' literal value.
+	 * The '<em><b>TRUEBRANCH</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>BRANCH</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>TRUEBRANCH</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #BRANCH
+	 * @see #TRUEBRANCH
 	 * @model
 	 * @generated
 	 * @ordered
 	 */
-	public static final int BRANCH_VALUE = 2;
+	public static final int TRUEBRANCH_VALUE = 2;
+
+	/**
+	 * The '<em><b>ELSEBRANCH</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>ELSEBRANCH</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @see #ELSEBRANCH
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ELSEBRANCH_VALUE = 3;
 
 	/**
 	 * The '<em><b>SYNCHRONIZER</b></em>' literal value.
@@ -127,7 +148,7 @@ public enum BlockType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int SYNCHRONIZER_VALUE = 3;
+	public static final int SYNCHRONIZER_VALUE = 4;
 
 	/**
 	 * An array of all the '<em><b>Block Type</b></em>' enumerators.
@@ -139,7 +160,8 @@ public enum BlockType implements Enumerator {
 		new BlockType[] {
 			NORMAL,
 			DEPTH,
-			BRANCH,
+			TRUEBRANCH,
+			ELSEBRANCH,
 			SYNCHRONIZER,
 		};
 
@@ -193,7 +215,8 @@ public enum BlockType implements Enumerator {
 		switch (value) {
 			case NORMAL_VALUE: return NORMAL;
 			case DEPTH_VALUE: return DEPTH;
-			case BRANCH_VALUE: return BRANCH;
+			case TRUEBRANCH_VALUE: return TRUEBRANCH;
+			case ELSEBRANCH_VALUE: return ELSEBRANCH;
 			case SYNCHRONIZER_VALUE: return SYNCHRONIZER;
 		}
 		return null;
