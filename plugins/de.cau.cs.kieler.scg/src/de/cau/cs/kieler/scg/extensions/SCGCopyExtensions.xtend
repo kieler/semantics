@@ -147,6 +147,11 @@ class SCGCopyExtensions {
         ]
         
         basicBlock.schedulingBlocks.forEach[ it.copySchedulingBlock(bb) ]
+        
+        bb => [
+        	blockType = basicBlock.blockType
+        	goBlock = basicBlock.goBlock
+        ]
                 
         basicBlockMapping.put(basicBlock, bb)
         revBasicBlockMapping.put(bb, basicBlock)
@@ -163,13 +168,6 @@ class SCGCopyExtensions {
             val tnode = nodeMapping.get(it) 
             sb.nodes.add(tnode)
             sb.dependencies.addAll(tnode.incoming.filter(typeof(Dependency)))  
-        ]
-        //schedulingBlock.dependencies.forEach[ sb.dependencies.add(dependencyMapping.get(it)) ]
-        
-        sb => [
-        	goBlock = schedulingBlock.goBlock
-        	depthBlock = schedulingBlock.depthBlock
-        	synchronizerBlock = schedulingBlock.synchronizerBlock
         ]
     
         schedulingBlockMapping.put(schedulingBlock, sb)    

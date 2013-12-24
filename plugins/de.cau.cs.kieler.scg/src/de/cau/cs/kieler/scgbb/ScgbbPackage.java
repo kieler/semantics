@@ -17,6 +17,7 @@ import de.cau.cs.kieler.scgdep.ScgdepPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -162,13 +163,40 @@ public interface ScgbbPackage extends EPackage {
 	int BASIC_BLOCK__PREDECESSORS = 2;
 
 				/**
+	 * The feature id for the '<em><b>Block Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASIC_BLOCK__BLOCK_TYPE = 3;
+
+				/**
+	 * The feature id for the '<em><b>Condition</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASIC_BLOCK__CONDITION = 4;
+
+				/**
+	 * The feature id for the '<em><b>Go Block</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASIC_BLOCK__GO_BLOCK = 5;
+
+				/**
 	 * The number of structural features of the '<em>Basic Block</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int BASIC_BLOCK_FEATURE_COUNT = 3;
+    int BASIC_BLOCK_FEATURE_COUNT = 6;
 
     /**
 	 * The number of operations of the '<em>Basic Block</em>' class.
@@ -217,40 +245,13 @@ public interface ScgbbPackage extends EPackage {
 	int SCHEDULING_BLOCK__GUARD = 2;
 
 				/**
-	 * The feature id for the '<em><b>Depth Block</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCHEDULING_BLOCK__DEPTH_BLOCK = 3;
-
-				/**
-	 * The feature id for the '<em><b>Synchronizer Block</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK = 4;
-
-				/**
-	 * The feature id for the '<em><b>Go Block</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCHEDULING_BLOCK__GO_BLOCK = 5;
-
-				/**
 	 * The number of structural features of the '<em>Scheduling Block</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SCHEDULING_BLOCK_FEATURE_COUNT = 6;
+    int SCHEDULING_BLOCK_FEATURE_COUNT = 3;
 
     /**
 	 * The number of operations of the '<em>Scheduling Block</em>' class.
@@ -262,6 +263,16 @@ public interface ScgbbPackage extends EPackage {
     int SCHEDULING_BLOCK_OPERATION_COUNT = 0;
 
     /**
+	 * The meta object id for the '{@link de.cau.cs.kieler.scgbb.BlockType <em>Block Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.scgbb.BlockType
+	 * @see de.cau.cs.kieler.scgbb.impl.ScgbbPackageImpl#getBlockType()
+	 * @generated
+	 */
+	int BLOCK_TYPE = 3;
+
+				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scgbb.SCGraphBB <em>SC Graph BB</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -326,6 +337,39 @@ public interface ScgbbPackage extends EPackage {
 	EReference getBasicBlock_Predecessors();
 
 				/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgbb.BasicBlock#getBlockType <em>Block Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Block Type</em>'.
+	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getBlockType()
+	 * @see #getBasicBlock()
+	 * @generated
+	 */
+	EAttribute getBasicBlock_BlockType();
+
+				/**
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgbb.BasicBlock#getCondition <em>Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Condition</em>'.
+	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getCondition()
+	 * @see #getBasicBlock()
+	 * @generated
+	 */
+	EReference getBasicBlock_Condition();
+
+				/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgbb.BasicBlock#isGoBlock <em>Go Block</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Go Block</em>'.
+	 * @see de.cau.cs.kieler.scgbb.BasicBlock#isGoBlock()
+	 * @see #getBasicBlock()
+	 * @generated
+	 */
+	EAttribute getBasicBlock_GoBlock();
+
+				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scgbb.SchedulingBlock <em>Scheduling Block</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -369,37 +413,14 @@ public interface ScgbbPackage extends EPackage {
 	EReference getSchedulingBlock_Guard();
 
 				/**
-	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isDepthBlock <em>Depth Block</em>}'.
+	 * Returns the meta object for enum '{@link de.cau.cs.kieler.scgbb.BlockType <em>Block Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Depth Block</em>'.
-	 * @see de.cau.cs.kieler.scgbb.SchedulingBlock#isDepthBlock()
-	 * @see #getSchedulingBlock()
+	 * @return the meta object for enum '<em>Block Type</em>'.
+	 * @see de.cau.cs.kieler.scgbb.BlockType
 	 * @generated
 	 */
-	EAttribute getSchedulingBlock_DepthBlock();
-
-				/**
-	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isSynchronizerBlock <em>Synchronizer Block</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Synchronizer Block</em>'.
-	 * @see de.cau.cs.kieler.scgbb.SchedulingBlock#isSynchronizerBlock()
-	 * @see #getSchedulingBlock()
-	 * @generated
-	 */
-	EAttribute getSchedulingBlock_SynchronizerBlock();
-
-				/**
-	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgbb.SchedulingBlock#isGoBlock <em>Go Block</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Go Block</em>'.
-	 * @see de.cau.cs.kieler.scgbb.SchedulingBlock#isGoBlock()
-	 * @see #getSchedulingBlock()
-	 * @generated
-	 */
-	EAttribute getSchedulingBlock_GoBlock();
+	EEnum getBlockType();
 
 				/**
 	 * Returns the factory that creates the instances of the model.
@@ -477,6 +498,30 @@ public interface ScgbbPackage extends EPackage {
 		EReference BASIC_BLOCK__PREDECESSORS = eINSTANCE.getBasicBlock_Predecessors();
 
 								/**
+		 * The meta object literal for the '<em><b>Block Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BASIC_BLOCK__BLOCK_TYPE = eINSTANCE.getBasicBlock_BlockType();
+
+								/**
+		 * The meta object literal for the '<em><b>Condition</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BASIC_BLOCK__CONDITION = eINSTANCE.getBasicBlock_Condition();
+
+								/**
+		 * The meta object literal for the '<em><b>Go Block</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BASIC_BLOCK__GO_BLOCK = eINSTANCE.getBasicBlock_GoBlock();
+
+								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl <em>Scheduling Block</em>}' class.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -511,28 +556,14 @@ public interface ScgbbPackage extends EPackage {
 		EReference SCHEDULING_BLOCK__GUARD = eINSTANCE.getSchedulingBlock_Guard();
 
 								/**
-		 * The meta object literal for the '<em><b>Depth Block</b></em>' attribute feature.
+		 * The meta object literal for the '{@link de.cau.cs.kieler.scgbb.BlockType <em>Block Type</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * @see de.cau.cs.kieler.scgbb.BlockType
+		 * @see de.cau.cs.kieler.scgbb.impl.ScgbbPackageImpl#getBlockType()
 		 * @generated
 		 */
-		EAttribute SCHEDULING_BLOCK__DEPTH_BLOCK = eINSTANCE.getSchedulingBlock_DepthBlock();
-
-								/**
-		 * The meta object literal for the '<em><b>Synchronizer Block</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK = eINSTANCE.getSchedulingBlock_SynchronizerBlock();
-
-								/**
-		 * The meta object literal for the '<em><b>Go Block</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute SCHEDULING_BLOCK__GO_BLOCK = eINSTANCE.getSchedulingBlock_GoBlock();
+		EEnum BLOCK_TYPE = eINSTANCE.getBlockType();
 
     }
 

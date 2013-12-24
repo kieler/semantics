@@ -37,9 +37,6 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#getDependencies <em>Dependencies</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#getGuard <em>Guard</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#isDepthBlock <em>Depth Block</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#isSynchronizerBlock <em>Synchronizer Block</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#isGoBlock <em>Go Block</em>}</li>
  * </ul>
  * </p>
  *
@@ -75,66 +72,6 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 	 * @ordered
 	 */
 	protected ValuedObject guard;
-
-				/**
-	 * The default value of the '{@link #isDepthBlock() <em>Depth Block</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isDepthBlock()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean DEPTH_BLOCK_EDEFAULT = false;
-
-				/**
-	 * The cached value of the '{@link #isDepthBlock() <em>Depth Block</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isDepthBlock()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean depthBlock = DEPTH_BLOCK_EDEFAULT;
-
-				/**
-	 * The default value of the '{@link #isSynchronizerBlock() <em>Synchronizer Block</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSynchronizerBlock()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean SYNCHRONIZER_BLOCK_EDEFAULT = false;
-
-				/**
-	 * The cached value of the '{@link #isSynchronizerBlock() <em>Synchronizer Block</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSynchronizerBlock()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean synchronizerBlock = SYNCHRONIZER_BLOCK_EDEFAULT;
-
-				/**
-	 * The default value of the '{@link #isGoBlock() <em>Go Block</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isGoBlock()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean GO_BLOCK_EDEFAULT = false;
-
-				/**
-	 * The cached value of the '{@link #isGoBlock() <em>Go Block</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isGoBlock()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean goBlock = GO_BLOCK_EDEFAULT;
 
 				/**
 	 * <!-- begin-user-doc -->
@@ -219,69 +156,6 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 
 				/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isDepthBlock() {
-		return depthBlock;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setDepthBlock(boolean newDepthBlock) {
-		boolean oldDepthBlock = depthBlock;
-		depthBlock = newDepthBlock;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.SCHEDULING_BLOCK__DEPTH_BLOCK, oldDepthBlock, depthBlock));
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSynchronizerBlock() {
-		return synchronizerBlock;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSynchronizerBlock(boolean newSynchronizerBlock) {
-		boolean oldSynchronizerBlock = synchronizerBlock;
-		synchronizerBlock = newSynchronizerBlock;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK, oldSynchronizerBlock, synchronizerBlock));
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isGoBlock() {
-		return goBlock;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setGoBlock(boolean newGoBlock) {
-		boolean oldGoBlock = goBlock;
-		goBlock = newGoBlock;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.SCHEDULING_BLOCK__GO_BLOCK, oldGoBlock, goBlock));
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -295,12 +169,6 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 			case ScgbbPackage.SCHEDULING_BLOCK__GUARD:
 				if (resolve) return getGuard();
 				return basicGetGuard();
-			case ScgbbPackage.SCHEDULING_BLOCK__DEPTH_BLOCK:
-				return isDepthBlock();
-			case ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK:
-				return isSynchronizerBlock();
-			case ScgbbPackage.SCHEDULING_BLOCK__GO_BLOCK:
-				return isGoBlock();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -325,15 +193,6 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 			case ScgbbPackage.SCHEDULING_BLOCK__GUARD:
 				setGuard((ValuedObject)newValue);
 				return;
-			case ScgbbPackage.SCHEDULING_BLOCK__DEPTH_BLOCK:
-				setDepthBlock((Boolean)newValue);
-				return;
-			case ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK:
-				setSynchronizerBlock((Boolean)newValue);
-				return;
-			case ScgbbPackage.SCHEDULING_BLOCK__GO_BLOCK:
-				setGoBlock((Boolean)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -355,15 +214,6 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 			case ScgbbPackage.SCHEDULING_BLOCK__GUARD:
 				setGuard((ValuedObject)null);
 				return;
-			case ScgbbPackage.SCHEDULING_BLOCK__DEPTH_BLOCK:
-				setDepthBlock(DEPTH_BLOCK_EDEFAULT);
-				return;
-			case ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK:
-				setSynchronizerBlock(SYNCHRONIZER_BLOCK_EDEFAULT);
-				return;
-			case ScgbbPackage.SCHEDULING_BLOCK__GO_BLOCK:
-				setGoBlock(GO_BLOCK_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -382,34 +232,8 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 				return dependencies != null && !dependencies.isEmpty();
 			case ScgbbPackage.SCHEDULING_BLOCK__GUARD:
 				return guard != null;
-			case ScgbbPackage.SCHEDULING_BLOCK__DEPTH_BLOCK:
-				return depthBlock != DEPTH_BLOCK_EDEFAULT;
-			case ScgbbPackage.SCHEDULING_BLOCK__SYNCHRONIZER_BLOCK:
-				return synchronizerBlock != SYNCHRONIZER_BLOCK_EDEFAULT;
-			case ScgbbPackage.SCHEDULING_BLOCK__GO_BLOCK:
-				return goBlock != GO_BLOCK_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (depthBlock: ");
-		result.append(depthBlock);
-		result.append(", synchronizerBlock: ");
-		result.append(synchronizerBlock);
-		result.append(", goBlock: ");
-		result.append(goBlock);
-		result.append(')');
-		return result.toString();
 	}
 
 } //SchedulingBlockImpl

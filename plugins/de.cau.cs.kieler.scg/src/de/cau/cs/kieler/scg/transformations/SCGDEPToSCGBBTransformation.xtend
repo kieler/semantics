@@ -35,6 +35,7 @@ import de.cau.cs.kieler.scgdep.SCGraphDep
 import java.util.ArrayList
 import java.util.List
 import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scgbb.BlockType
 
 /** 
  * SCGDEP to SCGBB Transformation 
@@ -104,7 +105,6 @@ class SCGDEPToSCGBBTransformation {
         newIndex = newIndex + 1
         
         var schedulingBlock = ScgbbFactory::eINSTANCE.createSchedulingBlock
-        if (newIndex == 1) schedulingBlock.goBlock = true
         while(node != null) {
             schedulingBlock.nodes.add(node)
             
@@ -133,7 +133,6 @@ class SCGDEPToSCGBBTransformation {
             } else {
                 val next = node.eAllContents.filter(typeof(ControlFlow)).head.target
                 if (next instanceof Join) {
-                	schedulingBlock.synchronizerBlock = true
                     scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks)
                     node = null
                 } else
@@ -156,11 +155,23 @@ class SCGDEPToSCGBBTransformation {
     ) {
         val basicBlock = ScgbbFactory::eINSTANCE.createBasicBlock
         
-        if (schedulingBlock.nodes.head instanceof Depth) { schedulingBlock.depthBlock = true }
+        if (schedulingBlock.nodes.head instanceof Depth) { basicBlock.blockType = BlockType::DEPTH }
+        if (schedulingBlock.nodes.head instanceof Join) { basicBlock.blockType = BlockType::SYNCHRONIZER }
       
         basicBlock.guards.add(guard)
         basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock(basicBlock))
         basicBlock.predecessors.addAll(predecessorBlocks)
+        if (basicBlock.predecessors.size == 0) {
+        	basicBlock.goBlock = true
+        } else {
+        	basicBlock.predecessors.forEach[ 
+        		val lastNode = schedulingBlocks.last.nodes.last
+        		if (lastNode instanceof Conditional) {
+        			basicBlock.blockType =  BlockType::BRANCH
+        			basicBlock.condition = (lastNode as Conditional).condition
+        		}
+        	]
+        }
         scg.basicBlocks.add(basicBlock)
         
         basicBlock
@@ -169,7 +180,6 @@ class SCGDEPToSCGBBTransformation {
     def List<SchedulingBlock> splitSchedulingBlock(SchedulingBlock schedulingBlock, BasicBlock basicBlock) {
         val schedulingBlocks = <SchedulingBlock> newLinkedList
         var SchedulingBlock block = null
-        var boolean firstBlock = true
         var ValuedObject guard = null
         for (node : schedulingBlock.nodes) {
             if (block == null || 
@@ -187,14 +197,6 @@ class SCGDEPToSCGBBTransformation {
                 block = ScgbbFactory::eINSTANCE.createSchedulingBlock()
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))
                 block.guard = guard  
-                if (firstBlock) {
-                	block => [
-						goBlock = schedulingBlock.goBlock
-						depthBlock = schedulingBlock.depthBlock
-						synchronizerBlock = synchronizerBlock                	
-	                ]
-                }
-                firstBlock = false              
             }
             block.nodes.add(node)
         }

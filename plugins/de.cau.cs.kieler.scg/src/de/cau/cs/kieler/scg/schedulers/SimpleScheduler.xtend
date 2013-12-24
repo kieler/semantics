@@ -31,6 +31,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scgbb.BlockType
 
 /** 
  * SimpleScheduler
@@ -111,30 +112,36 @@ class SimpleScheduler extends AbstractSCGScheduler {
     	val gExpr = ScgschedFactory::eINSTANCE.createGuardExpression
     	gExpr.valuedObject = schedulingBlock.guard
     	
-    	if (schedulingBlock.goBlock) {
-    		gExpr.expression = scg.findValuedObjectByName(GOGUARDNAME).reference
-    	} 
-    	else if (schedulingBlock.depthBlock) {
+    	val basicBlock = schedulingBlock.basicBlock
+    	
+    	if (basicBlock.schedulingBlocks.head == schedulingBlock) {
+    		if (basicBlock.goBlock) {
+    			gExpr.expression = scg.findValuedObjectByName(GOGUARDNAME).reference
+    		} 
+    		else if (basicBlock.blockType == BlockType::DEPTH) {
     		
-    	}
-    	else if (schedulingBlock.synchronizerBlock) {
+    		}
+    		else if (basicBlock.blockType == BlockType::SYNCHRONIZER) {
 
-		} 
-		else {
-			val bb = schedulingBlock.basicBlock
-			if (bb.predecessors.size>1) {
-				val expr = KExpressionsFactory::eINSTANCE.createOperatorExpression
-				expr.setOperator(OperatorType::OR)
-				bb.predecessors.forEach[ expr.subExpressions.add(it.guards.head.reference) ]
-				gExpr.expression = expr
 			} 
-			else if (bb.predecessors.size == 1) {
-				gExpr.expression = bb.predecessors.head.guards.head.reference
-			} 
-			else 
-			{
-				throw new UnsupportedOperationException("Cannot handle standard guard without predecessor information!")
+			else {
+				val bb = schedulingBlock.basicBlock
+				if (bb.predecessors.size>1) {
+					val expr = KExpressionsFactory::eINSTANCE.createOperatorExpression
+					expr.setOperator(OperatorType::OR)
+					bb.predecessors.forEach[ expr.subExpressions.add(it.guards.head.reference) ]
+					gExpr.expression = expr
+				} 
+				else if (bb.predecessors.size == 1) {
+					gExpr.expression = bb.predecessors.head.guards.head.reference
+				} 
+				else 
+				{
+					throw new UnsupportedOperationException("Cannot handle standard guard without predecessor information!")
+				}
 			}
+		} else {
+			gExpr.expression = basicBlock.schedulingBlocks.head.guard.reference
 		}
 		    	
     	gExpr

@@ -13,15 +13,19 @@
  */
 package de.cau.cs.kieler.scgbb.impl;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.scgbb.BasicBlock;
+import de.cau.cs.kieler.scgbb.BlockType;
 import de.cau.cs.kieler.scgbb.ScgbbPackage;
 import de.cau.cs.kieler.scgbb.SchedulingBlock;
 import java.util.Collection;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -37,6 +41,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getSchedulingBlocks <em>Scheduling Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getGuards <em>Guards</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getPredecessors <em>Predecessors</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getBlockType <em>Block Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getCondition <em>Condition</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#isGoBlock <em>Go Block</em>}</li>
  * </ul>
  * </p>
  *
@@ -72,6 +79,56 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 	 * @ordered
 	 */
 	protected EList<BasicBlock> predecessors;
+
+				/**
+	 * The default value of the '{@link #getBlockType() <em>Block Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBlockType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final BlockType BLOCK_TYPE_EDEFAULT = BlockType.NORMAL;
+
+				/**
+	 * The cached value of the '{@link #getBlockType() <em>Block Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getBlockType()
+	 * @generated
+	 * @ordered
+	 */
+	protected BlockType blockType = BLOCK_TYPE_EDEFAULT;
+
+				/**
+	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCondition()
+	 * @generated
+	 * @ordered
+	 */
+	protected Expression condition;
+
+				/**
+	 * The default value of the '{@link #isGoBlock() <em>Go Block</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isGoBlock()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean GO_BLOCK_EDEFAULT = false;
+
+				/**
+	 * The cached value of the '{@link #isGoBlock() <em>Go Block</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isGoBlock()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean goBlock = GO_BLOCK_EDEFAULT;
 
 				/**
 	 * <!-- begin-user-doc -->
@@ -130,6 +187,86 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 
 				/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public BlockType getBlockType() {
+		return blockType;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBlockType(BlockType newBlockType) {
+		BlockType oldBlockType = blockType;
+		blockType = newBlockType == null ? BLOCK_TYPE_EDEFAULT : newBlockType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE, oldBlockType, blockType));
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Expression getCondition() {
+		if (condition != null && condition.eIsProxy()) {
+			InternalEObject oldCondition = (InternalEObject)condition;
+			condition = (Expression)eResolveProxy(oldCondition);
+			if (condition != oldCondition) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgbbPackage.BASIC_BLOCK__CONDITION, oldCondition, condition));
+			}
+		}
+		return condition;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Expression basicGetCondition() {
+		return condition;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCondition(Expression newCondition) {
+		Expression oldCondition = condition;
+		condition = newCondition;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__CONDITION, oldCondition, condition));
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isGoBlock() {
+		return goBlock;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGoBlock(boolean newGoBlock) {
+		boolean oldGoBlock = goBlock;
+		goBlock = newGoBlock;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__GO_BLOCK, oldGoBlock, goBlock));
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -158,6 +295,13 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				return getGuards();
 			case ScgbbPackage.BASIC_BLOCK__PREDECESSORS:
 				return getPredecessors();
+			case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
+				return getBlockType();
+			case ScgbbPackage.BASIC_BLOCK__CONDITION:
+				if (resolve) return getCondition();
+				return basicGetCondition();
+			case ScgbbPackage.BASIC_BLOCK__GO_BLOCK:
+				return isGoBlock();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -183,6 +327,15 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				getPredecessors().clear();
 				getPredecessors().addAll((Collection<? extends BasicBlock>)newValue);
 				return;
+			case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
+				setBlockType((BlockType)newValue);
+				return;
+			case ScgbbPackage.BASIC_BLOCK__CONDITION:
+				setCondition((Expression)newValue);
+				return;
+			case ScgbbPackage.BASIC_BLOCK__GO_BLOCK:
+				setGoBlock((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -204,6 +357,15 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 			case ScgbbPackage.BASIC_BLOCK__PREDECESSORS:
 				getPredecessors().clear();
 				return;
+			case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
+				setBlockType(BLOCK_TYPE_EDEFAULT);
+				return;
+			case ScgbbPackage.BASIC_BLOCK__CONDITION:
+				setCondition((Expression)null);
+				return;
+			case ScgbbPackage.BASIC_BLOCK__GO_BLOCK:
+				setGoBlock(GO_BLOCK_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -222,8 +384,32 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				return guards != null && !guards.isEmpty();
 			case ScgbbPackage.BASIC_BLOCK__PREDECESSORS:
 				return predecessors != null && !predecessors.isEmpty();
+			case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
+				return blockType != BLOCK_TYPE_EDEFAULT;
+			case ScgbbPackage.BASIC_BLOCK__CONDITION:
+				return condition != null;
+			case ScgbbPackage.BASIC_BLOCK__GO_BLOCK:
+				return goBlock != GO_BLOCK_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (blockType: ");
+		result.append(blockType);
+		result.append(", goBlock: ");
+		result.append(goBlock);
+		result.append(')');
+		return result.toString();
 	}
 
 } //BasicBlockImpl

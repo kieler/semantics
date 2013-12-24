@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.scgbb;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -28,6 +29,9 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getSchedulingBlocks <em>Scheduling Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuards <em>Guards</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getPredecessors <em>Predecessors</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getBlockType <em>Block Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getCondition <em>Condition</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#isGoBlock <em>Go Block</em>}</li>
  * </ul>
  * </p>
  *
@@ -83,5 +87,86 @@ public interface BasicBlock extends EObject {
 	 * @generated
 	 */
 	EList<BasicBlock> getPredecessors();
+
+				/**
+	 * Returns the value of the '<em><b>Block Type</b></em>' attribute.
+	 * The literals are from the enumeration {@link de.cau.cs.kieler.scgbb.BlockType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Block Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Block Type</em>' attribute.
+	 * @see de.cau.cs.kieler.scgbb.BlockType
+	 * @see #setBlockType(BlockType)
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_BlockType()
+	 * @model
+	 * @generated
+	 */
+	BlockType getBlockType();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#getBlockType <em>Block Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Block Type</em>' attribute.
+	 * @see de.cau.cs.kieler.scgbb.BlockType
+	 * @see #getBlockType()
+	 * @generated
+	 */
+	void setBlockType(BlockType value);
+
+				/**
+	 * Returns the value of the '<em><b>Condition</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Condition</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Condition</em>' reference.
+	 * @see #setCondition(Expression)
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_Condition()
+	 * @model
+	 * @generated
+	 */
+	Expression getCondition();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#getCondition <em>Condition</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Condition</em>' reference.
+	 * @see #getCondition()
+	 * @generated
+	 */
+	void setCondition(Expression value);
+
+				/**
+	 * Returns the value of the '<em><b>Go Block</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Go Block</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Go Block</em>' attribute.
+	 * @see #setGoBlock(boolean)
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_GoBlock()
+	 * @model
+	 * @generated
+	 */
+	boolean isGoBlock();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#isGoBlock <em>Go Block</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Go Block</em>' attribute.
+	 * @see #isGoBlock()
+	 * @generated
+	 */
+	void setGoBlock(boolean value);
 
 } // BasicBlock
