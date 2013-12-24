@@ -62,6 +62,7 @@ class SCGCopyExtensions {
     private val nodeMapping = new HashMap<Node, Node>
     private val revNodeMapping = new HashMap<Node, Node>
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
+    private val dependencyMapping = new HashMap<Dependency, Dependency>
     private val revBasicBlockMapping = new HashMap<BasicBlock, BasicBlock>
     private val schedulingBlockMapping = new HashMap<SchedulingBlock, SchedulingBlock>
     private val basicBlockMapping = new HashMap<BasicBlock, BasicBlock>
@@ -159,11 +160,7 @@ class SCGCopyExtensions {
             sb.nodes.add(tnode)
             sb.dependencies.addAll(tnode.incoming.filter(typeof(Dependency)))  
         ]
-        schedulingBlock.dependencies.forEach[ 
-        	val newDependency = it.copy
-        	newDependency.target = nodeMapping.get(it.target)
-        	sb.dependencies.add(newDependency)
-        ]
+        schedulingBlock.dependencies.forEach[ sb.dependencies.add(dependencyMapping.get(it)) ]
         
         sb => [
         	goBlock = schedulingBlock.goBlock
@@ -184,6 +181,7 @@ class SCGCopyExtensions {
         var newDependency = dependency.copy;
         (nodeMapping.get(dependency.eContainer as Node) as NodeDep).dependencies.add(newDependency)
         newDependency.target = nodeMapping.get(dependency.target)
+        dependencyMapping.put(dependency, newDependency)
     }
 
     // -------------------------------------------------------------------------
