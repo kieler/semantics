@@ -71,38 +71,14 @@ public class BasicBlockItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addPredecessorsPropertyDescriptor(object);
 			addGoBlockPropertyDescriptor(object);
 			addBlockTypePropertyDescriptor(object);
-			addConditionalPropertyDescriptor(object);
 			addPreGuardPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
     /**
-	 * This adds a property descriptor for the Predecessors feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addPredecessorsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_BasicBlock_predecessors_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_BasicBlock_predecessors_feature", "_UI_BasicBlock_type"),
-				 ScgbbPackage.Literals.BASIC_BLOCK__PREDECESSORS,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-				/**
 	 * This adds a property descriptor for the Block Type feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -120,28 +96,6 @@ public class BasicBlockItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-				/**
-	 * This adds a property descriptor for the Conditional feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addConditionalPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_BasicBlock_conditional_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_BasicBlock_conditional_feature", "_UI_BasicBlock_type"),
-				 ScgbbPackage.Literals.BASIC_BLOCK__CONDITIONAL,
-				 true,
-				 false,
-				 true,
-				 null,
 				 null,
 				 null));
 	}
@@ -204,6 +158,7 @@ public class BasicBlockItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ScgbbPackage.Literals.BASIC_BLOCK__SCHEDULING_BLOCKS);
 			childrenFeatures.add(ScgbbPackage.Literals.BASIC_BLOCK__GUARDS);
+			childrenFeatures.add(ScgbbPackage.Literals.BASIC_BLOCK__PREDECESSORS);
 		}
 		return childrenFeatures;
 	}
@@ -262,6 +217,7 @@ public class BasicBlockItemProvider
 				return;
 			case ScgbbPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
 			case ScgbbPackage.BASIC_BLOCK__GUARDS:
+			case ScgbbPackage.BASIC_BLOCK__PREDECESSORS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -288,6 +244,11 @@ public class BasicBlockItemProvider
 			(createChildParameter
 				(ScgbbPackage.Literals.BASIC_BLOCK__GUARDS,
 				 KExpressionsFactory.eINSTANCE.createValuedObject()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScgbbPackage.Literals.BASIC_BLOCK__PREDECESSORS,
+				 ScgbbFactory.eINSTANCE.createPredecessor()));
 	}
 
     /**

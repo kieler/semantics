@@ -152,6 +152,29 @@ public class ScgbbItemProviderAdapterFactory extends ScgbbAdapterFactory impleme
 	}
 
     /**
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgbb.Predecessor} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected PredecessorItemProvider predecessorItemProvider;
+
+				/**
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scgbb.Predecessor}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createPredecessorAdapter() {
+		if (predecessorItemProvider == null) {
+			predecessorItemProvider = new PredecessorItemProvider(this);
+		}
+
+		return predecessorItemProvider;
+	}
+
+				/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -253,6 +276,7 @@ public class ScgbbItemProviderAdapterFactory extends ScgbbAdapterFactory impleme
 		if (scGraphBBItemProvider != null) scGraphBBItemProvider.dispose();
 		if (basicBlockItemProvider != null) basicBlockItemProvider.dispose();
 		if (schedulingBlockItemProvider != null) schedulingBlockItemProvider.dispose();
+		if (predecessorItemProvider != null) predecessorItemProvider.dispose();
 	}
 
 }

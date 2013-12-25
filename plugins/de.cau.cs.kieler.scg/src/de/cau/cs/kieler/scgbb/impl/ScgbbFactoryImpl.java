@@ -71,6 +71,7 @@ public class ScgbbFactoryImpl extends EFactoryImpl implements ScgbbFactory {
 			case ScgbbPackage.SC_GRAPH_BB: return createSCGraphBB();
 			case ScgbbPackage.BASIC_BLOCK: return createBasicBlock();
 			case ScgbbPackage.SCHEDULING_BLOCK: return createSchedulingBlock();
+			case ScgbbPackage.PREDECESSOR: return createPredecessor();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -137,6 +138,16 @@ public class ScgbbFactoryImpl extends EFactoryImpl implements ScgbbFactory {
 	}
 
     /**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Predecessor createPredecessor() {
+		PredecessorImpl predecessor = new PredecessorImpl();
+		return predecessor;
+	}
+
+				/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.scgbb;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.scg.Conditional;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
@@ -31,7 +30,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getPredecessors <em>Predecessors</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#isGoBlock <em>Go Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getBlockType <em>Block Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getConditional <em>Conditional</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getPreGuard <em>Pre Guard</em>}</li>
  * </ul>
  * </p>
@@ -74,20 +72,20 @@ public interface BasicBlock extends EObject {
 	EList<ValuedObject> getGuards();
 
 				/**
-	 * Returns the value of the '<em><b>Predecessors</b></em>' reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.scgbb.BasicBlock}.
+	 * Returns the value of the '<em><b>Predecessors</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scgbb.Predecessor}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Predecessors</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Predecessors</em>' reference list.
+	 * @return the value of the '<em>Predecessors</em>' containment reference list.
 	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_Predecessors()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList<BasicBlock> getPredecessors();
+	EList<Predecessor> getPredecessors();
 
 				/**
 	 * Returns the value of the '<em><b>Block Type</b></em>' attribute.
@@ -117,32 +115,6 @@ public interface BasicBlock extends EObject {
 	 * @generated
 	 */
 	void setBlockType(BlockType value);
-
-				/**
-	 * Returns the value of the '<em><b>Conditional</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Conditional</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Conditional</em>' reference.
-	 * @see #setConditional(Conditional)
-	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_Conditional()
-	 * @model
-	 * @generated
-	 */
-	Conditional getConditional();
-
-				/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#getConditional <em>Conditional</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Conditional</em>' reference.
-	 * @see #getConditional()
-	 * @generated
-	 */
-	void setConditional(Conditional value);
 
 				/**
 	 * Returns the value of the '<em><b>Pre Guard</b></em>' reference.

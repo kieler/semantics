@@ -95,6 +95,10 @@ public class ScgbbAdapterFactory extends AdapterFactoryImpl {
 				return createSchedulingBlockAdapter();
 			}
 			@Override
+			public Adapter casePredecessor(Predecessor object) {
+				return createPredecessorAdapter();
+			}
+			@Override
 			public Adapter caseSCGraph(SCGraph object) {
 				return createSCGraphAdapter();
 			}
@@ -165,6 +169,20 @@ public class ScgbbAdapterFactory extends AdapterFactoryImpl {
 	}
 
     /**
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgbb.Predecessor <em>Predecessor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scgbb.Predecessor
+	 * @generated
+	 */
+	public Adapter createPredecessorAdapter() {
+		return null;
+	}
+
+				/**
 	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.SCGraph <em>SC Graph</em>}'.
 	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;

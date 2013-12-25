@@ -14,9 +14,9 @@
 package de.cau.cs.kieler.scgbb.impl;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.scg.Conditional;
 import de.cau.cs.kieler.scgbb.BasicBlock;
 import de.cau.cs.kieler.scgbb.BlockType;
+import de.cau.cs.kieler.scgbb.Predecessor;
 import de.cau.cs.kieler.scgbb.ScgbbPackage;
 import de.cau.cs.kieler.scgbb.SchedulingBlock;
 import java.util.Collection;
@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -43,7 +42,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getPredecessors <em>Predecessors</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#isGoBlock <em>Go Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getBlockType <em>Block Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getConditional <em>Conditional</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getPreGuard <em>Pre Guard</em>}</li>
  * </ul>
  * </p>
@@ -72,14 +70,14 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 	protected EList<ValuedObject> guards;
 
 				/**
-	 * The cached value of the '{@link #getPredecessors() <em>Predecessors</em>}' reference list.
+	 * The cached value of the '{@link #getPredecessors() <em>Predecessors</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getPredecessors()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<BasicBlock> predecessors;
+	protected EList<Predecessor> predecessors;
 
 				/**
 	 * The default value of the '{@link #isGoBlock() <em>Go Block</em>}' attribute.
@@ -120,16 +118,6 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 	 * @ordered
 	 */
 	protected BlockType blockType = BLOCK_TYPE_EDEFAULT;
-
-				/**
-	 * The cached value of the '{@link #getConditional() <em>Conditional</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getConditional()
-	 * @generated
-	 * @ordered
-	 */
-	protected Conditional conditional;
 
 				/**
 	 * The cached value of the '{@link #getPreGuard() <em>Pre Guard</em>}' reference.
@@ -189,9 +177,9 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<BasicBlock> getPredecessors() {
+	public EList<Predecessor> getPredecessors() {
 		if (predecessors == null) {
-			predecessors = new EObjectResolvingEList<BasicBlock>(BasicBlock.class, this, ScgbbPackage.BASIC_BLOCK__PREDECESSORS);
+			predecessors = new EObjectContainmentEList<Predecessor>(Predecessor.class, this, ScgbbPackage.BASIC_BLOCK__PREDECESSORS);
 		}
 		return predecessors;
 	}
@@ -215,44 +203,6 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 		blockType = newBlockType == null ? BLOCK_TYPE_EDEFAULT : newBlockType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE, oldBlockType, blockType));
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Conditional getConditional() {
-		if (conditional != null && conditional.eIsProxy()) {
-			InternalEObject oldConditional = (InternalEObject)conditional;
-			conditional = (Conditional)eResolveProxy(oldConditional);
-			if (conditional != oldConditional) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgbbPackage.BASIC_BLOCK__CONDITIONAL, oldConditional, conditional));
-			}
-		}
-		return conditional;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Conditional basicGetConditional() {
-		return conditional;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setConditional(Conditional newConditional) {
-		Conditional oldConditional = conditional;
-		conditional = newConditional;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__CONDITIONAL, oldConditional, conditional));
 	}
 
 				/**
@@ -326,6 +276,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				return ((InternalEList<?>)getSchedulingBlocks()).basicRemove(otherEnd, msgs);
 			case ScgbbPackage.BASIC_BLOCK__GUARDS:
 				return ((InternalEList<?>)getGuards()).basicRemove(otherEnd, msgs);
+			case ScgbbPackage.BASIC_BLOCK__PREDECESSORS:
+				return ((InternalEList<?>)getPredecessors()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -348,9 +300,6 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				return isGoBlock();
 			case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
 				return getBlockType();
-			case ScgbbPackage.BASIC_BLOCK__CONDITIONAL:
-				if (resolve) return getConditional();
-				return basicGetConditional();
 			case ScgbbPackage.BASIC_BLOCK__PRE_GUARD:
 				if (resolve) return getPreGuard();
 				return basicGetPreGuard();
@@ -377,16 +326,13 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				return;
 			case ScgbbPackage.BASIC_BLOCK__PREDECESSORS:
 				getPredecessors().clear();
-				getPredecessors().addAll((Collection<? extends BasicBlock>)newValue);
+				getPredecessors().addAll((Collection<? extends Predecessor>)newValue);
 				return;
 			case ScgbbPackage.BASIC_BLOCK__GO_BLOCK:
 				setGoBlock((Boolean)newValue);
 				return;
 			case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
 				setBlockType((BlockType)newValue);
-				return;
-			case ScgbbPackage.BASIC_BLOCK__CONDITIONAL:
-				setConditional((Conditional)newValue);
 				return;
 			case ScgbbPackage.BASIC_BLOCK__PRE_GUARD:
 				setPreGuard((ValuedObject)newValue);
@@ -418,9 +364,6 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 			case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
 				setBlockType(BLOCK_TYPE_EDEFAULT);
 				return;
-			case ScgbbPackage.BASIC_BLOCK__CONDITIONAL:
-				setConditional((Conditional)null);
-				return;
 			case ScgbbPackage.BASIC_BLOCK__PRE_GUARD:
 				setPreGuard((ValuedObject)null);
 				return;
@@ -446,8 +389,6 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				return goBlock != GO_BLOCK_EDEFAULT;
 			case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
 				return blockType != BLOCK_TYPE_EDEFAULT;
-			case ScgbbPackage.BASIC_BLOCK__CONDITIONAL:
-				return conditional != null;
 			case ScgbbPackage.BASIC_BLOCK__PRE_GUARD:
 				return preGuard != null;
 		}

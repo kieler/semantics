@@ -34,6 +34,8 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scgbb.BlockType
 import de.cau.cs.kieler.scg.synchronizer.SurfaceSynchronizer
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.scgbb.Predecessor
 
 /** 
  * SimpleScheduler
@@ -82,7 +84,7 @@ class SimpleScheduler extends AbstractSCGScheduler {
                 var placeable = true
                 val parentBB = block.eContainer as BasicBlock
                 for(pred:parentBB.predecessors){
-                    for(sb:pred.schedulingBlocks){
+                    for(sb:pred.basicBlock.schedulingBlocks){
                         if (!schedule.schedulingBlocks.contains(sb)) { placeable = false }
                     }
                 }
@@ -126,36 +128,21 @@ class SimpleScheduler extends AbstractSCGScheduler {
     			expression.subExpressions.add(basicBlock.preGuard.reference)
     			gExpr.expression = expression
     		}
-    		else if (basicBlock.blockType == BlockType::TRUEBRANCH) {
-    			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-    			expression.setOperator(OperatorType::AND)
-    			expression.subExpressions.add(basicBlock.predecessors.head.guards.last.reference)
-    			expression.subExpressions.add(basicBlock.conditional.condition.copy)
-    			gExpr.expression = expression
-    		}
-    		else if (basicBlock.blockType == BlockType::ELSEBRANCH) {
-    			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-    			expression.setOperator(OperatorType::AND)
-    			expression.subExpressions.add(basicBlock.predecessors.head.guards.last.reference)
-    			expression.subExpressions.add(basicBlock.conditional.condition.copy.negate)
-    			gExpr.expression = expression
-    		}
     		else if (basicBlock.blockType == BlockType::SYNCHRONIZER) {
 				val SurfaceSynchronizer synchronizer = Guice.createInjector().getInstance(typeof(SurfaceSynchronizer))
 				val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join)
 				scg.valuedObjects.addAll(joinData.valuedObjects)
 				return joinData.guardExpression			
-			} 
-			else {
+			} else {
 				val bb = schedulingBlock.basicBlock
 				if (bb.predecessors.size>1) {
 					val expr = KExpressionsFactory::eINSTANCE.createOperatorExpression
 					expr.setOperator(OperatorType::OR)
-					bb.predecessors.forEach[ expr.subExpressions.add(it.guards.head.reference) ]
+					bb.predecessors.forEach[ expr.subExpressions.add(it.predecessorExpression) ]
 					gExpr.expression = expr
 				} 
 				else if (bb.predecessors.size == 1) {
-					gExpr.expression = bb.predecessors.head.guards.head.reference
+					gExpr.expression = bb.predecessors.head.predecessorExpression
 				} 
 				else 
 				{
@@ -167,6 +154,29 @@ class SimpleScheduler extends AbstractSCGScheduler {
 		}
 		    	
     	gExpr
+    }
+    
+    def Expression predecessorExpression(Predecessor predecessor) {
+    	if (predecessor.blockType == BlockType::NORMAL) {
+    		return predecessor.basicBlock.guards.head.reference
+    	}
+    	else if (predecessor.blockType == BlockType::TRUEBRANCH) {
+   			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+   			expression.setOperator(OperatorType::AND)
+   			expression.subExpressions.add(predecessor.basicBlock.guards.last.reference)
+   			expression.subExpressions.add(predecessor.conditional.condition.copy)
+   			return expression
+   		}
+   		else if (predecessor.blockType == BlockType::ELSEBRANCH) {
+   			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+   			expression.setOperator(OperatorType::AND)
+   			expression.subExpressions.add(predecessor.basicBlock.guards.last.reference)
+   			expression.subExpressions.add(predecessor.conditional.condition.copy.negate)
+   			return expression
+   		}
+    		
+    	// FIXME: throw exception
+    	return null
     }
 
 }

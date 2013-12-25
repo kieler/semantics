@@ -154,7 +154,7 @@ public interface ScgbbPackage extends EPackage {
 	int BASIC_BLOCK__GUARDS = 1;
 
 				/**
-	 * The feature id for the '<em><b>Predecessors</b></em>' reference list.
+	 * The feature id for the '<em><b>Predecessors</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -181,22 +181,13 @@ public interface ScgbbPackage extends EPackage {
 	int BASIC_BLOCK__BLOCK_TYPE = 4;
 
 				/**
-	 * The feature id for the '<em><b>Conditional</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BASIC_BLOCK__CONDITIONAL = 5;
-
-				/**
 	 * The feature id for the '<em><b>Pre Guard</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BASIC_BLOCK__PRE_GUARD = 6;
+	int BASIC_BLOCK__PRE_GUARD = 5;
 
 				/**
 	 * The number of structural features of the '<em>Basic Block</em>' class.
@@ -205,7 +196,7 @@ public interface ScgbbPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int BASIC_BLOCK_FEATURE_COUNT = 7;
+    int BASIC_BLOCK_FEATURE_COUNT = 6;
 
     /**
 	 * The number of operations of the '<em>Basic Block</em>' class.
@@ -272,6 +263,61 @@ public interface ScgbbPackage extends EPackage {
     int SCHEDULING_BLOCK_OPERATION_COUNT = 0;
 
     /**
+	 * The meta object id for the '{@link de.cau.cs.kieler.scgbb.impl.PredecessorImpl <em>Predecessor</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.scgbb.impl.PredecessorImpl
+	 * @see de.cau.cs.kieler.scgbb.impl.ScgbbPackageImpl#getPredecessor()
+	 * @generated
+	 */
+	int PREDECESSOR = 3;
+
+				/**
+	 * The feature id for the '<em><b>Basic Block</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREDECESSOR__BASIC_BLOCK = 0;
+
+				/**
+	 * The feature id for the '<em><b>Block Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREDECESSOR__BLOCK_TYPE = 1;
+
+				/**
+	 * The feature id for the '<em><b>Conditional</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREDECESSOR__CONDITIONAL = 2;
+
+				/**
+	 * The number of structural features of the '<em>Predecessor</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREDECESSOR_FEATURE_COUNT = 3;
+
+				/**
+	 * The number of operations of the '<em>Predecessor</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREDECESSOR_OPERATION_COUNT = 0;
+
+				/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.scgbb.BlockType <em>Block Type</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -279,7 +325,7 @@ public interface ScgbbPackage extends EPackage {
 	 * @see de.cau.cs.kieler.scgbb.impl.ScgbbPackageImpl#getBlockType()
 	 * @generated
 	 */
-	int BLOCK_TYPE = 3;
+	int BLOCK_TYPE = 4;
 
 				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scgbb.SCGraphBB <em>SC Graph BB</em>}'.
@@ -335,10 +381,10 @@ public interface ScgbbPackage extends EPackage {
 	EReference getBasicBlock_Guards();
 
 				/**
-	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scgbb.BasicBlock#getPredecessors <em>Predecessors</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgbb.BasicBlock#getPredecessors <em>Predecessors</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Predecessors</em>'.
+	 * @return the meta object for the containment reference list '<em>Predecessors</em>'.
 	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getPredecessors()
 	 * @see #getBasicBlock()
 	 * @generated
@@ -355,17 +401,6 @@ public interface ScgbbPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getBasicBlock_BlockType();
-
-				/**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgbb.BasicBlock#getConditional <em>Conditional</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Conditional</em>'.
-	 * @see de.cau.cs.kieler.scgbb.BasicBlock#getConditional()
-	 * @see #getBasicBlock()
-	 * @generated
-	 */
-	EReference getBasicBlock_Conditional();
 
 				/**
 	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgbb.BasicBlock#getPreGuard <em>Pre Guard</em>}'.
@@ -431,6 +466,49 @@ public interface ScgbbPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getSchedulingBlock_Guard();
+
+				/**
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.scgbb.Predecessor <em>Predecessor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Predecessor</em>'.
+	 * @see de.cau.cs.kieler.scgbb.Predecessor
+	 * @generated
+	 */
+	EClass getPredecessor();
+
+				/**
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgbb.Predecessor#getBasicBlock <em>Basic Block</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Basic Block</em>'.
+	 * @see de.cau.cs.kieler.scgbb.Predecessor#getBasicBlock()
+	 * @see #getPredecessor()
+	 * @generated
+	 */
+	EReference getPredecessor_BasicBlock();
+
+				/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgbb.Predecessor#getBlockType <em>Block Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Block Type</em>'.
+	 * @see de.cau.cs.kieler.scgbb.Predecessor#getBlockType()
+	 * @see #getPredecessor()
+	 * @generated
+	 */
+	EAttribute getPredecessor_BlockType();
+
+				/**
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgbb.Predecessor#getConditional <em>Conditional</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Conditional</em>'.
+	 * @see de.cau.cs.kieler.scgbb.Predecessor#getConditional()
+	 * @see #getPredecessor()
+	 * @generated
+	 */
+	EReference getPredecessor_Conditional();
 
 				/**
 	 * Returns the meta object for enum '{@link de.cau.cs.kieler.scgbb.BlockType <em>Block Type</em>}'.
@@ -510,7 +588,7 @@ public interface ScgbbPackage extends EPackage {
 		EReference BASIC_BLOCK__GUARDS = eINSTANCE.getBasicBlock_Guards();
 
 								/**
-		 * The meta object literal for the '<em><b>Predecessors</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Predecessors</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -524,14 +602,6 @@ public interface ScgbbPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute BASIC_BLOCK__BLOCK_TYPE = eINSTANCE.getBasicBlock_BlockType();
-
-								/**
-		 * The meta object literal for the '<em><b>Conditional</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference BASIC_BLOCK__CONDITIONAL = eINSTANCE.getBasicBlock_Conditional();
 
 								/**
 		 * The meta object literal for the '<em><b>Pre Guard</b></em>' reference feature.
@@ -582,6 +652,40 @@ public interface ScgbbPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SCHEDULING_BLOCK__GUARD = eINSTANCE.getSchedulingBlock_Guard();
+
+								/**
+		 * The meta object literal for the '{@link de.cau.cs.kieler.scgbb.impl.PredecessorImpl <em>Predecessor</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.cau.cs.kieler.scgbb.impl.PredecessorImpl
+		 * @see de.cau.cs.kieler.scgbb.impl.ScgbbPackageImpl#getPredecessor()
+		 * @generated
+		 */
+		EClass PREDECESSOR = eINSTANCE.getPredecessor();
+
+								/**
+		 * The meta object literal for the '<em><b>Basic Block</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREDECESSOR__BASIC_BLOCK = eINSTANCE.getPredecessor_BasicBlock();
+
+								/**
+		 * The meta object literal for the '<em><b>Block Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREDECESSOR__BLOCK_TYPE = eINSTANCE.getPredecessor_BlockType();
+
+								/**
+		 * The meta object literal for the '<em><b>Conditional</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREDECESSOR__CONDITIONAL = eINSTANCE.getPredecessor_Conditional();
 
 								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.scgbb.BlockType <em>Block Type</em>}' enum.

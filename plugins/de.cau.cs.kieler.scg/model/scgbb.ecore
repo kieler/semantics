@@ -12,10 +12,9 @@
         upperBound="-1" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="predecessors" upperBound="-1"
-        eType="#//BasicBlock"/>
+        eType="#//Predecessor" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="goBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockType" eType="#//BlockType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="conditional" eType="ecore:EClass scg.ecore#//Conditional"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="preGuard" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SchedulingBlock">
@@ -31,5 +30,11 @@
     <eLiterals name="TRUEBRANCH" value="2"/>
     <eLiterals name="ELSEBRANCH" value="3"/>
     <eLiterals name="SYNCHRONIZER" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Predecessor">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="basicBlock" lowerBound="1"
+        eType="#//BasicBlock"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockType" eType="#//BlockType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="conditional" eType="ecore:EClass scg.ecore#//Conditional"/>
   </eClassifiers>
 </ecore:EPackage>

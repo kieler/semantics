@@ -37,6 +37,7 @@ import java.util.List
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scgbb.BlockType
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scgbb.Predecessor
 
 /** 
  * SCGDEP to SCGBB Transformation 
@@ -96,7 +97,8 @@ class SCGDEPToSCGBBTransformation {
             scg.basicBlocks.forEach[bb|bb.schedulingBlocks.forEach[sb|n.addAll(sb.nodes)]]
         ]
         if (nodes.contains(rootNode)) {
-            
+            val rootBasicBlock = rootNode.basicBlock
+            rootBasicBlock.predecessors.addAll(predecessorBlocks.createPredecessors(rootBasicBlock))
             return newIndex;
         }
         
@@ -168,18 +170,7 @@ class SCGDEPToSCGBBTransformation {
       
         basicBlock.guards.add(guard)
         basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock(basicBlock))
-        basicBlock.predecessors.addAll(predecessorBlocks)
-      	basicBlock.predecessors.forEach[ 
-       		val lastNode = schedulingBlocks.last.nodes.last
-       		if (lastNode instanceof Conditional) {
-       			if (basicBlock.schedulingBlocks.head.nodes.head == (lastNode as Conditional).then.target) {
-        			basicBlock.blockType =  BlockType::TRUEBRANCH
-       			} else {
-        			basicBlock.blockType =  BlockType::ELSEBRANCH
-       			}
-       			basicBlock.conditional = lastNode as Conditional
-       		}
-       	]
+        basicBlock.predecessors.addAll(predecessorBlocks.createPredecessors(basicBlock))
         scg.basicBlocks.add(basicBlock)
         
         basicBlock
@@ -211,6 +202,29 @@ class SCGDEPToSCGBBTransformation {
         if (block != null) schedulingBlocks.add(block)
         
         schedulingBlocks
+    }
+    
+    def List<Predecessor> createPredecessors(List<BasicBlock> basicBlocks, BasicBlock target) {
+    	val predecessors = <Predecessor> newArrayList
+    	
+    	basicBlocks.forEach[
+    		val predecessor = ScgbbFactory::eINSTANCE.createPredecessor
+    		
+    		predecessor.basicBlock = it
+    		val lastNode = it.schedulingBlocks.last.nodes.last
+       		if (lastNode instanceof Conditional) {
+       			if (target.schedulingBlocks.head.nodes.head == (lastNode as Conditional).then.target) {
+        			predecessor.blockType =  BlockType::TRUEBRANCH
+       			} else {
+        			predecessor.blockType =  BlockType::ELSEBRANCH
+       			}
+       			predecessor.conditional = lastNode as Conditional
+       		}
+    		
+    		predecessors.add(predecessor)
+    	]
+    	
+    	predecessors
     }
 
    // -------------------------------------------------------------------------   

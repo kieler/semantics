@@ -43,7 +43,6 @@ import de.cau.cs.kieler.scgsched.Schedule
 import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scgbb.ActivationExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 
@@ -98,8 +97,13 @@ class SCGCopyExtensions {
         if (source instanceof SCGraphBB && target instanceof SCGraphBB) { 
             (source as SCGraphBB).basicBlocks.forEach[ it.copyBasicBlock(target as SCGraphBB) ]
             (target as SCGraphBB).basicBlocks.forEach[bb|
-            	revBasicBlockMapping.get(bb).predecessors.forEach[
-   	           		bb.predecessors.add(basicBlockMapping.get(it))
+            	revBasicBlockMapping.get(bb).predecessors.forEach[pred|
+            		val predecessor = ScgbbFactory::eINSTANCE.createPredecessor => [
+            			it.basicBlock = basicBlockMapping.get(pred.basicBlock)
+            			it.blockType = pred.blockType
+			        	it.conditional = nodeMapping.get(pred.conditional) as Conditional
+            		]
+   	           		bb.predecessors.add(predecessor)
             	]
             ] 
         }
@@ -152,7 +156,6 @@ class SCGCopyExtensions {
         bb => [
         	blockType = basicBlock.blockType
         	goBlock = basicBlock.goBlock
-        	conditional = nodeMapping.get(basicBlock.conditional) as Conditional
         	preGuard = valuedObjectMapping.get(basicBlock.preGuard)
         ]
                 
