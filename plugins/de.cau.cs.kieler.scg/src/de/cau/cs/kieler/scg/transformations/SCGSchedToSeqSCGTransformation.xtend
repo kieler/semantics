@@ -57,7 +57,7 @@ class SCGSchedToSeqSCGTransformation {
     extension SCGCopyExtensions	
     
     // -------------------------------------------------------------------------
-    // -- TRANSFORMATION METHOD
+    // -- Transformation method
     // -------------------------------------------------------------------------    
     
     /**

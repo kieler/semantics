@@ -73,13 +73,13 @@ class SCGDEPToSCGBBTransformation {
     extension SCGCopyExtensions
          
     // -------------------------------------------------------------------------
-    // -- CONSTANTS
+    // -- Constants
     // -------------------------------------------------------------------------
     /** The prefix of each guard. */
     private val String GUARDPREFIX = "guard"
     
     // -------------------------------------------------------------------------
-    // -- TRANSFORMATION METHOD
+    // -- Transformation method
     // -------------------------------------------------------------------------
     
     /**
@@ -111,7 +111,7 @@ class SCGDEPToSCGBBTransformation {
     
 
     // -------------------------------------------------------------------------
-    // -- BASIC BLOCK METHODS
+    // -- Basic Block methods
     // -------------------------------------------------------------------------
     
     /**
