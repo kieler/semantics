@@ -238,3 +238,9 @@ class SCGExtensions {
     	plp
     }
 }
+
+class UnsupportedSCGException extends Exception {
+	new(String s) {
+		super(s)
+	}
+}
