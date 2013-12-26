@@ -119,7 +119,7 @@ class SCGSchedToSeqSCGTransformation {
      * 			the source control flow which points to the next node
      * @returns Returns a list of outgoing control flows. The caller should connect them to their surrounding environment. 
      */
-    def transformSchedule(Schedule schedule, SCGraph scg, ControlFlow controlFlow) {
+    private def transformSchedule(Schedule schedule, SCGraph scg, ControlFlow controlFlow) {
     	// The source SCG is easily determined as it includes the schedule. Its container is the source SCG.
     	val scgSched = schedule.eContainer as SCGraphSched
     	
