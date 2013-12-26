@@ -117,7 +117,9 @@ class SCGSchedToSeqSCGTransformation {
      * 			the target SCG
      * @param controlFlow
      * 			the source control flow which points to the next node
-     * @returns Returns a list of outgoing control flows. The caller should connect them to their surrounding environment. 
+     * @return Returns a list of outgoing control flows. The caller should connect them to their surrounding environment. 
+     * @throws UnsupportedSCGException
+     * 			if no guard expression can be found for a specific guard.
      */
     private def transformSchedule(Schedule schedule, SCGraph scg, ControlFlow controlFlow) {
     	// The source SCG is easily determined as it includes the schedule. Its container is the source SCG.

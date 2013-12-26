@@ -89,6 +89,8 @@ class SCGDEPToSCGBBTransformation {
      * @param scgdep
      * 			the source SCG
      * @return Returns the enriched SCG.
+     * @throws UnsupportedSCGException
+     * 			if the first node of the SCG is not an entry node.
      */
     def SCGraphBB transformSCGDEPToSCGBB(SCGraphDep scgDep) {
         // Create new SCG with the appropriate Scgbb factory. 
