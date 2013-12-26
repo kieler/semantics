@@ -41,9 +41,9 @@ import de.cau.cs.kieler.scgdep.ScgdepFactory
  * <pre>
  * SCG 
  *   |-- Dependency Analysis 	 					<== YOU ARE HERE
- *       |-- Basic Block Analysis
- *           |-- Scheduler
- *               |-- Sequentialization (new SCG)
+ *   |-- Basic Block Analysis
+ *   |-- Scheduler
+ *   |-- Sequentialization (new SCG)
  * </pre>
  * 
  * @author ssm
@@ -65,7 +65,7 @@ class SCGToSCGDEPTransformation {
     extension SCGCopyExtensions
     
     // -------------------------------------------------------------------------
-    // -- TRANSFORMATION METHOD
+    // -- Transformation method
     // -------------------------------------------------------------------------
     
     /**

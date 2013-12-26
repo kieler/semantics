@@ -36,9 +36,9 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * <pre>
  * SCG 
  *   |-- Dependency Analysis 	 					
- *       |-- Basic Block Analysis				
- *           |-- Scheduler
- *               |-- Sequentialization (new SCG)	<== YOU ARE HERE
+ *   |-- Basic Block Analysis				
+ *   |-- Scheduler
+ *   |-- Sequentialization (new SCG)	<== YOU ARE HERE
  * </pre>
  * 
  * @author ssm

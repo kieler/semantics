@@ -49,9 +49,9 @@ import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
  * <pre>
  * SCG 
  *   |-- Dependency Analysis 	 					
- *       |-- Basic Block Analysis					<== YOU ARE HERE
- *           |-- Scheduler
- *               |-- Sequentialization (new SCG)
+ *   |-- Basic Block Analysis					<== YOU ARE HERE
+ *   |-- Scheduler
+ *   |-- Sequentialization (new SCG)
  * </pre>
  * 
  * @author ssm
