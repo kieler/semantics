@@ -122,7 +122,6 @@ class TransformationTreeExtensions {
      * Value element is a bijective mapping between model instance reference by elements in transformation tree and given model instance.
      * 
      * Returns null if model is not found or can not be identified because it is transient.
-     * If you are searching a transient model it must be found manually by its name, type and its semantic position in transformation tree.
      * @param tree root model of tree
      * @param modelRoot root element of a model instance to search for.
      * @return Pair with matching modelNode in tree and map of model matching or null.
@@ -131,7 +130,7 @@ class TransformationTreeExtensions {
 
         //get a list of all reachable models from root, add root because it is missing in it's succeeding models and filter for not transient models
         val models = (tree.succeedingTransformations.map[it.target].filterNull.toList => [it.add(tree)]).filter [
-            it.transient == false
+            it.transient == false;
         ];
 
         //find matching model to given instance
@@ -143,13 +142,13 @@ class TransformationTreeExtensions {
                 }
             }
         }
-        return null
+        return null;
     }
 
     // -------------------------------------------------------------------------
     // Element Utilities
     /**
-     * Returns all parent elements in source model of ModelTransformation associated with given element.
+     * Returns all parent elements in source model of given ModelTransformation associated with given element.
      * If target model of given ModelTransformation does not contain given element returned list is empty.
      * @param element element of a model in transformation tree.
      * @param tranformation model transformation to resolve parent relation.
@@ -160,7 +159,7 @@ class TransformationTreeExtensions {
     }
 
     /**
-     * Returns all child elements in target model of transformation associated with given element.
+     * Returns all child elements in target model of given ModelTransformation associated with given element.
      * If source model of given ModelTransformation does not contain given element returned list is empty.
      * @param element element of a model in transformation tree.
      * @param tranformation model transformation to resolve parent relation.
@@ -171,7 +170,18 @@ class TransformationTreeExtensions {
     }
 
     /**
-     * Resolves a mapping between all element of source and target model instance wit given transformation tree.
+     * Resolves a mapping between all elements of source and target model instances with given transformation tree.
+     * 
+     * Returns a multi-mapping from elements of source model to target model elements.
+     * Mapping is created by resolving all transformations on a path from source to target.
+     * Source and target can be arbitray model in tree, so path can be bottom up, top down or leaf to leaf.
+     * 
+     * Return null if source or target model can not be found in tree or can not be identified because one is transient.
+     * 
+     * @param tree root model of tree
+     * @param sourceModel root element of a source model instance
+     * @param targetModel root element of a target model instance
+     * @return multi-mapping from source model objects to target model objects or null
      */
     def HashMultimap<EObject, EObject> resolveMapping(Model tree, EObject sourceModel, EObject targetModel) {
 
@@ -319,9 +329,9 @@ class TransformationTreeExtensions {
      * 
      * @param mapping object mapping data
      * @param transformationID a unique identifier for initial transformation
-     * @param sourceModelRoot root element of source model
+     * @param sourceModelRoot root element of source model instance
      * @param sourceModelName display name of source model
-     * @param targetModelRoot root element of target model
+     * @param targetModelRoot root element of target model instance
      * @param targetModelName display name of target model
      * @return leaf of new tree
      */
@@ -356,7 +366,7 @@ class TransformationTreeExtensions {
         transformation.source = source;
         transformation.target = target;
 
-        //create object mapping        
+        //create element transformations from object mapping        
         mapping.entries.forEach [
             val trans = factory.createElementTransformation;
             trans.modelTransformation = transformation;
@@ -380,8 +390,8 @@ class TransformationTreeExtensions {
      * @param mapping object mapping data
      * @param modelNode node in tree to append transformation, representing source model
      * @param transformationID a unique identifier for initial transformation
-     * @param sourceModelRoot root element of source model
-     * @param targetModelRoot root element of target model
+     * @param sourceModelRoot root element of source model instance
+     * @param targetModelRoot root element of target model instance
      * @param targetModelName display name of target model
      * @return newly created leaf in tree
      * @throws MappingException indicated inconsistent mappings. Appears when Objects in source are mapped to target object but do not exist in source model.
@@ -392,7 +402,7 @@ class TransformationTreeExtensions {
         //check if source model has same type as modelNode
         if (modelNode != null && !modelNode.transient && modelNode.type.equals(sourceModelRoot.eClass)) {
 
-            //TODO check real equality first
+            //TODO check real equality first or not ?
             val sourceModelMap = matchModels(sourceModelRoot, modelNode.rootElement);
             if (sourceModelMap == null) {
                 return null; //sourceModel and model represented by modelNode don't match
@@ -426,7 +436,7 @@ class TransformationTreeExtensions {
                 if (sourceElem != null) {
                     trans.source = sourceElem;
                 } else {
-                    throw new MappingException("Missing Object in source model.", entry.key); //TODO may be irrelevant if model identity check is correct or maybe add missing element
+                    throw new MappingException("Missing Object in source model.", entry.key); //TODO may be irrelevant if model identity check is correct or maybe add missing element when transformation tree is incomplete
                 }
                 trans.target = targetCopyMap.get(entry.value).createElement(target);
             ]
@@ -477,6 +487,9 @@ class TransformationTreeExtensions {
 
     // -------------------------------------------------------------------------
     // Helper
+    /**
+     * creates element once
+     */
     private def Element create element : factory.createElement() createElement(EObject obj, Model model) {
         element.model = model;
         element.name = obj.eClass.name;
