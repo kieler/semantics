@@ -31,6 +31,7 @@ import org.eclipse.emf.compare.rcp.EMFCompareRCPPlugin
 import org.eclipse.emf.compare.utils.UseIdentifiers
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
+import com.google.common.collect.HashMultimap
 
 /**
  * Extension for easier access and manipulation of TranformationTrees.
@@ -44,6 +45,7 @@ class TransformationTreeExtensions {
     // Model Utilities
     /**
 	 * Returns root model of tree.
+	 * @param model root model in tree
 	 * @return root model.
 	 */
     def Model root(Model model) {
@@ -62,6 +64,7 @@ class TransformationTreeExtensions {
     /**
 	 * Returns parent model in tree, where given model was transformed from.
 	 * If model is root node, returns null.
+	 * @param model model in tree
 	 * @return parent model or null
 	 */
     def Model parent(Model model) {
@@ -77,6 +80,7 @@ class TransformationTreeExtensions {
 
     /**
      * Returns all child models of this node in tree, where given model is transformed into.
+     * @param model model in tree
      * @return child models
      */
     def List<Model> children(Model model) {
@@ -89,6 +93,7 @@ class TransformationTreeExtensions {
     /**
 	 * Returns all succeeding ModelTransformations for given model.
 	 * BFS will be performed on sub tree.
+	 * @param model model in tree
 	 * @return list of succeeding ModelTransformation.
 	 */
     def List<ModelTransformation> succeedingTransformations(Model model) {
@@ -109,20 +114,45 @@ class TransformationTreeExtensions {
         }
         return transformations;
     }
-    
+
     /**
-     * Searches given transformation tree for matching modelNode to given model represented by it's root element.
-     * @return matching modelNode in tree or null
+     * Searches given transformation tree for matching modelNode to given model instance represented by it's root element.
+     * 
+     * Returns a Pair were key element is found model in tree.
+     * Value element is a bijective mapping between model instance reference by elements in transformation tree and given model instance.
+     * 
+     * Returns null if model is not found or can not be identified because it is transient.
+     * If you are searching a transient model it must be found manually by its name, type and its semantic position in transformation tree.
+     * @param tree root model of tree
+     * @param modelRoot root element of a model instance to search for.
+     * @return Pair with matching modelNode in tree and map of model matching or null.
      */
-    def Model findModelInTree(Model tree, EObject modelRoot){
-        //TODO
-    }    
+    def Pair<Model, HashMap<EObject, EObject>> findModelInTree(Model tree, EObject modelRoot) {
+
+        //get a list of all reachable models from root, add root because it is missing in it's succeeding models and filter for not transient models
+        val models = (tree.succeedingTransformations.map[it.target].filterNull.toList => [it.add(tree)]).filter [
+            it.transient == false
+        ];
+
+        //find matching model to given instance
+        for (Model model : models) {
+            if (model.type.equals(modelRoot.eClass)) { //first check only class of root element
+                val match = matchModels(model.rootElement, modelRoot);
+                if (match != null) {
+                    return new Pair(model, match);
+                }
+            }
+        }
+        return null
+    }
 
     // -------------------------------------------------------------------------
     // Element Utilities
-    
     /**
-     * Returns all parent elements in source model of transformation associated with given element.
+     * Returns all parent elements in source model of ModelTransformation associated with given element.
+     * If target model of given ModelTransformation does not contain given element returned list is empty.
+     * @param element element of a model in transformation tree.
+     * @param tranformation model transformation to resolve parent relation.
      * @return List of parent elements.
      */
     def List<Element> parents(Element element, ModelTransformation tranformation) {
@@ -131,6 +161,9 @@ class TransformationTreeExtensions {
 
     /**
      * Returns all child elements in target model of transformation associated with given element.
+     * If source model of given ModelTransformation does not contain given element returned list is empty.
+     * @param element element of a model in transformation tree.
+     * @param tranformation model transformation to resolve parent relation.
      * @return List of child elements.
      */
     def List<Element> children(Element element, ModelTransformation tranformation) {
@@ -138,38 +171,142 @@ class TransformationTreeExtensions {
     }
 
     /**
-     * Returns all parent elements in source model at head of transformation path associated with given element.
-     * This function will iterate over each ModelTransformation in path backwards and recursively resolves associated parent elements.
-     * The path must lead from source model where returned elements should be contained to target model where given element is taken from.
-     * If path does not exist returns null.
-     * @param tranformationPath list of model transformations from source model to target model.
-     * @return List of parent elements or null
+     * Resolves a mapping between all element of source and target model instance wit given transformation tree.
      */
-    def List<Element> parents(Element element, List<ModelTransformation> tranformationPath) {       
-        //NOTE leaf leaf paths
-        //return tranformation.elementTransformations.filter[it.target == element].map[it.source].toList;
-    }
+    def HashMultimap<EObject, EObject> resolveMapping(Model tree, EObject sourceModel, EObject targetModel) {
 
-    /**
-     * Returns all child elements in target model at tail of transformation path associated with given element.
-     * This function will iterate over each ModelTransformation in path and recursively resolves associated child elements.
-     * The path must lead from source model where given element is taken from to target model where returned elements should be contained .
-     * If path does not exist returns null.
-     * @param tranformationPath list of model transformations from source model to target model.
-     * @return List of parent elements or null
-     */
-    def List<Element> children(Element element, List<ModelTransformation> tranformationPath) {
-        //NOTE leaf leaf paths
-        //return tranformation.elementTransformations.filter[it.source == element].map[it.target].toList;
-    }
-    
-    /**
-     * Returns a path from source model to destination model
-     * @return path as list of ModelTransformations or null
-     */
-    def List<ModelTransformation> getTransformationPath(Model source, Model destination){        
-        //TODO
-        //NOTE leaf leaf paths
+        //find model and mapping for given source model instance
+        val source = tree.findModelInTree(sourceModel);
+        if (source == null) {
+            return null;
+        }
+
+        //find model and mapping for given target model instance
+        val target = tree.findModelInTree(targetModel);
+        if (target == null) {
+            return null;
+        }
+
+        //trivial case when source and target are same model
+        if (source.key == target.key) {
+
+            val mapping = HashMultimap::create(source.value.size, 1);
+            source.value.entrySet.forEach [
+                //map source element instances to target element instance because they might differ even if they represent the same model
+                mapping.put(it.value, target.value.get(it.key));
+            ];
+            return mapping;
+        } else {
+
+            //Find a path between source and target node in tree.
+            //Path must not follow direction of edges in tree.
+            //Path can be bottom up, top down or leaf to leaf.
+            //Path is a list of ModelTransformations between nodes.
+            var List<ModelTransformation> path = null;
+
+            //Index in path were path direction in tree changes from upwards to downwards
+            //index of first element in other direction
+            var int downwardIndex;
+            val sourceUpPath = emptyList;
+            val targetUpPath = emptyList;
+
+            //First resolve a path from target model upward to root
+            var node = target.key;//Iteration variable for models on paths
+            do {
+                val sourceTransformation = node.transformedFrom;
+                node = if (sourceTransformation != null) {
+                    targetUpPath.add(sourceTransformation); //add transformation to path
+                    sourceTransformation.source; //set next model node
+                } else {
+                    null; //root node has no parent
+                }
+                if (node == source.key) { //if source model already found on this subpath, path is already complete
+                    path = targetUpPath.reverse; //set path, reverse to get a path from source to target
+                    downwardIndex = -1;//this path is always downward
+                    node = null; //break loop
+                }
+            } while (node != null);
+
+            //If no path is found yet, resolve a path from source model upward to root
+            if (path == null) {
+                node = source.key;
+                do {
+                    val sourceTransformation = node.transformedFrom;
+                    node = if (sourceTransformation != null) {
+                        sourceUpPath.add(sourceTransformation); //add transformation to path
+                        sourceTransformation.source; //set next model node
+                    } else {
+                        null; //root node has no parent
+                    }
+                    if (node == target.key) { //if target already found on this subpath, path is already complete
+                        path = sourceUpPath; //set path
+                        downwardIndex = path.size;//this path is always upward
+                        node = null; //break loop
+                    }
+                } while (node != null);
+            }
+
+            //if no simply upward or downward path exist there might be a leaf-to-leaf-path with change of direction
+            if (path == null) {
+
+                //search for a connection between the two upward paths
+                val connection = sourceUpPath.findFirst[targetUpPath.contains(it)];
+
+                if (connection == null) {
+
+                    //If no connection is found, the two paths are connected via root node,
+                    // which can not be found by comparing the paths because path contains out of 
+                    // ModelTransformation and root-model-node has no incoming transformation which match
+                    // in both paths
+                    //They must be connected because both models are in same tree (reachable from root),
+                    // which were check by findModelInTree before
+                    path = (sourceUpPath + targetUpPath.reverseView).toList;
+                    downwardIndex = sourceUpPath.size;
+                } else {
+
+                    //turn index is index of connecting transformation but is not part of resulting path so index will point to correct (turned) transformation  
+                    downwardIndex = sourceUpPath.indexOf(connection);
+
+                    //First part of path is upward path from source to connection (exclusive) 
+                    path = sourceUpPath.take(downwardIndex).toList;
+
+                    //Second part is downward path from connection (exclusive) to target
+                    path.addAll(targetUpPath.reverseView.drop(targetUpPath.indexOf(connection) + 1));
+                }
+            }
+
+            //traverse path and resolve mapping
+            val elementMapping = HashMultimap::create(source.value.size, 10);
+            //init mapping
+            path.get(0).elementTransformations.forEach[
+                elementMapping.put(it.source,it.target);
+            ];
+            //resolve mapping from path
+            val _downwardIndex = downwardIndex;//index needs to be final to be used in iteration
+            val keys = elementMapping.keySet;
+            path.drop(1).forEach[transformation, index |
+                keys.forEach[
+                    //resolve elementTransformation for all values and replace value
+                    val values = elementMapping.get(it).map[
+                        if(index < _downwardIndex){
+                            it.parents(transformation);//upward
+                        }else{
+                            it.children(transformation);//downward
+                        }
+                    ].fold(emptySet)[ first, second | //fold new values into one set
+                        first.addAll(second);
+                        first;//return first as container of next folding
+                    ];
+                    elementMapping.replaceValues(it,values);
+                ];
+            ];
+            //transform element mapping into mapping between EObjects of given input models
+            val objectMapping = HashMultimap::create(source.value.size, 10);
+            elementMapping.entries.forEach[
+                objectMapping.put(source.value.get(it.key.referencedObject),target.value.get(it.value.referencedObject));
+            ];
+            return objectMapping;
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -254,7 +391,7 @@ class TransformationTreeExtensions {
 
         //check if source model has same type as modelNode
         if (modelNode != null && !modelNode.transient && modelNode.type.equals(sourceModelRoot.eClass)) {
-            
+
             //TODO check real equality first
             val sourceModelMap = matchModels(sourceModelRoot, modelNode.rootElement);
             if (sourceModelMap == null) {
@@ -339,7 +476,7 @@ class TransformationTreeExtensions {
     }
 
     // -------------------------------------------------------------------------
-    // Tree Modifier Helper
+    // Helper
     private def Element create element : factory.createElement() createElement(EObject obj, Model model) {
         element.model = model;
         element.name = obj.eClass.name;
@@ -347,11 +484,11 @@ class TransformationTreeExtensions {
     }
 
     /**
-     * @return null if models are not identically else mapping between same objects
+     * @return null if models are not identically else bijective mapping between matching objects
      */
     private def matchModels(EObject left, EObject right) {
 
-        //THIS CODE IS WRONG
+        //THIS CODE MIGHT BE WRONG
         val matcher = DefaultMatchEngine.createDefaultEObjectMatcher(UseIdentifiers.NEVER);
         val comparisonFactory = new DefaultComparisonFactory(new DefaultEqualityHelperFactory());
         val matchEngine = new DefaultMatchEngine(matcher, comparisonFactory);
