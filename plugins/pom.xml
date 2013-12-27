@@ -51,6 +51,8 @@
     <module>de.cau.cs.kieler.kev</module>
     <module>de.cau.cs.kieler.kex</module>
     <module>de.cau.cs.kieler.kex.ui</module>
+    <module>de.cau.cs.kieler.ktm</module>
+    <module>de.cau.cs.kieler.ktm.klighd</module>
     <module>de.cau.cs.kieler.s</module>
     <module>de.cau.cs.kieler.s.sc</module>
     <module>de.cau.cs.kieler.s.sj</module>

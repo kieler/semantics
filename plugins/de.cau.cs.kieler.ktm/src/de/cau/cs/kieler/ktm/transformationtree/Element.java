@@ -58,6 +58,9 @@ public interface Element extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Model containing this element.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Model</em>' container reference.
      * @see #setModel(Model)
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getElement_Model()
@@ -112,6 +115,9 @@ public interface Element extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * List of element-transformations were this element is source element.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Transformed Into</em>' reference list.
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getElement_TransformedInto()
      * @see de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getSource
@@ -130,6 +136,9 @@ public interface Element extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * List of element-transformations were this element is target element.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Transformed From</em>' reference list.
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getElement_TransformedFrom()
      * @see de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getTarget
@@ -146,6 +155,11 @@ public interface Element extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Reference to a instance of model relement represented by this Element.
+     * <p>
+     * This reference is mandatory iff transient flag of model owning this element is NOT set.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Referenced Object</em>' reference.
      * @see #setReferencedObject(EObject)
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getElement_ReferencedObject()

@@ -54,6 +54,9 @@ public interface ElementTransformation extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Model-transformation were this element-tranformation is part of.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Model Transformation</em>' container reference.
      * @see #setModelTransformation(ModelTransformation)
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getElementTransformation_ModelTransformation()
@@ -82,6 +85,9 @@ public interface ElementTransformation extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Source element of this transfromation.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Source</em>' reference.
      * @see #setSource(Element)
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getElementTransformation_Source()
@@ -110,6 +116,9 @@ public interface ElementTransformation extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Target element of this transfromation.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Target</em>' reference.
      * @see #setTarget(Element)
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getElementTransformation_Target()

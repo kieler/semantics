@@ -25,6 +25,8 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <!-- begin-model-doc -->
  * Abstract representation of a model used in a transformation.
+ * <p>
+ * Used as nodes in tree structure.
  * <!-- end-model-doc -->
  *
  * <p>
@@ -87,6 +89,9 @@ public interface Model extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * All elements contained by this model.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Elements</em>' containment reference list.
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModel_Elements()
      * @see de.cau.cs.kieler.ktm.transformationtree.Element#getModel
@@ -105,6 +110,9 @@ public interface Model extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * List of model-transformations were this model is source model.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Transformed Into</em>' containment reference list.
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModel_TransformedInto()
      * @see de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getSource
@@ -122,6 +130,9 @@ public interface Model extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Model-transformations were this model is target model.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Transformed From</em>' container reference.
      * @see #setTransformedFrom(ModelTransformation)
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModel_TransformedFrom()
@@ -146,7 +157,7 @@ public interface Model extends EObject {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
-     * This flag is set if model's elemets have no {@link Element#referencedObject} entry.
+     * This flag is set if model's elemets have no {@link Element#referencedObject referencedObject} entry.
      * <p>
      * Falg status must be consistent with all elements.
      * <!-- end-model-doc -->
@@ -176,6 +187,9 @@ public interface Model extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Type as class of represented model.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Type</em>' reference.
      * @see #setType(EClass)
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModel_Type()
@@ -202,6 +216,9 @@ public interface Model extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Reference to element which represents root element of the model.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Root Element</em>' reference.
      * @see #setRootElement(Element)
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModel_RootElement()

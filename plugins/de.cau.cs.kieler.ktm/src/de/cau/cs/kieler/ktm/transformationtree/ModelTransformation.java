@@ -24,6 +24,8 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <!-- begin-model-doc -->
  * Transformation relation between two models.
+ * <p>
+ * Used as edges in tree structure.
  * <!-- end-model-doc -->
  *
  * <p>
@@ -53,7 +55,7 @@ public interface ModelTransformation extends EObject {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
-     * Unique identifier of this {@link ModelTransformation}
+     * Unique identifier of this transformation.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Id</em>' attribute.
      * @see #setId(String)
@@ -82,6 +84,9 @@ public interface ModelTransformation extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Source model of this transfromation.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Source</em>' container reference.
      * @see #setSource(Model)
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModelTransformation_Source()
@@ -110,6 +115,9 @@ public interface ModelTransformation extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Target model of this transfromation.
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Target</em>' containment reference.
      * @see #setTarget(Model)
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModelTransformation_Target()
@@ -139,6 +147,9 @@ public interface ModelTransformation extends EObject {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * All element-transformations which are part of this model-transformation
+     * <!-- end-model-doc -->
      * @return the value of the '<em>Element Transformations</em>' containment reference list.
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModelTransformation_ElementTransformations()
      * @see de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getModelTransformation
