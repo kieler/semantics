@@ -43,6 +43,7 @@ import de.cau.cs.kieler.scgsched.ScgschedFactory
  *   |    |   |-- Synchonize threads			<== YOU ARE HERE
  *   |    |-- Optimization
  *   |-- Sequentialization (new SCG)
+ *       |-- Optimization					
  * </pre>
  * 
  * @author ssm

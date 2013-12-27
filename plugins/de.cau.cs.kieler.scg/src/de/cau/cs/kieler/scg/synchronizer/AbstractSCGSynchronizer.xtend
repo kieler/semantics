@@ -18,7 +18,7 @@ import de.cau.cs.kieler.scg.Join
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
  * whenever multiple threads join again. This abstract class defines the generic interface of a synchronizer 
- * since the scheduler may choose different synchronizers for differnt tasks.<br>
+ * since the scheduler may choose different synchronizers for different tasks.<br>
  * The chain is used to gather important information 
  * about the schedulability of a given SCG. This is done in several key steps. Between two steps the results 
  * are cached in specifically designed metamodels for further processing. At the end of the transformation
@@ -32,9 +32,10 @@ import de.cau.cs.kieler.scg.Join
  *   |-- Scheduler
  *   |    |-- Graph analyses
  *   |    |-- Scheduling
- *   |    |   |-- Synchonize threads			<== YOU ARE HERE
+ *   |    |   |-- Synchonize threads		<== YOU ARE HERE
  *   |    |-- Optimization
  *   |-- Sequentialization (new SCG)
+ *       |-- Optimization					
  * </pre>
  * 
  * @author ssm
