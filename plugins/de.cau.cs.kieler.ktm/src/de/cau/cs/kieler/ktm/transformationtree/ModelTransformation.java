@@ -52,6 +52,7 @@ public interface ModelTransformation extends EObject {
 
     /**
      * Returns the value of the '<em><b>Id</b></em>' attribute.
+     * The default value is <code>""</code>.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -60,7 +61,7 @@ public interface ModelTransformation extends EObject {
      * @return the value of the '<em>Id</em>' attribute.
      * @see #setId(String)
      * @see de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage#getModelTransformation_Id()
-     * @model required="true"
+     * @model default="" required="true"
      * @generated
      */
     String getId();

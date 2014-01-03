@@ -33,7 +33,11 @@ class SimpleTransformation {
     @Inject
     extension TransformationTreeExtensions
 
-    def Model douleAllTransformations(Model input) {
+    /**
+     * splits all ModelTransformation-edges into two edges and adds a new Model in between
+     */
+    def Model splitAllTransformations(Model input) {
+
         //Create copy and create direct mapping
         val output = input.mappedCopy;
         output.succeedingTransformations.forEach [
@@ -49,6 +53,21 @@ class SimpleTransformation {
         ]
 
         return output;
+    }
+
+    /**
+     * Merges all model elements into one model
+     */
+    def mergeIntoOneTransformation(Model input) {
+        val output = factory.createModel;
+        output.name = "TheOneAndOnly";
+        input.mapChild(output);
+        input.eAllContents.forEach[it.mapChild(output)];
+        return output;
+    }
+    
+    def identity(Model input){
+        return input.mappedCopy;
     }
 
     def extractMapping() {

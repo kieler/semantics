@@ -67,7 +67,7 @@ public class ModelTransformationImpl extends MinimalEObjectImpl.Container implem
      * @generated
      * @ordered
      */
-    protected static final String ID_EDEFAULT = null;
+    protected static final String ID_EDEFAULT = "";
 
     /**
      * The cached value of the '{@link #getId() <em>Id</em>}' attribute.

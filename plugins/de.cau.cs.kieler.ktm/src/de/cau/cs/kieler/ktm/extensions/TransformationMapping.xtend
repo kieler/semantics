@@ -21,6 +21,8 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import org.eclipse.xtext.xbase.lib.Pair
 
+import static com.google.common.base.Preconditions.*
+
 import static extension com.google.common.collect.Multimaps.*
 import static extension com.google.common.collect.Sets.*
 
@@ -38,112 +40,138 @@ class TransformationMapping {
     // -------------------------------------------------------------------------
     // Basic mapping generation
     /**
-	 * Maps given parent as source of given child in this transformation
-     * @return true if the mapping changed
-     * @throws MappingException when child parent relations were mixed (i.e. when one object is will be mapped as parent when it is already mapped as child)
+	 * Maps given parent as source of given child in this transformation.
+     * @return true if the mapping changed.
+     * @throws MappingException when child parent relations were mixed (i.e. when one object is will be mapped as parent when it is already mapped as child).
+     * @throws NullPointerException if parent or child is null.
 	 */
-    def mapParent(EObject child, EObject parent) {
+    def boolean mapParent(EObject child, EObject parent) {
         parent.mapChild(child);
     }
 
     /**
-     * Maps given parents as source of given child in this transformation
-     * @throws MappingException when child parent relations were mixed (i.e. when one object is will be mapped as parent when it is already mapped as child)
+     * Maps given parents as source of given child in this transformation.
+     * @return true if the mapping changed.
+     * @throws MappingException when child parent relations were mixed (i.e. when one object is will be mapped as parent when it is already mapped as child).
+     * @throws NullPointerException if parents or child is null.
+     * @throws IllegalArgumentException if children list contains null element.
      */
-    def mapParents(EObject child, List<EObject> parents) {
-        parents.forEach[it.mapChild(child)];
+    def boolean mapParents(EObject child, List<EObject> parents) {
+        checkNotNull(parents, "parents object is null");
+        checkNotNull(child, "child list is null");
+        checkArgument(!parents.contains(null), "Parents list contains null element");
+        parents.fold(false)[ boolean changes, EObject parent |
+            parent.mapChild(child) || changes;
+        ];
     }
 
     /**
-	 * Maps given child as result of this transformation for given parent
-     * @return true if the mapping changed
-     * @throws MappingException when child parent relations were mixed (i.e. when one object is will be mapped as parent when it is already mapped as child)
+	 * Maps given child as result of this transformation for given parent.
+     * @return true if the mapping changed.
+     * @throws MappingException when child parent relations were mixed (i.e. when one object is will be mapped as parent when it is already mapped as child).
+     * @throws NullPointerException if parent or child is null.
 	 */
-    def mapChild(EObject parent, EObject child) {
+    def boolean mapChild(EObject parent, EObject child) {
+        checkNotNull(parent, "parent object is null");
+        checkNotNull(child, "child object is null");
 
         //if child was already mapped as an parent throw exception
         if (mapping.containsKey(child)) {
-            throw new MappingException("Cannot map object as child when already mapped as parent",child);
+            throw new MappingException("Cannot map object as child when already mapped as parent", child);
         }
 
         //if parent was already mapped as an child throw exception
         if (mapping.containsValue(parent)) {
-            throw new MappingException("Cannot map object as parent when already mapped as child",parent);
+            throw new MappingException("Cannot map object as parent when already mapped as child", parent);
         }
 
         mapping.put(parent, child);
     }
 
     /**
-	 * Maps given children as results of this transformation for given parent
-	 * @return true if the mapping changed
-	 * @throws MappingException when child parent relations were mixed (i.e. when one object is will be mapped as parent when it is already mapped as child)
+	 * Maps given children as results of this transformation for given parent. 
+     * @return true if the mapping changed.
+	 * @throws MappingException when child parent relations were mixed (i.e. when one object is will be mapped as parent when it is already mapped as child).
+	 * @throws NullPointerException if parent or children list is null.
+	 * @throws IllegalArgumentException if children list contains null element.
 	 */
-    def mapChildren(EObject parent, List<EObject> children) {
+    def boolean mapChildren(EObject parent, List<EObject> children) {
+        checkNotNull(parent, "parent object is null");
+        checkNotNull(children, "children list is null");
+        checkArgument(!children.contains(null), "Children list contains null element");
 
         //if child was already mapped as an parent throw exception
         val badChild = children.findFirst[mapping.containsKey(it)];
         if (badChild != null) {
-            throw new MappingException("Cannot map object as child when already mapped as parent",badChild);
+            throw new MappingException("Cannot map object as child when already mapped as parent", badChild);
         }
 
         //if parent was already mapped as an child throw exception
         if (mapping.containsValue(parent)) {
-            throw new MappingException("Cannot map object as parent when already mapped as child",parent);
+            throw new MappingException("Cannot map object as parent when already mapped as child", parent);
         }
 
         mapping.putAll(parent, children);
     }
- 
+
     /**
      * Returns all Children mapped to given parent
      * @return List of children for parent
-     */  
-    def mappedChildren(EObject parent){
-        mapping.get(parent).toList;
+     */
+    def List<EObject> mappedChildren(EObject parent) {
+        (mapping.get(parent)?:emptyList).toList;
     }
-    
+
     /**
      * Returns all Parents mapped to given child
      * @return List of parents for child
-     */  
-    def mappedParents(EObject child){
+     */
+    def List<EObject> mappedParents(EObject child) {
         mapping.entries.filter[it.value == child].map[it.key].toList;
-    }    
+    }
 
     /**
 	 * Removes mapping between given objects.
+	 * <p>
 	 * Parent child order is arbitrary.
 	 * @param first - parent or child object depending on chosen order
 	 * @param second - parent or child object depending on chosen order
 	 * @return true if the mapping changed
 	 */
-    def unmap(EObject first, EObject second) {
+    def boolean unmap(EObject first, EObject second) {
 
         if (mapping.containsKey(first)) { //if first is key
             mapping.remove(first, second);
         } else if (mapping.containsKey(second)) { //if second is key
             mapping.remove(second, first);
+        } else{
+            false
         }
     }
 
     /**
 	 * Removes all mappings for given objects.
+	 * <p>
 	 * Object can be parent or child
+     * @return true if the mapping changed
 	 */
-    def void unmapAll(EObject obj) {
+    def boolean unmapAll(EObject obj) {
 
         if (mapping.containsKey(obj)) { //if object is key
-            mapping.removeAll(obj);
-        } else if (mapping.containsValue(obj)) { //if second is key
-            mapping.keySet.forEach[mapping.remove(it, obj);];
+            !mapping.removeAll(obj).empty;
+        } else if (mapping.containsValue(obj)) { //if object is value
+            mapping.keySet.immutableCopy.fold(false)[ boolean changes, EObject key |
+                mapping.remove(key, obj) || changes;
+            ];
+        } else{
+            false
         }
     }
 
     /**
 	 * Drops all current mapping information
 	 */
-    def clearMapping() {
+    def void clearMapping() {
         mapping.clear();
     }
 
@@ -151,7 +179,9 @@ class TransformationMapping {
     // Mapping helpers
     /**
 	 * Creates direct mapping between two identical models. 
+	 * <p>
 	 * Use for transformations based on copies.
+	 * <p>
 	 * Mapping will include given root elements.
 	 * @param original model to copy
 	 * @return copy   
@@ -171,15 +201,20 @@ class TransformationMapping {
 
     /**
 	 * Checks if mapping is complete
+	 * <p>
 	 * All objects in sourceModel are compared with parents and all targetModel objects are compared to children, both includes given source/target-model objects.
+	 * <p>
 	 * Returns Pair of two sets where were key-element is symmetric difference between source model objects and all parents and value-element is symmetric difference between target and children.
 	 * All elements are mapped correctly if both sets are empty.
+	 * @throws NullPointerException if sourceModel or targetMode is null.
 	 * @return Pair of two Sets with symmetric differences.	 
 	 */
-    def  checkMappingCompleteness(EObject sourceModel, EObject targetModel) {
+    def checkMappingCompleteness(EObject sourceModel, EObject targetModel) {
+        checkNotNull(sourceModel, "Source model object is null");
+        checkNotNull(targetModel, "Target model object is null");
 
         //check if all elements in source model are keys in mapping		
-        //keySet must be converted to LinkedHashSet because symmetricDifference need same set types.
+        //keySet must be converted to LinkedHashSet because symmetricDifference need same types of Set.
         val keyDiff = (sourceModel.eAllContents.toSet => [it.add(sourceModel)]).symmetricDifference(
             newLinkedHashSet(mapping.keySet));
 
