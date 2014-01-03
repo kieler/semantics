@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:sccharts="http://kieler.cs.cau.de/sccharts/0.1.0" xmlns:transformationtree="http://kieler.cs.cau.de/transformationtree/0.1.0">
+  <transformationtree:Model name="ABO" rootElement="/0/@elements.0">
+    <elements name="Region" transformedInto="/0/@transformedInto.0/@elementTransformations.0" referencedObject="/1"/>
+    <elements name="Assignment" transformedInto="/0/@transformedInto.0/@elementTransformations.1" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0/@effects.1"/>
+    <elements name="State" transformedInto="/0/@transformedInto.0/@elementTransformations.2" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.1/@states.1"/>
+    <elements name="Assignment" transformedInto="/0/@transformedInto.0/@elementTransformations.3" referencedObject="/1/@states.0/@regions.0/@states.0/@outgoingTransitions.0/@effects.1"/>
+    <elements name="Transition" transformedInto="/0/@transformedInto.0/@elementTransformations.4 /0/@transformedInto.0/@elementTransformations.5 /0/@transformedInto.0/@elementTransformations.6 /0/@transformedInto.0/@elementTransformations.7 /0/@transformedInto.0/@elementTransformations.8" referencedObject="/1/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+    <elements name="ValuedObject" transformedInto="/0/@transformedInto.0/@elementTransformations.9" referencedObject="/1/@states.0/@valuedObjects.3"/>
+    <elements name="BoolValue" transformedInto="/0/@transformedInto.0/@elementTransformations.10" referencedObject="/1/@states.0/@regions.0/@states.1/@outgoingTransitions.0/@effects.1/@expression"/>
+    <elements name="Assignment" transformedInto="/0/@transformedInto.0/@elementTransformations.11" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0/@effects.0"/>
+    <elements name="BoolValue" transformedInto="/0/@transformedInto.0/@elementTransformations.12" referencedObject="/1/@states.0/@regions.0/@states.0/@outgoingTransitions.0/@effects.1/@expression"/>
+    <elements name="State" transformedInto="/0/@transformedInto.0/@elementTransformations.13" referencedObject="/1/@states.0"/>
+    <elements name="Assignment" transformedInto="/0/@transformedInto.0/@elementTransformations.14" referencedObject="/1/@states.0/@regions.0/@states.1/@outgoingTransitions.0/@effects.1"/>
+    <elements name="ValuedObjectReference" transformedInto="/0/@transformedInto.0/@elementTransformations.15" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0/@trigger"/>
+    <elements name="State" transformedInto="/0/@transformedInto.0/@elementTransformations.16" referencedObject="/1/@states.0/@regions.0/@states.2"/>
+    <elements name="BoolValue" transformedInto="/0/@transformedInto.0/@elementTransformations.17" referencedObject="/1/@states.0/@regions.0/@states.1/@outgoingTransitions.0/@effects.0/@expression"/>
+    <elements name="ValuedObject" transformedInto="/0/@transformedInto.0/@elementTransformations.18" referencedObject="/1/@states.0/@valuedObjects.2"/>
+    <elements name="Transition" transformedInto="/0/@transformedInto.0/@elementTransformations.19 /0/@transformedInto.0/@elementTransformations.20 /0/@transformedInto.0/@elementTransformations.21 /0/@transformedInto.0/@elementTransformations.22 /0/@transformedInto.0/@elementTransformations.23" referencedObject="/1/@states.0/@regions.0/@states.1/@outgoingTransitions.0"/>
+    <elements name="Annotation" transformedInto="/0/@transformedInto.0/@elementTransformations.24" referencedObject="/1/@states.0/@annotations.0"/>
+    <elements name="State" transformedInto="/0/@transformedInto.0/@elementTransformations.25" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0"/>
+    <elements name="Region" transformedInto="/0/@transformedInto.0/@elementTransformations.26" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.1"/>
+    <elements name="State" transformedInto="/0/@transformedInto.0/@elementTransformations.27" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.1/@states.0"/>
+    <elements name="Assignment" transformedInto="/0/@transformedInto.0/@elementTransformations.28" referencedObject="/1/@states.0/@regions.0/@states.0/@outgoingTransitions.0/@effects.0"/>
+    <elements name="Region" transformedInto="/0/@transformedInto.0/@elementTransformations.29" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.0"/>
+    <elements name="ValuedObject" transformedInto="/0/@transformedInto.0/@elementTransformations.30" referencedObject="/1/@states.0/@valuedObjects.0"/>
+    <elements name="ValuedObject" transformedInto="/0/@transformedInto.0/@elementTransformations.31" referencedObject="/1/@states.0/@valuedObjects.1"/>
+    <elements name="BoolValue" transformedInto="/0/@transformedInto.0/@elementTransformations.32" referencedObject="/1/@states.0/@regions.0/@states.0/@outgoingTransitions.0/@effects.0/@expression"/>
+    <elements name="Transition" transformedInto="/0/@transformedInto.0/@elementTransformations.33 /0/@transformedInto.0/@elementTransformations.34 /0/@transformedInto.0/@elementTransformations.35 /0/@transformedInto.0/@elementTransformations.36 /0/@transformedInto.0/@elementTransformations.37" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0"/>
+    <elements name="BoolValue" transformedInto="/0/@transformedInto.0/@elementTransformations.38" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0/@effects.0/@expression"/>
+    <elements name="Region" transformedInto="/0/@transformedInto.0/@elementTransformations.39" referencedObject="/1/@states.0/@regions.0"/>
+    <elements name="BoolValue" transformedInto="/0/@transformedInto.0/@elementTransformations.40" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0/@effects.1/@expression"/>
+    <elements name="Assignment" transformedInto="/0/@transformedInto.0/@elementTransformations.41" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0/@effects.0"/>
+    <elements name="State" transformedInto="/0/@transformedInto.0/@elementTransformations.42" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.1"/>
+    <elements name="BoolValue" transformedInto="/0/@transformedInto.0/@elementTransformations.43" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0/@effects.0/@expression"/>
+    <elements name="State" transformedInto="/0/@transformedInto.0/@elementTransformations.44" referencedObject="/1/@states.0/@regions.0/@states.1"/>
+    <elements name="State" transformedInto="/0/@transformedInto.0/@elementTransformations.45" referencedObject="/1/@states.0/@regions.0/@states.0"/>
+    <elements name="Transition" transformedInto="/0/@transformedInto.0/@elementTransformations.46 /0/@transformedInto.0/@elementTransformations.47 /0/@transformedInto.0/@elementTransformations.48" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0"/>
+    <elements name="Assignment" transformedInto="/0/@transformedInto.0/@elementTransformations.49" referencedObject="/1/@states.0/@regions.0/@states.1/@outgoingTransitions.0/@effects.0"/>
+    <elements name="ValuedObjectReference" transformedInto="/0/@transformedInto.0/@elementTransformations.50" referencedObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0/@trigger"/>
+    <transformedInto id="splitTriggerEffect">
+      <target name="ABO-splitTriEff" rootElement="/0/@transformedInto.0/@target/@elements.0">
+        <elements name="Region" transformedFrom="/0/@transformedInto.0/@elementTransformations.0" referencedObject="/2"/>
+        <elements name="Assignment" transformedFrom="/0/@transformedInto.0/@elementTransformations.1" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.3/@outgoingTransitions.0/@effects.0"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.2" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.1"/>
+        <elements name="Assignment" transformedFrom="/0/@transformedInto.0/@elementTransformations.3" referencedObject="/2/@states.0/@regions.0/@states.4/@outgoingTransitions.0/@effects.0"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.4" referencedObject="/2/@states.0/@regions.0/@states.3"/>
+        <elements name="Transition" transformedFrom="/0/@transformedInto.0/@elementTransformations.5" referencedObject="/2/@states.0/@regions.0/@states.4/@outgoingTransitions.0"/>
+        <elements name="Transition" transformedFrom="/0/@transformedInto.0/@elementTransformations.6" referencedObject="/2/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.7" referencedObject="/2/@states.0/@regions.0/@states.4"/>
+        <elements name="Transition" transformedFrom="/0/@transformedInto.0/@elementTransformations.8" referencedObject="/2/@states.0/@regions.0/@states.3/@outgoingTransitions.0"/>
+        <elements name="ValuedObject" transformedFrom="/0/@transformedInto.0/@elementTransformations.9" referencedObject="/2/@states.0/@valuedObjects.3"/>
+        <elements name="BoolValue" transformedFrom="/0/@transformedInto.0/@elementTransformations.10" referencedObject="/2/@states.0/@regions.0/@states.6/@outgoingTransitions.0/@effects.0/@expression"/>
+        <elements name="Assignment" transformedFrom="/0/@transformedInto.0/@elementTransformations.11" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.2/@outgoingTransitions.0/@effects.0"/>
+        <elements name="BoolValue" transformedFrom="/0/@transformedInto.0/@elementTransformations.12" referencedObject="/2/@states.0/@regions.0/@states.4/@outgoingTransitions.0/@effects.0/@expression"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.13" referencedObject="/2/@states.0"/>
+        <elements name="Assignment" transformedFrom="/0/@transformedInto.0/@elementTransformations.14" referencedObject="/2/@states.0/@regions.0/@states.6/@outgoingTransitions.0/@effects.0"/>
+        <elements name="ValuedObjectReference" transformedFrom="/0/@transformedInto.0/@elementTransformations.15" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0/@trigger"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.16" referencedObject="/2/@states.0/@regions.0/@states.2"/>
+        <elements name="BoolValue" transformedFrom="/0/@transformedInto.0/@elementTransformations.17" referencedObject="/2/@states.0/@regions.0/@states.5/@outgoingTransitions.0/@effects.0/@expression"/>
+        <elements name="ValuedObject" transformedFrom="/0/@transformedInto.0/@elementTransformations.18" referencedObject="/2/@states.0/@valuedObjects.2"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.19" referencedObject="/2/@states.0/@regions.0/@states.6"/>
+        <elements name="Transition" transformedFrom="/0/@transformedInto.0/@elementTransformations.20" referencedObject="/2/@states.0/@regions.0/@states.1/@outgoingTransitions.0"/>
+        <elements name="Transition" transformedFrom="/0/@transformedInto.0/@elementTransformations.21" referencedObject="/2/@states.0/@regions.0/@states.6/@outgoingTransitions.0"/>
+        <elements name="Transition" transformedFrom="/0/@transformedInto.0/@elementTransformations.22" referencedObject="/2/@states.0/@regions.0/@states.5/@outgoingTransitions.0"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.23" referencedObject="/2/@states.0/@regions.0/@states.5"/>
+        <elements name="Annotation" transformedFrom="/0/@transformedInto.0/@elementTransformations.24" referencedObject="/2/@states.0/@annotations.0"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.25" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.0"/>
+        <elements name="Region" transformedFrom="/0/@transformedInto.0/@elementTransformations.26" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.1"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.27" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.0"/>
+        <elements name="Assignment" transformedFrom="/0/@transformedInto.0/@elementTransformations.28" referencedObject="/2/@states.0/@regions.0/@states.3/@outgoingTransitions.0/@effects.0"/>
+        <elements name="Region" transformedFrom="/0/@transformedInto.0/@elementTransformations.29" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.0"/>
+        <elements name="ValuedObject" transformedFrom="/0/@transformedInto.0/@elementTransformations.30" referencedObject="/2/@states.0/@valuedObjects.0"/>
+        <elements name="ValuedObject" transformedFrom="/0/@transformedInto.0/@elementTransformations.31" referencedObject="/2/@states.0/@valuedObjects.1"/>
+        <elements name="BoolValue" transformedFrom="/0/@transformedInto.0/@elementTransformations.32" referencedObject="/2/@states.0/@regions.0/@states.3/@outgoingTransitions.0/@effects.0/@expression"/>
+        <elements name="Transition" transformedFrom="/0/@transformedInto.0/@elementTransformations.33" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.3/@outgoingTransitions.0"/>
+        <elements name="Transition" transformedFrom="/0/@transformedInto.0/@elementTransformations.34" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.35" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.3"/>
+        <elements name="Transition" transformedFrom="/0/@transformedInto.0/@elementTransformations.36" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.2/@outgoingTransitions.0"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.37" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.2"/>
+        <elements name="BoolValue" transformedFrom="/0/@transformedInto.0/@elementTransformations.38" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.2/@outgoingTransitions.0/@effects.0/@expression"/>
+        <elements name="Region" transformedFrom="/0/@transformedInto.0/@elementTransformations.39" referencedObject="/2/@states.0/@regions.0"/>
+        <elements name="BoolValue" transformedFrom="/0/@transformedInto.0/@elementTransformations.40" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.3/@outgoingTransitions.0/@effects.0/@expression"/>
+        <elements name="Assignment" transformedFrom="/0/@transformedInto.0/@elementTransformations.41" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.2/@outgoingTransitions.0/@effects.0"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.42" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.1"/>
+        <elements name="BoolValue" transformedFrom="/0/@transformedInto.0/@elementTransformations.43" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.2/@outgoingTransitions.0/@effects.0/@expression"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.44" referencedObject="/2/@states.0/@regions.0/@states.1"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.45" referencedObject="/2/@states.0/@regions.0/@states.0"/>
+        <elements name="State" transformedFrom="/0/@transformedInto.0/@elementTransformations.46" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.2"/>
+        <elements name="Transition" transformedFrom="/0/@transformedInto.0/@elementTransformations.47" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0"/>
+        <elements name="Transition" transformedFrom="/0/@transformedInto.0/@elementTransformations.48" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.2/@outgoingTransitions.0"/>
+        <elements name="Assignment" transformedFrom="/0/@transformedInto.0/@elementTransformations.49" referencedObject="/2/@states.0/@regions.0/@states.5/@outgoingTransitions.0/@effects.0"/>
+        <elements name="ValuedObjectReference" transformedFrom="/0/@transformedInto.0/@elementTransformations.50" referencedObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0/@trigger"/>
+        <type href="http://kieler.cs.cau.de/sccharts/0.1.0#//Region"/>
+      </target>
+      <elementTransformations source="/0/@elements.0" target="/0/@transformedInto.0/@target/@elements.0"/>
+      <elementTransformations source="/0/@elements.1" target="/0/@transformedInto.0/@target/@elements.1"/>
+      <elementTransformations source="/0/@elements.2" target="/0/@transformedInto.0/@target/@elements.2"/>
+      <elementTransformations source="/0/@elements.3" target="/0/@transformedInto.0/@target/@elements.3"/>
+      <elementTransformations source="/0/@elements.4" target="/0/@transformedInto.0/@target/@elements.4"/>
+      <elementTransformations source="/0/@elements.4" target="/0/@transformedInto.0/@target/@elements.5"/>
+      <elementTransformations source="/0/@elements.4" target="/0/@transformedInto.0/@target/@elements.6"/>
+      <elementTransformations source="/0/@elements.4" target="/0/@transformedInto.0/@target/@elements.7"/>
+      <elementTransformations source="/0/@elements.4" target="/0/@transformedInto.0/@target/@elements.8"/>
+      <elementTransformations source="/0/@elements.5" target="/0/@transformedInto.0/@target/@elements.9"/>
+      <elementTransformations source="/0/@elements.6" target="/0/@transformedInto.0/@target/@elements.10"/>
+      <elementTransformations source="/0/@elements.7" target="/0/@transformedInto.0/@target/@elements.11"/>
+      <elementTransformations source="/0/@elements.8" target="/0/@transformedInto.0/@target/@elements.12"/>
+      <elementTransformations source="/0/@elements.9" target="/0/@transformedInto.0/@target/@elements.13"/>
+      <elementTransformations source="/0/@elements.10" target="/0/@transformedInto.0/@target/@elements.14"/>
+      <elementTransformations source="/0/@elements.11" target="/0/@transformedInto.0/@target/@elements.15"/>
+      <elementTransformations source="/0/@elements.12" target="/0/@transformedInto.0/@target/@elements.16"/>
+      <elementTransformations source="/0/@elements.13" target="/0/@transformedInto.0/@target/@elements.17"/>
+      <elementTransformations source="/0/@elements.14" target="/0/@transformedInto.0/@target/@elements.18"/>
+      <elementTransformations source="/0/@elements.15" target="/0/@transformedInto.0/@target/@elements.19"/>
+      <elementTransformations source="/0/@elements.15" target="/0/@transformedInto.0/@target/@elements.20"/>
+      <elementTransformations source="/0/@elements.15" target="/0/@transformedInto.0/@target/@elements.21"/>
+      <elementTransformations source="/0/@elements.15" target="/0/@transformedInto.0/@target/@elements.22"/>
+      <elementTransformations source="/0/@elements.15" target="/0/@transformedInto.0/@target/@elements.23"/>
+      <elementTransformations source="/0/@elements.16" target="/0/@transformedInto.0/@target/@elements.24"/>
+      <elementTransformations source="/0/@elements.17" target="/0/@transformedInto.0/@target/@elements.25"/>
+      <elementTransformations source="/0/@elements.18" target="/0/@transformedInto.0/@target/@elements.26"/>
+      <elementTransformations source="/0/@elements.19" target="/0/@transformedInto.0/@target/@elements.27"/>
+      <elementTransformations source="/0/@elements.20" target="/0/@transformedInto.0/@target/@elements.28"/>
+      <elementTransformations source="/0/@elements.21" target="/0/@transformedInto.0/@target/@elements.29"/>
+      <elementTransformations source="/0/@elements.22" target="/0/@transformedInto.0/@target/@elements.30"/>
+      <elementTransformations source="/0/@elements.23" target="/0/@transformedInto.0/@target/@elements.31"/>
+      <elementTransformations source="/0/@elements.24" target="/0/@transformedInto.0/@target/@elements.32"/>
+      <elementTransformations source="/0/@elements.25" target="/0/@transformedInto.0/@target/@elements.33"/>
+      <elementTransformations source="/0/@elements.25" target="/0/@transformedInto.0/@target/@elements.34"/>
+      <elementTransformations source="/0/@elements.25" target="/0/@transformedInto.0/@target/@elements.35"/>
+      <elementTransformations source="/0/@elements.25" target="/0/@transformedInto.0/@target/@elements.36"/>
+      <elementTransformations source="/0/@elements.25" target="/0/@transformedInto.0/@target/@elements.37"/>
+      <elementTransformations source="/0/@elements.26" target="/0/@transformedInto.0/@target/@elements.38"/>
+      <elementTransformations source="/0/@elements.27" target="/0/@transformedInto.0/@target/@elements.39"/>
+      <elementTransformations source="/0/@elements.28" target="/0/@transformedInto.0/@target/@elements.40"/>
+      <elementTransformations source="/0/@elements.29" target="/0/@transformedInto.0/@target/@elements.41"/>
+      <elementTransformations source="/0/@elements.30" target="/0/@transformedInto.0/@target/@elements.42"/>
+      <elementTransformations source="/0/@elements.31" target="/0/@transformedInto.0/@target/@elements.43"/>
+      <elementTransformations source="/0/@elements.32" target="/0/@transformedInto.0/@target/@elements.44"/>
+      <elementTransformations source="/0/@elements.33" target="/0/@transformedInto.0/@target/@elements.45"/>
+      <elementTransformations source="/0/@elements.34" target="/0/@transformedInto.0/@target/@elements.46"/>
+      <elementTransformations source="/0/@elements.34" target="/0/@transformedInto.0/@target/@elements.47"/>
+      <elementTransformations source="/0/@elements.34" target="/0/@transformedInto.0/@target/@elements.48"/>
+      <elementTransformations source="/0/@elements.35" target="/0/@transformedInto.0/@target/@elements.49"/>
+      <elementTransformations source="/0/@elements.36" target="/0/@transformedInto.0/@target/@elements.50"/>
+    </transformedInto>
+    <type href="http://kieler.cs.cau.de/sccharts/0.1.0#//Region"/>
+  </transformationtree:Model>
+  <sccharts:Region>
+    <states id="ABO" label="ABO">
+      <annotations name="VHLayout"/>
+      <valuedObjects name="A" type="bool" input="true" output="true"/>
+      <valuedObjects name="B" type="bool" input="true" output="true"/>
+      <valuedObjects name="O1" type="bool" output="true"/>
+      <valuedObjects name="O2" type="bool" output="true"/>
+      <regions>
+        <states id="Init" label="Init" initial="true">
+          <outgoingTransitions immediate="true" priority="1" targetState="/1/@states.0/@regions.0/@states.1">
+            <effects xsi:type="sccharts:Assignment" valuedObject="/1/@states.0/@valuedObjects.2">
+              <expression xsi:type="kexpressions:BoolValue" value="false"/>
+            </effects>
+            <effects xsi:type="sccharts:Assignment" valuedObject="/1/@states.0/@valuedObjects.3">
+              <expression xsi:type="kexpressions:BoolValue" value="false"/>
+            </effects>
+          </outgoingTransitions>
+        </states>
+        <states id="WaitAB" label="WaitAB" incomingTransitions="/1/@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+          <regions id="HandleA" label="HandleA">
+            <states id="WaitA" label="WaitA" initial="true">
+              <outgoingTransitions immediate="true" priority="1" targetState="/1/@states.0/@regions.0/@states.1/@regions.0/@states.1">
+                <effects xsi:type="sccharts:Assignment" valuedObject="/1/@states.0/@valuedObjects.1">
+                  <expression xsi:type="kexpressions:BoolValue" value="true"/>
+                </effects>
+                <effects xsi:type="sccharts:Assignment" valuedObject="/1/@states.0/@valuedObjects.2">
+                  <expression xsi:type="kexpressions:BoolValue" value="true"/>
+                </effects>
+                <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="/1/@states.0/@valuedObjects.0"/>
+              </outgoingTransitions>
+            </states>
+            <states id="DoneA" label="DoneA" final="true" incomingTransitions="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0"/>
+          </regions>
+          <regions id="HandleB" label="HandleB">
+            <states id="WaitB" label="WaitB" initial="true">
+              <outgoingTransitions priority="1" targetState="/1/@states.0/@regions.0/@states.1/@regions.1/@states.1">
+                <effects xsi:type="sccharts:Assignment" valuedObject="/1/@states.0/@valuedObjects.2">
+                  <expression xsi:type="kexpressions:BoolValue" value="true"/>
+                </effects>
+                <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="/1/@states.0/@valuedObjects.1"/>
+              </outgoingTransitions>
+            </states>
+            <states id="DoneB" label="DoneB" final="true" incomingTransitions="/1/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0"/>
+          </regions>
+          <outgoingTransitions priority="1" type="NORMALTERMINATION" targetState="/1/@states.0/@regions.0/@states.2">
+            <effects xsi:type="sccharts:Assignment" valuedObject="/1/@states.0/@valuedObjects.2">
+              <expression xsi:type="kexpressions:BoolValue" value="false"/>
+            </effects>
+            <effects xsi:type="sccharts:Assignment" valuedObject="/1/@states.0/@valuedObjects.3">
+              <expression xsi:type="kexpressions:BoolValue" value="true"/>
+            </effects>
+          </outgoingTransitions>
+        </states>
+        <states id="GotAB" label="GotAB" incomingTransitions="/1/@states.0/@regions.0/@states.1/@outgoingTransitions.0"/>
+      </regions>
+    </states>
+  </sccharts:Region>
+  <sccharts:Region>
+    <states id="ABO" label="ABO">
+      <annotations name="VHLayout"/>
+      <valuedObjects name="A" type="bool" input="true" output="true"/>
+      <valuedObjects name="B" type="bool" input="true" output="true"/>
+      <valuedObjects name="O1" type="bool" output="true"/>
+      <valuedObjects name="O2" type="bool" output="true"/>
+      <regions>
+        <states id="Init" label="Init" initial="true">
+          <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.3"/>
+        </states>
+        <states id="WaitAB" label="WaitAB" incomingTransitions="/2/@states.0/@regions.0/@states.4/@outgoingTransitions.0">
+          <regions id="HandleA" label="HandleA">
+            <states id="WaitA" label="WaitA" initial="true">
+              <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.1/@regions.0/@states.2">
+                <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="/2/@states.0/@valuedObjects.0"/>
+              </outgoingTransitions>
+            </states>
+            <states id="DoneA" label="DoneA" final="true" incomingTransitions="/2/@states.0/@regions.0/@states.1/@regions.0/@states.3/@outgoingTransitions.0"/>
+            <states id="DoneA18586052" label="" type="CONNECTOR" incomingTransitions="/2/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0">
+              <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.1/@regions.0/@states.3">
+                <effects xsi:type="sccharts:Assignment" valuedObject="/2/@states.0/@valuedObjects.1">
+                  <expression xsi:type="kexpressions:BoolValue" value="true"/>
+                </effects>
+              </outgoingTransitions>
+            </states>
+            <states id="DoneA26811303" label="" type="CONNECTOR" incomingTransitions="/2/@states.0/@regions.0/@states.1/@regions.0/@states.2/@outgoingTransitions.0">
+              <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.1/@regions.0/@states.1">
+                <effects xsi:type="sccharts:Assignment" valuedObject="/2/@states.0/@valuedObjects.2">
+                  <expression xsi:type="kexpressions:BoolValue" value="true"/>
+                </effects>
+              </outgoingTransitions>
+            </states>
+          </regions>
+          <regions id="HandleB" label="HandleB">
+            <states id="WaitB" label="WaitB" initial="true">
+              <outgoingTransitions priority="1" targetState="/2/@states.0/@regions.0/@states.1/@regions.1/@states.2">
+                <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="/2/@states.0/@valuedObjects.1"/>
+              </outgoingTransitions>
+            </states>
+            <states id="DoneB" label="DoneB" final="true" incomingTransitions="/2/@states.0/@regions.0/@states.1/@regions.1/@states.2/@outgoingTransitions.0"/>
+            <states id="DoneB19167401" label="" type="CONNECTOR" incomingTransitions="/2/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0">
+              <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.1/@regions.1/@states.1">
+                <effects xsi:type="sccharts:Assignment" valuedObject="/2/@states.0/@valuedObjects.2">
+                  <expression xsi:type="kexpressions:BoolValue" value="true"/>
+                </effects>
+              </outgoingTransitions>
+            </states>
+          </regions>
+          <outgoingTransitions priority="1" type="NORMALTERMINATION" targetState="/2/@states.0/@regions.0/@states.5"/>
+        </states>
+        <states id="GotAB" label="GotAB" incomingTransitions="/2/@states.0/@regions.0/@states.6/@outgoingTransitions.0"/>
+        <states id="WaitAB1535718" label="" type="CONNECTOR" incomingTransitions="/2/@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+          <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.4">
+            <effects xsi:type="sccharts:Assignment" valuedObject="/2/@states.0/@valuedObjects.2">
+              <expression xsi:type="kexpressions:BoolValue" value="false"/>
+            </effects>
+          </outgoingTransitions>
+        </states>
+        <states id="WaitAB12159494" label="" type="CONNECTOR" incomingTransitions="/2/@states.0/@regions.0/@states.3/@outgoingTransitions.0">
+          <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.1">
+            <effects xsi:type="sccharts:Assignment" valuedObject="/2/@states.0/@valuedObjects.3">
+              <expression xsi:type="kexpressions:BoolValue" value="false"/>
+            </effects>
+          </outgoingTransitions>
+        </states>
+        <states id="GotAB19375260" label="" type="CONNECTOR" incomingTransitions="/2/@states.0/@regions.0/@states.1/@outgoingTransitions.0">
+          <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.6">
+            <effects xsi:type="sccharts:Assignment" valuedObject="/2/@states.0/@valuedObjects.2">
+              <expression xsi:type="kexpressions:BoolValue" value="false"/>
+            </effects>
+          </outgoingTransitions>
+        </states>
+        <states id="GotAB9012615" label="" type="CONNECTOR" incomingTransitions="/2/@states.0/@regions.0/@states.5/@outgoingTransitions.0">
+          <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.2">
+            <effects xsi:type="sccharts:Assignment" valuedObject="/2/@states.0/@valuedObjects.3">
+              <expression xsi:type="kexpressions:BoolValue" value="true"/>
+            </effects>
+          </outgoingTransitions>
+        </states>
+      </regions>
+    </states>
+  </sccharts:Region>
+</xmi:XMI>

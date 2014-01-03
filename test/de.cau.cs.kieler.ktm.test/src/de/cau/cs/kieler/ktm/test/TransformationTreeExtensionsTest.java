@@ -26,8 +26,8 @@ import com.google.common.collect.Multimap;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions;
-import de.cau.cs.kieler.ktm.generators.SimpleModelGenerator;
-import de.cau.cs.kieler.ktm.generators.SimpleTransformation;
+import de.cau.cs.kieler.ktm.test.generators.SimpleModelGenerator;
+import de.cau.cs.kieler.ktm.test.transformations.SimpleTransformation;
 import de.cau.cs.kieler.ktm.transformationtree.Element;
 import de.cau.cs.kieler.ktm.transformationtree.Model;
 import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation;

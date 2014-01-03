@@ -27,7 +27,7 @@ import com.google.inject.Guice;
 
 import de.cau.cs.kieler.ktm.exceptions.MappingException;
 import de.cau.cs.kieler.ktm.extensions.TransformationMapping;
-import de.cau.cs.kieler.ktm.generators.SimpleModelGenerator;
+import de.cau.cs.kieler.ktm.test.generators.SimpleModelGenerator;
 import de.cau.cs.kieler.ktm.transformationtree.Model;
 import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation;
 

@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.ktm.generators
+package de.cau.cs.kieler.ktm.test.generators
 
 import de.cau.cs.kieler.ktm.transformationtree.Model
 import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation

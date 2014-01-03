@@ -16,6 +16,7 @@ Require-Bundle: org.junit;visibility:=reexport,
  org.eclipse.xtext.xbase.lib,
  com.google.guava,
  com.google.inject;bundle-version="3.0.0",
- de.cau.cs.kieler.ktm;visibility:=reexport
+ de.cau.cs.kieler.ktm;visibility:=reexport,
+ de.cau.cs.kieler.sccharts;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
 
