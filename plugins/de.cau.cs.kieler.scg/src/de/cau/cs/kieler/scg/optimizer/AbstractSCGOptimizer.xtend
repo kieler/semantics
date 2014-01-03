@@ -42,6 +42,7 @@ import de.cau.cs.kieler.scg.SCGraph
  * @author ssm
  * @kieler.design 2013-12-02 proposed 
  * @kieler.rating 2013-12-02 proposed yellow
+ * @abstract
  */
 abstract class AbstractSCGOptimizer {
   

@@ -41,6 +41,7 @@ import de.cau.cs.kieler.scg.Join
  * @author ssm
  * @kieler.design 2013-11-28 proposed 
  * @kieler.rating 2013-11-28 proposed yellow
+ * @abstract
  */
 abstract class AbstractSCGSynchronizer {
    
