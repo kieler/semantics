@@ -31,6 +31,10 @@ import de.cau.cs.kieler.scgsched.ScgschedFactory
 import de.cau.cs.kieler.scgsched.Schedule
 import java.util.List
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.OperatorType
 
 /**
  * SCG Extensions.
@@ -58,6 +62,18 @@ class SCGExtensions {
          valuedObject
     }
    
+	/** 
+	 * Finds and retrieves a valued object by its name. May return null.
+	 * 
+	 * @param scg
+	 * 			the SCG containing the object
+	 * @param name
+	 * 			the name of the valued object
+	 * @return Returns the (first) valued object with the given name or null.
+	 */
+    def ValuedObject findValuedObjectByName(SCGraph scg, String name) {
+    	scg.valuedObjects.filter[it.name == name]?.head
+    }
 
    // -------------------------------------------------------------------------
    
@@ -232,11 +248,35 @@ class SCGExtensions {
     
     // -------------------------------------------------------------------------
     
+    
     def PotentialInstantaneousLoopProblem createPotentialLoopProblem(List<ControlFlow> controlFlows) {
     	val plp = ScgschedFactory::eINSTANCE.createPotentialInstantaneousLoopProblem
     	plp.controlFlows.addAll(controlFlows)
     	plp
     }
+
+
+    def Expression splitOperatorExpression(Expression expression) {
+    	if (!(expression instanceof OperatorExpression)) return expression
+    	var newExp = expression as OperatorExpression
+        if ((expression as OperatorExpression).subExpressions.size > 2) {
+            var exp = expression.copy as OperatorExpression
+            newExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
+            newExp.operator = exp.operator
+            newExp.subExpressions.add(exp.subExpressions.get(0))
+            newExp.subExpressions.add(exp.splitOperatorExpression)
+        }
+        newExp
+    }
+    
+    def Expression negate(Expression expression) {
+    	val nExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
+    	nExp.setOperator(OperatorType::NOT)
+    	nExp.subExpressions.add(expression)
+    	nExp
+    }
+    
+    
 }
 
 class UnsupportedSCGException extends Exception {

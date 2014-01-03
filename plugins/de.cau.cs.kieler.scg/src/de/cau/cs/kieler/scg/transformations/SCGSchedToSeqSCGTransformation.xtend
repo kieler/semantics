@@ -137,7 +137,7 @@ class SCGSchedToSeqSCGTransformation {
     		 * Create it and copy the corresponding object.
     		 */
     		val newAssignment = ScgFactory::eINSTANCE.createAssignment
-    		newAssignment.valuedObject = sb.guard.copyValuedObject
+    		newAssignment.valuedObject = sb.guard.getCopy
 
 			/**
 			 * For each guard a guard expression exists.
@@ -203,7 +203,7 @@ class SCGSchedToSeqSCGTransformation {
     			// in the true branch of the conditional.
     			var nextCFlow = conditional.then
     			for (assignment : sb.nodes.filter(typeof(Assignment))) {
-    				val Assignment cAssignment = assignment.copySCGNode as Assignment
+    				val Assignment cAssignment = assignment.copySCGNode(scg) as Assignment
     				nextCFlow.target = cAssignment
     				scg.nodes.add(cAssignment)
     				nextCFlow = ScgFactory::eINSTANCE.createControlFlow
