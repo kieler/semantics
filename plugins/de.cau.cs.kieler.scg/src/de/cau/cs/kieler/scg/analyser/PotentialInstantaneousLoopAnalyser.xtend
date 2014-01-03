@@ -35,7 +35,7 @@ class PotentialInstantaneousLoopAnalyser extends AbstractSCGAnalyser {
 		val potentialInstantaneousLoopResult = new PotentialInstantaneousLoopResult
 		analyserChain.SCG.nodes.forEach[
 			it.instantaneousControlFlows.forEach[
-				val problem = it.createPotentialLoopProblem
+				val problem = it.createPotentialInstantaneousLoopProblem
 				potentialInstantaneousLoopResult.addProblem(problem)
 			]
 		]

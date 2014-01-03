@@ -572,22 +572,22 @@ class SCGCopyExtensions {
      */
     
     /** Creates an entry node. */
-    def dispatch Entry copySCGNode(Entry node, SCGraph target) { ScgFactory::eINSTANCE.createEntry() }
+    def dispatch Entry copySCGNode(Entry node, SCGraph target) { ScgFactory::eINSTANCE.createEntry }
     
     /** Create an exit node. */
-    def dispatch Exit copySCGNode(Exit node, SCGraph target) { ScgFactory::eINSTANCE.createExit() }
+    def dispatch Exit copySCGNode(Exit node, SCGraph target) { ScgFactory::eINSTANCE.createExit }
     
     /** Create a surface node. */
-    def dispatch Surface copySCGNode(Surface node, SCGraph target) { ScgFactory::eINSTANCE.createSurface() }
+    def dispatch Surface copySCGNode(Surface node, SCGraph target) { ScgFactory::eINSTANCE.createSurface }
     
     /** Create a depth node. */
-    def dispatch Depth copySCGNode(Depth node, SCGraph target) { ScgFactory::eINSTANCE.createDepth() }
+    def dispatch Depth copySCGNode(Depth node, SCGraph target) { ScgFactory::eINSTANCE.createDepth }
     
     /** Create a fork node. */
-    def dispatch Fork copySCGNode(Fork node, SCGraph target) { ScgFactory::eINSTANCE.createFork() }
+    def dispatch Fork copySCGNode(Fork node, SCGraph target) { ScgFactory::eINSTANCE.createFork }
     
     /** Create a join node */
-    def dispatch Join copySCGNode(Join node, SCGraph target) { ScgFactory::eINSTANCE.createJoin() }
+    def dispatch Join copySCGNode(Join node, SCGraph target) { ScgFactory::eINSTANCE.createJoin }
     
     /** Check target capabilities and create an assignment node.  */
     def dispatch Assignment copySCGNode(Assignment node, SCGraph target) {
@@ -604,7 +604,7 @@ class SCGCopyExtensions {
 
     /** Create conditional node. */
     def dispatch Conditional copySCGNode(Conditional node, SCGraph target) { 
-        val conditional = ScgFactory::eINSTANCE.createConditional();
+        val conditional = ScgFactory::eINSTANCE.createConditional
         conditional.condition = node.condition.copyExpression
         conditional
     }
