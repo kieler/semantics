@@ -37,6 +37,9 @@ import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import java.util.LinkedList
+import java.util.HashSet
+import de.cau.cs.kieler.ktm.transformationtree.Element
 
 /**
  * KLighD visualization for Transformation Mapping Graphs.
@@ -100,30 +103,63 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model>
     // The Main entry transform function
     /**
      * Each Model is a element in a tree.
-     * This will transform the full tree and not only this single element.
+     * Creates synthesis for tree with given model as root element
      */
     override KNode transform(Model model) {
-        val root = model.createNode();
-        var rootModel = model.root;
+        val rootNode = createNode();
 
-        // currently only overview of transformation tree is available
-        if (rootModel.transformedInto.empty) { //no transformations
-            model.transformModelAsChildNode(root);
-        } else {
+        //create Tree
+        rootNode.children += model.createNode() => [ treeNode |
+            treeNode.addRectangle => [
+                it.invisible = true;
+                if (model.transformedInto.empty) { //no transformations
+                    model.transformModelAsChildNode(treeNode);
+                } else {
 
-            //iterate over all transformations and create nodes and edges
-            rootModel.succeedingTransformations.forEach [ ModelTransformation trans |
-                trans.createEdge() => [
-                    it.source = trans.source.transformModelAsChildNode(root);
-                    it.target = trans.target.transformModelAsChildNode(root);
-                    it.addPolyline.addArrowDecorator;
-                    it.createLabel.configureCenteralEdgeLabel(trans.id, KlighdConstants::DEFAULT_FONT_SIZE,
-                        KlighdConstants::DEFAULT_FONT_NAME);
-                ]
+                    //iterate over all transformations and create nodes and edges
+                    model.succeedingTransformations.forEach [ trans |
+                        trans.createEdge() => [
+                            it.source = trans.source.transformModelAsChildNode(treeNode);
+                            it.target = trans.target.transformModelAsChildNode(treeNode);
+                            it.addPolyline.addArrowDecorator;
+                            it.createLabel.configureCenteralEdgeLabel(trans.id, KlighdConstants::DEFAULT_FONT_SIZE,
+                                KlighdConstants::DEFAULT_FONT_NAME);
+                        ]
+                    ];
+                }
+            ]
+        ];
+
+        //create detail views for element transformations
+        rootNode.children += model.succeedingTransformations.map [ trans |
+            createNode => [ transNode |
+                transNode.putToLookUpWith(trans);
+                //add element transformations
+                trans.elementTransformations.forEach [ elemTrans |
+                    elemTrans.createEdge() => [
+                        it.putToLookUpWith(elemTrans);
+                        it.source = elemTrans.source.transformElementAsChildNode(transNode);
+                        it.target = elemTrans.target.transformElementAsChildNode(transNode);
+                        it.addPolyline.addArrowDecorator;
+                    ]
+                ];
+                transNode.addRoundedRectangle(8, 8, 1) => [
+                    it.background = "white".color;
+                    it.lineWidth = 1;
+                    it.foreground = "gray".color;
+                    if (SHOW_SHADOW.booleanValue) {
+                        it.shadow = "black".color;
+                        it.shadow.XOffset = 4;
+                        it.shadow.YOffset = 4;
+                    }
+                    it.setGridPlacement(1);
+                    it.addText(trans.id).putToLookUpWith(trans).setSurroundingSpace(5, 0).setFontBold(true);
+                    it.addHorizontalLine(1); //separator
+                    it.addChildArea();
+                ];
             ];
-        }
-
-        return root;
+        ];
+        return rootNode;
     }
 
     /**
@@ -148,7 +184,38 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model>
 
         figure.addText(model.name).putToLookUpWith(model) => [
             it.fontSize = 11;
-            it.setFontBold(true);
+            it.setFontItalic(model.transient);
+            it.setFontBold(!model.transient);
+            it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+        ];
+
+        //add child once to root
+        root.children += node;
+    }
+
+    /**
+     * creates a Node for given model (once) and adds it to given root node.
+     */
+    def KNode create node : createNode() transformElementAsChildNode(Element element, KNode root) {
+        node.putToLookUpWith(element);
+
+        //Model's visualization like States in SCCharts
+        val figure = node.addRoundedRectangle(8, 8, 1).background = "white".color;
+        figure.lineWidth = 1;
+        figure.foreground = "gray".color;
+        figure.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+
+        if (SHOW_SHADOW.booleanValue) {
+            figure.shadow = "black".color;
+            figure.shadow.XOffset = 4;
+            figure.shadow.YOffset = 4;
+        }
+
+        node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
+
+        figure.addText(element.name).putToLookUpWith(element) => [
+            it.fontSize = 11;
+            it.setFontBold(element == element.model.rootElement);
             it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
         ];
 
