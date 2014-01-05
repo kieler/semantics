@@ -38,7 +38,29 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.scgbb.Predecessor
 
 /** 
- * SimpleScheduler
+ * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
+ * (for the particular scheduler) important analyses, creates one or more schedules for the SCG which 
+ * may include the execution of synchronizers and runs conclusive optimizations on the graph if available. 
+ * This abstract class defines the generic interface of a scheduler 
+ * since they may be several schedulers for different tasks/graphs.<br>
+ * The transformation chain is used to gather important information 
+ * about the schedulability of a given SCG. This is done in several key steps. Between two steps the results 
+ * are cached in specifically designed metamodels for further processing. At the end of the transformation
+ * chain a newly generated (and sequentialized) SCG is returned. <br>
+ * You can either call the transformations manually or use the SCG transformation extensions to enrich the
+ * SCGs with the desired information.<br>
+ * <pre>
+ * SCG 
+ *   |-- Dependency Analysis 	 					
+ *   |-- Basic Block Analysis
+ *   |-- Scheduler
+ *   |    |-- Graph analyses
+ *   |    |-- Scheduling					<== YOU ARE HERE
+ *   |    |   |-- Synchonize threads		
+ *   |    |-- Optimization
+ *   |-- Sequentialization (new SCG)
+ *       |-- Optimization					
+ * </pre>
  * 
  * @author ssm
  * @kieler.design 2013-11-27 proposed 
@@ -46,13 +68,29 @@ import de.cau.cs.kieler.scgbb.Predecessor
  */
 class SimpleScheduler extends AbstractSCGScheduler {
     
+    // -------------------------------------------------------------------------
+    // -- Injections 
+    // -------------------------------------------------------------------------
+    
+    /** Inject SCG extensions. */    
     @Inject
     extension SCGExtensions    
 
+	/** Inject SCG copy extensions. */
     @Inject
     extension SCGCopyExtensions    
     
+    
+    // -------------------------------------------------------------------------
+    // -- Constants 
+    // -------------------------------------------------------------------------
+    
     private static val String GOGUARDNAME = "_GO"
+    
+    
+    // -------------------------------------------------------------------------
+    // -- Scheduler 
+    // -------------------------------------------------------------------------
     
 	override protected analyse(SCGraphSched scg) {
 		val PotentialInstantaneousLoopAnalyzer loopAnalyser = Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))

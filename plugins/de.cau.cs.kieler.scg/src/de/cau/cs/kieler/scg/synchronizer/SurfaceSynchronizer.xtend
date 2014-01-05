@@ -62,6 +62,7 @@ class SurfaceSynchronizer extends AbstractSCGSynchronizer {
     /** Inject SCG extensions. */    
     @Inject
     extension SCGExtensions
+    
 	/** Inject SCG copy extensions. */  
     @Inject
     extension SCGCopyExtensions
