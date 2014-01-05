@@ -22,6 +22,10 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
  * The {@code SynchronizerData} class comprises members for the data mandatory to 
  * create a guard expression entry in the scheduling information of the scheduler.<br>
  * It is filled by a synchronizer and used by a scheduler.
+ * 
+ * @author ssm
+ * @kieler.design 2013-11-28 proposed 
+ * @kieler.rating 2013-11-28 proposed yellow 
  */
 
 class SynchronizerData {

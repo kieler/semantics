@@ -24,7 +24,7 @@ import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scgsched.SCGraphSched
 import com.google.inject.Guice
-import de.cau.cs.kieler.scg.analyser.PotentialInstantaneousLoopAnalyser
+import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
 import de.cau.cs.kieler.scgsched.GuardExpression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
@@ -55,7 +55,7 @@ class SimpleScheduler extends AbstractSCGScheduler {
     private static val String GOGUARDNAME = "_GO"
     
 	override protected analyse(SCGraphSched scg) {
-		val PotentialInstantaneousLoopAnalyser loopAnalyser = Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyser))
+		val PotentialInstantaneousLoopAnalyzer loopAnalyser = Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
 		loopAnalyser.analyse(scg).copyAllProblems(scg).SCG as SCGraphSched
     }    
     
