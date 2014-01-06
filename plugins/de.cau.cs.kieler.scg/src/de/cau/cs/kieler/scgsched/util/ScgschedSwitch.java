@@ -110,16 +110,9 @@ public class ScgschedSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ScgschedPackage.PROBLEM: {
-				Problem problem = (Problem)theEObject;
-				T result = caseProblem(problem);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM: {
-				PotentialInstantaneousLoopProblem potentialInstantaneousLoopProblem = (PotentialInstantaneousLoopProblem)theEObject;
-				T result = casePotentialInstantaneousLoopProblem(potentialInstantaneousLoopProblem);
-				if (result == null) result = caseProblem(potentialInstantaneousLoopProblem);
+			case ScgschedPackage.ANALYSIS: {
+				Analysis analysis = (Analysis)theEObject;
+				T result = caseAnalysis(analysis);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -188,32 +181,17 @@ public class ScgschedSwitch<T> extends Switch<T> {
 	}
 
     /**
-	 * Returns the result of interpreting the object as an instance of '<em>Problem</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Analysis</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Problem</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Analysis</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseProblem(Problem object) {
-		return null;
-	}
-
-				/**
-	 * Returns the result of interpreting the object as an instance of '<em>Potential Instantaneous Loop Problem</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Potential Instantaneous Loop Problem</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T casePotentialInstantaneousLoopProblem(PotentialInstantaneousLoopProblem object) {
+	public T caseAnalysis(Analysis object) {
 		return null;
 	}
 

@@ -79,8 +79,8 @@ class PotentialInstantaneousLoopAnalyzer extends AbstractSCGAnalyzer {
 		// For each loop found a new instantaneous loop problem is created.
 		analyzerData.SCG.nodes.forEach[
 			it.instantaneousControlFlows.forEach[
-				val problem = it.createPotentialInstantaneousLoopProblem
-				potentialInstantaneousLoopResult.addProblem(problem)
+				val analysis = it.createPotentialInstantaneousLoopProblem
+				potentialInstantaneousLoopResult.addAnalysis(analysis)
 			]
 		]
 		

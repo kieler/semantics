@@ -27,8 +27,8 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scgsched.SCGraphSched#isUnschedulable <em>Unschedulable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.SCGraphSched#getSchedules <em>Schedules</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgsched.SCGraphSched#getProblems <em>Problems</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.SCGraphSched#getGuards <em>Guards</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.SCGraphSched#getAnalyses <em>Analyses</em>}</li>
  * </ul>
  * </p>
  *
@@ -80,22 +80,6 @@ public interface SCGraphSched extends SCGraphBB {
     EList<Schedule> getSchedules();
 
 				/**
-	 * Returns the value of the '<em><b>Problems</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.scgsched.Problem}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Problems</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Problems</em>' containment reference list.
-	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSCGraphSched_Problems()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<Problem> getProblems();
-
-				/**
 	 * Returns the value of the '<em><b>Guards</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.scgsched.GuardExpression}.
 	 * <!-- begin-user-doc -->
@@ -110,5 +94,21 @@ public interface SCGraphSched extends SCGraphBB {
 	 * @generated
 	 */
 	EList<GuardExpression> getGuards();
+
+				/**
+	 * Returns the value of the '<em><b>Analyses</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scgsched.Analysis}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Analyses</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Analyses</em>' containment reference list.
+	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSCGraphSched_Analyses()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Analysis> getAnalyses();
 
 } // SCGraphSched

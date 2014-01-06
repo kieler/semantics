@@ -79,7 +79,7 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
-import de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem
+import de.cau.cs.kieler.scgsched.Analyses
 
 /** 
  * SCCGraph KlighD synthesis 
@@ -1136,10 +1136,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
     
     def drawProblems(SCGraphSched scg) {
-    	scg.problems.filter(typeof(PotentialInstantaneousLoopProblem)).forEach[
-    		it.controlFlows.forEach[
-    			it.colorizeControlFlow(PROBLEM_POTENTIALLOOP_COLOR)
-    			it.thickenControlFlow(PROBLEM_POTENTIALLOOP_WIDTH)
+    	scg.analyses.filter[ id == Analyses::POTENTIAL_INSTANTANEOUS_LOOP ].forEach[
+    		objectReferences.forEach[
+    			(it as ControlFlow).colorizeControlFlow(PROBLEM_POTENTIALLOOP_COLOR)
+    			(it as ControlFlow).thickenControlFlow(PROBLEM_POTENTIALLOOP_WIDTH)
     		]
     	]
     }

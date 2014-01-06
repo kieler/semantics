@@ -94,7 +94,7 @@ class SimpleScheduler extends AbstractSCGScheduler {
     
 	override protected analyse(SCGraphSched scg) {
 		val PotentialInstantaneousLoopAnalyzer loopAnalyser = Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
-		loopAnalyser.analyse(scg).copyAllProblems(scg).SCG as SCGraphSched
+		loopAnalyser.analyse(scg).copyAllAnalyses(scg).SCG as SCGraphSched
     }    
     
 	override protected optimize(SCGraphSched scg) {

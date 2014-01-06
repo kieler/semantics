@@ -101,12 +101,8 @@ public class ScgschedAdapterFactory extends AdapterFactoryImpl {
 				return createScheduleAdapter();
 			}
 			@Override
-			public Adapter caseProblem(Problem object) {
-				return createProblemAdapter();
-			}
-			@Override
-			public Adapter casePotentialInstantaneousLoopProblem(PotentialInstantaneousLoopProblem object) {
-				return createPotentialInstantaneousLoopProblemAdapter();
+			public Adapter caseAnalysis(Analysis object) {
+				return createAnalysisAdapter();
 			}
 			@Override
 			public Adapter caseSCGraph(SCGraph object) {
@@ -197,30 +193,16 @@ public class ScgschedAdapterFactory extends AdapterFactoryImpl {
 	}
 
     /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgsched.Problem <em>Problem</em>}'.
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgsched.Analysis <em>Analysis</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.scgsched.Problem
+	 * @see de.cau.cs.kieler.scgsched.Analysis
 	 * @generated
 	 */
-	public Adapter createProblemAdapter() {
-		return null;
-	}
-
-				/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem <em>Potential Instantaneous Loop Problem</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem
-	 * @generated
-	 */
-	public Adapter createPotentialInstantaneousLoopProblemAdapter() {
+	public Adapter createAnalysisAdapter() {
 		return null;
 	}
 

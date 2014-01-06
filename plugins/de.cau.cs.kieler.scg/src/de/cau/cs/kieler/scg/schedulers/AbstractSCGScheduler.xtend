@@ -112,9 +112,9 @@ abstract class AbstractSCGScheduler {
      * 			the SCG model
      * @return Returns the analyzer data structure.
      */
-    protected def AnalyzerData copyAllProblems(AnalyzerData analyzerData, SCGraphSched scg) {
+    protected def AnalyzerData copyAllAnalyses(AnalyzerData analyzerData, SCGraphSched scg) {
     	analyzerData.getResults(GenericAnalyzerResult).forEach[
-    		it.problems.forEach[scg.problems.add(it.copy)]
+    		it.analyses.forEach[scg.analyses.add(it.copy)]
     	]
     	analyzerData
     }

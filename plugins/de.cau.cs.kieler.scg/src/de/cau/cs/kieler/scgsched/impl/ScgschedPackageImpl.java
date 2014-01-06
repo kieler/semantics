@@ -14,18 +14,18 @@
 package de.cau.cs.kieler.scgsched.impl;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.scg.ScgPackage;
 import de.cau.cs.kieler.scgbb.ScgbbPackage;
+import de.cau.cs.kieler.scgsched.Analyses;
+import de.cau.cs.kieler.scgsched.Analysis;
 import de.cau.cs.kieler.scgsched.EmptyExpressions;
 import de.cau.cs.kieler.scgsched.GuardExpression;
-import de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem;
-import de.cau.cs.kieler.scgsched.Problem;
 import de.cau.cs.kieler.scgsched.SCGraphSched;
 import de.cau.cs.kieler.scgsched.ScgschedFactory;
 import de.cau.cs.kieler.scgsched.ScgschedPackage;
 import de.cau.cs.kieler.scgsched.Schedule;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -70,14 +70,14 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass problemEClass = null;
+	private EClass analysisEClass = null;
 
 				/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass potentialInstantaneousLoopProblemEClass = null;
+	private EEnum analysesEEnum = null;
 
 				/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -175,7 +175,7 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getSCGraphSched_Problems() {
+	public EReference getSCGraphSched_Guards() {
 		return (EReference)scGraphSchedEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -184,7 +184,7 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getSCGraphSched_Guards() {
+	public EReference getSCGraphSched_Analyses() {
 		return (EReference)scGraphSchedEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -283,8 +283,8 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getProblem() {
-		return problemEClass;
+	public EClass getAnalysis() {
+		return analysisEClass;
 	}
 
 				/**
@@ -292,8 +292,8 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getPotentialInstantaneousLoopProblem() {
-		return potentialInstantaneousLoopProblemEClass;
+	public EAttribute getAnalysis_Id() {
+		return (EAttribute)analysisEClass.getEStructuralFeatures().get(0);
 	}
 
 				/**
@@ -301,8 +301,17 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPotentialInstantaneousLoopProblem_ControlFlows() {
-		return (EReference)potentialInstantaneousLoopProblemEClass.getEStructuralFeatures().get(0);
+	public EReference getAnalysis_ObjectReferences() {
+		return (EReference)analysisEClass.getEStructuralFeatures().get(1);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getAnalyses() {
+		return analysesEEnum;
 	}
 
 				/**
@@ -336,8 +345,8 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 		scGraphSchedEClass = createEClass(SC_GRAPH_SCHED);
 		createEAttribute(scGraphSchedEClass, SC_GRAPH_SCHED__UNSCHEDULABLE);
 		createEReference(scGraphSchedEClass, SC_GRAPH_SCHED__SCHEDULES);
-		createEReference(scGraphSchedEClass, SC_GRAPH_SCHED__PROBLEMS);
 		createEReference(scGraphSchedEClass, SC_GRAPH_SCHED__GUARDS);
+		createEReference(scGraphSchedEClass, SC_GRAPH_SCHED__ANALYSES);
 
 		emptyExpressionsEClass = createEClass(EMPTY_EXPRESSIONS);
 		createEReference(emptyExpressionsEClass, EMPTY_EXPRESSIONS__VALUED_OBJECT);
@@ -352,10 +361,12 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 		scheduleEClass = createEClass(SCHEDULE);
 		createEReference(scheduleEClass, SCHEDULE__SCHEDULING_BLOCKS);
 
-		problemEClass = createEClass(PROBLEM);
+		analysisEClass = createEClass(ANALYSIS);
+		createEAttribute(analysisEClass, ANALYSIS__ID);
+		createEReference(analysisEClass, ANALYSIS__OBJECT_REFERENCES);
 
-		potentialInstantaneousLoopProblemEClass = createEClass(POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM);
-		createEReference(potentialInstantaneousLoopProblemEClass, POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS);
+		// Create enums
+		analysesEEnum = createEEnum(ANALYSES);
 	}
 
     /**
@@ -384,7 +395,6 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 		// Obtain other dependent packages
 		ScgbbPackage theScgbbPackage = (ScgbbPackage)EPackage.Registry.INSTANCE.getEPackage(ScgbbPackage.eNS_URI);
 		KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
-		ScgPackage theScgPackage = (ScgPackage)EPackage.Registry.INSTANCE.getEPackage(ScgPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -392,14 +402,13 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 
 		// Add supertypes to classes
 		scGraphSchedEClass.getESuperTypes().add(theScgbbPackage.getSCGraphBB());
-		potentialInstantaneousLoopProblemEClass.getESuperTypes().add(this.getProblem());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(scGraphSchedEClass, SCGraphSched.class, "SCGraphSched", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSCGraphSched_Unschedulable(), ecorePackage.getEBoolean(), "unschedulable", null, 0, 1, SCGraphSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSCGraphSched_Schedules(), this.getSchedule(), null, "schedules", null, 0, -1, SCGraphSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getSCGraphSched_Problems(), this.getProblem(), null, "problems", null, 0, -1, SCGraphSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSCGraphSched_Guards(), this.getGuardExpression(), null, "guards", null, 0, -1, SCGraphSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSCGraphSched_Analyses(), this.getAnalysis(), null, "analyses", null, 0, -1, SCGraphSched.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(emptyExpressionsEClass, EmptyExpressions.class, "EmptyExpressions", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEmptyExpressions_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, EmptyExpressions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -414,10 +423,16 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 		initEClass(scheduleEClass, Schedule.class, "Schedule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSchedule_SchedulingBlocks(), theScgbbPackage.getSchedulingBlock(), null, "schedulingBlocks", null, 0, -1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(problemEClass, Problem.class, "Problem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(analysisEClass, Analysis.class, "Analysis", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAnalysis_Id(), this.getAnalyses(), "id", null, 0, 1, Analysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getAnalysis_ObjectReferences(), ecorePackage.getEObject(), null, "objectReferences", null, 0, -1, Analysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(potentialInstantaneousLoopProblemEClass, PotentialInstantaneousLoopProblem.class, "PotentialInstantaneousLoopProblem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getPotentialInstantaneousLoopProblem_ControlFlows(), theScgPackage.getControlFlow(), null, "controlFlows", null, 0, -1, PotentialInstantaneousLoopProblem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		// Initialize enums and add enum literals
+		initEEnum(analysesEEnum, Analyses.class, "Analyses");
+		addEEnumLiteral(analysesEEnum, Analyses.USER_DEFINED);
+		addEEnumLiteral(analysesEEnum, Analyses.POTENTIAL_INSTANTANEOUS_LOOP);
+		addEEnumLiteral(analysesEEnum, Analyses.JOIN_FEEDBACK);
+		addEEnumLiteral(analysesEEnum, Analyses.INTERLEAVED_ASSIGNMENT);
 
 		// Create resource
 		createResource(eNS_URI);

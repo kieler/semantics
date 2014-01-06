@@ -15,8 +15,8 @@ package de.cau.cs.kieler.scg.analyzer
 
 import de.cau.cs.kieler.scg.SCGraph
 import java.util.List
-import de.cau.cs.kieler.scgsched.Problem
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scgsched.Analysis
 
 /**
  * The {@code AnalyzerData} class comprises members and methods for the data mandatory to 
@@ -123,8 +123,8 @@ import de.cau.cs.kieler.scg.Node
  */
 class GenericAnalyzerResult {
 	
-	/** A list that is able to hold any problems. */
-	private val problems = <Problem> newArrayList
+	/** A list that is able to hold any analysis. */
+	private val analyses = <Analysis> newArrayList
 	
 	/** 
 	 * The positive flag indicates whether or not a specific analysis detected a particular problem. 
@@ -154,24 +154,24 @@ class GenericAnalyzerResult {
 	}
 	
 	/**
-	 * Adds a problem to the list of problems and sets the positive flag to true.
+	 * Adds an analysis to the list of analyses and sets the positive flag to true.
 	 * 
-	 * @param problem
-	 * 			the problem to be added
-	 * @return Returns the problem.
+	 * @param analysis
+	 * 			the analysis to be added
+	 * @return Returns the analysis.
 	 */
-	public def Problem addProblem(Problem problem) {
+	public def Analysis addAnalysis(Analysis analysis) {
 		positive = true
-		problem => [ problems.add(it) ]
+		analysis => [ analyses.add(it) ]
 	}
 	
 	/**
-	 * Returns the list of problems.
+	 * Returns the list of analyses.
 	 * 
-	 * @return Returns a list of Problems.
+	 * @return Returns a list of analyses.
 	 */
-	public def List<Problem> getProblems() {
-		problems
+	public def List<Analysis> getAnalyses() {
+		analyses
 	}	
 }
 

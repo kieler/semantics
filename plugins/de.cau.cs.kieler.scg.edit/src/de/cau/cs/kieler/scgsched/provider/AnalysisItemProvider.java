@@ -14,6 +14,10 @@
 package de.cau.cs.kieler.scgsched.provider;
 
 
+import de.cau.cs.kieler.scg.provider.ScgschedEditPlugin;
+
+import de.cau.cs.kieler.scgsched.Analyses;
+import de.cau.cs.kieler.scgsched.Analysis;
 import de.cau.cs.kieler.scgsched.ScgschedPackage;
 
 import java.util.Collection;
@@ -22,6 +26,8 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -29,15 +35,18 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.scgsched.Analysis} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class PotentialInstantaneousLoopProblemItemProvider
-	extends ProblemItemProvider
+public class AnalysisItemProvider
+	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -50,7 +59,7 @@ public class PotentialInstantaneousLoopProblemItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public PotentialInstantaneousLoopProblemItemProvider(AdapterFactory adapterFactory) {
+	public AnalysisItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -65,25 +74,48 @@ public class PotentialInstantaneousLoopProblemItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addControlFlowsPropertyDescriptor(object);
+			addIdPropertyDescriptor(object);
+			addObjectReferencesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Control Flows feature.
+	 * This adds a property descriptor for the Id feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addControlFlowsPropertyDescriptor(Object object) {
+	protected void addIdPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_PotentialInstantaneousLoopProblem_controlFlows_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_PotentialInstantaneousLoopProblem_controlFlows_feature", "_UI_PotentialInstantaneousLoopProblem_type"),
-				 ScgschedPackage.Literals.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS,
+				 getString("_UI_Analysis_id_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Analysis_id_feature", "_UI_Analysis_type"),
+				 ScgschedPackage.Literals.ANALYSIS__ID,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Object References feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addObjectReferencesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Analysis_objectReferences_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Analysis_objectReferences_feature", "_UI_Analysis_type"),
+				 ScgschedPackage.Literals.ANALYSIS__OBJECT_REFERENCES,
 				 true,
 				 false,
 				 true,
@@ -93,14 +125,14 @@ public class PotentialInstantaneousLoopProblemItemProvider
 	}
 
 	/**
-	 * This returns PotentialInstantaneousLoopProblem.gif.
+	 * This returns Analysis.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/PotentialInstantaneousLoopProblem"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Analysis"));
 	}
 
 	/**
@@ -111,7 +143,11 @@ public class PotentialInstantaneousLoopProblemItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_PotentialInstantaneousLoopProblem_type");
+		Analyses labelValue = ((Analysis)object).getId();
+		String label = labelValue == null ? null : labelValue.toString();
+		return label == null || label.length() == 0 ?
+			getString("_UI_Analysis_type") :
+			getString("_UI_Analysis_type") + " " + label;
 	}
 
 	/**
@@ -124,6 +160,12 @@ public class PotentialInstantaneousLoopProblemItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(Analysis.class)) {
+			case ScgschedPackage.ANALYSIS__ID:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+		}
 		super.notifyChanged(notification);
 	}
 
@@ -137,6 +179,17 @@ public class PotentialInstantaneousLoopProblemItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+	}
+
+	/**
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ResourceLocator getResourceLocator() {
+		return ScgschedEditPlugin.INSTANCE;
 	}
 
 }

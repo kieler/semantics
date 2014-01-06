@@ -26,7 +26,6 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scgbb.BasicBlock
 import de.cau.cs.kieler.scgbb.SCGraphBB
 import de.cau.cs.kieler.scgbb.SchedulingBlock
-import de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem
 import de.cau.cs.kieler.scgsched.ScgschedFactory
 import de.cau.cs.kieler.scgsched.Schedule
 import java.util.List
@@ -35,6 +34,8 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.scgsched.Analysis
+import de.cau.cs.kieler.scgsched.Analyses
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -465,11 +466,12 @@ class SCGExtensions {
      * 
      * @param controlFlows
      * 			the control flow path causing the problem
-     * @return Returns an instance of a potential instantaneous loop problem.
+     * @return Returns an analysis structure containing the potential instantaneous loop problem.
      */
-    def PotentialInstantaneousLoopProblem createPotentialInstantaneousLoopProblem(List<ControlFlow> controlFlows) {
-    	val plp = ScgschedFactory::eINSTANCE.createPotentialInstantaneousLoopProblem
-    	plp.controlFlows.addAll(controlFlows)
+    def Analysis createPotentialInstantaneousLoopProblem(List<ControlFlow> controlFlows) {
+    	val plp = ScgschedFactory::eINSTANCE.createAnalysis
+    	plp.id = Analyses::POTENTIAL_INSTANTANEOUS_LOOP
+    	plp.objectReferences.addAll(controlFlows)
     	plp
     }
 
