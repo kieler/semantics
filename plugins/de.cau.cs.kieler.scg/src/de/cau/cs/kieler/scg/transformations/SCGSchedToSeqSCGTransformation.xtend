@@ -137,7 +137,7 @@ class SCGSchedToSeqSCGTransformation {
     		 * Create it and copy the corresponding object.
     		 */
     		val newAssignment = ScgFactory::eINSTANCE.createAssignment
-    		newAssignment.valuedObject = sb.guard.getCopy
+    		newAssignment.valuedObject = sb.guard.getValuedObjectCopy
 
 			/**
 			 * For each guard a guard expression exists.

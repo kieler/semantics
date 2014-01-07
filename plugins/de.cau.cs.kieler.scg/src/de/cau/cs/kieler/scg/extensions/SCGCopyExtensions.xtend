@@ -598,7 +598,7 @@ class SCGCopyExtensions {
         	assignment = ScgFactory::eINSTANCE.createAssignment
         }
         assignment.assignment = node.assignment.copyExpression
-        assignment.valuedObject = node.valuedObject.getCopy;
+        assignment.valuedObject = node.valuedObject.getValuedObjectCopy;
         assignment
     }
 
@@ -622,7 +622,7 @@ class SCGCopyExtensions {
      * 			the valued object in the source SCG
      * @return Returns the copied valued object in the target SCG.
      */
-    def ValuedObject getCopy(ValuedObject valuedObject) {
+    def ValuedObject getValuedObjectCopy(ValuedObject valuedObject) {
         valuedObjectMapping.get(valuedObject)
     }
     
@@ -640,12 +640,12 @@ class SCGCopyExtensions {
         if (newExpression instanceof ValuedObjectReference) {
 	        // If it is a single object reference, simply replace the reference with the object of the target SCG.
             (newExpression as ValuedObjectReference).valuedObject = 
-                (expression as ValuedObjectReference).valuedObject.getCopy                    
+                (expression as ValuedObjectReference).valuedObject.getValuedObjectCopy                    
         } else {
         	// Otherwise, query all references in the expression and replace the object with the new copy
         	// in the target SCG.
             newExpression.eAllContents.filter(typeof(ValuedObjectReference)).
-            	forEach[ valuedObject = valuedObject.getCopy ]        
+            	forEach[ valuedObject = valuedObject.getValuedObjectCopy ]        
         }
         
         // Return the new expression.
