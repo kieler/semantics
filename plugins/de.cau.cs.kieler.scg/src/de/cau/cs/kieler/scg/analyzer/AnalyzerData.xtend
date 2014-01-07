@@ -46,7 +46,7 @@ import de.cau.cs.kieler.scgsched.Analysis
 	 * @return Returns the SCG.
 	 */
 	def SCGraph setSCG(SCGraph scg) {
-		scg => [ this.scg = it]
+		scg => [ this.scg = it ]
 	}
 	
 	/**
@@ -66,7 +66,7 @@ import de.cau.cs.kieler.scgsched.Analysis
 	 * @return Returns the node.
 	 */
 	def Node setNode(Node node) {
-		node => [this.node = node]
+		node => [ this.node = node ]
 	}
 	
 	/**

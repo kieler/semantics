@@ -36,6 +36,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.scgsched.Analysis
 import de.cau.cs.kieler.scgsched.Analyses
+import com.google.common.base.Predicates
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -72,9 +73,9 @@ class SCGExtensions {
      * @return Returns a new valued object with the given name.
      */
     def ValuedObject createValuedObject(String valuedObjectName) {
-         val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-         valuedObject.setName(valuedObjectName)
-         valuedObject
+         KExpressionsFactory::eINSTANCE.createValuedObject => [
+             name = valuedObjectName
+         ]
     }
    
     /** 
@@ -87,9 +88,9 @@ class SCGExtensions {
      * @return Returns the new valued object. 
      */
     def ValuedObject createValuedObject(SCGraph scg, String valuedObjectName) {
-         val valuedObject = createValuedObject(valuedObjectName)
-         scg.valuedObjects.add(valuedObject)
-         valuedObject
+         createValuedObject(valuedObjectName) => [
+             scg.valuedObjects += it
+         ]
     }
    
 	/** 
@@ -184,7 +185,7 @@ class SCGExtensions {
     }
 
 	/** 
-	 * Rerieves a list of all control flow paths (lists of indirect control flows) from a source node
+	 * Retrieves a list of all control flow paths (lists of indirect control flows) from a source node
 	 * to a target node. Therefore, for each outgoing control flow the 
 	 * {@link #accumulateIndirectControlFlow(ControlFlow, List, List, Node)} method is called to 
 	 * accumulate the flows.
@@ -211,10 +212,7 @@ class SCGExtensions {
      * @return Returns true if the path is instantaneous.
      */
     def boolean instantaneousFlow(List<ControlFlow> controlFlows) {
-    	for(cf : controlFlows) {
-    		if (cf.target instanceof Depth) return false
-    	}
-    	true
+        !controlFlows.map[ target ].filter(typeof(Depth)).empty
     }    
 
 	/**
@@ -237,7 +235,7 @@ class SCGExtensions {
      * 
      * @param source
      * 			the node originating the control flow paths
-     * @return Returns a list of control flow paths containg all instantaneous control flow paths. 
+     * @return Returns a list of control flow paths containing all instantaneous control flow paths. 
      */
     def List<List<ControlFlow>> getInstantaneousControlFlows(Node source) {
     	source.getInstantaneousControlFlows(source)
@@ -251,7 +249,7 @@ class SCGExtensions {
      * @Return Returns true if an instantaneous path exists.
      */
     def boolean instantaneous(List<List<ControlFlow>> controlFlowsListPath) {
-    	controlFlowsListPath.filter[ instantaneousFlow ].size>0
+    	!controlFlowsListPath.filter[ instantaneousFlow ].empty
     }
       
 
@@ -495,15 +493,16 @@ class SCGExtensions {
     	
     	// Otherwise, split the expression as long as it contains more that two
     	// subExpressions. 
-    	var newExp = expression as OperatorExpression
         if ((expression as OperatorExpression).subExpressions.size > 2) {
-            var exp = expression.copy as OperatorExpression
-            newExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            newExp.operator = exp.operator
-            newExp.subExpressions.add(exp.subExpressions.get(0))
-            newExp.subExpressions.add(exp.splitOperatorExpression)
-        }
-        newExp
+            val exp = expression.copy as OperatorExpression
+            KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                operator = exp.operator
+                subExpressions += exp.subExpressions.head
+                subExpressions += exp.splitOperatorExpression
+            ]
+        } else {
+            expression
+        }        
     }
     
     /**
@@ -514,12 +513,11 @@ class SCGExtensions {
      * @return Returns a new negated operator expression containing the original expression. 
      */
     def Expression negate(Expression expression) {
-    	val nExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
-    	nExp.setOperator(OperatorType::NOT)
-    	nExp.subExpressions.add(expression)
-    	nExp
-    }
-    
+    	KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::NOT
+            subExpressions += expression
+    	]    	
+    }    
     
 }
 
