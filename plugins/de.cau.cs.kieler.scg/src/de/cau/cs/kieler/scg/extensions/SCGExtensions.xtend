@@ -212,7 +212,7 @@ class SCGExtensions {
      * @return Returns true if the path is instantaneous.
      */
     def boolean instantaneousFlow(List<ControlFlow> controlFlows) {
-        !controlFlows.map[ target ].filter(typeof(Depth)).empty
+        controlFlows.map[ target ].filter(typeof(Depth)).empty
     }    
 
 	/**

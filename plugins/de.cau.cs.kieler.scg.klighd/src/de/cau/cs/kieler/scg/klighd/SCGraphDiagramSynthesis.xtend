@@ -80,6 +80,7 @@ import org.eclipse.xtext.serializer.ISerializer
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scgsched.Analyses
+import de.cau.cs.kieler.scg.klighd.analyzer.AnalysesVisualization
 
 /** 
  * SCCGraph KlighD synthesis 
@@ -282,8 +283,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor SCHEDULING_NOTSCHEDULABLE = RENDERING_FACTORY.createKColor()=>[it.red = 255; it.green = 0; it.blue = 0;]
     private static val KColor STANDARD_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor()=>[it.red = 0; it.green = 0; it.blue = 0;]
     private static val KColor SCHEDULING_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor()=>[it.red = 144; it.green = 144; it.blue = 144;]
-
-    private static val KColor PROBLEM_POTENTIALLOOP_COLOR = RENDERING_FACTORY.createKColor()=>[it.red = 255; it.green = 0; it.blue = 0;]
     
     private static val String SCGPORTID_INCOMING = "incoming"
     private static val String SCGPORTID_OUTGOING = "outgoing"
@@ -305,7 +304,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val int ORIENTATION_LANDSCAPE = 1
     
     private static val int CONTROLFLOW_SCHEDULINGEDGE_WIDTH = 4
-    private static val int PROBLEM_POTENTIALLOOP_WIDTH = 4
     
     private KNode rootNode;
     private int orientation;
@@ -394,7 +392,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             
             if (r instanceof SCGraphSched) {
-            	(r as SCGraphSched).drawProblems
+            	(r as SCGraphSched).drawAnalyses
             }
             
             // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
@@ -891,7 +889,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     } 
      
     
-    def Depth coloizeTickEdge(Depth t, KColor color) {
+    def Depth colorizeTickEdge(Depth t, KColor color) {
         t.getAllEdges.forEach[
             val polyline = it.getData(typeof(KRoundedBendsPolyline)).foreground = color.copy
             polyline.foreground.propagateToChildren = true  
@@ -1097,7 +1095,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         controlFlows.forEach[it.colorizeControlFlow(SCHEDULINGBLOCKBORDER)]    
                         controlFlows.forEach[it.thickenControlFlow(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)]
                     } else if (target instanceof Depth) {
-                        (target as Depth).coloizeTickEdge(SCHEDULINGBLOCKBORDER)                    
+                        (target as Depth).colorizeTickEdge(SCHEDULINGBLOCKBORDER)                    
                         (target as Depth).thickenTickEdge(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)                    
                     } else {
                         val sourceF = source.node
@@ -1135,13 +1133,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         }
     }
     
-    def drawProblems(SCGraphSched scg) {
-    	scg.analyses.filter[ id == Analyses::POTENTIAL_INSTANTANEOUS_LOOP ].forEach[
-    		objectReferences.forEach[
-    			(it as ControlFlow).colorizeControlFlow(PROBLEM_POTENTIALLOOP_COLOR)
-    			(it as ControlFlow).thickenControlFlow(PROBLEM_POTENTIALLOOP_WIDTH)
-    		]
-    	]
+    def void drawAnalyses(SCGraphSched scg) {
+    	val AnalysesVisualization analysesVisualization = Guice.createInjector().getInstance(typeof(AnalysesVisualization))
+    	scg.analyses.forEach[ analysesVisualization.visualize(it, this) ]
     }
    
 
