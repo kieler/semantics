@@ -16,7 +16,7 @@ package de.cau.cs.kieler.scg.klighd
 import de.cau.cs.kieler.core.kivi.AbstractCombination
 import de.cau.cs.kieler.core.kivi.triggers.PartTrigger
 import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger
-import de.cau.cs.kieler.klighd.kivi.effects.KlighdDiagramEffect
+import de.cau.cs.kieler.klighd.kivi.effects.KlighdUpdateDiagramEffect
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.klighd.xtext.UpdateXtextModelKLighDCombination
@@ -76,7 +76,7 @@ class SCGraphShowDiagramCombination extends UpdateXtextModelKLighDCombination {
                     it?.load(Collections::emptyMap());
                 ])?.contents?.head;
                 if (eObject != null) {
-                    this.schedule(new KlighdDiagramEffect("volatile.scg.outline", eObject) => [
+                    this.schedule(new KlighdUpdateDiagramEffect("volatile.scg.outline", eObject) => [
                         it.setProperty(KlighdSynthesisProperties::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
                     ]);
                 }
