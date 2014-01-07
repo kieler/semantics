@@ -254,8 +254,8 @@ class SCGDEPToSCGBBTransformation {
             	 * Therefore, check the next block for these properties.
             	 */
             	// Retrieve the target of the next control flow.
-                val next = node.eAllContents.filter(typeof(ControlFlow)).head.target
-                if (next instanceof Join) {
+                val next = node.eAllContents?.filter(typeof(ControlFlow))?.head?.target
+                if (next instanceof Join || next == null) {
                 	/**
                 	 * If the next node would be a join node, we would exit the thread border. 
                 	 * Insert the actual block and do not proceed. The calling fork tree will handle 
