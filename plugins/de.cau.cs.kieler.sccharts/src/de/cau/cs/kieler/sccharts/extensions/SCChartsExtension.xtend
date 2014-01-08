@@ -222,6 +222,32 @@ class SCChartsExtension {
     def State createFinalState(Region region, String id) {
         region.createState(id).setFinal
     }
+    
+    def State[] getAllFinalStates(Region region) {
+        region.states.filter[isFinal]
+    }
+    
+    def State[] getFinalStates(Region region) {
+        region.allFinalStates.filter[outgoingTransitions.size == 0 && !hierarchical && entryActions.size == 0 && duringActions.size == 0 && exitActions.size == 0]
+    }
+    
+    // Get the first (simple) final state if the region contains any, otherwise return null.
+    def State getFinalState(Region region) {
+        val finalStates = region.getFinalStates
+        if (finalStates.size > 0)
+            return finalStates.get(0)
+        else
+            return null
+    }
+
+    // Get any final state if the region already contains a final state, otherwise create a final state.
+    def State retrieveFinalState(Region region, String id) {
+        val finalState = region.getFinalState
+        if (finalState != null) {
+            return finalState
+        }
+        region.createState(id).setFinal
+    }
 
     def State setLabel2(State state, String label) {
         state.setLabel(label)

@@ -1318,18 +1318,13 @@ class SCChartsCoreTransformation {
             val watcherTransition = watcherRegion.createInitialState("Watch").createImmediateTransitionTo(watcherRegion.createFinalState("Aborted"))
             watcherTransition.addEffect(abortFlag.assign(TRUE))
             for (termVariable : termVariables) {
-                if (watcherTransition.trigger != null) {
-                    watcherTransition.setTrigger(watcherTransition.trigger.and(termVariable.reference))    
-                }
-                else {
-                    watcherTransition.setTrigger(termVariable.reference)
-                }
+                watcherTransition.setTrigger(watcherTransition.trigger.and2(termVariable.reference))    
             }
             
             //Add additional final state
             for (complexFinalState : complexFinalStates) {
                 complexFinalState.setFinal(false)
-                val finalState = complexFinalState.parentRegion.createFinalState(complexFinalState.id("FinalComplexFinalState"))
+                val finalState = complexFinalState.parentRegion.retrieveFinalState(complexFinalState.id("FinalComplexFinalState"))
                 complexFinalState.createImmediateTransitionTo(finalState).setTrigger(abortFlag.reference)
             }
             
