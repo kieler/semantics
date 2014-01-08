@@ -70,7 +70,7 @@ class PotentialInstantaneousLoopAnalyzer extends AbstractSCGAnalyzer {
 	 * @return Returns the updated analyzer data structure.
 	 * @override
 	 */
-	override analyse(AnalyzerData analyzerData) {
+	override analyze(AnalyzerData analyzerData) {
 		// Create a new result for this analyzer.
 		val potentialInstantaneousLoopResult = new PotentialInstantaneousLoopResult
 		

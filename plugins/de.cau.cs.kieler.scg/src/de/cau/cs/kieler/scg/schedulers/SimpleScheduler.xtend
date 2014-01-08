@@ -36,6 +36,7 @@ import de.cau.cs.kieler.scg.synchronizer.SurfaceSynchronizer
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.scgbb.Predecessor
+import de.cau.cs.kieler.scg.analyzer.InterleavedAssignmentAnalyzer
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -92,9 +93,11 @@ class SimpleScheduler extends AbstractSCGScheduler {
     // -- Scheduler 
     // -------------------------------------------------------------------------
     
-	override protected analyse(SCGraphSched scg) {
-		val PotentialInstantaneousLoopAnalyzer loopAnalyser = Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
-		loopAnalyser.analyse(scg).copyAllAnalyses(scg).SCG as SCGraphSched
+	override protected analyze(SCGraphSched scg) {
+		val PotentialInstantaneousLoopAnalyzer loopAnalyzer = Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
+		val InterleavedAssignmentAnalyzer assignmentAnalyzer = Guice.createInjector().getInstance(typeof(InterleavedAssignmentAnalyzer))
+		
+		assignmentAnalyzer.analyze(loopAnalyzer.analyze(scg)).copyAllAnalyses(scg).SCG as SCGraphSched
     }    
     
 	override protected optimize(SCGraphSched scg) {

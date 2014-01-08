@@ -50,7 +50,7 @@ import java.util.List
  * @kieler.rating 2013-12-07 proposed yellow
  */
  
-class JoinFeedbackAnalyser extends AbstractSCGAnalyzer {
+class JoinFeedbackAnalyzer extends AbstractSCGAnalyzer {
 
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -77,7 +77,7 @@ class JoinFeedbackAnalyser extends AbstractSCGAnalyzer {
 	 * @override
 	 */
 
-	override analyse(AnalyzerData analyzerData) {
+	override analyze(AnalyzerData analyzerData) {
 		// If no node or not a join is selected, return the result and exit.
 		if (analyzerData.node == null || !(analyzerData.node instanceof Join)) return analyzerData
 		

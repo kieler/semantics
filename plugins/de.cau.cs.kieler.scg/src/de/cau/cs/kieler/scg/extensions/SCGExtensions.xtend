@@ -163,7 +163,7 @@ class SCGExtensions {
      * @return Returns nothing. 
      */  
     private def void accumulateIndirectControlFlow(ControlFlow next, List<ControlFlow> localFlow, 
-        List<List<ControlFlow>> listOfFlows, Node target
+        List<List<ControlFlow>> listOfFlows, Node target, boolean includeTickEdges 
     ) {
     	// Already in the local flow list: loop! Abort.
         if (localFlow.contains(next)) return;
@@ -178,10 +178,16 @@ class SCGExtensions {
         
         // Otherwise, follow the flow and recursively call this method to proceed on further control flows.
         localFlow.add(next)
-        next.target.getAllNext.forEach[
+        next.target.allNext.forEach[
             val newFlow = <ControlFlow> newArrayList(localFlow)       	    
-            it.accumulateIndirectControlFlow(newFlow, listOfFlows, target)
+            accumulateIndirectControlFlow(newFlow, listOfFlows, target, includeTickEdges)
         ]
+        
+        if (includeTickEdges && next.target instanceof Surface) {
+            (next.target as Surface).depth.next.accumulateIndirectControlFlow( 
+                localFlow, listOfFlows, target, includeTickEdges
+            )
+        }
     }
 
 	/** 
@@ -199,7 +205,7 @@ class SCGExtensions {
 	 */   
     def List<List<ControlFlow>> getIndirectControlFlows(Node source, Node target) {
    	    val pathList = <List<ControlFlow>> newLinkedList
-   	    source.getAllNext.forEach[ accumulateIndirectControlFlow(newArrayList(), pathList, target) ]
+   	    source.allNext.forEach[ accumulateIndirectControlFlow(newArrayList(), pathList, target, false) ]
    	    pathList 
     }
     
@@ -251,7 +257,25 @@ class SCGExtensions {
     def boolean instantaneous(List<List<ControlFlow>> controlFlowsListPath) {
     	!controlFlowsListPath.filter[ instantaneousFlow ].empty
     }
-      
+     
+    /** 
+     * Retrieves a list of all control flows (including the flows beyond tick boundaries) from a 
+     * source node to a target node. Therefore, for each outgoing edge the 
+     * {@link #accumulateIndirectControlFlow(ControlFlow, List, List, Node)} method is called to 
+     * accumulate the flows.
+     * 
+     * @param source
+     *          the source node
+     * @param target 
+     *          the target node
+     * @return Returns a list of list of control flows. Each list of control flows represent a path from
+     *          the source node to the target node. 
+     */   
+    def List<List<ControlFlow>> getIndirectControlFlowsBeyondTickBoundaries(Node source, Node target) {
+        val pathList = <List<ControlFlow>> newLinkedList
+        source.allNext.forEach[ accumulateIndirectControlFlow(newArrayList(), pathList, target, true) ]
+        pathList 
+    }      
 
     // -------------------------------------------------------------------------
     // -- Thread management
@@ -316,51 +340,71 @@ class SCGExtensions {
     
 
    /** 
+    * Finds the ancestor fork of a node. May return null, if no fork node is found.
+    * 
+    * @param node
+    * 			the node in question
+    * @return Returns the ancestor fork of an node or null.
+    */
+    def Fork getAncestorFork(Node node) {
+        // Create a list for the control flows that will be checked
+        // and a list for all control flows already checked. 
+        val controlFlows = <ControlFlow> newLinkedList
+        val marked = <ControlFlow> newLinkedList
+       
+        // Add all incoming control flows to the list an repeat until the list is empty.
+        controlFlows += node.allPrevious
+        while(!controlFlows.empty) {
+            // Check the first control flow and its parent node.
+            var prevNode = controlFlows.head.eContainer as Node
+            
+            // Mark the flow as processed and remove it.
+            marked += controlFlows.head
+            controlFlows.remove(0)
+           
+            if (prevNode instanceof Join) { 
+                // If it is a join, continue at the corresponding fork node.
+                controlFlows += (prevNode as Join).fork.allPrevious
+            }
+            else if (prevNode instanceof Fork) {
+                // If it is a fork node, return it
+                return prevNode as Fork
+            } 
+            else if (prevNode instanceof Depth) {
+                // If it is a depth, continue at the corresponding surface node.
+                controlFlows += (prevNode as Depth).surface.allPrevious
+            } else {
+                // Otherwise, proceed on the control flow path.
+                controlFlows += prevNode.allPrevious           
+            }
+           
+            // If the a newly added control flow is already marked, remove it.
+            marked.forEach[
+                if (controlFlows.contains(it)) controlFlows.remove(it)
+            ]
+        }
+       
+        // Return null if finished without fork
+        return null
+    }
+    
+   /** 
     * Finds all ancestor forks of a node. An ancestor fork list contains all forks that contain a given node
     * with respect to hierarchy.
     * 
     * @param node
-    * 			the node in question
+    *           the node in question
     * @return Returns a list of all ancestor forks.
     */
-   def List<Fork> getAncestorForks(Node node) {
-   		// Create a list for the ancestor forks, a list for the control flows that will be checked
-   		// and a list for all control flows already checked. 
+    def List<Fork> getAncestorForks(Node node) {
+   		// Create a list for the ancestor forks. 
         val returnList = <Fork> newLinkedList
-        val controlFlows = <ControlFlow> newLinkedList
-        val marked = <ControlFlow> newLinkedList
-       
-		// Add all incoming control flows to the list an repeat until the list is empty.
-        controlFlows.addAll(node.getAllPrevious)
-        while(!controlFlows.empty) {
-        	// Check the first control flow and its parent node.
-            val nextControlFlow = controlFlows.head
-            var prevNode = nextControlFlow.eContainer as Node
-            
-            // Mark the flow as processed and remove it.
-            marked.add(nextControlFlow);
-            controlFlows.remove(0)
-           
-            if (prevNode instanceof Join) { 
-            	// If it is a join, continue at the corresponding fork node.
-                controlFlows.addAll((prevNode as Join).fork.getAllPrevious);
-            }
-            else if (prevNode instanceof Fork) {
-            	// If it is a fork node, add it to the result list.
-                returnList.add(prevNode as Fork)
-            } 
-            else if (prevNode instanceof Depth) {
-            	// If it is a depth, continue at the corresponding surface node.
-                controlFlows.addAll((prevNode as Depth).surface.getAllPrevious)
-            } else {
-            	// Otherwise, proceed on the control flow path.
-                controlFlows.addAll(prevNode.getAllPrevious)           
-            }
-           
-            // If the a newly added control flow is already marked, remove it.
-            for(m : marked) {
-                if (controlFlows.contains(m)) controlFlows.remove(m)
-            }
+
+        // Retrieve immediate ancestor fork. 
+        var fork = node.ancestorFork       
+        while(!fork.isNull) {
+            returnList += fork
+            fork = fork.ancestorFork
         }
        
         // Return the list.
@@ -519,6 +563,10 @@ class SCGExtensions {
     	]    	
     }    
     
+    
+    def isNull(EObject eObject) {
+        eObject == null
+    }
 }
 
 

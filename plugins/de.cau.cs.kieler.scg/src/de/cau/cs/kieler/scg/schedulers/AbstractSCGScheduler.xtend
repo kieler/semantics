@@ -64,7 +64,7 @@ abstract class AbstractSCGScheduler {
      * @return Returns an updated SCGSched model.
      * @abstract
      */
-    protected abstract def SCGraphSched analyse(SCGraphSched scg);
+    protected abstract def SCGraphSched analyze(SCGraphSched scg);
     
     /** 
      * Override this method to add your optimizations.
@@ -100,7 +100,7 @@ abstract class AbstractSCGScheduler {
     	// Use the transformation extensions to enrich the SCG with all information.
     	// Afterwards, invoke the analyses and build the schedule.
     	// Eventually, return the SCG with performed optimizations.
-        build(((scg.upgradeAll(true) as SCGraphSched) as SCGraphSched).analyse).optimize
+        build(((scg.upgradeAll(true) as SCGraphSched) as SCGraphSched).analyze).optimize
     }    
     
     /**

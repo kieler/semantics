@@ -390,18 +390,19 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ) {
                 (r as SCGraphBB).drawBasicBlocks            
             }
-            
-            if (r instanceof SCGraphSched) {
-            	(r as SCGraphSched).drawAnalyses
-            }
-            
+                        
             // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
             if (r instanceof SCGraphDep  && 
                 SHOW_DEPENDENCIES.booleanValue &&
                 !LAYOUT_DEPENDENCIES.booleanValue
             ) {
                 r.eAllContents.filter(Dependency).forEach[ it.drawDependency ]
-            }     
+            }
+            
+            if (r instanceof SCGraphSched) {
+                (r as SCGraphSched).drawAnalyses
+            }
+                 
         ]
     }
     
@@ -887,7 +888,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         ]        
         t
     } 
-     
     
     def Depth colorizeTickEdge(Depth t, KColor color) {
         t.getAllEdges.forEach[
@@ -905,6 +905,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         t
     } 
 
+    def Dependency colorizeDependency(Dependency t, KColor color) {
+        t.getAllEdges.forEach[
+            val polyline = it.getData(typeof(KRoundedBendsPolyline)).foreground = color.copy
+            polyline.foreground.propagateToChildren = true  
+        ]        
+        t
+    }
+    
+    def Dependency thickenDependency(Dependency t, int width) {
+        t.getAllEdges.forEach[
+            val polyline = it.getData(typeof(KRoundedBendsPolyline)).lineWidth = width
+            polyline.lineWidth.propagateToChildren = true  
+        ]        
+        t
+    } 
     // -------------------------------------------------------------------------
     // -- TRANSFORM Dependency (edge) 
     // -------------------------------------------------------------------------
@@ -926,7 +941,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         val targetNode = dependency.target.node
         
         // Draw the dashed dependency edge....
-        sourceNode.createEdge("dependency " + sourceNode.toString + targetNode.toString) => [ edge |
+        dependency.createNewEdge().putToLookUpWith(dependency) => [ edge |
             edge.source = sourceNode
             edge.target = targetNode
             edge.addRoundedBendsPolyline(8,2) => [

@@ -54,10 +54,10 @@ abstract class AbstractSCGAnalyzer {
   	 * 			the SCG in question
   	 * @return Returns an SCGAnalyserResult structure for further processing.
   	 */
-    def AnalyzerData analyse(SCGraph scg) {
+    def AnalyzerData analyze(SCGraph scg) {
     	val analyzerData = new AnalyzerData
     	analyzerData.SCG = scg
-    	analyse(analyzerData)
+    	analyze(analyzerData)
     }
     
     /**
@@ -69,11 +69,11 @@ abstract class AbstractSCGAnalyzer {
      * 	 		the node of the SCG in question
      * @return Returns an SCGAnalyserResult structure for further processing.
      */
-    def AnalyzerData analyse(SCGraph scg, Node node) {
+    def AnalyzerData analyze(SCGraph scg, Node node) {
     	val analyzerData = new AnalyzerData
     	analyzerData.SCG = scg
     	analyzerData.node = node
-    	analyse(analyzerData)
+    	analyze(analyzerData)
     }    
 
 	/**
@@ -85,6 +85,6 @@ abstract class AbstractSCGAnalyzer {
 	 * @return Returns an updated analysis result structure. 
 	 * @abstract
 	 */
-    abstract def AnalyzerData analyse(AnalyzerData analyzerData) 
+    abstract def AnalyzerData analyze(AnalyzerData analyzerData) 
     
 }
