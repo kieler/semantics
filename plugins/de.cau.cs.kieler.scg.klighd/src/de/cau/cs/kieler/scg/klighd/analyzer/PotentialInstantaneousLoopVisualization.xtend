@@ -51,7 +51,7 @@ class PotentialInstantaneousLoopVisualization implements IAnalysisVisualization 
 	override Analysis visualize(Analysis analysis, SCGraphDiagramSynthesis synthesis) {
     	analysis => [
     		objectReferences.forEach [
-   				synthesis.colorizeControlFlow(it as ControlFlow, PROBLEM_POTENTIALLOOP_COLOR)
+   				synthesis.colorControlFlow(it as ControlFlow, PROBLEM_POTENTIALLOOP_COLOR)
    				synthesis.thickenControlFlow(it as ControlFlow, PROBLEM_POTENTIALLOOP_WIDTH)
    			]
    		]

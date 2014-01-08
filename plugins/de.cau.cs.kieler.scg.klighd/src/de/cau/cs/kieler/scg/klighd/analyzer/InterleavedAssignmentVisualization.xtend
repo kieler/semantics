@@ -33,7 +33,7 @@ class InterleavedAssignmentVisualization implements IAnalysisVisualization {
     override Analysis visualize(Analysis anaysis, SCGraphDiagramSynthesis synthesis) {
         anaysis => [
             objectReferences.forEach[
-                synthesis.colorizeDependency(it as Dependency, INTERLEAVED_DEPENDENCY)
+                synthesis.colorDependency(it as Dependency, INTERLEAVED_DEPENDENCY)
             ]
         ]
     }
