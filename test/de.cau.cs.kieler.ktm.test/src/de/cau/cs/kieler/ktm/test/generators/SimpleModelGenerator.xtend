@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.ktm.test.generators
 
-import de.cau.cs.kieler.ktm.transformationtree.Model
+import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper
 import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation
 import de.cau.cs.kieler.ktm.transformationtree.TransformationTreeFactory
 
@@ -30,22 +30,22 @@ class SimpleModelGenerator {
      * o - o - o
      */
     def generateThreePartsChain() {
-        val Model part1 = factory.createModel();
-        part1.name = "Part1";
+        val ModelWrapper part1 = factory.createModelWrapper();
+        part1.modelTypeID = "Part1";
 
-        val Model part2 = factory.createModel();
-        part2.name = "Part2";
+        val ModelWrapper part2 = factory.createModelWrapper();
+        part2.modelTypeID = "Part2";
 
         val ModelTransformation transformation1 = factory.createModelTransformation();
-        transformation1.id = "Part1 -> Part2";
+        transformation1.transformationID = "Part1 -> Part2";
         transformation1.source = part1;
         transformation1.target = part2;
 
-        val Model part3 = factory.createModel();
-        part3.name = "Part3";
+        val ModelWrapper part3 = factory.createModelWrapper();
+        part3.modelTypeID = "Part3";
 
         val ModelTransformation transformation2 = factory.createModelTransformation();
-        transformation2.id = "Part2 -> Part3";
+        transformation2.transformationID = "Part2 -> Part3";
         transformation2.source = part2;
         transformation2.target = part3;
 
@@ -57,22 +57,22 @@ class SimpleModelGenerator {
      *  \- o
      */
     def generateThreePartsTree() {
-        val Model part1 = factory.createModel();
-        part1.name = "Part1";
+        val ModelWrapper part1 = factory.createModelWrapper();
+        part1.modelTypeID = "Part1";
 
-        val Model part2 = factory.createModel();
-        part2.name = "Part2";
+        val ModelWrapper part2 = factory.createModelWrapper();
+        part2.modelTypeID = "Part2";
 
         val ModelTransformation transformation1 = factory.createModelTransformation();
-        transformation1.id = "Part1 -> Part2";
+        transformation1.transformationID = "Part1 -> Part2";
         transformation1.source = part1;
         transformation1.target = part2;
 
-        val Model part3 = factory.createModel();
-        part3.name = "Part3";
+        val ModelWrapper part3 = factory.createModelWrapper();
+        part3.modelTypeID = "Part3";
 
         val ModelTransformation transformation2 = factory.createModelTransformation();
-        transformation2.id = "Part1 -> Part3";
+        transformation2.transformationID = "Part1 -> Part3";
         transformation2.source = part1;
         transformation2.target = part3;
 
@@ -84,38 +84,38 @@ class SimpleModelGenerator {
      *      \- o - o
      */
     def generateFivePartsTree() {
-        val Model part1 = factory.createModel();
-        part1.name = "Part1";
+        val ModelWrapper part1 = factory.createModelWrapper();
+        part1.modelTypeID = "Part1";
 
-        val Model part2 = factory.createModel();
-        part2.name = "Part2";
+        val ModelWrapper part2 = factory.createModelWrapper();
+        part2.modelTypeID = "Part2";
 
         val ModelTransformation transformation1 = factory.createModelTransformation();
-        transformation1.id = "Part1 -> Part2";
+        transformation1.transformationID = "Part1 -> Part2";
         transformation1.source = part1;
         transformation1.target = part2;
 
-        val Model part3 = factory.createModel();
-        part3.name = "Part3";
+        val ModelWrapper part3 = factory.createModelWrapper();
+        part3.modelTypeID = "Part3";
 
         val ModelTransformation transformation2 = factory.createModelTransformation();
-        transformation2.id = "Part2 -> Part3";
+        transformation2.transformationID = "Part2 -> Part3";
         transformation2.source = part2;
         transformation2.target = part3;
 
-        val Model part4 = factory.createModel();
-        part4.name = "Part4";
+        val ModelWrapper part4 = factory.createModelWrapper();
+        part4.modelTypeID = "Part4";
 
         val ModelTransformation transformation3 = factory.createModelTransformation();
-        transformation3.id = "Part2 -> Part4";
+        transformation3.transformationID = "Part2 -> Part4";
         transformation3.source = part2;
         transformation3.target = part4;
 
-        val Model part5 = factory.createModel();
-        part5.name = "Part5";
+        val ModelWrapper part5 = factory.createModelWrapper();
+        part5.modelTypeID = "Part5";
 
         val ModelTransformation transformation4 = factory.createModelTransformation();
-        transformation4.id = "Part4 -> Part5";
+        transformation4.transformationID = "Part4 -> Part5";
         transformation4.source = part4;
         transformation4.target = part5;
 

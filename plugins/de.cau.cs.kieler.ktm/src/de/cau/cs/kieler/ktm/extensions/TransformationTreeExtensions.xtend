@@ -15,13 +15,16 @@ package de.cau.cs.kieler.ktm.extensions
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.ImmutableMultimap
-import de.cau.cs.kieler.ktm.transformationtree.Element
-import de.cau.cs.kieler.ktm.transformationtree.Model
+import com.google.common.collect.Multimap
+import de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper
+import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper
 import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation
 import de.cau.cs.kieler.ktm.transformationtree.TransformationTreeFactory
 import java.util.HashMap
+import java.util.HashSet
 import java.util.LinkedList
 import java.util.List
+import java.util.Map
 import java.util.Map.Entry
 import org.eclipse.emf.compare.EMFCompare
 import org.eclipse.emf.compare.match.DefaultComparisonFactory
@@ -31,12 +34,8 @@ import org.eclipse.emf.compare.rcp.EMFCompareRCPPlugin
 import org.eclipse.emf.compare.utils.UseIdentifiers
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
-import org.eclipse.xtext.xbase.lib.Pair
 
 import static com.google.common.base.Preconditions.*
-import java.util.Map
-import com.google.common.collect.Multimap
-import java.util.HashSet
 
 /**
  * Extension for easier access and manipulation of TranformationTrees.
@@ -47,13 +46,13 @@ import java.util.HashSet
 class TransformationTreeExtensions {
 
     // -------------------------------------------------------------------------
-    // Model Utilities
+    // ModelWrapper Utilities
     /**
-	 * Returns root model of tree.
-	 * @param model root model in tree
-	 * @return root model.
+	 * Returns root model-node of tree.
+	 * @param model any model-node in tree
+	 * @return root model-node.
 	 */
-    def Model root(Model model) {
+    def ModelWrapper root(ModelWrapper model) {
         if (model == null) {
             return null;
         }
@@ -68,17 +67,17 @@ class TransformationTreeExtensions {
     }
 
     /**
-	 * Returns parent model in tree, where given model was transformed from.
+	 * Returns source model-node in tree, where given model is transformed from.
 	 * <p>
-	 * If model is root node, returns null.
+	 * If model is root-node, returns null.
 	 * @param model model in tree
 	 * @return parent model or null
 	 */
-    def Model parent(Model model) {
+    def ModelWrapper parent(ModelWrapper model) {
         if (model == null) {
             return null;
         }
-        val sourceTransformation = model.transformedFrom;
+        val sourceTransformation = model.sourceTransformation;
         if (sourceTransformation != null) {
             return sourceTransformation.source;
         }
@@ -90,30 +89,30 @@ class TransformationTreeExtensions {
      * @param model model in tree
      * @return child models
      */
-    def List<Model> children(Model model) {
+    def List<ModelWrapper> children(ModelWrapper model) {
         if (model == null) {
             return emptyList;
         }
-        return (model.transformedInto ?: emptyList).map[it.target];
+        return (model.targetTransformations ?: emptyList).map[it.target];
     }
 
     /**
-	 * Returns all succeeding ModelTransformations for given model.
+	 * Returns all succeeding ModelTransformations for given model-node.
      * <p>
 	 * BFS will be performed on sub tree.
 	 * @param model model in tree
 	 * @return list of succeeding ModelTransformation.
 	 */
-    def List<ModelTransformation> succeedingTransformations(Model model) {
+    def List<ModelTransformation> succeedingTransformations(ModelWrapper model) {
         val transformations = new LinkedList<ModelTransformation>();
 
         //Simple implementation of breadth-first search.
         //visited nodes are not marked because we can estimate valid (acyclic) tree
         if (model != null) {
-            val queue = new LinkedList<Model>();
+            val queue = new LinkedList<ModelWrapper>();
             queue.add(model);
             while (!queue.empty) {
-                val targetTransformations = queue.poll.transformedInto ?: emptyList;
+                val targetTransformations = queue.poll.targetTransformations ?: emptyList;
                 transformations.addAll(targetTransformations);
                 targetTransformations.forEach [
                     queue.offer(it.target);
@@ -130,34 +129,34 @@ class TransformationTreeExtensions {
      * @param model model in tree
      * @return list of succeeding models.
      */
-    def List<Model> succeedingModels(Model model) {
+    def List<ModelWrapper> succeedingModels(ModelWrapper model) {
         model.succeedingTransformations.map[it.target].filterNull.toList;
     }
 
     // -------------------------------------------------------------------------
-    // Element Utilities
+    // EObjectWrapper Utilities
     /**
-     * Returns all parent elements in source model of given ModelTransformation associated with given element.
+     * Returns all parent objects in source model of given ModelTransformation associated with given element.
      * <p>
      * If target model of given ModelTransformation does not contain given element returned list is empty.
      * @param element element of a model in transformation tree.
      * @param tranformation model transformation to resolve parent relation.
      * @return List of parent elements.
      */
-    def List<Element> parents(Element element, ModelTransformation tranformation) {
-        return (tranformation?.elementTransformations ?: emptyList).filter[it.target == element].map[it.source].toList;
+    def List<EObjectWrapper> parents(EObjectWrapper element, ModelTransformation tranformation) {
+        return (tranformation?.objectTransformations ?: emptyList).filter[it.target == element].map[it.source].toList;
     }
 
     /**
-     * Returns all child elements in target model of given ModelTransformation associated with given element.
+     * Returns all child objects in target model of given ModelTransformation associated with given element.
      * <p>
      * If source model of given ModelTransformation does not contain given element returned list is empty.
      * @param element element of a model in transformation tree.
      * @param tranformation model transformation to resolve parent relation.
      * @return List of child elements.
      */
-    def List<Element> children(Element element, ModelTransformation tranformation) {
-        return (tranformation?.elementTransformations ?: emptyList).filter[it.source == element].map[it.target].toList;
+    def List<EObjectWrapper> children(EObjectWrapper element, ModelTransformation tranformation) {
+        return (tranformation?.objectTransformations ?: emptyList).filter[it.source == element].map[it.target].toList;
     }
 
     // -------------------------------------------------------------------------
@@ -172,25 +171,25 @@ class TransformationTreeExtensions {
      * If mapping is incomplete (model contains unmapped elements) later resolved mapping my be incomplete.
      * If mapping contains entries for objects not contained in given model instances they will omitted.
      * <p>
-     * Returns leaf of new tree as Model representing target model.
+     * Returns leaf of new tree as ModelWrapper representing target model.
      * 
      * @param mapping object mapping data
      * @param transformationID a unique identifier for initial transformation
      * @param sourceModelRoot root element of source model instance
-     * @param sourceModelName display name of source model
+     * @param sourceModelTypeID unique identifier for this kind of model
      * @param targetModelRoot root element of target model instance
-     * @param targetModelName display name of target model
+     * @param targetModelTypeID unique identifier for this kind of model and its applied transformation
      * @return leaf of new tree
      * @throws NullPointerException if any argument is null.
      */
-    def Model initializeTransformationTree(ImmutableMultimap<EObject, EObject> mapping, String transformationID,
-        EObject sourceModelRoot, String sourceModelName, EObject targetModelRoot, String targetModelName) {
+    def ModelWrapper initializeTransformationTree(ImmutableMultimap<EObject, EObject> mapping, String transformationID,
+        EObject sourceModelRoot, String sourceModelTypeID, EObject targetModelRoot, String targetModelTypeID) {
         checkNotNull(mapping, "mapping is null");
         checkNotNull(transformationID, "transformationID is null");
         checkNotNull(sourceModelRoot, "sourceModelRoot is null");
-        checkNotNull(sourceModelName, "sourceModelName is null");
+        checkNotNull(sourceModelTypeID, "sourceModelTypeID is null");
         checkNotNull(targetModelRoot, "targetModelRoot is null");
-        checkNotNull(targetModelName, "targetModelName is null");
+        checkNotNull(targetModelTypeID, "targetModelTypeID is null");
 
         //create copies of source and target model, so mapping will be immutable.
         // This code is taken from ECoreUtil.copy
@@ -203,20 +202,18 @@ class TransformationTreeExtensions {
         targetCopyMap.copyReferences();
 
         //create basic tree
-        val Model source = factory.createModel();
-        source.type = sourceModelCopy.eClass();
-        source.rootElement = sourceModelCopy.createElement(source);
-        source.name = sourceModelName;
+        val ModelWrapper source = factory.createModelWrapper();
+        source.rootObject = sourceModelCopy.createObject(source);
+        source.modelTypeID = sourceModelTypeID;
         source.transient = false;
 
-        val Model target = factory.createModel();
-        target.type = targetModelCopy.eClass();
-        target.rootElement = targetModelCopy.createElement(target);
-        target.name = targetModelName;
+        val ModelWrapper target = factory.createModelWrapper();
+        target.rootObject = targetModelCopy.createObject(target);
+        target.modelTypeID = targetModelTypeID;
         target.transient = false;
 
         val ModelTransformation transformation = factory.createModelTransformation();
-        transformation.id = transformationID;
+        transformation.transformationID = transformationID;
         transformation.source = source;
         transformation.target = target;
 
@@ -224,10 +221,10 @@ class TransformationTreeExtensions {
         mapping.entries.filter [
             sourceCopyMap.containsKey(it.key) && targetCopyMap.containsKey(it.value); //omit mappings of object not contained in models  
         ].forEach [
-            val trans = factory.createElementTransformation;
+            val trans = factory.createEObjectTransformation;
             trans.modelTransformation = transformation;
-            trans.source = sourceCopyMap.get(it.key).createElement(source);
-            trans.target = targetCopyMap.get(it.value).createElement(target);
+            trans.source = sourceCopyMap.get(it.key).createObject(source);
+            trans.target = targetCopyMap.get(it.value).createObject(target);
         ]
 
         return target;
@@ -252,7 +249,7 @@ class TransformationTreeExtensions {
      * If mapping contains entries for objects not contained in given model instances they will omitted.
      * <p>
      * <p>
-     * Returns new leaf in tree as Model representing target model.
+     * Returns new leaf in tree as ModelWrapper representing target model.
      * <p>
      * Return null if sourceModel is not modelNode or model is transient.
      * @param mapping object mapping data
@@ -260,23 +257,24 @@ class TransformationTreeExtensions {
      * @param transformationID a unique identifier for initial transformation
      * @param sourceModelRoot root element of source model instance
      * @param targetModelRoot root element of target model instance
-     * @param targetModelName display name of target model
+     * @param targetModelTypeID unique identifier for this kind of model and its applied transformation
      * @return newly created leaf in tree or null
      * @throws NullPointerException if any argument is null.
      */
-    def Model addTransformationToTree(ImmutableMultimap<EObject, EObject> mapping, Model modelNode,
-        String transformationID, EObject sourceModelRoot, EObject targetModelRoot, String targetModelName) {
+    def ModelWrapper addTransformationToTree(ImmutableMultimap<EObject, EObject> mapping, ModelWrapper modelNode,
+        String transformationID, EObject sourceModelRoot, EObject targetModelRoot, String targetModelTypeID) {
         checkNotNull(mapping, "mapping is null");
         checkNotNull(modelNode, "modelNode is null");
         checkNotNull(transformationID, "transformationID is null");
         checkNotNull(sourceModelRoot, "sourceModelRoot is null");
         checkNotNull(targetModelRoot, "targetModelRoot is null");
-        checkNotNull(targetModelName, "targetModelName is null");
+        checkNotNull(targetModelTypeID, "targetModelTypeID is null");
 
         //check if source model has same type as modelNode
-        if (modelNode != null && !modelNode.transient && modelNode.type.equals(sourceModelRoot.eClass)) {
+        if (modelNode != null && !modelNode.transient &&
+            modelNode.rootObject.EObject.eClass.equals(sourceModelRoot.eClass)) {
 
-            val sourceModelMap = matchModels(sourceModelRoot, modelNode.rootElement.referencedObject);
+            val sourceModelMap = matchModels(sourceModelRoot, modelNode.rootObject.EObject);
             if (sourceModelMap == null) {
                 return null; //sourceModel and model represented by modelNode don't match
             }
@@ -288,16 +286,15 @@ class TransformationTreeExtensions {
             targetCopyMap.copyReferences();
 
             //append new target model to tree
-            val Model source = modelNode;
+            val ModelWrapper source = modelNode;
 
-            val Model target = factory.createModel();
-            target.type = targetModelRoot.eClass();
-            target.rootElement = targetModelCopy.createElement(target);
-            target.name = targetModelName;
+            val ModelWrapper target = factory.createModelWrapper();
+            target.rootObject = targetModelCopy.createObject(target);
+            target.modelTypeID = targetModelTypeID;
             target.transient = false;
 
             val ModelTransformation mTransformation = factory.createModelTransformation();
-            mTransformation.id = transformationID;
+            mTransformation.transformationID = transformationID;
             mTransformation.source = source;
             mTransformation.target = target;
 
@@ -305,9 +302,9 @@ class TransformationTreeExtensions {
             mapping.entries.filter [
                 sourceModelMap.containsKey(it.key) && targetCopyMap.containsKey(it.value); //omit mappings of object not contained in models  
             ].forEach [ Entry<EObject, EObject> entry |
-                val eTransformation = factory.createElementTransformation;
+                val eTransformation = factory.createEObjectTransformation;
                 eTransformation.modelTransformation = mTransformation;
-                val sourceElem = source.elements.findFirst[it.referencedObject == sourceModelMap.get(entry.key)];
+                val sourceElem = source.modelObjects.findFirst[it.EObject == sourceModelMap.get(entry.key)];
                 if (sourceElem != null) {
                     eTransformation.source = sourceElem;
                 } else {
@@ -316,9 +313,9 @@ class TransformationTreeExtensions {
                     //So source.elements does not contain all object contained in source model.
                     //Adding additional elements.
                     //Its safe because both source model instances match
-                    eTransformation.source = sourceModelMap.get(entry.key).createElement(source);
+                    eTransformation.source = sourceModelMap.get(entry.key).createObject(source);
                 }
-                eTransformation.target = targetCopyMap.get(entry.value).createElement(target);
+                eTransformation.target = targetCopyMap.get(entry.value).createObject(target);
             ]
             return target;
         }
@@ -326,29 +323,29 @@ class TransformationTreeExtensions {
     }
 
     /**
-     * Removes given model from tree including all succeeding Models and Element-Mappings
+     * Removes given model from tree including all succeeding Models and EObjectWrapper-Mappings
      * <p>
-     * Returns parent in tree as Model
+     * Returns parent in tree
      * <p>
      * Returns null tree does not contain given model or model has no root
      * @param modelNode node in tree to remove
      * @return parent node or null
      */
-    def Model removeModelFromTree(Model modelNode) {
+    def ModelWrapper removeModelFromTree(ModelWrapper modelNode) {
         val source = modelNode.parent;
 
         //if has source then detach model transformation and all elements
         //they will be deleted when all references are lost
         if (source != null) {
-            modelNode.transformedFrom.source = null;
-            modelNode.transformedFrom.elementTransformations.forEach[it.source = null];
+            modelNode.sourceTransformation.source = null;
+            modelNode.sourceTransformation.objectTransformations.forEach[it.source = null];
         }
 
         return source;
     }
 
     /**
-     * Sets Model's transient flag and removes references to concrete Objects in all elements of given model.
+     * Sets ModelWrapper's transient flag and removes references to concrete Objects in all elements of given model.
      * <p>
      * Transient model can't be source model of any new transformation and has no association to it's concrete model.
      * <p>
@@ -358,10 +355,10 @@ class TransformationTreeExtensions {
      * @param modelNode model to convert
      * @return modelNode itself
      */
-    def Model makeTransient(Model modelNode) {
+    def ModelWrapper makeTransient(ModelWrapper modelNode) {
         if (modelNode != null) {
             modelNode.transient = true;
-            modelNode.elements.forEach[it.referencedObject = null];
+            modelNode.modelObjects.forEach[it.EObject = null];
         }
         return modelNode;
     }
@@ -369,36 +366,37 @@ class TransformationTreeExtensions {
     // -------------------------------------------------------------------------
     // Analyzer
     /**
-     * Searches given transformation tree for matching modelNodes to given model instance represented by it's root element.
+     * Searches given transformation tree for matching model-nodes for given model instance and typeID
      * <p>
-     * Returns a list of matching models.
-     * There is maybe more than one matching model if transformation tree has model transformation were 
-     * source and target model are structurally equal and base on same meta-model.
+     * If tree is malformed and there are more than one fully matching model the first one is returned.
      * <p>
-     * Returns empty list if no model is found or can not be identified because it is transient.
+     * Returns null if no model is found or can not be identified because it is transient.
      * @param tree root model of tree
      * @param modelRoot root element of a model instance to search for.
+     * @param modelTypeID unique identifier for searched kind of models.
      * @return Pair with matching modelNode in tree and map of model matching or null.
      */
-    def List<Model> findModelInTree(Model tree, EObject modelRoot) {
-        return if (tree == null || modelRoot == null) {
-            emptyList;
+    def ModelWrapper findModelInTree(ModelWrapper tree, EObject modelRoot, String modelTypeID) {
+        return if (tree == null || modelRoot == null || modelTypeID == null) {
+            null;
         } else {
 
             //get a list of all reachable models from root, add root because it is missing in it's succeeding models
             (tree.succeedingModels.toList => [it.add(tree)]).filter [ //filter for not transient models
                 it.transient == false;
-            ].filter [ //find matching model to given instance
-                it.type.equals(modelRoot.eClass) &&
-                    matchModels(it.rootElement.referencedObject, modelRoot) != null;
-            ].toList;
+            ].filter [ // filter for correct typeID
+                it.modelTypeID.equals(modelTypeID);
+            ].findFirst [ //find matching model to given instance
+                it.rootObject.EObject.eClass.equals(modelRoot.eClass) &&
+                    matchModels(it.rootObject.EObject, modelRoot) != null;
+            ];
         }
     }
 
     /**
      * Returns a mapping from Elements of a model in tree to a model instance. 
      * <p>
-     * ReferencedObjects of Elements in Model in transformation tree are only copies of their origin instances.
+     * ReferencedObjects of Elements in ModelWrapper in transformation tree are only copies of their origin instances.
      * Returned mapping provides relations between Elements and their represented objects in given model instance.
      * <p>
      * Return null if any argument is null or model and model of modelNode does not match.
@@ -407,14 +405,14 @@ class TransformationTreeExtensions {
      * @param model root element of a model instance to map to
      * @returns mapping from elements of modelNode to model objects
      */
-    def Map<Element, EObject> elementMapping(Model modelNode, EObject model) {
+    def Map<EObjectWrapper, EObject> objectMapping(ModelWrapper modelNode, EObject model) {
 
-        if (modelNode != null && model != null && modelNode.type.equals(model.eClass)) {
+        if (modelNode != null && model != null && !modelNode.transient && modelNode.rootObject.EObject.eClass.equals(model.eClass)) {
             val mapping = new HashMap;
-            val matching = matchModels(modelNode.rootElement.referencedObject, model);
+            val matching = matchModels(modelNode.rootObject.EObject, model);
             if (matching != null) {
-                modelNode.elements.forEach [
-                    mapping.put(it, matching.get(it.referencedObject));
+                modelNode.modelObjects.forEach [
+                    mapping.put(it, matching.get(it.EObject));
                 ]
                 return mapping;
             }
@@ -437,20 +435,20 @@ class TransformationTreeExtensions {
      * @param targetModel root element of a target model instance
      * @return multi-mapping from source model objects to target model objects or null
      */
-    def Multimap<EObject, EObject> resolveMapping(Model sourceModelNode, EObject sourceModel, Model targetModelNode,
-        EObject targetModel) {
+    def Multimap<EObject, EObject> resolveMapping(ModelWrapper sourceModelNode, EObject sourceModel,
+        ModelWrapper targetModelNode, EObject targetModel) {
         if (sourceModelNode.root != targetModelNode.root) {
             return null;
         }
 
         //get mapping for given source model instance
-        val sourceMapping = sourceModelNode.elementMapping(sourceModel);
+        val sourceMapping = sourceModelNode.objectMapping(sourceModel);
         if (sourceMapping == null) {
             return null;
         }
 
         //get mapping for given target model instance
-        val targetMapping = targetModelNode.elementMapping(targetModel);
+        val targetMapping = targetModelNode.objectMapping(targetModel);
         if (targetMapping == null) {
             return null;
         }
@@ -481,7 +479,7 @@ class TransformationTreeExtensions {
             //First resolve a path from target model upward to root
             var node = targetModelNode; //Iteration variable for models on paths
             do {
-                val sourceTransformation = node.transformedFrom;
+                val sourceTransformation = node.sourceTransformation;
                 node = if (sourceTransformation != null) {
                     targetUpPath.add(sourceTransformation); //add transformation to path
                     sourceTransformation.source; //set next model node
@@ -499,7 +497,7 @@ class TransformationTreeExtensions {
             if (path == null) {
                 node = sourceModelNode;
                 do {
-                    val sourceTransformation = node.transformedFrom;
+                    val sourceTransformation = node.sourceTransformation;
                     node = if (sourceTransformation != null) {
                         sourceUpPath.add(sourceTransformation); //add transformation to path
                         sourceTransformation.source; //set next model node
@@ -550,7 +548,7 @@ class TransformationTreeExtensions {
             val _downwardIndex = downwardIndex; //index needs to be final to be used in iteration
 
             //init mapping
-            path.get(0).elementTransformations.forEach [
+            path.get(0).objectTransformations.forEach [
                 if (0 < _downwardIndex) {
                     elementMapping.put(it.target, it.source); //upward
                 } else {
@@ -590,10 +588,10 @@ class TransformationTreeExtensions {
     /**
      * creates element once and adds it to its container-model
      */
-    private def Element create element : factory.createElement() createElement(EObject obj, Model model) {
+    private def EObjectWrapper create element : factory.createEObjectWrapper() createObject(EObject obj, ModelWrapper model) {
         element.model = model;
-        element.name = obj.eClass.name;
-        element.referencedObject = obj;
+        element.displayName = obj.toString;
+        element.EObject = obj;
     }
 
     /**
@@ -616,7 +614,7 @@ class TransformationTreeExtensions {
         val scope = EMFCompare.createDefaultScope(left, right);
         val comparison = comparator.compare(scope);
 
-        if (comparison.differences.empty) {
+        if (comparison.differences.empty && comparison.matches.size == 1) {
             val map = new HashMap(left.eAllContents.size);
             comparison.matches.forEach [
                 map.put(it.left, it.right);

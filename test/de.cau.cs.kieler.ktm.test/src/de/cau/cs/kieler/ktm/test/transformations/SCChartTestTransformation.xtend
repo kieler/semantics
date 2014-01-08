@@ -30,7 +30,7 @@ class SCChartTestTransformation {
     @Inject
     extension SCChartsExtension
 
-    // -- Mapping Access    
+    // NEW - Mapping Access delegation  
     def extractMapping() {
         extractMappingData;
     }
@@ -49,7 +49,6 @@ class SCChartTestTransformation {
         // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.mappedCopy; //NEW - mapping information (changed copy to mappedCopy)
 
-        //        val size = targetRootRegion.eAllContents().toList().filter(typeof(State)).toList()
         // Traverse all transitions
         for (targetTransition : targetRootRegion.getAllContainedTransitions) {
             targetTransition.transformTriggerEffect(targetRootRegion);

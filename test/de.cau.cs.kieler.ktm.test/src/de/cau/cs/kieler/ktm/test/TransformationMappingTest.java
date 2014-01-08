@@ -28,7 +28,7 @@ import com.google.inject.Guice;
 import de.cau.cs.kieler.ktm.exceptions.MappingException;
 import de.cau.cs.kieler.ktm.extensions.TransformationMapping;
 import de.cau.cs.kieler.ktm.test.generators.SimpleModelGenerator;
-import de.cau.cs.kieler.ktm.transformationtree.Model;
+import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation;
 
 /**
@@ -43,7 +43,7 @@ public class TransformationMappingTest extends TestCase {
             TransformationMapping.class);
     private final SimpleModelGenerator modelGen = Guice.createInjector().getInstance(
             SimpleModelGenerator.class);
-    private final Model chain = modelGen.generateThreePartsChain();
+    private final ModelWrapper chain = modelGen.generateThreePartsChain();
     private final EObject[] objects = new EObject[5];
 
     /**
@@ -53,9 +53,9 @@ public class TransformationMappingTest extends TestCase {
     protected void setUp() throws Exception {
         // set up elements of chain model as arbitrary test objects
         objects[0] = chain;
-        objects[1] = chain.getTransformedInto().get(0);
+        objects[1] = chain.getTargetTransformations().get(0);
         objects[2] = ((ModelTransformation) objects[1]).getTarget();
-        objects[3] = ((Model) objects[2]).getTransformedInto().get(0);
+        objects[3] = ((ModelWrapper) objects[2]).getTargetTransformations().get(0);
         objects[4] = ((ModelTransformation) objects[3]).getTarget();
         super.setUp();
     }
@@ -483,14 +483,14 @@ public class TransformationMappingTest extends TestCase {
      */
     public final void testMappedCopy() {
         mapper.clearMapping();
-        Model chainCopy = mapper.mappedCopy(chain);
+        ModelWrapper chainCopy = mapper.mappedCopy(chain);
 
         // separate copied objects as in chain
         EObject[] copy = new EObject[5];
         copy[0] = chainCopy;
-        copy[1] = chainCopy.getTransformedInto().get(0);
+        copy[1] = chainCopy.getTargetTransformations().get(0);
         copy[2] = ((ModelTransformation) copy[1]).getTarget();
-        copy[3] = ((Model) copy[2]).getTransformedInto().get(0);
+        copy[3] = ((ModelWrapper) copy[2]).getTargetTransformations().get(0);
         copy[4] = ((ModelTransformation) copy[3]).getTarget();
 
         // test correct bijective mapping
@@ -518,7 +518,7 @@ public class TransformationMappingTest extends TestCase {
         // init
         Pair<ImmutableSet<EObject>, ImmutableSet<EObject>> diffPair;
         mapper.clearMapping();
-        Model chainCopy = mapper.mappedCopy(chain);
+        ModelWrapper chainCopy = mapper.mappedCopy(chain);
 
         // test one-to-one mapping
         diffPair = mapper.checkMappingCompleteness(chain, chainCopy);
@@ -535,7 +535,7 @@ public class TransformationMappingTest extends TestCase {
 
         // test missing value
         mapper.unmap(objects[2], chainCopy);
-        mapper.mapChild(chain, chainCopy.getTransformedInto().get(0));
+        mapper.mapChild(chain, chainCopy.getTargetTransformations().get(0));
         diffPair = mapper.checkMappingCompleteness(chain, chainCopy);
         assertTrue(diffPair.getKey().size() == 0);
         assertTrue(diffPair.getValue().size() == 1);
@@ -543,16 +543,16 @@ public class TransformationMappingTest extends TestCase {
 
         // test mapper object not contained in models
         // restore correct mapping
-        mapper.unmap(chain, chainCopy.getTransformedInto().get(0));
+        mapper.unmap(chain, chainCopy.getTargetTransformations().get(0));
         mapper.mapChild(chain, chainCopy);
         // add mapping for other model elements
-        Model model = modelGen.generateThreePartsChain();
-        mapper.mapChild(model, model.getTransformedInto().get(0));
+        ModelWrapper model = modelGen.generateThreePartsChain();
+        mapper.mapChild(model, model.getTargetTransformations().get(0));
         diffPair = mapper.checkMappingCompleteness(chain, chainCopy);
         assertTrue(diffPair.getKey().size() == 1);
         assertTrue(diffPair.getKey().contains(model));
         assertTrue(diffPair.getValue().size() == 1);
-        assertTrue(diffPair.getValue().contains(model.getTransformedInto().get(0)));
+        assertTrue(diffPair.getValue().contains(model.getTargetTransformations().get(0)));
 
         // null tests
         try {

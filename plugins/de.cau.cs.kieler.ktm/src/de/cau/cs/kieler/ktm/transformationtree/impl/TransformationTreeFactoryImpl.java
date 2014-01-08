@@ -74,10 +74,10 @@ public class TransformationTreeFactoryImpl extends EFactoryImpl implements Trans
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case TransformationTreePackage.MODEL: return createModel();
-            case TransformationTreePackage.ELEMENT: return createElement();
+            case TransformationTreePackage.MODEL_WRAPPER: return createModelWrapper();
+            case TransformationTreePackage.EOBJECT_WRAPPER: return createEObjectWrapper();
             case TransformationTreePackage.MODEL_TRANSFORMATION: return createModelTransformation();
-            case TransformationTreePackage.ELEMENT_TRANSFORMATION: return createElementTransformation();
+            case TransformationTreePackage.EOBJECT_TRANSFORMATION: return createEObjectTransformation();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -88,9 +88,9 @@ public class TransformationTreeFactoryImpl extends EFactoryImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public Model createModel() {
-        ModelImpl model = new ModelImpl();
-        return model;
+    public ModelWrapper createModelWrapper() {
+        ModelWrapperImpl modelWrapper = new ModelWrapperImpl();
+        return modelWrapper;
     }
 
     /**
@@ -98,9 +98,9 @@ public class TransformationTreeFactoryImpl extends EFactoryImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public Element createElement() {
-        ElementImpl element = new ElementImpl();
-        return element;
+    public EObjectWrapper createEObjectWrapper() {
+        EObjectWrapperImpl eObjectWrapper = new EObjectWrapperImpl();
+        return eObjectWrapper;
     }
 
     /**
@@ -118,9 +118,9 @@ public class TransformationTreeFactoryImpl extends EFactoryImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public ElementTransformation createElementTransformation() {
-        ElementTransformationImpl elementTransformation = new ElementTransformationImpl();
-        return elementTransformation;
+    public EObjectTransformation createEObjectTransformation() {
+        EObjectTransformationImpl eObjectTransformation = new EObjectTransformationImpl();
+        return eObjectTransformation;
     }
 
     /**

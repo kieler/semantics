@@ -13,10 +13,10 @@
  */
 package de.cau.cs.kieler.ktm.transformationtree.impl;
 
-import de.cau.cs.kieler.ktm.transformationtree.Element;
-import de.cau.cs.kieler.ktm.transformationtree.ElementTransformation;
-import de.cau.cs.kieler.ktm.transformationtree.Model;
+import de.cau.cs.kieler.ktm.transformationtree.EObjectTransformation;
+import de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper;
 import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation;
+import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 import de.cau.cs.kieler.ktm.transformationtree.TransformationTreeFactory;
 import de.cau.cs.kieler.ktm.transformationtree.TransformationTreePackage;
 
@@ -47,14 +47,14 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass modelEClass = null;
+    private EClass modelWrapperEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass elementEClass = null;
+    private EClass eObjectWrapperEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -68,7 +68,7 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass elementTransformationEClass = null;
+    private EClass eObjectTransformationEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -139,8 +139,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getModel() {
-        return modelEClass;
+    public EClass getModelWrapper() {
+        return modelWrapperEClass;
     }
 
     /**
@@ -148,8 +148,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getModel_Name() {
-        return (EAttribute)modelEClass.getEStructuralFeatures().get(0);
+    public EAttribute getModelWrapper_ModelTypeID() {
+        return (EAttribute)modelWrapperEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -157,8 +157,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getModel_Elements() {
-        return (EReference)modelEClass.getEStructuralFeatures().get(1);
+    public EReference getModelWrapper_ModelObjects() {
+        return (EReference)modelWrapperEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -166,8 +166,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getModel_TransformedInto() {
-        return (EReference)modelEClass.getEStructuralFeatures().get(2);
+    public EReference getModelWrapper_TargetTransformations() {
+        return (EReference)modelWrapperEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -175,8 +175,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getModel_TransformedFrom() {
-        return (EReference)modelEClass.getEStructuralFeatures().get(3);
+    public EReference getModelWrapper_SourceTransformation() {
+        return (EReference)modelWrapperEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -184,8 +184,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getModel_Transient() {
-        return (EAttribute)modelEClass.getEStructuralFeatures().get(4);
+    public EAttribute getModelWrapper_Transient() {
+        return (EAttribute)modelWrapperEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -193,8 +193,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getModel_Type() {
-        return (EReference)modelEClass.getEStructuralFeatures().get(5);
+    public EReference getModelWrapper_RootObject() {
+        return (EReference)modelWrapperEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -202,8 +202,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getModel_RootElement() {
-        return (EReference)modelEClass.getEStructuralFeatures().get(6);
+    public EClass getEObjectWrapper() {
+        return eObjectWrapperEClass;
     }
 
     /**
@@ -211,8 +211,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getElement() {
-        return elementEClass;
+    public EReference getEObjectWrapper_Model() {
+        return (EReference)eObjectWrapperEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -220,8 +220,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getElement_Model() {
-        return (EReference)elementEClass.getEStructuralFeatures().get(0);
+    public EAttribute getEObjectWrapper_DisplayName() {
+        return (EAttribute)eObjectWrapperEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -229,8 +229,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getElement_Name() {
-        return (EAttribute)elementEClass.getEStructuralFeatures().get(1);
+    public EReference getEObjectWrapper_TargetTransformations() {
+        return (EReference)eObjectWrapperEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -238,8 +238,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getElement_TransformedInto() {
-        return (EReference)elementEClass.getEStructuralFeatures().get(2);
+    public EReference getEObjectWrapper_SourceTransformations() {
+        return (EReference)eObjectWrapperEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -247,17 +247,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getElement_TransformedFrom() {
-        return (EReference)elementEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getElement_ReferencedObject() {
-        return (EReference)elementEClass.getEStructuralFeatures().get(4);
+    public EReference getEObjectWrapper_EObject() {
+        return (EReference)eObjectWrapperEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -274,7 +265,7 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getModelTransformation_Id() {
+    public EAttribute getModelTransformation_TransformationID() {
         return (EAttribute)modelTransformationEClass.getEStructuralFeatures().get(0);
     }
 
@@ -301,7 +292,7 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getModelTransformation_ElementTransformations() {
+    public EReference getModelTransformation_ObjectTransformations() {
         return (EReference)modelTransformationEClass.getEStructuralFeatures().get(3);
     }
 
@@ -310,8 +301,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getElementTransformation() {
-        return elementTransformationEClass;
+    public EClass getEObjectTransformation() {
+        return eObjectTransformationEClass;
     }
 
     /**
@@ -319,8 +310,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getElementTransformation_ModelTransformation() {
-        return (EReference)elementTransformationEClass.getEStructuralFeatures().get(0);
+    public EReference getEObjectTransformation_ModelTransformation() {
+        return (EReference)eObjectTransformationEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -328,8 +319,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getElementTransformation_Source() {
-        return (EReference)elementTransformationEClass.getEStructuralFeatures().get(1);
+    public EReference getEObjectTransformation_Source() {
+        return (EReference)eObjectTransformationEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -337,8 +328,8 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getElementTransformation_Target() {
-        return (EReference)elementTransformationEClass.getEStructuralFeatures().get(2);
+    public EReference getEObjectTransformation_Target() {
+        return (EReference)eObjectTransformationEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -369,32 +360,31 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
         isCreated = true;
 
         // Create classes and their features
-        modelEClass = createEClass(MODEL);
-        createEAttribute(modelEClass, MODEL__NAME);
-        createEReference(modelEClass, MODEL__ELEMENTS);
-        createEReference(modelEClass, MODEL__TRANSFORMED_INTO);
-        createEReference(modelEClass, MODEL__TRANSFORMED_FROM);
-        createEAttribute(modelEClass, MODEL__TRANSIENT);
-        createEReference(modelEClass, MODEL__TYPE);
-        createEReference(modelEClass, MODEL__ROOT_ELEMENT);
+        modelWrapperEClass = createEClass(MODEL_WRAPPER);
+        createEAttribute(modelWrapperEClass, MODEL_WRAPPER__MODEL_TYPE_ID);
+        createEReference(modelWrapperEClass, MODEL_WRAPPER__MODEL_OBJECTS);
+        createEReference(modelWrapperEClass, MODEL_WRAPPER__TARGET_TRANSFORMATIONS);
+        createEReference(modelWrapperEClass, MODEL_WRAPPER__SOURCE_TRANSFORMATION);
+        createEAttribute(modelWrapperEClass, MODEL_WRAPPER__TRANSIENT);
+        createEReference(modelWrapperEClass, MODEL_WRAPPER__ROOT_OBJECT);
 
-        elementEClass = createEClass(ELEMENT);
-        createEReference(elementEClass, ELEMENT__MODEL);
-        createEAttribute(elementEClass, ELEMENT__NAME);
-        createEReference(elementEClass, ELEMENT__TRANSFORMED_INTO);
-        createEReference(elementEClass, ELEMENT__TRANSFORMED_FROM);
-        createEReference(elementEClass, ELEMENT__REFERENCED_OBJECT);
+        eObjectWrapperEClass = createEClass(EOBJECT_WRAPPER);
+        createEReference(eObjectWrapperEClass, EOBJECT_WRAPPER__MODEL);
+        createEAttribute(eObjectWrapperEClass, EOBJECT_WRAPPER__DISPLAY_NAME);
+        createEReference(eObjectWrapperEClass, EOBJECT_WRAPPER__TARGET_TRANSFORMATIONS);
+        createEReference(eObjectWrapperEClass, EOBJECT_WRAPPER__SOURCE_TRANSFORMATIONS);
+        createEReference(eObjectWrapperEClass, EOBJECT_WRAPPER__EOBJECT);
 
         modelTransformationEClass = createEClass(MODEL_TRANSFORMATION);
-        createEAttribute(modelTransformationEClass, MODEL_TRANSFORMATION__ID);
+        createEAttribute(modelTransformationEClass, MODEL_TRANSFORMATION__TRANSFORMATION_ID);
         createEReference(modelTransformationEClass, MODEL_TRANSFORMATION__SOURCE);
         createEReference(modelTransformationEClass, MODEL_TRANSFORMATION__TARGET);
-        createEReference(modelTransformationEClass, MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS);
+        createEReference(modelTransformationEClass, MODEL_TRANSFORMATION__OBJECT_TRANSFORMATIONS);
 
-        elementTransformationEClass = createEClass(ELEMENT_TRANSFORMATION);
-        createEReference(elementTransformationEClass, ELEMENT_TRANSFORMATION__MODEL_TRANSFORMATION);
-        createEReference(elementTransformationEClass, ELEMENT_TRANSFORMATION__SOURCE);
-        createEReference(elementTransformationEClass, ELEMENT_TRANSFORMATION__TARGET);
+        eObjectTransformationEClass = createEClass(EOBJECT_TRANSFORMATION);
+        createEReference(eObjectTransformationEClass, EOBJECT_TRANSFORMATION__MODEL_TRANSFORMATION);
+        createEReference(eObjectTransformationEClass, EOBJECT_TRANSFORMATION__SOURCE);
+        createEReference(eObjectTransformationEClass, EOBJECT_TRANSFORMATION__TARGET);
     }
 
     /**
@@ -430,32 +420,31 @@ public class TransformationTreePackageImpl extends EPackageImpl implements Trans
         // Add supertypes to classes
 
         // Initialize classes and features; add operations and parameters
-        initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getModel_Name(), ecorePackage.getEString(), "name", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getModel_Elements(), this.getElement(), this.getElement_Model(), "elements", null, 1, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getModel_TransformedInto(), this.getModelTransformation(), this.getModelTransformation_Source(), "transformedInto", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getModel_TransformedFrom(), this.getModelTransformation(), this.getModelTransformation_Target(), "transformedFrom", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getModel_Transient(), theEcorePackage.getEBoolean(), "transient", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getModel_Type(), theEcorePackage.getEClass(), null, "type", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getModel_RootElement(), this.getElement(), null, "rootElement", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(modelWrapperEClass, ModelWrapper.class, "ModelWrapper", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getModelWrapper_ModelTypeID(), ecorePackage.getEString(), "modelTypeID", null, 1, 1, ModelWrapper.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getModelWrapper_ModelObjects(), this.getEObjectWrapper(), this.getEObjectWrapper_Model(), "modelObjects", null, 1, -1, ModelWrapper.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getModelWrapper_TargetTransformations(), this.getModelTransformation(), this.getModelTransformation_Source(), "targetTransformations", null, 0, -1, ModelWrapper.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getModelWrapper_SourceTransformation(), this.getModelTransformation(), this.getModelTransformation_Target(), "sourceTransformation", null, 0, 1, ModelWrapper.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getModelWrapper_Transient(), theEcorePackage.getEBoolean(), "transient", null, 1, 1, ModelWrapper.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getModelWrapper_RootObject(), this.getEObjectWrapper(), null, "rootObject", null, 1, 1, ModelWrapper.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(elementEClass, Element.class, "Element", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getElement_Model(), this.getModel(), this.getModel_Elements(), "model", null, 1, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getElement_Name(), ecorePackage.getEString(), "name", null, 1, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getElement_TransformedInto(), this.getElementTransformation(), this.getElementTransformation_Source(), "transformedInto", null, 0, -1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getElement_TransformedFrom(), this.getElementTransformation(), this.getElementTransformation_Target(), "transformedFrom", null, 0, -1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getElement_ReferencedObject(), theEcorePackage.getEObject(), null, "referencedObject", null, 0, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(eObjectWrapperEClass, EObjectWrapper.class, "EObjectWrapper", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getEObjectWrapper_Model(), this.getModelWrapper(), this.getModelWrapper_ModelObjects(), "model", null, 1, 1, EObjectWrapper.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getEObjectWrapper_DisplayName(), ecorePackage.getEString(), "displayName", null, 1, 1, EObjectWrapper.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEObjectWrapper_TargetTransformations(), this.getEObjectTransformation(), this.getEObjectTransformation_Source(), "targetTransformations", null, 0, -1, EObjectWrapper.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEObjectWrapper_SourceTransformations(), this.getEObjectTransformation(), this.getEObjectTransformation_Target(), "sourceTransformations", null, 0, -1, EObjectWrapper.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEObjectWrapper_EObject(), theEcorePackage.getEObject(), null, "eObject", null, 0, 1, EObjectWrapper.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(modelTransformationEClass, ModelTransformation.class, "ModelTransformation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getModelTransformation_Id(), theEcorePackage.getEString(), "id", "", 1, 1, ModelTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getModelTransformation_Source(), this.getModel(), this.getModel_TransformedInto(), "source", null, 1, 1, ModelTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getModelTransformation_Target(), this.getModel(), this.getModel_TransformedFrom(), "target", null, 1, 1, ModelTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getModelTransformation_ElementTransformations(), this.getElementTransformation(), this.getElementTransformation_ModelTransformation(), "elementTransformations", null, 1, -1, ModelTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getModelTransformation_TransformationID(), theEcorePackage.getEString(), "transformationID", "", 1, 1, ModelTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getModelTransformation_Source(), this.getModelWrapper(), this.getModelWrapper_TargetTransformations(), "source", null, 1, 1, ModelTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getModelTransformation_Target(), this.getModelWrapper(), this.getModelWrapper_SourceTransformation(), "target", null, 1, 1, ModelTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getModelTransformation_ObjectTransformations(), this.getEObjectTransformation(), this.getEObjectTransformation_ModelTransformation(), "objectTransformations", null, 1, -1, ModelTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(elementTransformationEClass, ElementTransformation.class, "ElementTransformation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getElementTransformation_ModelTransformation(), this.getModelTransformation(), this.getModelTransformation_ElementTransformations(), "modelTransformation", null, 1, 1, ElementTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getElementTransformation_Source(), this.getElement(), this.getElement_TransformedInto(), "source", null, 1, 1, ElementTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getElementTransformation_Target(), this.getElement(), this.getElement_TransformedFrom(), "target", null, 1, 1, ElementTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(eObjectTransformationEClass, EObjectTransformation.class, "EObjectTransformation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getEObjectTransformation_ModelTransformation(), this.getModelTransformation(), this.getModelTransformation_ObjectTransformations(), "modelTransformation", null, 1, 1, EObjectTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEObjectTransformation_Source(), this.getEObjectWrapper(), this.getEObjectWrapper_TargetTransformations(), "source", null, 1, 1, EObjectTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEObjectTransformation_Target(), this.getEObjectWrapper(), this.getEObjectWrapper_SourceTransformations(), "target", null, 1, 1, EObjectTransformation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

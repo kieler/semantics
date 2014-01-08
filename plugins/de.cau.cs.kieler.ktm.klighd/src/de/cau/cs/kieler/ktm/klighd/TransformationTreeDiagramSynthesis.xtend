@@ -31,22 +31,19 @@ import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions
-import de.cau.cs.kieler.ktm.transformationtree.Model
-import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation
+import de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper
+import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper
 import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import java.util.LinkedList
-import java.util.HashSet
-import de.cau.cs.kieler.ktm.transformationtree.Element
 
 /**
  * KLighD visualization for Transformation Mapping Graphs.
  * 
  * @author als
  */
-class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model> {
+class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper> {
 
     @Inject
     extension KNodeExtensions
@@ -105,14 +102,14 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model>
      * Each Model is a element in a tree.
      * Creates synthesis for tree with given model as root element
      */
-    override KNode transform(Model model) {
+    override KNode transform(ModelWrapper model) {
         val rootNode = createNode();
 
         //create Tree
         rootNode.children += model.createNode() => [ treeNode |
             treeNode.addRectangle => [
                 it.invisible = true;
-                if (model.transformedInto.empty) { //no transformations
+                if (model.targetTransformations.empty) { //no transformations
                     model.transformModelAsChildNode(treeNode);
                 } else {
 
@@ -122,7 +119,8 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model>
                             it.source = trans.source.transformModelAsChildNode(treeNode);
                             it.target = trans.target.transformModelAsChildNode(treeNode);
                             it.addPolyline.addArrowDecorator;
-                            it.createLabel.configureCenteralEdgeLabel(trans.id, KlighdConstants::DEFAULT_FONT_SIZE,
+                            it.createLabel.configureCenteralEdgeLabel(trans.transformationID,
+                                KlighdConstants::DEFAULT_FONT_SIZE,
                                 KlighdConstants::DEFAULT_FONT_NAME);
                         ]
                     ];
@@ -135,7 +133,7 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model>
             createNode => [ transNode |
                 transNode.putToLookUpWith(trans);
                 //add element transformations
-                trans.elementTransformations.forEach [ elemTrans |
+                trans.objectTransformations.forEach [ elemTrans |
                     elemTrans.createEdge() => [
                         it.putToLookUpWith(elemTrans);
                         it.source = elemTrans.source.transformElementAsChildNode(transNode);
@@ -153,7 +151,8 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model>
                         it.shadow.YOffset = 4;
                     }
                     it.setGridPlacement(1);
-                    it.addText(trans.id).putToLookUpWith(trans).setSurroundingSpace(5, 0).setFontBold(true);
+                    it.addText(trans.transformationID).putToLookUpWith(trans).setSurroundingSpace(5, 0).
+                        setFontBold(true);
                     it.addHorizontalLine(1); //separator
                     it.addChildArea();
                 ];
@@ -165,7 +164,7 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model>
     /**
 	 * creates a Node for given model (once) and adds it to given root node.
 	 */
-    def KNode create node : createNode() transformModelAsChildNode(Model model, KNode root) {
+    def KNode create node : createNode() transformModelAsChildNode(ModelWrapper model, KNode root) {
         node.putToLookUpWith(model);
 
         //Model's visualization like States in SCCharts
@@ -182,7 +181,7 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model>
 
         node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
 
-        figure.addText(model.name).putToLookUpWith(model) => [
+        figure.addText(model.modelTypeID).putToLookUpWith(model) => [
             it.fontSize = 11;
             it.setFontItalic(model.transient);
             it.setFontBold(!model.transient);
@@ -196,8 +195,8 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model>
     /**
      * creates a Node for given model (once) and adds it to given root node.
      */
-    def KNode create node : createNode() transformElementAsChildNode(Element element, KNode root) {
-        node.putToLookUpWith(element);
+    def KNode create node : createNode() transformElementAsChildNode(EObjectWrapper object, KNode root) {
+        node.putToLookUpWith(object);
 
         //Model's visualization like States in SCCharts
         val figure = node.addRoundedRectangle(8, 8, 1).background = "white".color;
@@ -213,9 +212,9 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model>
 
         node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
 
-        figure.addText(element.name).putToLookUpWith(element) => [
+        figure.addText(object.displayName).putToLookUpWith(object) => [
             it.fontSize = 11;
-            it.setFontBold(element == element.model.rootElement);
+            it.setFontBold(object == object.model.rootObject);
             it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
         ];
 

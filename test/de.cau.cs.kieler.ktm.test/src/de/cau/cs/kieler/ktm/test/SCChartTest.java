@@ -29,7 +29,7 @@ import com.google.inject.Guice;
 
 import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions;
 import de.cau.cs.kieler.ktm.test.transformations.SCChartTestTransformation;
-import de.cau.cs.kieler.ktm.transformationtree.Model;
+import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 import de.cau.cs.kieler.sccharts.Region;
 
 /**
@@ -44,7 +44,7 @@ public class SCChartTest extends TestCase {
             .getInstance(TransformationTreeExtensions.class);
     private Region abo;
     private Region aboSplitTE;
-    private Model tree;
+    private ModelWrapper tree;
 
     /**
      * {@inheritDoc}
@@ -123,11 +123,11 @@ public class SCChartTest extends TestCase {
         resource.getContents().add(tree);
         // Also add referenced Objects
         if (!tree.isTransient()) {
-            resource.getContents().add(tree.getRootElement().getReferencedObject());
+            resource.getContents().add(tree.getRootObject().getEObject());
         }
-        for (Model model : transformationTree.succeedingModels(tree)) {
+        for (ModelWrapper model : transformationTree.succeedingModels(tree)) {
             if (!model.isTransient()) {
-                resource.getContents().add(model.getRootElement().getReferencedObject());
+                resource.getContents().add(model.getRootObject().getEObject());
             }
         }
 
@@ -147,7 +147,7 @@ public class SCChartTest extends TestCase {
         aboSplitTE = transformation.transformTriggerEffect(abo);
         assertNotNull(aboSplitTE);
 
-        Model aboSplitTEModel =
+        ModelWrapper aboSplitTEModel =
                 transformationTree.initializeTransformationTree(transformation.extractMapping(),
                         "splitTriggerEffect", abo, "ABO", aboSplitTE, "ABO-splitTriEff");
         assertNotNull(aboSplitTEModel);

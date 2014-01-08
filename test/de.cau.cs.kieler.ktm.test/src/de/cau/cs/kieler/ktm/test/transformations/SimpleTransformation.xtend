@@ -16,7 +16,7 @@ package de.cau.cs.kieler.ktm.test.transformations
 import com.google.inject.Inject
 import de.cau.cs.kieler.ktm.extensions.TransformationMapping
 import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions
-import de.cau.cs.kieler.ktm.transformationtree.Model
+import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper
 import de.cau.cs.kieler.ktm.transformationtree.TransformationTreeFactory
 
 /**
@@ -36,17 +36,17 @@ class SimpleTransformation {
     /**
      * splits all ModelTransformation-edges into two edges and adds a new Model in between
      */
-    def Model splitAllTransformations(Model input) {
+    def ModelWrapper splitAllTransformations(ModelWrapper input) {
 
         //Create copy and create direct mapping
         val output = input.mappedCopy;
         output.succeedingTransformations.forEach [
-            val insertedModel = factory.createModel;
+            val insertedModel = factory.createModelWrapper;
             insertedModel.mapParents(it.mappedParents);
-            insertedModel.name = it.source.name + "_2";
+            insertedModel.modelTypeID = it.source.modelTypeID + "_2";
             val insertedTransformation = factory.createModelTransformation;
             insertedTransformation.mapParents(it.mappedParents);
-            insertedTransformation.id = it.id + " (2)";
+            insertedTransformation.transformationID = it.transformationID + " (2)";
             insertedTransformation.source = insertedModel;
             insertedTransformation.target = it.target;
             it.target = insertedModel;
@@ -58,15 +58,15 @@ class SimpleTransformation {
     /**
      * Merges all model elements into one model
      */
-    def mergeIntoOneTransformation(Model input) {
-        val output = factory.createModel;
-        output.name = "TheOneAndOnly";
+    def mergeIntoOneTransformation(ModelWrapper input) {
+        val output = factory.createModelWrapper;
+        output.modelTypeID = "TheOneAndOnly";
         input.mapChild(output);
         input.eAllContents.forEach[it.mapChild(output)];
         return output;
     }
-    
-    def identity(Model input){
+
+    def identity(ModelWrapper input) {
         return input.mappedCopy;
     }
 
