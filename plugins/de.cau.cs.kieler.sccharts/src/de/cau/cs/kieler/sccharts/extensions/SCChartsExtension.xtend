@@ -192,6 +192,62 @@ class SCChartsExtension {
         state
     }
 
+
+    //========== UNIQUE NAMES ===========
+    def private String getUniqueNameHelper(String id, int number) {
+        if (number > 1) {
+            return id + (number)
+        }
+        return null
+    }
+    
+    def State uniqueName(State state) {
+        val originalId = state.id
+        val newName = originalId.getUniqueNameHelper(state.parentRegion.states.filter[id != null && id.startsWith(originalId)].size)
+        if (newName != null) {
+//            System.out.println("Changed State Id from '"+ state.id + "' to '"+ newName + "'")
+            state.setLabel2(newName)
+        } 
+        state
+    }
+
+    def Region uniqueName(Region region) {
+        val originalId = region.id
+        val newName = originalId.getUniqueNameHelper(region.parentState.regions.filter[id != null && id.startsWith(originalId)].size)
+        if (newName != null) {
+//            System.out.println("Changed Region Id from '"+ region.id + "' to '"+ newName + "'")
+            region.setLabel2(newName)
+        } 
+        region
+    }
+
+    def int countInParent(Region region, String originalId) {
+        if (region == null) {
+            return 0;
+        }
+        val number = region.valuedObjects.filter[name != null && name.startsWith(originalId)].size
+        number + region.parentState.countInParent(originalId)
+    }
+    def int countInParent(State state, String originalId) {
+        if (state == null) {
+            return 0;
+        }
+        val number = state.valuedObjects.filter[name != null && name.startsWith(originalId)].size
+        number + state.parentRegion.countInParent(originalId)
+    }
+
+    def ValuedObject uniqueName(ValuedObject valuedObject) {
+        val originalId = valuedObject.name
+        val newName = originalId.getUniqueNameHelper((valuedObject.eContainer as State).countInParent(originalId))
+        if (newName != null) {
+//            System.out.println("Changed ValuedObject Name from '"+ valuedObject.name + "' to '"+ newName + "'")
+            valuedObject.setName(newName)
+        } 
+        valuedObject
+    }
+
+    
+
     def State setInitial(State state) {
         state.setInitial(true)
         state

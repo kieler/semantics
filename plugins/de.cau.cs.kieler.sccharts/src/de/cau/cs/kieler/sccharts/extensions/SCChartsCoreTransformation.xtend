@@ -650,6 +650,29 @@ class SCChartsCoreTransformation {
             }
         }
     }
+    
+    //       
+    // -- FORMER IMPLEMENTATION --
+    // 
+    // For all deferred transitions T from S1 to S2, create a new State _S
+    // create a new transition _T from _S to S2 and change T's target to _S.
+    // Remove the deferred flag from T.
+    //
+    //     def void transformDeferred(Transition transition) {
+    //         if (transition.deferred) {
+    //             // Create a new state _S
+    //             val _S = transition.targetState.parentRegion.createState(transition.id("_S"))
+    //             // Create a new transition _T
+    //             _S.createTransitionTo(transition.targetState)
+    //             // Re-target transition T
+    //             transition.setTargetState(_S)
+    //             // Remove deferred flag
+    //             transition.setDeferred(false)
+    //         }
+    //     }
+
+
+    
 
     //-------------------------------------------------------------------------
     //--          A B O R T S  - 1 -  T R A N S F O R M A T I O N        --
@@ -1026,25 +1049,86 @@ class SCChartsCoreTransformation {
         }
     }
 
-    //       
-    // -- FORMER IMPLEMENTATION --
-    // 
-    // For all deferred transitions T from S1 to S2, create a new State _S
-    // create a new transition _T from _S to S2 and change T's target to _S.
-    // Remove the deferred flag from T.
-    //
-    //     def void transformDeferred(Transition transition) {
-    //         if (transition.deferred) {
-    //             // Create a new state _S
-    //             val _S = transition.targetState.parentRegion.createState(transition.id("_S"))
-    //             // Create a new transition _T
-    //             _S.createTransitionTo(transition.targetState)
-    //             // Re-target transition T
-    //             transition.setTargetState(_S)
-    //             // Remove deferred flag
-    //             transition.setDeferred(false)
-    //         }
-    //     }
+
+
+
+
+    //-------------------------------------------------------------------------
+    //--              C O M P L E X   F I N A L   S T A T E S                --
+    //-------------------------------------------------------------------------
+    // ...
+    // Optimizations: 
+    // (1)   In transitions from one ComplexFinalState (CFS) to another CFS
+    //       optimize: Do not set term to false and to true again later
+    //       (-> .filter[!complexFinalStates.contains(sourceState)])
+    // (2)   Share a unique final state if possible (-> retrieveFinalState())
+    // (3)   If just one regions: No watcher region is needed, no abort signal and
+    //       only a single term signal 
+    //       (TODO)                
+    
+    def Region transformComplexFinalStates(Region rootRegion) {
+
+        // Clone the complete SCCharts region 
+        var targetRootRegion = rootRegion.copy;
+
+        // For every state in the SyncChart do the transformation
+        for (targetState : targetRootRegion.getAllContainedStates) {
+            targetState.transformComplexFinalStates(rootRegion);
+        }
+        targetRootRegion;
+    }
+
+    def void transformComplexFinalStates(State state, Region targetRootRegion) {
+        val complexFinalStates = state.allContainedStates.filter( e |
+                e.parentRegion.parentState == state && e.isFinal && 
+                (!e.outgoingTransitions.nullOrEmpty || e.allContainedStates.size > 0 || e.entryActions.size > 0
+                    || e.duringActions.size > 0 || e.exitActions.size > 0)).toList()
+
+        if (!complexFinalStates.nullOrEmpty) {
+            
+            var abortFlag = state.createBoolVariable("Abort").uniqueName
+            abortFlag.setInitialValue(FALSE)
+            
+            var ArrayList<ValuedObject> termVariables = new ArrayList
+            
+            for (region : state.regions) {
+                val termVariable = state.createBoolVariable("Term").uniqueName
+                termVariable.setInitialValue(FALSE)
+                termVariables.add(termVariable)
+                
+                val finalStates = region.states.filter[final && incomingTransitions.size > 0]
+                
+                for (finalState : finalStates) {
+                    for (transition : finalState.incomingTransitions.filter[!complexFinalStates.contains(sourceState)]) {
+                        transition.addEffect(termVariable.assign(TRUE))
+                    }
+                    for (transition : finalState.outgoingTransitions.filter[!complexFinalStates.contains(targetState)]) {
+                        transition.addEffect(termVariable.assign(FALSE))
+                    }
+                }
+                
+            }
+            
+            //Add Watcher Region
+            val watcherRegion = state.createRegion("Watch").uniqueName
+            val watcherTransition = watcherRegion.createInitialState("Watch").createImmediateTransitionTo(watcherRegion.createFinalState("Aborted"))
+            watcherTransition.addEffect(abortFlag.assign(TRUE))
+            for (termVariable : termVariables) {
+                watcherTransition.setTrigger(watcherTransition.trigger.and2(termVariable.reference))    
+            }
+            
+            //Add additional final state
+            for (complexFinalState : complexFinalStates) {
+                complexFinalState.setFinal(false)
+                val finalState = complexFinalState.parentRegion.retrieveFinalState("Final")
+                complexFinalState.createImmediateTransitionTo(finalState).setTrigger(abortFlag.reference)
+            }
+            
+            
+        }
+        
+     }
+     
     ////////////////////////////////////////////////////////////////////////////////////////           
     ////////////////////////////////////////////////////////////////////////////////////////           
     ////////////////////////////////////////////////////////////////////////////////////////           
@@ -1265,73 +1349,6 @@ class SCChartsCoreTransformation {
     //     }
 
 
-
-    //-------------------------------------------------------------------------
-    //--              C O M P L E X   F I N A L   S T A T E S                --
-    //-------------------------------------------------------------------------
-    // ...
-    def Region transformComplexFinalStates(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
-
-        // For every state in the SyncChart do the transformation
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformComplexFinalStates(rootRegion);
-        }
-        targetRootRegion;
-    }
-
-    def void transformComplexFinalStates(State state, Region targetRootRegion) {
-        val complexFinalStates = state.allContainedStates.filter( e |
-                e.parentRegion.parentState == state && e.isFinal && 
-                (!e.outgoingTransitions.nullOrEmpty || e.allContainedStates.size > 0 || e.entryActions.size > 0
-                    || e.duringActions.size > 0 || e.exitActions.size > 0)).toList()
-
-        if (!complexFinalStates.nullOrEmpty) {
-            
-            var abortFlag = state.createBoolVariable(state.id("AbortComplexFinalState"))
-            abortFlag.setInitialValue(FALSE)
-            
-            var ArrayList<ValuedObject> termVariables = new ArrayList
-            
-            for (region : state.regions) {
-                val termVariable = state.createBoolVariable(region.id("TermComplexFinalState"))
-                termVariable.setInitialValue(FALSE)
-                termVariables.add(termVariable)
-                
-                val finalStates = region.states.filter[final && incomingTransitions.size > 0]
-                
-                for (finalState : finalStates) {
-                    for (transition : finalState.incomingTransitions) {
-                        transition.addEffect(termVariable.assign(TRUE))
-                    }
-                    for (transition : finalState.outgoingTransitions) {
-                        transition.addEffect(termVariable.assign(FALSE))
-                    }
-                }
-                
-            }
-            
-            //Add Watcher Region
-            val watcherRegion = state.createRegion(state.id("WatchComplexFinalState"))
-            val watcherTransition = watcherRegion.createInitialState("Watch").createImmediateTransitionTo(watcherRegion.createFinalState("Aborted"))
-            watcherTransition.addEffect(abortFlag.assign(TRUE))
-            for (termVariable : termVariables) {
-                watcherTransition.setTrigger(watcherTransition.trigger.and2(termVariable.reference))    
-            }
-            
-            //Add additional final state
-            for (complexFinalState : complexFinalStates) {
-                complexFinalState.setFinal(false)
-                val finalState = complexFinalState.parentRegion.retrieveFinalState(complexFinalState.id("FinalComplexFinalState"))
-                complexFinalState.createImmediateTransitionTo(finalState).setTrigger(abortFlag.reference)
-            }
-            
-            
-        }
-        
-     }
     
     
 //    //-------------------------------------------------------------------------
