@@ -467,10 +467,10 @@ class SCGExtensions {
      * @return Returns an analysis structure containing the potential instantaneous loop problem.
      */
     def Analysis createPotentialInstantaneousLoopProblem(List<ControlFlow> controlFlows) {
-    	val plp = ScgschedFactory::eINSTANCE.createAnalysis
-    	plp.id = Analyses::POTENTIAL_INSTANTANEOUS_LOOP
-    	plp.objectReferences.addAll(controlFlows)
-    	plp
+    	ScgschedFactory::eINSTANCE.createAnalysis => [
+    		id = Analyses::POTENTIAL_INSTANTANEOUS_LOOP
+    		objectReferences += controlFlows
+    	]
     }
 
 
