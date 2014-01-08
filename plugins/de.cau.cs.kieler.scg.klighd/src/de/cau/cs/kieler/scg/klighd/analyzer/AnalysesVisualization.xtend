@@ -15,7 +15,6 @@
 
 import com.google.inject.Guice
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
-import de.cau.cs.kieler.scgsched.Analyses
 import de.cau.cs.kieler.scgsched.Analysis
 
 /**
@@ -32,6 +31,10 @@ import de.cau.cs.kieler.scgsched.Analysis
 
 class AnalysesVisualization {
 
+	private static val ANALYZERVISUALIZATIONPACKAGE = "de.cau.cs.kieler.scg.klighd.analyzer"
+	
+	private static val VISUALIZATIONCLASSSUFFIX = "Visualization"
+
 	/**
 	 * This method is called by the SCG klighd synthesis for each analysis stored in the graph. 
 	 * If a visualization for a given analysis exists, an instance is created and executed.
@@ -44,14 +47,10 @@ class AnalysesVisualization {
 	 */	
 	def Analysis visualize(Analysis analysis, SCGraphDiagramSynthesis synthesis) {
 		
-		var String className = ""  
-		
-		if (analysis.id == Analyses::POTENTIAL_INSTANTANEOUS_LOOP) className = "PotentialInstantaneousLoopVisualization"
-		if (analysis.id == Analyses::JOIN_FEEDBACK) className = "JoinFeedbackVisualization"
-		if (analysis.id == Analyses::INTERLEAVED_ASSIGNMENT) className = "InterleavedAssignmentVisualization"
+		var String className = analysis.getId + VISUALIZATIONCLASSSUFFIX
 		
 		try {
-			val clazz = Class::forName("de.cau.cs.kieler.scg.klighd.analyzer."+className)
+			val clazz = Class::forName(ANALYZERVISUALIZATIONPACKAGE + "." + className)
 			val IAnalysisVisualization analysisVis = Guice.createInjector().getInstance(clazz) as IAnalysisVisualization
 			analysisVis.visualize(analysis, synthesis)
 		} catch (ClassNotFoundException exception) {

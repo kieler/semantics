@@ -14,10 +14,8 @@
 package de.cau.cs.kieler.scgsched;
 
 import de.cau.cs.kieler.scgbb.ScgbbPackage;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -356,16 +354,6 @@ public interface ScgschedPackage extends EPackage {
 	int ANALYSIS_OPERATION_COUNT = 0;
 
 				/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.scgsched.Analyses <em>Analyses</em>}' enum.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.scgsched.Analyses
-	 * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getAnalyses()
-	 * @generated
-	 */
-	int ANALYSES = 5;
-
-				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scgsched.SCGraphSched <em>SC Graph Sched</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -559,16 +547,6 @@ public interface ScgschedPackage extends EPackage {
 	EReference getAnalysis_ObjectReferences();
 
 				/**
-	 * Returns the meta object for enum '{@link de.cau.cs.kieler.scgsched.Analyses <em>Analyses</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for enum '<em>Analyses</em>'.
-	 * @see de.cau.cs.kieler.scgsched.Analyses
-	 * @generated
-	 */
-	EEnum getAnalyses();
-
-				/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -744,16 +722,6 @@ public interface ScgschedPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ANALYSIS__OBJECT_REFERENCES = eINSTANCE.getAnalysis_ObjectReferences();
-
-								/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.scgsched.Analyses <em>Analyses</em>}' enum.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.scgsched.Analyses
-		 * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getAnalyses()
-		 * @generated
-		 */
-		EEnum ANALYSES = eINSTANCE.getAnalyses();
 
     }
 

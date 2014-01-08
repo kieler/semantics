@@ -79,7 +79,6 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
-import de.cau.cs.kieler.scgsched.Analyses
 import de.cau.cs.kieler.scg.klighd.analyzer.AnalysesVisualization
 
 /** 

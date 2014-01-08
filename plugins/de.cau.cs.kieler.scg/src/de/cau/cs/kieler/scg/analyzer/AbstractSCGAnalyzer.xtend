@@ -87,4 +87,12 @@ abstract class AbstractSCGAnalyzer {
 	 */
     abstract def AnalyzerData analyze(AnalyzerData analyzerData) 
     
+    /**
+     * Override this method to add an unique ID string to your analysis.
+     * Usually, the name of the analysis class is taken.
+     * 
+     * @return Returns the identifier string of the analysis
+     */
+    abstract def String getAnalysisId()
+    
 }

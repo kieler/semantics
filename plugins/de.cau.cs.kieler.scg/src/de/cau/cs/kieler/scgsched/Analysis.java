@@ -37,7 +37,6 @@ import org.eclipse.emf.ecore.EObject;
 public interface Analysis extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Id</b></em>' attribute.
-	 * The literals are from the enumeration {@link de.cau.cs.kieler.scgsched.Analyses}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
@@ -45,24 +44,22 @@ public interface Analysis extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see de.cau.cs.kieler.scgsched.Analyses
-	 * @see #setId(Analyses)
+	 * @see #setId(String)
 	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getAnalysis_Id()
 	 * @model
 	 * @generated
 	 */
-	Analyses getId();
+	String getId();
 
 	/**
 	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.Analysis#getId <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see de.cau.cs.kieler.scgsched.Analyses
 	 * @see #getId()
 	 * @generated
 	 */
-	void setId(Analyses value);
+	void setId(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Object References</b></em>' reference list.

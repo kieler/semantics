@@ -14,15 +14,12 @@
 package de.cau.cs.kieler.scg.analyzer
 
 import de.cau.cs.kieler.scg.analyzer.AbstractSCGAnalyzer
-import de.cau.cs.kieler.scgdep.Dependency
 import de.cau.cs.kieler.scgdep.Write_Write
 import de.cau.cs.kieler.scg.Node
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scgsched.ScgschedFactory
-import de.cau.cs.kieler.scgsched.Analyses
 import de.cau.cs.kieler.scg.Surface
 
 /**
@@ -63,7 +60,7 @@ class InterleavedAssignmentAnalyzer extends AbstractSCGAnalyzer {
                 
                 if (isSimpleFlow && assignment1Tick != assignment2Tick) {
                     val analysis = ScgschedFactory::eINSTANCE.createAnalysis => [
-                        id = Analyses::INTERLEAVED_ASSIGNMENT
+                        id = getAnalysisId
                         objectReferences += dependency                        
                     ]
                     result.addAnalysis(analysis)
@@ -73,6 +70,16 @@ class InterleavedAssignmentAnalyzer extends AbstractSCGAnalyzer {
         
         analyzerData => [ addResult(result) ]
     }
+    
+	/**
+	 * Returns the identifier string of this analysis.
+	 * 
+	 * @returns Returns the identifier string of this analysis.
+	 */
+	override getAnalysisId() {
+		return "InterleavedAssignment"
+	}
+    
     
 }
 

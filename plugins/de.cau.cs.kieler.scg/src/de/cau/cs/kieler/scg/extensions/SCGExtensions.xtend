@@ -35,8 +35,6 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.scgsched.Analysis
-import de.cau.cs.kieler.scgsched.Analyses
-import com.google.common.base.Predicates
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -504,16 +502,16 @@ class SCGExtensions {
     // -------------------------------------------------------------------------
     
     /**
-     * Creates an instance of a potential instantaneous loop problem.
+     * Creates an instance of an analysis.
      * 
-     * @param controlFlows
-     * 			the control flow path causing the problem
-     * @return Returns an analysis structure containing the potential instantaneous loop problem.
+     * @param eObjects
+     * 			a list of objects associated with a particular analysis
+     * @return Returns an analysis structure.
      */
-    def Analysis createPotentialInstantaneousLoopProblem(List<ControlFlow> controlFlows) {
+    def Analysis createAnalysis(String idString, List<EObject> eObjects) {
     	ScgschedFactory::eINSTANCE.createAnalysis => [
-    		id = Analyses::POTENTIAL_INSTANTANEOUS_LOOP
-    		objectReferences += controlFlows
+    		id = idString
+    		objectReferences += eObjects
     	]
     }
 

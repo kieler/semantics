@@ -111,6 +111,15 @@ class JoinFeedbackAnalyzer extends AbstractSCGAnalyzer {
 		analyzerData  
 	}
 	
+	/**
+	 * Returns the identifier string of this analysis.
+	 * 
+	 * @returns Returns the identifier string of this analysis.
+	 */
+	override getAnalysisId() {
+		return "JoinFeedback"
+	}
+	
 }
 
 /**

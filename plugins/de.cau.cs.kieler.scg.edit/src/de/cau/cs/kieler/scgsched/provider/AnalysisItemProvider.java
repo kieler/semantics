@@ -15,19 +15,13 @@ package de.cau.cs.kieler.scgsched.provider;
 
 
 import de.cau.cs.kieler.scg.provider.ScgschedEditPlugin;
-
-import de.cau.cs.kieler.scgsched.Analyses;
 import de.cau.cs.kieler.scgsched.Analysis;
 import de.cau.cs.kieler.scgsched.ScgschedPackage;
-
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -143,8 +137,7 @@ public class AnalysisItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		Analyses labelValue = ((Analysis)object).getId();
-		String label = labelValue == null ? null : labelValue.toString();
+		String label = ((Analysis)object).getId();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Analysis_type") :
 			getString("_UI_Analysis_type") + " " + label;

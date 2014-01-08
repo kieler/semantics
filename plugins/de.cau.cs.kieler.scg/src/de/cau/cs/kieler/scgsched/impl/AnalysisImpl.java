@@ -13,22 +13,15 @@
  */
 package de.cau.cs.kieler.scgsched.impl;
 
-import de.cau.cs.kieler.scgsched.Analyses;
 import de.cau.cs.kieler.scgsched.Analysis;
 import de.cau.cs.kieler.scgsched.ScgschedPackage;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
@@ -54,7 +47,7 @@ public class AnalysisImpl extends MinimalEObjectImpl.Container implements Analys
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Analyses ID_EDEFAULT = Analyses.USER_DEFINED;
+	protected static final String ID_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
@@ -64,7 +57,7 @@ public class AnalysisImpl extends MinimalEObjectImpl.Container implements Analys
 	 * @generated
 	 * @ordered
 	 */
-	protected Analyses id = ID_EDEFAULT;
+	protected String id = ID_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getObjectReferences() <em>Object References</em>}' reference list.
@@ -100,7 +93,7 @@ public class AnalysisImpl extends MinimalEObjectImpl.Container implements Analys
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Analyses getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -109,9 +102,9 @@ public class AnalysisImpl extends MinimalEObjectImpl.Container implements Analys
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setId(Analyses newId) {
-		Analyses oldId = id;
-		id = newId == null ? ID_EDEFAULT : newId;
+	public void setId(String newId) {
+		String oldId = id;
+		id = newId;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.ANALYSIS__ID, oldId, id));
 	}
@@ -154,7 +147,7 @@ public class AnalysisImpl extends MinimalEObjectImpl.Container implements Analys
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ScgschedPackage.ANALYSIS__ID:
-				setId((Analyses)newValue);
+				setId((String)newValue);
 				return;
 			case ScgschedPackage.ANALYSIS__OBJECT_REFERENCES:
 				getObjectReferences().clear();
@@ -191,7 +184,7 @@ public class AnalysisImpl extends MinimalEObjectImpl.Container implements Analys
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case ScgschedPackage.ANALYSIS__ID:
-				return id != ID_EDEFAULT;
+				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case ScgschedPackage.ANALYSIS__OBJECT_REFERENCES:
 				return objectReferences != null && !objectReferences.isEmpty();
 		}

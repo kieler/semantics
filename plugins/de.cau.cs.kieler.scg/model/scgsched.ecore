@@ -33,14 +33,8 @@
         eType="ecore:EClass scgbb.ecore#//SchedulingBlock"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Analysis">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="#//Analyses"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="objectReferences" upperBound="-1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="Analyses">
-    <eLiterals name="UserDefined"/>
-    <eLiterals name="PotentialInstantaneousLoop" value="1"/>
-    <eLiterals name="JoinFeedback" value="2"/>
-    <eLiterals name="InterleavedAssignment" value="3"/>
   </eClassifiers>
 </ecore:EPackage>

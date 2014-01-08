@@ -15,7 +15,6 @@ package de.cau.cs.kieler.scgsched.impl;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.scgbb.ScgbbPackage;
-import de.cau.cs.kieler.scgsched.Analyses;
 import de.cau.cs.kieler.scgsched.Analysis;
 import de.cau.cs.kieler.scgsched.EmptyExpressions;
 import de.cau.cs.kieler.scgsched.GuardExpression;
@@ -25,7 +24,6 @@ import de.cau.cs.kieler.scgsched.ScgschedPackage;
 import de.cau.cs.kieler.scgsched.Schedule;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -71,13 +69,6 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * @generated
 	 */
 	private EClass analysisEClass = null;
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EEnum analysesEEnum = null;
 
 				/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -307,15 +298,6 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 
 				/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EEnum getAnalyses() {
-		return analysesEEnum;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -364,9 +346,6 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 		analysisEClass = createEClass(ANALYSIS);
 		createEAttribute(analysisEClass, ANALYSIS__ID);
 		createEReference(analysisEClass, ANALYSIS__OBJECT_REFERENCES);
-
-		// Create enums
-		analysesEEnum = createEEnum(ANALYSES);
 	}
 
     /**
@@ -424,15 +403,8 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 		initEReference(getSchedule_SchedulingBlocks(), theScgbbPackage.getSchedulingBlock(), null, "schedulingBlocks", null, 0, -1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(analysisEClass, Analysis.class, "Analysis", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getAnalysis_Id(), this.getAnalyses(), "id", null, 0, 1, Analysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAnalysis_Id(), ecorePackage.getEString(), "id", null, 0, 1, Analysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAnalysis_ObjectReferences(), ecorePackage.getEObject(), null, "objectReferences", null, 0, -1, Analysis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		// Initialize enums and add enum literals
-		initEEnum(analysesEEnum, Analyses.class, "Analyses");
-		addEEnumLiteral(analysesEEnum, Analyses.USER_DEFINED);
-		addEEnumLiteral(analysesEEnum, Analyses.POTENTIAL_INSTANTANEOUS_LOOP);
-		addEEnumLiteral(analysesEEnum, Analyses.JOIN_FEEDBACK);
-		addEEnumLiteral(analysesEEnum, Analyses.INTERLEAVED_ASSIGNMENT);
 
 		// Create resource
 		createResource(eNS_URI);
