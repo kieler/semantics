@@ -30,8 +30,11 @@ import de.cau.cs.kieler.scg.schedulers.SimpleScheduler;
 import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation;
 
 /**
- * @author ssm
+ * Handler for menu contributions
  *
+ * @author ssm
+ * @kieler.design 2014-01-08 proposed 
+ * @kieler.rating 2014-01-08 proposed yellow
  */
 public class SCGraphSchedulingModelFileHandler extends AbstractConvertModelHandler {
 
