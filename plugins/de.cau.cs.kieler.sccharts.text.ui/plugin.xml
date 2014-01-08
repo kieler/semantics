@@ -492,7 +492,7 @@
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.text.ui.handler.SctModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.commands.SctFinalStateTransitionTransformation">
+            commandId="de.cau.cs.kieler.sccharts.commands.SctComplexFinalStatesTransformation">
       </handler>
    </extension>
     
@@ -918,8 +918,8 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.commands.SctFinalStateTransitionTransformation"
-               label="Transitions from Final States"
+               commandId="de.cau.cs.kieler.sccharts.commands.SctComplexFinalStatesTransformation"
+               label="Complex Final States"
                mnemonic="D"
                style="push">
             <visibleWhen>

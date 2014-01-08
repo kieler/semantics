@@ -16,10 +16,7 @@ package de.cau.cs.kieler.sccharts.klighd
 import de.cau.cs.kieler.core.kivi.AbstractCombination
 import de.cau.cs.kieler.core.kivi.triggers.PartTrigger
 import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger
-// FIX while klighd.incremental is down
-//import de.cau.cs.kieler.klighd.incremental.UpdateStrategy
 import de.cau.cs.kieler.klighd.xtext.UpdateXtextModelKLighDCombination
-import de.cau.cs.kieler.klighd.xtext.triggers.XtextBasedEditorActivationChangeTrigger.XtextModelChangeState
 
 class SCChartsShowDiagramCombination extends UpdateXtextModelKLighDCombination {
     

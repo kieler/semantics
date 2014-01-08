@@ -82,8 +82,8 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     public static final String NORMALTERMINATION_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.NormalTerminationTransformation";
 
-    public static final String FINALSTATETRANSITION_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.FinalStateTransitionTransformation";
+    public static final String COMPLEXFINALSTATES_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.ComplexFinalStatesTransformation";
 
     // -------------------------------------------------------------------------
 
@@ -171,8 +171,8 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
             transformed = transformation.transformExposeLocalValuedObject((Region) model);
         } else if (commandString.equals(NORMALTERMINATION_TRANSFORMATION)) {
             transformed = transformation.transformNormalTermination((Region) model);
-        } else if (commandString.equals(FINALSTATETRANSITION_TRANSFORMATION)) {
-            transformed = transformation.transformFinalStateTransition((Region) model);
+        } else if (commandString.equals(COMPLEXFINALSTATES_TRANSFORMATION)) {
+            transformed = transformation.transformComplexFinalStates((Region) model);
         }
         return transformed;
     }
