@@ -43,7 +43,7 @@ class InterleavedAssignmentAnalyzer extends AbstractSCGAnalyzer {
             var assignment2Tick = 0
             var isSimpleFlow = true
             
-            if (ancestorFork == assignment2.ancestorFork) {
+            if (ancestorFork != null && ancestorFork == assignment2.ancestorFork) {
                 for (entry: ancestorFork.allNext.map[target]) {
                     var flows = entry.getIndirectControlFlowsBeyondTickBoundaries((entry as Entry).exit)
                     if (flows.size != 1) {

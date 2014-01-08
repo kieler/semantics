@@ -87,8 +87,15 @@ class SimpleScheduler extends AbstractSCGScheduler {
     // -- Constants 
     // -------------------------------------------------------------------------
     
+    /** Name of the go signal. */
     private static val String GOGUARDNAME = "_GO"
     
+    // -------------------------------------------------------------------------
+    // -- Globals 
+    // -------------------------------------------------------------------------
+    
+    /** Storage space for the interleaved assignment analyzer id. */
+    private var String interleavedAssignmentAnalyzerId = ""
     
     // -------------------------------------------------------------------------
     // -- Scheduler 
@@ -118,6 +125,7 @@ class SimpleScheduler extends AbstractSCGScheduler {
 		// Our scheduler creates instances of the potential instantaneous loop and interleaved assignment analyzer.
 		val PotentialInstantaneousLoopAnalyzer loopAnalyzer = Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
 		val InterleavedAssignmentAnalyzer assignmentAnalyzer = Guice.createInjector().getInstance(typeof(InterleavedAssignmentAnalyzer))
+		interleavedAssignmentAnalyzerId = assignmentAnalyzer.analysisId
 		
 		// The results are gathered in the analyzer data structure, persisted in the SCG and returned to the caller.
 		assignmentAnalyzer.analyze(loopAnalyzer.analyze(scg)).copyAllAnalyses(scg).SCG as SCGraphSched
@@ -204,15 +212,18 @@ class SimpleScheduler extends AbstractSCGScheduler {
                 // Basically, perform the same test for dependency. We cannot create a guard expression 
                 // if any block containing a dependency is still in our list.
                 for(dep:block.dependencies) {
-                    if (dep.concurrent && !dep.confluent)
-                      if (!schedule.schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) { placeable = false }
+                    if (dep.concurrent && !dep.confluent) {
+                    	// If the interleaved assignment analyzer marked this dependency as interleaving, ignore it.
+                    	if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
+	                    	if (!schedule.schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) { placeable = false }
+                    }
                 }
                 
                 // If all preconditions are met, process this block, add it to the schedule and create its guard expression.
                 // Then, remove it from our list of remaining blocks.
                 if (placeable) {
                     schedule.schedulingBlocks.add(block)
-                    scg.guards.add(block.createGuardExpression(scg))
+                    scg.guards += block.createGuardExpression(scg)
                     schedulingBlocks.remove(block)
                     
                     // This iteration updated the lists. This is not a fix point.
@@ -371,8 +382,8 @@ class SimpleScheduler extends AbstractSCGScheduler {
     	else if (predecessor.blockType == BlockType::TRUEBRANCH) {
    			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
    			expression.setOperator(OperatorType::AND)
-   			expression.subExpressions.add(predecessor.basicBlock.guards.last.reference)
-   			expression.subExpressions.add(predecessor.conditional.condition.copy)
+   			expression.subExpressions += predecessor.basicBlock.guards.last.reference
+   			expression.subExpressions += predecessor.conditional.condition.copy
    			return expression
    		}
     	// If we are in the true branch of the predecessor, combine the predecessor guard reference with
@@ -380,8 +391,8 @@ class SimpleScheduler extends AbstractSCGScheduler {
    		else if (predecessor.blockType == BlockType::ELSEBRANCH) {
    			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
    			expression.setOperator(OperatorType::AND)
-   			expression.subExpressions.add(predecessor.basicBlock.guards.last.reference)
-   			expression.subExpressions.add(predecessor.conditional.condition.copy.negate)
+   			expression.subExpressions += predecessor.basicBlock.guards.last.reference
+   			expression.subExpressions += predecessor.conditional.condition.copy.negate
    			return expression
    		}
     		
