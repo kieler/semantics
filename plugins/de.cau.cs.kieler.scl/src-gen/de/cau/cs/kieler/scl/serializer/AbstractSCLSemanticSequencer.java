@@ -88,12 +88,9 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 				}
 				else break;
 			case AnnotationsPackage.STRING_ANNOTATION:
-				if(context == grammarAccess.getAnnotationRule()) {
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_Annotation_CommentAnnotation_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getValuedAnnotationRule()) {
-					sequence_CommentAnnotation_KeyStringValueAnnotation_ValuedAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getCommentAnnotationRule()) {
@@ -216,38 +213,29 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 				}
 				else break;
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
-				if(context == grammarAccess.getAtomicValuedExpressionRule()) {
-					sequence_AddExpression_AndExpression_AtomicValuedExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getRootRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_Expression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getAddExpressionRule() ||
+				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicValuedExpressionRule() ||
 				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
 				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getExpressionRule() ||
 				   context == grammarAccess.getModExpressionRule() ||
 				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getMultExpressionRule() ||
 				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getAtomicExpressionRule()) {
-					sequence_AndExpression_AtomicExpression_CompareOperation_NotExpression_OrExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
 				else if(context == grammarAccess.getAndExpressionRule() ||
 				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getBoolExpressionRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
