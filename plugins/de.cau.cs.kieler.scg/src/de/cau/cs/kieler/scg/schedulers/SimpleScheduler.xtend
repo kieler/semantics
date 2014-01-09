@@ -38,6 +38,8 @@ import de.cau.cs.kieler.scgbb.Predecessor
 import de.cau.cs.kieler.scg.analyzer.InterleavedAssignmentAnalyzer
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
  * (for the particular scheduler) important analyses, creates one or more schedules for the SCG which 
