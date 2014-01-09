@@ -153,7 +153,7 @@ class SCGSchedToSeqSCGTransformation {
     			// Create an assigment for each empty expression and connect the control flow appropriately.
     			guardExpression.emptyExpressions.forEach[
     				val eeAssignment = ScgFactory::eINSTANCE.createAssignment
-    				eeAssignment.valuedObject = it.valuedObject
+    				eeAssignment.valuedObject = it.valuedObject.getValuedObjectCopy
     				eeAssignment.assignment = it.expression.copyExpression
     				scg.nodes.add(eeAssignment)
 		    		nextFlows.forEach[it.target = eeAssignment]

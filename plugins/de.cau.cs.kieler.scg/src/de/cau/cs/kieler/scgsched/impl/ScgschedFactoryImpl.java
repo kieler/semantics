@@ -28,120 +28,120 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class ScgschedFactoryImpl extends EFactoryImpl implements ScgschedFactory {
     /**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static ScgschedFactory init() {
-		try {
-			ScgschedFactory theScgschedFactory = (ScgschedFactory)EPackage.Registry.INSTANCE.getEFactory(ScgschedPackage.eNS_URI);
-			if (theScgschedFactory != null) {
-				return theScgschedFactory;
-			}
-		}
-		catch (Exception exception) {
-			EcorePlugin.INSTANCE.log(exception);
-		}
-		return new ScgschedFactoryImpl();
-	}
+        try {
+            ScgschedFactory theScgschedFactory = (ScgschedFactory)EPackage.Registry.INSTANCE.getEFactory(ScgschedPackage.eNS_URI);
+            if (theScgschedFactory != null) {
+                return theScgschedFactory;
+            }
+        }
+        catch (Exception exception) {
+            EcorePlugin.INSTANCE.log(exception);
+        }
+        return new ScgschedFactoryImpl();
+    }
 
     /**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ScgschedFactoryImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
-			case ScgschedPackage.SC_GRAPH_SCHED: return createSCGraphSched();
-			case ScgschedPackage.EMPTY_EXPRESSIONS: return createEmptyExpressions();
-			case ScgschedPackage.GUARD_EXPRESSION: return createGuardExpression();
-			case ScgschedPackage.SCHEDULE: return createSchedule();
-			case ScgschedPackage.ANALYSIS: return createAnalysis();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eClass.getClassifierID()) {
+            case ScgschedPackage.SC_GRAPH_SCHED: return createSCGraphSched();
+            case ScgschedPackage.EMPTY_EXPRESSION: return createEmptyExpression();
+            case ScgschedPackage.GUARD_EXPRESSION: return createGuardExpression();
+            case ScgschedPackage.SCHEDULE: return createSchedule();
+            case ScgschedPackage.ANALYSIS: return createAnalysis();
+            default:
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        }
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public SCGraphSched createSCGraphSched() {
-		SCGraphSchedImpl scGraphSched = new SCGraphSchedImpl();
-		return scGraphSched;
-	}
+        SCGraphSchedImpl scGraphSched = new SCGraphSchedImpl();
+        return scGraphSched;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EmptyExpressions createEmptyExpressions() {
-		EmptyExpressionsImpl emptyExpressions = new EmptyExpressionsImpl();
-		return emptyExpressions;
-	}
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EmptyExpression createEmptyExpression() {
+        EmptyExpressionImpl emptyExpression = new EmptyExpressionImpl();
+        return emptyExpression;
+    }
 
-				/**
-	 * <!-- begin-user-doc -->
+    /**
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public GuardExpression createGuardExpression() {
-		GuardExpressionImpl guardExpression = new GuardExpressionImpl();
-		return guardExpression;
-	}
+        GuardExpressionImpl guardExpression = new GuardExpressionImpl();
+        return guardExpression;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Schedule createSchedule() {
-		ScheduleImpl schedule = new ScheduleImpl();
-		return schedule;
-	}
+        ScheduleImpl schedule = new ScheduleImpl();
+        return schedule;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Analysis createAnalysis() {
-		AnalysisImpl analysis = new AnalysisImpl();
-		return analysis;
-	}
+        AnalysisImpl analysis = new AnalysisImpl();
+        return analysis;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ScgschedPackage getScgschedPackage() {
-		return (ScgschedPackage)getEPackage();
-	}
+        return (ScgschedPackage)getEPackage();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @deprecated
-	 * @generated
-	 */
+     * @deprecated
+     * @generated
+     */
     @Deprecated
     public static ScgschedPackage getPackage() {
-		return ScgschedPackage.eINSTANCE;
-	}
+        return ScgschedPackage.eINSTANCE;
+    }
 
 } //ScgschedFactoryImpl

@@ -10,7 +10,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="analyses" upperBound="-1"
         eType="#//Analysis" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EmptyExpressions">
+  <eClassifiers xsi:type="ecore:EClass" name="EmptyExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
         eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="threadExitObject" lowerBound="1"
@@ -26,7 +26,7 @@
         eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="emptyExpressions" upperBound="-1"
-        eType="#//EmptyExpressions" containment="true"/>
+        eType="#//EmptyExpression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Schedule">
     <eStructuralFeatures xsi:type="ecore:EReference" name="schedulingBlocks" upperBound="-1"

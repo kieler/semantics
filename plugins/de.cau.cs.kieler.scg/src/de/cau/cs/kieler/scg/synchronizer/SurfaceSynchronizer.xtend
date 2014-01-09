@@ -98,7 +98,7 @@ class SurfaceSynchronizer extends AbstractSCGSynchronizer {
 		// Create a new list for all exit nodes of the threads of the fork-join-combination...
         val exitNodes = <Exit> newLinkedList
         // ... and fill the list with the exit nodes of all threads.
-        join.getAllPrevious.forEach[exitNodes.add(it.eContainer as Exit)]
+        join.allPrevious.forEach[exitNodes.add(it.eContainer as Exit)]
         
         // The valued object of the GuardExpression of the synchronizer is the guard of the
         // scheduling block of the join node. 
@@ -134,7 +134,7 @@ class SurfaceSynchronizer extends AbstractSCGSynchronizer {
             	 * SynchronizerData structure since the object has to be added to the list of 
             	 * valued objects in the SCG. 
             	 */
-      			val emptyExp = ScgschedFactory::eINSTANCE.createEmptyExpressions    
+      			val emptyExp = ScgschedFactory::eINSTANCE.createEmptyExpression  
       			emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
       			emptyExp.valuedObject.name = exitSB.guard.name + '_e' + exitNodeCount
       			emptyExp.valuedObject.type = ValueType::BOOL
