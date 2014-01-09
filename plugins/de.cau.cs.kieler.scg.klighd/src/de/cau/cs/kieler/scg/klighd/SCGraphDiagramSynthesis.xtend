@@ -660,7 +660,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * 			the entry node in question.
 	 * @return Returns the top level KNode. 
 	 */ 
-    def dispatch KNode translate(Entry entry) {
+    private def dispatch KNode synthesize(Entry entry) {
         return entry.createNode().putToLookUpWith(entry) => [ node |
             
             // If the corresponding option is set to true, exit nodes are placed in the first layer;
@@ -1127,8 +1127,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         controlFlows.forEach[it.colorControlFlow(SCHEDULINGBLOCKBORDER)]    
                         controlFlows.forEach[it.thickenControlFlow(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)]
                     } else if (target instanceof Depth) {
-                        (target as Depth).colorTickEdge(SCHEDULINGBLOCKBORDER)                    
-                        (target as Depth).thickenTickEdge(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)                    
+//                        (target as Depth).colorTickEdge(SCHEDULINGBLOCKBORDER)                    
+//                        (target as Depth).thickenTickEdge(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)                    
                     } else {
                         val sourceF = source.node
                         val targetF = target.node
