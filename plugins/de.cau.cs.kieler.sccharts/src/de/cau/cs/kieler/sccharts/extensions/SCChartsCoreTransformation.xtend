@@ -1299,7 +1299,91 @@ class SCChartsCoreTransformation {
                 state.localActions.remove(duringAction)
             }
         }
-    }     
+    }    
+    
+    
+    //-------------------------------------------------------------------------
+    //--                     E N T R Y         A C T I O N S                 --
+    //-------------------------------------------------------------------------
+    // @requires: during actions
+    // Transforming Entry and During Actions.
+    def Region transformEntry(Region rootRegion) {
+
+        // Clone the complete SCCharts region 
+        val targetRootRegion = rootRegion.copy;
+
+        // Traverse all states
+        for (targetState : targetRootRegion.getAllContainedStates.immutableCopy) {
+            targetState.transformEntry(targetRootRegion);
+        }
+        targetRootRegion;
+    }
+
+    // Traverse all states and transform macro states that have actions to transform
+    def void transformEntry(State state, Region targetRootRegion) {
+        if (state.entryActions != null && state.entryActions.size > 0) {
+
+            var State firstState
+            var State secondState
+
+            if  (state.final)  {
+                val connector = state.parentRegion.createState("C").uniqueName.setTypeConnector
+                for (transition : state.incomingTransitions.immutableCopy) {
+                    transition.setTargetState(connector)
+                }
+                firstState = connector
+                secondState = state
+            } else if (!state.hierarchical) {
+                val region = state.createRegion("")
+                firstState = region.createInitialState("Init")
+                secondState = region.createFinalState("Done")
+                val exitState = state.parentRegion.createState(state.id("Exit"))
+                for (transition : state.outgoingTransitions.immutableCopy) {
+                    exitState.outgoingTransitions.add(transition)
+                }
+                state.createTransitionTo(exitState)
+            } else if (state.regions.size == 1) {
+                val region = state.regions.get(0)
+                secondState = region.states.filter[initial].get(0) //every region MUST have an initial state
+                secondState.setNotInitial
+                firstState = region.createInitialState("Init").uniqueName
+            } else { // state has several regions
+                val region = state.createRegion("Entry").uniqueName
+                secondState = region.createFinalState("Main")
+                for (mainRegion : state.regions.filter(e | e != region).toList.immutableCopy){
+                    secondState.regions.add(mainRegion)
+                }
+                firstState = region.createInitialState("Init")
+                val finalState = region.createFinalState("Done")
+                secondState.createTransitionTo(finalState).setTypeNormalTermination
+            }
+            
+            val entryRegion = firstState.parentRegion
+            val lastEntryAction = state.entryActions.last
+            for (entryAction : state.entryActions) {
+                var connector = secondState
+                if (entryAction != lastEntryAction) {
+                     connector = entryRegion.createState(state.id("C")).setTypeConnector
+                }
+                val transition = firstState.createImmediateTransitionTo(connector)
+                for (effect : entryAction.effects) {
+                    transition.addEffect(effect.copy)
+                }
+                if (entryAction.trigger != null) {
+                    transition.setTrigger(entryAction.trigger)
+                    // add default transition
+                    firstState.createImmediateTransitionTo(connector)
+                }
+                firstState = connector
+            }
+            
+            // After transforming entry actions, erase them
+            state.entryActions.clear();
+        }
+    }
+
+
+     
      
     ////////////////////////////////////////////////////////////////////////////////////////           
     ////////////////////////////////////////////////////////////////////////////////////////           
@@ -2350,97 +2434,97 @@ class SCChartsCoreTransformation {
 //        }
 //    }
 
-    //-------------------------------------------------------------------------
-    //--                     E N T R Y         A C T I O N S                 --
-    //-------------------------------------------------------------------------
-    // @requires: during actions
-    // Transforming Entry and During Actions.
-    def Region transformEntry(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
-
-        // Traverse all states
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformEntry(targetRootRegion);
-        }
-        targetRootRegion;
-    }
-
-    // Traverse all states and transform macro states that have actions to transform
-    def void transformEntry(State state, Region targetRootRegion) {
-
-        // ENTRY ACTIONS :
-        // First Idea: Create a macro state for all incoming transitions. Weak abort the
-        // macro state and connect it to the original target. Put the action into an
-        // transition within the macro state.
-        //
-        // Charles Andre: "Immediate abortions may cause instantaneous abortion of the state.
-        // In this case the status stays IDLE, the transition is taken, DONE is returned: the
-        // state is by-passed. If there is not an immediate strong abortion, then the state is 
-        // effectively entered, and the entry actions are performed."
-        //
-        // This means that entry actions must be immediately-strong-abortable by the original outgoing
-        // transitions.
-        //
-        // We create a new macro state EntrySurround around the original state, and connect the incoming and
-        // outgoing transitions to it. Within the new macro state, we then create an initial state
-        // with the entry actions as during actions. Then we connect this initial state to the
-        // original state with an immediate (true triggered) transition.
-        if (state.entryActions != null && state.entryActions.size > 0) {
-            val surroundState = SCChartsFactory::eINSTANCE.createState();
-            surroundState.setId(state.id("EntrySurround"));
-            surroundState.setLabel("EntrySurround " + state.label);
-            state.parentRegion.states.add(surroundState);
-
-            // If the original state is an initial stat then the new surround state must also be
-            // marked to be initial
-            surroundState.setInitial(state.isInitial);
-
-            // Move transitions to the new state
-            for (transition : ImmutableList::copyOf(state.incomingTransitions)) {
-                surroundState.incomingTransitions.add(transition);
-            }
-            for (transition : ImmutableList::copyOf(state.outgoingTransitions)) {
-                surroundState.outgoingTransitions.add(transition);
-            }
-            state.incomingTransitions.clear();
-            state.outgoingTransitions.clear();
-
-            // Move original state into new state
-            val surroundRegion = SCChartsFactory::eINSTANCE.createRegion();
-            surroundRegion.setId(state.id("EntrySurroundRegion"));
-            surroundState.regions.add(surroundRegion);
-            surroundRegion.states.add(state);
-
-            // Create initial state add it to the surround state
-            val initialState = SCChartsFactory::eINSTANCE.createState();
-            val initialTransition = SCChartsFactory::eINSTANCE.createTransition();
-            initialState.setId(state.id("init"));
-            initialState.setLabel("init " + state.label);
-            initialTransition.setLabel("#");
-            initialTransition.setTargetState(state);
-            initialTransition.setPriority(1);
-            initialTransition.setImmediate(true);
-            initialState.setInitial(true);
-            state.setInitial(false);
-            initialState.outgoingTransitions.add(initialTransition);
-            surroundRegion.states.add(initialState);
-
-            // Create the body of the dummy state - containing the entry action
-            // For every entry action: Create a region
-            for (entryAction : state.entryActions) {
-                val entryActionCopy = entryAction.copy;
-                entryActionCopy.setImmediate(true);
-
-                // Create during actions for the initial state
-                initialState.localActions.add(entryActionCopy);
-            }
-
-            // After transforming entry actions, erase them
-            state.entryActions.clear();
-        }
-    }
+//    //-------------------------------------------------------------------------
+//    //--                     E N T R Y         A C T I O N S                 --
+//    //-------------------------------------------------------------------------
+//    // @requires: during actions
+//    // Transforming Entry and During Actions.
+//    def Region transformEntry(Region rootRegion) {
+//
+//        // Clone the complete SCCharts region 
+//        val targetRootRegion = rootRegion.copy;
+//
+//        // Traverse all states
+//        for (targetState : targetRootRegion.getAllContainedStates) {
+//            targetState.transformEntry(targetRootRegion);
+//        }
+//        targetRootRegion;
+//    }
+//
+//    // Traverse all states and transform macro states that have actions to transform
+//    def void transformEntry(State state, Region targetRootRegion) {
+//
+//        // ENTRY ACTIONS :
+//        // First Idea: Create a macro state for all incoming transitions. Weak abort the
+//        // macro state and connect it to the original target. Put the action into an
+//        // transition within the macro state.
+//        //
+//        // Charles Andre: "Immediate abortions may cause instantaneous abortion of the state.
+//        // In this case the status stays IDLE, the transition is taken, DONE is returned: the
+//        // state is by-passed. If there is not an immediate strong abortion, then the state is 
+//        // effectively entered, and the entry actions are performed."
+//        //
+//        // This means that entry actions must be immediately-strong-abortable by the original outgoing
+//        // transitions.
+//        //
+//        // We create a new macro state EntrySurround around the original state, and connect the incoming and
+//        // outgoing transitions to it. Within the new macro state, we then create an initial state
+//        // with the entry actions as during actions. Then we connect this initial state to the
+//        // original state with an immediate (true triggered) transition.
+//        if (state.entryActions != null && state.entryActions.size > 0) {
+//            val surroundState = SCChartsFactory::eINSTANCE.createState();
+//            surroundState.setId(state.id("EntrySurround"));
+//            surroundState.setLabel("EntrySurround " + state.label);
+//            state.parentRegion.states.add(surroundState);
+//
+//            // If the original state is an initial stat then the new surround state must also be
+//            // marked to be initial
+//            surroundState.setInitial(state.isInitial);
+//
+//            // Move transitions to the new state
+//            for (transition : ImmutableList::copyOf(state.incomingTransitions)) {
+//                surroundState.incomingTransitions.add(transition);
+//            }
+//            for (transition : ImmutableList::copyOf(state.outgoingTransitions)) {
+//                surroundState.outgoingTransitions.add(transition);
+//            }
+//            state.incomingTransitions.clear();
+//            state.outgoingTransitions.clear();
+//
+//            // Move original state into new state
+//            val surroundRegion = SCChartsFactory::eINSTANCE.createRegion();
+//            surroundRegion.setId(state.id("EntrySurroundRegion"));
+//            surroundState.regions.add(surroundRegion);
+//            surroundRegion.states.add(state);
+//
+//            // Create initial state add it to the surround state
+//            val initialState = SCChartsFactory::eINSTANCE.createState();
+//            val initialTransition = SCChartsFactory::eINSTANCE.createTransition();
+//            initialState.setId(state.id("init"));
+//            initialState.setLabel("init " + state.label);
+//            initialTransition.setLabel("#");
+//            initialTransition.setTargetState(state);
+//            initialTransition.setPriority(1);
+//            initialTransition.setImmediate(true);
+//            initialState.setInitial(true);
+//            state.setInitial(false);
+//            initialState.outgoingTransitions.add(initialTransition);
+//            surroundRegion.states.add(initialState);
+//
+//            // Create the body of the dummy state - containing the entry action
+//            // For every entry action: Create a region
+//            for (entryAction : state.entryActions) {
+//                val entryActionCopy = entryAction.copy;
+//                entryActionCopy.setImmediate(true);
+//
+//                // Create during actions for the initial state
+//                initialState.localActions.add(entryActionCopy);
+//            }
+//
+//            // After transforming entry actions, erase them
+//            state.entryActions.clear();
+//        }
+//    }
 
     //-------------------------------------------------------------------------
     //--                      E X I T       A C T I O N S                    --
