@@ -915,7 +915,7 @@
             </visibleWhen>
          </command>
       </menuContribution>
-      <menuContribution
+<!--      <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
                commandId="de.cau.cs.kieler.sccharts.commands.SctComplexFinalStatesTransformation"
@@ -937,7 +937,7 @@
                </iterate>
             </visibleWhen>
          </command>
-      </menuContribution>
+      </menuContribution> -->
 
    </extension>
     
