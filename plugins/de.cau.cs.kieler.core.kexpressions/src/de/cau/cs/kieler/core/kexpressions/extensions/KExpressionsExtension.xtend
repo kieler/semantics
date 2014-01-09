@@ -295,6 +295,57 @@ class KExpressionsExtension {
         notExpression
     }
     
+    
+    // Create an ADD Expression.
+    def OperatorExpression createAddExpression() {
+        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
+        expression.setOperator(OperatorType::ADD)
+        expression
+    }
+    
+    // Create an ADD Expression as a sub expression.
+    def OperatorExpression createAddExpression(OperatorExpression operatorExpression) {
+        val expression = createAddExpression()
+        operatorExpression.add(expression)
+        expression
+    }
+    
+    // Create an ADD Expression and add expression as a sub expression.
+    def Expression add(Expression expressionFirst, Expression expressionSecond) {
+        if (expressionFirst == null) {
+            return expressionSecond
+        }
+        val addExpression = createAddExpression()
+        addExpression.add(expressionFirst)
+        addExpression.add(expressionSecond)
+        addExpression
+    }
+    
+    // Create an SUB Expression.
+    def OperatorExpression createSubExpression() {
+        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
+        expression.setOperator(OperatorType::SUB)
+        expression
+    }
+    
+    // Create an SUB Expression as a sub expression.
+    def OperatorExpression createSubExpression(OperatorExpression operatorExpression) {
+        val expression = createSubExpression()
+        operatorExpression.add(expression)
+        expression
+    }
+    
+    // Create an SUB Expression and add expression as a sub expression.
+    def Expression sub(Expression expressionFirst, Expression expressionSecond) {
+        if (expressionFirst == null) {
+            return expressionSecond
+        }
+        val subExpression = createSubExpression()
+        subExpression.add(expressionFirst)
+        subExpression.add(expressionSecond)
+        subExpression
+    } 
+    
     // Add a sub expression to an OperatorExpression.
     def OperatorExpression add(OperatorExpression operatorExpression, Expression expression) {
         operatorExpression.subExpressions.add(expression)
@@ -307,7 +358,7 @@ class KExpressionsExtension {
          valuedObjectReference.setValuedObject(valuedObject);
          valuedObjectReference
     }
-    
+
 
     //=========  VALUED OBJECT  =========
 

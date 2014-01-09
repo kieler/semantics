@@ -107,7 +107,7 @@
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.commands.SccFinalStateTransitionTransformation">
+            commandId="de.cau.cs.kieler.sccharts.commands.SccComplexFinalStatesTransformation">
       </handler>
    </extension>
 
@@ -529,11 +529,11 @@
             </visibleWhen>
          </command>
       </menuContribution>
-      <menuContribution
+<!--      <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.commands.SccFinalStateTransitionTransformation"
-               label="Transitions from Final States"
+               commandId="de.cau.cs.kieler.sccharts.commands.SccComplexFinalStatesTransformation"
+               label="Complex Final States"
                mnemonic="D"
                style="push">
             <visibleWhen>
@@ -551,7 +551,7 @@
                </iterate>
             </visibleWhen>
          </command>
-      </menuContribution>
+      </menuContribution> -->
 
    </extension>
 
