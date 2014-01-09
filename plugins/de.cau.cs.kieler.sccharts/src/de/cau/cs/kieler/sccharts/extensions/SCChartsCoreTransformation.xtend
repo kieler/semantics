@@ -38,6 +38,7 @@ import java.util.List
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.EntryAction
 import java.util.ArrayList
+import de.cau.cs.kieler.sccharts.SuspendAction
 
 /**
  * SCCharts CoreTransformation Extensions.
@@ -862,14 +863,9 @@ class SCChartsCoreTransformation {
     //-------------------------------------------------------------------------
     // Transforming Aborts.
     def Region transformAborts2(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
-        //        for (targetState : targetRootRegion.getAllContainedStates) {
-        //            targetState.preTransformAborts2(targetRootRegion);
-        //        }
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformAborts2(targetRootRegion);
         }
@@ -1128,6 +1124,182 @@ class SCChartsCoreTransformation {
         }
         
      }
+     
+     
+    //-------------------------------------------------------------------------
+    //--                   C O U N T   D E L A Y S                           --
+    //-------------------------------------------------------------------------
+    // ...
+    def Region transformCountDelay(Region rootRegion) {
+
+        // Clone the complete SCCharts region 
+        var targetRootRegion = rootRegion.copy;
+
+        // For every transition in the SyncChart do the transformation
+        // Iterate over a copy of the list  
+        for (targetTransition : targetRootRegion.getAllContainedTransitions) {
+
+            targetTransition.transformCountDelay(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+
+    // This will encode count delays in transitions.
+    def void transformCountDelay(Transition transition, Region targetRootRegion) {
+        if (transition.delay > 1) {
+            val parentState = transition.sourceState.parentRegion.parentState
+            
+            val counter = parentState.createIntVariable("Counter").uniqueName
+            counter.setInitialValue(0.createIntValue)
+            
+            // Add during action
+            val duringAction = parentState.createDuringAction
+            duringAction.setTrigger(transition.trigger)
+            duringAction.addEffect(counter.assign((1.createIntValue).add(counter.reference)))
+
+            // Modify original trigger
+            // trigger := (counter == delay)
+            val trigger = counter.reference.isEqual(transition.delay.createIntValue)
+            transition.setTrigger(trigger)
+            transition.setDelay(1)
+        }
+    }
+     
+     
+    //-------------------------------------------------------------------------
+    //--                          S U S P E N D                              --
+    //-------------------------------------------------------------------------
+    //@requires: during
+    //@run-before: entry (because these are considered here)
+    // For a suspend statement of state S create a new top-level region
+    // with two states (NotSuspended (initial) and Suspended). Connect them
+    // with the suspension trigger.
+    // If the trigger is immediate, then connect them immediately and have
+    // the transition back be non-immediate. If it is non immediate then
+    // have the transition back be immediate.
+    // Create an immediate during action of the Suspended state that emits
+    // an auxiliaryDisableValuedObject that is added to all outgoing transitions
+    // (within the disabledExpression) 
+    // Transforming Suspends.
+    def Region transformSuspend(Region rootRegion) {
+
+        // Clone the complete SCCharts region 
+        var targetRootRegion = rootRegion.copy;
+
+        // For every state in the SyncChart do the transformation
+        // Iterate over a copy of the list  
+        for (targetState : targetRootRegion.getAllContainedStates) {
+            targetState.transformSuspend(targetRootRegion);
+        }
+
+//        // Now delete all suspends
+//        for (targetState : targetRootRegion.getAllContainedStates.filter(e|e.suspendActions.size > 0)) {
+//            for (suspendAction : targetState.suspendActions.immutableCopy) {
+//                targetState.localActions.remove(suspendAction)
+//            }
+//        }
+        
+        targetRootRegion;
+    }
+
+
+    def void transformSuspend(State state, Region targetRootRegion) {
+        for (suspension : state.suspendActions.immutableCopy) {
+            val suspendTrigger = suspension.trigger;
+            val notSuspendTrigger = not(suspendTrigger)
+            val immediateSuspension = suspension.isImmediate;
+            
+            val suspendFlag = state.createBoolVariable("Enabled").uniqueName
+            suspendFlag.setInitialValue(TRUE)
+
+            // Do not consider other suspends as actions
+            val allInnerActions = state.allContainedActions.filter(e | !(e instanceof SuspendAction))
+            for (action : allInnerActions) {
+                action.setTrigger(action.trigger.and2(suspendFlag.reference))
+            }
+
+            // add during action AFTER modifying allInnerActions so that we
+            // do not modify our new during action
+            val duringAction = state.createDuringAction
+            duringAction.setImmediate(immediateSuspension)
+            duringAction.setTrigger(null)
+            duringAction.addEffect(suspendFlag.assign(notSuspendTrigger))
+            
+            // remove suspend action
+            state.localActions.remove(suspension)
+        } 
+    }
+     
+     
+     
+     
+    //-------------------------------------------------------------------------
+    //--                     D U R I N G       A C T I O N S                 --
+    //-------------------------------------------------------------------------
+    // Transforming During Actions.
+    def Region transformDuring(Region rootRegion) {
+
+        // Clone the complete SCCharts region 
+        val targetRootRegion = rootRegion.copy;
+
+        // Traverse all states
+        for (targetState : targetRootRegion.getAllContainedStates) {
+            targetState.transformDuring(targetRootRegion);
+        }
+        targetRootRegion;
+    }
+
+    // Traverse all states and transform macro states that have actions to transform
+    def void transformDuring(State state, Region targetRootRegion) {
+
+        // DURING ACTIONS : 
+        // For each action create a separate region in the state. 
+        // Put the action into an transition within the macro state.
+        // Add a loop back to the initial state of the added region.
+        // In case the during action is immediate, the looping transition is non-immediate.
+        // In case the during action is non-immediate, the looping transition is immediate.
+        if (state.duringActions != null && state.duringActions.size > 0) {
+             val term = state.createBoolVariable("Term").uniqueName
+             term.setInitialValue(FALSE)
+              
+             val mainRegion = state.createRegion("Main").uniqueName
+             val mainState = mainRegion.createState("Main")
+             for (region : state.regions.filter(e | e != mainRegion)) {
+                  mainState.regions.add(region)
+             }
+             val termTransition = mainState.createTransitionTo(mainRegion.createState("Term"))
+             termTransition.setTypeNormalTermination
+             termTransition.addEffect(term.assign(TRUE))
+
+             // Create the body of the dummy state - containing the during action
+             // For every during action: Create a region
+             for (duringAction : state.duringActions.immutableCopy) {
+                val region = state.createRegion("During").uniqueName
+                val initialState = region.createInitialState("I")
+                val middleState = region.createState("S")
+                val finalState = region.createFinalState("F")
+                val transition1 = initialState.createTransitionTo(middleState)
+                transition1.setDelay(duringAction.delay);
+                transition1.setImmediate(duringAction.isImmediate);
+                transition1.setTrigger(duringAction.trigger.copy);
+                for (action : duringAction.effects) {
+                    transition1.addEffect(action.copy);
+                }
+                val transition2 = middleState.createTransitionTo(initialState)
+                transition2.setImmediate(!duringAction.isImmediate);
+                var Transition transition3
+                if (duringAction.immediate) {
+                    transition3 = middleState.createImmediateTransitionTo(finalState) 
+                } else{
+                    transition3 = initialState.createImmediateTransitionTo(finalState) 
+                }
+                transition3.setTrigger(term.reference)
+                // After transforming during actions, erase them
+                state.localActions.remove(duringAction)
+            }
+        }
+    }     
      
     ////////////////////////////////////////////////////////////////////////////////////////           
     ////////////////////////////////////////////////////////////////////////////////////////           
@@ -1518,99 +1690,99 @@ class SCChartsCoreTransformation {
 //        } // end if considered
 //    }
 
-    //-------------------------------------------------------------------------
-    //--                   C O U N T   D E L A Y S                           --
-    //-------------------------------------------------------------------------
-    // For every transition T from state S with a count delay n create a region R. Put the
-    // region into S (hence, S may become a macro state). Create a new valuedObject countDelay that is emitted
-    // by the last transition of the auxiliary region R. Create n+1 states within R and connect
-    // these by the same trigger of T just without the count delay. The n+1's state must be final
-    // in order to handle possible outgoing normal terminations of S correctly.
-    def Region transformCountDelay(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
-
-        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
-
-        // For every transition in the SyncChart do the transformation
-        // Iterate over a copy of the list  
-        for (targetTransition : targetTransitions) {
-
-            targetTransition.transformCountDelay(targetRootRegion);
-        }
-        
-        targetRootRegion;
-    }
-
-    // This will encode count delays in transitions.
-    def void transformCountDelay(Transition transition, Region targetRootRegion) {
-        if (transition.delay > 1) {
-            val targetRootState = targetRootRegion.states.get(0);
-            val sourceState = transition.sourceState;
-
-            // Optimization: If there is no outgoing normal termination out of S then do not mark states as final
-            val existsNormalTermination = !(sourceState.parentRegion.parentState.outgoingTransitions.filter(
-                e|e.type == TransitionType::NORMALTERMINATION).nullOrEmpty);
-
-            // auxiliary trigger valuedObject
-            var auxiliaryValuedObjectUID = transition.id("countDelay");
-            val auxiliaryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-            auxiliaryValuedObject.setName(auxiliaryValuedObjectUID);
-            auxiliaryValuedObject.setInput(false);
-            auxiliaryValuedObject.setOutput(false);
-            auxiliaryValuedObject.setType(ValueType::PURE);
-            targetRootState.valuedObjects.add(auxiliaryValuedObject);
-
-            val triggerExpression = transition.trigger;
-
-            // Create auxiliary region R and add it to the source state.
-            // Also add the auxiliary valuedObject to this common parent state
-            val auxiliaryRegion = SCChartsFactory::eINSTANCE.createRegion()
-            sourceState.regions.add(auxiliaryRegion);
-
-            var delay = 0;
-            var State previousAuxiliaryState = null;
-            var State auxiliaryState = null;
-            while (delay <= transition.delay) {
-                delay = delay + 1;
-                previousAuxiliaryState = auxiliaryState;
-
-                auxiliaryState = SCChartsFactory::eINSTANCE.createState();
-                auxiliaryState.setId("delay" + delay);
-                auxiliaryState.setLabel(delay + "");
-                auxiliaryState.setInitial(delay == 1);
-                auxiliaryRegion.states.add(auxiliaryState);
-
-                if (previousAuxiliaryState != null) {
-                    val connect = SCChartsFactory::eINSTANCE.createTransition();
-                    connect.setPriority(2);
-                    connect.targetState = auxiliaryState
-                    previousAuxiliaryState.outgoingTransitions.add(connect);
-                    connect.setTrigger(triggerExpression.copy);
-                    if (delay > transition.delay) {
-
-                        // Connect last state
-                        val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
-                        auxiliaryEmission.setValuedObject(auxiliaryValuedObject);
-                        connect.addEmission(auxiliaryEmission);
-                    }
-
-                    // Make state final (just in case, because there could be
-                    // a normal termination outgoing)
-                    if (existsNormalTermination) {
-                        auxiliaryState.setFinal(true);
-                    }
-                }
-            }
-
-            // Modify original trigger
-            transition.setDelay(0);
-            val auxiliaryTrigger = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-            auxiliaryTrigger.setValuedObject(auxiliaryValuedObject);
-            transition.setTrigger(auxiliaryTrigger);
-        }
-    }
+//    //-------------------------------------------------------------------------
+//    //--                   C O U N T   D E L A Y S                           --
+//    //-------------------------------------------------------------------------
+//    // For every transition T from state S with a count delay n create a region R. Put the
+//    // region into S (hence, S may become a macro state). Create a new valuedObject countDelay that is emitted
+//    // by the last transition of the auxiliary region R. Create n+1 states within R and connect
+//    // these by the same trigger of T just without the count delay. The n+1's state must be final
+//    // in order to handle possible outgoing normal terminations of S correctly.
+//    def Region transformCountDelay(Region rootRegion) {
+//
+//        // Clone the complete SCCharts region 
+//        var targetRootRegion = rootRegion.copy;
+//
+//        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
+//
+//        // For every transition in the SyncChart do the transformation
+//        // Iterate over a copy of the list  
+//        for (targetTransition : targetTransitions) {
+//
+//            targetTransition.transformCountDelay(targetRootRegion);
+//        }
+//        
+//        targetRootRegion;
+//    }
+//
+//    // This will encode count delays in transitions.
+//    def void transformCountDelay(Transition transition, Region targetRootRegion) {
+//        if (transition.delay > 1) {
+//            val targetRootState = targetRootRegion.states.get(0);
+//            val sourceState = transition.sourceState;
+//
+//            // Optimization: If there is no outgoing normal termination out of S then do not mark states as final
+//            val existsNormalTermination = !(sourceState.parentRegion.parentState.outgoingTransitions.filter(
+//                e|e.type == TransitionType::NORMALTERMINATION).nullOrEmpty);
+//
+//            // auxiliary trigger valuedObject
+//            var auxiliaryValuedObjectUID = transition.id("countDelay");
+//            val auxiliaryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+//            auxiliaryValuedObject.setName(auxiliaryValuedObjectUID);
+//            auxiliaryValuedObject.setInput(false);
+//            auxiliaryValuedObject.setOutput(false);
+//            auxiliaryValuedObject.setType(ValueType::PURE);
+//            targetRootState.valuedObjects.add(auxiliaryValuedObject);
+//
+//            val triggerExpression = transition.trigger;
+//
+//            // Create auxiliary region R and add it to the source state.
+//            // Also add the auxiliary valuedObject to this common parent state
+//            val auxiliaryRegion = SCChartsFactory::eINSTANCE.createRegion()
+//            sourceState.regions.add(auxiliaryRegion);
+//
+//            var delay = 0;
+//            var State previousAuxiliaryState = null;
+//            var State auxiliaryState = null;
+//            while (delay <= transition.delay) {
+//                delay = delay + 1;
+//                previousAuxiliaryState = auxiliaryState;
+//
+//                auxiliaryState = SCChartsFactory::eINSTANCE.createState();
+//                auxiliaryState.setId("delay" + delay);
+//                auxiliaryState.setLabel(delay + "");
+//                auxiliaryState.setInitial(delay == 1);
+//                auxiliaryRegion.states.add(auxiliaryState);
+//
+//                if (previousAuxiliaryState != null) {
+//                    val connect = SCChartsFactory::eINSTANCE.createTransition();
+//                    connect.setPriority(2);
+//                    connect.targetState = auxiliaryState
+//                    previousAuxiliaryState.outgoingTransitions.add(connect);
+//                    connect.setTrigger(triggerExpression.copy);
+//                    if (delay > transition.delay) {
+//
+//                        // Connect last state
+//                        val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
+//                        auxiliaryEmission.setValuedObject(auxiliaryValuedObject);
+//                        connect.addEmission(auxiliaryEmission);
+//                    }
+//
+//                    // Make state final (just in case, because there could be
+//                    // a normal termination outgoing)
+//                    if (existsNormalTermination) {
+//                        auxiliaryState.setFinal(true);
+//                    }
+//                }
+//            }
+//
+//            // Modify original trigger
+//            transition.setDelay(0);
+//            val auxiliaryTrigger = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+//            auxiliaryTrigger.setValuedObject(auxiliaryValuedObject);
+//            transition.setTrigger(auxiliaryTrigger);
+//        }
+//    }
 
     //    //-------------------------------------------------------------------------
     //    //--                   C O U N T   D E L A Y S                           --
@@ -1680,47 +1852,222 @@ class SCChartsCoreTransformation {
     //               
     //          }
     //     }
+    
+    
+//    //-------------------------------------------------------------------------
+//    //--                          S U S P E N D                              --
+//    //-------------------------------------------------------------------------
+//    //@requires: during
+//    //@run-before: entry (because these are considered here)
+//    // For a suspend statement of state S create a new top-level region
+//    // with two states (NotSuspended (initial) and Suspended). Connect them
+//    // with the suspension trigger.
+//    // If the trigger is immediate, then connect them immediately and have
+//    // the transition back be non-immediate. If it is non immediate then
+//    // have the transition back be immediate.
+//    // Create an immediate during action of the Suspended state that emits
+//    // an auxiliaryDisableValuedObject that is added to all outgoing transitions
+//    // (within the disabledExpression) 
+//    // Transforming Suspends.
+//    def Region transformSuspend(Region rootRegion) {
+//
+//        // Clone the complete SCCharts region 
+//        var targetRootRegion = rootRegion.copy;
+//
+//        // For every state in the SyncChart do the transformation
+//        // Iterate over a copy of the list  
+//        for (targetState : targetRootRegion.getAllContainedStates) {
+//
+//            targetState.transformSuspend(targetRootRegion);
+//        }
+//
+//        // Now delete all suspends
+//        for (targetState : targetRootRegion.getAllContainedStates.filter(e|e.suspendActions.size > 0)) {
+//            for (suspendAction : targetState.suspendActions.immutableCopy) {
+//                targetState.localActions.remove(suspendAction)
+//            }
+//        }
+//        
+//        targetRootRegion;
+//    }
+//
+//    // Tells whether a state is a macro state
+//    def boolean isHierarchical(State state) {
+//        (state.regions != null && state.regions.size > 0);
+//    }
+//
+//    // Build a new expression that disables the inExpression if the disabledWhenExpression
+//    // is enabled. It optimizes not(not(x)) = x.
+//    def Expression buildDisabledExpression(Expression inExpression, Expression disabledWhenExpression) {
+//        val andAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+//        andAuxiliaryTrigger.setOperator(OperatorType::AND);
+//        val notAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+//        notAuxiliaryTrigger.setOperator(OperatorType::NOT);
+//        var Expression auxiliaryTrigger;
+//
+//        // Add a copy because we want this trigger to be used in possibly several
+//        // outgoing transitions
+//        if ((disabledWhenExpression instanceof OperatorExpression) &&
+//            ((disabledWhenExpression as OperatorExpression).operator == OperatorType::NOT)) {
+//
+//            // Optimize not(not(x)) = x
+//            auxiliaryTrigger = ((disabledWhenExpression as OperatorExpression).subExpressions.get(0)
+//                            as Expression).
+//                copy;
+//        } else {
+//
+//            // Default case
+//            notAuxiliaryTrigger.add(disabledWhenExpression.copy);
+//            auxiliaryTrigger = notAuxiliaryTrigger;
+//        }
+//        if (inExpression != null) {
+//
+//            // There is an outgoing transition trigger  
+//            andAuxiliaryTrigger.add(inExpression);
+//            andAuxiliaryTrigger.add(auxiliaryTrigger);
+//            return andAuxiliaryTrigger;
+//        } else {
+//
+//            // The simple case, there is NO outgoing transition trigger yet
+//            return auxiliaryTrigger;
+//        }
+//    }
+//
+//    // Encode suspensions by traversing all states and get their
+//    // hierarchical suspension trigger (if any).
+//    // In case there is such a trigger, to all outgoing transitions, add 
+//    // an "(<condition>) && !trigger" to disable ALL these transitions
+//    // if the suspension trigger is enabled.
+//    def void transformSuspend(State state, Region targetRootRegion) {
+//
+//        for (suspension : state.suspendActions) {
+//            val suspendTrigger = suspension.trigger;
+//            val immediateSuspension = suspension.isImmediate;
+//            val notSuspendTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+//            notSuspendTrigger.setOperator(OperatorType::NOT);
+//            notSuspendTrigger.add(suspendTrigger.copy);
+//
+//            // Add SET and RESET valuedObject valuedObject flag 
+//            val disabledValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+//            disabledValuedObject.setName("disabled" + state.id);
+//            disabledValuedObject.setInput(false);
+//            disabledValuedObject.setOutput(false);
+//            disabledValuedObject.setType(ValueType::PURE);
+//            targetRootRegion.rootState.valuedObjects.add(disabledValuedObject);
+//
+//            // Add a NonSuspended and Suspended state
+//            val runningState = SCChartsFactory::eINSTANCE.createState();
+//            runningState.setId(state.id("NonSuspended"));
+//            runningState.setLabel(state.id + "Running");
+//            runningState.setInitial(true);
+//            val disabledState = SCChartsFactory::eINSTANCE.createState();
+//            disabledState.setId(state.id("Suspended"));
+//            disabledState.setLabel(state.id + "Disabled");
+//
+//            // Add during action that emits the disable valuedObject 
+//            val immediateDuringAction = disabledState.createImmediateDuringAction
+//            immediateDuringAction.setImmediate(true);
+//            val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
+//            auxiliaryEmission.setValuedObject(disabledValuedObject);
+//            immediateDuringAction.addEmission(auxiliaryEmission);
+//
+//            // Create the body of the intermediate state - containing the entry actions
+//            // as during actions.
+//            val actionState = SCChartsFactory::eINSTANCE.createState();
+//            actionState.setId(state.id("Awake"));
+//            actionState.setLabel("Awake " + state.label);
+//
+//            // For every entry action: Create a region
+//            for (entryAction : state.entryActions) {
+//                val entryActionCopy = entryAction.copy;
+//                entryActionCopy.setImmediate(true);
+//                actionState.localActions.add(entryActionCopy);
+//            }
+//
+//            // Connect Suspended and NonSuspended States with transitions (s.a. for a more detailed explanation)
+//            val disabled2actionTransition = SCChartsFactory::eINSTANCE.createTransition();
+//            disabled2actionTransition.setTargetState(actionState);
+//            disabled2actionTransition.setTrigger(notSuspendTrigger.copy);
+//            disabled2actionTransition.setImmediate(!immediateSuspension);
+//            disabled2actionTransition.setPriority(1);
+//            disabledState.outgoingTransitions.add(disabled2actionTransition);
+//
+//            // Do not emit the disableValuedObject when the suspend trigger is not true any more!
+//            disabled2actionTransition.setType(TransitionType::STRONGABORT);
+//            val action2runningTransition = SCChartsFactory::eINSTANCE.createTransition();
+//            action2runningTransition.setTargetState(runningState);
+//            action2runningTransition.setLabel("#");
+//            action2runningTransition.setImmediate(true);
+//            action2runningTransition.setPriority(1);
+//            actionState.outgoingTransitions.add(action2runningTransition);
+//            val running2disabledTransition = SCChartsFactory::eINSTANCE.createTransition();
+//            running2disabledTransition.setTargetState(disabledState);
+//            running2disabledTransition.setImmediate(immediateSuspension);
+//            running2disabledTransition.setTrigger(suspendTrigger.copy);
+//            running2disabledTransition.setPriority(1);
+//            runningState.outgoingTransitions.add(running2disabledTransition);
+//
+//            // Create a region with two states running and disabled and the intermediate entry-action-macro-state
+//            val suspendActionRegion = SCChartsFactory::eINSTANCE.createRegion();
+//            suspendActionRegion.setId(state.id("SuspendActionRegion"));
+//            suspendActionRegion.states.add(actionState);
+//            suspendActionRegion.states.add(runningState);
+//            suspendActionRegion.states.add(disabledState);
+//            targetRootRegion.states.get(0).regions.add(suspendActionRegion);
+//
+//            // Add disabled valuedObject  to ALL hierarchically lower (immediate) transitions
+//            // that appear INSIDE the considered state (in its regions)
+//            var List<Transition> consideredTransitions = <Transition>newLinkedList;
+//            for (region : state.regions) {
+//                if (immediateSuspension) {
+//
+//                    // consider ALL transitions (also immediate ones)
+//                    consideredTransitions.addAll(region.eAllContents().filter(typeof(Transition)).toList());
+//                } else {
+//
+//                    // consider only NON-immediate transitions
+//                    consideredTransitions.addAll(
+//                        region.eAllContents().filter(typeof(Transition)).filter(e|!e.isImmediate).toList());
+//                }
+//            }
+//
+//            for (consideredTransition : ImmutableList::copyOf(consideredTransitions)) {
+//                val disabledValuedObjectRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+//                disabledValuedObjectRef.setValuedObject(disabledValuedObject);
+//                val disabledExpression = buildDisabledExpression(consideredTransition.trigger,
+//                    disabledValuedObjectRef);
+//                consideredTransition.setTrigger(disabledExpression);
+//            }
+//        } // if any suspension there
+//    }
+
+
+
     //-------------------------------------------------------------------------
-    //--                          S U S P E N D                              --
+    //--                        H I S T O R Y                                --
     //-------------------------------------------------------------------------
-    //@requires: during
-    //@run-before: entry (because these are considered here)
-    // For a suspend statement of state S create a new top-level region
-    // with two states (NotSuspended (initial) and Suspended). Connect them
-    // with the suspension trigger.
-    // If the trigger is immediate, then connect them immediately and have
-    // the transition back be non-immediate. If it is non immediate then
-    // have the transition back be immediate.
-    // Create an immediate during action of the Suspended state that emits
-    // an auxiliaryDisableValuedObject that is added to all outgoing transitions
-    // (within the disabledExpression) 
-    // Transforming Suspends.
-    def Region transformSuspend(Region rootRegion) {
+    // @requires: suspend
+    // Transforming History. This is using the concept of suspend so it must
+    // be followed by resolving suspension
+    def Region transformHistory(Region rootRegion) {
 
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy;
 
         // For every state in the SyncChart do the transformation
-        // Iterate over a copy of the list  
+        // Iterate over a copy of the list
+        // The following can also be written functional:
+        //        ImmutableList::copyOf(targetStates).forEach[
+        //             it.transformHistory(targetRootRegion);
+        //        ]
         for (targetState : targetRootRegion.getAllContainedStates) {
 
-            targetState.transformSuspend(targetRootRegion);
-        }
-
-        // Now delete all suspends
-        for (targetState : targetRootRegion.getAllContainedStates.filter(e|e.suspendActions.size > 0)) {
-            for (suspendAction : targetState.suspendActions.immutableCopy) {
-                targetState.localActions.remove(suspendAction)
-            }
+            targetState.transformHistory(targetRootRegion);
         }
         
         targetRootRegion;
     }
 
-    // Tells whether a state is a macro state
-    def boolean isHierarchical(State state) {
-        (state.regions != null && state.regions.size > 0);
-    }
 
     // Build a new expression that disables the inExpression if the disabledWhenExpression
     // is enabled. It optimizes not(not(x)) = x.
@@ -1759,138 +2106,6 @@ class SCChartsCoreTransformation {
         }
     }
 
-    // Encode suspensions by traversing all states and get their
-    // hierarchical suspension trigger (if any).
-    // In case there is such a trigger, to all outgoing transitions, add 
-    // an "(<condition>) && !trigger" to disable ALL these transitions
-    // if the suspension trigger is enabled.
-    def void transformSuspend(State state, Region targetRootRegion) {
-
-        for (suspension : state.suspendActions) {
-            val suspendTrigger = suspension.trigger;
-            val immediateSuspension = suspension.isImmediate;
-            val notSuspendTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
-            notSuspendTrigger.setOperator(OperatorType::NOT);
-            notSuspendTrigger.add(suspendTrigger.copy);
-
-            // Add SET and RESET valuedObject valuedObject flag 
-            val disabledValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-            disabledValuedObject.setName("disabled" + state.id);
-            disabledValuedObject.setInput(false);
-            disabledValuedObject.setOutput(false);
-            disabledValuedObject.setType(ValueType::PURE);
-            targetRootRegion.rootState.valuedObjects.add(disabledValuedObject);
-
-            // Add a NonSuspended and Suspended state
-            val runningState = SCChartsFactory::eINSTANCE.createState();
-            runningState.setId(state.id("NonSuspended"));
-            runningState.setLabel(state.id + "Running");
-            runningState.setInitial(true);
-            val disabledState = SCChartsFactory::eINSTANCE.createState();
-            disabledState.setId(state.id("Suspended"));
-            disabledState.setLabel(state.id + "Disabled");
-
-            // Add during action that emits the disable valuedObject 
-            val immediateDuringAction = disabledState.createImmediateDuringAction
-            immediateDuringAction.setImmediate(true);
-            val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
-            auxiliaryEmission.setValuedObject(disabledValuedObject);
-            immediateDuringAction.addEmission(auxiliaryEmission);
-
-            // Create the body of the intermediate state - containing the entry actions
-            // as during actions.
-            val actionState = SCChartsFactory::eINSTANCE.createState();
-            actionState.setId(state.id("Awake"));
-            actionState.setLabel("Awake " + state.label);
-
-            // For every entry action: Create a region
-            for (entryAction : state.entryActions) {
-                val entryActionCopy = entryAction.copy;
-                entryActionCopy.setImmediate(true);
-                actionState.localActions.add(entryActionCopy);
-            }
-
-            // Connect Suspended and NonSuspended States with transitions (s.a. for a more detailed explanation)
-            val disabled2actionTransition = SCChartsFactory::eINSTANCE.createTransition();
-            disabled2actionTransition.setTargetState(actionState);
-            disabled2actionTransition.setTrigger(notSuspendTrigger.copy);
-            disabled2actionTransition.setImmediate(!immediateSuspension);
-            disabled2actionTransition.setPriority(1);
-            disabledState.outgoingTransitions.add(disabled2actionTransition);
-
-            // Do not emit the disableValuedObject when the suspend trigger is not true any more!
-            disabled2actionTransition.setType(TransitionType::STRONGABORT);
-            val action2runningTransition = SCChartsFactory::eINSTANCE.createTransition();
-            action2runningTransition.setTargetState(runningState);
-            action2runningTransition.setLabel("#");
-            action2runningTransition.setImmediate(true);
-            action2runningTransition.setPriority(1);
-            actionState.outgoingTransitions.add(action2runningTransition);
-            val running2disabledTransition = SCChartsFactory::eINSTANCE.createTransition();
-            running2disabledTransition.setTargetState(disabledState);
-            running2disabledTransition.setImmediate(immediateSuspension);
-            running2disabledTransition.setTrigger(suspendTrigger.copy);
-            running2disabledTransition.setPriority(1);
-            runningState.outgoingTransitions.add(running2disabledTransition);
-
-            // Create a region with two states running and disabled and the intermediate entry-action-macro-state
-            val suspendActionRegion = SCChartsFactory::eINSTANCE.createRegion();
-            suspendActionRegion.setId(state.id("SuspendActionRegion"));
-            suspendActionRegion.states.add(actionState);
-            suspendActionRegion.states.add(runningState);
-            suspendActionRegion.states.add(disabledState);
-            targetRootRegion.states.get(0).regions.add(suspendActionRegion);
-
-            // Add disabled valuedObject  to ALL hierarchically lower (immediate) transitions
-            // that appear INSIDE the considered state (in its regions)
-            var List<Transition> consideredTransitions = <Transition>newLinkedList;
-            for (region : state.regions) {
-                if (immediateSuspension) {
-
-                    // consider ALL transitions (also immediate ones)
-                    consideredTransitions.addAll(region.eAllContents().filter(typeof(Transition)).toList());
-                } else {
-
-                    // consider only NON-immediate transitions
-                    consideredTransitions.addAll(
-                        region.eAllContents().filter(typeof(Transition)).filter(e|!e.isImmediate).toList());
-                }
-            }
-
-            for (consideredTransition : ImmutableList::copyOf(consideredTransitions)) {
-                val disabledValuedObjectRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-                disabledValuedObjectRef.setValuedObject(disabledValuedObject);
-                val disabledExpression = buildDisabledExpression(consideredTransition.trigger,
-                    disabledValuedObjectRef);
-                consideredTransition.setTrigger(disabledExpression);
-            }
-        } // if any suspension there
-    }
-
-    //-------------------------------------------------------------------------
-    //--                        H I S T O R Y                                --
-    //-------------------------------------------------------------------------
-    // @requires: suspend
-    // Transforming History. This is using the concept of suspend so it must
-    // be followed by resolving suspension
-    def Region transformHistory(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
-
-        // For every state in the SyncChart do the transformation
-        // Iterate over a copy of the list
-        // The following can also be written functional:
-        //        ImmutableList::copyOf(targetStates).forEach[
-        //             it.transformHistory(targetRootRegion);
-        //        ]
-        for (targetState : targetRootRegion.getAllContainedStates) {
-
-            targetState.transformHistory(targetRootRegion);
-        }
-        
-        targetRootRegion;
-    }
 
     // Traverse all states and transform macro states that have connecting
     // (incoming) history transitions.    
@@ -2059,79 +2274,81 @@ class SCChartsCoreTransformation {
         }
     }
 
-    //-------------------------------------------------------------------------
-    //--                     D U R I N G       A C T I O N S                 --
-    //-------------------------------------------------------------------------
-    // Transforming During Actions.
-    def Region transformDuring(Region rootRegion) {
 
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
 
-        // Traverse all states
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformDuring(targetRootRegion);
-        }
-        targetRootRegion;
-    }
-
-    // Traverse all states and transform macro states that have actions to transform
-    def void transformDuring(State state, Region targetRootRegion) {
-
-        // DURING ACTIONS : 
-        // For each action create a separate region in the state. 
-        // Put the action into an transition within the macro state.
-        // Add a loop back to the initial state of the added region.
-        // In case the during action is immediate, the looping transition is non-immediate.
-        // In case the during action is non-immediate, the looping transition is immediate.
-        if (state.duringActions != null && state.duringActions.size > 0) {
-
-            // Create the body of the dummy state - containing the during action
-            // For every during action: Create a region
-            for (innerAction : state.duringActions) {
-                val dummyInternalState1 = SCChartsFactory::eINSTANCE.createState();
-                val dummyInternalState2 = SCChartsFactory::eINSTANCE.createState();
-                dummyInternalState1.setId(state.id("During1Internal"));
-                dummyInternalState1.setLabel("i");
-                dummyInternalState1.setInitial(true);
-                dummyInternalState2.setId(state.id("During2Internal"));
-                dummyInternalState2.setLabel("f");
-
-                // Add action dummyTransition
-                val dummyInternalTransition = SCChartsFactory::eINSTANCE.createTransition();
-                dummyInternalTransition.setTargetState(dummyInternalState2);
-                dummyInternalTransition.setPriority(1);
-                dummyInternalTransition.setDelay(innerAction.delay);
-                dummyInternalTransition.setImmediate(innerAction.isImmediate);
-                dummyInternalTransition.setTrigger(innerAction.trigger.copy);
-                for (action : innerAction.effects) {
-                    dummyInternalTransition.addEffect(action.copy);
-                }
-                dummyInternalState1.outgoingTransitions.add(dummyInternalTransition);
-
-                // Add self loop
-                val dummyInternalLoopTransition = SCChartsFactory::eINSTANCE.createTransition();
-                dummyInternalLoopTransition.setTargetState(dummyInternalState1);
-                dummyInternalLoopTransition.setPriority(1);
-                dummyInternalLoopTransition.setImmediate(!innerAction.isImmediate);
-                if (!innerAction.isImmediate) {
-                    dummyInternalLoopTransition.setLabel("#");
-                }
-                dummyInternalLoopTransition.setType(TransitionType::WEAKABORT);
-                dummyInternalState2.outgoingTransitions.add(dummyInternalLoopTransition);
-
-                // Add the region to the state
-                val dummyInternalRegion = SCChartsFactory::eINSTANCE.createRegion();
-                dummyInternalRegion.setId(innerAction.id("DuringDummyRegion"));
-                dummyInternalRegion.states.add(dummyInternalState1);
-                dummyInternalRegion.states.add(dummyInternalState2);
-                state.regions.add(dummyInternalRegion);
-            }
-
-            // After transforming during actions, erase them
-            state.duringActions.clear();
-        }
-    }
+//    //-------------------------------------------------------------------------
+//    //--                     D U R I N G       A C T I O N S                 --
+//    //-------------------------------------------------------------------------
+//    // Transforming During Actions.
+//    def Region transformDuring(Region rootRegion) {
+//
+//        // Clone the complete SCCharts region 
+//        val targetRootRegion = rootRegion.copy;
+//
+//        // Traverse all states
+//        for (targetState : targetRootRegion.getAllContainedStates) {
+//            targetState.transformDuring(targetRootRegion);
+//        }
+//        targetRootRegion;
+//    }
+//
+//    // Traverse all states and transform macro states that have actions to transform
+//    def void transformDuring(State state, Region targetRootRegion) {
+//
+//        // DURING ACTIONS : 
+//        // For each action create a separate region in the state. 
+//        // Put the action into an transition within the macro state.
+//        // Add a loop back to the initial state of the added region.
+//        // In case the during action is immediate, the looping transition is non-immediate.
+//        // In case the during action is non-immediate, the looping transition is immediate.
+//        if (state.duringActions != null && state.duringActions.size > 0) {
+//
+//            // Create the body of the dummy state - containing the during action
+//            // For every during action: Create a region
+//            for (innerAction : state.duringActions) {
+//                val dummyInternalState1 = SCChartsFactory::eINSTANCE.createState();
+//                val dummyInternalState2 = SCChartsFactory::eINSTANCE.createState();
+//                dummyInternalState1.setId(state.id("During1Internal"));
+//                dummyInternalState1.setLabel("i");
+//                dummyInternalState1.setInitial(true);
+//                dummyInternalState2.setId(state.id("During2Internal"));
+//                dummyInternalState2.setLabel("f");
+//
+//                // Add action dummyTransition
+//                val dummyInternalTransition = SCChartsFactory::eINSTANCE.createTransition();
+//                dummyInternalTransition.setTargetState(dummyInternalState2);
+//                dummyInternalTransition.setPriority(1);
+//                dummyInternalTransition.setDelay(innerAction.delay);
+//                dummyInternalTransition.setImmediate(innerAction.isImmediate);
+//                dummyInternalTransition.setTrigger(innerAction.trigger.copy);
+//                for (action : innerAction.effects) {
+//                    dummyInternalTransition.addEffect(action.copy);
+//                }
+//                dummyInternalState1.outgoingTransitions.add(dummyInternalTransition);
+//
+//                // Add self loop
+//                val dummyInternalLoopTransition = SCChartsFactory::eINSTANCE.createTransition();
+//                dummyInternalLoopTransition.setTargetState(dummyInternalState1);
+//                dummyInternalLoopTransition.setPriority(1);
+//                dummyInternalLoopTransition.setImmediate(!innerAction.isImmediate);
+//                if (!innerAction.isImmediate) {
+//                    dummyInternalLoopTransition.setLabel("#");
+//                }
+//                dummyInternalLoopTransition.setType(TransitionType::WEAKABORT);
+//                dummyInternalState2.outgoingTransitions.add(dummyInternalLoopTransition);
+//
+//                // Add the region to the state
+//                val dummyInternalRegion = SCChartsFactory::eINSTANCE.createRegion();
+//                dummyInternalRegion.setId(innerAction.id("DuringDummyRegion"));
+//                dummyInternalRegion.states.add(dummyInternalState1);
+//                dummyInternalRegion.states.add(dummyInternalState2);
+//                state.regions.add(dummyInternalRegion);
+//            }
+//
+//            // After transforming during actions, erase them
+//            state.duringActions.clear();
+//        }
+//    }
 
     //-------------------------------------------------------------------------
     //--                     E N T R Y         A C T I O N S                 --
