@@ -6222,38 +6222,32 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Expression__Alternatives"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2031:1: rule__Expression__Alternatives : ( ( ( ruleBoolExpression ) ) | ( ruleValuedExpression ) );
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2031:1: rule__Expression__Alternatives : ( ( ruleValuedExpression ) | ( ruleBoolExpression ) );
     public final void rule__Expression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2035:1: ( ( ( ruleBoolExpression ) ) | ( ruleValuedExpression ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2035:1: ( ( ruleValuedExpression ) | ( ruleBoolExpression ) )
             int alt9=2;
             alt9 = dfa9.predict(input);
             switch (alt9) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2036:1: ( ( ruleBoolExpression ) )
+                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2036:1: ( ruleValuedExpression )
                     {
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2036:1: ( ( ruleBoolExpression ) )
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2037:1: ( ruleBoolExpression )
+                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2036:1: ( ruleValuedExpression )
+                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2037:1: ruleValuedExpression
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); 
+                       before(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); 
                     }
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2038:1: ( ruleBoolExpression )
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2038:3: ruleBoolExpression
-                    {
-                    pushFollow(FollowSets000.FOLLOW_ruleBoolExpression_in_rule__Expression__Alternatives4262);
-                    ruleBoolExpression();
+                    pushFollow(FollowSets000.FOLLOW_ruleValuedExpression_in_rule__Expression__Alternatives4261);
+                    ruleValuedExpression();
 
                     state._fsp--;
                     if (state.failed) return ;
-
-                    }
-
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); 
+                       after(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); 
                     }
 
                     }
@@ -6262,21 +6256,21 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2042:6: ( ruleValuedExpression )
+                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2042:6: ( ruleBoolExpression )
                     {
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2042:6: ( ruleValuedExpression )
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2043:1: ruleValuedExpression
+                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2042:6: ( ruleBoolExpression )
+                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2043:1: ruleBoolExpression
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_1()); 
+                       before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_1()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleValuedExpression_in_rule__Expression__Alternatives4280);
-                    ruleValuedExpression();
+                    pushFollow(FollowSets000.FOLLOW_ruleBoolExpression_in_rule__Expression__Alternatives4278);
+                    ruleBoolExpression();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_1()); 
+                       after(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_1()); 
                     }
 
                     }
@@ -6324,7 +6318,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2060:1: ( rule__CompareOperation__Group_0__0 )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2060:2: rule__CompareOperation__Group_0__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0__0_in_rule__CompareOperation__Alternatives4312);
+                    pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0__0_in_rule__CompareOperation__Alternatives4310);
                     rule__CompareOperation__Group_0__0();
 
                     state._fsp--;
@@ -6350,7 +6344,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getCompareOperationAccess().getNotExpressionParserRuleCall_1()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleNotExpression_in_rule__CompareOperation__Alternatives4330);
+                    pushFollow(FollowSets000.FOLLOW_ruleNotExpression_in_rule__CompareOperation__Alternatives4328);
                     ruleNotExpression();
 
                     state._fsp--;
@@ -6382,36 +6376,30 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NotOrValuedExpression__Alternatives"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2075:1: rule__NotOrValuedExpression__Alternatives : ( ( ( ruleValuedExpression ) ) | ( ruleNotExpression ) );
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2075:1: rule__NotOrValuedExpression__Alternatives : ( ( ruleValuedExpression ) | ( ruleNotExpression ) );
     public final void rule__NotOrValuedExpression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2079:1: ( ( ( ruleValuedExpression ) ) | ( ruleNotExpression ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2079:1: ( ( ruleValuedExpression ) | ( ruleNotExpression ) )
             int alt11=2;
             alt11 = dfa11.predict(input);
             switch (alt11) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2080:1: ( ( ruleValuedExpression ) )
+                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2080:1: ( ruleValuedExpression )
                     {
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2080:1: ( ( ruleValuedExpression ) )
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2081:1: ( ruleValuedExpression )
+                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2080:1: ( ruleValuedExpression )
+                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2081:1: ruleValuedExpression
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); 
                     }
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2082:1: ( ruleValuedExpression )
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2082:3: ruleValuedExpression
-                    {
-                    pushFollow(FollowSets000.FOLLOW_ruleValuedExpression_in_rule__NotOrValuedExpression__Alternatives4363);
+                    pushFollow(FollowSets000.FOLLOW_ruleValuedExpression_in_rule__NotOrValuedExpression__Alternatives4360);
                     ruleValuedExpression();
 
                     state._fsp--;
                     if (state.failed) return ;
-
-                    }
-
                     if ( state.backtracking==0 ) {
                        after(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); 
                     }
@@ -6430,7 +6418,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getNotOrValuedExpressionAccess().getNotExpressionParserRuleCall_1()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleNotExpression_in_rule__NotOrValuedExpression__Alternatives4381);
+                    pushFollow(FollowSets000.FOLLOW_ruleNotExpression_in_rule__NotOrValuedExpression__Alternatives4377);
                     ruleNotExpression();
 
                     state._fsp--;
@@ -6498,7 +6486,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2104:1: ( rule__NotExpression__Group_0__0 )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2104:2: rule__NotExpression__Group_0__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__NotExpression__Group_0__0_in_rule__NotExpression__Alternatives4413);
+                    pushFollow(FollowSets000.FOLLOW_rule__NotExpression__Group_0__0_in_rule__NotExpression__Alternatives4409);
                     rule__NotExpression__Group_0__0();
 
                     state._fsp--;
@@ -6524,7 +6512,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getNotExpressionAccess().getAtomicExpressionParserRuleCall_1()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleAtomicExpression_in_rule__NotExpression__Alternatives4431);
+                    pushFollow(FollowSets000.FOLLOW_ruleAtomicExpression_in_rule__NotExpression__Alternatives4427);
                     ruleAtomicExpression();
 
                     state._fsp--;
@@ -6592,7 +6580,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2126:1: ( rule__NegExpression__Group_0__0 )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2126:2: rule__NegExpression__Group_0__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__NegExpression__Group_0__0_in_rule__NegExpression__Alternatives4463);
+                    pushFollow(FollowSets000.FOLLOW_rule__NegExpression__Group_0__0_in_rule__NegExpression__Alternatives4459);
                     rule__NegExpression__Group_0__0();
 
                     state._fsp--;
@@ -6618,7 +6606,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getNegExpressionAccess().getAtomicValuedExpressionParserRuleCall_1()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleAtomicValuedExpression_in_rule__NegExpression__Alternatives4481);
+                    pushFollow(FollowSets000.FOLLOW_ruleAtomicValuedExpression_in_rule__NegExpression__Alternatives4477);
                     ruleAtomicValuedExpression();
 
                     state._fsp--;
@@ -6699,7 +6687,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicExpressionAccess().getBoolValueParserRuleCall_0()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleBoolValue_in_rule__AtomicExpression__Alternatives4513);
+                    pushFollow(FollowSets000.FOLLOW_ruleBoolValue_in_rule__AtomicExpression__Alternatives4509);
                     ruleBoolValue();
 
                     state._fsp--;
@@ -6722,7 +6710,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicExpressionAccess().getValuedObjectTestExpressionParserRuleCall_1()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleValuedObjectTestExpression_in_rule__AtomicExpression__Alternatives4530);
+                    pushFollow(FollowSets000.FOLLOW_ruleValuedObjectTestExpression_in_rule__AtomicExpression__Alternatives4526);
                     ruleValuedObjectTestExpression();
 
                     state._fsp--;
@@ -6748,7 +6736,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2160:1: ( rule__AtomicExpression__Group_2__0 )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2160:2: rule__AtomicExpression__Group_2__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__AtomicExpression__Group_2__0_in_rule__AtomicExpression__Alternatives4547);
+                    pushFollow(FollowSets000.FOLLOW_rule__AtomicExpression__Group_2__0_in_rule__AtomicExpression__Alternatives4543);
                     rule__AtomicExpression__Group_2__0();
 
                     state._fsp--;
@@ -6774,7 +6762,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicExpressionAccess().getTextExpressionParserRuleCall_3()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleTextExpression_in_rule__AtomicExpression__Alternatives4565);
+                    pushFollow(FollowSets000.FOLLOW_ruleTextExpression_in_rule__AtomicExpression__Alternatives4561);
                     ruleTextExpression();
 
                     state._fsp--;
@@ -6825,7 +6813,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicValuedExpressionAccess().getIntValueParserRuleCall_0()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleIntValue_in_rule__AtomicValuedExpression__Alternatives4597);
+                    pushFollow(FollowSets000.FOLLOW_ruleIntValue_in_rule__AtomicValuedExpression__Alternatives4593);
                     ruleIntValue();
 
                     state._fsp--;
@@ -6848,7 +6836,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicValuedExpressionAccess().getFloatValueParserRuleCall_1()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleFloatValue_in_rule__AtomicValuedExpression__Alternatives4614);
+                    pushFollow(FollowSets000.FOLLOW_ruleFloatValue_in_rule__AtomicValuedExpression__Alternatives4610);
                     ruleFloatValue();
 
                     state._fsp--;
@@ -6871,7 +6859,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicValuedExpressionAccess().getDoubleValueParserRuleCall_2()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleDoubleValue_in_rule__AtomicValuedExpression__Alternatives4631);
+                    pushFollow(FollowSets000.FOLLOW_ruleDoubleValue_in_rule__AtomicValuedExpression__Alternatives4627);
                     ruleDoubleValue();
 
                     state._fsp--;
@@ -6897,7 +6885,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2200:1: ( rule__AtomicValuedExpression__Group_3__0 )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2200:2: rule__AtomicValuedExpression__Group_3__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__AtomicValuedExpression__Group_3__0_in_rule__AtomicValuedExpression__Alternatives4648);
+                    pushFollow(FollowSets000.FOLLOW_rule__AtomicValuedExpression__Group_3__0_in_rule__AtomicValuedExpression__Alternatives4644);
                     rule__AtomicValuedExpression__Group_3__0();
 
                     state._fsp--;
@@ -6923,7 +6911,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAtomicValuedExpressionAccess().getAtomicExpressionParserRuleCall_4()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleAtomicExpression_in_rule__AtomicValuedExpression__Alternatives4666);
+                    pushFollow(FollowSets000.FOLLOW_ruleAtomicExpression_in_rule__AtomicValuedExpression__Alternatives4662);
                     ruleAtomicExpression();
 
                     state._fsp--;
@@ -6991,7 +6979,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2222:1: ( rule__ValuedObjectTestExpression__Group_0__0 )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2222:2: rule__ValuedObjectTestExpression__Group_0__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__0_in_rule__ValuedObjectTestExpression__Alternatives4698);
+                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__0_in_rule__ValuedObjectTestExpression__Alternatives4694);
                     rule__ValuedObjectTestExpression__Group_0__0();
 
                     state._fsp--;
@@ -7017,7 +7005,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getValuedObjectTestExpressionAccess().getValuedObjectReferenceParserRuleCall_1()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleValuedObjectReference_in_rule__ValuedObjectTestExpression__Alternatives4716);
+                    pushFollow(FollowSets000.FOLLOW_ruleValuedObjectReference_in_rule__ValuedObjectTestExpression__Alternatives4712);
                     ruleValuedObjectReference();
 
                     state._fsp--;
@@ -7082,7 +7070,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorPreOperatorEnumRuleCall_0_1_0_0()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_rulePreOperator_in_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_04748);
+                    pushFollow(FollowSets000.FOLLOW_rulePreOperator_in_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_04744);
                     rulePreOperator();
 
                     state._fsp--;
@@ -7105,7 +7093,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorValOperatorEnumRuleCall_0_1_0_1()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleValOperator_in_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_04765);
+                    pushFollow(FollowSets000.FOLLOW_ruleValOperator_in_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_04761);
                     ruleValOperator();
 
                     state._fsp--;
@@ -7156,7 +7144,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAnnotationAccess().getCommentAnnotationParserRuleCall_0()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleCommentAnnotation_in_rule__Annotation__Alternatives4798);
+                    pushFollow(FollowSets000.FOLLOW_ruleCommentAnnotation_in_rule__Annotation__Alternatives4794);
                     ruleCommentAnnotation();
 
                     state._fsp--;
@@ -7179,7 +7167,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_1()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleTagAnnotation_in_rule__Annotation__Alternatives4815);
+                    pushFollow(FollowSets000.FOLLOW_ruleTagAnnotation_in_rule__Annotation__Alternatives4811);
                     ruleTagAnnotation();
 
                     state._fsp--;
@@ -7202,7 +7190,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleKeyStringValueAnnotation_in_rule__Annotation__Alternatives4832);
+                    pushFollow(FollowSets000.FOLLOW_ruleKeyStringValueAnnotation_in_rule__Annotation__Alternatives4828);
                     ruleKeyStringValueAnnotation();
 
                     state._fsp--;
@@ -7225,7 +7213,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleTypedKeyStringValueAnnotation_in_rule__Annotation__Alternatives4849);
+                    pushFollow(FollowSets000.FOLLOW_ruleTypedKeyStringValueAnnotation_in_rule__Annotation__Alternatives4845);
                     ruleTypedKeyStringValueAnnotation();
 
                     state._fsp--;
@@ -7248,7 +7236,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_4()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleKeyBooleanValueAnnotation_in_rule__Annotation__Alternatives4866);
+                    pushFollow(FollowSets000.FOLLOW_ruleKeyBooleanValueAnnotation_in_rule__Annotation__Alternatives4862);
                     ruleKeyBooleanValueAnnotation();
 
                     state._fsp--;
@@ -7271,7 +7259,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_5()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleKeyIntValueAnnotation_in_rule__Annotation__Alternatives4883);
+                    pushFollow(FollowSets000.FOLLOW_ruleKeyIntValueAnnotation_in_rule__Annotation__Alternatives4879);
                     ruleKeyIntValueAnnotation();
 
                     state._fsp--;
@@ -7294,7 +7282,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_6()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleKeyFloatValueAnnotation_in_rule__Annotation__Alternatives4900);
+                    pushFollow(FollowSets000.FOLLOW_ruleKeyFloatValueAnnotation_in_rule__Annotation__Alternatives4896);
                     ruleKeyFloatValueAnnotation();
 
                     state._fsp--;
@@ -7359,7 +7347,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getEStringAccess().getSTRINGTerminalRuleCall_0()); 
                     }
-                    match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_rule__EString__Alternatives4933); if (state.failed) return ;
+                    match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_rule__EString__Alternatives4929); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
                        after(grammarAccess.getEStringAccess().getSTRINGTerminalRuleCall_0()); 
                     }
@@ -7378,7 +7366,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getEStringAccess().getIDTerminalRuleCall_1()); 
                     }
-                    match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__EString__Alternatives4950); if (state.failed) return ;
+                    match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__EString__Alternatives4946); if (state.failed) return ;
                     if ( state.backtracking==0 ) {
                        after(grammarAccess.getEStringAccess().getIDTerminalRuleCall_1()); 
                     }
@@ -7456,7 +7444,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2342:1: ( 'normal' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2342:3: 'normal'
                     {
-                    match(input,26,FollowSets000.FOLLOW_26_in_rule__StateType__Alternatives4983); if (state.failed) return ;
+                    match(input,26,FollowSets000.FOLLOW_26_in_rule__StateType__Alternatives4979); if (state.failed) return ;
 
                     }
 
@@ -7481,7 +7469,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2349:1: ( 'connector' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2349:3: 'connector'
                     {
-                    match(input,27,FollowSets000.FOLLOW_27_in_rule__StateType__Alternatives5004); if (state.failed) return ;
+                    match(input,27,FollowSets000.FOLLOW_27_in_rule__StateType__Alternatives5000); if (state.failed) return ;
 
                     }
 
@@ -7506,7 +7494,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2356:1: ( 'reference' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2356:3: 'reference'
                     {
-                    match(input,28,FollowSets000.FOLLOW_28_in_rule__StateType__Alternatives5025); if (state.failed) return ;
+                    match(input,28,FollowSets000.FOLLOW_28_in_rule__StateType__Alternatives5021); if (state.failed) return ;
 
                     }
 
@@ -7531,7 +7519,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2363:1: ( 'textual' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2363:3: 'textual'
                     {
-                    match(input,29,FollowSets000.FOLLOW_29_in_rule__StateType__Alternatives5046); if (state.failed) return ;
+                    match(input,29,FollowSets000.FOLLOW_29_in_rule__StateType__Alternatives5042); if (state.failed) return ;
 
                     }
 
@@ -7607,7 +7595,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2380:1: ( '-->' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2380:3: '-->'
                     {
-                    match(input,30,FollowSets000.FOLLOW_30_in_rule__TransitionType__Alternatives5082); if (state.failed) return ;
+                    match(input,30,FollowSets000.FOLLOW_30_in_rule__TransitionType__Alternatives5078); if (state.failed) return ;
 
                     }
 
@@ -7632,7 +7620,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2387:1: ( 'o->' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2387:3: 'o->'
                     {
-                    match(input,31,FollowSets000.FOLLOW_31_in_rule__TransitionType__Alternatives5103); if (state.failed) return ;
+                    match(input,31,FollowSets000.FOLLOW_31_in_rule__TransitionType__Alternatives5099); if (state.failed) return ;
 
                     }
 
@@ -7657,7 +7645,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2394:1: ( '>->' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2394:3: '>->'
                     {
-                    match(input,32,FollowSets000.FOLLOW_32_in_rule__TransitionType__Alternatives5124); if (state.failed) return ;
+                    match(input,32,FollowSets000.FOLLOW_32_in_rule__TransitionType__Alternatives5120); if (state.failed) return ;
 
                     }
 
@@ -7733,7 +7721,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2411:1: ( 'reset' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2411:3: 'reset'
                     {
-                    match(input,33,FollowSets000.FOLLOW_33_in_rule__HistoryType__Alternatives5160); if (state.failed) return ;
+                    match(input,33,FollowSets000.FOLLOW_33_in_rule__HistoryType__Alternatives5156); if (state.failed) return ;
 
                     }
 
@@ -7758,7 +7746,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2418:1: ( 'shallow history' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2418:3: 'shallow history'
                     {
-                    match(input,34,FollowSets000.FOLLOW_34_in_rule__HistoryType__Alternatives5181); if (state.failed) return ;
+                    match(input,34,FollowSets000.FOLLOW_34_in_rule__HistoryType__Alternatives5177); if (state.failed) return ;
 
                     }
 
@@ -7783,7 +7771,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2425:1: ( 'history' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2425:3: 'history'
                     {
-                    match(input,35,FollowSets000.FOLLOW_35_in_rule__HistoryType__Alternatives5202); if (state.failed) return ;
+                    match(input,35,FollowSets000.FOLLOW_35_in_rule__HistoryType__Alternatives5198); if (state.failed) return ;
 
                     }
 
@@ -7874,7 +7862,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2442:1: ( '==' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2442:3: '=='
                     {
-                    match(input,36,FollowSets000.FOLLOW_36_in_rule__CompareOperator__Alternatives5238); if (state.failed) return ;
+                    match(input,36,FollowSets000.FOLLOW_36_in_rule__CompareOperator__Alternatives5234); if (state.failed) return ;
 
                     }
 
@@ -7899,7 +7887,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2449:1: ( '<' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2449:3: '<'
                     {
-                    match(input,37,FollowSets000.FOLLOW_37_in_rule__CompareOperator__Alternatives5259); if (state.failed) return ;
+                    match(input,37,FollowSets000.FOLLOW_37_in_rule__CompareOperator__Alternatives5255); if (state.failed) return ;
 
                     }
 
@@ -7924,7 +7912,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2456:1: ( '<=' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2456:3: '<='
                     {
-                    match(input,38,FollowSets000.FOLLOW_38_in_rule__CompareOperator__Alternatives5280); if (state.failed) return ;
+                    match(input,38,FollowSets000.FOLLOW_38_in_rule__CompareOperator__Alternatives5276); if (state.failed) return ;
 
                     }
 
@@ -7949,7 +7937,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2463:1: ( '>' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2463:3: '>'
                     {
-                    match(input,39,FollowSets000.FOLLOW_39_in_rule__CompareOperator__Alternatives5301); if (state.failed) return ;
+                    match(input,39,FollowSets000.FOLLOW_39_in_rule__CompareOperator__Alternatives5297); if (state.failed) return ;
 
                     }
 
@@ -7974,7 +7962,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2470:1: ( '>=' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2470:3: '>='
                     {
-                    match(input,40,FollowSets000.FOLLOW_40_in_rule__CompareOperator__Alternatives5322); if (state.failed) return ;
+                    match(input,40,FollowSets000.FOLLOW_40_in_rule__CompareOperator__Alternatives5318); if (state.failed) return ;
 
                     }
 
@@ -7999,7 +7987,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2477:1: ( '<>' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2477:3: '<>'
                     {
-                    match(input,41,FollowSets000.FOLLOW_41_in_rule__CompareOperator__Alternatives5343); if (state.failed) return ;
+                    match(input,41,FollowSets000.FOLLOW_41_in_rule__CompareOperator__Alternatives5339); if (state.failed) return ;
 
                     }
 
@@ -8100,7 +8088,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2494:1: ( 'pure' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2494:3: 'pure'
                     {
-                    match(input,42,FollowSets000.FOLLOW_42_in_rule__ValueType__Alternatives5379); if (state.failed) return ;
+                    match(input,42,FollowSets000.FOLLOW_42_in_rule__ValueType__Alternatives5375); if (state.failed) return ;
 
                     }
 
@@ -8125,7 +8113,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2501:1: ( 'bool' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2501:3: 'bool'
                     {
-                    match(input,43,FollowSets000.FOLLOW_43_in_rule__ValueType__Alternatives5400); if (state.failed) return ;
+                    match(input,43,FollowSets000.FOLLOW_43_in_rule__ValueType__Alternatives5396); if (state.failed) return ;
 
                     }
 
@@ -8150,7 +8138,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2508:1: ( 'unsigned' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2508:3: 'unsigned'
                     {
-                    match(input,44,FollowSets000.FOLLOW_44_in_rule__ValueType__Alternatives5421); if (state.failed) return ;
+                    match(input,44,FollowSets000.FOLLOW_44_in_rule__ValueType__Alternatives5417); if (state.failed) return ;
 
                     }
 
@@ -8175,7 +8163,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2515:1: ( 'int' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2515:3: 'int'
                     {
-                    match(input,45,FollowSets000.FOLLOW_45_in_rule__ValueType__Alternatives5442); if (state.failed) return ;
+                    match(input,45,FollowSets000.FOLLOW_45_in_rule__ValueType__Alternatives5438); if (state.failed) return ;
 
                     }
 
@@ -8200,7 +8188,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2522:1: ( 'float' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2522:3: 'float'
                     {
-                    match(input,46,FollowSets000.FOLLOW_46_in_rule__ValueType__Alternatives5463); if (state.failed) return ;
+                    match(input,46,FollowSets000.FOLLOW_46_in_rule__ValueType__Alternatives5459); if (state.failed) return ;
 
                     }
 
@@ -8225,7 +8213,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2529:1: ( 'double' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2529:3: 'double'
                     {
-                    match(input,47,FollowSets000.FOLLOW_47_in_rule__ValueType__Alternatives5484); if (state.failed) return ;
+                    match(input,47,FollowSets000.FOLLOW_47_in_rule__ValueType__Alternatives5480); if (state.failed) return ;
 
                     }
 
@@ -8250,7 +8238,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2536:1: ( 'string' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2536:3: 'string'
                     {
-                    match(input,48,FollowSets000.FOLLOW_48_in_rule__ValueType__Alternatives5505); if (state.failed) return ;
+                    match(input,48,FollowSets000.FOLLOW_48_in_rule__ValueType__Alternatives5501); if (state.failed) return ;
 
                     }
 
@@ -8275,7 +8263,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2543:1: ( 'host' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2543:3: 'host'
                     {
-                    match(input,49,FollowSets000.FOLLOW_49_in_rule__ValueType__Alternatives5526); if (state.failed) return ;
+                    match(input,49,FollowSets000.FOLLOW_49_in_rule__ValueType__Alternatives5522); if (state.failed) return ;
 
                     }
 
@@ -8376,7 +8364,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2560:1: ( 'none' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2560:3: 'none'
                     {
-                    match(input,50,FollowSets000.FOLLOW_50_in_rule__CombineOperator__Alternatives5562); if (state.failed) return ;
+                    match(input,50,FollowSets000.FOLLOW_50_in_rule__CombineOperator__Alternatives5558); if (state.failed) return ;
 
                     }
 
@@ -8401,7 +8389,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2567:1: ( '+' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2567:3: '+'
                     {
-                    match(input,21,FollowSets000.FOLLOW_21_in_rule__CombineOperator__Alternatives5583); if (state.failed) return ;
+                    match(input,21,FollowSets000.FOLLOW_21_in_rule__CombineOperator__Alternatives5579); if (state.failed) return ;
 
                     }
 
@@ -8426,7 +8414,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2574:1: ( '*' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2574:3: '*'
                     {
-                    match(input,23,FollowSets000.FOLLOW_23_in_rule__CombineOperator__Alternatives5604); if (state.failed) return ;
+                    match(input,23,FollowSets000.FOLLOW_23_in_rule__CombineOperator__Alternatives5600); if (state.failed) return ;
 
                     }
 
@@ -8451,7 +8439,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2581:1: ( 'max' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2581:3: 'max'
                     {
-                    match(input,51,FollowSets000.FOLLOW_51_in_rule__CombineOperator__Alternatives5625); if (state.failed) return ;
+                    match(input,51,FollowSets000.FOLLOW_51_in_rule__CombineOperator__Alternatives5621); if (state.failed) return ;
 
                     }
 
@@ -8476,7 +8464,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2588:1: ( 'min' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2588:3: 'min'
                     {
-                    match(input,52,FollowSets000.FOLLOW_52_in_rule__CombineOperator__Alternatives5646); if (state.failed) return ;
+                    match(input,52,FollowSets000.FOLLOW_52_in_rule__CombineOperator__Alternatives5642); if (state.failed) return ;
 
                     }
 
@@ -8501,7 +8489,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2595:1: ( '|' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2595:3: '|'
                     {
-                    match(input,18,FollowSets000.FOLLOW_18_in_rule__CombineOperator__Alternatives5667); if (state.failed) return ;
+                    match(input,18,FollowSets000.FOLLOW_18_in_rule__CombineOperator__Alternatives5663); if (state.failed) return ;
 
                     }
 
@@ -8526,7 +8514,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2602:1: ( '&' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2602:3: '&'
                     {
-                    match(input,19,FollowSets000.FOLLOW_19_in_rule__CombineOperator__Alternatives5688); if (state.failed) return ;
+                    match(input,19,FollowSets000.FOLLOW_19_in_rule__CombineOperator__Alternatives5684); if (state.failed) return ;
 
                     }
 
@@ -8551,7 +8539,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2609:1: ( 'host' )
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2609:3: 'host'
                     {
-                    match(input,49,FollowSets000.FOLLOW_49_in_rule__CombineOperator__Alternatives5709); if (state.failed) return ;
+                    match(input,49,FollowSets000.FOLLOW_49_in_rule__CombineOperator__Alternatives5705); if (state.failed) return ;
 
                     }
 
@@ -8591,12 +8579,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2625:1: ( rule__RootRegion__Group__0__Impl rule__RootRegion__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2626:2: rule__RootRegion__Group__0__Impl rule__RootRegion__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group__0__Impl_in_rule__RootRegion__Group__05742);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group__0__Impl_in_rule__RootRegion__Group__05738);
             rule__RootRegion__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group__1_in_rule__RootRegion__Group__05745);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group__1_in_rule__RootRegion__Group__05741);
             rule__RootRegion__Group__1();
 
             state._fsp--;
@@ -8670,12 +8658,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2656:1: ( rule__RootRegion__Group__1__Impl rule__RootRegion__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2657:2: rule__RootRegion__Group__1__Impl rule__RootRegion__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group__1__Impl_in_rule__RootRegion__Group__15803);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group__1__Impl_in_rule__RootRegion__Group__15799);
             rule__RootRegion__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group__2_in_rule__RootRegion__Group__15806);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group__2_in_rule__RootRegion__Group__15802);
             rule__RootRegion__Group__2();
 
             state._fsp--;
@@ -8729,7 +8717,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2671:2: rule__RootRegion__AnnotationsAssignment_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__RootRegion__AnnotationsAssignment_1_in_rule__RootRegion__Group__1__Impl5833);
+            	    pushFollow(FollowSets000.FOLLOW_rule__RootRegion__AnnotationsAssignment_1_in_rule__RootRegion__Group__1__Impl5829);
             	    rule__RootRegion__AnnotationsAssignment_1();
 
             	    state._fsp--;
@@ -8777,12 +8765,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2685:1: ( rule__RootRegion__Group__2__Impl rule__RootRegion__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2686:2: rule__RootRegion__Group__2__Impl rule__RootRegion__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group__2__Impl_in_rule__RootRegion__Group__25864);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group__2__Impl_in_rule__RootRegion__Group__25860);
             rule__RootRegion__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group__3_in_rule__RootRegion__Group__25867);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group__3_in_rule__RootRegion__Group__25863);
             rule__RootRegion__Group__3();
 
             state._fsp--;
@@ -8828,7 +8816,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2700:2: rule__RootRegion__Group_2__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__0_in_rule__RootRegion__Group__2__Impl5894);
+                    pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__0_in_rule__RootRegion__Group__2__Impl5890);
                     rule__RootRegion__Group_2__0();
 
                     state._fsp--;
@@ -8873,7 +8861,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2714:1: ( rule__RootRegion__Group__3__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2715:2: rule__RootRegion__Group__3__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group__3__Impl_in_rule__RootRegion__Group__35925);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group__3__Impl_in_rule__RootRegion__Group__35921);
             rule__RootRegion__Group__3__Impl();
 
             state._fsp--;
@@ -8927,7 +8915,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2728:2: rule__RootRegion__StatesAssignment_3
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__RootRegion__StatesAssignment_3_in_rule__RootRegion__Group__3__Impl5952);
+            	    pushFollow(FollowSets000.FOLLOW_rule__RootRegion__StatesAssignment_3_in_rule__RootRegion__Group__3__Impl5948);
             	    rule__RootRegion__StatesAssignment_3();
 
             	    state._fsp--;
@@ -8975,12 +8963,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2750:1: ( rule__RootRegion__Group_2__0__Impl rule__RootRegion__Group_2__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2751:2: rule__RootRegion__Group_2__0__Impl rule__RootRegion__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__0__Impl_in_rule__RootRegion__Group_2__05991);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__0__Impl_in_rule__RootRegion__Group_2__05987);
             rule__RootRegion__Group_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__1_in_rule__RootRegion__Group_2__05994);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__1_in_rule__RootRegion__Group_2__05990);
             rule__RootRegion__Group_2__1();
 
             state._fsp--;
@@ -9034,7 +9022,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2765:2: rule__RootRegion__AnnotationsAssignment_2_0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__RootRegion__AnnotationsAssignment_2_0_in_rule__RootRegion__Group_2__0__Impl6021);
+            	    pushFollow(FollowSets000.FOLLOW_rule__RootRegion__AnnotationsAssignment_2_0_in_rule__RootRegion__Group_2__0__Impl6017);
             	    rule__RootRegion__AnnotationsAssignment_2_0();
 
             	    state._fsp--;
@@ -9082,12 +9070,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2779:1: ( rule__RootRegion__Group_2__1__Impl rule__RootRegion__Group_2__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2780:2: rule__RootRegion__Group_2__1__Impl rule__RootRegion__Group_2__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__1__Impl_in_rule__RootRegion__Group_2__16052);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__1__Impl_in_rule__RootRegion__Group_2__16048);
             rule__RootRegion__Group_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__2_in_rule__RootRegion__Group_2__16055);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__2_in_rule__RootRegion__Group_2__16051);
             rule__RootRegion__Group_2__2();
 
             state._fsp--;
@@ -9126,7 +9114,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootRegionAccess().getRegionKeyword_2_1()); 
             }
-            match(input,53,FollowSets000.FOLLOW_53_in_rule__RootRegion__Group_2__1__Impl6083); if (state.failed) return ;
+            match(input,53,FollowSets000.FOLLOW_53_in_rule__RootRegion__Group_2__1__Impl6079); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRootRegionAccess().getRegionKeyword_2_1()); 
             }
@@ -9161,12 +9149,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2810:1: ( rule__RootRegion__Group_2__2__Impl rule__RootRegion__Group_2__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2811:2: rule__RootRegion__Group_2__2__Impl rule__RootRegion__Group_2__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__2__Impl_in_rule__RootRegion__Group_2__26114);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__2__Impl_in_rule__RootRegion__Group_2__26110);
             rule__RootRegion__Group_2__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__3_in_rule__RootRegion__Group_2__26117);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__3_in_rule__RootRegion__Group_2__26113);
             rule__RootRegion__Group_2__3();
 
             state._fsp--;
@@ -9208,7 +9196,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2825:1: ( rule__RootRegion__IdAssignment_2_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2825:2: rule__RootRegion__IdAssignment_2_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__IdAssignment_2_2_in_rule__RootRegion__Group_2__2__Impl6144);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__IdAssignment_2_2_in_rule__RootRegion__Group_2__2__Impl6140);
             rule__RootRegion__IdAssignment_2_2();
 
             state._fsp--;
@@ -9250,12 +9238,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2839:1: ( rule__RootRegion__Group_2__3__Impl rule__RootRegion__Group_2__4 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2840:2: rule__RootRegion__Group_2__3__Impl rule__RootRegion__Group_2__4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__3__Impl_in_rule__RootRegion__Group_2__36174);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__3__Impl_in_rule__RootRegion__Group_2__36170);
             rule__RootRegion__Group_2__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__4_in_rule__RootRegion__Group_2__36177);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__4_in_rule__RootRegion__Group_2__36173);
             rule__RootRegion__Group_2__4();
 
             state._fsp--;
@@ -9305,7 +9293,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2854:2: rule__RootRegion__LabelAssignment_2_3
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__RootRegion__LabelAssignment_2_3_in_rule__RootRegion__Group_2__3__Impl6204);
+                    pushFollow(FollowSets000.FOLLOW_rule__RootRegion__LabelAssignment_2_3_in_rule__RootRegion__Group_2__3__Impl6200);
                     rule__RootRegion__LabelAssignment_2_3();
 
                     state._fsp--;
@@ -9350,12 +9338,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2868:1: ( rule__RootRegion__Group_2__4__Impl rule__RootRegion__Group_2__5 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2869:2: rule__RootRegion__Group_2__4__Impl rule__RootRegion__Group_2__5
             {
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__4__Impl_in_rule__RootRegion__Group_2__46235);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__4__Impl_in_rule__RootRegion__Group_2__46231);
             rule__RootRegion__Group_2__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__5_in_rule__RootRegion__Group_2__46238);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__5_in_rule__RootRegion__Group_2__46234);
             rule__RootRegion__Group_2__5();
 
             state._fsp--;
@@ -9394,7 +9382,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootRegionAccess().getColonKeyword_2_4()); 
             }
-            match(input,16,FollowSets000.FOLLOW_16_in_rule__RootRegion__Group_2__4__Impl6266); if (state.failed) return ;
+            match(input,16,FollowSets000.FOLLOW_16_in_rule__RootRegion__Group_2__4__Impl6262); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRootRegionAccess().getColonKeyword_2_4()); 
             }
@@ -9429,12 +9417,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2899:1: ( rule__RootRegion__Group_2__5__Impl rule__RootRegion__Group_2__6 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2900:2: rule__RootRegion__Group_2__5__Impl rule__RootRegion__Group_2__6
             {
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__5__Impl_in_rule__RootRegion__Group_2__56297);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__5__Impl_in_rule__RootRegion__Group_2__56293);
             rule__RootRegion__Group_2__5__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__6_in_rule__RootRegion__Group_2__56300);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__6_in_rule__RootRegion__Group_2__56296);
             rule__RootRegion__Group_2__6();
 
             state._fsp--;
@@ -9482,7 +9470,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2914:2: rule__RootRegion__ValuedObjectsAssignment_2_5
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__RootRegion__ValuedObjectsAssignment_2_5_in_rule__RootRegion__Group_2__5__Impl6327);
+            	    pushFollow(FollowSets000.FOLLOW_rule__RootRegion__ValuedObjectsAssignment_2_5_in_rule__RootRegion__Group_2__5__Impl6323);
             	    rule__RootRegion__ValuedObjectsAssignment_2_5();
 
             	    state._fsp--;
@@ -9530,7 +9518,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2928:1: ( rule__RootRegion__Group_2__6__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2929:2: rule__RootRegion__Group_2__6__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__6__Impl_in_rule__RootRegion__Group_2__66358);
+            pushFollow(FollowSets000.FOLLOW_rule__RootRegion__Group_2__6__Impl_in_rule__RootRegion__Group_2__66354);
             rule__RootRegion__Group_2__6__Impl();
 
             state._fsp--;
@@ -9584,7 +9572,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2942:2: rule__RootRegion__BodyTextAssignment_2_6
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__RootRegion__BodyTextAssignment_2_6_in_rule__RootRegion__Group_2__6__Impl6385);
+            	    pushFollow(FollowSets000.FOLLOW_rule__RootRegion__BodyTextAssignment_2_6_in_rule__RootRegion__Group_2__6__Impl6381);
             	    rule__RootRegion__BodyTextAssignment_2_6();
 
             	    state._fsp--;
@@ -9632,12 +9620,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2970:1: ( rule__SingleRegion__Group__0__Impl rule__SingleRegion__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2971:2: rule__SingleRegion__Group__0__Impl rule__SingleRegion__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group__0__Impl_in_rule__SingleRegion__Group__06430);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group__0__Impl_in_rule__SingleRegion__Group__06426);
             rule__SingleRegion__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group__1_in_rule__SingleRegion__Group__06433);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group__1_in_rule__SingleRegion__Group__06429);
             rule__SingleRegion__Group__1();
 
             state._fsp--;
@@ -9711,12 +9699,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3001:1: ( rule__SingleRegion__Group__1__Impl rule__SingleRegion__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3002:2: rule__SingleRegion__Group__1__Impl rule__SingleRegion__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group__1__Impl_in_rule__SingleRegion__Group__16491);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group__1__Impl_in_rule__SingleRegion__Group__16487);
             rule__SingleRegion__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group__2_in_rule__SingleRegion__Group__16494);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group__2_in_rule__SingleRegion__Group__16490);
             rule__SingleRegion__Group__2();
 
             state._fsp--;
@@ -9762,7 +9750,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3016:2: rule__SingleRegion__Group_1__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__0_in_rule__SingleRegion__Group__1__Impl6521);
+                    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__0_in_rule__SingleRegion__Group__1__Impl6517);
                     rule__SingleRegion__Group_1__0();
 
                     state._fsp--;
@@ -9807,7 +9795,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3030:1: ( rule__SingleRegion__Group__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3031:2: rule__SingleRegion__Group__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group__2__Impl_in_rule__SingleRegion__Group__26552);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group__2__Impl_in_rule__SingleRegion__Group__26548);
             rule__SingleRegion__Group__2__Impl();
 
             state._fsp--;
@@ -9855,7 +9843,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3044:2: rule__SingleRegion__StatesAssignment_2
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__StatesAssignment_2_in_rule__SingleRegion__Group__2__Impl6579);
+            	    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__StatesAssignment_2_in_rule__SingleRegion__Group__2__Impl6575);
             	    rule__SingleRegion__StatesAssignment_2();
 
             	    state._fsp--;
@@ -9903,12 +9891,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3064:1: ( rule__SingleRegion__Group_1__0__Impl rule__SingleRegion__Group_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3065:2: rule__SingleRegion__Group_1__0__Impl rule__SingleRegion__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__0__Impl_in_rule__SingleRegion__Group_1__06616);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__0__Impl_in_rule__SingleRegion__Group_1__06612);
             rule__SingleRegion__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__1_in_rule__SingleRegion__Group_1__06619);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__1_in_rule__SingleRegion__Group_1__06615);
             rule__SingleRegion__Group_1__1();
 
             state._fsp--;
@@ -9962,7 +9950,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3079:2: rule__SingleRegion__AnnotationsAssignment_1_0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__AnnotationsAssignment_1_0_in_rule__SingleRegion__Group_1__0__Impl6646);
+            	    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__AnnotationsAssignment_1_0_in_rule__SingleRegion__Group_1__0__Impl6642);
             	    rule__SingleRegion__AnnotationsAssignment_1_0();
 
             	    state._fsp--;
@@ -10010,12 +9998,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3093:1: ( rule__SingleRegion__Group_1__1__Impl rule__SingleRegion__Group_1__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3094:2: rule__SingleRegion__Group_1__1__Impl rule__SingleRegion__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__1__Impl_in_rule__SingleRegion__Group_1__16677);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__1__Impl_in_rule__SingleRegion__Group_1__16673);
             rule__SingleRegion__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__2_in_rule__SingleRegion__Group_1__16680);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__2_in_rule__SingleRegion__Group_1__16676);
             rule__SingleRegion__Group_1__2();
 
             state._fsp--;
@@ -10054,7 +10042,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSingleRegionAccess().getRegionKeyword_1_1()); 
             }
-            match(input,53,FollowSets000.FOLLOW_53_in_rule__SingleRegion__Group_1__1__Impl6708); if (state.failed) return ;
+            match(input,53,FollowSets000.FOLLOW_53_in_rule__SingleRegion__Group_1__1__Impl6704); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSingleRegionAccess().getRegionKeyword_1_1()); 
             }
@@ -10089,12 +10077,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3124:1: ( rule__SingleRegion__Group_1__2__Impl rule__SingleRegion__Group_1__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3125:2: rule__SingleRegion__Group_1__2__Impl rule__SingleRegion__Group_1__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__2__Impl_in_rule__SingleRegion__Group_1__26739);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__2__Impl_in_rule__SingleRegion__Group_1__26735);
             rule__SingleRegion__Group_1__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__3_in_rule__SingleRegion__Group_1__26742);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__3_in_rule__SingleRegion__Group_1__26738);
             rule__SingleRegion__Group_1__3();
 
             state._fsp--;
@@ -10144,7 +10132,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3139:2: rule__SingleRegion__IdAssignment_1_2
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__IdAssignment_1_2_in_rule__SingleRegion__Group_1__2__Impl6769);
+                    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__IdAssignment_1_2_in_rule__SingleRegion__Group_1__2__Impl6765);
                     rule__SingleRegion__IdAssignment_1_2();
 
                     state._fsp--;
@@ -10189,12 +10177,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3153:1: ( rule__SingleRegion__Group_1__3__Impl rule__SingleRegion__Group_1__4 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3154:2: rule__SingleRegion__Group_1__3__Impl rule__SingleRegion__Group_1__4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__3__Impl_in_rule__SingleRegion__Group_1__36800);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__3__Impl_in_rule__SingleRegion__Group_1__36796);
             rule__SingleRegion__Group_1__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__4_in_rule__SingleRegion__Group_1__36803);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__4_in_rule__SingleRegion__Group_1__36799);
             rule__SingleRegion__Group_1__4();
 
             state._fsp--;
@@ -10244,7 +10232,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3168:2: rule__SingleRegion__LabelAssignment_1_3
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__LabelAssignment_1_3_in_rule__SingleRegion__Group_1__3__Impl6830);
+                    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__LabelAssignment_1_3_in_rule__SingleRegion__Group_1__3__Impl6826);
                     rule__SingleRegion__LabelAssignment_1_3();
 
                     state._fsp--;
@@ -10289,12 +10277,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3182:1: ( rule__SingleRegion__Group_1__4__Impl rule__SingleRegion__Group_1__5 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3183:2: rule__SingleRegion__Group_1__4__Impl rule__SingleRegion__Group_1__5
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__4__Impl_in_rule__SingleRegion__Group_1__46861);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__4__Impl_in_rule__SingleRegion__Group_1__46857);
             rule__SingleRegion__Group_1__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__5_in_rule__SingleRegion__Group_1__46864);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__5_in_rule__SingleRegion__Group_1__46860);
             rule__SingleRegion__Group_1__5();
 
             state._fsp--;
@@ -10333,7 +10321,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSingleRegionAccess().getColonKeyword_1_4()); 
             }
-            match(input,16,FollowSets000.FOLLOW_16_in_rule__SingleRegion__Group_1__4__Impl6892); if (state.failed) return ;
+            match(input,16,FollowSets000.FOLLOW_16_in_rule__SingleRegion__Group_1__4__Impl6888); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSingleRegionAccess().getColonKeyword_1_4()); 
             }
@@ -10368,12 +10356,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3213:1: ( rule__SingleRegion__Group_1__5__Impl rule__SingleRegion__Group_1__6 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3214:2: rule__SingleRegion__Group_1__5__Impl rule__SingleRegion__Group_1__6
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__5__Impl_in_rule__SingleRegion__Group_1__56923);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__5__Impl_in_rule__SingleRegion__Group_1__56919);
             rule__SingleRegion__Group_1__5__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__6_in_rule__SingleRegion__Group_1__56926);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__6_in_rule__SingleRegion__Group_1__56922);
             rule__SingleRegion__Group_1__6();
 
             state._fsp--;
@@ -10421,7 +10409,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3228:2: rule__SingleRegion__ValuedObjectsAssignment_1_5
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__ValuedObjectsAssignment_1_5_in_rule__SingleRegion__Group_1__5__Impl6953);
+            	    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__ValuedObjectsAssignment_1_5_in_rule__SingleRegion__Group_1__5__Impl6949);
             	    rule__SingleRegion__ValuedObjectsAssignment_1_5();
 
             	    state._fsp--;
@@ -10469,7 +10457,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3242:1: ( rule__SingleRegion__Group_1__6__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3243:2: rule__SingleRegion__Group_1__6__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__6__Impl_in_rule__SingleRegion__Group_1__66984);
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1__6__Impl_in_rule__SingleRegion__Group_1__66980);
             rule__SingleRegion__Group_1__6__Impl();
 
             state._fsp--;
@@ -10523,7 +10511,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3256:2: rule__SingleRegion__BodyTextAssignment_1_6
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__BodyTextAssignment_1_6_in_rule__SingleRegion__Group_1__6__Impl7011);
+            	    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__BodyTextAssignment_1_6_in_rule__SingleRegion__Group_1__6__Impl7007);
             	    rule__SingleRegion__BodyTextAssignment_1_6();
 
             	    state._fsp--;
@@ -10571,12 +10559,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3284:1: ( rule__Region__Group__0__Impl rule__Region__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3285:2: rule__Region__Group__0__Impl rule__Region__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__0__Impl_in_rule__Region__Group__07056);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__0__Impl_in_rule__Region__Group__07052);
             rule__Region__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__1_in_rule__Region__Group__07059);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__1_in_rule__Region__Group__07055);
             rule__Region__Group__1();
 
             state._fsp--;
@@ -10650,12 +10638,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3315:1: ( rule__Region__Group__1__Impl rule__Region__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3316:2: rule__Region__Group__1__Impl rule__Region__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__1__Impl_in_rule__Region__Group__17117);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__1__Impl_in_rule__Region__Group__17113);
             rule__Region__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__2_in_rule__Region__Group__17120);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__2_in_rule__Region__Group__17116);
             rule__Region__Group__2();
 
             state._fsp--;
@@ -10709,7 +10697,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3330:2: rule__Region__AnnotationsAssignment_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__Region__AnnotationsAssignment_1_in_rule__Region__Group__1__Impl7147);
+            	    pushFollow(FollowSets000.FOLLOW_rule__Region__AnnotationsAssignment_1_in_rule__Region__Group__1__Impl7143);
             	    rule__Region__AnnotationsAssignment_1();
 
             	    state._fsp--;
@@ -10757,12 +10745,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3344:1: ( rule__Region__Group__2__Impl rule__Region__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3345:2: rule__Region__Group__2__Impl rule__Region__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__2__Impl_in_rule__Region__Group__27178);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__2__Impl_in_rule__Region__Group__27174);
             rule__Region__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__3_in_rule__Region__Group__27181);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__3_in_rule__Region__Group__27177);
             rule__Region__Group__3();
 
             state._fsp--;
@@ -10801,7 +10789,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRegionAccess().getRegionKeyword_2()); 
             }
-            match(input,53,FollowSets000.FOLLOW_53_in_rule__Region__Group__2__Impl7209); if (state.failed) return ;
+            match(input,53,FollowSets000.FOLLOW_53_in_rule__Region__Group__2__Impl7205); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRegionAccess().getRegionKeyword_2()); 
             }
@@ -10836,12 +10824,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3375:1: ( rule__Region__Group__3__Impl rule__Region__Group__4 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3376:2: rule__Region__Group__3__Impl rule__Region__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__3__Impl_in_rule__Region__Group__37240);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__3__Impl_in_rule__Region__Group__37236);
             rule__Region__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__4_in_rule__Region__Group__37243);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__4_in_rule__Region__Group__37239);
             rule__Region__Group__4();
 
             state._fsp--;
@@ -10891,7 +10879,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3390:2: rule__Region__IdAssignment_3
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Region__IdAssignment_3_in_rule__Region__Group__3__Impl7270);
+                    pushFollow(FollowSets000.FOLLOW_rule__Region__IdAssignment_3_in_rule__Region__Group__3__Impl7266);
                     rule__Region__IdAssignment_3();
 
                     state._fsp--;
@@ -10936,12 +10924,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3404:1: ( rule__Region__Group__4__Impl rule__Region__Group__5 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3405:2: rule__Region__Group__4__Impl rule__Region__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__4__Impl_in_rule__Region__Group__47301);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__4__Impl_in_rule__Region__Group__47297);
             rule__Region__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__5_in_rule__Region__Group__47304);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__5_in_rule__Region__Group__47300);
             rule__Region__Group__5();
 
             state._fsp--;
@@ -10991,7 +10979,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3419:2: rule__Region__LabelAssignment_4
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Region__LabelAssignment_4_in_rule__Region__Group__4__Impl7331);
+                    pushFollow(FollowSets000.FOLLOW_rule__Region__LabelAssignment_4_in_rule__Region__Group__4__Impl7327);
                     rule__Region__LabelAssignment_4();
 
                     state._fsp--;
@@ -11036,12 +11024,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3433:1: ( rule__Region__Group__5__Impl rule__Region__Group__6 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3434:2: rule__Region__Group__5__Impl rule__Region__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__5__Impl_in_rule__Region__Group__57362);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__5__Impl_in_rule__Region__Group__57358);
             rule__Region__Group__5__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__6_in_rule__Region__Group__57365);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__6_in_rule__Region__Group__57361);
             rule__Region__Group__6();
 
             state._fsp--;
@@ -11080,7 +11068,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRegionAccess().getColonKeyword_5()); 
             }
-            match(input,16,FollowSets000.FOLLOW_16_in_rule__Region__Group__5__Impl7393); if (state.failed) return ;
+            match(input,16,FollowSets000.FOLLOW_16_in_rule__Region__Group__5__Impl7389); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRegionAccess().getColonKeyword_5()); 
             }
@@ -11115,12 +11103,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3464:1: ( rule__Region__Group__6__Impl rule__Region__Group__7 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3465:2: rule__Region__Group__6__Impl rule__Region__Group__7
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__6__Impl_in_rule__Region__Group__67424);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__6__Impl_in_rule__Region__Group__67420);
             rule__Region__Group__6__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__7_in_rule__Region__Group__67427);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__7_in_rule__Region__Group__67423);
             rule__Region__Group__7();
 
             state._fsp--;
@@ -11168,7 +11156,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3479:2: rule__Region__ValuedObjectsAssignment_6
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__Region__ValuedObjectsAssignment_6_in_rule__Region__Group__6__Impl7454);
+            	    pushFollow(FollowSets000.FOLLOW_rule__Region__ValuedObjectsAssignment_6_in_rule__Region__Group__6__Impl7450);
             	    rule__Region__ValuedObjectsAssignment_6();
 
             	    state._fsp--;
@@ -11216,12 +11204,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3493:1: ( rule__Region__Group__7__Impl rule__Region__Group__8 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3494:2: rule__Region__Group__7__Impl rule__Region__Group__8
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__7__Impl_in_rule__Region__Group__77485);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__7__Impl_in_rule__Region__Group__77481);
             rule__Region__Group__7__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__8_in_rule__Region__Group__77488);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__8_in_rule__Region__Group__77484);
             rule__Region__Group__8();
 
             state._fsp--;
@@ -11275,7 +11263,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3508:2: rule__Region__BodyTextAssignment_7
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__Region__BodyTextAssignment_7_in_rule__Region__Group__7__Impl7515);
+            	    pushFollow(FollowSets000.FOLLOW_rule__Region__BodyTextAssignment_7_in_rule__Region__Group__7__Impl7511);
             	    rule__Region__BodyTextAssignment_7();
 
             	    state._fsp--;
@@ -11323,7 +11311,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3522:1: ( rule__Region__Group__8__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3523:2: rule__Region__Group__8__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__8__Impl_in_rule__Region__Group__87546);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__Group__8__Impl_in_rule__Region__Group__87542);
             rule__Region__Group__8__Impl();
 
             state._fsp--;
@@ -11368,7 +11356,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3537:1: ( rule__Region__StatesAssignment_8 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3537:2: rule__Region__StatesAssignment_8
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Region__StatesAssignment_8_in_rule__Region__Group__8__Impl7575);
+            pushFollow(FollowSets000.FOLLOW_rule__Region__StatesAssignment_8_in_rule__Region__Group__8__Impl7571);
             rule__Region__StatesAssignment_8();
 
             state._fsp--;
@@ -11397,7 +11385,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3542:2: rule__Region__StatesAssignment_8
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__Region__StatesAssignment_8_in_rule__Region__Group__8__Impl7587);
+            	    pushFollow(FollowSets000.FOLLOW_rule__Region__StatesAssignment_8_in_rule__Region__Group__8__Impl7583);
             	    rule__Region__StatesAssignment_8();
 
             	    state._fsp--;
@@ -11448,12 +11436,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3575:1: ( rule__SCChart__Group__0__Impl rule__SCChart__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3576:2: rule__SCChart__Group__0__Impl rule__SCChart__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__0__Impl_in_rule__SCChart__Group__07638);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__0__Impl_in_rule__SCChart__Group__07634);
             rule__SCChart__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__1_in_rule__SCChart__Group__07641);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__1_in_rule__SCChart__Group__07637);
             rule__SCChart__Group__1();
 
             state._fsp--;
@@ -11507,7 +11495,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3590:2: rule__SCChart__AnnotationsAssignment_0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__SCChart__AnnotationsAssignment_0_in_rule__SCChart__Group__0__Impl7668);
+            	    pushFollow(FollowSets000.FOLLOW_rule__SCChart__AnnotationsAssignment_0_in_rule__SCChart__Group__0__Impl7664);
             	    rule__SCChart__AnnotationsAssignment_0();
 
             	    state._fsp--;
@@ -11555,12 +11543,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3604:1: ( rule__SCChart__Group__1__Impl rule__SCChart__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3605:2: rule__SCChart__Group__1__Impl rule__SCChart__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__1__Impl_in_rule__SCChart__Group__17699);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__1__Impl_in_rule__SCChart__Group__17695);
             rule__SCChart__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__2_in_rule__SCChart__Group__17702);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__2_in_rule__SCChart__Group__17698);
             rule__SCChart__Group__2();
 
             state._fsp--;
@@ -11610,7 +11598,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3619:2: rule__SCChart__TypeAssignment_1
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__SCChart__TypeAssignment_1_in_rule__SCChart__Group__1__Impl7729);
+                    pushFollow(FollowSets000.FOLLOW_rule__SCChart__TypeAssignment_1_in_rule__SCChart__Group__1__Impl7725);
                     rule__SCChart__TypeAssignment_1();
 
                     state._fsp--;
@@ -11655,12 +11643,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3633:1: ( rule__SCChart__Group__2__Impl rule__SCChart__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3634:2: rule__SCChart__Group__2__Impl rule__SCChart__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__2__Impl_in_rule__SCChart__Group__27760);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__2__Impl_in_rule__SCChart__Group__27756);
             rule__SCChart__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__3_in_rule__SCChart__Group__27763);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__3_in_rule__SCChart__Group__27759);
             rule__SCChart__Group__3();
 
             state._fsp--;
@@ -11699,7 +11687,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getScchartKeyword_2()); 
             }
-            match(input,54,FollowSets000.FOLLOW_54_in_rule__SCChart__Group__2__Impl7791); if (state.failed) return ;
+            match(input,54,FollowSets000.FOLLOW_54_in_rule__SCChart__Group__2__Impl7787); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSCChartAccess().getScchartKeyword_2()); 
             }
@@ -11734,12 +11722,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3664:1: ( rule__SCChart__Group__3__Impl rule__SCChart__Group__4 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3665:2: rule__SCChart__Group__3__Impl rule__SCChart__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__3__Impl_in_rule__SCChart__Group__37822);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__3__Impl_in_rule__SCChart__Group__37818);
             rule__SCChart__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__4_in_rule__SCChart__Group__37825);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__4_in_rule__SCChart__Group__37821);
             rule__SCChart__Group__4();
 
             state._fsp--;
@@ -11781,7 +11769,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3679:1: ( rule__SCChart__IdAssignment_3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3679:2: rule__SCChart__IdAssignment_3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__IdAssignment_3_in_rule__SCChart__Group__3__Impl7852);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__IdAssignment_3_in_rule__SCChart__Group__3__Impl7848);
             rule__SCChart__IdAssignment_3();
 
             state._fsp--;
@@ -11823,12 +11811,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3693:1: ( rule__SCChart__Group__4__Impl rule__SCChart__Group__5 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3694:2: rule__SCChart__Group__4__Impl rule__SCChart__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__4__Impl_in_rule__SCChart__Group__47882);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__4__Impl_in_rule__SCChart__Group__47878);
             rule__SCChart__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__5_in_rule__SCChart__Group__47885);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__5_in_rule__SCChart__Group__47881);
             rule__SCChart__Group__5();
 
             state._fsp--;
@@ -11878,7 +11866,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3708:2: rule__SCChart__LabelAssignment_4
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__SCChart__LabelAssignment_4_in_rule__SCChart__Group__4__Impl7912);
+                    pushFollow(FollowSets000.FOLLOW_rule__SCChart__LabelAssignment_4_in_rule__SCChart__Group__4__Impl7908);
                     rule__SCChart__LabelAssignment_4();
 
                     state._fsp--;
@@ -11923,7 +11911,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3722:1: ( rule__SCChart__Group__5__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3723:2: rule__SCChart__Group__5__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__5__Impl_in_rule__SCChart__Group__57943);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group__5__Impl_in_rule__SCChart__Group__57939);
             rule__SCChart__Group__5__Impl();
 
             state._fsp--;
@@ -11984,7 +11972,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3736:2: rule__SCChart__Alternatives_5
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__SCChart__Alternatives_5_in_rule__SCChart__Group__5__Impl7970);
+                    pushFollow(FollowSets000.FOLLOW_rule__SCChart__Alternatives_5_in_rule__SCChart__Group__5__Impl7966);
                     rule__SCChart__Alternatives_5();
 
                     state._fsp--;
@@ -12029,12 +12017,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3762:1: ( rule__SCChart__Group_5_0__0__Impl rule__SCChart__Group_5_0__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3763:2: rule__SCChart__Group_5_0__0__Impl rule__SCChart__Group_5_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0__0__Impl_in_rule__SCChart__Group_5_0__08013);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0__0__Impl_in_rule__SCChart__Group_5_0__08009);
             rule__SCChart__Group_5_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0__1_in_rule__SCChart__Group_5_0__08016);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0__1_in_rule__SCChart__Group_5_0__08012);
             rule__SCChart__Group_5_0__1();
 
             state._fsp--;
@@ -12073,7 +12061,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getCommercialAtKeyword_5_0_0()); 
             }
-            match(input,55,FollowSets000.FOLLOW_55_in_rule__SCChart__Group_5_0__0__Impl8044); if (state.failed) return ;
+            match(input,55,FollowSets000.FOLLOW_55_in_rule__SCChart__Group_5_0__0__Impl8040); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSCChartAccess().getCommercialAtKeyword_5_0_0()); 
             }
@@ -12108,12 +12096,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3793:1: ( rule__SCChart__Group_5_0__1__Impl rule__SCChart__Group_5_0__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3794:2: rule__SCChart__Group_5_0__1__Impl rule__SCChart__Group_5_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0__1__Impl_in_rule__SCChart__Group_5_0__18075);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0__1__Impl_in_rule__SCChart__Group_5_0__18071);
             rule__SCChart__Group_5_0__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0__2_in_rule__SCChart__Group_5_0__18078);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0__2_in_rule__SCChart__Group_5_0__18074);
             rule__SCChart__Group_5_0__2();
 
             state._fsp--;
@@ -12155,7 +12143,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3808:1: ( rule__SCChart__BodyReferenceAssignment_5_0_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3808:2: rule__SCChart__BodyReferenceAssignment_5_0_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__BodyReferenceAssignment_5_0_1_in_rule__SCChart__Group_5_0__1__Impl8105);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__BodyReferenceAssignment_5_0_1_in_rule__SCChart__Group_5_0__1__Impl8101);
             rule__SCChart__BodyReferenceAssignment_5_0_1();
 
             state._fsp--;
@@ -12197,7 +12185,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3822:1: ( rule__SCChart__Group_5_0__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3823:2: rule__SCChart__Group_5_0__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0__2__Impl_in_rule__SCChart__Group_5_0__28135);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0__2__Impl_in_rule__SCChart__Group_5_0__28131);
             rule__SCChart__Group_5_0__2__Impl();
 
             state._fsp--;
@@ -12247,7 +12235,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3836:2: rule__SCChart__Group_5_0_2__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__0_in_rule__SCChart__Group_5_0__2__Impl8162);
+                    pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__0_in_rule__SCChart__Group_5_0__2__Impl8158);
                     rule__SCChart__Group_5_0_2__0();
 
                     state._fsp--;
@@ -12292,12 +12280,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3856:1: ( rule__SCChart__Group_5_0_2__0__Impl rule__SCChart__Group_5_0_2__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3857:2: rule__SCChart__Group_5_0_2__0__Impl rule__SCChart__Group_5_0_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__0__Impl_in_rule__SCChart__Group_5_0_2__08199);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__0__Impl_in_rule__SCChart__Group_5_0_2__08195);
             rule__SCChart__Group_5_0_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__1_in_rule__SCChart__Group_5_0_2__08202);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__1_in_rule__SCChart__Group_5_0_2__08198);
             rule__SCChart__Group_5_0_2__1();
 
             state._fsp--;
@@ -12336,7 +12324,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getLeftSquareBracketKeyword_5_0_2_0()); 
             }
-            match(input,56,FollowSets000.FOLLOW_56_in_rule__SCChart__Group_5_0_2__0__Impl8230); if (state.failed) return ;
+            match(input,56,FollowSets000.FOLLOW_56_in_rule__SCChart__Group_5_0_2__0__Impl8226); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSCChartAccess().getLeftSquareBracketKeyword_5_0_2_0()); 
             }
@@ -12371,12 +12359,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3887:1: ( rule__SCChart__Group_5_0_2__1__Impl rule__SCChart__Group_5_0_2__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3888:2: rule__SCChart__Group_5_0_2__1__Impl rule__SCChart__Group_5_0_2__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__1__Impl_in_rule__SCChart__Group_5_0_2__18261);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__1__Impl_in_rule__SCChart__Group_5_0_2__18257);
             rule__SCChart__Group_5_0_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__2_in_rule__SCChart__Group_5_0_2__18264);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__2_in_rule__SCChart__Group_5_0_2__18260);
             rule__SCChart__Group_5_0_2__2();
 
             state._fsp--;
@@ -12418,7 +12406,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3902:1: ( rule__SCChart__RenamingsAssignment_5_0_2_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3902:2: rule__SCChart__RenamingsAssignment_5_0_2_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__RenamingsAssignment_5_0_2_1_in_rule__SCChart__Group_5_0_2__1__Impl8291);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__RenamingsAssignment_5_0_2_1_in_rule__SCChart__Group_5_0_2__1__Impl8287);
             rule__SCChart__RenamingsAssignment_5_0_2_1();
 
             state._fsp--;
@@ -12460,12 +12448,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3916:1: ( rule__SCChart__Group_5_0_2__2__Impl rule__SCChart__Group_5_0_2__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3917:2: rule__SCChart__Group_5_0_2__2__Impl rule__SCChart__Group_5_0_2__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__2__Impl_in_rule__SCChart__Group_5_0_2__28321);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__2__Impl_in_rule__SCChart__Group_5_0_2__28317);
             rule__SCChart__Group_5_0_2__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__3_in_rule__SCChart__Group_5_0_2__28324);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__3_in_rule__SCChart__Group_5_0_2__28320);
             rule__SCChart__Group_5_0_2__3();
 
             state._fsp--;
@@ -12519,7 +12507,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3931:2: rule__SCChart__Group_5_0_2_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2_2__0_in_rule__SCChart__Group_5_0_2__2__Impl8351);
+            	    pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2_2__0_in_rule__SCChart__Group_5_0_2__2__Impl8347);
             	    rule__SCChart__Group_5_0_2_2__0();
 
             	    state._fsp--;
@@ -12567,7 +12555,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3945:1: ( rule__SCChart__Group_5_0_2__3__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3946:2: rule__SCChart__Group_5_0_2__3__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__3__Impl_in_rule__SCChart__Group_5_0_2__38382);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2__3__Impl_in_rule__SCChart__Group_5_0_2__38378);
             rule__SCChart__Group_5_0_2__3__Impl();
 
             state._fsp--;
@@ -12606,7 +12594,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getRightSquareBracketKeyword_5_0_2_3()); 
             }
-            match(input,57,FollowSets000.FOLLOW_57_in_rule__SCChart__Group_5_0_2__3__Impl8410); if (state.failed) return ;
+            match(input,57,FollowSets000.FOLLOW_57_in_rule__SCChart__Group_5_0_2__3__Impl8406); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSCChartAccess().getRightSquareBracketKeyword_5_0_2_3()); 
             }
@@ -12641,12 +12629,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3983:1: ( rule__SCChart__Group_5_0_2_2__0__Impl rule__SCChart__Group_5_0_2_2__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3984:2: rule__SCChart__Group_5_0_2_2__0__Impl rule__SCChart__Group_5_0_2_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2_2__0__Impl_in_rule__SCChart__Group_5_0_2_2__08449);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2_2__0__Impl_in_rule__SCChart__Group_5_0_2_2__08445);
             rule__SCChart__Group_5_0_2_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2_2__1_in_rule__SCChart__Group_5_0_2_2__08452);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2_2__1_in_rule__SCChart__Group_5_0_2_2__08448);
             rule__SCChart__Group_5_0_2_2__1();
 
             state._fsp--;
@@ -12685,7 +12673,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getCommaKeyword_5_0_2_2_0()); 
             }
-            match(input,58,FollowSets000.FOLLOW_58_in_rule__SCChart__Group_5_0_2_2__0__Impl8480); if (state.failed) return ;
+            match(input,58,FollowSets000.FOLLOW_58_in_rule__SCChart__Group_5_0_2_2__0__Impl8476); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSCChartAccess().getCommaKeyword_5_0_2_2_0()); 
             }
@@ -12720,7 +12708,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4014:1: ( rule__SCChart__Group_5_0_2_2__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4015:2: rule__SCChart__Group_5_0_2_2__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2_2__1__Impl_in_rule__SCChart__Group_5_0_2_2__18511);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_0_2_2__1__Impl_in_rule__SCChart__Group_5_0_2_2__18507);
             rule__SCChart__Group_5_0_2_2__1__Impl();
 
             state._fsp--;
@@ -12762,7 +12750,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4028:1: ( rule__SCChart__RenamingsAssignment_5_0_2_2_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4028:2: rule__SCChart__RenamingsAssignment_5_0_2_2_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__RenamingsAssignment_5_0_2_2_1_in_rule__SCChart__Group_5_0_2_2__1__Impl8538);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__RenamingsAssignment_5_0_2_2_1_in_rule__SCChart__Group_5_0_2_2__1__Impl8534);
             rule__SCChart__RenamingsAssignment_5_0_2_2_1();
 
             state._fsp--;
@@ -12804,12 +12792,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4046:1: ( rule__SCChart__Group_5_1__0__Impl rule__SCChart__Group_5_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4047:2: rule__SCChart__Group_5_1__0__Impl rule__SCChart__Group_5_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1__0__Impl_in_rule__SCChart__Group_5_1__08572);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1__0__Impl_in_rule__SCChart__Group_5_1__08568);
             rule__SCChart__Group_5_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1__1_in_rule__SCChart__Group_5_1__08575);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1__1_in_rule__SCChart__Group_5_1__08571);
             rule__SCChart__Group_5_1__1();
 
             state._fsp--;
@@ -12848,7 +12836,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getLeftCurlyBracketKeyword_5_1_0()); 
             }
-            match(input,59,FollowSets000.FOLLOW_59_in_rule__SCChart__Group_5_1__0__Impl8603); if (state.failed) return ;
+            match(input,59,FollowSets000.FOLLOW_59_in_rule__SCChart__Group_5_1__0__Impl8599); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSCChartAccess().getLeftCurlyBracketKeyword_5_1_0()); 
             }
@@ -12883,12 +12871,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4077:1: ( rule__SCChart__Group_5_1__1__Impl rule__SCChart__Group_5_1__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4078:2: rule__SCChart__Group_5_1__1__Impl rule__SCChart__Group_5_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1__1__Impl_in_rule__SCChart__Group_5_1__18634);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1__1__Impl_in_rule__SCChart__Group_5_1__18630);
             rule__SCChart__Group_5_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1__2_in_rule__SCChart__Group_5_1__18637);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1__2_in_rule__SCChart__Group_5_1__18633);
             rule__SCChart__Group_5_1__2();
 
             state._fsp--;
@@ -12930,7 +12918,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4092:1: ( rule__SCChart__Group_5_1_1__0 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4092:2: rule__SCChart__Group_5_1_1__0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1__0_in_rule__SCChart__Group_5_1__1__Impl8664);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1__0_in_rule__SCChart__Group_5_1__1__Impl8660);
             rule__SCChart__Group_5_1_1__0();
 
             state._fsp--;
@@ -12972,7 +12960,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4106:1: ( rule__SCChart__Group_5_1__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4107:2: rule__SCChart__Group_5_1__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1__2__Impl_in_rule__SCChart__Group_5_1__28694);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1__2__Impl_in_rule__SCChart__Group_5_1__28690);
             rule__SCChart__Group_5_1__2__Impl();
 
             state._fsp--;
@@ -13011,7 +12999,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getRightCurlyBracketKeyword_5_1_2()); 
             }
-            match(input,60,FollowSets000.FOLLOW_60_in_rule__SCChart__Group_5_1__2__Impl8722); if (state.failed) return ;
+            match(input,60,FollowSets000.FOLLOW_60_in_rule__SCChart__Group_5_1__2__Impl8718); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSCChartAccess().getRightCurlyBracketKeyword_5_1_2()); 
             }
@@ -13046,12 +13034,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4142:1: ( rule__SCChart__Group_5_1_1__0__Impl rule__SCChart__Group_5_1_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4143:2: rule__SCChart__Group_5_1_1__0__Impl rule__SCChart__Group_5_1_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1__0__Impl_in_rule__SCChart__Group_5_1_1__08759);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1__0__Impl_in_rule__SCChart__Group_5_1_1__08755);
             rule__SCChart__Group_5_1_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1__1_in_rule__SCChart__Group_5_1_1__08762);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1__1_in_rule__SCChart__Group_5_1_1__08758);
             rule__SCChart__Group_5_1_1__1();
 
             state._fsp--;
@@ -13099,7 +13087,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4157:2: rule__SCChart__Alternatives_5_1_1_0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__SCChart__Alternatives_5_1_1_0_in_rule__SCChart__Group_5_1_1__0__Impl8789);
+            	    pushFollow(FollowSets000.FOLLOW_rule__SCChart__Alternatives_5_1_1_0_in_rule__SCChart__Group_5_1_1__0__Impl8785);
             	    rule__SCChart__Alternatives_5_1_1_0();
 
             	    state._fsp--;
@@ -13147,12 +13135,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4171:1: ( rule__SCChart__Group_5_1_1__1__Impl rule__SCChart__Group_5_1_1__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4172:2: rule__SCChart__Group_5_1_1__1__Impl rule__SCChart__Group_5_1_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1__1__Impl_in_rule__SCChart__Group_5_1_1__18820);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1__1__Impl_in_rule__SCChart__Group_5_1_1__18816);
             rule__SCChart__Group_5_1_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1__2_in_rule__SCChart__Group_5_1_1__18823);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1__2_in_rule__SCChart__Group_5_1_1__18819);
             rule__SCChart__Group_5_1_1__2();
 
             state._fsp--;
@@ -13206,7 +13194,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4186:2: rule__SCChart__BodyTextAssignment_5_1_1_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__SCChart__BodyTextAssignment_5_1_1_1_in_rule__SCChart__Group_5_1_1__1__Impl8850);
+            	    pushFollow(FollowSets000.FOLLOW_rule__SCChart__BodyTextAssignment_5_1_1_1_in_rule__SCChart__Group_5_1_1__1__Impl8846);
             	    rule__SCChart__BodyTextAssignment_5_1_1_1();
 
             	    state._fsp--;
@@ -13254,7 +13242,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4200:1: ( rule__SCChart__Group_5_1_1__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4201:2: rule__SCChart__Group_5_1_1__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1__2__Impl_in_rule__SCChart__Group_5_1_1__28881);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1__2__Impl_in_rule__SCChart__Group_5_1_1__28877);
             rule__SCChart__Group_5_1_1__2__Impl();
 
             state._fsp--;
@@ -13311,7 +13299,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4214:2: rule__SCChart__Group_5_1_1_2__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1_2__0_in_rule__SCChart__Group_5_1_1__2__Impl8908);
+                    pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1_2__0_in_rule__SCChart__Group_5_1_1__2__Impl8904);
                     rule__SCChart__Group_5_1_1_2__0();
 
                     state._fsp--;
@@ -13356,12 +13344,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4234:1: ( rule__SCChart__Group_5_1_1_2__0__Impl rule__SCChart__Group_5_1_1_2__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4235:2: rule__SCChart__Group_5_1_1_2__0__Impl rule__SCChart__Group_5_1_1_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1_2__0__Impl_in_rule__SCChart__Group_5_1_1_2__08945);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1_2__0__Impl_in_rule__SCChart__Group_5_1_1_2__08941);
             rule__SCChart__Group_5_1_1_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1_2__1_in_rule__SCChart__Group_5_1_1_2__08948);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1_2__1_in_rule__SCChart__Group_5_1_1_2__08944);
             rule__SCChart__Group_5_1_1_2__1();
 
             state._fsp--;
@@ -13403,7 +13391,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4249:1: ( rule__SCChart__RegionsAssignment_5_1_1_2_0 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4249:2: rule__SCChart__RegionsAssignment_5_1_1_2_0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__RegionsAssignment_5_1_1_2_0_in_rule__SCChart__Group_5_1_1_2__0__Impl8975);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__RegionsAssignment_5_1_1_2_0_in_rule__SCChart__Group_5_1_1_2__0__Impl8971);
             rule__SCChart__RegionsAssignment_5_1_1_2_0();
 
             state._fsp--;
@@ -13445,7 +13433,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4263:1: ( rule__SCChart__Group_5_1_1_2__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4264:2: rule__SCChart__Group_5_1_1_2__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1_2__1__Impl_in_rule__SCChart__Group_5_1_1_2__19005);
+            pushFollow(FollowSets000.FOLLOW_rule__SCChart__Group_5_1_1_2__1__Impl_in_rule__SCChart__Group_5_1_1_2__19001);
             rule__SCChart__Group_5_1_1_2__1__Impl();
 
             state._fsp--;
@@ -13499,7 +13487,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4277:2: rule__SCChart__RegionsAssignment_5_1_1_2_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__SCChart__RegionsAssignment_5_1_1_2_1_in_rule__SCChart__Group_5_1_1_2__1__Impl9032);
+            	    pushFollow(FollowSets000.FOLLOW_rule__SCChart__RegionsAssignment_5_1_1_2_1_in_rule__SCChart__Group_5_1_1_2__1__Impl9028);
             	    rule__SCChart__RegionsAssignment_5_1_1_2_1();
 
             	    state._fsp--;
@@ -13547,12 +13535,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4295:1: ( rule__State__Group__0__Impl rule__State__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4296:2: rule__State__Group__0__Impl rule__State__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__0__Impl_in_rule__State__Group__09067);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__0__Impl_in_rule__State__Group__09063);
             rule__State__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__1_in_rule__State__Group__09070);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__1_in_rule__State__Group__09066);
             rule__State__Group__1();
 
             state._fsp--;
@@ -13606,7 +13594,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4310:2: rule__State__AnnotationsAssignment_0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__State__AnnotationsAssignment_0_in_rule__State__Group__0__Impl9097);
+            	    pushFollow(FollowSets000.FOLLOW_rule__State__AnnotationsAssignment_0_in_rule__State__Group__0__Impl9093);
             	    rule__State__AnnotationsAssignment_0();
 
             	    state._fsp--;
@@ -13654,12 +13642,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4324:1: ( rule__State__Group__1__Impl rule__State__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4325:2: rule__State__Group__1__Impl rule__State__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__1__Impl_in_rule__State__Group__19128);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__1__Impl_in_rule__State__Group__19124);
             rule__State__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__2_in_rule__State__Group__19131);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__2_in_rule__State__Group__19127);
             rule__State__Group__2();
 
             state._fsp--;
@@ -13709,7 +13697,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4339:2: rule__State__Alternatives_1
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__State__Alternatives_1_in_rule__State__Group__1__Impl9158);
+                    pushFollow(FollowSets000.FOLLOW_rule__State__Alternatives_1_in_rule__State__Group__1__Impl9154);
                     rule__State__Alternatives_1();
 
                     state._fsp--;
@@ -13754,12 +13742,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4353:1: ( rule__State__Group__2__Impl rule__State__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4354:2: rule__State__Group__2__Impl rule__State__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__2__Impl_in_rule__State__Group__29189);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__2__Impl_in_rule__State__Group__29185);
             rule__State__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__3_in_rule__State__Group__29192);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__3_in_rule__State__Group__29188);
             rule__State__Group__3();
 
             state._fsp--;
@@ -13809,7 +13797,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4368:2: rule__State__TypeAssignment_2
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__State__TypeAssignment_2_in_rule__State__Group__2__Impl9219);
+                    pushFollow(FollowSets000.FOLLOW_rule__State__TypeAssignment_2_in_rule__State__Group__2__Impl9215);
                     rule__State__TypeAssignment_2();
 
                     state._fsp--;
@@ -13854,12 +13842,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4382:1: ( rule__State__Group__3__Impl rule__State__Group__4 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4383:2: rule__State__Group__3__Impl rule__State__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__3__Impl_in_rule__State__Group__39250);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__3__Impl_in_rule__State__Group__39246);
             rule__State__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__4_in_rule__State__Group__39253);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__4_in_rule__State__Group__39249);
             rule__State__Group__4();
 
             state._fsp--;
@@ -13898,7 +13886,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getStateKeyword_3()); 
             }
-            match(input,61,FollowSets000.FOLLOW_61_in_rule__State__Group__3__Impl9281); if (state.failed) return ;
+            match(input,61,FollowSets000.FOLLOW_61_in_rule__State__Group__3__Impl9277); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getStateKeyword_3()); 
             }
@@ -13933,12 +13921,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4413:1: ( rule__State__Group__4__Impl rule__State__Group__5 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4414:2: rule__State__Group__4__Impl rule__State__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__4__Impl_in_rule__State__Group__49312);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__4__Impl_in_rule__State__Group__49308);
             rule__State__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__5_in_rule__State__Group__49315);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__5_in_rule__State__Group__49311);
             rule__State__Group__5();
 
             state._fsp--;
@@ -13980,7 +13968,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4428:1: ( rule__State__IdAssignment_4 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4428:2: rule__State__IdAssignment_4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__IdAssignment_4_in_rule__State__Group__4__Impl9342);
+            pushFollow(FollowSets000.FOLLOW_rule__State__IdAssignment_4_in_rule__State__Group__4__Impl9338);
             rule__State__IdAssignment_4();
 
             state._fsp--;
@@ -14022,12 +14010,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4442:1: ( rule__State__Group__5__Impl rule__State__Group__6 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4443:2: rule__State__Group__5__Impl rule__State__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__5__Impl_in_rule__State__Group__59372);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__5__Impl_in_rule__State__Group__59368);
             rule__State__Group__5__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__6_in_rule__State__Group__59375);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__6_in_rule__State__Group__59371);
             rule__State__Group__6();
 
             state._fsp--;
@@ -14077,7 +14065,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4457:2: rule__State__LabelAssignment_5
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__State__LabelAssignment_5_in_rule__State__Group__5__Impl9402);
+                    pushFollow(FollowSets000.FOLLOW_rule__State__LabelAssignment_5_in_rule__State__Group__5__Impl9398);
                     rule__State__LabelAssignment_5();
 
                     state._fsp--;
@@ -14122,12 +14110,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4471:1: ( rule__State__Group__6__Impl rule__State__Group__7 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4472:2: rule__State__Group__6__Impl rule__State__Group__7
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__6__Impl_in_rule__State__Group__69433);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__6__Impl_in_rule__State__Group__69429);
             rule__State__Group__6__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__7_in_rule__State__Group__69436);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__7_in_rule__State__Group__69432);
             rule__State__Group__7();
 
             state._fsp--;
@@ -14188,7 +14176,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4486:2: rule__State__Alternatives_6
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__State__Alternatives_6_in_rule__State__Group__6__Impl9463);
+                    pushFollow(FollowSets000.FOLLOW_rule__State__Alternatives_6_in_rule__State__Group__6__Impl9459);
                     rule__State__Alternatives_6();
 
                     state._fsp--;
@@ -14233,12 +14221,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4500:1: ( rule__State__Group__7__Impl rule__State__Group__8 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4501:2: rule__State__Group__7__Impl rule__State__Group__8
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__7__Impl_in_rule__State__Group__79494);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__7__Impl_in_rule__State__Group__79490);
             rule__State__Group__7__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__8_in_rule__State__Group__79497);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__8_in_rule__State__Group__79493);
             rule__State__Group__8();
 
             state._fsp--;
@@ -14292,7 +14280,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4515:2: rule__State__OutgoingTransitionsAssignment_7
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__State__OutgoingTransitionsAssignment_7_in_rule__State__Group__7__Impl9524);
+            	    pushFollow(FollowSets000.FOLLOW_rule__State__OutgoingTransitionsAssignment_7_in_rule__State__Group__7__Impl9520);
             	    rule__State__OutgoingTransitionsAssignment_7();
 
             	    state._fsp--;
@@ -14340,7 +14328,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4529:1: ( rule__State__Group__8__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4530:2: rule__State__Group__8__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group__8__Impl_in_rule__State__Group__89555);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group__8__Impl_in_rule__State__Group__89551);
             rule__State__Group__8__Impl();
 
             state._fsp--;
@@ -14379,7 +14367,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getSemicolonKeyword_8()); 
             }
-            match(input,62,FollowSets000.FOLLOW_62_in_rule__State__Group__8__Impl9583); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_62_in_rule__State__Group__8__Impl9579); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getSemicolonKeyword_8()); 
             }
@@ -14414,12 +14402,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4577:1: ( rule__State__Group_1_0__0__Impl rule__State__Group_1_0__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4578:2: rule__State__Group_1_0__0__Impl rule__State__Group_1_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_1_0__0__Impl_in_rule__State__Group_1_0__09632);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_1_0__0__Impl_in_rule__State__Group_1_0__09628);
             rule__State__Group_1_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_1_0__1_in_rule__State__Group_1_0__09635);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_1_0__1_in_rule__State__Group_1_0__09631);
             rule__State__Group_1_0__1();
 
             state._fsp--;
@@ -14461,7 +14449,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4592:1: ( rule__State__InitialAssignment_1_0_0 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4592:2: rule__State__InitialAssignment_1_0_0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__InitialAssignment_1_0_0_in_rule__State__Group_1_0__0__Impl9662);
+            pushFollow(FollowSets000.FOLLOW_rule__State__InitialAssignment_1_0_0_in_rule__State__Group_1_0__0__Impl9658);
             rule__State__InitialAssignment_1_0_0();
 
             state._fsp--;
@@ -14503,7 +14491,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4606:1: ( rule__State__Group_1_0__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4607:2: rule__State__Group_1_0__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_1_0__1__Impl_in_rule__State__Group_1_0__19692);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_1_0__1__Impl_in_rule__State__Group_1_0__19688);
             rule__State__Group_1_0__1__Impl();
 
             state._fsp--;
@@ -14553,7 +14541,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4620:2: rule__State__FinalAssignment_1_0_1
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__State__FinalAssignment_1_0_1_in_rule__State__Group_1_0__1__Impl9719);
+                    pushFollow(FollowSets000.FOLLOW_rule__State__FinalAssignment_1_0_1_in_rule__State__Group_1_0__1__Impl9715);
                     rule__State__FinalAssignment_1_0_1();
 
                     state._fsp--;
@@ -14598,12 +14586,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4638:1: ( rule__State__Group_1_1__0__Impl rule__State__Group_1_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4639:2: rule__State__Group_1_1__0__Impl rule__State__Group_1_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_1_1__0__Impl_in_rule__State__Group_1_1__09754);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_1_1__0__Impl_in_rule__State__Group_1_1__09750);
             rule__State__Group_1_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_1_1__1_in_rule__State__Group_1_1__09757);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_1_1__1_in_rule__State__Group_1_1__09753);
             rule__State__Group_1_1__1();
 
             state._fsp--;
@@ -14645,7 +14633,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4653:1: ( rule__State__FinalAssignment_1_1_0 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4653:2: rule__State__FinalAssignment_1_1_0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__FinalAssignment_1_1_0_in_rule__State__Group_1_1__0__Impl9784);
+            pushFollow(FollowSets000.FOLLOW_rule__State__FinalAssignment_1_1_0_in_rule__State__Group_1_1__0__Impl9780);
             rule__State__FinalAssignment_1_1_0();
 
             state._fsp--;
@@ -14687,7 +14675,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4667:1: ( rule__State__Group_1_1__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4668:2: rule__State__Group_1_1__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_1_1__1__Impl_in_rule__State__Group_1_1__19814);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_1_1__1__Impl_in_rule__State__Group_1_1__19810);
             rule__State__Group_1_1__1__Impl();
 
             state._fsp--;
@@ -14737,7 +14725,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4681:2: rule__State__InitialAssignment_1_1_1
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__State__InitialAssignment_1_1_1_in_rule__State__Group_1_1__1__Impl9841);
+                    pushFollow(FollowSets000.FOLLOW_rule__State__InitialAssignment_1_1_1_in_rule__State__Group_1_1__1__Impl9837);
                     rule__State__InitialAssignment_1_1_1();
 
                     state._fsp--;
@@ -14782,12 +14770,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4699:1: ( rule__State__Group_6_0__0__Impl rule__State__Group_6_0__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4700:2: rule__State__Group_6_0__0__Impl rule__State__Group_6_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0__0__Impl_in_rule__State__Group_6_0__09876);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0__0__Impl_in_rule__State__Group_6_0__09872);
             rule__State__Group_6_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0__1_in_rule__State__Group_6_0__09879);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0__1_in_rule__State__Group_6_0__09875);
             rule__State__Group_6_0__1();
 
             state._fsp--;
@@ -14826,7 +14814,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getCommercialAtKeyword_6_0_0()); 
             }
-            match(input,55,FollowSets000.FOLLOW_55_in_rule__State__Group_6_0__0__Impl9907); if (state.failed) return ;
+            match(input,55,FollowSets000.FOLLOW_55_in_rule__State__Group_6_0__0__Impl9903); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getCommercialAtKeyword_6_0_0()); 
             }
@@ -14861,12 +14849,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4730:1: ( rule__State__Group_6_0__1__Impl rule__State__Group_6_0__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4731:2: rule__State__Group_6_0__1__Impl rule__State__Group_6_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0__1__Impl_in_rule__State__Group_6_0__19938);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0__1__Impl_in_rule__State__Group_6_0__19934);
             rule__State__Group_6_0__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0__2_in_rule__State__Group_6_0__19941);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0__2_in_rule__State__Group_6_0__19937);
             rule__State__Group_6_0__2();
 
             state._fsp--;
@@ -14908,7 +14896,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4745:1: ( rule__State__BodyReferenceAssignment_6_0_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4745:2: rule__State__BodyReferenceAssignment_6_0_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__BodyReferenceAssignment_6_0_1_in_rule__State__Group_6_0__1__Impl9968);
+            pushFollow(FollowSets000.FOLLOW_rule__State__BodyReferenceAssignment_6_0_1_in_rule__State__Group_6_0__1__Impl9964);
             rule__State__BodyReferenceAssignment_6_0_1();
 
             state._fsp--;
@@ -14950,7 +14938,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4759:1: ( rule__State__Group_6_0__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4760:2: rule__State__Group_6_0__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0__2__Impl_in_rule__State__Group_6_0__29998);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0__2__Impl_in_rule__State__Group_6_0__29994);
             rule__State__Group_6_0__2__Impl();
 
             state._fsp--;
@@ -15000,7 +14988,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4773:2: rule__State__Group_6_0_2__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__0_in_rule__State__Group_6_0__2__Impl10025);
+                    pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__0_in_rule__State__Group_6_0__2__Impl10021);
                     rule__State__Group_6_0_2__0();
 
                     state._fsp--;
@@ -15045,12 +15033,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4793:1: ( rule__State__Group_6_0_2__0__Impl rule__State__Group_6_0_2__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4794:2: rule__State__Group_6_0_2__0__Impl rule__State__Group_6_0_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__0__Impl_in_rule__State__Group_6_0_2__010062);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__0__Impl_in_rule__State__Group_6_0_2__010058);
             rule__State__Group_6_0_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__1_in_rule__State__Group_6_0_2__010065);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__1_in_rule__State__Group_6_0_2__010061);
             rule__State__Group_6_0_2__1();
 
             state._fsp--;
@@ -15089,7 +15077,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getLeftSquareBracketKeyword_6_0_2_0()); 
             }
-            match(input,56,FollowSets000.FOLLOW_56_in_rule__State__Group_6_0_2__0__Impl10093); if (state.failed) return ;
+            match(input,56,FollowSets000.FOLLOW_56_in_rule__State__Group_6_0_2__0__Impl10089); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getLeftSquareBracketKeyword_6_0_2_0()); 
             }
@@ -15124,12 +15112,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4824:1: ( rule__State__Group_6_0_2__1__Impl rule__State__Group_6_0_2__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4825:2: rule__State__Group_6_0_2__1__Impl rule__State__Group_6_0_2__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__1__Impl_in_rule__State__Group_6_0_2__110124);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__1__Impl_in_rule__State__Group_6_0_2__110120);
             rule__State__Group_6_0_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__2_in_rule__State__Group_6_0_2__110127);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__2_in_rule__State__Group_6_0_2__110123);
             rule__State__Group_6_0_2__2();
 
             state._fsp--;
@@ -15171,7 +15159,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4839:1: ( rule__State__RenamingsAssignment_6_0_2_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4839:2: rule__State__RenamingsAssignment_6_0_2_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__RenamingsAssignment_6_0_2_1_in_rule__State__Group_6_0_2__1__Impl10154);
+            pushFollow(FollowSets000.FOLLOW_rule__State__RenamingsAssignment_6_0_2_1_in_rule__State__Group_6_0_2__1__Impl10150);
             rule__State__RenamingsAssignment_6_0_2_1();
 
             state._fsp--;
@@ -15213,12 +15201,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4853:1: ( rule__State__Group_6_0_2__2__Impl rule__State__Group_6_0_2__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4854:2: rule__State__Group_6_0_2__2__Impl rule__State__Group_6_0_2__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__2__Impl_in_rule__State__Group_6_0_2__210184);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__2__Impl_in_rule__State__Group_6_0_2__210180);
             rule__State__Group_6_0_2__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__3_in_rule__State__Group_6_0_2__210187);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__3_in_rule__State__Group_6_0_2__210183);
             rule__State__Group_6_0_2__3();
 
             state._fsp--;
@@ -15272,7 +15260,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4868:2: rule__State__Group_6_0_2_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2_2__0_in_rule__State__Group_6_0_2__2__Impl10214);
+            	    pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2_2__0_in_rule__State__Group_6_0_2__2__Impl10210);
             	    rule__State__Group_6_0_2_2__0();
 
             	    state._fsp--;
@@ -15320,7 +15308,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4882:1: ( rule__State__Group_6_0_2__3__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4883:2: rule__State__Group_6_0_2__3__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__3__Impl_in_rule__State__Group_6_0_2__310245);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2__3__Impl_in_rule__State__Group_6_0_2__310241);
             rule__State__Group_6_0_2__3__Impl();
 
             state._fsp--;
@@ -15359,7 +15347,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getRightSquareBracketKeyword_6_0_2_3()); 
             }
-            match(input,57,FollowSets000.FOLLOW_57_in_rule__State__Group_6_0_2__3__Impl10273); if (state.failed) return ;
+            match(input,57,FollowSets000.FOLLOW_57_in_rule__State__Group_6_0_2__3__Impl10269); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getRightSquareBracketKeyword_6_0_2_3()); 
             }
@@ -15394,12 +15382,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4920:1: ( rule__State__Group_6_0_2_2__0__Impl rule__State__Group_6_0_2_2__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4921:2: rule__State__Group_6_0_2_2__0__Impl rule__State__Group_6_0_2_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2_2__0__Impl_in_rule__State__Group_6_0_2_2__010312);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2_2__0__Impl_in_rule__State__Group_6_0_2_2__010308);
             rule__State__Group_6_0_2_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2_2__1_in_rule__State__Group_6_0_2_2__010315);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2_2__1_in_rule__State__Group_6_0_2_2__010311);
             rule__State__Group_6_0_2_2__1();
 
             state._fsp--;
@@ -15438,7 +15426,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getCommaKeyword_6_0_2_2_0()); 
             }
-            match(input,58,FollowSets000.FOLLOW_58_in_rule__State__Group_6_0_2_2__0__Impl10343); if (state.failed) return ;
+            match(input,58,FollowSets000.FOLLOW_58_in_rule__State__Group_6_0_2_2__0__Impl10339); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getCommaKeyword_6_0_2_2_0()); 
             }
@@ -15473,7 +15461,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4951:1: ( rule__State__Group_6_0_2_2__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4952:2: rule__State__Group_6_0_2_2__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2_2__1__Impl_in_rule__State__Group_6_0_2_2__110374);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_0_2_2__1__Impl_in_rule__State__Group_6_0_2_2__110370);
             rule__State__Group_6_0_2_2__1__Impl();
 
             state._fsp--;
@@ -15515,7 +15503,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4965:1: ( rule__State__RenamingsAssignment_6_0_2_2_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4965:2: rule__State__RenamingsAssignment_6_0_2_2_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__RenamingsAssignment_6_0_2_2_1_in_rule__State__Group_6_0_2_2__1__Impl10401);
+            pushFollow(FollowSets000.FOLLOW_rule__State__RenamingsAssignment_6_0_2_2_1_in_rule__State__Group_6_0_2_2__1__Impl10397);
             rule__State__RenamingsAssignment_6_0_2_2_1();
 
             state._fsp--;
@@ -15557,12 +15545,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4983:1: ( rule__State__Group_6_1__0__Impl rule__State__Group_6_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4984:2: rule__State__Group_6_1__0__Impl rule__State__Group_6_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1__0__Impl_in_rule__State__Group_6_1__010435);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1__0__Impl_in_rule__State__Group_6_1__010431);
             rule__State__Group_6_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1__1_in_rule__State__Group_6_1__010438);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1__1_in_rule__State__Group_6_1__010434);
             rule__State__Group_6_1__1();
 
             state._fsp--;
@@ -15601,7 +15589,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_6_1_0()); 
             }
-            match(input,59,FollowSets000.FOLLOW_59_in_rule__State__Group_6_1__0__Impl10466); if (state.failed) return ;
+            match(input,59,FollowSets000.FOLLOW_59_in_rule__State__Group_6_1__0__Impl10462); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getLeftCurlyBracketKeyword_6_1_0()); 
             }
@@ -15636,12 +15624,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5014:1: ( rule__State__Group_6_1__1__Impl rule__State__Group_6_1__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5015:2: rule__State__Group_6_1__1__Impl rule__State__Group_6_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1__1__Impl_in_rule__State__Group_6_1__110497);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1__1__Impl_in_rule__State__Group_6_1__110493);
             rule__State__Group_6_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1__2_in_rule__State__Group_6_1__110500);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1__2_in_rule__State__Group_6_1__110496);
             rule__State__Group_6_1__2();
 
             state._fsp--;
@@ -15683,7 +15671,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5029:1: ( rule__State__Group_6_1_1__0 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5029:2: rule__State__Group_6_1_1__0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1__0_in_rule__State__Group_6_1__1__Impl10527);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1__0_in_rule__State__Group_6_1__1__Impl10523);
             rule__State__Group_6_1_1__0();
 
             state._fsp--;
@@ -15725,7 +15713,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5043:1: ( rule__State__Group_6_1__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5044:2: rule__State__Group_6_1__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1__2__Impl_in_rule__State__Group_6_1__210557);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1__2__Impl_in_rule__State__Group_6_1__210553);
             rule__State__Group_6_1__2__Impl();
 
             state._fsp--;
@@ -15764,7 +15752,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getRightCurlyBracketKeyword_6_1_2()); 
             }
-            match(input,60,FollowSets000.FOLLOW_60_in_rule__State__Group_6_1__2__Impl10585); if (state.failed) return ;
+            match(input,60,FollowSets000.FOLLOW_60_in_rule__State__Group_6_1__2__Impl10581); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getRightCurlyBracketKeyword_6_1_2()); 
             }
@@ -15799,12 +15787,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5079:1: ( rule__State__Group_6_1_1__0__Impl rule__State__Group_6_1_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5080:2: rule__State__Group_6_1_1__0__Impl rule__State__Group_6_1_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1__0__Impl_in_rule__State__Group_6_1_1__010622);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1__0__Impl_in_rule__State__Group_6_1_1__010618);
             rule__State__Group_6_1_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1__1_in_rule__State__Group_6_1_1__010625);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1__1_in_rule__State__Group_6_1_1__010621);
             rule__State__Group_6_1_1__1();
 
             state._fsp--;
@@ -15852,7 +15840,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5094:2: rule__State__Alternatives_6_1_1_0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__State__Alternatives_6_1_1_0_in_rule__State__Group_6_1_1__0__Impl10652);
+            	    pushFollow(FollowSets000.FOLLOW_rule__State__Alternatives_6_1_1_0_in_rule__State__Group_6_1_1__0__Impl10648);
             	    rule__State__Alternatives_6_1_1_0();
 
             	    state._fsp--;
@@ -15900,12 +15888,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5108:1: ( rule__State__Group_6_1_1__1__Impl rule__State__Group_6_1_1__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5109:2: rule__State__Group_6_1_1__1__Impl rule__State__Group_6_1_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1__1__Impl_in_rule__State__Group_6_1_1__110683);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1__1__Impl_in_rule__State__Group_6_1_1__110679);
             rule__State__Group_6_1_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1__2_in_rule__State__Group_6_1_1__110686);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1__2_in_rule__State__Group_6_1_1__110682);
             rule__State__Group_6_1_1__2();
 
             state._fsp--;
@@ -15959,7 +15947,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5123:2: rule__State__BodyTextAssignment_6_1_1_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__State__BodyTextAssignment_6_1_1_1_in_rule__State__Group_6_1_1__1__Impl10713);
+            	    pushFollow(FollowSets000.FOLLOW_rule__State__BodyTextAssignment_6_1_1_1_in_rule__State__Group_6_1_1__1__Impl10709);
             	    rule__State__BodyTextAssignment_6_1_1_1();
 
             	    state._fsp--;
@@ -16007,7 +15995,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5137:1: ( rule__State__Group_6_1_1__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5138:2: rule__State__Group_6_1_1__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1__2__Impl_in_rule__State__Group_6_1_1__210744);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1__2__Impl_in_rule__State__Group_6_1_1__210740);
             rule__State__Group_6_1_1__2__Impl();
 
             state._fsp--;
@@ -16064,7 +16052,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5151:2: rule__State__Group_6_1_1_2__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1_2__0_in_rule__State__Group_6_1_1__2__Impl10771);
+                    pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1_2__0_in_rule__State__Group_6_1_1__2__Impl10767);
                     rule__State__Group_6_1_1_2__0();
 
                     state._fsp--;
@@ -16109,12 +16097,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5171:1: ( rule__State__Group_6_1_1_2__0__Impl rule__State__Group_6_1_1_2__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5172:2: rule__State__Group_6_1_1_2__0__Impl rule__State__Group_6_1_1_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1_2__0__Impl_in_rule__State__Group_6_1_1_2__010808);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1_2__0__Impl_in_rule__State__Group_6_1_1_2__010804);
             rule__State__Group_6_1_1_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1_2__1_in_rule__State__Group_6_1_1_2__010811);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1_2__1_in_rule__State__Group_6_1_1_2__010807);
             rule__State__Group_6_1_1_2__1();
 
             state._fsp--;
@@ -16156,7 +16144,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5186:1: ( rule__State__RegionsAssignment_6_1_1_2_0 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5186:2: rule__State__RegionsAssignment_6_1_1_2_0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__RegionsAssignment_6_1_1_2_0_in_rule__State__Group_6_1_1_2__0__Impl10838);
+            pushFollow(FollowSets000.FOLLOW_rule__State__RegionsAssignment_6_1_1_2_0_in_rule__State__Group_6_1_1_2__0__Impl10834);
             rule__State__RegionsAssignment_6_1_1_2_0();
 
             state._fsp--;
@@ -16198,7 +16186,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5200:1: ( rule__State__Group_6_1_1_2__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5201:2: rule__State__Group_6_1_1_2__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1_2__1__Impl_in_rule__State__Group_6_1_1_2__110868);
+            pushFollow(FollowSets000.FOLLOW_rule__State__Group_6_1_1_2__1__Impl_in_rule__State__Group_6_1_1_2__110864);
             rule__State__Group_6_1_1_2__1__Impl();
 
             state._fsp--;
@@ -16252,7 +16240,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5214:2: rule__State__RegionsAssignment_6_1_1_2_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__State__RegionsAssignment_6_1_1_2_1_in_rule__State__Group_6_1_1_2__1__Impl10895);
+            	    pushFollow(FollowSets000.FOLLOW_rule__State__RegionsAssignment_6_1_1_2_1_in_rule__State__Group_6_1_1_2__1__Impl10891);
             	    rule__State__RegionsAssignment_6_1_1_2_1();
 
             	    state._fsp--;
@@ -16300,12 +16288,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5232:1: ( rule__Transition__Group__0__Impl rule__Transition__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5233:2: rule__Transition__Group__0__Impl rule__Transition__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__0__Impl_in_rule__Transition__Group__010930);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__0__Impl_in_rule__Transition__Group__010926);
             rule__Transition__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__1_in_rule__Transition__Group__010933);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__1_in_rule__Transition__Group__010929);
             rule__Transition__Group__1();
 
             state._fsp--;
@@ -16359,7 +16347,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5247:2: rule__Transition__AnnotationsAssignment_0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__Transition__AnnotationsAssignment_0_in_rule__Transition__Group__0__Impl10960);
+            	    pushFollow(FollowSets000.FOLLOW_rule__Transition__AnnotationsAssignment_0_in_rule__Transition__Group__0__Impl10956);
             	    rule__Transition__AnnotationsAssignment_0();
 
             	    state._fsp--;
@@ -16407,12 +16395,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5261:1: ( rule__Transition__Group__1__Impl rule__Transition__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5262:2: rule__Transition__Group__1__Impl rule__Transition__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__1__Impl_in_rule__Transition__Group__110991);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__1__Impl_in_rule__Transition__Group__110987);
             rule__Transition__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__2_in_rule__Transition__Group__110994);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__2_in_rule__Transition__Group__110990);
             rule__Transition__Group__2();
 
             state._fsp--;
@@ -16454,7 +16442,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5276:1: ( rule__Transition__TypeAssignment_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5276:2: rule__Transition__TypeAssignment_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__TypeAssignment_1_in_rule__Transition__Group__1__Impl11021);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__TypeAssignment_1_in_rule__Transition__Group__1__Impl11017);
             rule__Transition__TypeAssignment_1();
 
             state._fsp--;
@@ -16496,12 +16484,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5290:1: ( rule__Transition__Group__2__Impl rule__Transition__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5291:2: rule__Transition__Group__2__Impl rule__Transition__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__2__Impl_in_rule__Transition__Group__211051);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__2__Impl_in_rule__Transition__Group__211047);
             rule__Transition__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__3_in_rule__Transition__Group__211054);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__3_in_rule__Transition__Group__211050);
             rule__Transition__Group__3();
 
             state._fsp--;
@@ -16551,7 +16539,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5305:2: rule__Transition__PriorityAssignment_2
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Transition__PriorityAssignment_2_in_rule__Transition__Group__2__Impl11081);
+                    pushFollow(FollowSets000.FOLLOW_rule__Transition__PriorityAssignment_2_in_rule__Transition__Group__2__Impl11077);
                     rule__Transition__PriorityAssignment_2();
 
                     state._fsp--;
@@ -16596,12 +16584,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5319:1: ( rule__Transition__Group__3__Impl rule__Transition__Group__4 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5320:2: rule__Transition__Group__3__Impl rule__Transition__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__3__Impl_in_rule__Transition__Group__311112);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__3__Impl_in_rule__Transition__Group__311108);
             rule__Transition__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__4_in_rule__Transition__Group__311115);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__4_in_rule__Transition__Group__311111);
             rule__Transition__Group__4();
 
             state._fsp--;
@@ -16643,7 +16631,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5334:1: ( rule__Transition__TargetStateAssignment_3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5334:2: rule__Transition__TargetStateAssignment_3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__TargetStateAssignment_3_in_rule__Transition__Group__3__Impl11142);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__TargetStateAssignment_3_in_rule__Transition__Group__3__Impl11138);
             rule__Transition__TargetStateAssignment_3();
 
             state._fsp--;
@@ -16685,7 +16673,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5348:1: ( rule__Transition__Group__4__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5349:2: rule__Transition__Group__4__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__4__Impl_in_rule__Transition__Group__411172);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group__4__Impl_in_rule__Transition__Group__411168);
             rule__Transition__Group__4__Impl();
 
             state._fsp--;
@@ -16731,7 +16719,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5362:2: rule__Transition__Group_4__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__0_in_rule__Transition__Group__4__Impl11199);
+                    pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__0_in_rule__Transition__Group__4__Impl11195);
                     rule__Transition__Group_4__0();
 
                     state._fsp--;
@@ -16776,12 +16764,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5386:1: ( rule__Transition__Group_4__0__Impl rule__Transition__Group_4__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5387:2: rule__Transition__Group_4__0__Impl rule__Transition__Group_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__0__Impl_in_rule__Transition__Group_4__011240);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__0__Impl_in_rule__Transition__Group_4__011236);
             rule__Transition__Group_4__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__1_in_rule__Transition__Group_4__011243);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__1_in_rule__Transition__Group_4__011239);
             rule__Transition__Group_4__1();
 
             state._fsp--;
@@ -16831,7 +16819,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5401:2: rule__Transition__ImmediateAssignment_4_0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Transition__ImmediateAssignment_4_0_in_rule__Transition__Group_4__0__Impl11270);
+                    pushFollow(FollowSets000.FOLLOW_rule__Transition__ImmediateAssignment_4_0_in_rule__Transition__Group_4__0__Impl11266);
                     rule__Transition__ImmediateAssignment_4_0();
 
                     state._fsp--;
@@ -16876,12 +16864,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5415:1: ( rule__Transition__Group_4__1__Impl rule__Transition__Group_4__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5416:2: rule__Transition__Group_4__1__Impl rule__Transition__Group_4__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__1__Impl_in_rule__Transition__Group_4__111301);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__1__Impl_in_rule__Transition__Group_4__111297);
             rule__Transition__Group_4__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__2_in_rule__Transition__Group_4__111304);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__2_in_rule__Transition__Group_4__111300);
             rule__Transition__Group_4__2();
 
             state._fsp--;
@@ -16931,7 +16919,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5430:2: rule__Transition__DeferredAssignment_4_1
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Transition__DeferredAssignment_4_1_in_rule__Transition__Group_4__1__Impl11331);
+                    pushFollow(FollowSets000.FOLLOW_rule__Transition__DeferredAssignment_4_1_in_rule__Transition__Group_4__1__Impl11327);
                     rule__Transition__DeferredAssignment_4_1();
 
                     state._fsp--;
@@ -16976,12 +16964,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5444:1: ( rule__Transition__Group_4__2__Impl rule__Transition__Group_4__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5445:2: rule__Transition__Group_4__2__Impl rule__Transition__Group_4__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__2__Impl_in_rule__Transition__Group_4__211362);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__2__Impl_in_rule__Transition__Group_4__211358);
             rule__Transition__Group_4__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__3_in_rule__Transition__Group_4__211365);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__3_in_rule__Transition__Group_4__211361);
             rule__Transition__Group_4__3();
 
             state._fsp--;
@@ -17031,7 +17019,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5459:2: rule__Transition__HistoryAssignment_4_2
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Transition__HistoryAssignment_4_2_in_rule__Transition__Group_4__2__Impl11392);
+                    pushFollow(FollowSets000.FOLLOW_rule__Transition__HistoryAssignment_4_2_in_rule__Transition__Group_4__2__Impl11388);
                     rule__Transition__HistoryAssignment_4_2();
 
                     state._fsp--;
@@ -17076,7 +17064,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5473:1: ( rule__Transition__Group_4__3__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5474:2: rule__Transition__Group_4__3__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__3__Impl_in_rule__Transition__Group_4__311423);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4__3__Impl_in_rule__Transition__Group_4__311419);
             rule__Transition__Group_4__3__Impl();
 
             state._fsp--;
@@ -17126,7 +17114,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5487:2: rule__Transition__Group_4_3__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3__0_in_rule__Transition__Group_4__3__Impl11450);
+                    pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3__0_in_rule__Transition__Group_4__3__Impl11446);
                     rule__Transition__Group_4_3__0();
 
                     state._fsp--;
@@ -17171,12 +17159,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5509:1: ( rule__Transition__Group_4_3__0__Impl rule__Transition__Group_4_3__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5510:2: rule__Transition__Group_4_3__0__Impl rule__Transition__Group_4_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3__0__Impl_in_rule__Transition__Group_4_3__011489);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3__0__Impl_in_rule__Transition__Group_4_3__011485);
             rule__Transition__Group_4_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3__1_in_rule__Transition__Group_4_3__011492);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3__1_in_rule__Transition__Group_4_3__011488);
             rule__Transition__Group_4_3__1();
 
             state._fsp--;
@@ -17215,7 +17203,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getWithKeyword_4_3_0()); 
             }
-            match(input,63,FollowSets000.FOLLOW_63_in_rule__Transition__Group_4_3__0__Impl11520); if (state.failed) return ;
+            match(input,63,FollowSets000.FOLLOW_63_in_rule__Transition__Group_4_3__0__Impl11516); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTransitionAccess().getWithKeyword_4_3_0()); 
             }
@@ -17250,7 +17238,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5540:1: ( rule__Transition__Group_4_3__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5541:2: rule__Transition__Group_4_3__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3__1__Impl_in_rule__Transition__Group_4_3__111551);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3__1__Impl_in_rule__Transition__Group_4_3__111547);
             rule__Transition__Group_4_3__1__Impl();
 
             state._fsp--;
@@ -17292,7 +17280,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5554:1: ( rule__Transition__Alternatives_4_3_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5554:2: rule__Transition__Alternatives_4_3_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Alternatives_4_3_1_in_rule__Transition__Group_4_3__1__Impl11578);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Alternatives_4_3_1_in_rule__Transition__Group_4_3__1__Impl11574);
             rule__Transition__Alternatives_4_3_1();
 
             state._fsp--;
@@ -17334,12 +17322,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5572:1: ( rule__Transition__Group_4_3_1_0__0__Impl rule__Transition__Group_4_3_1_0__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5573:2: rule__Transition__Group_4_3_1_0__0__Impl rule__Transition__Group_4_3_1_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0__0__Impl_in_rule__Transition__Group_4_3_1_0__011612);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0__0__Impl_in_rule__Transition__Group_4_3_1_0__011608);
             rule__Transition__Group_4_3_1_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0__1_in_rule__Transition__Group_4_3_1_0__011615);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0__1_in_rule__Transition__Group_4_3_1_0__011611);
             rule__Transition__Group_4_3_1_0__1();
 
             state._fsp--;
@@ -17385,7 +17373,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5587:2: rule__Transition__DelayAssignment_4_3_1_0_0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Transition__DelayAssignment_4_3_1_0_0_in_rule__Transition__Group_4_3_1_0__0__Impl11642);
+                    pushFollow(FollowSets000.FOLLOW_rule__Transition__DelayAssignment_4_3_1_0_0_in_rule__Transition__Group_4_3_1_0__0__Impl11638);
                     rule__Transition__DelayAssignment_4_3_1_0_0();
 
                     state._fsp--;
@@ -17430,12 +17418,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5601:1: ( rule__Transition__Group_4_3_1_0__1__Impl rule__Transition__Group_4_3_1_0__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5602:2: rule__Transition__Group_4_3_1_0__1__Impl rule__Transition__Group_4_3_1_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0__1__Impl_in_rule__Transition__Group_4_3_1_0__111673);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0__1__Impl_in_rule__Transition__Group_4_3_1_0__111669);
             rule__Transition__Group_4_3_1_0__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0__2_in_rule__Transition__Group_4_3_1_0__111676);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0__2_in_rule__Transition__Group_4_3_1_0__111672);
             rule__Transition__Group_4_3_1_0__2();
 
             state._fsp--;
@@ -17485,7 +17473,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5616:2: rule__Transition__TriggerAssignment_4_3_1_0_1
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Transition__TriggerAssignment_4_3_1_0_1_in_rule__Transition__Group_4_3_1_0__1__Impl11703);
+                    pushFollow(FollowSets000.FOLLOW_rule__Transition__TriggerAssignment_4_3_1_0_1_in_rule__Transition__Group_4_3_1_0__1__Impl11699);
                     rule__Transition__TriggerAssignment_4_3_1_0_1();
 
                     state._fsp--;
@@ -17530,7 +17518,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5630:1: ( rule__Transition__Group_4_3_1_0__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5631:2: rule__Transition__Group_4_3_1_0__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0__2__Impl_in_rule__Transition__Group_4_3_1_0__211734);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0__2__Impl_in_rule__Transition__Group_4_3_1_0__211730);
             rule__Transition__Group_4_3_1_0__2__Impl();
 
             state._fsp--;
@@ -17580,7 +17568,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5644:2: rule__Transition__Group_4_3_1_0_2__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2__0_in_rule__Transition__Group_4_3_1_0__2__Impl11761);
+                    pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2__0_in_rule__Transition__Group_4_3_1_0__2__Impl11757);
                     rule__Transition__Group_4_3_1_0_2__0();
 
                     state._fsp--;
@@ -17625,12 +17613,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5664:1: ( rule__Transition__Group_4_3_1_0_2__0__Impl rule__Transition__Group_4_3_1_0_2__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5665:2: rule__Transition__Group_4_3_1_0_2__0__Impl rule__Transition__Group_4_3_1_0_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2__0__Impl_in_rule__Transition__Group_4_3_1_0_2__011798);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2__0__Impl_in_rule__Transition__Group_4_3_1_0_2__011794);
             rule__Transition__Group_4_3_1_0_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2__1_in_rule__Transition__Group_4_3_1_0_2__011801);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2__1_in_rule__Transition__Group_4_3_1_0_2__011797);
             rule__Transition__Group_4_3_1_0_2__1();
 
             state._fsp--;
@@ -17669,7 +17657,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getSolidusKeyword_4_3_1_0_2_0()); 
             }
-            match(input,64,FollowSets000.FOLLOW_64_in_rule__Transition__Group_4_3_1_0_2__0__Impl11829); if (state.failed) return ;
+            match(input,64,FollowSets000.FOLLOW_64_in_rule__Transition__Group_4_3_1_0_2__0__Impl11825); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTransitionAccess().getSolidusKeyword_4_3_1_0_2_0()); 
             }
@@ -17704,12 +17692,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5695:1: ( rule__Transition__Group_4_3_1_0_2__1__Impl rule__Transition__Group_4_3_1_0_2__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5696:2: rule__Transition__Group_4_3_1_0_2__1__Impl rule__Transition__Group_4_3_1_0_2__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2__1__Impl_in_rule__Transition__Group_4_3_1_0_2__111860);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2__1__Impl_in_rule__Transition__Group_4_3_1_0_2__111856);
             rule__Transition__Group_4_3_1_0_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2__2_in_rule__Transition__Group_4_3_1_0_2__111863);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2__2_in_rule__Transition__Group_4_3_1_0_2__111859);
             rule__Transition__Group_4_3_1_0_2__2();
 
             state._fsp--;
@@ -17751,7 +17739,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5710:1: ( rule__Transition__EffectsAssignment_4_3_1_0_2_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5710:2: rule__Transition__EffectsAssignment_4_3_1_0_2_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__EffectsAssignment_4_3_1_0_2_1_in_rule__Transition__Group_4_3_1_0_2__1__Impl11890);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__EffectsAssignment_4_3_1_0_2_1_in_rule__Transition__Group_4_3_1_0_2__1__Impl11886);
             rule__Transition__EffectsAssignment_4_3_1_0_2_1();
 
             state._fsp--;
@@ -17793,7 +17781,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5724:1: ( rule__Transition__Group_4_3_1_0_2__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5725:2: rule__Transition__Group_4_3_1_0_2__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2__2__Impl_in_rule__Transition__Group_4_3_1_0_2__211920);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2__2__Impl_in_rule__Transition__Group_4_3_1_0_2__211916);
             rule__Transition__Group_4_3_1_0_2__2__Impl();
 
             state._fsp--;
@@ -17853,7 +17841,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5738:2: rule__Transition__Group_4_3_1_0_2_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2_2__0_in_rule__Transition__Group_4_3_1_0_2__2__Impl11947);
+            	    pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2_2__0_in_rule__Transition__Group_4_3_1_0_2__2__Impl11943);
             	    rule__Transition__Group_4_3_1_0_2_2__0();
 
             	    state._fsp--;
@@ -17901,12 +17889,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5758:1: ( rule__Transition__Group_4_3_1_0_2_2__0__Impl rule__Transition__Group_4_3_1_0_2_2__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5759:2: rule__Transition__Group_4_3_1_0_2_2__0__Impl rule__Transition__Group_4_3_1_0_2_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2_2__0__Impl_in_rule__Transition__Group_4_3_1_0_2_2__011984);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2_2__0__Impl_in_rule__Transition__Group_4_3_1_0_2_2__011980);
             rule__Transition__Group_4_3_1_0_2_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2_2__1_in_rule__Transition__Group_4_3_1_0_2_2__011987);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2_2__1_in_rule__Transition__Group_4_3_1_0_2_2__011983);
             rule__Transition__Group_4_3_1_0_2_2__1();
 
             state._fsp--;
@@ -17945,7 +17933,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getSemicolonKeyword_4_3_1_0_2_2_0()); 
             }
-            match(input,62,FollowSets000.FOLLOW_62_in_rule__Transition__Group_4_3_1_0_2_2__0__Impl12015); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_62_in_rule__Transition__Group_4_3_1_0_2_2__0__Impl12011); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTransitionAccess().getSemicolonKeyword_4_3_1_0_2_2_0()); 
             }
@@ -17980,7 +17968,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5789:1: ( rule__Transition__Group_4_3_1_0_2_2__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5790:2: rule__Transition__Group_4_3_1_0_2_2__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2_2__1__Impl_in_rule__Transition__Group_4_3_1_0_2_2__112046);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__Group_4_3_1_0_2_2__1__Impl_in_rule__Transition__Group_4_3_1_0_2_2__112042);
             rule__Transition__Group_4_3_1_0_2_2__1__Impl();
 
             state._fsp--;
@@ -18022,7 +18010,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5803:1: ( rule__Transition__EffectsAssignment_4_3_1_0_2_2_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5803:2: rule__Transition__EffectsAssignment_4_3_1_0_2_2_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Transition__EffectsAssignment_4_3_1_0_2_2_1_in_rule__Transition__Group_4_3_1_0_2_2__1__Impl12073);
+            pushFollow(FollowSets000.FOLLOW_rule__Transition__EffectsAssignment_4_3_1_0_2_2_1_in_rule__Transition__Group_4_3_1_0_2_2__1__Impl12069);
             rule__Transition__EffectsAssignment_4_3_1_0_2_2_1();
 
             state._fsp--;
@@ -18064,12 +18052,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5821:1: ( rule__ValuedObject__Group__0__Impl rule__ValuedObject__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5822:2: rule__ValuedObject__Group__0__Impl rule__ValuedObject__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__0__Impl_in_rule__ValuedObject__Group__012107);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__0__Impl_in_rule__ValuedObject__Group__012103);
             rule__ValuedObject__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__1_in_rule__ValuedObject__Group__012110);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__1_in_rule__ValuedObject__Group__012106);
             rule__ValuedObject__Group__1();
 
             state._fsp--;
@@ -18123,7 +18111,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5836:2: rule__ValuedObject__AnnotationsAssignment_0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__AnnotationsAssignment_0_in_rule__ValuedObject__Group__0__Impl12137);
+            	    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__AnnotationsAssignment_0_in_rule__ValuedObject__Group__0__Impl12133);
             	    rule__ValuedObject__AnnotationsAssignment_0();
 
             	    state._fsp--;
@@ -18171,12 +18159,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5850:1: ( rule__ValuedObject__Group__1__Impl rule__ValuedObject__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5851:2: rule__ValuedObject__Group__1__Impl rule__ValuedObject__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__1__Impl_in_rule__ValuedObject__Group__112168);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__1__Impl_in_rule__ValuedObject__Group__112164);
             rule__ValuedObject__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__2_in_rule__ValuedObject__Group__112171);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__2_in_rule__ValuedObject__Group__112167);
             rule__ValuedObject__Group__2();
 
             state._fsp--;
@@ -18226,7 +18214,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5865:2: rule__ValuedObject__InputAssignment_1
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__InputAssignment_1_in_rule__ValuedObject__Group__1__Impl12198);
+                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__InputAssignment_1_in_rule__ValuedObject__Group__1__Impl12194);
                     rule__ValuedObject__InputAssignment_1();
 
                     state._fsp--;
@@ -18271,12 +18259,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5879:1: ( rule__ValuedObject__Group__2__Impl rule__ValuedObject__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5880:2: rule__ValuedObject__Group__2__Impl rule__ValuedObject__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__2__Impl_in_rule__ValuedObject__Group__212229);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__2__Impl_in_rule__ValuedObject__Group__212225);
             rule__ValuedObject__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__3_in_rule__ValuedObject__Group__212232);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__3_in_rule__ValuedObject__Group__212228);
             rule__ValuedObject__Group__3();
 
             state._fsp--;
@@ -18326,7 +18314,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5894:2: rule__ValuedObject__OutputAssignment_2
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__OutputAssignment_2_in_rule__ValuedObject__Group__2__Impl12259);
+                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__OutputAssignment_2_in_rule__ValuedObject__Group__2__Impl12255);
                     rule__ValuedObject__OutputAssignment_2();
 
                     state._fsp--;
@@ -18371,12 +18359,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5908:1: ( rule__ValuedObject__Group__3__Impl rule__ValuedObject__Group__4 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5909:2: rule__ValuedObject__Group__3__Impl rule__ValuedObject__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__3__Impl_in_rule__ValuedObject__Group__312290);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__3__Impl_in_rule__ValuedObject__Group__312286);
             rule__ValuedObject__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__4_in_rule__ValuedObject__Group__312293);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__4_in_rule__ValuedObject__Group__312289);
             rule__ValuedObject__Group__4();
 
             state._fsp--;
@@ -18426,7 +18414,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5923:2: rule__ValuedObject__StaticAssignment_3
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__StaticAssignment_3_in_rule__ValuedObject__Group__3__Impl12320);
+                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__StaticAssignment_3_in_rule__ValuedObject__Group__3__Impl12316);
                     rule__ValuedObject__StaticAssignment_3();
 
                     state._fsp--;
@@ -18471,12 +18459,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5937:1: ( rule__ValuedObject__Group__4__Impl rule__ValuedObject__Group__5 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5938:2: rule__ValuedObject__Group__4__Impl rule__ValuedObject__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__4__Impl_in_rule__ValuedObject__Group__412351);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__4__Impl_in_rule__ValuedObject__Group__412347);
             rule__ValuedObject__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__5_in_rule__ValuedObject__Group__412354);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__5_in_rule__ValuedObject__Group__412350);
             rule__ValuedObject__Group__5();
 
             state._fsp--;
@@ -18526,7 +18514,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5952:2: rule__ValuedObject__SignalAssignment_4
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__SignalAssignment_4_in_rule__ValuedObject__Group__4__Impl12381);
+                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__SignalAssignment_4_in_rule__ValuedObject__Group__4__Impl12377);
                     rule__ValuedObject__SignalAssignment_4();
 
                     state._fsp--;
@@ -18571,12 +18559,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5966:1: ( rule__ValuedObject__Group__5__Impl rule__ValuedObject__Group__6 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5967:2: rule__ValuedObject__Group__5__Impl rule__ValuedObject__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__5__Impl_in_rule__ValuedObject__Group__512412);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__5__Impl_in_rule__ValuedObject__Group__512408);
             rule__ValuedObject__Group__5__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__6_in_rule__ValuedObject__Group__512415);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__6_in_rule__ValuedObject__Group__512411);
             rule__ValuedObject__Group__6();
 
             state._fsp--;
@@ -18626,7 +18614,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5981:2: rule__ValuedObject__TypeAssignment_5
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__TypeAssignment_5_in_rule__ValuedObject__Group__5__Impl12442);
+                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__TypeAssignment_5_in_rule__ValuedObject__Group__5__Impl12438);
                     rule__ValuedObject__TypeAssignment_5();
 
                     state._fsp--;
@@ -18671,12 +18659,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5995:1: ( rule__ValuedObject__Group__6__Impl rule__ValuedObject__Group__7 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5996:2: rule__ValuedObject__Group__6__Impl rule__ValuedObject__Group__7
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__6__Impl_in_rule__ValuedObject__Group__612473);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__6__Impl_in_rule__ValuedObject__Group__612469);
             rule__ValuedObject__Group__6__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__7_in_rule__ValuedObject__Group__612476);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__7_in_rule__ValuedObject__Group__612472);
             rule__ValuedObject__Group__7();
 
             state._fsp--;
@@ -18718,7 +18706,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6010:1: ( rule__ValuedObject__NameAssignment_6 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6010:2: rule__ValuedObject__NameAssignment_6
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__NameAssignment_6_in_rule__ValuedObject__Group__6__Impl12503);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__NameAssignment_6_in_rule__ValuedObject__Group__6__Impl12499);
             rule__ValuedObject__NameAssignment_6();
 
             state._fsp--;
@@ -18760,12 +18748,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6024:1: ( rule__ValuedObject__Group__7__Impl rule__ValuedObject__Group__8 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6025:2: rule__ValuedObject__Group__7__Impl rule__ValuedObject__Group__8
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__7__Impl_in_rule__ValuedObject__Group__712533);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__7__Impl_in_rule__ValuedObject__Group__712529);
             rule__ValuedObject__Group__7__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__8_in_rule__ValuedObject__Group__712536);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__8_in_rule__ValuedObject__Group__712532);
             rule__ValuedObject__Group__8();
 
             state._fsp--;
@@ -18815,7 +18803,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6039:2: rule__ValuedObject__Group_7__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_7__0_in_rule__ValuedObject__Group__7__Impl12563);
+                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_7__0_in_rule__ValuedObject__Group__7__Impl12559);
                     rule__ValuedObject__Group_7__0();
 
                     state._fsp--;
@@ -18860,12 +18848,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6053:1: ( rule__ValuedObject__Group__8__Impl rule__ValuedObject__Group__9 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6054:2: rule__ValuedObject__Group__8__Impl rule__ValuedObject__Group__9
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__8__Impl_in_rule__ValuedObject__Group__812594);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__8__Impl_in_rule__ValuedObject__Group__812590);
             rule__ValuedObject__Group__8__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__9_in_rule__ValuedObject__Group__812597);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__9_in_rule__ValuedObject__Group__812593);
             rule__ValuedObject__Group__9();
 
             state._fsp--;
@@ -18915,7 +18903,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6068:2: rule__ValuedObject__Group_8__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_8__0_in_rule__ValuedObject__Group__8__Impl12624);
+                    pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_8__0_in_rule__ValuedObject__Group__8__Impl12620);
                     rule__ValuedObject__Group_8__0();
 
                     state._fsp--;
@@ -18960,7 +18948,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6082:1: ( rule__ValuedObject__Group__9__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6083:2: rule__ValuedObject__Group__9__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__9__Impl_in_rule__ValuedObject__Group__912655);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group__9__Impl_in_rule__ValuedObject__Group__912651);
             rule__ValuedObject__Group__9__Impl();
 
             state._fsp--;
@@ -18999,7 +18987,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getSemicolonKeyword_9()); 
             }
-            match(input,62,FollowSets000.FOLLOW_62_in_rule__ValuedObject__Group__9__Impl12683); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_62_in_rule__ValuedObject__Group__9__Impl12679); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectAccess().getSemicolonKeyword_9()); 
             }
@@ -19034,12 +19022,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6132:1: ( rule__ValuedObject__Group_7__0__Impl rule__ValuedObject__Group_7__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6133:2: rule__ValuedObject__Group_7__0__Impl rule__ValuedObject__Group_7__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_7__0__Impl_in_rule__ValuedObject__Group_7__012734);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_7__0__Impl_in_rule__ValuedObject__Group_7__012730);
             rule__ValuedObject__Group_7__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_7__1_in_rule__ValuedObject__Group_7__012737);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_7__1_in_rule__ValuedObject__Group_7__012733);
             rule__ValuedObject__Group_7__1();
 
             state._fsp--;
@@ -19078,7 +19066,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getEqualsSignKeyword_7_0()); 
             }
-            match(input,65,FollowSets000.FOLLOW_65_in_rule__ValuedObject__Group_7__0__Impl12765); if (state.failed) return ;
+            match(input,65,FollowSets000.FOLLOW_65_in_rule__ValuedObject__Group_7__0__Impl12761); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectAccess().getEqualsSignKeyword_7_0()); 
             }
@@ -19113,7 +19101,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6163:1: ( rule__ValuedObject__Group_7__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6164:2: rule__ValuedObject__Group_7__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_7__1__Impl_in_rule__ValuedObject__Group_7__112796);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_7__1__Impl_in_rule__ValuedObject__Group_7__112792);
             rule__ValuedObject__Group_7__1__Impl();
 
             state._fsp--;
@@ -19155,7 +19143,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6177:1: ( rule__ValuedObject__InitialValueAssignment_7_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6177:2: rule__ValuedObject__InitialValueAssignment_7_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__InitialValueAssignment_7_1_in_rule__ValuedObject__Group_7__1__Impl12823);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__InitialValueAssignment_7_1_in_rule__ValuedObject__Group_7__1__Impl12819);
             rule__ValuedObject__InitialValueAssignment_7_1();
 
             state._fsp--;
@@ -19197,12 +19185,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6195:1: ( rule__ValuedObject__Group_8__0__Impl rule__ValuedObject__Group_8__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6196:2: rule__ValuedObject__Group_8__0__Impl rule__ValuedObject__Group_8__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_8__0__Impl_in_rule__ValuedObject__Group_8__012857);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_8__0__Impl_in_rule__ValuedObject__Group_8__012853);
             rule__ValuedObject__Group_8__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_8__1_in_rule__ValuedObject__Group_8__012860);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_8__1_in_rule__ValuedObject__Group_8__012856);
             rule__ValuedObject__Group_8__1();
 
             state._fsp--;
@@ -19241,7 +19229,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getCombineKeyword_8_0()); 
             }
-            match(input,66,FollowSets000.FOLLOW_66_in_rule__ValuedObject__Group_8__0__Impl12888); if (state.failed) return ;
+            match(input,66,FollowSets000.FOLLOW_66_in_rule__ValuedObject__Group_8__0__Impl12884); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectAccess().getCombineKeyword_8_0()); 
             }
@@ -19276,7 +19264,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6226:1: ( rule__ValuedObject__Group_8__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6227:2: rule__ValuedObject__Group_8__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_8__1__Impl_in_rule__ValuedObject__Group_8__112919);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__Group_8__1__Impl_in_rule__ValuedObject__Group_8__112915);
             rule__ValuedObject__Group_8__1__Impl();
 
             state._fsp--;
@@ -19318,7 +19306,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6240:1: ( rule__ValuedObject__CombineOperatorAssignment_8_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6240:2: rule__ValuedObject__CombineOperatorAssignment_8_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__CombineOperatorAssignment_8_1_in_rule__ValuedObject__Group_8__1__Impl12946);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObject__CombineOperatorAssignment_8_1_in_rule__ValuedObject__Group_8__1__Impl12942);
             rule__ValuedObject__CombineOperatorAssignment_8_1();
 
             state._fsp--;
@@ -19360,12 +19348,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6258:1: ( rule__TextualCode__Group__0__Impl rule__TextualCode__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6259:2: rule__TextualCode__Group__0__Impl rule__TextualCode__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TextualCode__Group__0__Impl_in_rule__TextualCode__Group__012980);
+            pushFollow(FollowSets000.FOLLOW_rule__TextualCode__Group__0__Impl_in_rule__TextualCode__Group__012976);
             rule__TextualCode__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TextualCode__Group__1_in_rule__TextualCode__Group__012983);
+            pushFollow(FollowSets000.FOLLOW_rule__TextualCode__Group__1_in_rule__TextualCode__Group__012979);
             rule__TextualCode__Group__1();
 
             state._fsp--;
@@ -19407,7 +19395,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6273:1: ( rule__TextualCode__TextAssignment_0 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6273:2: rule__TextualCode__TextAssignment_0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TextualCode__TextAssignment_0_in_rule__TextualCode__Group__0__Impl13010);
+            pushFollow(FollowSets000.FOLLOW_rule__TextualCode__TextAssignment_0_in_rule__TextualCode__Group__0__Impl13006);
             rule__TextualCode__TextAssignment_0();
 
             state._fsp--;
@@ -19449,7 +19437,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6287:1: ( rule__TextualCode__Group__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6288:2: rule__TextualCode__Group__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TextualCode__Group__1__Impl_in_rule__TextualCode__Group__113040);
+            pushFollow(FollowSets000.FOLLOW_rule__TextualCode__Group__1__Impl_in_rule__TextualCode__Group__113036);
             rule__TextualCode__Group__1__Impl();
 
             state._fsp--;
@@ -19488,7 +19476,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTextualCodeAccess().getSemicolonKeyword_1()); 
             }
-            match(input,62,FollowSets000.FOLLOW_62_in_rule__TextualCode__Group__1__Impl13068); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_62_in_rule__TextualCode__Group__1__Impl13064); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTextualCodeAccess().getSemicolonKeyword_1()); 
             }
@@ -19523,12 +19511,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6321:1: ( rule__Substitution__Group__0__Impl rule__Substitution__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6322:2: rule__Substitution__Group__0__Impl rule__Substitution__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Substitution__Group__0__Impl_in_rule__Substitution__Group__013103);
+            pushFollow(FollowSets000.FOLLOW_rule__Substitution__Group__0__Impl_in_rule__Substitution__Group__013099);
             rule__Substitution__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Substitution__Group__1_in_rule__Substitution__Group__013106);
+            pushFollow(FollowSets000.FOLLOW_rule__Substitution__Group__1_in_rule__Substitution__Group__013102);
             rule__Substitution__Group__1();
 
             state._fsp--;
@@ -19570,7 +19558,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6336:1: ( rule__Substitution__ActualAssignment_0 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6336:2: rule__Substitution__ActualAssignment_0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Substitution__ActualAssignment_0_in_rule__Substitution__Group__0__Impl13133);
+            pushFollow(FollowSets000.FOLLOW_rule__Substitution__ActualAssignment_0_in_rule__Substitution__Group__0__Impl13129);
             rule__Substitution__ActualAssignment_0();
 
             state._fsp--;
@@ -19612,12 +19600,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6350:1: ( rule__Substitution__Group__1__Impl rule__Substitution__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6351:2: rule__Substitution__Group__1__Impl rule__Substitution__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Substitution__Group__1__Impl_in_rule__Substitution__Group__113163);
+            pushFollow(FollowSets000.FOLLOW_rule__Substitution__Group__1__Impl_in_rule__Substitution__Group__113159);
             rule__Substitution__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Substitution__Group__2_in_rule__Substitution__Group__113166);
+            pushFollow(FollowSets000.FOLLOW_rule__Substitution__Group__2_in_rule__Substitution__Group__113162);
             rule__Substitution__Group__2();
 
             state._fsp--;
@@ -19656,7 +19644,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubstitutionAccess().getSolidusKeyword_1()); 
             }
-            match(input,64,FollowSets000.FOLLOW_64_in_rule__Substitution__Group__1__Impl13194); if (state.failed) return ;
+            match(input,64,FollowSets000.FOLLOW_64_in_rule__Substitution__Group__1__Impl13190); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSubstitutionAccess().getSolidusKeyword_1()); 
             }
@@ -19691,7 +19679,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6381:1: ( rule__Substitution__Group__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6382:2: rule__Substitution__Group__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Substitution__Group__2__Impl_in_rule__Substitution__Group__213225);
+            pushFollow(FollowSets000.FOLLOW_rule__Substitution__Group__2__Impl_in_rule__Substitution__Group__213221);
             rule__Substitution__Group__2__Impl();
 
             state._fsp--;
@@ -19733,7 +19721,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6395:1: ( rule__Substitution__FormalAssignment_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6395:2: rule__Substitution__FormalAssignment_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Substitution__FormalAssignment_2_in_rule__Substitution__Group__2__Impl13252);
+            pushFollow(FollowSets000.FOLLOW_rule__Substitution__FormalAssignment_2_in_rule__Substitution__Group__2__Impl13248);
             rule__Substitution__FormalAssignment_2();
 
             state._fsp--;
@@ -19775,12 +19763,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6415:1: ( rule__EntryAction__Group__0__Impl rule__EntryAction__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6416:2: rule__EntryAction__Group__0__Impl rule__EntryAction__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__0__Impl_in_rule__EntryAction__Group__013288);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__0__Impl_in_rule__EntryAction__Group__013284);
             rule__EntryAction__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__1_in_rule__EntryAction__Group__013291);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__1_in_rule__EntryAction__Group__013287);
             rule__EntryAction__Group__1();
 
             state._fsp--;
@@ -19854,12 +19842,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6446:1: ( rule__EntryAction__Group__1__Impl rule__EntryAction__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6447:2: rule__EntryAction__Group__1__Impl rule__EntryAction__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__1__Impl_in_rule__EntryAction__Group__113349);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__1__Impl_in_rule__EntryAction__Group__113345);
             rule__EntryAction__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__2_in_rule__EntryAction__Group__113352);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__2_in_rule__EntryAction__Group__113348);
             rule__EntryAction__Group__2();
 
             state._fsp--;
@@ -19898,7 +19886,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEntryActionAccess().getEntryKeyword_1()); 
             }
-            match(input,67,FollowSets000.FOLLOW_67_in_rule__EntryAction__Group__1__Impl13380); if (state.failed) return ;
+            match(input,67,FollowSets000.FOLLOW_67_in_rule__EntryAction__Group__1__Impl13376); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEntryActionAccess().getEntryKeyword_1()); 
             }
@@ -19933,12 +19921,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6477:1: ( rule__EntryAction__Group__2__Impl rule__EntryAction__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6478:2: rule__EntryAction__Group__2__Impl rule__EntryAction__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__2__Impl_in_rule__EntryAction__Group__213411);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__2__Impl_in_rule__EntryAction__Group__213407);
             rule__EntryAction__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__3_in_rule__EntryAction__Group__213414);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__3_in_rule__EntryAction__Group__213410);
             rule__EntryAction__Group__3();
 
             state._fsp--;
@@ -19988,7 +19976,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6492:2: rule__EntryAction__TriggerAssignment_2
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__EntryAction__TriggerAssignment_2_in_rule__EntryAction__Group__2__Impl13441);
+                    pushFollow(FollowSets000.FOLLOW_rule__EntryAction__TriggerAssignment_2_in_rule__EntryAction__Group__2__Impl13437);
                     rule__EntryAction__TriggerAssignment_2();
 
                     state._fsp--;
@@ -20033,12 +20021,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6506:1: ( rule__EntryAction__Group__3__Impl rule__EntryAction__Group__4 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6507:2: rule__EntryAction__Group__3__Impl rule__EntryAction__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__3__Impl_in_rule__EntryAction__Group__313472);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__3__Impl_in_rule__EntryAction__Group__313468);
             rule__EntryAction__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__4_in_rule__EntryAction__Group__313475);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__4_in_rule__EntryAction__Group__313471);
             rule__EntryAction__Group__4();
 
             state._fsp--;
@@ -20088,7 +20076,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6521:2: rule__EntryAction__Group_3__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3__0_in_rule__EntryAction__Group__3__Impl13502);
+                    pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3__0_in_rule__EntryAction__Group__3__Impl13498);
                     rule__EntryAction__Group_3__0();
 
                     state._fsp--;
@@ -20133,7 +20121,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6535:1: ( rule__EntryAction__Group__4__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6536:2: rule__EntryAction__Group__4__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__4__Impl_in_rule__EntryAction__Group__413533);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group__4__Impl_in_rule__EntryAction__Group__413529);
             rule__EntryAction__Group__4__Impl();
 
             state._fsp--;
@@ -20172,7 +20160,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEntryActionAccess().getSemicolonKeyword_4()); 
             }
-            match(input,62,FollowSets000.FOLLOW_62_in_rule__EntryAction__Group__4__Impl13561); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_62_in_rule__EntryAction__Group__4__Impl13557); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEntryActionAccess().getSemicolonKeyword_4()); 
             }
@@ -20207,12 +20195,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6575:1: ( rule__EntryAction__Group_3__0__Impl rule__EntryAction__Group_3__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6576:2: rule__EntryAction__Group_3__0__Impl rule__EntryAction__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3__0__Impl_in_rule__EntryAction__Group_3__013602);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3__0__Impl_in_rule__EntryAction__Group_3__013598);
             rule__EntryAction__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3__1_in_rule__EntryAction__Group_3__013605);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3__1_in_rule__EntryAction__Group_3__013601);
             rule__EntryAction__Group_3__1();
 
             state._fsp--;
@@ -20251,7 +20239,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEntryActionAccess().getSolidusKeyword_3_0()); 
             }
-            match(input,64,FollowSets000.FOLLOW_64_in_rule__EntryAction__Group_3__0__Impl13633); if (state.failed) return ;
+            match(input,64,FollowSets000.FOLLOW_64_in_rule__EntryAction__Group_3__0__Impl13629); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEntryActionAccess().getSolidusKeyword_3_0()); 
             }
@@ -20286,12 +20274,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6606:1: ( rule__EntryAction__Group_3__1__Impl rule__EntryAction__Group_3__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6607:2: rule__EntryAction__Group_3__1__Impl rule__EntryAction__Group_3__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3__1__Impl_in_rule__EntryAction__Group_3__113664);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3__1__Impl_in_rule__EntryAction__Group_3__113660);
             rule__EntryAction__Group_3__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3__2_in_rule__EntryAction__Group_3__113667);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3__2_in_rule__EntryAction__Group_3__113663);
             rule__EntryAction__Group_3__2();
 
             state._fsp--;
@@ -20333,7 +20321,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6621:1: ( rule__EntryAction__EffectsAssignment_3_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6621:2: rule__EntryAction__EffectsAssignment_3_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__EffectsAssignment_3_1_in_rule__EntryAction__Group_3__1__Impl13694);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__EffectsAssignment_3_1_in_rule__EntryAction__Group_3__1__Impl13690);
             rule__EntryAction__EffectsAssignment_3_1();
 
             state._fsp--;
@@ -20375,7 +20363,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6635:1: ( rule__EntryAction__Group_3__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6636:2: rule__EntryAction__Group_3__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3__2__Impl_in_rule__EntryAction__Group_3__213724);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3__2__Impl_in_rule__EntryAction__Group_3__213720);
             rule__EntryAction__Group_3__2__Impl();
 
             state._fsp--;
@@ -20435,7 +20423,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6649:2: rule__EntryAction__Group_3_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3_2__0_in_rule__EntryAction__Group_3__2__Impl13751);
+            	    pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3_2__0_in_rule__EntryAction__Group_3__2__Impl13747);
             	    rule__EntryAction__Group_3_2__0();
 
             	    state._fsp--;
@@ -20483,12 +20471,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6669:1: ( rule__EntryAction__Group_3_2__0__Impl rule__EntryAction__Group_3_2__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6670:2: rule__EntryAction__Group_3_2__0__Impl rule__EntryAction__Group_3_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3_2__0__Impl_in_rule__EntryAction__Group_3_2__013788);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3_2__0__Impl_in_rule__EntryAction__Group_3_2__013784);
             rule__EntryAction__Group_3_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3_2__1_in_rule__EntryAction__Group_3_2__013791);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3_2__1_in_rule__EntryAction__Group_3_2__013787);
             rule__EntryAction__Group_3_2__1();
 
             state._fsp--;
@@ -20527,7 +20515,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEntryActionAccess().getSemicolonKeyword_3_2_0()); 
             }
-            match(input,62,FollowSets000.FOLLOW_62_in_rule__EntryAction__Group_3_2__0__Impl13819); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_62_in_rule__EntryAction__Group_3_2__0__Impl13815); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEntryActionAccess().getSemicolonKeyword_3_2_0()); 
             }
@@ -20562,7 +20550,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6700:1: ( rule__EntryAction__Group_3_2__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6701:2: rule__EntryAction__Group_3_2__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3_2__1__Impl_in_rule__EntryAction__Group_3_2__113850);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__Group_3_2__1__Impl_in_rule__EntryAction__Group_3_2__113846);
             rule__EntryAction__Group_3_2__1__Impl();
 
             state._fsp--;
@@ -20604,7 +20592,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6714:1: ( rule__EntryAction__EffectsAssignment_3_2_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6714:2: rule__EntryAction__EffectsAssignment_3_2_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__EffectsAssignment_3_2_1_in_rule__EntryAction__Group_3_2__1__Impl13877);
+            pushFollow(FollowSets000.FOLLOW_rule__EntryAction__EffectsAssignment_3_2_1_in_rule__EntryAction__Group_3_2__1__Impl13873);
             rule__EntryAction__EffectsAssignment_3_2_1();
 
             state._fsp--;
@@ -20646,12 +20634,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6732:1: ( rule__DuringAction__Group__0__Impl rule__DuringAction__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6733:2: rule__DuringAction__Group__0__Impl rule__DuringAction__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__0__Impl_in_rule__DuringAction__Group__013911);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__0__Impl_in_rule__DuringAction__Group__013907);
             rule__DuringAction__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__1_in_rule__DuringAction__Group__013914);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__1_in_rule__DuringAction__Group__013910);
             rule__DuringAction__Group__1();
 
             state._fsp--;
@@ -20725,12 +20713,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6763:1: ( rule__DuringAction__Group__1__Impl rule__DuringAction__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6764:2: rule__DuringAction__Group__1__Impl rule__DuringAction__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__1__Impl_in_rule__DuringAction__Group__113972);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__1__Impl_in_rule__DuringAction__Group__113968);
             rule__DuringAction__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__2_in_rule__DuringAction__Group__113975);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__2_in_rule__DuringAction__Group__113971);
             rule__DuringAction__Group__2();
 
             state._fsp--;
@@ -20780,7 +20768,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6778:2: rule__DuringAction__ImmediateAssignment_1
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__DuringAction__ImmediateAssignment_1_in_rule__DuringAction__Group__1__Impl14002);
+                    pushFollow(FollowSets000.FOLLOW_rule__DuringAction__ImmediateAssignment_1_in_rule__DuringAction__Group__1__Impl13998);
                     rule__DuringAction__ImmediateAssignment_1();
 
                     state._fsp--;
@@ -20825,12 +20813,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6792:1: ( rule__DuringAction__Group__2__Impl rule__DuringAction__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6793:2: rule__DuringAction__Group__2__Impl rule__DuringAction__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__2__Impl_in_rule__DuringAction__Group__214033);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__2__Impl_in_rule__DuringAction__Group__214029);
             rule__DuringAction__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__3_in_rule__DuringAction__Group__214036);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__3_in_rule__DuringAction__Group__214032);
             rule__DuringAction__Group__3();
 
             state._fsp--;
@@ -20869,7 +20857,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDuringActionAccess().getDuringKeyword_2()); 
             }
-            match(input,68,FollowSets000.FOLLOW_68_in_rule__DuringAction__Group__2__Impl14064); if (state.failed) return ;
+            match(input,68,FollowSets000.FOLLOW_68_in_rule__DuringAction__Group__2__Impl14060); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getDuringActionAccess().getDuringKeyword_2()); 
             }
@@ -20904,12 +20892,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6823:1: ( rule__DuringAction__Group__3__Impl rule__DuringAction__Group__4 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6824:2: rule__DuringAction__Group__3__Impl rule__DuringAction__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__3__Impl_in_rule__DuringAction__Group__314095);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__3__Impl_in_rule__DuringAction__Group__314091);
             rule__DuringAction__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__4_in_rule__DuringAction__Group__314098);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__4_in_rule__DuringAction__Group__314094);
             rule__DuringAction__Group__4();
 
             state._fsp--;
@@ -20959,7 +20947,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6838:2: rule__DuringAction__TriggerAssignment_3
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__DuringAction__TriggerAssignment_3_in_rule__DuringAction__Group__3__Impl14125);
+                    pushFollow(FollowSets000.FOLLOW_rule__DuringAction__TriggerAssignment_3_in_rule__DuringAction__Group__3__Impl14121);
                     rule__DuringAction__TriggerAssignment_3();
 
                     state._fsp--;
@@ -21004,12 +20992,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6852:1: ( rule__DuringAction__Group__4__Impl rule__DuringAction__Group__5 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6853:2: rule__DuringAction__Group__4__Impl rule__DuringAction__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__4__Impl_in_rule__DuringAction__Group__414156);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__4__Impl_in_rule__DuringAction__Group__414152);
             rule__DuringAction__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__5_in_rule__DuringAction__Group__414159);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__5_in_rule__DuringAction__Group__414155);
             rule__DuringAction__Group__5();
 
             state._fsp--;
@@ -21059,7 +21047,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6867:2: rule__DuringAction__Group_4__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4__0_in_rule__DuringAction__Group__4__Impl14186);
+                    pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4__0_in_rule__DuringAction__Group__4__Impl14182);
                     rule__DuringAction__Group_4__0();
 
                     state._fsp--;
@@ -21104,7 +21092,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6881:1: ( rule__DuringAction__Group__5__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6882:2: rule__DuringAction__Group__5__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__5__Impl_in_rule__DuringAction__Group__514217);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group__5__Impl_in_rule__DuringAction__Group__514213);
             rule__DuringAction__Group__5__Impl();
 
             state._fsp--;
@@ -21143,7 +21131,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDuringActionAccess().getSemicolonKeyword_5()); 
             }
-            match(input,62,FollowSets000.FOLLOW_62_in_rule__DuringAction__Group__5__Impl14245); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_62_in_rule__DuringAction__Group__5__Impl14241); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getDuringActionAccess().getSemicolonKeyword_5()); 
             }
@@ -21178,12 +21166,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6923:1: ( rule__DuringAction__Group_4__0__Impl rule__DuringAction__Group_4__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6924:2: rule__DuringAction__Group_4__0__Impl rule__DuringAction__Group_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4__0__Impl_in_rule__DuringAction__Group_4__014288);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4__0__Impl_in_rule__DuringAction__Group_4__014284);
             rule__DuringAction__Group_4__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4__1_in_rule__DuringAction__Group_4__014291);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4__1_in_rule__DuringAction__Group_4__014287);
             rule__DuringAction__Group_4__1();
 
             state._fsp--;
@@ -21222,7 +21210,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDuringActionAccess().getSolidusKeyword_4_0()); 
             }
-            match(input,64,FollowSets000.FOLLOW_64_in_rule__DuringAction__Group_4__0__Impl14319); if (state.failed) return ;
+            match(input,64,FollowSets000.FOLLOW_64_in_rule__DuringAction__Group_4__0__Impl14315); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getDuringActionAccess().getSolidusKeyword_4_0()); 
             }
@@ -21257,12 +21245,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6954:1: ( rule__DuringAction__Group_4__1__Impl rule__DuringAction__Group_4__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6955:2: rule__DuringAction__Group_4__1__Impl rule__DuringAction__Group_4__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4__1__Impl_in_rule__DuringAction__Group_4__114350);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4__1__Impl_in_rule__DuringAction__Group_4__114346);
             rule__DuringAction__Group_4__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4__2_in_rule__DuringAction__Group_4__114353);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4__2_in_rule__DuringAction__Group_4__114349);
             rule__DuringAction__Group_4__2();
 
             state._fsp--;
@@ -21304,7 +21292,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6969:1: ( rule__DuringAction__EffectsAssignment_4_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6969:2: rule__DuringAction__EffectsAssignment_4_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__EffectsAssignment_4_1_in_rule__DuringAction__Group_4__1__Impl14380);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__EffectsAssignment_4_1_in_rule__DuringAction__Group_4__1__Impl14376);
             rule__DuringAction__EffectsAssignment_4_1();
 
             state._fsp--;
@@ -21346,7 +21334,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6983:1: ( rule__DuringAction__Group_4__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6984:2: rule__DuringAction__Group_4__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4__2__Impl_in_rule__DuringAction__Group_4__214410);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4__2__Impl_in_rule__DuringAction__Group_4__214406);
             rule__DuringAction__Group_4__2__Impl();
 
             state._fsp--;
@@ -21406,7 +21394,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6997:2: rule__DuringAction__Group_4_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4_2__0_in_rule__DuringAction__Group_4__2__Impl14437);
+            	    pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4_2__0_in_rule__DuringAction__Group_4__2__Impl14433);
             	    rule__DuringAction__Group_4_2__0();
 
             	    state._fsp--;
@@ -21454,12 +21442,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7017:1: ( rule__DuringAction__Group_4_2__0__Impl rule__DuringAction__Group_4_2__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7018:2: rule__DuringAction__Group_4_2__0__Impl rule__DuringAction__Group_4_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4_2__0__Impl_in_rule__DuringAction__Group_4_2__014474);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4_2__0__Impl_in_rule__DuringAction__Group_4_2__014470);
             rule__DuringAction__Group_4_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4_2__1_in_rule__DuringAction__Group_4_2__014477);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4_2__1_in_rule__DuringAction__Group_4_2__014473);
             rule__DuringAction__Group_4_2__1();
 
             state._fsp--;
@@ -21498,7 +21486,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDuringActionAccess().getSemicolonKeyword_4_2_0()); 
             }
-            match(input,62,FollowSets000.FOLLOW_62_in_rule__DuringAction__Group_4_2__0__Impl14505); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_62_in_rule__DuringAction__Group_4_2__0__Impl14501); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getDuringActionAccess().getSemicolonKeyword_4_2_0()); 
             }
@@ -21533,7 +21521,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7048:1: ( rule__DuringAction__Group_4_2__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7049:2: rule__DuringAction__Group_4_2__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4_2__1__Impl_in_rule__DuringAction__Group_4_2__114536);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__Group_4_2__1__Impl_in_rule__DuringAction__Group_4_2__114532);
             rule__DuringAction__Group_4_2__1__Impl();
 
             state._fsp--;
@@ -21575,7 +21563,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7062:1: ( rule__DuringAction__EffectsAssignment_4_2_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7062:2: rule__DuringAction__EffectsAssignment_4_2_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__EffectsAssignment_4_2_1_in_rule__DuringAction__Group_4_2__1__Impl14563);
+            pushFollow(FollowSets000.FOLLOW_rule__DuringAction__EffectsAssignment_4_2_1_in_rule__DuringAction__Group_4_2__1__Impl14559);
             rule__DuringAction__EffectsAssignment_4_2_1();
 
             state._fsp--;
@@ -21617,12 +21605,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7080:1: ( rule__ExitAction__Group__0__Impl rule__ExitAction__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7081:2: rule__ExitAction__Group__0__Impl rule__ExitAction__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__0__Impl_in_rule__ExitAction__Group__014597);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__0__Impl_in_rule__ExitAction__Group__014593);
             rule__ExitAction__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__1_in_rule__ExitAction__Group__014600);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__1_in_rule__ExitAction__Group__014596);
             rule__ExitAction__Group__1();
 
             state._fsp--;
@@ -21696,12 +21684,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7111:1: ( rule__ExitAction__Group__1__Impl rule__ExitAction__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7112:2: rule__ExitAction__Group__1__Impl rule__ExitAction__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__1__Impl_in_rule__ExitAction__Group__114658);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__1__Impl_in_rule__ExitAction__Group__114654);
             rule__ExitAction__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__2_in_rule__ExitAction__Group__114661);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__2_in_rule__ExitAction__Group__114657);
             rule__ExitAction__Group__2();
 
             state._fsp--;
@@ -21740,7 +21728,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExitActionAccess().getExitKeyword_1()); 
             }
-            match(input,69,FollowSets000.FOLLOW_69_in_rule__ExitAction__Group__1__Impl14689); if (state.failed) return ;
+            match(input,69,FollowSets000.FOLLOW_69_in_rule__ExitAction__Group__1__Impl14685); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExitActionAccess().getExitKeyword_1()); 
             }
@@ -21775,12 +21763,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7142:1: ( rule__ExitAction__Group__2__Impl rule__ExitAction__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7143:2: rule__ExitAction__Group__2__Impl rule__ExitAction__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__2__Impl_in_rule__ExitAction__Group__214720);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__2__Impl_in_rule__ExitAction__Group__214716);
             rule__ExitAction__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__3_in_rule__ExitAction__Group__214723);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__3_in_rule__ExitAction__Group__214719);
             rule__ExitAction__Group__3();
 
             state._fsp--;
@@ -21830,7 +21818,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7157:2: rule__ExitAction__TriggerAssignment_2
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__ExitAction__TriggerAssignment_2_in_rule__ExitAction__Group__2__Impl14750);
+                    pushFollow(FollowSets000.FOLLOW_rule__ExitAction__TriggerAssignment_2_in_rule__ExitAction__Group__2__Impl14746);
                     rule__ExitAction__TriggerAssignment_2();
 
                     state._fsp--;
@@ -21875,12 +21863,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7171:1: ( rule__ExitAction__Group__3__Impl rule__ExitAction__Group__4 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7172:2: rule__ExitAction__Group__3__Impl rule__ExitAction__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__3__Impl_in_rule__ExitAction__Group__314781);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__3__Impl_in_rule__ExitAction__Group__314777);
             rule__ExitAction__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__4_in_rule__ExitAction__Group__314784);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__4_in_rule__ExitAction__Group__314780);
             rule__ExitAction__Group__4();
 
             state._fsp--;
@@ -21930,7 +21918,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7186:2: rule__ExitAction__Group_3__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3__0_in_rule__ExitAction__Group__3__Impl14811);
+                    pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3__0_in_rule__ExitAction__Group__3__Impl14807);
                     rule__ExitAction__Group_3__0();
 
                     state._fsp--;
@@ -21975,7 +21963,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7200:1: ( rule__ExitAction__Group__4__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7201:2: rule__ExitAction__Group__4__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__4__Impl_in_rule__ExitAction__Group__414842);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group__4__Impl_in_rule__ExitAction__Group__414838);
             rule__ExitAction__Group__4__Impl();
 
             state._fsp--;
@@ -22014,7 +22002,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExitActionAccess().getSemicolonKeyword_4()); 
             }
-            match(input,62,FollowSets000.FOLLOW_62_in_rule__ExitAction__Group__4__Impl14870); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_62_in_rule__ExitAction__Group__4__Impl14866); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExitActionAccess().getSemicolonKeyword_4()); 
             }
@@ -22049,12 +22037,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7240:1: ( rule__ExitAction__Group_3__0__Impl rule__ExitAction__Group_3__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7241:2: rule__ExitAction__Group_3__0__Impl rule__ExitAction__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3__0__Impl_in_rule__ExitAction__Group_3__014911);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3__0__Impl_in_rule__ExitAction__Group_3__014907);
             rule__ExitAction__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3__1_in_rule__ExitAction__Group_3__014914);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3__1_in_rule__ExitAction__Group_3__014910);
             rule__ExitAction__Group_3__1();
 
             state._fsp--;
@@ -22093,7 +22081,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExitActionAccess().getSolidusKeyword_3_0()); 
             }
-            match(input,64,FollowSets000.FOLLOW_64_in_rule__ExitAction__Group_3__0__Impl14942); if (state.failed) return ;
+            match(input,64,FollowSets000.FOLLOW_64_in_rule__ExitAction__Group_3__0__Impl14938); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExitActionAccess().getSolidusKeyword_3_0()); 
             }
@@ -22128,12 +22116,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7271:1: ( rule__ExitAction__Group_3__1__Impl rule__ExitAction__Group_3__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7272:2: rule__ExitAction__Group_3__1__Impl rule__ExitAction__Group_3__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3__1__Impl_in_rule__ExitAction__Group_3__114973);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3__1__Impl_in_rule__ExitAction__Group_3__114969);
             rule__ExitAction__Group_3__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3__2_in_rule__ExitAction__Group_3__114976);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3__2_in_rule__ExitAction__Group_3__114972);
             rule__ExitAction__Group_3__2();
 
             state._fsp--;
@@ -22175,7 +22163,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7286:1: ( rule__ExitAction__EffectsAssignment_3_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7286:2: rule__ExitAction__EffectsAssignment_3_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__EffectsAssignment_3_1_in_rule__ExitAction__Group_3__1__Impl15003);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__EffectsAssignment_3_1_in_rule__ExitAction__Group_3__1__Impl14999);
             rule__ExitAction__EffectsAssignment_3_1();
 
             state._fsp--;
@@ -22217,7 +22205,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7300:1: ( rule__ExitAction__Group_3__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7301:2: rule__ExitAction__Group_3__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3__2__Impl_in_rule__ExitAction__Group_3__215033);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3__2__Impl_in_rule__ExitAction__Group_3__215029);
             rule__ExitAction__Group_3__2__Impl();
 
             state._fsp--;
@@ -22277,7 +22265,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7314:2: rule__ExitAction__Group_3_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3_2__0_in_rule__ExitAction__Group_3__2__Impl15060);
+            	    pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3_2__0_in_rule__ExitAction__Group_3__2__Impl15056);
             	    rule__ExitAction__Group_3_2__0();
 
             	    state._fsp--;
@@ -22325,12 +22313,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7334:1: ( rule__ExitAction__Group_3_2__0__Impl rule__ExitAction__Group_3_2__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7335:2: rule__ExitAction__Group_3_2__0__Impl rule__ExitAction__Group_3_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3_2__0__Impl_in_rule__ExitAction__Group_3_2__015097);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3_2__0__Impl_in_rule__ExitAction__Group_3_2__015093);
             rule__ExitAction__Group_3_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3_2__1_in_rule__ExitAction__Group_3_2__015100);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3_2__1_in_rule__ExitAction__Group_3_2__015096);
             rule__ExitAction__Group_3_2__1();
 
             state._fsp--;
@@ -22369,7 +22357,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExitActionAccess().getSemicolonKeyword_3_2_0()); 
             }
-            match(input,62,FollowSets000.FOLLOW_62_in_rule__ExitAction__Group_3_2__0__Impl15128); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_62_in_rule__ExitAction__Group_3_2__0__Impl15124); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExitActionAccess().getSemicolonKeyword_3_2_0()); 
             }
@@ -22404,7 +22392,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7365:1: ( rule__ExitAction__Group_3_2__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7366:2: rule__ExitAction__Group_3_2__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3_2__1__Impl_in_rule__ExitAction__Group_3_2__115159);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__Group_3_2__1__Impl_in_rule__ExitAction__Group_3_2__115155);
             rule__ExitAction__Group_3_2__1__Impl();
 
             state._fsp--;
@@ -22446,7 +22434,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7379:1: ( rule__ExitAction__EffectsAssignment_3_2_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7379:2: rule__ExitAction__EffectsAssignment_3_2_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__EffectsAssignment_3_2_1_in_rule__ExitAction__Group_3_2__1__Impl15186);
+            pushFollow(FollowSets000.FOLLOW_rule__ExitAction__EffectsAssignment_3_2_1_in_rule__ExitAction__Group_3_2__1__Impl15182);
             rule__ExitAction__EffectsAssignment_3_2_1();
 
             state._fsp--;
@@ -22488,12 +22476,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7397:1: ( rule__SuspendAction__Group__0__Impl rule__SuspendAction__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7398:2: rule__SuspendAction__Group__0__Impl rule__SuspendAction__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__0__Impl_in_rule__SuspendAction__Group__015220);
+            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__0__Impl_in_rule__SuspendAction__Group__015216);
             rule__SuspendAction__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__1_in_rule__SuspendAction__Group__015223);
+            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__1_in_rule__SuspendAction__Group__015219);
             rule__SuspendAction__Group__1();
 
             state._fsp--;
@@ -22567,12 +22555,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7428:1: ( rule__SuspendAction__Group__1__Impl rule__SuspendAction__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7429:2: rule__SuspendAction__Group__1__Impl rule__SuspendAction__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__1__Impl_in_rule__SuspendAction__Group__115281);
+            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__1__Impl_in_rule__SuspendAction__Group__115277);
             rule__SuspendAction__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__2_in_rule__SuspendAction__Group__115284);
+            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__2_in_rule__SuspendAction__Group__115280);
             rule__SuspendAction__Group__2();
 
             state._fsp--;
@@ -22622,7 +22610,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7443:2: rule__SuspendAction__ImmediateAssignment_1
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__ImmediateAssignment_1_in_rule__SuspendAction__Group__1__Impl15311);
+                    pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__ImmediateAssignment_1_in_rule__SuspendAction__Group__1__Impl15307);
                     rule__SuspendAction__ImmediateAssignment_1();
 
                     state._fsp--;
@@ -22667,12 +22655,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7457:1: ( rule__SuspendAction__Group__2__Impl rule__SuspendAction__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7458:2: rule__SuspendAction__Group__2__Impl rule__SuspendAction__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__2__Impl_in_rule__SuspendAction__Group__215342);
+            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__2__Impl_in_rule__SuspendAction__Group__215338);
             rule__SuspendAction__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__3_in_rule__SuspendAction__Group__215345);
+            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__3_in_rule__SuspendAction__Group__215341);
             rule__SuspendAction__Group__3();
 
             state._fsp--;
@@ -22722,7 +22710,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7472:2: rule__SuspendAction__WeakAssignment_2
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__WeakAssignment_2_in_rule__SuspendAction__Group__2__Impl15372);
+                    pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__WeakAssignment_2_in_rule__SuspendAction__Group__2__Impl15368);
                     rule__SuspendAction__WeakAssignment_2();
 
                     state._fsp--;
@@ -22767,12 +22755,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7486:1: ( rule__SuspendAction__Group__3__Impl rule__SuspendAction__Group__4 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7487:2: rule__SuspendAction__Group__3__Impl rule__SuspendAction__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__3__Impl_in_rule__SuspendAction__Group__315403);
+            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__3__Impl_in_rule__SuspendAction__Group__315399);
             rule__SuspendAction__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__4_in_rule__SuspendAction__Group__315406);
+            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__4_in_rule__SuspendAction__Group__315402);
             rule__SuspendAction__Group__4();
 
             state._fsp--;
@@ -22811,7 +22799,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSuspendActionAccess().getSuspendKeyword_3()); 
             }
-            match(input,70,FollowSets000.FOLLOW_70_in_rule__SuspendAction__Group__3__Impl15434); if (state.failed) return ;
+            match(input,70,FollowSets000.FOLLOW_70_in_rule__SuspendAction__Group__3__Impl15430); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSuspendActionAccess().getSuspendKeyword_3()); 
             }
@@ -22846,12 +22834,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7517:1: ( rule__SuspendAction__Group__4__Impl rule__SuspendAction__Group__5 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7518:2: rule__SuspendAction__Group__4__Impl rule__SuspendAction__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__4__Impl_in_rule__SuspendAction__Group__415465);
+            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__4__Impl_in_rule__SuspendAction__Group__415461);
             rule__SuspendAction__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__5_in_rule__SuspendAction__Group__415468);
+            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__5_in_rule__SuspendAction__Group__415464);
             rule__SuspendAction__Group__5();
 
             state._fsp--;
@@ -22901,7 +22889,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7532:2: rule__SuspendAction__TriggerAssignment_4
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__TriggerAssignment_4_in_rule__SuspendAction__Group__4__Impl15495);
+                    pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__TriggerAssignment_4_in_rule__SuspendAction__Group__4__Impl15491);
                     rule__SuspendAction__TriggerAssignment_4();
 
                     state._fsp--;
@@ -22946,7 +22934,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7546:1: ( rule__SuspendAction__Group__5__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7547:2: rule__SuspendAction__Group__5__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__5__Impl_in_rule__SuspendAction__Group__515526);
+            pushFollow(FollowSets000.FOLLOW_rule__SuspendAction__Group__5__Impl_in_rule__SuspendAction__Group__515522);
             rule__SuspendAction__Group__5__Impl();
 
             state._fsp--;
@@ -22985,7 +22973,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSuspendActionAccess().getSemicolonKeyword_5()); 
             }
-            match(input,62,FollowSets000.FOLLOW_62_in_rule__SuspendAction__Group__5__Impl15554); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_62_in_rule__SuspendAction__Group__5__Impl15550); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSuspendActionAccess().getSemicolonKeyword_5()); 
             }
@@ -23020,12 +23008,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7588:1: ( rule__Emission__Group__0__Impl rule__Emission__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7589:2: rule__Emission__Group__0__Impl rule__Emission__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group__0__Impl_in_rule__Emission__Group__015597);
+            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group__0__Impl_in_rule__Emission__Group__015593);
             rule__Emission__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group__1_in_rule__Emission__Group__015600);
+            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group__1_in_rule__Emission__Group__015596);
             rule__Emission__Group__1();
 
             state._fsp--;
@@ -23067,7 +23055,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7603:1: ( rule__Emission__ValuedObjectAssignment_0 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7603:2: rule__Emission__ValuedObjectAssignment_0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Emission__ValuedObjectAssignment_0_in_rule__Emission__Group__0__Impl15627);
+            pushFollow(FollowSets000.FOLLOW_rule__Emission__ValuedObjectAssignment_0_in_rule__Emission__Group__0__Impl15623);
             rule__Emission__ValuedObjectAssignment_0();
 
             state._fsp--;
@@ -23109,7 +23097,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7617:1: ( rule__Emission__Group__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7618:2: rule__Emission__Group__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group__1__Impl_in_rule__Emission__Group__115657);
+            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group__1__Impl_in_rule__Emission__Group__115653);
             rule__Emission__Group__1__Impl();
 
             state._fsp--;
@@ -23159,7 +23147,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7631:2: rule__Emission__Group_1__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Emission__Group_1__0_in_rule__Emission__Group__1__Impl15684);
+                    pushFollow(FollowSets000.FOLLOW_rule__Emission__Group_1__0_in_rule__Emission__Group__1__Impl15680);
                     rule__Emission__Group_1__0();
 
                     state._fsp--;
@@ -23204,12 +23192,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7649:1: ( rule__Emission__Group_1__0__Impl rule__Emission__Group_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7650:2: rule__Emission__Group_1__0__Impl rule__Emission__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group_1__0__Impl_in_rule__Emission__Group_1__015719);
+            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group_1__0__Impl_in_rule__Emission__Group_1__015715);
             rule__Emission__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group_1__1_in_rule__Emission__Group_1__015722);
+            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group_1__1_in_rule__Emission__Group_1__015718);
             rule__Emission__Group_1__1();
 
             state._fsp--;
@@ -23248,7 +23236,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getLeftParenthesisKeyword_1_0()); 
             }
-            match(input,71,FollowSets000.FOLLOW_71_in_rule__Emission__Group_1__0__Impl15750); if (state.failed) return ;
+            match(input,71,FollowSets000.FOLLOW_71_in_rule__Emission__Group_1__0__Impl15746); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEmissionAccess().getLeftParenthesisKeyword_1_0()); 
             }
@@ -23283,12 +23271,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7680:1: ( rule__Emission__Group_1__1__Impl rule__Emission__Group_1__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7681:2: rule__Emission__Group_1__1__Impl rule__Emission__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group_1__1__Impl_in_rule__Emission__Group_1__115781);
+            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group_1__1__Impl_in_rule__Emission__Group_1__115777);
             rule__Emission__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group_1__2_in_rule__Emission__Group_1__115784);
+            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group_1__2_in_rule__Emission__Group_1__115780);
             rule__Emission__Group_1__2();
 
             state._fsp--;
@@ -23330,7 +23318,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7695:1: ( rule__Emission__NewValueAssignment_1_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7695:2: rule__Emission__NewValueAssignment_1_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Emission__NewValueAssignment_1_1_in_rule__Emission__Group_1__1__Impl15811);
+            pushFollow(FollowSets000.FOLLOW_rule__Emission__NewValueAssignment_1_1_in_rule__Emission__Group_1__1__Impl15807);
             rule__Emission__NewValueAssignment_1_1();
 
             state._fsp--;
@@ -23372,7 +23360,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7709:1: ( rule__Emission__Group_1__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7710:2: rule__Emission__Group_1__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group_1__2__Impl_in_rule__Emission__Group_1__215841);
+            pushFollow(FollowSets000.FOLLOW_rule__Emission__Group_1__2__Impl_in_rule__Emission__Group_1__215837);
             rule__Emission__Group_1__2__Impl();
 
             state._fsp--;
@@ -23411,7 +23399,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getRightParenthesisKeyword_1_2()); 
             }
-            match(input,72,FollowSets000.FOLLOW_72_in_rule__Emission__Group_1__2__Impl15869); if (state.failed) return ;
+            match(input,72,FollowSets000.FOLLOW_72_in_rule__Emission__Group_1__2__Impl15865); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEmissionAccess().getRightParenthesisKeyword_1_2()); 
             }
@@ -23446,12 +23434,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7745:1: ( rule__Assignment__Group__0__Impl rule__Assignment__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7746:2: rule__Assignment__Group__0__Impl rule__Assignment__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Assignment__Group__0__Impl_in_rule__Assignment__Group__015906);
+            pushFollow(FollowSets000.FOLLOW_rule__Assignment__Group__0__Impl_in_rule__Assignment__Group__015902);
             rule__Assignment__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Assignment__Group__1_in_rule__Assignment__Group__015909);
+            pushFollow(FollowSets000.FOLLOW_rule__Assignment__Group__1_in_rule__Assignment__Group__015905);
             rule__Assignment__Group__1();
 
             state._fsp--;
@@ -23493,7 +23481,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7760:1: ( rule__Assignment__ValuedObjectAssignment_0 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7760:2: rule__Assignment__ValuedObjectAssignment_0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Assignment__ValuedObjectAssignment_0_in_rule__Assignment__Group__0__Impl15936);
+            pushFollow(FollowSets000.FOLLOW_rule__Assignment__ValuedObjectAssignment_0_in_rule__Assignment__Group__0__Impl15932);
             rule__Assignment__ValuedObjectAssignment_0();
 
             state._fsp--;
@@ -23535,12 +23523,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7774:1: ( rule__Assignment__Group__1__Impl rule__Assignment__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7775:2: rule__Assignment__Group__1__Impl rule__Assignment__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Assignment__Group__1__Impl_in_rule__Assignment__Group__115966);
+            pushFollow(FollowSets000.FOLLOW_rule__Assignment__Group__1__Impl_in_rule__Assignment__Group__115962);
             rule__Assignment__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Assignment__Group__2_in_rule__Assignment__Group__115969);
+            pushFollow(FollowSets000.FOLLOW_rule__Assignment__Group__2_in_rule__Assignment__Group__115965);
             rule__Assignment__Group__2();
 
             state._fsp--;
@@ -23579,7 +23567,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getEqualsSignKeyword_1()); 
             }
-            match(input,65,FollowSets000.FOLLOW_65_in_rule__Assignment__Group__1__Impl15997); if (state.failed) return ;
+            match(input,65,FollowSets000.FOLLOW_65_in_rule__Assignment__Group__1__Impl15993); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAssignmentAccess().getEqualsSignKeyword_1()); 
             }
@@ -23614,7 +23602,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7805:1: ( rule__Assignment__Group__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7806:2: rule__Assignment__Group__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Assignment__Group__2__Impl_in_rule__Assignment__Group__216028);
+            pushFollow(FollowSets000.FOLLOW_rule__Assignment__Group__2__Impl_in_rule__Assignment__Group__216024);
             rule__Assignment__Group__2__Impl();
 
             state._fsp--;
@@ -23656,7 +23644,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7819:1: ( rule__Assignment__ExpressionAssignment_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7819:2: rule__Assignment__ExpressionAssignment_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Assignment__ExpressionAssignment_2_in_rule__Assignment__Group__2__Impl16055);
+            pushFollow(FollowSets000.FOLLOW_rule__Assignment__ExpressionAssignment_2_in_rule__Assignment__Group__2__Impl16051);
             rule__Assignment__ExpressionAssignment_2();
 
             state._fsp--;
@@ -23698,12 +23686,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7839:1: ( rule__OrExpression__Group__0__Impl rule__OrExpression__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7840:2: rule__OrExpression__Group__0__Impl rule__OrExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group__0__Impl_in_rule__OrExpression__Group__016091);
+            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group__0__Impl_in_rule__OrExpression__Group__016087);
             rule__OrExpression__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group__1_in_rule__OrExpression__Group__016094);
+            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group__1_in_rule__OrExpression__Group__016090);
             rule__OrExpression__Group__1();
 
             state._fsp--;
@@ -23742,7 +23730,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getOrExpressionAccess().getAndExpressionParserRuleCall_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleAndExpression_in_rule__OrExpression__Group__0__Impl16121);
+            pushFollow(FollowSets000.FOLLOW_ruleAndExpression_in_rule__OrExpression__Group__0__Impl16117);
             ruleAndExpression();
 
             state._fsp--;
@@ -23781,7 +23769,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7868:1: ( rule__OrExpression__Group__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7869:2: rule__OrExpression__Group__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group__1__Impl_in_rule__OrExpression__Group__116150);
+            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group__1__Impl_in_rule__OrExpression__Group__116146);
             rule__OrExpression__Group__1__Impl();
 
             state._fsp--;
@@ -23835,7 +23823,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7882:2: rule__OrExpression__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group_1__0_in_rule__OrExpression__Group__1__Impl16177);
+            	    pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group_1__0_in_rule__OrExpression__Group__1__Impl16173);
             	    rule__OrExpression__Group_1__0();
 
             	    state._fsp--;
@@ -23883,12 +23871,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7900:1: ( rule__OrExpression__Group_1__0__Impl rule__OrExpression__Group_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7901:2: rule__OrExpression__Group_1__0__Impl rule__OrExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group_1__0__Impl_in_rule__OrExpression__Group_1__016212);
+            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group_1__0__Impl_in_rule__OrExpression__Group_1__016208);
             rule__OrExpression__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group_1__1_in_rule__OrExpression__Group_1__016215);
+            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group_1__1_in_rule__OrExpression__Group_1__016211);
             rule__OrExpression__Group_1__1();
 
             state._fsp--;
@@ -23962,12 +23950,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7931:1: ( rule__OrExpression__Group_1__1__Impl rule__OrExpression__Group_1__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7932:2: rule__OrExpression__Group_1__1__Impl rule__OrExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group_1__1__Impl_in_rule__OrExpression__Group_1__116273);
+            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group_1__1__Impl_in_rule__OrExpression__Group_1__116269);
             rule__OrExpression__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group_1__2_in_rule__OrExpression__Group_1__116276);
+            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group_1__2_in_rule__OrExpression__Group_1__116272);
             rule__OrExpression__Group_1__2();
 
             state._fsp--;
@@ -24009,7 +23997,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7946:1: ( rule__OrExpression__OperatorAssignment_1_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7946:2: rule__OrExpression__OperatorAssignment_1_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__OperatorAssignment_1_1_in_rule__OrExpression__Group_1__1__Impl16303);
+            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__OperatorAssignment_1_1_in_rule__OrExpression__Group_1__1__Impl16299);
             rule__OrExpression__OperatorAssignment_1_1();
 
             state._fsp--;
@@ -24051,7 +24039,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7960:1: ( rule__OrExpression__Group_1__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7961:2: rule__OrExpression__Group_1__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group_1__2__Impl_in_rule__OrExpression__Group_1__216333);
+            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__Group_1__2__Impl_in_rule__OrExpression__Group_1__216329);
             rule__OrExpression__Group_1__2__Impl();
 
             state._fsp--;
@@ -24093,7 +24081,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7974:1: ( rule__OrExpression__SubExpressionsAssignment_1_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7974:2: rule__OrExpression__SubExpressionsAssignment_1_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__SubExpressionsAssignment_1_2_in_rule__OrExpression__Group_1__2__Impl16360);
+            pushFollow(FollowSets000.FOLLOW_rule__OrExpression__SubExpressionsAssignment_1_2_in_rule__OrExpression__Group_1__2__Impl16356);
             rule__OrExpression__SubExpressionsAssignment_1_2();
 
             state._fsp--;
@@ -24135,12 +24123,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7994:1: ( rule__AndExpression__Group__0__Impl rule__AndExpression__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7995:2: rule__AndExpression__Group__0__Impl rule__AndExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group__0__Impl_in_rule__AndExpression__Group__016396);
+            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group__0__Impl_in_rule__AndExpression__Group__016392);
             rule__AndExpression__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group__1_in_rule__AndExpression__Group__016399);
+            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group__1_in_rule__AndExpression__Group__016395);
             rule__AndExpression__Group__1();
 
             state._fsp--;
@@ -24179,7 +24167,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAndExpressionAccess().getCompareOperationParserRuleCall_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleCompareOperation_in_rule__AndExpression__Group__0__Impl16426);
+            pushFollow(FollowSets000.FOLLOW_ruleCompareOperation_in_rule__AndExpression__Group__0__Impl16422);
             ruleCompareOperation();
 
             state._fsp--;
@@ -24218,7 +24206,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8023:1: ( rule__AndExpression__Group__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8024:2: rule__AndExpression__Group__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group__1__Impl_in_rule__AndExpression__Group__116455);
+            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group__1__Impl_in_rule__AndExpression__Group__116451);
             rule__AndExpression__Group__1__Impl();
 
             state._fsp--;
@@ -24272,7 +24260,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8037:2: rule__AndExpression__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group_1__0_in_rule__AndExpression__Group__1__Impl16482);
+            	    pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group_1__0_in_rule__AndExpression__Group__1__Impl16478);
             	    rule__AndExpression__Group_1__0();
 
             	    state._fsp--;
@@ -24320,12 +24308,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8055:1: ( rule__AndExpression__Group_1__0__Impl rule__AndExpression__Group_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8056:2: rule__AndExpression__Group_1__0__Impl rule__AndExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group_1__0__Impl_in_rule__AndExpression__Group_1__016517);
+            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group_1__0__Impl_in_rule__AndExpression__Group_1__016513);
             rule__AndExpression__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group_1__1_in_rule__AndExpression__Group_1__016520);
+            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group_1__1_in_rule__AndExpression__Group_1__016516);
             rule__AndExpression__Group_1__1();
 
             state._fsp--;
@@ -24399,12 +24387,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8086:1: ( rule__AndExpression__Group_1__1__Impl rule__AndExpression__Group_1__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8087:2: rule__AndExpression__Group_1__1__Impl rule__AndExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group_1__1__Impl_in_rule__AndExpression__Group_1__116578);
+            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group_1__1__Impl_in_rule__AndExpression__Group_1__116574);
             rule__AndExpression__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group_1__2_in_rule__AndExpression__Group_1__116581);
+            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group_1__2_in_rule__AndExpression__Group_1__116577);
             rule__AndExpression__Group_1__2();
 
             state._fsp--;
@@ -24446,7 +24434,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8101:1: ( rule__AndExpression__OperatorAssignment_1_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8101:2: rule__AndExpression__OperatorAssignment_1_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__OperatorAssignment_1_1_in_rule__AndExpression__Group_1__1__Impl16608);
+            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__OperatorAssignment_1_1_in_rule__AndExpression__Group_1__1__Impl16604);
             rule__AndExpression__OperatorAssignment_1_1();
 
             state._fsp--;
@@ -24488,7 +24476,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8115:1: ( rule__AndExpression__Group_1__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8116:2: rule__AndExpression__Group_1__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group_1__2__Impl_in_rule__AndExpression__Group_1__216638);
+            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__Group_1__2__Impl_in_rule__AndExpression__Group_1__216634);
             rule__AndExpression__Group_1__2__Impl();
 
             state._fsp--;
@@ -24530,7 +24518,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8129:1: ( rule__AndExpression__SubExpressionsAssignment_1_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8129:2: rule__AndExpression__SubExpressionsAssignment_1_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__SubExpressionsAssignment_1_2_in_rule__AndExpression__Group_1__2__Impl16665);
+            pushFollow(FollowSets000.FOLLOW_rule__AndExpression__SubExpressionsAssignment_1_2_in_rule__AndExpression__Group_1__2__Impl16661);
             rule__AndExpression__SubExpressionsAssignment_1_2();
 
             state._fsp--;
@@ -24572,12 +24560,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8149:1: ( rule__CompareOperation__Group_0__0__Impl rule__CompareOperation__Group_0__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8150:2: rule__CompareOperation__Group_0__0__Impl rule__CompareOperation__Group_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0__0__Impl_in_rule__CompareOperation__Group_0__016701);
+            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0__0__Impl_in_rule__CompareOperation__Group_0__016697);
             rule__CompareOperation__Group_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0__1_in_rule__CompareOperation__Group_0__016704);
+            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0__1_in_rule__CompareOperation__Group_0__016700);
             rule__CompareOperation__Group_0__1();
 
             state._fsp--;
@@ -24601,32 +24589,26 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CompareOperation__Group_0__0__Impl"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8157:1: rule__CompareOperation__Group_0__0__Impl : ( ( ruleNotOrValuedExpression ) ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8157:1: rule__CompareOperation__Group_0__0__Impl : ( ruleNotOrValuedExpression ) ;
     public final void rule__CompareOperation__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8161:1: ( ( ( ruleNotOrValuedExpression ) ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8162:1: ( ( ruleNotOrValuedExpression ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8161:1: ( ( ruleNotOrValuedExpression ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8162:1: ( ruleNotOrValuedExpression )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8162:1: ( ( ruleNotOrValuedExpression ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8163:1: ( ruleNotOrValuedExpression )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8162:1: ( ruleNotOrValuedExpression )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8163:1: ruleNotOrValuedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getNotOrValuedExpressionParserRuleCall_0_0()); 
             }
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8164:1: ( ruleNotOrValuedExpression )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8164:3: ruleNotOrValuedExpression
-            {
-            pushFollow(FollowSets000.FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__Group_0__0__Impl16732);
+            pushFollow(FollowSets000.FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__Group_0__0__Impl16727);
             ruleNotOrValuedExpression();
 
             state._fsp--;
             if (state.failed) return ;
-
-            }
-
             if ( state.backtracking==0 ) {
                after(grammarAccess.getCompareOperationAccess().getNotOrValuedExpressionParserRuleCall_0_0()); 
             }
@@ -24661,7 +24643,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8178:1: ( rule__CompareOperation__Group_0__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8179:2: rule__CompareOperation__Group_0__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0__1__Impl_in_rule__CompareOperation__Group_0__116762);
+            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0__1__Impl_in_rule__CompareOperation__Group_0__116756);
             rule__CompareOperation__Group_0__1__Impl();
 
             state._fsp--;
@@ -24703,7 +24685,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8192:1: ( rule__CompareOperation__Group_0_1__0 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8192:2: rule__CompareOperation__Group_0_1__0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0_1__0_in_rule__CompareOperation__Group_0__1__Impl16789);
+            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0_1__0_in_rule__CompareOperation__Group_0__1__Impl16783);
             rule__CompareOperation__Group_0_1__0();
 
             state._fsp--;
@@ -24745,12 +24727,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8210:1: ( rule__CompareOperation__Group_0_1__0__Impl rule__CompareOperation__Group_0_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8211:2: rule__CompareOperation__Group_0_1__0__Impl rule__CompareOperation__Group_0_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0_1__0__Impl_in_rule__CompareOperation__Group_0_1__016823);
+            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0_1__0__Impl_in_rule__CompareOperation__Group_0_1__016817);
             rule__CompareOperation__Group_0_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0_1__1_in_rule__CompareOperation__Group_0_1__016826);
+            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0_1__1_in_rule__CompareOperation__Group_0_1__016820);
             rule__CompareOperation__Group_0_1__1();
 
             state._fsp--;
@@ -24824,12 +24806,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8241:1: ( rule__CompareOperation__Group_0_1__1__Impl rule__CompareOperation__Group_0_1__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8242:2: rule__CompareOperation__Group_0_1__1__Impl rule__CompareOperation__Group_0_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0_1__1__Impl_in_rule__CompareOperation__Group_0_1__116884);
+            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0_1__1__Impl_in_rule__CompareOperation__Group_0_1__116878);
             rule__CompareOperation__Group_0_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0_1__2_in_rule__CompareOperation__Group_0_1__116887);
+            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0_1__2_in_rule__CompareOperation__Group_0_1__116881);
             rule__CompareOperation__Group_0_1__2();
 
             state._fsp--;
@@ -24871,7 +24853,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8256:1: ( rule__CompareOperation__OperatorAssignment_0_1_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8256:2: rule__CompareOperation__OperatorAssignment_0_1_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__OperatorAssignment_0_1_1_in_rule__CompareOperation__Group_0_1__1__Impl16914);
+            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__OperatorAssignment_0_1_1_in_rule__CompareOperation__Group_0_1__1__Impl16908);
             rule__CompareOperation__OperatorAssignment_0_1_1();
 
             state._fsp--;
@@ -24913,7 +24895,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8270:1: ( rule__CompareOperation__Group_0_1__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8271:2: rule__CompareOperation__Group_0_1__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0_1__2__Impl_in_rule__CompareOperation__Group_0_1__216944);
+            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__Group_0_1__2__Impl_in_rule__CompareOperation__Group_0_1__216938);
             rule__CompareOperation__Group_0_1__2__Impl();
 
             state._fsp--;
@@ -24955,7 +24937,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8284:1: ( rule__CompareOperation__SubExpressionsAssignment_0_1_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8284:2: rule__CompareOperation__SubExpressionsAssignment_0_1_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__SubExpressionsAssignment_0_1_2_in_rule__CompareOperation__Group_0_1__2__Impl16971);
+            pushFollow(FollowSets000.FOLLOW_rule__CompareOperation__SubExpressionsAssignment_0_1_2_in_rule__CompareOperation__Group_0_1__2__Impl16965);
             rule__CompareOperation__SubExpressionsAssignment_0_1_2();
 
             state._fsp--;
@@ -24997,12 +24979,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8304:1: ( rule__NotExpression__Group_0__0__Impl rule__NotExpression__Group_0__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8305:2: rule__NotExpression__Group_0__0__Impl rule__NotExpression__Group_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__NotExpression__Group_0__0__Impl_in_rule__NotExpression__Group_0__017007);
+            pushFollow(FollowSets000.FOLLOW_rule__NotExpression__Group_0__0__Impl_in_rule__NotExpression__Group_0__017001);
             rule__NotExpression__Group_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__NotExpression__Group_0__1_in_rule__NotExpression__Group_0__017010);
+            pushFollow(FollowSets000.FOLLOW_rule__NotExpression__Group_0__1_in_rule__NotExpression__Group_0__017004);
             rule__NotExpression__Group_0__1();
 
             state._fsp--;
@@ -25076,12 +25058,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8335:1: ( rule__NotExpression__Group_0__1__Impl rule__NotExpression__Group_0__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8336:2: rule__NotExpression__Group_0__1__Impl rule__NotExpression__Group_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__NotExpression__Group_0__1__Impl_in_rule__NotExpression__Group_0__117068);
+            pushFollow(FollowSets000.FOLLOW_rule__NotExpression__Group_0__1__Impl_in_rule__NotExpression__Group_0__117062);
             rule__NotExpression__Group_0__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__NotExpression__Group_0__2_in_rule__NotExpression__Group_0__117071);
+            pushFollow(FollowSets000.FOLLOW_rule__NotExpression__Group_0__2_in_rule__NotExpression__Group_0__117065);
             rule__NotExpression__Group_0__2();
 
             state._fsp--;
@@ -25123,7 +25105,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8350:1: ( rule__NotExpression__OperatorAssignment_0_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8350:2: rule__NotExpression__OperatorAssignment_0_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__NotExpression__OperatorAssignment_0_1_in_rule__NotExpression__Group_0__1__Impl17098);
+            pushFollow(FollowSets000.FOLLOW_rule__NotExpression__OperatorAssignment_0_1_in_rule__NotExpression__Group_0__1__Impl17092);
             rule__NotExpression__OperatorAssignment_0_1();
 
             state._fsp--;
@@ -25165,7 +25147,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8364:1: ( rule__NotExpression__Group_0__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8365:2: rule__NotExpression__Group_0__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__NotExpression__Group_0__2__Impl_in_rule__NotExpression__Group_0__217128);
+            pushFollow(FollowSets000.FOLLOW_rule__NotExpression__Group_0__2__Impl_in_rule__NotExpression__Group_0__217122);
             rule__NotExpression__Group_0__2__Impl();
 
             state._fsp--;
@@ -25207,7 +25189,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8378:1: ( rule__NotExpression__SubExpressionsAssignment_0_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8378:2: rule__NotExpression__SubExpressionsAssignment_0_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__NotExpression__SubExpressionsAssignment_0_2_in_rule__NotExpression__Group_0__2__Impl17155);
+            pushFollow(FollowSets000.FOLLOW_rule__NotExpression__SubExpressionsAssignment_0_2_in_rule__NotExpression__Group_0__2__Impl17149);
             rule__NotExpression__SubExpressionsAssignment_0_2();
 
             state._fsp--;
@@ -25249,12 +25231,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8398:1: ( rule__AddExpression__Group__0__Impl rule__AddExpression__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8399:2: rule__AddExpression__Group__0__Impl rule__AddExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group__0__Impl_in_rule__AddExpression__Group__017191);
+            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group__0__Impl_in_rule__AddExpression__Group__017185);
             rule__AddExpression__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group__1_in_rule__AddExpression__Group__017194);
+            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group__1_in_rule__AddExpression__Group__017188);
             rule__AddExpression__Group__1();
 
             state._fsp--;
@@ -25293,7 +25275,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getSubExpressionParserRuleCall_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleSubExpression_in_rule__AddExpression__Group__0__Impl17221);
+            pushFollow(FollowSets000.FOLLOW_ruleSubExpression_in_rule__AddExpression__Group__0__Impl17215);
             ruleSubExpression();
 
             state._fsp--;
@@ -25332,7 +25314,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8427:1: ( rule__AddExpression__Group__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8428:2: rule__AddExpression__Group__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group__1__Impl_in_rule__AddExpression__Group__117250);
+            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group__1__Impl_in_rule__AddExpression__Group__117244);
             rule__AddExpression__Group__1__Impl();
 
             state._fsp--;
@@ -25386,7 +25368,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8441:2: rule__AddExpression__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group_1__0_in_rule__AddExpression__Group__1__Impl17277);
+            	    pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group_1__0_in_rule__AddExpression__Group__1__Impl17271);
             	    rule__AddExpression__Group_1__0();
 
             	    state._fsp--;
@@ -25434,12 +25416,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8459:1: ( rule__AddExpression__Group_1__0__Impl rule__AddExpression__Group_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8460:2: rule__AddExpression__Group_1__0__Impl rule__AddExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group_1__0__Impl_in_rule__AddExpression__Group_1__017312);
+            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group_1__0__Impl_in_rule__AddExpression__Group_1__017306);
             rule__AddExpression__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group_1__1_in_rule__AddExpression__Group_1__017315);
+            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group_1__1_in_rule__AddExpression__Group_1__017309);
             rule__AddExpression__Group_1__1();
 
             state._fsp--;
@@ -25513,12 +25495,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8490:1: ( rule__AddExpression__Group_1__1__Impl rule__AddExpression__Group_1__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8491:2: rule__AddExpression__Group_1__1__Impl rule__AddExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group_1__1__Impl_in_rule__AddExpression__Group_1__117373);
+            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group_1__1__Impl_in_rule__AddExpression__Group_1__117367);
             rule__AddExpression__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group_1__2_in_rule__AddExpression__Group_1__117376);
+            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group_1__2_in_rule__AddExpression__Group_1__117370);
             rule__AddExpression__Group_1__2();
 
             state._fsp--;
@@ -25560,7 +25542,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8505:1: ( rule__AddExpression__OperatorAssignment_1_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8505:2: rule__AddExpression__OperatorAssignment_1_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__OperatorAssignment_1_1_in_rule__AddExpression__Group_1__1__Impl17403);
+            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__OperatorAssignment_1_1_in_rule__AddExpression__Group_1__1__Impl17397);
             rule__AddExpression__OperatorAssignment_1_1();
 
             state._fsp--;
@@ -25602,7 +25584,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8519:1: ( rule__AddExpression__Group_1__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8520:2: rule__AddExpression__Group_1__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group_1__2__Impl_in_rule__AddExpression__Group_1__217433);
+            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__Group_1__2__Impl_in_rule__AddExpression__Group_1__217427);
             rule__AddExpression__Group_1__2__Impl();
 
             state._fsp--;
@@ -25644,7 +25626,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8533:1: ( rule__AddExpression__SubExpressionsAssignment_1_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8533:2: rule__AddExpression__SubExpressionsAssignment_1_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__SubExpressionsAssignment_1_2_in_rule__AddExpression__Group_1__2__Impl17460);
+            pushFollow(FollowSets000.FOLLOW_rule__AddExpression__SubExpressionsAssignment_1_2_in_rule__AddExpression__Group_1__2__Impl17454);
             rule__AddExpression__SubExpressionsAssignment_1_2();
 
             state._fsp--;
@@ -25686,12 +25668,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8553:1: ( rule__SubExpression__Group__0__Impl rule__SubExpression__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8554:2: rule__SubExpression__Group__0__Impl rule__SubExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group__0__Impl_in_rule__SubExpression__Group__017496);
+            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group__0__Impl_in_rule__SubExpression__Group__017490);
             rule__SubExpression__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group__1_in_rule__SubExpression__Group__017499);
+            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group__1_in_rule__SubExpression__Group__017493);
             rule__SubExpression__Group__1();
 
             state._fsp--;
@@ -25730,7 +25712,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getMultExpressionParserRuleCall_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleMultExpression_in_rule__SubExpression__Group__0__Impl17526);
+            pushFollow(FollowSets000.FOLLOW_ruleMultExpression_in_rule__SubExpression__Group__0__Impl17520);
             ruleMultExpression();
 
             state._fsp--;
@@ -25769,7 +25751,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8582:1: ( rule__SubExpression__Group__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8583:2: rule__SubExpression__Group__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group__1__Impl_in_rule__SubExpression__Group__117555);
+            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group__1__Impl_in_rule__SubExpression__Group__117549);
             rule__SubExpression__Group__1__Impl();
 
             state._fsp--;
@@ -25823,7 +25805,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8596:2: rule__SubExpression__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group_1__0_in_rule__SubExpression__Group__1__Impl17582);
+            	    pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group_1__0_in_rule__SubExpression__Group__1__Impl17576);
             	    rule__SubExpression__Group_1__0();
 
             	    state._fsp--;
@@ -25871,12 +25853,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8614:1: ( rule__SubExpression__Group_1__0__Impl rule__SubExpression__Group_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8615:2: rule__SubExpression__Group_1__0__Impl rule__SubExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group_1__0__Impl_in_rule__SubExpression__Group_1__017617);
+            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group_1__0__Impl_in_rule__SubExpression__Group_1__017611);
             rule__SubExpression__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group_1__1_in_rule__SubExpression__Group_1__017620);
+            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group_1__1_in_rule__SubExpression__Group_1__017614);
             rule__SubExpression__Group_1__1();
 
             state._fsp--;
@@ -25950,12 +25932,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8645:1: ( rule__SubExpression__Group_1__1__Impl rule__SubExpression__Group_1__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8646:2: rule__SubExpression__Group_1__1__Impl rule__SubExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group_1__1__Impl_in_rule__SubExpression__Group_1__117678);
+            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group_1__1__Impl_in_rule__SubExpression__Group_1__117672);
             rule__SubExpression__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group_1__2_in_rule__SubExpression__Group_1__117681);
+            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group_1__2_in_rule__SubExpression__Group_1__117675);
             rule__SubExpression__Group_1__2();
 
             state._fsp--;
@@ -25997,7 +25979,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8660:1: ( rule__SubExpression__OperatorAssignment_1_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8660:2: rule__SubExpression__OperatorAssignment_1_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__OperatorAssignment_1_1_in_rule__SubExpression__Group_1__1__Impl17708);
+            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__OperatorAssignment_1_1_in_rule__SubExpression__Group_1__1__Impl17702);
             rule__SubExpression__OperatorAssignment_1_1();
 
             state._fsp--;
@@ -26039,7 +26021,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8674:1: ( rule__SubExpression__Group_1__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8675:2: rule__SubExpression__Group_1__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group_1__2__Impl_in_rule__SubExpression__Group_1__217738);
+            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__Group_1__2__Impl_in_rule__SubExpression__Group_1__217732);
             rule__SubExpression__Group_1__2__Impl();
 
             state._fsp--;
@@ -26081,7 +26063,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8688:1: ( rule__SubExpression__SubExpressionsAssignment_1_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8688:2: rule__SubExpression__SubExpressionsAssignment_1_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__SubExpressionsAssignment_1_2_in_rule__SubExpression__Group_1__2__Impl17765);
+            pushFollow(FollowSets000.FOLLOW_rule__SubExpression__SubExpressionsAssignment_1_2_in_rule__SubExpression__Group_1__2__Impl17759);
             rule__SubExpression__SubExpressionsAssignment_1_2();
 
             state._fsp--;
@@ -26123,12 +26105,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8708:1: ( rule__MultExpression__Group__0__Impl rule__MultExpression__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8709:2: rule__MultExpression__Group__0__Impl rule__MultExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group__0__Impl_in_rule__MultExpression__Group__017801);
+            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group__0__Impl_in_rule__MultExpression__Group__017795);
             rule__MultExpression__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group__1_in_rule__MultExpression__Group__017804);
+            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group__1_in_rule__MultExpression__Group__017798);
             rule__MultExpression__Group__1();
 
             state._fsp--;
@@ -26167,7 +26149,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getDivExpressionParserRuleCall_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleDivExpression_in_rule__MultExpression__Group__0__Impl17831);
+            pushFollow(FollowSets000.FOLLOW_ruleDivExpression_in_rule__MultExpression__Group__0__Impl17825);
             ruleDivExpression();
 
             state._fsp--;
@@ -26206,7 +26188,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8737:1: ( rule__MultExpression__Group__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8738:2: rule__MultExpression__Group__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group__1__Impl_in_rule__MultExpression__Group__117860);
+            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group__1__Impl_in_rule__MultExpression__Group__117854);
             rule__MultExpression__Group__1__Impl();
 
             state._fsp--;
@@ -26260,7 +26242,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8751:2: rule__MultExpression__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group_1__0_in_rule__MultExpression__Group__1__Impl17887);
+            	    pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group_1__0_in_rule__MultExpression__Group__1__Impl17881);
             	    rule__MultExpression__Group_1__0();
 
             	    state._fsp--;
@@ -26308,12 +26290,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8769:1: ( rule__MultExpression__Group_1__0__Impl rule__MultExpression__Group_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8770:2: rule__MultExpression__Group_1__0__Impl rule__MultExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group_1__0__Impl_in_rule__MultExpression__Group_1__017922);
+            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group_1__0__Impl_in_rule__MultExpression__Group_1__017916);
             rule__MultExpression__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group_1__1_in_rule__MultExpression__Group_1__017925);
+            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group_1__1_in_rule__MultExpression__Group_1__017919);
             rule__MultExpression__Group_1__1();
 
             state._fsp--;
@@ -26387,12 +26369,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8800:1: ( rule__MultExpression__Group_1__1__Impl rule__MultExpression__Group_1__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8801:2: rule__MultExpression__Group_1__1__Impl rule__MultExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group_1__1__Impl_in_rule__MultExpression__Group_1__117983);
+            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group_1__1__Impl_in_rule__MultExpression__Group_1__117977);
             rule__MultExpression__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group_1__2_in_rule__MultExpression__Group_1__117986);
+            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group_1__2_in_rule__MultExpression__Group_1__117980);
             rule__MultExpression__Group_1__2();
 
             state._fsp--;
@@ -26434,7 +26416,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8815:1: ( rule__MultExpression__OperatorAssignment_1_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8815:2: rule__MultExpression__OperatorAssignment_1_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__OperatorAssignment_1_1_in_rule__MultExpression__Group_1__1__Impl18013);
+            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__OperatorAssignment_1_1_in_rule__MultExpression__Group_1__1__Impl18007);
             rule__MultExpression__OperatorAssignment_1_1();
 
             state._fsp--;
@@ -26476,7 +26458,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8829:1: ( rule__MultExpression__Group_1__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8830:2: rule__MultExpression__Group_1__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group_1__2__Impl_in_rule__MultExpression__Group_1__218043);
+            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__Group_1__2__Impl_in_rule__MultExpression__Group_1__218037);
             rule__MultExpression__Group_1__2__Impl();
 
             state._fsp--;
@@ -26518,7 +26500,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8843:1: ( rule__MultExpression__SubExpressionsAssignment_1_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8843:2: rule__MultExpression__SubExpressionsAssignment_1_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__SubExpressionsAssignment_1_2_in_rule__MultExpression__Group_1__2__Impl18070);
+            pushFollow(FollowSets000.FOLLOW_rule__MultExpression__SubExpressionsAssignment_1_2_in_rule__MultExpression__Group_1__2__Impl18064);
             rule__MultExpression__SubExpressionsAssignment_1_2();
 
             state._fsp--;
@@ -26560,12 +26542,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8863:1: ( rule__DivExpression__Group__0__Impl rule__DivExpression__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8864:2: rule__DivExpression__Group__0__Impl rule__DivExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group__0__Impl_in_rule__DivExpression__Group__018106);
+            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group__0__Impl_in_rule__DivExpression__Group__018100);
             rule__DivExpression__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group__1_in_rule__DivExpression__Group__018109);
+            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group__1_in_rule__DivExpression__Group__018103);
             rule__DivExpression__Group__1();
 
             state._fsp--;
@@ -26604,7 +26586,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getModExpressionParserRuleCall_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleModExpression_in_rule__DivExpression__Group__0__Impl18136);
+            pushFollow(FollowSets000.FOLLOW_ruleModExpression_in_rule__DivExpression__Group__0__Impl18130);
             ruleModExpression();
 
             state._fsp--;
@@ -26643,7 +26625,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8892:1: ( rule__DivExpression__Group__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8893:2: rule__DivExpression__Group__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group__1__Impl_in_rule__DivExpression__Group__118165);
+            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group__1__Impl_in_rule__DivExpression__Group__118159);
             rule__DivExpression__Group__1__Impl();
 
             state._fsp--;
@@ -26693,7 +26675,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8906:2: rule__DivExpression__Group_1__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group_1__0_in_rule__DivExpression__Group__1__Impl18192);
+                    pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group_1__0_in_rule__DivExpression__Group__1__Impl18186);
                     rule__DivExpression__Group_1__0();
 
                     state._fsp--;
@@ -26738,12 +26720,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8924:1: ( rule__DivExpression__Group_1__0__Impl rule__DivExpression__Group_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8925:2: rule__DivExpression__Group_1__0__Impl rule__DivExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group_1__0__Impl_in_rule__DivExpression__Group_1__018227);
+            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group_1__0__Impl_in_rule__DivExpression__Group_1__018221);
             rule__DivExpression__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group_1__1_in_rule__DivExpression__Group_1__018230);
+            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group_1__1_in_rule__DivExpression__Group_1__018224);
             rule__DivExpression__Group_1__1();
 
             state._fsp--;
@@ -26817,12 +26799,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8955:1: ( rule__DivExpression__Group_1__1__Impl rule__DivExpression__Group_1__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8956:2: rule__DivExpression__Group_1__1__Impl rule__DivExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group_1__1__Impl_in_rule__DivExpression__Group_1__118288);
+            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group_1__1__Impl_in_rule__DivExpression__Group_1__118282);
             rule__DivExpression__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group_1__2_in_rule__DivExpression__Group_1__118291);
+            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group_1__2_in_rule__DivExpression__Group_1__118285);
             rule__DivExpression__Group_1__2();
 
             state._fsp--;
@@ -26864,7 +26846,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8970:1: ( rule__DivExpression__OperatorAssignment_1_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8970:2: rule__DivExpression__OperatorAssignment_1_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__OperatorAssignment_1_1_in_rule__DivExpression__Group_1__1__Impl18318);
+            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__OperatorAssignment_1_1_in_rule__DivExpression__Group_1__1__Impl18312);
             rule__DivExpression__OperatorAssignment_1_1();
 
             state._fsp--;
@@ -26906,7 +26888,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8984:1: ( rule__DivExpression__Group_1__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8985:2: rule__DivExpression__Group_1__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group_1__2__Impl_in_rule__DivExpression__Group_1__218348);
+            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__Group_1__2__Impl_in_rule__DivExpression__Group_1__218342);
             rule__DivExpression__Group_1__2__Impl();
 
             state._fsp--;
@@ -26948,7 +26930,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8998:1: ( rule__DivExpression__SubExpressionsAssignment_1_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:8998:2: rule__DivExpression__SubExpressionsAssignment_1_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__SubExpressionsAssignment_1_2_in_rule__DivExpression__Group_1__2__Impl18375);
+            pushFollow(FollowSets000.FOLLOW_rule__DivExpression__SubExpressionsAssignment_1_2_in_rule__DivExpression__Group_1__2__Impl18369);
             rule__DivExpression__SubExpressionsAssignment_1_2();
 
             state._fsp--;
@@ -26990,12 +26972,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9018:1: ( rule__ModExpression__Group__0__Impl rule__ModExpression__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9019:2: rule__ModExpression__Group__0__Impl rule__ModExpression__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group__0__Impl_in_rule__ModExpression__Group__018411);
+            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group__0__Impl_in_rule__ModExpression__Group__018405);
             rule__ModExpression__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group__1_in_rule__ModExpression__Group__018414);
+            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group__1_in_rule__ModExpression__Group__018408);
             rule__ModExpression__Group__1();
 
             state._fsp--;
@@ -27034,7 +27016,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getNegExpressionParserRuleCall_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleNegExpression_in_rule__ModExpression__Group__0__Impl18441);
+            pushFollow(FollowSets000.FOLLOW_ruleNegExpression_in_rule__ModExpression__Group__0__Impl18435);
             ruleNegExpression();
 
             state._fsp--;
@@ -27073,7 +27055,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9047:1: ( rule__ModExpression__Group__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9048:2: rule__ModExpression__Group__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group__1__Impl_in_rule__ModExpression__Group__118470);
+            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group__1__Impl_in_rule__ModExpression__Group__118464);
             rule__ModExpression__Group__1__Impl();
 
             state._fsp--;
@@ -27123,7 +27105,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9061:2: rule__ModExpression__Group_1__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group_1__0_in_rule__ModExpression__Group__1__Impl18497);
+                    pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group_1__0_in_rule__ModExpression__Group__1__Impl18491);
                     rule__ModExpression__Group_1__0();
 
                     state._fsp--;
@@ -27168,12 +27150,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9079:1: ( rule__ModExpression__Group_1__0__Impl rule__ModExpression__Group_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9080:2: rule__ModExpression__Group_1__0__Impl rule__ModExpression__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group_1__0__Impl_in_rule__ModExpression__Group_1__018532);
+            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group_1__0__Impl_in_rule__ModExpression__Group_1__018526);
             rule__ModExpression__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group_1__1_in_rule__ModExpression__Group_1__018535);
+            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group_1__1_in_rule__ModExpression__Group_1__018529);
             rule__ModExpression__Group_1__1();
 
             state._fsp--;
@@ -27247,12 +27229,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9110:1: ( rule__ModExpression__Group_1__1__Impl rule__ModExpression__Group_1__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9111:2: rule__ModExpression__Group_1__1__Impl rule__ModExpression__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group_1__1__Impl_in_rule__ModExpression__Group_1__118593);
+            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group_1__1__Impl_in_rule__ModExpression__Group_1__118587);
             rule__ModExpression__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group_1__2_in_rule__ModExpression__Group_1__118596);
+            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group_1__2_in_rule__ModExpression__Group_1__118590);
             rule__ModExpression__Group_1__2();
 
             state._fsp--;
@@ -27294,7 +27276,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9125:1: ( rule__ModExpression__OperatorAssignment_1_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9125:2: rule__ModExpression__OperatorAssignment_1_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__OperatorAssignment_1_1_in_rule__ModExpression__Group_1__1__Impl18623);
+            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__OperatorAssignment_1_1_in_rule__ModExpression__Group_1__1__Impl18617);
             rule__ModExpression__OperatorAssignment_1_1();
 
             state._fsp--;
@@ -27336,7 +27318,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9139:1: ( rule__ModExpression__Group_1__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9140:2: rule__ModExpression__Group_1__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group_1__2__Impl_in_rule__ModExpression__Group_1__218653);
+            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__Group_1__2__Impl_in_rule__ModExpression__Group_1__218647);
             rule__ModExpression__Group_1__2__Impl();
 
             state._fsp--;
@@ -27378,7 +27360,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9153:1: ( rule__ModExpression__SubExpressionsAssignment_1_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9153:2: rule__ModExpression__SubExpressionsAssignment_1_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__SubExpressionsAssignment_1_2_in_rule__ModExpression__Group_1__2__Impl18680);
+            pushFollow(FollowSets000.FOLLOW_rule__ModExpression__SubExpressionsAssignment_1_2_in_rule__ModExpression__Group_1__2__Impl18674);
             rule__ModExpression__SubExpressionsAssignment_1_2();
 
             state._fsp--;
@@ -27420,12 +27402,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9173:1: ( rule__NegExpression__Group_0__0__Impl rule__NegExpression__Group_0__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9174:2: rule__NegExpression__Group_0__0__Impl rule__NegExpression__Group_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__NegExpression__Group_0__0__Impl_in_rule__NegExpression__Group_0__018716);
+            pushFollow(FollowSets000.FOLLOW_rule__NegExpression__Group_0__0__Impl_in_rule__NegExpression__Group_0__018710);
             rule__NegExpression__Group_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__NegExpression__Group_0__1_in_rule__NegExpression__Group_0__018719);
+            pushFollow(FollowSets000.FOLLOW_rule__NegExpression__Group_0__1_in_rule__NegExpression__Group_0__018713);
             rule__NegExpression__Group_0__1();
 
             state._fsp--;
@@ -27499,12 +27481,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9204:1: ( rule__NegExpression__Group_0__1__Impl rule__NegExpression__Group_0__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9205:2: rule__NegExpression__Group_0__1__Impl rule__NegExpression__Group_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__NegExpression__Group_0__1__Impl_in_rule__NegExpression__Group_0__118777);
+            pushFollow(FollowSets000.FOLLOW_rule__NegExpression__Group_0__1__Impl_in_rule__NegExpression__Group_0__118771);
             rule__NegExpression__Group_0__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__NegExpression__Group_0__2_in_rule__NegExpression__Group_0__118780);
+            pushFollow(FollowSets000.FOLLOW_rule__NegExpression__Group_0__2_in_rule__NegExpression__Group_0__118774);
             rule__NegExpression__Group_0__2();
 
             state._fsp--;
@@ -27546,7 +27528,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9219:1: ( rule__NegExpression__OperatorAssignment_0_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9219:2: rule__NegExpression__OperatorAssignment_0_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__NegExpression__OperatorAssignment_0_1_in_rule__NegExpression__Group_0__1__Impl18807);
+            pushFollow(FollowSets000.FOLLOW_rule__NegExpression__OperatorAssignment_0_1_in_rule__NegExpression__Group_0__1__Impl18801);
             rule__NegExpression__OperatorAssignment_0_1();
 
             state._fsp--;
@@ -27588,7 +27570,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9233:1: ( rule__NegExpression__Group_0__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9234:2: rule__NegExpression__Group_0__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__NegExpression__Group_0__2__Impl_in_rule__NegExpression__Group_0__218837);
+            pushFollow(FollowSets000.FOLLOW_rule__NegExpression__Group_0__2__Impl_in_rule__NegExpression__Group_0__218831);
             rule__NegExpression__Group_0__2__Impl();
 
             state._fsp--;
@@ -27630,7 +27612,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9247:1: ( rule__NegExpression__SubExpressionsAssignment_0_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9247:2: rule__NegExpression__SubExpressionsAssignment_0_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__NegExpression__SubExpressionsAssignment_0_2_in_rule__NegExpression__Group_0__2__Impl18864);
+            pushFollow(FollowSets000.FOLLOW_rule__NegExpression__SubExpressionsAssignment_0_2_in_rule__NegExpression__Group_0__2__Impl18858);
             rule__NegExpression__SubExpressionsAssignment_0_2();
 
             state._fsp--;
@@ -27672,12 +27654,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9267:1: ( rule__AtomicExpression__Group_2__0__Impl rule__AtomicExpression__Group_2__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9268:2: rule__AtomicExpression__Group_2__0__Impl rule__AtomicExpression__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AtomicExpression__Group_2__0__Impl_in_rule__AtomicExpression__Group_2__018900);
+            pushFollow(FollowSets000.FOLLOW_rule__AtomicExpression__Group_2__0__Impl_in_rule__AtomicExpression__Group_2__018894);
             rule__AtomicExpression__Group_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__AtomicExpression__Group_2__1_in_rule__AtomicExpression__Group_2__018903);
+            pushFollow(FollowSets000.FOLLOW_rule__AtomicExpression__Group_2__1_in_rule__AtomicExpression__Group_2__018897);
             rule__AtomicExpression__Group_2__1();
 
             state._fsp--;
@@ -27716,7 +27698,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()); 
             }
-            match(input,71,FollowSets000.FOLLOW_71_in_rule__AtomicExpression__Group_2__0__Impl18931); if (state.failed) return ;
+            match(input,71,FollowSets000.FOLLOW_71_in_rule__AtomicExpression__Group_2__0__Impl18925); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()); 
             }
@@ -27751,12 +27733,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9298:1: ( rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9299:2: rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AtomicExpression__Group_2__1__Impl_in_rule__AtomicExpression__Group_2__118962);
+            pushFollow(FollowSets000.FOLLOW_rule__AtomicExpression__Group_2__1__Impl_in_rule__AtomicExpression__Group_2__118956);
             rule__AtomicExpression__Group_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__AtomicExpression__Group_2__2_in_rule__AtomicExpression__Group_2__118965);
+            pushFollow(FollowSets000.FOLLOW_rule__AtomicExpression__Group_2__2_in_rule__AtomicExpression__Group_2__118959);
             rule__AtomicExpression__Group_2__2();
 
             state._fsp--;
@@ -27795,7 +27777,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicExpressionAccess().getBoolExpressionParserRuleCall_2_1()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleBoolExpression_in_rule__AtomicExpression__Group_2__1__Impl18992);
+            pushFollow(FollowSets000.FOLLOW_ruleBoolExpression_in_rule__AtomicExpression__Group_2__1__Impl18986);
             ruleBoolExpression();
 
             state._fsp--;
@@ -27834,7 +27816,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9327:1: ( rule__AtomicExpression__Group_2__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9328:2: rule__AtomicExpression__Group_2__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AtomicExpression__Group_2__2__Impl_in_rule__AtomicExpression__Group_2__219021);
+            pushFollow(FollowSets000.FOLLOW_rule__AtomicExpression__Group_2__2__Impl_in_rule__AtomicExpression__Group_2__219015);
             rule__AtomicExpression__Group_2__2__Impl();
 
             state._fsp--;
@@ -27873,7 +27855,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicExpressionAccess().getRightParenthesisKeyword_2_2()); 
             }
-            match(input,72,FollowSets000.FOLLOW_72_in_rule__AtomicExpression__Group_2__2__Impl19049); if (state.failed) return ;
+            match(input,72,FollowSets000.FOLLOW_72_in_rule__AtomicExpression__Group_2__2__Impl19043); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAtomicExpressionAccess().getRightParenthesisKeyword_2_2()); 
             }
@@ -27908,12 +27890,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9363:1: ( rule__AtomicValuedExpression__Group_3__0__Impl rule__AtomicValuedExpression__Group_3__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9364:2: rule__AtomicValuedExpression__Group_3__0__Impl rule__AtomicValuedExpression__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AtomicValuedExpression__Group_3__0__Impl_in_rule__AtomicValuedExpression__Group_3__019086);
+            pushFollow(FollowSets000.FOLLOW_rule__AtomicValuedExpression__Group_3__0__Impl_in_rule__AtomicValuedExpression__Group_3__019080);
             rule__AtomicValuedExpression__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__AtomicValuedExpression__Group_3__1_in_rule__AtomicValuedExpression__Group_3__019089);
+            pushFollow(FollowSets000.FOLLOW_rule__AtomicValuedExpression__Group_3__1_in_rule__AtomicValuedExpression__Group_3__019083);
             rule__AtomicValuedExpression__Group_3__1();
 
             state._fsp--;
@@ -27937,28 +27919,22 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AtomicValuedExpression__Group_3__0__Impl"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9371:1: rule__AtomicValuedExpression__Group_3__0__Impl : ( ( '(' ) ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9371:1: rule__AtomicValuedExpression__Group_3__0__Impl : ( '(' ) ;
     public final void rule__AtomicValuedExpression__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9375:1: ( ( ( '(' ) ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9376:1: ( ( '(' ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9375:1: ( ( '(' ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9376:1: ( '(' )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9376:1: ( ( '(' ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9377:1: ( '(' )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9376:1: ( '(' )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9377:1: '('
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0()); 
             }
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9378:1: ( '(' )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9379:2: '('
-            {
-            match(input,71,FollowSets000.FOLLOW_71_in_rule__AtomicValuedExpression__Group_3__0__Impl19118); if (state.failed) return ;
-
-            }
-
+            match(input,71,FollowSets000.FOLLOW_71_in_rule__AtomicValuedExpression__Group_3__0__Impl19111); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0()); 
             }
@@ -27993,12 +27969,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9394:1: ( rule__AtomicValuedExpression__Group_3__1__Impl rule__AtomicValuedExpression__Group_3__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9395:2: rule__AtomicValuedExpression__Group_3__1__Impl rule__AtomicValuedExpression__Group_3__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AtomicValuedExpression__Group_3__1__Impl_in_rule__AtomicValuedExpression__Group_3__119150);
+            pushFollow(FollowSets000.FOLLOW_rule__AtomicValuedExpression__Group_3__1__Impl_in_rule__AtomicValuedExpression__Group_3__119142);
             rule__AtomicValuedExpression__Group_3__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__AtomicValuedExpression__Group_3__2_in_rule__AtomicValuedExpression__Group_3__119153);
+            pushFollow(FollowSets000.FOLLOW_rule__AtomicValuedExpression__Group_3__2_in_rule__AtomicValuedExpression__Group_3__119145);
             rule__AtomicValuedExpression__Group_3__2();
 
             state._fsp--;
@@ -28037,7 +28013,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicValuedExpressionAccess().getValuedExpressionParserRuleCall_3_1()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleValuedExpression_in_rule__AtomicValuedExpression__Group_3__1__Impl19180);
+            pushFollow(FollowSets000.FOLLOW_ruleValuedExpression_in_rule__AtomicValuedExpression__Group_3__1__Impl19172);
             ruleValuedExpression();
 
             state._fsp--;
@@ -28076,7 +28052,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9423:1: ( rule__AtomicValuedExpression__Group_3__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9424:2: rule__AtomicValuedExpression__Group_3__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__AtomicValuedExpression__Group_3__2__Impl_in_rule__AtomicValuedExpression__Group_3__219209);
+            pushFollow(FollowSets000.FOLLOW_rule__AtomicValuedExpression__Group_3__2__Impl_in_rule__AtomicValuedExpression__Group_3__219201);
             rule__AtomicValuedExpression__Group_3__2__Impl();
 
             state._fsp--;
@@ -28115,7 +28091,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicValuedExpressionAccess().getRightParenthesisKeyword_3_2()); 
             }
-            match(input,72,FollowSets000.FOLLOW_72_in_rule__AtomicValuedExpression__Group_3__2__Impl19237); if (state.failed) return ;
+            match(input,72,FollowSets000.FOLLOW_72_in_rule__AtomicValuedExpression__Group_3__2__Impl19229); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAtomicValuedExpressionAccess().getRightParenthesisKeyword_3_2()); 
             }
@@ -28150,12 +28126,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9459:1: ( rule__ValuedObjectTestExpression__Group_0__0__Impl rule__ValuedObjectTestExpression__Group_0__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9460:2: rule__ValuedObjectTestExpression__Group_0__0__Impl rule__ValuedObjectTestExpression__Group_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__0__Impl_in_rule__ValuedObjectTestExpression__Group_0__019274);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__0__Impl_in_rule__ValuedObjectTestExpression__Group_0__019266);
             rule__ValuedObjectTestExpression__Group_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__1_in_rule__ValuedObjectTestExpression__Group_0__019277);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__1_in_rule__ValuedObjectTestExpression__Group_0__019269);
             rule__ValuedObjectTestExpression__Group_0__1();
 
             state._fsp--;
@@ -28229,12 +28205,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9490:1: ( rule__ValuedObjectTestExpression__Group_0__1__Impl rule__ValuedObjectTestExpression__Group_0__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9491:2: rule__ValuedObjectTestExpression__Group_0__1__Impl rule__ValuedObjectTestExpression__Group_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__1__Impl_in_rule__ValuedObjectTestExpression__Group_0__119335);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__1__Impl_in_rule__ValuedObjectTestExpression__Group_0__119327);
             rule__ValuedObjectTestExpression__Group_0__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__2_in_rule__ValuedObjectTestExpression__Group_0__119338);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__2_in_rule__ValuedObjectTestExpression__Group_0__119330);
             rule__ValuedObjectTestExpression__Group_0__2();
 
             state._fsp--;
@@ -28276,7 +28252,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9505:1: ( rule__ValuedObjectTestExpression__OperatorAssignment_0_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9505:2: rule__ValuedObjectTestExpression__OperatorAssignment_0_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__OperatorAssignment_0_1_in_rule__ValuedObjectTestExpression__Group_0__1__Impl19365);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__OperatorAssignment_0_1_in_rule__ValuedObjectTestExpression__Group_0__1__Impl19357);
             rule__ValuedObjectTestExpression__OperatorAssignment_0_1();
 
             state._fsp--;
@@ -28318,12 +28294,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9519:1: ( rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9520:2: rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__2__Impl_in_rule__ValuedObjectTestExpression__Group_0__219395);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__2__Impl_in_rule__ValuedObjectTestExpression__Group_0__219387);
             rule__ValuedObjectTestExpression__Group_0__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__3_in_rule__ValuedObjectTestExpression__Group_0__219398);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__3_in_rule__ValuedObjectTestExpression__Group_0__219390);
             rule__ValuedObjectTestExpression__Group_0__3();
 
             state._fsp--;
@@ -28362,7 +28338,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getLeftParenthesisKeyword_0_2()); 
             }
-            match(input,71,FollowSets000.FOLLOW_71_in_rule__ValuedObjectTestExpression__Group_0__2__Impl19426); if (state.failed) return ;
+            match(input,71,FollowSets000.FOLLOW_71_in_rule__ValuedObjectTestExpression__Group_0__2__Impl19418); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectTestExpressionAccess().getLeftParenthesisKeyword_0_2()); 
             }
@@ -28397,12 +28373,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9550:1: ( rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9551:2: rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__3__Impl_in_rule__ValuedObjectTestExpression__Group_0__319457);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__3__Impl_in_rule__ValuedObjectTestExpression__Group_0__319449);
             rule__ValuedObjectTestExpression__Group_0__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__4_in_rule__ValuedObjectTestExpression__Group_0__319460);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__4_in_rule__ValuedObjectTestExpression__Group_0__319452);
             rule__ValuedObjectTestExpression__Group_0__4();
 
             state._fsp--;
@@ -28444,7 +28420,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9565:1: ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9565:2: rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3_in_rule__ValuedObjectTestExpression__Group_0__3__Impl19487);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3_in_rule__ValuedObjectTestExpression__Group_0__3__Impl19479);
             rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3();
 
             state._fsp--;
@@ -28486,7 +28462,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9579:1: ( rule__ValuedObjectTestExpression__Group_0__4__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9580:2: rule__ValuedObjectTestExpression__Group_0__4__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__4__Impl_in_rule__ValuedObjectTestExpression__Group_0__419517);
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectTestExpression__Group_0__4__Impl_in_rule__ValuedObjectTestExpression__Group_0__419509);
             rule__ValuedObjectTestExpression__Group_0__4__Impl();
 
             state._fsp--;
@@ -28525,7 +28501,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_4()); 
             }
-            match(input,72,FollowSets000.FOLLOW_72_in_rule__ValuedObjectTestExpression__Group_0__4__Impl19545); if (state.failed) return ;
+            match(input,72,FollowSets000.FOLLOW_72_in_rule__ValuedObjectTestExpression__Group_0__4__Impl19537); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_4()); 
             }
@@ -28560,12 +28536,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9619:1: ( rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9620:2: rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group__0__Impl_in_rule__TagAnnotation__Group__019586);
+            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group__0__Impl_in_rule__TagAnnotation__Group__019578);
             rule__TagAnnotation__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group__1_in_rule__TagAnnotation__Group__019589);
+            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group__1_in_rule__TagAnnotation__Group__019581);
             rule__TagAnnotation__Group__1();
 
             state._fsp--;
@@ -28604,7 +28580,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,55,FollowSets000.FOLLOW_55_in_rule__TagAnnotation__Group__0__Impl19617); if (state.failed) return ;
+            match(input,55,FollowSets000.FOLLOW_55_in_rule__TagAnnotation__Group__0__Impl19609); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -28639,12 +28615,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9650:1: ( rule__TagAnnotation__Group__1__Impl rule__TagAnnotation__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9651:2: rule__TagAnnotation__Group__1__Impl rule__TagAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group__1__Impl_in_rule__TagAnnotation__Group__119648);
+            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group__1__Impl_in_rule__TagAnnotation__Group__119640);
             rule__TagAnnotation__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group__2_in_rule__TagAnnotation__Group__119651);
+            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group__2_in_rule__TagAnnotation__Group__119643);
             rule__TagAnnotation__Group__2();
 
             state._fsp--;
@@ -28686,7 +28662,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9665:1: ( rule__TagAnnotation__NameAssignment_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9665:2: rule__TagAnnotation__NameAssignment_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__NameAssignment_1_in_rule__TagAnnotation__Group__1__Impl19678);
+            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__NameAssignment_1_in_rule__TagAnnotation__Group__1__Impl19670);
             rule__TagAnnotation__NameAssignment_1();
 
             state._fsp--;
@@ -28728,7 +28704,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9679:1: ( rule__TagAnnotation__Group__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9680:2: rule__TagAnnotation__Group__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group__2__Impl_in_rule__TagAnnotation__Group__219708);
+            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group__2__Impl_in_rule__TagAnnotation__Group__219700);
             rule__TagAnnotation__Group__2__Impl();
 
             state._fsp--;
@@ -28778,7 +28754,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9693:2: rule__TagAnnotation__Group_2__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group_2__0_in_rule__TagAnnotation__Group__2__Impl19735);
+                    pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group_2__0_in_rule__TagAnnotation__Group__2__Impl19727);
                     rule__TagAnnotation__Group_2__0();
 
                     state._fsp--;
@@ -28823,12 +28799,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9713:1: ( rule__TagAnnotation__Group_2__0__Impl rule__TagAnnotation__Group_2__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9714:2: rule__TagAnnotation__Group_2__0__Impl rule__TagAnnotation__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group_2__0__Impl_in_rule__TagAnnotation__Group_2__019772);
+            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group_2__0__Impl_in_rule__TagAnnotation__Group_2__019764);
             rule__TagAnnotation__Group_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group_2__1_in_rule__TagAnnotation__Group_2__019775);
+            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group_2__1_in_rule__TagAnnotation__Group_2__019767);
             rule__TagAnnotation__Group_2__1();
 
             state._fsp--;
@@ -28867,7 +28843,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getLeftParenthesisKeyword_2_0()); 
             }
-            match(input,71,FollowSets000.FOLLOW_71_in_rule__TagAnnotation__Group_2__0__Impl19803); if (state.failed) return ;
+            match(input,71,FollowSets000.FOLLOW_71_in_rule__TagAnnotation__Group_2__0__Impl19795); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTagAnnotationAccess().getLeftParenthesisKeyword_2_0()); 
             }
@@ -28902,12 +28878,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9744:1: ( rule__TagAnnotation__Group_2__1__Impl rule__TagAnnotation__Group_2__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9745:2: rule__TagAnnotation__Group_2__1__Impl rule__TagAnnotation__Group_2__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group_2__1__Impl_in_rule__TagAnnotation__Group_2__119834);
+            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group_2__1__Impl_in_rule__TagAnnotation__Group_2__119826);
             rule__TagAnnotation__Group_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group_2__2_in_rule__TagAnnotation__Group_2__119837);
+            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group_2__2_in_rule__TagAnnotation__Group_2__119829);
             rule__TagAnnotation__Group_2__2();
 
             state._fsp--;
@@ -28961,7 +28937,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9759:2: rule__TagAnnotation__AnnotationsAssignment_2_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__AnnotationsAssignment_2_1_in_rule__TagAnnotation__Group_2__1__Impl19864);
+            	    pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__AnnotationsAssignment_2_1_in_rule__TagAnnotation__Group_2__1__Impl19856);
             	    rule__TagAnnotation__AnnotationsAssignment_2_1();
 
             	    state._fsp--;
@@ -29009,7 +28985,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9773:1: ( rule__TagAnnotation__Group_2__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9774:2: rule__TagAnnotation__Group_2__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group_2__2__Impl_in_rule__TagAnnotation__Group_2__219895);
+            pushFollow(FollowSets000.FOLLOW_rule__TagAnnotation__Group_2__2__Impl_in_rule__TagAnnotation__Group_2__219887);
             rule__TagAnnotation__Group_2__2__Impl();
 
             state._fsp--;
@@ -29048,7 +29024,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getRightParenthesisKeyword_2_2()); 
             }
-            match(input,72,FollowSets000.FOLLOW_72_in_rule__TagAnnotation__Group_2__2__Impl19923); if (state.failed) return ;
+            match(input,72,FollowSets000.FOLLOW_72_in_rule__TagAnnotation__Group_2__2__Impl19915); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTagAnnotationAccess().getRightParenthesisKeyword_2_2()); 
             }
@@ -29083,12 +29059,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9809:1: ( rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9810:2: rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group__0__Impl_in_rule__KeyStringValueAnnotation__Group__019960);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group__0__Impl_in_rule__KeyStringValueAnnotation__Group__019952);
             rule__KeyStringValueAnnotation__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group__1_in_rule__KeyStringValueAnnotation__Group__019963);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group__1_in_rule__KeyStringValueAnnotation__Group__019955);
             rule__KeyStringValueAnnotation__Group__1();
 
             state._fsp--;
@@ -29127,7 +29103,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,55,FollowSets000.FOLLOW_55_in_rule__KeyStringValueAnnotation__Group__0__Impl19991); if (state.failed) return ;
+            match(input,55,FollowSets000.FOLLOW_55_in_rule__KeyStringValueAnnotation__Group__0__Impl19983); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -29162,12 +29138,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9840:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9841:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group__1__Impl_in_rule__KeyStringValueAnnotation__Group__120022);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group__1__Impl_in_rule__KeyStringValueAnnotation__Group__120014);
             rule__KeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group__2_in_rule__KeyStringValueAnnotation__Group__120025);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group__2_in_rule__KeyStringValueAnnotation__Group__120017);
             rule__KeyStringValueAnnotation__Group__2();
 
             state._fsp--;
@@ -29209,7 +29185,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9855:1: ( rule__KeyStringValueAnnotation__NameAssignment_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9855:2: rule__KeyStringValueAnnotation__NameAssignment_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__NameAssignment_1_in_rule__KeyStringValueAnnotation__Group__1__Impl20052);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__NameAssignment_1_in_rule__KeyStringValueAnnotation__Group__1__Impl20044);
             rule__KeyStringValueAnnotation__NameAssignment_1();
 
             state._fsp--;
@@ -29251,12 +29227,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9869:1: ( rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9870:2: rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group__2__Impl_in_rule__KeyStringValueAnnotation__Group__220082);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group__2__Impl_in_rule__KeyStringValueAnnotation__Group__220074);
             rule__KeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group__3_in_rule__KeyStringValueAnnotation__Group__220085);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group__3_in_rule__KeyStringValueAnnotation__Group__220077);
             rule__KeyStringValueAnnotation__Group__3();
 
             state._fsp--;
@@ -29298,7 +29274,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9884:1: ( rule__KeyStringValueAnnotation__ValueAssignment_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9884:2: rule__KeyStringValueAnnotation__ValueAssignment_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__ValueAssignment_2_in_rule__KeyStringValueAnnotation__Group__2__Impl20112);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__ValueAssignment_2_in_rule__KeyStringValueAnnotation__Group__2__Impl20104);
             rule__KeyStringValueAnnotation__ValueAssignment_2();
 
             state._fsp--;
@@ -29340,7 +29316,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9898:1: ( rule__KeyStringValueAnnotation__Group__3__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9899:2: rule__KeyStringValueAnnotation__Group__3__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group__3__Impl_in_rule__KeyStringValueAnnotation__Group__320142);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group__3__Impl_in_rule__KeyStringValueAnnotation__Group__320134);
             rule__KeyStringValueAnnotation__Group__3__Impl();
 
             state._fsp--;
@@ -29390,7 +29366,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9912:2: rule__KeyStringValueAnnotation__Group_3__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group_3__0_in_rule__KeyStringValueAnnotation__Group__3__Impl20169);
+                    pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group_3__0_in_rule__KeyStringValueAnnotation__Group__3__Impl20161);
                     rule__KeyStringValueAnnotation__Group_3__0();
 
                     state._fsp--;
@@ -29435,12 +29411,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9934:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9935:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group_3__0__Impl_in_rule__KeyStringValueAnnotation__Group_3__020208);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group_3__0__Impl_in_rule__KeyStringValueAnnotation__Group_3__020200);
             rule__KeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group_3__1_in_rule__KeyStringValueAnnotation__Group_3__020211);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group_3__1_in_rule__KeyStringValueAnnotation__Group_3__020203);
             rule__KeyStringValueAnnotation__Group_3__1();
 
             state._fsp--;
@@ -29479,7 +29455,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
-            match(input,71,FollowSets000.FOLLOW_71_in_rule__KeyStringValueAnnotation__Group_3__0__Impl20239); if (state.failed) return ;
+            match(input,71,FollowSets000.FOLLOW_71_in_rule__KeyStringValueAnnotation__Group_3__0__Impl20231); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
@@ -29514,12 +29490,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9965:1: ( rule__KeyStringValueAnnotation__Group_3__1__Impl rule__KeyStringValueAnnotation__Group_3__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9966:2: rule__KeyStringValueAnnotation__Group_3__1__Impl rule__KeyStringValueAnnotation__Group_3__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group_3__1__Impl_in_rule__KeyStringValueAnnotation__Group_3__120270);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group_3__1__Impl_in_rule__KeyStringValueAnnotation__Group_3__120262);
             rule__KeyStringValueAnnotation__Group_3__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group_3__2_in_rule__KeyStringValueAnnotation__Group_3__120273);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group_3__2_in_rule__KeyStringValueAnnotation__Group_3__120265);
             rule__KeyStringValueAnnotation__Group_3__2();
 
             state._fsp--;
@@ -29573,7 +29549,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9980:2: rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyStringValueAnnotation__Group_3__1__Impl20300);
+            	    pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyStringValueAnnotation__Group_3__1__Impl20292);
             	    rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1();
 
             	    state._fsp--;
@@ -29621,7 +29597,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9994:1: ( rule__KeyStringValueAnnotation__Group_3__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:9995:2: rule__KeyStringValueAnnotation__Group_3__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group_3__2__Impl_in_rule__KeyStringValueAnnotation__Group_3__220331);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyStringValueAnnotation__Group_3__2__Impl_in_rule__KeyStringValueAnnotation__Group_3__220323);
             rule__KeyStringValueAnnotation__Group_3__2__Impl();
 
             state._fsp--;
@@ -29660,7 +29636,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
-            match(input,72,FollowSets000.FOLLOW_72_in_rule__KeyStringValueAnnotation__Group_3__2__Impl20359); if (state.failed) return ;
+            match(input,72,FollowSets000.FOLLOW_72_in_rule__KeyStringValueAnnotation__Group_3__2__Impl20351); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyStringValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
@@ -29695,12 +29671,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10030:1: ( rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10031:2: rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group__020396);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group__020388);
             rule__TypedKeyStringValueAnnotation__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1_in_rule__TypedKeyStringValueAnnotation__Group__020399);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1_in_rule__TypedKeyStringValueAnnotation__Group__020391);
             rule__TypedKeyStringValueAnnotation__Group__1();
 
             state._fsp--;
@@ -29739,7 +29715,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,55,FollowSets000.FOLLOW_55_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl20427); if (state.failed) return ;
+            match(input,55,FollowSets000.FOLLOW_55_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl20419); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -29774,12 +29750,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10061:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10062:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group__120458);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group__120450);
             rule__TypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2_in_rule__TypedKeyStringValueAnnotation__Group__120461);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2_in_rule__TypedKeyStringValueAnnotation__Group__120453);
             rule__TypedKeyStringValueAnnotation__Group__2();
 
             state._fsp--;
@@ -29821,7 +29797,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10076:1: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10076:2: rule__TypedKeyStringValueAnnotation__NameAssignment_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__NameAssignment_1_in_rule__TypedKeyStringValueAnnotation__Group__1__Impl20488);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__NameAssignment_1_in_rule__TypedKeyStringValueAnnotation__Group__1__Impl20480);
             rule__TypedKeyStringValueAnnotation__NameAssignment_1();
 
             state._fsp--;
@@ -29863,12 +29839,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10090:1: ( rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10091:2: rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group__220518);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group__220510);
             rule__TypedKeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3_in_rule__TypedKeyStringValueAnnotation__Group__220521);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3_in_rule__TypedKeyStringValueAnnotation__Group__220513);
             rule__TypedKeyStringValueAnnotation__Group__3();
 
             state._fsp--;
@@ -29907,7 +29883,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
             }
-            match(input,56,FollowSets000.FOLLOW_56_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl20549); if (state.failed) return ;
+            match(input,56,FollowSets000.FOLLOW_56_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl20541); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
             }
@@ -29942,12 +29918,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10121:1: ( rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10122:2: rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3__Impl_in_rule__TypedKeyStringValueAnnotation__Group__320580);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3__Impl_in_rule__TypedKeyStringValueAnnotation__Group__320572);
             rule__TypedKeyStringValueAnnotation__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4_in_rule__TypedKeyStringValueAnnotation__Group__320583);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4_in_rule__TypedKeyStringValueAnnotation__Group__320575);
             rule__TypedKeyStringValueAnnotation__Group__4();
 
             state._fsp--;
@@ -29989,7 +29965,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10136:1: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10136:2: rule__TypedKeyStringValueAnnotation__TypeAssignment_3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__TypeAssignment_3_in_rule__TypedKeyStringValueAnnotation__Group__3__Impl20610);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__TypeAssignment_3_in_rule__TypedKeyStringValueAnnotation__Group__3__Impl20602);
             rule__TypedKeyStringValueAnnotation__TypeAssignment_3();
 
             state._fsp--;
@@ -30031,12 +30007,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10150:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10151:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4__Impl_in_rule__TypedKeyStringValueAnnotation__Group__420640);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4__Impl_in_rule__TypedKeyStringValueAnnotation__Group__420632);
             rule__TypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5_in_rule__TypedKeyStringValueAnnotation__Group__420643);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5_in_rule__TypedKeyStringValueAnnotation__Group__420635);
             rule__TypedKeyStringValueAnnotation__Group__5();
 
             state._fsp--;
@@ -30075,7 +30051,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
             }
-            match(input,57,FollowSets000.FOLLOW_57_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl20671); if (state.failed) return ;
+            match(input,57,FollowSets000.FOLLOW_57_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl20663); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
             }
@@ -30110,12 +30086,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10181:1: ( rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10182:2: rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5__Impl_in_rule__TypedKeyStringValueAnnotation__Group__520702);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5__Impl_in_rule__TypedKeyStringValueAnnotation__Group__520694);
             rule__TypedKeyStringValueAnnotation__Group__5__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6_in_rule__TypedKeyStringValueAnnotation__Group__520705);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6_in_rule__TypedKeyStringValueAnnotation__Group__520697);
             rule__TypedKeyStringValueAnnotation__Group__6();
 
             state._fsp--;
@@ -30157,7 +30133,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10196:1: ( rule__TypedKeyStringValueAnnotation__ValueAssignment_5 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10196:2: rule__TypedKeyStringValueAnnotation__ValueAssignment_5
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__ValueAssignment_5_in_rule__TypedKeyStringValueAnnotation__Group__5__Impl20732);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__ValueAssignment_5_in_rule__TypedKeyStringValueAnnotation__Group__5__Impl20724);
             rule__TypedKeyStringValueAnnotation__ValueAssignment_5();
 
             state._fsp--;
@@ -30199,7 +30175,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10210:1: ( rule__TypedKeyStringValueAnnotation__Group__6__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10211:2: rule__TypedKeyStringValueAnnotation__Group__6__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6__Impl_in_rule__TypedKeyStringValueAnnotation__Group__620762);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6__Impl_in_rule__TypedKeyStringValueAnnotation__Group__620754);
             rule__TypedKeyStringValueAnnotation__Group__6__Impl();
 
             state._fsp--;
@@ -30249,7 +30225,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10224:2: rule__TypedKeyStringValueAnnotation__Group_6__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0_in_rule__TypedKeyStringValueAnnotation__Group__6__Impl20789);
+                    pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0_in_rule__TypedKeyStringValueAnnotation__Group__6__Impl20781);
                     rule__TypedKeyStringValueAnnotation__Group_6__0();
 
                     state._fsp--;
@@ -30294,12 +30270,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10252:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10253:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__020834);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__020826);
             rule__TypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1_in_rule__TypedKeyStringValueAnnotation__Group_6__020837);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1_in_rule__TypedKeyStringValueAnnotation__Group_6__020829);
             rule__TypedKeyStringValueAnnotation__Group_6__1();
 
             state._fsp--;
@@ -30338,7 +30314,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_6_0()); 
             }
-            match(input,71,FollowSets000.FOLLOW_71_in_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl20865); if (state.failed) return ;
+            match(input,71,FollowSets000.FOLLOW_71_in_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl20857); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_6_0()); 
             }
@@ -30373,12 +30349,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10283:1: ( rule__TypedKeyStringValueAnnotation__Group_6__1__Impl rule__TypedKeyStringValueAnnotation__Group_6__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10284:2: rule__TypedKeyStringValueAnnotation__Group_6__1__Impl rule__TypedKeyStringValueAnnotation__Group_6__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__120896);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__120888);
             rule__TypedKeyStringValueAnnotation__Group_6__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2_in_rule__TypedKeyStringValueAnnotation__Group_6__120899);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2_in_rule__TypedKeyStringValueAnnotation__Group_6__120891);
             rule__TypedKeyStringValueAnnotation__Group_6__2();
 
             state._fsp--;
@@ -30432,7 +30408,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10298:2: rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1_in_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl20926);
+            	    pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1_in_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl20918);
             	    rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1();
 
             	    state._fsp--;
@@ -30480,7 +30456,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10312:1: ( rule__TypedKeyStringValueAnnotation__Group_6__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10313:2: rule__TypedKeyStringValueAnnotation__Group_6__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__220957);
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__220949);
             rule__TypedKeyStringValueAnnotation__Group_6__2__Impl();
 
             state._fsp--;
@@ -30519,7 +30495,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_6_2()); 
             }
-            match(input,72,FollowSets000.FOLLOW_72_in_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl20985); if (state.failed) return ;
+            match(input,72,FollowSets000.FOLLOW_72_in_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl20977); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_6_2()); 
             }
@@ -30554,12 +30530,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10348:1: ( rule__KeyBooleanValueAnnotation__Group__0__Impl rule__KeyBooleanValueAnnotation__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10349:2: rule__KeyBooleanValueAnnotation__Group__0__Impl rule__KeyBooleanValueAnnotation__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group__0__Impl_in_rule__KeyBooleanValueAnnotation__Group__021022);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group__0__Impl_in_rule__KeyBooleanValueAnnotation__Group__021014);
             rule__KeyBooleanValueAnnotation__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group__1_in_rule__KeyBooleanValueAnnotation__Group__021025);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group__1_in_rule__KeyBooleanValueAnnotation__Group__021017);
             rule__KeyBooleanValueAnnotation__Group__1();
 
             state._fsp--;
@@ -30598,7 +30574,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,55,FollowSets000.FOLLOW_55_in_rule__KeyBooleanValueAnnotation__Group__0__Impl21053); if (state.failed) return ;
+            match(input,55,FollowSets000.FOLLOW_55_in_rule__KeyBooleanValueAnnotation__Group__0__Impl21045); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -30633,12 +30609,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10379:1: ( rule__KeyBooleanValueAnnotation__Group__1__Impl rule__KeyBooleanValueAnnotation__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10380:2: rule__KeyBooleanValueAnnotation__Group__1__Impl rule__KeyBooleanValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group__1__Impl_in_rule__KeyBooleanValueAnnotation__Group__121084);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group__1__Impl_in_rule__KeyBooleanValueAnnotation__Group__121076);
             rule__KeyBooleanValueAnnotation__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group__2_in_rule__KeyBooleanValueAnnotation__Group__121087);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group__2_in_rule__KeyBooleanValueAnnotation__Group__121079);
             rule__KeyBooleanValueAnnotation__Group__2();
 
             state._fsp--;
@@ -30680,7 +30656,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10394:1: ( rule__KeyBooleanValueAnnotation__NameAssignment_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10394:2: rule__KeyBooleanValueAnnotation__NameAssignment_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__NameAssignment_1_in_rule__KeyBooleanValueAnnotation__Group__1__Impl21114);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__NameAssignment_1_in_rule__KeyBooleanValueAnnotation__Group__1__Impl21106);
             rule__KeyBooleanValueAnnotation__NameAssignment_1();
 
             state._fsp--;
@@ -30722,12 +30698,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10408:1: ( rule__KeyBooleanValueAnnotation__Group__2__Impl rule__KeyBooleanValueAnnotation__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10409:2: rule__KeyBooleanValueAnnotation__Group__2__Impl rule__KeyBooleanValueAnnotation__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group__2__Impl_in_rule__KeyBooleanValueAnnotation__Group__221144);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group__2__Impl_in_rule__KeyBooleanValueAnnotation__Group__221136);
             rule__KeyBooleanValueAnnotation__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group__3_in_rule__KeyBooleanValueAnnotation__Group__221147);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group__3_in_rule__KeyBooleanValueAnnotation__Group__221139);
             rule__KeyBooleanValueAnnotation__Group__3();
 
             state._fsp--;
@@ -30769,7 +30745,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10423:1: ( rule__KeyBooleanValueAnnotation__ValueAssignment_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10423:2: rule__KeyBooleanValueAnnotation__ValueAssignment_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__ValueAssignment_2_in_rule__KeyBooleanValueAnnotation__Group__2__Impl21174);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__ValueAssignment_2_in_rule__KeyBooleanValueAnnotation__Group__2__Impl21166);
             rule__KeyBooleanValueAnnotation__ValueAssignment_2();
 
             state._fsp--;
@@ -30811,7 +30787,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10437:1: ( rule__KeyBooleanValueAnnotation__Group__3__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10438:2: rule__KeyBooleanValueAnnotation__Group__3__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group__3__Impl_in_rule__KeyBooleanValueAnnotation__Group__321204);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group__3__Impl_in_rule__KeyBooleanValueAnnotation__Group__321196);
             rule__KeyBooleanValueAnnotation__Group__3__Impl();
 
             state._fsp--;
@@ -30861,7 +30837,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10451:2: rule__KeyBooleanValueAnnotation__Group_3__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0_in_rule__KeyBooleanValueAnnotation__Group__3__Impl21231);
+                    pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0_in_rule__KeyBooleanValueAnnotation__Group__3__Impl21223);
                     rule__KeyBooleanValueAnnotation__Group_3__0();
 
                     state._fsp--;
@@ -30906,12 +30882,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10473:1: ( rule__KeyBooleanValueAnnotation__Group_3__0__Impl rule__KeyBooleanValueAnnotation__Group_3__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10474:2: rule__KeyBooleanValueAnnotation__Group_3__0__Impl rule__KeyBooleanValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__021270);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__021262);
             rule__KeyBooleanValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1_in_rule__KeyBooleanValueAnnotation__Group_3__021273);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1_in_rule__KeyBooleanValueAnnotation__Group_3__021265);
             rule__KeyBooleanValueAnnotation__Group_3__1();
 
             state._fsp--;
@@ -30950,7 +30926,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
-            match(input,71,FollowSets000.FOLLOW_71_in_rule__KeyBooleanValueAnnotation__Group_3__0__Impl21301); if (state.failed) return ;
+            match(input,71,FollowSets000.FOLLOW_71_in_rule__KeyBooleanValueAnnotation__Group_3__0__Impl21293); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyBooleanValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
@@ -30985,12 +30961,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10504:1: ( rule__KeyBooleanValueAnnotation__Group_3__1__Impl rule__KeyBooleanValueAnnotation__Group_3__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10505:2: rule__KeyBooleanValueAnnotation__Group_3__1__Impl rule__KeyBooleanValueAnnotation__Group_3__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__121332);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__121324);
             rule__KeyBooleanValueAnnotation__Group_3__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2_in_rule__KeyBooleanValueAnnotation__Group_3__121335);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2_in_rule__KeyBooleanValueAnnotation__Group_3__121327);
             rule__KeyBooleanValueAnnotation__Group_3__2();
 
             state._fsp--;
@@ -31044,7 +31020,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10519:2: rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyBooleanValueAnnotation__Group_3__1__Impl21362);
+            	    pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyBooleanValueAnnotation__Group_3__1__Impl21354);
             	    rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1();
 
             	    state._fsp--;
@@ -31092,7 +31068,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10533:1: ( rule__KeyBooleanValueAnnotation__Group_3__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10534:2: rule__KeyBooleanValueAnnotation__Group_3__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__221393);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__221385);
             rule__KeyBooleanValueAnnotation__Group_3__2__Impl();
 
             state._fsp--;
@@ -31131,7 +31107,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
-            match(input,72,FollowSets000.FOLLOW_72_in_rule__KeyBooleanValueAnnotation__Group_3__2__Impl21421); if (state.failed) return ;
+            match(input,72,FollowSets000.FOLLOW_72_in_rule__KeyBooleanValueAnnotation__Group_3__2__Impl21413); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyBooleanValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
@@ -31166,12 +31142,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10569:1: ( rule__KeyIntValueAnnotation__Group__0__Impl rule__KeyIntValueAnnotation__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10570:2: rule__KeyIntValueAnnotation__Group__0__Impl rule__KeyIntValueAnnotation__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group__0__Impl_in_rule__KeyIntValueAnnotation__Group__021458);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group__0__Impl_in_rule__KeyIntValueAnnotation__Group__021450);
             rule__KeyIntValueAnnotation__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group__1_in_rule__KeyIntValueAnnotation__Group__021461);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group__1_in_rule__KeyIntValueAnnotation__Group__021453);
             rule__KeyIntValueAnnotation__Group__1();
 
             state._fsp--;
@@ -31210,7 +31186,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,55,FollowSets000.FOLLOW_55_in_rule__KeyIntValueAnnotation__Group__0__Impl21489); if (state.failed) return ;
+            match(input,55,FollowSets000.FOLLOW_55_in_rule__KeyIntValueAnnotation__Group__0__Impl21481); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -31245,12 +31221,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10600:1: ( rule__KeyIntValueAnnotation__Group__1__Impl rule__KeyIntValueAnnotation__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10601:2: rule__KeyIntValueAnnotation__Group__1__Impl rule__KeyIntValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group__1__Impl_in_rule__KeyIntValueAnnotation__Group__121520);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group__1__Impl_in_rule__KeyIntValueAnnotation__Group__121512);
             rule__KeyIntValueAnnotation__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group__2_in_rule__KeyIntValueAnnotation__Group__121523);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group__2_in_rule__KeyIntValueAnnotation__Group__121515);
             rule__KeyIntValueAnnotation__Group__2();
 
             state._fsp--;
@@ -31292,7 +31268,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10615:1: ( rule__KeyIntValueAnnotation__NameAssignment_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10615:2: rule__KeyIntValueAnnotation__NameAssignment_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__NameAssignment_1_in_rule__KeyIntValueAnnotation__Group__1__Impl21550);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__NameAssignment_1_in_rule__KeyIntValueAnnotation__Group__1__Impl21542);
             rule__KeyIntValueAnnotation__NameAssignment_1();
 
             state._fsp--;
@@ -31334,12 +31310,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10629:1: ( rule__KeyIntValueAnnotation__Group__2__Impl rule__KeyIntValueAnnotation__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10630:2: rule__KeyIntValueAnnotation__Group__2__Impl rule__KeyIntValueAnnotation__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group__2__Impl_in_rule__KeyIntValueAnnotation__Group__221580);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group__2__Impl_in_rule__KeyIntValueAnnotation__Group__221572);
             rule__KeyIntValueAnnotation__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group__3_in_rule__KeyIntValueAnnotation__Group__221583);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group__3_in_rule__KeyIntValueAnnotation__Group__221575);
             rule__KeyIntValueAnnotation__Group__3();
 
             state._fsp--;
@@ -31381,7 +31357,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10644:1: ( rule__KeyIntValueAnnotation__ValueAssignment_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10644:2: rule__KeyIntValueAnnotation__ValueAssignment_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__ValueAssignment_2_in_rule__KeyIntValueAnnotation__Group__2__Impl21610);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__ValueAssignment_2_in_rule__KeyIntValueAnnotation__Group__2__Impl21602);
             rule__KeyIntValueAnnotation__ValueAssignment_2();
 
             state._fsp--;
@@ -31423,7 +31399,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10658:1: ( rule__KeyIntValueAnnotation__Group__3__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10659:2: rule__KeyIntValueAnnotation__Group__3__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group__3__Impl_in_rule__KeyIntValueAnnotation__Group__321640);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group__3__Impl_in_rule__KeyIntValueAnnotation__Group__321632);
             rule__KeyIntValueAnnotation__Group__3__Impl();
 
             state._fsp--;
@@ -31473,7 +31449,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10672:2: rule__KeyIntValueAnnotation__Group_3__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group_3__0_in_rule__KeyIntValueAnnotation__Group__3__Impl21667);
+                    pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group_3__0_in_rule__KeyIntValueAnnotation__Group__3__Impl21659);
                     rule__KeyIntValueAnnotation__Group_3__0();
 
                     state._fsp--;
@@ -31518,12 +31494,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10694:1: ( rule__KeyIntValueAnnotation__Group_3__0__Impl rule__KeyIntValueAnnotation__Group_3__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10695:2: rule__KeyIntValueAnnotation__Group_3__0__Impl rule__KeyIntValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group_3__0__Impl_in_rule__KeyIntValueAnnotation__Group_3__021706);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group_3__0__Impl_in_rule__KeyIntValueAnnotation__Group_3__021698);
             rule__KeyIntValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group_3__1_in_rule__KeyIntValueAnnotation__Group_3__021709);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group_3__1_in_rule__KeyIntValueAnnotation__Group_3__021701);
             rule__KeyIntValueAnnotation__Group_3__1();
 
             state._fsp--;
@@ -31562,7 +31538,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
-            match(input,71,FollowSets000.FOLLOW_71_in_rule__KeyIntValueAnnotation__Group_3__0__Impl21737); if (state.failed) return ;
+            match(input,71,FollowSets000.FOLLOW_71_in_rule__KeyIntValueAnnotation__Group_3__0__Impl21729); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyIntValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
@@ -31597,12 +31573,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10725:1: ( rule__KeyIntValueAnnotation__Group_3__1__Impl rule__KeyIntValueAnnotation__Group_3__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10726:2: rule__KeyIntValueAnnotation__Group_3__1__Impl rule__KeyIntValueAnnotation__Group_3__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group_3__1__Impl_in_rule__KeyIntValueAnnotation__Group_3__121768);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group_3__1__Impl_in_rule__KeyIntValueAnnotation__Group_3__121760);
             rule__KeyIntValueAnnotation__Group_3__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group_3__2_in_rule__KeyIntValueAnnotation__Group_3__121771);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group_3__2_in_rule__KeyIntValueAnnotation__Group_3__121763);
             rule__KeyIntValueAnnotation__Group_3__2();
 
             state._fsp--;
@@ -31656,7 +31632,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10740:2: rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyIntValueAnnotation__Group_3__1__Impl21798);
+            	    pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyIntValueAnnotation__Group_3__1__Impl21790);
             	    rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1();
 
             	    state._fsp--;
@@ -31704,7 +31680,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10754:1: ( rule__KeyIntValueAnnotation__Group_3__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10755:2: rule__KeyIntValueAnnotation__Group_3__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group_3__2__Impl_in_rule__KeyIntValueAnnotation__Group_3__221829);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyIntValueAnnotation__Group_3__2__Impl_in_rule__KeyIntValueAnnotation__Group_3__221821);
             rule__KeyIntValueAnnotation__Group_3__2__Impl();
 
             state._fsp--;
@@ -31743,7 +31719,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
-            match(input,72,FollowSets000.FOLLOW_72_in_rule__KeyIntValueAnnotation__Group_3__2__Impl21857); if (state.failed) return ;
+            match(input,72,FollowSets000.FOLLOW_72_in_rule__KeyIntValueAnnotation__Group_3__2__Impl21849); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyIntValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
@@ -31778,12 +31754,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10790:1: ( rule__KeyFloatValueAnnotation__Group__0__Impl rule__KeyFloatValueAnnotation__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10791:2: rule__KeyFloatValueAnnotation__Group__0__Impl rule__KeyFloatValueAnnotation__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group__0__Impl_in_rule__KeyFloatValueAnnotation__Group__021894);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group__0__Impl_in_rule__KeyFloatValueAnnotation__Group__021886);
             rule__KeyFloatValueAnnotation__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group__1_in_rule__KeyFloatValueAnnotation__Group__021897);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group__1_in_rule__KeyFloatValueAnnotation__Group__021889);
             rule__KeyFloatValueAnnotation__Group__1();
 
             state._fsp--;
@@ -31822,7 +31798,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,55,FollowSets000.FOLLOW_55_in_rule__KeyFloatValueAnnotation__Group__0__Impl21925); if (state.failed) return ;
+            match(input,55,FollowSets000.FOLLOW_55_in_rule__KeyFloatValueAnnotation__Group__0__Impl21917); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -31857,12 +31833,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10821:1: ( rule__KeyFloatValueAnnotation__Group__1__Impl rule__KeyFloatValueAnnotation__Group__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10822:2: rule__KeyFloatValueAnnotation__Group__1__Impl rule__KeyFloatValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group__1__Impl_in_rule__KeyFloatValueAnnotation__Group__121956);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group__1__Impl_in_rule__KeyFloatValueAnnotation__Group__121948);
             rule__KeyFloatValueAnnotation__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group__2_in_rule__KeyFloatValueAnnotation__Group__121959);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group__2_in_rule__KeyFloatValueAnnotation__Group__121951);
             rule__KeyFloatValueAnnotation__Group__2();
 
             state._fsp--;
@@ -31904,7 +31880,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10836:1: ( rule__KeyFloatValueAnnotation__NameAssignment_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10836:2: rule__KeyFloatValueAnnotation__NameAssignment_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__NameAssignment_1_in_rule__KeyFloatValueAnnotation__Group__1__Impl21986);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__NameAssignment_1_in_rule__KeyFloatValueAnnotation__Group__1__Impl21978);
             rule__KeyFloatValueAnnotation__NameAssignment_1();
 
             state._fsp--;
@@ -31946,12 +31922,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10850:1: ( rule__KeyFloatValueAnnotation__Group__2__Impl rule__KeyFloatValueAnnotation__Group__3 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10851:2: rule__KeyFloatValueAnnotation__Group__2__Impl rule__KeyFloatValueAnnotation__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group__2__Impl_in_rule__KeyFloatValueAnnotation__Group__222016);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group__2__Impl_in_rule__KeyFloatValueAnnotation__Group__222008);
             rule__KeyFloatValueAnnotation__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group__3_in_rule__KeyFloatValueAnnotation__Group__222019);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group__3_in_rule__KeyFloatValueAnnotation__Group__222011);
             rule__KeyFloatValueAnnotation__Group__3();
 
             state._fsp--;
@@ -31993,7 +31969,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10865:1: ( rule__KeyFloatValueAnnotation__ValueAssignment_2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10865:2: rule__KeyFloatValueAnnotation__ValueAssignment_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__ValueAssignment_2_in_rule__KeyFloatValueAnnotation__Group__2__Impl22046);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__ValueAssignment_2_in_rule__KeyFloatValueAnnotation__Group__2__Impl22038);
             rule__KeyFloatValueAnnotation__ValueAssignment_2();
 
             state._fsp--;
@@ -32035,7 +32011,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10879:1: ( rule__KeyFloatValueAnnotation__Group__3__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10880:2: rule__KeyFloatValueAnnotation__Group__3__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group__3__Impl_in_rule__KeyFloatValueAnnotation__Group__322076);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group__3__Impl_in_rule__KeyFloatValueAnnotation__Group__322068);
             rule__KeyFloatValueAnnotation__Group__3__Impl();
 
             state._fsp--;
@@ -32085,7 +32061,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                 case 1 :
                     // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10893:2: rule__KeyFloatValueAnnotation__Group_3__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0_in_rule__KeyFloatValueAnnotation__Group__3__Impl22103);
+                    pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0_in_rule__KeyFloatValueAnnotation__Group__3__Impl22095);
                     rule__KeyFloatValueAnnotation__Group_3__0();
 
                     state._fsp--;
@@ -32130,12 +32106,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10915:1: ( rule__KeyFloatValueAnnotation__Group_3__0__Impl rule__KeyFloatValueAnnotation__Group_3__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10916:2: rule__KeyFloatValueAnnotation__Group_3__0__Impl rule__KeyFloatValueAnnotation__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0__Impl_in_rule__KeyFloatValueAnnotation__Group_3__022142);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0__Impl_in_rule__KeyFloatValueAnnotation__Group_3__022134);
             rule__KeyFloatValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1_in_rule__KeyFloatValueAnnotation__Group_3__022145);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1_in_rule__KeyFloatValueAnnotation__Group_3__022137);
             rule__KeyFloatValueAnnotation__Group_3__1();
 
             state._fsp--;
@@ -32174,7 +32150,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
-            match(input,71,FollowSets000.FOLLOW_71_in_rule__KeyFloatValueAnnotation__Group_3__0__Impl22173); if (state.failed) return ;
+            match(input,71,FollowSets000.FOLLOW_71_in_rule__KeyFloatValueAnnotation__Group_3__0__Impl22165); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyFloatValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
@@ -32209,12 +32185,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10946:1: ( rule__KeyFloatValueAnnotation__Group_3__1__Impl rule__KeyFloatValueAnnotation__Group_3__2 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10947:2: rule__KeyFloatValueAnnotation__Group_3__1__Impl rule__KeyFloatValueAnnotation__Group_3__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1__Impl_in_rule__KeyFloatValueAnnotation__Group_3__122204);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1__Impl_in_rule__KeyFloatValueAnnotation__Group_3__122196);
             rule__KeyFloatValueAnnotation__Group_3__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2_in_rule__KeyFloatValueAnnotation__Group_3__122207);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2_in_rule__KeyFloatValueAnnotation__Group_3__122199);
             rule__KeyFloatValueAnnotation__Group_3__2();
 
             state._fsp--;
@@ -32268,7 +32244,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10961:2: rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyFloatValueAnnotation__Group_3__1__Impl22234);
+            	    pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyFloatValueAnnotation__Group_3__1__Impl22226);
             	    rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1();
 
             	    state._fsp--;
@@ -32316,7 +32292,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10975:1: ( rule__KeyFloatValueAnnotation__Group_3__2__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:10976:2: rule__KeyFloatValueAnnotation__Group_3__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2__Impl_in_rule__KeyFloatValueAnnotation__Group_3__222265);
+            pushFollow(FollowSets000.FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2__Impl_in_rule__KeyFloatValueAnnotation__Group_3__222257);
             rule__KeyFloatValueAnnotation__Group_3__2__Impl();
 
             state._fsp--;
@@ -32355,7 +32331,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
-            match(input,72,FollowSets000.FOLLOW_72_in_rule__KeyFloatValueAnnotation__Group_3__2__Impl22293); if (state.failed) return ;
+            match(input,72,FollowSets000.FOLLOW_72_in_rule__KeyFloatValueAnnotation__Group_3__2__Impl22285); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyFloatValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
@@ -32390,12 +32366,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11011:1: ( rule__ImportAnnotation__Group__0__Impl rule__ImportAnnotation__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11012:2: rule__ImportAnnotation__Group__0__Impl rule__ImportAnnotation__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ImportAnnotation__Group__0__Impl_in_rule__ImportAnnotation__Group__022330);
+            pushFollow(FollowSets000.FOLLOW_rule__ImportAnnotation__Group__0__Impl_in_rule__ImportAnnotation__Group__022322);
             rule__ImportAnnotation__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ImportAnnotation__Group__1_in_rule__ImportAnnotation__Group__022333);
+            pushFollow(FollowSets000.FOLLOW_rule__ImportAnnotation__Group__1_in_rule__ImportAnnotation__Group__022325);
             rule__ImportAnnotation__Group__1();
 
             state._fsp--;
@@ -32434,7 +32410,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getImportAnnotationAccess().getImportKeyword_0()); 
             }
-            match(input,73,FollowSets000.FOLLOW_73_in_rule__ImportAnnotation__Group__0__Impl22361); if (state.failed) return ;
+            match(input,73,FollowSets000.FOLLOW_73_in_rule__ImportAnnotation__Group__0__Impl22353); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getImportAnnotationAccess().getImportKeyword_0()); 
             }
@@ -32469,7 +32445,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11042:1: ( rule__ImportAnnotation__Group__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11043:2: rule__ImportAnnotation__Group__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ImportAnnotation__Group__1__Impl_in_rule__ImportAnnotation__Group__122392);
+            pushFollow(FollowSets000.FOLLOW_rule__ImportAnnotation__Group__1__Impl_in_rule__ImportAnnotation__Group__122384);
             rule__ImportAnnotation__Group__1__Impl();
 
             state._fsp--;
@@ -32511,7 +32487,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11056:1: ( rule__ImportAnnotation__ImportURIAssignment_1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11056:2: rule__ImportAnnotation__ImportURIAssignment_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ImportAnnotation__ImportURIAssignment_1_in_rule__ImportAnnotation__Group__1__Impl22419);
+            pushFollow(FollowSets000.FOLLOW_rule__ImportAnnotation__ImportURIAssignment_1_in_rule__ImportAnnotation__Group__1__Impl22411);
             rule__ImportAnnotation__ImportURIAssignment_1();
 
             state._fsp--;
@@ -32553,12 +32529,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11074:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11075:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group__0__Impl_in_rule__ExtendedID__Group__022453);
+            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group__0__Impl_in_rule__ExtendedID__Group__022445);
             rule__ExtendedID__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group__1_in_rule__ExtendedID__Group__022456);
+            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group__1_in_rule__ExtendedID__Group__022448);
             rule__ExtendedID__Group__1();
 
             state._fsp--;
@@ -32597,7 +32573,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__ExtendedID__Group__0__Impl22483); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__ExtendedID__Group__0__Impl22475); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
             }
@@ -32632,7 +32608,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11103:1: ( rule__ExtendedID__Group__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11104:2: rule__ExtendedID__Group__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group__1__Impl_in_rule__ExtendedID__Group__122512);
+            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group__1__Impl_in_rule__ExtendedID__Group__122504);
             rule__ExtendedID__Group__1__Impl();
 
             state._fsp--;
@@ -32686,7 +32662,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11117:2: rule__ExtendedID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__0_in_rule__ExtendedID__Group__1__Impl22539);
+            	    pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__0_in_rule__ExtendedID__Group__1__Impl22531);
             	    rule__ExtendedID__Group_1__0();
 
             	    state._fsp--;
@@ -32734,12 +32710,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11135:1: ( rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11136:2: rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__0__Impl_in_rule__ExtendedID__Group_1__022574);
+            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__0__Impl_in_rule__ExtendedID__Group_1__022566);
             rule__ExtendedID__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__1_in_rule__ExtendedID__Group_1__022577);
+            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__1_in_rule__ExtendedID__Group_1__022569);
             rule__ExtendedID__Group_1__1();
 
             state._fsp--;
@@ -32778,7 +32754,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
             }
-            match(input,74,FollowSets000.FOLLOW_74_in_rule__ExtendedID__Group_1__0__Impl22605); if (state.failed) return ;
+            match(input,74,FollowSets000.FOLLOW_74_in_rule__ExtendedID__Group_1__0__Impl22597); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
             }
@@ -32813,7 +32789,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11166:1: ( rule__ExtendedID__Group_1__1__Impl )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:11167:2: rule__ExtendedID__Group_1__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__122636);
+            pushFollow(FollowSets000.FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__122628);
             rule__ExtendedID__Group_1__1__Impl();
 
             state._fsp--;
@@ -32852,7 +32828,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl22663); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl22655); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
             }
@@ -32893,7 +32869,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootRegionAccess().getAnnotationsImportAnnotationParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleImportAnnotation_in_rule__RootRegion__AnnotationsAssignment_122701);
+            pushFollow(FollowSets000.FOLLOW_ruleImportAnnotation_in_rule__RootRegion__AnnotationsAssignment_122693);
             ruleImportAnnotation();
 
             state._fsp--;
@@ -32938,7 +32914,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootRegionAccess().getAnnotationsAnnotationParserRuleCall_2_0_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_rule__RootRegion__AnnotationsAssignment_2_022732);
+            pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_rule__RootRegion__AnnotationsAssignment_2_022724);
             ruleAnnotation();
 
             state._fsp--;
@@ -32983,7 +32959,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootRegionAccess().getIdIDTerminalRuleCall_2_2_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__RootRegion__IdAssignment_2_222763); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__RootRegion__IdAssignment_2_222755); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRootRegionAccess().getIdIDTerminalRuleCall_2_2_0()); 
             }
@@ -33024,7 +33000,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootRegionAccess().getLabelSTRINGTerminalRuleCall_2_3_0()); 
             }
-            match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_rule__RootRegion__LabelAssignment_2_322794); if (state.failed) return ;
+            match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_rule__RootRegion__LabelAssignment_2_322786); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRootRegionAccess().getLabelSTRINGTerminalRuleCall_2_3_0()); 
             }
@@ -33065,7 +33041,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootRegionAccess().getValuedObjectsValuedObjectParserRuleCall_2_5_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleValuedObject_in_rule__RootRegion__ValuedObjectsAssignment_2_522825);
+            pushFollow(FollowSets000.FOLLOW_ruleValuedObject_in_rule__RootRegion__ValuedObjectsAssignment_2_522817);
             ruleValuedObject();
 
             state._fsp--;
@@ -33110,7 +33086,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootRegionAccess().getBodyTextTextualCodeParserRuleCall_2_6_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleTextualCode_in_rule__RootRegion__BodyTextAssignment_2_622856);
+            pushFollow(FollowSets000.FOLLOW_ruleTextualCode_in_rule__RootRegion__BodyTextAssignment_2_622848);
             ruleTextualCode();
 
             state._fsp--;
@@ -33155,7 +33131,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootRegionAccess().getStatesSCChartParserRuleCall_3_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleSCChart_in_rule__RootRegion__StatesAssignment_322887);
+            pushFollow(FollowSets000.FOLLOW_ruleSCChart_in_rule__RootRegion__StatesAssignment_322879);
             ruleSCChart();
 
             state._fsp--;
@@ -33200,7 +33176,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSingleRegionAccess().getAnnotationsAnnotationParserRuleCall_1_0_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_rule__SingleRegion__AnnotationsAssignment_1_022918);
+            pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_rule__SingleRegion__AnnotationsAssignment_1_022910);
             ruleAnnotation();
 
             state._fsp--;
@@ -33245,7 +33221,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSingleRegionAccess().getIdIDTerminalRuleCall_1_2_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__SingleRegion__IdAssignment_1_222949); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__SingleRegion__IdAssignment_1_222941); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSingleRegionAccess().getIdIDTerminalRuleCall_1_2_0()); 
             }
@@ -33286,7 +33262,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSingleRegionAccess().getLabelSTRINGTerminalRuleCall_1_3_0()); 
             }
-            match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_rule__SingleRegion__LabelAssignment_1_322980); if (state.failed) return ;
+            match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_rule__SingleRegion__LabelAssignment_1_322972); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSingleRegionAccess().getLabelSTRINGTerminalRuleCall_1_3_0()); 
             }
@@ -33327,7 +33303,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSingleRegionAccess().getValuedObjectsValuedObjectParserRuleCall_1_5_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleValuedObject_in_rule__SingleRegion__ValuedObjectsAssignment_1_523011);
+            pushFollow(FollowSets000.FOLLOW_ruleValuedObject_in_rule__SingleRegion__ValuedObjectsAssignment_1_523003);
             ruleValuedObject();
 
             state._fsp--;
@@ -33372,7 +33348,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSingleRegionAccess().getBodyTextTextualCodeParserRuleCall_1_6_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleTextualCode_in_rule__SingleRegion__BodyTextAssignment_1_623042);
+            pushFollow(FollowSets000.FOLLOW_ruleTextualCode_in_rule__SingleRegion__BodyTextAssignment_1_623034);
             ruleTextualCode();
 
             state._fsp--;
@@ -33417,7 +33393,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSingleRegionAccess().getStatesStateParserRuleCall_2_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleState_in_rule__SingleRegion__StatesAssignment_223073);
+            pushFollow(FollowSets000.FOLLOW_ruleState_in_rule__SingleRegion__StatesAssignment_223065);
             ruleState();
 
             state._fsp--;
@@ -33462,7 +33438,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRegionAccess().getAnnotationsAnnotationParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_rule__Region__AnnotationsAssignment_123104);
+            pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_rule__Region__AnnotationsAssignment_123096);
             ruleAnnotation();
 
             state._fsp--;
@@ -33507,7 +33483,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRegionAccess().getIdIDTerminalRuleCall_3_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__Region__IdAssignment_323135); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__Region__IdAssignment_323127); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRegionAccess().getIdIDTerminalRuleCall_3_0()); 
             }
@@ -33548,7 +33524,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRegionAccess().getLabelSTRINGTerminalRuleCall_4_0()); 
             }
-            match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_rule__Region__LabelAssignment_423166); if (state.failed) return ;
+            match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_rule__Region__LabelAssignment_423158); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRegionAccess().getLabelSTRINGTerminalRuleCall_4_0()); 
             }
@@ -33589,7 +33565,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRegionAccess().getValuedObjectsValuedObjectParserRuleCall_6_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleValuedObject_in_rule__Region__ValuedObjectsAssignment_623197);
+            pushFollow(FollowSets000.FOLLOW_ruleValuedObject_in_rule__Region__ValuedObjectsAssignment_623189);
             ruleValuedObject();
 
             state._fsp--;
@@ -33634,7 +33610,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRegionAccess().getBodyTextTextualCodeParserRuleCall_7_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleTextualCode_in_rule__Region__BodyTextAssignment_723228);
+            pushFollow(FollowSets000.FOLLOW_ruleTextualCode_in_rule__Region__BodyTextAssignment_723220);
             ruleTextualCode();
 
             state._fsp--;
@@ -33679,7 +33655,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRegionAccess().getStatesStateParserRuleCall_8_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleState_in_rule__Region__StatesAssignment_823259);
+            pushFollow(FollowSets000.FOLLOW_ruleState_in_rule__Region__StatesAssignment_823251);
             ruleState();
 
             state._fsp--;
@@ -33724,7 +33700,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_rule__SCChart__AnnotationsAssignment_023290);
+            pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_rule__SCChart__AnnotationsAssignment_023282);
             ruleAnnotation();
 
             state._fsp--;
@@ -33769,7 +33745,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getTypeStateTypeEnumRuleCall_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleStateType_in_rule__SCChart__TypeAssignment_123321);
+            pushFollow(FollowSets000.FOLLOW_ruleStateType_in_rule__SCChart__TypeAssignment_123313);
             ruleStateType();
 
             state._fsp--;
@@ -33814,7 +33790,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getIdIDTerminalRuleCall_3_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__SCChart__IdAssignment_323352); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__SCChart__IdAssignment_323344); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSCChartAccess().getIdIDTerminalRuleCall_3_0()); 
             }
@@ -33855,7 +33831,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getLabelSTRINGTerminalRuleCall_4_0()); 
             }
-            match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_rule__SCChart__LabelAssignment_423383); if (state.failed) return ;
+            match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_rule__SCChart__LabelAssignment_423375); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSCChartAccess().getLabelSTRINGTerminalRuleCall_4_0()); 
             }
@@ -33902,7 +33878,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getBodyReferenceStateIDTerminalRuleCall_5_0_1_0_1()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__SCChart__BodyReferenceAssignment_5_0_123418); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__SCChart__BodyReferenceAssignment_5_0_123410); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSCChartAccess().getBodyReferenceStateIDTerminalRuleCall_5_0_1_0_1()); 
             }
@@ -33949,7 +33925,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getRenamingsSubstitutionParserRuleCall_5_0_2_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleSubstitution_in_rule__SCChart__RenamingsAssignment_5_0_2_123453);
+            pushFollow(FollowSets001.FOLLOW_ruleSubstitution_in_rule__SCChart__RenamingsAssignment_5_0_2_123445);
             ruleSubstitution();
 
             state._fsp--;
@@ -33994,7 +33970,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getRenamingsSubstitutionParserRuleCall_5_0_2_2_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleSubstitution_in_rule__SCChart__RenamingsAssignment_5_0_2_2_123484);
+            pushFollow(FollowSets001.FOLLOW_ruleSubstitution_in_rule__SCChart__RenamingsAssignment_5_0_2_2_123476);
             ruleSubstitution();
 
             state._fsp--;
@@ -34039,7 +34015,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getValuedObjectsValuedObjectParserRuleCall_5_1_1_0_0_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleValuedObject_in_rule__SCChart__ValuedObjectsAssignment_5_1_1_0_023515);
+            pushFollow(FollowSets001.FOLLOW_ruleValuedObject_in_rule__SCChart__ValuedObjectsAssignment_5_1_1_0_023507);
             ruleValuedObject();
 
             state._fsp--;
@@ -34084,7 +34060,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getLocalActionsLocalActionParserRuleCall_5_1_1_0_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleLocalAction_in_rule__SCChart__LocalActionsAssignment_5_1_1_0_123546);
+            pushFollow(FollowSets001.FOLLOW_ruleLocalAction_in_rule__SCChart__LocalActionsAssignment_5_1_1_0_123538);
             ruleLocalAction();
 
             state._fsp--;
@@ -34129,7 +34105,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getBodyTextTextualCodeParserRuleCall_5_1_1_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleTextualCode_in_rule__SCChart__BodyTextAssignment_5_1_1_123577);
+            pushFollow(FollowSets001.FOLLOW_ruleTextualCode_in_rule__SCChart__BodyTextAssignment_5_1_1_123569);
             ruleTextualCode();
 
             state._fsp--;
@@ -34174,7 +34150,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getRegionsSingleRegionParserRuleCall_5_1_1_2_0_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleSingleRegion_in_rule__SCChart__RegionsAssignment_5_1_1_2_023608);
+            pushFollow(FollowSets001.FOLLOW_ruleSingleRegion_in_rule__SCChart__RegionsAssignment_5_1_1_2_023600);
             ruleSingleRegion();
 
             state._fsp--;
@@ -34219,7 +34195,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSCChartAccess().getRegionsRegionParserRuleCall_5_1_1_2_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleRegion_in_rule__SCChart__RegionsAssignment_5_1_1_2_123639);
+            pushFollow(FollowSets001.FOLLOW_ruleRegion_in_rule__SCChart__RegionsAssignment_5_1_1_2_123631);
             ruleRegion();
 
             state._fsp--;
@@ -34264,7 +34240,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__State__AnnotationsAssignment_023670);
+            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__State__AnnotationsAssignment_023662);
             ruleAnnotation();
 
             state._fsp--;
@@ -34315,7 +34291,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getInitialInitialKeyword_1_0_0_0()); 
             }
-            match(input,75,FollowSets001.FOLLOW_75_in_rule__State__InitialAssignment_1_0_023706); if (state.failed) return ;
+            match(input,75,FollowSets001.FOLLOW_75_in_rule__State__InitialAssignment_1_0_023698); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getInitialInitialKeyword_1_0_0_0()); 
             }
@@ -34368,7 +34344,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getFinalFinalKeyword_1_0_1_0()); 
             }
-            match(input,76,FollowSets001.FOLLOW_76_in_rule__State__FinalAssignment_1_0_123750); if (state.failed) return ;
+            match(input,76,FollowSets001.FOLLOW_76_in_rule__State__FinalAssignment_1_0_123742); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getFinalFinalKeyword_1_0_1_0()); 
             }
@@ -34421,7 +34397,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getFinalFinalKeyword_1_1_0_0()); 
             }
-            match(input,76,FollowSets001.FOLLOW_76_in_rule__State__FinalAssignment_1_1_023794); if (state.failed) return ;
+            match(input,76,FollowSets001.FOLLOW_76_in_rule__State__FinalAssignment_1_1_023786); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getFinalFinalKeyword_1_1_0_0()); 
             }
@@ -34474,7 +34450,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getInitialInitialKeyword_1_1_1_0()); 
             }
-            match(input,75,FollowSets001.FOLLOW_75_in_rule__State__InitialAssignment_1_1_123838); if (state.failed) return ;
+            match(input,75,FollowSets001.FOLLOW_75_in_rule__State__InitialAssignment_1_1_123830); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getInitialInitialKeyword_1_1_1_0()); 
             }
@@ -34521,7 +34497,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getTypeStateTypeEnumRuleCall_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleStateType_in_rule__State__TypeAssignment_223877);
+            pushFollow(FollowSets001.FOLLOW_ruleStateType_in_rule__State__TypeAssignment_223869);
             ruleStateType();
 
             state._fsp--;
@@ -34566,7 +34542,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getIdIDTerminalRuleCall_4_0()); 
             }
-            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__State__IdAssignment_423908); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__State__IdAssignment_423900); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getIdIDTerminalRuleCall_4_0()); 
             }
@@ -34607,7 +34583,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getLabelSTRINGTerminalRuleCall_5_0()); 
             }
-            match(input,RULE_STRING,FollowSets001.FOLLOW_RULE_STRING_in_rule__State__LabelAssignment_523939); if (state.failed) return ;
+            match(input,RULE_STRING,FollowSets001.FOLLOW_RULE_STRING_in_rule__State__LabelAssignment_523931); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getLabelSTRINGTerminalRuleCall_5_0()); 
             }
@@ -34654,7 +34630,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getBodyReferenceStateIDTerminalRuleCall_6_0_1_0_1()); 
             }
-            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__State__BodyReferenceAssignment_6_0_123974); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__State__BodyReferenceAssignment_6_0_123966); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getBodyReferenceStateIDTerminalRuleCall_6_0_1_0_1()); 
             }
@@ -34701,7 +34677,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getRenamingsSubstitutionParserRuleCall_6_0_2_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleSubstitution_in_rule__State__RenamingsAssignment_6_0_2_124009);
+            pushFollow(FollowSets001.FOLLOW_ruleSubstitution_in_rule__State__RenamingsAssignment_6_0_2_124001);
             ruleSubstitution();
 
             state._fsp--;
@@ -34746,7 +34722,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getRenamingsSubstitutionParserRuleCall_6_0_2_2_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleSubstitution_in_rule__State__RenamingsAssignment_6_0_2_2_124040);
+            pushFollow(FollowSets001.FOLLOW_ruleSubstitution_in_rule__State__RenamingsAssignment_6_0_2_2_124032);
             ruleSubstitution();
 
             state._fsp--;
@@ -34791,7 +34767,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getValuedObjectsValuedObjectParserRuleCall_6_1_1_0_0_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleValuedObject_in_rule__State__ValuedObjectsAssignment_6_1_1_0_024071);
+            pushFollow(FollowSets001.FOLLOW_ruleValuedObject_in_rule__State__ValuedObjectsAssignment_6_1_1_0_024063);
             ruleValuedObject();
 
             state._fsp--;
@@ -34836,7 +34812,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getLocalActionsLocalActionParserRuleCall_6_1_1_0_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleLocalAction_in_rule__State__LocalActionsAssignment_6_1_1_0_124102);
+            pushFollow(FollowSets001.FOLLOW_ruleLocalAction_in_rule__State__LocalActionsAssignment_6_1_1_0_124094);
             ruleLocalAction();
 
             state._fsp--;
@@ -34881,7 +34857,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getBodyTextTextualCodeParserRuleCall_6_1_1_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleTextualCode_in_rule__State__BodyTextAssignment_6_1_1_124133);
+            pushFollow(FollowSets001.FOLLOW_ruleTextualCode_in_rule__State__BodyTextAssignment_6_1_1_124125);
             ruleTextualCode();
 
             state._fsp--;
@@ -34926,7 +34902,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getRegionsSingleRegionParserRuleCall_6_1_1_2_0_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleSingleRegion_in_rule__State__RegionsAssignment_6_1_1_2_024164);
+            pushFollow(FollowSets001.FOLLOW_ruleSingleRegion_in_rule__State__RegionsAssignment_6_1_1_2_024156);
             ruleSingleRegion();
 
             state._fsp--;
@@ -34971,7 +34947,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_2_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleRegion_in_rule__State__RegionsAssignment_6_1_1_2_124195);
+            pushFollow(FollowSets001.FOLLOW_ruleRegion_in_rule__State__RegionsAssignment_6_1_1_2_124187);
             ruleRegion();
 
             state._fsp--;
@@ -35016,7 +34992,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getOutgoingTransitionsTransitionParserRuleCall_7_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleTransition_in_rule__State__OutgoingTransitionsAssignment_724226);
+            pushFollow(FollowSets001.FOLLOW_ruleTransition_in_rule__State__OutgoingTransitionsAssignment_724218);
             ruleTransition();
 
             state._fsp--;
@@ -35061,7 +35037,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__Transition__AnnotationsAssignment_024257);
+            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__Transition__AnnotationsAssignment_024249);
             ruleAnnotation();
 
             state._fsp--;
@@ -35106,7 +35082,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getTypeTransitionTypeEnumRuleCall_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleTransitionType_in_rule__Transition__TypeAssignment_124288);
+            pushFollow(FollowSets001.FOLLOW_ruleTransitionType_in_rule__Transition__TypeAssignment_124280);
             ruleTransitionType();
 
             state._fsp--;
@@ -35151,7 +35127,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getPriorityINTTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_INT,FollowSets001.FOLLOW_RULE_INT_in_rule__Transition__PriorityAssignment_224319); if (state.failed) return ;
+            match(input,RULE_INT,FollowSets001.FOLLOW_RULE_INT_in_rule__Transition__PriorityAssignment_224311); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTransitionAccess().getPriorityINTTerminalRuleCall_2_0()); 
             }
@@ -35198,7 +35174,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getTargetStateStateIDTerminalRuleCall_3_0_1()); 
             }
-            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__Transition__TargetStateAssignment_324354); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__Transition__TargetStateAssignment_324346); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTransitionAccess().getTargetStateStateIDTerminalRuleCall_3_0_1()); 
             }
@@ -35251,7 +35227,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_4_0_0()); 
             }
-            match(input,77,FollowSets001.FOLLOW_77_in_rule__Transition__ImmediateAssignment_4_024394); if (state.failed) return ;
+            match(input,77,FollowSets001.FOLLOW_77_in_rule__Transition__ImmediateAssignment_4_024386); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_4_0_0()); 
             }
@@ -35304,7 +35280,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_4_1_0()); 
             }
-            match(input,78,FollowSets001.FOLLOW_78_in_rule__Transition__DeferredAssignment_4_124438); if (state.failed) return ;
+            match(input,78,FollowSets001.FOLLOW_78_in_rule__Transition__DeferredAssignment_4_124430); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_4_1_0()); 
             }
@@ -35351,7 +35327,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getHistoryHistoryTypeEnumRuleCall_4_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleHistoryType_in_rule__Transition__HistoryAssignment_4_224477);
+            pushFollow(FollowSets001.FOLLOW_ruleHistoryType_in_rule__Transition__HistoryAssignment_4_224469);
             ruleHistoryType();
 
             state._fsp--;
@@ -35396,7 +35372,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_4_3_1_0_0_0()); 
             }
-            match(input,RULE_INT,FollowSets001.FOLLOW_RULE_INT_in_rule__Transition__DelayAssignment_4_3_1_0_024508); if (state.failed) return ;
+            match(input,RULE_INT,FollowSets001.FOLLOW_RULE_INT_in_rule__Transition__DelayAssignment_4_3_1_0_024500); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_4_3_1_0_0_0()); 
             }
@@ -35437,7 +35413,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getTriggerBoolExpressionParserRuleCall_4_3_1_0_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleBoolExpression_in_rule__Transition__TriggerAssignment_4_3_1_0_124539);
+            pushFollow(FollowSets001.FOLLOW_ruleBoolExpression_in_rule__Transition__TriggerAssignment_4_3_1_0_124531);
             ruleBoolExpression();
 
             state._fsp--;
@@ -35482,7 +35458,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_4_3_1_0_2_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__Transition__EffectsAssignment_4_3_1_0_2_124570);
+            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__Transition__EffectsAssignment_4_3_1_0_2_124562);
             ruleEffect();
 
             state._fsp--;
@@ -35527,7 +35503,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_4_3_1_0_2_2_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__Transition__EffectsAssignment_4_3_1_0_2_2_124601);
+            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__Transition__EffectsAssignment_4_3_1_0_2_2_124593);
             ruleEffect();
 
             state._fsp--;
@@ -35572,7 +35548,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_4_3_1_1_0()); 
             }
-            match(input,RULE_STRING,FollowSets001.FOLLOW_RULE_STRING_in_rule__Transition__LabelAssignment_4_3_1_124632); if (state.failed) return ;
+            match(input,RULE_STRING,FollowSets001.FOLLOW_RULE_STRING_in_rule__Transition__LabelAssignment_4_3_1_124624); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_4_3_1_1_0()); 
             }
@@ -35613,7 +35589,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__ValuedObject__AnnotationsAssignment_024663);
+            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__ValuedObject__AnnotationsAssignment_024655);
             ruleAnnotation();
 
             state._fsp--;
@@ -35664,7 +35640,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getInputInputKeyword_1_0()); 
             }
-            match(input,79,FollowSets001.FOLLOW_79_in_rule__ValuedObject__InputAssignment_124699); if (state.failed) return ;
+            match(input,79,FollowSets001.FOLLOW_79_in_rule__ValuedObject__InputAssignment_124691); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectAccess().getInputInputKeyword_1_0()); 
             }
@@ -35717,7 +35693,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getOutputOutputKeyword_2_0()); 
             }
-            match(input,80,FollowSets001.FOLLOW_80_in_rule__ValuedObject__OutputAssignment_224743); if (state.failed) return ;
+            match(input,80,FollowSets001.FOLLOW_80_in_rule__ValuedObject__OutputAssignment_224735); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectAccess().getOutputOutputKeyword_2_0()); 
             }
@@ -35770,7 +35746,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getStaticStaticKeyword_3_0()); 
             }
-            match(input,81,FollowSets001.FOLLOW_81_in_rule__ValuedObject__StaticAssignment_324787); if (state.failed) return ;
+            match(input,81,FollowSets001.FOLLOW_81_in_rule__ValuedObject__StaticAssignment_324779); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectAccess().getStaticStaticKeyword_3_0()); 
             }
@@ -35823,7 +35799,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getSignalSignalKeyword_4_0()); 
             }
-            match(input,82,FollowSets001.FOLLOW_82_in_rule__ValuedObject__SignalAssignment_424831); if (state.failed) return ;
+            match(input,82,FollowSets001.FOLLOW_82_in_rule__ValuedObject__SignalAssignment_424823); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectAccess().getSignalSignalKeyword_4_0()); 
             }
@@ -35870,7 +35846,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getTypeValueTypeEnumRuleCall_5_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleValueType_in_rule__ValuedObject__TypeAssignment_524870);
+            pushFollow(FollowSets001.FOLLOW_ruleValueType_in_rule__ValuedObject__TypeAssignment_524862);
             ruleValueType();
 
             state._fsp--;
@@ -35915,7 +35891,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getNameIDTerminalRuleCall_6_0()); 
             }
-            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__ValuedObject__NameAssignment_624901); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__ValuedObject__NameAssignment_624893); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectAccess().getNameIDTerminalRuleCall_6_0()); 
             }
@@ -35956,7 +35932,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getInitialValueExpressionParserRuleCall_7_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleExpression_in_rule__ValuedObject__InitialValueAssignment_7_124932);
+            pushFollow(FollowSets001.FOLLOW_ruleExpression_in_rule__ValuedObject__InitialValueAssignment_7_124924);
             ruleExpression();
 
             state._fsp--;
@@ -36001,7 +35977,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getCombineOperatorCombineOperatorEnumRuleCall_8_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleCombineOperator_in_rule__ValuedObject__CombineOperatorAssignment_8_124963);
+            pushFollow(FollowSets001.FOLLOW_ruleCombineOperator_in_rule__ValuedObject__CombineOperatorAssignment_8_124955);
             ruleCombineOperator();
 
             state._fsp--;
@@ -36046,7 +36022,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTextualCodeAccess().getTextHOSTCODETerminalRuleCall_0_0()); 
             }
-            match(input,RULE_HOSTCODE,FollowSets001.FOLLOW_RULE_HOSTCODE_in_rule__TextualCode__TextAssignment_024994); if (state.failed) return ;
+            match(input,RULE_HOSTCODE,FollowSets001.FOLLOW_RULE_HOSTCODE_in_rule__TextualCode__TextAssignment_024986); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTextualCodeAccess().getTextHOSTCODETerminalRuleCall_0_0()); 
             }
@@ -36087,7 +36063,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubstitutionAccess().getActualIDTerminalRuleCall_0_0()); 
             }
-            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__Substitution__ActualAssignment_025025); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__Substitution__ActualAssignment_025017); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSubstitutionAccess().getActualIDTerminalRuleCall_0_0()); 
             }
@@ -36128,7 +36104,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubstitutionAccess().getFormalIDTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__Substitution__FormalAssignment_225056); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__Substitution__FormalAssignment_225048); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSubstitutionAccess().getFormalIDTerminalRuleCall_2_0()); 
             }
@@ -36169,7 +36145,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEntryActionAccess().getTriggerBoolExpressionParserRuleCall_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleBoolExpression_in_rule__EntryAction__TriggerAssignment_225087);
+            pushFollow(FollowSets001.FOLLOW_ruleBoolExpression_in_rule__EntryAction__TriggerAssignment_225079);
             ruleBoolExpression();
 
             state._fsp--;
@@ -36214,7 +36190,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEntryActionAccess().getEffectsEffectParserRuleCall_3_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__EntryAction__EffectsAssignment_3_125118);
+            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__EntryAction__EffectsAssignment_3_125110);
             ruleEffect();
 
             state._fsp--;
@@ -36259,7 +36235,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEntryActionAccess().getEffectsEffectParserRuleCall_3_2_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__EntryAction__EffectsAssignment_3_2_125149);
+            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__EntryAction__EffectsAssignment_3_2_125141);
             ruleEffect();
 
             state._fsp--;
@@ -36310,7 +36286,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDuringActionAccess().getImmediateImmediateKeyword_1_0()); 
             }
-            match(input,77,FollowSets001.FOLLOW_77_in_rule__DuringAction__ImmediateAssignment_125185); if (state.failed) return ;
+            match(input,77,FollowSets001.FOLLOW_77_in_rule__DuringAction__ImmediateAssignment_125177); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getDuringActionAccess().getImmediateImmediateKeyword_1_0()); 
             }
@@ -36357,7 +36333,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDuringActionAccess().getTriggerBoolExpressionParserRuleCall_3_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleBoolExpression_in_rule__DuringAction__TriggerAssignment_325224);
+            pushFollow(FollowSets001.FOLLOW_ruleBoolExpression_in_rule__DuringAction__TriggerAssignment_325216);
             ruleBoolExpression();
 
             state._fsp--;
@@ -36402,7 +36378,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDuringActionAccess().getEffectsEffectParserRuleCall_4_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__DuringAction__EffectsAssignment_4_125255);
+            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__DuringAction__EffectsAssignment_4_125247);
             ruleEffect();
 
             state._fsp--;
@@ -36447,7 +36423,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDuringActionAccess().getEffectsEffectParserRuleCall_4_2_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__DuringAction__EffectsAssignment_4_2_125286);
+            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__DuringAction__EffectsAssignment_4_2_125278);
             ruleEffect();
 
             state._fsp--;
@@ -36492,7 +36468,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExitActionAccess().getTriggerBoolExpressionParserRuleCall_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleBoolExpression_in_rule__ExitAction__TriggerAssignment_225317);
+            pushFollow(FollowSets001.FOLLOW_ruleBoolExpression_in_rule__ExitAction__TriggerAssignment_225309);
             ruleBoolExpression();
 
             state._fsp--;
@@ -36537,7 +36513,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExitActionAccess().getEffectsEffectParserRuleCall_3_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__ExitAction__EffectsAssignment_3_125348);
+            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__ExitAction__EffectsAssignment_3_125340);
             ruleEffect();
 
             state._fsp--;
@@ -36582,7 +36558,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExitActionAccess().getEffectsEffectParserRuleCall_3_2_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__ExitAction__EffectsAssignment_3_2_125379);
+            pushFollow(FollowSets001.FOLLOW_ruleEffect_in_rule__ExitAction__EffectsAssignment_3_2_125371);
             ruleEffect();
 
             state._fsp--;
@@ -36633,7 +36609,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSuspendActionAccess().getImmediateImmediateKeyword_1_0()); 
             }
-            match(input,77,FollowSets001.FOLLOW_77_in_rule__SuspendAction__ImmediateAssignment_125415); if (state.failed) return ;
+            match(input,77,FollowSets001.FOLLOW_77_in_rule__SuspendAction__ImmediateAssignment_125407); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSuspendActionAccess().getImmediateImmediateKeyword_1_0()); 
             }
@@ -36686,7 +36662,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSuspendActionAccess().getWeakWeakKeyword_2_0()); 
             }
-            match(input,83,FollowSets001.FOLLOW_83_in_rule__SuspendAction__WeakAssignment_225459); if (state.failed) return ;
+            match(input,83,FollowSets001.FOLLOW_83_in_rule__SuspendAction__WeakAssignment_225451); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getSuspendActionAccess().getWeakWeakKeyword_2_0()); 
             }
@@ -36733,7 +36709,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSuspendActionAccess().getTriggerBoolExpressionParserRuleCall_4_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleBoolExpression_in_rule__SuspendAction__TriggerAssignment_425498);
+            pushFollow(FollowSets001.FOLLOW_ruleBoolExpression_in_rule__SuspendAction__TriggerAssignment_425490);
             ruleBoolExpression();
 
             state._fsp--;
@@ -36784,7 +36760,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1()); 
             }
-            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__Emission__ValuedObjectAssignment_025533); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__Emission__ValuedObjectAssignment_025525); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEmissionAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1()); 
             }
@@ -36831,7 +36807,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmissionAccess().getNewValueExpressionParserRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleExpression_in_rule__Emission__NewValueAssignment_1_125568);
+            pushFollow(FollowSets001.FOLLOW_ruleExpression_in_rule__Emission__NewValueAssignment_1_125560);
             ruleExpression();
 
             state._fsp--;
@@ -36882,7 +36858,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1()); 
             }
-            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__Assignment__ValuedObjectAssignment_025603); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__Assignment__ValuedObjectAssignment_025595); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAssignmentAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1()); 
             }
@@ -36929,7 +36905,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleExpression_in_rule__Assignment__ExpressionAssignment_225638);
+            pushFollow(FollowSets001.FOLLOW_ruleExpression_in_rule__Assignment__ExpressionAssignment_225630);
             ruleExpression();
 
             state._fsp--;
@@ -36974,7 +36950,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTextEffectAccess().getTextHOSTCODETerminalRuleCall_0()); 
             }
-            match(input,RULE_HOSTCODE,FollowSets001.FOLLOW_RULE_HOSTCODE_in_rule__TextEffect__TextAssignment25669); if (state.failed) return ;
+            match(input,RULE_HOSTCODE,FollowSets001.FOLLOW_RULE_HOSTCODE_in_rule__TextEffect__TextAssignment25661); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTextEffectAccess().getTextHOSTCODETerminalRuleCall_0()); 
             }
@@ -37015,7 +36991,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getOrExpressionAccess().getOperatorOrOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleOrOperator_in_rule__OrExpression__OperatorAssignment_1_125700);
+            pushFollow(FollowSets001.FOLLOW_ruleOrOperator_in_rule__OrExpression__OperatorAssignment_1_125692);
             ruleOrOperator();
 
             state._fsp--;
@@ -37060,7 +37036,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getOrExpressionAccess().getSubExpressionsAndExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleAndExpression_in_rule__OrExpression__SubExpressionsAssignment_1_225731);
+            pushFollow(FollowSets001.FOLLOW_ruleAndExpression_in_rule__OrExpression__SubExpressionsAssignment_1_225723);
             ruleAndExpression();
 
             state._fsp--;
@@ -37105,7 +37081,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAndExpressionAccess().getOperatorAndOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleAndOperator_in_rule__AndExpression__OperatorAssignment_1_125762);
+            pushFollow(FollowSets001.FOLLOW_ruleAndOperator_in_rule__AndExpression__OperatorAssignment_1_125754);
             ruleAndOperator();
 
             state._fsp--;
@@ -37150,7 +37126,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleCompareOperation_in_rule__AndExpression__SubExpressionsAssignment_1_225793);
+            pushFollow(FollowSets001.FOLLOW_ruleCompareOperation_in_rule__AndExpression__SubExpressionsAssignment_1_225785);
             ruleCompareOperation();
 
             state._fsp--;
@@ -37195,7 +37171,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getOperatorCompareOperatorEnumRuleCall_0_1_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_0_1_125824);
+            pushFollow(FollowSets001.FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_0_1_125816);
             ruleCompareOperator();
 
             state._fsp--;
@@ -37240,7 +37216,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getSubExpressionsNotOrValuedExpressionParserRuleCall_0_1_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__SubExpressionsAssignment_0_1_225855);
+            pushFollow(FollowSets001.FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__SubExpressionsAssignment_0_1_225847);
             ruleNotOrValuedExpression();
 
             state._fsp--;
@@ -37285,7 +37261,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNotExpressionAccess().getOperatorNotOperatorEnumRuleCall_0_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleNotOperator_in_rule__NotExpression__OperatorAssignment_0_125886);
+            pushFollow(FollowSets001.FOLLOW_ruleNotOperator_in_rule__NotExpression__OperatorAssignment_0_125878);
             ruleNotOperator();
 
             state._fsp--;
@@ -37330,7 +37306,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNotExpressionAccess().getSubExpressionsNotExpressionParserRuleCall_0_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleNotExpression_in_rule__NotExpression__SubExpressionsAssignment_0_225917);
+            pushFollow(FollowSets001.FOLLOW_ruleNotExpression_in_rule__NotExpression__SubExpressionsAssignment_0_225909);
             ruleNotExpression();
 
             state._fsp--;
@@ -37375,7 +37351,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getOperatorAddOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleAddOperator_in_rule__AddExpression__OperatorAssignment_1_125948);
+            pushFollow(FollowSets001.FOLLOW_ruleAddOperator_in_rule__AddExpression__OperatorAssignment_1_125940);
             ruleAddOperator();
 
             state._fsp--;
@@ -37420,7 +37396,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getSubExpressionsSubExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleSubExpression_in_rule__AddExpression__SubExpressionsAssignment_1_225979);
+            pushFollow(FollowSets001.FOLLOW_ruleSubExpression_in_rule__AddExpression__SubExpressionsAssignment_1_225971);
             ruleSubExpression();
 
             state._fsp--;
@@ -37465,7 +37441,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getOperatorSubOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleSubOperator_in_rule__SubExpression__OperatorAssignment_1_126010);
+            pushFollow(FollowSets001.FOLLOW_ruleSubOperator_in_rule__SubExpression__OperatorAssignment_1_126002);
             ruleSubOperator();
 
             state._fsp--;
@@ -37510,7 +37486,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getSubExpressionsMultExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleMultExpression_in_rule__SubExpression__SubExpressionsAssignment_1_226041);
+            pushFollow(FollowSets001.FOLLOW_ruleMultExpression_in_rule__SubExpression__SubExpressionsAssignment_1_226033);
             ruleMultExpression();
 
             state._fsp--;
@@ -37555,7 +37531,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getOperatorMultOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleMultOperator_in_rule__MultExpression__OperatorAssignment_1_126072);
+            pushFollow(FollowSets001.FOLLOW_ruleMultOperator_in_rule__MultExpression__OperatorAssignment_1_126064);
             ruleMultOperator();
 
             state._fsp--;
@@ -37600,7 +37576,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getSubExpressionsDivExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleDivExpression_in_rule__MultExpression__SubExpressionsAssignment_1_226103);
+            pushFollow(FollowSets001.FOLLOW_ruleDivExpression_in_rule__MultExpression__SubExpressionsAssignment_1_226095);
             ruleDivExpression();
 
             state._fsp--;
@@ -37645,7 +37621,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getOperatorDivOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleDivOperator_in_rule__DivExpression__OperatorAssignment_1_126134);
+            pushFollow(FollowSets001.FOLLOW_ruleDivOperator_in_rule__DivExpression__OperatorAssignment_1_126126);
             ruleDivOperator();
 
             state._fsp--;
@@ -37690,7 +37666,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getSubExpressionsModExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleModExpression_in_rule__DivExpression__SubExpressionsAssignment_1_226165);
+            pushFollow(FollowSets001.FOLLOW_ruleModExpression_in_rule__DivExpression__SubExpressionsAssignment_1_226157);
             ruleModExpression();
 
             state._fsp--;
@@ -37735,7 +37711,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getOperatorModOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleModOperator_in_rule__ModExpression__OperatorAssignment_1_126196);
+            pushFollow(FollowSets001.FOLLOW_ruleModOperator_in_rule__ModExpression__OperatorAssignment_1_126188);
             ruleModOperator();
 
             state._fsp--;
@@ -37780,7 +37756,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleAtomicValuedExpression_in_rule__ModExpression__SubExpressionsAssignment_1_226227);
+            pushFollow(FollowSets001.FOLLOW_ruleAtomicValuedExpression_in_rule__ModExpression__SubExpressionsAssignment_1_226219);
             ruleAtomicValuedExpression();
 
             state._fsp--;
@@ -37825,7 +37801,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNegExpressionAccess().getOperatorSubOperatorEnumRuleCall_0_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleSubOperator_in_rule__NegExpression__OperatorAssignment_0_126258);
+            pushFollow(FollowSets001.FOLLOW_ruleSubOperator_in_rule__NegExpression__OperatorAssignment_0_126250);
             ruleSubOperator();
 
             state._fsp--;
@@ -37870,7 +37846,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNegExpressionAccess().getSubExpressionsNegExpressionParserRuleCall_0_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleNegExpression_in_rule__NegExpression__SubExpressionsAssignment_0_226289);
+            pushFollow(FollowSets001.FOLLOW_ruleNegExpression_in_rule__NegExpression__SubExpressionsAssignment_0_226281);
             ruleNegExpression();
 
             state._fsp--;
@@ -37918,7 +37894,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12976:1: ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 )
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12976:2: rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0
             {
-            pushFollow(FollowSets001.FOLLOW_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0_in_rule__ValuedObjectTestExpression__OperatorAssignment_0_126320);
+            pushFollow(FollowSets001.FOLLOW_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0_in_rule__ValuedObjectTestExpression__OperatorAssignment_0_126312);
             rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0();
 
             state._fsp--;
@@ -37966,7 +37942,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleValuedObjectTestExpression_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_326353);
+            pushFollow(FollowSets001.FOLLOW_ruleValuedObjectTestExpression_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_326345);
             ruleValuedObjectTestExpression();
 
             state._fsp--;
@@ -38017,7 +37993,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_1()); 
             }
-            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__ValuedObjectReference__ValuedObjectAssignment26388); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__ValuedObjectReference__ValuedObjectAssignment26380); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_1()); 
             }
@@ -38064,7 +38040,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_0()); 
             }
-            match(input,RULE_HOSTCODE,FollowSets001.FOLLOW_RULE_HOSTCODE_in_rule__TextExpression__TextAssignment26423); if (state.failed) return ;
+            match(input,RULE_HOSTCODE,FollowSets001.FOLLOW_RULE_HOSTCODE_in_rule__TextExpression__TextAssignment26415); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_0()); 
             }
@@ -38105,7 +38081,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntValueAccess().getValueINTTerminalRuleCall_0()); 
             }
-            match(input,RULE_INT,FollowSets001.FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment26454); if (state.failed) return ;
+            match(input,RULE_INT,FollowSets001.FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment26446); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIntValueAccess().getValueINTTerminalRuleCall_0()); 
             }
@@ -38146,7 +38122,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); 
             }
-            match(input,RULE_FLOAT,FollowSets001.FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment26485); if (state.failed) return ;
+            match(input,RULE_FLOAT,FollowSets001.FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment26477); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); 
             }
@@ -38187,7 +38163,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBoolValueAccess().getValueBOOLEANTerminalRuleCall_0()); 
             }
-            match(input,RULE_BOOLEAN,FollowSets001.FOLLOW_RULE_BOOLEAN_in_rule__BoolValue__ValueAssignment26516); if (state.failed) return ;
+            match(input,RULE_BOOLEAN,FollowSets001.FOLLOW_RULE_BOOLEAN_in_rule__BoolValue__ValueAssignment26508); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getBoolValueAccess().getValueBOOLEANTerminalRuleCall_0()); 
             }
@@ -38228,7 +38204,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDoubleValueAccess().getValueFLOATTerminalRuleCall_0()); 
             }
-            match(input,RULE_FLOAT,FollowSets001.FOLLOW_RULE_FLOAT_in_rule__DoubleValue__ValueAssignment26547); if (state.failed) return ;
+            match(input,RULE_FLOAT,FollowSets001.FOLLOW_RULE_FLOAT_in_rule__DoubleValue__ValueAssignment26539); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getDoubleValueAccess().getValueFLOATTerminalRuleCall_0()); 
             }
@@ -38269,7 +38245,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCommentAnnotationAccess().getValueCOMMENT_ANNOTATIONTerminalRuleCall_0()); 
             }
-            match(input,RULE_COMMENT_ANNOTATION,FollowSets001.FOLLOW_RULE_COMMENT_ANNOTATION_in_rule__CommentAnnotation__ValueAssignment26578); if (state.failed) return ;
+            match(input,RULE_COMMENT_ANNOTATION,FollowSets001.FOLLOW_RULE_COMMENT_ANNOTATION_in_rule__CommentAnnotation__ValueAssignment26570); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getCommentAnnotationAccess().getValueCOMMENT_ANNOTATIONTerminalRuleCall_0()); 
             }
@@ -38310,7 +38286,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleExtendedID_in_rule__TagAnnotation__NameAssignment_126609);
+            pushFollow(FollowSets001.FOLLOW_ruleExtendedID_in_rule__TagAnnotation__NameAssignment_126601);
             ruleExtendedID();
 
             state._fsp--;
@@ -38355,7 +38331,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getAnnotationsAnnotationParserRuleCall_2_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__TagAnnotation__AnnotationsAssignment_2_126640);
+            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__TagAnnotation__AnnotationsAssignment_2_126632);
             ruleAnnotation();
 
             state._fsp--;
@@ -38400,7 +38376,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleExtendedID_in_rule__KeyStringValueAnnotation__NameAssignment_126671);
+            pushFollow(FollowSets001.FOLLOW_ruleExtendedID_in_rule__KeyStringValueAnnotation__NameAssignment_126663);
             ruleExtendedID();
 
             state._fsp--;
@@ -38445,7 +38421,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleEString_in_rule__KeyStringValueAnnotation__ValueAssignment_226702);
+            pushFollow(FollowSets001.FOLLOW_ruleEString_in_rule__KeyStringValueAnnotation__ValueAssignment_226694);
             ruleEString();
 
             state._fsp--;
@@ -38490,7 +38466,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_3_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_126733);
+            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_126725);
             ruleAnnotation();
 
             state._fsp--;
@@ -38535,7 +38511,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_126764);
+            pushFollow(FollowSets001.FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_126756);
             ruleExtendedID();
 
             state._fsp--;
@@ -38580,7 +38556,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_326795);
+            pushFollow(FollowSets001.FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_326787);
             ruleExtendedID();
 
             state._fsp--;
@@ -38625,7 +38601,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_5_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValueAssignment_526826);
+            pushFollow(FollowSets001.FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValueAssignment_526818);
             ruleEString();
 
             state._fsp--;
@@ -38670,7 +38646,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_6_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_126857);
+            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_126849);
             ruleAnnotation();
 
             state._fsp--;
@@ -38715,7 +38691,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleExtendedID_in_rule__KeyBooleanValueAnnotation__NameAssignment_126888);
+            pushFollow(FollowSets001.FOLLOW_ruleExtendedID_in_rule__KeyBooleanValueAnnotation__NameAssignment_126880);
             ruleExtendedID();
 
             state._fsp--;
@@ -38760,7 +38736,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_BOOLEAN,FollowSets001.FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_226919); if (state.failed) return ;
+            match(input,RULE_BOOLEAN,FollowSets001.FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_226911); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
             }
@@ -38801,7 +38777,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_3_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_126950);
+            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_126942);
             ruleAnnotation();
 
             state._fsp--;
@@ -38846,7 +38822,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleExtendedID_in_rule__KeyIntValueAnnotation__NameAssignment_126981);
+            pushFollow(FollowSets001.FOLLOW_ruleExtendedID_in_rule__KeyIntValueAnnotation__NameAssignment_126973);
             ruleExtendedID();
 
             state._fsp--;
@@ -38891,7 +38867,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_INT,FollowSets001.FOLLOW_RULE_INT_in_rule__KeyIntValueAnnotation__ValueAssignment_227012); if (state.failed) return ;
+            match(input,RULE_INT,FollowSets001.FOLLOW_RULE_INT_in_rule__KeyIntValueAnnotation__ValueAssignment_227004); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0()); 
             }
@@ -38932,7 +38908,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_3_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_127043);
+            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_127035);
             ruleAnnotation();
 
             state._fsp--;
@@ -38977,7 +38953,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_127074);
+            pushFollow(FollowSets001.FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_127066);
             ruleExtendedID();
 
             state._fsp--;
@@ -39022,7 +38998,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_FLOAT,FollowSets001.FOLLOW_RULE_FLOAT_in_rule__KeyFloatValueAnnotation__ValueAssignment_227105); if (state.failed) return ;
+            match(input,RULE_FLOAT,FollowSets001.FOLLOW_RULE_FLOAT_in_rule__KeyFloatValueAnnotation__ValueAssignment_227097); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()); 
             }
@@ -39063,7 +39039,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_3_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_127136);
+            pushFollow(FollowSets001.FOLLOW_ruleAnnotation_in_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_127128);
             ruleAnnotation();
 
             state._fsp--;
@@ -39108,7 +39084,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getImportAnnotationAccess().getImportURISTRINGTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_STRING,FollowSets001.FOLLOW_RULE_STRING_in_rule__ImportAnnotation__ImportURIAssignment_127167); if (state.failed) return ;
+            match(input,RULE_STRING,FollowSets001.FOLLOW_RULE_STRING_in_rule__ImportAnnotation__ImportURIAssignment_127159); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getImportAnnotationAccess().getImportURISTRINGTerminalRuleCall_1_0()); 
             }
@@ -39134,26 +39110,20 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
     // $ANTLR start synpred12_InternalSct
     public final void synpred12_InternalSct_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2036:1: ( ( ( ruleBoolExpression ) ) )
-        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2036:1: ( ( ruleBoolExpression ) )
+        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2036:1: ( ( ruleValuedExpression ) )
+        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2036:1: ( ruleValuedExpression )
         {
-        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2036:1: ( ( ruleBoolExpression ) )
-        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2037:1: ( ruleBoolExpression )
+        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2036:1: ( ruleValuedExpression )
+        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2037:1: ruleValuedExpression
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); 
+           before(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); 
         }
-        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2038:1: ( ruleBoolExpression )
-        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2038:3: ruleBoolExpression
-        {
-        pushFollow(FollowSets001.FOLLOW_ruleBoolExpression_in_synpred12_InternalSct4262);
-        ruleBoolExpression();
+        pushFollow(FollowSets001.FOLLOW_ruleValuedExpression_in_synpred12_InternalSct4261);
+        ruleValuedExpression();
 
         state._fsp--;
         if (state.failed) return ;
-
-        }
-
 
         }
 
@@ -39176,7 +39146,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2060:1: ( rule__CompareOperation__Group_0__0 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2060:2: rule__CompareOperation__Group_0__0
         {
-        pushFollow(FollowSets001.FOLLOW_rule__CompareOperation__Group_0__0_in_synpred13_InternalSct4312);
+        pushFollow(FollowSets001.FOLLOW_rule__CompareOperation__Group_0__0_in_synpred13_InternalSct4310);
         rule__CompareOperation__Group_0__0();
 
         state._fsp--;
@@ -39194,26 +39164,20 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
     // $ANTLR start synpred14_InternalSct
     public final void synpred14_InternalSct_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2080:1: ( ( ( ruleValuedExpression ) ) )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2080:1: ( ( ruleValuedExpression ) )
+        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2080:1: ( ruleValuedExpression )
         {
-        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2080:1: ( ( ruleValuedExpression ) )
-        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2081:1: ( ruleValuedExpression )
+        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2080:1: ( ruleValuedExpression )
+        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2081:1: ruleValuedExpression
         {
         if ( state.backtracking==0 ) {
            before(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); 
         }
-        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2082:1: ( ruleValuedExpression )
-        // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2082:3: ruleValuedExpression
-        {
-        pushFollow(FollowSets001.FOLLOW_ruleValuedExpression_in_synpred14_InternalSct4363);
+        pushFollow(FollowSets001.FOLLOW_ruleValuedExpression_in_synpred14_InternalSct4360);
         ruleValuedExpression();
 
         state._fsp--;
         if (state.failed) return ;
-
-        }
-
 
         }
 
@@ -39233,7 +39197,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         if ( state.backtracking==0 ) {
            before(grammarAccess.getAtomicValuedExpressionAccess().getFloatValueParserRuleCall_1()); 
         }
-        pushFollow(FollowSets001.FOLLOW_ruleFloatValue_in_synpred21_InternalSct4614);
+        pushFollow(FollowSets001.FOLLOW_ruleFloatValue_in_synpred21_InternalSct4610);
         ruleFloatValue();
 
         state._fsp--;
@@ -39257,7 +39221,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         if ( state.backtracking==0 ) {
            before(grammarAccess.getAtomicValuedExpressionAccess().getDoubleValueParserRuleCall_2()); 
         }
-        pushFollow(FollowSets001.FOLLOW_ruleDoubleValue_in_synpred22_InternalSct4631);
+        pushFollow(FollowSets001.FOLLOW_ruleDoubleValue_in_synpred22_InternalSct4627);
         ruleDoubleValue();
 
         state._fsp--;
@@ -39284,7 +39248,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2200:1: ( rule__AtomicValuedExpression__Group_3__0 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2200:2: rule__AtomicValuedExpression__Group_3__0
         {
-        pushFollow(FollowSets001.FOLLOW_rule__AtomicValuedExpression__Group_3__0_in_synpred23_InternalSct4648);
+        pushFollow(FollowSets001.FOLLOW_rule__AtomicValuedExpression__Group_3__0_in_synpred23_InternalSct4644);
         rule__AtomicValuedExpression__Group_3__0();
 
         state._fsp--;
@@ -39305,7 +39269,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2700:2: ( rule__RootRegion__Group_2__0 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2700:2: rule__RootRegion__Group_2__0
         {
-        pushFollow(FollowSets001.FOLLOW_rule__RootRegion__Group_2__0_in_synpred60_InternalSct5894);
+        pushFollow(FollowSets001.FOLLOW_rule__RootRegion__Group_2__0_in_synpred60_InternalSct5890);
         rule__RootRegion__Group_2__0();
 
         state._fsp--;
@@ -39320,7 +39284,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2914:2: ( rule__RootRegion__ValuedObjectsAssignment_2_5 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:2914:2: rule__RootRegion__ValuedObjectsAssignment_2_5
         {
-        pushFollow(FollowSets001.FOLLOW_rule__RootRegion__ValuedObjectsAssignment_2_5_in_synpred64_InternalSct6327);
+        pushFollow(FollowSets001.FOLLOW_rule__RootRegion__ValuedObjectsAssignment_2_5_in_synpred64_InternalSct6323);
         rule__RootRegion__ValuedObjectsAssignment_2_5();
 
         state._fsp--;
@@ -39335,7 +39299,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3016:2: ( rule__SingleRegion__Group_1__0 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3016:2: rule__SingleRegion__Group_1__0
         {
-        pushFollow(FollowSets001.FOLLOW_rule__SingleRegion__Group_1__0_in_synpred66_InternalSct6521);
+        pushFollow(FollowSets001.FOLLOW_rule__SingleRegion__Group_1__0_in_synpred66_InternalSct6517);
         rule__SingleRegion__Group_1__0();
 
         state._fsp--;
@@ -39350,7 +39314,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3044:2: ( rule__SingleRegion__StatesAssignment_2 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3044:2: rule__SingleRegion__StatesAssignment_2
         {
-        pushFollow(FollowSets001.FOLLOW_rule__SingleRegion__StatesAssignment_2_in_synpred67_InternalSct6579);
+        pushFollow(FollowSets001.FOLLOW_rule__SingleRegion__StatesAssignment_2_in_synpred67_InternalSct6575);
         rule__SingleRegion__StatesAssignment_2();
 
         state._fsp--;
@@ -39365,7 +39329,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3228:2: ( rule__SingleRegion__ValuedObjectsAssignment_1_5 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3228:2: rule__SingleRegion__ValuedObjectsAssignment_1_5
         {
-        pushFollow(FollowSets001.FOLLOW_rule__SingleRegion__ValuedObjectsAssignment_1_5_in_synpred71_InternalSct6953);
+        pushFollow(FollowSets001.FOLLOW_rule__SingleRegion__ValuedObjectsAssignment_1_5_in_synpred71_InternalSct6949);
         rule__SingleRegion__ValuedObjectsAssignment_1_5();
 
         state._fsp--;
@@ -39380,7 +39344,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3479:2: ( rule__Region__ValuedObjectsAssignment_6 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3479:2: rule__Region__ValuedObjectsAssignment_6
         {
-        pushFollow(FollowSets001.FOLLOW_rule__Region__ValuedObjectsAssignment_6_in_synpred76_InternalSct7454);
+        pushFollow(FollowSets001.FOLLOW_rule__Region__ValuedObjectsAssignment_6_in_synpred76_InternalSct7450);
         rule__Region__ValuedObjectsAssignment_6();
 
         state._fsp--;
@@ -39395,7 +39359,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3542:2: ( rule__Region__StatesAssignment_8 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3542:2: rule__Region__StatesAssignment_8
         {
-        pushFollow(FollowSets001.FOLLOW_rule__Region__StatesAssignment_8_in_synpred78_InternalSct7587);
+        pushFollow(FollowSets001.FOLLOW_rule__Region__StatesAssignment_8_in_synpred78_InternalSct7583);
         rule__Region__StatesAssignment_8();
 
         state._fsp--;
@@ -39410,7 +39374,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3736:2: ( rule__SCChart__Alternatives_5 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3736:2: rule__SCChart__Alternatives_5
         {
-        pushFollow(FollowSets001.FOLLOW_rule__SCChart__Alternatives_5_in_synpred82_InternalSct7970);
+        pushFollow(FollowSets001.FOLLOW_rule__SCChart__Alternatives_5_in_synpred82_InternalSct7966);
         rule__SCChart__Alternatives_5();
 
         state._fsp--;
@@ -39425,7 +39389,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4157:2: ( rule__SCChart__Alternatives_5_1_1_0 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4157:2: rule__SCChart__Alternatives_5_1_1_0
         {
-        pushFollow(FollowSets001.FOLLOW_rule__SCChart__Alternatives_5_1_1_0_in_synpred85_InternalSct8789);
+        pushFollow(FollowSets001.FOLLOW_rule__SCChart__Alternatives_5_1_1_0_in_synpred85_InternalSct8785);
         rule__SCChart__Alternatives_5_1_1_0();
 
         state._fsp--;
@@ -39440,7 +39404,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4214:2: ( rule__SCChart__Group_5_1_1_2__0 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4214:2: rule__SCChart__Group_5_1_1_2__0
         {
-        pushFollow(FollowSets001.FOLLOW_rule__SCChart__Group_5_1_1_2__0_in_synpred87_InternalSct8908);
+        pushFollow(FollowSets001.FOLLOW_rule__SCChart__Group_5_1_1_2__0_in_synpred87_InternalSct8904);
         rule__SCChart__Group_5_1_1_2__0();
 
         state._fsp--;
@@ -39455,7 +39419,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4486:2: ( rule__State__Alternatives_6 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:4486:2: rule__State__Alternatives_6
         {
-        pushFollow(FollowSets001.FOLLOW_rule__State__Alternatives_6_in_synpred93_InternalSct9463);
+        pushFollow(FollowSets001.FOLLOW_rule__State__Alternatives_6_in_synpred93_InternalSct9459);
         rule__State__Alternatives_6();
 
         state._fsp--;
@@ -39470,7 +39434,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5094:2: ( rule__State__Alternatives_6_1_1_0 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5094:2: rule__State__Alternatives_6_1_1_0
         {
-        pushFollow(FollowSets001.FOLLOW_rule__State__Alternatives_6_1_1_0_in_synpred99_InternalSct10652);
+        pushFollow(FollowSets001.FOLLOW_rule__State__Alternatives_6_1_1_0_in_synpred99_InternalSct10648);
         rule__State__Alternatives_6_1_1_0();
 
         state._fsp--;
@@ -39485,7 +39449,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5151:2: ( rule__State__Group_6_1_1_2__0 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5151:2: rule__State__Group_6_1_1_2__0
         {
-        pushFollow(FollowSets001.FOLLOW_rule__State__Group_6_1_1_2__0_in_synpred101_InternalSct10771);
+        pushFollow(FollowSets001.FOLLOW_rule__State__Group_6_1_1_2__0_in_synpred101_InternalSct10767);
         rule__State__Group_6_1_1_2__0();
 
         state._fsp--;
@@ -39500,7 +39464,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5362:2: ( rule__Transition__Group_4__0 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5362:2: rule__Transition__Group_4__0
         {
-        pushFollow(FollowSets001.FOLLOW_rule__Transition__Group_4__0_in_synpred105_InternalSct11199);
+        pushFollow(FollowSets001.FOLLOW_rule__Transition__Group_4__0_in_synpred105_InternalSct11195);
         rule__Transition__Group_4__0();
 
         state._fsp--;
@@ -39515,7 +39479,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5587:2: ( rule__Transition__DelayAssignment_4_3_1_0_0 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:5587:2: rule__Transition__DelayAssignment_4_3_1_0_0
         {
-        pushFollow(FollowSets001.FOLLOW_rule__Transition__DelayAssignment_4_3_1_0_0_in_synpred110_InternalSct11642);
+        pushFollow(FollowSets001.FOLLOW_rule__Transition__DelayAssignment_4_3_1_0_0_in_synpred110_InternalSct11638);
         rule__Transition__DelayAssignment_4_3_1_0_0();
 
         state._fsp--;
@@ -39530,7 +39494,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6649:2: ( rule__EntryAction__Group_3_2__0 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6649:2: rule__EntryAction__Group_3_2__0
         {
-        pushFollow(FollowSets001.FOLLOW_rule__EntryAction__Group_3_2__0_in_synpred124_InternalSct13751);
+        pushFollow(FollowSets001.FOLLOW_rule__EntryAction__Group_3_2__0_in_synpred124_InternalSct13747);
         rule__EntryAction__Group_3_2__0();
 
         state._fsp--;
@@ -39545,7 +39509,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6997:2: ( rule__DuringAction__Group_4_2__0 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:6997:2: rule__DuringAction__Group_4_2__0
         {
-        pushFollow(FollowSets001.FOLLOW_rule__DuringAction__Group_4_2__0_in_synpred128_InternalSct14437);
+        pushFollow(FollowSets001.FOLLOW_rule__DuringAction__Group_4_2__0_in_synpred128_InternalSct14433);
         rule__DuringAction__Group_4_2__0();
 
         state._fsp--;
@@ -39560,7 +39524,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7314:2: ( rule__ExitAction__Group_3_2__0 )
         // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:7314:2: rule__ExitAction__Group_3_2__0
         {
-        pushFollow(FollowSets001.FOLLOW_rule__ExitAction__Group_3_2__0_in_synpred131_InternalSct15060);
+        pushFollow(FollowSets001.FOLLOW_rule__ExitAction__Group_3_2__0_in_synpred131_InternalSct15056);
         rule__ExitAction__Group_3_2__0();
 
         state._fsp--;
@@ -39935,7 +39899,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
     static final String DFA9_maxS =
         "\1\107\11\0\2\uffff";
     static final String DFA9_acceptS =
-        "\12\uffff\1\1\1\2";
+        "\12\uffff\1\2\1\1";
     static final String DFA9_specialS =
         "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\2\uffff}>";
     static final String[] DFA9_transitionS = {
@@ -39984,7 +39948,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             this.transition = DFA9_transition;
         }
         public String getDescription() {
-            return "2031:1: rule__Expression__Alternatives : ( ( ( ruleBoolExpression ) ) | ( ruleValuedExpression ) );";
+            return "2031:1: rule__Expression__Alternatives : ( ( ruleValuedExpression ) | ( ruleBoolExpression ) );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -39997,9 +39961,9 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         int index9_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred12_InternalSct()) ) {s = 10;}
+                        if ( (synpred12_InternalSct()) ) {s = 11;}
 
-                        else if ( (true) ) {s = 11;}
+                        else if ( (true) ) {s = 10;}
 
                          
                         input.seek(index9_1);
@@ -40012,9 +39976,9 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         int index9_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred12_InternalSct()) ) {s = 10;}
+                        if ( (synpred12_InternalSct()) ) {s = 11;}
 
-                        else if ( (true) ) {s = 11;}
+                        else if ( (true) ) {s = 10;}
 
                          
                         input.seek(index9_2);
@@ -40027,9 +39991,9 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         int index9_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred12_InternalSct()) ) {s = 10;}
+                        if ( (synpred12_InternalSct()) ) {s = 11;}
 
-                        else if ( (true) ) {s = 11;}
+                        else if ( (true) ) {s = 10;}
 
                          
                         input.seek(index9_3);
@@ -40042,9 +40006,9 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         int index9_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred12_InternalSct()) ) {s = 10;}
+                        if ( (synpred12_InternalSct()) ) {s = 11;}
 
-                        else if ( (true) ) {s = 11;}
+                        else if ( (true) ) {s = 10;}
 
                          
                         input.seek(index9_4);
@@ -40057,9 +40021,9 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         int index9_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred12_InternalSct()) ) {s = 10;}
+                        if ( (synpred12_InternalSct()) ) {s = 11;}
 
-                        else if ( (true) ) {s = 11;}
+                        else if ( (true) ) {s = 10;}
 
                          
                         input.seek(index9_5);
@@ -40072,9 +40036,9 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         int index9_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred12_InternalSct()) ) {s = 10;}
+                        if ( (synpred12_InternalSct()) ) {s = 11;}
 
-                        else if ( (true) ) {s = 11;}
+                        else if ( (true) ) {s = 10;}
 
                          
                         input.seek(index9_6);
@@ -40087,9 +40051,9 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         int index9_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred12_InternalSct()) ) {s = 10;}
+                        if ( (synpred12_InternalSct()) ) {s = 11;}
 
-                        else if ( (true) ) {s = 11;}
+                        else if ( (true) ) {s = 10;}
 
                          
                         input.seek(index9_7);
@@ -40102,9 +40066,9 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         int index9_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred12_InternalSct()) ) {s = 10;}
+                        if ( (synpred12_InternalSct()) ) {s = 11;}
 
-                        else if ( (true) ) {s = 11;}
+                        else if ( (true) ) {s = 10;}
 
                          
                         input.seek(index9_8);
@@ -40117,9 +40081,9 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         int index9_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred12_InternalSct()) ) {s = 10;}
+                        if ( (synpred12_InternalSct()) ) {s = 11;}
 
-                        else if ( (true) ) {s = 11;}
+                        else if ( (true) ) {s = 10;}
 
                          
                         input.seek(index9_9);
@@ -40367,7 +40331,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             this.transition = DFA11_transition;
         }
         public String getDescription() {
-            return "2075:1: rule__NotOrValuedExpression__Alternatives : ( ( ( ruleValuedExpression ) ) | ( ruleNotExpression ) );";
+            return "2075:1: rule__NotOrValuedExpression__Alternatives : ( ( ruleValuedExpression ) | ( ruleNotExpression ) );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -40575,35 +40539,35 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
     static final String DFA18_eotS =
         "\15\uffff";
     static final String DFA18_eofS =
-        "\3\uffff\1\12\5\uffff\1\10\2\uffff\1\12";
+        "\3\uffff\1\7\4\uffff\1\11\3\uffff\1\7";
     static final String DFA18_minS =
-        "\1\12\1\uffff\1\5\1\4\1\5\4\uffff\1\5\2\uffff\1\4";
+        "\1\12\1\uffff\1\5\1\4\1\5\3\uffff\1\5\3\uffff\1\4";
     static final String DFA18_maxS =
-        "\1\67\1\uffff\1\5\1\122\1\5\4\uffff\1\122\2\uffff\1\122";
+        "\1\67\1\uffff\1\5\1\122\1\5\3\uffff\1\122\3\uffff\1\122";
     static final String DFA18_acceptS =
-        "\1\uffff\1\1\3\uffff\1\4\1\5\1\7\1\3\1\uffff\1\2\1\6\1\uffff";
+        "\1\uffff\1\1\3\uffff\1\7\1\4\1\2\1\uffff\1\3\1\6\1\5\1\uffff";
     static final String DFA18_specialS =
         "\15\uffff}>";
     static final String[] DFA18_transitionS = {
             "\1\1\54\uffff\1\2",
             "",
             "\1\3",
-            "\1\10\1\11\1\13\1\uffff\1\7\1\6\1\12\17\uffff\7\12\11\uffff"+
-            "\10\12\3\uffff\3\12\1\5\4\uffff\1\12\11\uffff\2\12\1\uffff\1"+
-            "\4\2\12\2\uffff\4\12",
+            "\1\11\1\10\1\12\1\uffff\1\5\1\13\1\7\17\uffff\7\7\11\uffff"+
+            "\10\7\3\uffff\3\7\1\6\4\uffff\1\7\11\uffff\2\7\1\uffff\1\4\2"+
+            "\7\2\uffff\4\7",
             "\1\14",
             "",
             "",
             "",
+            "\1\11\4\uffff\1\11\17\uffff\7\11\11\uffff\10\11\3\uffff\3"+
+            "\11\5\uffff\1\11\1\7\2\uffff\2\7\4\uffff\2\11\2\uffff\2\11\2"+
+            "\uffff\4\11",
             "",
-            "\1\10\4\uffff\1\10\17\uffff\7\10\11\uffff\10\10\3\uffff\3"+
-            "\10\5\uffff\1\10\1\12\2\uffff\2\12\4\uffff\2\10\2\uffff\2\10"+
-            "\2\uffff\4\10",
             "",
             "",
-            "\1\10\1\11\1\13\1\uffff\1\7\1\6\1\12\17\uffff\7\12\11\uffff"+
-            "\10\12\3\uffff\3\12\1\5\4\uffff\1\12\11\uffff\2\12\1\uffff\1"+
-            "\4\2\12\2\uffff\4\12"
+            "\1\11\1\10\1\12\1\uffff\1\5\1\13\1\7\17\uffff\7\7\11\uffff"+
+            "\10\7\3\uffff\3\7\1\6\4\uffff\1\7\11\uffff\2\7\1\uffff\1\4\2"+
+            "\7\2\uffff\4\7"
     };
 
     static final short[] DFA18_eot = DFA.unpackEncodedString(DFA18_eotS);
@@ -41664,7 +41628,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
     static final String DFA72_acceptS =
         "\1\uffff\1\1\7\uffff\1\2";
     static final String DFA72_specialS =
-        "\2\uffff\1\5\1\1\1\2\1\0\1\4\1\6\1\3\1\uffff}>";
+        "\2\uffff\1\6\1\3\1\1\1\2\1\5\1\0\1\4\1\uffff}>";
     static final String[] DFA72_transitionS = {
             "\1\4\23\uffff\1\6\1\7\1\10\3\1\23\uffff\1\5\6\uffff\1\3\1\1"+
             "\15\uffff\2\1",
@@ -41716,10 +41680,10 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA72_5 = input.LA(1);
+                        int LA72_7 = input.LA(1);
 
                          
-                        int index72_5 = input.index();
+                        int index72_7 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred105_InternalSct()) ) {s = 1;}
@@ -41727,25 +41691,10 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 9;}
 
                          
-                        input.seek(index72_5);
+                        input.seek(index72_7);
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA72_3 = input.LA(1);
-
-                         
-                        int index72_3 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred105_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 9;}
-
-                         
-                        input.seek(index72_3);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
                         int LA72_4 = input.LA(1);
 
                          
@@ -41760,7 +41709,37 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index72_4);
                         if ( s>=0 ) return s;
                         break;
+                    case 2 : 
+                        int LA72_5 = input.LA(1);
+
+                         
+                        int index72_5 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred105_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index72_5);
+                        if ( s>=0 ) return s;
+                        break;
                     case 3 : 
+                        int LA72_3 = input.LA(1);
+
+                         
+                        int index72_3 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred105_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 9;}
+
+                         
+                        input.seek(index72_3);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 4 : 
                         int LA72_8 = input.LA(1);
 
                          
@@ -41775,7 +41754,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index72_8);
                         if ( s>=0 ) return s;
                         break;
-                    case 4 : 
+                    case 5 : 
                         int LA72_6 = input.LA(1);
 
                          
@@ -41790,7 +41769,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index72_6);
                         if ( s>=0 ) return s;
                         break;
-                    case 5 : 
+                    case 6 : 
                         int LA72_2 = input.LA(1);
 
                          
@@ -41803,21 +41782,6 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
                          
                         input.seek(index72_2);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 6 : 
-                        int LA72_7 = input.LA(1);
-
-                         
-                        int index72_7 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred105_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 9;}
-
-                         
-                        input.seek(index72_7);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -42119,956 +42083,956 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_ruleEmission_in_rule__Effect__Alternatives4195 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAssignment_in_rule__Effect__Alternatives4212 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleTextEffect_in_rule__Effect__Alternatives4229 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__Expression__Alternatives4262 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedExpression_in_rule__Expression__Alternatives4280 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0_in_rule__CompareOperation__Alternatives4312 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleNotExpression_in_rule__CompareOperation__Alternatives4330 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedExpression_in_rule__NotOrValuedExpression__Alternatives4363 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleNotExpression_in_rule__NotOrValuedExpression__Alternatives4381 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__NotExpression__Group_0__0_in_rule__NotExpression__Alternatives4413 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAtomicExpression_in_rule__NotExpression__Alternatives4431 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__NegExpression__Group_0__0_in_rule__NegExpression__Alternatives4463 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAtomicValuedExpression_in_rule__NegExpression__Alternatives4481 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleBoolValue_in_rule__AtomicExpression__Alternatives4513 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedObjectTestExpression_in_rule__AtomicExpression__Alternatives4530 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__0_in_rule__AtomicExpression__Alternatives4547 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTextExpression_in_rule__AtomicExpression__Alternatives4565 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleIntValue_in_rule__AtomicValuedExpression__Alternatives4597 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleFloatValue_in_rule__AtomicValuedExpression__Alternatives4614 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleDoubleValue_in_rule__AtomicValuedExpression__Alternatives4631 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_3__0_in_rule__AtomicValuedExpression__Alternatives4648 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAtomicExpression_in_rule__AtomicValuedExpression__Alternatives4666 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__0_in_rule__ValuedObjectTestExpression__Alternatives4698 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedObjectReference_in_rule__ValuedObjectTestExpression__Alternatives4716 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rulePreOperator_in_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_04748 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValOperator_in_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_04765 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleCommentAnnotation_in_rule__Annotation__Alternatives4798 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTagAnnotation_in_rule__Annotation__Alternatives4815 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleKeyStringValueAnnotation_in_rule__Annotation__Alternatives4832 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTypedKeyStringValueAnnotation_in_rule__Annotation__Alternatives4849 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleKeyBooleanValueAnnotation_in_rule__Annotation__Alternatives4866 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleKeyIntValueAnnotation_in_rule__Annotation__Alternatives4883 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleKeyFloatValueAnnotation_in_rule__Annotation__Alternatives4900 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_STRING_in_rule__EString__Alternatives4933 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__EString__Alternatives4950 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_26_in_rule__StateType__Alternatives4983 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_27_in_rule__StateType__Alternatives5004 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_28_in_rule__StateType__Alternatives5025 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_29_in_rule__StateType__Alternatives5046 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_30_in_rule__TransitionType__Alternatives5082 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_31_in_rule__TransitionType__Alternatives5103 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_32_in_rule__TransitionType__Alternatives5124 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_33_in_rule__HistoryType__Alternatives5160 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_34_in_rule__HistoryType__Alternatives5181 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_35_in_rule__HistoryType__Alternatives5202 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_36_in_rule__CompareOperator__Alternatives5238 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_37_in_rule__CompareOperator__Alternatives5259 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_38_in_rule__CompareOperator__Alternatives5280 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_39_in_rule__CompareOperator__Alternatives5301 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_40_in_rule__CompareOperator__Alternatives5322 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_41_in_rule__CompareOperator__Alternatives5343 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_42_in_rule__ValueType__Alternatives5379 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_43_in_rule__ValueType__Alternatives5400 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_44_in_rule__ValueType__Alternatives5421 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_45_in_rule__ValueType__Alternatives5442 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_46_in_rule__ValueType__Alternatives5463 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_47_in_rule__ValueType__Alternatives5484 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_48_in_rule__ValueType__Alternatives5505 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_49_in_rule__ValueType__Alternatives5526 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_50_in_rule__CombineOperator__Alternatives5562 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_21_in_rule__CombineOperator__Alternatives5583 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_23_in_rule__CombineOperator__Alternatives5604 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_51_in_rule__CombineOperator__Alternatives5625 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_52_in_rule__CombineOperator__Alternatives5646 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_18_in_rule__CombineOperator__Alternatives5667 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_19_in_rule__CombineOperator__Alternatives5688 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_49_in_rule__CombineOperator__Alternatives5709 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group__0__Impl_in_rule__RootRegion__Group__05742 = new BitSet(new long[]{0x00E000003C000400L,0x0000000000000200L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group__1_in_rule__RootRegion__Group__05745 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group__1__Impl_in_rule__RootRegion__Group__15803 = new BitSet(new long[]{0x00E000003C000400L,0x0000000000000200L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group__2_in_rule__RootRegion__Group__15806 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__AnnotationsAssignment_1_in_rule__RootRegion__Group__1__Impl5833 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000200L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group__2__Impl_in_rule__RootRegion__Group__25864 = new BitSet(new long[]{0x00E000003C000400L,0x0000000000000200L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group__3_in_rule__RootRegion__Group__25867 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__0_in_rule__RootRegion__Group__2__Impl5894 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group__3__Impl_in_rule__RootRegion__Group__35925 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__StatesAssignment_3_in_rule__RootRegion__Group__3__Impl5952 = new BitSet(new long[]{0x00C000003C000402L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__0__Impl_in_rule__RootRegion__Group_2__05991 = new BitSet(new long[]{0x00A0000000000400L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__1_in_rule__RootRegion__Group_2__05994 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__AnnotationsAssignment_2_0_in_rule__RootRegion__Group_2__0__Impl6021 = new BitSet(new long[]{0x0080000000000402L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__1__Impl_in_rule__RootRegion__Group_2__16052 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__2_in_rule__RootRegion__Group_2__16055 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_53_in_rule__RootRegion__Group_2__1__Impl6083 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__2__Impl_in_rule__RootRegion__Group_2__26114 = new BitSet(new long[]{0x0000000000010010L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__3_in_rule__RootRegion__Group_2__26117 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__IdAssignment_2_2_in_rule__RootRegion__Group_2__2__Impl6144 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__3__Impl_in_rule__RootRegion__Group_2__36174 = new BitSet(new long[]{0x0000000000010010L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__4_in_rule__RootRegion__Group_2__36177 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__LabelAssignment_2_3_in_rule__RootRegion__Group_2__3__Impl6204 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__4__Impl_in_rule__RootRegion__Group_2__46235 = new BitSet(new long[]{0x0083FC00000004A0L,0x0000000000078000L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__5_in_rule__RootRegion__Group_2__46238 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_rule__RootRegion__Group_2__4__Impl6266 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__5__Impl_in_rule__RootRegion__Group_2__56297 = new BitSet(new long[]{0x0083FC00000004A0L,0x0000000000078000L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__6_in_rule__RootRegion__Group_2__56300 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__ValuedObjectsAssignment_2_5_in_rule__RootRegion__Group_2__5__Impl6327 = new BitSet(new long[]{0x0083FC0000000422L,0x0000000000078000L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__6__Impl_in_rule__RootRegion__Group_2__66358 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__BodyTextAssignment_2_6_in_rule__RootRegion__Group_2__6__Impl6385 = new BitSet(new long[]{0x0000000000000082L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group__0__Impl_in_rule__SingleRegion__Group__06430 = new BitSet(new long[]{0x20A000003C000400L,0x0000000000001800L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group__1_in_rule__SingleRegion__Group__06433 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group__1__Impl_in_rule__SingleRegion__Group__16491 = new BitSet(new long[]{0x20A000003C000400L,0x0000000000001800L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group__2_in_rule__SingleRegion__Group__16494 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__0_in_rule__SingleRegion__Group__1__Impl6521 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group__2__Impl_in_rule__SingleRegion__Group__26552 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__StatesAssignment_2_in_rule__SingleRegion__Group__2__Impl6579 = new BitSet(new long[]{0x208000003C000402L,0x0000000000001800L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__0__Impl_in_rule__SingleRegion__Group_1__06616 = new BitSet(new long[]{0x00A0000000000400L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__1_in_rule__SingleRegion__Group_1__06619 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__AnnotationsAssignment_1_0_in_rule__SingleRegion__Group_1__0__Impl6646 = new BitSet(new long[]{0x0080000000000402L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__1__Impl_in_rule__SingleRegion__Group_1__16677 = new BitSet(new long[]{0x0000000000010030L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__2_in_rule__SingleRegion__Group_1__16680 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_53_in_rule__SingleRegion__Group_1__1__Impl6708 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__2__Impl_in_rule__SingleRegion__Group_1__26739 = new BitSet(new long[]{0x0000000000010030L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__3_in_rule__SingleRegion__Group_1__26742 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__IdAssignment_1_2_in_rule__SingleRegion__Group_1__2__Impl6769 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__3__Impl_in_rule__SingleRegion__Group_1__36800 = new BitSet(new long[]{0x0000000000010030L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__4_in_rule__SingleRegion__Group_1__36803 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__LabelAssignment_1_3_in_rule__SingleRegion__Group_1__3__Impl6830 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__4__Impl_in_rule__SingleRegion__Group_1__46861 = new BitSet(new long[]{0x0083FC00000004A0L,0x0000000000078000L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__5_in_rule__SingleRegion__Group_1__46864 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_rule__SingleRegion__Group_1__4__Impl6892 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__5__Impl_in_rule__SingleRegion__Group_1__56923 = new BitSet(new long[]{0x0083FC00000004A0L,0x0000000000078000L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__6_in_rule__SingleRegion__Group_1__56926 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__ValuedObjectsAssignment_1_5_in_rule__SingleRegion__Group_1__5__Impl6953 = new BitSet(new long[]{0x0083FC0000000422L,0x0000000000078000L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__6__Impl_in_rule__SingleRegion__Group_1__66984 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__BodyTextAssignment_1_6_in_rule__SingleRegion__Group_1__6__Impl7011 = new BitSet(new long[]{0x0000000000000082L});
-        public static final BitSet FOLLOW_rule__Region__Group__0__Impl_in_rule__Region__Group__07056 = new BitSet(new long[]{0x00A0000000000400L});
-        public static final BitSet FOLLOW_rule__Region__Group__1_in_rule__Region__Group__07059 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Region__Group__1__Impl_in_rule__Region__Group__17117 = new BitSet(new long[]{0x00A0000000000400L});
-        public static final BitSet FOLLOW_rule__Region__Group__2_in_rule__Region__Group__17120 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Region__AnnotationsAssignment_1_in_rule__Region__Group__1__Impl7147 = new BitSet(new long[]{0x0080000000000402L});
-        public static final BitSet FOLLOW_rule__Region__Group__2__Impl_in_rule__Region__Group__27178 = new BitSet(new long[]{0x0000000000010030L});
-        public static final BitSet FOLLOW_rule__Region__Group__3_in_rule__Region__Group__27181 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_53_in_rule__Region__Group__2__Impl7209 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Region__Group__3__Impl_in_rule__Region__Group__37240 = new BitSet(new long[]{0x0000000000010030L});
-        public static final BitSet FOLLOW_rule__Region__Group__4_in_rule__Region__Group__37243 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Region__IdAssignment_3_in_rule__Region__Group__3__Impl7270 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Region__Group__4__Impl_in_rule__Region__Group__47301 = new BitSet(new long[]{0x0000000000010030L});
-        public static final BitSet FOLLOW_rule__Region__Group__5_in_rule__Region__Group__47304 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Region__LabelAssignment_4_in_rule__Region__Group__4__Impl7331 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Region__Group__5__Impl_in_rule__Region__Group__57362 = new BitSet(new long[]{0x2083FC003C0004A0L,0x0000000000079800L});
-        public static final BitSet FOLLOW_rule__Region__Group__6_in_rule__Region__Group__57365 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_rule__Region__Group__5__Impl7393 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Region__Group__6__Impl_in_rule__Region__Group__67424 = new BitSet(new long[]{0x2083FC003C0004A0L,0x0000000000079800L});
-        public static final BitSet FOLLOW_rule__Region__Group__7_in_rule__Region__Group__67427 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Region__ValuedObjectsAssignment_6_in_rule__Region__Group__6__Impl7454 = new BitSet(new long[]{0x0083FC0000000422L,0x0000000000078000L});
-        public static final BitSet FOLLOW_rule__Region__Group__7__Impl_in_rule__Region__Group__77485 = new BitSet(new long[]{0x2083FC003C0004A0L,0x0000000000079800L});
-        public static final BitSet FOLLOW_rule__Region__Group__8_in_rule__Region__Group__77488 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Region__BodyTextAssignment_7_in_rule__Region__Group__7__Impl7515 = new BitSet(new long[]{0x0000000000000082L});
-        public static final BitSet FOLLOW_rule__Region__Group__8__Impl_in_rule__Region__Group__87546 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Region__StatesAssignment_8_in_rule__Region__Group__8__Impl7575 = new BitSet(new long[]{0x2083FC003C0004A2L,0x0000000000079800L});
-        public static final BitSet FOLLOW_rule__Region__StatesAssignment_8_in_rule__Region__Group__8__Impl7587 = new BitSet(new long[]{0x2083FC003C0004A2L,0x0000000000079800L});
-        public static final BitSet FOLLOW_rule__SCChart__Group__0__Impl_in_rule__SCChart__Group__07638 = new BitSet(new long[]{0x00C000003C000400L});
-        public static final BitSet FOLLOW_rule__SCChart__Group__1_in_rule__SCChart__Group__07641 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__AnnotationsAssignment_0_in_rule__SCChart__Group__0__Impl7668 = new BitSet(new long[]{0x0080000000000402L});
-        public static final BitSet FOLLOW_rule__SCChart__Group__1__Impl_in_rule__SCChart__Group__17699 = new BitSet(new long[]{0x00C000003C000400L});
-        public static final BitSet FOLLOW_rule__SCChart__Group__2_in_rule__SCChart__Group__17702 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__TypeAssignment_1_in_rule__SCChart__Group__1__Impl7729 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group__2__Impl_in_rule__SCChart__Group__27760 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__SCChart__Group__3_in_rule__SCChart__Group__27763 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_54_in_rule__SCChart__Group__2__Impl7791 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group__3__Impl_in_rule__SCChart__Group__37822 = new BitSet(new long[]{0x0880000000000010L});
-        public static final BitSet FOLLOW_rule__SCChart__Group__4_in_rule__SCChart__Group__37825 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__IdAssignment_3_in_rule__SCChart__Group__3__Impl7852 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group__4__Impl_in_rule__SCChart__Group__47882 = new BitSet(new long[]{0x0880000000000010L});
-        public static final BitSet FOLLOW_rule__SCChart__Group__5_in_rule__SCChart__Group__47885 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__LabelAssignment_4_in_rule__SCChart__Group__4__Impl7912 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group__5__Impl_in_rule__SCChart__Group__57943 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Alternatives_5_in_rule__SCChart__Group__5__Impl7970 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0__0__Impl_in_rule__SCChart__Group_5_0__08013 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0__1_in_rule__SCChart__Group_5_0__08016 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_55_in_rule__SCChart__Group_5_0__0__Impl8044 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0__1__Impl_in_rule__SCChart__Group_5_0__18075 = new BitSet(new long[]{0x0100000000000000L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0__2_in_rule__SCChart__Group_5_0__18078 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__BodyReferenceAssignment_5_0_1_in_rule__SCChart__Group_5_0__1__Impl8105 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0__2__Impl_in_rule__SCChart__Group_5_0__28135 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__0_in_rule__SCChart__Group_5_0__2__Impl8162 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__0__Impl_in_rule__SCChart__Group_5_0_2__08199 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__1_in_rule__SCChart__Group_5_0_2__08202 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_56_in_rule__SCChart__Group_5_0_2__0__Impl8230 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__1__Impl_in_rule__SCChart__Group_5_0_2__18261 = new BitSet(new long[]{0x0600000000000000L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__2_in_rule__SCChart__Group_5_0_2__18264 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__RenamingsAssignment_5_0_2_1_in_rule__SCChart__Group_5_0_2__1__Impl8291 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__2__Impl_in_rule__SCChart__Group_5_0_2__28321 = new BitSet(new long[]{0x0600000000000000L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__3_in_rule__SCChart__Group_5_0_2__28324 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2_2__0_in_rule__SCChart__Group_5_0_2__2__Impl8351 = new BitSet(new long[]{0x0400000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__3__Impl_in_rule__SCChart__Group_5_0_2__38382 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_57_in_rule__SCChart__Group_5_0_2__3__Impl8410 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2_2__0__Impl_in_rule__SCChart__Group_5_0_2_2__08449 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2_2__1_in_rule__SCChart__Group_5_0_2_2__08452 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_58_in_rule__SCChart__Group_5_0_2_2__0__Impl8480 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2_2__1__Impl_in_rule__SCChart__Group_5_0_2_2__18511 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__RenamingsAssignment_5_0_2_2_1_in_rule__SCChart__Group_5_0_2_2__1__Impl8538 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1__0__Impl_in_rule__SCChart__Group_5_1__08572 = new BitSet(new long[]{0x20A3FC003C0004A0L,0x00000000000FB878L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1__1_in_rule__SCChart__Group_5_1__08575 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_59_in_rule__SCChart__Group_5_1__0__Impl8603 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1__1__Impl_in_rule__SCChart__Group_5_1__18634 = new BitSet(new long[]{0x1000000000000000L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1__2_in_rule__SCChart__Group_5_1__18637 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1__0_in_rule__SCChart__Group_5_1__1__Impl8664 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1__2__Impl_in_rule__SCChart__Group_5_1__28694 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_60_in_rule__SCChart__Group_5_1__2__Impl8722 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1__0__Impl_in_rule__SCChart__Group_5_1_1__08759 = new BitSet(new long[]{0x20A3FC003C0004A0L,0x00000000000FB878L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1__1_in_rule__SCChart__Group_5_1_1__08762 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Alternatives_5_1_1_0_in_rule__SCChart__Group_5_1_1__0__Impl8789 = new BitSet(new long[]{0x0083FC0000000422L,0x00000000000FA078L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1__1__Impl_in_rule__SCChart__Group_5_1_1__18820 = new BitSet(new long[]{0x20A3FC003C0004A0L,0x00000000000FB878L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1__2_in_rule__SCChart__Group_5_1_1__18823 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__BodyTextAssignment_5_1_1_1_in_rule__SCChart__Group_5_1_1__1__Impl8850 = new BitSet(new long[]{0x0000000000000082L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1__2__Impl_in_rule__SCChart__Group_5_1_1__28881 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1_2__0_in_rule__SCChart__Group_5_1_1__2__Impl8908 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1_2__0__Impl_in_rule__SCChart__Group_5_1_1_2__08945 = new BitSet(new long[]{0x00A0000000000400L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1_2__1_in_rule__SCChart__Group_5_1_1_2__08948 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__RegionsAssignment_5_1_1_2_0_in_rule__SCChart__Group_5_1_1_2__0__Impl8975 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1_2__1__Impl_in_rule__SCChart__Group_5_1_1_2__19005 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__RegionsAssignment_5_1_1_2_1_in_rule__SCChart__Group_5_1_1_2__1__Impl9032 = new BitSet(new long[]{0x00A0000000000402L});
-        public static final BitSet FOLLOW_rule__State__Group__0__Impl_in_rule__State__Group__09067 = new BitSet(new long[]{0x208000003C000400L,0x0000000000001800L});
-        public static final BitSet FOLLOW_rule__State__Group__1_in_rule__State__Group__09070 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__AnnotationsAssignment_0_in_rule__State__Group__0__Impl9097 = new BitSet(new long[]{0x0080000000000402L});
-        public static final BitSet FOLLOW_rule__State__Group__1__Impl_in_rule__State__Group__19128 = new BitSet(new long[]{0x208000003C000400L,0x0000000000001800L});
-        public static final BitSet FOLLOW_rule__State__Group__2_in_rule__State__Group__19131 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Alternatives_1_in_rule__State__Group__1__Impl9158 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group__2__Impl_in_rule__State__Group__29189 = new BitSet(new long[]{0x208000003C000400L,0x0000000000001800L});
-        public static final BitSet FOLLOW_rule__State__Group__3_in_rule__State__Group__29192 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__TypeAssignment_2_in_rule__State__Group__2__Impl9219 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group__3__Impl_in_rule__State__Group__39250 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__State__Group__4_in_rule__State__Group__39253 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_61_in_rule__State__Group__3__Impl9281 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group__4__Impl_in_rule__State__Group__49312 = new BitSet(new long[]{0x48800001C0000410L});
-        public static final BitSet FOLLOW_rule__State__Group__5_in_rule__State__Group__49315 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__IdAssignment_4_in_rule__State__Group__4__Impl9342 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group__5__Impl_in_rule__State__Group__59372 = new BitSet(new long[]{0x48800001C0000410L});
-        public static final BitSet FOLLOW_rule__State__Group__6_in_rule__State__Group__59375 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__LabelAssignment_5_in_rule__State__Group__5__Impl9402 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group__6__Impl_in_rule__State__Group__69433 = new BitSet(new long[]{0x48800001C0000410L});
-        public static final BitSet FOLLOW_rule__State__Group__7_in_rule__State__Group__69436 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Alternatives_6_in_rule__State__Group__6__Impl9463 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group__7__Impl_in_rule__State__Group__79494 = new BitSet(new long[]{0x48800001C0000410L});
-        public static final BitSet FOLLOW_rule__State__Group__8_in_rule__State__Group__79497 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__OutgoingTransitionsAssignment_7_in_rule__State__Group__7__Impl9524 = new BitSet(new long[]{0x00800001C0000402L});
-        public static final BitSet FOLLOW_rule__State__Group__8__Impl_in_rule__State__Group__89555 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_rule__State__Group__8__Impl9583 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_1_0__0__Impl_in_rule__State__Group_1_0__09632 = new BitSet(new long[]{0x0000000000000000L,0x0000000000001000L});
-        public static final BitSet FOLLOW_rule__State__Group_1_0__1_in_rule__State__Group_1_0__09635 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__InitialAssignment_1_0_0_in_rule__State__Group_1_0__0__Impl9662 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_1_0__1__Impl_in_rule__State__Group_1_0__19692 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__FinalAssignment_1_0_1_in_rule__State__Group_1_0__1__Impl9719 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_1_1__0__Impl_in_rule__State__Group_1_1__09754 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000800L});
-        public static final BitSet FOLLOW_rule__State__Group_1_1__1_in_rule__State__Group_1_1__09757 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__FinalAssignment_1_1_0_in_rule__State__Group_1_1__0__Impl9784 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_1_1__1__Impl_in_rule__State__Group_1_1__19814 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__InitialAssignment_1_1_1_in_rule__State__Group_1_1__1__Impl9841 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0__0__Impl_in_rule__State__Group_6_0__09876 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0__1_in_rule__State__Group_6_0__09879 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_55_in_rule__State__Group_6_0__0__Impl9907 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0__1__Impl_in_rule__State__Group_6_0__19938 = new BitSet(new long[]{0x0100000000000000L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0__2_in_rule__State__Group_6_0__19941 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__BodyReferenceAssignment_6_0_1_in_rule__State__Group_6_0__1__Impl9968 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0__2__Impl_in_rule__State__Group_6_0__29998 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0_2__0_in_rule__State__Group_6_0__2__Impl10025 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0_2__0__Impl_in_rule__State__Group_6_0_2__010062 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0_2__1_in_rule__State__Group_6_0_2__010065 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_56_in_rule__State__Group_6_0_2__0__Impl10093 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0_2__1__Impl_in_rule__State__Group_6_0_2__110124 = new BitSet(new long[]{0x0600000000000000L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0_2__2_in_rule__State__Group_6_0_2__110127 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__RenamingsAssignment_6_0_2_1_in_rule__State__Group_6_0_2__1__Impl10154 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0_2__2__Impl_in_rule__State__Group_6_0_2__210184 = new BitSet(new long[]{0x0600000000000000L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0_2__3_in_rule__State__Group_6_0_2__210187 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0_2_2__0_in_rule__State__Group_6_0_2__2__Impl10214 = new BitSet(new long[]{0x0400000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0_2__3__Impl_in_rule__State__Group_6_0_2__310245 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_57_in_rule__State__Group_6_0_2__3__Impl10273 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0_2_2__0__Impl_in_rule__State__Group_6_0_2_2__010312 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0_2_2__1_in_rule__State__Group_6_0_2_2__010315 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_58_in_rule__State__Group_6_0_2_2__0__Impl10343 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_0_2_2__1__Impl_in_rule__State__Group_6_0_2_2__110374 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__RenamingsAssignment_6_0_2_2_1_in_rule__State__Group_6_0_2_2__1__Impl10401 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1__0__Impl_in_rule__State__Group_6_1__010435 = new BitSet(new long[]{0x20A3FC003C0004A0L,0x00000000000FB878L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1__1_in_rule__State__Group_6_1__010438 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_59_in_rule__State__Group_6_1__0__Impl10466 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1__1__Impl_in_rule__State__Group_6_1__110497 = new BitSet(new long[]{0x1000000000000000L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1__2_in_rule__State__Group_6_1__110500 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1_1__0_in_rule__State__Group_6_1__1__Impl10527 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1__2__Impl_in_rule__State__Group_6_1__210557 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_60_in_rule__State__Group_6_1__2__Impl10585 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1_1__0__Impl_in_rule__State__Group_6_1_1__010622 = new BitSet(new long[]{0x20A3FC003C0004A0L,0x00000000000FB878L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1_1__1_in_rule__State__Group_6_1_1__010625 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Alternatives_6_1_1_0_in_rule__State__Group_6_1_1__0__Impl10652 = new BitSet(new long[]{0x0083FC0000000422L,0x00000000000FA078L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1_1__1__Impl_in_rule__State__Group_6_1_1__110683 = new BitSet(new long[]{0x20A3FC003C0004A0L,0x00000000000FB878L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1_1__2_in_rule__State__Group_6_1_1__110686 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__BodyTextAssignment_6_1_1_1_in_rule__State__Group_6_1_1__1__Impl10713 = new BitSet(new long[]{0x0000000000000082L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1_1__2__Impl_in_rule__State__Group_6_1_1__210744 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1_1_2__0_in_rule__State__Group_6_1_1__2__Impl10771 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1_1_2__0__Impl_in_rule__State__Group_6_1_1_2__010808 = new BitSet(new long[]{0x00A0000000000400L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1_1_2__1_in_rule__State__Group_6_1_1_2__010811 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__RegionsAssignment_6_1_1_2_0_in_rule__State__Group_6_1_1_2__0__Impl10838 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1_1_2__1__Impl_in_rule__State__Group_6_1_1_2__110868 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__RegionsAssignment_6_1_1_2_1_in_rule__State__Group_6_1_1_2__1__Impl10895 = new BitSet(new long[]{0x00A0000000000402L});
-        public static final BitSet FOLLOW_rule__Transition__Group__0__Impl_in_rule__Transition__Group__010930 = new BitSet(new long[]{0x00800001C0000400L});
-        public static final BitSet FOLLOW_rule__Transition__Group__1_in_rule__Transition__Group__010933 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__AnnotationsAssignment_0_in_rule__Transition__Group__0__Impl10960 = new BitSet(new long[]{0x0080000000000402L});
-        public static final BitSet FOLLOW_rule__Transition__Group__1__Impl_in_rule__Transition__Group__110991 = new BitSet(new long[]{0x0000000000000060L});
-        public static final BitSet FOLLOW_rule__Transition__Group__2_in_rule__Transition__Group__110994 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__TypeAssignment_1_in_rule__Transition__Group__1__Impl11021 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group__2__Impl_in_rule__Transition__Group__211051 = new BitSet(new long[]{0x0000000000000060L});
-        public static final BitSet FOLLOW_rule__Transition__Group__3_in_rule__Transition__Group__211054 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__PriorityAssignment_2_in_rule__Transition__Group__2__Impl11081 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group__3__Impl_in_rule__Transition__Group__311112 = new BitSet(new long[]{0x8000000E00000000L,0x0000000000006000L});
-        public static final BitSet FOLLOW_rule__Transition__Group__4_in_rule__Transition__Group__311115 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__TargetStateAssignment_3_in_rule__Transition__Group__3__Impl11142 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group__4__Impl_in_rule__Transition__Group__411172 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4__0_in_rule__Transition__Group__4__Impl11199 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4__0__Impl_in_rule__Transition__Group_4__011240 = new BitSet(new long[]{0x8000000E00000000L,0x0000000000006000L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4__1_in_rule__Transition__Group_4__011243 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__ImmediateAssignment_4_0_in_rule__Transition__Group_4__0__Impl11270 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4__1__Impl_in_rule__Transition__Group_4__111301 = new BitSet(new long[]{0x8000000E00000000L,0x0000000000006000L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4__2_in_rule__Transition__Group_4__111304 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__DeferredAssignment_4_1_in_rule__Transition__Group_4__1__Impl11331 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4__2__Impl_in_rule__Transition__Group_4__211362 = new BitSet(new long[]{0x8000000E00000000L,0x0000000000006000L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4__3_in_rule__Transition__Group_4__211365 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__HistoryAssignment_4_2_in_rule__Transition__Group_4__2__Impl11392 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4__3__Impl_in_rule__Transition__Group_4__311423 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3__0_in_rule__Transition__Group_4__3__Impl11450 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3__0__Impl_in_rule__Transition__Group_4_3__011489 = new BitSet(new long[]{0x00000000025203F0L,0x0000000000000081L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3__1_in_rule__Transition__Group_4_3__011492 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_63_in_rule__Transition__Group_4_3__0__Impl11520 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3__1__Impl_in_rule__Transition__Group_4_3__111551 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Alternatives_4_3_1_in_rule__Transition__Group_4_3__1__Impl11578 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0__0__Impl_in_rule__Transition__Group_4_3_1_0__011612 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000081L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0__1_in_rule__Transition__Group_4_3_1_0__011615 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__DelayAssignment_4_3_1_0_0_in_rule__Transition__Group_4_3_1_0__0__Impl11642 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0__1__Impl_in_rule__Transition__Group_4_3_1_0__111673 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000081L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0__2_in_rule__Transition__Group_4_3_1_0__111676 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__TriggerAssignment_4_3_1_0_1_in_rule__Transition__Group_4_3_1_0__1__Impl11703 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0__2__Impl_in_rule__Transition__Group_4_3_1_0__211734 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2__0_in_rule__Transition__Group_4_3_1_0__2__Impl11761 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2__0__Impl_in_rule__Transition__Group_4_3_1_0_2__011798 = new BitSet(new long[]{0x00000000000000A0L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2__1_in_rule__Transition__Group_4_3_1_0_2__011801 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_64_in_rule__Transition__Group_4_3_1_0_2__0__Impl11829 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2__1__Impl_in_rule__Transition__Group_4_3_1_0_2__111860 = new BitSet(new long[]{0x4000000000000000L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2__2_in_rule__Transition__Group_4_3_1_0_2__111863 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__EffectsAssignment_4_3_1_0_2_1_in_rule__Transition__Group_4_3_1_0_2__1__Impl11890 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2__2__Impl_in_rule__Transition__Group_4_3_1_0_2__211920 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2_2__0_in_rule__Transition__Group_4_3_1_0_2__2__Impl11947 = new BitSet(new long[]{0x4000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2_2__0__Impl_in_rule__Transition__Group_4_3_1_0_2_2__011984 = new BitSet(new long[]{0x00000000000000A0L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2_2__1_in_rule__Transition__Group_4_3_1_0_2_2__011987 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_rule__Transition__Group_4_3_1_0_2_2__0__Impl12015 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2_2__1__Impl_in_rule__Transition__Group_4_3_1_0_2_2__112046 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__EffectsAssignment_4_3_1_0_2_2_1_in_rule__Transition__Group_4_3_1_0_2_2__1__Impl12073 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__0__Impl_in_rule__ValuedObject__Group__012107 = new BitSet(new long[]{0x0083FC0000000420L,0x0000000000078000L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__1_in_rule__ValuedObject__Group__012110 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__AnnotationsAssignment_0_in_rule__ValuedObject__Group__0__Impl12137 = new BitSet(new long[]{0x0080000000000402L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__1__Impl_in_rule__ValuedObject__Group__112168 = new BitSet(new long[]{0x0083FC0000000420L,0x0000000000078000L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__2_in_rule__ValuedObject__Group__112171 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__InputAssignment_1_in_rule__ValuedObject__Group__1__Impl12198 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__2__Impl_in_rule__ValuedObject__Group__212229 = new BitSet(new long[]{0x0083FC0000000420L,0x0000000000078000L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__3_in_rule__ValuedObject__Group__212232 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__OutputAssignment_2_in_rule__ValuedObject__Group__2__Impl12259 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__3__Impl_in_rule__ValuedObject__Group__312290 = new BitSet(new long[]{0x0083FC0000000420L,0x0000000000078000L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__4_in_rule__ValuedObject__Group__312293 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__StaticAssignment_3_in_rule__ValuedObject__Group__3__Impl12320 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__4__Impl_in_rule__ValuedObject__Group__412351 = new BitSet(new long[]{0x0083FC0000000420L,0x0000000000078000L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__5_in_rule__ValuedObject__Group__412354 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__SignalAssignment_4_in_rule__ValuedObject__Group__4__Impl12381 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__5__Impl_in_rule__ValuedObject__Group__512412 = new BitSet(new long[]{0x0083FC0000000420L,0x0000000000078000L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__6_in_rule__ValuedObject__Group__512415 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__TypeAssignment_5_in_rule__ValuedObject__Group__5__Impl12442 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__6__Impl_in_rule__ValuedObject__Group__612473 = new BitSet(new long[]{0x4000000000000000L,0x0000000000000006L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__7_in_rule__ValuedObject__Group__612476 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__NameAssignment_6_in_rule__ValuedObject__Group__6__Impl12503 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__7__Impl_in_rule__ValuedObject__Group__712533 = new BitSet(new long[]{0x4000000000000000L,0x0000000000000006L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__8_in_rule__ValuedObject__Group__712536 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group_7__0_in_rule__ValuedObject__Group__7__Impl12563 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__8__Impl_in_rule__ValuedObject__Group__812594 = new BitSet(new long[]{0x4000000000000000L,0x0000000000000006L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__9_in_rule__ValuedObject__Group__812597 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group_8__0_in_rule__ValuedObject__Group__8__Impl12624 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group__9__Impl_in_rule__ValuedObject__Group__912655 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_rule__ValuedObject__Group__9__Impl12683 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group_7__0__Impl_in_rule__ValuedObject__Group_7__012734 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group_7__1_in_rule__ValuedObject__Group_7__012737 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_65_in_rule__ValuedObject__Group_7__0__Impl12765 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group_7__1__Impl_in_rule__ValuedObject__Group_7__112796 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__InitialValueAssignment_7_1_in_rule__ValuedObject__Group_7__1__Impl12823 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group_8__0__Impl_in_rule__ValuedObject__Group_8__012857 = new BitSet(new long[]{0x001E000000AC0000L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group_8__1_in_rule__ValuedObject__Group_8__012860 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_66_in_rule__ValuedObject__Group_8__0__Impl12888 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__Group_8__1__Impl_in_rule__ValuedObject__Group_8__112919 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObject__CombineOperatorAssignment_8_1_in_rule__ValuedObject__Group_8__1__Impl12946 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TextualCode__Group__0__Impl_in_rule__TextualCode__Group__012980 = new BitSet(new long[]{0x4000000000000000L});
-        public static final BitSet FOLLOW_rule__TextualCode__Group__1_in_rule__TextualCode__Group__012983 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TextualCode__TextAssignment_0_in_rule__TextualCode__Group__0__Impl13010 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TextualCode__Group__1__Impl_in_rule__TextualCode__Group__113040 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_rule__TextualCode__Group__1__Impl13068 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Substitution__Group__0__Impl_in_rule__Substitution__Group__013103 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-        public static final BitSet FOLLOW_rule__Substitution__Group__1_in_rule__Substitution__Group__013106 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Substitution__ActualAssignment_0_in_rule__Substitution__Group__0__Impl13133 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Substitution__Group__1__Impl_in_rule__Substitution__Group__113163 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__Substitution__Group__2_in_rule__Substitution__Group__113166 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_64_in_rule__Substitution__Group__1__Impl13194 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Substitution__Group__2__Impl_in_rule__Substitution__Group__213225 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Substitution__FormalAssignment_2_in_rule__Substitution__Group__2__Impl13252 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group__0__Impl_in_rule__EntryAction__Group__013288 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group__1_in_rule__EntryAction__Group__013291 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group__1__Impl_in_rule__EntryAction__Group__113349 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group__2_in_rule__EntryAction__Group__113352 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_67_in_rule__EntryAction__Group__1__Impl13380 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group__2__Impl_in_rule__EntryAction__Group__213411 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group__3_in_rule__EntryAction__Group__213414 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__TriggerAssignment_2_in_rule__EntryAction__Group__2__Impl13441 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group__3__Impl_in_rule__EntryAction__Group__313472 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group__4_in_rule__EntryAction__Group__313475 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group_3__0_in_rule__EntryAction__Group__3__Impl13502 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group__4__Impl_in_rule__EntryAction__Group__413533 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_rule__EntryAction__Group__4__Impl13561 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group_3__0__Impl_in_rule__EntryAction__Group_3__013602 = new BitSet(new long[]{0x00000000000000A0L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group_3__1_in_rule__EntryAction__Group_3__013605 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_64_in_rule__EntryAction__Group_3__0__Impl13633 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group_3__1__Impl_in_rule__EntryAction__Group_3__113664 = new BitSet(new long[]{0x4000000000000000L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group_3__2_in_rule__EntryAction__Group_3__113667 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__EffectsAssignment_3_1_in_rule__EntryAction__Group_3__1__Impl13694 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group_3__2__Impl_in_rule__EntryAction__Group_3__213724 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group_3_2__0_in_rule__EntryAction__Group_3__2__Impl13751 = new BitSet(new long[]{0x4000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group_3_2__0__Impl_in_rule__EntryAction__Group_3_2__013788 = new BitSet(new long[]{0x00000000000000A0L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group_3_2__1_in_rule__EntryAction__Group_3_2__013791 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_rule__EntryAction__Group_3_2__0__Impl13819 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group_3_2__1__Impl_in_rule__EntryAction__Group_3_2__113850 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__EffectsAssignment_3_2_1_in_rule__EntryAction__Group_3_2__1__Impl13877 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group__0__Impl_in_rule__DuringAction__Group__013911 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002010L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group__1_in_rule__DuringAction__Group__013914 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group__1__Impl_in_rule__DuringAction__Group__113972 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002010L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group__2_in_rule__DuringAction__Group__113975 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__ImmediateAssignment_1_in_rule__DuringAction__Group__1__Impl14002 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group__2__Impl_in_rule__DuringAction__Group__214033 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group__3_in_rule__DuringAction__Group__214036 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_68_in_rule__DuringAction__Group__2__Impl14064 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group__3__Impl_in_rule__DuringAction__Group__314095 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group__4_in_rule__DuringAction__Group__314098 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__TriggerAssignment_3_in_rule__DuringAction__Group__3__Impl14125 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group__4__Impl_in_rule__DuringAction__Group__414156 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group__5_in_rule__DuringAction__Group__414159 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group_4__0_in_rule__DuringAction__Group__4__Impl14186 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group__5__Impl_in_rule__DuringAction__Group__514217 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_rule__DuringAction__Group__5__Impl14245 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group_4__0__Impl_in_rule__DuringAction__Group_4__014288 = new BitSet(new long[]{0x00000000000000A0L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group_4__1_in_rule__DuringAction__Group_4__014291 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_64_in_rule__DuringAction__Group_4__0__Impl14319 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group_4__1__Impl_in_rule__DuringAction__Group_4__114350 = new BitSet(new long[]{0x4000000000000000L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group_4__2_in_rule__DuringAction__Group_4__114353 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__EffectsAssignment_4_1_in_rule__DuringAction__Group_4__1__Impl14380 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group_4__2__Impl_in_rule__DuringAction__Group_4__214410 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group_4_2__0_in_rule__DuringAction__Group_4__2__Impl14437 = new BitSet(new long[]{0x4000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group_4_2__0__Impl_in_rule__DuringAction__Group_4_2__014474 = new BitSet(new long[]{0x00000000000000A0L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group_4_2__1_in_rule__DuringAction__Group_4_2__014477 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_rule__DuringAction__Group_4_2__0__Impl14505 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group_4_2__1__Impl_in_rule__DuringAction__Group_4_2__114536 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__EffectsAssignment_4_2_1_in_rule__DuringAction__Group_4_2__1__Impl14563 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group__0__Impl_in_rule__ExitAction__Group__014597 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group__1_in_rule__ExitAction__Group__014600 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group__1__Impl_in_rule__ExitAction__Group__114658 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group__2_in_rule__ExitAction__Group__114661 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_69_in_rule__ExitAction__Group__1__Impl14689 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group__2__Impl_in_rule__ExitAction__Group__214720 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group__3_in_rule__ExitAction__Group__214723 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__TriggerAssignment_2_in_rule__ExitAction__Group__2__Impl14750 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group__3__Impl_in_rule__ExitAction__Group__314781 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group__4_in_rule__ExitAction__Group__314784 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group_3__0_in_rule__ExitAction__Group__3__Impl14811 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group__4__Impl_in_rule__ExitAction__Group__414842 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_rule__ExitAction__Group__4__Impl14870 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group_3__0__Impl_in_rule__ExitAction__Group_3__014911 = new BitSet(new long[]{0x00000000000000A0L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group_3__1_in_rule__ExitAction__Group_3__014914 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_64_in_rule__ExitAction__Group_3__0__Impl14942 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group_3__1__Impl_in_rule__ExitAction__Group_3__114973 = new BitSet(new long[]{0x4000000000000000L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group_3__2_in_rule__ExitAction__Group_3__114976 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__EffectsAssignment_3_1_in_rule__ExitAction__Group_3__1__Impl15003 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group_3__2__Impl_in_rule__ExitAction__Group_3__215033 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group_3_2__0_in_rule__ExitAction__Group_3__2__Impl15060 = new BitSet(new long[]{0x4000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group_3_2__0__Impl_in_rule__ExitAction__Group_3_2__015097 = new BitSet(new long[]{0x00000000000000A0L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group_3_2__1_in_rule__ExitAction__Group_3_2__015100 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_rule__ExitAction__Group_3_2__0__Impl15128 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group_3_2__1__Impl_in_rule__ExitAction__Group_3_2__115159 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__EffectsAssignment_3_2_1_in_rule__ExitAction__Group_3_2__1__Impl15186 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SuspendAction__Group__0__Impl_in_rule__SuspendAction__Group__015220 = new BitSet(new long[]{0x0083FC0000000420L,0x00000000000FA078L});
-        public static final BitSet FOLLOW_rule__SuspendAction__Group__1_in_rule__SuspendAction__Group__015223 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SuspendAction__Group__1__Impl_in_rule__SuspendAction__Group__115281 = new BitSet(new long[]{0x0083FC0000000420L,0x00000000000FA078L});
-        public static final BitSet FOLLOW_rule__SuspendAction__Group__2_in_rule__SuspendAction__Group__115284 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SuspendAction__ImmediateAssignment_1_in_rule__SuspendAction__Group__1__Impl15311 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SuspendAction__Group__2__Impl_in_rule__SuspendAction__Group__215342 = new BitSet(new long[]{0x0083FC0000000420L,0x00000000000FA078L});
-        public static final BitSet FOLLOW_rule__SuspendAction__Group__3_in_rule__SuspendAction__Group__215345 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SuspendAction__WeakAssignment_2_in_rule__SuspendAction__Group__2__Impl15372 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SuspendAction__Group__3__Impl_in_rule__SuspendAction__Group__315403 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__SuspendAction__Group__4_in_rule__SuspendAction__Group__315406 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_70_in_rule__SuspendAction__Group__3__Impl15434 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SuspendAction__Group__4__Impl_in_rule__SuspendAction__Group__415465 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__SuspendAction__Group__5_in_rule__SuspendAction__Group__415468 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SuspendAction__TriggerAssignment_4_in_rule__SuspendAction__Group__4__Impl15495 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SuspendAction__Group__5__Impl_in_rule__SuspendAction__Group__515526 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_rule__SuspendAction__Group__5__Impl15554 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Emission__Group__0__Impl_in_rule__Emission__Group__015597 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__Emission__Group__1_in_rule__Emission__Group__015600 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Emission__ValuedObjectAssignment_0_in_rule__Emission__Group__0__Impl15627 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Emission__Group__1__Impl_in_rule__Emission__Group__115657 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Emission__Group_1__0_in_rule__Emission__Group__1__Impl15684 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Emission__Group_1__0__Impl_in_rule__Emission__Group_1__015719 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__Emission__Group_1__1_in_rule__Emission__Group_1__015722 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_71_in_rule__Emission__Group_1__0__Impl15750 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Emission__Group_1__1__Impl_in_rule__Emission__Group_1__115781 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__Emission__Group_1__2_in_rule__Emission__Group_1__115784 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Emission__NewValueAssignment_1_1_in_rule__Emission__Group_1__1__Impl15811 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Emission__Group_1__2__Impl_in_rule__Emission__Group_1__215841 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_72_in_rule__Emission__Group_1__2__Impl15869 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Assignment__Group__0__Impl_in_rule__Assignment__Group__015906 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Assignment__Group__1_in_rule__Assignment__Group__015909 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Assignment__ValuedObjectAssignment_0_in_rule__Assignment__Group__0__Impl15936 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Assignment__Group__1__Impl_in_rule__Assignment__Group__115966 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__Assignment__Group__2_in_rule__Assignment__Group__115969 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_65_in_rule__Assignment__Group__1__Impl15997 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Assignment__Group__2__Impl_in_rule__Assignment__Group__216028 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Assignment__ExpressionAssignment_2_in_rule__Assignment__Group__2__Impl16055 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__OrExpression__Group__0__Impl_in_rule__OrExpression__Group__016091 = new BitSet(new long[]{0x0000000000040000L});
-        public static final BitSet FOLLOW_rule__OrExpression__Group__1_in_rule__OrExpression__Group__016094 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAndExpression_in_rule__OrExpression__Group__0__Impl16121 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__OrExpression__Group__1__Impl_in_rule__OrExpression__Group__116150 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__OrExpression__Group_1__0_in_rule__OrExpression__Group__1__Impl16177 = new BitSet(new long[]{0x0000000000040002L});
-        public static final BitSet FOLLOW_rule__OrExpression__Group_1__0__Impl_in_rule__OrExpression__Group_1__016212 = new BitSet(new long[]{0x0000000000040000L});
-        public static final BitSet FOLLOW_rule__OrExpression__Group_1__1_in_rule__OrExpression__Group_1__016215 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__OrExpression__Group_1__1__Impl_in_rule__OrExpression__Group_1__116273 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__OrExpression__Group_1__2_in_rule__OrExpression__Group_1__116276 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__OrExpression__OperatorAssignment_1_1_in_rule__OrExpression__Group_1__1__Impl16303 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__OrExpression__Group_1__2__Impl_in_rule__OrExpression__Group_1__216333 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__OrExpression__SubExpressionsAssignment_1_2_in_rule__OrExpression__Group_1__2__Impl16360 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AndExpression__Group__0__Impl_in_rule__AndExpression__Group__016396 = new BitSet(new long[]{0x0000000000080000L});
-        public static final BitSet FOLLOW_rule__AndExpression__Group__1_in_rule__AndExpression__Group__016399 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleCompareOperation_in_rule__AndExpression__Group__0__Impl16426 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AndExpression__Group__1__Impl_in_rule__AndExpression__Group__116455 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AndExpression__Group_1__0_in_rule__AndExpression__Group__1__Impl16482 = new BitSet(new long[]{0x0000000000080002L});
-        public static final BitSet FOLLOW_rule__AndExpression__Group_1__0__Impl_in_rule__AndExpression__Group_1__016517 = new BitSet(new long[]{0x0000000000080000L});
-        public static final BitSet FOLLOW_rule__AndExpression__Group_1__1_in_rule__AndExpression__Group_1__016520 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AndExpression__Group_1__1__Impl_in_rule__AndExpression__Group_1__116578 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__AndExpression__Group_1__2_in_rule__AndExpression__Group_1__116581 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AndExpression__OperatorAssignment_1_1_in_rule__AndExpression__Group_1__1__Impl16608 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AndExpression__Group_1__2__Impl_in_rule__AndExpression__Group_1__216638 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AndExpression__SubExpressionsAssignment_1_2_in_rule__AndExpression__Group_1__2__Impl16665 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0__Impl_in_rule__CompareOperation__Group_0__016701 = new BitSet(new long[]{0x000003F000000000L});
-        public static final BitSet FOLLOW_rule__CompareOperation__Group_0__1_in_rule__CompareOperation__Group_0__016704 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__Group_0__0__Impl16732 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__CompareOperation__Group_0__1__Impl_in_rule__CompareOperation__Group_0__116762 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__0_in_rule__CompareOperation__Group_0__1__Impl16789 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__0__Impl_in_rule__CompareOperation__Group_0_1__016823 = new BitSet(new long[]{0x000003F000000000L});
-        public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__1_in_rule__CompareOperation__Group_0_1__016826 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__1__Impl_in_rule__CompareOperation__Group_0_1__116884 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__2_in_rule__CompareOperation__Group_0_1__116887 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__CompareOperation__OperatorAssignment_0_1_1_in_rule__CompareOperation__Group_0_1__1__Impl16914 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__2__Impl_in_rule__CompareOperation__Group_0_1__216944 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__CompareOperation__SubExpressionsAssignment_0_1_2_in_rule__CompareOperation__Group_0_1__2__Impl16971 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__NotExpression__Group_0__0__Impl_in_rule__NotExpression__Group_0__017007 = new BitSet(new long[]{0x0000000000100000L});
-        public static final BitSet FOLLOW_rule__NotExpression__Group_0__1_in_rule__NotExpression__Group_0__017010 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__NotExpression__Group_0__1__Impl_in_rule__NotExpression__Group_0__117068 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__NotExpression__Group_0__2_in_rule__NotExpression__Group_0__117071 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__NotExpression__OperatorAssignment_0_1_in_rule__NotExpression__Group_0__1__Impl17098 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__NotExpression__Group_0__2__Impl_in_rule__NotExpression__Group_0__217128 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__NotExpression__SubExpressionsAssignment_0_2_in_rule__NotExpression__Group_0__2__Impl17155 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AddExpression__Group__0__Impl_in_rule__AddExpression__Group__017191 = new BitSet(new long[]{0x0000000000200000L});
-        public static final BitSet FOLLOW_rule__AddExpression__Group__1_in_rule__AddExpression__Group__017194 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSubExpression_in_rule__AddExpression__Group__0__Impl17221 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AddExpression__Group__1__Impl_in_rule__AddExpression__Group__117250 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AddExpression__Group_1__0_in_rule__AddExpression__Group__1__Impl17277 = new BitSet(new long[]{0x0000000000200002L});
-        public static final BitSet FOLLOW_rule__AddExpression__Group_1__0__Impl_in_rule__AddExpression__Group_1__017312 = new BitSet(new long[]{0x0000000000200000L});
-        public static final BitSet FOLLOW_rule__AddExpression__Group_1__1_in_rule__AddExpression__Group_1__017315 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AddExpression__Group_1__1__Impl_in_rule__AddExpression__Group_1__117373 = new BitSet(new long[]{0x00000000024203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__AddExpression__Group_1__2_in_rule__AddExpression__Group_1__117376 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AddExpression__OperatorAssignment_1_1_in_rule__AddExpression__Group_1__1__Impl17403 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AddExpression__Group_1__2__Impl_in_rule__AddExpression__Group_1__217433 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AddExpression__SubExpressionsAssignment_1_2_in_rule__AddExpression__Group_1__2__Impl17460 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SubExpression__Group__0__Impl_in_rule__SubExpression__Group__017496 = new BitSet(new long[]{0x0000000000400000L});
-        public static final BitSet FOLLOW_rule__SubExpression__Group__1_in_rule__SubExpression__Group__017499 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleMultExpression_in_rule__SubExpression__Group__0__Impl17526 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SubExpression__Group__1__Impl_in_rule__SubExpression__Group__117555 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SubExpression__Group_1__0_in_rule__SubExpression__Group__1__Impl17582 = new BitSet(new long[]{0x0000000000400002L});
-        public static final BitSet FOLLOW_rule__SubExpression__Group_1__0__Impl_in_rule__SubExpression__Group_1__017617 = new BitSet(new long[]{0x0000000000400000L});
-        public static final BitSet FOLLOW_rule__SubExpression__Group_1__1_in_rule__SubExpression__Group_1__017620 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SubExpression__Group_1__1__Impl_in_rule__SubExpression__Group_1__117678 = new BitSet(new long[]{0x00000000024203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__SubExpression__Group_1__2_in_rule__SubExpression__Group_1__117681 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SubExpression__OperatorAssignment_1_1_in_rule__SubExpression__Group_1__1__Impl17708 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SubExpression__Group_1__2__Impl_in_rule__SubExpression__Group_1__217738 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SubExpression__SubExpressionsAssignment_1_2_in_rule__SubExpression__Group_1__2__Impl17765 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__MultExpression__Group__0__Impl_in_rule__MultExpression__Group__017801 = new BitSet(new long[]{0x0000000000800000L});
-        public static final BitSet FOLLOW_rule__MultExpression__Group__1_in_rule__MultExpression__Group__017804 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleDivExpression_in_rule__MultExpression__Group__0__Impl17831 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__MultExpression__Group__1__Impl_in_rule__MultExpression__Group__117860 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__MultExpression__Group_1__0_in_rule__MultExpression__Group__1__Impl17887 = new BitSet(new long[]{0x0000000000800002L});
-        public static final BitSet FOLLOW_rule__MultExpression__Group_1__0__Impl_in_rule__MultExpression__Group_1__017922 = new BitSet(new long[]{0x0000000000800000L});
-        public static final BitSet FOLLOW_rule__MultExpression__Group_1__1_in_rule__MultExpression__Group_1__017925 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__MultExpression__Group_1__1__Impl_in_rule__MultExpression__Group_1__117983 = new BitSet(new long[]{0x00000000024203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__MultExpression__Group_1__2_in_rule__MultExpression__Group_1__117986 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__MultExpression__OperatorAssignment_1_1_in_rule__MultExpression__Group_1__1__Impl18013 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__MultExpression__Group_1__2__Impl_in_rule__MultExpression__Group_1__218043 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__MultExpression__SubExpressionsAssignment_1_2_in_rule__MultExpression__Group_1__2__Impl18070 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DivExpression__Group__0__Impl_in_rule__DivExpression__Group__018106 = new BitSet(new long[]{0x0000000000010000L});
-        public static final BitSet FOLLOW_rule__DivExpression__Group__1_in_rule__DivExpression__Group__018109 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleModExpression_in_rule__DivExpression__Group__0__Impl18136 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DivExpression__Group__1__Impl_in_rule__DivExpression__Group__118165 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DivExpression__Group_1__0_in_rule__DivExpression__Group__1__Impl18192 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DivExpression__Group_1__0__Impl_in_rule__DivExpression__Group_1__018227 = new BitSet(new long[]{0x0000000000010000L});
-        public static final BitSet FOLLOW_rule__DivExpression__Group_1__1_in_rule__DivExpression__Group_1__018230 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DivExpression__Group_1__1__Impl_in_rule__DivExpression__Group_1__118288 = new BitSet(new long[]{0x00000000024203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__DivExpression__Group_1__2_in_rule__DivExpression__Group_1__118291 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DivExpression__OperatorAssignment_1_1_in_rule__DivExpression__Group_1__1__Impl18318 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DivExpression__Group_1__2__Impl_in_rule__DivExpression__Group_1__218348 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DivExpression__SubExpressionsAssignment_1_2_in_rule__DivExpression__Group_1__2__Impl18375 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ModExpression__Group__0__Impl_in_rule__ModExpression__Group__018411 = new BitSet(new long[]{0x0000000001000000L});
-        public static final BitSet FOLLOW_rule__ModExpression__Group__1_in_rule__ModExpression__Group__018414 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleNegExpression_in_rule__ModExpression__Group__0__Impl18441 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ModExpression__Group__1__Impl_in_rule__ModExpression__Group__118470 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ModExpression__Group_1__0_in_rule__ModExpression__Group__1__Impl18497 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ModExpression__Group_1__0__Impl_in_rule__ModExpression__Group_1__018532 = new BitSet(new long[]{0x0000000001000000L});
-        public static final BitSet FOLLOW_rule__ModExpression__Group_1__1_in_rule__ModExpression__Group_1__018535 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ModExpression__Group_1__1__Impl_in_rule__ModExpression__Group_1__118593 = new BitSet(new long[]{0x00000000024203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__ModExpression__Group_1__2_in_rule__ModExpression__Group_1__118596 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ModExpression__OperatorAssignment_1_1_in_rule__ModExpression__Group_1__1__Impl18623 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ModExpression__Group_1__2__Impl_in_rule__ModExpression__Group_1__218653 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ModExpression__SubExpressionsAssignment_1_2_in_rule__ModExpression__Group_1__2__Impl18680 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__NegExpression__Group_0__0__Impl_in_rule__NegExpression__Group_0__018716 = new BitSet(new long[]{0x0000000000400000L});
-        public static final BitSet FOLLOW_rule__NegExpression__Group_0__1_in_rule__NegExpression__Group_0__018719 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__NegExpression__Group_0__1__Impl_in_rule__NegExpression__Group_0__118777 = new BitSet(new long[]{0x00000000024203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__NegExpression__Group_0__2_in_rule__NegExpression__Group_0__118780 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__NegExpression__OperatorAssignment_0_1_in_rule__NegExpression__Group_0__1__Impl18807 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__NegExpression__Group_0__2__Impl_in_rule__NegExpression__Group_0__218837 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__NegExpression__SubExpressionsAssignment_0_2_in_rule__NegExpression__Group_0__2__Impl18864 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__0__Impl_in_rule__AtomicExpression__Group_2__018900 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__1_in_rule__AtomicExpression__Group_2__018903 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_71_in_rule__AtomicExpression__Group_2__0__Impl18931 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__1__Impl_in_rule__AtomicExpression__Group_2__118962 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__2_in_rule__AtomicExpression__Group_2__118965 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__AtomicExpression__Group_2__1__Impl18992 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__2__Impl_in_rule__AtomicExpression__Group_2__219021 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_72_in_rule__AtomicExpression__Group_2__2__Impl19049 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_3__0__Impl_in_rule__AtomicValuedExpression__Group_3__019086 = new BitSet(new long[]{0x00000000024203E0L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_3__1_in_rule__AtomicValuedExpression__Group_3__019089 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_71_in_rule__AtomicValuedExpression__Group_3__0__Impl19118 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_3__1__Impl_in_rule__AtomicValuedExpression__Group_3__119150 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_3__2_in_rule__AtomicValuedExpression__Group_3__119153 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedExpression_in_rule__AtomicValuedExpression__Group_3__1__Impl19180 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_3__2__Impl_in_rule__AtomicValuedExpression__Group_3__219209 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_72_in_rule__AtomicValuedExpression__Group_3__2__Impl19237 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__0__Impl_in_rule__ValuedObjectTestExpression__Group_0__019274 = new BitSet(new long[]{0x0000000002020000L});
-        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__1_in_rule__ValuedObjectTestExpression__Group_0__019277 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__1__Impl_in_rule__ValuedObjectTestExpression__Group_0__119335 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__2_in_rule__ValuedObjectTestExpression__Group_0__119338 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__OperatorAssignment_0_1_in_rule__ValuedObjectTestExpression__Group_0__1__Impl19365 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__2__Impl_in_rule__ValuedObjectTestExpression__Group_0__219395 = new BitSet(new long[]{0x0000000002020020L});
-        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__3_in_rule__ValuedObjectTestExpression__Group_0__219398 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_71_in_rule__ValuedObjectTestExpression__Group_0__2__Impl19426 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__3__Impl_in_rule__ValuedObjectTestExpression__Group_0__319457 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__4_in_rule__ValuedObjectTestExpression__Group_0__319460 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3_in_rule__ValuedObjectTestExpression__Group_0__3__Impl19487 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__4__Impl_in_rule__ValuedObjectTestExpression__Group_0__419517 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_72_in_rule__ValuedObjectTestExpression__Group_0__4__Impl19545 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__Group__0__Impl_in_rule__TagAnnotation__Group__019586 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__Group__1_in_rule__TagAnnotation__Group__019589 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_55_in_rule__TagAnnotation__Group__0__Impl19617 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__Group__1__Impl_in_rule__TagAnnotation__Group__119648 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__Group__2_in_rule__TagAnnotation__Group__119651 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__NameAssignment_1_in_rule__TagAnnotation__Group__1__Impl19678 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__Group__2__Impl_in_rule__TagAnnotation__Group__219708 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__0_in_rule__TagAnnotation__Group__2__Impl19735 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__0__Impl_in_rule__TagAnnotation__Group_2__019772 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__1_in_rule__TagAnnotation__Group_2__019775 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_71_in_rule__TagAnnotation__Group_2__0__Impl19803 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__1__Impl_in_rule__TagAnnotation__Group_2__119834 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__2_in_rule__TagAnnotation__Group_2__119837 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__AnnotationsAssignment_2_1_in_rule__TagAnnotation__Group_2__1__Impl19864 = new BitSet(new long[]{0x0080000000000402L});
-        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__2__Impl_in_rule__TagAnnotation__Group_2__219895 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_72_in_rule__TagAnnotation__Group_2__2__Impl19923 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__0__Impl_in_rule__KeyStringValueAnnotation__Group__019960 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__1_in_rule__KeyStringValueAnnotation__Group__019963 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_55_in_rule__KeyStringValueAnnotation__Group__0__Impl19991 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__1__Impl_in_rule__KeyStringValueAnnotation__Group__120022 = new BitSet(new long[]{0x0000000000000030L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__2_in_rule__KeyStringValueAnnotation__Group__120025 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__NameAssignment_1_in_rule__KeyStringValueAnnotation__Group__1__Impl20052 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__2__Impl_in_rule__KeyStringValueAnnotation__Group__220082 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__3_in_rule__KeyStringValueAnnotation__Group__220085 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__ValueAssignment_2_in_rule__KeyStringValueAnnotation__Group__2__Impl20112 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__3__Impl_in_rule__KeyStringValueAnnotation__Group__320142 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__0_in_rule__KeyStringValueAnnotation__Group__3__Impl20169 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__0__Impl_in_rule__KeyStringValueAnnotation__Group_3__020208 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__1_in_rule__KeyStringValueAnnotation__Group_3__020211 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_71_in_rule__KeyStringValueAnnotation__Group_3__0__Impl20239 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__1__Impl_in_rule__KeyStringValueAnnotation__Group_3__120270 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__2_in_rule__KeyStringValueAnnotation__Group_3__120273 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyStringValueAnnotation__Group_3__1__Impl20300 = new BitSet(new long[]{0x0080000000000402L});
-        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__2__Impl_in_rule__KeyStringValueAnnotation__Group_3__220331 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_72_in_rule__KeyStringValueAnnotation__Group_3__2__Impl20359 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group__020396 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1_in_rule__TypedKeyStringValueAnnotation__Group__020399 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_55_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl20427 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group__120458 = new BitSet(new long[]{0x0100000000000000L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2_in_rule__TypedKeyStringValueAnnotation__Group__120461 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__NameAssignment_1_in_rule__TypedKeyStringValueAnnotation__Group__1__Impl20488 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group__220518 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3_in_rule__TypedKeyStringValueAnnotation__Group__220521 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_56_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl20549 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3__Impl_in_rule__TypedKeyStringValueAnnotation__Group__320580 = new BitSet(new long[]{0x0200000000000000L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4_in_rule__TypedKeyStringValueAnnotation__Group__320583 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__TypeAssignment_3_in_rule__TypedKeyStringValueAnnotation__Group__3__Impl20610 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4__Impl_in_rule__TypedKeyStringValueAnnotation__Group__420640 = new BitSet(new long[]{0x0000000000000030L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5_in_rule__TypedKeyStringValueAnnotation__Group__420643 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_57_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl20671 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5__Impl_in_rule__TypedKeyStringValueAnnotation__Group__520702 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6_in_rule__TypedKeyStringValueAnnotation__Group__520705 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__ValueAssignment_5_in_rule__TypedKeyStringValueAnnotation__Group__5__Impl20732 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6__Impl_in_rule__TypedKeyStringValueAnnotation__Group__620762 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0_in_rule__TypedKeyStringValueAnnotation__Group__6__Impl20789 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__020834 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1_in_rule__TypedKeyStringValueAnnotation__Group_6__020837 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_71_in_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl20865 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__120896 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2_in_rule__TypedKeyStringValueAnnotation__Group_6__120899 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1_in_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl20926 = new BitSet(new long[]{0x0080000000000402L});
-        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__220957 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_72_in_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl20985 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__0__Impl_in_rule__KeyBooleanValueAnnotation__Group__021022 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__1_in_rule__KeyBooleanValueAnnotation__Group__021025 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_55_in_rule__KeyBooleanValueAnnotation__Group__0__Impl21053 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__1__Impl_in_rule__KeyBooleanValueAnnotation__Group__121084 = new BitSet(new long[]{0x0000000000000200L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__2_in_rule__KeyBooleanValueAnnotation__Group__121087 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__NameAssignment_1_in_rule__KeyBooleanValueAnnotation__Group__1__Impl21114 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__2__Impl_in_rule__KeyBooleanValueAnnotation__Group__221144 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__3_in_rule__KeyBooleanValueAnnotation__Group__221147 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__ValueAssignment_2_in_rule__KeyBooleanValueAnnotation__Group__2__Impl21174 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__3__Impl_in_rule__KeyBooleanValueAnnotation__Group__321204 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0_in_rule__KeyBooleanValueAnnotation__Group__3__Impl21231 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__021270 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1_in_rule__KeyBooleanValueAnnotation__Group_3__021273 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_71_in_rule__KeyBooleanValueAnnotation__Group_3__0__Impl21301 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__121332 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2_in_rule__KeyBooleanValueAnnotation__Group_3__121335 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyBooleanValueAnnotation__Group_3__1__Impl21362 = new BitSet(new long[]{0x0080000000000402L});
-        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__221393 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_72_in_rule__KeyBooleanValueAnnotation__Group_3__2__Impl21421 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__0__Impl_in_rule__KeyIntValueAnnotation__Group__021458 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__1_in_rule__KeyIntValueAnnotation__Group__021461 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_55_in_rule__KeyIntValueAnnotation__Group__0__Impl21489 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__1__Impl_in_rule__KeyIntValueAnnotation__Group__121520 = new BitSet(new long[]{0x0000000000000040L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__2_in_rule__KeyIntValueAnnotation__Group__121523 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__NameAssignment_1_in_rule__KeyIntValueAnnotation__Group__1__Impl21550 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__2__Impl_in_rule__KeyIntValueAnnotation__Group__221580 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__3_in_rule__KeyIntValueAnnotation__Group__221583 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__ValueAssignment_2_in_rule__KeyIntValueAnnotation__Group__2__Impl21610 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__3__Impl_in_rule__KeyIntValueAnnotation__Group__321640 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__0_in_rule__KeyIntValueAnnotation__Group__3__Impl21667 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__0__Impl_in_rule__KeyIntValueAnnotation__Group_3__021706 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__1_in_rule__KeyIntValueAnnotation__Group_3__021709 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_71_in_rule__KeyIntValueAnnotation__Group_3__0__Impl21737 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__1__Impl_in_rule__KeyIntValueAnnotation__Group_3__121768 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__2_in_rule__KeyIntValueAnnotation__Group_3__121771 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyIntValueAnnotation__Group_3__1__Impl21798 = new BitSet(new long[]{0x0080000000000402L});
-        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__2__Impl_in_rule__KeyIntValueAnnotation__Group_3__221829 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_72_in_rule__KeyIntValueAnnotation__Group_3__2__Impl21857 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__0__Impl_in_rule__KeyFloatValueAnnotation__Group__021894 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__1_in_rule__KeyFloatValueAnnotation__Group__021897 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_55_in_rule__KeyFloatValueAnnotation__Group__0__Impl21925 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__1__Impl_in_rule__KeyFloatValueAnnotation__Group__121956 = new BitSet(new long[]{0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__2_in_rule__KeyFloatValueAnnotation__Group__121959 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__NameAssignment_1_in_rule__KeyFloatValueAnnotation__Group__1__Impl21986 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__2__Impl_in_rule__KeyFloatValueAnnotation__Group__222016 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__3_in_rule__KeyFloatValueAnnotation__Group__222019 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__ValueAssignment_2_in_rule__KeyFloatValueAnnotation__Group__2__Impl22046 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__3__Impl_in_rule__KeyFloatValueAnnotation__Group__322076 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0_in_rule__KeyFloatValueAnnotation__Group__3__Impl22103 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0__Impl_in_rule__KeyFloatValueAnnotation__Group_3__022142 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1_in_rule__KeyFloatValueAnnotation__Group_3__022145 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_71_in_rule__KeyFloatValueAnnotation__Group_3__0__Impl22173 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1__Impl_in_rule__KeyFloatValueAnnotation__Group_3__122204 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2_in_rule__KeyFloatValueAnnotation__Group_3__122207 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyFloatValueAnnotation__Group_3__1__Impl22234 = new BitSet(new long[]{0x0080000000000402L});
-        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2__Impl_in_rule__KeyFloatValueAnnotation__Group_3__222265 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_72_in_rule__KeyFloatValueAnnotation__Group_3__2__Impl22293 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ImportAnnotation__Group__0__Impl_in_rule__ImportAnnotation__Group__022330 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_rule__ImportAnnotation__Group__1_in_rule__ImportAnnotation__Group__022333 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_73_in_rule__ImportAnnotation__Group__0__Impl22361 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ImportAnnotation__Group__1__Impl_in_rule__ImportAnnotation__Group__122392 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ImportAnnotation__ImportURIAssignment_1_in_rule__ImportAnnotation__Group__1__Impl22419 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group__0__Impl_in_rule__ExtendedID__Group__022453 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group__1_in_rule__ExtendedID__Group__022456 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group__0__Impl22483 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group__1__Impl_in_rule__ExtendedID__Group__122512 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0_in_rule__ExtendedID__Group__1__Impl22539 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000400L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0__Impl_in_rule__ExtendedID__Group_1__022574 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1_in_rule__ExtendedID__Group_1__022577 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_74_in_rule__ExtendedID__Group_1__0__Impl22605 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__122636 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl22663 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleImportAnnotation_in_rule__RootRegion__AnnotationsAssignment_122701 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__RootRegion__AnnotationsAssignment_2_022732 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__RootRegion__IdAssignment_2_222763 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_STRING_in_rule__RootRegion__LabelAssignment_2_322794 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedObject_in_rule__RootRegion__ValuedObjectsAssignment_2_522825 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTextualCode_in_rule__RootRegion__BodyTextAssignment_2_622856 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSCChart_in_rule__RootRegion__StatesAssignment_322887 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__SingleRegion__AnnotationsAssignment_1_022918 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__SingleRegion__IdAssignment_1_222949 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_STRING_in_rule__SingleRegion__LabelAssignment_1_322980 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedObject_in_rule__SingleRegion__ValuedObjectsAssignment_1_523011 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTextualCode_in_rule__SingleRegion__BodyTextAssignment_1_623042 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleState_in_rule__SingleRegion__StatesAssignment_223073 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__Region__AnnotationsAssignment_123104 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__Region__IdAssignment_323135 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_STRING_in_rule__Region__LabelAssignment_423166 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedObject_in_rule__Region__ValuedObjectsAssignment_623197 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTextualCode_in_rule__Region__BodyTextAssignment_723228 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleState_in_rule__Region__StatesAssignment_823259 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__SCChart__AnnotationsAssignment_023290 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleStateType_in_rule__SCChart__TypeAssignment_123321 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__SCChart__IdAssignment_323352 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_STRING_in_rule__SCChart__LabelAssignment_423383 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__SCChart__BodyReferenceAssignment_5_0_123418 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedExpression_in_rule__Expression__Alternatives4261 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__Expression__Alternatives4278 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0_in_rule__CompareOperation__Alternatives4310 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleNotExpression_in_rule__CompareOperation__Alternatives4328 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedExpression_in_rule__NotOrValuedExpression__Alternatives4360 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleNotExpression_in_rule__NotOrValuedExpression__Alternatives4377 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__NotExpression__Group_0__0_in_rule__NotExpression__Alternatives4409 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAtomicExpression_in_rule__NotExpression__Alternatives4427 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__NegExpression__Group_0__0_in_rule__NegExpression__Alternatives4459 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAtomicValuedExpression_in_rule__NegExpression__Alternatives4477 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleBoolValue_in_rule__AtomicExpression__Alternatives4509 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedObjectTestExpression_in_rule__AtomicExpression__Alternatives4526 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__0_in_rule__AtomicExpression__Alternatives4543 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTextExpression_in_rule__AtomicExpression__Alternatives4561 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleIntValue_in_rule__AtomicValuedExpression__Alternatives4593 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleFloatValue_in_rule__AtomicValuedExpression__Alternatives4610 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleDoubleValue_in_rule__AtomicValuedExpression__Alternatives4627 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_3__0_in_rule__AtomicValuedExpression__Alternatives4644 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAtomicExpression_in_rule__AtomicValuedExpression__Alternatives4662 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__0_in_rule__ValuedObjectTestExpression__Alternatives4694 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedObjectReference_in_rule__ValuedObjectTestExpression__Alternatives4712 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rulePreOperator_in_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_04744 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValOperator_in_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_04761 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleCommentAnnotation_in_rule__Annotation__Alternatives4794 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTagAnnotation_in_rule__Annotation__Alternatives4811 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleKeyStringValueAnnotation_in_rule__Annotation__Alternatives4828 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTypedKeyStringValueAnnotation_in_rule__Annotation__Alternatives4845 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleKeyBooleanValueAnnotation_in_rule__Annotation__Alternatives4862 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleKeyIntValueAnnotation_in_rule__Annotation__Alternatives4879 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleKeyFloatValueAnnotation_in_rule__Annotation__Alternatives4896 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_STRING_in_rule__EString__Alternatives4929 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__EString__Alternatives4946 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_26_in_rule__StateType__Alternatives4979 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_27_in_rule__StateType__Alternatives5000 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_28_in_rule__StateType__Alternatives5021 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_29_in_rule__StateType__Alternatives5042 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_30_in_rule__TransitionType__Alternatives5078 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_31_in_rule__TransitionType__Alternatives5099 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_32_in_rule__TransitionType__Alternatives5120 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_33_in_rule__HistoryType__Alternatives5156 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_34_in_rule__HistoryType__Alternatives5177 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_35_in_rule__HistoryType__Alternatives5198 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_36_in_rule__CompareOperator__Alternatives5234 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_37_in_rule__CompareOperator__Alternatives5255 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_38_in_rule__CompareOperator__Alternatives5276 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_39_in_rule__CompareOperator__Alternatives5297 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_40_in_rule__CompareOperator__Alternatives5318 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_41_in_rule__CompareOperator__Alternatives5339 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_42_in_rule__ValueType__Alternatives5375 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_43_in_rule__ValueType__Alternatives5396 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_44_in_rule__ValueType__Alternatives5417 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_45_in_rule__ValueType__Alternatives5438 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_46_in_rule__ValueType__Alternatives5459 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_47_in_rule__ValueType__Alternatives5480 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_48_in_rule__ValueType__Alternatives5501 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_49_in_rule__ValueType__Alternatives5522 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_50_in_rule__CombineOperator__Alternatives5558 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_21_in_rule__CombineOperator__Alternatives5579 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_23_in_rule__CombineOperator__Alternatives5600 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_51_in_rule__CombineOperator__Alternatives5621 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_52_in_rule__CombineOperator__Alternatives5642 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_18_in_rule__CombineOperator__Alternatives5663 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_19_in_rule__CombineOperator__Alternatives5684 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_49_in_rule__CombineOperator__Alternatives5705 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group__0__Impl_in_rule__RootRegion__Group__05738 = new BitSet(new long[]{0x00E000003C000400L,0x0000000000000200L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group__1_in_rule__RootRegion__Group__05741 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group__1__Impl_in_rule__RootRegion__Group__15799 = new BitSet(new long[]{0x00E000003C000400L,0x0000000000000200L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group__2_in_rule__RootRegion__Group__15802 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__AnnotationsAssignment_1_in_rule__RootRegion__Group__1__Impl5829 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000200L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group__2__Impl_in_rule__RootRegion__Group__25860 = new BitSet(new long[]{0x00E000003C000400L,0x0000000000000200L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group__3_in_rule__RootRegion__Group__25863 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__0_in_rule__RootRegion__Group__2__Impl5890 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group__3__Impl_in_rule__RootRegion__Group__35921 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__StatesAssignment_3_in_rule__RootRegion__Group__3__Impl5948 = new BitSet(new long[]{0x00C000003C000402L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__0__Impl_in_rule__RootRegion__Group_2__05987 = new BitSet(new long[]{0x00A0000000000400L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__1_in_rule__RootRegion__Group_2__05990 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__AnnotationsAssignment_2_0_in_rule__RootRegion__Group_2__0__Impl6017 = new BitSet(new long[]{0x0080000000000402L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__1__Impl_in_rule__RootRegion__Group_2__16048 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__2_in_rule__RootRegion__Group_2__16051 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_53_in_rule__RootRegion__Group_2__1__Impl6079 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__2__Impl_in_rule__RootRegion__Group_2__26110 = new BitSet(new long[]{0x0000000000010010L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__3_in_rule__RootRegion__Group_2__26113 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__IdAssignment_2_2_in_rule__RootRegion__Group_2__2__Impl6140 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__3__Impl_in_rule__RootRegion__Group_2__36170 = new BitSet(new long[]{0x0000000000010010L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__4_in_rule__RootRegion__Group_2__36173 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__LabelAssignment_2_3_in_rule__RootRegion__Group_2__3__Impl6200 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__4__Impl_in_rule__RootRegion__Group_2__46231 = new BitSet(new long[]{0x0083FC00000004A0L,0x0000000000078000L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__5_in_rule__RootRegion__Group_2__46234 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_16_in_rule__RootRegion__Group_2__4__Impl6262 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__5__Impl_in_rule__RootRegion__Group_2__56293 = new BitSet(new long[]{0x0083FC00000004A0L,0x0000000000078000L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__6_in_rule__RootRegion__Group_2__56296 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__ValuedObjectsAssignment_2_5_in_rule__RootRegion__Group_2__5__Impl6323 = new BitSet(new long[]{0x0083FC0000000422L,0x0000000000078000L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__6__Impl_in_rule__RootRegion__Group_2__66354 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__BodyTextAssignment_2_6_in_rule__RootRegion__Group_2__6__Impl6381 = new BitSet(new long[]{0x0000000000000082L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group__0__Impl_in_rule__SingleRegion__Group__06426 = new BitSet(new long[]{0x20A000003C000400L,0x0000000000001800L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group__1_in_rule__SingleRegion__Group__06429 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group__1__Impl_in_rule__SingleRegion__Group__16487 = new BitSet(new long[]{0x20A000003C000400L,0x0000000000001800L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group__2_in_rule__SingleRegion__Group__16490 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__0_in_rule__SingleRegion__Group__1__Impl6517 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group__2__Impl_in_rule__SingleRegion__Group__26548 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__StatesAssignment_2_in_rule__SingleRegion__Group__2__Impl6575 = new BitSet(new long[]{0x208000003C000402L,0x0000000000001800L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__0__Impl_in_rule__SingleRegion__Group_1__06612 = new BitSet(new long[]{0x00A0000000000400L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__1_in_rule__SingleRegion__Group_1__06615 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__AnnotationsAssignment_1_0_in_rule__SingleRegion__Group_1__0__Impl6642 = new BitSet(new long[]{0x0080000000000402L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__1__Impl_in_rule__SingleRegion__Group_1__16673 = new BitSet(new long[]{0x0000000000010030L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__2_in_rule__SingleRegion__Group_1__16676 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_53_in_rule__SingleRegion__Group_1__1__Impl6704 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__2__Impl_in_rule__SingleRegion__Group_1__26735 = new BitSet(new long[]{0x0000000000010030L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__3_in_rule__SingleRegion__Group_1__26738 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__IdAssignment_1_2_in_rule__SingleRegion__Group_1__2__Impl6765 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__3__Impl_in_rule__SingleRegion__Group_1__36796 = new BitSet(new long[]{0x0000000000010030L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__4_in_rule__SingleRegion__Group_1__36799 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__LabelAssignment_1_3_in_rule__SingleRegion__Group_1__3__Impl6826 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__4__Impl_in_rule__SingleRegion__Group_1__46857 = new BitSet(new long[]{0x0083FC00000004A0L,0x0000000000078000L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__5_in_rule__SingleRegion__Group_1__46860 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_16_in_rule__SingleRegion__Group_1__4__Impl6888 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__5__Impl_in_rule__SingleRegion__Group_1__56919 = new BitSet(new long[]{0x0083FC00000004A0L,0x0000000000078000L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__6_in_rule__SingleRegion__Group_1__56922 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__ValuedObjectsAssignment_1_5_in_rule__SingleRegion__Group_1__5__Impl6949 = new BitSet(new long[]{0x0083FC0000000422L,0x0000000000078000L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__6__Impl_in_rule__SingleRegion__Group_1__66980 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__BodyTextAssignment_1_6_in_rule__SingleRegion__Group_1__6__Impl7007 = new BitSet(new long[]{0x0000000000000082L});
+        public static final BitSet FOLLOW_rule__Region__Group__0__Impl_in_rule__Region__Group__07052 = new BitSet(new long[]{0x00A0000000000400L});
+        public static final BitSet FOLLOW_rule__Region__Group__1_in_rule__Region__Group__07055 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Region__Group__1__Impl_in_rule__Region__Group__17113 = new BitSet(new long[]{0x00A0000000000400L});
+        public static final BitSet FOLLOW_rule__Region__Group__2_in_rule__Region__Group__17116 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Region__AnnotationsAssignment_1_in_rule__Region__Group__1__Impl7143 = new BitSet(new long[]{0x0080000000000402L});
+        public static final BitSet FOLLOW_rule__Region__Group__2__Impl_in_rule__Region__Group__27174 = new BitSet(new long[]{0x0000000000010030L});
+        public static final BitSet FOLLOW_rule__Region__Group__3_in_rule__Region__Group__27177 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_53_in_rule__Region__Group__2__Impl7205 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Region__Group__3__Impl_in_rule__Region__Group__37236 = new BitSet(new long[]{0x0000000000010030L});
+        public static final BitSet FOLLOW_rule__Region__Group__4_in_rule__Region__Group__37239 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Region__IdAssignment_3_in_rule__Region__Group__3__Impl7266 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Region__Group__4__Impl_in_rule__Region__Group__47297 = new BitSet(new long[]{0x0000000000010030L});
+        public static final BitSet FOLLOW_rule__Region__Group__5_in_rule__Region__Group__47300 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Region__LabelAssignment_4_in_rule__Region__Group__4__Impl7327 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Region__Group__5__Impl_in_rule__Region__Group__57358 = new BitSet(new long[]{0x2083FC003C0004A0L,0x0000000000079800L});
+        public static final BitSet FOLLOW_rule__Region__Group__6_in_rule__Region__Group__57361 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_16_in_rule__Region__Group__5__Impl7389 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Region__Group__6__Impl_in_rule__Region__Group__67420 = new BitSet(new long[]{0x2083FC003C0004A0L,0x0000000000079800L});
+        public static final BitSet FOLLOW_rule__Region__Group__7_in_rule__Region__Group__67423 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Region__ValuedObjectsAssignment_6_in_rule__Region__Group__6__Impl7450 = new BitSet(new long[]{0x0083FC0000000422L,0x0000000000078000L});
+        public static final BitSet FOLLOW_rule__Region__Group__7__Impl_in_rule__Region__Group__77481 = new BitSet(new long[]{0x2083FC003C0004A0L,0x0000000000079800L});
+        public static final BitSet FOLLOW_rule__Region__Group__8_in_rule__Region__Group__77484 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Region__BodyTextAssignment_7_in_rule__Region__Group__7__Impl7511 = new BitSet(new long[]{0x0000000000000082L});
+        public static final BitSet FOLLOW_rule__Region__Group__8__Impl_in_rule__Region__Group__87542 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Region__StatesAssignment_8_in_rule__Region__Group__8__Impl7571 = new BitSet(new long[]{0x2083FC003C0004A2L,0x0000000000079800L});
+        public static final BitSet FOLLOW_rule__Region__StatesAssignment_8_in_rule__Region__Group__8__Impl7583 = new BitSet(new long[]{0x2083FC003C0004A2L,0x0000000000079800L});
+        public static final BitSet FOLLOW_rule__SCChart__Group__0__Impl_in_rule__SCChart__Group__07634 = new BitSet(new long[]{0x00C000003C000400L});
+        public static final BitSet FOLLOW_rule__SCChart__Group__1_in_rule__SCChart__Group__07637 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__AnnotationsAssignment_0_in_rule__SCChart__Group__0__Impl7664 = new BitSet(new long[]{0x0080000000000402L});
+        public static final BitSet FOLLOW_rule__SCChart__Group__1__Impl_in_rule__SCChart__Group__17695 = new BitSet(new long[]{0x00C000003C000400L});
+        public static final BitSet FOLLOW_rule__SCChart__Group__2_in_rule__SCChart__Group__17698 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__TypeAssignment_1_in_rule__SCChart__Group__1__Impl7725 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group__2__Impl_in_rule__SCChart__Group__27756 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__SCChart__Group__3_in_rule__SCChart__Group__27759 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_54_in_rule__SCChart__Group__2__Impl7787 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group__3__Impl_in_rule__SCChart__Group__37818 = new BitSet(new long[]{0x0880000000000010L});
+        public static final BitSet FOLLOW_rule__SCChart__Group__4_in_rule__SCChart__Group__37821 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__IdAssignment_3_in_rule__SCChart__Group__3__Impl7848 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group__4__Impl_in_rule__SCChart__Group__47878 = new BitSet(new long[]{0x0880000000000010L});
+        public static final BitSet FOLLOW_rule__SCChart__Group__5_in_rule__SCChart__Group__47881 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__LabelAssignment_4_in_rule__SCChart__Group__4__Impl7908 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group__5__Impl_in_rule__SCChart__Group__57939 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Alternatives_5_in_rule__SCChart__Group__5__Impl7966 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0__0__Impl_in_rule__SCChart__Group_5_0__08009 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0__1_in_rule__SCChart__Group_5_0__08012 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_55_in_rule__SCChart__Group_5_0__0__Impl8040 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0__1__Impl_in_rule__SCChart__Group_5_0__18071 = new BitSet(new long[]{0x0100000000000000L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0__2_in_rule__SCChart__Group_5_0__18074 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__BodyReferenceAssignment_5_0_1_in_rule__SCChart__Group_5_0__1__Impl8101 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0__2__Impl_in_rule__SCChart__Group_5_0__28131 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__0_in_rule__SCChart__Group_5_0__2__Impl8158 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__0__Impl_in_rule__SCChart__Group_5_0_2__08195 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__1_in_rule__SCChart__Group_5_0_2__08198 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_56_in_rule__SCChart__Group_5_0_2__0__Impl8226 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__1__Impl_in_rule__SCChart__Group_5_0_2__18257 = new BitSet(new long[]{0x0600000000000000L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__2_in_rule__SCChart__Group_5_0_2__18260 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__RenamingsAssignment_5_0_2_1_in_rule__SCChart__Group_5_0_2__1__Impl8287 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__2__Impl_in_rule__SCChart__Group_5_0_2__28317 = new BitSet(new long[]{0x0600000000000000L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__3_in_rule__SCChart__Group_5_0_2__28320 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2_2__0_in_rule__SCChart__Group_5_0_2__2__Impl8347 = new BitSet(new long[]{0x0400000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2__3__Impl_in_rule__SCChart__Group_5_0_2__38378 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_57_in_rule__SCChart__Group_5_0_2__3__Impl8406 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2_2__0__Impl_in_rule__SCChart__Group_5_0_2_2__08445 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2_2__1_in_rule__SCChart__Group_5_0_2_2__08448 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_58_in_rule__SCChart__Group_5_0_2_2__0__Impl8476 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_0_2_2__1__Impl_in_rule__SCChart__Group_5_0_2_2__18507 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__RenamingsAssignment_5_0_2_2_1_in_rule__SCChart__Group_5_0_2_2__1__Impl8534 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1__0__Impl_in_rule__SCChart__Group_5_1__08568 = new BitSet(new long[]{0x20A3FC003C0004A0L,0x00000000000FB878L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1__1_in_rule__SCChart__Group_5_1__08571 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_59_in_rule__SCChart__Group_5_1__0__Impl8599 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1__1__Impl_in_rule__SCChart__Group_5_1__18630 = new BitSet(new long[]{0x1000000000000000L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1__2_in_rule__SCChart__Group_5_1__18633 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1__0_in_rule__SCChart__Group_5_1__1__Impl8660 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1__2__Impl_in_rule__SCChart__Group_5_1__28690 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_60_in_rule__SCChart__Group_5_1__2__Impl8718 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1__0__Impl_in_rule__SCChart__Group_5_1_1__08755 = new BitSet(new long[]{0x20A3FC003C0004A0L,0x00000000000FB878L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1__1_in_rule__SCChart__Group_5_1_1__08758 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Alternatives_5_1_1_0_in_rule__SCChart__Group_5_1_1__0__Impl8785 = new BitSet(new long[]{0x0083FC0000000422L,0x00000000000FA078L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1__1__Impl_in_rule__SCChart__Group_5_1_1__18816 = new BitSet(new long[]{0x20A3FC003C0004A0L,0x00000000000FB878L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1__2_in_rule__SCChart__Group_5_1_1__18819 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__BodyTextAssignment_5_1_1_1_in_rule__SCChart__Group_5_1_1__1__Impl8846 = new BitSet(new long[]{0x0000000000000082L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1__2__Impl_in_rule__SCChart__Group_5_1_1__28877 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1_2__0_in_rule__SCChart__Group_5_1_1__2__Impl8904 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1_2__0__Impl_in_rule__SCChart__Group_5_1_1_2__08941 = new BitSet(new long[]{0x00A0000000000400L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1_2__1_in_rule__SCChart__Group_5_1_1_2__08944 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__RegionsAssignment_5_1_1_2_0_in_rule__SCChart__Group_5_1_1_2__0__Impl8971 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1_2__1__Impl_in_rule__SCChart__Group_5_1_1_2__19001 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__RegionsAssignment_5_1_1_2_1_in_rule__SCChart__Group_5_1_1_2__1__Impl9028 = new BitSet(new long[]{0x00A0000000000402L});
+        public static final BitSet FOLLOW_rule__State__Group__0__Impl_in_rule__State__Group__09063 = new BitSet(new long[]{0x208000003C000400L,0x0000000000001800L});
+        public static final BitSet FOLLOW_rule__State__Group__1_in_rule__State__Group__09066 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__AnnotationsAssignment_0_in_rule__State__Group__0__Impl9093 = new BitSet(new long[]{0x0080000000000402L});
+        public static final BitSet FOLLOW_rule__State__Group__1__Impl_in_rule__State__Group__19124 = new BitSet(new long[]{0x208000003C000400L,0x0000000000001800L});
+        public static final BitSet FOLLOW_rule__State__Group__2_in_rule__State__Group__19127 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Alternatives_1_in_rule__State__Group__1__Impl9154 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group__2__Impl_in_rule__State__Group__29185 = new BitSet(new long[]{0x208000003C000400L,0x0000000000001800L});
+        public static final BitSet FOLLOW_rule__State__Group__3_in_rule__State__Group__29188 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__TypeAssignment_2_in_rule__State__Group__2__Impl9215 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group__3__Impl_in_rule__State__Group__39246 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__State__Group__4_in_rule__State__Group__39249 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_61_in_rule__State__Group__3__Impl9277 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group__4__Impl_in_rule__State__Group__49308 = new BitSet(new long[]{0x48800001C0000410L});
+        public static final BitSet FOLLOW_rule__State__Group__5_in_rule__State__Group__49311 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__IdAssignment_4_in_rule__State__Group__4__Impl9338 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group__5__Impl_in_rule__State__Group__59368 = new BitSet(new long[]{0x48800001C0000410L});
+        public static final BitSet FOLLOW_rule__State__Group__6_in_rule__State__Group__59371 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__LabelAssignment_5_in_rule__State__Group__5__Impl9398 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group__6__Impl_in_rule__State__Group__69429 = new BitSet(new long[]{0x48800001C0000410L});
+        public static final BitSet FOLLOW_rule__State__Group__7_in_rule__State__Group__69432 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Alternatives_6_in_rule__State__Group__6__Impl9459 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group__7__Impl_in_rule__State__Group__79490 = new BitSet(new long[]{0x48800001C0000410L});
+        public static final BitSet FOLLOW_rule__State__Group__8_in_rule__State__Group__79493 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__OutgoingTransitionsAssignment_7_in_rule__State__Group__7__Impl9520 = new BitSet(new long[]{0x00800001C0000402L});
+        public static final BitSet FOLLOW_rule__State__Group__8__Impl_in_rule__State__Group__89551 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_rule__State__Group__8__Impl9579 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_1_0__0__Impl_in_rule__State__Group_1_0__09628 = new BitSet(new long[]{0x0000000000000000L,0x0000000000001000L});
+        public static final BitSet FOLLOW_rule__State__Group_1_0__1_in_rule__State__Group_1_0__09631 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__InitialAssignment_1_0_0_in_rule__State__Group_1_0__0__Impl9658 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_1_0__1__Impl_in_rule__State__Group_1_0__19688 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__FinalAssignment_1_0_1_in_rule__State__Group_1_0__1__Impl9715 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_1_1__0__Impl_in_rule__State__Group_1_1__09750 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000800L});
+        public static final BitSet FOLLOW_rule__State__Group_1_1__1_in_rule__State__Group_1_1__09753 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__FinalAssignment_1_1_0_in_rule__State__Group_1_1__0__Impl9780 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_1_1__1__Impl_in_rule__State__Group_1_1__19810 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__InitialAssignment_1_1_1_in_rule__State__Group_1_1__1__Impl9837 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0__0__Impl_in_rule__State__Group_6_0__09872 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0__1_in_rule__State__Group_6_0__09875 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_55_in_rule__State__Group_6_0__0__Impl9903 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0__1__Impl_in_rule__State__Group_6_0__19934 = new BitSet(new long[]{0x0100000000000000L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0__2_in_rule__State__Group_6_0__19937 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__BodyReferenceAssignment_6_0_1_in_rule__State__Group_6_0__1__Impl9964 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0__2__Impl_in_rule__State__Group_6_0__29994 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0_2__0_in_rule__State__Group_6_0__2__Impl10021 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0_2__0__Impl_in_rule__State__Group_6_0_2__010058 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0_2__1_in_rule__State__Group_6_0_2__010061 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_56_in_rule__State__Group_6_0_2__0__Impl10089 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0_2__1__Impl_in_rule__State__Group_6_0_2__110120 = new BitSet(new long[]{0x0600000000000000L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0_2__2_in_rule__State__Group_6_0_2__110123 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__RenamingsAssignment_6_0_2_1_in_rule__State__Group_6_0_2__1__Impl10150 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0_2__2__Impl_in_rule__State__Group_6_0_2__210180 = new BitSet(new long[]{0x0600000000000000L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0_2__3_in_rule__State__Group_6_0_2__210183 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0_2_2__0_in_rule__State__Group_6_0_2__2__Impl10210 = new BitSet(new long[]{0x0400000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0_2__3__Impl_in_rule__State__Group_6_0_2__310241 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_57_in_rule__State__Group_6_0_2__3__Impl10269 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0_2_2__0__Impl_in_rule__State__Group_6_0_2_2__010308 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0_2_2__1_in_rule__State__Group_6_0_2_2__010311 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_58_in_rule__State__Group_6_0_2_2__0__Impl10339 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_0_2_2__1__Impl_in_rule__State__Group_6_0_2_2__110370 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__RenamingsAssignment_6_0_2_2_1_in_rule__State__Group_6_0_2_2__1__Impl10397 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1__0__Impl_in_rule__State__Group_6_1__010431 = new BitSet(new long[]{0x20A3FC003C0004A0L,0x00000000000FB878L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1__1_in_rule__State__Group_6_1__010434 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_59_in_rule__State__Group_6_1__0__Impl10462 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1__1__Impl_in_rule__State__Group_6_1__110493 = new BitSet(new long[]{0x1000000000000000L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1__2_in_rule__State__Group_6_1__110496 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1_1__0_in_rule__State__Group_6_1__1__Impl10523 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1__2__Impl_in_rule__State__Group_6_1__210553 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_60_in_rule__State__Group_6_1__2__Impl10581 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1_1__0__Impl_in_rule__State__Group_6_1_1__010618 = new BitSet(new long[]{0x20A3FC003C0004A0L,0x00000000000FB878L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1_1__1_in_rule__State__Group_6_1_1__010621 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Alternatives_6_1_1_0_in_rule__State__Group_6_1_1__0__Impl10648 = new BitSet(new long[]{0x0083FC0000000422L,0x00000000000FA078L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1_1__1__Impl_in_rule__State__Group_6_1_1__110679 = new BitSet(new long[]{0x20A3FC003C0004A0L,0x00000000000FB878L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1_1__2_in_rule__State__Group_6_1_1__110682 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__BodyTextAssignment_6_1_1_1_in_rule__State__Group_6_1_1__1__Impl10709 = new BitSet(new long[]{0x0000000000000082L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1_1__2__Impl_in_rule__State__Group_6_1_1__210740 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1_1_2__0_in_rule__State__Group_6_1_1__2__Impl10767 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1_1_2__0__Impl_in_rule__State__Group_6_1_1_2__010804 = new BitSet(new long[]{0x00A0000000000400L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1_1_2__1_in_rule__State__Group_6_1_1_2__010807 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__RegionsAssignment_6_1_1_2_0_in_rule__State__Group_6_1_1_2__0__Impl10834 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1_1_2__1__Impl_in_rule__State__Group_6_1_1_2__110864 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__RegionsAssignment_6_1_1_2_1_in_rule__State__Group_6_1_1_2__1__Impl10891 = new BitSet(new long[]{0x00A0000000000402L});
+        public static final BitSet FOLLOW_rule__Transition__Group__0__Impl_in_rule__Transition__Group__010926 = new BitSet(new long[]{0x00800001C0000400L});
+        public static final BitSet FOLLOW_rule__Transition__Group__1_in_rule__Transition__Group__010929 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__AnnotationsAssignment_0_in_rule__Transition__Group__0__Impl10956 = new BitSet(new long[]{0x0080000000000402L});
+        public static final BitSet FOLLOW_rule__Transition__Group__1__Impl_in_rule__Transition__Group__110987 = new BitSet(new long[]{0x0000000000000060L});
+        public static final BitSet FOLLOW_rule__Transition__Group__2_in_rule__Transition__Group__110990 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__TypeAssignment_1_in_rule__Transition__Group__1__Impl11017 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group__2__Impl_in_rule__Transition__Group__211047 = new BitSet(new long[]{0x0000000000000060L});
+        public static final BitSet FOLLOW_rule__Transition__Group__3_in_rule__Transition__Group__211050 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__PriorityAssignment_2_in_rule__Transition__Group__2__Impl11077 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group__3__Impl_in_rule__Transition__Group__311108 = new BitSet(new long[]{0x8000000E00000000L,0x0000000000006000L});
+        public static final BitSet FOLLOW_rule__Transition__Group__4_in_rule__Transition__Group__311111 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__TargetStateAssignment_3_in_rule__Transition__Group__3__Impl11138 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group__4__Impl_in_rule__Transition__Group__411168 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4__0_in_rule__Transition__Group__4__Impl11195 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4__0__Impl_in_rule__Transition__Group_4__011236 = new BitSet(new long[]{0x8000000E00000000L,0x0000000000006000L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4__1_in_rule__Transition__Group_4__011239 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__ImmediateAssignment_4_0_in_rule__Transition__Group_4__0__Impl11266 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4__1__Impl_in_rule__Transition__Group_4__111297 = new BitSet(new long[]{0x8000000E00000000L,0x0000000000006000L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4__2_in_rule__Transition__Group_4__111300 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__DeferredAssignment_4_1_in_rule__Transition__Group_4__1__Impl11327 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4__2__Impl_in_rule__Transition__Group_4__211358 = new BitSet(new long[]{0x8000000E00000000L,0x0000000000006000L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4__3_in_rule__Transition__Group_4__211361 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__HistoryAssignment_4_2_in_rule__Transition__Group_4__2__Impl11388 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4__3__Impl_in_rule__Transition__Group_4__311419 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3__0_in_rule__Transition__Group_4__3__Impl11446 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3__0__Impl_in_rule__Transition__Group_4_3__011485 = new BitSet(new long[]{0x00000000025203F0L,0x0000000000000081L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3__1_in_rule__Transition__Group_4_3__011488 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_63_in_rule__Transition__Group_4_3__0__Impl11516 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3__1__Impl_in_rule__Transition__Group_4_3__111547 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Alternatives_4_3_1_in_rule__Transition__Group_4_3__1__Impl11574 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0__0__Impl_in_rule__Transition__Group_4_3_1_0__011608 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000081L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0__1_in_rule__Transition__Group_4_3_1_0__011611 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__DelayAssignment_4_3_1_0_0_in_rule__Transition__Group_4_3_1_0__0__Impl11638 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0__1__Impl_in_rule__Transition__Group_4_3_1_0__111669 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000081L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0__2_in_rule__Transition__Group_4_3_1_0__111672 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__TriggerAssignment_4_3_1_0_1_in_rule__Transition__Group_4_3_1_0__1__Impl11699 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0__2__Impl_in_rule__Transition__Group_4_3_1_0__211730 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2__0_in_rule__Transition__Group_4_3_1_0__2__Impl11757 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2__0__Impl_in_rule__Transition__Group_4_3_1_0_2__011794 = new BitSet(new long[]{0x00000000000000A0L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2__1_in_rule__Transition__Group_4_3_1_0_2__011797 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_64_in_rule__Transition__Group_4_3_1_0_2__0__Impl11825 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2__1__Impl_in_rule__Transition__Group_4_3_1_0_2__111856 = new BitSet(new long[]{0x4000000000000000L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2__2_in_rule__Transition__Group_4_3_1_0_2__111859 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__EffectsAssignment_4_3_1_0_2_1_in_rule__Transition__Group_4_3_1_0_2__1__Impl11886 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2__2__Impl_in_rule__Transition__Group_4_3_1_0_2__211916 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2_2__0_in_rule__Transition__Group_4_3_1_0_2__2__Impl11943 = new BitSet(new long[]{0x4000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2_2__0__Impl_in_rule__Transition__Group_4_3_1_0_2_2__011980 = new BitSet(new long[]{0x00000000000000A0L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2_2__1_in_rule__Transition__Group_4_3_1_0_2_2__011983 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_rule__Transition__Group_4_3_1_0_2_2__0__Impl12011 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4_3_1_0_2_2__1__Impl_in_rule__Transition__Group_4_3_1_0_2_2__112042 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__EffectsAssignment_4_3_1_0_2_2_1_in_rule__Transition__Group_4_3_1_0_2_2__1__Impl12069 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__0__Impl_in_rule__ValuedObject__Group__012103 = new BitSet(new long[]{0x0083FC0000000420L,0x0000000000078000L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__1_in_rule__ValuedObject__Group__012106 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__AnnotationsAssignment_0_in_rule__ValuedObject__Group__0__Impl12133 = new BitSet(new long[]{0x0080000000000402L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__1__Impl_in_rule__ValuedObject__Group__112164 = new BitSet(new long[]{0x0083FC0000000420L,0x0000000000078000L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__2_in_rule__ValuedObject__Group__112167 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__InputAssignment_1_in_rule__ValuedObject__Group__1__Impl12194 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__2__Impl_in_rule__ValuedObject__Group__212225 = new BitSet(new long[]{0x0083FC0000000420L,0x0000000000078000L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__3_in_rule__ValuedObject__Group__212228 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__OutputAssignment_2_in_rule__ValuedObject__Group__2__Impl12255 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__3__Impl_in_rule__ValuedObject__Group__312286 = new BitSet(new long[]{0x0083FC0000000420L,0x0000000000078000L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__4_in_rule__ValuedObject__Group__312289 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__StaticAssignment_3_in_rule__ValuedObject__Group__3__Impl12316 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__4__Impl_in_rule__ValuedObject__Group__412347 = new BitSet(new long[]{0x0083FC0000000420L,0x0000000000078000L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__5_in_rule__ValuedObject__Group__412350 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__SignalAssignment_4_in_rule__ValuedObject__Group__4__Impl12377 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__5__Impl_in_rule__ValuedObject__Group__512408 = new BitSet(new long[]{0x0083FC0000000420L,0x0000000000078000L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__6_in_rule__ValuedObject__Group__512411 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__TypeAssignment_5_in_rule__ValuedObject__Group__5__Impl12438 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__6__Impl_in_rule__ValuedObject__Group__612469 = new BitSet(new long[]{0x4000000000000000L,0x0000000000000006L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__7_in_rule__ValuedObject__Group__612472 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__NameAssignment_6_in_rule__ValuedObject__Group__6__Impl12499 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__7__Impl_in_rule__ValuedObject__Group__712529 = new BitSet(new long[]{0x4000000000000000L,0x0000000000000006L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__8_in_rule__ValuedObject__Group__712532 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group_7__0_in_rule__ValuedObject__Group__7__Impl12559 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__8__Impl_in_rule__ValuedObject__Group__812590 = new BitSet(new long[]{0x4000000000000000L,0x0000000000000006L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__9_in_rule__ValuedObject__Group__812593 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group_8__0_in_rule__ValuedObject__Group__8__Impl12620 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group__9__Impl_in_rule__ValuedObject__Group__912651 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_rule__ValuedObject__Group__9__Impl12679 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group_7__0__Impl_in_rule__ValuedObject__Group_7__012730 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group_7__1_in_rule__ValuedObject__Group_7__012733 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_65_in_rule__ValuedObject__Group_7__0__Impl12761 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group_7__1__Impl_in_rule__ValuedObject__Group_7__112792 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__InitialValueAssignment_7_1_in_rule__ValuedObject__Group_7__1__Impl12819 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group_8__0__Impl_in_rule__ValuedObject__Group_8__012853 = new BitSet(new long[]{0x001E000000AC0000L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group_8__1_in_rule__ValuedObject__Group_8__012856 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_66_in_rule__ValuedObject__Group_8__0__Impl12884 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__Group_8__1__Impl_in_rule__ValuedObject__Group_8__112915 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObject__CombineOperatorAssignment_8_1_in_rule__ValuedObject__Group_8__1__Impl12942 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TextualCode__Group__0__Impl_in_rule__TextualCode__Group__012976 = new BitSet(new long[]{0x4000000000000000L});
+        public static final BitSet FOLLOW_rule__TextualCode__Group__1_in_rule__TextualCode__Group__012979 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TextualCode__TextAssignment_0_in_rule__TextualCode__Group__0__Impl13006 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TextualCode__Group__1__Impl_in_rule__TextualCode__Group__113036 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_rule__TextualCode__Group__1__Impl13064 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Substitution__Group__0__Impl_in_rule__Substitution__Group__013099 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+        public static final BitSet FOLLOW_rule__Substitution__Group__1_in_rule__Substitution__Group__013102 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Substitution__ActualAssignment_0_in_rule__Substitution__Group__0__Impl13129 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Substitution__Group__1__Impl_in_rule__Substitution__Group__113159 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__Substitution__Group__2_in_rule__Substitution__Group__113162 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_64_in_rule__Substitution__Group__1__Impl13190 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Substitution__Group__2__Impl_in_rule__Substitution__Group__213221 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Substitution__FormalAssignment_2_in_rule__Substitution__Group__2__Impl13248 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group__0__Impl_in_rule__EntryAction__Group__013284 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group__1_in_rule__EntryAction__Group__013287 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group__1__Impl_in_rule__EntryAction__Group__113345 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group__2_in_rule__EntryAction__Group__113348 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_67_in_rule__EntryAction__Group__1__Impl13376 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group__2__Impl_in_rule__EntryAction__Group__213407 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group__3_in_rule__EntryAction__Group__213410 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__TriggerAssignment_2_in_rule__EntryAction__Group__2__Impl13437 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group__3__Impl_in_rule__EntryAction__Group__313468 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group__4_in_rule__EntryAction__Group__313471 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group_3__0_in_rule__EntryAction__Group__3__Impl13498 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group__4__Impl_in_rule__EntryAction__Group__413529 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_rule__EntryAction__Group__4__Impl13557 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group_3__0__Impl_in_rule__EntryAction__Group_3__013598 = new BitSet(new long[]{0x00000000000000A0L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group_3__1_in_rule__EntryAction__Group_3__013601 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_64_in_rule__EntryAction__Group_3__0__Impl13629 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group_3__1__Impl_in_rule__EntryAction__Group_3__113660 = new BitSet(new long[]{0x4000000000000000L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group_3__2_in_rule__EntryAction__Group_3__113663 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__EffectsAssignment_3_1_in_rule__EntryAction__Group_3__1__Impl13690 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group_3__2__Impl_in_rule__EntryAction__Group_3__213720 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group_3_2__0_in_rule__EntryAction__Group_3__2__Impl13747 = new BitSet(new long[]{0x4000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group_3_2__0__Impl_in_rule__EntryAction__Group_3_2__013784 = new BitSet(new long[]{0x00000000000000A0L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group_3_2__1_in_rule__EntryAction__Group_3_2__013787 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_rule__EntryAction__Group_3_2__0__Impl13815 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group_3_2__1__Impl_in_rule__EntryAction__Group_3_2__113846 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__EffectsAssignment_3_2_1_in_rule__EntryAction__Group_3_2__1__Impl13873 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group__0__Impl_in_rule__DuringAction__Group__013907 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002010L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group__1_in_rule__DuringAction__Group__013910 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group__1__Impl_in_rule__DuringAction__Group__113968 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002010L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group__2_in_rule__DuringAction__Group__113971 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__ImmediateAssignment_1_in_rule__DuringAction__Group__1__Impl13998 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group__2__Impl_in_rule__DuringAction__Group__214029 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group__3_in_rule__DuringAction__Group__214032 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_68_in_rule__DuringAction__Group__2__Impl14060 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group__3__Impl_in_rule__DuringAction__Group__314091 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group__4_in_rule__DuringAction__Group__314094 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__TriggerAssignment_3_in_rule__DuringAction__Group__3__Impl14121 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group__4__Impl_in_rule__DuringAction__Group__414152 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group__5_in_rule__DuringAction__Group__414155 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group_4__0_in_rule__DuringAction__Group__4__Impl14182 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group__5__Impl_in_rule__DuringAction__Group__514213 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_rule__DuringAction__Group__5__Impl14241 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group_4__0__Impl_in_rule__DuringAction__Group_4__014284 = new BitSet(new long[]{0x00000000000000A0L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group_4__1_in_rule__DuringAction__Group_4__014287 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_64_in_rule__DuringAction__Group_4__0__Impl14315 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group_4__1__Impl_in_rule__DuringAction__Group_4__114346 = new BitSet(new long[]{0x4000000000000000L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group_4__2_in_rule__DuringAction__Group_4__114349 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__EffectsAssignment_4_1_in_rule__DuringAction__Group_4__1__Impl14376 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group_4__2__Impl_in_rule__DuringAction__Group_4__214406 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group_4_2__0_in_rule__DuringAction__Group_4__2__Impl14433 = new BitSet(new long[]{0x4000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group_4_2__0__Impl_in_rule__DuringAction__Group_4_2__014470 = new BitSet(new long[]{0x00000000000000A0L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group_4_2__1_in_rule__DuringAction__Group_4_2__014473 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_rule__DuringAction__Group_4_2__0__Impl14501 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group_4_2__1__Impl_in_rule__DuringAction__Group_4_2__114532 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__EffectsAssignment_4_2_1_in_rule__DuringAction__Group_4_2__1__Impl14559 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group__0__Impl_in_rule__ExitAction__Group__014593 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group__1_in_rule__ExitAction__Group__014596 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group__1__Impl_in_rule__ExitAction__Group__114654 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group__2_in_rule__ExitAction__Group__114657 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_69_in_rule__ExitAction__Group__1__Impl14685 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group__2__Impl_in_rule__ExitAction__Group__214716 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group__3_in_rule__ExitAction__Group__214719 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__TriggerAssignment_2_in_rule__ExitAction__Group__2__Impl14746 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group__3__Impl_in_rule__ExitAction__Group__314777 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000081L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group__4_in_rule__ExitAction__Group__314780 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group_3__0_in_rule__ExitAction__Group__3__Impl14807 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group__4__Impl_in_rule__ExitAction__Group__414838 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_rule__ExitAction__Group__4__Impl14866 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group_3__0__Impl_in_rule__ExitAction__Group_3__014907 = new BitSet(new long[]{0x00000000000000A0L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group_3__1_in_rule__ExitAction__Group_3__014910 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_64_in_rule__ExitAction__Group_3__0__Impl14938 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group_3__1__Impl_in_rule__ExitAction__Group_3__114969 = new BitSet(new long[]{0x4000000000000000L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group_3__2_in_rule__ExitAction__Group_3__114972 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__EffectsAssignment_3_1_in_rule__ExitAction__Group_3__1__Impl14999 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group_3__2__Impl_in_rule__ExitAction__Group_3__215029 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group_3_2__0_in_rule__ExitAction__Group_3__2__Impl15056 = new BitSet(new long[]{0x4000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group_3_2__0__Impl_in_rule__ExitAction__Group_3_2__015093 = new BitSet(new long[]{0x00000000000000A0L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group_3_2__1_in_rule__ExitAction__Group_3_2__015096 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_rule__ExitAction__Group_3_2__0__Impl15124 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group_3_2__1__Impl_in_rule__ExitAction__Group_3_2__115155 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__EffectsAssignment_3_2_1_in_rule__ExitAction__Group_3_2__1__Impl15182 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SuspendAction__Group__0__Impl_in_rule__SuspendAction__Group__015216 = new BitSet(new long[]{0x0083FC0000000420L,0x00000000000FA078L});
+        public static final BitSet FOLLOW_rule__SuspendAction__Group__1_in_rule__SuspendAction__Group__015219 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SuspendAction__Group__1__Impl_in_rule__SuspendAction__Group__115277 = new BitSet(new long[]{0x0083FC0000000420L,0x00000000000FA078L});
+        public static final BitSet FOLLOW_rule__SuspendAction__Group__2_in_rule__SuspendAction__Group__115280 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SuspendAction__ImmediateAssignment_1_in_rule__SuspendAction__Group__1__Impl15307 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SuspendAction__Group__2__Impl_in_rule__SuspendAction__Group__215338 = new BitSet(new long[]{0x0083FC0000000420L,0x00000000000FA078L});
+        public static final BitSet FOLLOW_rule__SuspendAction__Group__3_in_rule__SuspendAction__Group__215341 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SuspendAction__WeakAssignment_2_in_rule__SuspendAction__Group__2__Impl15368 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SuspendAction__Group__3__Impl_in_rule__SuspendAction__Group__315399 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__SuspendAction__Group__4_in_rule__SuspendAction__Group__315402 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_70_in_rule__SuspendAction__Group__3__Impl15430 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SuspendAction__Group__4__Impl_in_rule__SuspendAction__Group__415461 = new BitSet(new long[]{0x40000000025203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__SuspendAction__Group__5_in_rule__SuspendAction__Group__415464 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SuspendAction__TriggerAssignment_4_in_rule__SuspendAction__Group__4__Impl15491 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SuspendAction__Group__5__Impl_in_rule__SuspendAction__Group__515522 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_rule__SuspendAction__Group__5__Impl15550 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Emission__Group__0__Impl_in_rule__Emission__Group__015593 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__Emission__Group__1_in_rule__Emission__Group__015596 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Emission__ValuedObjectAssignment_0_in_rule__Emission__Group__0__Impl15623 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Emission__Group__1__Impl_in_rule__Emission__Group__115653 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Emission__Group_1__0_in_rule__Emission__Group__1__Impl15680 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Emission__Group_1__0__Impl_in_rule__Emission__Group_1__015715 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__Emission__Group_1__1_in_rule__Emission__Group_1__015718 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_71_in_rule__Emission__Group_1__0__Impl15746 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Emission__Group_1__1__Impl_in_rule__Emission__Group_1__115777 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__Emission__Group_1__2_in_rule__Emission__Group_1__115780 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Emission__NewValueAssignment_1_1_in_rule__Emission__Group_1__1__Impl15807 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Emission__Group_1__2__Impl_in_rule__Emission__Group_1__215837 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_72_in_rule__Emission__Group_1__2__Impl15865 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Assignment__Group__0__Impl_in_rule__Assignment__Group__015902 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Assignment__Group__1_in_rule__Assignment__Group__015905 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Assignment__ValuedObjectAssignment_0_in_rule__Assignment__Group__0__Impl15932 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Assignment__Group__1__Impl_in_rule__Assignment__Group__115962 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__Assignment__Group__2_in_rule__Assignment__Group__115965 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_65_in_rule__Assignment__Group__1__Impl15993 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Assignment__Group__2__Impl_in_rule__Assignment__Group__216024 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Assignment__ExpressionAssignment_2_in_rule__Assignment__Group__2__Impl16051 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__OrExpression__Group__0__Impl_in_rule__OrExpression__Group__016087 = new BitSet(new long[]{0x0000000000040000L});
+        public static final BitSet FOLLOW_rule__OrExpression__Group__1_in_rule__OrExpression__Group__016090 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAndExpression_in_rule__OrExpression__Group__0__Impl16117 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__OrExpression__Group__1__Impl_in_rule__OrExpression__Group__116146 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__OrExpression__Group_1__0_in_rule__OrExpression__Group__1__Impl16173 = new BitSet(new long[]{0x0000000000040002L});
+        public static final BitSet FOLLOW_rule__OrExpression__Group_1__0__Impl_in_rule__OrExpression__Group_1__016208 = new BitSet(new long[]{0x0000000000040000L});
+        public static final BitSet FOLLOW_rule__OrExpression__Group_1__1_in_rule__OrExpression__Group_1__016211 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__OrExpression__Group_1__1__Impl_in_rule__OrExpression__Group_1__116269 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__OrExpression__Group_1__2_in_rule__OrExpression__Group_1__116272 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__OrExpression__OperatorAssignment_1_1_in_rule__OrExpression__Group_1__1__Impl16299 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__OrExpression__Group_1__2__Impl_in_rule__OrExpression__Group_1__216329 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__OrExpression__SubExpressionsAssignment_1_2_in_rule__OrExpression__Group_1__2__Impl16356 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AndExpression__Group__0__Impl_in_rule__AndExpression__Group__016392 = new BitSet(new long[]{0x0000000000080000L});
+        public static final BitSet FOLLOW_rule__AndExpression__Group__1_in_rule__AndExpression__Group__016395 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleCompareOperation_in_rule__AndExpression__Group__0__Impl16422 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AndExpression__Group__1__Impl_in_rule__AndExpression__Group__116451 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AndExpression__Group_1__0_in_rule__AndExpression__Group__1__Impl16478 = new BitSet(new long[]{0x0000000000080002L});
+        public static final BitSet FOLLOW_rule__AndExpression__Group_1__0__Impl_in_rule__AndExpression__Group_1__016513 = new BitSet(new long[]{0x0000000000080000L});
+        public static final BitSet FOLLOW_rule__AndExpression__Group_1__1_in_rule__AndExpression__Group_1__016516 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AndExpression__Group_1__1__Impl_in_rule__AndExpression__Group_1__116574 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__AndExpression__Group_1__2_in_rule__AndExpression__Group_1__116577 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AndExpression__OperatorAssignment_1_1_in_rule__AndExpression__Group_1__1__Impl16604 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AndExpression__Group_1__2__Impl_in_rule__AndExpression__Group_1__216634 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AndExpression__SubExpressionsAssignment_1_2_in_rule__AndExpression__Group_1__2__Impl16661 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0__Impl_in_rule__CompareOperation__Group_0__016697 = new BitSet(new long[]{0x000003F000000000L});
+        public static final BitSet FOLLOW_rule__CompareOperation__Group_0__1_in_rule__CompareOperation__Group_0__016700 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__Group_0__0__Impl16727 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__CompareOperation__Group_0__1__Impl_in_rule__CompareOperation__Group_0__116756 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__0_in_rule__CompareOperation__Group_0__1__Impl16783 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__0__Impl_in_rule__CompareOperation__Group_0_1__016817 = new BitSet(new long[]{0x000003F000000000L});
+        public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__1_in_rule__CompareOperation__Group_0_1__016820 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__1__Impl_in_rule__CompareOperation__Group_0_1__116878 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__2_in_rule__CompareOperation__Group_0_1__116881 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__CompareOperation__OperatorAssignment_0_1_1_in_rule__CompareOperation__Group_0_1__1__Impl16908 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__2__Impl_in_rule__CompareOperation__Group_0_1__216938 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__CompareOperation__SubExpressionsAssignment_0_1_2_in_rule__CompareOperation__Group_0_1__2__Impl16965 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__NotExpression__Group_0__0__Impl_in_rule__NotExpression__Group_0__017001 = new BitSet(new long[]{0x0000000000100000L});
+        public static final BitSet FOLLOW_rule__NotExpression__Group_0__1_in_rule__NotExpression__Group_0__017004 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__NotExpression__Group_0__1__Impl_in_rule__NotExpression__Group_0__117062 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__NotExpression__Group_0__2_in_rule__NotExpression__Group_0__117065 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__NotExpression__OperatorAssignment_0_1_in_rule__NotExpression__Group_0__1__Impl17092 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__NotExpression__Group_0__2__Impl_in_rule__NotExpression__Group_0__217122 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__NotExpression__SubExpressionsAssignment_0_2_in_rule__NotExpression__Group_0__2__Impl17149 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AddExpression__Group__0__Impl_in_rule__AddExpression__Group__017185 = new BitSet(new long[]{0x0000000000200000L});
+        public static final BitSet FOLLOW_rule__AddExpression__Group__1_in_rule__AddExpression__Group__017188 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSubExpression_in_rule__AddExpression__Group__0__Impl17215 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AddExpression__Group__1__Impl_in_rule__AddExpression__Group__117244 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AddExpression__Group_1__0_in_rule__AddExpression__Group__1__Impl17271 = new BitSet(new long[]{0x0000000000200002L});
+        public static final BitSet FOLLOW_rule__AddExpression__Group_1__0__Impl_in_rule__AddExpression__Group_1__017306 = new BitSet(new long[]{0x0000000000200000L});
+        public static final BitSet FOLLOW_rule__AddExpression__Group_1__1_in_rule__AddExpression__Group_1__017309 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AddExpression__Group_1__1__Impl_in_rule__AddExpression__Group_1__117367 = new BitSet(new long[]{0x00000000024203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__AddExpression__Group_1__2_in_rule__AddExpression__Group_1__117370 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AddExpression__OperatorAssignment_1_1_in_rule__AddExpression__Group_1__1__Impl17397 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AddExpression__Group_1__2__Impl_in_rule__AddExpression__Group_1__217427 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AddExpression__SubExpressionsAssignment_1_2_in_rule__AddExpression__Group_1__2__Impl17454 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SubExpression__Group__0__Impl_in_rule__SubExpression__Group__017490 = new BitSet(new long[]{0x0000000000400000L});
+        public static final BitSet FOLLOW_rule__SubExpression__Group__1_in_rule__SubExpression__Group__017493 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleMultExpression_in_rule__SubExpression__Group__0__Impl17520 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SubExpression__Group__1__Impl_in_rule__SubExpression__Group__117549 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SubExpression__Group_1__0_in_rule__SubExpression__Group__1__Impl17576 = new BitSet(new long[]{0x0000000000400002L});
+        public static final BitSet FOLLOW_rule__SubExpression__Group_1__0__Impl_in_rule__SubExpression__Group_1__017611 = new BitSet(new long[]{0x0000000000400000L});
+        public static final BitSet FOLLOW_rule__SubExpression__Group_1__1_in_rule__SubExpression__Group_1__017614 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SubExpression__Group_1__1__Impl_in_rule__SubExpression__Group_1__117672 = new BitSet(new long[]{0x00000000024203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__SubExpression__Group_1__2_in_rule__SubExpression__Group_1__117675 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SubExpression__OperatorAssignment_1_1_in_rule__SubExpression__Group_1__1__Impl17702 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SubExpression__Group_1__2__Impl_in_rule__SubExpression__Group_1__217732 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SubExpression__SubExpressionsAssignment_1_2_in_rule__SubExpression__Group_1__2__Impl17759 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__MultExpression__Group__0__Impl_in_rule__MultExpression__Group__017795 = new BitSet(new long[]{0x0000000000800000L});
+        public static final BitSet FOLLOW_rule__MultExpression__Group__1_in_rule__MultExpression__Group__017798 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleDivExpression_in_rule__MultExpression__Group__0__Impl17825 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__MultExpression__Group__1__Impl_in_rule__MultExpression__Group__117854 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__MultExpression__Group_1__0_in_rule__MultExpression__Group__1__Impl17881 = new BitSet(new long[]{0x0000000000800002L});
+        public static final BitSet FOLLOW_rule__MultExpression__Group_1__0__Impl_in_rule__MultExpression__Group_1__017916 = new BitSet(new long[]{0x0000000000800000L});
+        public static final BitSet FOLLOW_rule__MultExpression__Group_1__1_in_rule__MultExpression__Group_1__017919 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__MultExpression__Group_1__1__Impl_in_rule__MultExpression__Group_1__117977 = new BitSet(new long[]{0x00000000024203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__MultExpression__Group_1__2_in_rule__MultExpression__Group_1__117980 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__MultExpression__OperatorAssignment_1_1_in_rule__MultExpression__Group_1__1__Impl18007 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__MultExpression__Group_1__2__Impl_in_rule__MultExpression__Group_1__218037 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__MultExpression__SubExpressionsAssignment_1_2_in_rule__MultExpression__Group_1__2__Impl18064 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DivExpression__Group__0__Impl_in_rule__DivExpression__Group__018100 = new BitSet(new long[]{0x0000000000010000L});
+        public static final BitSet FOLLOW_rule__DivExpression__Group__1_in_rule__DivExpression__Group__018103 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleModExpression_in_rule__DivExpression__Group__0__Impl18130 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DivExpression__Group__1__Impl_in_rule__DivExpression__Group__118159 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DivExpression__Group_1__0_in_rule__DivExpression__Group__1__Impl18186 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DivExpression__Group_1__0__Impl_in_rule__DivExpression__Group_1__018221 = new BitSet(new long[]{0x0000000000010000L});
+        public static final BitSet FOLLOW_rule__DivExpression__Group_1__1_in_rule__DivExpression__Group_1__018224 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DivExpression__Group_1__1__Impl_in_rule__DivExpression__Group_1__118282 = new BitSet(new long[]{0x00000000024203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__DivExpression__Group_1__2_in_rule__DivExpression__Group_1__118285 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DivExpression__OperatorAssignment_1_1_in_rule__DivExpression__Group_1__1__Impl18312 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DivExpression__Group_1__2__Impl_in_rule__DivExpression__Group_1__218342 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DivExpression__SubExpressionsAssignment_1_2_in_rule__DivExpression__Group_1__2__Impl18369 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ModExpression__Group__0__Impl_in_rule__ModExpression__Group__018405 = new BitSet(new long[]{0x0000000001000000L});
+        public static final BitSet FOLLOW_rule__ModExpression__Group__1_in_rule__ModExpression__Group__018408 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleNegExpression_in_rule__ModExpression__Group__0__Impl18435 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ModExpression__Group__1__Impl_in_rule__ModExpression__Group__118464 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ModExpression__Group_1__0_in_rule__ModExpression__Group__1__Impl18491 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ModExpression__Group_1__0__Impl_in_rule__ModExpression__Group_1__018526 = new BitSet(new long[]{0x0000000001000000L});
+        public static final BitSet FOLLOW_rule__ModExpression__Group_1__1_in_rule__ModExpression__Group_1__018529 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ModExpression__Group_1__1__Impl_in_rule__ModExpression__Group_1__118587 = new BitSet(new long[]{0x00000000024203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__ModExpression__Group_1__2_in_rule__ModExpression__Group_1__118590 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ModExpression__OperatorAssignment_1_1_in_rule__ModExpression__Group_1__1__Impl18617 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ModExpression__Group_1__2__Impl_in_rule__ModExpression__Group_1__218647 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ModExpression__SubExpressionsAssignment_1_2_in_rule__ModExpression__Group_1__2__Impl18674 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__NegExpression__Group_0__0__Impl_in_rule__NegExpression__Group_0__018710 = new BitSet(new long[]{0x0000000000400000L});
+        public static final BitSet FOLLOW_rule__NegExpression__Group_0__1_in_rule__NegExpression__Group_0__018713 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__NegExpression__Group_0__1__Impl_in_rule__NegExpression__Group_0__118771 = new BitSet(new long[]{0x00000000024203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__NegExpression__Group_0__2_in_rule__NegExpression__Group_0__118774 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__NegExpression__OperatorAssignment_0_1_in_rule__NegExpression__Group_0__1__Impl18801 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__NegExpression__Group_0__2__Impl_in_rule__NegExpression__Group_0__218831 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__NegExpression__SubExpressionsAssignment_0_2_in_rule__NegExpression__Group_0__2__Impl18858 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__0__Impl_in_rule__AtomicExpression__Group_2__018894 = new BitSet(new long[]{0x00000000025203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__1_in_rule__AtomicExpression__Group_2__018897 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_71_in_rule__AtomicExpression__Group_2__0__Impl18925 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__1__Impl_in_rule__AtomicExpression__Group_2__118956 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__2_in_rule__AtomicExpression__Group_2__118959 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__AtomicExpression__Group_2__1__Impl18986 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__2__Impl_in_rule__AtomicExpression__Group_2__219015 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_72_in_rule__AtomicExpression__Group_2__2__Impl19043 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_3__0__Impl_in_rule__AtomicValuedExpression__Group_3__019080 = new BitSet(new long[]{0x00000000024203E0L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_3__1_in_rule__AtomicValuedExpression__Group_3__019083 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_71_in_rule__AtomicValuedExpression__Group_3__0__Impl19111 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_3__1__Impl_in_rule__AtomicValuedExpression__Group_3__119142 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_3__2_in_rule__AtomicValuedExpression__Group_3__119145 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedExpression_in_rule__AtomicValuedExpression__Group_3__1__Impl19172 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_3__2__Impl_in_rule__AtomicValuedExpression__Group_3__219201 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_72_in_rule__AtomicValuedExpression__Group_3__2__Impl19229 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__0__Impl_in_rule__ValuedObjectTestExpression__Group_0__019266 = new BitSet(new long[]{0x0000000002020000L});
+        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__1_in_rule__ValuedObjectTestExpression__Group_0__019269 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__1__Impl_in_rule__ValuedObjectTestExpression__Group_0__119327 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__2_in_rule__ValuedObjectTestExpression__Group_0__119330 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__OperatorAssignment_0_1_in_rule__ValuedObjectTestExpression__Group_0__1__Impl19357 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__2__Impl_in_rule__ValuedObjectTestExpression__Group_0__219387 = new BitSet(new long[]{0x0000000002020020L});
+        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__3_in_rule__ValuedObjectTestExpression__Group_0__219390 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_71_in_rule__ValuedObjectTestExpression__Group_0__2__Impl19418 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__3__Impl_in_rule__ValuedObjectTestExpression__Group_0__319449 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__4_in_rule__ValuedObjectTestExpression__Group_0__319452 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3_in_rule__ValuedObjectTestExpression__Group_0__3__Impl19479 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__4__Impl_in_rule__ValuedObjectTestExpression__Group_0__419509 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_72_in_rule__ValuedObjectTestExpression__Group_0__4__Impl19537 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__Group__0__Impl_in_rule__TagAnnotation__Group__019578 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__Group__1_in_rule__TagAnnotation__Group__019581 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_55_in_rule__TagAnnotation__Group__0__Impl19609 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__Group__1__Impl_in_rule__TagAnnotation__Group__119640 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__Group__2_in_rule__TagAnnotation__Group__119643 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__NameAssignment_1_in_rule__TagAnnotation__Group__1__Impl19670 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__Group__2__Impl_in_rule__TagAnnotation__Group__219700 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__0_in_rule__TagAnnotation__Group__2__Impl19727 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__0__Impl_in_rule__TagAnnotation__Group_2__019764 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__1_in_rule__TagAnnotation__Group_2__019767 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_71_in_rule__TagAnnotation__Group_2__0__Impl19795 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__1__Impl_in_rule__TagAnnotation__Group_2__119826 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__2_in_rule__TagAnnotation__Group_2__119829 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__AnnotationsAssignment_2_1_in_rule__TagAnnotation__Group_2__1__Impl19856 = new BitSet(new long[]{0x0080000000000402L});
+        public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__2__Impl_in_rule__TagAnnotation__Group_2__219887 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_72_in_rule__TagAnnotation__Group_2__2__Impl19915 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__0__Impl_in_rule__KeyStringValueAnnotation__Group__019952 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__1_in_rule__KeyStringValueAnnotation__Group__019955 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_55_in_rule__KeyStringValueAnnotation__Group__0__Impl19983 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__1__Impl_in_rule__KeyStringValueAnnotation__Group__120014 = new BitSet(new long[]{0x0000000000000030L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__2_in_rule__KeyStringValueAnnotation__Group__120017 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__NameAssignment_1_in_rule__KeyStringValueAnnotation__Group__1__Impl20044 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__2__Impl_in_rule__KeyStringValueAnnotation__Group__220074 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__3_in_rule__KeyStringValueAnnotation__Group__220077 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__ValueAssignment_2_in_rule__KeyStringValueAnnotation__Group__2__Impl20104 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__3__Impl_in_rule__KeyStringValueAnnotation__Group__320134 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__0_in_rule__KeyStringValueAnnotation__Group__3__Impl20161 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__0__Impl_in_rule__KeyStringValueAnnotation__Group_3__020200 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__1_in_rule__KeyStringValueAnnotation__Group_3__020203 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_71_in_rule__KeyStringValueAnnotation__Group_3__0__Impl20231 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__1__Impl_in_rule__KeyStringValueAnnotation__Group_3__120262 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__2_in_rule__KeyStringValueAnnotation__Group_3__120265 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyStringValueAnnotation__Group_3__1__Impl20292 = new BitSet(new long[]{0x0080000000000402L});
+        public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__2__Impl_in_rule__KeyStringValueAnnotation__Group_3__220323 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_72_in_rule__KeyStringValueAnnotation__Group_3__2__Impl20351 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group__020388 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1_in_rule__TypedKeyStringValueAnnotation__Group__020391 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_55_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl20419 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group__120450 = new BitSet(new long[]{0x0100000000000000L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2_in_rule__TypedKeyStringValueAnnotation__Group__120453 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__NameAssignment_1_in_rule__TypedKeyStringValueAnnotation__Group__1__Impl20480 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group__220510 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3_in_rule__TypedKeyStringValueAnnotation__Group__220513 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_56_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl20541 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3__Impl_in_rule__TypedKeyStringValueAnnotation__Group__320572 = new BitSet(new long[]{0x0200000000000000L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4_in_rule__TypedKeyStringValueAnnotation__Group__320575 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__TypeAssignment_3_in_rule__TypedKeyStringValueAnnotation__Group__3__Impl20602 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4__Impl_in_rule__TypedKeyStringValueAnnotation__Group__420632 = new BitSet(new long[]{0x0000000000000030L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5_in_rule__TypedKeyStringValueAnnotation__Group__420635 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_57_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl20663 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5__Impl_in_rule__TypedKeyStringValueAnnotation__Group__520694 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6_in_rule__TypedKeyStringValueAnnotation__Group__520697 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__ValueAssignment_5_in_rule__TypedKeyStringValueAnnotation__Group__5__Impl20724 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6__Impl_in_rule__TypedKeyStringValueAnnotation__Group__620754 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0_in_rule__TypedKeyStringValueAnnotation__Group__6__Impl20781 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__020826 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1_in_rule__TypedKeyStringValueAnnotation__Group_6__020829 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_71_in_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl20857 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__120888 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2_in_rule__TypedKeyStringValueAnnotation__Group_6__120891 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1_in_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl20918 = new BitSet(new long[]{0x0080000000000402L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__220949 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_72_in_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl20977 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__0__Impl_in_rule__KeyBooleanValueAnnotation__Group__021014 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__1_in_rule__KeyBooleanValueAnnotation__Group__021017 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_55_in_rule__KeyBooleanValueAnnotation__Group__0__Impl21045 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__1__Impl_in_rule__KeyBooleanValueAnnotation__Group__121076 = new BitSet(new long[]{0x0000000000000200L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__2_in_rule__KeyBooleanValueAnnotation__Group__121079 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__NameAssignment_1_in_rule__KeyBooleanValueAnnotation__Group__1__Impl21106 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__2__Impl_in_rule__KeyBooleanValueAnnotation__Group__221136 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__3_in_rule__KeyBooleanValueAnnotation__Group__221139 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__ValueAssignment_2_in_rule__KeyBooleanValueAnnotation__Group__2__Impl21166 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__3__Impl_in_rule__KeyBooleanValueAnnotation__Group__321196 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0_in_rule__KeyBooleanValueAnnotation__Group__3__Impl21223 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__021262 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1_in_rule__KeyBooleanValueAnnotation__Group_3__021265 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_71_in_rule__KeyBooleanValueAnnotation__Group_3__0__Impl21293 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__121324 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2_in_rule__KeyBooleanValueAnnotation__Group_3__121327 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyBooleanValueAnnotation__Group_3__1__Impl21354 = new BitSet(new long[]{0x0080000000000402L});
+        public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__221385 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_72_in_rule__KeyBooleanValueAnnotation__Group_3__2__Impl21413 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__0__Impl_in_rule__KeyIntValueAnnotation__Group__021450 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__1_in_rule__KeyIntValueAnnotation__Group__021453 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_55_in_rule__KeyIntValueAnnotation__Group__0__Impl21481 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__1__Impl_in_rule__KeyIntValueAnnotation__Group__121512 = new BitSet(new long[]{0x0000000000000040L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__2_in_rule__KeyIntValueAnnotation__Group__121515 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__NameAssignment_1_in_rule__KeyIntValueAnnotation__Group__1__Impl21542 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__2__Impl_in_rule__KeyIntValueAnnotation__Group__221572 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__3_in_rule__KeyIntValueAnnotation__Group__221575 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__ValueAssignment_2_in_rule__KeyIntValueAnnotation__Group__2__Impl21602 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__3__Impl_in_rule__KeyIntValueAnnotation__Group__321632 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__0_in_rule__KeyIntValueAnnotation__Group__3__Impl21659 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__0__Impl_in_rule__KeyIntValueAnnotation__Group_3__021698 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__1_in_rule__KeyIntValueAnnotation__Group_3__021701 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_71_in_rule__KeyIntValueAnnotation__Group_3__0__Impl21729 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__1__Impl_in_rule__KeyIntValueAnnotation__Group_3__121760 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__2_in_rule__KeyIntValueAnnotation__Group_3__121763 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyIntValueAnnotation__Group_3__1__Impl21790 = new BitSet(new long[]{0x0080000000000402L});
+        public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__2__Impl_in_rule__KeyIntValueAnnotation__Group_3__221821 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_72_in_rule__KeyIntValueAnnotation__Group_3__2__Impl21849 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__0__Impl_in_rule__KeyFloatValueAnnotation__Group__021886 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__1_in_rule__KeyFloatValueAnnotation__Group__021889 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_55_in_rule__KeyFloatValueAnnotation__Group__0__Impl21917 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__1__Impl_in_rule__KeyFloatValueAnnotation__Group__121948 = new BitSet(new long[]{0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__2_in_rule__KeyFloatValueAnnotation__Group__121951 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__NameAssignment_1_in_rule__KeyFloatValueAnnotation__Group__1__Impl21978 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__2__Impl_in_rule__KeyFloatValueAnnotation__Group__222008 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__3_in_rule__KeyFloatValueAnnotation__Group__222011 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__ValueAssignment_2_in_rule__KeyFloatValueAnnotation__Group__2__Impl22038 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__3__Impl_in_rule__KeyFloatValueAnnotation__Group__322068 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0_in_rule__KeyFloatValueAnnotation__Group__3__Impl22095 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0__Impl_in_rule__KeyFloatValueAnnotation__Group_3__022134 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1_in_rule__KeyFloatValueAnnotation__Group_3__022137 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_71_in_rule__KeyFloatValueAnnotation__Group_3__0__Impl22165 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1__Impl_in_rule__KeyFloatValueAnnotation__Group_3__122196 = new BitSet(new long[]{0x0080000000000400L,0x0000000000000100L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2_in_rule__KeyFloatValueAnnotation__Group_3__122199 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyFloatValueAnnotation__Group_3__1__Impl22226 = new BitSet(new long[]{0x0080000000000402L});
+        public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2__Impl_in_rule__KeyFloatValueAnnotation__Group_3__222257 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_72_in_rule__KeyFloatValueAnnotation__Group_3__2__Impl22285 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ImportAnnotation__Group__0__Impl_in_rule__ImportAnnotation__Group__022322 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_rule__ImportAnnotation__Group__1_in_rule__ImportAnnotation__Group__022325 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_73_in_rule__ImportAnnotation__Group__0__Impl22353 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ImportAnnotation__Group__1__Impl_in_rule__ImportAnnotation__Group__122384 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ImportAnnotation__ImportURIAssignment_1_in_rule__ImportAnnotation__Group__1__Impl22411 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group__0__Impl_in_rule__ExtendedID__Group__022445 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group__1_in_rule__ExtendedID__Group__022448 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group__0__Impl22475 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group__1__Impl_in_rule__ExtendedID__Group__122504 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0_in_rule__ExtendedID__Group__1__Impl22531 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000400L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0__Impl_in_rule__ExtendedID__Group_1__022566 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1_in_rule__ExtendedID__Group_1__022569 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_74_in_rule__ExtendedID__Group_1__0__Impl22597 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__122628 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl22655 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleImportAnnotation_in_rule__RootRegion__AnnotationsAssignment_122693 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__RootRegion__AnnotationsAssignment_2_022724 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__RootRegion__IdAssignment_2_222755 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_STRING_in_rule__RootRegion__LabelAssignment_2_322786 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedObject_in_rule__RootRegion__ValuedObjectsAssignment_2_522817 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTextualCode_in_rule__RootRegion__BodyTextAssignment_2_622848 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSCChart_in_rule__RootRegion__StatesAssignment_322879 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__SingleRegion__AnnotationsAssignment_1_022910 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__SingleRegion__IdAssignment_1_222941 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_STRING_in_rule__SingleRegion__LabelAssignment_1_322972 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedObject_in_rule__SingleRegion__ValuedObjectsAssignment_1_523003 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTextualCode_in_rule__SingleRegion__BodyTextAssignment_1_623034 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleState_in_rule__SingleRegion__StatesAssignment_223065 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__Region__AnnotationsAssignment_123096 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__Region__IdAssignment_323127 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_STRING_in_rule__Region__LabelAssignment_423158 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedObject_in_rule__Region__ValuedObjectsAssignment_623189 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTextualCode_in_rule__Region__BodyTextAssignment_723220 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleState_in_rule__Region__StatesAssignment_823251 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__SCChart__AnnotationsAssignment_023282 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleStateType_in_rule__SCChart__TypeAssignment_123313 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__SCChart__IdAssignment_323344 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_STRING_in_rule__SCChart__LabelAssignment_423375 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__SCChart__BodyReferenceAssignment_5_0_123410 = new BitSet(new long[]{0x0000000000000002L});
     }
 
     private static class FollowSets001 {
-        public static final BitSet FOLLOW_ruleSubstitution_in_rule__SCChart__RenamingsAssignment_5_0_2_123453 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSubstitution_in_rule__SCChart__RenamingsAssignment_5_0_2_2_123484 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedObject_in_rule__SCChart__ValuedObjectsAssignment_5_1_1_0_023515 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleLocalAction_in_rule__SCChart__LocalActionsAssignment_5_1_1_0_123546 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTextualCode_in_rule__SCChart__BodyTextAssignment_5_1_1_123577 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSingleRegion_in_rule__SCChart__RegionsAssignment_5_1_1_2_023608 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleRegion_in_rule__SCChart__RegionsAssignment_5_1_1_2_123639 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__State__AnnotationsAssignment_023670 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_75_in_rule__State__InitialAssignment_1_0_023706 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_76_in_rule__State__FinalAssignment_1_0_123750 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_76_in_rule__State__FinalAssignment_1_1_023794 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_75_in_rule__State__InitialAssignment_1_1_123838 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleStateType_in_rule__State__TypeAssignment_223877 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__State__IdAssignment_423908 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_STRING_in_rule__State__LabelAssignment_523939 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__State__BodyReferenceAssignment_6_0_123974 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSubstitution_in_rule__State__RenamingsAssignment_6_0_2_124009 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSubstitution_in_rule__State__RenamingsAssignment_6_0_2_2_124040 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedObject_in_rule__State__ValuedObjectsAssignment_6_1_1_0_024071 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleLocalAction_in_rule__State__LocalActionsAssignment_6_1_1_0_124102 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTextualCode_in_rule__State__BodyTextAssignment_6_1_1_124133 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSingleRegion_in_rule__State__RegionsAssignment_6_1_1_2_024164 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleRegion_in_rule__State__RegionsAssignment_6_1_1_2_124195 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTransition_in_rule__State__OutgoingTransitionsAssignment_724226 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__Transition__AnnotationsAssignment_024257 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTransitionType_in_rule__Transition__TypeAssignment_124288 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_INT_in_rule__Transition__PriorityAssignment_224319 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__Transition__TargetStateAssignment_324354 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_77_in_rule__Transition__ImmediateAssignment_4_024394 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_78_in_rule__Transition__DeferredAssignment_4_124438 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleHistoryType_in_rule__Transition__HistoryAssignment_4_224477 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_INT_in_rule__Transition__DelayAssignment_4_3_1_0_024508 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__Transition__TriggerAssignment_4_3_1_0_124539 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEffect_in_rule__Transition__EffectsAssignment_4_3_1_0_2_124570 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEffect_in_rule__Transition__EffectsAssignment_4_3_1_0_2_2_124601 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_STRING_in_rule__Transition__LabelAssignment_4_3_1_124632 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__ValuedObject__AnnotationsAssignment_024663 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_79_in_rule__ValuedObject__InputAssignment_124699 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_80_in_rule__ValuedObject__OutputAssignment_224743 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_81_in_rule__ValuedObject__StaticAssignment_324787 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_82_in_rule__ValuedObject__SignalAssignment_424831 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValueType_in_rule__ValuedObject__TypeAssignment_524870 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__ValuedObject__NameAssignment_624901 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExpression_in_rule__ValuedObject__InitialValueAssignment_7_124932 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleCombineOperator_in_rule__ValuedObject__CombineOperatorAssignment_8_124963 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__TextualCode__TextAssignment_024994 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__Substitution__ActualAssignment_025025 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__Substitution__FormalAssignment_225056 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__EntryAction__TriggerAssignment_225087 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEffect_in_rule__EntryAction__EffectsAssignment_3_125118 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEffect_in_rule__EntryAction__EffectsAssignment_3_2_125149 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_77_in_rule__DuringAction__ImmediateAssignment_125185 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__DuringAction__TriggerAssignment_325224 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEffect_in_rule__DuringAction__EffectsAssignment_4_125255 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEffect_in_rule__DuringAction__EffectsAssignment_4_2_125286 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__ExitAction__TriggerAssignment_225317 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEffect_in_rule__ExitAction__EffectsAssignment_3_125348 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEffect_in_rule__ExitAction__EffectsAssignment_3_2_125379 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_77_in_rule__SuspendAction__ImmediateAssignment_125415 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_83_in_rule__SuspendAction__WeakAssignment_225459 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__SuspendAction__TriggerAssignment_425498 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__Emission__ValuedObjectAssignment_025533 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExpression_in_rule__Emission__NewValueAssignment_1_125568 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__Assignment__ValuedObjectAssignment_025603 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExpression_in_rule__Assignment__ExpressionAssignment_225638 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__TextEffect__TextAssignment25669 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleOrOperator_in_rule__OrExpression__OperatorAssignment_1_125700 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAndExpression_in_rule__OrExpression__SubExpressionsAssignment_1_225731 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAndOperator_in_rule__AndExpression__OperatorAssignment_1_125762 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleCompareOperation_in_rule__AndExpression__SubExpressionsAssignment_1_225793 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_0_1_125824 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__SubExpressionsAssignment_0_1_225855 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleNotOperator_in_rule__NotExpression__OperatorAssignment_0_125886 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleNotExpression_in_rule__NotExpression__SubExpressionsAssignment_0_225917 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAddOperator_in_rule__AddExpression__OperatorAssignment_1_125948 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSubExpression_in_rule__AddExpression__SubExpressionsAssignment_1_225979 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSubOperator_in_rule__SubExpression__OperatorAssignment_1_126010 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleMultExpression_in_rule__SubExpression__SubExpressionsAssignment_1_226041 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleMultOperator_in_rule__MultExpression__OperatorAssignment_1_126072 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleDivExpression_in_rule__MultExpression__SubExpressionsAssignment_1_226103 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleDivOperator_in_rule__DivExpression__OperatorAssignment_1_126134 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleModExpression_in_rule__DivExpression__SubExpressionsAssignment_1_226165 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleModOperator_in_rule__ModExpression__OperatorAssignment_1_126196 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAtomicValuedExpression_in_rule__ModExpression__SubExpressionsAssignment_1_226227 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleSubOperator_in_rule__NegExpression__OperatorAssignment_0_126258 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleNegExpression_in_rule__NegExpression__SubExpressionsAssignment_0_226289 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0_in_rule__ValuedObjectTestExpression__OperatorAssignment_0_126320 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedObjectTestExpression_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_326353 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__ValuedObjectReference__ValuedObjectAssignment26388 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__TextExpression__TextAssignment26423 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment26454 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment26485 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__BoolValue__ValueAssignment26516 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_FLOAT_in_rule__DoubleValue__ValueAssignment26547 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_COMMENT_ANNOTATION_in_rule__CommentAnnotation__ValueAssignment26578 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_rule__TagAnnotation__NameAssignment_126609 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__TagAnnotation__AnnotationsAssignment_2_126640 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyStringValueAnnotation__NameAssignment_126671 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEString_in_rule__KeyStringValueAnnotation__ValueAssignment_226702 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_126733 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_126764 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_326795 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValueAssignment_526826 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_126857 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyBooleanValueAnnotation__NameAssignment_126888 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_226919 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_126950 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyIntValueAnnotation__NameAssignment_126981 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_INT_in_rule__KeyIntValueAnnotation__ValueAssignment_227012 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_127043 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_127074 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_FLOAT_in_rule__KeyFloatValueAnnotation__ValueAssignment_227105 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_127136 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_STRING_in_rule__ImportAnnotation__ImportURIAssignment_127167 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleBoolExpression_in_synpred12_InternalSct4262 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0_in_synpred13_InternalSct4312 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedExpression_in_synpred14_InternalSct4363 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleFloatValue_in_synpred21_InternalSct4614 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleDoubleValue_in_synpred22_InternalSct4631 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_3__0_in_synpred23_InternalSct4648 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__Group_2__0_in_synpred60_InternalSct5894 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__RootRegion__ValuedObjectsAssignment_2_5_in_synpred64_InternalSct6327 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__0_in_synpred66_InternalSct6521 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__StatesAssignment_2_in_synpred67_InternalSct6579 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__ValuedObjectsAssignment_1_5_in_synpred71_InternalSct6953 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Region__ValuedObjectsAssignment_6_in_synpred76_InternalSct7454 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Region__StatesAssignment_8_in_synpred78_InternalSct7587 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Alternatives_5_in_synpred82_InternalSct7970 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Alternatives_5_1_1_0_in_synpred85_InternalSct8789 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1_2__0_in_synpred87_InternalSct8908 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Alternatives_6_in_synpred93_InternalSct9463 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Alternatives_6_1_1_0_in_synpred99_InternalSct10652 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__State__Group_6_1_1_2__0_in_synpred101_InternalSct10771 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__Group_4__0_in_synpred105_InternalSct11199 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Transition__DelayAssignment_4_3_1_0_0_in_synpred110_InternalSct11642 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__EntryAction__Group_3_2__0_in_synpred124_InternalSct13751 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__DuringAction__Group_4_2__0_in_synpred128_InternalSct14437 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ExitAction__Group_3_2__0_in_synpred131_InternalSct15060 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSubstitution_in_rule__SCChart__RenamingsAssignment_5_0_2_123445 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSubstitution_in_rule__SCChart__RenamingsAssignment_5_0_2_2_123476 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedObject_in_rule__SCChart__ValuedObjectsAssignment_5_1_1_0_023507 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleLocalAction_in_rule__SCChart__LocalActionsAssignment_5_1_1_0_123538 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTextualCode_in_rule__SCChart__BodyTextAssignment_5_1_1_123569 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSingleRegion_in_rule__SCChart__RegionsAssignment_5_1_1_2_023600 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleRegion_in_rule__SCChart__RegionsAssignment_5_1_1_2_123631 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__State__AnnotationsAssignment_023662 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_75_in_rule__State__InitialAssignment_1_0_023698 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_76_in_rule__State__FinalAssignment_1_0_123742 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_76_in_rule__State__FinalAssignment_1_1_023786 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_75_in_rule__State__InitialAssignment_1_1_123830 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleStateType_in_rule__State__TypeAssignment_223869 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__State__IdAssignment_423900 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_STRING_in_rule__State__LabelAssignment_523931 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__State__BodyReferenceAssignment_6_0_123966 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSubstitution_in_rule__State__RenamingsAssignment_6_0_2_124001 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSubstitution_in_rule__State__RenamingsAssignment_6_0_2_2_124032 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedObject_in_rule__State__ValuedObjectsAssignment_6_1_1_0_024063 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleLocalAction_in_rule__State__LocalActionsAssignment_6_1_1_0_124094 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTextualCode_in_rule__State__BodyTextAssignment_6_1_1_124125 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSingleRegion_in_rule__State__RegionsAssignment_6_1_1_2_024156 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleRegion_in_rule__State__RegionsAssignment_6_1_1_2_124187 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTransition_in_rule__State__OutgoingTransitionsAssignment_724218 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__Transition__AnnotationsAssignment_024249 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTransitionType_in_rule__Transition__TypeAssignment_124280 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_INT_in_rule__Transition__PriorityAssignment_224311 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__Transition__TargetStateAssignment_324346 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_77_in_rule__Transition__ImmediateAssignment_4_024386 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_78_in_rule__Transition__DeferredAssignment_4_124430 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleHistoryType_in_rule__Transition__HistoryAssignment_4_224469 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_INT_in_rule__Transition__DelayAssignment_4_3_1_0_024500 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__Transition__TriggerAssignment_4_3_1_0_124531 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEffect_in_rule__Transition__EffectsAssignment_4_3_1_0_2_124562 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEffect_in_rule__Transition__EffectsAssignment_4_3_1_0_2_2_124593 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_STRING_in_rule__Transition__LabelAssignment_4_3_1_124624 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__ValuedObject__AnnotationsAssignment_024655 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_79_in_rule__ValuedObject__InputAssignment_124691 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_80_in_rule__ValuedObject__OutputAssignment_224735 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_81_in_rule__ValuedObject__StaticAssignment_324779 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_82_in_rule__ValuedObject__SignalAssignment_424823 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValueType_in_rule__ValuedObject__TypeAssignment_524862 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__ValuedObject__NameAssignment_624893 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExpression_in_rule__ValuedObject__InitialValueAssignment_7_124924 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleCombineOperator_in_rule__ValuedObject__CombineOperatorAssignment_8_124955 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__TextualCode__TextAssignment_024986 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__Substitution__ActualAssignment_025017 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__Substitution__FormalAssignment_225048 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__EntryAction__TriggerAssignment_225079 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEffect_in_rule__EntryAction__EffectsAssignment_3_125110 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEffect_in_rule__EntryAction__EffectsAssignment_3_2_125141 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_77_in_rule__DuringAction__ImmediateAssignment_125177 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__DuringAction__TriggerAssignment_325216 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEffect_in_rule__DuringAction__EffectsAssignment_4_125247 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEffect_in_rule__DuringAction__EffectsAssignment_4_2_125278 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__ExitAction__TriggerAssignment_225309 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEffect_in_rule__ExitAction__EffectsAssignment_3_125340 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEffect_in_rule__ExitAction__EffectsAssignment_3_2_125371 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_77_in_rule__SuspendAction__ImmediateAssignment_125407 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_83_in_rule__SuspendAction__WeakAssignment_225451 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__SuspendAction__TriggerAssignment_425490 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__Emission__ValuedObjectAssignment_025525 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExpression_in_rule__Emission__NewValueAssignment_1_125560 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__Assignment__ValuedObjectAssignment_025595 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExpression_in_rule__Assignment__ExpressionAssignment_225630 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__TextEffect__TextAssignment25661 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleOrOperator_in_rule__OrExpression__OperatorAssignment_1_125692 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAndExpression_in_rule__OrExpression__SubExpressionsAssignment_1_225723 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAndOperator_in_rule__AndExpression__OperatorAssignment_1_125754 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleCompareOperation_in_rule__AndExpression__SubExpressionsAssignment_1_225785 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_0_1_125816 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__SubExpressionsAssignment_0_1_225847 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleNotOperator_in_rule__NotExpression__OperatorAssignment_0_125878 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleNotExpression_in_rule__NotExpression__SubExpressionsAssignment_0_225909 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAddOperator_in_rule__AddExpression__OperatorAssignment_1_125940 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSubExpression_in_rule__AddExpression__SubExpressionsAssignment_1_225971 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSubOperator_in_rule__SubExpression__OperatorAssignment_1_126002 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleMultExpression_in_rule__SubExpression__SubExpressionsAssignment_1_226033 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleMultOperator_in_rule__MultExpression__OperatorAssignment_1_126064 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleDivExpression_in_rule__MultExpression__SubExpressionsAssignment_1_226095 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleDivOperator_in_rule__DivExpression__OperatorAssignment_1_126126 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleModExpression_in_rule__DivExpression__SubExpressionsAssignment_1_226157 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleModOperator_in_rule__ModExpression__OperatorAssignment_1_126188 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAtomicValuedExpression_in_rule__ModExpression__SubExpressionsAssignment_1_226219 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSubOperator_in_rule__NegExpression__OperatorAssignment_0_126250 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleNegExpression_in_rule__NegExpression__SubExpressionsAssignment_0_226281 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0_in_rule__ValuedObjectTestExpression__OperatorAssignment_0_126312 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedObjectTestExpression_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_326345 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__ValuedObjectReference__ValuedObjectAssignment26380 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__TextExpression__TextAssignment26415 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment26446 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment26477 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__BoolValue__ValueAssignment26508 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_FLOAT_in_rule__DoubleValue__ValueAssignment26539 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_COMMENT_ANNOTATION_in_rule__CommentAnnotation__ValueAssignment26570 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__TagAnnotation__NameAssignment_126601 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__TagAnnotation__AnnotationsAssignment_2_126632 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyStringValueAnnotation__NameAssignment_126663 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEString_in_rule__KeyStringValueAnnotation__ValueAssignment_226694 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_126725 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_126756 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_326787 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValueAssignment_526818 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_126849 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyBooleanValueAnnotation__NameAssignment_126880 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_226911 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_126942 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyIntValueAnnotation__NameAssignment_126973 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_INT_in_rule__KeyIntValueAnnotation__ValueAssignment_227004 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_127035 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_127066 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_FLOAT_in_rule__KeyFloatValueAnnotation__ValueAssignment_227097 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_127128 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_STRING_in_rule__ImportAnnotation__ImportURIAssignment_127159 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedExpression_in_synpred12_InternalSct4261 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0_in_synpred13_InternalSct4310 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedExpression_in_synpred14_InternalSct4360 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleFloatValue_in_synpred21_InternalSct4610 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleDoubleValue_in_synpred22_InternalSct4627 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_3__0_in_synpred23_InternalSct4644 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__Group_2__0_in_synpred60_InternalSct5890 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__RootRegion__ValuedObjectsAssignment_2_5_in_synpred64_InternalSct6323 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1__0_in_synpred66_InternalSct6517 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__StatesAssignment_2_in_synpred67_InternalSct6575 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__ValuedObjectsAssignment_1_5_in_synpred71_InternalSct6949 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Region__ValuedObjectsAssignment_6_in_synpred76_InternalSct7450 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Region__StatesAssignment_8_in_synpred78_InternalSct7583 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Alternatives_5_in_synpred82_InternalSct7966 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Alternatives_5_1_1_0_in_synpred85_InternalSct8785 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCChart__Group_5_1_1_2__0_in_synpred87_InternalSct8904 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Alternatives_6_in_synpred93_InternalSct9459 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Alternatives_6_1_1_0_in_synpred99_InternalSct10648 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__State__Group_6_1_1_2__0_in_synpred101_InternalSct10767 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__Group_4__0_in_synpred105_InternalSct11195 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__Transition__DelayAssignment_4_3_1_0_0_in_synpred110_InternalSct11638 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__EntryAction__Group_3_2__0_in_synpred124_InternalSct13747 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__DuringAction__Group_4_2__0_in_synpred128_InternalSct14433 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ExitAction__Group_3_2__0_in_synpred131_InternalSct15056 = new BitSet(new long[]{0x0000000000000002L});
     }
 
 

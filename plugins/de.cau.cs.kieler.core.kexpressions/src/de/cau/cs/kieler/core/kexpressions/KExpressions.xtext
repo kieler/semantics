@@ -30,9 +30,8 @@ Root returns ecore::EObject:
 // --------------------------
 
 Expression returns Expression:
-//	=> BoolExpression
-	ValuedExpression
-    | BoolExpression
+    ValuedExpression |
+     BoolExpression  
 	;
 
 
@@ -53,14 +52,14 @@ AndExpression returns Expression:
 
 // Example: 42 <= val(A)
 CompareOperation returns Expression:
-	=> NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=NotOrValuedExpression)
+	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=NotOrValuedExpression)
 	| NotExpression
 	;
 
 
 // order IS IMPORTANT
 NotOrValuedExpression returns Expression:
-	=> ValuedExpression
+	ValuedExpression
 	| NotExpression
     ;
 
@@ -127,7 +126,7 @@ AtomicValuedExpression returns Expression:
     IntValue
     | FloatValue | DoubleValue
 //    | '(' DivExpression ')'
-    | => '(' ValuedExpression ')'
+    | '(' ValuedExpression ')'
     | AtomicExpression 
     ;
 

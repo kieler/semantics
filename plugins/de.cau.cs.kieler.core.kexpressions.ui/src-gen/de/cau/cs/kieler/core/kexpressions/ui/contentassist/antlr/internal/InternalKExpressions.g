@@ -1245,15 +1245,15 @@ rule__Expression__Alternatives
     }
 :
 (
-{ before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); }
-(	ruleBoolExpression)
-{ after(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); }
+{ before(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); }
+	ruleValuedExpression
+{ after(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); }
 )
 
     |(
-{ before(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_1()); }
-	ruleValuedExpression
-{ after(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_1()); }
+{ before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_1()); }
+	ruleBoolExpression
+{ after(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_1()); }
 )
 
 ;
@@ -1290,7 +1290,7 @@ rule__NotOrValuedExpression__Alternatives
 :
 (
 { before(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); }
-(	ruleValuedExpression)
+	ruleValuedExpression
 { after(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); }
 )
 
@@ -1928,7 +1928,7 @@ rule__CompareOperation__Group_0__0__Impl
 :
 (
 { before(grammarAccess.getCompareOperationAccess().getNotOrValuedExpressionParserRuleCall_0_0()); }
-(	ruleNotOrValuedExpression)
+	ruleNotOrValuedExpression
 { after(grammarAccess.getCompareOperationAccess().getNotOrValuedExpressionParserRuleCall_0_0()); }
 )
 
@@ -3142,9 +3142,9 @@ rule__AtomicValuedExpression__Group_3__0__Impl
 :
 (
 { before(grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0()); }
-(
+
 	'(' 
-)
+
 { after(grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0()); }
 )
 

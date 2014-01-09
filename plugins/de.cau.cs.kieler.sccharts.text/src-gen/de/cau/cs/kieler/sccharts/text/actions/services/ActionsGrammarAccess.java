@@ -749,7 +749,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	////
 	//// --------------------------
 	//Expression:
-	//	BoolExpression | ValuedExpression;
+	//	ValuedExpression | BoolExpression;
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
 		return gaKExpressions.getExpressionAccess();
 	}
@@ -816,7 +816,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: not A, not false, not (A or B)
-	//// at the latter we need the parans to indicate the right binding
+	//// at the latter we need the parents to indicate the right binding
 	//NotExpression returns Expression:
 	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
 	public KExpressionsGrammarAccess.NotExpressionElements getNotExpressionAccess() {
@@ -875,7 +875,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: (2 / 4)
-	//// note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
+	//// note: division always has to have parentheses because the '/' sign is also used for trigger/effect delimiter
 	//DivExpression returns Expression:
 	//	ModExpression ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?;
 	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
@@ -898,8 +898,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getModExpressionAccess().getRule();
 	}
 
-	//// Example: not A, not false, not (A or B)
-	//// at the latter we need the parans to indicate the right binding
+	//// Example: -?A, -(?A + ?B)
+	//// at the latter we need the parents to indicate the right binding
 	//NegExpression returns Expression:
 	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | AtomicValuedExpression;
 	public KExpressionsGrammarAccess.NegExpressionElements getNegExpressionAccess() {

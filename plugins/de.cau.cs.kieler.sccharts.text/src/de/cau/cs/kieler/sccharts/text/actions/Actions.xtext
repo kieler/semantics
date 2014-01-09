@@ -46,11 +46,11 @@ Effect returns sccharts::Effect:
 
 		
 Emission returns sccharts::Emission:
-	valuedObject=[kexpressions::ValuedObject] ( "(" newValue=Expression ")" )?;
+	valuedObject=[kexpressions::ValuedObject] ( "(" newValue = Expression ")" )?;
 
     
 Assignment returns sccharts::Assignment:
-	valuedObject=[kexpressions::ValuedObject] "=" expression = Expression;
+	valuedObject=[kexpressions::ValuedObject] "=" expression = Expression ;
 
 
 TextEffect returns sccharts::TextEffect:

@@ -30,19 +30,16 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cKeyFloatValueAnnotationParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		
 		//// --------------------------
-		// //
-		// //   ANNOTATIONS
-		// //
-		// // --------------------------
-		// Annotation:
-		//
+		////
+		////   ANNOTATIONS
+		////
+		//// --------------------------
+		//Annotation:
 		//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
-		//
 		//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
 		public ParserRule getRule() { return rule; }
 
 		//CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
-		//
 		//| KeyIntValueAnnotation | KeyFloatValueAnnotation
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -79,14 +76,11 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cKeyFloatValueAnnotationParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
 		//ValuedAnnotation returns Annotation:
-		//
 		//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
-		//
 		//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
 		public ParserRule getRule() { return rule; }
 
 		//CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
-		//
 		//KeyIntValueAnnotation | KeyFloatValueAnnotation
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -115,8 +109,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValueCOMMENT_ANNOTATIONTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
 		//// e.g.: / ** semantic comment * /
-		// CommentAnnotation returns StringAnnotation:
-		//
+		//CommentAnnotation returns StringAnnotation:
 		//	value=COMMENT_ANNOTATION;
 		public ParserRule getRule() { return rule; }
 
@@ -140,8 +133,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//// e.g.: @HVlayout
-		// TagAnnotation returns Annotation:
-		//
+		//TagAnnotation returns Annotation:
 		//	"@" name=ExtendedID ("(" annotations+=Annotation* ")")?;
 		public ParserRule getRule() { return rule; }
 
@@ -188,8 +180,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		
 		//// e.g.: @layouter dot;   
-		// KeyStringValueAnnotation returns StringAnnotation:
-		//
+		//KeyStringValueAnnotation returns StringAnnotation:
 		//	"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?;
 		public ParserRule getRule() { return rule; }
 
@@ -246,10 +237,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
 		
 		//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-		// TypedKeyStringValueAnnotation returns
-		//
-		//TypedStringAnnotation:
-		//
+		//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
 		//	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString ("(" annotations+=Annotation* ")")?;
 		public ParserRule getRule() { return rule; }
 
@@ -314,8 +302,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		
 		//// e.g.: @visible true;
-		// KeyBooleanValueAnnotation returns BooleanAnnotation:
-		//
+		//KeyBooleanValueAnnotation returns BooleanAnnotation:
 		//	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
 		public ParserRule getRule() { return rule; }
 
@@ -368,8 +355,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		
 		//// e.g.: @minSpace 10;    
-		// KeyIntValueAnnotation returns IntAnnotation:
-		//
+		//KeyIntValueAnnotation returns IntAnnotation:
 		//	"@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?;
 		public ParserRule getRule() { return rule; }
 
@@ -422,8 +408,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		
 		//// e.g.: @minSpace 10.0;    
-		// KeyFloatValueAnnotation returns FloatAnnotation:
-		//
+		//KeyFloatValueAnnotation returns FloatAnnotation:
 		//	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
 		public ParserRule getRule() { return rule; }
 
@@ -469,8 +454,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cImportURISTRINGTerminalRuleCall_1_0 = (RuleCall)cImportURIAssignment_1.eContents().get(0);
 		
 		//// needed for importing other resources
-		// ImportAnnotation:
-		//
+		//ImportAnnotation:
 		//	"import" importURI=STRING;
 		public ParserRule getRule() { return rule; }
 
@@ -494,8 +478,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// allow strings without quotes as they don'c contain spaces
-		// EString returns ecore::EString:
-		//
+		//EString returns ecore::EString:
 		//	STRING | ID;
 		public ParserRule getRule() { return rule; }
 
@@ -518,7 +501,6 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIDTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
 		
 		//ExtendedID returns ecore::EString:
-		//
 		//	ID ("." ID)*;
 		public ParserRule getRule() { return rule; }
 
@@ -598,14 +580,12 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//// --------------------------
-	// //
-	// //   ANNOTATIONS
-	// //
-	// // --------------------------
-	// Annotation:
-	//
+	////
+	////   ANNOTATIONS
+	////
+	//// --------------------------
+	//Annotation:
 	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
-	//
 	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
 	public AnnotationElements getAnnotationAccess() {
 		return (pAnnotation != null) ? pAnnotation : (pAnnotation = new AnnotationElements());
@@ -616,9 +596,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ValuedAnnotation returns Annotation:
-	//
 	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
-	//
 	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
 	public ValuedAnnotationElements getValuedAnnotationAccess() {
 		return (pValuedAnnotation != null) ? pValuedAnnotation : (pValuedAnnotation = new ValuedAnnotationElements());
@@ -629,8 +607,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: / ** semantic comment * /
-	// CommentAnnotation returns StringAnnotation:
-	//
+	//CommentAnnotation returns StringAnnotation:
 	//	value=COMMENT_ANNOTATION;
 	public CommentAnnotationElements getCommentAnnotationAccess() {
 		return (pCommentAnnotation != null) ? pCommentAnnotation : (pCommentAnnotation = new CommentAnnotationElements());
@@ -641,8 +618,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @HVlayout
-	// TagAnnotation returns Annotation:
-	//
+	//TagAnnotation returns Annotation:
 	//	"@" name=ExtendedID ("(" annotations+=Annotation* ")")?;
 	public TagAnnotationElements getTagAnnotationAccess() {
 		return (pTagAnnotation != null) ? pTagAnnotation : (pTagAnnotation = new TagAnnotationElements());
@@ -653,8 +629,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @layouter dot;   
-	// KeyStringValueAnnotation returns StringAnnotation:
-	//
+	//KeyStringValueAnnotation returns StringAnnotation:
 	//	"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?;
 	public KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return (pKeyStringValueAnnotation != null) ? pKeyStringValueAnnotation : (pKeyStringValueAnnotation = new KeyStringValueAnnotationElements());
@@ -665,10 +640,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-	// TypedKeyStringValueAnnotation returns
-	//
-	//TypedStringAnnotation:
-	//
+	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
 	//	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString ("(" annotations+=Annotation* ")")?;
 	public TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return (pTypedKeyStringValueAnnotation != null) ? pTypedKeyStringValueAnnotation : (pTypedKeyStringValueAnnotation = new TypedKeyStringValueAnnotationElements());
@@ -679,8 +651,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @visible true;
-	// KeyBooleanValueAnnotation returns BooleanAnnotation:
-	//
+	//KeyBooleanValueAnnotation returns BooleanAnnotation:
 	//	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
 	public KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
 		return (pKeyBooleanValueAnnotation != null) ? pKeyBooleanValueAnnotation : (pKeyBooleanValueAnnotation = new KeyBooleanValueAnnotationElements());
@@ -691,8 +662,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @minSpace 10;    
-	// KeyIntValueAnnotation returns IntAnnotation:
-	//
+	//KeyIntValueAnnotation returns IntAnnotation:
 	//	"@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?;
 	public KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
 		return (pKeyIntValueAnnotation != null) ? pKeyIntValueAnnotation : (pKeyIntValueAnnotation = new KeyIntValueAnnotationElements());
@@ -703,8 +673,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @minSpace 10.0;    
-	// KeyFloatValueAnnotation returns FloatAnnotation:
-	//
+	//KeyFloatValueAnnotation returns FloatAnnotation:
 	//	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
 	public KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
 		return (pKeyFloatValueAnnotation != null) ? pKeyFloatValueAnnotation : (pKeyFloatValueAnnotation = new KeyFloatValueAnnotationElements());
@@ -715,8 +684,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// needed for importing other resources
-	// ImportAnnotation:
-	//
+	//ImportAnnotation:
 	//	"import" importURI=STRING;
 	public ImportAnnotationElements getImportAnnotationAccess() {
 		return (pImportAnnotation != null) ? pImportAnnotation : (pImportAnnotation = new ImportAnnotationElements());
@@ -727,8 +695,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// allow strings without quotes as they don'c contain spaces
-	// EString returns ecore::EString:
-	//
+	//EString returns ecore::EString:
 	//	STRING | ID;
 	public EStringElements getEStringAccess() {
 		return (pEString != null) ? pEString : (pEString = new EStringElements());
@@ -739,7 +706,6 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ExtendedID returns ecore::EString:
-	//
 	//	ID ("." ID)*;
 	public ExtendedIDElements getExtendedIDAccess() {
 		return (pExtendedID != null) ? pExtendedID : (pExtendedID = new ExtendedIDElements());
@@ -750,95 +716,80 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// --------------------------
-	// //
-	// //  Terminals...
-	// //
-	// // --------------------------
-	// // custom terminals
-	//
-	//
+	////
+	////  Terminals...
+	////
+	//// --------------------------
+	//// custom terminals
 	//// custom terminal rule introducing semantic comments
-	// terminal COMMENT_ANNOTATION:
-	//
+	//terminal COMMENT_ANNOTATION:
 	//	"/ **"->"* /";
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return (tCOMMENT_ANNOTATION != null) ? tCOMMENT_ANNOTATION : (tCOMMENT_ANNOTATION = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "COMMENT_ANNOTATION"));
 	} 
 
 	//// modified version of Terminals.ML_COMMENT as
-	// // COMMENT_ANNOTATION is not recognized correctly with original one 
-	//
-	//
+	//// COMMENT_ANNOTATION is not recognized correctly with original one 
 	//terminal ML_COMMENT:
-	//
 	//	"/ *" !"*"->"* /";
 	public TerminalRule getML_COMMENTRule() {
 		return (tML_COMMENT != null) ? tML_COMMENT : (tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ML_COMMENT"));
 	} 
 
 	//// generic terminals
-	// terminal fragment NUMBER:
-	//
+	//terminal fragment NUMBER:
 	//	"0".."9";
 	public TerminalRule getNUMBERRule() {
 		return (tNUMBER != null) ? tNUMBER : (tNUMBER = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "NUMBER"));
 	} 
 
 	//// redefine INT terminal to allow negative numbers
-	// terminal INT returns ecore::EInt:
-	//
+	//terminal INT returns ecore::EInt:
 	//	"-"? NUMBER+;
 	public TerminalRule getINTRule() {
 		return (tINT != null) ? tINT : (tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT"));
 	} 
 
 	//// make sure the Float rule does not shadow the INT rule
-	// terminal FLOAT returns ecore::EFloatObject:
-	//
+	//terminal FLOAT returns ecore::EFloatObject:
 	//	"-"? NUMBER+ ("." NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? "f"? | "-"? NUMBER+ "f";
 	public TerminalRule getFLOATRule() {
 		return (tFLOAT != null) ? tFLOAT : (tFLOAT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "FLOAT"));
 	} 
 
 	//// introduce boolean values
-	// terminal BOOLEAN returns ecore::EBooleanObject:
-	//
+	//terminal BOOLEAN returns ecore::EBooleanObject:
 	//	"true" | "false";
 	public TerminalRule getBOOLEANRule() {
 		return (tBOOLEAN != null) ? tBOOLEAN : (tBOOLEAN = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "BOOLEAN"));
 	} 
 
 	//// custom terminal rule for strings
-	// terminal STRING:
-	//
+	//terminal STRING:
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
 	public TerminalRule getSTRINGRule() {
 		return (tSTRING != null) ? tSTRING : (tSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "STRING"));
 	} 
 
 	//terminal ID:
-	//
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
 	} 
 
 	//terminal SL_COMMENT:
-	//
 	//	"//" !("\n" | "\r")* ("\r"? "\n")?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaTerminals.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:
-	//
 	//	(" " | "\t" | "\r" | "\n")+;
 	public TerminalRule getWSRule() {
 		return gaTerminals.getWSRule();
 	} 
 
 	//terminal ANY_OTHER:
-	//
 	//	.;
 	public TerminalRule getANY_OTHERRule() {
 		return gaTerminals.getANY_OTHERRule();
