@@ -484,15 +484,19 @@
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.text.ui.handler.SctModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.commands.SctExposeLocalSignalsTransformation">
+            commandId="de.cau.cs.kieler.sccharts.commands.SctExposeLocalSignalTransformation">
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.text.ui.handler.SctModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.commands.SctNormalTerminationTransformation">
+            commandId="de.cau.cs.kieler.sccharts.commands.SctTerminationTransformation">
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.text.ui.handler.SctModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.commands.SctComplexFinalStatesTransformation">
+            commandId="de.cau.cs.kieler.sccharts.commands.SctComplexFinalStateTransformation">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.text.ui.handler.SctModelFileHandler"
+            commandId="de.cau.cs.kieler.sccharts.commands.SctInitializationTransformation">
       </handler>
    </extension>
     
@@ -846,8 +850,31 @@
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
                commandId="de.cau.cs.kieler.sccharts.commands.SctPreTransformation"
-               label="Pre Operator"
+               label="Pre Operators"
                mnemonic="P"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="sct">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.commands.SctInitializationTransformation"
+               label="Initializations"
+               mnemonic="I"
                style="push">
             <visibleWhen>
                <iterate
@@ -872,7 +899,7 @@
                visible="true">
          </separator>
          <command
-               commandId="de.cau.cs.kieler.sccharts.commands.SctExposeLocalSignalsTransformation"
+               commandId="de.cau.cs.kieler.sccharts.commands.SctExposeLocalSignalTransformation"
                label="Expose Local Signals"
                mnemonic="L"
                style="push">
@@ -895,8 +922,8 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.commands.SctNormalTerminationTransformation"
-               label="Normal Termination Transitions"
+               commandId="de.cau.cs.kieler.sccharts.commands.SctTerminationTransformation"
+               label="Termination Transitions"
                mnemonic="D"
                style="push">
             <visibleWhen>
@@ -915,10 +942,10 @@
             </visibleWhen>
          </command>
       </menuContribution>
-<!--      <menuContribution
+      <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="de.cau.cs.kieler.sccharts.commands.SctComplexFinalStatesTransformation"
+               commandId="de.cau.cs.kieler.sccharts.commands.SctComplexFinalStateTransformation"
                label="Complex Final States"
                mnemonic="D"
                style="push">
@@ -937,7 +964,7 @@
                </iterate>
             </visibleWhen>
          </command>
-      </menuContribution> -->
+      </menuContribution> <!--  -->
 
    </extension>
     

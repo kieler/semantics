@@ -591,7 +591,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 switch (t.type) {
                     case TransitionType::STRONGABORT:
                         it.addStrongAbortionDecorator
-                    case TransitionType::NORMALTERMINATION:
+                    case TransitionType::TERMINATION:
                         it.addNormalTerminationDecorator()
                 };
             ];

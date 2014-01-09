@@ -140,20 +140,20 @@ class SCChartsCoreTransformation {
     // Therefore a transformed transition must explicitly negate all triggers
     // of other outgoing transitions.
     // Transforming Normal Termination. 
-    def Region transformNormalTermination(Region rootRegion) {
+    def Region transformTermination(Region rootRegion) {
 
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformNormalTermination(targetRootRegion);
+            targetState.transformTermination(targetRootRegion);
         }
         targetRootRegion;
     }
 
     // Traverse all states and transform outgoing normal termination transitions into weak aborts
-    def void transformNormalTermination(State state, Region targetRootRegion) {
+    def void transformTermination(State state, Region targetRootRegion) {
 
         // NORMAL TERMINATION : For every state with normal termination transitions transform these into
         // weak abort transitions. Create a trigger for these new transitions that contains a conjunction
@@ -162,11 +162,11 @@ class SCChartsCoreTransformation {
         // (belonging to the region).
         // Explicitly negate triggers of other outgoing transitions (see test147)
         // This is the special case where we must taken care of a normal termination 
-        val normalTerminationTransition = state.getNormalTerminationTransitions;
-        if (normalTerminationTransition != null) {
-            val otherTransitions = state.outgoingTransitions.filter(e|e.type != TransitionType::NORMALTERMINATION);
+        val terminationTransition = state.getTerminationTransitions;
+        if (terminationTransition != null) {
+            val otherTransitions = state.outgoingTransitions.filter(e|e.type != TransitionType::TERMINATION);
 
-            normalTerminationTransition.setType(TransitionType::WEAKABORT);
+            terminationTransition.setType(TransitionType::WEAKABORT);
             val triggerExpression = createAndExpression
 
             // Setup the auxiliary terminated valuedObject indicating that a normal termination
@@ -188,7 +188,7 @@ class SCChartsCoreTransformation {
             }
 
             // Prevent the normal termination to be taken again by emitting this helper valuedObject (test10)
-            normalTerminationTransition.addEmission(terminatedEmission);
+            terminationTransition.addEmission(terminatedEmission);
 
             // Walk thru all regions that must terminate and create one termination valuedObject per
             // region. For the weak abort create a conjunction of these valuedObjects as the trigger.
@@ -212,11 +212,11 @@ class SCChartsCoreTransformation {
             }
 
             // A normal termination should immediately be triggerable! (test 145) 
-            normalTerminationTransition.setImmediate(true);
+            terminationTransition.setImmediate(true);
 
             // if there is just one valuedObject, we do not need an AND!
             if (triggerExpression != null) {
-                normalTerminationTransition.setTrigger(triggerExpression.fixForOperatorExpressionLists.trim);
+                terminationTransition.setTrigger(triggerExpression.fixForOperatorExpressionLists.trim);
             }
         } // end if normal termination present
 
@@ -708,9 +708,9 @@ class SCChartsCoreTransformation {
 
         val stateHasUntransformedTransitions = (!(state.outgoingTransitions.size == 0) || ((state.outgoingTransitions.
             size == 1) &&
-            state.outgoingTransitions.filter[typeNormalTermination].filter[trigger == null].size == 1))
+            state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))
 
-        val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeNormalTermination].nullOrEmpty))
+        val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
 
         //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
         if (state.hierarchical && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
@@ -741,27 +741,27 @@ class SCChartsCoreTransformation {
                     }
                 }
 
-                var Expression normalTerminationTrigger;
+                var Expression terminationTrigger;
 
                 // Decides whether a _TERM signal and the necessary _Run, _Done state is needed
                 // OPTIMIZATION
-                val normalTerminationHandlingNeeded = !outgoingTransitions.filter[typeNormalTermination].nullOrEmpty
+                val terminationHandlingNeeded = !outgoingTransitions.filter[typeTermination].nullOrEmpty
 
                 // For each region encapsulate it into a _Main state and add a _Term variable
-                // also to the normalTerminationTrigger
+                // also to the terminationTrigger
                 for (region : regions) {
-                    if (normalTerminationHandlingNeeded) {
+                    if (terminationHandlingNeeded) {
                         val mainRegion = state.createRegion(region.id("_Main"))
                         val mainState = mainRegion.createInitialState(region.id("_Main"))
                         mainState.regions.add(region)
                         val termState = mainRegion.createFinalState(region.id("_Term"))
                         val termVariable = state.createBoolVariable(region.id("_Term"))
                         mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).
-                            setTypeNormalTermination
-                        if (normalTerminationTrigger != null) {
-                            normalTerminationTrigger = normalTerminationTrigger.and(termVariable.reference)
+                            setTypeTermination
+                        if (terminationTrigger != null) {
+                            terminationTrigger = terminationTrigger.and(termVariable.reference)
                         } else {
-                            normalTerminationTrigger = termVariable.reference
+                            terminationTrigger = termVariable.reference
                         }
                         state.createEntryAction.addEffect(termVariable.assign(FALSE))
                     }
@@ -800,11 +800,11 @@ class SCChartsCoreTransformation {
 
                     // Create a ctrlTransition in the ctrlRegion
                     val ctrlTransition = runState.createTransitionTo(doneState)
-                    if (transition.typeNormalTermination) {
+                    if (transition.typeTermination) {
                         if (transition.trigger != null) {
-                            ctrlTransition.setTrigger(normalTerminationTrigger.copy.and(transition.trigger))
+                            ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger))
                         } else {
-                            ctrlTransition.setTrigger(normalTerminationTrigger.copy)
+                            ctrlTransition.setTrigger(terminationTrigger.copy)
                         }
                     } else {
                         ctrlTransition.setTrigger(transition.trigger)
@@ -819,7 +819,7 @@ class SCChartsCoreTransformation {
 
             // Create a single outgoing normal termination to a new connector state
             val outgoingConnectorState = state.parentRegion.createState(state.id("_C")).setTypeConnector
-            state.createTransitionTo(outgoingConnectorState).setTypeNormalTermination
+            state.createTransitionTo(outgoingConnectorState).setTypeTermination
 
             for (transition : outgoingTransitions) {
 
@@ -846,7 +846,7 @@ class SCChartsCoreTransformation {
             if (outgoingConnectorState.outgoingTransitions.size == 1) {
                 val transition = outgoingConnectorState.outgoingTransitions.get(0)
                 transition.setImmediate(true)
-                transition.setTypeNormalTermination
+                transition.setTypeTermination
                 transition.setTrigger(null)
                 val transitionToDelete = outgoingConnectorState.incomingTransitions.get(0)
                 state.outgoingTransitions.remove(transitionToDelete)
@@ -881,9 +881,9 @@ class SCChartsCoreTransformation {
 
         val stateHasUntransformedTransitions = (!(state.outgoingTransitions.size == 0) || ((state.outgoingTransitions.
             size == 1) &&
-            state.outgoingTransitions.filter[typeNormalTermination].filter[trigger == null].size == 1))
+            state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))
 
-        val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeNormalTermination].nullOrEmpty))
+        val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
 
         //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
         if (state.hierarchical && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
@@ -914,27 +914,27 @@ class SCChartsCoreTransformation {
                     }
                 }
 
-                var Expression normalTerminationTrigger;
+                var Expression terminationTrigger;
 
                 // Decides whether a _TERM signal and the necessary _Run, _Done state is needed
                 // OPTIMIZATION
-                val normalTerminationHandlingNeeded = !outgoingTransitions.filter[typeNormalTermination].nullOrEmpty
+                val terminationHandlingNeeded = !outgoingTransitions.filter[typeTermination].nullOrEmpty
 
                 // For each region encapsulate it into a _Main state and add a _Term variable
-                // also to the normalTerminationTrigger
+                // also to the terminationTrigger
                 for (region : regions) {
-                    if (normalTerminationHandlingNeeded) {
+                    if (terminationHandlingNeeded) {
                         val mainRegion = state.createRegion(region.id("_Main"))
                         val mainState = mainRegion.createInitialState(region.id("_Main"))
                         mainState.regions.add(region)
                         val termState = mainRegion.createFinalState(region.id("_Term"))
                         val termVariable = state.createBoolVariable(region.id("_Term"))
                         mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).
-                            setTypeNormalTermination
-                        if (normalTerminationTrigger != null) {
-                            normalTerminationTrigger = normalTerminationTrigger.and(termVariable.reference)
+                            setTypeTermination
+                        if (terminationTrigger != null) {
+                            terminationTrigger = terminationTrigger.and(termVariable.reference)
                         } else {
-                            normalTerminationTrigger = termVariable.reference
+                            terminationTrigger = termVariable.reference
                         }
                         state.createEntryAction.addEffect(termVariable.assign(FALSE))
                     }
@@ -951,7 +951,7 @@ class SCChartsCoreTransformation {
                                     // We dig deep in the hierarchy and connect all states with immediate transitions
                                     // to a final state.
                                     // This leads to more transitions but avoids more variables.
-                                    strongAbort.setTypeNormalTermination
+                                    strongAbort.setTypeTermination
                                     val allInnerSimpleStates = innerState.allContainedStates.filter[!hierarchical].
                                         filter[!final]
                                     for (innerSimpleState : allInnerSimpleStates) {
@@ -988,11 +988,11 @@ class SCChartsCoreTransformation {
 
                     // Create a ctrlTransition in the ctrlRegion
                     val ctrlTransition = runState.createTransitionTo(doneState)
-                    if (transition.typeNormalTermination) {
+                    if (transition.typeTermination) {
                         if (transition.trigger != null) {
-                            ctrlTransition.setTrigger(normalTerminationTrigger.copy.and(transition.trigger))
+                            ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger))
                         } else {
-                            ctrlTransition.setTrigger(normalTerminationTrigger.copy)
+                            ctrlTransition.setTrigger(terminationTrigger.copy)
                         }
                     } else {
                         ctrlTransition.setTrigger(transition.trigger)
@@ -1007,7 +1007,7 @@ class SCChartsCoreTransformation {
 
             // Create a single outgoing normal termination to a new connector state
             val outgoingConnectorState = state.parentRegion.createState(state.id("_C")).setTypeConnector
-            state.createTransitionTo(outgoingConnectorState).setTypeNormalTermination
+            state.createTransitionTo(outgoingConnectorState).setTypeTermination
 
             for (transition : outgoingTransitions) {
 
@@ -1034,7 +1034,7 @@ class SCChartsCoreTransformation {
             if (outgoingConnectorState.outgoingTransitions.size == 1) {
                 val transition = outgoingConnectorState.outgoingTransitions.get(0)
                 transition.setImmediate(true)
-                transition.setTypeNormalTermination
+                transition.setTypeTermination
                 transition.setTrigger(null)
                 val transitionToDelete = outgoingConnectorState.incomingTransitions.get(0)
                 state.outgoingTransitions.remove(transitionToDelete)
@@ -1050,7 +1050,7 @@ class SCChartsCoreTransformation {
 
 
     //-------------------------------------------------------------------------
-    //--              C O M P L E X   F I N A L   S T A T E S                --
+    //--              C O M P L E X   F I N A L   S T A T E                  --
     //-------------------------------------------------------------------------
     // ...
     // Optimizations: 
@@ -1062,19 +1062,19 @@ class SCChartsCoreTransformation {
     //       only a single term signal 
     //       (TODO)                
     
-    def Region transformComplexFinalStates(Region rootRegion) {
+    def Region transformComplexFinalState(Region rootRegion) {
 
         // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
 
         // For every state in the SyncChart do the transformation
         for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformComplexFinalStates(rootRegion);
+            targetState.transformComplexFinalState(rootRegion);
         }
         targetRootRegion;
     }
 
-    def void transformComplexFinalStates(State state, Region targetRootRegion) {
+    def void transformComplexFinalState(State state, Region targetRootRegion) {
         val complexFinalStates = state.allContainedStates.filter( e |
                 e.parentRegion.parentState == state && e.isFinal && 
                 (!e.outgoingTransitions.nullOrEmpty || e.allContainedStates.size > 0 || e.entryActions.size > 0
@@ -1127,7 +1127,7 @@ class SCChartsCoreTransformation {
      
      
     //-------------------------------------------------------------------------
-    //--                   C O U N T   D E L A Y S                           --
+    //--                   C O U N T   D E L A Y                             --
     //-------------------------------------------------------------------------
     // ...
     def Region transformCountDelay(Region rootRegion) {
@@ -1183,7 +1183,6 @@ class SCChartsCoreTransformation {
     // (within the disabledExpression) 
     // Transforming Suspends.
     def Region transformSuspend(Region rootRegion) {
-
         // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
 
@@ -1192,13 +1191,6 @@ class SCChartsCoreTransformation {
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformSuspend(targetRootRegion);
         }
-
-//        // Now delete all suspends
-//        for (targetState : targetRootRegion.getAllContainedStates.filter(e|e.suspendActions.size > 0)) {
-//            for (suspendAction : targetState.suspendActions.immutableCopy) {
-//                targetState.localActions.remove(suspendAction)
-//            }
-//        }
         
         targetRootRegion;
     }
@@ -1235,11 +1227,10 @@ class SCChartsCoreTransformation {
      
      
     //-------------------------------------------------------------------------
-    //--                     D U R I N G       A C T I O N S                 --
+    //--                     D U R I N G       A C T I O N                   --
     //-------------------------------------------------------------------------
     // Transforming During Actions.
     def Region transformDuring(Region rootRegion) {
-
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
 
@@ -1269,7 +1260,7 @@ class SCChartsCoreTransformation {
                   mainState.regions.add(region)
              }
              val termTransition = mainState.createTransitionTo(mainRegion.createState("Term"))
-             termTransition.setTypeNormalTermination
+             termTransition.setTypeTermination
              termTransition.addEffect(term.assign(TRUE))
 
              // Create the body of the dummy state - containing the during action
@@ -1303,12 +1294,11 @@ class SCChartsCoreTransformation {
     
     
     //-------------------------------------------------------------------------
-    //--                     E N T R Y         A C T I O N S                 --
+    //--                      E N T R Y         A C T I O N                  --
     //-------------------------------------------------------------------------
     // @requires: during actions
     // Transforming Entry and During Actions.
     def Region transformEntry(Region rootRegion) {
-
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
 
@@ -1355,7 +1345,7 @@ class SCChartsCoreTransformation {
                 }
                 firstState = region.createInitialState("Init")
                 val finalState = region.createFinalState("Done")
-                secondState.createTransitionTo(finalState).setTypeNormalTermination
+                secondState.createTransitionTo(finalState).setTypeTermination
             }
             
             val entryRegion = firstState.parentRegion
@@ -1379,6 +1369,35 @@ class SCChartsCoreTransformation {
             
             // After transforming entry actions, erase them
             state.entryActions.clear();
+        }
+    }
+        
+    //-------------------------------------------------------------------------
+    //--                       I N I T I A L I Z A T I O N                   --
+    //-------------------------------------------------------------------------
+    // @requires: entry actions
+    // Transforming Variable Initializations
+    def Region transformInitialization(Region rootRegion) {
+        // Clone the complete SCCharts region 
+        val targetRootRegion = rootRegion.copy;
+
+        // Traverse all states
+        for (targetState : targetRootRegion.getAllContainedStates.immutableCopy) {
+            targetState.transformInitialization(targetRootRegion);
+        }
+        targetRootRegion;
+    }
+
+    // Traverse all states and transform macro states that have actions to transform
+    def void transformInitialization(State state, Region targetRootRegion) {
+        val valuedObjects = state.valuedObjects.filter[initialValue != null]
+        
+        if (!valuedObjects.nullOrEmpty) {
+            for (valuedObject : valuedObjects) {
+                val entryAction = state.createEntryAction
+                entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
+                valuedObject.setInitialValue(null)
+            }
         }
     }
 
@@ -1806,7 +1825,7 @@ class SCChartsCoreTransformation {
 //            val sourceState = transition.sourceState;
 //
 //            // Optimization: If there is no outgoing normal termination out of S then do not mark states as final
-//            val existsNormalTermination = !(sourceState.parentRegion.parentState.outgoingTransitions.filter(
+//            val existsTermination = !(sourceState.parentRegion.parentState.outgoingTransitions.filter(
 //                e|e.type == TransitionType::NORMALTERMINATION).nullOrEmpty);
 //
 //            // auxiliary trigger valuedObject
@@ -1854,7 +1873,7 @@ class SCChartsCoreTransformation {
 //
 //                    // Make state final (just in case, because there could be
 //                    // a normal termination outgoing)
-//                    if (existsNormalTermination) {
+//                    if (existsTermination) {
 //                        auxiliaryState.setFinal(true);
 //                    }
 //                }
@@ -3192,8 +3211,8 @@ class SCChartsCoreTransformation {
                 originalOutgoingTransitions.filter(e|e.type == TransitionType::STRONGABORT));
             val outgoingWeakTransitions = ImmutableList::copyOf(
                 originalOutgoingTransitions.filter(e|e.type == TransitionType::WEAKABORT));
-            val normalTerminationExists = originalOutgoingTransitions.filter(
-                e|e.type == TransitionType::NORMALTERMINATION).size > 0;
+            val terminationExists = originalOutgoingTransitions.filter(
+                e|e.type == TransitionType::TERMINATION).size > 0;
 
             // Remember all regions
             val originalRegions = ImmutableList::copyOf(state.regions);
@@ -3217,7 +3236,7 @@ class SCChartsCoreTransformation {
             watcherRegion.setId(state.id("Ctrl"));
             watcherRegion.states.add(runState);
             watcherRegion.states.add(abortState);
-            val needWatcherRegion = (originalOutgoingTransitions.filter(e|e.type != TransitionType::NORMALTERMINATION).
+            val needWatcherRegion = (originalOutgoingTransitions.filter(e|e.type != TransitionType::TERMINATION).
                 size > 0);
             if (needWatcherRegion) {
                 state.regions.add(watcherRegion);
@@ -3229,11 +3248,11 @@ class SCChartsCoreTransformation {
             conditionalState.setId(state.id("_Conditional"));
             conditionalState.setType(StateType::CONNECTOR);
             state.parentRegion.states.add(conditionalState);
-            val normalTerminationTransition = SCChartsFactory::eINSTANCE.createTransition();
-            normalTerminationTransition.setTargetState(conditionalState);
-            normalTerminationTransition.setPriority(1);
-            normalTerminationTransition.setType(TransitionType::NORMALTERMINATION);
-            state.outgoingTransitions.add(normalTerminationTransition);
+            val terminationTransition = SCChartsFactory::eINSTANCE.createTransition();
+            terminationTransition.setTargetState(conditionalState);
+            terminationTransition.setPriority(1);
+            terminationTransition.setType(TransitionType::TERMINATION);
+            state.outgoingTransitions.add(terminationTransition);
 
             // Create complex triggers to be filled with auxiliary valuedObjects (sorted strong or weak)                        
             var Expression strongTrigger;
@@ -3250,7 +3269,7 @@ class SCChartsCoreTransformation {
 
                 // Add transition to watcher region
                 // ONLY iff this is not a normal termination
-                if (transition.type != TransitionType::NORMALTERMINATION) {
+                if (transition.type != TransitionType::TERMINATION) {
 
                     // Create a valuedObject 
                     val transitionValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
@@ -3386,7 +3405,7 @@ class SCChartsCoreTransformation {
             // Optimization: If a normal termination is outgoing then the following 
             // transformation is necessary to be able to abort the watcher in case
             // of triggering the normal termination.
-            if (normalTerminationExists) {
+            if (terminationExists) {
 
                 // If there is at least one such transition then whe need an "_Exit" valuedObject
                 val exitValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
@@ -3431,7 +3450,7 @@ class SCChartsCoreTransformation {
                 val transition = SCChartsFactory::eINSTANCE.createTransition();
                 transition.setTargetState(termState);
                 transition.setPriority(1);
-                transition.setType(TransitionType::NORMALTERMINATION);
+                transition.setType(TransitionType::TERMINATION);
                 mainState.outgoingTransitions.add(transition);
                 val exitValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
                 exitValuedObjectEmission.setValuedObject(exitValuedObject);

@@ -76,14 +76,17 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     public static final String PRE_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.PreTransformation";
 
-    public static final String EXPOSELOCALSIGNALS_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.ExposeLocalSignalsTransformation";
+    public static final String INITIALIZATION_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.InitializationTransformation";
 
-    public static final String NORMALTERMINATION_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.NormalTerminationTransformation";
+    public static final String EXPOSELOCALSIGNAL_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.ExposeLocalSignalTransformation";
 
-    public static final String COMPLEXFINALSTATES_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.ComplexFinalStatesTransformation";
+    public static final String TERMINATION_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.TerminationTransformation";
+
+    public static final String COMPLEXFINALSTATE_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.ComplexFinalStateTransformation";
 
     // -------------------------------------------------------------------------
 
@@ -167,12 +170,14 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
             transformed = transformation.transformDeferred((Region) model);
         } else if (commandString.equals(PRE_TRANSFORMATION)) {
             transformed = transformation.transformPre((Region) model);
-        } else if (commandString.equals(EXPOSELOCALSIGNALS_TRANSFORMATION)) {
+        } else if (commandString.equals(INITIALIZATION_TRANSFORMATION)) {
+            transformed = transformation.transformInitialization((Region) model);
+        } else if (commandString.equals(EXPOSELOCALSIGNAL_TRANSFORMATION)) {
             transformed = transformation.transformExposeLocalValuedObject((Region) model);
-        } else if (commandString.equals(NORMALTERMINATION_TRANSFORMATION)) {
-            transformed = transformation.transformNormalTermination((Region) model);
-        } else if (commandString.equals(COMPLEXFINALSTATES_TRANSFORMATION)) {
-            transformed = transformation.transformComplexFinalStates((Region) model);
+        } else if (commandString.equals(TERMINATION_TRANSFORMATION)) {
+            transformed = transformation.transformTermination((Region) model);
+        } else if (commandString.equals(COMPLEXFINALSTATE_TRANSFORMATION)) {
+            transformed = transformation.transformComplexFinalState((Region) model);
         }
         return transformed;
     }

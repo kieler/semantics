@@ -72,13 +72,13 @@ class SCChartsExtension {
     //====== GENERAL MODEL ELEMENTS =====
     // Get the single normal termination Transition. Return null if there is 
     // no outgoing normal termination Transition.
-    def Transition getNormalTerminationTransitions(State state) {
-        val allNormalTerminationTransitions = state.outgoingTransitions.filter(
-            e|e.type == TransitionType::NORMALTERMINATION);
-        if (allNormalTerminationTransitions.size == 0) {
+    def Transition getTerminationTransitions(State state) {
+        val allTerminationTransitions = state.outgoingTransitions.filter(
+            e|e.type == TransitionType::TERMINATION);
+        if (allTerminationTransitions.size == 0) {
             return null;
         }
-        allNormalTerminationTransitions.head;
+        allTerminationTransitions.head;
     }
 
     // Return the list of all contained States.
@@ -151,8 +151,8 @@ class SCChartsExtension {
 
     //========== TRANSITIONS ===========
     
-    def Transition setTypeNormalTermination(Transition transition) {
-        transition.setType(TransitionType::NORMALTERMINATION)
+    def Transition setTypeTermination(Transition transition) {
+        transition.setType(TransitionType::TERMINATION)
         transition
     }
 
@@ -166,8 +166,8 @@ class SCChartsExtension {
         transition
     }
     
-    def boolean isTypeNormalTermination(Transition transition) {
-        return transition.type == TransitionType::NORMALTERMINATION
+    def boolean isTypeTermination(Transition transition) {
+        return transition.type == TransitionType::TERMINATION
     }
 
     def boolean isTypeStrongAbort(Transition transition) {
@@ -480,7 +480,7 @@ class SCChartsExtension {
     def Boolean isImmediate2(Transition transition) {
         (transition.immediate) || 
         (transition.sourceState.type == StateType::CONNECTOR) || 
-        (transition.type == TransitionType::NORMALTERMINATION && transition.trigger == null
+        (transition.type == TransitionType::TERMINATION && transition.trigger == null
         )
     }
 
