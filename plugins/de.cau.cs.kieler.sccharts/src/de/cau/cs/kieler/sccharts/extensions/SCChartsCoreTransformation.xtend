@@ -1350,7 +1350,7 @@ class SCChartsCoreTransformation {
             
             val entryRegion = firstState.parentRegion
             val lastEntryAction = state.entryActions.last
-            for (entryAction : state.entryActions) {
+            for (entryAction : state.entryActions.immutableCopy) {
                 var connector = secondState
                 if (entryAction != lastEntryAction) {
                      connector = entryRegion.createState(state.id("C")).setTypeConnector
@@ -1365,10 +1365,9 @@ class SCChartsCoreTransformation {
                     firstState.createImmediateTransitionTo(connector)
                 }
                 firstState = connector
+                // After transforming entry actions, erase them
+                state.localActions.remove(entryAction)
             }
-            
-            // After transforming entry actions, erase them
-            state.entryActions.clear();
         }
     }
         
