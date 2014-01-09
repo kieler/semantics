@@ -1,10 +1,12 @@
 package de.cau.cs.kieler.scg.synchronizer
 
-import java.util.ArrayList
-import de.cau.cs.kieler.scgbb.BasicBlock
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scgbb.BasicBlock
 
 class SynchronizerData {
-    public var ArrayList<BasicBlock> predecessors = new ArrayList<BasicBlock>()
-    public var ArrayList<Expression> activationExpressions = new ArrayList<Expression>()
+    public var predecessors = <BasicBlock> newArrayList
+    public var Expression guardExpression
+    public var emptyExpressions = <Expression> newArrayList
+    public var emptyGuards = <ValuedObject> newArrayList
 }

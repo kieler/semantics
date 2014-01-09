@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.scgbb.impl;
 
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.scg.Node;
 
 import de.cau.cs.kieler.scgbb.ScgbbPackage;
@@ -22,10 +23,13 @@ import de.cau.cs.kieler.scgdep.Dependency;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -39,6 +43,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#getDependencies <em>Dependencies</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.impl.SchedulingBlockImpl#getGuard <em>Guard</em>}</li>
  * </ul>
  * </p>
  *
@@ -66,6 +71,16 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
     protected EList<Dependency> dependencies;
 
     /**
+     * The cached value of the '{@link #getGuard() <em>Guard</em>}' reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see #getGuard()
+     * @generated
+     * @ordered
+     */
+	protected ValuedObject guard;
+
+				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -110,6 +125,44 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
 
     /**
      * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public ValuedObject getGuard() {
+        if (guard != null && guard.eIsProxy()) {
+            InternalEObject oldGuard = (InternalEObject)guard;
+            guard = (ValuedObject)eResolveProxy(oldGuard);
+            if (guard != oldGuard) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgbbPackage.SCHEDULING_BLOCK__GUARD, oldGuard, guard));
+            }
+        }
+        return guard;
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public ValuedObject basicGetGuard() {
+        return guard;
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public void setGuard(ValuedObject newGuard) {
+        ValuedObject oldGuard = guard;
+        guard = newGuard;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.SCHEDULING_BLOCK__GUARD, oldGuard, guard));
+    }
+
+				/**
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
@@ -120,6 +173,9 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
                 return getNodes();
             case ScgbbPackage.SCHEDULING_BLOCK__DEPENDENCIES:
                 return getDependencies();
+            case ScgbbPackage.SCHEDULING_BLOCK__GUARD:
+                if (resolve) return getGuard();
+                return basicGetGuard();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -141,6 +197,9 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
                 getDependencies().clear();
                 getDependencies().addAll((Collection<? extends Dependency>)newValue);
                 return;
+            case ScgbbPackage.SCHEDULING_BLOCK__GUARD:
+                setGuard((ValuedObject)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -159,6 +218,9 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
             case ScgbbPackage.SCHEDULING_BLOCK__DEPENDENCIES:
                 getDependencies().clear();
                 return;
+            case ScgbbPackage.SCHEDULING_BLOCK__GUARD:
+                setGuard((ValuedObject)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -175,6 +237,8 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
                 return nodes != null && !nodes.isEmpty();
             case ScgbbPackage.SCHEDULING_BLOCK__DEPENDENCIES:
                 return dependencies != null && !dependencies.isEmpty();
+            case ScgbbPackage.SCHEDULING_BLOCK__GUARD:
+                return guard != null;
         }
         return super.eIsSet(featureID);
     }

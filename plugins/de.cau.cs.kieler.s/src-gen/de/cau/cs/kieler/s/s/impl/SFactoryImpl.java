@@ -68,6 +68,7 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
       case SPackage.STATE: return createState();
       case SPackage.HOST_CODE_INSTRUCTION: return createHostCodeInstruction();
       case SPackage.INSTRUCTION: return createInstruction();
+      case SPackage.ASSIGNMENT: return createAssignment();
       case SPackage.PRIO: return createPrio();
       case SPackage.TRANS: return createTrans();
       case SPackage.FORK: return createFork();
@@ -127,6 +128,17 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
   {
     InstructionImpl instruction = new InstructionImpl();
     return instruction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Assignment createAssignment()
+  {
+    AssignmentImpl assignment = new AssignmentImpl();
+    return assignment;
   }
 
   /**

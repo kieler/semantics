@@ -43,6 +43,10 @@
             class="de.cau.cs.kieler.scg.handlers.SCGraphSchedulingModelFileHandler"
             commandId="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation">
       </handler>
+      <handler
+            class="de.cau.cs.kieler.scg.handlers.SequentialSCGraphModelFileHandler"
+            commandId="de.cau.cs.kieler.scg.commands.SCGSchedToSeqSCGTransformation">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -118,6 +122,30 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.scg.commands.SCGSchedToSeqSCGTransformation"
+               label="SCG: Generate sequentialized SCG"
+               mnemonic="A"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scgsched">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -139,6 +167,11 @@
             categoryId="de.cau.cs.kieler.scg.commands.category"
             id="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation"
             name="SCG: Populate Scheduling Data">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.scg.commands.category"
+            id="de.cau.cs.kieler.scg.commands.SCGSchedToSeqSCGTransformation"
+            name="SCG: Generate sequentialized SCG">
       </command>
    </extension>
 

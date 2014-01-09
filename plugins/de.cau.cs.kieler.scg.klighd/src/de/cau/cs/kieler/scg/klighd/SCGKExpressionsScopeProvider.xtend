@@ -13,13 +13,15 @@
  */
 package de.cau.cs.kieler.scg.klighd
 
+import com.google.inject.Singleton
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.scoping.KExpressionsScopeProvider
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scgbb.SCGraphBB
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
-import com.google.inject.Singleton
 
 /** 
  * Specialized SCG KExpression scope provider
@@ -49,7 +51,14 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
 
     // ValuedObjectReference scope
     def IScope scope_ValuedObjectReference_valuedObject(EObject context, EReference reference) {
-        Scopes.scopeFor(parent.getValuedObjects())
+  		val scopeObjects = <ValuedObject> newLinkedList
+  		scopeObjects.addAll(parent.getValuedObjects)
+    	if (parent instanceof SCGraphBB) {
+    		(parent as SCGraphBB).basicBlocks.forEach[scopeObjects.add(it.guard)]
+    		(parent as SCGraphBB).basicBlocks.forEach[scopeObjects.addAll(it.subGuards)]
+    		(parent as SCGraphBB).basicBlocks.forEach[scopeObjects.addAll(it.emptyGuards)]
+    	}
+        Scopes.scopeFor(scopeObjects)
     }
 
 }

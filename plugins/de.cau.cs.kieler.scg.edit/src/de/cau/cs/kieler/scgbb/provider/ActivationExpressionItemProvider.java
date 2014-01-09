@@ -19,6 +19,7 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.scg.provider.ScgbbEditPlugin;
 
 import de.cau.cs.kieler.scgbb.ActivationExpression;
+import de.cau.cs.kieler.scgbb.ScgbbFactory;
 import de.cau.cs.kieler.scgbb.ScgbbPackage;
 
 import java.util.Collection;
@@ -76,6 +77,7 @@ public class ActivationExpressionItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
+            addGuardPropertyDescriptor(object);
             addBasicBlocksPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
@@ -104,6 +106,28 @@ public class ActivationExpressionItemProvider
     }
 
     /**
+     * This adds a property descriptor for the Guard feature.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	protected void addGuardPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ActivationExpression_guard_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ActivationExpression_guard_feature", "_UI_ActivationExpression_type"),
+                 ScgbbPackage.Literals.ACTIVATION_EXPRESSION__GUARD,
+                 true,
+                 false,
+                 true,
+                 null,
+                 null,
+                 null));
+    }
+
+				/**
      * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
      * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -115,7 +139,8 @@ public class ActivationExpressionItemProvider
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add(ScgbbPackage.Literals.ACTIVATION_EXPRESSION__EXPRESSIONS);
+            childrenFeatures.add(ScgbbPackage.Literals.ACTIVATION_EXPRESSION__GUARD_EXPRESSION);
+            childrenFeatures.add(ScgbbPackage.Literals.ACTIVATION_EXPRESSION__EMPTY_EXPRESSIONS);
         }
         return childrenFeatures;
     }
@@ -167,7 +192,8 @@ public class ActivationExpressionItemProvider
         updateChildren(notification);
 
         switch (notification.getFeatureID(ActivationExpression.class)) {
-            case ScgbbPackage.ACTIVATION_EXPRESSION__EXPRESSIONS:
+            case ScgbbPackage.ACTIVATION_EXPRESSION__GUARD_EXPRESSION:
+            case ScgbbPackage.ACTIVATION_EXPRESSION__EMPTY_EXPRESSIONS:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -187,48 +213,53 @@ public class ActivationExpressionItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__EXPRESSIONS,
+                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__GUARD_EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createExpression()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__EXPRESSIONS,
+                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__GUARD_EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__EXPRESSIONS,
+                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__GUARD_EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createValue()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__EXPRESSIONS,
+                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__GUARD_EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createIntValue()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__EXPRESSIONS,
+                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__GUARD_EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createFloatValue()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__EXPRESSIONS,
+                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__GUARD_EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createBoolValue()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__EXPRESSIONS,
+                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__GUARD_EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createOperatorExpression()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__EXPRESSIONS,
+                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__GUARD_EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__EXPRESSIONS,
+                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__GUARD_EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createDoubleValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgbbPackage.Literals.ACTIVATION_EXPRESSION__EMPTY_EXPRESSIONS,
+                 ScgbbFactory.eINSTANCE.createActivationExpression()));
     }
 
     /**

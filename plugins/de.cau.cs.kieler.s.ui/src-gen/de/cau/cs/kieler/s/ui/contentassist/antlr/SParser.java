@@ -64,6 +64,7 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectAccess().getGroup(), "rule__ValuedObject__Group__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup_7(), "rule__ValuedObject__Group_7__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup_8(), "rule__ValuedObject__Group_8__0");
+					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
 					put(grammarAccess.getPrioAccess().getGroup(), "rule__Prio__Group__0");
 					put(grammarAccess.getPrioAccess().getGroup_3(), "rule__Prio__Group_3__0");
 					put(grammarAccess.getTransAccess().getGroup(), "rule__Trans__Group__0");
@@ -137,6 +138,8 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_7_1(), "rule__ValuedObject__InitialValueAssignment_7_1");
 					put(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_8_1(), "rule__ValuedObject__CombineOperatorAssignment_8_1");
 					put(grammarAccess.getHostCodeInstructionAccess().getHostCodeAssignment(), "rule__HostCodeInstruction__HostCodeAssignment");
+					put(grammarAccess.getAssignmentAccess().getVariableAssignment_0(), "rule__Assignment__VariableAssignment_0");
+					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_2(), "rule__Assignment__ExpressionAssignment_2");
 					put(grammarAccess.getPrioAccess().getPriorityAssignment_2(), "rule__Prio__PriorityAssignment_2");
 					put(grammarAccess.getPrioAccess().getContinuationAssignment_3_1(), "rule__Prio__ContinuationAssignment_3_1");
 					put(grammarAccess.getTransAccess().getContinuationAssignment_2(), "rule__Trans__ContinuationAssignment_2");

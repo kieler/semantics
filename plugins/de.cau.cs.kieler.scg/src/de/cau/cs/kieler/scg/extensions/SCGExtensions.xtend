@@ -13,26 +13,24 @@
  */
 package de.cau.cs.kieler.scg.extensions
 
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Surface
-import java.util.List
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Depth
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scgbb.SchedulingBlock
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scgbb.BasicBlock
 import de.cau.cs.kieler.scgbb.SCGraphBB
-import java.util.InputMismatchException
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import de.cau.cs.kieler.scgbb.BasicBlock
-import de.cau.cs.kieler.scgsched.Schedule
-import de.cau.cs.kieler.scgsched.PotentialLoopProblem
+import de.cau.cs.kieler.scgbb.SchedulingBlock
+import de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem
 import de.cau.cs.kieler.scgsched.ScgschedFactory
+import de.cau.cs.kieler.scgsched.Schedule
+import java.util.List
+import org.eclipse.emf.ecore.EObject
 
 /**
  * SCG Extensions.
@@ -85,12 +83,12 @@ class SCGExtensions {
     def List<ControlFlow> getControlFlows(Node source, Node target) {
         source.eContents.filter(typeof(ControlFlow)).filter[it.target==target].toList
     }
-   
-    def void accumulateInstantaneousControlFlow(ControlFlow next, List<ControlFlow> myFlow, 
+      
+    def void accumulateIndirectControlFlow(ControlFlow next, List<ControlFlow> myFlow, 
         List<List<ControlFlow>> list, Node target
     ) {
         if (myFlow.contains(next)) return;
-        if (next.target instanceof Surface) return;
+//        if (next.target instanceof Surface) return;
         if (next.target == target) {
         	myFlow.add(next)
             list.add(myFlow)
@@ -99,14 +97,30 @@ class SCGExtensions {
         myFlow.add(next)
         next.target.getAllNext.forEach[
             val newFlow = <ControlFlow> newArrayList(myFlow)       	    
-            it.accumulateInstantaneousControlFlow(newFlow, list, target)
+            it.accumulateIndirectControlFlow(newFlow, list, target)
         ]
     }
    
-    def List<List<ControlFlow>> getInstantaneousControlFlows(Node source) {
+    def List<List<ControlFlow>> getIndirectControlFlows(Node source, Node target) {
    	    val loopList = <List<ControlFlow>> newLinkedList
-   	    source.getAllNext.forEach[it.accumulateInstantaneousControlFlow(newArrayList(), loopList, source)]
+   	    source.getAllNext.forEach[it.accumulateIndirectControlFlow(newArrayList(), loopList, target)]
    	    loopList 
+    }
+    
+    def boolean instantaneousFlow(List<ControlFlow> controlFlows) {
+    	var isInst = true
+    	for(cf : controlFlows) {
+    		if (cf.target instanceof Depth) isInst = false
+    	}
+    	isInst
+    }    
+
+    def List<List<ControlFlow>> getInstantaneousControlFlows(Node source) {
+    	source.getIndirectControlFlows(source).filter[it.instantaneousFlow].toList
+    }
+    
+    def boolean instantaneous(List<List<ControlFlow>> controlFlowsList) {
+    	controlFlowsList.filter[it.instantaneousFlow].size>0
     }
       
     //  -------------------------------------------------------------------------   
@@ -213,8 +227,8 @@ class SCGExtensions {
     
     // -------------------------------------------------------------------------
     
-    def PotentialLoopProblem createPotentialLoopProblem(List<ControlFlow> controlFlows) {
-    	val plp = ScgschedFactory::eINSTANCE.createPotentialLoopProblem
+    def PotentialInstantaneousLoopProblem createPotentialLoopProblem(List<ControlFlow> controlFlows) {
+    	val plp = ScgschedFactory::eINSTANCE.createPotentialInstantaneousLoopProblem
     	plp.controlFlows.addAll(controlFlows)
     	plp
     }

@@ -140,7 +140,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         return newLinkedList(
             new Pair<IProperty<?>, List<?>>(LayoutOptions::ALGORITHM, emptyList),
             new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[it.name]), 
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 255))
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 50))
         );
     }
 
@@ -644,7 +644,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     def KRendering addDeferredDecorator(KContainerRendering line, float offset) {
         return line.addEllipse() => [
             it.lineWidth = 1;
-            it.background = "blue".color
+            it.background = "red".color
             it.setDecoratorPlacementData(10, 10, -4 + offset, 1, false);
         ];
     }

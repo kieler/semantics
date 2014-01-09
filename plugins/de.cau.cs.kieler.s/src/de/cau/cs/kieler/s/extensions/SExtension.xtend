@@ -151,15 +151,15 @@ class SExtension {
     }
     
     // Create a pure emission.
-    def Emit emit(ValuedObject valuedObject) {
+    def Emit createEmit(ValuedObject valuedObject) {
         val emitInstruction = SFactory::eINSTANCE.createEmit
         emitInstruction.setSignal(valuedObject)
         emitInstruction
     }
     
     // Create a valued emission.
-    def Emit emit(ValuedObject valuedObject, Expression expression) {
-        val emitInstruction = valuedObject.emit
+    def Emit createEmit(ValuedObject valuedObject, Expression expression) {
+        val emitInstruction = valuedObject.createEmit
         emitInstruction.setValue(expression)
         emitInstruction
     }
