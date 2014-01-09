@@ -146,7 +146,7 @@ enum StateType returns sccharts::StateType:
 	NORMAL = 'normal' | CONNECTOR = 'connector' | REFERENCE = 'reference' | TEXTUAL = 'textual';
 
 enum TransitionType returns sccharts::TransitionType:
-	WEAKABORT = '-->' | STRONGABORT = 'o->' | NORMALTERMINATION = '>->';
+	WEAKABORT = '-->' | STRONGABORT = 'o->' | TERMINATION = '>->';
 
 
 	

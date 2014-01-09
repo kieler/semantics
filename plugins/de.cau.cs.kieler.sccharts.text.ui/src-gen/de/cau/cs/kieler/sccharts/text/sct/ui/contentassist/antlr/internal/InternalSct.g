@@ -2390,10 +2390,10 @@ rule__TransitionType__Alternatives
 )
 
     |(
-{ before(grammarAccess.getTransitionTypeAccess().getNORMALTERMINATIONEnumLiteralDeclaration_2()); }
+{ before(grammarAccess.getTransitionTypeAccess().getTERMINATIONEnumLiteralDeclaration_2()); }
 (	'>->' 
 )
-{ after(grammarAccess.getTransitionTypeAccess().getNORMALTERMINATIONEnumLiteralDeclaration_2()); }
+{ after(grammarAccess.getTransitionTypeAccess().getTERMINATIONEnumLiteralDeclaration_2()); }
 )
 
 ;
