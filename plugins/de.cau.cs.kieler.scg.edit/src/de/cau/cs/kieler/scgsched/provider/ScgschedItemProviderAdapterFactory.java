@@ -106,6 +106,52 @@ public class ScgschedItemProviderAdapterFactory extends ScgschedAdapterFactory i
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgsched.EmptyExpression} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected EmptyExpressionItemProvider emptyExpressionItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scgsched.EmptyExpression}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createEmptyExpressionAdapter() {
+        if (emptyExpressionItemProvider == null) {
+            emptyExpressionItemProvider = new EmptyExpressionItemProvider(this);
+        }
+
+        return emptyExpressionItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgsched.GuardExpression} instances.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	protected GuardExpressionItemProvider guardExpressionItemProvider;
+
+				/**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scgsched.GuardExpression}.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	@Override
+	public Adapter createGuardExpressionAdapter() {
+        if (guardExpressionItemProvider == null) {
+            guardExpressionItemProvider = new GuardExpressionItemProvider(this);
+        }
+
+        return guardExpressionItemProvider;
+    }
+
+				/**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgsched.Schedule} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -129,49 +175,26 @@ public class ScgschedItemProviderAdapterFactory extends ScgschedAdapterFactory i
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgsched.Problem} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgsched.Analysis} instances.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
-	protected ProblemItemProvider problemItemProvider;
+	protected AnalysisItemProvider analysisItemProvider;
 
 				/**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scgsched.Problem}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.scgsched.Analysis}.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
 	@Override
-	public Adapter createProblemAdapter() {
-        if (problemItemProvider == null) {
-            problemItemProvider = new ProblemItemProvider(this);
+	public Adapter createAnalysisAdapter() {
+        if (analysisItemProvider == null) {
+            analysisItemProvider = new AnalysisItemProvider(this);
         }
 
-        return problemItemProvider;
-    }
-
-				/**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem} instances.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	protected PotentialInstantaneousLoopProblemItemProvider potentialInstantaneousLoopProblemItemProvider;
-
-				/**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem}.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	@Override
-	public Adapter createPotentialInstantaneousLoopProblemAdapter() {
-        if (potentialInstantaneousLoopProblemItemProvider == null) {
-            potentialInstantaneousLoopProblemItemProvider = new PotentialInstantaneousLoopProblemItemProvider(this);
-        }
-
-        return potentialInstantaneousLoopProblemItemProvider;
+        return analysisItemProvider;
     }
 
 				/**
@@ -274,9 +297,10 @@ public class ScgschedItemProviderAdapterFactory extends ScgschedAdapterFactory i
      */
     public void dispose() {
         if (scGraphSchedItemProvider != null) scGraphSchedItemProvider.dispose();
+        if (emptyExpressionItemProvider != null) emptyExpressionItemProvider.dispose();
+        if (guardExpressionItemProvider != null) guardExpressionItemProvider.dispose();
         if (scheduleItemProvider != null) scheduleItemProvider.dispose();
-        if (problemItemProvider != null) problemItemProvider.dispose();
-        if (potentialInstantaneousLoopProblemItemProvider != null) potentialInstantaneousLoopProblemItemProvider.dispose();
+        if (analysisItemProvider != null) analysisItemProvider.dispose();
     }
 
 }

@@ -27,8 +27,11 @@ import de.cau.cs.kieler.scg.transformations.SCGSchedToSeqSCGTransformation;
 import de.cau.cs.kieler.scgsched.SCGraphSched;
 
 /**
- * @author ssm
+ * Handler for menu contributions
  *
+ * @author ssm
+ * @kieler.design 2014-01-08 proposed 
+ * @kieler.rating 2014-01-08 proposed yellow
  */
 public class SequentialSCGraphModelFileHandler extends AbstractConvertModelHandler {
 

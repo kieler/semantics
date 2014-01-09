@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.scgsched;
 
 import de.cau.cs.kieler.scgbb.ScgbbPackage;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -125,13 +124,22 @@ public interface ScgschedPackage extends EPackage {
     int SC_GRAPH_SCHED__SCHEDULES = ScgbbPackage.SC_GRAPH_BB_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Problems</b></em>' containment reference list.
+     * The feature id for the '<em><b>Guards</b></em>' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int SC_GRAPH_SCHED__PROBLEMS = ScgbbPackage.SC_GRAPH_BB_FEATURE_COUNT + 2;
+	int SC_GRAPH_SCHED__GUARDS = ScgbbPackage.SC_GRAPH_BB_FEATURE_COUNT + 2;
+
+				/**
+     * The feature id for the '<em><b>Analyses</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int SC_GRAPH_SCHED__ANALYSES = ScgbbPackage.SC_GRAPH_BB_FEATURE_COUNT + 3;
 
 				/**
      * The number of structural features of the '<em>SC Graph Sched</em>' class.
@@ -140,7 +148,7 @@ public interface ScgschedPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SC_GRAPH_SCHED_FEATURE_COUNT = ScgbbPackage.SC_GRAPH_BB_FEATURE_COUNT + 3;
+    int SC_GRAPH_SCHED_FEATURE_COUNT = ScgbbPackage.SC_GRAPH_BB_FEATURE_COUNT + 4;
 
     /**
      * The number of operations of the '<em>SC Graph Sched</em>' class.
@@ -152,6 +160,116 @@ public interface ScgschedPackage extends EPackage {
     int SC_GRAPH_SCHED_OPERATION_COUNT = ScgbbPackage.SC_GRAPH_BB_OPERATION_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scgsched.impl.EmptyExpressionImpl <em>Empty Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scgsched.impl.EmptyExpressionImpl
+     * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getEmptyExpression()
+     * @generated
+     */
+    int EMPTY_EXPRESSION = 1;
+
+    /**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMPTY_EXPRESSION__VALUED_OBJECT = 0;
+
+    /**
+     * The feature id for the '<em><b>Thread Exit Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMPTY_EXPRESSION__THREAD_EXIT_OBJECT = 1;
+
+    /**
+     * The feature id for the '<em><b>Expression</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMPTY_EXPRESSION__EXPRESSION = 2;
+
+    /**
+     * The number of structural features of the '<em>Empty Expression</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMPTY_EXPRESSION_FEATURE_COUNT = 3;
+
+    /**
+     * The number of operations of the '<em>Empty Expression</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMPTY_EXPRESSION_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scgsched.impl.GuardExpressionImpl <em>Guard Expression</em>}' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scgsched.impl.GuardExpressionImpl
+     * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getGuardExpression()
+     * @generated
+     */
+	int GUARD_EXPRESSION = 2;
+
+				/**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int GUARD_EXPRESSION__VALUED_OBJECT = 0;
+
+				/**
+     * The feature id for the '<em><b>Expression</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int GUARD_EXPRESSION__EXPRESSION = 1;
+
+				/**
+     * The feature id for the '<em><b>Empty Expressions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int GUARD_EXPRESSION__EMPTY_EXPRESSIONS = 2;
+
+				/**
+     * The number of structural features of the '<em>Guard Expression</em>' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int GUARD_EXPRESSION_FEATURE_COUNT = 3;
+
+				/**
+     * The number of operations of the '<em>Guard Expression</em>' class.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int GUARD_EXPRESSION_OPERATION_COUNT = 0;
+
+				/**
      * The meta object id for the '{@link de.cau.cs.kieler.scgsched.impl.ScheduleImpl <em>Schedule</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -159,7 +277,7 @@ public interface ScgschedPackage extends EPackage {
      * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getSchedule()
      * @generated
      */
-    int SCHEDULE = 1;
+    int SCHEDULE = 3;
 
     /**
      * The feature id for the '<em><b>Scheduling Blocks</b></em>' reference list.
@@ -190,69 +308,50 @@ public interface ScgschedPackage extends EPackage {
 
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.scgsched.impl.ProblemImpl <em>Problem</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.scgsched.impl.AnalysisImpl <em>Analysis</em>}' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scgsched.impl.ProblemImpl
-     * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getProblem()
+     * @see de.cau.cs.kieler.scgsched.impl.AnalysisImpl
+     * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getAnalysis()
      * @generated
      */
-	int PROBLEM = 2;
+	int ANALYSIS = 4;
 
 				/**
-     * The number of structural features of the '<em>Problem</em>' class.
+     * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int PROBLEM_FEATURE_COUNT = 0;
+	int ANALYSIS__ID = 0;
 
 				/**
-     * The number of operations of the '<em>Problem</em>' class.
+     * The feature id for the '<em><b>Object References</b></em>' reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int PROBLEM_OPERATION_COUNT = 0;
+	int ANALYSIS__OBJECT_REFERENCES = 1;
 
 				/**
-     * The meta object id for the '{@link de.cau.cs.kieler.scgsched.impl.PotentialInstantaneousLoopProblemImpl <em>Potential Instantaneous Loop Problem</em>}' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scgsched.impl.PotentialInstantaneousLoopProblemImpl
-     * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getPotentialInstantaneousLoopProblem()
-     * @generated
-     */
-	int POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM = 3;
-
-				/**
-     * The feature id for the '<em><b>Control Flows</b></em>' reference list.
+     * The number of structural features of the '<em>Analysis</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS = PROBLEM_FEATURE_COUNT + 0;
+	int ANALYSIS_FEATURE_COUNT = 2;
 
 				/**
-     * The number of structural features of the '<em>Potential Instantaneous Loop Problem</em>' class.
+     * The number of operations of the '<em>Analysis</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM_FEATURE_COUNT = PROBLEM_FEATURE_COUNT + 1;
-
-				/**
-     * The number of operations of the '<em>Potential Instantaneous Loop Problem</em>' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM_OPERATION_COUNT = PROBLEM_OPERATION_COUNT + 0;
+	int ANALYSIS_OPERATION_COUNT = 0;
 
 				/**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scgsched.SCGraphSched <em>SC Graph Sched</em>}'.
@@ -287,15 +386,112 @@ public interface ScgschedPackage extends EPackage {
     EReference getSCGraphSched_Schedules();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgsched.SCGraphSched#getProblems <em>Problems</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgsched.SCGraphSched#getGuards <em>Guards</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Problems</em>'.
-     * @see de.cau.cs.kieler.scgsched.SCGraphSched#getProblems()
+     * @return the meta object for the containment reference list '<em>Guards</em>'.
+     * @see de.cau.cs.kieler.scgsched.SCGraphSched#getGuards()
      * @see #getSCGraphSched()
      * @generated
      */
-	EReference getSCGraphSched_Problems();
+	EReference getSCGraphSched_Guards();
+
+				/**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgsched.SCGraphSched#getAnalyses <em>Analyses</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Analyses</em>'.
+     * @see de.cau.cs.kieler.scgsched.SCGraphSched#getAnalyses()
+     * @see #getSCGraphSched()
+     * @generated
+     */
+	EReference getSCGraphSched_Analyses();
+
+				/**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scgsched.EmptyExpression <em>Empty Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Empty Expression</em>'.
+     * @see de.cau.cs.kieler.scgsched.EmptyExpression
+     * @generated
+     */
+    EClass getEmptyExpression();
+
+                /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgsched.EmptyExpression#getValuedObject <em>Valued Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Valued Object</em>'.
+     * @see de.cau.cs.kieler.scgsched.EmptyExpression#getValuedObject()
+     * @see #getEmptyExpression()
+     * @generated
+     */
+    EReference getEmptyExpression_ValuedObject();
+
+                /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgsched.EmptyExpression#getThreadExitObject <em>Thread Exit Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Thread Exit Object</em>'.
+     * @see de.cau.cs.kieler.scgsched.EmptyExpression#getThreadExitObject()
+     * @see #getEmptyExpression()
+     * @generated
+     */
+    EReference getEmptyExpression_ThreadExitObject();
+
+                /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgsched.EmptyExpression#getExpression <em>Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Expression</em>'.
+     * @see de.cau.cs.kieler.scgsched.EmptyExpression#getExpression()
+     * @see #getEmptyExpression()
+     * @generated
+     */
+    EReference getEmptyExpression_Expression();
+
+                /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scgsched.GuardExpression <em>Guard Expression</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Guard Expression</em>'.
+     * @see de.cau.cs.kieler.scgsched.GuardExpression
+     * @generated
+     */
+	EClass getGuardExpression();
+
+				/**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgsched.GuardExpression#getValuedObject <em>Valued Object</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Valued Object</em>'.
+     * @see de.cau.cs.kieler.scgsched.GuardExpression#getValuedObject()
+     * @see #getGuardExpression()
+     * @generated
+     */
+	EReference getGuardExpression_ValuedObject();
+
+				/**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgsched.GuardExpression#getExpression <em>Expression</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Expression</em>'.
+     * @see de.cau.cs.kieler.scgsched.GuardExpression#getExpression()
+     * @see #getGuardExpression()
+     * @generated
+     */
+	EReference getGuardExpression_Expression();
+
+				/**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scgsched.GuardExpression#getEmptyExpressions <em>Empty Expressions</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Empty Expressions</em>'.
+     * @see de.cau.cs.kieler.scgsched.GuardExpression#getEmptyExpressions()
+     * @see #getGuardExpression()
+     * @generated
+     */
+	EReference getGuardExpression_EmptyExpressions();
 
 				/**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scgsched.Schedule <em>Schedule</em>}'.
@@ -319,35 +515,36 @@ public interface ScgschedPackage extends EPackage {
     EReference getSchedule_SchedulingBlocks();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.scgsched.Problem <em>Problem</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scgsched.Analysis <em>Analysis</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Problem</em>'.
-     * @see de.cau.cs.kieler.scgsched.Problem
+     * @return the meta object for class '<em>Analysis</em>'.
+     * @see de.cau.cs.kieler.scgsched.Analysis
      * @generated
      */
-	EClass getProblem();
+	EClass getAnalysis();
 
 				/**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem <em>Potential Instantaneous Loop Problem</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scgsched.Analysis#getId <em>Id</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Potential Instantaneous Loop Problem</em>'.
-     * @see de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem
+     * @return the meta object for the attribute '<em>Id</em>'.
+     * @see de.cau.cs.kieler.scgsched.Analysis#getId()
+     * @see #getAnalysis()
      * @generated
      */
-	EClass getPotentialInstantaneousLoopProblem();
+	EAttribute getAnalysis_Id();
 
 				/**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem#getControlFlows <em>Control Flows</em>}'.
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scgsched.Analysis#getObjectReferences <em>Object References</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Control Flows</em>'.
-     * @see de.cau.cs.kieler.scgsched.PotentialInstantaneousLoopProblem#getControlFlows()
-     * @see #getPotentialInstantaneousLoopProblem()
+     * @return the meta object for the reference list '<em>Object References</em>'.
+     * @see de.cau.cs.kieler.scgsched.Analysis#getObjectReferences()
+     * @see #getAnalysis()
      * @generated
      */
-	EReference getPotentialInstantaneousLoopProblem_ControlFlows();
+	EReference getAnalysis_ObjectReferences();
 
 				/**
      * Returns the factory that creates the instances of the model.
@@ -399,12 +596,88 @@ public interface ScgschedPackage extends EPackage {
         EReference SC_GRAPH_SCHED__SCHEDULES = eINSTANCE.getSCGraphSched_Schedules();
 
         /**
-         * The meta object literal for the '<em><b>Problems</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Guards</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
          * @generated
          */
-		EReference SC_GRAPH_SCHED__PROBLEMS = eINSTANCE.getSCGraphSched_Problems();
+		EReference SC_GRAPH_SCHED__GUARDS = eINSTANCE.getSCGraphSched_Guards();
+
+								/**
+         * The meta object literal for the '<em><b>Analyses</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @generated
+         */
+		EReference SC_GRAPH_SCHED__ANALYSES = eINSTANCE.getSCGraphSched_Analyses();
+
+								/**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scgsched.impl.EmptyExpressionImpl <em>Empty Expression</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scgsched.impl.EmptyExpressionImpl
+         * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getEmptyExpression()
+         * @generated
+         */
+        EClass EMPTY_EXPRESSION = eINSTANCE.getEmptyExpression();
+
+                                /**
+         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EMPTY_EXPRESSION__VALUED_OBJECT = eINSTANCE.getEmptyExpression_ValuedObject();
+
+                                /**
+         * The meta object literal for the '<em><b>Thread Exit Object</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EMPTY_EXPRESSION__THREAD_EXIT_OBJECT = eINSTANCE.getEmptyExpression_ThreadExitObject();
+
+                                /**
+         * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EMPTY_EXPRESSION__EXPRESSION = eINSTANCE.getEmptyExpression_Expression();
+
+                                /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scgsched.impl.GuardExpressionImpl <em>Guard Expression</em>}' class.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scgsched.impl.GuardExpressionImpl
+         * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getGuardExpression()
+         * @generated
+         */
+		EClass GUARD_EXPRESSION = eINSTANCE.getGuardExpression();
+
+								/**
+         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @generated
+         */
+		EReference GUARD_EXPRESSION__VALUED_OBJECT = eINSTANCE.getGuardExpression_ValuedObject();
+
+								/**
+         * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @generated
+         */
+		EReference GUARD_EXPRESSION__EXPRESSION = eINSTANCE.getGuardExpression_Expression();
+
+								/**
+         * The meta object literal for the '<em><b>Empty Expressions</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @generated
+         */
+		EReference GUARD_EXPRESSION__EMPTY_EXPRESSIONS = eINSTANCE.getGuardExpression_EmptyExpressions();
 
 								/**
          * The meta object literal for the '{@link de.cau.cs.kieler.scgsched.impl.ScheduleImpl <em>Schedule</em>}' class.
@@ -425,32 +698,30 @@ public interface ScgschedPackage extends EPackage {
         EReference SCHEDULE__SCHEDULING_BLOCKS = eINSTANCE.getSchedule_SchedulingBlocks();
 
 								/**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scgsched.impl.ProblemImpl <em>Problem</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.scgsched.impl.AnalysisImpl <em>Analysis</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scgsched.impl.ProblemImpl
-         * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getProblem()
+         * @see de.cau.cs.kieler.scgsched.impl.AnalysisImpl
+         * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getAnalysis()
          * @generated
          */
-		EClass PROBLEM = eINSTANCE.getProblem();
+		EClass ANALYSIS = eINSTANCE.getAnalysis();
 
 								/**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scgsched.impl.PotentialInstantaneousLoopProblemImpl <em>Potential Instantaneous Loop Problem</em>}' class.
+         * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scgsched.impl.PotentialInstantaneousLoopProblemImpl
-         * @see de.cau.cs.kieler.scgsched.impl.ScgschedPackageImpl#getPotentialInstantaneousLoopProblem()
          * @generated
          */
-		EClass POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM = eINSTANCE.getPotentialInstantaneousLoopProblem();
+		EAttribute ANALYSIS__ID = eINSTANCE.getAnalysis_Id();
 
 								/**
-         * The meta object literal for the '<em><b>Control Flows</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Object References</b></em>' reference list feature.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
          * @generated
          */
-		EReference POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM__CONTROL_FLOWS = eINSTANCE.getPotentialInstantaneousLoopProblem_ControlFlows();
+		EReference ANALYSIS__OBJECT_REFERENCES = eINSTANCE.getAnalysis_ObjectReferences();
 
     }
 

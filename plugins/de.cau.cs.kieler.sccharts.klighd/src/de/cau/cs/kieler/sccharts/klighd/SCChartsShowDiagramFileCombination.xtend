@@ -16,7 +16,7 @@ package de.cau.cs.kieler.sccharts.klighd
 import de.cau.cs.kieler.core.kivi.AbstractCombination
 import de.cau.cs.kieler.core.kivi.triggers.PartTrigger
 import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger
-import de.cau.cs.kieler.klighd.kivi.effects.KlighdDiagramEffect
+import de.cau.cs.kieler.klighd.kivi.effects.KlighdUpdateDiagramEffect
 import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.klighd.xtext.UpdateXtextModelKLighDCombination
@@ -65,7 +65,7 @@ class SCChartsShowDiagramFileCombination extends UpdateXtextModelKLighDCombinati
                     it?.load(Collections::emptyMap());
                 ])?.contents?.head;
                 if (eObject != null) {
-                    this.schedule(new KlighdDiagramEffect("volatile.sccharts.outline", eObject) => [
+                    this.schedule(new KlighdUpdateDiagramEffect("volatile.sccharts.outline", eObject) => [
 // FIX while klighd.incremental is down
                         it.setProperty(KlighdSynthesisProperties::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
 //                        it.setProperty(LightDiagramServices::REQUESTED_UPDATE_STRATEGY, UpdateStrategy::ID);

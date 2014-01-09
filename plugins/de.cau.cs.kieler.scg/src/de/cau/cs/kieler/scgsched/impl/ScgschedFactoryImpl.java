@@ -14,13 +14,10 @@
 package de.cau.cs.kieler.scgsched.impl;
 
 import de.cau.cs.kieler.scgsched.*;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
@@ -68,9 +65,10 @@ public class ScgschedFactoryImpl extends EFactoryImpl implements ScgschedFactory
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
             case ScgschedPackage.SC_GRAPH_SCHED: return createSCGraphSched();
+            case ScgschedPackage.EMPTY_EXPRESSION: return createEmptyExpression();
+            case ScgschedPackage.GUARD_EXPRESSION: return createGuardExpression();
             case ScgschedPackage.SCHEDULE: return createSchedule();
-            case ScgschedPackage.PROBLEM: return createProblem();
-            case ScgschedPackage.POTENTIAL_INSTANTANEOUS_LOOP_PROBLEM: return createPotentialInstantaneousLoopProblem();
+            case ScgschedPackage.ANALYSIS: return createAnalysis();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -91,6 +89,26 @@ public class ScgschedFactoryImpl extends EFactoryImpl implements ScgschedFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    public EmptyExpression createEmptyExpression() {
+        EmptyExpressionImpl emptyExpression = new EmptyExpressionImpl();
+        return emptyExpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public GuardExpression createGuardExpression() {
+        GuardExpressionImpl guardExpression = new GuardExpressionImpl();
+        return guardExpression;
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public Schedule createSchedule() {
         ScheduleImpl schedule = new ScheduleImpl();
         return schedule;
@@ -101,19 +119,9 @@ public class ScgschedFactoryImpl extends EFactoryImpl implements ScgschedFactory
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public Problem createProblem() {
-        ProblemImpl problem = new ProblemImpl();
-        return problem;
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public PotentialInstantaneousLoopProblem createPotentialInstantaneousLoopProblem() {
-        PotentialInstantaneousLoopProblemImpl potentialInstantaneousLoopProblem = new PotentialInstantaneousLoopProblemImpl();
-        return potentialInstantaneousLoopProblem;
+	public Analysis createAnalysis() {
+        AnalysisImpl analysis = new AnalysisImpl();
+        return analysis;
     }
 
 				/**

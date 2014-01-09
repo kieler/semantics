@@ -26,7 +26,7 @@ import org.eclipse.xtext.scoping.Scopes
 /** 
  * Specialized SCG KExpression scope provider
  * 
- * Need to retrieve the correct scope for the valued objects in the SCGraph.
+ * Needed to retrieve the correct scope for the valued objects in the SCGraph.
  * 
  * @author ssm
  * @kieler.design 2013-10-23 proposed 
@@ -38,25 +38,41 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
 
     private SCGraph parent;
 
-    // Set parent to the SCGraph.
-    // All declarations are stored here.
+    /**
+     * Since all declarations are stored in the parent SCG, set parent to the SCGraph.
+     *
+     * @param theParent
+     * 			The root parent of all valued objects.
+     * @returns Returns nothing.  
+     */
     def void setParent(SCGraph theParent) {
         parent = theParent;
     }
     
-    // ValuedObject scope
+	/**
+	 * Returns the scope of the valued objects stored in the parent object.
+	 * 
+	 * @param context context 
+	 * @param reference reference
+	 * @return Returns the scope of the valued objects stored in the parent object.
+	 */
     def IScope scope_ValuedObject(EObject context, EReference reference) {
         Scopes.scopeFor(parent.getValuedObjects())
     }
 
-    // ValuedObjectReference scope
+    /**
+     * Returns the scope valued objects stored in the parent object. 
+     * However, if the graph is an SCGraphBB, the valued object maybe a guard of a basic block. Add them as well.
+     * 
+     * @param context conect
+     * @param reference reference
+     * @return Returns the scope of the valued objects stored in the parent object of in its basic blocks.
+     */
     def IScope scope_ValuedObjectReference_valuedObject(EObject context, EReference reference) {
   		val scopeObjects = <ValuedObject> newLinkedList
   		scopeObjects.addAll(parent.getValuedObjects)
     	if (parent instanceof SCGraphBB) {
-    		(parent as SCGraphBB).basicBlocks.forEach[scopeObjects.add(it.guard)]
-    		(parent as SCGraphBB).basicBlocks.forEach[scopeObjects.addAll(it.subGuards)]
-    		(parent as SCGraphBB).basicBlocks.forEach[scopeObjects.addAll(it.emptyGuards)]
+    		(parent as SCGraphBB).basicBlocks.forEach[scopeObjects.addAll(it.guards)]
     	}
         Scopes.scopeFor(scopeObjects)
     }

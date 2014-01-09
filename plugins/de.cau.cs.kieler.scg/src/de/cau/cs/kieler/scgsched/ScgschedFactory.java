@@ -42,6 +42,24 @@ public interface ScgschedFactory extends EFactory {
     SCGraphSched createSCGraphSched();
 
     /**
+     * Returns a new object of class '<em>Empty Expression</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Empty Expression</em>'.
+     * @generated
+     */
+    EmptyExpression createEmptyExpression();
+
+    /**
+     * Returns a new object of class '<em>Guard Expression</em>'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return a new object of class '<em>Guard Expression</em>'.
+     * @generated
+     */
+	GuardExpression createGuardExpression();
+
+				/**
      * Returns a new object of class '<em>Schedule</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -51,22 +69,13 @@ public interface ScgschedFactory extends EFactory {
     Schedule createSchedule();
 
     /**
-     * Returns a new object of class '<em>Problem</em>'.
+     * Returns a new object of class '<em>Analysis</em>'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @return a new object of class '<em>Problem</em>'.
+     * @return a new object of class '<em>Analysis</em>'.
      * @generated
      */
-	Problem createProblem();
-
-				/**
-     * Returns a new object of class '<em>Potential Instantaneous Loop Problem</em>'.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return a new object of class '<em>Potential Instantaneous Loop Problem</em>'.
-     * @generated
-     */
-	PotentialInstantaneousLoopProblem createPotentialInstantaneousLoopProblem();
+	Analysis createAnalysis();
 
 				/**
      * Returns the package supported by this factory.
