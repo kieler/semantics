@@ -1333,17 +1333,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -------------------------------------------------------------------------
     
     def String removeParenthesis(String str) {
-        var String s = "";
         if (str.contains("&")) {
           return str.replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")");  
-        } 
-        if (str.startsWith("(") && str.endsWith(")")) {
-            s = str.substring(1)
-            s = s.substring(0, s.length - 1);
-        } else {
-  	 		s = str
         }
-        return s;
+        return str
     }
    
     def boolean topdown() {
