@@ -124,16 +124,34 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
      */
     @Override
     protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
-        String commandString = event.getCommand().getId().toString();
+        String commandString = getCommandString(event);
         if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {
-            return ".core";
+            return "core";
         } else if (commandString.equals(ALLNORMALIZE_TRANSFORMATIONS)) {
-            return ".normalized";
+            return "normalized";
         } else {
-            return ".transformed";
+            return "transformed";
         }
     }
 
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the command string.
+     *
+     * @param event the event
+     * @return the command string
+     */
+    protected String getCommandString(ExecutionEvent event) {
+        String commandString = event.getCommand().getId().toString();
+        // Call the model transformation (this creates a copy of the model containing the
+        // refactored model).
+        // Use commandString for Scc and Sct Transformation
+        commandString = commandString.replace("commands.Scc", "commands.");
+        commandString = commandString.replace("commands.Sct", "commands.");
+        return commandString;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -142,14 +160,8 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
      */
     @Override
     protected Object transform(EObject model, ExecutionEvent event, ISelection selection) {
-        String commandString = event.getCommand().getId().toString();
+        String commandString = getCommandString(event);
         EObject transformed = null;
-        // Call the model transformation (this creates a copy of the model containing the
-        // refactored model).
-        // Use commandString for Scc and Sct Transformation
-        commandString = commandString.replace("commands.Scc", "commands.");
-        commandString = commandString.replace("commands.Sct", "commands.");
-        System.out.println(commandString);
 
         SCChartsCoreTransformation transformation =
                 Guice.createInjector().getInstance(SCChartsCoreTransformation.class);
