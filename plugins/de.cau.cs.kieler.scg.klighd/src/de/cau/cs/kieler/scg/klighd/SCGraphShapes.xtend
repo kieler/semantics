@@ -45,15 +45,15 @@ class SCGraphShapes {
     @Inject
     extension KColorExtensions
 	
-	def KRenderingFactory factory() {
+	def KRenderingFactory KRenderingFactory() {
 		return KRenderingFactory::eINSTANCE;
 	} 
 	
-	def KRendering getKRendering(KGraphElement kge) {
+	private def KRendering getKRendering(KGraphElement kge) {
 		return kge.getData(typeof(KRendering));
 	}
 	
-	def KShapeLayout getKShapeLayout(KGraphElement kge) {
+	private def KShapeLayout getKShapeLayout(KGraphElement kge) {
 		return kge.getData(typeof(KShapeLayout));
 	}
 	
@@ -233,14 +233,14 @@ class SCGraphShapes {
 	
 	def KEdge createPolyLineEdge(Object o) {
 		val edge = o.edge;
-		edge.data.add(factory.createKRoundedBendsPolyline => [
+		edge.data.add(KRenderingFactory.createKRoundedBendsPolyline => [
 		    it.setBendRadius(5);
 		]);
 		return edge;
 	}
     def KEdge createSplineEdge(Object o) {
         val edge = o.edge;
-        edge.data.add(factory.createKSpline);
+        edge.data.add(KRenderingFactory.createKSpline);
         return edge;
     }	
 }
