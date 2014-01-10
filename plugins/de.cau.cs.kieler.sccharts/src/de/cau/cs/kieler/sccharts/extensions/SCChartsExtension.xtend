@@ -186,26 +186,61 @@ class SCChartsExtension {
         state
     }
 
+    def State createState(Region region, String id, String label) {
+        val state = createState(id)
+        region.states.add(state)
+        state
+    }
+
     def State createState(Region region, String id) {
         val state = createState(id)
+        state.setLabel(id)
         region.states.add(state)
         state
     }
 
 
     //========== UNIQUE NAMES ===========
-    def private String getUniqueNameHelper(String id, int number) {
-        if (number > 1) {
-            return id + (number)
-        }
-        return null
+    def private dispatch boolean uniqueNameTest(State state, String newName) {
+        state.parentRegion.states.filter[it != state && id == newName].size == 0
+    }
+    def private dispatch boolean uniqueNameTest(Region region, String newName) {
+        region.parentState.regions.filter[it != region && id == newName].size == 0
+    }
+    def private boolean uniqueNameTest(ValuedObject valuedObject, State state, String newName) {
+        val parentState = (valuedObject.eContainer as State)
+        parentState.valuedObjects.filter[it != valuedObject && id == newName].size == 0
+        && parentState.parentRegion == null || valuedObject.uniqueNameTest(parentState, newName) 
+    }
+    def private dispatch boolean uniqueNameTest(ValuedObject valuedObject, String newName) {
+        valuedObject.uniqueNameTest((valuedObject.eContainer as State), newName)
+    }
+    def private dispatch boolean uniqueNameTest(EObject eObject, String newName) {
+        false
     }
     
+    def private String uniqueNameHelper(EObject eObject, String originalId) {
+        var String newName = null
+        var c = 1
+        if (eObject.uniqueNameTest(originalId)) {
+            return originalId
+        }
+        while (newName == null) {
+            c = c + 1
+            val tmpNewName = originalId + c
+            if (eObject.uniqueNameTest(tmpNewName)) {
+                newName = tmpNewName
+            } 
+        }
+        return newName
+    }
+    
+
     def State uniqueName(State state) {
         val originalId = state.id
-        val newName = originalId.getUniqueNameHelper(state.parentRegion.states.filter[id != null && id.startsWith(originalId)].size)
-        if (newName != null) {
-//            System.out.println("Changed State Id from '"+ state.id + "' to '"+ newName + "'")
+        var String newName = state.uniqueNameHelper(originalId)
+        if (newName != originalId) {
+            state.setId(newName)
             state.setLabel2(newName)
         } 
         state
@@ -213,40 +248,22 @@ class SCChartsExtension {
 
     def Region uniqueName(Region region) {
         val originalId = region.id
-        val newName = originalId.getUniqueNameHelper(region.parentState.regions.filter[id != null && id.startsWith(originalId)].size)
-        if (newName != null) {
-//            System.out.println("Changed Region Id from '"+ region.id + "' to '"+ newName + "'")
+        var String newName = region.uniqueNameHelper(originalId)
+        if (newName != originalId) {
             region.setLabel2(newName)
         } 
         region
     }
 
-    def int countInParent(Region region, String originalId) {
-        if (region == null) {
-            return 0;
-        }
-        val number = region.valuedObjects.filter[name != null && name.startsWith(originalId)].size
-        number + region.parentState.countInParent(originalId)
-    }
-    def int countInParent(State state, String originalId) {
-        if (state == null) {
-            return 0;
-        }
-        val number = state.valuedObjects.filter[name != null && name.startsWith(originalId)].size
-        number + state.parentRegion.countInParent(originalId)
-    }
-
-    def ValuedObject uniqueName(ValuedObject valuedObject) {
+     def ValuedObject uniqueName(ValuedObject valuedObject) {
         val originalId = valuedObject.name
-        val newName = originalId.getUniqueNameHelper((valuedObject.eContainer as State).countInParent(originalId))
-        if (newName != null) {
-//            System.out.println("Changed ValuedObject Name from '"+ valuedObject.name + "' to '"+ newName + "'")
-            valuedObject.setName(newName)
+        var String newName = valuedObject.uniqueNameHelper(originalId)
+        if (newName != originalId) {
+             valuedObject.setName(newName)
         } 
         valuedObject
     }
 
-    
 
     def State setInitial(State state) {
         state.setInitial(true)
