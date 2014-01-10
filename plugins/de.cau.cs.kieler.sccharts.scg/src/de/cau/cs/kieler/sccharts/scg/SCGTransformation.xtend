@@ -178,7 +178,7 @@ class SCGTransformation {
        ((state.outgoingTransitions.filter[e|!e.isImmediate &&
                                              e.trigger == null && 
                                              e.effects.nullOrEmpty &&
-                                             e.type != TransitionType::NORMALTERMINATION].size == 1) && 
+                                             e.type != TransitionType::TERMINATION].size == 1) && 
        (state.outgoingTransitions.size == 1)) 
    }           
            
@@ -196,7 +196,7 @@ class SCGTransformation {
        ((state.outgoingTransitions.filter[e|e.isImmediate && 
                                             e.trigger == null && 
                                            !e.effects.nullOrEmpty &&
-                                            e.type != TransitionType::NORMALTERMINATION].size == 1) && 
+                                            e.type != TransitionType::TERMINATION].size == 1) && 
        (state.outgoingTransitions.size == 1)) 
    }           
 
@@ -485,11 +485,11 @@ class SCGTransformation {
                 region.transformSCGConnectNodes(sCGraph)
             }
             if (state.outgoingTransitions.size>0) {
-                val normalTerminationTargetState = state.outgoingTransitions.get(0).targetState
-                val otherNodeNormalTermination = normalTerminationTargetState.mappedNode   
-                if (otherNodeNormalTermination != null) {
-                    val controlFlowNormalTermination = otherNodeNormalTermination.createControlFlow
-                    join.setNext(controlFlowNormalTermination)
+                val terminationTargetState = state.outgoingTransitions.get(0).targetState
+                val otherNodeTermination = terminationTargetState.mappedNode   
+                if (otherNodeTermination != null) {
+                    val controlFlowTermination = otherNodeTermination.createControlFlow
+                    join.setNext(controlFlowTermination)
                 }   
             } else {
                 // The root state does not have a normal termination.

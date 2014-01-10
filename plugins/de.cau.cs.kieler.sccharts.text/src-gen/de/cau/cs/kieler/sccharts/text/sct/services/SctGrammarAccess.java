@@ -1082,14 +1082,14 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cWEAKABORTHyphenMinusHyphenMinusGreaterThanSignKeyword_0_0 = (Keyword)cWEAKABORTEnumLiteralDeclaration_0.eContents().get(0);
 		private final EnumLiteralDeclaration cSTRONGABORTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
 		private final Keyword cSTRONGABORTOKeyword_1_0 = (Keyword)cSTRONGABORTEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cNORMALTERMINATIONEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0 = (Keyword)cNORMALTERMINATIONEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cTERMINATIONEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0 = (Keyword)cTERMINATIONEnumLiteralDeclaration_2.eContents().get(0);
 		
 		//enum TransitionType returns sccharts::TransitionType:
-		//	WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->";
+		//	WEAKABORT="-->" | STRONGABORT="o->" | TERMINATION=">->";
 		public EnumRule getRule() { return rule; }
 
-		//WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->"
+		//WEAKABORT="-->" | STRONGABORT="o->" | TERMINATION=">->"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//WEAKABORT="-->"
@@ -1104,11 +1104,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//"o->"
 		public Keyword getSTRONGABORTOKeyword_1_0() { return cSTRONGABORTOKeyword_1_0; }
 
-		//NORMALTERMINATION=">->"
-		public EnumLiteralDeclaration getNORMALTERMINATIONEnumLiteralDeclaration_2() { return cNORMALTERMINATIONEnumLiteralDeclaration_2; }
+		//TERMINATION=">->"
+		public EnumLiteralDeclaration getTERMINATIONEnumLiteralDeclaration_2() { return cTERMINATIONEnumLiteralDeclaration_2; }
 
 		//">->"
-		public Keyword getNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0() { return cNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0; }
+		public Keyword getTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0() { return cTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0; }
 	}
 	
 	private RootRegionElements pRootRegion;
@@ -1295,7 +1295,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum TransitionType returns sccharts::TransitionType:
-	//	WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->";
+	//	WEAKABORT="-->" | STRONGABORT="o->" | TERMINATION=">->";
 	public TransitionTypeElements getTransitionTypeAccess() {
 		return (unknownRuleTransitionType != null) ? unknownRuleTransitionType : (unknownRuleTransitionType = new TransitionTypeElements());
 	}

@@ -48,7 +48,7 @@ public class SCGraphSchedulingModelFileHandler extends AbstractConvertModelHandl
      * {@inheritDoc}
      */
     @Override
-    protected String getTargetExtension() {
+    protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
         return "scgsched";
     }
 

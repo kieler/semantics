@@ -41,7 +41,7 @@ public class SCGraphSCLModelFileHandler extends AbstractConvertModelHandler {
      * {@inheritDoc}
      */
     @Override
-    protected String getTargetExtension() {
+    protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
         return "scl";
     }
 
