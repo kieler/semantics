@@ -56,7 +56,7 @@ class SCChartsExtension {
     extension KExpressionsExtension
 
     // This prefix is used for namings of all generated signals, states and regions
-    static final String GENERATED_PREFIX = "_"
+    static public final String GENERATED_PREFIX = "_"
 
     //    public val Injector i = ActionsStandaloneSetup::doSetup();
     //    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));

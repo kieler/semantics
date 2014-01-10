@@ -54,6 +54,10 @@ class SCChartsCoreTransformation {
 
     @Inject
     extension SCChartsExtension
+    
+    // This prefix is used for namings of all generated signals, states and regions
+    static public final String GENERATED_PREFIX = "_"
+    
 
     //-------------------------------------------------------------------------
     //--             E X P O S E   L O C A L   S I G N A L S                 --
@@ -172,7 +176,7 @@ class SCChartsCoreTransformation {
             // Setup the auxiliary terminated valuedObject indicating that a normal termination
             // has been taken in the same synchronous tick and must not be taken again.
             val rootState = state.rootState
-            val terminatedValuedObject = rootState.createPureSignal(state.id("terminated"));
+            val terminatedValuedObject = rootState.createPureSignal(GENERATED_PREFIX + "terminated").uniqueName;
 
             val terminatedEmission = terminatedValuedObject.emit
 
@@ -196,7 +200,7 @@ class SCChartsCoreTransformation {
 
                 // Setup the auxiliary termination valuedObject indicating that a normal termination
                 // should be taken.
-                val finishedValuedObject = targetRootRegion.rootState.createPureSignal(region.id("finished"))
+                val finishedValuedObject = targetRootRegion.rootState.createPureSignal(GENERATED_PREFIX + "finished").uniqueName
 
                 val finalStates = region.states.filter(e|e.isFinal == true);
 
@@ -211,7 +215,7 @@ class SCChartsCoreTransformation {
                 triggerExpression.add(finishedValuedObject.reference);
             }
 
-            // A normal termination should immediately be triggerable! (test 145) 
+            // A normal termination should immediately be trigger-able! (test 145) 
             terminationTransition.setImmediate(true);
 
             // if there is just one valuedObject, we do not need an AND!
@@ -227,7 +231,7 @@ class SCChartsCoreTransformation {
     //-------------------------------------------------------------------------
     // TODO: for inputs no during action!
     // TODO: relative writes!!
-    private static val String variableValueExtension = "_val";
+    private static val String variableValueExtension = GENERATED_PREFIX + "val";
 
     // @requires: during actions
     // For all states do the following:
@@ -408,8 +412,8 @@ class SCChartsCoreTransformation {
             // Modify surfaceState (the original state)
             val surfaceState = state
             var depthState = state
-            surfaceState.setId("_Surface")
-            surfaceState.setLabel2("_Surface")
+            surfaceState.setId(GENERATED_PREFIX + "Surface")
+            surfaceState.setLabel2(GENERATED_PREFIX + "Surface")
             surfaceState.uniqueName
 
             // For every state create a number of surface nodes
@@ -433,7 +437,7 @@ class SCChartsCoreTransformation {
                         previousState = surfaceState
                         currentState = null
                     }
-                    depthState = parentRegion.createState("_Pause").uniqueName
+                    depthState = parentRegion.createState(GENERATED_PREFIX + "Pause").uniqueName
                     val connect = previousState.createImmediateTransitionTo(depthState)
                     previousState = depthState
                     connect.setPriority(2)
@@ -441,7 +445,7 @@ class SCChartsCoreTransformation {
 
                 if (currentState == null) {
                     // Create a new state
-                    currentState = parentRegion.createState("_S").uniqueName
+                    currentState = parentRegion.createState(GENERATED_PREFIX + "S").uniqueName
 
                     // Connect
                     val connect = previousState.createTransitionTo(currentState)
@@ -555,7 +559,7 @@ class SCChartsCoreTransformation {
                  if(transition.immediate && transition.trigger == null && firstEffect == effect) {
                         // skip
                  } else { 
-                    val effectState = parentRegion.createState("_S")
+                    val effectState = parentRegion.createState(GENERATED_PREFIX + "S")
                     effectState.uniqueName
                     val effectTransition = createImmediateTransition.addEffect(effect)
                     effectTransition.setSourceState(effectState)
@@ -627,7 +631,7 @@ class SCChartsCoreTransformation {
 
             // Add a new deferVariable to the outer state, set it initially to FALSE and
             // add a during action in the state to reset it to FALSE
-            val deferVariable = state.parentRegion.parentState.createBoolVariable(state.id("_deferred"))
+            val deferVariable = state.parentRegion.parentState.createBoolVariable(GENERATED_PREFIX + "deferred").uniqueName
             deferVariable.setInitialValue(FALSE)
             val resetDeferSignalAction = state.createDuringAction
             resetDeferSignalAction.addEffect(deferVariable.assign(FALSE))
@@ -724,9 +728,9 @@ class SCChartsCoreTransformation {
             val regions = state.regions.immutableCopy
 
             if (stateHasUntransformedAborts) {
-                val ctrlRegion = state.createRegion(state.id("_Ctrl"))
-                val runState = ctrlRegion.createInitialState(state.id("_Run"))
-                val doneState = ctrlRegion.createFinalState(state.id("_Done"))
+                val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueName
+                val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
+                val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
 
                 // Build up weak and strong abort triggers
                 var Expression strongAbortTrigger = null;
@@ -734,7 +738,7 @@ class SCChartsCoreTransformation {
                 for (transition : outgoingTransitions) {
 
                     // Create a new _transitionTrigger valuedObject
-                    val transitionTriggerVariable = state.parentRegion.parentState.createBoolVariable(transition.id("_"))
+                    val transitionTriggerVariable = state.parentRegion.parentState.createBoolVariable(GENERATED_PREFIX + "trig").uniqueName
                     transitionTriggerVariable.setInitialValue(FALSE)
                     transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                     if (transition.typeStrongAbort) {
@@ -754,11 +758,11 @@ class SCChartsCoreTransformation {
                 // also to the terminationTrigger
                 for (region : regions) {
                     if (terminationHandlingNeeded) {
-                        val mainRegion = state.createRegion(region.id("_Main"))
-                        val mainState = mainRegion.createInitialState(region.id("_Main"))
+                        val mainRegion = state.createRegion(GENERATED_PREFIX + "Main").uniqueName
+                        val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").uniqueName
                         mainState.regions.add(region)
-                        val termState = mainRegion.createFinalState(region.id("_Term"))
-                        val termVariable = state.createBoolVariable(region.id("_Term"))
+                        val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").uniqueName
+                        val termVariable = state.createBoolVariable(GENERATED_PREFIX + "term").uniqueName
                         mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).
                             setTypeTermination
                         if (terminationTrigger != null) {
@@ -770,7 +774,7 @@ class SCChartsCoreTransformation {
                     }
 
                     // Inside every region create a _Aborted
-                    val abortedState = region.createFinalState(region.id("_Aborted"))
+                    val abortedState = region.createFinalState(GENERATED_PREFIX + "Aborted").uniqueName
                     for (innerState : region.states.filter[!final]) {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
@@ -821,7 +825,7 @@ class SCChartsCoreTransformation {
             }
 
             // Create a single outgoing normal termination to a new connector state
-            val outgoingConnectorState = state.parentRegion.createState(state.id("_C")).setTypeConnector
+            val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
             state.createTransitionTo(outgoingConnectorState).setTypeTermination
 
             for (transition : outgoingTransitions) {
@@ -897,9 +901,9 @@ class SCChartsCoreTransformation {
             val regions = state.regions.immutableCopy
 
             if (stateHasUntransformedAborts) {
-                val ctrlRegion = state.createRegion(state.id("_Ctrl"))
-                val runState = ctrlRegion.createInitialState(state.id("_Run"))
-                val doneState = ctrlRegion.createFinalState(state.id("_Done"))
+                val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueName
+                val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
+                val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX +"Done").uniqueName
 
                 // Build up weak and strong abort triggers
                 var Expression strongAbortTrigger = null;
@@ -907,7 +911,7 @@ class SCChartsCoreTransformation {
                 for (transition : outgoingTransitions) {
 
                     // Create a new _transitionTrigger valuedObject
-                    val transitionTriggerVariable = state.parentRegion.parentState.createBoolVariable(transition.id("_"))
+                    val transitionTriggerVariable = state.parentRegion.parentState.createBoolVariable(GENERATED_PREFIX + "trig").uniqueName
                     transitionTriggerVariable.setInitialValue(FALSE)
                     transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                     if (transition.typeStrongAbort) {
@@ -927,11 +931,11 @@ class SCChartsCoreTransformation {
                 // also to the terminationTrigger
                 for (region : regions) {
                     if (terminationHandlingNeeded) {
-                        val mainRegion = state.createRegion(region.id("_Main"))
-                        val mainState = mainRegion.createInitialState(region.id("_Main"))
+                        val mainRegion = state.createRegion(GENERATED_PREFIX + "Main").uniqueName
+                        val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").uniqueName
                         mainState.regions.add(region)
-                        val termState = mainRegion.createFinalState(region.id("_Term"))
-                        val termVariable = state.createBoolVariable(region.id("_Term"))
+                        val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").uniqueName
+                        val termVariable = state.createBoolVariable(GENERATED_PREFIX + "term").uniqueName
                         mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).
                             setTypeTermination
                         if (terminationTrigger != null) {
@@ -943,7 +947,7 @@ class SCChartsCoreTransformation {
                     }
 
                     // Inside every region create a _Aborted
-                    val abortedState = region.createFinalState(region.id("_Aborted"))
+                    val abortedState = region.createFinalState(GENERATED_PREFIX + "Aborted").uniqueName
                     for (innerState : region.states.filter[!final]) {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
@@ -962,7 +966,7 @@ class SCChartsCoreTransformation {
                                         var State innerAbortedState;
                                         if (innerFinalStates.nullOrEmpty) {
                                             innerAbortedState = innerSimpleState.parentRegion.
-                                                createFinalState(region.id("_Aborted"))
+                                                createFinalState(GENERATED_PREFIX + "Aborted").uniqueName
                                         } else {
                                             innerAbortedState = innerFinalStates.get(0)
                                         }
@@ -1009,7 +1013,7 @@ class SCChartsCoreTransformation {
             }
 
             // Create a single outgoing normal termination to a new connector state
-            val outgoingConnectorState = state.parentRegion.createState(state.id("_C")).setTypeConnector
+            val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
             state.createTransitionTo(outgoingConnectorState).setTypeTermination
 
             for (transition : outgoingTransitions) {
@@ -1085,13 +1089,13 @@ class SCChartsCoreTransformation {
 
         if (!complexFinalStates.nullOrEmpty) {
             
-            var abortFlag = state.createBoolVariable("Abort").uniqueName
+            var abortFlag = state.createBoolVariable(GENERATED_PREFIX + "abort").uniqueName
             abortFlag.setInitialValue(FALSE)
             
             var ArrayList<ValuedObject> termVariables = new ArrayList
             
             for (region : state.regions) {
-                val termVariable = state.createBoolVariable("Term").uniqueName
+                val termVariable = state.createBoolVariable(GENERATED_PREFIX + "term").uniqueName
                 termVariable.setInitialValue(FALSE)
                 termVariables.add(termVariable)
                 
@@ -1109,8 +1113,9 @@ class SCChartsCoreTransformation {
             }
             
             //Add Watcher Region
-            val watcherRegion = state.createRegion("Watch").uniqueName
-            val watcherTransition = watcherRegion.createInitialState("Watch").createImmediateTransitionTo(watcherRegion.createFinalState("Aborted"))
+            val watcherRegion = state.createRegion(GENERATED_PREFIX + "Watch").uniqueName
+            val watcherTransition = watcherRegion.createInitialState(GENERATED_PREFIX + "Watch")
+                .createImmediateTransitionTo(watcherRegion.createFinalState(GENERATED_PREFIX + "Aborted"))
             watcherTransition.addEffect(abortFlag.assign(TRUE))
             for (termVariable : termVariables) {
                 watcherTransition.setTrigger(watcherTransition.trigger.and2(termVariable.reference))    
@@ -1119,7 +1124,7 @@ class SCChartsCoreTransformation {
             //Add additional final state
             for (complexFinalState : complexFinalStates) {
                 complexFinalState.setFinal(false)
-                val finalState = complexFinalState.parentRegion.retrieveFinalState("Final")
+                val finalState = complexFinalState.parentRegion.retrieveFinalState(GENERATED_PREFIX + "Final")
                 complexFinalState.createImmediateTransitionTo(finalState).setTrigger(abortFlag.reference)
             }
             
@@ -1145,7 +1150,12 @@ class SCChartsCoreTransformation {
     }
 
     def void transformStatic(State state, Region targetRootRegion) {
-        //TODO
+        val staticValuedObjects = state.valuedObjects.filter[isStatic].toList
+        for (staticValuedObject : staticValuedObjects.immutableCopy) {
+            staticValuedObject.setName(state.getHierarchicalName("") + staticValuedObject.name)
+            state.rootState.valuedObjects.add(staticValuedObject)
+            staticValuedObject.setStatic(false)
+        }
     }
      
      
@@ -1213,7 +1223,7 @@ class SCChartsCoreTransformation {
         if (transition.delay > 1) {
             val parentState = transition.sourceState.parentRegion.parentState
             
-            val counter = parentState.createIntVariable("Counter").uniqueName
+            val counter = parentState.createIntVariable(GENERATED_PREFIX + "counter").uniqueName
             counter.setInitialValue(0.createIntValue)
             
             // Add during action
@@ -1265,7 +1275,7 @@ class SCChartsCoreTransformation {
             val notSuspendTrigger = not(suspendTrigger)
             val immediateSuspension = suspension.isImmediate;
             
-            val suspendFlag = state.createBoolVariable("Enabled").uniqueName
+            val suspendFlag = state.createBoolVariable(GENERATED_PREFIX + "enabled").uniqueName
             suspendFlag.setInitialValue(TRUE)
 
             // Do not consider other suspends as actions
@@ -1314,25 +1324,25 @@ class SCChartsCoreTransformation {
         // In case the during action is immediate, the looping transition is non-immediate.
         // In case the during action is non-immediate, the looping transition is immediate.
         if (state.duringActions != null && state.duringActions.size > 0) {
-             val term = state.createBoolVariable("Term").uniqueName
+             val term = state.createBoolVariable(GENERATED_PREFIX + "term").uniqueName
              term.setInitialValue(FALSE)
               
-             val mainRegion = state.createRegion("Main").uniqueName
-             val mainState = mainRegion.createState("Main")
+             val mainRegion = state.createRegion(GENERATED_PREFIX + "Main").uniqueName
+             val mainState = mainRegion.createState(GENERATED_PREFIX + "Main")
              for (region : state.regions.filter(e | e != mainRegion).toList.immutableCopy) {
                   mainState.regions.add(region)
              }
-             val termTransition = mainState.createTransitionTo(mainRegion.createState("Term"))
+             val termTransition = mainState.createTransitionTo(mainRegion.createState(GENERATED_PREFIX + "Term"))
              termTransition.setTypeTermination
              termTransition.addEffect(term.assign(TRUE))
 
              // Create the body of the dummy state - containing the during action
              // For every during action: Create a region
              for (duringAction : state.duringActions.immutableCopy) {
-                val region = state.createRegion("During").uniqueName
-                val initialState = region.createInitialState("I")
-                val middleState = region.createState("S")
-                val finalState = region.createFinalState("F")
+                val region = state.createRegion(GENERATED_PREFIX + "During").uniqueName
+                val initialState = region.createInitialState(GENERATED_PREFIX  + "I")
+                val middleState = region.createState(GENERATED_PREFIX + "S")
+                val finalState = region.createFinalState(GENERATED_PREFIX + "F")
                 val transition1 = initialState.createTransitionTo(middleState)
                 transition1.setDelay(duringAction.delay);
                 transition1.setImmediate(duringAction.isImmediate);
@@ -1380,17 +1390,17 @@ class SCChartsCoreTransformation {
             var State secondState
 
             if  (state.final)  {
-                val connector = state.parentRegion.createState("C").uniqueName.setTypeConnector
+                val connector = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
                 for (transition : state.incomingTransitions.immutableCopy) {
                     transition.setTargetState(connector)
                 }
                 firstState = connector
                 secondState = state
             } else if (!state.hierarchical) {
-                val region = state.createRegion("")
-                firstState = region.createInitialState("Init")
-                secondState = region.createFinalState("Done")
-                val exitState = state.parentRegion.createState(state.id("Exit"))
+                val region = state.createRegion(GENERATED_PREFIX + "Entry")
+                firstState = region.createInitialState(GENERATED_PREFIX + "Init")
+                secondState = region.createFinalState(GENERATED_PREFIX + "Done")
+                val exitState = state.parentRegion.createState(GENERATED_PREFIX + "Exit").uniqueName
                 for (transition : state.outgoingTransitions.immutableCopy) {
                     exitState.outgoingTransitions.add(transition)
                 }
@@ -1399,15 +1409,15 @@ class SCChartsCoreTransformation {
                 val region = state.regions.get(0)
                 secondState = region.states.filter[initial].get(0) //every region MUST have an initial state
                 secondState.setNotInitial
-                firstState = region.createInitialState("Init").uniqueName
+                firstState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName
             } else { // state has several regions
-                val region = state.createRegion("Entry").uniqueName
-                secondState = region.createFinalState("Main")
+                val region = state.createRegion(GENERATED_PREFIX + "Entry").uniqueName
+                secondState = region.createFinalState(GENERATED_PREFIX + "Main")
                 for (mainRegion : state.regions.filter(e | e != region).toList.immutableCopy){
                     secondState.regions.add(mainRegion)
                 }
-                firstState = region.createInitialState("Init")
-                val finalState = region.createFinalState("Done")
+                firstState = region.createInitialState(GENERATED_PREFIX + "Init")
+                val finalState = region.createFinalState(GENERATED_PREFIX + "Done")
                 secondState.createTransitionTo(finalState).setTypeTermination
             }
             
@@ -1416,7 +1426,7 @@ class SCChartsCoreTransformation {
             for (entryAction : state.entryActions.immutableCopy) {
                 var connector = secondState
                 if (entryAction != lastEntryAction) {
-                     connector = entryRegion.createState(state.id("C")).setTypeConnector
+                     connector = entryRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
                 }
                 val transition = firstState.createImmediateTransitionTo(connector)
                 for (effect : entryAction.effects) {
