@@ -176,7 +176,7 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
             transformed = transformation.transformCountDelay((Region) transformed);
             transformed = transformation.transformPre((Region) transformed);
             transformed = transformation.transformSuspend((Region) transformed);
-            transformed = transformation.transformComplexFinalState((Region) transformed);
+            //transformed = transformation.transformComplexFinalState((Region) transformed);
             // There are TWO options for the Aborts transformation
             // 1. transformAborts1() and 2. transformAborts2()
             transformed = transformation.transformAborts2((Region) transformed);
