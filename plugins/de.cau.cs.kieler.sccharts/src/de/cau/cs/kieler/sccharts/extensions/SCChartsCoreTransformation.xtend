@@ -389,10 +389,11 @@ class SCChartsCoreTransformation {
     }
 
     def void transformSurfaceDepth(State state, Region targetRootRegion) {
-        if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL) {
+        if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL
+            && !state.outgoingTransitions.get(0).typeTermination
+            && (state.outgoingTransitions.get(0).trigger != null || !state.outgoingTransitions.get(0).immediate)
+        ) {
             val parentRegion = state.parentRegion;
-            val stateId = state.id;
-            var number = 1;
 
             // Duplicate immediate transitions
             val immediateTransitions = state.outgoingTransitions.filter[isImmediate].sortBy[-priority].toList;
@@ -407,8 +408,9 @@ class SCChartsCoreTransformation {
             // Modify surfaceState (the original state)
             val surfaceState = state
             var depthState = state
-            surfaceState.setId(state.id("Surface"))
-            surfaceState.setLabel2(stateId)
+            surfaceState.setId("_Surface")
+            surfaceState.setLabel2("_Surface")
+            surfaceState.uniqueName
 
             // For every state create a number of surface nodes
             val orderedTransitionList = state.outgoingTransitions.sortBy[priority]
@@ -426,23 +428,20 @@ class SCChartsCoreTransformation {
                     nextTransitionNotImmediate = true
 
                     // Add an additional last state that will become depth State
-                    if (previousState != null) { /// IS THIS RIGHT!?!?
-                        val numberString = "" + number
-                        number = number + 1
-                        depthState = parentRegion.createState(state.id("_Pause")).setLabel2("_" + stateId + numberString)
-                        val connect = previousState.createImmediateTransitionTo(depthState)
-                        previousState = depthState
-                        connect.setPriority(2)
+                    if (previousState == null) { /// IS THIS RIGHT!?!?
+                        //val dummyState = parentRegion.createState("_Dummy").uniqueName
+                        previousState = surfaceState
+                        currentState = null
                     }
+                    depthState = parentRegion.createState("_Pause").uniqueName
+                    val connect = previousState.createImmediateTransitionTo(depthState)
+                    previousState = depthState
+                    connect.setPriority(2)
                 }
 
                 if (currentState == null) {
-
                     // Create a new state
-                    val numberString = "" + number
-                    number = number + 1
-                    currentState = parentRegion.createState(stateId + transition.id(numberString)).setLabel2(
-                        "_" + stateId + numberString) //.setTypeConnector
+                    currentState = parentRegion.createState("_S").uniqueName
 
                     // Connect
                     val connect = previousState.createTransitionTo(currentState)
@@ -478,38 +477,42 @@ class SCChartsCoreTransformation {
             Vergleiche nun rekursiv wieder die eingehenden Kanten von neuen S_Depth
             bis TK1 und TK2 ungleich sind.*/
             var stateAfterDepth = depthState
-            var done = false
-            while (!done) {
-                done = true
-                if (stateAfterDepth.incomingTransitions.size == 2) {
-
-                    // T1 is the incoming node from the surface
-                    var T1tmp = stateAfterDepth.incomingTransitions.get(0)
-                    if (T1tmp == T2tmp) {
-                        T1tmp = stateAfterDepth.incomingTransitions.get(1)
-                    }
-                    val T1 = T1tmp
-                    val T2 = T2tmp
-
-                    // T2 is the incoming node from the feedback
-                    val K1 = T1.sourceState
-                    val K2 = T2.sourceState
-                    if (!K1.outgoingTransitions.filter(e|e != T1).nullOrEmpty &&
-                        !K2.outgoingTransitions.filter(e|e != T1).nullOrEmpty) {
-                        val TK1 = K1.outgoingTransitions.filter(e|e != T1).get(0)
-                        val TK2 = K2.outgoingTransitions.filter(e|e != T2).get(0)
-                        if ((TK1.targetState == TK2.targetState) &&
-                            ((TK1.trigger == TK2.trigger) || (TK1.trigger.equals2(TK2.trigger)))) {
-                            stateAfterDepth = K1
-                            val t = K2.incomingTransitions.get(0)
-                            t.setTargetState(stateAfterDepth)
-                            K2.parentRegion.states.remove(K2)
-                            done = false
-                            T2tmp = t
-                        }
-                    }
-                }
-            }
+//            var done = false
+//            while (!done) {
+//                done = true
+//                if (stateAfterDepth.incomingTransitions.size == 2) {
+//
+//                    // T1 is the incoming node from the surface
+//                    var T1tmp = stateAfterDepth.incomingTransitions.get(0)
+//                    if (T1tmp == T2tmp) {
+//                        T1tmp = stateAfterDepth.incomingTransitions.get(1)
+//                    }
+//                    val T1 = T1tmp
+//                    val T2 = T2tmp
+//
+//                    // T2 is the incoming node from the feedback
+//                    val K1 = T1.sourceState
+//                    val K2 = T2.sourceState
+//                    if (!K1.outgoingTransitions.filter(e|e != T1).nullOrEmpty &&
+//                        !K2.outgoingTransitions.filter(e|e != T1).nullOrEmpty) {
+//                        val TK1s = K2.outgoingTransitions.filter(e|e != T2)
+//                        val TK2s = K2.outgoingTransitions.filter(e|e != T2)
+//                        if (TK1s.size > 0 && TK2s.size > 0) {
+//                            val TK1 = TK1s.get(0)
+//                            val TK2 = TK2s.get(0)
+//                            if ((TK1.targetState == TK2.targetState) &&
+//                                ((TK1.trigger == TK2.trigger) || (TK1.trigger.equals2(TK2.trigger)))) {
+//                                stateAfterDepth = K1
+//                                val t = K2.incomingTransitions.get(0)
+//                                t.setTargetState(stateAfterDepth)
+//                                K2.parentRegion.states.remove(K2)
+//                                done = false
+//                                T2tmp = t
+//                            }
+//                        }
+//                    }
+//                }
+//            }
 
         // End of DTO transformation
         // This MUST be highest priority so that the control flow restarts and takes other 
@@ -528,37 +531,37 @@ class SCChartsCoreTransformation {
     //     Set the T_eff to have T's target state. Set T to have the target C.
     //     Add T_eff to C's outgoing transitions. 
     def Region transformTriggerEffect(Region rootRegion) {
-
         // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
-
-        //        val size = targetRootRegion.eAllContents().toList().filter(typeof(State)).toList()
         // Traverse all transitions
         for (targetTransition : targetRootRegion.getAllContainedTransitions) {
             targetTransition.transformTriggerEffect(targetRootRegion);
         }
-        
         targetRootRegion;
     }
 
     def void transformTriggerEffect(Transition transition, Region targetRootRegion) {
-
-        // Only apply this to transition that have both, a trigger and one or more effects 
-        if (((transition.trigger != null || !transition.immediate) && !transition.effects.nullOrEmpty) ||
+       // Only apply this to transition that have both, a trigger (or is a termination) and one or more effects 
+        if (((transition.trigger != null || !transition.immediate || transition.typeTermination) && !transition.effects.nullOrEmpty) ||
             transition.effects.size > 1) {
             val targetState = transition.targetState
             val parentRegion = targetState.parentRegion
             val transitionOriginalTarget = transition.targetState
             var Transition lastTransition = transition
 
+            val firstEffect = transition.effects.head
             for (effect : transition.effects.immutableCopy) {
-                val effectState = parentRegion.createState(targetState.id + effect.id)
-                effectState.setTypeConnector
-                val effectTransition = createImmediateTransition.addEffect(effect)
-
-                effectTransition.setSourceState(effectState)
-                lastTransition.setTargetState(effectState)
-                lastTransition = effectTransition
+                 // Optimization: Prevent transitions without a trigger
+                 if(transition.immediate && transition.trigger == null && firstEffect == effect) {
+                        // skip
+                 } else { 
+                    val effectState = parentRegion.createState("_S")
+                    effectState.uniqueName
+                    val effectTransition = createImmediateTransition.addEffect(effect)
+                    effectTransition.setSourceState(effectState)
+                    lastTransition.setTargetState(effectState)
+                    lastTransition = effectTransition
+                 }
             }
 
             lastTransition.setTargetState(transitionOriginalTarget)
