@@ -1126,6 +1126,66 @@ class SCChartsCoreTransformation {
      }
      
      
+     
+    //-------------------------------------------------------------------------
+    //--                          S T A T I C                                --
+    //-------------------------------------------------------------------------
+    // ...
+    def Region transformStatic(Region rootRegion) {
+        // Clone the complete SCCharts region 
+        var targetRootRegion = rootRegion.copy;
+        // For every state in the SyncChart do the transformation
+        for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
+            targetTransition.transformStatic(targetRootRegion);
+        }
+        targetRootRegion;
+    }
+
+    def void transformStatic(State state, Region targetRootRegion) {
+        //TODO
+    }
+     
+     
+    //-------------------------------------------------------------------------
+    //--          I N P U T   O U T P U T   V A R I A B L E                  --
+    //-------------------------------------------------------------------------
+    // ...
+    def Region transformInputOutputVariable(Region rootRegion) {
+        // Clone the complete SCCharts region 
+        var targetRootRegion = rootRegion.copy;
+        // For every state in the SyncChart do the transformation
+        for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
+            targetTransition.transformInputOutputVariable(targetRootRegion);
+        }
+        targetRootRegion;
+    }
+
+    def void transformInputOutputVariable(State state, Region targetRootRegion) {
+        //TODO
+    }
+          
+          
+
+    //-------------------------------------------------------------------------
+    //--                     W E A K   S U S P E N D                         --
+    //-------------------------------------------------------------------------
+    // ...
+    def Region transformWeakSuspend(Region rootRegion) {
+        // Clone the complete SCCharts region 
+        var targetRootRegion = rootRegion.copy;
+        // For every state in the SyncChart do the transformation
+        for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
+            targetTransition.transformWeakSuspend(targetRootRegion);
+        }
+        targetRootRegion;
+    }
+
+    def void transformWeakSuspend(State state, Region targetRootRegion) {
+        //TODO
+    }
+               
+          
+          
     //-------------------------------------------------------------------------
     //--                   C O U N T   D E L A Y                             --
     //-------------------------------------------------------------------------

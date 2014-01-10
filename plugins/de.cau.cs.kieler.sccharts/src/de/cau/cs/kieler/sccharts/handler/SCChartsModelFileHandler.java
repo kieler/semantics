@@ -34,6 +34,9 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     public static final String ALLCORE_TRANSFORMATIONS =
             "de.cau.cs.kieler.sccharts.commands.AllCoreTransformations";
 
+    public static final String ALLNORMALIZE_TRANSFORMATIONS =
+            "de.cau.cs.kieler.sccharts.commands.AllNormalizeTransformations";
+
     public static final String ABORT_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.AbortTransformation";
 
@@ -46,14 +49,17 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     public static final String SIGNAL_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.SignalTransformation";
 
-    public static final String INPUTOUTPUTSIGNAL_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.InputOutputSignalTransformation";
+    public static final String INPUTOUTPUTVARIABLE_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.InputOutputVariableTransformation";
 
     public static final String ENTRY_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.EntryTransformation";
 
     public static final String DURING_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.DuringTransformation";
+
+    public static final String STATIC_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.StaticTransformation";
 
     public static final String EXIT_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.ExitTransformation";
@@ -67,6 +73,9 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     public static final String SUSPEND_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.SuspendTransformation";
 
+    public static final String WEAKSUSPEND_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.WeakSuspendTransformation";
+
     public static final String COUNTDELAY_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.CountDelayTransformation";
 
@@ -79,8 +88,8 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     public static final String INITIALIZATION_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.InitializationTransformation";
 
-    public static final String EXPOSELOCALSIGNAL_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.ExposeLocalSignalTransformation";
+    public static final String EXPOSELOCALVARIABLE_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.ExposeLocalVariableTransformation";
 
     public static final String TERMINATION_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.TerminationTransformation";
@@ -139,6 +148,8 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
         transformed = model;
         if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {
             // TODO
+        } else if (commandString.equals(ALLNORMALIZE_TRANSFORMATIONS)) {
+            // TODO
         } else if (commandString.equals(ABORT_TRANSFORMATION)) {
             // There are TWO options for the Aborts transformation
             // 1. transformAborts1() and 2. transformAborts2()
@@ -149,13 +160,14 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
             transformed = transformation.transformTriggerEffect((Region) model);
         } else if (commandString.equals(SIGNAL_TRANSFORMATION)) {
             transformed = transformation.transformSignal((Region) model);
-        } else if (commandString.equals(INPUTOUTPUTSIGNAL_TRANSFORMATION)) {
-            // TODO
-            // transformed = transformation.transformInputOutputSignal((Region) model);
+        } else if (commandString.equals(INPUTOUTPUTVARIABLE_TRANSFORMATION)) {
+            transformed = transformation.transformInputOutputVariable((Region) model);
         } else if (commandString.equals(ENTRY_TRANSFORMATION)) {
             transformed = transformation.transformEntry((Region) model);
         } else if (commandString.equals(DURING_TRANSFORMATION)) {
             transformed = transformation.transformDuring((Region) model);
+        } else if (commandString.equals(STATIC_TRANSFORMATION)) {
+            transformed = transformation.transformStatic((Region) model);
         } else if (commandString.equals(EXIT_TRANSFORMATION)) {
             transformed = transformation.transformExit((Region) model);
         } else if (commandString.equals(CONNECTOR_TRANSFORMATION)) {
@@ -164,6 +176,8 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
             transformed = transformation.transformHistory((Region) model);
         } else if (commandString.equals(SUSPEND_TRANSFORMATION)) {
             transformed = transformation.transformSuspend((Region) model);
+        } else if (commandString.equals(WEAKSUSPEND_TRANSFORMATION)) {
+            transformed = transformation.transformWeakSuspend((Region) model);
         } else if (commandString.equals(COUNTDELAY_TRANSFORMATION)) {
             transformed = transformation.transformCountDelay((Region) model);
         } else if (commandString.equals(DEFERRED_TRANSFORMATION)) {
@@ -172,7 +186,7 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
             transformed = transformation.transformPre((Region) model);
         } else if (commandString.equals(INITIALIZATION_TRANSFORMATION)) {
             transformed = transformation.transformInitialization((Region) model);
-        } else if (commandString.equals(EXPOSELOCALSIGNAL_TRANSFORMATION)) {
+        } else if (commandString.equals(EXPOSELOCALVARIABLE_TRANSFORMATION)) {
             transformed = transformation.transformExposeLocalValuedObject((Region) model);
         } else if (commandString.equals(TERMINATION_TRANSFORMATION)) {
             transformed = transformation.transformTermination((Region) model);
