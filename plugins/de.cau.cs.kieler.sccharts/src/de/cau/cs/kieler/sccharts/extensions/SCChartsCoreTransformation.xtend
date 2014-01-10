@@ -1316,7 +1316,7 @@ class SCChartsCoreTransformation {
               
              val mainRegion = state.createRegion("Main").uniqueName
              val mainState = mainRegion.createState("Main")
-             for (region : state.regions.filter(e | e != mainRegion)) {
+             for (region : state.regions.filter(e | e != mainRegion).toList.immutableCopy) {
                   mainState.regions.add(region)
              }
              val termTransition = mainState.createTransitionTo(mainRegion.createState("Term"))

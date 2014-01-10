@@ -831,7 +831,6 @@
             </visibleWhen>
          </command>
       </menuContribution>
-      <!--
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
@@ -854,7 +853,7 @@
                </iterate>
             </visibleWhen>
          </command>
-      </menuContribution> -->
+      </menuContribution> 
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command

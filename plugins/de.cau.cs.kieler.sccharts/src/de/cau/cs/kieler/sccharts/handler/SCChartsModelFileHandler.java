@@ -12,6 +12,7 @@ import org.eclipse.jface.viewers.ISelection;
 //import org.eclipse.xtext.resource.SaveOptions;
 //import org.eclipse.xtext.serializer.ISerializer;
 
+
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -118,13 +119,21 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
 
     // -------------------------------------------------------------------------
 
-    // /**
-    // * {@inheritDoc}
-    // */
-    // @Override
-    // protected String getTargetExtension() {
-    // return "transformed.scc";
-    // }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
+        String commandString = event.getCommand().getId().toString();
+        if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {
+            return ".core";
+        } else if (commandString.equals(ALLNORMALIZE_TRANSFORMATIONS)) {
+            return ".normalized";
+        } else {
+            return ".transformed";
+        }
+    }
+
 
     // -------------------------------------------------------------------------
 
@@ -147,9 +156,26 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
 
         transformed = model;
         if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {
-            // TODO
+            transformed = transformation.transformHistory((Region) model);
+            transformed = transformation.transformWeakSuspend((Region) transformed);
+            transformed = transformation.transformDeferred((Region) transformed);
+            transformed = transformation.transformStatic((Region) transformed);
+            transformed = transformation.transformSignal((Region) transformed);
+            transformed = transformation.transformCountDelay((Region) transformed);
+            transformed = transformation.transformPre((Region) transformed);
+            transformed = transformation.transformSuspend((Region) transformed);
+            transformed = transformation.transformComplexFinalState((Region) transformed);
+            // There are TWO options for the Aborts transformation
+            // 1. transformAborts1() and 2. transformAborts2()
+            transformed = transformation.transformAborts2((Region) transformed);
+            transformed = transformation.transformDuring((Region) transformed);
+            transformed = transformation.transformInitialization((Region) transformed);
+            transformed = transformation.transformEntry((Region) transformed);
+            transformed = transformation.transformExit((Region) transformed);
+            transformed = transformation.transformConnector((Region) transformed);
         } else if (commandString.equals(ALLNORMALIZE_TRANSFORMATIONS)) {
-            // TODO
+            transformed = transformation.transformTriggerEffect((Region) model);
+            transformed = transformation.transformSurfaceDepth((Region) transformed);
         } else if (commandString.equals(ABORT_TRANSFORMATION)) {
             // There are TWO options for the Aborts transformation
             // 1. transformAborts1() and 2. transformAborts2()
