@@ -474,7 +474,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 // Additionally, remove unnecessary parenthesis and add spacing in line breaks.
                 if (assignment.valuedObject != null && assignment.assignment != null) {
                     var assignmentStr = assignment.valuedObject.name + " = " + 
-                    	serializer.serialize(assignment.assignment.copy.splitOperatorExpression).removeParenthesis
+                        serializer.serialize(assignment.assignment.copy.splitOperatorExpression)
+//                        serializer.serialize(assignment.assignment.copy.splitOperatorExpression).removeParenthesis
                     if (assignmentStr.contains("&") && assignmentStr.indexOf("&") != assignmentStr.lastIndexOf("&")) {
                         assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
                         assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
@@ -1334,9 +1335,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -------------------------------------------------------------------------
     
     def String removeParenthesis(String str) {
-        if (str.contains("&")) {
-          return str.replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")");  
-        }
+//        if (str.contains("&")) {
+//          return str.replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")");  
+//        }
         return str
     }
    

@@ -14,14 +14,14 @@
 package de.cau.cs.kieler.core.kexpressions.test.scoping;
 
 import de.cau.cs.kieler.core.kexpressions.ValueType;
-import de.cau.cs.kieler.core.kexpressions.impl.VariableImpl;
+import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl;
 
 /**
  * The Class DummyVariable.
  * 
  * @author cmot
  */
-public class DummyVariable extends VariableImpl {
+public class DummyVariable extends ValuedObjectImpl {
     
     /**
      * Instantiates a new dummy variable.

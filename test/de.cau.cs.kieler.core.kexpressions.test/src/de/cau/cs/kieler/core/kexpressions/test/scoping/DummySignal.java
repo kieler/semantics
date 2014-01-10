@@ -14,14 +14,14 @@
 package de.cau.cs.kieler.core.kexpressions.test.scoping;
 
 import de.cau.cs.kieler.core.kexpressions.ValueType;
-import de.cau.cs.kieler.core.kexpressions.impl.SignalImpl;
+import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl;
 
 /**
  * The Class DummySignal.
  * 
  * @author cmot
  */
-public class DummySignal extends SignalImpl {
+public class DummySignal extends ValuedObjectImpl {
     
     /**
      * Instantiates a new dummy signal.
@@ -30,8 +30,8 @@ public class DummySignal extends SignalImpl {
      */
     public DummySignal(String name) {
         this.setType(ValueType.PURE);
-        this.setIsInput(true);
-        this.setIsOutput(true);
+        this.setInput(true);
+        this.setOutput(true);
         setName(name);
     }
 

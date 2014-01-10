@@ -6,7 +6,7 @@
  * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
- *     + Real-Time and Embedded Systems Group
+ *     + Real-Time & Embedded Systems Group
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
@@ -25,18 +25,18 @@ import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup;
 
 /**
- * JUnit Test Case for the SyncCharts Editor Transition label parser and its
+ * JUnit Test Case for the SyncCharts Editor Transition label parser & its
  * serializer.
  * 
  * @author haf, chsch, cmot
@@ -46,7 +46,7 @@ public class KExpressionsParserSerializerTest {
     private Injector injector;
 
     /**
-     * Initialize the parser and serializer.
+     * Initialize the parser & serializer.
      * 
      * @throws Exception
      *             Something failed
@@ -125,7 +125,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerSumCmp() throws Exception {
-        this.parseAndSerialize("5 + 5 < 7 or C");
+        this.parseAndSerialize("5 + 5 < 7 | C");
     }
 
     /**
@@ -147,7 +147,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerEmission() throws Exception {
-        this.parseAndSerialize("?B");
+        this.parseAndSerialize("val(B)");
     }
 
     /**
@@ -158,7 +158,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerComparison() throws Exception {
-        this.parseAndSerialize("varA = 5");
+        this.parseAndSerialize("varA == 5");
     }
 
     /**
@@ -169,7 +169,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerComparison2() throws Exception {
-        this.parseAndSerialize("5 = varA");
+        this.parseAndSerialize("5 == varA");
     }
 
     /**
@@ -180,7 +180,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerComparison3() throws Exception {
-        this.parseAndSerialize("?A = 5");
+        this.parseAndSerialize("val(A) == 5");
     }
 
     /**
@@ -191,7 +191,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerComparisonValue() throws Exception {
-        this.parseAndSerialize("3 < ?A");
+        this.parseAndSerialize("3 < val(A)");
     }
 
     /**
@@ -202,7 +202,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerValue() throws Exception {
-        this.parseAndSerialize("?A = true");
+        this.parseAndSerialize("val(A) == true");
     }
 
 
@@ -217,16 +217,28 @@ public class KExpressionsParserSerializerTest {
         this.parseAndSerialize("\'This is some host code\'");
     }
 
-    /**
-     * A JUnit test for the Labelparser.
-     * 
-     * @throws Exception
-     *             if parsing fails
-     */
-    @Test
-    public void testSerializerHostCodeType() throws Exception {
-        this.parseAndSerialize("\'This is some host code\'(Natural)");
-    }
+//    /**
+//     * A JUnit test for the Labelparser.
+//     * 
+//     * @throws Exception
+//     *             if parsing fails
+//     */
+//    @Test
+//    public void testSerializerHostCodeType() throws Exception {
+//        this.parseAndSerialize("\'This is some host code\'(Natural)");
+//    }
+
+//    /**
+//     * A JUnit test for the Labelparser.
+//     * 
+//     * @throws Exception
+//     *             if parsing fails
+//     */
+//    @Test
+//    public void testSerializerHostCodeEverywhere() throws Exception {
+//        this.parseAndSerialize("A & \'HostCode\'(esterel) & 4 < \'Hooooost\'");
+//    }
+
 
     /**
      * A JUnit test for the Labelparser.
@@ -234,22 +246,33 @@ public class KExpressionsParserSerializerTest {
      * @throws Exception
      *             if parsing fails
      */
-    @Test
-    public void testSerializerHostCodeEverywhere() throws Exception {
-        this.parseAndSerialize("A and \'HostCode\'(esterel) and 4 < \'Hooooost\'");
-    }
-
-
-    /**
-     * A JUnit test for the Labelparser.
-     * 
-     * @throws Exception
-     *             if parsing fails
-     */
-    @Test
+    @Test//(expected = AssertionError.class)
     public void testSerializerAndOr() throws Exception {
-        this.parseAndSerialize("A and B or C");
+        this.parseAndSerialize("A & B | C");
     }
+
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test//(expected = AssertionError.class)
+    public void testSerializerAndAnd() throws Exception {
+        this.parseAndSerialize("A & B & C");
+    }
+    
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test//(expected = AssertionError.class)
+    public void testSerializerAndOrAndOr() throws Exception {
+        this.parseAndSerialize("(A | B) & (B | C) & (C | D)");
+    }
+    
 
     /**
      * A JUnit test for the Labelparser.
@@ -259,7 +282,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerAndOr2() throws Exception {
-        this.parseAndSerialize("A and (B or C)");
+        this.parseAndSerialize("A & (B | C)");
     }
 
     /**
@@ -270,7 +293,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerAndNot() throws Exception {
-        this.parseAndSerialize("not A and B");
+        this.parseAndSerialize("!A & B");
     }
 
     /**
@@ -281,7 +304,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerAndNot2() throws Exception {
-        this.parseAndSerialize("not (A and B)");
+        this.parseAndSerialize("!(A & B)");
     }
 
     /**
@@ -292,7 +315,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerPlus() throws Exception {
-        this.parseAndSerialize("?A + 4 > 3");
+        this.parseAndSerialize("val(A) + 4 > 3");
     }
 
     /**
@@ -314,7 +337,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerDiv() throws Exception {
-        this.parseAndSerialize("varA / ?B > varB");
+        this.parseAndSerialize("varA / val(B) > varB");
     }
 
     /**
@@ -325,7 +348,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerPlusMult() throws Exception {
-        this.parseAndSerialize("5 * varA - ?B mod 2 > 3");
+        this.parseAndSerialize("5 * varA - val(B) mod 2 > 3");
     }
 
     /**
@@ -336,7 +359,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerPlusDiv() throws Exception {
-        this.parseAndSerialize("5 / varA - ?B / 2 > 3");
+        this.parseAndSerialize("5 / varA - val(B) / 2 > 3");
     }
 
     /**
@@ -347,7 +370,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerMultDiv() throws Exception {
-        this.parseAndSerialize("varA * ?B / 2 < 2");
+        this.parseAndSerialize("varA * val(B) / 2 < 2");
     }
 
     /**
@@ -358,7 +381,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerPre() throws Exception {
-        this.parseAndSerialize("(pre(A) or pre(?B) > 3) and pre(C)");
+        this.parseAndSerialize("(pre(A) | pre(val(B)) > 3) & pre(C)");
     }
 
     /**
@@ -369,7 +392,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerNotPre() throws Exception {
-        this.parseAndSerialize("not pre(B)");
+        this.parseAndSerialize("!pre(B)");
     }
 
     /**
@@ -380,7 +403,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerNotNot() throws Exception {
-        this.parseAndSerialize("not not B");
+        this.parseAndSerialize("!!B");
     }
 
     /**
@@ -391,19 +414,19 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerCtr1() throws Exception {
-        this.parseAndSerialize("5 * ?A / 5 = ?A");
+        this.parseAndSerialize("5 * val(A) / 5 == val(A)");
     }
 
-    /**
-     * A JUnit test for the Labelparser.
-     * 
-     * @throws Exception
-     *             if parsing fails
-     */
-    @Test
-    public void testSerializerCtr2() throws Exception {
-        this.parseAndSerialize("pre(?A) - 1");
-    }
+//    /**
+//     * A JUnit test for the Labelparser.
+//     * 
+//     * @throws Exception
+//     *             if parsing fails
+//     */
+//    @Test
+//    public void testSerializerCtr2() throws Exception {
+//        this.parseAndSerialize("pre(val(A)) - 1");
+//    }
 
     /**
      * A JUnit test for the Labelparser.
@@ -413,19 +436,19 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerCtr3() throws Exception {
-        this.parseAndSerialize("pre(?A) = 100");
+        this.parseAndSerialize("pre(val(A)) == 100");
     }
 
-    /**
-     * A JUnit test for the Labelparser.
-     * 
-     * @throws Exception
-     *             if parsing fails
-     */
-    @Test
-    public void testSerializerCtr4() throws Exception {
-        this.parseAndSerialize("pre(?A) + 1");
-    }
+//    /**
+//     * A JUnit test for the Labelparser.
+//     * 
+//     * @throws Exception
+//     *             if parsing fails
+//     */
+//    @Test
+//    public void testSerializerCtr4() throws Exception {
+//        this.parseAndSerialize("pre(val((A)) + 1");
+//    }
 
 //    /**
 //     * A JUnit test for the Labelparser.
@@ -459,27 +482,38 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerBoolean() throws Exception {
-        this.parseAndSerialize("true or false or varA = true or varB = false");
+        this.parseAndSerialize("true | false | varA == true | varB == false");
+    }
+    
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test
+    public void testSerializerBoolean1() throws Exception {
+        this.parseAndSerialize("varA == varA | true");
     }
     
     
     /* ------------------------------------------------------------------------------ */
     
 
-    private void parseAndSerialize(final String inputString) throws KielerModelException, IOException {
+    private void parseAndSerialize(final String inputString) throws IOException {
         Expression expr = parse(inputString);
         String serializedString = serialize(expr);
         if (inputString.equals(serializedString)) {
             return;
         } else {
-            // throw new IllegalStateException("Serialization failed. Input and output"
+            // throw new IllegalStateException("Serialization failed. Input & output"
             //        + "are not the same: Input: " + inputString + " Output: " + serializedString);
         }
     }
 
     
     /**
-     * Create a new parse command and execute its parse method. Likely to throw
+     * Create a new parse command & execute its parse method. Likely to throw
      * exceptions if the text could not be parsed.
      * 
      * @param textToParse
@@ -490,7 +524,7 @@ public class KExpressionsParserSerializerTest {
      *             unlikely to be thrown, only if there are internal errors
      *             regarding the resource factories.
      */
-    private Expression parse(final String textToParse) throws KielerModelException, IOException {
+    private Expression parse(final String textToParse) throws IOException {
     	
         ByteArrayInputStream stream = new ByteArrayInputStream(textToParse.getBytes());
 
@@ -518,9 +552,8 @@ public class KExpressionsParserSerializerTest {
 
         IParseResult parseResult = resource.getParseResult();
         if (parseResult == null) {
-            throw new KielerModelException("\"" + textToParse + "\""
-                    + "Could not parse expression string. Parser did return null.",
-                    null);
+            Assert.fail("\"" + textToParse + "\""
+                    + "Could not parse expression string. Parser did return null.");
         }
 
         List<Diagnostic> errors = resource.getErrors();
@@ -533,18 +566,17 @@ public class KExpressionsParserSerializerTest {
                     parseErrorString.append("\n");
                 }
             }
-            throw new RuntimeException("\"" + textToParse + "\""
+            Assert.fail("\"" + textToParse + "\""
                     + " Parse errors in expression String: " + parseErrorString);
         }
 
         EObject parsedObject = resource.getContents().get(0);
         if (parsedObject == null || !(parsedObject instanceof Expression)) {
-            throw new KielerModelException(
-                    "\""
-                            + textToParse
-                            + "\""
-                            + "Could not parse expression string. Parser did not return an Expression object but "
-                            + parsedObject, null);
+            Assert.fail("\""
+                    + textToParse
+                    + "\""
+                    + "Could not parse expression string. Parser did not return an Expression object but "
+                    + parsedObject);
         }
         
         //this.transition.setTrigger((Expression) parsedObject);
