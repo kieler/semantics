@@ -1152,7 +1152,7 @@ class SCChartsCoreTransformation {
     def void transformStatic(State state, Region targetRootRegion) {
         val staticValuedObjects = state.valuedObjects.filter[isStatic].toList
         for (staticValuedObject : staticValuedObjects.immutableCopy) {
-            staticValuedObject.setName(state.getHierarchicalName("") + staticValuedObject.name)
+            staticValuedObject.setName(state.getHierarchicalName(GENERATED_PREFIX) + GENERATED_PREFIX + staticValuedObject.name)
             state.rootState.valuedObjects.add(staticValuedObject)
             staticValuedObject.setStatic(false)
         }
