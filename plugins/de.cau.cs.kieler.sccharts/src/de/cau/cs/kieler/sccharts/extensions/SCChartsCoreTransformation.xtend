@@ -1552,7 +1552,7 @@ class SCChartsCoreTransformation {
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName
             } else { // state has several regions
                 val region = state.createRegion(GENERATED_PREFIX + "Entry").uniqueName
-                lastState = region.createFinalState(GENERATED_PREFIX + "Main")
+                lastState = region.createState(GENERATED_PREFIX + "Main")
                 for (mainRegion : state.regions.filter(e | e != region).toList.immutableCopy){
                     lastState.regions.add(mainRegion)
                 }
