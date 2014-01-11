@@ -283,6 +283,11 @@ class SCChartsExtension {
         state
     }
 
+    def State setNotFinal(State state) {
+        state.setFinal(false)
+        state
+    }
+
     def State createInitialState(String id) {
         createState(id).setInitial
     }

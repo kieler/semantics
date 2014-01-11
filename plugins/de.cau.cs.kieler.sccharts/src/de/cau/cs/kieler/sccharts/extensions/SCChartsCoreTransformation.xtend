@@ -1138,7 +1138,12 @@ class SCChartsCoreTransformation {
     //-------------------------------------------------------------------------
     //--                          S T A T I C                                --
     //-------------------------------------------------------------------------
-    // ...
+    // In some local superstate M that has a declaration of a static variable x, move the
+    // declaration of the variable to the root state of the SCChart and rename x respecting
+    // a proper unique and qualified naming. Within the scope of x (within M) update all
+    // references (accesses) to x to the new name. Remove the static keyword from the declaration.
+    // This is applied for all superstates that contain static variable declarations.
+    //
     def Region transformStatic(Region rootRegion) {
         // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy;
@@ -1370,7 +1375,11 @@ class SCChartsCoreTransformation {
     //--                      E N T R Y         A C T I O N                  --
     //-------------------------------------------------------------------------
     // @requires: during actions
-    // Transforming Entry and During Actions.
+    //
+    // Idea: Setup or create a firstState and a lastState and place the
+    // entry actions of a state in between these two states.
+    
+    // Transforming Entry Actions.
     def Region transformEntry(Region rootRegion) {
         // Clone the complete SCCharts region 
         val targetRootRegion = rootRegion.copy;
@@ -1384,10 +1393,10 @@ class SCChartsCoreTransformation {
 
     // Traverse all states and transform macro states that have actions to transform
     def void transformEntry(State state, Region targetRootRegion) {
-        if (state.entryActions != null && state.entryActions.size > 0) {
+        if (!state.entryActions.nullOrEmpty) {
 
             var State firstState
-            var State secondState
+            var State lastState
 
             if  (state.final)  {
                 val connector = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
@@ -1395,36 +1404,36 @@ class SCChartsCoreTransformation {
                     transition.setTargetState(connector)
                 }
                 firstState = connector
-                secondState = state
+                lastState = state
             } else if (!state.hierarchical) {
                 val region = state.createRegion(GENERATED_PREFIX + "Entry")
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
-                secondState = region.createFinalState(GENERATED_PREFIX + "Done")
+                lastState = region.createFinalState(GENERATED_PREFIX + "Done")
                 val exitState = state.parentRegion.createState(GENERATED_PREFIX + "Exit").uniqueName
                 for (transition : state.outgoingTransitions.immutableCopy) {
                     exitState.outgoingTransitions.add(transition)
                 }
-                state.createTransitionTo(exitState)
+                state.createTransitionTo(exitState).setTypeTermination
             } else if (state.regions.size == 1) {
                 val region = state.regions.get(0)
-                secondState = region.states.filter[initial].get(0) //every region MUST have an initial state
-                secondState.setNotInitial
+                lastState = region.states.filter[initial].get(0) //every region MUST have an initial state
+                lastState.setNotInitial
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init").uniqueName
             } else { // state has several regions
                 val region = state.createRegion(GENERATED_PREFIX + "Entry").uniqueName
-                secondState = region.createFinalState(GENERATED_PREFIX + "Main")
+                lastState = region.createFinalState(GENERATED_PREFIX + "Main")
                 for (mainRegion : state.regions.filter(e | e != region).toList.immutableCopy){
-                    secondState.regions.add(mainRegion)
+                    lastState.regions.add(mainRegion)
                 }
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
                 val finalState = region.createFinalState(GENERATED_PREFIX + "Done")
-                secondState.createTransitionTo(finalState).setTypeTermination
+                lastState.createTransitionTo(finalState).setTypeTermination
             }
             
             val entryRegion = firstState.parentRegion
             val lastEntryAction = state.entryActions.last
             for (entryAction : state.entryActions.immutableCopy) {
-                var connector = secondState
+                var connector = lastState
                 if (entryAction != lastEntryAction) {
                      connector = entryRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
                 }
@@ -1443,6 +1452,124 @@ class SCChartsCoreTransformation {
             }
         }
     }
+        
+        
+        
+    //-------------------------------------------------------------------------
+    //--                      E X I T       A C T I O N S                    --
+    //-------------------------------------------------------------------------
+    // @requires: entry actions
+    // @requires: during actions
+    // @requires: suspend
+    // @requires: valued valuedObjects
+
+    // Transforming Exit Actions. 
+    def Region transformExit(Region rootRegion) {
+        // Clone the complete SCCharts region 
+        val targetRootRegion = rootRegion.copy;
+        // Prepare all states so that each reagion has at most one final state
+        for (targetState : targetRootRegion.getAllContainedStates) {
+            targetState.prepareExit(targetRootRegion);
+        }
+        // Traverse all states
+        for (targetState : targetRootRegion.getAllContainedStates) {
+            targetState.transformExit(targetRootRegion);
+        }
+        targetRootRegion;
+    }
+
+    def void prepareExit(State state, Region targetRootRegion) {
+        for (region : state.regions) {
+            val finalStates = region.finalStates 
+            if (finalStates.size > 1) {
+                val firstFinalState = finalStates.get(0)
+                for (finalState : finalStates) {
+                    if (finalState != firstFinalState)  {
+                        finalState.setNotFinal
+                        finalState.createImmediateTransitionTo(firstFinalState)
+                    }
+                }
+            }
+        }
+    }
+
+    // Traverse all states and transform macro states that have actions to transform
+    def void transformExit(State state, Region targetRootRegion) {
+        if (!state.exitActions.nullOrEmpty && !state.final) {
+            
+            var State firstState
+            var State lastState
+            
+            if (!state.hierarchical) {
+                val region = state.createRegion(GENERATED_PREFIX + "Exit")
+                firstState = region.createInitialState(GENERATED_PREFIX + "Init")
+                lastState = region.createFinalState(GENERATED_PREFIX + "Done")
+                for (transition : state.outgoingTransitions.immutableCopy) {
+                    transition.setTypeTermination
+                }
+            } else if (state.regions.size == 1 && !state.regions.get(0).finalStates.nullOrEmpty) {
+                val region = state.regions.get(0)
+                lastState = region.createFinalState(GENERATED_PREFIX + "Done")
+
+                firstState = region.finalStates.get(0) //every region MUST have an initial state
+                firstState.setNotFinal
+            } else { // state has several regions (or one region without any final state!)
+                val region = state.createRegion(GENERATED_PREFIX + "Entry").uniqueName
+                firstState = region.createFinalState(GENERATED_PREFIX + "Main")
+                for (mainRegion : state.regions.filter(e | e != region).toList.immutableCopy){
+                    firstState.regions.add(mainRegion)
+                }
+                lastState = region.createFinalState(GENERATED_PREFIX + "Done")
+            }
+            
+            if (state.outgoingTransitions.size > 1) {
+                // Memorize outgoing transition
+                val region = firstState.parentRegion
+                val memory = state.parentRegion.parentState.createIntVariable(GENERATED_PREFIX + "exit").uniqueName
+                val middleState = region.createState(GENERATED_PREFIX + "Memorize").setTypeConnector
+                val exitOptionState = state.parentRegion.createState(GENERATED_PREFIX + "ExitOption").setTypeConnector
+                var counter = 1
+                for (transition : state.outgoingTransitions.immutableCopy) {
+                    val exitTransition = exitOptionState.createImmediateTransitionTo(transition.targetState)
+                    exitTransition.setTrigger(memory.reference.isEqual(counter.createIntValue))
+                    for (effect : transition.effects.immutableCopy) {
+                        exitTransition.effects.add(effect)
+                    }
+                    
+                    firstState.outgoingTransitions.add(transition)
+                    transition.setTypeWeakAbort
+                    transition.setTargetState(middleState)
+                    transition.addEffect(memory.assign(counter.createIntValue))
+                    counter = counter + 1
+                }
+                state.createTransitionTo(exitOptionState).setTypeTermination
+                firstState = middleState
+            }
+                
+            val entryRegion = firstState.parentRegion
+            val lastExitAction = state.exitActions.last
+            for (exitAction : state.exitActions.immutableCopy) {
+                var connector = lastState
+                if (exitAction != lastExitAction) {
+                     connector = entryRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
+                }
+                val transition = firstState.createImmediateTransitionTo(connector)
+                for (effect : exitAction.effects) {
+                    transition.addEffect(effect.copy)
+                }
+                if (exitAction.trigger != null) {
+                    transition.setTrigger(exitAction.trigger)
+                    // add default transition
+                    firstState.createImmediateTransitionTo(connector)
+                }
+                firstState = connector
+                // After transforming exit actions, erase them
+                state.localActions.remove(exitAction)
+            }
+        }
+    }
+
+
         
     //-------------------------------------------------------------------------
     //--                       I N I T I A L I Z A T I O N                   --
@@ -2617,389 +2744,389 @@ class SCChartsCoreTransformation {
 //        }
 //    }
 
-    //-------------------------------------------------------------------------
-    //--                      E X I T       A C T I O N S                    --
-    //-------------------------------------------------------------------------
-    // @requires: entry actions
-    // @requires: during actions
-    // @requires: suspend
-    // @requires: valued valuedObjects
-    // Helper function to gather all hierarchically higher outgoing transitions
-    // for an inner state.
-    def List<Transition> hierarchicallyHigherOutgoingTransitions(State state) {
-        val List<Transition> returnTransitions = <Transition>newLinkedList;
-
-        for (transition : state.outgoingTransitions) {
-            returnTransitions.add(transition);
-        }
-
-        if (state.parentRegion != null) {
-            if (state.parentRegion.parentState != null) {
-                val transitionListFromAbove = state.parentRegion.parentState.hierarchicallyHigherOutgoingTransitions;
-                returnTransitions.addAll(transitionListFromAbove);
-            }
-        }
-
-        return returnTransitions;
-    }
-
-    // Transforming Exit Actions. 
-    def Region transformExit(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
-
-        // Traverse all states
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformExit(targetRootRegion);
-        }
-        targetRootRegion;
-    }
-
-    // For a state, have a look at all outgoing transition weak abort triggers and collect them
-    // OR them together and do this hierarchically to the outside.        
-    def Expression getDisjunctionOfAllHierachicallyOutgoingWeakAborts(State state) {
-        val returnExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
-        val expressionList = state.getDisjunctionOfAllHierachicallyOutgoingWeakAbortsHelper;
-        returnExpression.setOperator(OperatorType::OR);
-        if (expressionList.size == 0) {
-            return null;
-        } else if (expressionList.size == 1) {
-            return expressionList.head;
-        } else {
-            for (expression : expressionList) {
-                if (expression != null) {
-                    returnExpression.add(expression);
-                }
-            }
-            return returnExpression;
-        }
-    }
-
-    def List<Expression> getDisjunctionOfAllHierachicallyOutgoingWeakAbortsHelper(State state) {
-        var List<Expression> expressionList = <Expression>newLinkedList;
-        val outgoingTransitions = state.outgoingTransitions.filter(e|e.type == TransitionType::WEAKABORT);
-        for (outgoingTransition : outgoingTransitions) {
-            expressionList.add(outgoingTransition.trigger.copy);
-        }
-
-        // collect from higher hierarchy level
-        if (state.parentRegion != null && state.parentRegion.parentState != null) {
-            expressionList.addAll(
-                state.parentRegion.parentState.getDisjunctionOfAllHierachicallyOutgoingWeakAbortsHelper);
-        }
-       expressionList;
-    }
-
-    // Tries to follow immediate chains of transitions in order to exclude possible self loops
-    def boolean isPossibleSelfLoop(Transition transition) {
-        return isPossibleSelfLoop(transition, transition.sourceState);
-    }
-
-    def boolean isPossibleSelfLoop(Transition transition, State startState) {
-        var boolean isLoop = false;
-        for (Transition nextTransition : transition.targetState.outgoingTransitions.filter(e|e.isImmediate)) {
-            isLoop = isLoop || nextTransition.isPossibleSelfLoop(startState);
-        }
-        isLoop = isLoop || (transition.targetState == startState);
-        return isLoop;
-    }
-
-    // Traverse all states and transform macro states that have actions to transform
-    def void transformExit(State state, Region targetRootRegion) {
-
-        // EXIT ACTIONS : For every state with exit actions create a new top-level region and
-        // create SET and RESET valuedObjects. This region contains a set and reset (inital) state
-        // connected from reset to set with an intermediate macro state containing all the
-        // exit actions and labeled with SET and not RESET. Another arc from set to reset labeled
-        // with RESET. A self-arc from reset labeled with SET and RESET.
-        // Every transition considered to be outgoing in any way emits the SET valuedObject.
-        // The entry action emits the RESET valuedObject.
-        // The state in question must have an immediate during action, resetting (emit RESET), BUT
-        // important is that this is triggered and the trigger is excluded hierarchically by ALL
-        // possibly outgoing transitions to the outside that are weak (in this case we do not want
-        // to reset because we know we leave the state and want to remember the exiting 
-        // (and NOT reset!!!) 
-        //
-        // DEPRECATED IDEA (has drawbacks, see below)
-        // Create a macro state for all outgoing non-preempting(!) transitions. 
-        // Weak abort the macro state and connect it to the original target. Put the action into an
-        // transition within the macro state.
-        //
-        // From Charles Andre, Semantics of SCCharts: Note that strong and weak abortions have the
-        // same effect on exit actions. This explains why exit actions are primitive constructs: they 
-        // cannot be expressed by a combination of the already studied constructs.
-        //
-        // Chris Motika: In other words, if an exit action is inside some hierarchical states and an
-        // outer state is left by a strong preemption, surprisingly the exit action is still
-        // executed.
-        // To resolve this, we need to figure out ALL hierarchically outgoing strong preemption transition
-        // and add the action also there. For weak preemption transitions we do not need to do this 
-        // because the action from inside is allowed to take place as the "last wish".
-        //
-        // FLAW I: When re-entering one has to give precedence to reset but when exiting one wants
-        // to giv precedence to set. => Valued valuedObjects are too limited, more preciseley the combine
-        // function of valued valuedObjects. Better use a two state representation.
-        //
-        // FLAW II: When transforming a history transition with suspend, when re-entering,
-        // entry actions are currently not executed again (propably they should?! FIXME: find out about
-        // entry actions & history transitions). If using sustain actions this problem is solved BUT another
-        // one arises. In the same state there will be a set and reset. Giving precedence to reset this
-        // will result in calling the exit action AGAIN if the state is left outside.
-        // 
-        if (state.exitActions != null && state.exitActions.size > 0) {
-            var List<Transition> consideredTransitions = <Transition>newLinkedList;
-            consideredTransitions.addAll(state.hierarchicallyHigherOutgoingTransitions);
-
-            // Add SET and SETI and RESETI and RESETN valuedObject valuedObject flag 
-            val setValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-            setValuedObject.setName("Set" + state.id);
-            setValuedObject.setInput(false);
-            setValuedObject.setOutput(false);
-            setValuedObject.setType(ValueType::PURE);
-            targetRootRegion.rootState.valuedObjects.add(setValuedObject);
-
-            // This valuedObject is produced by ALL immediate outputs (also hierarchically higher)
-            // it is able to trigger an immediate transition back from reset to set (when entering reset)
-            // set ---> reset -#-> set
-            val setIValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-            setIValuedObject.setName("SetI" + state.id);
-            setIValuedObject.setInput(false);
-            setIValuedObject.setOutput(false);
-            setIValuedObject.setType(ValueType::PURE);
-            targetRootRegion.rootState.valuedObjects.add(setIValuedObject);
-
-            val resetIValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-            resetIValuedObject.setName("ResetI" + state.id);
-            resetIValuedObject.setInput(false);
-            resetIValuedObject.setOutput(false);
-            resetIValuedObject.setType(ValueType::PURE);
-            targetRootRegion.rootState.valuedObjects.add(resetIValuedObject);
-
-            val resetNValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-            resetNValuedObject.setName("ResetN" + state.id);
-            resetNValuedObject.setInput(false);
-            resetNValuedObject.setOutput(false);
-            resetNValuedObject.setType(ValueType::PURE);
-            targetRootRegion.rootState.valuedObjects.add(resetNValuedObject);
-
-            // Add a Set and Reset state
-            val resetState = SCChartsFactory::eINSTANCE.createState();
-            resetState.setId(state.id("ExitReset"));
-            resetState.setLabel("r");
-            val setState = SCChartsFactory::eINSTANCE.createState();
-            setState.setId(state.id("ExitSet"));
-
-            // The Set state has to be the initial state
-            setState.setInitial(true);
-            setState.setLabel("s");
-
-            // Connect Set and Reset States with transitions (s.a. for a more detailed explanation)
-            val reset2setTransition = SCChartsFactory::eINSTANCE.createTransition();
-            reset2setTransition.setTargetState(setState);
-            resetState.outgoingTransitions.add(reset2setTransition);
-            val reset2setITransition = SCChartsFactory::eINSTANCE.createTransition();
-            reset2setITransition.setTargetState(setState);
-            resetState.outgoingTransitions.add(reset2setITransition);
-            val set2resetTransition = SCChartsFactory::eINSTANCE.createTransition();
-            set2resetTransition.setTargetState(resetState);
-            setState.outgoingTransitions.add(set2resetTransition);
-            val set2setTransition = SCChartsFactory::eINSTANCE.createTransition();
-            set2setTransition.setTargetState(setState);
-            setState.outgoingTransitions.add(set2setTransition);
-
-            // Build triggers for transitions 
-            // (A) set -- ResetI --> reset
-            // (B) set -- Set and ResetI and ResetN --> set (means started in C, ending in C by outputting O)
-            // (C) reset -- Set --> set (means starting NOT in C, ending in C by outputting O)
-            // (D) reset -- #SetI --> set (possibly a chain coming from inside set and ending in inside set over transient reset)
-            val setValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-            setValuedObjectReference.setValuedObject(setValuedObject);
-            val setIValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-            setIValuedObjectReference.setValuedObject(setIValuedObject);
-            val resetIValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-            resetIValuedObjectReference.setValuedObject(resetIValuedObject);
-            val resetNValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-            resetNValuedObjectReference.setValuedObject(resetNValuedObject);
-            val andExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
-            andExpression.setOperator(OperatorType::AND);
-
-            // (A)
-            set2resetTransition.setTrigger(resetIValuedObjectReference.copy);
-            set2resetTransition.setPriority(2); // Set a LOWER prio than set to set (B)
-
-            // (B)
-            val set2setTrigger = andExpression.copy;
-            val set2setTrigger2 = andExpression.copy;
-            set2setTrigger2.add(setValuedObjectReference.copy);
-            set2setTrigger2.add(resetIValuedObjectReference.copy);
-            set2setTrigger.add(set2setTrigger2);
-            set2setTrigger.add(resetNValuedObjectReference.copy);
-            set2setTransition.setTrigger(set2setTrigger);
-            set2setTransition.setPriority(1); // Set a HIGHER prio than set to reset (A)
-
-            // (C)
-            reset2setTransition.setTrigger(setValuedObjectReference.copy);
-            reset2setTransition.setPriority(2);
-
-            // (D)
-            reset2setITransition.setTrigger(setIValuedObjectReference.copy);
-            reset2setITransition.setImmediate(true);
-            reset2setITransition.setPriority(1);
-
-            // Create a region with two states set and reset 
-            val exitActionRegion = SCChartsFactory::eINSTANCE.createRegion();
-            exitActionRegion.setId(state.id("ExitActionRegion"));
-            exitActionRegion.states.add(resetState);
-            exitActionRegion.states.add(setState);
-            targetRootRegion.states.get(0).regions.add(exitActionRegion);
-
-            // Create conditioned sustain and actions for Set state containing the exit actions
-            // For every exit action: Create a during and entry action for Set state
-            // the entry action is triggered by Set
-            // the during action is triggered by Set and ResetI and ResetN
-            for (exitAction : state.exitActions) {
-                val entryAction = exitAction.copy;
-                entryAction.setImmediate(true);
-                var entryActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
-                entryActionTrigger.setOperator(OperatorType::AND);
-                entryActionTrigger.add(setValuedObjectReference.copy); // (C)
-                if (entryAction.trigger != null) {
-                    entryActionTrigger.add(entryAction.trigger);
-                    entryAction.setTrigger(entryActionTrigger);
-                } else {
-                    entryAction.setTrigger(setValuedObjectReference.copy);
-                }
-                setState.createEntryAction.applyAttributes(entryAction);
-
-                val duringAction = exitAction.copy;
-                duringAction.setImmediate(true);
-                var duringActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
-                duringActionTrigger.setOperator(OperatorType::AND);
-                duringActionTrigger.add(set2setTrigger.copy); // (B)
-                if (duringAction.trigger != null) {
-                    duringActionTrigger.add(duringAction.trigger);
-                    duringAction.setTrigger(duringActionTrigger);
-                } else {
-                    duringAction.setTrigger(set2setTrigger.copy);
-                }
-                setState.createDuringAction.applyAttributes(duringAction);
-            }
-
-            // CORNER CASE: 78 & 79 (also 80)
-            // Execute ExitAction if permanent PREEMPTIVE reset is present.
-            // DO NOT execute when was left before.
-            val strongAbortSelfLoopPresent = consideredTransitions.filter(
-                e|e.type == TransitionType::STRONGABORT && e.isPossibleSelfLoop);
-            val cornerCaseTransition = consideredTransitions.filter(e|!e.isPossibleSelfLoop);
-            if (strongAbortSelfLoopPresent.size > 0) {
-
-                // Create SetInner valuedObject only for outgoing transitions that are no self loops
-                // this includes also possible chains of immediate transitions
-                // Optimization: only consider strong aborts, because for weak aborts 78 is not a problem!
-                val setValuedObjectInner = KExpressionsFactory::eINSTANCE.createValuedObject();
-                setValuedObjectInner.setName("SetInner" + state.id);
-                setValuedObjectInner.setInput(false);
-                setValuedObjectInner.setOutput(false);
-                setValuedObjectInner.setType(ValueType::PURE);
-                targetRootRegion.rootState.valuedObjects.add(setValuedObjectInner);
-                val setValuedObjectInnerReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-                setValuedObjectInnerReference.setValuedObject(setValuedObjectInner);
-
-                //Create In state and Out state
-                val inState = SCChartsFactory::eINSTANCE.createState();
-                inState.setId(state.id("ExitIn"));
-                inState.setInitial(true);
-                inState.setLabel("in");
-                val outState = SCChartsFactory::eINSTANCE.createState();
-                outState.setId(state.id("ExitOut"));
-                outState.setLabel("out");
-
-                // Connect In and Out states with transitions triggered #SetCC
-                val in2outTransition = SCChartsFactory::eINSTANCE.createTransition();
-                in2outTransition.setTargetState(outState);
-                in2outTransition.setImmediate(true);
-                inState.outgoingTransitions.add(in2outTransition);
-                in2outTransition.setTrigger(setValuedObjectInnerReference.copy);
-
-                // Create InOut region    
-                val setInOutRegion = SCChartsFactory::eINSTANCE.createRegion();
-                setInOutRegion.setId(state.id("ExitInOutRegion"));
-                setInOutRegion.states.add(inState);
-                setInOutRegion.states.add(outState);
-                setState.regions.add(setInOutRegion);
-
-                // Add emission to corner case transitions 
-                for (transition : cornerCaseTransition) {
-                    val setEmission = SCChartsFactory::eINSTANCE.createEmission();
-                    setEmission.setValuedObject(setValuedObjectInner);
-                    transition.addEmission(setEmission);
-                }
-
-                // Add during action for inState
-                val duringIActionResetValuedObjectN = inState.createDuringAction
-                val resetNEmission2 = SCChartsFactory::eINSTANCE.createEmission();
-                resetNEmission2.setValuedObject(resetNValuedObject);
-                duringIActionResetValuedObjectN.addEmission(resetNEmission2);
-            } // End corner case
-
-            // Add a during action that resets the exit action
-            // more specifically add an immediate during action for resetI
-            //                   and a  normal during action for resetN
-            val duringIAction = state.createDuringAction
-            duringIAction.setImmediate(true);
-            val resetIEmission = SCChartsFactory::eINSTANCE.createEmission();
-            resetIEmission.setValuedObject(resetIValuedObject);
-            duringIAction.addEmission(resetIEmission);
-            val duringNAction = state.createDuringAction
-            val resetNEmission = SCChartsFactory::eINSTANCE.createEmission();
-            resetNEmission.setValuedObject(resetNValuedObject);
-            duringNAction.addEmission(resetNEmission);
-
-            // André says: Do not execute exitActions if the state is bypassed (by an enabled immediate strong abort)
-            // Hence, the following is incorrect.                
-            //               // For every incoming transitions add a ResetI emission
-            //               // (if the state is an initial state, then add another initial state before and
-            //               // connect both with an immediate true triggered transition)
-            //               if (state.isInitial) {
-            //                   val newInitialState = SCChartsFactory::eINSTANCE.createState();
-            //                   newInitialState.setId("initial" + state.hashCode);
-            //                   newInitialState.setLabel("i");
-            //                   newInitialState.setInitial(true);
-            //                   state.setInitial(false);
-            //                   state.parentRegion.states.add(newInitialState);
-            //                   val immediateTransition =  SCChartsFactory::eINSTANCE.createTransition();
-            //                   immediateTransition.setImmediate(true);
-            //                   immediateTransition.setLabel("#");
-            //                   immediateTransition.setTargetState(state);
-            //                   newInitialState.outgoingTransitions.add(immediateTransition);
-            //               }
-            //               for (incomingTransition : ImmutableList::copyOf(state.incomingTransitions)) {
-            //                   incomingTransition.addEmission(resetIEmission.copy);
-            //               }
-            for (transition : consideredTransitions) {
-
-                // For every considered transition add an emission of the set valuedObject
-                // that will result in executing the exit action if it was not
-                // previously executed.
-                val setEmission = SCChartsFactory::eINSTANCE.createEmission();
-                setEmission.setValuedObject(setValuedObject);
-                transition.addEmission(setEmission);
-            }
-
-            for (transition : consideredTransitions.filter(e|e.isImmediate)) {
-
-                // For every considered immediate transition add an emission of the setI valuedObject
-                val setIEmission = SCChartsFactory::eINSTANCE.createEmission();
-                setIEmission.setValuedObject(setIValuedObject);
-                transition.addEmission(setIEmission);
-            }
-
-            // After transforming exit actions, erase them
-            state.exitActions.clear();
-        }
-
-    }
+//    //-------------------------------------------------------------------------
+//    //--                      E X I T       A C T I O N S                    --
+//    //-------------------------------------------------------------------------
+//    // @requires: entry actions
+//    // @requires: during actions
+//    // @requires: suspend
+//    // @requires: valued valuedObjects
+//    // Helper function to gather all hierarchically higher outgoing transitions
+//    // for an inner state.
+//    def List<Transition> hierarchicallyHigherOutgoingTransitions(State state) {
+//        val List<Transition> returnTransitions = <Transition>newLinkedList;
+//
+//        for (transition : state.outgoingTransitions) {
+//            returnTransitions.add(transition);
+//        }
+//
+//        if (state.parentRegion != null) {
+//            if (state.parentRegion.parentState != null) {
+//                val transitionListFromAbove = state.parentRegion.parentState.hierarchicallyHigherOutgoingTransitions;
+//                returnTransitions.addAll(transitionListFromAbove);
+//            }
+//        }
+//
+//        return returnTransitions;
+//    }
+//
+//    // Transforming Exit Actions. 
+//    def Region transformExit(Region rootRegion) {
+//
+//        // Clone the complete SCCharts region 
+//        val targetRootRegion = rootRegion.copy;
+//
+//        // Traverse all states
+//        for (targetState : targetRootRegion.getAllContainedStates) {
+//            targetState.transformExit(targetRootRegion);
+//        }
+//        targetRootRegion;
+//    }
+//
+//    // For a state, have a look at all outgoing transition weak abort triggers and collect them
+//    // OR them together and do this hierarchically to the outside.        
+//    def Expression getDisjunctionOfAllHierachicallyOutgoingWeakAborts(State state) {
+//        val returnExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+//        val expressionList = state.getDisjunctionOfAllHierachicallyOutgoingWeakAbortsHelper;
+//        returnExpression.setOperator(OperatorType::OR);
+//        if (expressionList.size == 0) {
+//            return null;
+//        } else if (expressionList.size == 1) {
+//            return expressionList.head;
+//        } else {
+//            for (expression : expressionList) {
+//                if (expression != null) {
+//                    returnExpression.add(expression);
+//                }
+//            }
+//            return returnExpression;
+//        }
+//    }
+//
+//    def List<Expression> getDisjunctionOfAllHierachicallyOutgoingWeakAbortsHelper(State state) {
+//        var List<Expression> expressionList = <Expression>newLinkedList;
+//        val outgoingTransitions = state.outgoingTransitions.filter(e|e.type == TransitionType::WEAKABORT);
+//        for (outgoingTransition : outgoingTransitions) {
+//            expressionList.add(outgoingTransition.trigger.copy);
+//        }
+//
+//        // collect from higher hierarchy level
+//        if (state.parentRegion != null && state.parentRegion.parentState != null) {
+//            expressionList.addAll(
+//                state.parentRegion.parentState.getDisjunctionOfAllHierachicallyOutgoingWeakAbortsHelper);
+//        }
+//       expressionList;
+//    }
+//
+//    // Tries to follow immediate chains of transitions in order to exclude possible self loops
+//    def boolean isPossibleSelfLoop(Transition transition) {
+//        return isPossibleSelfLoop(transition, transition.sourceState);
+//    }
+//
+//    def boolean isPossibleSelfLoop(Transition transition, State startState) {
+//        var boolean isLoop = false;
+//        for (Transition nextTransition : transition.targetState.outgoingTransitions.filter(e|e.isImmediate)) {
+//            isLoop = isLoop || nextTransition.isPossibleSelfLoop(startState);
+//        }
+//        isLoop = isLoop || (transition.targetState == startState);
+//        return isLoop;
+//    }
+//
+//    // Traverse all states and transform macro states that have actions to transform
+//    def void transformExit(State state, Region targetRootRegion) {
+//
+//        // EXIT ACTIONS : For every state with exit actions create a new top-level region and
+//        // create SET and RESET valuedObjects. This region contains a set and reset (inital) state
+//        // connected from reset to set with an intermediate macro state containing all the
+//        // exit actions and labeled with SET and not RESET. Another arc from set to reset labeled
+//        // with RESET. A self-arc from reset labeled with SET and RESET.
+//        // Every transition considered to be outgoing in any way emits the SET valuedObject.
+//        // The entry action emits the RESET valuedObject.
+//        // The state in question must have an immediate during action, resetting (emit RESET), BUT
+//        // important is that this is triggered and the trigger is excluded hierarchically by ALL
+//        // possibly outgoing transitions to the outside that are weak (in this case we do not want
+//        // to reset because we know we leave the state and want to remember the exiting 
+//        // (and NOT reset!!!) 
+//        //
+//        // DEPRECATED IDEA (has drawbacks, see below)
+//        // Create a macro state for all outgoing non-preempting(!) transitions. 
+//        // Weak abort the macro state and connect it to the original target. Put the action into an
+//        // transition within the macro state.
+//        //
+//        // From Charles Andre, Semantics of SCCharts: Note that strong and weak abortions have the
+//        // same effect on exit actions. This explains why exit actions are primitive constructs: they 
+//        // cannot be expressed by a combination of the already studied constructs.
+//        //
+//        // Chris Motika: In other words, if an exit action is inside some hierarchical states and an
+//        // outer state is left by a strong preemption, surprisingly the exit action is still
+//        // executed.
+//        // To resolve this, we need to figure out ALL hierarchically outgoing strong preemption transition
+//        // and add the action also there. For weak preemption transitions we do not need to do this 
+//        // because the action from inside is allowed to take place as the "last wish".
+//        //
+//        // FLAW I: When re-entering one has to give precedence to reset but when exiting one wants
+//        // to giv precedence to set. => Valued valuedObjects are too limited, more preciseley the combine
+//        // function of valued valuedObjects. Better use a two state representation.
+//        //
+//        // FLAW II: When transforming a history transition with suspend, when re-entering,
+//        // entry actions are currently not executed again (propably they should?! FIXME: find out about
+//        // entry actions & history transitions). If using sustain actions this problem is solved BUT another
+//        // one arises. In the same state there will be a set and reset. Giving precedence to reset this
+//        // will result in calling the exit action AGAIN if the state is left outside.
+//        // 
+//        if (state.exitActions != null && state.exitActions.size > 0) {
+//            var List<Transition> consideredTransitions = <Transition>newLinkedList;
+//            consideredTransitions.addAll(state.hierarchicallyHigherOutgoingTransitions);
+//
+//            // Add SET and SETI and RESETI and RESETN valuedObject valuedObject flag 
+//            val setValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+//            setValuedObject.setName("Set" + state.id);
+//            setValuedObject.setInput(false);
+//            setValuedObject.setOutput(false);
+//            setValuedObject.setType(ValueType::PURE);
+//            targetRootRegion.rootState.valuedObjects.add(setValuedObject);
+//
+//            // This valuedObject is produced by ALL immediate outputs (also hierarchically higher)
+//            // it is able to trigger an immediate transition back from reset to set (when entering reset)
+//            // set ---> reset -#-> set
+//            val setIValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+//            setIValuedObject.setName("SetI" + state.id);
+//            setIValuedObject.setInput(false);
+//            setIValuedObject.setOutput(false);
+//            setIValuedObject.setType(ValueType::PURE);
+//            targetRootRegion.rootState.valuedObjects.add(setIValuedObject);
+//
+//            val resetIValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+//            resetIValuedObject.setName("ResetI" + state.id);
+//            resetIValuedObject.setInput(false);
+//            resetIValuedObject.setOutput(false);
+//            resetIValuedObject.setType(ValueType::PURE);
+//            targetRootRegion.rootState.valuedObjects.add(resetIValuedObject);
+//
+//            val resetNValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+//            resetNValuedObject.setName("ResetN" + state.id);
+//            resetNValuedObject.setInput(false);
+//            resetNValuedObject.setOutput(false);
+//            resetNValuedObject.setType(ValueType::PURE);
+//            targetRootRegion.rootState.valuedObjects.add(resetNValuedObject);
+//
+//            // Add a Set and Reset state
+//            val resetState = SCChartsFactory::eINSTANCE.createState();
+//            resetState.setId(state.id("ExitReset"));
+//            resetState.setLabel("r");
+//            val setState = SCChartsFactory::eINSTANCE.createState();
+//            setState.setId(state.id("ExitSet"));
+//
+//            // The Set state has to be the initial state
+//            setState.setInitial(true);
+//            setState.setLabel("s");
+//
+//            // Connect Set and Reset States with transitions (s.a. for a more detailed explanation)
+//            val reset2setTransition = SCChartsFactory::eINSTANCE.createTransition();
+//            reset2setTransition.setTargetState(setState);
+//            resetState.outgoingTransitions.add(reset2setTransition);
+//            val reset2setITransition = SCChartsFactory::eINSTANCE.createTransition();
+//            reset2setITransition.setTargetState(setState);
+//            resetState.outgoingTransitions.add(reset2setITransition);
+//            val set2resetTransition = SCChartsFactory::eINSTANCE.createTransition();
+//            set2resetTransition.setTargetState(resetState);
+//            setState.outgoingTransitions.add(set2resetTransition);
+//            val set2setTransition = SCChartsFactory::eINSTANCE.createTransition();
+//            set2setTransition.setTargetState(setState);
+//            setState.outgoingTransitions.add(set2setTransition);
+//
+//            // Build triggers for transitions 
+//            // (A) set -- ResetI --> reset
+//            // (B) set -- Set and ResetI and ResetN --> set (means started in C, ending in C by outputting O)
+//            // (C) reset -- Set --> set (means starting NOT in C, ending in C by outputting O)
+//            // (D) reset -- #SetI --> set (possibly a chain coming from inside set and ending in inside set over transient reset)
+//            val setValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+//            setValuedObjectReference.setValuedObject(setValuedObject);
+//            val setIValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+//            setIValuedObjectReference.setValuedObject(setIValuedObject);
+//            val resetIValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+//            resetIValuedObjectReference.setValuedObject(resetIValuedObject);
+//            val resetNValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+//            resetNValuedObjectReference.setValuedObject(resetNValuedObject);
+//            val andExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+//            andExpression.setOperator(OperatorType::AND);
+//
+//            // (A)
+//            set2resetTransition.setTrigger(resetIValuedObjectReference.copy);
+//            set2resetTransition.setPriority(2); // Set a LOWER prio than set to set (B)
+//
+//            // (B)
+//            val set2setTrigger = andExpression.copy;
+//            val set2setTrigger2 = andExpression.copy;
+//            set2setTrigger2.add(setValuedObjectReference.copy);
+//            set2setTrigger2.add(resetIValuedObjectReference.copy);
+//            set2setTrigger.add(set2setTrigger2);
+//            set2setTrigger.add(resetNValuedObjectReference.copy);
+//            set2setTransition.setTrigger(set2setTrigger);
+//            set2setTransition.setPriority(1); // Set a HIGHER prio than set to reset (A)
+//
+//            // (C)
+//            reset2setTransition.setTrigger(setValuedObjectReference.copy);
+//            reset2setTransition.setPriority(2);
+//
+//            // (D)
+//            reset2setITransition.setTrigger(setIValuedObjectReference.copy);
+//            reset2setITransition.setImmediate(true);
+//            reset2setITransition.setPriority(1);
+//
+//            // Create a region with two states set and reset 
+//            val exitActionRegion = SCChartsFactory::eINSTANCE.createRegion();
+//            exitActionRegion.setId(state.id("ExitActionRegion"));
+//            exitActionRegion.states.add(resetState);
+//            exitActionRegion.states.add(setState);
+//            targetRootRegion.states.get(0).regions.add(exitActionRegion);
+//
+//            // Create conditioned sustain and actions for Set state containing the exit actions
+//            // For every exit action: Create a during and entry action for Set state
+//            // the entry action is triggered by Set
+//            // the during action is triggered by Set and ResetI and ResetN
+//            for (exitAction : state.exitActions) {
+//                val entryAction = exitAction.copy;
+//                entryAction.setImmediate(true);
+//                var entryActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+//                entryActionTrigger.setOperator(OperatorType::AND);
+//                entryActionTrigger.add(setValuedObjectReference.copy); // (C)
+//                if (entryAction.trigger != null) {
+//                    entryActionTrigger.add(entryAction.trigger);
+//                    entryAction.setTrigger(entryActionTrigger);
+//                } else {
+//                    entryAction.setTrigger(setValuedObjectReference.copy);
+//                }
+//                setState.createEntryAction.applyAttributes(entryAction);
+//
+//                val duringAction = exitAction.copy;
+//                duringAction.setImmediate(true);
+//                var duringActionTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+//                duringActionTrigger.setOperator(OperatorType::AND);
+//                duringActionTrigger.add(set2setTrigger.copy); // (B)
+//                if (duringAction.trigger != null) {
+//                    duringActionTrigger.add(duringAction.trigger);
+//                    duringAction.setTrigger(duringActionTrigger);
+//                } else {
+//                    duringAction.setTrigger(set2setTrigger.copy);
+//                }
+//                setState.createDuringAction.applyAttributes(duringAction);
+//            }
+//
+//            // CORNER CASE: 78 & 79 (also 80)
+//            // Execute ExitAction if permanent PREEMPTIVE reset is present.
+//            // DO NOT execute when was left before.
+//            val strongAbortSelfLoopPresent = consideredTransitions.filter(
+//                e|e.type == TransitionType::STRONGABORT && e.isPossibleSelfLoop);
+//            val cornerCaseTransition = consideredTransitions.filter(e|!e.isPossibleSelfLoop);
+//            if (strongAbortSelfLoopPresent.size > 0) {
+//
+//                // Create SetInner valuedObject only for outgoing transitions that are no self loops
+//                // this includes also possible chains of immediate transitions
+//                // Optimization: only consider strong aborts, because for weak aborts 78 is not a problem!
+//                val setValuedObjectInner = KExpressionsFactory::eINSTANCE.createValuedObject();
+//                setValuedObjectInner.setName("SetInner" + state.id);
+//                setValuedObjectInner.setInput(false);
+//                setValuedObjectInner.setOutput(false);
+//                setValuedObjectInner.setType(ValueType::PURE);
+//                targetRootRegion.rootState.valuedObjects.add(setValuedObjectInner);
+//                val setValuedObjectInnerReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+//                setValuedObjectInnerReference.setValuedObject(setValuedObjectInner);
+//
+//                //Create In state and Out state
+//                val inState = SCChartsFactory::eINSTANCE.createState();
+//                inState.setId(state.id("ExitIn"));
+//                inState.setInitial(true);
+//                inState.setLabel("in");
+//                val outState = SCChartsFactory::eINSTANCE.createState();
+//                outState.setId(state.id("ExitOut"));
+//                outState.setLabel("out");
+//
+//                // Connect In and Out states with transitions triggered #SetCC
+//                val in2outTransition = SCChartsFactory::eINSTANCE.createTransition();
+//                in2outTransition.setTargetState(outState);
+//                in2outTransition.setImmediate(true);
+//                inState.outgoingTransitions.add(in2outTransition);
+//                in2outTransition.setTrigger(setValuedObjectInnerReference.copy);
+//
+//                // Create InOut region    
+//                val setInOutRegion = SCChartsFactory::eINSTANCE.createRegion();
+//                setInOutRegion.setId(state.id("ExitInOutRegion"));
+//                setInOutRegion.states.add(inState);
+//                setInOutRegion.states.add(outState);
+//                setState.regions.add(setInOutRegion);
+//
+//                // Add emission to corner case transitions 
+//                for (transition : cornerCaseTransition) {
+//                    val setEmission = SCChartsFactory::eINSTANCE.createEmission();
+//                    setEmission.setValuedObject(setValuedObjectInner);
+//                    transition.addEmission(setEmission);
+//                }
+//
+//                // Add during action for inState
+//                val duringIActionResetValuedObjectN = inState.createDuringAction
+//                val resetNEmission2 = SCChartsFactory::eINSTANCE.createEmission();
+//                resetNEmission2.setValuedObject(resetNValuedObject);
+//                duringIActionResetValuedObjectN.addEmission(resetNEmission2);
+//            } // End corner case
+//
+//            // Add a during action that resets the exit action
+//            // more specifically add an immediate during action for resetI
+//            //                   and a  normal during action for resetN
+//            val duringIAction = state.createDuringAction
+//            duringIAction.setImmediate(true);
+//            val resetIEmission = SCChartsFactory::eINSTANCE.createEmission();
+//            resetIEmission.setValuedObject(resetIValuedObject);
+//            duringIAction.addEmission(resetIEmission);
+//            val duringNAction = state.createDuringAction
+//            val resetNEmission = SCChartsFactory::eINSTANCE.createEmission();
+//            resetNEmission.setValuedObject(resetNValuedObject);
+//            duringNAction.addEmission(resetNEmission);
+//
+//            // André says: Do not execute exitActions if the state is bypassed (by an enabled immediate strong abort)
+//            // Hence, the following is incorrect.                
+//            //               // For every incoming transitions add a ResetI emission
+//            //               // (if the state is an initial state, then add another initial state before and
+//            //               // connect both with an immediate true triggered transition)
+//            //               if (state.isInitial) {
+//            //                   val newInitialState = SCChartsFactory::eINSTANCE.createState();
+//            //                   newInitialState.setId("initial" + state.hashCode);
+//            //                   newInitialState.setLabel("i");
+//            //                   newInitialState.setInitial(true);
+//            //                   state.setInitial(false);
+//            //                   state.parentRegion.states.add(newInitialState);
+//            //                   val immediateTransition =  SCChartsFactory::eINSTANCE.createTransition();
+//            //                   immediateTransition.setImmediate(true);
+//            //                   immediateTransition.setLabel("#");
+//            //                   immediateTransition.setTargetState(state);
+//            //                   newInitialState.outgoingTransitions.add(immediateTransition);
+//            //               }
+//            //               for (incomingTransition : ImmutableList::copyOf(state.incomingTransitions)) {
+//            //                   incomingTransition.addEmission(resetIEmission.copy);
+//            //               }
+//            for (transition : consideredTransitions) {
+//
+//                // For every considered transition add an emission of the set valuedObject
+//                // that will result in executing the exit action if it was not
+//                // previously executed.
+//                val setEmission = SCChartsFactory::eINSTANCE.createEmission();
+//                setEmission.setValuedObject(setValuedObject);
+//                transition.addEmission(setEmission);
+//            }
+//
+//            for (transition : consideredTransitions.filter(e|e.isImmediate)) {
+//
+//                // For every considered immediate transition add an emission of the setI valuedObject
+//                val setIEmission = SCChartsFactory::eINSTANCE.createEmission();
+//                setIEmission.setValuedObject(setIValuedObject);
+//                transition.addEmission(setIEmission);
+//            }
+//
+//            // After transforming exit actions, erase them
+//            state.exitActions.clear();
+//        }
+//
+//    }
 
     //-------------------------------------------------------------------------
     //--                        P R E -  O P E R A T O R                     --
