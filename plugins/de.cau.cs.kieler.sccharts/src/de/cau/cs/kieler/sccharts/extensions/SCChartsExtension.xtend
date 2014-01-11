@@ -86,6 +86,11 @@ class SCChartsExtension {
         scope.eAllContents().toList().filter(typeof(State)).toList()
     }
 
+    // Return the list of all contained Regions.
+    def List<Region> getAllContainedRegions(Scope scope) {
+        scope.eAllContents().toList().filter(typeof(Region)).toList()
+    }
+
     // Return the list of all contained Transitions.
     def List<Transition> getAllContainedTransitions(Scope scope) {
         scope.eAllContents().toList().filter(typeof(Transition)).toList()
@@ -394,6 +399,10 @@ class SCChartsExtension {
     // A transition is a history transition if it is not a reset transition.
     def boolean isHistory(Transition transition) {
         transition.history != HistoryType::RESET
+    }
+
+    def boolean isDeepHistory(Transition transition) {
+        transition.history == HistoryType::DEEP
     }
 
     def Transition createTransition() {
