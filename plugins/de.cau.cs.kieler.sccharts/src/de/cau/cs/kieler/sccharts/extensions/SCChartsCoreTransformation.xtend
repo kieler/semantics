@@ -1205,7 +1205,39 @@ class SCChartsCoreTransformation {
     }
 
     def void transformWeakSuspend(State state, Region targetRootRegion) {
-        //TODO
+        
+        val weakSuspends = state.suspendActions.filter[weak].toList
+        
+        if (!weakSuspends.nullOrEmpty) {
+            val weakSuspendFlag = state.createBoolVariable(GENERATED_PREFIX + "weakSuspend").uniqueName
+            weakSuspendFlag.setInitialValue(FALSE)
+            
+            for (weakSuspend : weakSuspends.immutableCopy) {
+                val duringAction = state.createDuringAction
+                duringAction.setImmediate(weakSuspend.immediate)
+                duringAction.setTrigger(weakSuspend.trigger.copy)
+                duringAction.addEffect(weakSuspendFlag.assign(TRUE))
+                state.localActions.remove(weakSuspend)
+            }
+            
+            
+            for (region : state.allContainedRegions.immutableCopy) {
+                val subStates = region.states.immutableCopy
+                val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
+                val stateEnum = state.createBoolVariable(GENERATED_PREFIX + "stateEnum").uniqueName
+                var counter = 0
+            
+                for (subState : subStates) {
+                    val reEnterTransition = wsState.createImmediateTransitionTo(subState)
+                    reEnterTransition.setTrigger(stateEnum.reference.isEqual(counter.createIntValue))
+                    reEnterTransition.setDeferred(true)
+                    subState.createEntryAction.addEffect(stateEnum.assign(counter.createIntValue))
+                    counter = counter + 1
+                    val weakSuspendTransition = subState.createImmediateTransitionTo(wsState)
+                    weakSuspendTransition.setTrigger(weakSuspendFlag.reference)
+                }
+            }
+        }
     }
                
           
@@ -1406,7 +1438,7 @@ class SCChartsCoreTransformation {
 
 
     def void transformSuspend(State state, Region targetRootRegion) {
-        for (suspension : state.suspendActions.immutableCopy) {
+        for (suspension : state.suspendActions.filter[!weak].toList.immutableCopy) {
             val suspendTrigger = suspension.trigger;
             val notSuspendTrigger = not(suspendTrigger)
             val immediateSuspension = suspension.isImmediate;
