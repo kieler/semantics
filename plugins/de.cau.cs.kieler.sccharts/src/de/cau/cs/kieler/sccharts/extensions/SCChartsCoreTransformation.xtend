@@ -1497,6 +1497,7 @@ class SCChartsCoreTransformation {
     def void transformExit(State state, Region targetRootRegion) {
         if (!state.exitActions.nullOrEmpty && !state.final) {
             
+            val stateOutgoingTransitions = state.outgoingTransitions.size
             var State firstState
             var State lastState
             
@@ -1504,9 +1505,6 @@ class SCChartsCoreTransformation {
                 val region = state.createRegion(GENERATED_PREFIX + "Exit")
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
                 lastState = region.createFinalState(GENERATED_PREFIX + "Done")
-                for (transition : state.outgoingTransitions.immutableCopy) {
-                    transition.setTypeTermination
-                }
             } else if (state.regions.size == 1 && !state.regions.get(0).finalStates.nullOrEmpty) {
                 val region = state.regions.get(0)
                 lastState = region.createFinalState(GENERATED_PREFIX + "Done")
@@ -1522,27 +1520,37 @@ class SCChartsCoreTransformation {
                 lastState = region.createFinalState(GENERATED_PREFIX + "Done")
             }
             
-            if (state.outgoingTransitions.size > 1) {
+            // Optimization: "&& state.outgoingTransitions.filter[trigger != null].size > 0"
+            // Do not create superflous exitOptionStates
+            if (stateOutgoingTransitions > 0 && state.outgoingTransitions.filter[trigger != null].size > 0) {
                 // Memorize outgoing transition
                 val region = firstState.parentRegion
-                val memory = state.parentRegion.parentState.createIntVariable(GENERATED_PREFIX + "exit").uniqueName
+                var ValuedObject memory
+                if (stateOutgoingTransitions > 1) {
+                    memory = state.parentRegion.parentState.createIntVariable(GENERATED_PREFIX + "exit").uniqueName
+                }
                 val middleState = region.createState(GENERATED_PREFIX + "Memorize").setTypeConnector
-                val exitOptionState = state.parentRegion.createState(GENERATED_PREFIX + "ExitOption").setTypeConnector
+                val exitOptionState = state.parentRegion.createState(GENERATED_PREFIX + "ExitOption").uniqueName.setTypeConnector
                 var counter = 1
                 for (transition : state.outgoingTransitions.immutableCopy) {
                     val exitTransition = exitOptionState.createImmediateTransitionTo(transition.targetState)
-                    exitTransition.setTrigger(memory.reference.isEqual(counter.createIntValue))
+                    if (stateOutgoingTransitions > 1) {
+                        exitTransition.setTrigger(memory.reference.isEqual(counter.createIntValue))
+                    }
                     for (effect : transition.effects.immutableCopy) {
                         exitTransition.effects.add(effect)
                     }
                     
                     firstState.outgoingTransitions.add(transition)
+                    transition.setImmediate(transition.immediate2) // Ensure termination transitions are interpreted as immediate
                     transition.setTypeWeakAbort
                     transition.setTargetState(middleState)
-                    transition.addEffect(memory.assign(counter.createIntValue))
-                    counter = counter + 1
+                    if (stateOutgoingTransitions > 1) {
+                        transition.addEffect(memory.assign(counter.createIntValue))
+                        counter = counter + 1
+                    }
                 }
-                state.createTransitionTo(exitOptionState).setTypeTermination
+                state.createImmediateTransitionTo(exitOptionState).setTypeTermination
                 firstState = middleState
             }
                 
