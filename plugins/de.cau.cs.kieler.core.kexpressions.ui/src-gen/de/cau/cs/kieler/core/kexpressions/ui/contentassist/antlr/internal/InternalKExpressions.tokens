@@ -37,7 +37,6 @@ RULE_COMMENT_ANNOTATION=10
 '>='=30
 '/'=24
 '=='=26
-'mod'=23
 'val'=25
 '>'=29
 '<='=28
@@ -54,3 +53,4 @@ RULE_COMMENT_ANNOTATION=10
 'pre'=16
 '&'=18
 ']'=36
+'%'=23

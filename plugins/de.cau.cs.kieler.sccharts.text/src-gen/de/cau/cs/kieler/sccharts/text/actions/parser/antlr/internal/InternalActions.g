@@ -541,11 +541,11 @@ ruleBoolExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getBoolExpressionAccess().getOrAndExpressionParserRuleCall()); 
+        newCompositeNode(grammarAccess.getBoolExpressionAccess().getOrExpressionParserRuleCall()); 
     }
-    this_OrAndExpression_0=ruleOrAndExpression
+    this_OrExpression_0=ruleOrExpression
     { 
-        $current = $this_OrAndExpression_0.current; 
+        $current = $this_OrExpression_0.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -555,91 +555,145 @@ ruleBoolExpression returns [EObject current=null]
 
 
 
-// Entry rule entryRuleOrAndExpression
-entryRuleOrAndExpression returns [EObject current=null] 
+// Entry rule entryRuleOrExpression
+entryRuleOrExpression returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getOrAndExpressionRule()); }
-	 iv_ruleOrAndExpression=ruleOrAndExpression 
-	 { $current=$iv_ruleOrAndExpression.current; } 
+	{ newCompositeNode(grammarAccess.getOrExpressionRule()); }
+	 iv_ruleOrExpression=ruleOrExpression 
+	 { $current=$iv_ruleOrExpression.current; } 
 	 EOF 
 ;
 
-// Rule OrAndExpression
-ruleOrAndExpression returns [EObject current=null] 
+// Rule OrExpression
+ruleOrExpression returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getOrExpressionAccess().getAndExpressionParserRuleCall_0()); 
+    }
+    this_AndExpression_0=ruleAndExpression
+    { 
+        $current = $this_AndExpression_0.current; 
+        afterParserOrEnumRuleCall();
+    }
 ((
 	{ 
 	  /* */ 
 	}
     {
-        $current = forceCreateModelElement(
-            grammarAccess.getOrAndExpressionAccess().getOperatorExpressionAction_0(),
+        $current = forceCreateModelElementAndAdd(
+            grammarAccess.getOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0(),
             $current);
     }
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getOrAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getOrExpressionAccess().getOperatorOrOperatorEnumRuleCall_1_1_0()); 
 	    }
-		lv_subExpressions_1_0=ruleCompareOperation		{
+		lv_operator_2_0=ruleOrOperator		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getOrAndExpressionRule());
-	        }
-       		add(
-       			$current, 
-       			"subExpressions",
-        		lv_subExpressions_1_0, 
-        		"CompareOperation");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)((
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getOrAndExpressionAccess().getOperatorAndOperatorEnumRuleCall_2_0_0_0()); 
-	    }
-		lv_operator_2_1=ruleAndOperator		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getOrAndExpressionRule());
+	            $current = createModelElementForParent(grammarAccess.getOrExpressionRule());
 	        }
        		set(
        			$current, 
        			"operator",
-        		lv_operator_2_1, 
-        		"AndOperator");
-	        afterParserOrEnumRuleCall();
-	    }
-
-    |		{ 
-	        newCompositeNode(grammarAccess.getOrAndExpressionAccess().getOperatorOrOperatorEnumRuleCall_2_0_0_1()); 
-	    }
-		lv_operator_2_2=ruleOrOperator		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getOrAndExpressionRule());
-	        }
-       		set(
-       			$current, 
-       			"operator",
-        		lv_operator_2_2, 
+        		lv_operator_2_0, 
         		"OrOperator");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getOrExpressionAccess().getSubExpressionsAndExpressionParserRuleCall_1_2_0()); 
+	    }
+		lv_subExpressions_3_0=ruleAndExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getOrExpressionRule());
+	        }
+       		add(
+       			$current, 
+       			"subExpressions",
+        		lv_subExpressions_3_0, 
+        		"AndExpression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*)
+;
+
+
+
+
+
+// Entry rule entryRuleAndExpression
+entryRuleAndExpression returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getAndExpressionRule()); }
+	 iv_ruleAndExpression=ruleAndExpression 
+	 { $current=$iv_ruleAndExpression.current; } 
+	 EOF 
+;
+
+// Rule AndExpression
+ruleAndExpression returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getAndExpressionAccess().getCompareOperationParserRuleCall_0()); 
+    }
+    this_CompareOperation_0=ruleCompareOperation
+    { 
+        $current = $this_CompareOperation_0.current; 
+        afterParserOrEnumRuleCall();
+    }
+((
+	{ 
+	  /* */ 
+	}
+    {
+        $current = forceCreateModelElementAndAdd(
+            grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0(),
+            $current);
+    }
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAndExpressionAccess().getOperatorAndOperatorEnumRuleCall_1_1_0()); 
+	    }
+		lv_operator_2_0=ruleAndOperator		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAndExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"operator",
+        		lv_operator_2_0, 
+        		"AndOperator");
+	        afterParserOrEnumRuleCall();
+	    }
 
 )
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getOrAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_2_1_0()); 
+	        newCompositeNode(grammarAccess.getAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_2_0()); 
 	    }
 		lv_subExpressions_3_0=ruleCompareOperation		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getOrAndExpressionRule());
+	            $current = createModelElementForParent(grammarAccess.getAndExpressionRule());
 	        }
        		add(
        			$current, 
@@ -2824,7 +2878,7 @@ ruleMultOperator returns [Enumerator current=null]
 ruleModOperator returns [Enumerator current=null] 
     @init { enterRule(); }
     @after { leaveRule(); }:
-(	enumLiteral_0='mod' 
+(	enumLiteral_0='%' 
 	{
         $current = grammarAccess.getModOperatorAccess().getMODEnumLiteralDeclaration().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_0, grammarAccess.getModOperatorAccess().getMODEnumLiteralDeclaration()); 

@@ -1362,7 +1362,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	////
 	//// --------------------------
 	//Expression:
-	//	ValuedExpression | BoolExpression;
+	//	BoolExpression | ValuedExpression;
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
 		return gaKExpressions.getExpressionAccess();
 	}
@@ -1405,6 +1405,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getAndExpressionAccess().getRule();
 	}
 
+	////	{OperatorExpression} subExpressions += CompareOperation (/ *{OperatorExpression.subExpressions+=current}* / operator=(AndOperator|OrOperator) subExpressions+=CompareOperation)*;
 	//// Example: 42 <= val(A)
 	//CompareOperation returns Expression:
 	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
@@ -1772,7 +1773,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum ModOperator returns OperatorType:
-	//	MOD="mod";
+	//	MOD="%";
 	public KExpressionsGrammarAccess.ModOperatorElements getModOperatorAccess() {
 		return gaKExpressions.getModOperatorAccess();
 	}

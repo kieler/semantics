@@ -1277,11 +1277,11 @@ ruleExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); 
     }
-    this_ValuedExpression_0=ruleValuedExpression
+    this_BoolExpression_0=ruleBoolExpression
     { 
-        $current = $this_ValuedExpression_0.current; 
+        $current = $this_BoolExpression_0.current; 
         afterParserOrEnumRuleCall();
     }
 
@@ -1290,11 +1290,11 @@ ruleExpression returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_1()); 
+        newCompositeNode(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_1()); 
     }
-    this_BoolExpression_1=ruleBoolExpression
+    this_ValuedExpression_1=ruleValuedExpression
     { 
-        $current = $this_BoolExpression_1.current; 
+        $current = $this_ValuedExpression_1.current; 
         afterParserOrEnumRuleCall();
     }
 )
@@ -3622,7 +3622,7 @@ ruleMultOperator returns [Enumerator current=null]
 ruleModOperator returns [Enumerator current=null] 
     @init { enterRule(); }
     @after { leaveRule(); }:
-(	enumLiteral_0='mod' 
+(	enumLiteral_0='%' 
 	{
         $current = grammarAccess.getModOperatorAccess().getMODEnumLiteralDeclaration().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_0, grammarAccess.getModOperatorAccess().getMODEnumLiteralDeclaration()); 

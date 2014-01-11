@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSCLParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'mod'", "'/'", "'val'", "'=='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'pure'", "'bool'", "'unsigned'", "'int'", "'float'", "'double'", "'string'", "'host'", "'none'", "'max'", "'min'", "'module'", "'{'", "'}'", "';'", "'='", "'combine'", "':'", "'if'", "'then'", "'end'", "'else'", "'goto'", "'fork'", "'join'", "'par'", "'pause'", "'('", "')'", "'@'", "'['", "']'", "'.'", "'input'", "'output'", "'static'", "'signal'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'=='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'pure'", "'bool'", "'unsigned'", "'int'", "'float'", "'double'", "'string'", "'host'", "'none'", "'max'", "'min'", "'module'", "'{'", "'}'", "';'", "'='", "'combine'", "':'", "'if'", "'then'", "'end'", "'else'", "'goto'", "'fork'", "'join'", "'par'", "'pause'", "'('", "')'", "'@'", "'['", "']'", "'.'", "'input'", "'output'", "'static'", "'signal'"
     };
     public static final int T__68=68;
     public static final int RULE_BOOLEAN=9;
@@ -4238,23 +4238,23 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleModOperator"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1467:1: ruleModOperator : ( ( 'mod' ) ) ;
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1467:1: ruleModOperator : ( ( '%' ) ) ;
     public final void ruleModOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1471:1: ( ( ( 'mod' ) ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1472:1: ( ( 'mod' ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1471:1: ( ( ( '%' ) ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1472:1: ( ( '%' ) )
             {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1472:1: ( ( 'mod' ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1473:1: ( 'mod' )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1472:1: ( ( '%' ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1473:1: ( '%' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModOperatorAccess().getMODEnumLiteralDeclaration()); 
             }
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1474:1: ( 'mod' )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1474:3: 'mod'
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1474:1: ( '%' )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1474:3: '%'
             {
             match(input,23,FollowSets000.FOLLOW_23_in_ruleModOperator3039); if (state.failed) return ;
 
@@ -5255,32 +5255,32 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Expression__Alternatives"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1723:1: rule__Expression__Alternatives : ( ( ruleValuedExpression ) | ( ruleBoolExpression ) );
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1723:1: rule__Expression__Alternatives : ( ( ruleBoolExpression ) | ( ruleValuedExpression ) );
     public final void rule__Expression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1727:1: ( ( ruleValuedExpression ) | ( ruleBoolExpression ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1727:1: ( ( ruleBoolExpression ) | ( ruleValuedExpression ) )
             int alt7=2;
             alt7 = dfa7.predict(input);
             switch (alt7) {
                 case 1 :
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1728:1: ( ruleValuedExpression )
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1728:1: ( ruleBoolExpression )
                     {
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1728:1: ( ruleValuedExpression )
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1729:1: ruleValuedExpression
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1728:1: ( ruleBoolExpression )
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1729:1: ruleBoolExpression
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); 
+                       before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleValuedExpression_in_rule__Expression__Alternatives3601);
-                    ruleValuedExpression();
+                    pushFollow(FollowSets000.FOLLOW_ruleBoolExpression_in_rule__Expression__Alternatives3601);
+                    ruleBoolExpression();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); 
+                       after(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); 
                     }
 
                     }
@@ -5289,21 +5289,21 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1734:6: ( ruleBoolExpression )
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1734:6: ( ruleValuedExpression )
                     {
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1734:6: ( ruleBoolExpression )
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1735:1: ruleBoolExpression
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1734:6: ( ruleValuedExpression )
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1735:1: ruleValuedExpression
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_1()); 
+                       before(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_1()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleBoolExpression_in_rule__Expression__Alternatives3618);
-                    ruleBoolExpression();
+                    pushFollow(FollowSets000.FOLLOW_ruleValuedExpression_in_rule__Expression__Alternatives3618);
+                    ruleValuedExpression();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_1()); 
+                       after(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_1()); 
                     }
 
                     }
@@ -27710,17 +27710,17 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
     // $ANTLR start synpred11_InternalSCL
     public final void synpred11_InternalSCL_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1728:1: ( ( ruleValuedExpression ) )
-        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1728:1: ( ruleValuedExpression )
+        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1728:1: ( ( ruleBoolExpression ) )
+        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1728:1: ( ruleBoolExpression )
         {
-        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1728:1: ( ruleValuedExpression )
-        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1729:1: ruleValuedExpression
+        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1728:1: ( ruleBoolExpression )
+        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1729:1: ruleBoolExpression
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); 
+           before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); 
         }
-        pushFollow(FollowSets000.FOLLOW_ruleValuedExpression_in_synpred11_InternalSCL3601);
-        ruleValuedExpression();
+        pushFollow(FollowSets000.FOLLOW_ruleBoolExpression_in_synpred11_InternalSCL3601);
+        ruleBoolExpression();
 
         state._fsp--;
         if (state.failed) return ;
@@ -28204,7 +28204,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     static final String DFA7_maxS =
         "\1\73\11\0\2\uffff";
     static final String DFA7_acceptS =
-        "\12\uffff\1\2\1\1";
+        "\12\uffff\1\1\1\2";
     static final String DFA7_specialS =
         "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\2\uffff}>";
     static final String[] DFA7_transitionS = {
@@ -28253,7 +28253,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.transition = DFA7_transition;
         }
         public String getDescription() {
-            return "1723:1: rule__Expression__Alternatives : ( ( ruleValuedExpression ) | ( ruleBoolExpression ) );";
+            return "1723:1: rule__Expression__Alternatives : ( ( ruleBoolExpression ) | ( ruleValuedExpression ) );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -28266,9 +28266,9 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                         int index7_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalSCL()) ) {s = 11;}
+                        if ( (synpred11_InternalSCL()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index7_1);
@@ -28281,9 +28281,9 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                         int index7_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalSCL()) ) {s = 11;}
+                        if ( (synpred11_InternalSCL()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index7_2);
@@ -28296,9 +28296,9 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                         int index7_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalSCL()) ) {s = 11;}
+                        if ( (synpred11_InternalSCL()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index7_3);
@@ -28311,9 +28311,9 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                         int index7_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalSCL()) ) {s = 11;}
+                        if ( (synpred11_InternalSCL()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index7_4);
@@ -28326,9 +28326,9 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                         int index7_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalSCL()) ) {s = 11;}
+                        if ( (synpred11_InternalSCL()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index7_5);
@@ -28341,9 +28341,9 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                         int index7_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalSCL()) ) {s = 11;}
+                        if ( (synpred11_InternalSCL()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index7_6);
@@ -28356,9 +28356,9 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                         int index7_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalSCL()) ) {s = 11;}
+                        if ( (synpred11_InternalSCL()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index7_7);
@@ -28371,9 +28371,9 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                         int index7_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalSCL()) ) {s = 11;}
+                        if ( (synpred11_InternalSCL()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index7_8);
@@ -28386,9 +28386,9 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                         int index7_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred11_InternalSCL()) ) {s = 11;}
+                        if ( (synpred11_InternalSCL()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index7_9);
@@ -29843,8 +29843,8 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_rule__Thread__StatementsAssignment_1_0_1_in_rule__Thread__Alternatives_1_03517 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__StatementScope__Group_3_0_0__0_in_rule__StatementScope__Alternatives_3_03550 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__StatementScope__StatementsAssignment_3_0_1_in_rule__StatementScope__Alternatives_3_03568 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedExpression_in_rule__Expression__Alternatives3601 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__Expression__Alternatives3618 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleBoolExpression_in_rule__Expression__Alternatives3601 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedExpression_in_rule__Expression__Alternatives3618 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0_in_rule__CompareOperation__Alternatives3650 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleNotExpression_in_rule__CompareOperation__Alternatives3668 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValuedExpression_in_rule__NotOrValuedExpression__Alternatives3700 = new BitSet(new long[]{0x0000000000000002L});
@@ -30471,7 +30471,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_119181 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_FLOAT_in_rule__KeyFloatValueAnnotation__ValueAssignment_219212 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_119243 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleValuedExpression_in_synpred11_InternalSCL3601 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleBoolExpression_in_synpred11_InternalSCL3601 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0_in_synpred12_InternalSCL3650 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValuedExpression_in_synpred13_InternalSCL3700 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleFloatValue_in_synpred20_InternalSCL3950 = new BitSet(new long[]{0x0000000000000002L});

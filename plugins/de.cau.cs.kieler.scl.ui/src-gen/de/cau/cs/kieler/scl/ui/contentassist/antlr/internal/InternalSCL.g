@@ -1471,7 +1471,7 @@ ruleModOperator
 :
 (
 { before(grammarAccess.getModOperatorAccess().getMODEnumLiteralDeclaration()); }
-(	'mod' 
+(	'%' 
 )
 { after(grammarAccess.getModOperatorAccess().getMODEnumLiteralDeclaration()); }
 )
@@ -1726,15 +1726,15 @@ rule__Expression__Alternatives
     }
 :
 (
-{ before(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); }
-	ruleValuedExpression
-{ after(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); }
+{ before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); }
+	ruleBoolExpression
+{ after(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); }
 )
 
     |(
-{ before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_1()); }
-	ruleBoolExpression
-{ after(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_1()); }
+{ before(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_1()); }
+	ruleValuedExpression
+{ after(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_1()); }
 )
 
 ;

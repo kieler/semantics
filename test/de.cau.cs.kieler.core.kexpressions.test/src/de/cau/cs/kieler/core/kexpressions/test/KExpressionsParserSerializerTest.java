@@ -348,7 +348,7 @@ public class KExpressionsParserSerializerTest {
      */
     @Test
     public void testSerializerPlusMult() throws Exception {
-        this.parseAndSerialize("5 * varA - val(B) mod 2 > 3");
+        this.parseAndSerialize("5 * varA - val(B) % 2 > 3");
     }
 
     /**

@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_HOSTCODE", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_HOSTCODESTRINGTERMINAL", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'mod'", "'/'", "'val'", "'=='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'pure'", "'bool'", "'unsigned'", "'int'", "'float'", "'double'", "'string'", "'host'", "'none'", "'max'", "'min'", "'synchronous program'", "'('", "')'", "'\\''", "'state'", "'{'", "'}'", "';'", "'='", "'combine'", "'prio'", "','", "'trans'", "'fork'", "'join'", "'pause'", "'term'", "'halt'", "'signal'", "'emit'", "'abort'", "'if'", "'await'", "'@'", "'['", "']'", "'.'", "'input'", "'output'", "'static'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_HOSTCODE", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_HOSTCODESTRINGTERMINAL", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'=='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'pure'", "'bool'", "'unsigned'", "'int'", "'float'", "'double'", "'string'", "'host'", "'none'", "'max'", "'min'", "'synchronous program'", "'('", "')'", "'\\''", "'state'", "'{'", "'}'", "';'", "'='", "'combine'", "'prio'", "','", "'trans'", "'fork'", "'join'", "'pause'", "'term'", "'halt'", "'signal'", "'emit'", "'abort'", "'if'", "'await'", "'@'", "'['", "']'", "'.'", "'input'", "'output'", "'static'"
     };
     public static final int T__68=68;
     public static final int RULE_BOOLEAN=9;
@@ -4923,23 +4923,23 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "ruleModOperator"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1685:1: ruleModOperator : ( ( 'mod' ) ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1685:1: ruleModOperator : ( ( '%' ) ) ;
     public final void ruleModOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1689:1: ( ( ( 'mod' ) ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1690:1: ( ( 'mod' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1689:1: ( ( ( '%' ) ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1690:1: ( ( '%' ) )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1690:1: ( ( 'mod' ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1691:1: ( 'mod' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1690:1: ( ( '%' ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1691:1: ( '%' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModOperatorAccess().getMODEnumLiteralDeclaration()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1692:1: ( 'mod' )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1692:3: 'mod'
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1692:1: ( '%' )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1692:3: '%'
             {
             match(input,24,FOLLOW_24_in_ruleModOperator3513); if (state.failed) return ;
 
@@ -5692,32 +5692,32 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Expression__Alternatives"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1898:1: rule__Expression__Alternatives : ( ( ruleValuedExpression ) | ( ruleBoolExpression ) );
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1898:1: rule__Expression__Alternatives : ( ( ruleBoolExpression ) | ( ruleValuedExpression ) );
     public final void rule__Expression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1902:1: ( ( ruleValuedExpression ) | ( ruleBoolExpression ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1902:1: ( ( ruleBoolExpression ) | ( ruleValuedExpression ) )
             int alt3=2;
             alt3 = dfa3.predict(input);
             switch (alt3) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1903:1: ( ruleValuedExpression )
+                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1903:1: ( ruleBoolExpression )
                     {
-                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1903:1: ( ruleValuedExpression )
-                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1904:1: ruleValuedExpression
+                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1903:1: ( ruleBoolExpression )
+                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1904:1: ruleBoolExpression
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); 
+                       before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); 
                     }
-                    pushFollow(FOLLOW_ruleValuedExpression_in_rule__Expression__Alternatives4002);
-                    ruleValuedExpression();
+                    pushFollow(FOLLOW_ruleBoolExpression_in_rule__Expression__Alternatives4002);
+                    ruleBoolExpression();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); 
+                       after(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); 
                     }
 
                     }
@@ -5726,21 +5726,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1909:6: ( ruleBoolExpression )
+                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1909:6: ( ruleValuedExpression )
                     {
-                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1909:6: ( ruleBoolExpression )
-                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1910:1: ruleBoolExpression
+                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1909:6: ( ruleValuedExpression )
+                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1910:1: ruleValuedExpression
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_1()); 
+                       before(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_1()); 
                     }
-                    pushFollow(FOLLOW_ruleBoolExpression_in_rule__Expression__Alternatives4019);
-                    ruleBoolExpression();
+                    pushFollow(FOLLOW_ruleValuedExpression_in_rule__Expression__Alternatives4019);
+                    ruleValuedExpression();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_1()); 
+                       after(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_1()); 
                     }
 
                     }
@@ -30757,17 +30757,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
     // $ANTLR start synpred15_InternalS
     public final void synpred15_InternalS_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1903:1: ( ( ruleValuedExpression ) )
-        // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1903:1: ( ruleValuedExpression )
+        // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1903:1: ( ( ruleBoolExpression ) )
+        // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1903:1: ( ruleBoolExpression )
         {
-        // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1903:1: ( ruleValuedExpression )
-        // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1904:1: ruleValuedExpression
+        // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1903:1: ( ruleBoolExpression )
+        // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1904:1: ruleBoolExpression
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); 
+           before(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); 
         }
-        pushFollow(FOLLOW_ruleValuedExpression_in_synpred15_InternalS4002);
-        ruleValuedExpression();
+        pushFollow(FOLLOW_ruleBoolExpression_in_synpred15_InternalS4002);
+        ruleBoolExpression();
 
         state._fsp--;
         if (state.failed) return ;
@@ -31057,7 +31057,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     static final String DFA3_maxS =
         "\1\55\11\0\2\uffff";
     static final String DFA3_acceptS =
-        "\12\uffff\1\2\1\1";
+        "\12\uffff\1\1\1\2";
     static final String DFA3_specialS =
         "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\2\uffff}>";
     static final String[] DFA3_transitionS = {
@@ -31106,7 +31106,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             this.transition = DFA3_transition;
         }
         public String getDescription() {
-            return "1898:1: rule__Expression__Alternatives : ( ( ruleValuedExpression ) | ( ruleBoolExpression ) );";
+            return "1898:1: rule__Expression__Alternatives : ( ( ruleBoolExpression ) | ( ruleValuedExpression ) );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -31119,9 +31119,9 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                         int index3_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred15_InternalS()) ) {s = 11;}
+                        if ( (synpred15_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index3_1);
@@ -31134,9 +31134,9 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                         int index3_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred15_InternalS()) ) {s = 11;}
+                        if ( (synpred15_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index3_2);
@@ -31149,9 +31149,9 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                         int index3_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred15_InternalS()) ) {s = 11;}
+                        if ( (synpred15_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index3_3);
@@ -31164,9 +31164,9 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                         int index3_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred15_InternalS()) ) {s = 11;}
+                        if ( (synpred15_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index3_4);
@@ -31179,9 +31179,9 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                         int index3_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred15_InternalS()) ) {s = 11;}
+                        if ( (synpred15_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index3_5);
@@ -31194,9 +31194,9 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                         int index3_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred15_InternalS()) ) {s = 11;}
+                        if ( (synpred15_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index3_6);
@@ -31209,9 +31209,9 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                         int index3_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred15_InternalS()) ) {s = 11;}
+                        if ( (synpred15_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index3_7);
@@ -31224,9 +31224,9 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                         int index3_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred15_InternalS()) ) {s = 11;}
+                        if ( (synpred15_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index3_8);
@@ -31239,9 +31239,9 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                         int index3_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred15_InternalS()) ) {s = 11;}
+                        if ( (synpred15_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index3_9);
@@ -32065,8 +32065,8 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_ruleAssignment_in_rule__Instruction__Alternatives3921 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__SExpression__Alternatives3953 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__SExpression__Alternatives3970 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValuedExpression_in_rule__Expression__Alternatives4002 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBoolExpression_in_rule__Expression__Alternatives4019 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBoolExpression_in_rule__Expression__Alternatives4002 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValuedExpression_in_rule__Expression__Alternatives4019 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0_in_rule__CompareOperation__Alternatives4051 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleNotExpression_in_rule__CompareOperation__Alternatives4069 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleValuedExpression_in_rule__NotOrValuedExpression__Alternatives4101 = new BitSet(new long[]{0x0000000000000002L});
@@ -32799,7 +32799,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_RULE_FLOAT_in_rule__KeyFloatValueAnnotation__ValueAssignment_221944 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_121975 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_synpred14_InternalS3953 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValuedExpression_in_synpred15_InternalS4002 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBoolExpression_in_synpred15_InternalS4002 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0_in_synpred16_InternalS4051 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleValuedExpression_in_synpred17_InternalS4101 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleFloatValue_in_synpred24_InternalS4351 = new BitSet(new long[]{0x0000000000000002L});

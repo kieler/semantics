@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_HOSTCODE", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_STRING", "RULE_HOSTCODESTRINGTERMINAL", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'synchronous program'", "'('", "')'", "'\\''", "'state'", "'{'", "';'", "'}'", "'input'", "'output'", "'static'", "'signal'", "'='", "'combine'", "'prio'", "','", "'trans'", "'fork'", "'join'", "'pause'", "'term'", "'halt'", "'emit'", "'abort'", "'if'", "'await'", "'@'", "'['", "']'", "'.'", "'=='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'pre'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'mod'", "'/'", "'val'", "'pure'", "'bool'", "'unsigned'", "'int'", "'float'", "'double'", "'string'", "'host'", "'none'", "'max'", "'min'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_HOSTCODE", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_STRING", "RULE_HOSTCODESTRINGTERMINAL", "RULE_ML_COMMENT", "RULE_NUMBER", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'synchronous program'", "'('", "')'", "'\\''", "'state'", "'{'", "';'", "'}'", "'input'", "'output'", "'static'", "'signal'", "'='", "'combine'", "'prio'", "','", "'trans'", "'fork'", "'join'", "'pause'", "'term'", "'halt'", "'emit'", "'abort'", "'if'", "'await'", "'@'", "'['", "']'", "'.'", "'=='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'pre'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'pure'", "'bool'", "'unsigned'", "'int'", "'float'", "'double'", "'string'", "'host'", "'none'", "'max'", "'min'"
     };
     public static final int T__68=68;
     public static final int RULE_BOOLEAN=8;
@@ -4428,27 +4428,27 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExpression"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1653:1: ruleExpression returns [EObject current=null] : (this_ValuedExpression_0= ruleValuedExpression | this_BoolExpression_1= ruleBoolExpression ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1653:1: ruleExpression returns [EObject current=null] : (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression ) ;
     public final EObject ruleExpression() throws RecognitionException {
         EObject current = null;
 
-        EObject this_ValuedExpression_0 = null;
+        EObject this_BoolExpression_0 = null;
 
-        EObject this_BoolExpression_1 = null;
+        EObject this_ValuedExpression_1 = null;
 
 
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1656:28: ( (this_ValuedExpression_0= ruleValuedExpression | this_BoolExpression_1= ruleBoolExpression ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1657:1: (this_ValuedExpression_0= ruleValuedExpression | this_BoolExpression_1= ruleBoolExpression )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1656:28: ( (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1657:1: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1657:1: (this_ValuedExpression_0= ruleValuedExpression | this_BoolExpression_1= ruleBoolExpression )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1657:1: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression )
             int alt29=2;
             alt29 = dfa29.predict(input);
             switch (alt29) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1658:2: this_ValuedExpression_0= ruleValuedExpression
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1658:2: this_BoolExpression_0= ruleBoolExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -4457,17 +4457,17 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_0()); 
+                              newCompositeNode(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_0()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleValuedExpression_in_ruleExpression3731);
-                    this_ValuedExpression_0=ruleValuedExpression();
+                    pushFollow(FOLLOW_ruleBoolExpression_in_ruleExpression3731);
+                    this_BoolExpression_0=ruleBoolExpression();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
                        
-                              current = this_ValuedExpression_0; 
+                              current = this_BoolExpression_0; 
                               afterParserOrEnumRuleCall();
                           
                     }
@@ -4475,7 +4475,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1671:2: this_BoolExpression_1= ruleBoolExpression
+                    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1671:2: this_ValuedExpression_1= ruleValuedExpression
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -4484,17 +4484,17 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getExpressionAccess().getBoolExpressionParserRuleCall_1()); 
+                              newCompositeNode(grammarAccess.getExpressionAccess().getValuedExpressionParserRuleCall_1()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleBoolExpression_in_ruleExpression3761);
-                    this_BoolExpression_1=ruleBoolExpression();
+                    pushFollow(FOLLOW_ruleValuedExpression_in_ruleExpression3761);
+                    this_ValuedExpression_1=ruleValuedExpression();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
                        
-                              current = this_BoolExpression_1; 
+                              current = this_ValuedExpression_1; 
                               afterParserOrEnumRuleCall();
                           
                     }
@@ -11039,7 +11039,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModOperator"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:4004:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= 'mod' ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:4004:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= '%' ) ;
     public final Enumerator ruleModOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -11047,11 +11047,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:4006:28: ( (enumLiteral_0= 'mod' ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:4007:1: (enumLiteral_0= 'mod' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:4006:28: ( (enumLiteral_0= '%' ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:4007:1: (enumLiteral_0= '%' )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:4007:1: (enumLiteral_0= 'mod' )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:4007:3: enumLiteral_0= 'mod'
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:4007:1: (enumLiteral_0= '%' )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:4007:3: enumLiteral_0= '%'
             {
             enumLiteral_0=(Token)match(input,60,FOLLOW_60_in_ruleModOperator9016); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -11745,19 +11745,19 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
     // $ANTLR start synpred41_InternalS
     public final void synpred41_InternalS_fragment() throws RecognitionException {   
-        EObject this_ValuedExpression_0 = null;
+        EObject this_BoolExpression_0 = null;
 
 
-        // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1658:2: (this_ValuedExpression_0= ruleValuedExpression )
-        // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1658:2: this_ValuedExpression_0= ruleValuedExpression
+        // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1658:2: (this_BoolExpression_0= ruleBoolExpression )
+        // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:1658:2: this_BoolExpression_0= ruleBoolExpression
         {
         if ( state.backtracking==0 ) {
            
           	  /* */ 
           	
         }
-        pushFollow(FOLLOW_ruleValuedExpression_in_synpred41_InternalS3731);
-        this_ValuedExpression_0=ruleValuedExpression();
+        pushFollow(FOLLOW_ruleBoolExpression_in_synpred41_InternalS3731);
+        this_BoolExpression_0=ruleBoolExpression();
 
         state._fsp--;
         if (state.failed) return ;
@@ -12207,7 +12207,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
     static final String DFA29_maxS =
         "\1\76\11\0\2\uffff";
     static final String DFA29_acceptS =
-        "\12\uffff\1\2\1\1";
+        "\12\uffff\1\1\1\2";
     static final String DFA29_specialS =
         "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\2\uffff}>";
     static final String[] DFA29_transitionS = {
@@ -12256,7 +12256,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             this.transition = DFA29_transition;
         }
         public String getDescription() {
-            return "1657:1: (this_ValuedExpression_0= ruleValuedExpression | this_BoolExpression_1= ruleBoolExpression )";
+            return "1657:1: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -12269,9 +12269,9 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                         int index29_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred41_InternalS()) ) {s = 11;}
+                        if ( (synpred41_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index29_1);
@@ -12284,9 +12284,9 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                         int index29_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred41_InternalS()) ) {s = 11;}
+                        if ( (synpred41_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index29_2);
@@ -12299,9 +12299,9 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                         int index29_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred41_InternalS()) ) {s = 11;}
+                        if ( (synpred41_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index29_3);
@@ -12314,9 +12314,9 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                         int index29_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred41_InternalS()) ) {s = 11;}
+                        if ( (synpred41_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index29_4);
@@ -12329,9 +12329,9 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                         int index29_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred41_InternalS()) ) {s = 11;}
+                        if ( (synpred41_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index29_5);
@@ -12344,9 +12344,9 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                         int index29_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred41_InternalS()) ) {s = 11;}
+                        if ( (synpred41_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index29_6);
@@ -12359,9 +12359,9 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                         int index29_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred41_InternalS()) ) {s = 11;}
+                        if ( (synpred41_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index29_7);
@@ -12374,9 +12374,9 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                         int index29_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred41_InternalS()) ) {s = 11;}
+                        if ( (synpred41_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index29_8);
@@ -12389,9 +12389,9 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                         int index29_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred41_InternalS()) ) {s = 11;}
+                        if ( (synpred41_InternalS()) ) {s = 10;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 11;}
 
                          
                         input.seek(index29_9);
@@ -13068,8 +13068,8 @@ public class InternalSParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_RULE_HOSTCODE_in_ruleSExpression3634 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_entryRuleExpression3671 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleExpression3681 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValuedExpression_in_ruleExpression3731 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBoolExpression_in_ruleExpression3761 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBoolExpression_in_ruleExpression3731 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValuedExpression_in_ruleExpression3761 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleBoolExpression_in_entryRuleBoolExpression3796 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleBoolExpression3806 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleOrExpression_in_ruleBoolExpression3855 = new BitSet(new long[]{0x0000000000000002L});
@@ -13280,7 +13280,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleValuedObject_in_synpred6_InternalS476 = new BitSet(new long[]{0x800008001E800210L,0x000000000000007FL});
     public static final BitSet FOLLOW_23_in_synpred6_InternalS489 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_synpred40_InternalS3618 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValuedExpression_in_synpred41_InternalS3731 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBoolExpression_in_synpred41_InternalS3731 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_synpred44_InternalS4254 = new BitSet(new long[]{0x001F800000000000L});
     public static final BitSet FOLLOW_ruleCompareOperator_in_synpred44_InternalS4287 = new BitSet(new long[]{0x45200000000401F0L});
     public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_synpred44_InternalS4308 = new BitSet(new long[]{0x0000000000000002L});
