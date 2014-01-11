@@ -38,6 +38,7 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 				private static final long serialVersionUID = 1L;
 				{
 					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
+					put(grammarAccess.getOrAndExpressionAccess().getAlternatives_1(), "rule__OrAndExpression__Alternatives_1");
 					put(grammarAccess.getCompareOperationAccess().getAlternatives(), "rule__CompareOperation__Alternatives");
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 					put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
@@ -53,10 +54,9 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
-					put(grammarAccess.getOrExpressionAccess().getGroup(), "rule__OrExpression__Group__0");
-					put(grammarAccess.getOrExpressionAccess().getGroup_1(), "rule__OrExpression__Group_1__0");
-					put(grammarAccess.getAndExpressionAccess().getGroup(), "rule__AndExpression__Group__0");
-					put(grammarAccess.getAndExpressionAccess().getGroup_1(), "rule__AndExpression__Group_1__0");
+					put(grammarAccess.getOrAndExpressionAccess().getGroup(), "rule__OrAndExpression__Group__0");
+					put(grammarAccess.getOrAndExpressionAccess().getGroup_1_0(), "rule__OrAndExpression__Group_1_0__0");
+					put(grammarAccess.getOrAndExpressionAccess().getGroup_1_1(), "rule__OrAndExpression__Group_1_1__0");
 					put(grammarAccess.getCompareOperationAccess().getGroup_0(), "rule__CompareOperation__Group_0__0");
 					put(grammarAccess.getCompareOperationAccess().getGroup_0_1(), "rule__CompareOperation__Group_0_1__0");
 					put(grammarAccess.getNotExpressionAccess().getGroup_0(), "rule__NotExpression__Group_0__0");
@@ -89,10 +89,10 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getImportAnnotationAccess().getGroup(), "rule__ImportAnnotation__Group__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup(), "rule__ExtendedID__Group__0");
 					put(grammarAccess.getExtendedIDAccess().getGroup_1(), "rule__ExtendedID__Group_1__0");
-					put(grammarAccess.getOrExpressionAccess().getOperatorAssignment_1_1(), "rule__OrExpression__OperatorAssignment_1_1");
-					put(grammarAccess.getOrExpressionAccess().getSubExpressionsAssignment_1_2(), "rule__OrExpression__SubExpressionsAssignment_1_2");
-					put(grammarAccess.getAndExpressionAccess().getOperatorAssignment_1_1(), "rule__AndExpression__OperatorAssignment_1_1");
-					put(grammarAccess.getAndExpressionAccess().getSubExpressionsAssignment_1_2(), "rule__AndExpression__SubExpressionsAssignment_1_2");
+					put(grammarAccess.getOrAndExpressionAccess().getOperatorAssignment_1_0_1(), "rule__OrAndExpression__OperatorAssignment_1_0_1");
+					put(grammarAccess.getOrAndExpressionAccess().getSubExpressionsAssignment_1_0_2(), "rule__OrAndExpression__SubExpressionsAssignment_1_0_2");
+					put(grammarAccess.getOrAndExpressionAccess().getOperatorAssignment_1_1_1(), "rule__OrAndExpression__OperatorAssignment_1_1_1");
+					put(grammarAccess.getOrAndExpressionAccess().getSubExpressionsAssignment_1_1_2(), "rule__OrAndExpression__SubExpressionsAssignment_1_1_2");
 					put(grammarAccess.getCompareOperationAccess().getOperatorAssignment_0_1_1(), "rule__CompareOperation__OperatorAssignment_0_1_1");
 					put(grammarAccess.getCompareOperationAccess().getSubExpressionsAssignment_0_1_2(), "rule__CompareOperation__SubExpressionsAssignment_0_1_2");
 					put(grammarAccess.getNotExpressionAccess().getOperatorAssignment_0_1(), "rule__NotExpression__OperatorAssignment_0_1");

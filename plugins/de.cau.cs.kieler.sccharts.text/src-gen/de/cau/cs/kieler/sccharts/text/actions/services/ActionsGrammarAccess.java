@@ -741,13 +741,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getRootAccess().getRule();
 	}
 
-	////Variable returns annotations::Annotatable:
-	////    (annotations += StringAnnotation)*;
-	//// --------------------------
-	////
-	////   EXPRESSIONS
-	////
-	//// --------------------------
 	//Expression:
 	//	BoolExpression | ValuedExpression;
 	public KExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
@@ -758,9 +751,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getExpressionAccess().getRule();
 	}
 
-	//// Example: not D and C or val(E) = 42 or not (A and (B or C))
 	//BoolExpression returns Expression:
-	//	OrExpression;
+	//	OrAndExpression;
 	public KExpressionsGrammarAccess.BoolExpressionElements getBoolExpressionAccess() {
 		return gaKExpressions.getBoolExpressionAccess();
 	}
@@ -769,30 +761,24 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getBoolExpressionAccess().getRule();
 	}
 
-	//// Example: A or B, A and B and C, C and B or D and not E, A and B and C
-	//OrExpression returns Expression:
-	//	AndExpression ({OperatorExpression.subExpressions+=current} operator=OrOperator subExpressions+=AndExpression)*;
-	public KExpressionsGrammarAccess.OrExpressionElements getOrExpressionAccess() {
-		return gaKExpressions.getOrExpressionAccess();
+	//OrAndExpression returns Expression:
+	//	CompareOperation (({OperatorExpression.subExpressions+=current} operator=OrOperator
+	//	subExpressions+=CompareOperation)* | ({OperatorExpression.subExpressions+=current} operator=AndOperator
+	//	subExpressions+=CompareOperation)*);
+	public KExpressionsGrammarAccess.OrAndExpressionElements getOrAndExpressionAccess() {
+		return gaKExpressions.getOrAndExpressionAccess();
 	}
 	
-	public ParserRule getOrExpressionRule() {
-		return getOrExpressionAccess().getRule();
+	public ParserRule getOrAndExpressionRule() {
+		return getOrAndExpressionAccess().getRule();
 	}
 
-	//// Example: A and B, not C and 42 <= val(D)
-	//AndExpression returns Expression:
-	//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator
-	//	subExpressions+=CompareOperation)*;
-	public KExpressionsGrammarAccess.AndExpressionElements getAndExpressionAccess() {
-		return gaKExpressions.getAndExpressionAccess();
-	}
-	
-	public ParserRule getAndExpressionRule() {
-		return getAndExpressionAccess().getRule();
-	}
-
-	////	{OperatorExpression} subExpressions += CompareOperation (/ *{OperatorExpression.subExpressions+=current}* / operator=(AndOperator|OrOperator) subExpressions+=CompareOperation)*;
+	////OrExpression returns Expression:
+	////	CompareOperation ({OperatorExpression.subExpressions+=current} operator=(OrOperator) subExpressions+=CompareOperation)*;
+	//////	{OperatorExpression} subExpressions += CompareOperation (/ *{OperatorExpression.subExpressions+=current}* / operator=(AndOperator|OrOperator) subExpressions+=CompareOperation)*;
+	////
+	////AndExpression returns Expression:
+	////	CompareOperation ({OperatorExpression.subExpressions+=current} operator=(AndOperator) subExpressions+=CompareOperation)*;
 	//// Example: 42 <= val(A)
 	//CompareOperation returns Expression:
 	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
@@ -922,8 +908,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicValuedExpression returns Expression:
-	//	IntValue //    | '(' DivExpression ')'
-	//	| FloatValue | DoubleValue | "(" ValuedExpression ")" | AtomicExpression;
+	//	IntValue | FloatValue | DoubleValue | "(" ValuedExpression ")" | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaKExpressions.getAtomicValuedExpressionAccess();
 	}
@@ -976,8 +961,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getIntValueAccess().getRule();
 	}
 
-	////NIntValue returns IntValue:
-	////	value=NINT;
 	//FloatValue:
 	//	value=FLOAT;
 	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
@@ -1021,64 +1004,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnyTypeAccess().getRule();
 	}
 
-	//// --------------------------
-	////
-	////  Interface Declarations
-	////
-	//// --------------------------
-	////ISignal returns ISignal:
-	////	name=ID (channelDescr=ChannelDescription)?;
-	////InterfaceDeclaration:
-	////	(declarations+=ValuedObject ";")* ;
-	////ChannelDescription:
-	////	(":" type=TypeIdentifier)
-	////	| ("(" type=TypeIdentifier ")")
-	////	| (":=" expression=Expression ":" type=TypeIdentifier);
-	//// Variables
-	////InterfaceVariableDecl:
-	////	"var" (varDecls+=VariableDecl) ("," varDecls+=VariableDecl)*;
-	////VariableDecl:
-	////	(variables+=IVariable) ("," variables+=IVariable)* ":" type=TypeIdentifier;
-	////IVariable:
-	////	 name=ID (":=" expression=Expression)?;
-	//// transform ID to hostcode
-	////TypeIdentifier:
-	////	type=ValueType 
-	////	| typeID=ID
-	////	| ("combine" (type=ValueType | typeID=ID) "with" operator=CombineOperator);
-	////InterfaceDeclaration:
-	////  (declarations+= ValuedObjectDelaration ";")* ;
-	////
-	////
-	////ValuedObjectDelaration:
-	////    SignalDeclaration | SignalDeclaration
-	////;
-	////	
-	////SignalDeclaration returns Signal:
-	////    SignalDefinition
-	////;
-	////SignalDefinition:
-	////    (isInput?='input')? (isOutput?='output')? 'signal'
-	////    name=ID (':' (type=ValueType | typeID=ID)
-	////    ('=' varInitialValue=Expression)?
-	////    ('with' varCombineOperator=CombineOperator)?)? ';';
-	/// ************************************************ / / *           Variable Definition                * /
-	/// ************************************************ / // A dummy VariableDefinition declaration, which will be override by an other grammar 
-	////VariableDefinition:
-	////  {VariableDefinition} 'variable' name=ID ';';
-	//// CMOT changes, want to use VariableDefinitions from SyncText
-	////VariableDeclaration returns Variable:
-	////    VariableDefinition
-	////;
-	////VariableDefinition:
-	////    (isInput?='input')? (isOutput?='output')? (isStatic?='static')? (type=ValueType | typeID=ID) name=ID
-	////    ('=' initialValue=Expression)? ('with' varCombineOperator=CombineOperator)? ';';    
-	////	
-	//// --------------------------
-	////
-	////  Terminals...
-	////
-	//// --------------------------
 	//enum CompareOperator returns OperatorType:
 	//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 	public KExpressionsGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {

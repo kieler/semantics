@@ -40,6 +40,7 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getInstructionAccess().getAlternatives(), "rule__Instruction__Alternatives");
 					put(grammarAccess.getSExpressionAccess().getAlternatives(), "rule__SExpression__Alternatives");
 					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
+					put(grammarAccess.getOrAndExpressionAccess().getAlternatives_1(), "rule__OrAndExpression__Alternatives_1");
 					put(grammarAccess.getCompareOperationAccess().getAlternatives(), "rule__CompareOperation__Alternatives");
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 					put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
@@ -83,10 +84,9 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIfAccess().getGroup_6(), "rule__If__Group_6__0");
 					put(grammarAccess.getAwaitAccess().getGroup(), "rule__Await__Group__0");
 					put(grammarAccess.getAwaitAccess().getGroup_3(), "rule__Await__Group_3__0");
-					put(grammarAccess.getOrExpressionAccess().getGroup(), "rule__OrExpression__Group__0");
-					put(grammarAccess.getOrExpressionAccess().getGroup_1(), "rule__OrExpression__Group_1__0");
-					put(grammarAccess.getAndExpressionAccess().getGroup(), "rule__AndExpression__Group__0");
-					put(grammarAccess.getAndExpressionAccess().getGroup_1(), "rule__AndExpression__Group_1__0");
+					put(grammarAccess.getOrAndExpressionAccess().getGroup(), "rule__OrAndExpression__Group__0");
+					put(grammarAccess.getOrAndExpressionAccess().getGroup_1_0(), "rule__OrAndExpression__Group_1_0__0");
+					put(grammarAccess.getOrAndExpressionAccess().getGroup_1_1(), "rule__OrAndExpression__Group_1_1__0");
 					put(grammarAccess.getCompareOperationAccess().getGroup_0(), "rule__CompareOperation__Group_0__0");
 					put(grammarAccess.getCompareOperationAccess().getGroup_0_1(), "rule__CompareOperation__Group_0_1__0");
 					put(grammarAccess.getNotExpressionAccess().getGroup_0(), "rule__NotExpression__Group_0__0");
@@ -159,10 +159,10 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIfAccess().getInstructionsAssignment_6_0(), "rule__If__InstructionsAssignment_6_0");
 					put(grammarAccess.getAwaitAccess().getSignalAssignment_2(), "rule__Await__SignalAssignment_2");
 					put(grammarAccess.getAwaitAccess().getContinuationAssignment_3_1(), "rule__Await__ContinuationAssignment_3_1");
-					put(grammarAccess.getOrExpressionAccess().getOperatorAssignment_1_1(), "rule__OrExpression__OperatorAssignment_1_1");
-					put(grammarAccess.getOrExpressionAccess().getSubExpressionsAssignment_1_2(), "rule__OrExpression__SubExpressionsAssignment_1_2");
-					put(grammarAccess.getAndExpressionAccess().getOperatorAssignment_1_1(), "rule__AndExpression__OperatorAssignment_1_1");
-					put(grammarAccess.getAndExpressionAccess().getSubExpressionsAssignment_1_2(), "rule__AndExpression__SubExpressionsAssignment_1_2");
+					put(grammarAccess.getOrAndExpressionAccess().getOperatorAssignment_1_0_1(), "rule__OrAndExpression__OperatorAssignment_1_0_1");
+					put(grammarAccess.getOrAndExpressionAccess().getSubExpressionsAssignment_1_0_2(), "rule__OrAndExpression__SubExpressionsAssignment_1_0_2");
+					put(grammarAccess.getOrAndExpressionAccess().getOperatorAssignment_1_1_1(), "rule__OrAndExpression__OperatorAssignment_1_1_1");
+					put(grammarAccess.getOrAndExpressionAccess().getSubExpressionsAssignment_1_1_2(), "rule__OrAndExpression__SubExpressionsAssignment_1_1_2");
 					put(grammarAccess.getCompareOperationAccess().getOperatorAssignment_0_1_1(), "rule__CompareOperation__OperatorAssignment_0_1_1");
 					put(grammarAccess.getCompareOperationAccess().getSubExpressionsAssignment_0_1_2(), "rule__CompareOperation__SubExpressionsAssignment_0_1_2");
 					put(grammarAccess.getNotExpressionAccess().getOperatorAssignment_0_1(), "rule__NotExpression__OperatorAssignment_0_1");
