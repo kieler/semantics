@@ -304,6 +304,14 @@ class SCChartsExtension {
         region.createState(id).setFinal
     }
     
+    def State getInitialState(Region region) {
+        var initialStates = region.states.filter[isInitial]
+        if (initialStates.size > 0) {
+            return initialStates.get(0)
+        }
+        return null
+    }
+    
     def State[] getAllFinalStates(Region region) {
         region.states.filter[isFinal]
     }

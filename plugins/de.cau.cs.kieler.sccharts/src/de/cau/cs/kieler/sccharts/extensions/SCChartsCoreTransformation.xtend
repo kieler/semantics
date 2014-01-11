@@ -1064,6 +1064,8 @@ class SCChartsCoreTransformation {
     // (1)   In transitions from one ComplexFinalState (CFS) to another CFS
     //       optimize: Do not set term to false and to true again later
     //       (-> .filter[!complexFinalStates.contains(sourceState)])
+    //  ATTENTION: if using this optimization make sure that if there is a
+    //  final&INITIAL-state, the term-variable is initialized with TRUE!!! (not FALSE as usual) ***
     // (2)   Share a unique final state if possible (-> retrieveFinalState())
     // (3)   If just one regions: No watcher region is needed, no abort signal and
     //       only a single term signal 
@@ -1097,6 +1099,10 @@ class SCChartsCoreTransformation {
             for (region : state.regions) {
                 val termVariable = state.createBoolVariable(GENERATED_PREFIX + "term").uniqueName
                 termVariable.setInitialValue(FALSE)
+                if (region.initialState.final) {
+                    //***
+                    termVariable.setInitialValue(TRUE)
+                }
                 termVariables.add(termVariable)
                 
                 val finalStates = region.states.filter[final && incomingTransitions.size > 0]
@@ -1243,6 +1249,131 @@ class SCChartsCoreTransformation {
             transition.setDelay(1)
         }
     }
+    
+    
+    //-------------------------------------------------------------------------
+    //--                        P R E -  O P E R A T O R                     --
+    //-------------------------------------------------------------------------
+    // Transforming PRE Operator.
+    def Region transformPre(Region rootRegion) {
+        val targetRootRegion = rootRegion.copy;
+        for (targetState : targetRootRegion.getAllContainedStates) {
+            targetState.transformPre(targetRootRegion);
+        }
+        targetRootRegion;
+    }
+
+    // Return a list of Pre Expressions for an action that references the valuedObject
+    def List<OperatorExpression> getPreExpression(Action action, ValuedObject valuedObject) {
+        val List<OperatorExpression> returnPreExpressions = <OperatorExpression>newLinkedList;
+        val preExpressions = action.eAllContents.filter(typeof(OperatorExpression)).toList().filter(
+            e|
+                (e.operator == OperatorType::PRE) && (e.subExpressions.size() == 1) &&
+                    (e.subExpressions.get(0) instanceof ValuedObjectReference) &&
+                    ((e.subExpressions.get(0) as ValuedObjectReference).valuedObject == valuedObject)
+        );
+        returnPreExpressions.addAll(preExpressions);
+        return returnPreExpressions;
+    }
+
+    // Return a list of Pre Expressions for an action that references the value of a valuedObject
+    def List<OperatorExpression> getPreValExpression(Action action, ValuedObject valuedObject) {
+        val List<OperatorExpression> returnPreValExpressions = <OperatorExpression>newLinkedList;
+        val preValExpressions = action.eAllContents.filter(typeof(OperatorExpression)).toList().filter(
+            e|
+                (e.operator == OperatorType::PRE) && (e.subExpressions.size() == 1) &&
+                    (e.subExpressions.get(0) instanceof OperatorExpression) &&
+                    ((e.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL) &&
+                    ((e.subExpressions.get(0) as OperatorExpression).subExpressions.size() == 1) &&
+                    ((e.subExpressions.get(0) as OperatorExpression).subExpressions.get(0) instanceof ValuedObjectReference) && (((e.
+                        subExpressions.get(0) as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).
+                        valuedObject == valuedObject)
+        );
+        returnPreValExpressions.addAll(preValExpressions);
+        return returnPreValExpressions;
+    }
+
+    // Traverse all states that might declare a valuedObject that is used with the PRE operator
+    def void transformPre(State state, Region targetRootRegion) {
+
+        // Filter all valuedObjects and retrieve those that are referenced
+        val allActions = state.eAllContents.filter(typeof(Action)).toList();
+        val allPreValuedObjects = state.valuedObjects.filter(
+            valuedObject|
+                allActions.filter(
+                    action|
+                        action.getPreExpression(valuedObject).size > 0 ||
+                            action.getPreValExpression(valuedObject).size > 0).size > 0);
+
+        for (preValuedObject : ImmutableList::copyOf(allPreValuedObjects)) {
+            
+            val newPre = state.createValuedObject(GENERATED_PREFIX + "pre"+ GENERATED_PREFIX + preValuedObject.name).uniqueName
+            newPre.applyAttributes(preValuedObject)
+            val newAux = state.createValuedObject(GENERATED_PREFIX + "aux"+ GENERATED_PREFIX + preValuedObject.name).uniqueName
+            newAux.applyAttributes(preValuedObject)
+            
+            val preRegion = state.createRegion(GENERATED_PREFIX + "Pre").uniqueName
+            val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueName.setFinal
+            val preWait = preRegion.createFinalState(GENERATED_PREFIX + "Wait").uniqueName
+//            val preDone = preRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
+            
+            val transInitWait = preInit.createImmediateTransitionTo(preWait)
+            transInitWait.addEffect(newAux.assign(preValuedObject.reference))
+            
+            val transWaitInit = preWait.createTransitionTo(preInit)
+            transWaitInit.addEffect(newPre.assign(newAux.reference))
+
+//            val transWaitDone = preWait.createTransitionTo(preDone)
+//            transWaitDone.setTrigger()
+//            val transInitDone = preInit.createTransitionTo(preDone)
+            
+            // Replace the ComplexExpression Pre(S) by the ValuedObjectReference PreS in all actions            
+            // Replace the ComplexExpression Pre(?S) by the OperatorExpression ?PreS in all actions            
+            for (action : allActions) {
+                val preExpressions = action.getPreExpression(preValuedObject);
+                val preValExpressions = action.getPreValExpression(preValuedObject);
+
+                for (preExpression : preExpressions) {
+                    val container = preExpression.eContainer;
+
+                    if (container instanceof OperatorExpression) {
+                        // If nested PRE or PRE inside another complex expression
+                        (container as OperatorExpression).subExpressions.remove(preExpression);
+                        (container as OperatorExpression).add(newPre.reference);
+                    } else if (container instanceof Action) {
+                        // If PRE directly a trigger
+                        (container as Action).setTrigger(newPre.reference)
+                    }
+                }
+
+                for (preValExpression : preValExpressions) {
+                    val container = preValExpression.eContainer;
+
+                    if ((!preValExpression.subExpressions.nullOrEmpty) &&
+                        preValExpression.subExpressions.get(0) instanceof OperatorExpression &&
+                        (preValExpression.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL) {
+
+                        // Transform pre(?V) --> ?PreV
+                        val valueExpression = preValExpression.subExpressions.get(0);
+                        (valueExpression as OperatorExpression).subExpressions.remove(0);
+                        (valueExpression as OperatorExpression).add(newPre.reference);
+                        if (container instanceof Emission) {
+                            (container as Emission).setNewValue(valueExpression.copy);
+                        } else if (container instanceof OperatorExpression) {
+                            // If nested PRE or PRE inside another complex expression
+                            (container as OperatorExpression).subExpressions.remove(preValExpression);
+                            (container as OperatorExpression).add(valueExpression.copy);
+                        }
+                    }
+
+                }
+            }
+            
+            
+        }
+
+    }
+    
      
      
     //-------------------------------------------------------------------------
@@ -3136,272 +3267,272 @@ class SCChartsCoreTransformation {
 //
 //    }
 
-    //-------------------------------------------------------------------------
-    //--                        P R E -  O P E R A T O R                     --
-    //-------------------------------------------------------------------------
-    // Transforming PRE Operator.
-    def Region transformPre(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
-
-        // Traverse all states
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformPre(targetRootRegion);
-        }
-        targetRootRegion;
-    }
-
-    // Return a list of Pre Expressions for an action that references the valuedObject
-    def List<OperatorExpression> getPreExpression(Action action, ValuedObject valuedObject) {
-        val List<OperatorExpression> returnPreExpressions = <OperatorExpression>newLinkedList;
-        val preExpressions = action.eAllContents.filter(typeof(OperatorExpression)).toList().filter(
-            e|
-                (e.operator == OperatorType::PRE) && (e.subExpressions.size() == 1) &&
-                    (e.subExpressions.get(0) instanceof ValuedObjectReference) &&
-                    ((e.subExpressions.get(0) as ValuedObjectReference).valuedObject == valuedObject)
-        );
-        returnPreExpressions.addAll(preExpressions);
-        return returnPreExpressions;
-    }
-
-    // Return a list of Pre Expressions for an action that references the value of a valuedObject
-    def List<OperatorExpression> getPreValExpression(Action action, ValuedObject valuedObject) {
-        val List<OperatorExpression> returnPreValExpressions = <OperatorExpression>newLinkedList;
-        val preValExpressions = action.eAllContents.filter(typeof(OperatorExpression)).toList().filter(
-            e|
-                (e.operator == OperatorType::PRE) && (e.subExpressions.size() == 1) &&
-                    (e.subExpressions.get(0) instanceof OperatorExpression) &&
-                    ((e.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL) &&
-                    ((e.subExpressions.get(0) as OperatorExpression).subExpressions.size() == 1) &&
-                    ((e.subExpressions.get(0) as OperatorExpression).subExpressions.get(0) instanceof ValuedObjectReference) && (((e.
-                        subExpressions.get(0) as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).
-                        valuedObject == valuedObject)
-        );
-        returnPreValExpressions.addAll(preValExpressions);
-        return returnPreValExpressions;
-    }
-
-    // Traverse all states that might declare a valuedObject that is used with the PRE operator
-    def void transformPre(State state, Region targetRootRegion) {
-
-        // Filter all valuedObjects and retrieve those that are referenced
-        val allActions = state.eAllContents.filter(typeof(Action)).toList();
-        val allPreValuedObjects = state.valuedObjects.filter(
-            valuedObject|
-                allActions.filter(
-                    action|
-                        action.getPreExpression(valuedObject).size > 0 ||
-                            action.getPreValExpression(valuedObject).size > 0).size > 0);
-
-        for (preValuedObject : ImmutableList::copyOf(allPreValuedObjects)) {
-
-            // Create PreS / PreV
-            val explicitPreValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-            explicitPreValuedObject.setName("Pre" + preValuedObject.name);
-            explicitPreValuedObject.setInput(false);
-            explicitPreValuedObject.setOutput(false);
-            explicitPreValuedObject.setType(preValuedObject.type);
-            if (preValuedObject.initialValue != null) {
-                explicitPreValuedObject.setInitialValue(preValuedObject.initialValue);
-            }
-
-            // Add to the current state
-            state.valuedObjects.add(explicitPreValuedObject);
-
-            // PreValuedObject and ExplicitPreValuedObject References                
-            val explicitPreValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-            explicitPreValuedObjectReference.setValuedObject(explicitPreValuedObject);
-            val preValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-            preValuedObjectReference.setValuedObject(preValuedObject);
-
-            // Add a Pre and NotPre state
-            val preState = SCChartsFactory::eINSTANCE.createState();
-            preState.setId(preValuedObject.id("Pre"));
-            preState.setLabel("Pre");
-            val notPreState = SCChartsFactory::eINSTANCE.createState();
-            notPreState.setId(preValuedObject.id("NotPre"));
-            notPreState.setInitial(true);
-            notPreState.setLabel("NotPre");
-
-            // Add a region     
-            val preRegion = SCChartsFactory::eINSTANCE.createRegion();
-            preRegion.setId(preValuedObject.id("PreRegion"));
-            preRegion.states.add(preState);
-            preRegion.states.add(notPreState);
-            state.regions.add(preRegion);
-
-            // Transitions         
-            val notPre2PreTransition = SCChartsFactory::eINSTANCE.createTransition();
-            notPre2PreTransition.setTargetState(preState);
-            notPre2PreTransition.setPriority(1);
-            notPreState.outgoingTransitions.add(notPre2PreTransition);
-            val pre2NotPreTransition = SCChartsFactory::eINSTANCE.createTransition();
-            pre2NotPreTransition.setPriority(2);
-            pre2NotPreTransition.setTargetState(notPreState);
-            preState.outgoingTransitions.add(pre2NotPreTransition);
-
-            if (preValuedObject.type == ValueType::PURE) {
-
-                // Simple ValuedObject Case
-                notPre2PreTransition.setTrigger(preValuedObjectReference.copy);
-                val explicitPreValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
-                explicitPreValuedObjectEmission.setValuedObject(explicitPreValuedObject);
-                val preSelfTransition = SCChartsFactory::eINSTANCE.createTransition();
-                preSelfTransition.setTargetState(preState);
-                preSelfTransition.setPriority(1);
-                preState.outgoingTransitions.add(preSelfTransition);
-                preSelfTransition.setTrigger(preValuedObjectReference.copy);
-
-                // PreValuedObject emission must be added as an inner action
-                // to be decoupled from deciding for a specific transition (B is present or B is not present)
-                val explicitPreValuedObjectEmissionAction = preState.createDuringAction
-                explicitPreValuedObjectEmissionAction.addEmission(explicitPreValuedObjectEmission.copy);
-
-            //preSelfTransition.addEmission(explicitPreValuedObjectEmission.copy);
-            //pre2NotPreTransition.addEmission(explicitPreValuedObjectEmission.copy);
-            } else {
-
-                // Valued ValuedObject Case
-                // Additional PreB state
-                val preBState = SCChartsFactory::eINSTANCE.createState();
-                preBState.setId(preValuedObject.id("PreB"));
-                preBState.setLabel("PreB");
-                preRegion.states.add(preBState);
-
-                val preB2PreTransition = SCChartsFactory::eINSTANCE.createTransition();
-                preB2PreTransition.setTargetState(preState);
-                preB2PreTransition.setPriority(1);
-                preBState.outgoingTransitions.add(preB2PreTransition);
-                val preB2NotPreTransition = SCChartsFactory::eINSTANCE.createTransition();
-                preB2NotPreTransition.setTargetState(notPreState);
-                preB2NotPreTransition.setPriority(2);
-                preBState.outgoingTransitions.add(preB2NotPreTransition);
-                val pre2PreBTransition = SCChartsFactory::eINSTANCE.createTransition();
-                pre2PreBTransition.setTargetState(preBState);
-                pre2PreBTransition.setPriority(1);
-                preState.outgoingTransitions.add(pre2PreBTransition);
-
-                // Additional ValuedObjects                    
-                val explicitPre1ValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-                explicitPre1ValuedObject.setName("Pre1" + preValuedObject.name);
-                explicitPre1ValuedObject.setInput(false);
-                explicitPre1ValuedObject.setOutput(false);
-                explicitPre1ValuedObject.setType(preValuedObject.type);
-                if (preValuedObject.initialValue != null) {
-                    explicitPre1ValuedObject.setInitialValue(preValuedObject.initialValue);
-                }
-                state.valuedObjects.add(explicitPre1ValuedObject);
-                val explicitPre2ValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-                explicitPre2ValuedObject.setName("Pre2" + preValuedObject.name);
-                explicitPre2ValuedObject.setInput(false);
-                explicitPre2ValuedObject.setOutput(false);
-                explicitPre2ValuedObject.setType(preValuedObject.type);
-                if (preValuedObject.initialValue != null) {
-                    explicitPre2ValuedObject.setInitialValue(preValuedObject.initialValue);
-                }
-                state.valuedObjects.add(explicitPre2ValuedObject);
-
-                // Transition triggers & effects
-                val explicitPre1ValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-                explicitPre1ValuedObjectReference.setValuedObject(explicitPre1ValuedObject);
-                val explicitPre2ValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-                explicitPre2ValuedObjectReference.setValuedObject(explicitPre2ValuedObject);
-
-                val valPreExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
-                valPreExpression.setOperator(OperatorType::VAL);
-                valPreExpression.add(preValuedObjectReference.copy);
-                val valExplicitPre1Expression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
-                valExplicitPre1Expression.setOperator(OperatorType::VAL);
-                valExplicitPre1Expression.add(explicitPre1ValuedObjectReference.copy);
-                val valExplicitPre2Expression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
-                valExplicitPre2Expression.setOperator(OperatorType::VAL);
-                valExplicitPre2Expression.add(explicitPre2ValuedObjectReference.copy);
-
-                val explicitPreValuedObjectEmissionFromPre1 = SCChartsFactory::eINSTANCE.createEmission();
-                explicitPreValuedObjectEmissionFromPre1.setValuedObject(explicitPreValuedObject);
-                explicitPreValuedObjectEmissionFromPre1.setNewValue(valExplicitPre1Expression.copy);
-                val explicitPreValuedObjectEmissionFromPre2 = SCChartsFactory::eINSTANCE.createEmission();
-                explicitPreValuedObjectEmissionFromPre2.setValuedObject(explicitPreValuedObject);
-                explicitPreValuedObjectEmissionFromPre2.setNewValue(valExplicitPre2Expression.copy);
-
-                val explicitPre1ValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
-                explicitPre1ValuedObjectEmission.setValuedObject(explicitPre1ValuedObject);
-                explicitPre1ValuedObjectEmission.setNewValue(valPreExpression.copy);
-                val explicitPre2ValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
-                explicitPre2ValuedObjectEmission.setValuedObject(explicitPre2ValuedObject);
-                explicitPre2ValuedObjectEmission.setNewValue(valPreExpression.copy);
-
-                // PreValuedObject emission must be added as an inner action
-                // to be decoupled from deciding for a specific transition (B is present or B is not present)
-                val explicitPreValuedObjectEmissionFromPre1Action = preState.createDuringAction
-                explicitPreValuedObjectEmissionFromPre1Action.addEmission(explicitPreValuedObjectEmissionFromPre1);
-                val explicitPreValuedObjectEmissionFromPre2Action = preBState.createDuringAction
-                explicitPreValuedObjectEmissionFromPre2Action.addEmission(explicitPreValuedObjectEmissionFromPre2);
-
-                // Fill transitions
-                //                pre2NotPreTransition.addEmission(explicitPreValuedObjectEmissionFromPre1.copy);
-                pre2PreBTransition.setTrigger(preValuedObjectReference.copy);
-
-                //                pre2PreBTransition.addEmission(explicitPreValuedObjectEmissionFromPre1.copy);
-                pre2PreBTransition.addEmission(explicitPre2ValuedObjectEmission.copy);
-
-                preB2PreTransition.setTrigger(preValuedObjectReference.copy);
-
-                //                preB2PreTransition.addEmission(explicitPreValuedObjectEmissionFromPre2.copy);
-                preB2PreTransition.addEmission(explicitPre1ValuedObjectEmission.copy);
-
-                //                preB2NotPreTransition.addEmission(explicitPreValuedObjectEmissionFromPre2.copy);
-                notPre2PreTransition.setTrigger(preValuedObjectReference.copy);
-                notPre2PreTransition.addEmission(explicitPre1ValuedObjectEmission.copy);
-            }
-
-            // Replace the ComplexExpression Pre(S) by the ValuedObjectReference PreS in all actions            
-            // Replace the ComplexExpression Pre(?S) by the OperatorExpression ?PreS in all actions            
-            for (action : allActions) {
-                val preExpressions = action.getPreExpression(preValuedObject);
-                val preValExpressions = action.getPreValExpression(preValuedObject);
-
-                for (preExpression : preExpressions) {
-                    val container = preExpression.eContainer;
-
-                    if (container instanceof OperatorExpression) {
-
-                        // If nested PRE or PRE inside another complex expression
-                        (container as OperatorExpression).subExpressions.remove(preExpression);
-                        (container as OperatorExpression).add(explicitPreValuedObjectReference.copy);
-                    } else if (container instanceof Action) {
-
-                        // If PRE directly a trigger
-                        (container as Action).setTrigger(explicitPreValuedObjectReference.copy)
-                    }
-                }
-
-                for (preValExpression : preValExpressions) {
-                    val container = preValExpression.eContainer;
-
-                    if ((!preValExpression.subExpressions.nullOrEmpty) &&
-                        preValExpression.subExpressions.get(0) instanceof OperatorExpression &&
-                        (preValExpression.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL) {
-
-                        // Transform pre(?V) --> ?PreV
-                        val valueExpression = preValExpression.subExpressions.get(0);
-                        (valueExpression as OperatorExpression).subExpressions.remove(0);
-                        (valueExpression as OperatorExpression).add(explicitPreValuedObjectReference.copy);
-                        if (container instanceof Emission) {
-                            (container as Emission).setNewValue(valueExpression.copy);
-                        } else if (container instanceof OperatorExpression) {
-
-                            // If nested PRE or PRE inside another complex expression
-                            (container as OperatorExpression).subExpressions.remove(preValExpression);
-                            (container as OperatorExpression).add(valueExpression.copy);
-                        }
-                    }
-
-                }
-            }
-        }
-    }
+//    //-------------------------------------------------------------------------
+//    //--                        P R E -  O P E R A T O R                     --
+//    //-------------------------------------------------------------------------
+//    // Transforming PRE Operator.
+//    def Region transformPre(Region rootRegion) {
+//
+//        // Clone the complete SCCharts region 
+//        val targetRootRegion = rootRegion.copy;
+//
+//        // Traverse all states
+//        for (targetState : targetRootRegion.getAllContainedStates) {
+//            targetState.transformPre(targetRootRegion);
+//        }
+//        targetRootRegion;
+//    }
+//
+//    // Return a list of Pre Expressions for an action that references the valuedObject
+//    def List<OperatorExpression> getPreExpression(Action action, ValuedObject valuedObject) {
+//        val List<OperatorExpression> returnPreExpressions = <OperatorExpression>newLinkedList;
+//        val preExpressions = action.eAllContents.filter(typeof(OperatorExpression)).toList().filter(
+//            e|
+//                (e.operator == OperatorType::PRE) && (e.subExpressions.size() == 1) &&
+//                    (e.subExpressions.get(0) instanceof ValuedObjectReference) &&
+//                    ((e.subExpressions.get(0) as ValuedObjectReference).valuedObject == valuedObject)
+//        );
+//        returnPreExpressions.addAll(preExpressions);
+//        return returnPreExpressions;
+//    }
+//
+//    // Return a list of Pre Expressions for an action that references the value of a valuedObject
+//    def List<OperatorExpression> getPreValExpression(Action action, ValuedObject valuedObject) {
+//        val List<OperatorExpression> returnPreValExpressions = <OperatorExpression>newLinkedList;
+//        val preValExpressions = action.eAllContents.filter(typeof(OperatorExpression)).toList().filter(
+//            e|
+//                (e.operator == OperatorType::PRE) && (e.subExpressions.size() == 1) &&
+//                    (e.subExpressions.get(0) instanceof OperatorExpression) &&
+//                    ((e.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL) &&
+//                    ((e.subExpressions.get(0) as OperatorExpression).subExpressions.size() == 1) &&
+//                    ((e.subExpressions.get(0) as OperatorExpression).subExpressions.get(0) instanceof ValuedObjectReference) && (((e.
+//                        subExpressions.get(0) as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).
+//                        valuedObject == valuedObject)
+//        );
+//        returnPreValExpressions.addAll(preValExpressions);
+//        return returnPreValExpressions;
+//    }
+//
+//    // Traverse all states that might declare a valuedObject that is used with the PRE operator
+//    def void transformPre(State state, Region targetRootRegion) {
+//
+//        // Filter all valuedObjects and retrieve those that are referenced
+//        val allActions = state.eAllContents.filter(typeof(Action)).toList();
+//        val allPreValuedObjects = state.valuedObjects.filter(
+//            valuedObject|
+//                allActions.filter(
+//                    action|
+//                        action.getPreExpression(valuedObject).size > 0 ||
+//                            action.getPreValExpression(valuedObject).size > 0).size > 0);
+//
+//        for (preValuedObject : ImmutableList::copyOf(allPreValuedObjects)) {
+//
+//            // Create PreS / PreV
+//            val explicitPreValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+//            explicitPreValuedObject.setName("Pre" + preValuedObject.name);
+//            explicitPreValuedObject.setInput(false);
+//            explicitPreValuedObject.setOutput(false);
+//            explicitPreValuedObject.setType(preValuedObject.type);
+//            if (preValuedObject.initialValue != null) {
+//                explicitPreValuedObject.setInitialValue(preValuedObject.initialValue);
+//            }
+//
+//            // Add to the current state
+//            state.valuedObjects.add(explicitPreValuedObject);
+//
+//            // PreValuedObject and ExplicitPreValuedObject References                
+//            val explicitPreValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+//            explicitPreValuedObjectReference.setValuedObject(explicitPreValuedObject);
+//            val preValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+//            preValuedObjectReference.setValuedObject(preValuedObject);
+//
+//            // Add a Pre and NotPre state
+//            val preState = SCChartsFactory::eINSTANCE.createState();
+//            preState.setId(preValuedObject.id("Pre"));
+//            preState.setLabel("Pre");
+//            val notPreState = SCChartsFactory::eINSTANCE.createState();
+//            notPreState.setId(preValuedObject.id("NotPre"));
+//            notPreState.setInitial(true);
+//            notPreState.setLabel("NotPre");
+//
+//            // Add a region     
+//            val preRegion = SCChartsFactory::eINSTANCE.createRegion();
+//            preRegion.setId(preValuedObject.id("PreRegion"));
+//            preRegion.states.add(preState);
+//            preRegion.states.add(notPreState);
+//            state.regions.add(preRegion);
+//
+//            // Transitions         
+//            val notPre2PreTransition = SCChartsFactory::eINSTANCE.createTransition();
+//            notPre2PreTransition.setTargetState(preState);
+//            notPre2PreTransition.setPriority(1);
+//            notPreState.outgoingTransitions.add(notPre2PreTransition);
+//            val pre2NotPreTransition = SCChartsFactory::eINSTANCE.createTransition();
+//            pre2NotPreTransition.setPriority(2);
+//            pre2NotPreTransition.setTargetState(notPreState);
+//            preState.outgoingTransitions.add(pre2NotPreTransition);
+//
+//            if (preValuedObject.type == ValueType::PURE) {
+//
+//                // Simple ValuedObject Case
+//                notPre2PreTransition.setTrigger(preValuedObjectReference.copy);
+//                val explicitPreValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
+//                explicitPreValuedObjectEmission.setValuedObject(explicitPreValuedObject);
+//                val preSelfTransition = SCChartsFactory::eINSTANCE.createTransition();
+//                preSelfTransition.setTargetState(preState);
+//                preSelfTransition.setPriority(1);
+//                preState.outgoingTransitions.add(preSelfTransition);
+//                preSelfTransition.setTrigger(preValuedObjectReference.copy);
+//
+//                // PreValuedObject emission must be added as an inner action
+//                // to be decoupled from deciding for a specific transition (B is present or B is not present)
+//                val explicitPreValuedObjectEmissionAction = preState.createDuringAction
+//                explicitPreValuedObjectEmissionAction.addEmission(explicitPreValuedObjectEmission.copy);
+//
+//            //preSelfTransition.addEmission(explicitPreValuedObjectEmission.copy);
+//            //pre2NotPreTransition.addEmission(explicitPreValuedObjectEmission.copy);
+//            } else {
+//
+//                // Valued ValuedObject Case
+//                // Additional PreB state
+//                val preBState = SCChartsFactory::eINSTANCE.createState();
+//                preBState.setId(preValuedObject.id("PreB"));
+//                preBState.setLabel("PreB");
+//                preRegion.states.add(preBState);
+//
+//                val preB2PreTransition = SCChartsFactory::eINSTANCE.createTransition();
+//                preB2PreTransition.setTargetState(preState);
+//                preB2PreTransition.setPriority(1);
+//                preBState.outgoingTransitions.add(preB2PreTransition);
+//                val preB2NotPreTransition = SCChartsFactory::eINSTANCE.createTransition();
+//                preB2NotPreTransition.setTargetState(notPreState);
+//                preB2NotPreTransition.setPriority(2);
+//                preBState.outgoingTransitions.add(preB2NotPreTransition);
+//                val pre2PreBTransition = SCChartsFactory::eINSTANCE.createTransition();
+//                pre2PreBTransition.setTargetState(preBState);
+//                pre2PreBTransition.setPriority(1);
+//                preState.outgoingTransitions.add(pre2PreBTransition);
+//
+//                // Additional ValuedObjects                    
+//                val explicitPre1ValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+//                explicitPre1ValuedObject.setName("Pre1" + preValuedObject.name);
+//                explicitPre1ValuedObject.setInput(false);
+//                explicitPre1ValuedObject.setOutput(false);
+//                explicitPre1ValuedObject.setType(preValuedObject.type);
+//                if (preValuedObject.initialValue != null) {
+//                    explicitPre1ValuedObject.setInitialValue(preValuedObject.initialValue);
+//                }
+//                state.valuedObjects.add(explicitPre1ValuedObject);
+//                val explicitPre2ValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+//                explicitPre2ValuedObject.setName("Pre2" + preValuedObject.name);
+//                explicitPre2ValuedObject.setInput(false);
+//                explicitPre2ValuedObject.setOutput(false);
+//                explicitPre2ValuedObject.setType(preValuedObject.type);
+//                if (preValuedObject.initialValue != null) {
+//                    explicitPre2ValuedObject.setInitialValue(preValuedObject.initialValue);
+//                }
+//                state.valuedObjects.add(explicitPre2ValuedObject);
+//
+//                // Transition triggers & effects
+//                val explicitPre1ValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+//                explicitPre1ValuedObjectReference.setValuedObject(explicitPre1ValuedObject);
+//                val explicitPre2ValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+//                explicitPre2ValuedObjectReference.setValuedObject(explicitPre2ValuedObject);
+//
+//                val valPreExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+//                valPreExpression.setOperator(OperatorType::VAL);
+//                valPreExpression.add(preValuedObjectReference.copy);
+//                val valExplicitPre1Expression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+//                valExplicitPre1Expression.setOperator(OperatorType::VAL);
+//                valExplicitPre1Expression.add(explicitPre1ValuedObjectReference.copy);
+//                val valExplicitPre2Expression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+//                valExplicitPre2Expression.setOperator(OperatorType::VAL);
+//                valExplicitPre2Expression.add(explicitPre2ValuedObjectReference.copy);
+//
+//                val explicitPreValuedObjectEmissionFromPre1 = SCChartsFactory::eINSTANCE.createEmission();
+//                explicitPreValuedObjectEmissionFromPre1.setValuedObject(explicitPreValuedObject);
+//                explicitPreValuedObjectEmissionFromPre1.setNewValue(valExplicitPre1Expression.copy);
+//                val explicitPreValuedObjectEmissionFromPre2 = SCChartsFactory::eINSTANCE.createEmission();
+//                explicitPreValuedObjectEmissionFromPre2.setValuedObject(explicitPreValuedObject);
+//                explicitPreValuedObjectEmissionFromPre2.setNewValue(valExplicitPre2Expression.copy);
+//
+//                val explicitPre1ValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
+//                explicitPre1ValuedObjectEmission.setValuedObject(explicitPre1ValuedObject);
+//                explicitPre1ValuedObjectEmission.setNewValue(valPreExpression.copy);
+//                val explicitPre2ValuedObjectEmission = SCChartsFactory::eINSTANCE.createEmission();
+//                explicitPre2ValuedObjectEmission.setValuedObject(explicitPre2ValuedObject);
+//                explicitPre2ValuedObjectEmission.setNewValue(valPreExpression.copy);
+//
+//                // PreValuedObject emission must be added as an inner action
+//                // to be decoupled from deciding for a specific transition (B is present or B is not present)
+//                val explicitPreValuedObjectEmissionFromPre1Action = preState.createDuringAction
+//                explicitPreValuedObjectEmissionFromPre1Action.addEmission(explicitPreValuedObjectEmissionFromPre1);
+//                val explicitPreValuedObjectEmissionFromPre2Action = preBState.createDuringAction
+//                explicitPreValuedObjectEmissionFromPre2Action.addEmission(explicitPreValuedObjectEmissionFromPre2);
+//
+//                // Fill transitions
+//                //                pre2NotPreTransition.addEmission(explicitPreValuedObjectEmissionFromPre1.copy);
+//                pre2PreBTransition.setTrigger(preValuedObjectReference.copy);
+//
+//                //                pre2PreBTransition.addEmission(explicitPreValuedObjectEmissionFromPre1.copy);
+//                pre2PreBTransition.addEmission(explicitPre2ValuedObjectEmission.copy);
+//
+//                preB2PreTransition.setTrigger(preValuedObjectReference.copy);
+//
+//                //                preB2PreTransition.addEmission(explicitPreValuedObjectEmissionFromPre2.copy);
+//                preB2PreTransition.addEmission(explicitPre1ValuedObjectEmission.copy);
+//
+//                //                preB2NotPreTransition.addEmission(explicitPreValuedObjectEmissionFromPre2.copy);
+//                notPre2PreTransition.setTrigger(preValuedObjectReference.copy);
+//                notPre2PreTransition.addEmission(explicitPre1ValuedObjectEmission.copy);
+//            }
+//
+//            // Replace the ComplexExpression Pre(S) by the ValuedObjectReference PreS in all actions            
+//            // Replace the ComplexExpression Pre(?S) by the OperatorExpression ?PreS in all actions            
+//            for (action : allActions) {
+//                val preExpressions = action.getPreExpression(preValuedObject);
+//                val preValExpressions = action.getPreValExpression(preValuedObject);
+//
+//                for (preExpression : preExpressions) {
+//                    val container = preExpression.eContainer;
+//
+//                    if (container instanceof OperatorExpression) {
+//
+//                        // If nested PRE or PRE inside another complex expression
+//                        (container as OperatorExpression).subExpressions.remove(preExpression);
+//                        (container as OperatorExpression).add(explicitPreValuedObjectReference.copy);
+//                    } else if (container instanceof Action) {
+//
+//                        // If PRE directly a trigger
+//                        (container as Action).setTrigger(explicitPreValuedObjectReference.copy)
+//                    }
+//                }
+//
+//                for (preValExpression : preValExpressions) {
+//                    val container = preValExpression.eContainer;
+//
+//                    if ((!preValExpression.subExpressions.nullOrEmpty) &&
+//                        preValExpression.subExpressions.get(0) instanceof OperatorExpression &&
+//                        (preValExpression.subExpressions.get(0) as OperatorExpression).operator == OperatorType::VAL) {
+//
+//                        // Transform pre(?V) --> ?PreV
+//                        val valueExpression = preValExpression.subExpressions.get(0);
+//                        (valueExpression as OperatorExpression).subExpressions.remove(0);
+//                        (valueExpression as OperatorExpression).add(explicitPreValuedObjectReference.copy);
+//                        if (container instanceof Emission) {
+//                            (container as Emission).setNewValue(valueExpression.copy);
+//                        } else if (container instanceof OperatorExpression) {
+//
+//                            // If nested PRE or PRE inside another complex expression
+//                            (container as OperatorExpression).subExpressions.remove(preValExpression);
+//                            (container as OperatorExpression).add(valueExpression.copy);
+//                        }
+//                    }
+//
+//                }
+//            }
+//        }
+//    }
 
     //-------------------------------------------------------------------------
     //--          A B O R T S   O L D    T R A N S F O R M A T I O N        --
