@@ -31,9 +31,9 @@ BoolExpression returns Expression:
 OrAndExpression returns Expression:
 	CompareOperation 
 	(
-		({OperatorExpression.subExpressions+=current} operator=(OrOperator) subExpressions+=CompareOperation)*
+		({OperatorExpression.subExpressions+=current} operator=(OrOperator|LogicalOrOperator) subExpressions+=CompareOperation)*
 		|	
-		({OperatorExpression.subExpressions+=current} operator=(AndOperator) subExpressions+=CompareOperation)*
+		({OperatorExpression.subExpressions+=current} operator=(AndOperator|LogicalAndOperator) subExpressions+=CompareOperation)*
 	)
 ;
 	
@@ -193,6 +193,11 @@ enum DivOperator returns OperatorType:
 enum ValOperator returns OperatorType:
 	VAL="val";
 
+enum LogicalOrOperator returns OperatorType:
+	OR="||";
+
+enum LogicalAndOperator returns OperatorType:
+	AND="&&";
 
 /*
    the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 

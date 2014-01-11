@@ -307,8 +307,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_0_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (subExpressions+=OrAndExpression_OperatorExpression_1_0_0 operator=OrOperator subExpressions+=CompareOperation) | 
-	 *         (subExpressions+=OrAndExpression_OperatorExpression_1_1_0 operator=AndOperator subExpressions+=CompareOperation) | 
+	 *         (subExpressions+=OrAndExpression_OperatorExpression_1_0_0 (operator=OrOperator | operator=LogicalOrOperator) subExpressions+=CompareOperation) | 
+	 *         (subExpressions+=OrAndExpression_OperatorExpression_1_1_0 (operator=AndOperator | operator=LogicalAndOperator) subExpressions+=CompareOperation) | 
 	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=ModOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
 	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=DivOperator subExpressions+=ModExpression) | 
@@ -344,8 +344,8 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_0_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (subExpressions+=OrAndExpression_OperatorExpression_1_0_0 operator=OrOperator subExpressions+=CompareOperation) | 
-	 *         (subExpressions+=OrAndExpression_OperatorExpression_1_1_0 operator=AndOperator subExpressions+=CompareOperation)
+	 *         (subExpressions+=OrAndExpression_OperatorExpression_1_0_0 (operator=OrOperator | operator=LogicalOrOperator) subExpressions+=CompareOperation) | 
+	 *         (subExpressions+=OrAndExpression_OperatorExpression_1_1_0 (operator=AndOperator | operator=LogicalAndOperator) subExpressions+=CompareOperation)
 	 *     )
 	 */
 	protected void sequence_CompareOperation_NotExpression_OrAndExpression_ValuedObjectTestExpression(EObject context, OperatorExpression semanticObject) {

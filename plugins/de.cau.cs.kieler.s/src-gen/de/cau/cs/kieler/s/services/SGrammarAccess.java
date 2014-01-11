@@ -1375,9 +1375,9 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//OrAndExpression returns Expression:
-	//	CompareOperation (({OperatorExpression.subExpressions+=current} operator=OrOperator
-	//	subExpressions+=CompareOperation)* | ({OperatorExpression.subExpressions+=current} operator=AndOperator
-	//	subExpressions+=CompareOperation)*);
+	//	CompareOperation (({OperatorExpression.subExpressions+=current} operator=(OrOperator | LogicalOrOperator)
+	//	subExpressions+=CompareOperation)* | ({OperatorExpression.subExpressions+=current} operator=(AndOperator |
+	//	LogicalAndOperator) subExpressions+=CompareOperation)*);
 	public KExpressionsGrammarAccess.OrAndExpressionElements getOrAndExpressionAccess() {
 		return gaKExpressions.getOrAndExpressionAccess();
 	}
@@ -1725,6 +1725,26 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getValOperatorRule() {
 		return getValOperatorAccess().getRule();
+	}
+
+	//enum LogicalOrOperator returns OperatorType:
+	//	OR="||";
+	public KExpressionsGrammarAccess.LogicalOrOperatorElements getLogicalOrOperatorAccess() {
+		return gaKExpressions.getLogicalOrOperatorAccess();
+	}
+	
+	public EnumRule getLogicalOrOperatorRule() {
+		return getLogicalOrOperatorAccess().getRule();
+	}
+
+	//enum LogicalAndOperator returns OperatorType:
+	//	AND="&&";
+	public KExpressionsGrammarAccess.LogicalAndOperatorElements getLogicalAndOperatorAccess() {
+		return gaKExpressions.getLogicalAndOperatorAccess();
+	}
+	
+	public EnumRule getLogicalAndOperatorRule() {
+		return getLogicalAndOperatorAccess().getRule();
 	}
 
 	/// *

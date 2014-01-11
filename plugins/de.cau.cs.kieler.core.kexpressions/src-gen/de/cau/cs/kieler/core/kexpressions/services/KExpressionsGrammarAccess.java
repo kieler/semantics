@@ -70,44 +70,57 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0_0 = (Action)cGroup_1_0.eContents().get(0);
 		private final Assignment cOperatorAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
-		private final RuleCall cOperatorOrOperatorEnumRuleCall_1_0_1_0 = (RuleCall)cOperatorAssignment_1_0_1.eContents().get(0);
+		private final Alternatives cOperatorAlternatives_1_0_1_0 = (Alternatives)cOperatorAssignment_1_0_1.eContents().get(0);
+		private final RuleCall cOperatorOrOperatorEnumRuleCall_1_0_1_0_0 = (RuleCall)cOperatorAlternatives_1_0_1_0.eContents().get(0);
+		private final RuleCall cOperatorLogicalOrOperatorEnumRuleCall_1_0_1_0_1 = (RuleCall)cOperatorAlternatives_1_0_1_0.eContents().get(1);
 		private final Assignment cSubExpressionsAssignment_1_0_2 = (Assignment)cGroup_1_0.eContents().get(2);
 		private final RuleCall cSubExpressionsCompareOperationParserRuleCall_1_0_2_0 = (RuleCall)cSubExpressionsAssignment_1_0_2.eContents().get(0);
 		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_1_0 = (Action)cGroup_1_1.eContents().get(0);
 		private final Assignment cOperatorAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
-		private final RuleCall cOperatorAndOperatorEnumRuleCall_1_1_1_0 = (RuleCall)cOperatorAssignment_1_1_1.eContents().get(0);
+		private final Alternatives cOperatorAlternatives_1_1_1_0 = (Alternatives)cOperatorAssignment_1_1_1.eContents().get(0);
+		private final RuleCall cOperatorAndOperatorEnumRuleCall_1_1_1_0_0 = (RuleCall)cOperatorAlternatives_1_1_1_0.eContents().get(0);
+		private final RuleCall cOperatorLogicalAndOperatorEnumRuleCall_1_1_1_0_1 = (RuleCall)cOperatorAlternatives_1_1_1_0.eContents().get(1);
 		private final Assignment cSubExpressionsAssignment_1_1_2 = (Assignment)cGroup_1_1.eContents().get(2);
 		private final RuleCall cSubExpressionsCompareOperationParserRuleCall_1_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_1_2.eContents().get(0);
 		
 		//OrAndExpression returns Expression:
-		//	CompareOperation (({OperatorExpression.subExpressions+=current} operator=OrOperator
-		//	subExpressions+=CompareOperation)* | ({OperatorExpression.subExpressions+=current} operator=AndOperator
-		//	subExpressions+=CompareOperation)*);
+		//	CompareOperation (({OperatorExpression.subExpressions+=current} operator=(OrOperator | LogicalOrOperator)
+		//	subExpressions+=CompareOperation)* | ({OperatorExpression.subExpressions+=current} operator=(AndOperator |
+		//	LogicalAndOperator) subExpressions+=CompareOperation)*);
 		public ParserRule getRule() { return rule; }
 
-		//CompareOperation (({OperatorExpression.subExpressions+=current} operator=OrOperator subExpressions+=CompareOperation)* |
-		//({OperatorExpression.subExpressions+=current} operator=AndOperator subExpressions+=CompareOperation)*)
+		//CompareOperation (({OperatorExpression.subExpressions+=current} operator=(OrOperator | LogicalOrOperator)
+		//subExpressions+=CompareOperation)* | ({OperatorExpression.subExpressions+=current} operator=(AndOperator |
+		//LogicalAndOperator) subExpressions+=CompareOperation)*)
 		public Group getGroup() { return cGroup; }
 
 		//CompareOperation
 		public RuleCall getCompareOperationParserRuleCall_0() { return cCompareOperationParserRuleCall_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=OrOperator subExpressions+=CompareOperation)* |
-		//({OperatorExpression.subExpressions+=current} operator=AndOperator subExpressions+=CompareOperation)*
+		//({OperatorExpression.subExpressions+=current} operator=(OrOperator | LogicalOrOperator)
+		//subExpressions+=CompareOperation)* | ({OperatorExpression.subExpressions+=current} operator=(AndOperator |
+		//LogicalAndOperator) subExpressions+=CompareOperation)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 
-		//({OperatorExpression.subExpressions+=current} operator=OrOperator subExpressions+=CompareOperation)*
+		//({OperatorExpression.subExpressions+=current} operator=(OrOperator | LogicalOrOperator)
+		//subExpressions+=CompareOperation)*
 		public Group getGroup_1_0() { return cGroup_1_0; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0_0() { return cOperatorExpressionSubExpressionsAction_1_0_0; }
 
-		//operator=OrOperator
+		//operator=(OrOperator | LogicalOrOperator)
 		public Assignment getOperatorAssignment_1_0_1() { return cOperatorAssignment_1_0_1; }
 
+		//OrOperator | LogicalOrOperator
+		public Alternatives getOperatorAlternatives_1_0_1_0() { return cOperatorAlternatives_1_0_1_0; }
+
 		//OrOperator
-		public RuleCall getOperatorOrOperatorEnumRuleCall_1_0_1_0() { return cOperatorOrOperatorEnumRuleCall_1_0_1_0; }
+		public RuleCall getOperatorOrOperatorEnumRuleCall_1_0_1_0_0() { return cOperatorOrOperatorEnumRuleCall_1_0_1_0_0; }
+
+		//LogicalOrOperator
+		public RuleCall getOperatorLogicalOrOperatorEnumRuleCall_1_0_1_0_1() { return cOperatorLogicalOrOperatorEnumRuleCall_1_0_1_0_1; }
 
 		//subExpressions+=CompareOperation
 		public Assignment getSubExpressionsAssignment_1_0_2() { return cSubExpressionsAssignment_1_0_2; }
@@ -115,17 +128,24 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//CompareOperation
 		public RuleCall getSubExpressionsCompareOperationParserRuleCall_1_0_2_0() { return cSubExpressionsCompareOperationParserRuleCall_1_0_2_0; }
 
-		//({OperatorExpression.subExpressions+=current} operator=AndOperator subExpressions+=CompareOperation)*
+		//({OperatorExpression.subExpressions+=current} operator=(AndOperator | LogicalAndOperator)
+		//subExpressions+=CompareOperation)*
 		public Group getGroup_1_1() { return cGroup_1_1; }
 
 		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_1_0() { return cOperatorExpressionSubExpressionsAction_1_1_0; }
 
-		//operator=AndOperator
+		//operator=(AndOperator | LogicalAndOperator)
 		public Assignment getOperatorAssignment_1_1_1() { return cOperatorAssignment_1_1_1; }
 
+		//AndOperator | LogicalAndOperator
+		public Alternatives getOperatorAlternatives_1_1_1_0() { return cOperatorAlternatives_1_1_1_0; }
+
 		//AndOperator
-		public RuleCall getOperatorAndOperatorEnumRuleCall_1_1_1_0() { return cOperatorAndOperatorEnumRuleCall_1_1_1_0; }
+		public RuleCall getOperatorAndOperatorEnumRuleCall_1_1_1_0_0() { return cOperatorAndOperatorEnumRuleCall_1_1_1_0_0; }
+
+		//LogicalAndOperator
+		public RuleCall getOperatorLogicalAndOperatorEnumRuleCall_1_1_1_0_1() { return cOperatorLogicalAndOperatorEnumRuleCall_1_1_1_0_1; }
 
 		//subExpressions+=CompareOperation
 		public Assignment getSubExpressionsAssignment_1_1_2() { return cSubExpressionsAssignment_1_1_2; }
@@ -1022,6 +1042,38 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getVALValKeyword_0() { return cVALValKeyword_0; }
 	}
 
+	public class LogicalOrOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "LogicalOrOperator");
+		private final EnumLiteralDeclaration cOREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cORVerticalLineVerticalLineKeyword_0 = (Keyword)cOREnumLiteralDeclaration.eContents().get(0);
+		
+		//enum LogicalOrOperator returns OperatorType:
+		//	OR="||";
+		public EnumRule getRule() { return rule; }
+
+		//OR="||"
+		public EnumLiteralDeclaration getOREnumLiteralDeclaration() { return cOREnumLiteralDeclaration; }
+
+		//"||"
+		public Keyword getORVerticalLineVerticalLineKeyword_0() { return cORVerticalLineVerticalLineKeyword_0; }
+	}
+
+	public class LogicalAndOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "LogicalAndOperator");
+		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cANDAmpersandAmpersandKeyword_0 = (Keyword)cANDEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum LogicalAndOperator returns OperatorType:
+		//	AND="&&";
+		public EnumRule getRule() { return rule; }
+
+		//AND="&&"
+		public EnumLiteralDeclaration getANDEnumLiteralDeclaration() { return cANDEnumLiteralDeclaration; }
+
+		//"&&"
+		public Keyword getANDAmpersandAmpersandKeyword_0() { return cANDAmpersandAmpersandKeyword_0; }
+	}
+
 	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "ValueType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1213,6 +1265,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private ModOperatorElements unknownRuleModOperator;
 	private DivOperatorElements unknownRuleDivOperator;
 	private ValOperatorElements unknownRuleValOperator;
+	private LogicalOrOperatorElements unknownRuleLogicalOrOperator;
+	private LogicalAndOperatorElements unknownRuleLogicalAndOperator;
 	private ValueTypeElements unknownRuleValueType;
 	private CombineOperatorElements unknownRuleCombineOperator;
 	private TerminalRule tHOSTCODE;
@@ -1286,9 +1340,9 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//OrAndExpression returns Expression:
-	//	CompareOperation (({OperatorExpression.subExpressions+=current} operator=OrOperator
-	//	subExpressions+=CompareOperation)* | ({OperatorExpression.subExpressions+=current} operator=AndOperator
-	//	subExpressions+=CompareOperation)*);
+	//	CompareOperation (({OperatorExpression.subExpressions+=current} operator=(OrOperator | LogicalOrOperator)
+	//	subExpressions+=CompareOperation)* | ({OperatorExpression.subExpressions+=current} operator=(AndOperator |
+	//	LogicalAndOperator) subExpressions+=CompareOperation)*);
 	public OrAndExpressionElements getOrAndExpressionAccess() {
 		return (pOrAndExpression != null) ? pOrAndExpression : (pOrAndExpression = new OrAndExpressionElements());
 	}
@@ -1636,6 +1690,26 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getValOperatorRule() {
 		return getValOperatorAccess().getRule();
+	}
+
+	//enum LogicalOrOperator returns OperatorType:
+	//	OR="||";
+	public LogicalOrOperatorElements getLogicalOrOperatorAccess() {
+		return (unknownRuleLogicalOrOperator != null) ? unknownRuleLogicalOrOperator : (unknownRuleLogicalOrOperator = new LogicalOrOperatorElements());
+	}
+	
+	public EnumRule getLogicalOrOperatorRule() {
+		return getLogicalOrOperatorAccess().getRule();
+	}
+
+	//enum LogicalAndOperator returns OperatorType:
+	//	AND="&&";
+	public LogicalAndOperatorElements getLogicalAndOperatorAccess() {
+		return (unknownRuleLogicalAndOperator != null) ? unknownRuleLogicalAndOperator : (unknownRuleLogicalAndOperator = new LogicalAndOperatorElements());
+	}
+	
+	public EnumRule getLogicalAndOperatorRule() {
+		return getLogicalAndOperatorAccess().getRule();
 	}
 
 	/// *

@@ -1713,6 +1713,46 @@ finally {
 
 
 
+// Rule LogicalOrOperator
+ruleLogicalOrOperator
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration()); }
+(	'||' 
+)
+{ after(grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
+// Rule LogicalAndOperator
+ruleLogicalAndOperator
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration()); }
+(	'&&' 
+)
+{ after(grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
 // Rule ValueType
 ruleValueType
     @init {
@@ -1904,6 +1944,50 @@ rule__OrAndExpression__Alternatives_1
 { before(grammarAccess.getOrAndExpressionAccess().getGroup_1_1()); }
 (rule__OrAndExpression__Group_1_1__0)*
 { after(grammarAccess.getOrAndExpressionAccess().getGroup_1_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__OrAndExpression__OperatorAlternatives_1_0_1_0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getOrAndExpressionAccess().getOperatorOrOperatorEnumRuleCall_1_0_1_0_0()); }
+	ruleOrOperator
+{ after(grammarAccess.getOrAndExpressionAccess().getOperatorOrOperatorEnumRuleCall_1_0_1_0_0()); }
+)
+
+    |(
+{ before(grammarAccess.getOrAndExpressionAccess().getOperatorLogicalOrOperatorEnumRuleCall_1_0_1_0_1()); }
+	ruleLogicalOrOperator
+{ after(grammarAccess.getOrAndExpressionAccess().getOperatorLogicalOrOperatorEnumRuleCall_1_0_1_0_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__OrAndExpression__OperatorAlternatives_1_1_1_0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getOrAndExpressionAccess().getOperatorAndOperatorEnumRuleCall_1_1_1_0_0()); }
+	ruleAndOperator
+{ after(grammarAccess.getOrAndExpressionAccess().getOperatorAndOperatorEnumRuleCall_1_1_1_0_0()); }
+)
+
+    |(
+{ before(grammarAccess.getOrAndExpressionAccess().getOperatorLogicalAndOperatorEnumRuleCall_1_1_1_0_1()); }
+	ruleLogicalAndOperator
+{ after(grammarAccess.getOrAndExpressionAccess().getOperatorLogicalAndOperatorEnumRuleCall_1_1_1_0_1()); }
 )
 
 ;
@@ -10092,8 +10176,9 @@ rule__OrAndExpression__OperatorAssignment_1_0_1
     }
 :
 (
-{ before(grammarAccess.getOrAndExpressionAccess().getOperatorOrOperatorEnumRuleCall_1_0_1_0()); }
-	ruleOrOperator{ after(grammarAccess.getOrAndExpressionAccess().getOperatorOrOperatorEnumRuleCall_1_0_1_0()); }
+{ before(grammarAccess.getOrAndExpressionAccess().getOperatorAlternatives_1_0_1_0()); }
+(rule__OrAndExpression__OperatorAlternatives_1_0_1_0)
+{ after(grammarAccess.getOrAndExpressionAccess().getOperatorAlternatives_1_0_1_0()); }
 )
 
 ;
@@ -10122,8 +10207,9 @@ rule__OrAndExpression__OperatorAssignment_1_1_1
     }
 :
 (
-{ before(grammarAccess.getOrAndExpressionAccess().getOperatorAndOperatorEnumRuleCall_1_1_1_0()); }
-	ruleAndOperator{ after(grammarAccess.getOrAndExpressionAccess().getOperatorAndOperatorEnumRuleCall_1_1_1_0()); }
+{ before(grammarAccess.getOrAndExpressionAccess().getOperatorAlternatives_1_1_1_0()); }
+(rule__OrAndExpression__OperatorAlternatives_1_1_1_0)
+{ after(grammarAccess.getOrAndExpressionAccess().getOperatorAlternatives_1_1_1_0()); }
 )
 
 ;

@@ -592,20 +592,38 @@ ruleOrAndExpression returns [EObject current=null]
     }
 )(
 (
+(
 		{ 
-	        newCompositeNode(grammarAccess.getOrAndExpressionAccess().getOperatorOrOperatorEnumRuleCall_1_0_1_0()); 
+	        newCompositeNode(grammarAccess.getOrAndExpressionAccess().getOperatorOrOperatorEnumRuleCall_1_0_1_0_0()); 
 	    }
-		lv_operator_2_0=ruleOrOperator		{
+		lv_operator_2_1=ruleOrOperator		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getOrAndExpressionRule());
 	        }
        		set(
        			$current, 
        			"operator",
-        		lv_operator_2_0, 
+        		lv_operator_2_1, 
         		"OrOperator");
 	        afterParserOrEnumRuleCall();
 	    }
+
+    |		{ 
+	        newCompositeNode(grammarAccess.getOrAndExpressionAccess().getOperatorLogicalOrOperatorEnumRuleCall_1_0_1_0_1()); 
+	    }
+		lv_operator_2_2=ruleLogicalOrOperator		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getOrAndExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"operator",
+        		lv_operator_2_2, 
+        		"LogicalOrOperator");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 
 )
 )(
@@ -638,20 +656,38 @@ ruleOrAndExpression returns [EObject current=null]
     }
 )(
 (
+(
 		{ 
-	        newCompositeNode(grammarAccess.getOrAndExpressionAccess().getOperatorAndOperatorEnumRuleCall_1_1_1_0()); 
+	        newCompositeNode(grammarAccess.getOrAndExpressionAccess().getOperatorAndOperatorEnumRuleCall_1_1_1_0_0()); 
 	    }
-		lv_operator_5_0=ruleAndOperator		{
+		lv_operator_5_1=ruleAndOperator		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getOrAndExpressionRule());
 	        }
        		set(
        			$current, 
        			"operator",
-        		lv_operator_5_0, 
+        		lv_operator_5_1, 
         		"AndOperator");
 	        afterParserOrEnumRuleCall();
 	    }
+
+    |		{ 
+	        newCompositeNode(grammarAccess.getOrAndExpressionAccess().getOperatorLogicalAndOperatorEnumRuleCall_1_1_1_0_1()); 
+	    }
+		lv_operator_5_2=ruleLogicalAndOperator		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getOrAndExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"operator",
+        		lv_operator_5_2, 
+        		"LogicalAndOperator");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 
 )
 )(
@@ -2863,6 +2899,32 @@ ruleValOperator returns [Enumerator current=null]
 	{
         $current = grammarAccess.getValOperatorAccess().getVALEnumLiteralDeclaration().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_0, grammarAccess.getValOperatorAccess().getVALEnumLiteralDeclaration()); 
+    }
+);
+
+
+
+// Rule LogicalOrOperator
+ruleLogicalOrOperator returns [Enumerator current=null] 
+    @init { enterRule(); }
+    @after { leaveRule(); }:
+(	enumLiteral_0='||' 
+	{
+        $current = grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_0, grammarAccess.getLogicalOrOperatorAccess().getOREnumLiteralDeclaration()); 
+    }
+);
+
+
+
+// Rule LogicalAndOperator
+ruleLogicalAndOperator returns [Enumerator current=null] 
+    @init { enterRule(); }
+    @after { leaveRule(); }:
+(	enumLiteral_0='&&' 
+	{
+        $current = grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_0, grammarAccess.getLogicalAndOperatorAccess().getANDEnumLiteralDeclaration()); 
     }
 );
 

@@ -48,6 +48,8 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStatementScopeAccess().getAlternatives_3_0(), "rule__StatementScope__Alternatives_3_0");
 					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
 					put(grammarAccess.getOrAndExpressionAccess().getAlternatives_1(), "rule__OrAndExpression__Alternatives_1");
+					put(grammarAccess.getOrAndExpressionAccess().getOperatorAlternatives_1_0_1_0(), "rule__OrAndExpression__OperatorAlternatives_1_0_1_0");
+					put(grammarAccess.getOrAndExpressionAccess().getOperatorAlternatives_1_1_1_0(), "rule__OrAndExpression__OperatorAlternatives_1_1_1_0");
 					put(grammarAccess.getCompareOperationAccess().getAlternatives(), "rule__CompareOperation__Alternatives");
 					put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 					put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
