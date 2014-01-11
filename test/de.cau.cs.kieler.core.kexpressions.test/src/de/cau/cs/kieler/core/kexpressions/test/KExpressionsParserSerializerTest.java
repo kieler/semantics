@@ -27,6 +27,8 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 import org.junit.Test;
 
 import com.google.inject.Guice;
@@ -41,6 +43,7 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup;
  * 
  * @author haf, chsch, cmot, ssm
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class KExpressionsParserSerializerTest {
 
     private Injector injector;
@@ -260,6 +263,28 @@ public class KExpressionsParserSerializerTest {
     @Test//(expected = AssertionError.class)
     public void testSerializerAnd2() throws Exception {
         this.parseAndSerialize("(A & B)");
+    }
+
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test//(expected = AssertionError.class)
+    public void testSerializerLogicalAnd() throws Exception {
+        this.parseAndSerialize("A && B");
+    }
+
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test//(expected = AssertionError.class)
+    public void testSerializerLogicalAnd2() throws Exception {
+        this.parseAndSerialize("(A && B)");
     }
 
     /**
