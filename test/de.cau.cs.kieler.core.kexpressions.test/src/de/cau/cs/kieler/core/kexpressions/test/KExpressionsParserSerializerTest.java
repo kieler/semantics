@@ -39,7 +39,7 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup;
  * JUnit Test Case for the SyncCharts Editor Transition label parser & its
  * serializer.
  * 
- * @author haf, chsch, cmot
+ * @author haf, chsch, cmot, ssm
  */
 public class KExpressionsParserSerializerTest {
 
@@ -247,6 +247,51 @@ public class KExpressionsParserSerializerTest {
      *             if parsing fails
      */
     @Test//(expected = AssertionError.class)
+    public void testSerializerAnd() throws Exception {
+        this.parseAndSerialize("A & B");
+    }
+
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test//(expected = AssertionError.class)
+    public void testSerializerAnd2() throws Exception {
+        this.parseAndSerialize("(A & B)");
+    }
+
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test//(expected = AssertionError.class)
+    public void testSerializerOr() throws Exception {
+        this.parseAndSerialize("A | B");
+    }
+
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test//(expected = AssertionError.class)
+    public void testSerializerOr2() throws Exception {
+        this.parseAndSerialize("(A | B)");
+    }
+
+    
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test(expected = AssertionError.class)
     public void testSerializerAndOr() throws Exception {
         this.parseAndSerialize("A & B | C");
     }
@@ -260,6 +305,17 @@ public class KExpressionsParserSerializerTest {
     @Test//(expected = AssertionError.class)
     public void testSerializerAndAnd() throws Exception {
         this.parseAndSerialize("A & B & C");
+    }
+
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test//(expected = AssertionError.class)
+    public void testSerializerOrOr() throws Exception {
+        this.parseAndSerialize("A | B | C");
     }
     
     /**
