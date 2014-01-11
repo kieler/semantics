@@ -213,11 +213,15 @@ class SCChartsExtension {
         region.parentState.regions.filter[it != region && id == newName].size == 0
     }
     def private boolean uniqueNameTest(ValuedObject valuedObject, State state, String newName) {
-        if (state == null || state.valuedObjects.nullOrEmpty) {
+        if (state == null) { //seems wrong!! --> || state.valuedObjects.nullOrEmpty) {
             return true
         }
         val notFoundOtherValuedObjectInState = state.valuedObjects.filter[it != valuedObject && name == newName].size == 0
-        val notFoundInParents = (state.parentRegion == null || valuedObject.uniqueNameTest(state.parentRegion.parentState, newName))
+        val parentRegion = state.parentRegion
+        var notFoundInParents = true
+        if (parentRegion != null) {
+            notFoundInParents = valuedObject.uniqueNameTest(state.parentRegion.parentState, newName)
+        }
         return notFoundOtherValuedObjectInState && notFoundInParents
     }
     def private dispatch boolean uniqueNameTest(ValuedObject valuedObject, String newName) {
