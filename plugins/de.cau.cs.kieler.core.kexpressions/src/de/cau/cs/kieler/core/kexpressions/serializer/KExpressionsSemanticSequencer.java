@@ -40,4 +40,14 @@ public class KExpressionsSemanticSequencer extends AbstractKExpressionsSemanticS
 //     }
 //
 //        
+	
+	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_Expression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(EObject context, OperatorExpression semanticObject) {
+//		genericSequencer.createSequence(context, semanticObject);
+		super.sequence_AddExpression_AndExpression_CompareOperation_DivExpression_Expression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, semanticObject);
+	}
+	
+	protected void sequence_AndExpression_CompareOperation_NotExpression_OrExpression_ValuedObjectTestExpression(EObject context, OperatorExpression semanticObject) {
+//		genericSequencer.createSequence(context, semanticObject);
+		super.sequence_AndExpression_CompareOperation_NotExpression_OrExpression_ValuedObjectTestExpression(context, semanticObject);
+	}	
 }
