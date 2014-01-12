@@ -604,7 +604,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="Dde.cau.cs.kieler.sccharts.commands.SctHistoryTransformation"
+               commandId="de.cau.cs.kieler.sccharts.commands.SctHistoryTransformation"
                label="History Transitions"
                mnemonic="H"
                style="push">
@@ -627,7 +627,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="Dde.cau.cs.kieler.sccharts.commands.SctWeakSuspendTransformation"
+               commandId="de.cau.cs.kieler.sccharts.commands.SctWeakSuspendTransformation"
                label="Weak Suspends"
                mnemonic="W"
                style="push">
@@ -765,7 +765,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="Dde.cau.cs.kieler.sccharts.commands.SctPreTransformation"
+               commandId="de.cau.cs.kieler.sccharts.commands.SctPreTransformation"
                label="Pre Operators"
                mnemonic="P"
                style="push">
@@ -831,7 +831,7 @@
             </visibleWhen>
          </command>
       </menuContribution>
-<!--        <menuContribution
+       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
                commandId="de.cau.cs.kieler.sccharts.commands.SctComplexFinalStateTransformation"
@@ -853,7 +853,7 @@
                </iterate>
             </visibleWhen>
          </command>
-      </menuContribution> --> 
+      </menuContribution> <!--  --> 
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
@@ -949,7 +949,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="Dde.cau.cs.kieler.sccharts.commands.SctExitTransformation"
+               commandId="de.cau.cs.kieler.sccharts.commands.SctExitTransformation"
                label="Exit Actions"
                mnemonic="X"
                style="push">

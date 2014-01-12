@@ -218,7 +218,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
       <command
-               commandId="Dde.cau.cs.kieler.sccharts.commands.SccHistoryTransformation"
+               commandId="de.cau.cs.kieler.sccharts.commands.SccHistoryTransformation"
                label="History Transitions"
                mnemonic="H"
                style="push">
@@ -241,7 +241,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="Dde.cau.cs.kieler.sccharts.commands.SccWeakSuspendTransformation"
+               commandId="de.cau.cs.kieler.sccharts.commands.SccWeakSuspendTransformation"
                label="Weak Suspends"
                mnemonic="W"
                style="push">
@@ -379,7 +379,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="Dde.cau.cs.kieler.sccharts.commands.SccPreTransformation"
+               commandId="de.cau.cs.kieler.sccharts.commands.SccPreTransformation"
                label="Pre Operators"
                mnemonic="P"
                style="push">
@@ -564,7 +564,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="Dde.cau.cs.kieler.sccharts.commands.SccExitTransformation"
+               commandId="de.cau.cs.kieler.sccharts.commands.SccExitTransformation"
                label="Exit Actions"
                mnemonic="X"
                style="push">
