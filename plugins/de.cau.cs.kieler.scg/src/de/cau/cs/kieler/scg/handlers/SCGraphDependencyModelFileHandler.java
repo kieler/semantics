@@ -70,7 +70,7 @@ public class SCGraphDependencyModelFileHandler extends AbstractConvertModelHandl
         EObject transformed = null;
 
         SCGToSCGDEPTransformation transformation =
-        Guice.createInjector().getInstance(SCGToSCGDEPTransformation.class);
+        		Guice.createInjector().getInstance(SCGToSCGDEPTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).

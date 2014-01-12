@@ -25,6 +25,8 @@ import de.cau.cs.kieler.scgsched.SCGraphSched
 import de.cau.cs.kieler.scgsched.Schedule
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
+import org.eclipse.emf.ecore.EObject
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -46,7 +48,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.rating 2013-12-05 proposed yellow
  */
 
-class SCGSchedToSeqSCGTransformation {
+class SCGSchedToSeqSCGTransformation extends AbstractModelTransformation {
 
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -59,6 +61,10 @@ class SCGSchedToSeqSCGTransformation {
     // -------------------------------------------------------------------------
     // -- Transformation method
     // -------------------------------------------------------------------------    
+    
+    override transform(EObject eObject) {
+		return transformSCGSchedToSeqSCG(eObject as SCGraphSched)
+	}
     
     /**
      * transformSCGSchedToSeqSCG executes the transformation of an SCG with scheduling information to an

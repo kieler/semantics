@@ -73,7 +73,7 @@ public class SCGraphSchedulingModelFileHandler extends AbstractConvertModelHandl
         EObject transformed = null;
 
         AbstractSCGScheduler scheduler =
-        Guice.createInjector().getInstance(SimpleScheduler.class);
+        		Guice.createInjector().getInstance(SimpleScheduler.class);
         
         transformed = model;
         if (commandString.equals(SCGSCHED_TRANSFORMATION)) {

@@ -30,6 +30,8 @@ import de.cau.cs.kieler.scgdep.AssignmentDep
 import de.cau.cs.kieler.scgdep.Dependency
 import de.cau.cs.kieler.scgdep.SCGraphDep
 import de.cau.cs.kieler.scgdep.ScgdepFactory
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -51,7 +53,7 @@ import de.cau.cs.kieler.scgdep.ScgdepFactory
  * @kieler.rating 2013-10-23 proposed yellow
  */
 
-class SCGToSCGDEPTransformation {
+class SCGToSCGDEPTransformation extends AbstractModelTransformation {
     
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -68,6 +70,10 @@ class SCGToSCGDEPTransformation {
     // -- Transformation method
     // -------------------------------------------------------------------------
     
+	override transform(EObject eObject) {
+		return transformSCGToSCGDEP(eObject as SCGraph)
+	}
+	
     /**
      * transformSCGToSCGDEP executes the transformation from a standard SCG to 
      * an SCG with dependency information.
