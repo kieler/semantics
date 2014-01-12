@@ -71,7 +71,7 @@ public class SCGraphBasicBlockModelFileHandler extends AbstractConvertModelHandl
         EObject transformed = null;
 
         SCGDEPToSCGBBTransformation transformation =
-        Guice.createInjector().getInstance(SCGDEPToSCGBBTransformation.class);
+        		Guice.createInjector().getInstance(SCGDEPToSCGBBTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).

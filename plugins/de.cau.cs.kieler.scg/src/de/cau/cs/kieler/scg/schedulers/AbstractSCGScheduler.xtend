@@ -20,6 +20,8 @@ import de.cau.cs.kieler.scgsched.SCGraphSched
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.analyzer.AnalyzerData
 import de.cau.cs.kieler.scg.analyzer.GenericAnalyzerResult
+import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
+import org.eclipse.emf.ecore.EObject
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -50,7 +52,7 @@ import de.cau.cs.kieler.scg.analyzer.GenericAnalyzerResult
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-abstract class AbstractSCGScheduler {
+abstract class AbstractSCGScheduler extends AbstractModelTransformation {
 
 	/** Inject the SCG transformation extensions. */
     @Inject
@@ -85,6 +87,11 @@ abstract class AbstractSCGScheduler {
      * @abstract
      */
     protected abstract def SCGraphSched build(SCGraphSched scg);
+    
+    
+    override transform(EObject eObject) {
+		return schedule(eObject as SCGraph)
+	}
     
     /**
      * Entry point for the caller. Invoke {@code schedule} to create the schedules for the given SCG.

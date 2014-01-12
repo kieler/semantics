@@ -70,7 +70,7 @@ public class SequentialSCGraphModelFileHandler extends AbstractConvertModelHandl
         EObject transformed = null;
 
         SCGSchedToSeqSCGTransformation transformation =
-        Guice.createInjector().getInstance(SCGSchedToSeqSCGTransformation.class);
+        		Guice.createInjector().getInstance(SCGSchedToSeqSCGTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).

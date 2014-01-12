@@ -80,7 +80,6 @@ import org.eclipse.xtext.serializer.ISerializer
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.klighd.analyzer.AnalysesVisualization
-import de.cau.cs.kieler.core.krendering.KRenderingFactory
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -308,6 +307,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor SCHEDULING_NOTSCHEDULABLE = RENDERING_FACTORY.createKColor()=>[it.red = 255; it.green = 0; it.blue = 0;]
     private static val KColor STANDARD_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor()=>[it.red = 0; it.green = 0; it.blue = 0;]
     private static val KColor SCHEDULING_CONTROLFLOWEDGE = RENDERING_FACTORY.createKColor()=>[it.red = 144; it.green = 144; it.blue = 144;]
+    private static val KColor SCHEDULING_SCHEDULINGEDGE = RENDERING_FACTORY.createKColor()=>[it.red = 128; it.green = 0; it.blue = 253;]
+    private static val int SCHEDULING_SCHEDULINGEDGE_ALPHA = 96
     
     /** Constants for semantic object mapping */
     private static val String SCGPORTID_INCOMING = "incoming"
@@ -472,7 +473,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 // Additionally, remove unnecessary parenthesis and add spacing in line breaks.
                 if (assignment.valuedObject != null && assignment.assignment != null) {
                     var assignmentStr = assignment.valuedObject.name + " = " + 
-                    	serializer.serialize(assignment.assignment.copy.splitOperatorExpression).removeParenthesis
+                        serializer.serialize(assignment.assignment.copy.splitOperatorExpression).removeParenthesis
                     if (assignmentStr.contains("&") && assignmentStr.indexOf("&") != assignmentStr.lastIndexOf("&")) {
                         assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
                         assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
@@ -1125,11 +1126,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     
                     val controlFlows = source.getControlFlows(target)
                     if (controlFlows.size>0) {
-                        controlFlows.forEach[it.colorControlFlow(SCHEDULINGBLOCKBORDER)]    
-                        controlFlows.forEach[it.thickenControlFlow(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)]
-                    } else if (target instanceof Depth) {
-//                        (target as Depth).colorTickEdge(SCHEDULINGBLOCKBORDER)                    
-//                        (target as Depth).thickenTickEdge(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)                    
+                        controlFlows.forEach[ colorControlFlow(SCHEDULING_SCHEDULINGEDGE) ]    
+                        controlFlows.forEach[ thickenControlFlow(CONTROLFLOW_SCHEDULINGEDGE_WIDTH) ]
+                        controlFlows.forEach[ controlFlowAlpha(SCHEDULING_SCHEDULINGEDGE_ALPHA) ]
                     } else {
                         val sourceF = source.node
                         val targetF = target.node
@@ -1137,8 +1136,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                             edge.source = sourceF
                             edge.target = targetF
                             edge.addRoundedBendsPolyline(8, CONTROLFLOW_SCHEDULINGEDGE_WIDTH) => [
-                                it.foreground = SCHEDULINGBLOCKBORDER.copy
-//                                it.foreground.alpha = 144
+                                it.foreground = SCHEDULING_SCHEDULINGEDGE.copy
+                                it.foreground.alpha = SCHEDULING_SCHEDULINGEDGE_ALPHA
                                 it.addArrowDecorator
                             ]  
                             edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
@@ -1202,6 +1201,23 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 
 
+	/**
+	 * Re-alpha an existing control flow. All alpha values, even on split up edges, are changed.
+	 * 
+	 * @param controlFlow
+	 * 			the control flow in question
+	 * @param alpha 
+	 * 			the desired alpha value
+	 * @return Returns the control flow 
+	 */   
+    def ControlFlow controlFlowAlpha(ControlFlow controlFlow, int alpha) {
+        controlFlow => [ allEdges.forEach[
+            val polyline = it.getData(typeof(KRoundedBendsPolyline)) => [ getForeground.alpha = alpha ];
+            polyline.foreground.propagateToChildren = true  
+        ] ]
+    }
+    
+    
 	/**
 	 * Re-thicken an existing control flow. All edges, even split up ones, are thicken.
 	 * 
@@ -1317,17 +1333,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -------------------------------------------------------------------------
     
     def String removeParenthesis(String str) {
-        var String s = "";
         if (str.contains("&")) {
           return str.replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")");  
-        } 
-        if (str.startsWith("(") && str.endsWith(")")) {
-            s = str.substring(1)
-            s = s.substring(0, s.length - 1);
-        } else {
-  	 		s = str
         }
-        return s;
+        return str
     }
    
     def boolean topdown() {

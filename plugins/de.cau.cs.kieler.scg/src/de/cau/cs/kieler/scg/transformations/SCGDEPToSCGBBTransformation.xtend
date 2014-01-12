@@ -38,6 +38,8 @@ import de.cau.cs.kieler.scgdep.SCGraphDep
 import java.util.ArrayList
 import java.util.List
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
+import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
+import org.eclipse.emf.ecore.EObject
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -59,7 +61,7 @@ import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
  * @kieler.rating 2013-10-24 proposed yellow
  */
 
-class SCGDEPToSCGBBTransformation {
+class SCGDEPToSCGBBTransformation extends AbstractModelTransformation {
     
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -81,6 +83,10 @@ class SCGDEPToSCGBBTransformation {
     // -------------------------------------------------------------------------
     // -- Transformation method
     // -------------------------------------------------------------------------
+    
+    override transform(EObject eObject) {
+		return transformSCGDEPToSCGBB(eObject as SCGraphDep)
+	}
     
     /**
      * transformSCGDEPToSCGBB executes the transformation of an SCG with dependency information to an

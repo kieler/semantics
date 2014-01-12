@@ -29,6 +29,8 @@ T__36=36
 T__17=17
 RULE_NUMBER=12
 T__37=37
+T__38=38
+T__39=39
 RULE_INT=6
 RULE_WS=14
 RULE_COMMENT_ANNOTATION=9
@@ -37,9 +39,10 @@ RULE_COMMENT_ANNOTATION=9
 '>='=26
 '/'=36
 '=='=22
-'mod'=35
 'val'=37
 '>'=25
+'||'=38
+'&&'=39
 '<='=24
 '<'=23
 '<>'=27
@@ -53,4 +56,5 @@ RULE_COMMENT_ANNOTATION=9
 ')'=17
 '.'=21
 '&'=30
+'%'=35
 ']'=20
