@@ -816,7 +816,9 @@ class SCChartsCoreTransformation {
                     } else {
                         ctrlTransition.setTrigger(transition.trigger)
                     }
-                    if (transition.immediate2) {
+                    // ATTENTION: Test for ctrlTransition.immediate2 because transition's trigger has already been moved to ctrlTransition!!!
+                    ctrlTransition.setImmediate(transition.immediate)
+                    if (ctrlTransition.immediate2) {
                         ctrlTransition.setImmediate(true)
                     }
                     ctrlTransition.addEffect(transitionTriggerVariable.assign(TRUE))
@@ -1004,7 +1006,9 @@ class SCChartsCoreTransformation {
                     } else {
                         ctrlTransition.setTrigger(transition.trigger)
                     }
-                    if (transition.immediate2) {
+                    // ATTENTION: Test for ctrlTransition.immediate2 because transition's trigger has already been moved to ctrlTransition!!!
+                    ctrlTransition.setImmediate(transition.immediate)
+                    if (ctrlTransition.immediate2) {
                         ctrlTransition.setImmediate(true)
                     }
                     ctrlTransition.addEffect(transitionTriggerVariable.assign(TRUE))
