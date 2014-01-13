@@ -85,32 +85,14 @@ public class SCGTransformationTest {
 	
 	
 	protected void compareModels(String sourceModelPosition, Class<? extends AbstractModelTransformation> transformationClass, String targetModelPosition) {
-        final Bundle bundle = Platform.getBundle(PLUGINID);
+            final Bundle bundle = Platform.getBundle(PLUGINID);
 
-        URL bundleLocation = bundle.getEntry("");
-		URL sourceModelLocation = null;
-		URL targetModelLocation = null;
+            URL sourceModelLocation = bundle.getEntry(TESTMODELPATH + sourceModelPosition);
+            URL targetModelLocation = bundle.getEntry(TESTMODELPATH + targetModelPosition);
 		
-        try {
-			bundleLocation = ModelUtil.getAbsoluteBundlePath(bundleLocation);
-			String modelLocationString = bundleLocation.toString();
-			sourceModelLocation = URI.create(modelLocationString + TESTMODELPATH + sourceModelPosition).toURL();
-	        targetModelLocation = URI.create(modelLocationString + TESTMODELPATH + targetModelPosition).toURL();
-			sourceModelLocation = FileLocator.toFileURL(sourceModelLocation);
-			targetModelLocation = FileLocator.toFileURL(targetModelLocation);
-		} catch (MalformedURLException e) {
-		} catch (IOException e) {
-		}
-        
-        IPath sourcePath = new Path(sourceModelLocation.getPath());
-    	File source = new File(sourcePath.toString());
-        IPath targetPath = new Path(targetModelLocation.getPath());
-    	File target = new File(targetPath.toString());
-            
-		SCGModelTransformationComparator comparator = new SCGModelTransformationComparator();
-		if (!comparator.compare(source, transformationClass, target)) {
-			Assert.fail("The transformed model and the target model do not match!");
-		}
+            if (!new SCGModelTransformationComparator().compare(sourceModelLocation, transformationClass, targetModelLocation)) {
+                Assert.fail("The transformed model and the target model do not match!");
+            }
 	}
 	
 }

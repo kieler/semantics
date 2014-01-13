@@ -1,8 +1,7 @@
 package de.cau.cs.kieler.core.model.test;
 
-import java.io.File;
+import java.net.URL;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -28,7 +27,7 @@ public abstract class AbstractModelTransformationComparator {
 	
 	protected abstract AbstractModelComparator getModelComparator();	
 	
-	public boolean compare(File source, Class<? extends AbstractModelTransformation> transformationClass, File target) {
+	public boolean compare(URL source, Class<? extends AbstractModelTransformation> transformationClass, URL target) {
 		EObject sourceModel = loadModel(source);
 		EObject targetModel = loadModel(target);
 		if (sourceModel == null || targetModel == null) return false;
@@ -47,11 +46,10 @@ public abstract class AbstractModelTransformationComparator {
 		return result;
 	}
 	
-	private EObject loadModel(File source) {
+	private EObject loadModel(URL source) {
 		EObject model = null;
 		Injector injector = getResourceInjector();
-//		URI input = URI.createPlatformResourceURI(source.getPath().toString(), true);
-		URI input = URI.createFileURI(source.getPath().toString());
+		URI input = URI.createURI(source.toString());
 		
 		if (injector != null) {
 			ResourceSet resourceSet = injector.getInstance(ResourceSet.class);
