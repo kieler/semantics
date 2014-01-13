@@ -263,7 +263,7 @@ class SCChartsCoreTransformation {
             val isValuedSignal = !signal.pureSignal
 
             val presentVariable = signal
-
+            
             // If this is a valued signal we need a second signal for the value
             if (isValuedSignal) {
                 val valueVariable = state.createVariable(signal.name + variableValueExtension)
@@ -311,7 +311,7 @@ class SCChartsCoreTransformation {
             // Change signal to variable
             presentVariable.setSignal(false)
             presentVariable.setTypeBool
-
+            
             // Reset initial value and combine operator because we want to reset
             // the signal manually in every
             presentVariable.setInitialValue(null)
@@ -348,7 +348,7 @@ class SCChartsCoreTransformation {
 
             // Add a during reset action for the presentVariable if it is an output or local variable.
             // Do not do this for only-input-variables.
-            if (presentVariable.isInput && !presentVariable.isOutput) {
+            if (!presentVariable.isInput) {
                 val duringAction = state.createDuringAction
                 duringAction.createAssignment(presentVariable, FALSE)
                 duringAction.setImmediate(true)
