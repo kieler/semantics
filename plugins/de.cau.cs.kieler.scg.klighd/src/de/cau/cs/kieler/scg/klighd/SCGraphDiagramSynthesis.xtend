@@ -97,7 +97,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     // Retrieve an injector and instances for the serialization.
     private static var Injector guiceInjector;
-    @SuppressWarnings("unused")
+//    @SuppressWarnings("unused")
     private static val KExpressionsStandaloneSetup setup = new KExpressionsStandaloneSetup() => [
         guiceInjector = Guice.createInjector(new SCGRuntimeModule);
         it.register(guiceInjector);        

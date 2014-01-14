@@ -84,13 +84,10 @@ public class SCGTransformationTest {
     // -------------------------------------------------------------------------	
 	
 	
-	protected void compareModels(String sourceModelPosition, Class<? extends AbstractModelTransformation> transformationClass, String targetModelPosition) {
-            final Bundle bundle = Platform.getBundle(PLUGINID);
+	protected void compareModels(String sourceModel, Class<? extends AbstractModelTransformation> transformationClass, String targetModel) {
 
-            URL sourceModelLocation = bundle.getEntry(TESTMODELPATH + sourceModelPosition);
-            URL targetModelLocation = bundle.getEntry(TESTMODELPATH + targetModelPosition);
-		
-            if (!new SCGModelTransformationComparator().compare(sourceModelLocation, transformationClass, targetModelLocation)) {
+	    if (!new SCGModelTransformationComparator().
+	            compareModelsInBundle(PLUGINID, TESTMODELPATH, sourceModel, transformationClass, targetModel)) {
                 Assert.fail("The transformed model and the target model do not match!");
             }
 	}
