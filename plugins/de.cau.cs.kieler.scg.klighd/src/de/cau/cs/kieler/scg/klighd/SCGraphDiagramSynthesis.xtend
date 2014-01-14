@@ -98,13 +98,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // Retrieve an injector and instances for the serialization.
     private static var Injector guiceInjector;
 //    @SuppressWarnings("unused")
-    private static val KExpressionsStandaloneSetup setup = new KExpressionsStandaloneSetup() => [
+    private static val KExpressionsStandaloneSetup standAloneSetup = new KExpressionsStandaloneSetup()
+    => [
         guiceInjector = Guice.createInjector(new SCGRuntimeModule);
         it.register(guiceInjector);        
     ]
     private static val SCGKExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(typeof(SCGKExpressionsScopeProvider));
-    private static val ISerializer serializer = guiceInjector.getInstance(typeof(ISerializer));
-    
+    private static val ISerializer serializer = guiceInjector.getInstance(typeof(ISerializer));    
     
     // -------------------------------------------------------------------------
     // -- Extensions 
@@ -1097,7 +1097,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         val schedulingBlockMapping = new HashMap<SchedulingBlock, KNode>  
         
         val bbContainerList = new HashMap<BasicBlock, KNode>()
-        for (bb : (scg as SCGraphBB).basicBlocks) {
+        for (bb : scg.basicBlocks) {
             if (SHOW_BASICBLOCKS.booleanValue) {
                 val bbNodes = <Node> newLinkedList
                 bb.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
