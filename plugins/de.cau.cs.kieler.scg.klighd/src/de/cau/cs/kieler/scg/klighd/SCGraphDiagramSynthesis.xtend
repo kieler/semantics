@@ -1348,20 +1348,3 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
 }
 
-
-/** 
- * Specialized SCG runtime module
- * This is necessary to override the default KExpression scope provider. 
- * IMPORTANT: The binding has to be a singleton!
- * 
- * @author ssm
- * @kieler.design 2013-10-23 proposed 
- * @kieler.rating 2013-10-23 proposed yellow
- */
-class SCGRuntimeModule extends KExpressionsRuntimeModule {
-    
-    @Singleton
-    override Class<? extends IScopeProvider> bindIScopeProvider() {
-        return typeof(SCGKExpressionsScopeProvider);
-    }    
-}
