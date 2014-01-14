@@ -16,13 +16,13 @@ package de.cau.cs.kieler.scg.klighd
 import com.google.inject.Guice
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.annotations.StringAnnotation
-import de.cau.cs.kieler.core.kexpressions.KExpressionsRuntimeModule
 import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.kgraph.KPort
 import de.cau.cs.kieler.core.krendering.KColor
 import de.cau.cs.kieler.core.krendering.KPolygon
+import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.krendering.KRoundedBendsPolyline
 import de.cau.cs.kieler.core.krendering.KRoundedRectangle
 import de.cau.cs.kieler.core.krendering.LineStyle
@@ -58,7 +58,9 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.klighd.analyzer.AnalysesVisualization
 import de.cau.cs.kieler.scgbb.BasicBlock
 import de.cau.cs.kieler.scgbb.SCGraphBB
 import de.cau.cs.kieler.scgbb.SchedulingBlock
@@ -73,13 +75,9 @@ import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
 import javax.inject.Inject
-import javax.inject.Singleton
-import org.eclipse.xtext.scoping.IScopeProvider
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
-import de.cau.cs.kieler.scg.klighd.analyzer.AnalysesVisualization
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -109,6 +107,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -------------------------------------------------------------------------
     // -- Extensions 
     // -------------------------------------------------------------------------
+    
+//    extension KRenderingFactory = KRenderingFactory.eINSTANCE
     
     /** Inject node extensions. */
     @Inject
@@ -154,6 +154,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject
     extension SCGCopyExtensions
 
+    @Inject
+    extension AnalysesVisualization
+    
 
     // -------------------------------------------------------------------------
     // -- KlighD Options
@@ -516,10 +519,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             figure => [ node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
             	// Serialize the condition in the conditional
                 if (conditional.condition != null)  
-                    node.KRendering.add(KRenderingFactory.createKText.of(serializer.serialize(conditional.condition.copy.splitOperatorExpression).removeParenthesis)
+                    node.KContainerRendering.addText(serializer.serialize(conditional.condition.copy.splitOperatorExpression).removeParenthesis)
                         .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0)
                         .putToLookUpWith(conditional)
-                    );
                 if (SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
 
@@ -573,17 +575,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 figure = node.addPolygon().createSurfaceShape() 
                 figure => [ node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                     if (SHOW_CAPTION.booleanValue)
-                        node.KRendering.add(KRenderingFactory.createKText.of("surface").putToLookUpWith(surface))
+                        node.KContainerRendering.addText("surface").putToLookUpWith(surface)
 	                if (SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 ]
             } else { 
                 figure = node.addPolygon().createSurfaceLandscapeShape()
                 figure => [ node.setMinimalNodeSize(75, 25)
                     if (SHOW_CAPTION.booleanValue)
-                        node.KRendering.add(KRenderingFactory.createKText.of("surface")
+                        node.KContainerRendering.addText("surface")
                             .setAreaPlacementData.from(LEFT, 10, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 3, 0)
                             .putToLookUpWith(surface)
-                        );
 	                if (SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 ]
             }
@@ -622,20 +623,18 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 figure = node.addPolygon().createDepthShape()
                 figure => [ node.setMinimalNodeSize(75, 25)
                     if (SHOW_CAPTION.booleanValue)
-                        node.KRendering.add(KRenderingFactory.createKText.of("depth")
+                        node.KContainerRendering.addText("depth")
                             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0)
                             .putToLookUpWith(depth)
-                        );
 	                if (SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 ]
             } else {
                 figure = node.addPolygon().createDepthLandscapeShape()
                 figure => [ node.setMinimalNodeSize(75, 25)
                     if (SHOW_CAPTION.booleanValue)
-                        node.KRendering.add(KRenderingFactory.createKText.of("depth")
+                        node.KContainerRendering.addText("depth")
                             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 10, 0, BOTTOM, 2, 0)
                             .putToLookUpWith(depth)
-                        );
 	                if (SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 ]
             }
@@ -674,10 +673,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             figure => [ node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 if (SHOW_CAPTION.booleanValue)
-                    node.KRendering.add(KRenderingFactory.createKText.of("entry")
+                    node.KContainerRendering.addText("entry")
                         .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 1, 0)
                         .putToLookUpWith(entry)
-                    );
                 if (SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
 
@@ -713,10 +711,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
             figure => [ node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 if (SHOW_CAPTION.booleanValue) 
-                    node.KRendering.add(KRenderingFactory.createKText.of("exit")
+                    node.KContainerRendering.addText("exit")
                         .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 1, 0)
                         .putToLookUpWith(exit)
-                    );
                 if (SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
             
@@ -749,20 +746,18 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 figure = node.addPolygon().createTriangleShape()
                 figure => [ node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                     if (SHOW_CAPTION.booleanValue) 
-                        node.KRendering.add(KRenderingFactory.createKText.of("fork")
+                        node.KContainerRendering.addText("fork")
                             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 4, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0)
                             .putToLookUpWith(fork)
-                        );
                     if (SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 ]
             } else {
                 figure = node.addPolygon().createTriangleLandscapeShape();
                 figure => [ node.setMinimalNodeSize(MINIMALHEIGHT, MINIMALWIDTH);
                     if (SHOW_CAPTION.booleanValue) 
-                        node.KRendering.add(KRenderingFactory.createKText.of("fork")
+                        node.KContainerRendering.addText("fork")
                             .setAreaPlacementData.from(LEFT, 2, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 2, 0)
                             .putToLookUpWith(fork)
-                        );
 	                if (SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 ]
             }
@@ -797,20 +792,18 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 figure = node.addPolygon().createTriangleShapeReversed()
                 figure => [ node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                     if (SHOW_CAPTION.booleanValue) 
-                        node.KRendering.add(KRenderingFactory.createKText.of("join")
+                        node.KContainerRendering.addText("join")
                             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0)
                             .putToLookUpWith(join)
-                        );
                     if (SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 ]
             } else {
                 figure = node.addPolygon().createTriangleLandscapeShapeReversed()
                 figure => [ node.setMinimalNodeSize(MINIMALHEIGHT, MINIMALWIDTH)
                     if (SHOW_CAPTION.booleanValue) 
-                        node.KRendering.add(KRenderingFactory.createKText.of("join")
+                        node.KContainerRendering.addText("join")
                             .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 4, 0)
                             .putToLookUpWith(join)
-                        );
                     if (SHOW_SHADOW.booleanValue) {
                         it.shadow = "black".color;
                     }
@@ -1175,8 +1168,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      * @return Returns nothing.
      */
     private def void synthesizeAnalyses(SCGraphSched scg) {
-    	val AnalysesVisualization analysesVisualization = Guice.createInjector().getInstance(typeof(AnalysesVisualization))
-    	scg.analyses.forEach[ analysesVisualization.visualize(it, this) ]
+    	// val AnalysesVisualization analysesVisualization = Guice.createInjector().getInstance(typeof(AnalysesVisualization))
+    	scg.analyses.forEach[ visualize(it, this) ]
     }
    
 
@@ -1345,6 +1338,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
    
     def boolean leftright() {
         orientation == ORIENTATION_LANDSCAPE
+    }
+    
+    def RenderingFactory() {
+        KRenderingFactory.eINSTANCE
     }
 }
 

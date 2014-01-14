@@ -14,16 +14,11 @@
 package de.cau.cs.kieler.scg.klighd
 
 import de.cau.cs.kieler.core.kgraph.KEdge
-import de.cau.cs.kieler.core.kgraph.KGraphElement
 import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KContainerRendering
-import de.cau.cs.kieler.core.krendering.KLineWidth
 import de.cau.cs.kieler.core.krendering.KPolygon
-import de.cau.cs.kieler.core.krendering.KRendering
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
-import de.cau.cs.kieler.core.krendering.KStyle
-import de.cau.cs.kieler.core.krendering.KText
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 import de.cau.cs.kieler.kiml.util.KimlUtil
@@ -45,40 +40,10 @@ class SCGraphShapes {
     @Inject
     extension KColorExtensions
 	
-	def KRenderingFactory KRenderingFactory() {
-		return KRenderingFactory::eINSTANCE;
-	} 
+    @Inject
+    extension KNodeExtensions
 	
-	private def KRendering getKRendering(KGraphElement kge) {
-		return kge.getData(typeof(KRendering));
-	}
-	
-	private def KShapeLayout getKShapeLayout(KGraphElement kge) {
-		return kge.getData(typeof(KShapeLayout));
-	}
-	
-	def dispatch KRendering add(KContainerRendering r, KRendering cr) {
-		r.children.add(cr);
-		return r
-	}
-	
-	def dispatch KRendering add(KRendering r, KStyle s) {
-		r.styles.add(s);
-		return r
-	}
-	
-	def KText of(KText text, String content) {
-		text.text = content;
-		return text;
-	}
-	
-	def KLineWidth of(KLineWidth style, int width) {
-		style.lineWidth = width;
-		return style;
-	}
-	
-	def KNode create node: KimlUtil::createInitializedNode getNode(Object o) {
-	}
+
 	
 	def KNode createRoundedRectangulareNode(Object o) {
 		val node = o.node;
@@ -233,14 +198,14 @@ class SCGraphShapes {
 	
 	def KEdge createPolyLineEdge(Object o) {
 		val edge = o.edge;
-		edge.data.add(KRenderingFactory.createKRoundedBendsPolyline => [
+		edge.data.add(KRenderingFactory::eINSTANCE.createKRoundedBendsPolyline => [
 		    it.setBendRadius(5);
 		]);
 		return edge;
 	}
     def KEdge createSplineEdge(Object o) {
         val edge = o.edge;
-        edge.data.add(KRenderingFactory.createKSpline);
+        edge.data.add(KRenderingFactory::eINSTANCE.createKSpline);
         return edge;
     }	
 }
