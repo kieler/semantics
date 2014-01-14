@@ -47,10 +47,10 @@ SCChart returns sccharts::State:
     (type=StateType)? ('scchart') (id=ID) (label=STRING)?
   
     (
-      ('@' bodyReference = [sccharts::State|ID]
-        ('[' renamings+= Substitution (',' renamings+= Substitution)* ']')?
-       )
-     | 
+//      ('@' bodyReference = [sccharts::State|ID]
+//        ('[' renamings+= Substitution (',' renamings+= Substitution)* ']')?
+//       )
+//     | 
       ('{'
           (
             (valuedObjects+=ValuedObject |
@@ -77,9 +77,12 @@ State returns sccharts::State:
     (type=StateType)? ('state') (id=ID) (label=STRING)?
   
     (
-      ('@' bodyReference = [sccharts::State|ID]
-        ('[' renamings+= Substitution (',' renamings+= Substitution)* ']')?
-       )
+//      ('@' bodyReference = [sccharts::State|ID]
+//        ('[' renamings+= Substitution (',' renamings+= Substitution)* ']')?
+//       )
+		('references' bodyReference = [sccharts::State|ID]
+			('map' renamings += Substitution )*
+		)
      | 
       ('{'
           (
@@ -138,7 +141,7 @@ TextualCode returns kexpressions::TextExpression:
 // ---------------------------------------------------------------------------------------------------
 
 Substitution returns sccharts::Substitution:
-	actual = ID '/' formal = ID;
+	actual = ID 'to' formal = ID;
 
 // ---------------------------------------------------------------------------------------------------
 

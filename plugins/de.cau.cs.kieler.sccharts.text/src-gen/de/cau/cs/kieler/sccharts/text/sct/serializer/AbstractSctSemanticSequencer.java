@@ -447,10 +447,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         type=StateType? 
 	 *         id=ID 
 	 *         label=STRING? 
-	 *         (
-	 *             (bodyReference=[State|ID] (renamings+=Substitution renamings+=Substitution*)?) | 
-	 *             ((valuedObjects+=ValuedObject | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
-	 *         )?
+	 *         ((valuedObjects+=ValuedObject | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)?
 	 *     )
 	 */
 	protected void sequence_SCChart(EObject context, State semanticObject) {
@@ -476,7 +473,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         id=ID 
 	 *         label=STRING? 
 	 *         (
-	 *             (bodyReference=[State|ID] (renamings+=Substitution renamings+=Substitution*)?) | 
+	 *             (bodyReference=[State|ID] renamings+=Substitution*) | 
 	 *             ((valuedObjects+=ValuedObject | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
 	 *         )? 
 	 *         outgoingTransitions+=Transition*
