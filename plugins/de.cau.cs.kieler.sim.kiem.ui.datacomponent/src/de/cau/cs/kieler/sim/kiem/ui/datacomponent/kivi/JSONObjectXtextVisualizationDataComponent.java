@@ -350,6 +350,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
                         applyDiffSelection(diffSelection, scrollToObject);
                     } catch (KiemExecutionException e) {
                         // Report error
+                        e.printStackTrace();
                     }
                 }
             });
@@ -550,6 +551,12 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
             // Save the current style before
             StyleRange backupStyleRange = localXtextEditor.getInternalSourceViewer()
                     .getTextWidget().getStyleRangeAtOffset(offset);
+            if (backupStyleRange == null) {
+                if (recoverStyleRangeMap.containsKey(offset)) {
+                    // try to recover
+                    backupStyleRange = recoverStyleRangeMap.get(offset);
+                }
+            }
             if (backupStyleRange != null) {
                 // Only if there not already exists a backup/recovery style
                 if (!recoverStyleRangeMap.containsKey(offset)) {
@@ -557,7 +564,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
                 }
                 Color highlightColor = new Color(Display.getCurrent(), specificBackgroundColor);
                 styleRange = new StyleRange(offset, length, backupStyleRange.foreground,
-                        highlightColor);
+                            highlightColor);
             }
         } else {
             // Recover the old style
@@ -565,7 +572,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
             if (recoverStyleRange != null) {
                 styleRange = new StyleRange(offset, length, recoverStyleRange.foreground,
                         recoverStyleRange.background, recoverStyleRange.fontStyle);
-                recoverStyleRangeMap.remove(offset);
+                //recoverStyleRangeMap.remove(offset);
             }
         }
 
