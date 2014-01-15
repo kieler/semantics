@@ -18,6 +18,7 @@ import java.util.LinkedList;
 
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -243,6 +244,14 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                             isSignal = true;
                             signalValue = JSONSignalValues.getSignalValue((JSONObject) obj);
                             obj = signalValue;
+                            
+                            if (obj instanceof Double) {
+                                isPresent = (Double)obj != 0;
+                            } else if (obj instanceof Integer) {
+                                isPresent = (Integer)obj != 0;
+                            } else if (obj instanceof Boolean) {
+                                isPresent = (Boolean)obj;
+                            }
                         }
                     }
 
