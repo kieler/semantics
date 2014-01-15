@@ -53,29 +53,54 @@ public class SCGTransformationTest {
     // -- Unit tests
     // -------------------------------------------------------------------------	
 	
+        @Test
+        public void test001_scgToScgDep_simple() {
+                compareModels("001-simple.scg", SCGToSCGDEPTransformation.class, "001-simple.scgdep");
+        }
+
+        @Test
+        public void test002_scgDepToScgBB_simple() {
+                compareModels("001-simple.scgdep", SCGDEPToSCGBBTransformation.class, "001-simple.scgbb");
+        }
+
+        @Test
+        public void test003_scgBBToScgSched_simple() {
+                compareModels("001-simple.scgbb", SimpleScheduler.class, "001-simple.scgsched");
+        }
+
+        @Test
+        public void test004_scgSchedToSeqScg_simple() {
+                compareModels("001-simple.scgsched", SCGSchedToSeqSCGTransformation.class, "001-simple.seq.scg");
+        }
+
+        @Test(expected = AssertionError.class) // This test is expected to fail!
+        public void test005_scgToSeqScgFail_simple() {
+                compareModels("001-simple.scg", SCGToSCGDEPTransformation.class, "001-simple.seq.scg");
+        }
+        
 	@Test
 	public void test100_scgToScgDep_abo() {
-		compareModels("01-abo.scg", SCGToSCGDEPTransformation.class, "01-abo.scgdep");
+		compareModels("100-abo.scg", SCGToSCGDEPTransformation.class, "100-abo.scgdep");
 	}
 
 	@Test
 	public void test101_scgDepToScgBB_abo() {
-		compareModels("01-abo.scgdep", SCGDEPToSCGBBTransformation.class, "01-abo.scgbb");
+		compareModels("100-abo.scgdep", SCGDEPToSCGBBTransformation.class, "100-abo.scgbb");
 	}
 
 	@Test
 	public void test102_scgBBToScgSched_abo() {
-		compareModels("01-abo.scgbb", SimpleScheduler.class, "01-abo.scgsched");
+		compareModels("100-abo.scgbb", SimpleScheduler.class, "100-abo.scgsched");
 	}
 
 	@Test
 	public void test103_scgSchedToSeqScg_abo() {
-		compareModels("01-abo.scgsched", SCGSchedToSeqSCGTransformation.class, "01-abo.seq.scg");
+		compareModels("100-abo.scgsched", SCGSchedToSeqSCGTransformation.class, "100-abo.seq.scg");
 	}
 
 	@Test(expected = AssertionError.class) // This test is expected to fail!
 	public void test104_scgToSeqScgFail_abo() {
-		compareModels("01-abo.scg", SCGToSCGDEPTransformation.class, "01-abo.seq.scg");
+		compareModels("100-abo.scg", SCGToSCGDEPTransformation.class, "100-abo.seq.scg");
 	}
 	
 	
