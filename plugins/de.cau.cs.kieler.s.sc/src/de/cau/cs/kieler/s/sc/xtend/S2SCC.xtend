@@ -191,11 +191,17 @@ class S2SCC {
    
    // Generate signal constants.
    def sSignalConstants(Program program) {
-       '''typedef enum {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ",
+       val signals = program.getValuedObjects().filter[e|e.isSignal]
+       if (!signals.nullOrEmpty) {
+       '''typedef enum {«FOR signal : signals SEPARATOR ",
  "»«signal.name»«ENDFOR»} signaltype;
        
        const char *s2signame[] = {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ", 
 "»"«signal.name»"«ENDFOR»};'''
+       }
+       else {
+           ''''''
+       }
    }
 
 
