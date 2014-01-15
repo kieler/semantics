@@ -239,11 +239,13 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                     Object object = jSONObject.get(valuedObjectName);
                     if (object instanceof JSONObject) {
                         JSONObject valuedObjectContent = (JSONObject) object;
+                        Object programObject = program.getOutput(valuedObjectName);
+                        boolean isVariable = !(programObject instanceof Boolean);
                         boolean isSignal = JSONSignalValues.isSignalValue(valuedObjectContent);
                         Object value = JSONSignalValues.getSignalValue(valuedObjectContent);
                         boolean signalInputIsPresent = JSONSignalValues.isPresent(valuedObjectContent);
                         if (program.hasSignal(valuedObjectName)) {
-                            if (isSignal) {
+                            if (isSignal && !isVariable) {
                                 if (signalInputIsPresent) {
                                     program.setInput(valuedObjectName, true);
                                 } else {
@@ -251,7 +253,15 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                                 }
                             } else {
                                 //TODO: THIS GOES WRONG FOR NON-BOOLEAN SIGNALS/VARIABLES
-//                                program.setInput(valuedObjectName, value);
+                                if (value instanceof Integer) {
+                                    program.setInput(valuedObjectName, (Integer)value);    
+                                } else if (value instanceof Boolean) {
+                                    program.setInput(valuedObjectName, (Boolean)value);    
+                                } else if (value instanceof Long) {
+                                    program.setInput(valuedObjectName, (Long)value);    
+                                } else if (value instanceof Double) {
+                                    program.setInput(valuedObjectName, (Double)value);    
+                                }
                             }
                         }
                     }
@@ -407,6 +417,20 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                 }
                 if (object instanceof Integer) {
                     if ((Integer) object != 0) {
+                        sSignalIsPresent = true;
+                    } else {
+                        sSignalIsPresent = false;
+                    }
+                }
+                if (object instanceof Long) {
+                    if ((Long) object != 0) {
+                        sSignalIsPresent = true;
+                    } else {
+                        sSignalIsPresent = false;
+                    }
+                }
+                if (object instanceof Double) {
+                    if ((Double) object != 0) {
                         sSignalIsPresent = true;
                     } else {
                         sSignalIsPresent = false;
