@@ -355,6 +355,37 @@ class SCChartsCoreTransformation {
             }
         }
     }
+    
+    
+    //-------------------------------------------------------------------------
+    //--     O P T I M I Z E : Immediate Transitions with no Trigger/Effect  --
+    //-------------------------------------------------------------------------
+    def Region optimize1(Region rootRegion) {
+        var targetRootRegion = rootRegion.copy;
+        var targetStates = targetRootRegion.allContainedStates
+        for (targetState : targetStates) {
+            targetState.optimize1(targetRootRegion);
+        }
+        targetRootRegion;
+    }
+
+    def void optimize1(State state, Region targetRootRegion) {
+        if (state.outgoingTransitions.size == 1 && !state.hierarchical) {
+            val transition = state.outgoingTransitions.get(0)
+            if (transition.immediate2) {
+                if (transition.trigger == null && transition.effects.nullOrEmpty) {
+                    val otherState = transition.targetState
+                    otherState.setInitial(state.initial)
+                    otherState.setFinal(state.final)
+                    otherState.setId(state.id)
+                    otherState.setLabel(state.label)
+                    otherState.parentRegion.states.remove(state)
+                }
+            }
+        }
+        
+    }
+    
 
     //-------------------------------------------------------------------------
     //--                S U R F A C E  &   D E P T H                         --
@@ -389,7 +420,7 @@ class SCChartsCoreTransformation {
             targetState.transformSurfaceDepth(targetRootRegion);
         }
 
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootRegion.fixAllTextualOrdersByPriorities.optimize1;
     }
 
     def void transformSurfaceDepth(State state, Region targetRootRegion) {
