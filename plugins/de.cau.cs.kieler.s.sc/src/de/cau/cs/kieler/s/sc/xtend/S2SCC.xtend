@@ -266,7 +266,7 @@ class S2SCC {
         OUTPUT_«signal.name»(PRESENT_SCC(«signal.name»));
     «ENDFOR»
     «FOR variable : program.getValuedObjects().filter(e|e.isOutput && !e.isSignal)»
-        OUTPUT_«variable.name»(«variable.name»);
+        OUTPUT_«variable.name»();
     «ENDFOR»
         }
        '''
@@ -409,9 +409,9 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    // Define output functions to return JSON for each s variable.
    def sOutputVariables(Program program) {
     '''«'''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal].filter(e | e.isOutput)»
-        void OUTPUT_«signal.name»(int status){
+        void OUTPUT_«signal.name»(){
         value = cJSON_CreateObject();
-        cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
+        cJSON_AddItemToObject(value, "present", «signal.name»?cJSON_CreateTrue():cJSON_CreateFalse());
         cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«signal.name»));
         //cJSON_AddItemToObject(output, "«signal.name»", cJSON_CreateNumber(«signal.name»));
         cJSON_AddItemToObject(output, "«signal.name»", value);
