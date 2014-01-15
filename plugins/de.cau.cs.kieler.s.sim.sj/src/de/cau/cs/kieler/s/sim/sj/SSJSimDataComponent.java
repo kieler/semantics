@@ -253,13 +253,37 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                                 }
                             } else {
                                 //TODO: THIS GOES WRONG FOR NON-BOOLEAN SIGNALS/VARIABLES
-                                if (value instanceof Integer) {
+                                if (value == null) {
+                                  if (signalInputIsPresent) { 
+                                      if (programObject instanceof Integer) {
+                                          value = 1;    
+                                      } else if (programObject instanceof Boolean) {
+                                          value = true;    
+                                      } else if (programObject instanceof Long) {
+                                          value = 1;    
+                                      } else if (programObject instanceof Double) {
+                                          value = 1;    
+                                      }
+                                  } else {
+                                      if (programObject instanceof Integer) {
+                                          value = 0;    
+                                      } else if (programObject instanceof Boolean) {
+                                          value = false;    
+                                      } else if (programObject instanceof Long) {
+                                          value = 0;    
+                                      } else if (programObject instanceof Double) {
+                                          value = 0;    
+                                      }
+                                  }
+                                }
+                                
+                                if (programObject instanceof Integer) {
                                     program.setInput(valuedObjectName, (Integer)value);    
-                                } else if (value instanceof Boolean) {
+                                } else if (programObject instanceof Boolean) {
                                     program.setInput(valuedObjectName, (Boolean)value);    
-                                } else if (value instanceof Long) {
+                                } else if (programObject instanceof Long) {
                                     program.setInput(valuedObjectName, (Long)value);    
-                                } else if (value instanceof Double) {
+                                } else if (programObject instanceof Double) {
                                     program.setInput(valuedObjectName, (Double)value);    
                                 }
                             }
