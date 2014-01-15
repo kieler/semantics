@@ -25,8 +25,9 @@ import de.cau.cs.kieler.scgsched.Analysis
  * The SCG KlighD synthesis will call the visualize method for each analysis. 
  * 
  * @author ssm
- * @kieler.design 2014-01-07 proposed 
- * @kieler.rating 2014-01-07 proposed yellow
+ * @kieler.ignore 
+ * //@kieler.design 2014-01-07 proposed 
+ * //@kieler.rating 2014-01-07 proposed yellow
  */
 
 class AnalysesVisualization {
