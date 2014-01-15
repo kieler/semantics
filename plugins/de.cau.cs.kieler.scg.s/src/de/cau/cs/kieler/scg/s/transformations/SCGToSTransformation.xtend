@@ -75,10 +75,10 @@ class SCGToSTransformation {
             sProgram.states += it
         ]
         
-//        initState.instructions += SFactory::eINSTANCE.createAssignment => [
-//            variable = sProgram.findValuedObjectByName(GOGUARDNAME)
-//            expression = TRUE
-//        ]
+        initState.instructions += SFactory::eINSTANCE.createAssignment => [
+            variable = sProgram.findValuedObjectByName(GOGUARDNAME)
+            expression = TRUE
+        ]
         
         initState.instructions += SFactory::eINSTANCE.createTrans => [
             continuation = tickState
@@ -87,6 +87,12 @@ class SCGToSTransformation {
 		scg.nodes.head.transform(tickState.instructions)
 		
 		tickState.instructions += SFactory::eINSTANCE.createPause
+
+        tickState.instructions += SFactory::eINSTANCE.createAssignment => [
+            variable = sProgram.findValuedObjectByName(GOGUARDNAME)
+            expression = FALSE
+        ]
+
 		tickState.instructions += SFactory::eINSTANCE.createTrans => [
 		    continuation = tickState
 		] 
