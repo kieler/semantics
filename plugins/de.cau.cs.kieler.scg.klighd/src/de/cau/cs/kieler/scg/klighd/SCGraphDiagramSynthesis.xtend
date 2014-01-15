@@ -84,9 +84,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * all predefined types of SC graphs.
  * 
  * @author ssm
- * @kieler.ignore 
- * //@kieler.design 2013-10-23 proposed 
- * //@kieler.rating 2013-10-23 proposed yellow
+ * @kieler.design 2013-10-23 proposed 
+ * @kieler.rating 2013-10-23 proposed yellow
  */
 class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         
