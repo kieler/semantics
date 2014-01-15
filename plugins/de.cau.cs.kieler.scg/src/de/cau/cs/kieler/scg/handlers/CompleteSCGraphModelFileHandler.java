@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
+ * Copyright 2013 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.s.handlers;
+package de.cau.cs.kieler.scg.handlers;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
@@ -21,10 +21,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
-import de.cau.cs.kieler.s.SPlugin;
-import de.cau.cs.kieler.s.SStandaloneSetup;
-import de.cau.cs.kieler.scg.SCGraph;
-import de.cau.cs.kieler.scg.s.transformations.SCGToSTransformation;
+import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
+import de.cau.cs.kieler.scg.SCGPlugin;
 import de.cau.cs.kieler.scg.schedulers.AbstractSCGScheduler;
 import de.cau.cs.kieler.scg.schedulers.SimpleScheduler;
 import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation;
@@ -41,12 +39,12 @@ import de.cau.cs.kieler.scgsched.SCGraphSched;
  * @kieler.design 2014-01-08 proposed 
  * @kieler.rating 2014-01-08 proposed yellow
  */
-public class SCGraphModelFileHandler extends AbstractConvertModelHandler {
+public class CompleteSCGraphModelFileHandler extends AbstractConvertModelHandler {
 
-    public static final String SCG_TRANSFORMATION =
-            "de.cau.cs.kieler.scg.commands.SCGToSTransformation";
+    public static final String ALLSCG_TRANSFORMATION =
+            "de.cau.cs.kieler.scg.commands.AllSCGTransformations";
 
-    private static Injector injector = new SStandaloneSetup()
+    private static Injector injector = new SctStandaloneSetup()
         .createInjectorAndDoEMFRegistration();
 
     /**
@@ -54,7 +52,7 @@ public class SCGraphModelFileHandler extends AbstractConvertModelHandler {
      */
     @Override
     protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
-        return "s";
+        return "seq.scg";
     }
 
     /**
@@ -66,7 +64,7 @@ public class SCGraphModelFileHandler extends AbstractConvertModelHandler {
     }
 
     public String getDiagramEditorID() {
-        return SPlugin.EDITOR_ID;
+        return SCGPlugin.EDITOR_ID;
     }
     
     /**
@@ -84,25 +82,19 @@ public class SCGraphModelFileHandler extends AbstractConvertModelHandler {
         AbstractSCGScheduler transformation3 =
                 Guice.createInjector().getInstance(SimpleScheduler.class);        
         SCGSchedToSeqSCGTransformation transformation4 =
-                        Guice.createInjector().getInstance(SCGSchedToSeqSCGTransformation.class);
-        SCGToSTransformation transformation5 =
-        		Guice.createInjector().getInstance(SCGToSTransformation.class);
+        		Guice.createInjector().getInstance(SCGSchedToSeqSCGTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         transformed = model;
-        if (commandString.equals(SCG_TRANSFORMATION)) {
-            if (!selection.toString().contains(".seq.scg")) {
-                if (!(transformed instanceof SCGraphDep)) 
-                    transformed = transformation1.transform(transformed);
-                if (!(transformed instanceof SCGraphBB)) 
-                    transformed = transformation2.transform(transformed);
-                if (!(transformed instanceof SCGraphSched)) 
-                    transformed = transformation3.transform(transformed);            
-                transformed = transformation4.transform(transformed);
-            }
-            
-            transformed = transformation5.transformSCGToS((SCGraph) transformed);
+        if (commandString.equals(ALLSCG_TRANSFORMATION)) {
+            if (!(transformed instanceof SCGraphDep)) 
+                transformed = transformation1.transform(transformed);
+            if (!(transformed instanceof SCGraphBB)) 
+                transformed = transformation2.transform(transformed);
+            if (!(transformed instanceof SCGraphSched)) 
+                transformed = transformation3.transform(transformed);
+            transformed = transformation4.transform(transformed);
         } 
         return transformed;
     }

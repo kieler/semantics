@@ -23,10 +23,11 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations?before=de.cau.kieler.scg.menus.AllSCGTransformations">
          <command
                commandId="de.cau.cs.kieler.scg.commands.SCGToSTransformation"
-               label="SCG: Transform to S tick function"
+               id="de.cau.cs.kieler.scg.s.menus.STickFunction"
+               label="Transform to S Tick Function"
                mnemonic="A"
                style="push">
             <visibleWhen
@@ -45,6 +46,13 @@
                </iterate>
             </visibleWhen>
          </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations?after=de.cau.cs.kieler.scg.s.menus.STickFunction">
+         <separator
+               name="de.cau.cs.kieler.scg.separator11"
+               visible="true">
+         </separator>
       </menuContribution>
    </extension>
 
