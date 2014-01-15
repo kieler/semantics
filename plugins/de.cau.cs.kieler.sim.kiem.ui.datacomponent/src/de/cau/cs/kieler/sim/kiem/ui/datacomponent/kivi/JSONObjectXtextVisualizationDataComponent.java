@@ -165,7 +165,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
             e.printStackTrace();
         }
         eObjectMap.clear();
-        recoverStyleRangeMap.clear();
+        //recoverStyleRangeMap.clear();
         semanticResource = null;
         modelRoot = null;
         xtextEditor = null;
