@@ -461,15 +461,12 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
             cJSON* childPresent = cJSON_GetObjectItem(child, "present");
             if (childPresent != NULL && childValue == NULL) {
                 «variable.name» = childPresent->valueint;
-                printf("1:«variable.name» = %i", childPresent->valueint);
             }
             else if (childValue != NULL) {
                 «variable.name» = childValue->valueint;
-                printf("2:«variable.name» = %i", childValue->valueint);
             }
             else {
                 «variable.name» = NULL;
-                printf("3:«variable.name» = NULL");
             }
           }'''
        }
