@@ -113,7 +113,7 @@ public class SCChartTest extends TestCase {
                 .put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
 
         // Get the URI of the model file.
-        file = new File("./artifacts/transfomation.ktmt");
+        file = new File("./artifacts/ABO.ktmt");
         fileURI = URI.createFileURI(file.getAbsolutePath());
 
         // Create a resource for this file.
@@ -149,7 +149,7 @@ public class SCChartTest extends TestCase {
 
         ModelWrapper aboSplitTEModel =
                 transformationTree.initializeTransformationTree(transformation.extractMapping(),
-                        "splitTriggerEffect", abo, "ABO", aboSplitTE, "ABO-splitTriEff");
+                        "splitTriggerEffect", abo, "coreSCChart", aboSplitTE, "coreSCChart-splitTriggerEffect");
         assertNotNull(aboSplitTEModel);
 
         tree = transformationTree.root(aboSplitTEModel);

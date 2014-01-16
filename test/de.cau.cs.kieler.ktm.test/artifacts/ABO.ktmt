@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:sccharts="http://kieler.cs.cau.de/sccharts/0.1.0" xmlns:transformationtree="http://kieler.cs.cau.de/transformationtree/0.1.0">
+  <transformationtree:ModelWrapper modelTypeID="coreSCChart" rootObject="/0/@modelObjects.0">
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.RegionImpl@181e7fe (id: null, label: null)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.30" eObject="/1"/>
+    <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl@c27081 (value: true)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.0" eObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0/@effects.0/@expression"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.AssignmentImpl@6a1fbe" targetTransformations="/0/@targetTransformations.0/@objectTransformations.1" eObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0/@effects.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@1589d3d (delay: 1, immediate: true, label: null) (priority: 1, type: WEAKABORT, deferred: false, history: RESET)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.2 /0/@targetTransformations.0/@objectTransformations.3 /0/@targetTransformations.0/@objectTransformations.4 /0/@targetTransformations.0/@objectTransformations.5 /0/@targetTransformations.0/@objectTransformations.6" eObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl@1ab6c1c" targetTransformations="/0/@targetTransformations.0/@objectTransformations.7" eObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0/@trigger"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.AssignmentImpl@dd7786" targetTransformations="/0/@targetTransformations.0/@objectTransformations.8" eObject="/1/@states.0/@regions.0/@states.1/@outgoingTransitions.0/@effects.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@28bda (id: DoneB, label: DoneB) (type: NORMAL, initial: false, final: true)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.9" eObject="/1/@states.0/@regions.0/@states.1/@regions.1/@states.1"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.AssignmentImpl@f2db2d" targetTransformations="/0/@targetTransformations.0/@objectTransformations.10" eObject="/1/@states.0/@regions.0/@states.1/@outgoingTransitions.0/@effects.1"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.AssignmentImpl@1489ea3" targetTransformations="/0/@targetTransformations.0/@objectTransformations.11" eObject="/1/@states.0/@regions.0/@states.0/@outgoingTransitions.0/@effects.1"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@928739 (id: WaitAB, label: WaitAB) (type: NORMAL, initial: false, final: false)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.12" eObject="/1/@states.0/@regions.0/@states.1"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.RegionImpl@108f060 (id: HandleB, label: HandleB)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.13" eObject="/1/@states.0/@regions.0/@states.1/@regions.1"/>
+    <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl@14f7a86 (value: true)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.14" eObject="/1/@states.0/@regions.0/@states.1/@outgoingTransitions.0/@effects.1/@expression"/>
+    <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl@19c4364 (value: true)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.15" eObject="/1/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0/@effects.0/@expression"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@8c0d58 (id: WaitA, label: WaitA) (type: NORMAL, initial: true, final: false)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.16" eObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@ec0962 (delay: 1, immediate: true, label: null) (priority: 1, type: WEAKABORT, deferred: false, history: RESET)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.17 /0/@targetTransformations.0/@objectTransformations.18 /0/@targetTransformations.0/@objectTransformations.19 /0/@targetTransformations.0/@objectTransformations.20 /0/@targetTransformations.0/@objectTransformations.21" eObject="/1/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl@f6ede1 (name: B, type: bool, input: true, output: true, static: false, signal: false, combineOperator: NONE)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.22" eObject="/1/@states.0/@valuedObjects.1"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@10a4d7c (delay: 1, immediate: false, label: null) (priority: 1, type: NORMALTERMINATION, deferred: false, history: RESET)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.23 /0/@targetTransformations.0/@objectTransformations.24 /0/@targetTransformations.0/@objectTransformations.25 /0/@targetTransformations.0/@objectTransformations.26 /0/@targetTransformations.0/@objectTransformations.27" eObject="/1/@states.0/@regions.0/@states.1/@outgoingTransitions.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.core.annotations.impl.AnnotationImpl@15e6691 (name: VHLayout)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.28" eObject="/1/@states.0/@annotations.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.AssignmentImpl@1cf6f61" targetTransformations="/0/@targetTransformations.0/@objectTransformations.29" eObject="/1/@states.0/@regions.0/@states.0/@outgoingTransitions.0/@effects.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl@e2fa0e (value: false)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.31" eObject="/1/@states.0/@regions.0/@states.0/@outgoingTransitions.0/@effects.1/@expression"/>
+    <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl@19eef79 (value: true)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.32" eObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0/@effects.1/@expression"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.AssignmentImpl@499f7d" targetTransformations="/0/@targetTransformations.0/@objectTransformations.33" eObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0/@effects.1"/>
+    <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl@8cd4db (value: false)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.34" eObject="/1/@states.0/@regions.0/@states.1/@outgoingTransitions.0/@effects.0/@expression"/>
+    <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl@1ff83a9 (value: false)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.35" eObject="/1/@states.0/@regions.0/@states.0/@outgoingTransitions.0/@effects.0/@expression"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.RegionImpl@145d7f2 (id: null, label: null)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.36" eObject="/1/@states.0/@regions.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl@9c15d2 (name: A, type: bool, input: true, output: true, static: false, signal: false, combineOperator: NONE)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.37" eObject="/1/@states.0/@valuedObjects.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@b7cee4 (id: WaitB, label: WaitB) (type: NORMAL, initial: true, final: false)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.38" eObject="/1/@states.0/@regions.0/@states.1/@regions.1/@states.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@7e05c4 (id: Init, label: Init) (type: NORMAL, initial: true, final: false)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.39" eObject="/1/@states.0/@regions.0/@states.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@e7ccd7 (id: ABO, label: ABO) (type: NORMAL, initial: false, final: false)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.40" eObject="/1/@states.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.AssignmentImpl@6b3fc7" targetTransformations="/0/@targetTransformations.0/@objectTransformations.41" eObject="/1/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0/@effects.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.RegionImpl@1d16ecf (id: HandleA, label: HandleA)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.42" eObject="/1/@states.0/@regions.0/@states.1/@regions.0"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@1557a77 (id: DoneA, label: DoneA) (type: NORMAL, initial: false, final: true)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.43" eObject="/1/@states.0/@regions.0/@states.1/@regions.0/@states.1"/>
+    <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl@17ed710 (name: O2, type: bool, input: false, output: true, static: false, signal: false, combineOperator: NONE)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.44" eObject="/1/@states.0/@valuedObjects.3"/>
+    <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl@8b1323 (name: O1, type: bool, input: false, output: true, static: false, signal: false, combineOperator: NONE)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.45" eObject="/1/@states.0/@valuedObjects.2"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@12aec21 (id: GotAB, label: GotAB) (type: NORMAL, initial: false, final: false)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.46" eObject="/1/@states.0/@regions.0/@states.2"/>
+    <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl@a449e0" targetTransformations="/0/@targetTransformations.0/@objectTransformations.47" eObject="/1/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0/@trigger"/>
+    <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@d5e270 (delay: 1, immediate: false, label: null) (priority: 1, type: WEAKABORT, deferred: false, history: RESET)" targetTransformations="/0/@targetTransformations.0/@objectTransformations.48 /0/@targetTransformations.0/@objectTransformations.49 /0/@targetTransformations.0/@objectTransformations.50" eObject="/1/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0"/>
+    <targetTransformations transformationID="splitTriggerEffect">
+      <target modelTypeID="coreSCChart-splitTriggerEffect" rootObject="/0/@targetTransformations.0/@target/@modelObjects.0">
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.RegionImpl@10241ae (id: null, label: null)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.30" eObject="/2"/>
+        <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl@1685be9 (value: true)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.0" eObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.2/@outgoingTransitions.0/@effects.0/@expression"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.AssignmentImpl@14a0fe1" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.1" eObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.2/@outgoingTransitions.0/@effects.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@bb1bc4 (delay: 1, immediate: true, label: null) (priority: 1, type: WEAKABORT, deferred: false, history: RESET)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.2" eObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@1bfefb (id: DoneA3522054, label: ) (type: CONNECTOR, initial: false, final: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.3" eObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.3"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@13ada (id: DoneA19902060, label: ) (type: CONNECTOR, initial: false, final: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.4" eObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.2"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@bed4c8 (delay: 1, immediate: true, label: null) (priority: 1, type: WEAKABORT, deferred: false, history: RESET)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.5" eObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.2/@outgoingTransitions.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@8398e7 (delay: 1, immediate: true, label: null) (priority: 1, type: WEAKABORT, deferred: false, history: RESET)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.6" eObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.3/@outgoingTransitions.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl@146ac5a" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.7" eObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0/@trigger"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.AssignmentImpl@1d23e75" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.8" eObject="/2/@states.0/@regions.0/@states.5/@outgoingTransitions.0/@effects.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@12b9f79 (id: DoneB, label: DoneB) (type: NORMAL, initial: false, final: true)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.9" eObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.1"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.AssignmentImpl@13a356" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.10" eObject="/2/@states.0/@regions.0/@states.6/@outgoingTransitions.0/@effects.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.AssignmentImpl@a6faa9" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.11" eObject="/2/@states.0/@regions.0/@states.4/@outgoingTransitions.0/@effects.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@1ebe8ec (id: WaitAB, label: WaitAB) (type: NORMAL, initial: false, final: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.12" eObject="/2/@states.0/@regions.0/@states.1"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.RegionImpl@1dd5a3d (id: HandleB, label: HandleB)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.13" eObject="/2/@states.0/@regions.0/@states.1/@regions.1"/>
+        <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl@f4fb44 (value: true)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.14" eObject="/2/@states.0/@regions.0/@states.6/@outgoingTransitions.0/@effects.0/@expression"/>
+        <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl@c77c8 (value: true)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.15" eObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.2/@outgoingTransitions.0/@effects.0/@expression"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@c02d83 (id: WaitA, label: WaitA) (type: NORMAL, initial: true, final: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.16" eObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@5c18ff (delay: 1, immediate: true, label: null) (priority: 1, type: WEAKABORT, deferred: false, history: RESET)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.17" eObject="/2/@states.0/@regions.0/@states.4/@outgoingTransitions.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@6d12a9 (id: WaitAB6223775, label: ) (type: CONNECTOR, initial: false, final: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.18" eObject="/2/@states.0/@regions.0/@states.4"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@e427ed (id: WaitAB25065105, label: ) (type: CONNECTOR, initial: false, final: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.19" eObject="/2/@states.0/@regions.0/@states.3"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@f9748f (delay: 1, immediate: true, label: null) (priority: 1, type: WEAKABORT, deferred: false, history: RESET)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.20" eObject="/2/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@1537060 (delay: 1, immediate: true, label: null) (priority: 1, type: WEAKABORT, deferred: false, history: RESET)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.21" eObject="/2/@states.0/@regions.0/@states.3/@outgoingTransitions.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl@17b60b6 (name: B, type: bool, input: true, output: true, static: false, signal: false, combineOperator: NONE)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.22" eObject="/2/@states.0/@valuedObjects.1"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@1652e61 (delay: 1, immediate: true, label: null) (priority: 1, type: WEAKABORT, deferred: false, history: RESET)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.23" eObject="/2/@states.0/@regions.0/@states.6/@outgoingTransitions.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@1c7eb33 (id: GotAB8924668, label: ) (type: CONNECTOR, initial: false, final: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.24" eObject="/2/@states.0/@regions.0/@states.5"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@226649 (delay: 1, immediate: true, label: null) (priority: 1, type: WEAKABORT, deferred: false, history: RESET)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.25" eObject="/2/@states.0/@regions.0/@states.5/@outgoingTransitions.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@695527 (id: GotAB22563815, label: ) (type: CONNECTOR, initial: false, final: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.26" eObject="/2/@states.0/@regions.0/@states.6"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@1559ba8 (delay: 1, immediate: false, label: null) (priority: 1, type: NORMALTERMINATION, deferred: false, history: RESET)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.27" eObject="/2/@states.0/@regions.0/@states.1/@outgoingTransitions.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.core.annotations.impl.AnnotationImpl@9fe666 (name: VHLayout)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.28" eObject="/2/@states.0/@annotations.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.AssignmentImpl@19988c7" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.29" eObject="/2/@states.0/@regions.0/@states.3/@outgoingTransitions.0/@effects.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl@18ed284 (value: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.31" eObject="/2/@states.0/@regions.0/@states.4/@outgoingTransitions.0/@effects.0/@expression"/>
+        <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl@17c3056 (value: true)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.32" eObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.3/@outgoingTransitions.0/@effects.0/@expression"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.AssignmentImpl@185e155" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.33" eObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.3/@outgoingTransitions.0/@effects.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl@1ea8dbd (value: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.34" eObject="/2/@states.0/@regions.0/@states.5/@outgoingTransitions.0/@effects.0/@expression"/>
+        <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.BoolValueImpl@1cfd7c (value: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.35" eObject="/2/@states.0/@regions.0/@states.3/@outgoingTransitions.0/@effects.0/@expression"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.RegionImpl@6489f0 (id: null, label: null)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.36" eObject="/2/@states.0/@regions.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl@15cb235 (name: A, type: bool, input: true, output: true, static: false, signal: false, combineOperator: NONE)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.37" eObject="/2/@states.0/@valuedObjects.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@16ff9e0 (id: WaitB, label: WaitB) (type: NORMAL, initial: true, final: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.38" eObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@1ac8b37 (id: Init, label: Init) (type: NORMAL, initial: true, final: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.39" eObject="/2/@states.0/@regions.0/@states.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@39471b (id: ABO, label: ABO) (type: NORMAL, initial: false, final: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.40" eObject="/2/@states.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.AssignmentImpl@1284903" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.41" eObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.2/@outgoingTransitions.0/@effects.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.RegionImpl@c1dc0b (id: HandleA, label: HandleA)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.42" eObject="/2/@states.0/@regions.0/@states.1/@regions.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@db4c8d (id: DoneA, label: DoneA) (type: NORMAL, initial: false, final: true)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.43" eObject="/2/@states.0/@regions.0/@states.1/@regions.0/@states.1"/>
+        <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl@598a5d (name: O2, type: bool, input: false, output: true, static: false, signal: false, combineOperator: NONE)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.44" eObject="/2/@states.0/@valuedObjects.3"/>
+        <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl@9578c1 (name: O1, type: bool, input: false, output: true, static: false, signal: false, combineOperator: NONE)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.45" eObject="/2/@states.0/@valuedObjects.2"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@f4921b (id: GotAB, label: GotAB) (type: NORMAL, initial: false, final: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.46" eObject="/2/@states.0/@regions.0/@states.2"/>
+        <modelObjects displayName="de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl@1ee40a4" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.47" eObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0/@trigger"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.StateImpl@54643 (id: DoneB849679, label: ) (type: CONNECTOR, initial: false, final: false)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.48" eObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.2"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@481958 (delay: 1, immediate: false, label: null) (priority: 1, type: WEAKABORT, deferred: false, history: RESET)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.49" eObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0"/>
+        <modelObjects displayName="de.cau.cs.kieler.sccharts.impl.TransitionImpl@177e6b4 (delay: 1, immediate: true, label: null) (priority: 1, type: WEAKABORT, deferred: false, history: RESET)" sourceTransformations="/0/@targetTransformations.0/@objectTransformations.50" eObject="/2/@states.0/@regions.0/@states.1/@regions.1/@states.2/@outgoingTransitions.0"/>
+      </target>
+      <objectTransformations source="/0/@modelObjects.1" target="/0/@targetTransformations.0/@target/@modelObjects.1"/>
+      <objectTransformations source="/0/@modelObjects.2" target="/0/@targetTransformations.0/@target/@modelObjects.2"/>
+      <objectTransformations source="/0/@modelObjects.3" target="/0/@targetTransformations.0/@target/@modelObjects.3"/>
+      <objectTransformations source="/0/@modelObjects.3" target="/0/@targetTransformations.0/@target/@modelObjects.4"/>
+      <objectTransformations source="/0/@modelObjects.3" target="/0/@targetTransformations.0/@target/@modelObjects.5"/>
+      <objectTransformations source="/0/@modelObjects.3" target="/0/@targetTransformations.0/@target/@modelObjects.6"/>
+      <objectTransformations source="/0/@modelObjects.3" target="/0/@targetTransformations.0/@target/@modelObjects.7"/>
+      <objectTransformations source="/0/@modelObjects.4" target="/0/@targetTransformations.0/@target/@modelObjects.8"/>
+      <objectTransformations source="/0/@modelObjects.5" target="/0/@targetTransformations.0/@target/@modelObjects.9"/>
+      <objectTransformations source="/0/@modelObjects.6" target="/0/@targetTransformations.0/@target/@modelObjects.10"/>
+      <objectTransformations source="/0/@modelObjects.7" target="/0/@targetTransformations.0/@target/@modelObjects.11"/>
+      <objectTransformations source="/0/@modelObjects.8" target="/0/@targetTransformations.0/@target/@modelObjects.12"/>
+      <objectTransformations source="/0/@modelObjects.9" target="/0/@targetTransformations.0/@target/@modelObjects.13"/>
+      <objectTransformations source="/0/@modelObjects.10" target="/0/@targetTransformations.0/@target/@modelObjects.14"/>
+      <objectTransformations source="/0/@modelObjects.11" target="/0/@targetTransformations.0/@target/@modelObjects.15"/>
+      <objectTransformations source="/0/@modelObjects.12" target="/0/@targetTransformations.0/@target/@modelObjects.16"/>
+      <objectTransformations source="/0/@modelObjects.13" target="/0/@targetTransformations.0/@target/@modelObjects.17"/>
+      <objectTransformations source="/0/@modelObjects.14" target="/0/@targetTransformations.0/@target/@modelObjects.18"/>
+      <objectTransformations source="/0/@modelObjects.14" target="/0/@targetTransformations.0/@target/@modelObjects.19"/>
+      <objectTransformations source="/0/@modelObjects.14" target="/0/@targetTransformations.0/@target/@modelObjects.20"/>
+      <objectTransformations source="/0/@modelObjects.14" target="/0/@targetTransformations.0/@target/@modelObjects.21"/>
+      <objectTransformations source="/0/@modelObjects.14" target="/0/@targetTransformations.0/@target/@modelObjects.22"/>
+      <objectTransformations source="/0/@modelObjects.15" target="/0/@targetTransformations.0/@target/@modelObjects.23"/>
+      <objectTransformations source="/0/@modelObjects.16" target="/0/@targetTransformations.0/@target/@modelObjects.24"/>
+      <objectTransformations source="/0/@modelObjects.16" target="/0/@targetTransformations.0/@target/@modelObjects.25"/>
+      <objectTransformations source="/0/@modelObjects.16" target="/0/@targetTransformations.0/@target/@modelObjects.26"/>
+      <objectTransformations source="/0/@modelObjects.16" target="/0/@targetTransformations.0/@target/@modelObjects.27"/>
+      <objectTransformations source="/0/@modelObjects.16" target="/0/@targetTransformations.0/@target/@modelObjects.28"/>
+      <objectTransformations source="/0/@modelObjects.17" target="/0/@targetTransformations.0/@target/@modelObjects.29"/>
+      <objectTransformations source="/0/@modelObjects.18" target="/0/@targetTransformations.0/@target/@modelObjects.30"/>
+      <objectTransformations source="/0/@modelObjects.0" target="/0/@targetTransformations.0/@target/@modelObjects.0"/>
+      <objectTransformations source="/0/@modelObjects.19" target="/0/@targetTransformations.0/@target/@modelObjects.31"/>
+      <objectTransformations source="/0/@modelObjects.20" target="/0/@targetTransformations.0/@target/@modelObjects.32"/>
+      <objectTransformations source="/0/@modelObjects.21" target="/0/@targetTransformations.0/@target/@modelObjects.33"/>
+      <objectTransformations source="/0/@modelObjects.22" target="/0/@targetTransformations.0/@target/@modelObjects.34"/>
+      <objectTransformations source="/0/@modelObjects.23" target="/0/@targetTransformations.0/@target/@modelObjects.35"/>
+      <objectTransformations source="/0/@modelObjects.24" target="/0/@targetTransformations.0/@target/@modelObjects.36"/>
+      <objectTransformations source="/0/@modelObjects.25" target="/0/@targetTransformations.0/@target/@modelObjects.37"/>
+      <objectTransformations source="/0/@modelObjects.26" target="/0/@targetTransformations.0/@target/@modelObjects.38"/>
+      <objectTransformations source="/0/@modelObjects.27" target="/0/@targetTransformations.0/@target/@modelObjects.39"/>
+      <objectTransformations source="/0/@modelObjects.28" target="/0/@targetTransformations.0/@target/@modelObjects.40"/>
+      <objectTransformations source="/0/@modelObjects.29" target="/0/@targetTransformations.0/@target/@modelObjects.41"/>
+      <objectTransformations source="/0/@modelObjects.30" target="/0/@targetTransformations.0/@target/@modelObjects.42"/>
+      <objectTransformations source="/0/@modelObjects.31" target="/0/@targetTransformations.0/@target/@modelObjects.43"/>
+      <objectTransformations source="/0/@modelObjects.32" target="/0/@targetTransformations.0/@target/@modelObjects.44"/>
+      <objectTransformations source="/0/@modelObjects.33" target="/0/@targetTransformations.0/@target/@modelObjects.45"/>
+      <objectTransformations source="/0/@modelObjects.34" target="/0/@targetTransformations.0/@target/@modelObjects.46"/>
+      <objectTransformations source="/0/@modelObjects.35" target="/0/@targetTransformations.0/@target/@modelObjects.47"/>
+      <objectTransformations source="/0/@modelObjects.36" target="/0/@targetTransformations.0/@target/@modelObjects.48"/>
+      <objectTransformations source="/0/@modelObjects.36" target="/0/@targetTransformations.0/@target/@modelObjects.49"/>
+      <objectTransformations source="/0/@modelObjects.36" target="/0/@targetTransformations.0/@target/@modelObjects.50"/>
+    </targetTransformations>
+  </transformationtree:ModelWrapper>
+  <sccharts:Region>
+    <states id="ABO" label="ABO">
+      <annotations name="VHLayout"/>
+      <valuedObjects name="A" type="bool" input="true" output="true"/>
+      <valuedObjects name="B" type="bool" input="true" output="true"/>
+      <valuedObjects name="O1" type="bool" output="true"/>
+      <valuedObjects name="O2" type="bool" output="true"/>
+      <regions>
+        <states id="Init" label="Init" initial="true">
+          <outgoingTransitions immediate="true" priority="1" targetState="/1/@states.0/@regions.0/@states.1">
+            <effects xsi:type="sccharts:Assignment" valuedObject="/1/@states.0/@valuedObjects.2">
+              <expression xsi:type="kexpressions:BoolValue" value="false"/>
+            </effects>
+            <effects xsi:type="sccharts:Assignment" valuedObject="/1/@states.0/@valuedObjects.3">
+              <expression xsi:type="kexpressions:BoolValue" value="false"/>
+            </effects>
+          </outgoingTransitions>
+        </states>
+        <states id="WaitAB" label="WaitAB" incomingTransitions="/1/@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+          <regions id="HandleA" label="HandleA">
+            <states id="WaitA" label="WaitA" initial="true">
+              <outgoingTransitions immediate="true" priority="1" targetState="/1/@states.0/@regions.0/@states.1/@regions.0/@states.1">
+                <effects xsi:type="sccharts:Assignment" valuedObject="/1/@states.0/@valuedObjects.1">
+                  <expression xsi:type="kexpressions:BoolValue" value="true"/>
+                </effects>
+                <effects xsi:type="sccharts:Assignment" valuedObject="/1/@states.0/@valuedObjects.2">
+                  <expression xsi:type="kexpressions:BoolValue" value="true"/>
+                </effects>
+                <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="/1/@states.0/@valuedObjects.0"/>
+              </outgoingTransitions>
+            </states>
+            <states id="DoneA" label="DoneA" final="true" incomingTransitions="/1/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0"/>
+          </regions>
+          <regions id="HandleB" label="HandleB">
+            <states id="WaitB" label="WaitB" initial="true">
+              <outgoingTransitions priority="1" targetState="/1/@states.0/@regions.0/@states.1/@regions.1/@states.1">
+                <effects xsi:type="sccharts:Assignment" valuedObject="/1/@states.0/@valuedObjects.2">
+                  <expression xsi:type="kexpressions:BoolValue" value="true"/>
+                </effects>
+                <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="/1/@states.0/@valuedObjects.1"/>
+              </outgoingTransitions>
+            </states>
+            <states id="DoneB" label="DoneB" final="true" incomingTransitions="/1/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0"/>
+          </regions>
+          <outgoingTransitions priority="1" type="NORMALTERMINATION" targetState="/1/@states.0/@regions.0/@states.2">
+            <effects xsi:type="sccharts:Assignment" valuedObject="/1/@states.0/@valuedObjects.2">
+              <expression xsi:type="kexpressions:BoolValue" value="false"/>
+            </effects>
+            <effects xsi:type="sccharts:Assignment" valuedObject="/1/@states.0/@valuedObjects.3">
+              <expression xsi:type="kexpressions:BoolValue" value="true"/>
+            </effects>
+          </outgoingTransitions>
+        </states>
+        <states id="GotAB" label="GotAB" incomingTransitions="/1/@states.0/@regions.0/@states.1/@outgoingTransitions.0"/>
+      </regions>
+    </states>
+  </sccharts:Region>
+  <sccharts:Region>
+    <states id="ABO" label="ABO">
+      <annotations name="VHLayout"/>
+      <valuedObjects name="A" type="bool" input="true" output="true"/>
+      <valuedObjects name="B" type="bool" input="true" output="true"/>
+      <valuedObjects name="O1" type="bool" output="true"/>
+      <valuedObjects name="O2" type="bool" output="true"/>
+      <regions>
+        <states id="Init" label="Init" initial="true">
+          <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.3"/>
+        </states>
+        <states id="WaitAB" label="WaitAB" incomingTransitions="/2/@states.0/@regions.0/@states.4/@outgoingTransitions.0">
+          <regions id="HandleA" label="HandleA">
+            <states id="WaitA" label="WaitA" initial="true">
+              <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.1/@regions.0/@states.2">
+                <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="/2/@states.0/@valuedObjects.0"/>
+              </outgoingTransitions>
+            </states>
+            <states id="DoneA" label="DoneA" final="true" incomingTransitions="/2/@states.0/@regions.0/@states.1/@regions.0/@states.3/@outgoingTransitions.0"/>
+            <states id="DoneA19902060" label="" type="CONNECTOR" incomingTransitions="/2/@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0">
+              <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.1/@regions.0/@states.3">
+                <effects xsi:type="sccharts:Assignment" valuedObject="/2/@states.0/@valuedObjects.1">
+                  <expression xsi:type="kexpressions:BoolValue" value="true"/>
+                </effects>
+              </outgoingTransitions>
+            </states>
+            <states id="DoneA3522054" label="" type="CONNECTOR" incomingTransitions="/2/@states.0/@regions.0/@states.1/@regions.0/@states.2/@outgoingTransitions.0">
+              <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.1/@regions.0/@states.1">
+                <effects xsi:type="sccharts:Assignment" valuedObject="/2/@states.0/@valuedObjects.2">
+                  <expression xsi:type="kexpressions:BoolValue" value="true"/>
+                </effects>
+              </outgoingTransitions>
+            </states>
+          </regions>
+          <regions id="HandleB" label="HandleB">
+            <states id="WaitB" label="WaitB" initial="true">
+              <outgoingTransitions priority="1" targetState="/2/@states.0/@regions.0/@states.1/@regions.1/@states.2">
+                <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="/2/@states.0/@valuedObjects.1"/>
+              </outgoingTransitions>
+            </states>
+            <states id="DoneB" label="DoneB" final="true" incomingTransitions="/2/@states.0/@regions.0/@states.1/@regions.1/@states.2/@outgoingTransitions.0"/>
+            <states id="DoneB849679" label="" type="CONNECTOR" incomingTransitions="/2/@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0">
+              <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.1/@regions.1/@states.1">
+                <effects xsi:type="sccharts:Assignment" valuedObject="/2/@states.0/@valuedObjects.2">
+                  <expression xsi:type="kexpressions:BoolValue" value="true"/>
+                </effects>
+              </outgoingTransitions>
+            </states>
+          </regions>
+          <outgoingTransitions priority="1" type="NORMALTERMINATION" targetState="/2/@states.0/@regions.0/@states.5"/>
+        </states>
+        <states id="GotAB" label="GotAB" incomingTransitions="/2/@states.0/@regions.0/@states.6/@outgoingTransitions.0"/>
+        <states id="WaitAB25065105" label="" type="CONNECTOR" incomingTransitions="/2/@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+          <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.4">
+            <effects xsi:type="sccharts:Assignment" valuedObject="/2/@states.0/@valuedObjects.2">
+              <expression xsi:type="kexpressions:BoolValue" value="false"/>
+            </effects>
+          </outgoingTransitions>
+        </states>
+        <states id="WaitAB6223775" label="" type="CONNECTOR" incomingTransitions="/2/@states.0/@regions.0/@states.3/@outgoingTransitions.0">
+          <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.1">
+            <effects xsi:type="sccharts:Assignment" valuedObject="/2/@states.0/@valuedObjects.3">
+              <expression xsi:type="kexpressions:BoolValue" value="false"/>
+            </effects>
+          </outgoingTransitions>
+        </states>
+        <states id="GotAB8924668" label="" type="CONNECTOR" incomingTransitions="/2/@states.0/@regions.0/@states.1/@outgoingTransitions.0">
+          <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.6">
+            <effects xsi:type="sccharts:Assignment" valuedObject="/2/@states.0/@valuedObjects.2">
+              <expression xsi:type="kexpressions:BoolValue" value="false"/>
+            </effects>
+          </outgoingTransitions>
+        </states>
+        <states id="GotAB22563815" label="" type="CONNECTOR" incomingTransitions="/2/@states.0/@regions.0/@states.5/@outgoingTransitions.0">
+          <outgoingTransitions immediate="true" priority="1" targetState="/2/@states.0/@regions.0/@states.2">
+            <effects xsi:type="sccharts:Assignment" valuedObject="/2/@states.0/@valuedObjects.3">
+              <expression xsi:type="kexpressions:BoolValue" value="true"/>
+            </effects>
+          </outgoingTransitions>
+        </states>
+      </regions>
+    </states>
+  </sccharts:Region>
+</xmi:XMI>

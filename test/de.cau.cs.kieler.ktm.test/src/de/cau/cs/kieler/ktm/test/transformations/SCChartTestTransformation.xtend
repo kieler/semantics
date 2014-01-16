@@ -30,7 +30,7 @@ class SCChartTestTransformation {
     @Inject
     extension SCChartsExtension
 
-    // NEW - Mapping Access delegation  
+    // NEW - Mapping access delegation  
     def extractMapping() {
         extractMappingData;
     }
@@ -45,6 +45,7 @@ class SCChartTestTransformation {
     //     Set the T_eff to have T's target state. Set T to have the target C.
     //     Add T_eff to C's outgoing transitions. 
     def Region transformTriggerEffect(Region rootRegion) {
+        clearMapping; //NEW - clear previous mapping information to assure a single consistent mapping
 
         // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.mappedCopy; //NEW - mapping information (changed copy to mappedCopy)
