@@ -407,7 +407,8 @@ class TransformationTreeExtensions {
      */
     def Map<EObjectWrapper, EObject> objectMapping(ModelWrapper modelNode, EObject model) {
 
-        if (modelNode != null && model != null && !modelNode.transient && modelNode.rootObject.EObject.eClass.equals(model.eClass)) {
+        if (modelNode != null && model != null && !modelNode.transient &&
+            modelNode.rootObject.EObject.eClass.equals(model.eClass)) {
             val mapping = new HashMap;
             val matching = matchModels(modelNode.rootObject.EObject, model);
             if (matching != null) {
@@ -426,6 +427,8 @@ class TransformationTreeExtensions {
      * Returns a multi-mapping from elements of source model to target model elements.
      * Mapping is created by resolving all transformations on a path from source to target.
      * Source and target can be arbitrary model in tree, so path can be bottom up, top down or leaf to leaf.
+     * <p>
+     * A mapping can only be resolved if both source and target are NOT transient.
      * <p>
      * Returns null if source or target model do not match to their models in tree or if they are not in the same tree.
      * If transformation tree was created on incomplete mappings returned mapping may be incomplete.
@@ -453,13 +456,46 @@ class TransformationTreeExtensions {
             return null;
         }
 
+        val mapping = resolveWrapperMapping(sourceModelNode, targetModelNode);
+
+        //transform element mapping into mapping between EObjects of given input models
+        val objectMapping = HashMultimap::create(sourceMapping.size, 10);
+        mapping.entries.forEach [
+            objectMapping.put(sourceMapping.get(it.key), targetMapping.get(it.value));
+        ];
+        return objectMapping;
+    }
+
+    /**
+     * Resolves a mapping between all elements of source and target model as their wrappers.
+     * <p>
+     * If concrete instances shall be resolved use {@link resolveMapping}.
+     * <p>
+     * Returns a multi-mapping from elements of source model to target model elements.
+     * Mapping is created by resolving all transformations on a path from source to target.
+     * Source and target can be arbitrary model in tree, so path can be bottom up, top down or leaf to leaf.
+     * <p>
+     * A mapping can also be resolved for transient model wrapper.
+     * <p>
+     * Returns null if models are not in the same tree.
+     * If transformation tree was created on incomplete mappings returned mapping may be incomplete.
+     * @param sourceModelNode model in transformation tree representing sourceModel model
+     * @param targetModelNode model in transformation tree representing targetModel model
+     * @return multi-mapping from source model object wrappers to target model object wrappers or null
+     */
+    def Multimap<EObjectWrapper, EObjectWrapper> resolveWrapperMapping(ModelWrapper sourceModelNode,
+        ModelWrapper targetModelNode) {
+
+        if (sourceModelNode.root != targetModelNode.root) {
+            return null;
+        }
+
         //trivial case when source and target are same model
         if (sourceModelNode == targetModelNode) {
 
-            val mapping = HashMultimap::create(sourceMapping.size, 1);
-            sourceMapping.entrySet.forEach [
-                //map source element instances to target element instance because they might differ even if they represent the same model
-                mapping.put(it.value, targetMapping.get(it.key));
+            val mapping = HashMultimap::create();
+            sourceModelNode.modelObjects.forEach [
+                mapping.put(it, it);
             ];
             return mapping;
         } else {
@@ -542,7 +578,7 @@ class TransformationTreeExtensions {
             }
 
             //traverse path and resolve mapping
-            val elementMapping = HashMultimap::create(sourceMapping.size, 10);
+            val elementMapping = HashMultimap::create();
 
             //resolve mapping from path
             val _downwardIndex = downwardIndex; //index needs to be final to be used in iteration
@@ -574,12 +610,7 @@ class TransformationTreeExtensions {
                 ];
             ];
 
-            //transform element mapping into mapping between EObjects of given input models
-            val objectMapping = HashMultimap::create(sourceMapping.size, 10);
-            elementMapping.entries.forEach [
-                objectMapping.put(sourceMapping.get(it.key), targetMapping.get(it.value));
-            ];
-            return objectMapping;
+            return elementMapping;
         }
     }
 
@@ -588,7 +619,8 @@ class TransformationTreeExtensions {
     /**
      * creates element once and adds it to its container-model
      */
-    private def EObjectWrapper create element : factory.createEObjectWrapper() createObject(EObject obj, ModelWrapper model) {
+    private def EObjectWrapper create element : factory.createEObjectWrapper() createObject(EObject obj,
+        ModelWrapper model) {
         element.model = model;
         element.displayName = obj.toString;
         element.EObject = obj;

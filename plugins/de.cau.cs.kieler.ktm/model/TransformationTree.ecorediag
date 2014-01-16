@@ -97,7 +97,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_B7o_4WSYEeOb0MOqsz1DOg" fontColor="4210752" fontName="Ubuntu" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_B7o_4mSYEeOb0MOqsz1DOg" x="35" y="225"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_B7o_4mSYEeOb0MOqsz1DOg" x="35" y="230"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_2LMQoWSXEeOb0MOqsz1DOg"/>
   <element xmi:type="ecore:EPackage" href="TransformationTree.ecore#/"/>
