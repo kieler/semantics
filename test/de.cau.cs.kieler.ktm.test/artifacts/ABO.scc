@@ -43,7 +43,7 @@
           </states>
           <states id="DoneB" label="DoneB" final="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0"/>
         </regions>
-        <outgoingTransitions priority="1" type="NORMALTERMINATION" targetState="//@states.0/@regions.0/@states.2">
+        <outgoingTransitions priority="1" type="TERMINATION" targetState="//@states.0/@regions.0/@states.2">
           <effects xsi:type="sccharts:Assignment" valuedObject="//@states.0/@valuedObjects.2">
             <expression xsi:type="kexpressions:BoolValue" value="false"/>
           </effects>
