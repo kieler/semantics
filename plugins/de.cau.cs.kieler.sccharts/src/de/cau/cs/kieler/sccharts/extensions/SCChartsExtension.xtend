@@ -56,7 +56,7 @@ class SCChartsExtension {
     extension KExpressionsExtension
 
     // This prefix is used for namings of all generated signals, states and regions
-    static final String GENERATED_PREFIX = "_"
+    static public final String GENERATED_PREFIX = "_"
 
     //    public val Injector i = ActionsStandaloneSetup::doSetup();
     //    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
@@ -72,18 +72,23 @@ class SCChartsExtension {
     //====== GENERAL MODEL ELEMENTS =====
     // Get the single normal termination Transition. Return null if there is 
     // no outgoing normal termination Transition.
-    def Transition getNormalTerminationTransitions(State state) {
-        val allNormalTerminationTransitions = state.outgoingTransitions.filter(
-            e|e.type == TransitionType::NORMALTERMINATION);
-        if (allNormalTerminationTransitions.size == 0) {
+    def Transition getTerminationTransitions(State state) {
+        val allTerminationTransitions = state.outgoingTransitions.filter(
+            e|e.type == TransitionType::TERMINATION);
+        if (allTerminationTransitions.size == 0) {
             return null;
         }
-        allNormalTerminationTransitions.head;
+        allTerminationTransitions.head;
     }
 
     // Return the list of all contained States.
     def List<State> getAllContainedStates(Scope scope) {
         scope.eAllContents().toList().filter(typeof(State)).toList()
+    }
+
+    // Return the list of all contained Regions.
+    def List<Region> getAllContainedRegions(Scope scope) {
+        scope.eAllContents().toList().filter(typeof(Region)).toList()
     }
 
     // Return the list of all contained Transitions.
@@ -151,8 +156,8 @@ class SCChartsExtension {
 
     //========== TRANSITIONS ===========
     
-    def Transition setTypeNormalTermination(Transition transition) {
-        transition.setType(TransitionType::NORMALTERMINATION)
+    def Transition setTypeTermination(Transition transition) {
+        transition.setType(TransitionType::TERMINATION)
         transition
     }
 
@@ -166,8 +171,8 @@ class SCChartsExtension {
         transition
     }
     
-    def boolean isTypeNormalTermination(Transition transition) {
-        return transition.type == TransitionType::NORMALTERMINATION
+    def boolean isTypeTermination(Transition transition) {
+        return transition.type == TransitionType::TERMINATION
     }
 
     def boolean isTypeStrongAbort(Transition transition) {
@@ -186,26 +191,68 @@ class SCChartsExtension {
         state
     }
 
+    def State createState(Region region, String id, String label) {
+        val state = createState(id)
+        region.states.add(state)
+        state
+    }
+
     def State createState(Region region, String id) {
         val state = createState(id)
+        state.setLabel(id)
         region.states.add(state)
         state
     }
 
 
     //========== UNIQUE NAMES ===========
-    def private String getUniqueNameHelper(String id, int number) {
-        if (number > 1) {
-            return id + (number)
+    def private dispatch boolean uniqueNameTest(State state, String newName) {
+        state.parentRegion.states.filter[it != state && id == newName].size == 0
+    }
+    def private dispatch boolean uniqueNameTest(Region region, String newName) {
+        region.parentState.regions.filter[it != region && id == newName].size == 0
+    }
+    def private boolean uniqueNameTest(ValuedObject valuedObject, State state, String newName) {
+        if (state == null) { //seems wrong!! --> || state.valuedObjects.nullOrEmpty) {
+            return true
         }
-        return null
+        val notFoundOtherValuedObjectInState = state.valuedObjects.filter[it != valuedObject && name == newName].size == 0
+        val parentRegion = state.parentRegion
+        var notFoundInParents = true
+        if (parentRegion != null) {
+            notFoundInParents = valuedObject.uniqueNameTest(state.parentRegion.parentState, newName)
+        }
+        return notFoundOtherValuedObjectInState && notFoundInParents
+    }
+    def private dispatch boolean uniqueNameTest(ValuedObject valuedObject, String newName) {
+        valuedObject.uniqueNameTest((valuedObject.eContainer as State), newName)
+    }
+    def private dispatch boolean uniqueNameTest(EObject eObject, String newName) {
+        false
     }
     
+    def private String uniqueNameHelper(EObject eObject, String originalId) {
+        var String newName = null
+        var c = 1
+        if (eObject.uniqueNameTest(originalId)) {
+            return originalId
+        }
+        while (newName == null) {
+            c = c + 1
+            val tmpNewName = originalId + c
+            if (eObject.uniqueNameTest(tmpNewName)) {
+                newName = tmpNewName
+            } 
+        }
+        return newName
+    }
+    
+
     def State uniqueName(State state) {
         val originalId = state.id
-        val newName = originalId.getUniqueNameHelper(state.parentRegion.states.filter[id != null && id.startsWith(originalId)].size)
-        if (newName != null) {
-//            System.out.println("Changed State Id from '"+ state.id + "' to '"+ newName + "'")
+        var String newName = state.uniqueNameHelper(originalId)
+        if (newName != originalId) {
+            state.setId(newName)
             state.setLabel2(newName)
         } 
         state
@@ -213,40 +260,22 @@ class SCChartsExtension {
 
     def Region uniqueName(Region region) {
         val originalId = region.id
-        val newName = originalId.getUniqueNameHelper(region.parentState.regions.filter[id != null && id.startsWith(originalId)].size)
-        if (newName != null) {
-//            System.out.println("Changed Region Id from '"+ region.id + "' to '"+ newName + "'")
+        var String newName = region.uniqueNameHelper(originalId)
+        if (newName != originalId) {
             region.setLabel2(newName)
         } 
         region
     }
 
-    def int countInParent(Region region, String originalId) {
-        if (region == null) {
-            return 0;
-        }
-        val number = region.valuedObjects.filter[name != null && name.startsWith(originalId)].size
-        number + region.parentState.countInParent(originalId)
-    }
-    def int countInParent(State state, String originalId) {
-        if (state == null) {
-            return 0;
-        }
-        val number = state.valuedObjects.filter[name != null && name.startsWith(originalId)].size
-        number + state.parentRegion.countInParent(originalId)
-    }
-
-    def ValuedObject uniqueName(ValuedObject valuedObject) {
+     def ValuedObject uniqueName(ValuedObject valuedObject) {
         val originalId = valuedObject.name
-        val newName = originalId.getUniqueNameHelper((valuedObject.eContainer as State).countInParent(originalId))
-        if (newName != null) {
-//            System.out.println("Changed ValuedObject Name from '"+ valuedObject.name + "' to '"+ newName + "'")
-            valuedObject.setName(newName)
+        var String newName = valuedObject.uniqueNameHelper(originalId)
+        if (newName != originalId) {
+             valuedObject.setName(newName)
         } 
         valuedObject
     }
 
-    
 
     def State setInitial(State state) {
         state.setInitial(true)
@@ -260,6 +289,11 @@ class SCChartsExtension {
 
     def State setFinal(State state) {
         state.setFinal(true)
+        state
+    }
+
+    def State setNotFinal(State state) {
+        state.setFinal(false)
         state
     }
 
@@ -277,6 +311,14 @@ class SCChartsExtension {
 
     def State createFinalState(Region region, String id) {
         region.createState(id).setFinal
+    }
+    
+    def State getInitialState(Region region) {
+        var initialStates = region.states.filter[isInitial]
+        if (initialStates.size > 0) {
+            return initialStates.get(0)
+        }
+        return null
     }
     
     def State[] getAllFinalStates(Region region) {
@@ -361,6 +403,10 @@ class SCChartsExtension {
     // A transition is a history transition if it is not a reset transition.
     def boolean isHistory(Transition transition) {
         transition.history != HistoryType::RESET
+    }
+
+    def boolean isDeepHistory(Transition transition) {
+        transition.history == HistoryType::DEEP
     }
 
     def Transition createTransition() {
@@ -480,7 +526,7 @@ class SCChartsExtension {
     def Boolean isImmediate2(Transition transition) {
         (transition.immediate) || 
         (transition.sourceState.type == StateType::CONNECTOR) || 
-        (transition.type == TransitionType::NORMALTERMINATION && transition.trigger == null
+        (transition.type == TransitionType::TERMINATION && transition.trigger == null
         )
     }
 

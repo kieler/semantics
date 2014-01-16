@@ -73,7 +73,7 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
     /** 
      * @return target resource extension name
      */
-    protected abstract String getTargetExtension();
+    protected abstract String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection);
 
     /**
      * @return injector of a certain resource. 
@@ -230,7 +230,7 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
         // Set destination uri
         output = URI.createURI(input.toString());
         output = output.trimFragment();
-        output = output.trimFileExtension().appendFileExtension(getTargetExtension());
+        output = output.trimFileExtension().appendFileExtension(getTargetExtension(model, event, selection));
 
         try {
             ResourceSet resSet = new ResourceSetImpl();

@@ -27,8 +27,11 @@ import de.cau.cs.kieler.scg.transformations.SCGSchedToSeqSCGTransformation;
 import de.cau.cs.kieler.scgsched.SCGraphSched;
 
 /**
- * @author ssm
+ * Handler for menu contributions
  *
+ * @author ssm
+ * @kieler.design 2014-01-08 proposed 
+ * @kieler.rating 2014-01-08 proposed yellow
  */
 public class SequentialSCGraphModelFileHandler extends AbstractConvertModelHandler {
 
@@ -42,7 +45,7 @@ public class SequentialSCGraphModelFileHandler extends AbstractConvertModelHandl
      * {@inheritDoc}
      */
     @Override
-    protected String getTargetExtension() {
+    protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
         return "seq.scg";
     }
 
@@ -67,7 +70,7 @@ public class SequentialSCGraphModelFileHandler extends AbstractConvertModelHandl
         EObject transformed = null;
 
         SCGSchedToSeqSCGTransformation transformation =
-        Guice.createInjector().getInstance(SCGSchedToSeqSCGTransformation.class);
+        		Guice.createInjector().getInstance(SCGSchedToSeqSCGTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).

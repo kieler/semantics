@@ -55,8 +55,8 @@ public class SccModelFileHandler extends SCChartsModelFileHandler {
      * {@inheritDoc}
      */
     @Override
-    protected String getTargetExtension() {
-        return "transformed.scc";
+    protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
+        return super.getTargetExtension(model, event, selection) + ".scc";
     }
 
     // -------------------------------------------------------------------------

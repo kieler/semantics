@@ -54,14 +54,14 @@ public enum TransitionType implements Enumerator {
     STRONGABORT(1, "STRONGABORT", "STRONGABORT"),
 
     /**
-     * The '<em><b>NORMALTERMINATION</b></em>' literal object.
+     * The '<em><b>TERMINATION</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #NORMALTERMINATION_VALUE
+     * @see #TERMINATION_VALUE
      * @generated
      * @ordered
      */
-    NORMALTERMINATION(2, "NORMALTERMINATION", "NORMALTERMINATION");
+    TERMINATION(2, "TERMINATION", "TERMINATION");
 
     /**
      * <!-- begin-user-doc -->
@@ -102,19 +102,19 @@ public enum TransitionType implements Enumerator {
     public static final int STRONGABORT_VALUE = 1;
 
     /**
-     * The '<em><b>NORMALTERMINATION</b></em>' literal value.
+     * The '<em><b>TERMINATION</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * A NORMALTERMINATION will leave a State whenever all contained
      * Regions are in final States. A normal termination may not define a guard trigger.
      * <!-- end-model-doc -->
-     * @see #NORMALTERMINATION
+     * @see #TERMINATION
      * @model
      * @generated
      * @ordered
      */
-    public static final int NORMALTERMINATION_VALUE = 2;
+    public static final int TERMINATION_VALUE = 2;
 
     /**
      * An array of all the '<em><b>Transition Type</b></em>' enumerators.
@@ -126,7 +126,7 @@ public enum TransitionType implements Enumerator {
         new TransitionType[] {
             WEAKABORT,
             STRONGABORT,
-            NORMALTERMINATION,
+            TERMINATION,
         };
 
     /**
@@ -179,7 +179,7 @@ public enum TransitionType implements Enumerator {
         switch (value) {
             case WEAKABORT_VALUE: return WEAKABORT;
             case STRONGABORT_VALUE: return STRONGABORT;
-            case NORMALTERMINATION_VALUE: return NORMALTERMINATION;
+            case TERMINATION_VALUE: return TERMINATION;
         }
         return null;
     }

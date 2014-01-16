@@ -93,7 +93,7 @@ Workflow {
 			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment { 
 				options = {
 					classSplitting = true
-					backtrack = false
+					backtrack = true
 				}
 			}
 

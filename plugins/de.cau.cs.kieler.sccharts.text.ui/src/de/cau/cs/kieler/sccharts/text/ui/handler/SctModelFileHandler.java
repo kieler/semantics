@@ -12,6 +12,7 @@ import org.eclipse.jface.viewers.ISelection;
 //import org.eclipse.xtext.resource.SaveOptions;
 //import org.eclipse.xtext.serializer.ISerializer;
 
+
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
@@ -61,9 +62,10 @@ public class SctModelFileHandler extends SCChartsModelFileHandler {
      * {@inheritDoc}
      */
     @Override
-    protected String getTargetExtension() {
-        return "transformed.sct";
+    protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
+        return super.getTargetExtension(model, event, selection) + ".sct";
     }
+
 
     // -------------------------------------------------------------------------
 

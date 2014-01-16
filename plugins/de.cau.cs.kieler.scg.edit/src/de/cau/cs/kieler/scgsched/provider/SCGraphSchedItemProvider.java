@@ -138,7 +138,8 @@ public class SCGraphSchedItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add(ScgschedPackage.Literals.SC_GRAPH_SCHED__PROBLEMS);
+            childrenFeatures.add(ScgschedPackage.Literals.SC_GRAPH_SCHED__GUARDS);
+            childrenFeatures.add(ScgschedPackage.Literals.SC_GRAPH_SCHED__ANALYSES);
         }
         return childrenFeatures;
     }
@@ -194,7 +195,8 @@ public class SCGraphSchedItemProvider
             case ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
-            case ScgschedPackage.SC_GRAPH_SCHED__PROBLEMS:
+            case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
+            case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -214,13 +216,13 @@ public class SCGraphSchedItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (ScgschedPackage.Literals.SC_GRAPH_SCHED__PROBLEMS,
-                 ScgschedFactory.eINSTANCE.createProblem()));
+                (ScgschedPackage.Literals.SC_GRAPH_SCHED__GUARDS,
+                 ScgschedFactory.eINSTANCE.createGuardExpression()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ScgschedPackage.Literals.SC_GRAPH_SCHED__PROBLEMS,
-                 ScgschedFactory.eINSTANCE.createPotentialInstantaneousLoopProblem()));
+                (ScgschedPackage.Literals.SC_GRAPH_SCHED__ANALYSES,
+                 ScgschedFactory.eINSTANCE.createAnalysis()));
     }
 
     /**

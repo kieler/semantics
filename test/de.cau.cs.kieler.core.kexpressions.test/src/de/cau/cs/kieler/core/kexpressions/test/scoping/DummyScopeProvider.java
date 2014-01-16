@@ -27,7 +27,7 @@ import org.eclipse.xtext.util.SimpleAttributeResolver;
  * This class implements a dummy scope provided declaring a bunch of dummy signals and dummy
  * variables for the KExpressions tests.
  * 
- * @author cmot
+ * @author cmot, ssm
  * 
  */
 public class DummyScopeProvider extends AbstractDeclarativeScopeProvider {
@@ -36,14 +36,10 @@ public class DummyScopeProvider extends AbstractDeclarativeScopeProvider {
     public IScope getScope(EObject context, EReference reference) {
         LinkedList<EObject> eObjectList = new LinkedList<EObject>();
 
-        eObjectList.add(new DummySignal("A"));
-        eObjectList.add(new DummySignal("B"));
-        eObjectList.add(new DummySignal("C"));
-        eObjectList.add(new DummySignal("D"));
-        eObjectList.add(new DummyVariable("varA"));
-        eObjectList.add(new DummyVariable("varB"));
-        eObjectList.add(new DummyVariable("varC"));
-        eObjectList.add(new DummyVariable("varD"));
+        eObjectList.add(new DummyValuedObject("A"));
+        eObjectList.add(new DummyValuedObject("B"));
+        eObjectList.add(new DummyValuedObject("C"));
+        eObjectList.add(new DummyValuedObject("D"));
 
         return Scopes.scopeFor(eObjectList,
                 QualifiedName.wrapper(SimpleAttributeResolver.newResolver(String.class, "name")),

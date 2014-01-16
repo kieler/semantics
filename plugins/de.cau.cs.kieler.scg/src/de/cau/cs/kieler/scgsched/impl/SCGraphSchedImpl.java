@@ -14,7 +14,8 @@
 package de.cau.cs.kieler.scgsched.impl;
 
 import de.cau.cs.kieler.scgbb.impl.SCGraphBBImpl;
-import de.cau.cs.kieler.scgsched.Problem;
+import de.cau.cs.kieler.scgsched.Analysis;
+import de.cau.cs.kieler.scgsched.GuardExpression;
 import de.cau.cs.kieler.scgsched.SCGraphSched;
 import de.cau.cs.kieler.scgsched.ScgschedPackage;
 import de.cau.cs.kieler.scgsched.Schedule;
@@ -37,7 +38,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scgsched.impl.SCGraphSchedImpl#isUnschedulable <em>Unschedulable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.impl.SCGraphSchedImpl#getSchedules <em>Schedules</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgsched.impl.SCGraphSchedImpl#getProblems <em>Problems</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.impl.SCGraphSchedImpl#getGuards <em>Guards</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.impl.SCGraphSchedImpl#getAnalyses <em>Analyses</em>}</li>
  * </ul>
  * </p>
  *
@@ -75,14 +77,24 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
     protected EList<Schedule> schedules;
 
     /**
-     * The cached value of the '{@link #getProblems() <em>Problems</em>}' containment reference list.
+     * The cached value of the '{@link #getGuards() <em>Guards</em>}' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getProblems()
+     * @see #getGuards()
      * @generated
      * @ordered
      */
-	protected EList<Problem> problems;
+	protected EList<GuardExpression> guards;
+
+				/**
+     * The cached value of the '{@link #getAnalyses() <em>Analyses</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see #getAnalyses()
+     * @generated
+     * @ordered
+     */
+	protected EList<Analysis> analyses;
 
 				/**
      * <!-- begin-user-doc -->
@@ -141,11 +153,23 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Problem> getProblems() {
-        if (problems == null) {
-            problems = new EObjectContainmentEList<Problem>(Problem.class, this, ScgschedPackage.SC_GRAPH_SCHED__PROBLEMS);
+	public EList<GuardExpression> getGuards() {
+        if (guards == null) {
+            guards = new EObjectContainmentEList<GuardExpression>(GuardExpression.class, this, ScgschedPackage.SC_GRAPH_SCHED__GUARDS);
         }
-        return problems;
+        return guards;
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EList<Analysis> getAnalyses() {
+        if (analyses == null) {
+            analyses = new EObjectContainmentEList<Analysis>(Analysis.class, this, ScgschedPackage.SC_GRAPH_SCHED__ANALYSES);
+        }
+        return analyses;
     }
 
 				/**
@@ -158,8 +182,10 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
         switch (featureID) {
             case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
                 return ((InternalEList<?>)getSchedules()).basicRemove(otherEnd, msgs);
-            case ScgschedPackage.SC_GRAPH_SCHED__PROBLEMS:
-                return ((InternalEList<?>)getProblems()).basicRemove(otherEnd, msgs);
+            case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
+                return ((InternalEList<?>)getGuards()).basicRemove(otherEnd, msgs);
+            case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
+                return ((InternalEList<?>)getAnalyses()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -176,8 +202,10 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
                 return isUnschedulable();
             case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
                 return getSchedules();
-            case ScgschedPackage.SC_GRAPH_SCHED__PROBLEMS:
-                return getProblems();
+            case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
+                return getGuards();
+            case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
+                return getAnalyses();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -198,9 +226,13 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
                 getSchedules().clear();
                 getSchedules().addAll((Collection<? extends Schedule>)newValue);
                 return;
-            case ScgschedPackage.SC_GRAPH_SCHED__PROBLEMS:
-                getProblems().clear();
-                getProblems().addAll((Collection<? extends Problem>)newValue);
+            case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
+                getGuards().clear();
+                getGuards().addAll((Collection<? extends GuardExpression>)newValue);
+                return;
+            case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
+                getAnalyses().clear();
+                getAnalyses().addAll((Collection<? extends Analysis>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -220,8 +252,11 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
             case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
                 getSchedules().clear();
                 return;
-            case ScgschedPackage.SC_GRAPH_SCHED__PROBLEMS:
-                getProblems().clear();
+            case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
+                getGuards().clear();
+                return;
+            case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
+                getAnalyses().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -239,8 +274,10 @@ public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
                 return unschedulable != UNSCHEDULABLE_EDEFAULT;
             case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
                 return schedules != null && !schedules.isEmpty();
-            case ScgschedPackage.SC_GRAPH_SCHED__PROBLEMS:
-                return problems != null && !problems.isEmpty();
+            case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
+                return guards != null && !guards.isEmpty();
+            case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
+                return analyses != null && !analyses.isEmpty();
         }
         return super.eIsSet(featureID);
     }
