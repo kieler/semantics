@@ -18,6 +18,8 @@ import de.cau.cs.kieler.ktm.extensions.TransformationMapping
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.StateType
 
 /**
  * @author als
@@ -87,6 +89,34 @@ class SCChartTestTransformation {
             }
 
             lastTransition.setTargetState(transitionOriginalTarget)
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    //--                       C O N N E C T O R S                           --
+    //-------------------------------------------------------------------------
+    // Turn every connector into a simple state and turn all outgoing 
+    // transitions into immediate transitions.
+    def Region transformConnector(Region rootRegion) {
+        clearMapping; //NEW - clear previous mapping information to assure a single consistent mapping
+
+        // Clone the complete SCCharts region 
+        var targetRootRegion = rootRegion.mappedCopy; //NEW - mapping information (changed copy to mappedCopy)
+
+        // Traverse all states
+        for (targetTransition : targetRootRegion.allContainedStates) {
+            targetTransition.transformConnector(targetRootRegion);
+        }
+        
+        targetRootRegion;
+    }
+
+    def void transformConnector(State state, Region targetRootRegion) {
+        if (state.type == StateType::CONNECTOR) {
+            state.setTypeNormal
+            for (transition : state.outgoingTransitions) {
+                transition.setImmediate(true)
+            }
         }
     }
 

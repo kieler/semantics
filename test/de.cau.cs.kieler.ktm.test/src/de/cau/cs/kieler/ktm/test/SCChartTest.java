@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.ktm.test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -44,6 +45,7 @@ public class SCChartTest extends TestCase {
             .getInstance(TransformationTreeExtensions.class);
     private Region abo;
     private Region aboSplitTE;
+    private Region aboSplitTEConnector;
     private ModelWrapper tree;
 
     /**
@@ -79,8 +81,16 @@ public class SCChartTest extends TestCase {
     protected void tearDown() throws Exception {
         // SAVE results
 
-        // save transformed ABO
-        assertNotNull(aboSplitTE);
+        File file = new File("./artifacts/ABO.split.scc");
+        saveSCC(aboSplitTE, file);
+        assertTrue(file.exists());
+        
+        file = new File("./artifacts/ABO.split.connect.scc");
+        saveSCC(aboSplitTEConnector, file);
+        assertTrue(file.exists());
+        
+        
+        assertNotNull(tree);
 
         // Create a resource set.
         ResourceSet resourceSet = new ResourceSetImpl();
@@ -90,34 +100,11 @@ public class SCChartTest extends TestCase {
                 .put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
 
         // Get the URI of the model file.
-        File file = new File("./artifacts/ABO.transformed.scc");
+        file = new File("./artifacts/ABO.ktmt");
         URI fileURI = URI.createFileURI(file.getAbsolutePath());
 
         // Create a resource for this file.
         Resource resource = resourceSet.createResource(fileURI);
-
-        // Add the model objects to the contents.
-        resource.getContents().add(aboSplitTE);
-
-        // Save the contents of the resource to the file system.
-        resource.save(Collections.EMPTY_MAP);
-
-        assertTrue(file.exists());
-        assertNotNull(tree);
-
-        // Create a resource set.
-        resourceSet = new ResourceSetImpl();
-
-        // this tells EMF to use XML to save the model
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-                .put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
-
-        // Get the URI of the model file.
-        file = new File("./artifacts/ABO.ktmt");
-        fileURI = URI.createFileURI(file.getAbsolutePath());
-
-        // Create a resource for this file.
-        resource = resourceSet.createResource(fileURI);
 
         // Add the model objects to the contents.
         resource.getContents().add(tree);
@@ -139,6 +126,30 @@ public class SCChartTest extends TestCase {
         super.tearDown();
     }
 
+    public void saveSCC(Region model, File file) throws IOException {
+        // save transformed ABO
+        assertNotNull(model);
+
+        // Create a resource set.
+        ResourceSet resourceSet = new ResourceSetImpl();
+
+        // this tells EMF to use XML to save the model
+        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
+                .put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
+
+        // Get the URI of the model file.
+        URI fileURI = URI.createFileURI(file.getAbsolutePath());
+
+        // Create a resource for this file.
+        Resource resource = resourceSet.createResource(fileURI);
+
+        // Add the model objects to the contents.
+        resource.getContents().add(model);
+
+        // Save the contents of the resource to the file system.
+        resource.save(Collections.EMPTY_MAP);
+    }
+
     public final void testSCC() {
         assertNotNull(abo);
         // clear mapping
@@ -149,10 +160,20 @@ public class SCChartTest extends TestCase {
 
         ModelWrapper aboSplitTEModel =
                 transformationTree.initializeTransformationTree(transformation.extractMapping(),
-                        "splitTriggerEffect", abo, "coreSCChart", aboSplitTE, "coreSCChart-splitTriggerEffect");
+                        "splitTriggerEffect", abo, "coreSCChart", aboSplitTE,
+                        "coreSCChart-splitTriggerEffect");
         assertNotNull(aboSplitTEModel);
 
-        tree = transformationTree.root(aboSplitTEModel);
+        aboSplitTEConnector = transformation.transformConnector(aboSplitTE);
+        assertNotNull(aboSplitTEConnector);
+
+        ModelWrapper aboSplitTEConnectorModel =
+                transformationTree.addTransformationToTree(transformation.extractMapping(),
+                        aboSplitTEModel, "connector", aboSplitTE, aboSplitTEConnector,
+                        "coreSCChart-splitTriggerEffect-connector");
+        assertNotNull(aboSplitTEConnectorModel);
+
+        tree = transformationTree.root(aboSplitTEConnectorModel);
     }
 
 }
