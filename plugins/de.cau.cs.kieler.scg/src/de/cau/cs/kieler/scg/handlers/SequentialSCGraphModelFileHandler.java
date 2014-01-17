@@ -23,6 +23,8 @@ import com.google.inject.Injector;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
+import de.cau.cs.kieler.scg.SCGraph;
+import de.cau.cs.kieler.scg.optimizer.NotGuardMinimizer;
 import de.cau.cs.kieler.scg.transformations.SCGSchedToSeqSCGTransformation;
 import de.cau.cs.kieler.scgsched.SCGraphSched;
 
@@ -71,12 +73,16 @@ public class SequentialSCGraphModelFileHandler extends AbstractConvertModelHandl
 
         SCGSchedToSeqSCGTransformation transformation =
         		Guice.createInjector().getInstance(SCGSchedToSeqSCGTransformation.class);
+        NotGuardMinimizer notGuardMinimizer = 
+                        Guice.createInjector().getInstance(NotGuardMinimizer.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         transformed = model;
         if (commandString.equals(SCGSCHED_TRANSFORMATION)) {
+
             transformed = transformation.transformSCGSchedToSeqSCG((SCGraphSched) model);
+            transformed = notGuardMinimizer.optimize((SCGraph) transformed);
         } 
         return transformed;
     }
