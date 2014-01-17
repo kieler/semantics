@@ -25,10 +25,13 @@ import de.cau.cs.kieler.core.krendering.KInvisibility;
 import de.cau.cs.kieler.core.krendering.KRectangle;
 import de.cau.cs.kieler.core.krendering.KRendering;
 import de.cau.cs.kieler.core.krendering.KRenderingFactory;
+import de.cau.cs.kieler.core.properties.MapPropertyHolder;
 import de.cau.cs.kieler.klighd.IAction;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.ktm.klighd.TransformationTreeDiagramSynthesis;
+import de.cau.cs.kieler.ktm.klighd.resolve.EObjectSynthesisModelWrapperWrapper;
 import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 
 /**
@@ -77,10 +80,22 @@ public class SelectionDisplayAction implements IAction {
                 }
 
                 KNode subDiagram = null;
-                if (sourceMW.isTransient()) {
-                    vc.configureOption(TransformationTreeDiagramSynthesis.SYNTHESIZE_TREE, false);
-                    subDiagram = LightDiagramServices.translateModel(sourceMW, vc);
-                    vc.configureOption(TransformationTreeDiagramSynthesis.SYNTHESIZE_TREE, true);
+                boolean showModel = true;
+                if (vc.getOptionValue(TransformationTreeDiagramSynthesis.SHOW_MODELS) != null) {
+                    showModel =
+                            ((Boolean) (vc
+                                    .getOptionValue(TransformationTreeDiagramSynthesis.SHOW_MODELS)))
+                                    .booleanValue();
+                }
+                if (sourceMW.isTransient() || !showModel) {
+                    MapPropertyHolder systhesisProperty = new MapPropertyHolder();
+                    systhesisProperty.setProperty(
+                            KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+                            "de.cau.cs.kieler.ktm.klighd.TransformationTreeDiagramSynthesis");
+                    subDiagram =
+                            LightDiagramServices.translateModel(
+                                    new EObjectSynthesisModelWrapperWrapper(sourceMW), vc,
+                                    systhesisProperty);
                 } else {
                     subDiagram =
                             LightDiagramServices.translateModel(sourceMW.getRootObject()
@@ -149,6 +164,6 @@ public class SelectionDisplayAction implements IAction {
         KInvisibility invisibility = KRenderingFactory.eINSTANCE.createKInvisibility();
         invisibility.setInvisible(true);
         rootRectangle.getStyles().add(invisibility);
-        node.getData().add(rootRectangle);       
+        node.getData().add(rootRectangle);
     }
 }

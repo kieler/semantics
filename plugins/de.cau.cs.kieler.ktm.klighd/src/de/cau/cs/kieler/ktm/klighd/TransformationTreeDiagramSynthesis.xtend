@@ -29,9 +29,11 @@ import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions
+import de.cau.cs.kieler.ktm.klighd.resolve.EObjectSynthesisModelWrapperWrapper
 import de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper
 import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper
 import java.util.List
@@ -78,11 +80,9 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
     public static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadows", true);
     public static val SynthesisOption SHOW_MODELS = SynthesisOption::createCheckOption("Model visualization", true);
     public static val SynthesisOption SHOW_ATTRIBUTES = SynthesisOption::createCheckOption("EObject attributes", false);
-    public static val SynthesisOption SELECTIVE_MAPPING_VISUALISATION = SynthesisOption::
-        createCheckOption("Selective mapping visualization", true);
 
     override public getDisplayedSynthesisOptions() {
-        return newLinkedList(SHOW_SHADOW, SHOW_MODELS, SHOW_ATTRIBUTES, SELECTIVE_MAPPING_VISUALISATION);
+        return newLinkedList(SHOW_SHADOW, SHOW_MODELS, SHOW_ATTRIBUTES);
     }
 
     override public getDisplayedLayoutOptions() {
@@ -98,19 +98,6 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
     // Internal Display options
     public static val SynthesisOption SYNTHESIZE_TREE = SynthesisOption::createCheckOption("[synthesize tree]", true);
 
-    //
-    //    // -------------------------------------------------------------------------
-    //    // Register own layouter for advanced edge placement
-    //    //  - Priority must be greater than other layout out configurations e.g. StateLayoutConfig
-    //    //    - Otherwise layout will fail
-    //    private VolatileLayoutConfig postLayoutConfig = new VolatileLayoutConfig(200) => [
-    //        it.setValue(LayoutOptions.ALGORITHM, TransformationTreeLayoutProvider.ID);
-    //        it.setValue(LayoutOptions.SIZE_CONSTRAINT, SizeConstraint.fixed);
-    //    ];
-    //
-    //    override List<? extends ILayoutConfig> getAdditionalLayoutConfigs() {
-    //        newArrayList(postLayoutConfig);
-    //    }
     // -------------------------------------------------------------------------
     // Some color and pattern constants
     private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor() =>
@@ -127,9 +114,20 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
     override KNode transform(ModelWrapper model) {
         val rootNode = createNode();
 
-        //TODO access parent viewContext
-        //if(parentVC.getOptionValue(SYNTHESIZE_TREE)){
-        if (true) {
+        if (model instanceof EObjectSynthesisModelWrapperWrapper) {
+            rootNode.children += (model as EObjectSynthesisModelWrapperWrapper).modelWrapper.modelObjects.map [
+                it.translateObject;
+            ];
+            rootNode.addRoundedRectangle(8, 8, 1) => [
+                it.lineWidth = 2;
+                it.foreground = "gray".color;
+                if (SHOW_SHADOW.booleanValue) {
+                    it.shadow = "black".color;
+                    it.shadow.XOffset = 4;
+                    it.shadow.YOffset = 4;
+                }
+            ];
+        } else {
             rootNode.addInvisibleContainerRendering.addSingleClickAction(
                 "de.cau.cs.kieler.ktm.klighd.actions.SelectionDisplayAction");
 
@@ -153,11 +151,6 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
                     ];
                 }
             ];
-        } else {
-            rootNode.children += model.modelObjects.map [
-                //TODO access parent viewContext
-                it.translateObject(SHOW_ATTRIBUTES.booleanValue, SHOW_SHADOW.booleanValue);
-            ];
         }
 
         return rootNode;
@@ -170,7 +163,7 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
         node.putToLookUpWith(model);
 
         //Model's visualization like States in SCCharts
-        val figure = node.createFigure(SHOW_SHADOW.booleanValue);
+        val figure = node.createFigure;
 
         figure.addText(model.modelTypeID).putToLookUpWith(model) => [
             it.fontSize = 11;
@@ -191,13 +184,18 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
         root.children += node;
     }
 
+    def KNode translateObject(EObjectWrapper object, ViewContext vc) {
+        this.use(vc);
+        translateObject(object);
+    }
+
     /**
      * creates a Node for given model object.
      */
-    def KNode translateObject(EObjectWrapper object, boolean showAttributes, boolean showShadows) {
+    private def KNode translateObject(EObjectWrapper object) {
         val node = object.createNode.putToLookUpWith(object);
 
-        val figure = node.createFigure(showShadows);
+        val figure = node.createFigure;
 
         figure.setGridPlacement(1);
 
@@ -214,7 +212,7 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
             it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
         ];
 
-        if (showAttributes && object.EObject != null) {
+        if (SHOW_ATTRIBUTES.booleanValue && object.EObject != null) {
             object.EObject.eClass.EAllAttributes.filterNull.forEach [
                 figure.addText(it.name + ": " + String::valueOf(object.EObject.eGet(it))) => [
                     it.fontSize = 9;
@@ -227,13 +225,13 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
         return node;
     }
 
-    def createFigure(KNode node, boolean showShadow) {
+    def createFigure(KNode node) {
         val figure = node.addRoundedRectangle(8, 8, 1).background = "white".color;
         figure.lineWidth = 1;
         figure.foreground = "gray".color;
         figure.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
 
-        if (showShadow) {
+        if (SHOW_SHADOW.booleanValue) {
             figure.shadow = "black".color;
             figure.shadow.XOffset = 4;
             figure.shadow.YOffset = 4;

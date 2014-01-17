@@ -20,6 +20,7 @@ import de.cau.cs.kieler.core.kgraph.KGraphElement
 import de.cau.cs.kieler.core.kgraph.KLabel
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.kgraph.KPort
+import de.cau.cs.kieler.core.krendering.LineStyle
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
@@ -34,18 +35,12 @@ import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions
-import de.cau.cs.kieler.ktm.klighd.layout.TransformationTreeLayoutProperties
 import de.cau.cs.kieler.ktm.klighd.resolve.ResolveModelWrapper
+import de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper
 import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper
-import de.cau.cs.kieler.core.krendering.LineStyle
-import de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper
-import java.util.HashMap
-import de.cau.cs.kieler.klighd.ViewContext
 
 /**
  * KLighD visualization for Transformation Mapping Graphs.
@@ -82,7 +77,7 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
     extension TransformationTreeExtensions
 
     @Inject
-    extension TransformationTreeDiagramSynthesis
+    extension TransformationTreeDiagramSynthesis ttSyn
 
     // -------------------------------------------------------------------------
     // The Main entry transform function
@@ -97,19 +92,17 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
         val sourceModelWrapper = resolvePair.sourceModel;
         val targetModelWrapper = resolvePair.targetModel;
 
-        //TODO use parent vContext
-        val vc = this.getUsedContext();
-
         if (sourceModelWrapper.transient || sourceModelWrapper.transient ||
-            !((vc.getOptionValue(TransformationTreeDiagramSynthesis::SHOW_MODELS) as Boolean) ?: true)) {
-            rootNode.addObjectMappingNodes(resolveWrapperMapping(sourceModelWrapper, targetModelWrapper), vc);
+            !TransformationTreeDiagramSynthesis::SHOW_MODELS.booleanValue) {
+            rootNode.addObjectMappingNodes(resolveWrapperMapping(sourceModelWrapper, targetModelWrapper));
         } else {
+            val vc = usedContext;
             val sourceDiagramNode = LightDiagramServices::translateModel(sourceModelWrapper.rootObject.EObject, vc);
             val targetDiagramNode = LightDiagramServices::translateModel(targetModelWrapper.rootObject.EObject, vc);
 
             if (sourceDiagramNode == null || targetDiagramNode == null || sourceDiagramNode.children.empty ||
                 targetDiagramNode.children.empty) {
-                rootNode.addObjectMappingNodes(resolveWrapperMapping(sourceModelWrapper, targetModelWrapper), vc);
+                rootNode.addObjectMappingNodes(resolveWrapperMapping(sourceModelWrapper, targetModelWrapper));
             } else {
                 val mapping = resolveMapping(sourceModelWrapper, sourceModelWrapper.rootObject.EObject,
                     targetModelWrapper, targetModelWrapper.rootObject.EObject);
@@ -118,9 +111,7 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
                     targetDiagramNode.addTargetRectangle;
                     rootNode.children += sourceDiagramNode;
                     rootNode.children += targetDiagramNode;
-                    translateMappingToEdges(sourceDiagramNode, targetDiagramNode, mapping,
-                        (vc.getOptionValue(TransformationTreeDiagramSynthesis::SELECTIVE_MAPPING_VISUALISATION) as Boolean) ?:
-                            false);
+                    translateMappingToEdges(sourceDiagramNode, targetDiagramNode, mapping);
                 } else {
                     rootNode.children += createNode => [it.addRectangle.addText("ERROR: No mapping available");];
                 }
@@ -129,24 +120,31 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
         return rootNode;
     }
 
-    def addObjectMappingNodes(KNode rootNode, Multimap<EObjectWrapper, EObjectWrapper> mapping, ViewContext vc) {
-        val showShadow = (vc.getOptionValue(TransformationTreeDiagramSynthesis::SHOW_SHADOW) as Boolean) ?: true;
-        val showAttributes = (vc.getOptionValue(TransformationTreeDiagramSynthesis::SHOW_ATTRIBUTES) as Boolean) ?: true;
+    private def addObjectMappingNodes(KNode rootNode, Multimap<EObjectWrapper, EObjectWrapper> mapping) {
         if (mapping != null && !mapping.empty) {
             mapping.entries.forEach [ entry |
                 createEdge() => [
-                    it.source = entry.key.transformObjectWrapperNode(rootNode, showShadow, showAttributes, true);
-                    it.target = entry.value.transformObjectWrapperNode(rootNode, showShadow, showAttributes, false);
+                    it.source = entry.key.transformObjectWrapperNode(rootNode, true);
+                    it.target = entry.value.transformObjectWrapperNode(rootNode, false);
                     it.addPolyline.addArrowDecorator;
                 ]
+            ];
+            rootNode.addRoundedRectangle(8, 8, 1) => [
+                it.lineWidth = 2;
+                it.foreground = "gray".color;
+                if (TransformationTreeDiagramSynthesis::SHOW_SHADOW.booleanValue) {
+                    it.shadow = "black".color;
+                    it.shadow.XOffset = 4;
+                    it.shadow.YOffset = 4;
+                }
             ];
         } else {
             rootNode.children += createNode => [it.addRectangle.addText("ERROR: No mapping available");];
         }
     }
 
-    private def KNode create node : translateObject(object, showAttributes, showShadows) transformObjectWrapperNode(
-        EObjectWrapper object, KNode rootNode, boolean showAttributes, boolean showShadows, boolean isSource) {
+    private def KNode create node : translateObject(object,usedContext) transformObjectWrapperNode(
+        EObjectWrapper object, KNode rootNode, boolean isSource) {
         rootNode.children += node;
         if (isSource) {
             node.addSourceRectangle;
@@ -155,8 +153,8 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
         }
     }
 
-    def translateMappingToEdges(KNode sourceDiagramNode, KNode targetDiagramNode, Multimap<EObject, EObject> mapping,
-        boolean invisibleEdges) {
+    private def translateMappingToEdges(KNode sourceDiagramNode, KNode targetDiagramNode,
+        Multimap<EObject, EObject> mapping) {
         val elementMapping = HashMultimap::create;
         sourceDiagramNode.eAllContentsOfType(KGraphElement).forEach [
             val data = it.getData(KLayoutData);
@@ -180,7 +178,6 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
                         val edge = createEdge;
                         edge.addPolyline => [
                             it.foreground = "red".color;
-                            it.invisible = invisibleEdges;
                             it.addArrowDecorator;
                         ]
                         edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true);
@@ -190,8 +187,9 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
                             edge.setSource(source as KNode);
                         } else {
                             edge.setSource(getNearestNode(source as KGraphElement, sourceDiagramNode));
-                            edge.setLayoutOption(KlighdProperties::ACTUAL_EDGE_SOURCE,
-                                source as KGraphElement);
+
+                        //TODO activate when advanced Edge placement is implemented
+                        //edge.setLayoutOption(KlighdProperties::ACTUAL_EDGE_SOURCE, source as KGraphElement);
                         }
 
                         // actual target
@@ -199,16 +197,14 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
                             edge.setTarget(target as KNode);
                         } else {
                             edge.setTarget(getNearestNode(target as KGraphElement, targetDiagramNode));
-                            edge.setLayoutOption(KlighdProperties::ACTUAL_EDGE_TARGET,
-                                target as KGraphElement);
+
+                        //TODO activate when advanced Edge placement is implemented
+                        //edge.setLayoutOption(KlighdProperties::ACTUAL_EDGE_TARGET,target as KGraphElement);
                         }
                     }
                 ];
             ];
         ];
-
-    // TODO rederinges rausfiltern und daran die action anhängen die
-    // pfeile einzelnt highlighted
     }
 
     def KNode getNearestNode(KGraphElement elem, KNode defaultNode) {
@@ -224,14 +220,14 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
         return defaultNode;
     }
 
-    def addSourceRectangle(KNode node) {
+    private def addSourceRectangle(KNode node) {
         node.addRectangle => [
             it.foreground = "red".color;
             it.lineStyle = LineStyle.DOT;
         ];
     }
 
-    def addTargetRectangle(KNode node) {
+    private def addTargetRectangle(KNode node) {
         node.addRectangle => [
             it.foreground = "blue".color;
             it.lineStyle = LineStyle.DOT;
