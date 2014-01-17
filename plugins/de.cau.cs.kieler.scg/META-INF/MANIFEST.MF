@@ -8,7 +8,7 @@ Bundle-Activator: de.cau.cs.kieler.scg.SCGPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.core.resources;bundle-version="3.8.101",
+ org.eclipse.core.resources,
  org.eclipse.emf.ecore;visibility:=reexport,
  de.cau.cs.kieler.core.annotations;visibility:=reexport,
  de.cau.cs.kieler.core.kexpressions;visibility:=reexport,
