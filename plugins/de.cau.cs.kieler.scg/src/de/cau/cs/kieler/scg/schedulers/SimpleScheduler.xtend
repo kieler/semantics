@@ -39,6 +39,8 @@ import de.cau.cs.kieler.scg.analyzer.InterleavedAssignmentAnalyzer
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scgsched.Schedule
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -89,7 +91,7 @@ class SimpleScheduler extends AbstractSCGScheduler {
     // -------------------------------------------------------------------------
     
     /** Name of the go signal. */
-    private static val String GOGUARDNAME = "_GO"
+    protected static val String GOGUARDNAME = "_GO"
     
     // -------------------------------------------------------------------------
     // -- Globals 
@@ -149,27 +151,16 @@ class SimpleScheduler extends AbstractSCGScheduler {
 		scg
 	}
 	
-	/**
-	 * The build method builds the schedules for the given SCG. It uses the information from the dependency and
-	 * basic block analyses to build the guard expressions of the blocks. A schedule itself is an ordered list
-	 * of scheduling blocks. The next transformation step can use this information to create a new SCG containing
-	 * the guard expressions in the correct order.<br>
-     * <pre>
-     * Scheduler: Analyses --> Build schedule --> Optimization
-     * </pre>
-	 * This method is called by the interface. There is no need to call it directly.
-	 * 
-	 * @param scg
-	 * 			the source SCG
-	 * @return Returns the enriched SCG model.
-	 */
-    override protected SCGraphSched build(SCGraphSched scg) {
-    	// Create a new schedule using the scgsched factory.
-        val schedule = ScgschedFactory::eINSTANCE.createSchedule
-        // Create and fill a list for all scheduling blocks.
+    protected override SchedulingConstraints orderSchedulingBlocks(SCGraphSched scg) {
         val schedulingBlocks = <SchedulingBlock> newLinkedList
         scg.basicBlocks.forEach[schedulingBlocks.addAll(it.schedulingBlocks)]
         
+        new SchedulingConstraints => [
+        	it.schedulingBlocks = schedulingBlocks
+        ]    
+    }
+    
+    protected override ValuedObject createGOSignal(SCGraphSched scg) {
         /**
          * To form (circuit like) guard expression a GO signal must be created.  
          * It is needed in the guard expression of blocks that are active
@@ -183,9 +174,13 @@ class SimpleScheduler extends AbstractSCGScheduler {
         	type = ValueType::BOOL
         	scg.valuedObjects.add(it)
         ]
-        
+    }
+    
+    protected override boolean createSchedule(SCGraphSched scg, Schedule schedule, SchedulingConstraints constraints) {
         // fixpoint is set to true if an iteration cannot set any remaining blocks.
         var fixpoint  = false
+        
+        val schedulingBlocks = <SchedulingBlock> newArrayList => [ it.addAll(constraints.schedulingBlocks) ]
         
         // As long as there are blocks remaining and we have not reached a fix point.
         while (schedulingBlocks.size > 0 && !fixpoint) {
@@ -232,10 +227,36 @@ class SimpleScheduler extends AbstractSCGScheduler {
                 }
             }
         }
+    	
+    	!fixpoint 
+    }
+	
+	
+	/**
+	 * The build method builds the schedules for the given SCG. It uses the information from the dependency and
+	 * basic block analyses to build the guard expressions of the blocks. A schedule itself is an ordered list
+	 * of scheduling blocks. The next transformation step can use this information to create a new SCG containing
+	 * the guard expressions in the correct order.<br>
+     * <pre>
+     * Scheduler: Analyses --> Build schedule --> Optimization
+     * </pre>
+	 * This method is called by the interface. There is no need to call it directly.
+	 * 
+	 * @param scg
+	 * 			the source SCG
+	 * @return Returns the enriched SCG model.
+	 */
+    override protected SCGraphSched build(SCGraphSched scg) {
+    	// Create a new schedule using the scgsched factory.
+        val schedule = ScgschedFactory::eINSTANCE.createSchedule
+        // Create and fill a list for all scheduling blocks.
+        val schedulingConstraints = scg.orderSchedulingBlocks
+        
+        val schedulable = scg.createSchedule(schedule, schedulingConstraints)
         
         // Print out results on the console
         // and add the scheduling information to the graph.
-        if (fixpoint) {
+        if (!schedulable) {
             System::out.println("The SCG is NOT ASC-schedulable!")
             scg.setUnschedulable(true)            
             scg.schedules.add(schedule)
