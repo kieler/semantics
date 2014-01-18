@@ -59,6 +59,10 @@
             class="de.cau.cs.kieler.scg.handlers.CompleteSCGraphModelFileHandler"
             commandId="de.cau.cs.kieler.scg.commands.AllSCGTransformations">
       </handler>
+      <handler
+            class="de.cau.cs.kieler.scg.handlers.SCGraphSchedulingModelFileHandler"
+            commandId="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation.ClusterScheduler">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -89,6 +93,11 @@
       <command
             id="de.cau.cs.kieler.scg.commands.AllSCGTransformations"
             name="All SCG Transformations">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.scg.commands.category"
+            id="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation.ClusterScheduler"
+            name="SCG with Scheduling Data (ClusterScheduler)">
       </command>
    </extension>
    <extension
@@ -238,6 +247,30 @@
          <command
                commandId="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation"
                label="SCG with Scheduling Data"
+               mnemonic="A"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scgbb">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
+         <command
+               commandId="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation.ClusterScheduler"
+               label="SCG with Scheduling Data (ClusterScheduler)"
                mnemonic="A"
                style="push">
             <visibleWhen

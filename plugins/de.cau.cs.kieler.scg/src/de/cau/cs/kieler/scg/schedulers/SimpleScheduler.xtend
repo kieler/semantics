@@ -41,6 +41,7 @@ import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scgsched.Schedule
+import java.util.List
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -176,6 +177,36 @@ class SimpleScheduler extends AbstractSCGScheduler {
         ]
     }
     
+    protected def boolean isPlaceable(SchedulingBlock schedulingBlock, List<SchedulingBlock> remainingBlocks, 
+    	Schedule schedule, SCGraphSched scg
+    ) {
+       	// Assume all preconditions are met and query parent basic block.
+        var placeable = true
+        val parentBB = schedulingBlock.eContainer as BasicBlock
+                
+        // For all predecessor blocks check whether they are already processed.
+        for(pred : parentBB.predecessors){
+            for(sb : pred.basicBlock.schedulingBlocks){
+           	// If any scheduling block of that basic block is not already in our schedule,
+           	// the precondition test fails. Set placeable to false.
+	            if (!schedule.schedulingBlocks.contains(sb)) { placeable = false }
+            }
+        }
+                
+        // Basically, perform the same test for dependency. We cannot create a guard expression 
+        // if any block containing a dependency is still in our list.
+        for(dep : schedulingBlock.dependencies) {
+            if (dep.concurrent && !dep.confluent) {
+           	// If the interleaved assignment analyzer marked this dependency as interleaving, ignore it.
+    	       	if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
+	    	      	if (!schedule.schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) { placeable = false }
+                
+            }
+    	}
+    	
+    	placeable
+    }
+    
     protected override boolean createSchedule(SCGraphSched scg, Schedule schedule, SchedulingConstraints constraints) {
         // fixpoint is set to true if an iteration cannot set any remaining blocks.
         var fixpoint  = false
@@ -192,32 +223,10 @@ class SimpleScheduler extends AbstractSCGScheduler {
             
             // For each block try to process it.
             for(block : schedulingBlocksCopy) {
-            	// Assume all preconditions are met and query parent basic block.
-                var placeable = true
-                val parentBB = block.eContainer as BasicBlock
-                
-                // For all predecessor blocks check whether they are already processed.
-                for(pred:parentBB.predecessors){
-                    for(sb:pred.basicBlock.schedulingBlocks){
-                    	// If any scheduling block of that basic block is not already in our schedule,
-                    	// the precondition test fails. Set placeable to false.
-                        if (!schedule.schedulingBlocks.contains(sb)) { placeable = false }
-                    }
-                }
-                
-                // Basically, perform the same test for dependency. We cannot create a guard expression 
-                // if any block containing a dependency is still in our list.
-                for(dep:block.dependencies) {
-                    if (dep.concurrent && !dep.confluent) {
-                    	// If the interleaved assignment analyzer marked this dependency as interleaving, ignore it.
-                    	if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
-	                    	if (!schedule.schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) { placeable = false }
-                    }
-                }
                 
                 // If all preconditions are met, process this block, add it to the schedule and create its guard expression.
                 // Then, remove it from our list of remaining blocks.
-                if (placeable) {
+                if (block.isPlaceable(schedulingBlocks, schedule, scg)) {
                     schedule.schedulingBlocks.add(block)
                     scg.guards += block.createGuardExpression(scg)
                     schedulingBlocks.remove(block)
