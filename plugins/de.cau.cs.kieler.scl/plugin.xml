@@ -92,7 +92,7 @@
             name="Transform SCG to SCL">
       </command>
       <category
-            id="de.cau.cs.kieler.scg.scl.commands.category"
+            id="de.cau.cs.kieler.scl.commands.category"
             name="SCL Category">
       </category>
    </extension>
