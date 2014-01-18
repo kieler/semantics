@@ -258,6 +258,9 @@ class SimpleScheduler extends AbstractSCGScheduler {
     override protected SCGraphSched build(SCGraphSched scg) {
     	// Create a new schedule using the scgsched factory.
         val schedule = ScgschedFactory::eINSTANCE.createSchedule
+        
+        scg.createGOSignal
+        
         // Create and fill a list for all scheduling blocks.
         val schedulingConstraints = scg.orderSchedulingBlocks
         
