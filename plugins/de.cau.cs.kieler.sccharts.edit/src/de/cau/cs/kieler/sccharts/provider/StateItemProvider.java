@@ -298,7 +298,8 @@ public class StateItemProvider
             childFeature == SCChartsPackage.Literals.STATE__REGIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__RENAMINGS ||
             childFeature == SCChartsPackage.Literals.STATE__OUTGOING_TRANSITIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT;
+            childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT ||
+            childFeature == SCChartsPackage.Literals.SCOPE__TYPE_GROUPS;
 
         if (qualify) {
             return getString

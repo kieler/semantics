@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts.impl;
 import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.sccharts.Action;
@@ -56,6 +57,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBodyContents <em>Body Contents</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBodyText <em>Body Text</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getRenamings <em>Renamings</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getTypeGroups <em>Type Groups</em>}</li>
  * </ul>
  * </p>
  *
@@ -168,6 +170,16 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * @ordered
      */
     protected EList<Substitution> renamings;
+
+    /**
+     * The cached value of the '{@link #getTypeGroups() <em>Type Groups</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTypeGroups()
+     * @generated
+     * @ordered
+     */
+    protected EList<TypeGroup> typeGroups;
 
     /**
      * <!-- begin-user-doc -->
@@ -364,6 +376,18 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<TypeGroup> getTypeGroups() {
+        if (typeGroups == null) {
+            typeGroups = new EObjectContainmentEList<TypeGroup>(TypeGroup.class, this, SCChartsPackage.SCOPE__TYPE_GROUPS);
+        }
+        return typeGroups;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -392,6 +416,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return ((InternalEList<?>)getBodyText()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__RENAMINGS:
                 return ((InternalEList<?>)getRenamings()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.SCOPE__TYPE_GROUPS:
+                return ((InternalEList<?>)getTypeGroups()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -421,6 +447,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return getBodyText();
             case SCChartsPackage.SCOPE__RENAMINGS:
                 return getRenamings();
+            case SCChartsPackage.SCOPE__TYPE_GROUPS:
+                return getTypeGroups();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -462,6 +490,10 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 getRenamings().clear();
                 getRenamings().addAll((Collection<? extends Substitution>)newValue);
                 return;
+            case SCChartsPackage.SCOPE__TYPE_GROUPS:
+                getTypeGroups().clear();
+                getTypeGroups().addAll((Collection<? extends TypeGroup>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -498,6 +530,9 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SCChartsPackage.SCOPE__RENAMINGS:
                 getRenamings().clear();
                 return;
+            case SCChartsPackage.SCOPE__TYPE_GROUPS:
+                getTypeGroups().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -526,6 +561,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return bodyText != null && !bodyText.isEmpty();
             case SCChartsPackage.SCOPE__RENAMINGS:
                 return renamings != null && !renamings.isEmpty();
+            case SCChartsPackage.SCOPE__TYPE_GROUPS:
+                return typeGroups != null && !typeGroups.isEmpty();
         }
         return super.eIsSet(featureID);
     }

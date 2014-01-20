@@ -31,17 +31,20 @@ import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.OperatorType;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.sccharts.Assignment;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
 
 /**
@@ -194,7 +197,13 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         boolean inLogicalContainer = false;
         Scope scope = (Scope) container;
         do {
-            for (ValuedObject s : scope.getValuedObjects()) {
+            
+            List<ValuedObject> m = Lists.newArrayList();
+            for (TypeGroup g : scope.getTypeGroups()) {
+                m.addAll(g.getValuedObjects());
+            }
+            
+            for (ValuedObject s : Iterables.concat(scope.getValuedObjects(), m)) {
                 l.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
                         Collections.<String, String> emptyMap()));
             }

@@ -191,7 +191,8 @@ public class RegionItemProvider
             childFeature == SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__RENAMINGS ||
             childFeature == SCChartsPackage.Literals.REGION__STATES ||
-            childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT;
+            childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT ||
+            childFeature == SCChartsPackage.Literals.SCOPE__TYPE_GROUPS;
 
         if (qualify) {
             return getString

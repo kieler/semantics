@@ -17,6 +17,7 @@ import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.sccharts.Assignment;
@@ -283,8 +284,18 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.TYPE_GROUP:
+				if(context == grammarAccess.getTypeGroupRule()) {
+					sequence_TypeGroup(context, (TypeGroup) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.VALUED_OBJECT:
-				if(context == grammarAccess.getValuedObjectRule()) {
+				if(context == grammarAccess.getValuedObject2Rule()) {
+					sequence_ValuedObject2(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getValuedObjectRule()) {
 					sequence_ValuedObject(context, (ValuedObject) semanticObject); 
 					return; 
 				}
@@ -477,7 +488,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         label=STRING? 
 	 *         (
 	 *             (bodyReference=[State|ID] (renamings+=Substitution renamings+=Substitution*)?) | 
-	 *             ((valuedObjects+=ValuedObject | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
+	 *             ((typeGroups+=TypeGroup | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
 	 *         )? 
 	 *         outgoingTransitions+=Transition*
 	 *     )
@@ -528,6 +539,24 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *     )
 	 */
 	protected void sequence_Transition(EObject context, Transition semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (type=ValueType arrayCardinalities+=INT* valuedObjects+=ValuedObject2 valuedObjects+=ValuedObject2*)
+	 */
+	protected void sequence_TypeGroup(EObject context, TypeGroup semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name=ID initialValue=Expression? combineOperator=CombineOperator?)
+	 */
+	protected void sequence_ValuedObject2(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
