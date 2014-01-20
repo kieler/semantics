@@ -283,6 +283,52 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.DoubleValue} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected DoubleValueItemProvider doubleValueItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.DoubleValue}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createDoubleValueAdapter() {
+        if (doubleValueItemProvider == null) {
+            doubleValueItemProvider = new DoubleValueItemProvider(this);
+        }
+
+        return doubleValueItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.TypeGroup} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected TypeGroupItemProvider typeGroupItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.TypeGroup}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createTypeGroupAdapter() {
+        if (typeGroupItemProvider == null) {
+            typeGroupItemProvider = new TypeGroupItemProvider(this);
+        }
+
+        return typeGroupItemProvider;
+    }
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -390,6 +436,8 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
         if (boolValueItemProvider != null) boolValueItemProvider.dispose();
         if (operatorExpressionItemProvider != null) operatorExpressionItemProvider.dispose();
         if (textExpressionItemProvider != null) textExpressionItemProvider.dispose();
+        if (doubleValueItemProvider != null) doubleValueItemProvider.dispose();
+        if (typeGroupItemProvider != null) typeGroupItemProvider.dispose();
     }
 
 }

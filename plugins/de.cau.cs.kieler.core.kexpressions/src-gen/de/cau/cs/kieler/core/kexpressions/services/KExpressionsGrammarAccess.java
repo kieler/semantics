@@ -168,13 +168,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNotExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		////OrExpression returns Expression:
+		//
 		////	CompareOperation ({OperatorExpression.subExpressions+=current} operator=(OrOperator) subExpressions+=CompareOperation)*;
+		//
 		//////	{OperatorExpression} subExpressions += CompareOperation (/ *{OperatorExpression.subExpressions+=current}* / operator=(AndOperator|OrOperator) subExpressions+=CompareOperation)*;
+		//
 		////
-		////AndExpression returns Expression:
+		// //AndExpression returns Expression:
+		//
 		////	CompareOperation ({OperatorExpression.subExpressions+=current} operator=(AndOperator) subExpressions+=CompareOperation)*;
+		//
 		//// Example: 42 <= val(A)
-		//CompareOperation returns Expression:
+		// CompareOperation returns Expression:
 		//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
 		//	subExpressions+=NotOrValuedExpression) | NotExpression;
 		public ParserRule getRule() { return rule; }
@@ -219,7 +224,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNotExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// order IS IMPORTANT
-		//NotOrValuedExpression returns Expression:
+		// NotOrValuedExpression returns Expression:
 		//	ValuedExpression | NotExpression;
 		public ParserRule getRule() { return rule; }
 
@@ -245,7 +250,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAtomicExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// Example: not A, not false, not (A or B)
-		//// at the latter we need the parents to indicate the right binding
+		// // at the latter we need the parents to indicate the right binding
+		//
 		//NotExpression returns Expression:
 		//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
 		public ParserRule getRule() { return rule; }
@@ -280,7 +286,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAddExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//// everything that evaluates to a primitive number value
-		//ValuedExpression returns Expression:
+		// ValuedExpression returns Expression:
 		//	AddExpression;
 		public ParserRule getRule() { return rule; }
 
@@ -300,7 +306,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsSubExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
 		//// Example: 1 + 2
-		//AddExpression returns Expression:
+		// AddExpression returns Expression:
 		//	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
 		public ParserRule getRule() { return rule; }
 
@@ -341,7 +347,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsMultExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
 		//// Example: varA - ?B
-		//SubExpression returns Expression:
+		// SubExpression returns Expression:
 		//	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
 		public ParserRule getRule() { return rule; }
 
@@ -382,10 +388,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsDivExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
 		////    ({OperatorExpression} subExpressions+=MultExpression (operator=SubOperator subExpressions+=MultExpression)+)
+		//
 		////	| ({OperatorExpression} subExpressions+=MultExpression subExpressions+=NIntValue)
-		////    | MultExpression;
+		// //    | MultExpression;
+		//
 		//// Example: 2 * 4
-		//MultExpression returns Expression:
+		// MultExpression returns Expression:
 		//	DivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=DivExpression)*;
 		public ParserRule getRule() { return rule; }
 
@@ -426,7 +434,9 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsModExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
 		//// Example: (2 / 4)
+		//
 		//// note: division always has to have parentheses because the '/' sign is also used for trigger/effect delimiter
+		//
 		//DivExpression returns Expression:
 		//	ModExpression ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?;
 		public ParserRule getRule() { return rule; }
@@ -468,7 +478,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
 		//// Example: varA mod ?B
-		//ModExpression returns Expression:
+		// ModExpression returns Expression:
 		//	NegExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
 		//	subExpressions+=AtomicValuedExpression)?;
 		public ParserRule getRule() { return rule; }
@@ -511,8 +521,9 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAtomicValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// Example: -?A, -(?A + ?B)
-		//// at the latter we need the parents to indicate the right binding
-		//NegExpression returns Expression:
+		// // at the latter we need the parents to indicate the right binding
+		// NegExpression returns
+		//Expression:
 		//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | AtomicValuedExpression;
 		public ParserRule getRule() { return rule; }
 
@@ -641,7 +652,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuedObjectReferenceParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A), A varX
-		//ValuedObjectTestExpression returns Expression:
+		// ValuedObjectTestExpression returns Expression:
 		//	{OperatorExpression} operator=(PreOperator | ValOperator) "(" subExpressions+=ValuedObjectTestExpression ")" |
 		//	ValuedObjectReference;
 		public ParserRule getRule() { return rule; }
@@ -686,23 +697,47 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class ValuedObjectReferenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValuedObjectReference");
-		private final Assignment cValuedObjectAssignment = (Assignment)rule.eContents().get(1);
-		private final CrossReference cValuedObjectValuedObjectCrossReference_0 = (CrossReference)cValuedObjectAssignment.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0.eContents().get(1);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cArrayCardinalitiesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cArrayCardinalitiesExpressionParserRuleCall_1_1_0 = (RuleCall)cArrayCardinalitiesAssignment_1_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
 		//// Example: A, varB
-		//ValuedObjectReference:
-		//	valuedObject=[ValuedObject];
+		// ValuedObjectReference:
+		//	valuedObject=[ValuedObject] ("[" arrayCardinalities+=Expression "]")*;
 		public ParserRule getRule() { return rule; }
 
+		//valuedObject=[ValuedObject] ("[" arrayCardinalities+=Expression "]")*
+		public Group getGroup() { return cGroup; }
+
 		//valuedObject=[ValuedObject]
-		public Assignment getValuedObjectAssignment() { return cValuedObjectAssignment; }
+		public Assignment getValuedObjectAssignment_0() { return cValuedObjectAssignment_0; }
 
 		//[ValuedObject]
-		public CrossReference getValuedObjectValuedObjectCrossReference_0() { return cValuedObjectValuedObjectCrossReference_0; }
+		public CrossReference getValuedObjectValuedObjectCrossReference_0_0() { return cValuedObjectValuedObjectCrossReference_0_0; }
 
 		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_1; }
+		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
+
+		//("[" arrayCardinalities+=Expression "]")*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
+
+		//arrayCardinalities+=Expression
+		public Assignment getArrayCardinalitiesAssignment_1_1() { return cArrayCardinalitiesAssignment_1_1; }
+
+		//Expression
+		public RuleCall getArrayCardinalitiesExpressionParserRuleCall_1_1_0() { return cArrayCardinalitiesExpressionParserRuleCall_1_1_0; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
 	}
 
 	public class TextExpressionElements extends AbstractParserRuleElementFinder {
@@ -711,7 +746,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTextHOSTCODETerminalRuleCall_0 = (RuleCall)cTextAssignment.eContents().get(0);
 		
 		//// Example: 'printf(...)'
-		//TextExpression:
+		// TextExpression:
 		//	text=HOSTCODE;
 		public ParserRule getRule() { return rule; }
 
@@ -796,9 +831,10 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSTRINGTerminalRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//// data type rule allowing any kind of value to be accepted,
-		//// e.g. as initialValues of valuedObjects
+		// // e.g. as initialValues of valuedObjects
+		//
 		//// used in Kits.xtext 
-		//AnyType returns ecore::EString:
+		// AnyType returns ecore::EString:
 		//	BOOLEAN | INT | FLOAT | ID | STRING;
 		public ParserRule getRule() { return rule; }
 
@@ -1352,13 +1388,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////OrExpression returns Expression:
+	//
 	////	CompareOperation ({OperatorExpression.subExpressions+=current} operator=(OrOperator) subExpressions+=CompareOperation)*;
+	//
 	//////	{OperatorExpression} subExpressions += CompareOperation (/ *{OperatorExpression.subExpressions+=current}* / operator=(AndOperator|OrOperator) subExpressions+=CompareOperation)*;
+	//
 	////
-	////AndExpression returns Expression:
+	// //AndExpression returns Expression:
+	//
 	////	CompareOperation ({OperatorExpression.subExpressions+=current} operator=(AndOperator) subExpressions+=CompareOperation)*;
+	//
 	//// Example: 42 <= val(A)
-	//CompareOperation returns Expression:
+	// CompareOperation returns Expression:
 	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
 	//	subExpressions+=NotOrValuedExpression) | NotExpression;
 	public CompareOperationElements getCompareOperationAccess() {
@@ -1370,7 +1411,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// order IS IMPORTANT
-	//NotOrValuedExpression returns Expression:
+	// NotOrValuedExpression returns Expression:
 	//	ValuedExpression | NotExpression;
 	public NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
 		return (pNotOrValuedExpression != null) ? pNotOrValuedExpression : (pNotOrValuedExpression = new NotOrValuedExpressionElements());
@@ -1381,7 +1422,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: not A, not false, not (A or B)
-	//// at the latter we need the parents to indicate the right binding
+	// // at the latter we need the parents to indicate the right binding
+	//
 	//NotExpression returns Expression:
 	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
 	public NotExpressionElements getNotExpressionAccess() {
@@ -1393,7 +1435,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// everything that evaluates to a primitive number value
-	//ValuedExpression returns Expression:
+	// ValuedExpression returns Expression:
 	//	AddExpression;
 	public ValuedExpressionElements getValuedExpressionAccess() {
 		return (pValuedExpression != null) ? pValuedExpression : (pValuedExpression = new ValuedExpressionElements());
@@ -1404,7 +1446,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: 1 + 2
-	//AddExpression returns Expression:
+	// AddExpression returns Expression:
 	//	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
 	public AddExpressionElements getAddExpressionAccess() {
 		return (pAddExpression != null) ? pAddExpression : (pAddExpression = new AddExpressionElements());
@@ -1415,7 +1457,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: varA - ?B
-	//SubExpression returns Expression:
+	// SubExpression returns Expression:
 	//	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
 	public SubExpressionElements getSubExpressionAccess() {
 		return (pSubExpression != null) ? pSubExpression : (pSubExpression = new SubExpressionElements());
@@ -1426,10 +1468,12 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////    ({OperatorExpression} subExpressions+=MultExpression (operator=SubOperator subExpressions+=MultExpression)+)
+	//
 	////	| ({OperatorExpression} subExpressions+=MultExpression subExpressions+=NIntValue)
-	////    | MultExpression;
+	// //    | MultExpression;
+	//
 	//// Example: 2 * 4
-	//MultExpression returns Expression:
+	// MultExpression returns Expression:
 	//	DivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=DivExpression)*;
 	public MultExpressionElements getMultExpressionAccess() {
 		return (pMultExpression != null) ? pMultExpression : (pMultExpression = new MultExpressionElements());
@@ -1440,7 +1484,9 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: (2 / 4)
+	//
 	//// note: division always has to have parentheses because the '/' sign is also used for trigger/effect delimiter
+	//
 	//DivExpression returns Expression:
 	//	ModExpression ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?;
 	public DivExpressionElements getDivExpressionAccess() {
@@ -1452,7 +1498,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: varA mod ?B
-	//ModExpression returns Expression:
+	// ModExpression returns Expression:
 	//	NegExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
 	//	subExpressions+=AtomicValuedExpression)?;
 	public ModExpressionElements getModExpressionAccess() {
@@ -1464,8 +1510,9 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: -?A, -(?A + ?B)
-	//// at the latter we need the parents to indicate the right binding
-	//NegExpression returns Expression:
+	// // at the latter we need the parents to indicate the right binding
+	// NegExpression returns
+	//Expression:
 	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | AtomicValuedExpression;
 	public NegExpressionElements getNegExpressionAccess() {
 		return (pNegExpression != null) ? pNegExpression : (pNegExpression = new NegExpressionElements());
@@ -1496,7 +1543,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A), A varX
-	//ValuedObjectTestExpression returns Expression:
+	// ValuedObjectTestExpression returns Expression:
 	//	{OperatorExpression} operator=(PreOperator | ValOperator) "(" subExpressions+=ValuedObjectTestExpression ")" |
 	//	ValuedObjectReference;
 	public ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
@@ -1508,8 +1555,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: A, varB
-	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject];
+	// ValuedObjectReference:
+	//	valuedObject=[ValuedObject] ("[" arrayCardinalities+=Expression "]")*;
 	public ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return (pValuedObjectReference != null) ? pValuedObjectReference : (pValuedObjectReference = new ValuedObjectReferenceElements());
 	}
@@ -1519,7 +1566,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// Example: 'printf(...)'
-	//TextExpression:
+	// TextExpression:
 	//	text=HOSTCODE;
 	public TextExpressionElements getTextExpressionAccess() {
 		return (pTextExpression != null) ? pTextExpression : (pTextExpression = new TextExpressionElements());
@@ -1570,9 +1617,10 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// data type rule allowing any kind of value to be accepted,
-	//// e.g. as initialValues of valuedObjects
+	// // e.g. as initialValues of valuedObjects
+	//
 	//// used in Kits.xtext 
-	//AnyType returns ecore::EString:
+	// AnyType returns ecore::EString:
 	//	BOOLEAN | INT | FLOAT | ID | STRING;
 	public AnyTypeElements getAnyTypeAccess() {
 		return (pAnyType != null) ? pAnyType : (pAnyType = new AnyTypeElements());
@@ -1736,7 +1784,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// custom terminal rule allowing to save transition label string as they are
-	//terminal HOSTCODE:
+	// terminal HOSTCODE:
 	//	"\'" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
 	public TerminalRule getHOSTCODERule() {
 		return (tHOSTCODE != null) ? tHOSTCODE : (tHOSTCODE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "HOSTCODE"));

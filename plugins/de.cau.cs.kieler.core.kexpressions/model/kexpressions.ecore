@@ -182,6 +182,8 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
         eType="#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arrayCardinalities" upperBound="-1"
+        eType="#//Expression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Value" eSuperTypes="#//Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -225,5 +227,12 @@
       <details key="documentation" value="An Double value object."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloatObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TypeGroup">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObjects" upperBound="-1"
+        eType="#//ValuedObject" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="arrayCardinalities" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//ValueType"/>
   </eClassifiers>
 </ecore:EPackage>

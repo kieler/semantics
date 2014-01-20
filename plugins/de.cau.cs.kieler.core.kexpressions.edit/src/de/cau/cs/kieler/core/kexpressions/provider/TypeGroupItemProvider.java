@@ -1,23 +1,23 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.core.kexpressions.provider;
 
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
+import de.cau.cs.kieler.core.kexpressions.ValueType;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -25,16 +25,18 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.core.kexpressions.TypeGroup} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ValuedObjectReferenceItemProvider
-    extends ExpressionItemProvider
+public class TypeGroupItemProvider
+    extends ItemProviderAdapter
     implements
         IEditingDomainItemProvider,
         IStructuredItemContentProvider,
@@ -47,7 +49,7 @@ public class ValuedObjectReferenceItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public ValuedObjectReferenceItemProvider(AdapterFactory adapterFactory) {
+    public TypeGroupItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -62,29 +64,52 @@ public class ValuedObjectReferenceItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addValuedObjectPropertyDescriptor(object);
+            addArrayCardinalitiesPropertyDescriptor(object);
+            addTypePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Valued Object feature.
+     * This adds a property descriptor for the Array Cardinalities feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addValuedObjectPropertyDescriptor(Object object) {
+    protected void addArrayCardinalitiesPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_ValuedObjectReference_valuedObject_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObjectReference_valuedObject_feature", "_UI_ValuedObjectReference_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT,
+                 getString("_UI_TypeGroup_arrayCardinalities_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_arrayCardinalities_feature", "_UI_TypeGroup_type"),
+                 KExpressionsPackage.Literals.TYPE_GROUP__ARRAY_CARDINALITIES,
                  true,
                  false,
-                 true,
+                 false,
+                 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
                  null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Type feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addTypePropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_TypeGroup_type_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_type_feature", "_UI_TypeGroup_type"),
+                 KExpressionsPackage.Literals.TYPE_GROUP__TYPE,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
                  null));
     }
@@ -101,7 +126,7 @@ public class ValuedObjectReferenceItemProvider
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES);
+            childrenFeatures.add(KExpressionsPackage.Literals.TYPE_GROUP__VALUED_OBJECTS);
         }
         return childrenFeatures;
     }
@@ -120,14 +145,14 @@ public class ValuedObjectReferenceItemProvider
     }
 
     /**
-     * This returns ValuedObjectReference.gif.
+     * This returns TypeGroup.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/ValuedObjectReference"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/TypeGroup"));
     }
 
     /**
@@ -138,7 +163,11 @@ public class ValuedObjectReferenceItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_ValuedObjectReference_type");
+        ValueType labelValue = ((TypeGroup)object).getType();
+        String label = labelValue == null ? null : labelValue.toString();
+        return label == null || label.length() == 0 ?
+            getString("_UI_TypeGroup_type") :
+            getString("_UI_TypeGroup_type") + " " + label;
     }
 
     /**
@@ -152,8 +181,12 @@ public class ValuedObjectReferenceItemProvider
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(ValuedObjectReference.class)) {
-            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES:
+        switch (notification.getFeatureID(TypeGroup.class)) {
+            case KExpressionsPackage.TYPE_GROUP__ARRAY_CARDINALITIES:
+            case KExpressionsPackage.TYPE_GROUP__TYPE:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
+            case KExpressionsPackage.TYPE_GROUP__VALUED_OBJECTS:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -173,48 +206,19 @@ public class ValuedObjectReferenceItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
-                 KExpressionsFactory.eINSTANCE.createExpression()));
+                (KExpressionsPackage.Literals.TYPE_GROUP__VALUED_OBJECTS,
+                 KExpressionsFactory.eINSTANCE.createValuedObject()));
+    }
 
-        newChildDescriptors.add
-            (createChildParameter
-                (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
-                 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
-                 KExpressionsFactory.eINSTANCE.createValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
-                 KExpressionsFactory.eINSTANCE.createIntValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
-                 KExpressionsFactory.eINSTANCE.createFloatValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
-                 KExpressionsFactory.eINSTANCE.createBoolValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
-                 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
-                 KExpressionsFactory.eINSTANCE.createTextExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
-                 KExpressionsFactory.eINSTANCE.createDoubleValue()));
+    /**
+     * Return the resource locator for this item provider's resources.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ResourceLocator getResourceLocator() {
+        return KExpressionsEditPlugin.INSTANCE;
     }
 
 }

@@ -19,6 +19,7 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.OperatorType;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.core.kexpressions.Value;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
@@ -108,6 +109,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     private EClass doubleValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass typeGroupEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -307,6 +315,15 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getValuedObjectReference_ArrayCardinalities() {
+        return (EReference)valuedObjectReferenceEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getValue() {
         return valueEClass;
     }
@@ -433,6 +450,42 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getTypeGroup() {
+        return typeGroupEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getTypeGroup_ValuedObjects() {
+        return (EReference)typeGroupEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getTypeGroup_ArrayCardinalities() {
+        return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getTypeGroup_Type() {
+        return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EEnum getCombineOperator() {
         return combineOperatorEEnum;
     }
@@ -497,6 +550,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         valuedObjectReferenceEClass = createEClass(VALUED_OBJECT_REFERENCE);
         createEReference(valuedObjectReferenceEClass, VALUED_OBJECT_REFERENCE__VALUED_OBJECT);
+        createEReference(valuedObjectReferenceEClass, VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES);
 
         valueEClass = createEClass(VALUE);
 
@@ -518,6 +572,11 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         doubleValueEClass = createEClass(DOUBLE_VALUE);
         createEAttribute(doubleValueEClass, DOUBLE_VALUE__VALUE);
+
+        typeGroupEClass = createEClass(TYPE_GROUP);
+        createEReference(typeGroupEClass, TYPE_GROUP__VALUED_OBJECTS);
+        createEAttribute(typeGroupEClass, TYPE_GROUP__ARRAY_CARDINALITIES);
+        createEAttribute(typeGroupEClass, TYPE_GROUP__TYPE);
 
         // Create enums
         combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
@@ -581,6 +640,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(valuedObjectReferenceEClass, ValuedObjectReference.class, "ValuedObjectReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getValuedObjectReference_ValuedObject(), this.getValuedObject(), null, "valuedObject", null, 1, 1, ValuedObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getValuedObjectReference_ArrayCardinalities(), this.getExpression(), null, "arrayCardinalities", null, 0, -1, ValuedObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(valueEClass, Value.class, "Value", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -602,6 +662,11 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(doubleValueEClass, DoubleValue.class, "DoubleValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDoubleValue_Value(), ecorePackage.getEFloatObject(), "value", null, 1, 1, DoubleValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(typeGroupEClass, TypeGroup.class, "TypeGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getTypeGroup_ValuedObjects(), this.getValuedObject(), null, "valuedObjects", null, 0, -1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTypeGroup_ArrayCardinalities(), ecorePackage.getEInt(), "arrayCardinalities", null, 0, -1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTypeGroup_Type(), this.getValueType(), "type", null, 1, 1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");

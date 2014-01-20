@@ -114,6 +114,10 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createDoubleValueAdapter();
             }
             @Override
+            public Adapter caseTypeGroup(TypeGroup object) {
+                return createTypeGroupAdapter();
+            }
+            @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
             }
@@ -274,6 +278,20 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDoubleValueAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup <em>Type Group</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup
+     * @generated
+     */
+    public Adapter createTypeGroupAdapter() {
         return null;
     }
 

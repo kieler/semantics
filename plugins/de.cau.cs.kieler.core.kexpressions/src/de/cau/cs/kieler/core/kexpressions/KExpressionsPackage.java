@@ -201,13 +201,22 @@ public interface KExpressionsPackage extends EPackage {
     int VALUED_OBJECT_REFERENCE__VALUED_OBJECT = EXPRESSION_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Array Cardinalities</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES = EXPRESSION_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>Valued Object Reference</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT_REFERENCE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
+    int VALUED_OBJECT_REFERENCE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ValueImpl <em>Value</em>}' class.
@@ -406,6 +415,52 @@ public interface KExpressionsPackage extends EPackage {
     int DOUBLE_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl <em>Type Group</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl
+     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getTypeGroup()
+     * @generated
+     */
+    int TYPE_GROUP = 10;
+
+    /**
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPE_GROUP__VALUED_OBJECTS = 0;
+
+    /**
+     * The feature id for the '<em><b>Array Cardinalities</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPE_GROUP__ARRAY_CARDINALITIES = 1;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPE_GROUP__TYPE = 2;
+
+    /**
+     * The number of structural features of the '<em>Type Group</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPE_GROUP_FEATURE_COUNT = 3;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -413,7 +468,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 10;
+    int COMBINE_OPERATOR = 11;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -423,7 +478,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 11;
+    int OPERATOR_TYPE = 12;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -433,7 +488,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 12;
+    int VALUE_TYPE = 13;
 
 
     /**
@@ -564,6 +619,17 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EReference getValuedObjectReference_ValuedObject();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getArrayCardinalities <em>Array Cardinalities</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Array Cardinalities</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getArrayCardinalities()
+     * @see #getValuedObjectReference()
+     * @generated
+     */
+    EReference getValuedObjectReference_ArrayCardinalities();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.Value <em>Value</em>}'.
@@ -711,6 +777,49 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EAttribute getDoubleValue_Value();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup <em>Type Group</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Type Group</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup
+     * @generated
+     */
+    EClass getTypeGroup();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#getValuedObjects <em>Valued Objects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#getValuedObjects()
+     * @see #getTypeGroup()
+     * @generated
+     */
+    EReference getTypeGroup_ValuedObjects();
+
+    /**
+     * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#getArrayCardinalities <em>Array Cardinalities</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Array Cardinalities</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#getArrayCardinalities()
+     * @see #getTypeGroup()
+     * @generated
+     */
+    EAttribute getTypeGroup_ArrayCardinalities();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Type</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#getType()
+     * @see #getTypeGroup()
+     * @generated
+     */
+    EAttribute getTypeGroup_Type();
 
     /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}'.
@@ -867,6 +976,14 @@ public interface KExpressionsPackage extends EPackage {
         EReference VALUED_OBJECT_REFERENCE__VALUED_OBJECT = eINSTANCE.getValuedObjectReference_ValuedObject();
 
         /**
+         * The meta object literal for the '<em><b>Array Cardinalities</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES = eINSTANCE.getValuedObjectReference_ArrayCardinalities();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ValueImpl <em>Value</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -991,6 +1108,40 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EAttribute DOUBLE_VALUE__VALUE = eINSTANCE.getDoubleValue_Value();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl <em>Type Group</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl
+         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getTypeGroup()
+         * @generated
+         */
+        EClass TYPE_GROUP = eINSTANCE.getTypeGroup();
+
+        /**
+         * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TYPE_GROUP__VALUED_OBJECTS = eINSTANCE.getTypeGroup_ValuedObjects();
+
+        /**
+         * The meta object literal for the '<em><b>Array Cardinalities</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TYPE_GROUP__ARRAY_CARDINALITIES = eINSTANCE.getTypeGroup_ArrayCardinalities();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TYPE_GROUP__TYPE = eINSTANCE.getTypeGroup_Type();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
