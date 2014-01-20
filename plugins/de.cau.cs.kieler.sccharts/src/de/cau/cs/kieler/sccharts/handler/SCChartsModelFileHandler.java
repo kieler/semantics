@@ -12,6 +12,7 @@ import org.eclipse.jface.viewers.ISelection;
 //import org.eclipse.xtext.resource.SaveOptions;
 //import org.eclipse.xtext.serializer.ISerializer;
 
+
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -34,6 +35,9 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     public static final String ALLCORE_TRANSFORMATIONS =
             "de.cau.cs.kieler.sccharts.commands.AllCoreTransformations";
 
+    public static final String ALLNORMALIZE_TRANSFORMATIONS =
+            "de.cau.cs.kieler.sccharts.commands.AllNormalizeTransformations";
+
     public static final String ABORT_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.AbortTransformation";
 
@@ -46,14 +50,17 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     public static final String SIGNAL_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.SignalTransformation";
 
-    public static final String INPUTOUTPUTSIGNAL_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.InputOutputSignalTransformation";
+    public static final String INPUTOUTPUTVARIABLE_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.InputOutputVariableTransformation";
 
     public static final String ENTRY_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.EntryTransformation";
 
     public static final String DURING_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.DuringTransformation";
+
+    public static final String STATIC_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.StaticTransformation";
 
     public static final String EXIT_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.ExitTransformation";
@@ -67,6 +74,9 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     public static final String SUSPEND_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.SuspendTransformation";
 
+    public static final String WEAKSUSPEND_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.WeakSuspendTransformation";
+
     public static final String COUNTDELAY_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.CountDelayTransformation";
 
@@ -76,14 +86,17 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     public static final String PRE_TRANSFORMATION =
             "de.cau.cs.kieler.sccharts.commands.PreTransformation";
 
-    public static final String EXPOSELOCALSIGNALS_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.ExposeLocalSignalsTransformation";
+    public static final String INITIALIZATION_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.InitializationTransformation";
 
-    public static final String NORMALTERMINATION_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.NormalTerminationTransformation";
+    public static final String EXPOSELOCALVARIABLE_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.ExposeLocalVariableTransformation";
 
-    public static final String FINALSTATETRANSITION_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.FinalStateTransitionTransformation";
+    public static final String TERMINATION_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.TerminationTransformation";
+
+    public static final String COMPLEXFINALSTATE_TRANSFORMATION =
+            "de.cau.cs.kieler.sccharts.commands.ComplexFinalStateTransformation";
 
     // -------------------------------------------------------------------------
 
@@ -106,13 +119,39 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
 
     // -------------------------------------------------------------------------
 
-    // /**
-    // * {@inheritDoc}
-    // */
-    // @Override
-    // protected String getTargetExtension() {
-    // return "transformed.scc";
-    // }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
+        String commandString = getCommandString(event);
+        if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {
+            return "core";
+        } else if (commandString.equals(ALLNORMALIZE_TRANSFORMATIONS)) {
+            return "normalized";
+        } else {
+            return "transformed";
+        }
+    }
+
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the command string.
+     *
+     * @param event the event
+     * @return the command string
+     */
+    protected String getCommandString(ExecutionEvent event) {
+        String commandString = event.getCommand().getId().toString();
+        // Call the model transformation (this creates a copy of the model containing the
+        // refactored model).
+        // Use commandString for Scc and Sct Transformation
+        commandString = commandString.replace("commands.Scc", "commands.");
+        commandString = commandString.replace("commands.Sct", "commands.");
+        return commandString;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -121,21 +160,33 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
      */
     @Override
     protected Object transform(EObject model, ExecutionEvent event, ISelection selection) {
-        String commandString = event.getCommand().getId().toString();
+        String commandString = getCommandString(event);
         EObject transformed = null;
-        // Call the model transformation (this creates a copy of the model containing the
-        // refactored model).
-        // Use commandString for Scc and Sct Transformation
-        commandString = commandString.replace("commands.Scc", "commands.");
-        commandString = commandString.replace("commands.Sct", "commands.");
-        System.out.println(commandString);
 
         SCChartsCoreTransformation transformation =
                 Guice.createInjector().getInstance(SCChartsCoreTransformation.class);
 
         transformed = model;
         if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {
-            // TODO
+            transformed = transformation.transformHistory((Region) model);
+            transformed = transformation.transformWeakSuspend((Region) transformed);
+            transformed = transformation.transformDeferred((Region) transformed);
+            transformed = transformation.transformStatic((Region) transformed);
+            transformed = transformation.transformSignal((Region) transformed);
+            transformed = transformation.transformCountDelay((Region) transformed);
+            transformed = transformation.transformPre((Region) transformed);
+            transformed = transformation.transformSuspend((Region) transformed);
+            // There are TWO options for the Aborts transformation
+            // 1. transformAborts1() and 2. transformAborts2()
+            transformed = transformation.transformAborts2((Region) transformed);
+            transformed = transformation.transformDuring((Region) transformed);
+            transformed = transformation.transformInitialization((Region) transformed);
+            transformed = transformation.transformEntry((Region) transformed);
+            transformed = transformation.transformExit((Region) transformed);
+            transformed = transformation.transformConnector((Region) transformed);
+        } else if (commandString.equals(ALLNORMALIZE_TRANSFORMATIONS)) {
+            transformed = transformation.transformTriggerEffect((Region) model);
+            transformed = transformation.transformSurfaceDepth((Region) transformed);
         } else if (commandString.equals(ABORT_TRANSFORMATION)) {
             // There are TWO options for the Aborts transformation
             // 1. transformAborts1() and 2. transformAborts2()
@@ -146,13 +197,14 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
             transformed = transformation.transformTriggerEffect((Region) model);
         } else if (commandString.equals(SIGNAL_TRANSFORMATION)) {
             transformed = transformation.transformSignal((Region) model);
-        } else if (commandString.equals(INPUTOUTPUTSIGNAL_TRANSFORMATION)) {
-            // TODO
-            // transformed = transformation.transformInputOutputSignal((Region) model);
+        } else if (commandString.equals(INPUTOUTPUTVARIABLE_TRANSFORMATION)) {
+            transformed = transformation.transformInputOutputVariable((Region) model);
         } else if (commandString.equals(ENTRY_TRANSFORMATION)) {
             transformed = transformation.transformEntry((Region) model);
         } else if (commandString.equals(DURING_TRANSFORMATION)) {
             transformed = transformation.transformDuring((Region) model);
+        } else if (commandString.equals(STATIC_TRANSFORMATION)) {
+            transformed = transformation.transformStatic((Region) model);
         } else if (commandString.equals(EXIT_TRANSFORMATION)) {
             transformed = transformation.transformExit((Region) model);
         } else if (commandString.equals(CONNECTOR_TRANSFORMATION)) {
@@ -161,18 +213,22 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
             transformed = transformation.transformHistory((Region) model);
         } else if (commandString.equals(SUSPEND_TRANSFORMATION)) {
             transformed = transformation.transformSuspend((Region) model);
+        } else if (commandString.equals(WEAKSUSPEND_TRANSFORMATION)) {
+            transformed = transformation.transformWeakSuspend((Region) model);
         } else if (commandString.equals(COUNTDELAY_TRANSFORMATION)) {
             transformed = transformation.transformCountDelay((Region) model);
         } else if (commandString.equals(DEFERRED_TRANSFORMATION)) {
             transformed = transformation.transformDeferred((Region) model);
         } else if (commandString.equals(PRE_TRANSFORMATION)) {
             transformed = transformation.transformPre((Region) model);
-        } else if (commandString.equals(EXPOSELOCALSIGNALS_TRANSFORMATION)) {
+        } else if (commandString.equals(INITIALIZATION_TRANSFORMATION)) {
+            transformed = transformation.transformInitialization((Region) model);
+        } else if (commandString.equals(EXPOSELOCALVARIABLE_TRANSFORMATION)) {
             transformed = transformation.transformExposeLocalValuedObject((Region) model);
-        } else if (commandString.equals(NORMALTERMINATION_TRANSFORMATION)) {
-            transformed = transformation.transformNormalTermination((Region) model);
-        } else if (commandString.equals(FINALSTATETRANSITION_TRANSFORMATION)) {
-            transformed = transformation.transformFinalStateTransition((Region) model);
+        } else if (commandString.equals(TERMINATION_TRANSFORMATION)) {
+            transformed = transformation.transformTermination((Region) model);
+        } else if (commandString.equals(COMPLEXFINALSTATE_TRANSFORMATION)) {
+            //TODO
         }
         return transformed;
     }

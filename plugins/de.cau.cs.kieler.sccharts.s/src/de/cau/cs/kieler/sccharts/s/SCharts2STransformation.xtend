@@ -242,7 +242,7 @@ class SCCharts2STransformation {
             if (state.outgoingTransitions.length > 0) {
                 val transition = state.outgoingTransitions.get(0)
 
-                if (transition.type == TransitionType::NORMALTERMINATION) {
+                if (transition.type == TransitionType::TERMINATION) {
                     // if not joined yet - continue at state depth
                     val sjoin = joinElseContinueAt(transition.sourceState.sJoinState)
                     sJoinState.addInstruction(sjoin);
@@ -391,7 +391,7 @@ class SCCharts2STransformation {
     // Convert SyncChart transition effects and add them to an instructions list.
     def dispatch void convertToSEffect(Emission effect, List<Instruction> instructions) {
         val sSignal = effect.valuedObject.sValuedObject
-        val sEmit = sSignal.emit
+        val sEmit = sSignal.createEmit
         if (effect.newValue != null) {
             val sSignalValue = effect.newValue.convertToSExpression;
             sEmit.setValue(sSignalValue);
@@ -621,14 +621,14 @@ class SCCharts2STransformation {
 //    // ======================================================================================================
 //    
 //    def fillSStateJoin (State state, de.cau.cs.kieler.s.s.State sState) {
-//        val regardedTransitionNormalTermination = state.normalTerminationTransition
+//        val regardedTransitionTermination = state.terminationTransition
 //
 //        // lower priority (to allow a possible body to be executed)
 //        sState.addLowestWeakPrio(state);
 //        
 //        // then handle possible normal termination
-//        if (regardedTransitionNormalTermination != null) {
-//            regardedTransitionNormalTermination.handleTransition(sState);
+//        if (regardedTransitionTermination != null) {
+//            regardedTransitionTermination.handleTransition(sState);
 //        }
 //        else {
 //            // continue with depth (only if not a hierarchical state!)

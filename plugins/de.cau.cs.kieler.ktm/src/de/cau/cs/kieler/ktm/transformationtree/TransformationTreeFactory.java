@@ -40,22 +40,22 @@ public interface TransformationTreeFactory extends EFactory {
     TransformationTreeFactory eINSTANCE = de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreeFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Model</em>'.
+     * Returns a new object of class '<em>Model Wrapper</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Model</em>'.
+     * @return a new object of class '<em>Model Wrapper</em>'.
      * @generated
      */
-    Model createModel();
+    ModelWrapper createModelWrapper();
 
     /**
-     * Returns a new object of class '<em>Element</em>'.
+     * Returns a new object of class '<em>EObject Wrapper</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Element</em>'.
+     * @return a new object of class '<em>EObject Wrapper</em>'.
      * @generated
      */
-    Element createElement();
+    EObjectWrapper createEObjectWrapper();
 
     /**
      * Returns a new object of class '<em>Model Transformation</em>'.
@@ -67,13 +67,13 @@ public interface TransformationTreeFactory extends EFactory {
     ModelTransformation createModelTransformation();
 
     /**
-     * Returns a new object of class '<em>Element Transformation</em>'.
+     * Returns a new object of class '<em>EObject Transformation</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Element Transformation</em>'.
+     * @return a new object of class '<em>EObject Transformation</em>'.
      * @generated
      */
-    ElementTransformation createElementTransformation();
+    EObjectTransformation createEObjectTransformation();
 
     /**
      * Returns the package supported by this factory.

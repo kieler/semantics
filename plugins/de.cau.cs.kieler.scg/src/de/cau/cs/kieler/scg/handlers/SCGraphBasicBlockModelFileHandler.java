@@ -28,8 +28,11 @@ import de.cau.cs.kieler.scgdep.SCGraphDep;
 import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation;
 
 /**
- * @author ssm
+ * Handler for menu contributions
  *
+ * @author ssm
+ * @kieler.design 2014-01-08 proposed 
+ * @kieler.rating 2014-01-08 proposed yellow
  */
 public class SCGraphBasicBlockModelFileHandler extends AbstractConvertModelHandler {
 
@@ -43,7 +46,7 @@ public class SCGraphBasicBlockModelFileHandler extends AbstractConvertModelHandl
      * {@inheritDoc}
      */
     @Override
-    protected String getTargetExtension() {
+    protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
         return "scgbb";
     }
 
@@ -68,7 +71,7 @@ public class SCGraphBasicBlockModelFileHandler extends AbstractConvertModelHandl
         EObject transformed = null;
 
         SCGDEPToSCGBBTransformation transformation =
-        Guice.createInjector().getInstance(SCGDEPToSCGBBTransformation.class);
+        		Guice.createInjector().getInstance(SCGDEPToSCGBBTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).

@@ -8,22 +8,33 @@
   <eClassifiers xsi:type="ecore:EClass" name="BasicBlock">
     <eStructuralFeatures xsi:type="ecore:EReference" name="schedulingBlocks" upperBound="-1"
         eType="#//SchedulingBlock" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="activationExpressions"
-        upperBound="-1" eType="#//ActivationExpression" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="guard" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="guards" lowerBound="1"
+        upperBound="-1" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="predecessors" upperBound="-1"
+        eType="#//Predecessor" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="goBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockType" eType="#//BlockType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="preGuard" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SchedulingBlock">
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
         eType="ecore:EClass scg.ecore#//Node"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
         eType="ecore:EClass scgdep.ecore#//Dependency"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="guard" lowerBound="1" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ActivationExpression">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="basicBlocks" upperBound="-1"
+  <eClassifiers xsi:type="ecore:EEnum" name="BlockType">
+    <eLiterals name="NORMAL"/>
+    <eLiterals name="DEPTH" value="1"/>
+    <eLiterals name="TRUEBRANCH" value="2"/>
+    <eLiterals name="ELSEBRANCH" value="3"/>
+    <eLiterals name="SYNCHRONIZER" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Predecessor">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="basicBlock" lowerBound="1"
         eType="#//BasicBlock"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockType" eType="#//BlockType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="conditional" eType="ecore:EClass scg.ecore#//Conditional"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -40,6 +40,9 @@ import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import java.util.List
+import de.cau.cs.kieler.s.s.Assignment
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import org.eclipse.emf.ecore.EObject
 
 //import static de.cau.cs.kieler.s.sj.xtend.S2SJ.*
 
@@ -79,17 +82,39 @@ class S2SJ {
     «ENDFOR»
        '''
    }
+
+   // -------------------------------------------------------------------------   
+   
+   def dispatch expand(ValueType valueType) {
+       if (valueType == ValueType::BOOL) {
+           return '''boolean'''
+       }
+       else if (valueType == ValueType::INT) {
+           return '''int'''
+       }
+       else  {
+           return '''«valueType»'''
+       }
+   }   
    
    // -------------------------------------------------------------------------   
 
    def String listValuedObjects(List<ValuedObject> valuedObjectList) {
        '''
     «FOR valuedObject : valuedObjectList SEPARATOR ""»
-        public boolean «valuedObject.name» = false;
+        «IF valuedObject.isSignal»
+            public boolean «valuedObject.name» = false;
+        «ENDIF»
+        «IF !valuedObject.isSignal»
+            public «valuedObject.type.expand» «valuedObject.name»;
+        «ENDIF»
     «ENDFOR»
     «FOR valuedObject : valuedObjectList SEPARATOR ""»
         «IF valuedObject.isSignal»
             public Object «valuedObject.name»_value = null;
+        «ENDIF»
+        «IF !valuedObject.isSignal && valuedObject.usesPre»
+            public «valuedObject.type.expand» PRE_«valuedObject.name»;
         «ENDIF»
     «ENDFOR»
     «IF debug»
@@ -150,19 +175,67 @@ public class ''' + className + ''' extends SJLProgramWithSignals<State> implemen
    }
    
    // -------------------------------------------------------------------------
+  
+   def EObject rootEObject(EObject eObject) {
+       if (eObject.eContainer != null) {
+          return rootEObject(eObject.eContainer)
+       }
+       return eObject
+   }
+
+   def boolean usesPre(ValuedObject valuedObject) {
+       val root = valuedObject.rootEObject
+       val foundPres = root.eAllContents.filter(typeof(OperatorExpression)).filter[operator == OperatorType::PRE].toList; 
+       for (pre : foundPres) {
+           for (subExpression : pre.subExpressions) {
+               if (subExpression instanceof ValuedObjectReference) {
+                   if ((subExpression as ValuedObjectReference).valuedObject == valuedObject) {
+                       return true
+                   }
+               }
+               val found = subExpression.eAllContents.filter(typeof(ValuedObjectReference)).filter(e | e.valuedObject == valuedObject).toList
+               if (found.size > 0) {
+                   return true
+               }
+           }
+       } 
+       return false
+   }
+   
+   // Generate PRE variables setter.
+   def setPreVariables(Program program) {
+       '''«FOR valuedObject : program.getValuedObjects().filter[e|!e.isSignal] SEPARATOR ";
+ "»«IF valuedObject.usesPre» PRE_«valuedObject.name» = «valuedObject.name» «ENDIF»«ENDFOR»'''
+   }   
+
+
+   def getDefaultInitialValue(ValuedObject valuedObject) {
+       if (valuedObject.type == ValueType::BOOL) {
+           '''false'''
+       } else if ((valuedObject.type == ValueType::INT)||(valuedObject.type == ValueType::DOUBLE)||(valuedObject.type == ValueType::FLOAT)) {
+           '''0'''
+       } else {
+           ''''''
+       } 
+   }
 
    // Generate reset signals
    def sResetSignals(Program program) {
     '''
     public void resetInputSignals() {    
-    «FOR signal : program.valuedObjects.filter(e | e.isInput) SEPARATOR ""»
-        «signal.name» = false;
-    «ENDFOR»
+       // inputs must be set from the environment
     }
 
     public void resetOutputSignals() {    
-    «FOR signal : program.valuedObjects.filter(e | !e.isInput) SEPARATOR ""»
-        «signal.name» = false;
+    «FOR valuedObject : program.valuedObjects.filter(e | !e.isInput) SEPARATOR ""»
+        «IF valuedObject.signal»
+            «valuedObject.name» = false;
+        «ENDIF»
+        «IF !valuedObject.signal»
+            «valuedObject.name» = 
+            «IF valuedObject.initialValue != null»«valuedObject.initialValue.expand»«ENDIF»
+            «IF valuedObject.initialValue == null»«valuedObject.defaultInitialValue»«ENDIF»;
+        «ENDIF»
     «ENDFOR»
     }
     ''';
@@ -182,7 +255,8 @@ public class ''' + className + ''' extends SJLProgramWithSignals<State> implemen
        «ENDFOR»
        
             }
-        }       
+        }
+        «setPreVariables(program)»       
     }
     '''
    }
@@ -224,6 +298,12 @@ public class ''' + className + ''' extends SJLProgramWithSignals<State> implemen
    }
 
    // -------------------------------------------------------------------------   
+
+   // Expand a ASSIGNMENT instruction.
+   def dispatch CharSequence expand(Assignment assignment) {
+       '''«assignment.variable.expand » = «assignment.expression.expand»;'''
+   }   
+
       
    // Expand a PAUSE instruction.
        //«pauseInstruction.continuation.name»

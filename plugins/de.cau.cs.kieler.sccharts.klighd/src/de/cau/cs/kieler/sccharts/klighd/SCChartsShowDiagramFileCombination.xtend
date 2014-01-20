@@ -11,23 +11,20 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd 
+package de.cau.cs.kieler.sccharts.klighd
 
+import de.cau.cs.kieler.core.kivi.AbstractCombination
 import de.cau.cs.kieler.core.kivi.triggers.PartTrigger
 import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger
-import de.cau.cs.kieler.klighd.LightDiagramServices
-import de.cau.cs.kieler.klighd.effects.KlighdDiagramEffect
-
-// FIX while klighd.incremental is down
-//import de.cau.cs.kieler.klighd.incremental.UpdateStrategy
-import de.cau.cs.kieler.klighd.xtext.triggers.XtextBasedEditorActivationChangeTrigger$XtextModelChangeState
+import de.cau.cs.kieler.klighd.kivi.effects.KlighdUpdateDiagramEffect
+import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
+import de.cau.cs.kieler.klighd.xtext.UpdateXtextModelKLighDCombination
 import java.util.Collections
 import org.eclipse.core.resources.IFile
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import de.cau.cs.kieler.klighd.xtext.UpdateXtextModelKLighDCombination
-import de.cau.cs.kieler.klighd.krendering.SimpleUpdateStrategy
 
 class SCChartsShowDiagramFileCombination extends UpdateXtextModelKLighDCombination {
     
@@ -41,18 +38,18 @@ class SCChartsShowDiagramFileCombination extends UpdateXtextModelKLighDCombinati
     /**
      * The 'execute()' method, see doc of {@link AbstractCombination}.
      */    
-    def public void execute(PartTrigger$PartState es, SelectionTrigger$SelectionState selectionState) {
+    def public void execute(PartTrigger.PartState es, SelectionTrigger.SelectionState selectionState) {
             
         // do not react on partStates as well as on selectionStates in case
         //  a view part has been deactivated recently, as an potentially out-dated selection
         //  is currently about to be processed
         // most certainly a "part activated" event will follow and subsequently a further
         //  selection event if the selection of the newly active part is changed, too! 
-        if (this.latestState() == es || es.eventType == PartTrigger$EventType::VIEW_DEACTIVATED) {
+        if (this.latestState() == es || es.eventType == PartTrigger.EventType::VIEW_DEACTIVATED) {
            return;
         }
         
-        val selection = selectionState.selection;
+        val selection = selectionState.selectionElements;
         if (!selection.nullOrEmpty) {
             if (selection.size == 1 && typeof(IFile).isInstance(selection.get(0))) {
                 val IFile file = selection.get(0) as IFile;
@@ -68,9 +65,9 @@ class SCChartsShowDiagramFileCombination extends UpdateXtextModelKLighDCombinati
                     it?.load(Collections::emptyMap());
                 ])?.contents?.head;
                 if (eObject != null) {
-                    this.schedule(new KlighdDiagramEffect("volatile.sccharts.outline", eObject) => [
+                    this.schedule(new KlighdUpdateDiagramEffect("volatile.sccharts.outline", eObject) => [
 // FIX while klighd.incremental is down
-                        it.setProperty(LightDiagramServices::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
+                        it.setProperty(KlighdSynthesisProperties::REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy::ID);
 //                        it.setProperty(LightDiagramServices::REQUESTED_UPDATE_STRATEGY, UpdateStrategy::ID);
                     ]);
                 }

@@ -6,7 +6,7 @@
   <version>0.8.0-SNAPSHOT</version>
   <artifactId>de.cau.cs.kieler.semantics.product.repository</artifactId>
   <packaging>eclipse-repository</packaging>
-  <name>KIELER Semantics RCA</name>
+  <name>KIELER RCA</name>
 
   <parent>
     <groupId>de.cau.cs.kieler</groupId>
@@ -40,7 +40,7 @@
             <product>
               <id>de.cau.cs.kieler.product</id>
               <rootFolder>kieler</rootFolder>
-              <archiveFileName>kieler_semanticsrca_nightly_${buildQualifier}</archiveFileName>
+              <archiveFileName>kieler_rca_nightly_${buildQualifier}</archiveFileName>
             </product>
           </products>
         </configuration>

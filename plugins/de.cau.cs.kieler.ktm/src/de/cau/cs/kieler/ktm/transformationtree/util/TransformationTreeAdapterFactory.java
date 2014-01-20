@@ -86,20 +86,20 @@ public class TransformationTreeAdapterFactory extends AdapterFactoryImpl {
     protected TransformationTreeSwitch<Adapter> modelSwitch =
         new TransformationTreeSwitch<Adapter>() {
             @Override
-            public Adapter caseModel(Model object) {
-                return createModelAdapter();
+            public Adapter caseModelWrapper(ModelWrapper object) {
+                return createModelWrapperAdapter();
             }
             @Override
-            public Adapter caseElement(Element object) {
-                return createElementAdapter();
+            public Adapter caseEObjectWrapper(EObjectWrapper object) {
+                return createEObjectWrapperAdapter();
             }
             @Override
             public Adapter caseModelTransformation(ModelTransformation object) {
                 return createModelTransformationAdapter();
             }
             @Override
-            public Adapter caseElementTransformation(ElementTransformation object) {
-                return createElementTransformationAdapter();
+            public Adapter caseEObjectTransformation(EObjectTransformation object) {
+                return createEObjectTransformationAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -122,30 +122,30 @@ public class TransformationTreeAdapterFactory extends AdapterFactoryImpl {
 
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ktm.transformationtree.Model <em>Model</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ktm.transformationtree.ModelWrapper <em>Model Wrapper</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Model
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelWrapper
      * @generated
      */
-    public Adapter createModelAdapter() {
+    public Adapter createModelWrapperAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ktm.transformationtree.Element <em>Element</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper <em>EObject Wrapper</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Element
+     * @see de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper
      * @generated
      */
-    public Adapter createElementAdapter() {
+    public Adapter createEObjectWrapperAdapter() {
         return null;
     }
 
@@ -164,16 +164,16 @@ public class TransformationTreeAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ktm.transformationtree.ElementTransformation <em>Element Transformation</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.ktm.transformationtree.EObjectTransformation <em>EObject Transformation</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.ktm.transformationtree.ElementTransformation
+     * @see de.cau.cs.kieler.ktm.transformationtree.EObjectTransformation
      * @generated
      */
-    public Adapter createElementTransformationAdapter() {
+    public Adapter createEObjectTransformationAdapter() {
         return null;
     }
 

@@ -95,6 +95,11 @@ public class SAdapterFactory extends AdapterFactoryImpl
         return createInstructionAdapter();
       }
       @Override
+      public Adapter caseAssignment(Assignment object)
+      {
+        return createAssignmentAdapter();
+      }
+      @Override
       public Adapter casePrio(Prio object)
       {
         return createPrioAdapter();
@@ -232,6 +237,21 @@ public class SAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createInstructionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Assignment <em>Assignment</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.s.s.Assignment
+   * @generated
+   */
+  public Adapter createAssignmentAdapter()
   {
     return null;
   }

@@ -21,6 +21,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kexpressions.serializer.KExpressionsSemanticSequencer;
 import de.cau.cs.kieler.s.s.Abort;
+import de.cau.cs.kieler.s.s.Assignment;
 import de.cau.cs.kieler.s.s.Await;
 import de.cau.cs.kieler.s.s.Emit;
 import de.cau.cs.kieler.s.s.Fork;
@@ -121,8 +122,6 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 			case KExpressionsPackage.BOOL_VALUE:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getAndExpressionRule() ||
-				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
 				   context == grammarAccess.getBoolExpressionRule() ||
@@ -139,8 +138,9 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getOrExpressionRule() ||
-				   context == grammarAccess.getOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getOrAndExpressionRule() ||
+				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0() ||
+				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSExpressionRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
@@ -241,18 +241,17 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_Expression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_CompareOperation_DivExpression_Expression_ModExpression_MultExpression_NegExpression_NotExpression_OrAndExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getAndExpressionRule() ||
-				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getAtomicExpressionRule() ||
+				else if(context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getBoolExpressionRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
-				   context == grammarAccess.getOrExpressionRule() ||
-				   context == grammarAccess.getOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
-					sequence_AndExpression_CompareOperation_NotExpression_OrExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+				   context == grammarAccess.getOrAndExpressionRule() ||
+				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0() ||
+				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()) {
+					sequence_CompareOperation_NotExpression_OrAndExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getValuedObjectTestExpressionRule()) {
@@ -263,8 +262,6 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 			case KExpressionsPackage.TEXT_EXPRESSION:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getAndExpressionRule() ||
-				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
 				   context == grammarAccess.getBoolExpressionRule() ||
@@ -280,8 +277,9 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getOrExpressionRule() ||
-				   context == grammarAccess.getOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getOrAndExpressionRule() ||
+				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0() ||
+				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSExpressionRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
@@ -301,8 +299,6 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getAndExpressionRule() ||
-				   context == grammarAccess.getAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
 				   context == grammarAccess.getBoolExpressionRule() ||
@@ -318,8 +314,9 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getOrExpressionRule() ||
-				   context == grammarAccess.getOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getOrAndExpressionRule() ||
+				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0() ||
+				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0() ||
 				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSExpressionRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
@@ -337,6 +334,13 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 				if(context == grammarAccess.getAbortRule() ||
 				   context == grammarAccess.getInstructionRule()) {
 					sequence_Abort(context, (Abort) semanticObject); 
+					return; 
+				}
+				else break;
+			case SPackage.ASSIGNMENT:
+				if(context == grammarAccess.getAssignmentRule() ||
+				   context == grammarAccess.getInstructionRule()) {
+					sequence_Assignment(context, (Assignment) semanticObject); 
 					return; 
 				}
 				else break;
@@ -446,6 +450,25 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	 */
 	protected void sequence_Abort(EObject context, Abort semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (variable=[ValuedObject|ID] expression=Expression)
+	 */
+	protected void sequence_Assignment(EObject context, Assignment semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SPackage.Literals.ASSIGNMENT__VARIABLE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SPackage.Literals.ASSIGNMENT__VARIABLE));
+			if(transientValues.isValueTransient(semanticObject, SPackage.Literals.ASSIGNMENT__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SPackage.Literals.ASSIGNMENT__EXPRESSION));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getAssignmentAccess().getVariableValuedObjectIDTerminalRuleCall_0_0_1(), semanticObject.getVariable());
+		feeder.accept(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_2_0(), semanticObject.getExpression());
+		feeder.finish();
 	}
 	
 	

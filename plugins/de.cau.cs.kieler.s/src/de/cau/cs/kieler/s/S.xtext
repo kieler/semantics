@@ -91,7 +91,11 @@ terminal HOSTCODESTRINGTERMINAL returns ecore::EString:
     
 
 Instruction:
-   Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction
+   Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction | Assignment
+;
+
+Assignment:
+   variable = [kexpressions::ValuedObject] '=' expression=Expression
 ;
 
 // Change priority
@@ -135,11 +139,11 @@ Halt :
   
   
 LocalSignal: // For handling local signal re-initialization (taking care or reincarnation)
-    'signal''('signal=[kexpressions::ValuedObject]')'
+    'signal''('signal = [kexpressions::ValuedObject]')'
 ;
 
 Emit:
-	'emit''('signal= [kexpressions::ValuedObject] ('(' value=SExpression ')')? (',' continuation=[State])?')'
+	'emit''('signal = [kexpressions::ValuedObject] ('(' value=SExpression ')')? (',' continuation=[State])?')'
 ;
   
 Abort : 

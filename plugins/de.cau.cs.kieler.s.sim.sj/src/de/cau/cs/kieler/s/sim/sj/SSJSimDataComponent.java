@@ -79,6 +79,9 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
     /** The list of output signals including the ones used for the visualization. */
     private LinkedList<String> outputSignalList = null;
 
+    /** The list of output signals including the ones used for the visualization. */
+    private LinkedList<String> outputVariableList = null;
+
     /** A flag indicating that debug console output is generated and should be handled. */
     private boolean debugConsole = true;
 
@@ -232,16 +235,57 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
             // Test if there are any input signals to set
             if (sSignalInputArray != null) {
                 for (int i = 0; i < sSignalInputArray.length(); i++) {
-                    String sSignalInputName = sSignalInputArray.getString(i);
-                    Object object = jSONObject.get(sSignalInputName);
+                    String valuedObjectName = sSignalInputArray.getString(i);
+                    Object object = jSONObject.get(valuedObjectName);
                     if (object instanceof JSONObject) {
-                        JSONObject sSignalInput = (JSONObject) object;
-                        boolean sSignalInputIsPresent = JSONSignalValues.isPresent(sSignalInput);
-                        if (program.hasSignal(sSignalInputName)) {
-                            if (sSignalInputIsPresent) {
-                                program.setInput(sSignalInputName, true);
+                        JSONObject valuedObjectContent = (JSONObject) object;
+                        Object programObject = program.getOutput(valuedObjectName);
+                        boolean isVariable = !(programObject instanceof Boolean);
+                        boolean isSignal = JSONSignalValues.isSignalValue(valuedObjectContent);
+                        Object value = JSONSignalValues.getSignalValue(valuedObjectContent);
+                        boolean signalInputIsPresent = JSONSignalValues.isPresent(valuedObjectContent);
+                        if (program.hasSignal(valuedObjectName)) {
+                            if (isSignal && !isVariable) {
+                                if (signalInputIsPresent) {
+                                    program.setInput(valuedObjectName, true);
+                                } else {
+                                    program.setInput(valuedObjectName, false);
+                                }
                             } else {
-                                program.setInput(sSignalInputName, false);
+                                //TODO: THIS GOES WRONG FOR NON-BOOLEAN SIGNALS/VARIABLES
+                                if (value == null) {
+                                  if (signalInputIsPresent) { 
+                                      if (programObject instanceof Integer) {
+                                          value = 1;    
+                                      } else if (programObject instanceof Boolean) {
+                                          value = true;    
+                                      } else if (programObject instanceof Long) {
+                                          value = 1;    
+                                      } else if (programObject instanceof Double) {
+                                          value = 1;    
+                                      }
+                                  } else {
+                                      if (programObject instanceof Integer) {
+                                          value = 0;    
+                                      } else if (programObject instanceof Boolean) {
+                                          value = false;    
+                                      } else if (programObject instanceof Long) {
+                                          value = 0;    
+                                      } else if (programObject instanceof Double) {
+                                          value = 0;    
+                                      }
+                                  }
+                                }
+                                
+                                if (programObject instanceof Integer) {
+                                    program.setInput(valuedObjectName, (Integer)value);    
+                                } else if (programObject instanceof Boolean) {
+                                    program.setInput(valuedObjectName, (Boolean)value);    
+                                } else if (programObject instanceof Long) {
+                                    program.setInput(valuedObjectName, (Long)value);    
+                                } else if (programObject instanceof Double) {
+                                    program.setInput(valuedObjectName, (Double)value);    
+                                }
                             }
                         }
                     }
@@ -384,6 +428,41 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
                 // }
             }
 
+            // Then add normal output signals
+            for (String sVariableOutputName : outputVariableList) {
+                boolean sSignalIsPresent = false;
+                Object object = program.getOutput(sVariableOutputName);
+                if (object instanceof Boolean) {
+                    if ((Boolean) object) {
+                        sSignalIsPresent = true;
+                    } else {
+                        sSignalIsPresent = false;
+                    }
+                }
+                if (object instanceof Integer) {
+                    if ((Integer) object != 0) {
+                        sSignalIsPresent = true;
+                    } else {
+                        sSignalIsPresent = false;
+                    }
+                }
+                if (object instanceof Long) {
+                    if ((Long) object != 0) {
+                        sSignalIsPresent = true;
+                    } else {
+                        sSignalIsPresent = false;
+                    }
+                }
+                if (object instanceof Double) {
+                    if ((Double) object != 0) {
+                        sSignalIsPresent = true;
+                    } else {
+                        sSignalIsPresent = false;
+                    }
+                }
+                returnObj.accumulate(sVariableOutputName, JSONSignalValues.newValue(object, sSignalIsPresent));
+            }            
+            
             // Finally accumulate all active Statements (activeStatements)
             // under the statementName
             String statementName =
@@ -628,23 +707,31 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
 
         // Build the list of interface output signals
         outputSignalList = new LinkedList<String>();
+        outputVariableList = new LinkedList<String>();
         JSONObject res = new JSONObject();
         try {
             if (myModel != null && myModel.getValuedObjects() != null) {
-                for (ValuedObject signal : myModel.getValuedObjects()) {
-                    if (signal.isSignal()) {
-                        if (signal.isInput()) {
-                            res.accumulate(signal.getName(), JSONSignalValues.newValue(false));
+                for (ValuedObject valuedObject : myModel.getValuedObjects()) {
+                        if (valuedObject.isInput()) {
+                            if (valuedObject.isSignal()) {
+                                res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
+                            } else {
+                                res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
+                            }
                         }
-                        if (signal.isOutput()) {
-                            String signalName = signal.getName();
+                        if (valuedObject.isOutput()) {
+                            String signalName = valuedObject.getName();
                             if (!signalName.startsWith(SSimPlugin.AUXILIARY_VARIABLE_TAG)) {
-                                res.accumulate(signalName, JSONSignalValues.newValue(false));
-                                outputSignalList.add(signalName);
+                                if (valuedObject.isSignal()) {
+                                    res.accumulate(signalName, JSONSignalValues.newValue(false));
+                                    outputSignalList.add(signalName);
+                                } else {
+                                    res.accumulate(signalName, JSONSignalValues.newValue(false));
+                                    outputVariableList.add(signalName);
+                                }
                             }
                         }
                     }
-                }
             }
         } catch (JSONException e) {
             // ignore

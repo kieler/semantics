@@ -79,7 +79,7 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
      * {@inheritDoc}
      */
     @Override
-    protected String getTargetExtension() {
+    protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
         return "scg";
     }
 

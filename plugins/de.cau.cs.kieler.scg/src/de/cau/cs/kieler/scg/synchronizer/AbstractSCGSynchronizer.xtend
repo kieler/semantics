@@ -13,30 +13,61 @@
  */
 package de.cau.cs.kieler.scg.synchronizer
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.scg.Fork
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scgbb.BasicBlock
-import java.util.ArrayList
-import java.util.List
-import de.cau.cs.kieler.core.util.Pair
+import de.cau.cs.kieler.scg.Join
 
 /** 
- * AbstractSCGSynchronizer
+ * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
+ * whenever multiple threads join again. This abstract class defines the generic interface of a synchronizer 
+ * since the scheduler may choose different synchronizers for different tasks.<br>
+ * The chain is used to gather important information 
+ * about the schedulability of a given SCG. This is done in several key steps. Between two steps the results 
+ * are cached in specifically designed metamodels for further processing. At the end of the transformation
+ * chain a newly generated (and sequentialized) SCG is returned. <br>
+ * You can either call the transformations manually or use the SCG transformation extensions to enrich the
+ * SCGs with the desired information.<br>
+ * <pre>
+ * SCG 
+ *   |-- Dependency Analysis 	 					
+ *   |-- Basic Block Analysis
+ *   |-- Scheduler
+ *   |    |-- Graph analyses
+ *   |    |-- Scheduling
+ *   |    |   |-- Synchonize threads		<== YOU ARE HERE
+ *   |    |-- Optimization
+ *   |-- Sequentialization (new SCG)
+ *       |-- Optimization					
+ * </pre>
  * 
  * @author ssm
  * @kieler.design 2013-11-28 proposed 
  * @kieler.rating 2013-11-28 proposed yellow
+ * @abstract
  */
 abstract class AbstractSCGSynchronizer {
-
-    @Inject
-    extension SCGExtensions
+   
+    /**
+     * This function has to be overwritten in the derived class. It is called by the 
+     * {@link #synchronize(Join)} function which is called by the scheduler 
+     * and constructs the actual synchronizer.
+     * 
+     * @param join
+     * 			the join node in question
+     * @return Returns a {@code SynchronizerData} class which includes all mandatory 
+     * 		data to construct a guard expression for the join node in question.
+     * @abstract 
+     */
+    protected abstract def SynchronizerData build(Join join);
     
-    protected abstract def SynchronizerData build(Fork originFork);
-    
-    public def SynchronizerData synchronize(Fork fork) {
-        build(fork)
+    /**
+     * This function is the entry point for the scheduler. The scheduler calls 
+     * {@code synchronize} whenever multiple threads are joined at a join node.
+     * 
+     * @param join 
+     * 			the join node in question
+     * @return Returns a {@code SynchronizerData} class which includes all mandatory 
+     * 		data to construct a guard expression for the join node in question.
+     */
+    public def SynchronizerData synchronize(Join join) {
+        build(join)
     }    
 }

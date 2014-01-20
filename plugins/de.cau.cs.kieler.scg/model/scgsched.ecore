@@ -5,16 +5,36 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unschedulable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="schedules" upperBound="-1"
         eType="#//Schedule" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="problems" upperBound="-1"
-        eType="#//Problem" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="guards" upperBound="-1"
+        eType="#//GuardExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="analyses" upperBound="-1"
+        eType="#//Analysis" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EmptyExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="threadExitObject" lowerBound="1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GuardExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="emptyExpressions" upperBound="-1"
+        eType="#//EmptyExpression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Schedule">
     <eStructuralFeatures xsi:type="ecore:EReference" name="schedulingBlocks" upperBound="-1"
         eType="ecore:EClass scgbb.ecore#//SchedulingBlock"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Problem"/>
-  <eClassifiers xsi:type="ecore:EClass" name="PotentialLoopProblem" eSuperTypes="#//Problem">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="controlFlows" upperBound="-1"
-        eType="ecore:EClass scg.ecore#//ControlFlow"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Analysis">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="objectReferences" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
   </eClassifiers>
 </ecore:EPackage>

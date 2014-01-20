@@ -84,15 +84,15 @@ public class TransformationTreeSwitch<T> extends Switch<T> {
     @Override
     protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
-            case TransformationTreePackage.MODEL: {
-                Model model = (Model)theEObject;
-                T result = caseModel(model);
+            case TransformationTreePackage.MODEL_WRAPPER: {
+                ModelWrapper modelWrapper = (ModelWrapper)theEObject;
+                T result = caseModelWrapper(modelWrapper);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case TransformationTreePackage.ELEMENT: {
-                Element element = (Element)theEObject;
-                T result = caseElement(element);
+            case TransformationTreePackage.EOBJECT_WRAPPER: {
+                EObjectWrapper eObjectWrapper = (EObjectWrapper)theEObject;
+                T result = caseEObjectWrapper(eObjectWrapper);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -102,9 +102,9 @@ public class TransformationTreeSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case TransformationTreePackage.ELEMENT_TRANSFORMATION: {
-                ElementTransformation elementTransformation = (ElementTransformation)theEObject;
-                T result = caseElementTransformation(elementTransformation);
+            case TransformationTreePackage.EOBJECT_TRANSFORMATION: {
+                EObjectTransformation eObjectTransformation = (EObjectTransformation)theEObject;
+                T result = caseEObjectTransformation(eObjectTransformation);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -113,32 +113,32 @@ public class TransformationTreeSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Model</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Model Wrapper</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Model</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Model Wrapper</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseModel(Model object) {
+    public T caseModelWrapper(ModelWrapper object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Element</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>EObject Wrapper</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Element</em>'.
+     * @return the result of interpreting the object as an instance of '<em>EObject Wrapper</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseElement(Element object) {
+    public T caseEObjectWrapper(EObjectWrapper object) {
         return null;
     }
 
@@ -158,17 +158,17 @@ public class TransformationTreeSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Element Transformation</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>EObject Transformation</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Element Transformation</em>'.
+     * @return the result of interpreting the object as an instance of '<em>EObject Transformation</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseElementTransformation(ElementTransformation object) {
+    public T caseEObjectTransformation(EObjectTransformation object) {
         return null;
     }
 

@@ -16,8 +16,6 @@ package de.cau.cs.kieler.sccharts.klighd.layout;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EObject;
-
 import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.AnnotationsFactory;
@@ -55,7 +53,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
      * {@inheritDoc}
      */
     @Override
-    protected IProperty<?>[] getAffectedOptions(final EObject semanticElem) {
+    protected IProperty<?>[] getAffectedOptions(final Object semanticElem) {
         if (semanticElem instanceof Annotatable) {
             LayoutDataService dataService = LayoutDataService.getInstance();
             List<LayoutOptionData<?>> data = new LinkedList<LayoutOptionData<?>>();
@@ -136,7 +134,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
      * {@inheritDoc}
      */
     @Override
-    protected Object getSemanticValue(final EObject semanticElem,
+    protected Object getSemanticValue(final Object semanticElem,
             final LayoutOptionData<?> layoutOption) {
         if (semanticElem instanceof Annotatable) {
             Annotation annotation = getAnnotation((Annotatable) semanticElem, layoutOption.getId());
@@ -177,7 +175,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
      * {@inheritDoc}
      */
     @Override
-    protected void setSemanticValue(final EObject semanticElem,
+    protected void setSemanticValue(final Object semanticElem,
             final LayoutOptionData<?> layoutOption, final Object value) {
         if (semanticElem instanceof Annotatable) {
             Annotatable annotatable = (Annotatable) semanticElem;

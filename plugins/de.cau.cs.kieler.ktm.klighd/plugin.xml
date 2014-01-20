@@ -7,5 +7,69 @@
          class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.ktm.klighd.TransformationTreeDiagramSynthesis"
          id="de.cau.cs.kieler.ktm.klighd.TransformationTreeDiagramSynthesis">
    </diagramSynthesis>
+   <diagramSynthesis
+         class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.ktm.klighd.InternalResolveModelDiagramSynthesis"
+         id="de.cau.cs.kieler.ktm.klighd.InternalResolveModelDiagramSynthesis">
+   </diagramSynthesis>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.extensions">
+      <action
+            class="de.cau.cs.kieler.ktm.klighd.actions.SelectionDisplayAction"
+            id="de.cau.cs.kieler.ktm.klighd.actions.SelectionDisplayAction">
+      </action>
+      <action
+            class="de.cau.cs.kieler.ktm.klighd.actions.MultiSelectionDisplayAction"
+            id="de.cau.cs.kieler.ktm.klighd.actions.MultiSelectionDisplayAction">
+      </action>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            description="Transformation Tree"
+            id="de.cau.cs.kieler.ktm.klighd.TransformationTree"
+            name="TransformationTree">
+      </category>
+      <command
+            categoryId="de.cau.cs.kieler.ktm.klighd.TransformationTree"
+            defaultHandler="de.cau.cs.kieler.ktm.klighd.handler.OpenTransformationTreeHandler"
+            description="Opens an interactive visualisation of selected Transformation Tree."
+            id="de.cau.cs.kieler.ktm.klighd.openTransformationTree"
+            name="Open Transformation Tree">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?before=additions">
+         <command
+               commandId="de.cau.cs.kieler.ktm.klighd.openTransformationTree"
+               label="Open Transformation Tree"
+               style="push">
+            <visibleWhen>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="ktmt">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kiml.layoutProviders">
+      <layoutAlgorithm
+            class="de.cau.cs.kieler.ktm.klighd.layout.TransformationTreeLayoutProvider"
+            id="de.cau.cs.kieler.ktm.klighd.layout.TransformationTreeLayoutProvider"
+            name="TransformationTree Layout">
+      </layoutAlgorithm>
    </extension>
 null</plugin>

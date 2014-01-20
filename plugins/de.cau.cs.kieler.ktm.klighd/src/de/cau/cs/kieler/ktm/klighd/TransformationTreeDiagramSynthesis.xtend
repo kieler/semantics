@@ -29,10 +29,13 @@ import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions
-import de.cau.cs.kieler.ktm.transformationtree.Model
-import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation
+import de.cau.cs.kieler.ktm.klighd.resolve.EObjectSynthesisModelWrapperWrapper
+import de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper
+import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper
 import java.util.List
 import javax.inject.Inject
 
@@ -43,7 +46,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * 
  * @author als
  */
-class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model> {
+class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper> {
 
     @Inject
     extension KNodeExtensions
@@ -74,10 +77,12 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model>
 
     // -------------------------------------------------------------------------
     // Display options
-    private static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadow", true);
+    public static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadows", true);
+    public static val SynthesisOption SHOW_MODELS = SynthesisOption::createCheckOption("Model visualization", true);
+    public static val SynthesisOption SHOW_ATTRIBUTES = SynthesisOption::createCheckOption("EObject attributes", false);
 
     override public getDisplayedSynthesisOptions() {
-        return newLinkedList(SHOW_SHADOW);
+        return newLinkedList(SHOW_SHADOW, SHOW_MODELS, SHOW_ATTRIBUTES);
     }
 
     override public getDisplayedLayoutOptions() {
@@ -90,6 +95,10 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model>
     }
 
     // -------------------------------------------------------------------------
+    // Internal Display options
+    public static val SynthesisOption SYNTHESIZE_TREE = SynthesisOption::createCheckOption("[synthesize tree]", true);
+
+    // -------------------------------------------------------------------------
     // Some color and pattern constants
     private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor() =>
         [it.red = 248; it.green = 249; it.blue = 253];
@@ -100,39 +109,123 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model>
     // The Main entry transform function
     /**
      * Each Model is a element in a tree.
-     * This will transform the full tree and not only this single element.
+     * Creates synthesis for tree with given model as root element
      */
-    override KNode transform(Model model) {
-        val root = model.createNode();
-        var rootModel = model.root;
+    override KNode transform(ModelWrapper model) {
+        val rootNode = createNode();
 
-        // currently only overview of transformation tree is available
-        if (rootModel.transformedInto.empty) { //no transformations
-            model.transformModelAsChildNode(root);
+        if (model instanceof EObjectSynthesisModelWrapperWrapper) {
+            rootNode.children += (model as EObjectSynthesisModelWrapperWrapper).modelWrapper.modelObjects.map [
+                it.translateObject;
+            ];
+            rootNode.addRoundedRectangle(8, 8, 1) => [
+                it.lineWidth = 2;
+                it.foreground = "gray".color;
+                if (SHOW_SHADOW.booleanValue) {
+                    it.shadow = "black".color;
+                    it.shadow.XOffset = 4;
+                    it.shadow.YOffset = 4;
+                }
+            ];
         } else {
+            rootNode.addInvisibleContainerRendering.addSingleClickAction(
+                "de.cau.cs.kieler.ktm.klighd.actions.SelectionDisplayAction");
 
-            //iterate over all transformations and create nodes and edges
-            rootModel.succeedingTransformations.forEach [ ModelTransformation trans |
-                trans.createEdge() => [
-                    it.source = trans.source.transformModelAsChildNode(root);
-                    it.target = trans.target.transformModelAsChildNode(root);
-                    it.addPolyline.addArrowDecorator;
-                    it.createLabel.configureCenteralEdgeLabel(trans.id, KlighdConstants::DEFAULT_FONT_SIZE,
-                        KlighdConstants::DEFAULT_FONT_NAME);
-                ]
+            //create Tree
+            rootNode.children += model.createNode() => [ treeNode |
+                treeNode.addInvisibleContainerRendering;
+                if (model.targetTransformations.empty) { //no transformations
+                    model.transformModelAsChildNode(treeNode);
+                } else {
+
+                    //iterate over all transformations and create nodes and edges
+                    model.succeedingTransformations.forEach [ trans |
+                        trans.createEdge() => [
+                            it.source = trans.source.transformModelAsChildNode(treeNode);
+                            it.target = trans.target.transformModelAsChildNode(treeNode);
+                            it.addPolyline.addArrowDecorator;
+                            it.createLabel.configureCenteralEdgeLabel(trans.transformationID,
+                                KlighdConstants::DEFAULT_FONT_SIZE,
+                                KlighdConstants::DEFAULT_FONT_NAME);
+                        ]
+                    ];
+                }
             ];
         }
 
-        return root;
+        return rootNode;
     }
 
     /**
 	 * creates a Node for given model (once) and adds it to given root node.
 	 */
-    def KNode create node : createNode() transformModelAsChildNode(Model model, KNode root) {
+    private def KNode create node : createNode() transformModelAsChildNode(ModelWrapper model, KNode root) {
         node.putToLookUpWith(model);
 
         //Model's visualization like States in SCCharts
+        val figure = node.createFigure;
+
+        figure.addText(model.modelTypeID).putToLookUpWith(model) => [
+            it.fontSize = 11;
+            it.setFontItalic(model.transient);
+            it.setFontBold(!model.transient);
+            it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+            it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+        ];
+
+        //TODO this should be a event on not pressed Ctrl. chsch might fix this
+        figure.addSingleClickAction("de.cau.cs.kieler.ktm.klighd.actions.SelectionDisplayAction", false, true, false);
+
+        //TODO this should be a event on pressed Ctrl. chsch might fix this
+        figure.addSingleClickAction("de.cau.cs.kieler.ktm.klighd.actions.MultiSelectionDisplayAction", false, false,
+            true);
+
+        //add child once to root
+        root.children += node;
+    }
+
+    def KNode translateObject(EObjectWrapper object, ViewContext vc) {
+        this.use(vc);
+        translateObject(object);
+    }
+
+    /**
+     * creates a Node for given model object.
+     */
+    private def KNode translateObject(EObjectWrapper object) {
+        val node = object.createNode.putToLookUpWith(object);
+
+        val figure = node.createFigure;
+
+        figure.setGridPlacement(1);
+
+        val text = if (object.EObject == null) {
+                object.displayName;
+            } else {
+                object.EObject.eClass.name;
+            }
+
+        figure.addText(text).putToLookUpWith(object) => [
+            it.fontSize = 11;
+            it.setFontBold(true);
+            it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+            it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+        ];
+
+        if (SHOW_ATTRIBUTES.booleanValue && object.EObject != null) {
+            object.EObject.eClass.EAllAttributes.filterNull.forEach [
+                figure.addText(it.name + ": " + String::valueOf(object.EObject.eGet(it))) => [
+                    it.fontSize = 9;
+                    it.setGridPlacementData().from(LEFT, 5, 0, TOP, 2, 0).to(RIGHT, 5, 0, BOTTOM, 2, 0);
+                    it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                ];
+            ]
+        }
+
+        return node;
+    }
+
+    def createFigure(KNode node) {
         val figure = node.addRoundedRectangle(8, 8, 1).background = "white".color;
         figure.lineWidth = 1;
         figure.foreground = "gray".color;
@@ -146,14 +239,7 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<Model>
 
         node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
 
-        figure.addText(model.name).putToLookUpWith(model) => [
-            it.fontSize = 11;
-            it.setFontBold(true);
-            it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
-        ];
-
-        //add child once to root
-        root.children += node;
+        return figure
     }
 
 }

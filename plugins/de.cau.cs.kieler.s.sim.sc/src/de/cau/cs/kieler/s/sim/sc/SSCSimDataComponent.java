@@ -77,6 +77,9 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
     /** The list of output signals including the ones used for the visualization. */
     private LinkedList<String> outputSignalList = null;
 
+    /** The list of output signals including the ones used for the visualization. */
+    private LinkedList<String> outputVariableList = null;
+
     /** A flag indicating that debug console output is generated and should be handled. */
     private boolean debugConsole = true;
 
@@ -328,6 +331,30 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
                         returnObj.accumulate(outputSignal, JSONSignalValues.newValue(false));
                     }
                 }
+                for (String outputVariable : outputVariableList) {
+                    if (sSignalOutput.has(outputVariable)) {
+
+                        // retrieve jsonSignal
+                        JSONObject jsonVariable = sSignalOutput.getJSONObject(outputVariable);
+                        boolean sVariableIsPresent = JSONSignalValues.isPresent(jsonVariable);
+
+                        if (JSONSignalValues.isSignalValue(jsonVariable)) {
+                            Object value = JSONSignalValues.getSignalValue(jsonVariable);
+                            // valued signals
+                            // ALWAYS UPDATE VALUES FOR VARIABLES
+                            //if (sSignalIsPresent) {
+                                returnObj.accumulate(outputVariable,
+                                        JSONSignalValues.newValue(value, true));
+                            //}
+                        } else {
+                            // pure signals
+                            returnObj.accumulate(outputVariable,
+                                    JSONSignalValues.newValue(sVariableIsPresent));
+                        }
+                    } else {
+                        returnObj.accumulate(outputVariable, JSONSignalValues.newValue(false));
+                    }
+                }
             } else {
                 throw new KiemExecutionException("No S simulation is running", true, null);
 
@@ -565,22 +592,32 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
 
         // Build the list of interface output signals
         outputSignalList = new LinkedList<String>();
+        outputVariableList = new LinkedList<String>();
         JSONObject res = new JSONObject();
         try {
             if (myModel != null && myModel.getValuedObjects() != null) {
-                for (ValuedObject signal : myModel.getValuedObjects()) {
-                    if (signal.isSignal()) {
-                        if (signal.isInput()) {
-                            res.accumulate(signal.getName(), JSONSignalValues.newValue(false));
-                        }
-                        if (signal.isOutput()) {
-                            String signalName = signal.getName();
-                            if (!signalName.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)) {
-                                res.accumulate(signalName, JSONSignalValues.newValue(false));
-                                outputSignalList.add(signalName);
+                for (ValuedObject valuedObject : myModel.getValuedObjects()) {
+                        if (valuedObject.isInput()) {
+                            if (valuedObject.isSignal()) {
+                                res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
+                            }
+                            else {
+                                res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
                             }
                         }
-                    }
+                        if (valuedObject.isOutput()) {
+                            String signalName = valuedObject.getName();
+                            if (!signalName.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)) {
+                                if (valuedObject.isSignal()) {
+                                    res.accumulate(signalName, JSONSignalValues.newValue(false));
+                                    outputSignalList.add(signalName);
+                                }
+                                else {
+                                    res.accumulate(signalName, JSONSignalValues.newValue(false));
+                                    outputVariableList.add(signalName);
+                                }
+                            }
+                        }
                 }
             }
         } catch (JSONException e) {

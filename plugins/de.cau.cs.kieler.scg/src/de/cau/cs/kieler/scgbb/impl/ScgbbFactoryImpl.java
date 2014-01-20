@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scgbb.impl;
 import de.cau.cs.kieler.scgbb.*;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -31,109 +32,159 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class ScgbbFactoryImpl extends EFactoryImpl implements ScgbbFactory {
     /**
-     * Creates the default factory implementation.
-     * <!-- begin-user-doc -->
+	 * Creates the default factory implementation.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static ScgbbFactory init() {
-        try {
-            ScgbbFactory theScgbbFactory = (ScgbbFactory)EPackage.Registry.INSTANCE.getEFactory(ScgbbPackage.eNS_URI);
-            if (theScgbbFactory != null) {
-                return theScgbbFactory;
-            }
-        }
-        catch (Exception exception) {
-            EcorePlugin.INSTANCE.log(exception);
-        }
-        return new ScgbbFactoryImpl();
-    }
+		try {
+			ScgbbFactory theScgbbFactory = (ScgbbFactory)EPackage.Registry.INSTANCE.getEFactory(ScgbbPackage.eNS_URI);
+			if (theScgbbFactory != null) {
+				return theScgbbFactory;
+			}
+		}
+		catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
+		return new ScgbbFactoryImpl();
+	}
 
     /**
-     * Creates an instance of the factory.
-     * <!-- begin-user-doc -->
+	 * Creates an instance of the factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ScgbbFactoryImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public EObject create(EClass eClass) {
-        switch (eClass.getClassifierID()) {
-            case ScgbbPackage.SC_GRAPH_BB: return createSCGraphBB();
-            case ScgbbPackage.BASIC_BLOCK: return createBasicBlock();
-            case ScgbbPackage.SCHEDULING_BLOCK: return createSchedulingBlock();
-            case ScgbbPackage.ACTIVATION_EXPRESSION: return createActivationExpression();
-            default:
-                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-        }
-    }
+		switch (eClass.getClassifierID()) {
+			case ScgbbPackage.SC_GRAPH_BB: return createSCGraphBB();
+			case ScgbbPackage.BASIC_BLOCK: return createBasicBlock();
+			case ScgbbPackage.SCHEDULING_BLOCK: return createSchedulingBlock();
+			case ScgbbPackage.PREDECESSOR: return createPredecessor();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
+			case ScgbbPackage.BLOCK_TYPE:
+				return createBlockTypeFromString(eDataType, initialValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
+			case ScgbbPackage.BLOCK_TYPE:
+				return convertBlockTypeToString(eDataType, instanceValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public SCGraphBB createSCGraphBB() {
-        SCGraphBBImpl scGraphBB = new SCGraphBBImpl();
-        return scGraphBB;
-    }
+		SCGraphBBImpl scGraphBB = new SCGraphBBImpl();
+		return scGraphBB;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public BasicBlock createBasicBlock() {
-        BasicBlockImpl basicBlock = new BasicBlockImpl();
-        return basicBlock;
-    }
+		BasicBlockImpl basicBlock = new BasicBlockImpl();
+		return basicBlock;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public SchedulingBlock createSchedulingBlock() {
-        SchedulingBlockImpl schedulingBlock = new SchedulingBlockImpl();
-        return schedulingBlock;
-    }
+		SchedulingBlockImpl schedulingBlock = new SchedulingBlockImpl();
+		return schedulingBlock;
+	}
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ActivationExpression createActivationExpression() {
-        ActivationExpressionImpl activationExpression = new ActivationExpressionImpl();
-        return activationExpression;
-    }
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Predecessor createPredecessor() {
+		PredecessorImpl predecessor = new PredecessorImpl();
+		return predecessor;
+	}
 
-    /**
-     * <!-- begin-user-doc -->
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public BlockType createBlockTypeFromString(EDataType eDataType, String initialValue) {
+		BlockType result = BlockType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertBlockTypeToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ScgbbPackage getScgbbPackage() {
-        return (ScgbbPackage)getEPackage();
-    }
+		return (ScgbbPackage)getEPackage();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @deprecated
-     * @generated
-     */
+	 * @deprecated
+	 * @generated
+	 */
     @Deprecated
     public static ScgbbPackage getPackage() {
-        return ScgbbPackage.eINSTANCE;
-    }
+		return ScgbbPackage.eINSTANCE;
+	}
 
 } //ScgbbFactoryImpl

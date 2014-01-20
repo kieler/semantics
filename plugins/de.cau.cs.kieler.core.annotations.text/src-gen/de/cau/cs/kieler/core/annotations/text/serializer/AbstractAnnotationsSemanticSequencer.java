@@ -66,12 +66,9 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 				}
 				else break;
 			case AnnotationsPackage.STRING_ANNOTATION:
-				if(context == grammarAccess.getAnnotationRule()) {
+				if(context == grammarAccess.getAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_Annotation_CommentAnnotation_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getValuedAnnotationRule()) {
-					sequence_CommentAnnotation_KeyStringValueAnnotation_ValuedAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getCommentAnnotationRule()) {
@@ -100,15 +97,6 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	 *     (value=COMMENT_ANNOTATION | (name=ExtendedID value=EString annotations+=Annotation*))
 	 */
 	protected void sequence_Annotation_CommentAnnotation_KeyStringValueAnnotation(EObject context, StringAnnotation semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (value=COMMENT_ANNOTATION | (name=ExtendedID value=EString annotations+=Annotation*))
-	 */
-	protected void sequence_CommentAnnotation_KeyStringValueAnnotation_ValuedAnnotation(EObject context, StringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

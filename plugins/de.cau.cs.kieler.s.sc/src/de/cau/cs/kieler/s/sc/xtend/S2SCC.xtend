@@ -40,6 +40,7 @@ import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.s.s.LocalSignal
+import de.cau.cs.kieler.s.s.Assignment
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -61,7 +62,8 @@ class S2SCC {
        «sTotalResetSignals(program)»
        «sReset(program)»
 
-       «sOutputs(program)»
+       «sOutputSignals(program)»
+       «sOutputVariables(program)»
 
        «/* Generate input functions that are then called my the main function's
        tick function of the module */»
@@ -171,10 +173,10 @@ class S2SCC {
     
     
     #define PRESENT_SCC(name) \
-    ((presentSigInt[name]) == 1) \
+    ((presentSigInt[name]) != 0) \
     
     #define PRE_PRESENT_SCC(name) \
-    ((presentSigIntPre[name]) == 1) \
+    ((presentSigIntPre[name]) != 0) \
 
     #define VAL_SCC(name) \
     (valSigInt[name]) \
@@ -189,18 +191,55 @@ class S2SCC {
    
    // Generate signal constants.
    def sSignalConstants(Program program) {
-       '''typedef enum {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ",
+       val signals = program.getValuedObjects().filter[e|e.isSignal]
+       if (!signals.nullOrEmpty) {
+       '''typedef enum {«FOR signal : signals SEPARATOR ",
  "»«signal.name»«ENDFOR»} signaltype;
        
        const char *s2signame[] = {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ", 
 "»"«signal.name»"«ENDFOR»};'''
+       }
+       else {
+           ''''''
+       }
+   }
+
+
+   def boolean usesPre(Program program, ValuedObject valuedObject) {
+       val foundPres = program.eAllContents.filter(typeof(OperatorExpression)).filter[operator == OperatorType::PRE].toList; 
+       for (pre : foundPres) {
+           for (subExpression : pre.subExpressions) {
+               if (subExpression instanceof ValuedObjectReference) {
+                   if ((subExpression as ValuedObjectReference).valuedObject == valuedObject) {
+                       return true
+                   }
+               }
+               val found = subExpression.eAllContents.filter(typeof(ValuedObjectReference)).filter(e | e.valuedObject == valuedObject).toList
+               if (found.size > 0) {
+                   return true
+               }
+           }
+       } 
+       return false
    }
 
    // Generate variables.
    def sVariables(Program program) {
        '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal] SEPARATOR ";
- "»«signal.type.expand» «signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»«ENDFOR»;'''
+ "»«signal.type.expand» «signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
+  «IF program.usesPre(signal)»
+     «signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
+  «ENDIF»
+  «ENDFOR»
+ '''
    }
+
+   // Generate PRE variables setter.
+   def setPreVariables(Program program) {
+       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal] SEPARATOR ";
+ "»«IF program.usesPre(signal)» PRE_«signal.name» = «signal.name» «ENDIF»«ENDFOR»'''
+   }
+
 
    def dispatch expand(ValueType valueType) {
        if (valueType == ValueType::BOOL) {
@@ -229,8 +268,11 @@ class S2SCC {
    def sSetOutputFunction(Program program) {
        '''
     void callOutputs() {
-    «FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isOutput)»
+    «FOR signal : program.getValuedObjects().filter(e|e.isOutput && e.isSignal)»
         OUTPUT_«signal.name»(PRESENT_SCC(«signal.name»));
+    «ENDFOR»
+    «FOR variable : program.getValuedObjects().filter(e|e.isOutput && !e.isSignal)»
+        OUTPUT_«variable.name»();
     «ENDFOR»
         }
        '''
@@ -291,13 +333,16 @@ void setInputs(){
     object = cJSON_Parse(buffer);
     
    «'''«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e|e.isInput||e.isOutput)»
-                   «signal.callInputs»
+                   «signal.callInputSignal»
+   «ENDFOR»'''»    
+   «'''«FOR variable : program.getValuedObjects().filter[e|!e.isSignal].filter(e|e.isInput||e.isOutput)»
+                   «variable.callInputVariable»
    «ENDFOR»'''»    
    }'''
 }
    
    // -------------------------------------------------------------------------
-
+   
    // Generate the main function.
    def mainFunction(Program program) {
        '''int main(int argc, const char* argv[]) {
@@ -314,6 +359,9 @@ void setInputs(){
             strip_white_spaces(outString);
             printf("%s\n", outString);
             fflush(stdout);
+            
+            «setPreVariables(program)»
+                
             resetSignals();
             output = cJSON_CreateObject();
             setInputs();
@@ -347,7 +395,7 @@ void setInputs(){
    // -------------------------------------------------------------------------   
 
    // Define output functions to return JSON for each s signal.
-   def sOutputs(Program program) {
+   def sOutputSignals(Program program) {
     '''«'''«FOR signal : program.getValuedObjects().filter[e|e.isSignal].filter(e | e.isOutput)»
         void OUTPUT_«signal.name»(int status){
         value = cJSON_CreateObject();
@@ -363,11 +411,25 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
     «ENDFOR»'''»
     '''
    }
+
+   // Define output functions to return JSON for each s variable.
+   def sOutputVariables(Program program) {
+    '''«'''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal].filter(e | e.isOutput)»
+        void OUTPUT_«signal.name»(){
+        value = cJSON_CreateObject();
+        cJSON_AddItemToObject(value, "present", «signal.name»?cJSON_CreateTrue():cJSON_CreateFalse());
+        cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«signal.name»));
+        //cJSON_AddItemToObject(output, "«signal.name»", cJSON_CreateNumber(«signal.name»));
+        cJSON_AddItemToObject(output, "«signal.name»", value);
+    }
+    «ENDFOR»'''»
+    '''
+   }
    
    // -------------------------------------------------------------------------   
    
    // Call input functions for each JSON s signal that is present.
-   def callInputs(ValuedObject signal) {
+   def callInputSignal(ValuedObject signal) {
        if (signal.isSignal) {
            return        
        '''child = cJSON_GetObjectItem(object, "«signal.name»");
@@ -388,6 +450,28 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
        '''
        }
    }
+
+      // Call input functions for each JSON s signal that is present.
+   def callInputVariable(ValuedObject variable) {
+       if (!variable.isSignal && !variable.output) {
+          return '''
+          child = cJSON_GetObjectItem(object, "«variable.name»");
+          {
+            cJSON* childValue = cJSON_GetObjectItem(child, "value");
+            cJSON* childPresent = cJSON_GetObjectItem(child, "present");
+            if (childPresent != NULL && childValue == NULL) {
+                «variable.name» = childPresent->valueint;
+            }
+            else if (childValue != NULL) {
+                «variable.name» = childValue->valueint;
+            }
+            else {
+                «variable.name» = NULL;
+            }
+          }'''
+       }
+   }
+   
    
    // -------------------------------------------------------------------------   
    // -------------------------------------------------------------------------
@@ -427,6 +511,11 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    }
 
    // -------------------------------------------------------------------------   
+
+   // Expand a ASSIGNMENT instruction.
+   def dispatch CharSequence expand(Assignment assignment) {
+       '''«assignment.variable.expand » = «assignment.expression.expand»;'''
+   }   
       
    // Expand a PAUSE instruction.
    def dispatch CharSequence expand(Pause pauseInstruction) {
@@ -661,10 +750,10 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    }
    // Expand a signal within a value reference
    def dispatch CharSequence expand_val(ValuedObject signal) {
-       if (signal.isSignal) {
+       //if (signal.isSignal) {
             return  '''«signal.name»'''
-       }
-       return ''''''
+       //}
+       //return ''''''
    }
    def dispatch CharSequence expand_val(ValuedObjectReference valuedObjectReference) {
         '''«valuedObjectReference.valuedObject.expand_val»'''

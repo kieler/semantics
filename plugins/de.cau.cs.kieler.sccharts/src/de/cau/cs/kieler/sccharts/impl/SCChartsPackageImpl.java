@@ -980,7 +980,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEEnum(transitionTypeEEnum, TransitionType.class, "TransitionType");
         addEEnumLiteral(transitionTypeEEnum, TransitionType.WEAKABORT);
         addEEnumLiteral(transitionTypeEEnum, TransitionType.STRONGABORT);
-        addEEnumLiteral(transitionTypeEEnum, TransitionType.NORMALTERMINATION);
+        addEEnumLiteral(transitionTypeEEnum, TransitionType.TERMINATION);
 
         initEEnum(historyTypeEEnum, HistoryType.class, "HistoryType");
         addEEnumLiteral(historyTypeEEnum, HistoryType.RESET);

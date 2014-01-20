@@ -31,10 +31,13 @@ import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.s.s.HostCodeInstruction
-import org.eclipse.xtend.util.stdlib.CloningExtensions
+//import org.eclipse.xtend.util.stdlib.CloningExtensions
 
 import de.cau.cs.kieler.s.sim.SSimPlugin
 import de.cau.cs.kieler.s.s.LocalSignal
+import de.cau.cs.kieler.s.s.Assignment
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Transformation of S code into S code that is
@@ -59,7 +62,8 @@ class S2Simulation {
          var AUXILIARY_VARIABLE_TAG = SSimPlugin::AUXILIARY_VARIABLE_TAG
                
          // Clone the complete S program 
-         var target = CloningExtensions::clone(program) as Program;
+//         var target = CloningExtensions::clone(program) as Program;
+         var target = program.copy
 
          var originalInstructions = program.eAllContents().toIterable().filter(typeof(Instruction));
          var targetInstructions = target.eAllContents().toIterable().filter(typeof(Instruction)).toList();
@@ -86,6 +90,7 @@ class S2Simulation {
         //SIMPLE TEST
         if (
                (instruction instanceof Prio)
+               ||(instruction instanceof Assignment)
                ||(instruction instanceof Trans)
                ||(instruction instanceof Fork)
                ||(instruction instanceof Join)

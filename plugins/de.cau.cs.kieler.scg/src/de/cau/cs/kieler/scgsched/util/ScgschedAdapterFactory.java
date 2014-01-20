@@ -38,208 +38,226 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class ScgschedAdapterFactory extends AdapterFactoryImpl {
     /**
-	 * The cached model package.
-	 * <!-- begin-user-doc -->
+     * The cached model package.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected static ScgschedPackage modelPackage;
 
     /**
-	 * Creates an instance of the adapter factory.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the adapter factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ScgschedAdapterFactory() {
-		if (modelPackage == null) {
-			modelPackage = ScgschedPackage.eINSTANCE;
-		}
-	}
+        if (modelPackage == null) {
+            modelPackage = ScgschedPackage.eINSTANCE;
+        }
+    }
 
     /**
-	 * Returns whether this factory is applicable for the type of the object.
-	 * <!-- begin-user-doc -->
+     * Returns whether this factory is applicable for the type of the object.
+     * <!-- begin-user-doc -->
      * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
      * <!-- end-user-doc -->
-	 * @return whether this factory is applicable for the type of the object.
-	 * @generated
-	 */
+     * @return whether this factory is applicable for the type of the object.
+     * @generated
+     */
     @Override
     public boolean isFactoryForType(Object object) {
-		if (object == modelPackage) {
-			return true;
-		}
-		if (object instanceof EObject) {
-			return ((EObject)object).eClass().getEPackage() == modelPackage;
-		}
-		return false;
-	}
+        if (object == modelPackage) {
+            return true;
+        }
+        if (object instanceof EObject) {
+            return ((EObject)object).eClass().getEPackage() == modelPackage;
+        }
+        return false;
+    }
 
     /**
-	 * The switch that delegates to the <code>createXXX</code> methods.
-	 * <!-- begin-user-doc -->
+     * The switch that delegates to the <code>createXXX</code> methods.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ScgschedSwitch<Adapter> modelSwitch =
         new ScgschedSwitch<Adapter>() {
-			@Override
-			public Adapter caseSCGraphSched(SCGraphSched object) {
-				return createSCGraphSchedAdapter();
-			}
-			@Override
-			public Adapter caseSchedule(Schedule object) {
-				return createScheduleAdapter();
-			}
-			@Override
-			public Adapter caseProblem(Problem object) {
-				return createProblemAdapter();
-			}
-			@Override
-			public Adapter casePotentialLoopProblem(PotentialLoopProblem object) {
-				return createPotentialLoopProblemAdapter();
-			}
-			@Override
-			public Adapter caseSCGraph(SCGraph object) {
-				return createSCGraphAdapter();
-			}
-			@Override
-			public Adapter caseSCGraphDep(SCGraphDep object) {
-				return createSCGraphDepAdapter();
-			}
-			@Override
-			public Adapter caseSCGraphBB(SCGraphBB object) {
-				return createSCGraphBBAdapter();
-			}
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+            @Override
+            public Adapter caseSCGraphSched(SCGraphSched object) {
+                return createSCGraphSchedAdapter();
+            }
+            @Override
+            public Adapter caseEmptyExpression(EmptyExpression object) {
+                return createEmptyExpressionAdapter();
+            }
+            @Override
+            public Adapter caseGuardExpression(GuardExpression object) {
+                return createGuardExpressionAdapter();
+            }
+            @Override
+            public Adapter caseSchedule(Schedule object) {
+                return createScheduleAdapter();
+            }
+            @Override
+            public Adapter caseAnalysis(Analysis object) {
+                return createAnalysisAdapter();
+            }
+            @Override
+            public Adapter caseSCGraph(SCGraph object) {
+                return createSCGraphAdapter();
+            }
+            @Override
+            public Adapter caseSCGraphDep(SCGraphDep object) {
+                return createSCGraphDepAdapter();
+            }
+            @Override
+            public Adapter caseSCGraphBB(SCGraphBB object) {
+                return createSCGraphBBAdapter();
+            }
+            @Override
+            public Adapter defaultCase(EObject object) {
+                return createEObjectAdapter();
+            }
+        };
 
     /**
-	 * Creates an adapter for the <code>target</code>.
-	 * <!-- begin-user-doc -->
+     * Creates an adapter for the <code>target</code>.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param target the object to adapt.
-	 * @return the adapter for the <code>target</code>.
-	 * @generated
-	 */
+     * @param target the object to adapt.
+     * @return the adapter for the <code>target</code>.
+     * @generated
+     */
     @Override
     public Adapter createAdapter(Notifier target) {
-		return modelSwitch.doSwitch((EObject)target);
-	}
+        return modelSwitch.doSwitch((EObject)target);
+    }
 
 
     /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgsched.SCGraphSched <em>SC Graph Sched</em>}'.
-	 * <!-- begin-user-doc -->
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgsched.SCGraphSched <em>SC Graph Sched</em>}'.
+     * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.scgsched.SCGraphSched
-	 * @generated
-	 */
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scgsched.SCGraphSched
+     * @generated
+     */
     public Adapter createSCGraphSchedAdapter() {
-		return null;
-	}
+        return null;
+    }
 
     /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgsched.Schedule <em>Schedule</em>}'.
-	 * <!-- begin-user-doc -->
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgsched.EmptyExpression <em>Empty Expression</em>}'.
+     * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.scgsched.Schedule
-	 * @generated
-	 */
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scgsched.EmptyExpression
+     * @generated
+     */
+    public Adapter createEmptyExpressionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgsched.GuardExpression <em>Guard Expression</em>}'.
+     * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scgsched.GuardExpression
+     * @generated
+     */
+	public Adapter createGuardExpressionAdapter() {
+        return null;
+    }
+
+				/**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgsched.Schedule <em>Schedule</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scgsched.Schedule
+     * @generated
+     */
     public Adapter createScheduleAdapter() {
-		return null;
-	}
+        return null;
+    }
 
     /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgsched.Problem <em>Problem</em>}'.
-	 * <!-- begin-user-doc -->
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgsched.Analysis <em>Analysis</em>}'.
+     * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.scgsched.Problem
-	 * @generated
-	 */
-	public Adapter createProblemAdapter() {
-		return null;
-	}
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scgsched.Analysis
+     * @generated
+     */
+	public Adapter createAnalysisAdapter() {
+        return null;
+    }
 
 				/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgsched.PotentialLoopProblem <em>Potential Loop Problem</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.scgsched.PotentialLoopProblem
-	 * @generated
-	 */
-	public Adapter createPotentialLoopProblemAdapter() {
-		return null;
-	}
-
-				/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.SCGraph <em>SC Graph</em>}'.
-	 * <!-- begin-user-doc -->
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.SCGraph <em>SC Graph</em>}'.
+     * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.scg.SCGraph
-	 * @generated
-	 */
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.SCGraph
+     * @generated
+     */
     public Adapter createSCGraphAdapter() {
-		return null;
-	}
+        return null;
+    }
 
     /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgdep.SCGraphDep <em>SC Graph Dep</em>}'.
-	 * <!-- begin-user-doc -->
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgdep.SCGraphDep <em>SC Graph Dep</em>}'.
+     * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.scgdep.SCGraphDep
-	 * @generated
-	 */
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scgdep.SCGraphDep
+     * @generated
+     */
     public Adapter createSCGraphDepAdapter() {
-		return null;
-	}
+        return null;
+    }
 
     /**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgbb.SCGraphBB <em>SC Graph BB</em>}'.
-	 * <!-- begin-user-doc -->
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scgbb.SCGraphBB <em>SC Graph BB</em>}'.
+     * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.scgbb.SCGraphBB
-	 * @generated
-	 */
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scgbb.SCGraphBB
+     * @generated
+     */
     public Adapter createSCGraphBBAdapter() {
-		return null;
-	}
+        return null;
+    }
 
     /**
-	 * Creates a new adapter for the default case.
-	 * <!-- begin-user-doc -->
+     * Creates a new adapter for the default case.
+     * <!-- begin-user-doc -->
      * This default implementation returns null.
      * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @generated
-	 */
+     * @return the new adapter.
+     * @generated
+     */
     public Adapter createEObjectAdapter() {
-		return null;
-	}
+        return null;
+    }
 
 } //ScgschedAdapterFactory

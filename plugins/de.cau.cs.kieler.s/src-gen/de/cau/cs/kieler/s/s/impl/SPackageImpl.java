@@ -5,6 +5,7 @@ package de.cau.cs.kieler.s.s.impl;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.s.s.Abort;
+import de.cau.cs.kieler.s.s.Assignment;
 import de.cau.cs.kieler.s.s.Await;
 import de.cau.cs.kieler.s.s.Emit;
 import de.cau.cs.kieler.s.s.Fork;
@@ -65,6 +66,13 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * @generated
    */
   private EClass instructionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass assignmentEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -344,6 +352,36 @@ public class SPackageImpl extends EPackageImpl implements SPackage
   public EClass getInstruction()
   {
     return instructionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAssignment()
+  {
+    return assignmentEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAssignment_Variable()
+  {
+    return (EReference)assignmentEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAssignment_Expression()
+  {
+    return (EReference)assignmentEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -703,6 +741,10 @@ public class SPackageImpl extends EPackageImpl implements SPackage
 
     instructionEClass = createEClass(INSTRUCTION);
 
+    assignmentEClass = createEClass(ASSIGNMENT);
+    createEReference(assignmentEClass, ASSIGNMENT__VARIABLE);
+    createEReference(assignmentEClass, ASSIGNMENT__EXPRESSION);
+
     prioEClass = createEClass(PRIO);
     createEAttribute(prioEClass, PRIO__PRIORITY);
     createEReference(prioEClass, PRIO__CONTINUATION);
@@ -780,6 +822,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
 
     // Add supertypes to classes
     hostCodeInstructionEClass.getESuperTypes().add(this.getInstruction());
+    assignmentEClass.getESuperTypes().add(this.getInstruction());
     prioEClass.getESuperTypes().add(this.getInstruction());
     transEClass.getESuperTypes().add(this.getInstruction());
     forkEClass.getESuperTypes().add(this.getInstruction());
@@ -810,6 +853,10 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     initEAttribute(getHostCodeInstruction_HostCode(), ecorePackage.getEString(), "hostCode", null, 0, 1, HostCodeInstruction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(instructionEClass, Instruction.class, "Instruction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAssignment_Variable(), theKExpressionsPackage.getValuedObject(), null, "variable", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAssignment_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(prioEClass, Prio.class, "Prio", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPrio_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Prio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

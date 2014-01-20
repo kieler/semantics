@@ -74,50 +74,50 @@ public interface TransformationTreePackage extends EPackage {
     TransformationTreePackage eINSTANCE = de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl.init();
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl <em>Model</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelWrapperImpl <em>Model Wrapper</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl
-     * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getModel()
+     * @see de.cau.cs.kieler.ktm.transformationtree.impl.ModelWrapperImpl
+     * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getModelWrapper()
      * @generated
      */
-    int MODEL = 0;
+    int MODEL_WRAPPER = 0;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * The feature id for the '<em><b>Model Type ID</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MODEL__NAME = 0;
+    int MODEL_WRAPPER__MODEL_TYPE_ID = 0;
 
     /**
-     * The feature id for the '<em><b>Elements</b></em>' containment reference list.
+     * The feature id for the '<em><b>Model Objects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MODEL__ELEMENTS = 1;
+    int MODEL_WRAPPER__MODEL_OBJECTS = 1;
 
     /**
-     * The feature id for the '<em><b>Transformed Into</b></em>' containment reference list.
+     * The feature id for the '<em><b>Target Transformations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MODEL__TRANSFORMED_INTO = 2;
+    int MODEL_WRAPPER__TARGET_TRANSFORMATIONS = 2;
 
     /**
-     * The feature id for the '<em><b>Transformed From</b></em>' container reference.
+     * The feature id for the '<em><b>Source Transformation</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MODEL__TRANSFORMED_FROM = 3;
+    int MODEL_WRAPPER__SOURCE_TRANSFORMATION = 3;
 
     /**
      * The feature id for the '<em><b>Transient</b></em>' attribute.
@@ -126,44 +126,35 @@ public interface TransformationTreePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MODEL__TRANSIENT = 4;
+    int MODEL_WRAPPER__TRANSIENT = 4;
 
     /**
-     * The feature id for the '<em><b>Type</b></em>' reference.
+     * The feature id for the '<em><b>Root Object</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MODEL__TYPE = 5;
+    int MODEL_WRAPPER__ROOT_OBJECT = 5;
 
     /**
-     * The feature id for the '<em><b>Root Element</b></em>' reference.
+     * The number of structural features of the '<em>Model Wrapper</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MODEL__ROOT_ELEMENT = 6;
+    int MODEL_WRAPPER_FEATURE_COUNT = 6;
 
     /**
-     * The number of structural features of the '<em>Model</em>' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.EObjectWrapperImpl <em>EObject Wrapper</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int MODEL_FEATURE_COUNT = 7;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ElementImpl <em>Element</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.ktm.transformationtree.impl.ElementImpl
-     * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getElement()
+     * @see de.cau.cs.kieler.ktm.transformationtree.impl.EObjectWrapperImpl
+     * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getEObjectWrapper()
      * @generated
      */
-    int ELEMENT = 1;
+    int EOBJECT_WRAPPER = 1;
 
     /**
      * The feature id for the '<em><b>Model</b></em>' container reference.
@@ -172,52 +163,52 @@ public interface TransformationTreePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ELEMENT__MODEL = 0;
+    int EOBJECT_WRAPPER__MODEL = 0;
 
     /**
-     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * The feature id for the '<em><b>Display Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ELEMENT__NAME = 1;
+    int EOBJECT_WRAPPER__DISPLAY_NAME = 1;
 
     /**
-     * The feature id for the '<em><b>Transformed Into</b></em>' reference list.
+     * The feature id for the '<em><b>Target Transformations</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ELEMENT__TRANSFORMED_INTO = 2;
+    int EOBJECT_WRAPPER__TARGET_TRANSFORMATIONS = 2;
 
     /**
-     * The feature id for the '<em><b>Transformed From</b></em>' reference list.
+     * The feature id for the '<em><b>Source Transformations</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ELEMENT__TRANSFORMED_FROM = 3;
+    int EOBJECT_WRAPPER__SOURCE_TRANSFORMATIONS = 3;
 
     /**
-     * The feature id for the '<em><b>Referenced Object</b></em>' reference.
+     * The feature id for the '<em><b>EObject</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ELEMENT__REFERENCED_OBJECT = 4;
+    int EOBJECT_WRAPPER__EOBJECT = 4;
 
     /**
-     * The number of structural features of the '<em>Element</em>' class.
+     * The number of structural features of the '<em>EObject Wrapper</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ELEMENT_FEATURE_COUNT = 5;
+    int EOBJECT_WRAPPER_FEATURE_COUNT = 5;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelTransformationImpl <em>Model Transformation</em>}' class.
@@ -230,13 +221,13 @@ public interface TransformationTreePackage extends EPackage {
     int MODEL_TRANSFORMATION = 2;
 
     /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * The feature id for the '<em><b>Transformation ID</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MODEL_TRANSFORMATION__ID = 0;
+    int MODEL_TRANSFORMATION__TRANSFORMATION_ID = 0;
 
     /**
      * The feature id for the '<em><b>Source</b></em>' container reference.
@@ -257,13 +248,13 @@ public interface TransformationTreePackage extends EPackage {
     int MODEL_TRANSFORMATION__TARGET = 2;
 
     /**
-     * The feature id for the '<em><b>Element Transformations</b></em>' containment reference list.
+     * The feature id for the '<em><b>Object Transformations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS = 3;
+    int MODEL_TRANSFORMATION__OBJECT_TRANSFORMATIONS = 3;
 
     /**
      * The number of structural features of the '<em>Model Transformation</em>' class.
@@ -275,14 +266,14 @@ public interface TransformationTreePackage extends EPackage {
     int MODEL_TRANSFORMATION_FEATURE_COUNT = 4;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ElementTransformationImpl <em>Element Transformation</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.EObjectTransformationImpl <em>EObject Transformation</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.ktm.transformationtree.impl.ElementTransformationImpl
-     * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getElementTransformation()
+     * @see de.cau.cs.kieler.ktm.transformationtree.impl.EObjectTransformationImpl
+     * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getEObjectTransformation()
      * @generated
      */
-    int ELEMENT_TRANSFORMATION = 3;
+    int EOBJECT_TRANSFORMATION = 3;
 
     /**
      * The feature id for the '<em><b>Model Transformation</b></em>' container reference.
@@ -291,7 +282,7 @@ public interface TransformationTreePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ELEMENT_TRANSFORMATION__MODEL_TRANSFORMATION = 0;
+    int EOBJECT_TRANSFORMATION__MODEL_TRANSFORMATION = 0;
 
     /**
      * The feature id for the '<em><b>Source</b></em>' reference.
@@ -300,7 +291,7 @@ public interface TransformationTreePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ELEMENT_TRANSFORMATION__SOURCE = 1;
+    int EOBJECT_TRANSFORMATION__SOURCE = 1;
 
     /**
      * The feature id for the '<em><b>Target</b></em>' reference.
@@ -309,169 +300,158 @@ public interface TransformationTreePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ELEMENT_TRANSFORMATION__TARGET = 2;
+    int EOBJECT_TRANSFORMATION__TARGET = 2;
 
     /**
-     * The number of structural features of the '<em>Element Transformation</em>' class.
+     * The number of structural features of the '<em>EObject Transformation</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ELEMENT_TRANSFORMATION_FEATURE_COUNT = 3;
+    int EOBJECT_TRANSFORMATION_FEATURE_COUNT = 3;
 
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationtree.Model <em>Model</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationtree.ModelWrapper <em>Model Wrapper</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Model</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Model
+     * @return the meta object for class '<em>Model Wrapper</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelWrapper
      * @generated
      */
-    EClass getModel();
+    EClass getModelWrapper();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getName <em>Name</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationtree.ModelWrapper#getModelTypeID <em>Model Type ID</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Name</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Model#getName()
-     * @see #getModel()
+     * @return the meta object for the attribute '<em>Model Type ID</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelWrapper#getModelTypeID()
+     * @see #getModelWrapper()
      * @generated
      */
-    EAttribute getModel_Name();
+    EAttribute getModelWrapper_ModelTypeID();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getElements <em>Elements</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.ktm.transformationtree.ModelWrapper#getModelObjects <em>Model Objects</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Elements</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Model#getElements()
-     * @see #getModel()
+     * @return the meta object for the containment reference list '<em>Model Objects</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelWrapper#getModelObjects()
+     * @see #getModelWrapper()
      * @generated
      */
-    EReference getModel_Elements();
+    EReference getModelWrapper_ModelObjects();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getTransformedInto <em>Transformed Into</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.ktm.transformationtree.ModelWrapper#getTargetTransformations <em>Target Transformations</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Transformed Into</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Model#getTransformedInto()
-     * @see #getModel()
+     * @return the meta object for the containment reference list '<em>Target Transformations</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelWrapper#getTargetTransformations()
+     * @see #getModelWrapper()
      * @generated
      */
-    EReference getModel_TransformedInto();
+    EReference getModelWrapper_TargetTransformations();
 
     /**
-     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getTransformedFrom <em>Transformed From</em>}'.
+     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationtree.ModelWrapper#getSourceTransformation <em>Source Transformation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Transformed From</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Model#getTransformedFrom()
-     * @see #getModel()
+     * @return the meta object for the container reference '<em>Source Transformation</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelWrapper#getSourceTransformation()
+     * @see #getModelWrapper()
      * @generated
      */
-    EReference getModel_TransformedFrom();
+    EReference getModelWrapper_SourceTransformation();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationtree.Model#isTransient <em>Transient</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationtree.ModelWrapper#isTransient <em>Transient</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Transient</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Model#isTransient()
-     * @see #getModel()
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelWrapper#isTransient()
+     * @see #getModelWrapper()
      * @generated
      */
-    EAttribute getModel_Transient();
+    EAttribute getModelWrapper_Transient();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getType <em>Type</em>}'.
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationtree.ModelWrapper#getRootObject <em>Root Object</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Type</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Model#getType()
-     * @see #getModel()
+     * @return the meta object for the reference '<em>Root Object</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelWrapper#getRootObject()
+     * @see #getModelWrapper()
      * @generated
      */
-    EReference getModel_Type();
+    EReference getModelWrapper_RootObject();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationtree.Model#getRootElement <em>Root Element</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper <em>EObject Wrapper</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Root Element</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Model#getRootElement()
-     * @see #getModel()
+     * @return the meta object for class '<em>EObject Wrapper</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper
      * @generated
      */
-    EReference getModel_RootElement();
+    EClass getEObjectWrapper();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationtree.Element <em>Element</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Element</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Element
-     * @generated
-     */
-    EClass getElement();
-
-    /**
-     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationtree.Element#getModel <em>Model</em>}'.
+     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper#getModel <em>Model</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Model</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Element#getModel()
-     * @see #getElement()
+     * @see de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper#getModel()
+     * @see #getEObjectWrapper()
      * @generated
      */
-    EReference getElement_Model();
+    EReference getEObjectWrapper_Model();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationtree.Element#getName <em>Name</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper#getDisplayName <em>Display Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Name</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Element#getName()
-     * @see #getElement()
+     * @return the meta object for the attribute '<em>Display Name</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper#getDisplayName()
+     * @see #getEObjectWrapper()
      * @generated
      */
-    EAttribute getElement_Name();
+    EAttribute getEObjectWrapper_DisplayName();
 
     /**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.ktm.transformationtree.Element#getTransformedInto <em>Transformed Into</em>}'.
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper#getTargetTransformations <em>Target Transformations</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Transformed Into</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Element#getTransformedInto()
-     * @see #getElement()
+     * @return the meta object for the reference list '<em>Target Transformations</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper#getTargetTransformations()
+     * @see #getEObjectWrapper()
      * @generated
      */
-    EReference getElement_TransformedInto();
+    EReference getEObjectWrapper_TargetTransformations();
 
     /**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.ktm.transformationtree.Element#getTransformedFrom <em>Transformed From</em>}'.
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper#getSourceTransformations <em>Source Transformations</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Transformed From</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Element#getTransformedFrom()
-     * @see #getElement()
+     * @return the meta object for the reference list '<em>Source Transformations</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper#getSourceTransformations()
+     * @see #getEObjectWrapper()
      * @generated
      */
-    EReference getElement_TransformedFrom();
+    EReference getEObjectWrapper_SourceTransformations();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationtree.Element#getReferencedObject <em>Referenced Object</em>}'.
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper#getEObject <em>EObject</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Referenced Object</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.Element#getReferencedObject()
-     * @see #getElement()
+     * @return the meta object for the reference '<em>EObject</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper#getEObject()
+     * @see #getEObjectWrapper()
      * @generated
      */
-    EReference getElement_ReferencedObject();
+    EReference getEObjectWrapper_EObject();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation <em>Model Transformation</em>}'.
@@ -484,15 +464,15 @@ public interface TransformationTreePackage extends EPackage {
     EClass getModelTransformation();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getId <em>Id</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getTransformationID <em>Transformation ID</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Id</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getId()
+     * @return the meta object for the attribute '<em>Transformation ID</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getTransformationID()
      * @see #getModelTransformation()
      * @generated
      */
-    EAttribute getModelTransformation_Id();
+    EAttribute getModelTransformation_TransformationID();
 
     /**
      * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getSource <em>Source</em>}'.
@@ -517,58 +497,58 @@ public interface TransformationTreePackage extends EPackage {
     EReference getModelTransformation_Target();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getElementTransformations <em>Element Transformations</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getObjectTransformations <em>Object Transformations</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Element Transformations</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getElementTransformations()
+     * @return the meta object for the containment reference list '<em>Object Transformations</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.ModelTransformation#getObjectTransformations()
      * @see #getModelTransformation()
      * @generated
      */
-    EReference getModelTransformation_ElementTransformations();
+    EReference getModelTransformation_ObjectTransformations();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationtree.ElementTransformation <em>Element Transformation</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.ktm.transformationtree.EObjectTransformation <em>EObject Transformation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Element Transformation</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.ElementTransformation
+     * @return the meta object for class '<em>EObject Transformation</em>'.
+     * @see de.cau.cs.kieler.ktm.transformationtree.EObjectTransformation
      * @generated
      */
-    EClass getElementTransformation();
+    EClass getEObjectTransformation();
 
     /**
-     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getModelTransformation <em>Model Transformation</em>}'.
+     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.ktm.transformationtree.EObjectTransformation#getModelTransformation <em>Model Transformation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the container reference '<em>Model Transformation</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getModelTransformation()
-     * @see #getElementTransformation()
+     * @see de.cau.cs.kieler.ktm.transformationtree.EObjectTransformation#getModelTransformation()
+     * @see #getEObjectTransformation()
      * @generated
      */
-    EReference getElementTransformation_ModelTransformation();
+    EReference getEObjectTransformation_ModelTransformation();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getSource <em>Source</em>}'.
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationtree.EObjectTransformation#getSource <em>Source</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Source</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getSource()
-     * @see #getElementTransformation()
+     * @see de.cau.cs.kieler.ktm.transformationtree.EObjectTransformation#getSource()
+     * @see #getEObjectTransformation()
      * @generated
      */
-    EReference getElementTransformation_Source();
+    EReference getEObjectTransformation_Source();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getTarget <em>Target</em>}'.
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.ktm.transformationtree.EObjectTransformation#getTarget <em>Target</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the reference '<em>Target</em>'.
-     * @see de.cau.cs.kieler.ktm.transformationtree.ElementTransformation#getTarget()
-     * @see #getElementTransformation()
+     * @see de.cau.cs.kieler.ktm.transformationtree.EObjectTransformation#getTarget()
+     * @see #getEObjectTransformation()
      * @generated
      */
-    EReference getElementTransformation_Target();
+    EReference getEObjectTransformation_Target();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -593,46 +573,46 @@ public interface TransformationTreePackage extends EPackage {
      */
     interface Literals {
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl <em>Model</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelWrapperImpl <em>Model Wrapper</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.ktm.transformationtree.impl.ModelImpl
-         * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getModel()
+         * @see de.cau.cs.kieler.ktm.transformationtree.impl.ModelWrapperImpl
+         * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getModelWrapper()
          * @generated
          */
-        EClass MODEL = eINSTANCE.getModel();
+        EClass MODEL_WRAPPER = eINSTANCE.getModelWrapper();
 
         /**
-         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Model Type ID</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute MODEL__NAME = eINSTANCE.getModel_Name();
+        EAttribute MODEL_WRAPPER__MODEL_TYPE_ID = eINSTANCE.getModelWrapper_ModelTypeID();
 
         /**
-         * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Model Objects</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference MODEL__ELEMENTS = eINSTANCE.getModel_Elements();
+        EReference MODEL_WRAPPER__MODEL_OBJECTS = eINSTANCE.getModelWrapper_ModelObjects();
 
         /**
-         * The meta object literal for the '<em><b>Transformed Into</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Target Transformations</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference MODEL__TRANSFORMED_INTO = eINSTANCE.getModel_TransformedInto();
+        EReference MODEL_WRAPPER__TARGET_TRANSFORMATIONS = eINSTANCE.getModelWrapper_TargetTransformations();
 
         /**
-         * The meta object literal for the '<em><b>Transformed From</b></em>' container reference feature.
+         * The meta object literal for the '<em><b>Source Transformation</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference MODEL__TRANSFORMED_FROM = eINSTANCE.getModel_TransformedFrom();
+        EReference MODEL_WRAPPER__SOURCE_TRANSFORMATION = eINSTANCE.getModelWrapper_SourceTransformation();
 
         /**
          * The meta object literal for the '<em><b>Transient</b></em>' attribute feature.
@@ -640,33 +620,25 @@ public interface TransformationTreePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute MODEL__TRANSIENT = eINSTANCE.getModel_Transient();
+        EAttribute MODEL_WRAPPER__TRANSIENT = eINSTANCE.getModelWrapper_Transient();
 
         /**
-         * The meta object literal for the '<em><b>Type</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Root Object</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference MODEL__TYPE = eINSTANCE.getModel_Type();
+        EReference MODEL_WRAPPER__ROOT_OBJECT = eINSTANCE.getModelWrapper_RootObject();
 
         /**
-         * The meta object literal for the '<em><b>Root Element</b></em>' reference feature.
+         * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.EObjectWrapperImpl <em>EObject Wrapper</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.ktm.transformationtree.impl.EObjectWrapperImpl
+         * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getEObjectWrapper()
          * @generated
          */
-        EReference MODEL__ROOT_ELEMENT = eINSTANCE.getModel_RootElement();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ElementImpl <em>Element</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.ktm.transformationtree.impl.ElementImpl
-         * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getElement()
-         * @generated
-         */
-        EClass ELEMENT = eINSTANCE.getElement();
+        EClass EOBJECT_WRAPPER = eINSTANCE.getEObjectWrapper();
 
         /**
          * The meta object literal for the '<em><b>Model</b></em>' container reference feature.
@@ -674,39 +646,39 @@ public interface TransformationTreePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference ELEMENT__MODEL = eINSTANCE.getElement_Model();
+        EReference EOBJECT_WRAPPER__MODEL = eINSTANCE.getEObjectWrapper_Model();
 
         /**
-         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Display Name</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute ELEMENT__NAME = eINSTANCE.getElement_Name();
+        EAttribute EOBJECT_WRAPPER__DISPLAY_NAME = eINSTANCE.getEObjectWrapper_DisplayName();
 
         /**
-         * The meta object literal for the '<em><b>Transformed Into</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Target Transformations</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference ELEMENT__TRANSFORMED_INTO = eINSTANCE.getElement_TransformedInto();
+        EReference EOBJECT_WRAPPER__TARGET_TRANSFORMATIONS = eINSTANCE.getEObjectWrapper_TargetTransformations();
 
         /**
-         * The meta object literal for the '<em><b>Transformed From</b></em>' reference list feature.
+         * The meta object literal for the '<em><b>Source Transformations</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference ELEMENT__TRANSFORMED_FROM = eINSTANCE.getElement_TransformedFrom();
+        EReference EOBJECT_WRAPPER__SOURCE_TRANSFORMATIONS = eINSTANCE.getEObjectWrapper_SourceTransformations();
 
         /**
-         * The meta object literal for the '<em><b>Referenced Object</b></em>' reference feature.
+         * The meta object literal for the '<em><b>EObject</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference ELEMENT__REFERENCED_OBJECT = eINSTANCE.getElement_ReferencedObject();
+        EReference EOBJECT_WRAPPER__EOBJECT = eINSTANCE.getEObjectWrapper_EObject();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ModelTransformationImpl <em>Model Transformation</em>}' class.
@@ -719,12 +691,12 @@ public interface TransformationTreePackage extends EPackage {
         EClass MODEL_TRANSFORMATION = eINSTANCE.getModelTransformation();
 
         /**
-         * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Transformation ID</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute MODEL_TRANSFORMATION__ID = eINSTANCE.getModelTransformation_Id();
+        EAttribute MODEL_TRANSFORMATION__TRANSFORMATION_ID = eINSTANCE.getModelTransformation_TransformationID();
 
         /**
          * The meta object literal for the '<em><b>Source</b></em>' container reference feature.
@@ -743,22 +715,22 @@ public interface TransformationTreePackage extends EPackage {
         EReference MODEL_TRANSFORMATION__TARGET = eINSTANCE.getModelTransformation_Target();
 
         /**
-         * The meta object literal for the '<em><b>Element Transformations</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Object Transformations</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference MODEL_TRANSFORMATION__ELEMENT_TRANSFORMATIONS = eINSTANCE.getModelTransformation_ElementTransformations();
+        EReference MODEL_TRANSFORMATION__OBJECT_TRANSFORMATIONS = eINSTANCE.getModelTransformation_ObjectTransformations();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.ElementTransformationImpl <em>Element Transformation</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.ktm.transformationtree.impl.EObjectTransformationImpl <em>EObject Transformation</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.ktm.transformationtree.impl.ElementTransformationImpl
-         * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getElementTransformation()
+         * @see de.cau.cs.kieler.ktm.transformationtree.impl.EObjectTransformationImpl
+         * @see de.cau.cs.kieler.ktm.transformationtree.impl.TransformationTreePackageImpl#getEObjectTransformation()
          * @generated
          */
-        EClass ELEMENT_TRANSFORMATION = eINSTANCE.getElementTransformation();
+        EClass EOBJECT_TRANSFORMATION = eINSTANCE.getEObjectTransformation();
 
         /**
          * The meta object literal for the '<em><b>Model Transformation</b></em>' container reference feature.
@@ -766,7 +738,7 @@ public interface TransformationTreePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference ELEMENT_TRANSFORMATION__MODEL_TRANSFORMATION = eINSTANCE.getElementTransformation_ModelTransformation();
+        EReference EOBJECT_TRANSFORMATION__MODEL_TRANSFORMATION = eINSTANCE.getEObjectTransformation_ModelTransformation();
 
         /**
          * The meta object literal for the '<em><b>Source</b></em>' reference feature.
@@ -774,7 +746,7 @@ public interface TransformationTreePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference ELEMENT_TRANSFORMATION__SOURCE = eINSTANCE.getElementTransformation_Source();
+        EReference EOBJECT_TRANSFORMATION__SOURCE = eINSTANCE.getEObjectTransformation_Source();
 
         /**
          * The meta object literal for the '<em><b>Target</b></em>' reference feature.
@@ -782,7 +754,7 @@ public interface TransformationTreePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference ELEMENT_TRANSFORMATION__TARGET = eINSTANCE.getElementTransformation_Target();
+        EReference EOBJECT_TRANSFORMATION__TARGET = eINSTANCE.getEObjectTransformation_Target();
 
     }
 

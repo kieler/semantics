@@ -219,7 +219,6 @@ litigation.
    </url>
 
    <requires>
-      <import feature="com.google.guava.runtime.feature" version="9.0.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.emf" version="2.6.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.emf.compare" version="1.1.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.gmf" version="1.4.0" match="greaterOrEqual"/>
@@ -231,6 +230,7 @@ litigation.
       <import feature="de.cau.cs.kieler.kiml.graphviz.feature" version="0.7.0" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.klighd.feature" version="0.2.0" match="greaterOrEqual"/>
       <import feature="org.ptolemy.feature" version="8.1.0.qualifier"/>
+      <import plugin="com.google.guava" version="10.0.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
@@ -291,6 +291,13 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.karma"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kev"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -500,14 +507,14 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.json"
+         id="de.cau.cs.kieler.scg.s"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+         
    <plugin
-         id="de.cau.cs.kieler.kev"
+         id="org.json"
          download-size="0"
          install-size="0"
          version="0.0.0"
