@@ -485,11 +485,28 @@ class SCGTransformation {
                 region.transformSCGConnectNodes(sCGraph)
             }
             if (state.outgoingTransitions.size>0) {
-                val terminationTargetState = state.outgoingTransitions.get(0).targetState
+            	val termination = state.outgoingTransitions.get(0)
+                val terminationTargetState = termination.targetState
                 val otherNodeTermination = terminationTargetState.mappedNode   
                 if (otherNodeTermination != null) {
+
                     val controlFlowTermination = otherNodeTermination.createControlFlow
-                    join.setNext(controlFlowTermination)
+                	
+                	// Add another assignment if the termination has an effect.
+                	if (!termination.effects.nullOrEmpty) {
+	    		   		val assignment = sCGraph.addAssignment
+						val transitionCopy = termination.copy
+            			transitionCopy.setImmediate(false)
+						val effect = transitionCopy.effects.get(0)
+						val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
+						assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
+				        assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
+				        assignment.setNext(controlFlowTermination)
+				        join.setNext(assignment.createControlFlow)                	
+            		} else {
+	                    join.setNext(controlFlowTermination)
+                    }
+                    
                 }   
             } else {
                 // The root state does not have a normal termination.
