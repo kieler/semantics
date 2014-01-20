@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tsccharts
-Bundle-SymbolicName: de.cau.cs.kieler.sccharts.tsccharts
+Bundle-SymbolicName: de.cau.cs.kieler.sccharts.tsccharts;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sccharts.tsccharts.Activator
 Require-Bundle: org.eclipse.ui,
@@ -10,7 +10,9 @@ Require-Bundle: org.eclipse.ui,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  de.cau.cs.kieler.sccharts;bundle-version="0.1.0",
- de.cau.cs.kieler.ktm;bundle-version="0.1.0"
+ de.cau.cs.kieler.ktm;bundle-version="0.1.0",
+ de.cau.cs.kieler.klighd;bundle-version="0.4.0",
+ de.cau.cs.kieler.core.krendering.extensions;bundle-version="0.4.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 

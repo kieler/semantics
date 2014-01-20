@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.klighd.extensions">
+      <action
+            class="TimingAction"
+            id="de.cau.cs.kieler.sccharts.tsccharts.TimingAction">
+      </action>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:de.cau.cs.kieler.layout.toolbar">
+         <command
+               commandId="de.cau.cs.kieler.klighd.ui.actionExecution"
+               label="Show Execution Times"
+               style="push"
+               tooltip="bkajsdfjaklsj">
+            <parameter
+                  name="de.cau.cs.kieler.klighd.ui.action"
+                  value="de.cau.cs.kieler.sccharts.tsccharts.TimingAction">
+            </parameter>
+         </command>
+      </menuContribution>
+   </extension>
+
+</plugin>

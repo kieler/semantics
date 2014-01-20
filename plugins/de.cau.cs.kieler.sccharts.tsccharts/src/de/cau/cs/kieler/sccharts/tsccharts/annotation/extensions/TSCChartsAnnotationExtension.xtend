@@ -41,6 +41,7 @@ class TSCChartsAnnotationExtension {
     def setTimeFlat(Annotatable annotatable, Integer value) {
         val tFlat = AnnotationsFactory::eINSTANCE.createIntAnnotation;
         tFlat.name = "TimeFlat";
+        tFlat.setValue(value);
         annotatable.annotations.add(tFlat);
     }
 
@@ -64,7 +65,7 @@ class TSCChartsAnnotationExtension {
  * Retrieves the annotated hierarchical WCRT (with timing for children(regions: child regions) value of 
  * this Element. Returns null, if no such Annotation exists.
  */
-    def Integer getTimeHierachical(Annotatable annotatable) {
+    def Integer getTimeHierarchical(Annotatable annotatable) {
         val String key = "TimeHierarchical";
         var Integer annotatedValue = annotatable.getInt(key);
         return annotatedValue;
@@ -76,6 +77,7 @@ class TSCChartsAnnotationExtension {
     def setTimeHierarchical(Annotatable annotatable, Integer value) {
         val tDeep = AnnotationsFactory::eINSTANCE.createIntAnnotation;
         tDeep.name = "TimeHierarchical";
+        tDeep.setValue(value);
         annotatable.annotations.add(tDeep);
     }
 
@@ -99,18 +101,39 @@ class TSCChartsAnnotationExtension {
  * Retrieves the timing domain Annotation (The execution time for this element will be added to this 
  * domain)
  */
-    def String getTimeDomain(Annotatable annotatable) {
-        val String key = "TimeDomain";
-        var String annotatedValue = annotatable.getString(key);
+    def Integer getTimeDomainFlat(Annotatable annotatable) {
+        val String key = "TimeDomainFlat";
+        var Integer annotatedValue = annotatable.getInt(key);
         return annotatedValue;
     }
 
     /*
  * Sets the timing domain Annotation
  */
-    def setTimeDomain(Annotatable annotatable, String tag) {
+    def setTimeDomainFlat(Annotatable annotatable, Integer tag) {
         val tDomain = AnnotationsFactory::eINSTANCE.createIntAnnotation;
-        tDomain.name = "TimeDomain";
+        tDomain.name = "TimeDomainFlat";
+        tDomain.setValue(tag);
+        annotatable.annotations.add(tDomain);
+    }
+
+  /*
+ * Retrieves the timing domain Annotation (The execution time for this element will be added to this 
+ * domain)
+ */
+    def Integer getTimeDomainHierarchical(Annotatable annotatable) {
+        val String key = "TimeDomainFlat";
+        var Integer annotatedValue = annotatable.getInt(key);
+        return annotatedValue;
+    }
+
+    /*
+ * Sets the timing domain Annotation
+ */
+    def setTimeDomainHierarchical(Annotatable annotatable, Integer tag) {
+        val tDomain = AnnotationsFactory::eINSTANCE.createIntAnnotation;
+        tDomain.name = "TimeDomainFlat";
+        tDomain.setValue(tag);
         annotatable.annotations.add(tDomain);
     }
 
