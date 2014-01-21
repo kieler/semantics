@@ -13,24 +13,12 @@
  */
 package de.cau.cs.kieler.scg.test;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation;
-import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.scg.schedulers.SimpleScheduler;
 import de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer;
 import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation;
