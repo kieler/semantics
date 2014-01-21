@@ -12,7 +12,9 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.sccharts;bundle-version="0.1.0",
  de.cau.cs.kieler.ktm;bundle-version="0.1.0",
  de.cau.cs.kieler.klighd;bundle-version="0.4.0",
- de.cau.cs.kieler.core.krendering.extensions;bundle-version="0.4.0"
+ de.cau.cs.kieler.core.krendering.extensions;bundle-version="0.4.0",
+ javax.inject;bundle-version="1.0.0",
+ com.google.inject;bundle-version="3.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 

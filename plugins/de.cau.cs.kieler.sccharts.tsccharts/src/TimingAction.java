@@ -1,4 +1,8 @@
+import javax.inject.Inject;
+
 import org.eclipse.emf.ecore.EObject;
+
+import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.HorizontalAlignment;
@@ -9,7 +13,7 @@ import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.klighd.IAction;
 import de.cau.cs.kieler.sccharts.Region;
-import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.tsccharts.TimingAnnotationProvider;
 import de.cau.cs.kieler.sccharts.tsccharts.annotation.extensions.TSCChartsAnnotationExtension;
 
 
@@ -18,6 +22,13 @@ public class TimingAction implements IAction {
     public KRenderingExtensions renderingExtensions = new KRenderingExtensions();
     public KContainerRenderingExtensions containerRenderingExtensions = new KContainerRenderingExtensions();
     public TSCChartsAnnotationExtension annotationExtension = new TSCChartsAnnotationExtension();
+    
+    @Inject
+    public TimingAnnotationProvider annotationProvider;
+    
+    public TimingAction() {
+        Guice.createInjector().injectMembers(this);
+    }
 
     @Override
     public ActionResult execute(ActionContext context) {
@@ -30,6 +41,8 @@ public class TimingAction implements IAction {
             annotationExtension.setTimeHierarchical(region, 12345);   
         }
 
+        Integer highestNumber = annotationProvider.setTimingDomainsSimple(region, 0);
+        
         EObject viewModelElement =
                 context.getViewContext().getTargetElement(
                         /* eure states & regions */semanticElement, null);
@@ -42,7 +55,9 @@ public class TimingAction implements IAction {
             if (rect != null) {
                 Integer hierarchicalWCET = annotationExtension.getTimeHierarchical(region);
                 String hWCETString = hierarchicalWCET.toString();
-                KText text = containerRenderingExtensions.addText(rect, hWCETString);
+                Integer domainNumber = annotationExtension.getTimeDomain(region);
+                String domainNumberString = domainNumber.toString();
+                KText text = containerRenderingExtensions.addText(rect, domainNumberString);
                 renderingExtensions.setFontSize(text, 12);
                 renderingExtensions.setForegroundColor(text, 255, 0, 0);
                 renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5, 0,
