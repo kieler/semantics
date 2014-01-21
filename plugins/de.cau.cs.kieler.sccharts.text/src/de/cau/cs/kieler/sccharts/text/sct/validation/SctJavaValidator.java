@@ -13,15 +13,31 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.validation;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-//import org.eclipse.xtext.validation.Check;
+import org.eclipse.xtext.validation.Check;
+
+
+
+
+import org.eclipse.emf.ecore.EPackage;
 
 import de.cau.cs.kieler.core.model.validation.CustomEValidator;
+import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
+import de.cau.cs.kieler.sccharts.TransitionType;
 
+/**
+ * SCCharts Validation Rules
+ * 
+ * @author cmot
+ * @kieler.design 2014-01-20 proposed 
+ * @kieler.rating 2014-01-20 proposed yellow
+ */
 public class SctJavaValidator extends AbstractSctJavaValidator implements
         CustomEValidator {
 
@@ -33,14 +49,117 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public static final String NON_SUCCEEDING_PRIOS = "non_succeeding_prios";
     public static final String NO_PRIO_1_TRANSITION = "no_prio_1_transition";
     public static final String UNSORTED_PRIOS = "unsorted_prios";
+    
+    public static final String REGION_NO_INITIAL_STATE = "Every region must have an initial state";
+    public static final String REGION_TWO_MANY_INITIAL_STATES = "Every region must not have more than one initial state";
+    public static final String REGION_NO_FINAL_STATE = "Every region must have a final state if its parent state has a termination transition";
+    public static final String STATE_NOT_REACHABLE = "The state is not reachable";
 
-//    @Override
-//    protected List<EPackage> getEPackages() {
-//        List<EPackage> result = new ArrayList<EPackage>();
-//         result.add(de.cau.cs.kieler.sccharts.SyncchartsPackage.eINSTANCE);
-//        return result;
-//    }
+    @Override
+    protected List<EPackage> getEPackages() {
+        List<EPackage> result = new ArrayList<EPackage>();
+         result.add(de.cau.cs.kieler.sccharts.SCChartsPackage.eINSTANCE);
+        return result;
+    }
 
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Check if there is exactly ONE initial state per region.
+     *
+     * @param region the region
+     */
+    @Check
+    public void checkInitialState(final de.cau.cs.kieler.sccharts.Region region) {
+        // Do not consider the root region == SCChart
+        if (region.getParentState() != null) {
+            int foundInitial = 0;
+            for (de.cau.cs.kieler.sccharts.State state : region.getStates()) {
+                if (state.isInitial()) {
+                    foundInitial++;
+                }
+            }
+            if (foundInitial == 0) {
+                error(REGION_NO_INITIAL_STATE, region, null, -1);
+            } else if (foundInitial > 1) {
+                error(REGION_TWO_MANY_INITIAL_STATES, region, null, -1);
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * A state with a termination transition should have final states in all its
+     * inner regions.
+     *
+     * @param state the state
+     */
+    @Check
+    public void checkFinalStates(final de.cau.cs.kieler.sccharts.State state) {
+        // Only consider macro states
+        if (state.getRegions().size() > 0) {
+            boolean foundTermination = false;
+            for (Transition transition : state.getOutgoingTransitions()) {
+                if (transition.getType() == TransitionType.TERMINATION) {
+                    foundTermination = true;
+                    break;
+                }
+            }
+            if (foundTermination) {
+                // Now test for every region
+                for (Region region : state.getRegions()) {
+                    boolean foundFinal = false;
+                    for (de.cau.cs.kieler.sccharts.State innerState : region.getStates()) {
+                        if (innerState.isFinal()) {
+                            foundFinal = true;
+                            break;
+                        }
+                    }
+                    if (!foundFinal) {
+                        error(REGION_NO_FINAL_STATE, region, null, -1);
+                    }
+                }
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    
+    private boolean checkReachableStates(final de.cau.cs.kieler.sccharts.State originalState, final de.cau.cs.kieler.sccharts.State state) {
+        
+        if (state.isInitial()) {
+            return true;
+        }
+        else {
+            boolean reachedAnyInitialState = false;
+            for (Transition transition : state.getIncomingTransitions()) {
+                reachedAnyInitialState = reachedAnyInitialState | checkReachableStates(originalState, transition.getSourceState());
+            }
+            return reachedAnyInitialState;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * A state should be reachable from an initial state.
+     *
+     * @param state the state
+     */
+    @Check
+    public void checkReachableStates(final de.cau.cs.kieler.sccharts.State state) {
+        if (state.getParentRegion().getParentState() != null && !checkReachableStates(state, state)) {
+           warning(STATE_NOT_REACHABLE, state, null, -1);
+        }
+    }
+
+    
+    // -------------------------------------------------------------------------
+
+    
     // @Check
     public void checkTypeNameStartsWithCapital(
             final de.cau.cs.kieler.sccharts.State s) {
