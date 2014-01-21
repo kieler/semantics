@@ -17,6 +17,7 @@ import de.cau.cs.kieler.scgbb.SchedulingBlock
 import de.cau.cs.kieler.scgsched.GuardExpression
 import de.cau.cs.kieler.scgsched.ScgschedFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import java.util.List
 
 /**
  * The {@code SynchronizerData} class comprises members for the data mandatory to 
@@ -30,7 +31,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 class SynchronizerData {
 	/** List of predecessors of the join node */
-    public var predecessors = <SchedulingBlock> newArrayList
+	@Property
+    List<SchedulingBlock> predecessors
     
     /** 
      * List of additional ValuedObjects
@@ -38,11 +40,14 @@ class SynchronizerData {
      * Therefore, additional needed ValuedObjects must be added to the SCG valuedObjects list. 
      * Any new created ValuedObject is stored in the valuedObjects list.
      */
-    public var valuedObjects = <ValuedObject> newArrayList
+    @Property
+    List<ValuedObject> valuedObjects
     
     /**
      * guardExpression holds the actual expression of the synchronizer. It can be modified or used directly 
      * by the scheduler.
      */
     public var GuardExpression guardExpression = ScgschedFactory::eINSTANCE.createGuardExpression
+    
+    
 }
