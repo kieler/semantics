@@ -907,7 +907,7 @@ class SCChartsExtension {
             val originalTarget = terminationTransition.targetState
             val region = originalSource.parentRegion
             val auxiliaryState = region.createState("_TE").uniqueName
-            val auxliiaryTransition = auxiliaryState.createTransitionTo(originalTarget)
+            val auxliiaryTransition = auxiliaryState.createImmediateTransitionTo(originalTarget)
             for (effect : terminationTransition.effects.immutableCopy) {
                 auxliiaryTransition.addEffect(effect)
             }
@@ -956,12 +956,17 @@ class SCChartsExtension {
                 if (expose) {
                     localValuedObject.setOutput
                 }
-                
-                // Rename
-                localValuedObject.setName(newValuedObjectName)
-                
+
                 // Relocate
                 targetRootRegion.rootState.valuedObjects.add(localValuedObject)
+                
+                // Rename
+                if (expose) {
+                    localValuedObject.setName(newValuedObjectName)
+                } else {
+                    localValuedObject.uniqueName
+                }
+                
             }
         } // end if local valuedObjects present
 
