@@ -13,7 +13,6 @@
  */
  package de.cau.cs.kieler.scg.schedulers
 
-import de.cau.cs.kieler.scg.schedulers.AbstractSCGScheduler
 import de.cau.cs.kieler.scgbb.SchedulingBlock
 import de.cau.cs.kieler.scgsched.ScgschedFactory
 import de.cau.cs.kieler.scgbb.BasicBlock
@@ -72,7 +71,7 @@ import java.util.List
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-class SimpleScheduler extends AbstractSCGScheduler {
+class SimpleScheduler extends AbstractScheduler {
     
     // -------------------------------------------------------------------------
     // -- Injections 

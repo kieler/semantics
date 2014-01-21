@@ -54,7 +54,7 @@ import de.cau.cs.kieler.scgsched.Schedule
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-abstract class AbstractSCGScheduler extends AbstractModelTransformation {
+abstract class AbstractScheduler extends AbstractModelTransformation {
 
 	/** Inject the SCG transformation extensions. */
     @Inject

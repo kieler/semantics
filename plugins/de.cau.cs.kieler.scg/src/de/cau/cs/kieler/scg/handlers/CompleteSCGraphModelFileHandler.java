@@ -23,7 +23,7 @@ import com.google.inject.Injector;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
-import de.cau.cs.kieler.scg.schedulers.AbstractSCGScheduler;
+import de.cau.cs.kieler.scg.schedulers.AbstractScheduler;
 import de.cau.cs.kieler.scg.schedulers.SimpleScheduler;
 import de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer;
 import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation;
@@ -79,7 +79,7 @@ public class CompleteSCGraphModelFileHandler extends AbstractConvertModelHandler
                 Guice.createInjector().getInstance(SCGToSCGDEPTransformation.class);        
         SCGDEPToSCGBBTransformation transformation2 =
                 Guice.createInjector().getInstance(SCGDEPToSCGBBTransformation.class);
-        AbstractSCGScheduler transformation3 =
+        AbstractScheduler transformation3 =
                 Guice.createInjector().getInstance(SimpleScheduler.class);        
         SimpleSequentializer transformation4 =
         		Guice.createInjector().getInstance(SimpleSequentializer.class);
