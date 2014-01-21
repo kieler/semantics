@@ -18,6 +18,8 @@ import de.cau.cs.kieler.scgsched.GuardExpression
 import de.cau.cs.kieler.scgsched.ScgschedFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import java.util.List
+import java.util.HashMap
+import de.cau.cs.kieler.core.kexpressions.Expression
 
 /**
  * The {@code SynchronizerData} class comprises members for the data mandatory to 
@@ -49,5 +51,12 @@ class SynchronizerData {
      */
     public var GuardExpression guardExpression = ScgschedFactory::eINSTANCE.createGuardExpression
     
-    
+    /**
+     * Map of additional assignments with respect to their scheduling blocks.
+     * The synchronizer might want to add additional assignments to synchronize threads. 
+     * Therefore this field allows storage after their creation so that the scheduler and the
+     * sequentializer might use them.
+     */
+    @Property
+    HashMap<SchedulingBlock, List<Pair<ValuedObject, Expression>>> additionalAssignments
 }
