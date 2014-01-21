@@ -43,7 +43,7 @@ import de.cau.cs.kieler.scg.Join
  * @kieler.rating 2013-11-28 proposed yellow
  * @abstract
  */
-abstract class AbstractSCGSynchronizer {
+abstract class AbstractSynchronizer {
    
     /**
      * This function has to be overwritten in the derived class. It is called by the 

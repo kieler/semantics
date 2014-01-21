@@ -45,7 +45,7 @@ import de.cau.cs.kieler.scg.Node
  * @kieler.design 2013-12-02 proposed 
  * @kieler.rating 2013-12-02 proposed yellow
  */
-abstract class AbstractSCGAnalyzer {
+abstract class AbstractAnalyzer {
   
   	/**
   	 * Performs an analysis on the provided SCG.
