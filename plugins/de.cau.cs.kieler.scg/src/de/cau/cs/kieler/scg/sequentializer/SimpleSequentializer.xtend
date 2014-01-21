@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.transformations
+package de.cau.cs.kieler.scg.sequentializer
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.Assignment
@@ -48,7 +48,7 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.rating 2013-12-05 proposed yellow
  */
 
-class SCGSchedToSeqSCGTransformation extends AbstractModelTransformation {
+class SimpleSequentializer extends AbstractSequentializer {
 
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -61,11 +61,7 @@ class SCGSchedToSeqSCGTransformation extends AbstractModelTransformation {
     // -------------------------------------------------------------------------
     // -- Transformation method
     // -------------------------------------------------------------------------    
-    
-    override transform(EObject eObject) {
-		return transformSCGSchedToSeqSCG(eObject as SCGraphSched)
-	}
-    
+      
     /**
      * transformSCGSchedToSeqSCG executes the transformation of an SCG with scheduling information to an
      * standard SCG without any further information. Naturally, the SCG will only consist of an 
@@ -76,7 +72,7 @@ class SCGSchedToSeqSCGTransformation extends AbstractModelTransformation {
      * 			the source SCG with scheduling information
      * @return Returns a sequentialized standard SCG.
      */    
-     def SCGraph transformSCGSchedToSeqSCG(SCGraphSched scgSched) {
+     override SCGraph sequentialize(SCGraphSched scgSched) {
         // Create new standard SCG with the Scg factory.
         val scg = ScgFactory::eINSTANCE.createSCGraph()
         
