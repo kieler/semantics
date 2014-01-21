@@ -134,6 +134,8 @@ class SCGTransformation {
         valuedObjectSSChart2SCG.get(valuedObjectSCChart)
     }    
     
+
+    
     //-------------------------------------------------------------------------
     //--             T R A N S F O R M      T O    S C G                     --
     //-------------------------------------------------------------------------
@@ -141,12 +143,16 @@ class SCGTransformation {
 
     // Transforming Local ValuedObjects.
     def SCGraph transformSCG(Region rootRegion) {
+        // Fix termination transitions that have effects
+        var rootRegion2 = rootRegion.fixTerminationWithEffects
+        // Expose local variables
+        rootRegion2 = rootRegion2.transformLocalValuedObject  
         // Clear mappings
         resetMapping
         // Create a new SCGraph
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph
         // Handle declarations
-        for (valuedObject : rootRegion.rootState.valuedObjects) {
+        for (valuedObject : rootRegion2.rootState.valuedObjects) {
             val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
             valuedObjectSCG.applyAttributes(valuedObject)
             valuedObjectSCG.map(valuedObject)
@@ -154,17 +160,17 @@ class SCGTransformation {
         // Include top most level of hierarchy 
         // if the root state itself already contains multiple regions.
         // Otherwise skip the first layer of hierarchy.
-        if (rootRegion.rootState.regions.size>1) {
+        if (rootRegion2.rootState.regions.size>1) {
             // Generate nodes and recursively traverse model
-            rootRegion.transformSCGGenerateNodes(sCGraph)
-            rootRegion.transformSCGConnectNodes(sCGraph)        
+            rootRegion2.transformSCGGenerateNodes(sCGraph)
+            rootRegion2.transformSCGConnectNodes(sCGraph)        
         } else {
             // Generate nodes and recursively traverse model
-            for (region : rootRegion.rootState.regions) {
+            for (region : rootRegion2.rootState.regions) {
                region.transformSCGGenerateNodes(sCGraph)
             }
             // Generate nodes and recursively traverse model
-            for (region : rootRegion.rootState.regions) {
+            for (region : rootRegion2.rootState.regions) {
                 region.transformSCGConnectNodes(sCGraph)
             }
         }
@@ -491,21 +497,22 @@ class SCGTransformation {
                 if (otherNodeTermination != null) {
 
                     val controlFlowTermination = otherNodeTermination.createControlFlow
-                	
-                	// Add another assignment if the termination has an effect.
-                	if (!termination.effects.nullOrEmpty) {
-	    		   		val assignment = sCGraph.addAssignment
-						val transitionCopy = termination.copy
-            			transitionCopy.setImmediate(false)
-						val effect = transitionCopy.effects.get(0)
-						val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
-						assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
-				        assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
-				        assignment.setNext(controlFlowTermination)
-				        join.setNext(assignment.createControlFlow)                	
-            		} else {
+  
+// STEVEN'S HOTHOTFIX                	
+//                	// Add another assignment if the termination has an effect.
+//                	if (!termination.effects.nullOrEmpty) {
+//	    		   		val assignment = sCGraph.addAssignment
+//						val transitionCopy = termination.copy
+//            			transitionCopy.setImmediate(false)
+//						val effect = transitionCopy.effects.get(0)
+//						val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
+//						assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
+//				        assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
+//				        assignment.setNext(controlFlowTermination)
+//				        join.setNext(assignment.createControlFlow)                	
+//            		} else {
 	                    join.setNext(controlFlowTermination)
-                    }
+//                    }
                     
                 }   
             } else {
