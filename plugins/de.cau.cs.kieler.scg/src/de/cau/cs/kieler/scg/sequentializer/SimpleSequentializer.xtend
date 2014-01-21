@@ -25,8 +25,6 @@ import de.cau.cs.kieler.scgsched.SCGraphSched
 import de.cau.cs.kieler.scgsched.Schedule
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
-import org.eclipse.emf.ecore.EObject
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -123,7 +121,7 @@ class SimpleSequentializer extends AbstractSequentializer {
      * @throws UnsupportedSCGException
      * 			if no guard expression can be found for a specific guard.
      */
-    private def transformSchedule(Schedule schedule, SCGraph scg, ControlFlow controlFlow) {
+    protected def transformSchedule(Schedule schedule, SCGraph scg, ControlFlow controlFlow) {
     	// The source SCG is easily determined as it includes the schedule. Its container is the source SCG.
     	val scgSched = schedule.eContainer as SCGraphSched
     	
