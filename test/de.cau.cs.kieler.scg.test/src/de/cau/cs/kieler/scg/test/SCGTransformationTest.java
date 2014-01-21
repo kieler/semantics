@@ -32,8 +32,8 @@ import org.osgi.framework.Bundle;
 import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.scg.schedulers.SimpleScheduler;
+import de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer;
 import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation;
-import de.cau.cs.kieler.scg.transformations.SCGSchedToSeqSCGTransformation;
 import de.cau.cs.kieler.scg.transformations.SCGToSCGDEPTransformation;
 
 /**
@@ -70,7 +70,7 @@ public class SCGTransformationTest {
 
         @Test
         public void test004_scgSchedToSeqScg_simple() {
-                compareModels("001-simple.scgsched", SCGSchedToSeqSCGTransformation.class, "001-simple.seq.scg");
+                compareModels("001-simple.scgsched", SimpleSequentializer.class, "001-simple.seq.scg");
         }
 
         @Test(expected = AssertionError.class) // This test is expected to fail!
@@ -95,7 +95,7 @@ public class SCGTransformationTest {
 
 	@Test
 	public void test103_scgSchedToSeqScg_abo() {
-		compareModels("100-abo.scgsched", SCGSchedToSeqSCGTransformation.class, "100-abo.seq.scg");
+		compareModels("100-abo.scgsched", SimpleSequentializer.class, "100-abo.seq.scg");
 	}
 
 	@Test(expected = AssertionError.class) // This test is expected to fail!
