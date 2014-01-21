@@ -13,7 +13,11 @@
  */
 package de.cau.cs.kieler.scg.synchronizer
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -46,8 +50,67 @@ import de.cau.cs.kieler.scg.Join
 
 class HybridSynchronizer extends AbstractSynchronizer {
 	
-	override protected build(Join join) {
-		
-	}
+    // -------------------------------------------------------------------------
+    // -- Injections 
+    // -------------------------------------------------------------------------
+    
+    /** Inject SCG extensions. */    
+    @Inject
+    extension SCGExtensions
+    
+    /** Inject KExpressions extensions. */
+    @Inject
+    extension KExpressionsExtension	
 	
+    // -------------------------------------------------------------------------
+    // -- Constants
+    // -------------------------------------------------------------------------
+    	
+   	private val String FORKVARSUFFIX = "_F"
+   	private val String EXITVARSUFFIX = "_T"
+    	
+    // -------------------------------------------------------------------------
+    // -- Synchronizer
+    // -------------------------------------------------------------------------	
+	
+	override protected build(Join join) {
+    	// Create a new SynchronizerData class which holds the data to return.
+        val data = new SynchronizerData()
+		
+		// Since we are working we completely enriched SCGs, we can use the SCG extensions 
+		// to retrieve the scheduling block of the join node in question.
+		val joinSB = join.schedulingBlock
+        val forkSB = join.fork.schedulingBlock
+
+        // The valued object of the GuardExpression of the synchronizer is the guard of the
+        // scheduling block of the join node. 
+        data.guardExpression.valuedObject = joinSB.guard
+
+        
+        val forkVar = createValuedObject(forkSB.guard.name + FORKVARSUFFIX)
+        data.valuedObjects.add(forkVar)
+        data.addAdditionalAssignment(forkSB, forkVar, TRUE)
+        data.addAdditionalAssignment(joinSB, forkVar, FALSE)
+		data.guardExpression.expression = forkVar.reference
+		
+		val exitExpression = createOrExpression
+		// Create a new list for all exit nodes of the threads of the fork-join-combination...
+        val exitNodes = <Exit> newLinkedList
+        // ... and fill the list with the exit nodes of all threads.
+        join.allPrevious.forEach[
+        	val exit = it.eContainer as Exit
+        	val exitSB = exit.schedulingBlock 
+        	exitNodes.add(exit)
+        	val exitVar = createValuedObject(exitSB.guard.name + EXITVARSUFFIX)
+        	data.valuedObjects.add(exitVar)
+        	data.addAdditionalAssignment(forkSB, exitVar, TRUE)
+        	data.addAdditionalAssignment(exitSB, exitVar, FALSE)
+        	exitExpression.subExpressions.add(exitVar.reference)
+        ]
+        
+        data.guardExpression.expression.and(exitExpression.not)
+        
+        data		
+	}
+		
 }
