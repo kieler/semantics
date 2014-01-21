@@ -136,7 +136,8 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
         else {
             boolean reachedAnyInitialState = false;
             for (Transition transition : state.getIncomingTransitions()) {
-                reachedAnyInitialState = reachedAnyInitialState | checkReachableStates(originalState, transition.getSourceState());
+            	if (transition.getSourceState() != state) 
+            		reachedAnyInitialState = reachedAnyInitialState | checkReachableStates(originalState, transition.getSourceState());
             }
             return reachedAnyInitialState;
         }
