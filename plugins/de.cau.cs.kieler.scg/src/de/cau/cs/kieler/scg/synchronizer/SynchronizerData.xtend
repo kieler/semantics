@@ -57,7 +57,7 @@ class SynchronizerData {
      * Therefore this field allows storage after their creation so that the scheduler and the
      * sequentializer might use them.
      */
-    val additionalAssignments = new HashMap<SchedulingBlock, List<Pair<ValuedObject, Expression>>>
+    private val additionalAssignments = new HashMap<SchedulingBlock, List<Pair<ValuedObject, Expression>>>
     
     
 	public def SynchronizerData addAdditionalAssignment(SchedulingBlock schedulingBlock, 
@@ -74,6 +74,10 @@ class SynchronizerData {
 	
 	public def List<Pair<ValuedObject, Expression>> getAdditionalAssignments(SchedulingBlock schedulingBlock) {
 		additionalAssignments.get(schedulingBlock)
+	}
+	
+	public def List<SchedulingBlock> getAdditionalAssignmentBlocks() {
+		additionalAssignments.keySet.toList
 	}
     
 }
