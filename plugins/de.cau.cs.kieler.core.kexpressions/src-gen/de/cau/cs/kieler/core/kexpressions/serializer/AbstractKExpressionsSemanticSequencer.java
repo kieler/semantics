@@ -12,7 +12,6 @@ import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.annotations.text.serializer.AnnotationsSemanticSequencer;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
-import de.cau.cs.kieler.core.kexpressions.DoubleValue;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
@@ -128,29 +127,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
 					sequence_BoolValue(context, (BoolValue) semanticObject); 
-					return; 
-				}
-				else break;
-			case KExpressionsPackage.DOUBLE_VALUE:
-				if(context == grammarAccess.getAddExpressionRule() ||
-				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getAtomicValuedExpressionRule() ||
-				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
-				   context == grammarAccess.getDivExpressionRule() ||
-				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getDoubleValueRule() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getModExpressionRule() ||
-				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getMultExpressionRule() ||
-				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getNegExpressionRule() ||
-				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getRootRule() ||
-				   context == grammarAccess.getSubExpressionRule() ||
-				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getValuedExpressionRule()) {
-					sequence_DoubleValue(context, (DoubleValue) semanticObject); 
 					return; 
 				}
 				else break;
@@ -350,22 +326,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 */
 	protected void sequence_CompareOperation_NotExpression_OrAndExpression_ValuedObjectTestExpression(EObject context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     value=FLOAT
-	 */
-	protected void sequence_DoubleValue(EObject context, DoubleValue semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.DOUBLE_VALUE__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.DOUBLE_VALUE__VALUE));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getDoubleValueAccess().getValueFLOATTerminalRuleCall_0(), semanticObject.getValue());
-		feeder.finish();
 	}
 	
 	

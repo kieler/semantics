@@ -103,7 +103,7 @@ public class DoubleValueItemProvider
      */
     @Override
     public String getText(Object object) {
-        Float labelValue = ((DoubleValue)object).getValue();
+        Double labelValue = ((DoubleValue)object).getValue();
         String label = labelValue == null ? null : labelValue.toString();
         return label == null || label.length() == 0 ?
             getString("_UI_DoubleValue_type") :

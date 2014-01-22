@@ -1560,7 +1560,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicValuedExpression returns Expression:
-	//	IntValue | FloatValue | DoubleValue | "(" ValuedExpression ")" | AtomicExpression;
+	//	IntValue //    | DoubleValue
+	// | FloatValue | "(" ValuedExpression ")" | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaKExpressions.getAtomicValuedExpressionAccess();
 	}
@@ -1633,20 +1634,12 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getBoolValueAccess().getRule();
 	}
 
-	//DoubleValue:
-	//	value=FLOAT;
-	public KExpressionsGrammarAccess.DoubleValueElements getDoubleValueAccess() {
-		return gaKExpressions.getDoubleValueAccess();
-	}
-	
-	public ParserRule getDoubleValueRule() {
-		return getDoubleValueAccess().getRule();
-	}
-
-	//// data type rule allowing any kind of value to be accepted,
-	// // e.g. as initialValues of valuedObjects
+	////DoubleValue returns DoubleValue:
+	// //    value=FLOAT;
+	// // data type rule allowing any kind of value to be accepted,
 	//
-	//// used in Kits.xtext 
+	//// e.g. as initialValues of valuedObjects
+	// // used in Kits.xtext 
 	// AnyType returns ecore::EString:
 	//	BOOLEAN | INT | FLOAT | ID | STRING;
 	public KExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
