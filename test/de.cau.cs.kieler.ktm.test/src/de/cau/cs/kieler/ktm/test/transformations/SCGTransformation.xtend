@@ -201,8 +201,7 @@ class SCGTransformation {
         // Fix superfluous exit nodes
         sCGraph.trimExitNodes.trimConditioanlNodes
 
-        //NEW - DEBUG
-        val completeness = checkMappingCompleteness(rootRegion, sCGraph);
+        val completeness = checkMappingCompleteness(rootRegion, sCGraph);//NEW - DEBUG
         return sCGraph;
 
     }
@@ -309,6 +308,8 @@ class SCGTransformation {
             for (link : links) {
                 link.setTarget(exitNode.next.target)
             }
+            
+            exitNode.next.target.mapParents(exitNode.mappedParents); //NEW - redirect transformation mapping information
 
             if (exitNode.next != null) {
                 val link = exitNode.next
@@ -321,7 +322,6 @@ class SCGTransformation {
             }
             sCGraph.nodes.remove(exitNode)
             
-            exitNode.next.target.mapParents(exitNode.mappedParents); //NEW - redirect transformation mapping information
             exitNode.unmapAll; //NEW - remove transformation mapping information
         }
         sCGraph

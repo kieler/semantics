@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions;
-import de.cau.cs.kieler.ktm.test.transformations.SCChartTestTransformation;
+import de.cau.cs.kieler.ktm.test.transformations.SCChartsCoreTransformation;
 import de.cau.cs.kieler.ktm.test.transformations.SCGTransformation;
 import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 import de.cau.cs.kieler.sccharts.Region;
@@ -42,15 +42,15 @@ import de.cau.cs.kieler.scg.SCGraph;
  */
 public class SCChartTest extends TestCase {
 
-    private final SCChartTestTransformation SCCtransformation = Guice.createInjector().getInstance(
-            SCChartTestTransformation.class);
+    private final SCChartsCoreTransformation SCCtransformation = Guice.createInjector().getInstance(
+            SCChartsCoreTransformation.class);
     private final SCGTransformation SCGtransformation = Guice.createInjector().getInstance(
             SCGTransformation.class);
     private final TransformationTreeExtensions transformationTree = Guice.createInjector()
             .getInstance(TransformationTreeExtensions.class);
     private Region abo;
     private Region aboSplitTE;
-    private Region aboSplitTEConnector;
+    private Region aboNormalized;
     private SCGraph aboSCG;
     private ModelWrapper tree;
 
@@ -91,8 +91,8 @@ public class SCChartTest extends TestCase {
         saveModel(aboSplitTE, file);
         assertTrue(file.exists());
         
-        file = new File("./artifacts/ABO.split.connect.scc");
-        saveModel(aboSplitTEConnector, file);
+        file = new File("./artifacts/ABO.normalized.scc");
+        saveModel(aboNormalized, file);
         assertTrue(file.exists());
         
         file = new File("./artifacts/ABO.scg");
@@ -168,25 +168,25 @@ public class SCChartTest extends TestCase {
 
         ModelWrapper aboSplitTEModel =
                 transformationTree.initializeTransformationTree(SCCtransformation.extractMapping(),
-                        "splitTriggerEffect", abo, "coreSCChart", aboSplitTE,
+                        "TriggerEffect", abo, "coreSCChart", aboSplitTE,
                         "coreSCChart-splitTriggerEffect");
         assertNotNull(aboSplitTEModel);
 
-        aboSplitTEConnector = SCCtransformation.transformConnector(aboSplitTE);
-        assertNotNull(aboSplitTEConnector);
+        aboNormalized = SCCtransformation.transformSurfaceDepth(aboSplitTE);
+        assertNotNull(aboNormalized);
 
-        ModelWrapper aboSplitTEConnectorModel =
+        ModelWrapper aboNormalizedModel =
                 transformationTree.addTransformationToTree(SCCtransformation.extractMapping(),
-                        aboSplitTEModel, "connector", aboSplitTE, aboSplitTEConnector,
-                        "coreSCChart-splitTriggerEffect-connector");
-        assertNotNull(aboSplitTEConnectorModel);
+                        aboSplitTEModel, "SurfaceDepth", aboSplitTE, aboNormalized,
+                        "normalizedCoreSCChart");
+        assertNotNull(aboNormalizedModel);
         
-        aboSCG = SCGtransformation.transformSCG(aboSplitTEConnector);
+        aboSCG = SCGtransformation.transformSCG(aboNormalized);
         assertNotNull(aboSCG);
 
         ModelWrapper aboSCGModel =
                 transformationTree.addTransformationToTree(SCGtransformation.extractMapping(),
-                        aboSplitTEConnectorModel, "SCC2SCG", aboSplitTEConnector, aboSCG,
+                        aboNormalizedModel, "SCC2SCG", aboNormalized, aboSCG,
                         "SCG");
         assertNotNull(aboSCGModel);
 

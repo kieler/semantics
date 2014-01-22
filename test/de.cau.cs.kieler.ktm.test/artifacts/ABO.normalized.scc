@@ -8,7 +8,7 @@
     <valuedObjects name="O2" type="bool" output="true"/>
     <regions>
       <states id="Init" label="Init" initial="true">
-        <outgoingTransitions immediate="true" priority="1" targetState="//@states.0/@regions.0/@states.3">
+        <outgoingTransitions immediate="true" targetState="//@states.0/@regions.0/@states.3">
           <effects xsi:type="sccharts:Assignment" valuedObject="//@states.0/@valuedObjects.2">
             <expression xsi:type="kexpressions:BoolValue" value="false"/>
           </effects>
@@ -16,61 +16,69 @@
       </states>
       <states id="WaitAB" label="WaitAB" incomingTransitions="//@states.0/@regions.0/@states.3/@outgoingTransitions.0">
         <regions id="HandleA" label="HandleA">
-          <states id="WaitA" label="WaitA" initial="true">
-            <outgoingTransitions immediate="true" priority="1" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.2">
+          <states id="_Surface" label="_Surface" initial="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.4/@outgoingTransitions.0">
+            <outgoingTransitions immediate="true" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.2">
               <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@valuedObjects.0"/>
             </outgoingTransitions>
+            <outgoingTransitions immediate="true" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.4"/>
           </states>
           <states id="DoneA" label="DoneA" final="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.3/@outgoingTransitions.0"/>
           <states id="_S" label="_S" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0">
-            <outgoingTransitions immediate="true" priority="1" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.3">
+            <outgoingTransitions immediate="true" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.3">
               <effects xsi:type="sccharts:Assignment" valuedObject="//@states.0/@valuedObjects.1">
                 <expression xsi:type="kexpressions:BoolValue" value="true"/>
               </effects>
             </outgoingTransitions>
           </states>
           <states id="_S2" label="_S2" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.2/@outgoingTransitions.0">
-            <outgoingTransitions immediate="true" priority="1" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1">
+            <outgoingTransitions immediate="true" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1">
               <effects xsi:type="sccharts:Assignment" valuedObject="//@states.0/@valuedObjects.2">
                 <expression xsi:type="kexpressions:BoolValue" value="true"/>
               </effects>
             </outgoingTransitions>
+          </states>
+          <states id="_Pause" label="_Pause" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.1">
+            <outgoingTransitions targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.0"/>
           </states>
         </regions>
         <regions id="HandleB" label="HandleB">
-          <states id="WaitB" label="WaitB" initial="true">
-            <outgoingTransitions priority="1" targetState="//@states.0/@regions.0/@states.1/@regions.1/@states.2">
-              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@valuedObjects.1"/>
-            </outgoingTransitions>
-          </states>
-          <states id="DoneB" label="DoneB" final="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.1/@states.2/@outgoingTransitions.0"/>
-          <states id="_S" label="_S" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.1/@states.0/@outgoingTransitions.0">
-            <outgoingTransitions immediate="true" priority="1" targetState="//@states.0/@regions.0/@states.1/@regions.1/@states.1">
+          <states id="DoneB" label="DoneB" final="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.1/@states.1/@outgoingTransitions.0"/>
+          <states id="_S" label="_S" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.1/@states.3/@outgoingTransitions.0">
+            <outgoingTransitions immediate="true" targetState="//@states.0/@regions.0/@states.1/@regions.1/@states.0">
               <effects xsi:type="sccharts:Assignment" valuedObject="//@states.0/@valuedObjects.2">
                 <expression xsi:type="kexpressions:BoolValue" value="true"/>
               </effects>
             </outgoingTransitions>
           </states>
+          <states id="_Surface" label="_Surface" initial="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.1/@states.3/@outgoingTransitions.1">
+            <outgoingTransitions targetState="//@states.0/@regions.0/@states.1/@regions.1/@states.3"/>
+          </states>
+          <states id="_S2" label="_S2" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.1/@states.2/@outgoingTransitions.0">
+            <outgoingTransitions immediate="true" targetState="//@states.0/@regions.0/@states.1/@regions.1/@states.1">
+              <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@valuedObjects.1"/>
+            </outgoingTransitions>
+            <outgoingTransitions immediate="true" targetState="//@states.0/@regions.0/@states.1/@regions.1/@states.2"/>
+          </states>
         </regions>
-        <outgoingTransitions priority="1" type="TERMINATION" targetState="//@states.0/@regions.0/@states.4"/>
+        <outgoingTransitions type="TERMINATION" targetState="//@states.0/@regions.0/@states.4"/>
       </states>
       <states id="GotAB" label="GotAB" incomingTransitions="//@states.0/@regions.0/@states.5/@outgoingTransitions.0"/>
       <states id="_S" label="_S" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0">
-        <outgoingTransitions immediate="true" priority="1" targetState="//@states.0/@regions.0/@states.1">
+        <outgoingTransitions immediate="true" targetState="//@states.0/@regions.0/@states.1">
           <effects xsi:type="sccharts:Assignment" valuedObject="//@states.0/@valuedObjects.3">
             <expression xsi:type="kexpressions:BoolValue" value="false"/>
           </effects>
         </outgoingTransitions>
       </states>
       <states id="_S2" label="_S2" incomingTransitions="//@states.0/@regions.0/@states.1/@outgoingTransitions.0">
-        <outgoingTransitions immediate="true" priority="1" targetState="//@states.0/@regions.0/@states.5">
+        <outgoingTransitions immediate="true" targetState="//@states.0/@regions.0/@states.5">
           <effects xsi:type="sccharts:Assignment" valuedObject="//@states.0/@valuedObjects.2">
             <expression xsi:type="kexpressions:BoolValue" value="false"/>
           </effects>
         </outgoingTransitions>
       </states>
       <states id="_S3" label="_S3" incomingTransitions="//@states.0/@regions.0/@states.4/@outgoingTransitions.0">
-        <outgoingTransitions immediate="true" priority="1" targetState="//@states.0/@regions.0/@states.2">
+        <outgoingTransitions immediate="true" targetState="//@states.0/@regions.0/@states.2">
           <effects xsi:type="sccharts:Assignment" valuedObject="//@states.0/@valuedObjects.3">
             <expression xsi:type="kexpressions:BoolValue" value="true"/>
           </effects>
