@@ -497,6 +497,9 @@ class SCChartsCoreTransformation {
                                 stateAfterDepth = K1
                                 val t = K2.incomingTransitions.get(0)
                                 t.setTargetState(stateAfterDepth)
+                                for (transition : K2.outgoingTransitions) {
+                                    transition.targetState.incomingTransitions.remove(transition)
+                                }
                                 K2.parentRegion.states.remove(K2)
                                 done = false
                                 T2tmp = t
