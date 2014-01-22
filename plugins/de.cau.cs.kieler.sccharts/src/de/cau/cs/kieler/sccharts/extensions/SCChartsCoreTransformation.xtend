@@ -317,25 +317,26 @@ class SCChartsCoreTransformation {
     //--     O P T I M I Z E : Immediate Transitions with no Trigger/Effect  --
     //-------------------------------------------------------------------------
     def Region optimize1(Region rootRegion) {
-        var targetRootRegion = rootRegion.copy;
-        var targetStates = targetRootRegion.allContainedStates
+        var targetStates = rootRegion.allContainedStates
         for (targetState : targetStates) {
-            targetState.optimize1(targetRootRegion);
+            targetState.optimize1(rootRegion);
         }
-        targetRootRegion;
+        rootRegion;
     }
 
     def void optimize1(State state, Region targetRootRegion) {
         if (state.outgoingTransitions.size == 1 && !state.hierarchical) {
             val transition = state.outgoingTransitions.get(0)
+            val targetState = transition.targetState
             if (transition.immediate2) {
                 if (transition.trigger == null && transition.effects.nullOrEmpty) {
-                    val otherState = transition.targetState
-                    otherState.setInitial(state.initial)
-                    otherState.setFinal(state.final)
-                    otherState.setId(state.id)
-                    otherState.setLabel(state.label)
-                    otherState.parentRegion.states.remove(state)
+                    targetState.incomingTransitions.remove(transition)
+                    state.outgoingTransitions.remove(transition)
+                    targetState.setInitial(state.initial)
+                    targetState.setFinal(state.final)
+                    targetState.setId(state.id)
+                    targetState.setLabel(state.label)
+                    targetState.parentRegion.states.remove(state)
                 }
             }
         }
@@ -496,6 +497,9 @@ class SCChartsCoreTransformation {
                                 stateAfterDepth = K1
                                 val t = K2.incomingTransitions.get(0)
                                 t.setTargetState(stateAfterDepth)
+                                for (transition : K2.outgoingTransitions) {
+                                    transition.targetState.incomingTransitions.remove(transition)
+                                }
                                 K2.parentRegion.states.remove(K2)
                                 done = false
                                 T2tmp = t

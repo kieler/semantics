@@ -107,13 +107,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass doubleValueEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     private EEnum combineOperatorEEnum = null;
 
     /**
@@ -415,24 +408,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getDoubleValue() {
-        return doubleValueEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getDoubleValue_Value() {
-        return (EAttribute)doubleValueEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EEnum getCombineOperator() {
         return combineOperatorEEnum;
     }
@@ -516,9 +491,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         textExpressionEClass = createEClass(TEXT_EXPRESSION);
         createEAttribute(textExpressionEClass, TEXT_EXPRESSION__TEXT);
 
-        doubleValueEClass = createEClass(DOUBLE_VALUE);
-        createEAttribute(doubleValueEClass, DOUBLE_VALUE__VALUE);
-
         // Create enums
         combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
         operatorTypeEEnum = createEEnum(OPERATOR_TYPE);
@@ -564,7 +536,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         boolValueEClass.getESuperTypes().add(this.getValue());
         operatorExpressionEClass.getESuperTypes().add(this.getExpression());
         textExpressionEClass.getESuperTypes().add(this.getExpression());
-        doubleValueEClass.getESuperTypes().add(this.getValue());
 
         // Initialize classes and features; add operations and parameters
         initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -599,9 +570,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(textExpressionEClass, TextExpression.class, "TextExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTextExpression_Text(), ecorePackage.getEString(), "text", null, 0, 1, TextExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(doubleValueEClass, DoubleValue.class, "DoubleValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getDoubleValue_Value(), ecorePackage.getEDoubleObject(), "value", null, 1, 1, DoubleValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");

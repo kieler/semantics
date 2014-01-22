@@ -247,11 +247,6 @@ public class EmptyExpressionItemProvider
             (createChildParameter
                 (ScgschedPackage.Literals.EMPTY_EXPRESSION__EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ScgschedPackage.Literals.EMPTY_EXPRESSION__EXPRESSION,
-                 KExpressionsFactory.eINSTANCE.createDoubleValue()));
     }
 
     /**

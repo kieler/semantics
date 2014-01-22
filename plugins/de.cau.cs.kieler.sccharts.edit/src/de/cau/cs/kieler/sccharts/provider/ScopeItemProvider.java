@@ -423,11 +423,6 @@ public class ScopeItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createDoubleValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
                 (SCChartsPackage.Literals.SCOPE__BODY_TEXT,
                  SCChartsFactory.eINSTANCE.createTextEffect()));
 

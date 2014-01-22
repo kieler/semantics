@@ -1590,7 +1590,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicValuedExpression returns Expression:
-	//	IntValue | FloatValue | DoubleValue | "(" ValuedExpression ")" | AtomicExpression;
+	//	IntValue | FloatValue | "(" ValuedExpression ")" | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaActions.getAtomicValuedExpressionAccess();
 	}
@@ -1661,16 +1661,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getBoolValueRule() {
 		return getBoolValueAccess().getRule();
-	}
-
-	//DoubleValue:
-	//	value=FLOAT;
-	public KExpressionsGrammarAccess.DoubleValueElements getDoubleValueAccess() {
-		return gaActions.getDoubleValueAccess();
-	}
-	
-	public ParserRule getDoubleValueRule() {
-		return getDoubleValueAccess().getRule();
 	}
 
 	//// data type rule allowing any kind of value to be accepted,
@@ -1809,8 +1799,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 	// * / enum ValueType:
-	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | DOUBLE="double" | STRING="string" |
-	//	HOST="host";
+	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | STRING="string" | HOST="host";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaActions.getValueTypeAccess();
 	}

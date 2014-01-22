@@ -232,11 +232,6 @@ public class EmissionItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.EMISSION__NEW_VALUE,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.EMISSION__NEW_VALUE,
-                 KExpressionsFactory.eINSTANCE.createDoubleValue()));
     }
 
 }

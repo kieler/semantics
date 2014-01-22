@@ -519,13 +519,6 @@ class KExpressionsExtension {
          expression
     }
 
-    // Create a double value.
-    def DoubleValue createDoubleValue(double value) {
-         val expression = KExpressionsFactory::eINSTANCE.createDoubleValue
-         expression.setValue(value)
-         expression
-    }
-
     // Create a boolean value.
     def BoolValue createBoolValue(boolean value) {
          val expression = KExpressionsFactory::eINSTANCE.createBoolValue()

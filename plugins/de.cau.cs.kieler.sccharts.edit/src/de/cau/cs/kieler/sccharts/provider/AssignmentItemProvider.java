@@ -232,11 +232,6 @@ public class AssignmentItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 KExpressionsFactory.eINSTANCE.createDoubleValue()));
     }
 
 }
