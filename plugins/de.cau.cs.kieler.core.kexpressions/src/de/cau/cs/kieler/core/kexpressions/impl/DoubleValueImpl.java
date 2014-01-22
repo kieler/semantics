@@ -33,7 +33,7 @@ public class DoubleValueImpl extends ValueImpl implements DoubleValue {
      * @generated
      * @ordered
      */
-    protected static final Float VALUE_EDEFAULT = null;
+    protected static final Double VALUE_EDEFAULT = null;
 
     /**
      * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
@@ -43,7 +43,7 @@ public class DoubleValueImpl extends ValueImpl implements DoubleValue {
      * @generated
      * @ordered
      */
-    protected Float value = VALUE_EDEFAULT;
+    protected Double value = VALUE_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -69,7 +69,7 @@ public class DoubleValueImpl extends ValueImpl implements DoubleValue {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Float getValue() {
+    public Double getValue() {
         return value;
     }
 
@@ -78,8 +78,8 @@ public class DoubleValueImpl extends ValueImpl implements DoubleValue {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setValue(Float newValue) {
-        Float oldValue = value;
+    public void setValue(Double newValue) {
+        Double oldValue = value;
         value = newValue;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.DOUBLE_VALUE__VALUE, oldValue, value));
@@ -108,7 +108,7 @@ public class DoubleValueImpl extends ValueImpl implements DoubleValue {
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case KExpressionsPackage.DOUBLE_VALUE__VALUE:
-                setValue((Float)newValue);
+                setValue((Double)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
