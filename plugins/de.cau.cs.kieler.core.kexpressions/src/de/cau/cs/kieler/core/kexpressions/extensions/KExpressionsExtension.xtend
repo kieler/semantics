@@ -520,7 +520,7 @@ class KExpressionsExtension {
     }
 
     // Create a double value.
-    def DoubleValue createDoubleValue(float value) {
+    def DoubleValue createDoubleValue(double value) {
          val expression = KExpressionsFactory::eINSTANCE.createDoubleValue
          expression.setValue(value)
          expression

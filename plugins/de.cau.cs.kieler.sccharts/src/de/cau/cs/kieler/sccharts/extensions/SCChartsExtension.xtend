@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.TextEffect
 
 /**
  * SCCharts Extensions.
@@ -148,7 +149,6 @@ class SCChartsExtension {
 
     // Return the root state.
     def State getRootState(Region region) {
-
         // There should exactly be one state in the root region
         region.rootRegion.states.get(0)
     }
@@ -156,6 +156,10 @@ class SCChartsExtension {
     // Return the root state.
     def State getRootState(State state) {
         state.parentRegion.rootState;
+    }
+    
+    def State createSCChart() {
+         SCChartsFactory::eINSTANCE.createState
     }
 
 
@@ -625,6 +629,13 @@ class SCChartsExtension {
     }
 
     //========== ASSIGNMENTS ============
+   // Create a during action for a state.
+    def Emission createEmission() {
+        val emission = SCChartsFactory::eINSTANCE.createEmission
+        emission
+    }
+    
+    
     // Create an Assignment.
     def Assignment assign(ValuedObject valuedObject) {
         val assignment = SCChartsFactory::eINSTANCE.createAssignment()
@@ -668,6 +679,14 @@ class SCChartsExtension {
     }
 
     //=========== EMISSIONS =============
+    
+    // Create a TextEffect.
+    def TextEffect createTextEffect(String text) {
+        val extEffect = SCChartsFactory::eINSTANCE.createTextEffect
+        extEffect.setText(text)
+        extEffect
+    }
+    
     // Create an Emission.
     def Emission emit(ValuedObject valuedObject) {
         val emission = SCChartsFactory::eINSTANCE.createEmission()

@@ -365,11 +365,19 @@ class SCGTransformation {
             val transitionCopy = transition.copy
             transitionCopy.setImmediate(false)
             // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
-            val effect = transitionCopy.effects.get(0)
-            val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
-            assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
-            // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
-            assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
+            val effect = transitionCopy.effects.get(0) as de.cau.cs.kieler.sccharts.Effect
+            if (effect instanceof de.cau.cs.kieler.sccharts.Assignment) {
+                // For hostcode e.g. there is no need for a valued object - it is allowed to be null
+                val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
+                if (sCChartAssignment.valuedObject != null) {
+                    assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
+                }
+                // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
+                assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
+            }
+            else if (effect instanceof de.cau.cs.kieler.sccharts.TextEffect) {
+                assignment.setAssignment((effect as de.cau.cs.kieler.sccharts.TextEffect).convertToSCGExpression)
+            }
         }
         else if (state.conditional) {
             val conditional = sCGraph.addConditional
