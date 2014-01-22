@@ -4743,9 +4743,6 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                 else if ( (LA3_1==50) ) {
                     alt3=2;
                 }
-                else if ( (LA3_1==49) ) {
-                    alt3=1;
-                }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
                     NoViableAltException nvae =
@@ -28419,11 +28416,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred76_InternalSCL() {
+    public final boolean synpred68_InternalSCL() {
         state.backtracking++;
         int start = input.mark();
         try {
-            synpred76_InternalSCL_fragment(); // can never throw exception
+            synpred68_InternalSCL_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -28461,11 +28458,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred17_InternalSCL() {
+    public final boolean synpred26_InternalSCL() {
         state.backtracking++;
         int start = input.mark();
         try {
-            synpred17_InternalSCL_fragment(); // can never throw exception
+            synpred26_InternalSCL_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -28545,11 +28542,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred80_InternalSCL() {
+    public final boolean synpred13_InternalSCL() {
         state.backtracking++;
         int start = input.mark();
         try {
-            synpred80_InternalSCL_fragment(); // can never throw exception
+            synpred13_InternalSCL_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }

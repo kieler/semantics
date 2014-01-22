@@ -810,12 +810,10 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIDTerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cSTRINGTerminalRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
-		////DoubleValue returns DoubleValue:
-		// //    value=FLOAT;
-		// // data type rule allowing any kind of value to be accepted,
+		//// data type rule allowing any kind of value to be accepted,
+		// // e.g. as initialValues of valuedObjects
 		//
-		//// e.g. as initialValues of valuedObjects
-		// // used in Kits.xtext 
+		//// used in Kits.xtext 
 		// AnyType returns ecore::EString:
 		//	BOOLEAN | INT | FLOAT | ID | STRING;
 		public ParserRule getRule() { return rule; }
@@ -1580,8 +1578,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// data type rule allowing any kind of value to be accepted,
 	// // e.g. as initialValues of valuedObjects
 	//
-	//// e.g. as initialValues of valuedObjects
-	// // used in Kits.xtext 
+	//// used in Kits.xtext 
 	// AnyType returns ecore::EString:
 	//	BOOLEAN | INT | FLOAT | ID | STRING;
 	public AnyTypeElements getAnyTypeAccess() {
