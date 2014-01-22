@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.TextEffect
 
 /**
  * SCCharts Extensions.
@@ -106,6 +107,11 @@ class SCChartsExtension {
         action.eAllContents().toIterable().filter(typeof(Emission)).toList();
     }
 
+    // Return the list of contained Assignments.
+    def List<Assignment> getAllContainedAssignments(Action action) {
+        action.eAllContents().toIterable().filter(typeof(Assignment)).toList();
+    }
+
     // Return the list of pure signals of a state.
     def List<ValuedObject> getPureSignals(State state) {
         state.valuedObjects.filter[e|e.isSignal && e.type == ValueType::PURE].toList
@@ -143,7 +149,6 @@ class SCChartsExtension {
 
     // Return the root state.
     def State getRootState(Region region) {
-
         // There should exactly be one state in the root region
         region.rootRegion.states.get(0)
     }
@@ -151,6 +156,10 @@ class SCChartsExtension {
     // Return the root state.
     def State getRootState(State state) {
         state.parentRegion.rootState;
+    }
+    
+    def State createSCChart() {
+         SCChartsFactory::eINSTANCE.createState
     }
 
 
@@ -620,6 +629,13 @@ class SCChartsExtension {
     }
 
     //========== ASSIGNMENTS ============
+   // Create a during action for a state.
+    def Emission createEmission() {
+        val emission = SCChartsFactory::eINSTANCE.createEmission
+        emission
+    }
+    
+    
     // Create an Assignment.
     def Assignment assign(ValuedObject valuedObject) {
         val assignment = SCChartsFactory::eINSTANCE.createAssignment()
@@ -663,6 +679,14 @@ class SCChartsExtension {
     }
 
     //=========== EMISSIONS =============
+    
+    // Create a TextEffect.
+    def TextEffect createTextEffect(String text) {
+        val extEffect = SCChartsFactory::eINSTANCE.createTextEffect
+        extEffect.setText(text)
+        extEffect
+    }
+    
     // Create an Emission.
     def Emission emit(ValuedObject valuedObject) {
         val emission = SCChartsFactory::eINSTANCE.createEmission()
@@ -861,6 +885,7 @@ class SCChartsExtension {
         return ""
     }
 
+
     //-------------------------------------------------------------------------
     //--             H O T F I X   F O R   S C C H A R T S                   --
     //-------------------------------------------------------------------------
@@ -888,5 +913,83 @@ class SCChartsExtension {
         return newOperatorExpression;
     }
 
-// -------------------------------------------------------------------------   
+
+    //-------------------------------------------------------------------------
+    //--  F I X   F O R   T E R M I N A T I O N S   / W    E F F E C T S     --
+    //-------------------------------------------------------------------------
+    // This fixes termination transitions that have effects
+    def Region fixTerminationWithEffects(Region rootRegion) {
+        val terminationTransitions = rootRegion.allContainedTransitions.filter[type == TransitionType::TERMINATION].filter[!effects.nullOrEmpty]
+        
+        for (terminationTransition : terminationTransitions) {
+            val originalSource = terminationTransition.sourceState
+            val originalTarget = terminationTransition.targetState
+            val region = originalSource.parentRegion
+            val auxiliaryState = region.createState("_TE").uniqueName
+            val auxliiaryTransition = auxiliaryState.createImmediateTransitionTo(originalTarget)
+            for (effect : terminationTransition.effects.immutableCopy) {
+                auxliiaryTransition.addEffect(effect)
+            }
+            terminationTransition.setTargetState(auxiliaryState)
+        }
+        rootRegion
+    }
+    
+
+    //-------------------------------------------------------------------------
+    //--               L O C A L   V A L U E D O B J E C T S                 --
+    //-------------------------------------------------------------------------
+    
+    def Region transformLocalValuedObject(Region rootRegion) {
+
+        // Clone the complete SCCharts region 
+        val targetRootRegion = rootRegion.copy;
+
+        // Traverse all states
+        for (targetState : targetRootRegion.getAllContainedStates) {
+            targetState.transformExposeLocalValuedObject(targetRootRegion, false);
+        }
+        targetRootRegion;
+    }
+    
+    // Traverse all states and transform possible local valuedObjects.
+    def void transformExposeLocalValuedObject(State state, Region targetRootRegion, boolean expose) {
+
+        // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
+        // and wherever the local valuedObject is emitted, also emit the new global 
+        // valuedObject.
+        // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
+        // Exclude the top level state
+        if (state.parentRegion == targetRootRegion) {
+            return;
+        }
+
+        // There are local valuedObjects, raise them
+        if (state.valuedObjects != null && state.valuedObjects.size > 0) {
+            val hierarchicalStateName = state.getHierarchicalName("LOCAL");
+
+            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
+                val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
+                
+                // Possibly expose
+                if (expose) {
+                    localValuedObject.setOutput
+                }
+
+                // Relocate
+                targetRootRegion.rootState.valuedObjects.add(localValuedObject)
+                
+                // Rename
+                if (expose) {
+                    localValuedObject.setName(newValuedObjectName)
+                } else {
+                    localValuedObject.uniqueName
+                }
+                
+            }
+        } // end if local valuedObjects present
+
+    }
+
+    // -------------------------------------------------------------------------   
 }

@@ -37,19 +37,19 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Schedule extends EObject {
     /**
-     * Returns the value of the '<em><b>Scheduling Blocks</b></em>' reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scgbb.SchedulingBlock}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Scheduling Blocks</b></em>' reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scgbb.SchedulingBlock}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Scheduling Blocks</em>' reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Scheduling Blocks</em>' reference list.
-     * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSchedule_SchedulingBlocks()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Scheduling Blocks</em>' reference list.
+	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getSchedule_SchedulingBlocks()
+	 * @model
+	 * @generated
+	 */
     EList<SchedulingBlock> getSchedulingBlocks();
 
 } // Schedule

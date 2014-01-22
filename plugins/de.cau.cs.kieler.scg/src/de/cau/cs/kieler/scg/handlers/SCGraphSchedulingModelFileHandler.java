@@ -25,7 +25,7 @@ import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scgdep.SCGraphDep;
-import de.cau.cs.kieler.scg.schedulers.AbstractSCGScheduler;
+import de.cau.cs.kieler.scg.schedulers.AbstractScheduler;
 import de.cau.cs.kieler.scg.schedulers.ClusterScheduler;
 import de.cau.cs.kieler.scg.schedulers.SimpleScheduler;
 import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation;
@@ -77,12 +77,12 @@ public class SCGraphSchedulingModelFileHandler extends AbstractConvertModelHandl
        
         transformed = model;
         if (commandString.equals(SCGSCHED_TRANSFORMATION)) {
-            AbstractSCGScheduler scheduler =
+            AbstractScheduler scheduler =
             		Guice.createInjector().getInstance(SimpleScheduler.class);
             transformed = scheduler.schedule((SCGraph) model);
         } 
         if (commandString.equals(SCGSCHED_TRANSFORMATION_CLUSTERSCHEDULER)) {
-            AbstractSCGScheduler scheduler =
+            AbstractScheduler scheduler =
             		Guice.createInjector().getInstance(ClusterScheduler.class);
             transformed = scheduler.schedule((SCGraph) model);
         } 

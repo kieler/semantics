@@ -1,0 +1,36 @@
+«REM»
+@author mlo
+Moved preference page of synccharts editor from root to KIELER
+«ENDREM»
+
+﻿/*
+ * Copyright (c) 2007, 2010 Borland Software Corporation and others
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Dmitry Stadnik (Borland) - initial API and implementation
+ */
+
+«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'»
+
+«EXTENSION xpt::diagram::Utils»
+
+«DEFINE preferencePage FOR gmfgen::GenPreferencePage-»
+      <page
+            id="«iD»"
+            name="%prefpage.«iD»"
+«IF null <> parent-»
+            category="«parent.iD»"
+«REM»Moved preference page of synccharts editor from root to KIELER«ENDREM»
+«ELSE-»		
+            category="de.cau.cs.kieler"
+«REM»End of customization«ENDREM»
+«ENDIF-»
+            class="«getQualifiedClassName()»">
+      </page>
+«ENDDEFINE»
+

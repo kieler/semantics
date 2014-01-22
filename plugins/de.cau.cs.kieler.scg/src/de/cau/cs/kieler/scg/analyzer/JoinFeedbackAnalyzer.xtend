@@ -50,7 +50,7 @@ import java.util.List
  * @kieler.rating 2013-12-07 proposed yellow
  */
  
-class JoinFeedbackAnalyzer extends AbstractSCGAnalyzer {
+class JoinFeedbackAnalyzer extends AbstractAnalyzer {
 
     // -------------------------------------------------------------------------
     // -- Injections 

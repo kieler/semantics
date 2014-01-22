@@ -134,6 +134,8 @@ class SCGTransformation {
         valuedObjectSSChart2SCG.get(valuedObjectSCChart)
     }    
     
+
+    
     //-------------------------------------------------------------------------
     //--             T R A N S F O R M      T O    S C G                     --
     //-------------------------------------------------------------------------
@@ -141,12 +143,16 @@ class SCGTransformation {
 
     // Transforming Local ValuedObjects.
     def SCGraph transformSCG(Region rootRegion) {
+        // Fix termination transitions that have effects
+        var rootRegion2 = rootRegion.fixTerminationWithEffects
+        // Expose local variables
+        rootRegion2 = rootRegion2.transformLocalValuedObject  
         // Clear mappings
         resetMapping
         // Create a new SCGraph
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph
         // Handle declarations
-        for (valuedObject : rootRegion.rootState.valuedObjects) {
+        for (valuedObject : rootRegion2.rootState.valuedObjects) {
             val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
             valuedObjectSCG.applyAttributes(valuedObject)
             valuedObjectSCG.map(valuedObject)
@@ -154,17 +160,17 @@ class SCGTransformation {
         // Include top most level of hierarchy 
         // if the root state itself already contains multiple regions.
         // Otherwise skip the first layer of hierarchy.
-        if (rootRegion.rootState.regions.size>1) {
+        if (rootRegion2.rootState.regions.size>1) {
             // Generate nodes and recursively traverse model
-            rootRegion.transformSCGGenerateNodes(sCGraph)
-            rootRegion.transformSCGConnectNodes(sCGraph)        
+            rootRegion2.transformSCGGenerateNodes(sCGraph)
+            rootRegion2.transformSCGConnectNodes(sCGraph)        
         } else {
             // Generate nodes and recursively traverse model
-            for (region : rootRegion.rootState.regions) {
+            for (region : rootRegion2.rootState.regions) {
                region.transformSCGGenerateNodes(sCGraph)
             }
             // Generate nodes and recursively traverse model
-            for (region : rootRegion.rootState.regions) {
+            for (region : rootRegion2.rootState.regions) {
                 region.transformSCGConnectNodes(sCGraph)
             }
         }
@@ -359,11 +365,19 @@ class SCGTransformation {
             val transitionCopy = transition.copy
             transitionCopy.setImmediate(false)
             // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
-            val effect = transitionCopy.effects.get(0)
-            val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
-            assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
-            // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
-            assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
+            val effect = transitionCopy.effects.get(0) as de.cau.cs.kieler.sccharts.Effect
+            if (effect instanceof de.cau.cs.kieler.sccharts.Assignment) {
+                // For hostcode e.g. there is no need for a valued object - it is allowed to be null
+                val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
+                if (sCChartAssignment.valuedObject != null) {
+                    assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
+                }
+                // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
+                assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
+            }
+            else if (effect instanceof de.cau.cs.kieler.sccharts.TextEffect) {
+                assignment.setAssignment((effect as de.cau.cs.kieler.sccharts.TextEffect).convertToSCGExpression)
+            }
         }
         else if (state.conditional) {
             val conditional = sCGraph.addConditional
@@ -491,21 +505,22 @@ class SCGTransformation {
                 if (otherNodeTermination != null) {
 
                     val controlFlowTermination = otherNodeTermination.createControlFlow
-                	
-                	// Add another assignment if the termination has an effect.
-                	if (!termination.effects.nullOrEmpty) {
-	    		   		val assignment = sCGraph.addAssignment
-						val transitionCopy = termination.copy
-            			transitionCopy.setImmediate(false)
-						val effect = transitionCopy.effects.get(0)
-						val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
-						assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
-				        assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
-				        assignment.setNext(controlFlowTermination)
-				        join.setNext(assignment.createControlFlow)                	
-            		} else {
+  
+// STEVEN'S HOTHOTFIX                	
+//                	// Add another assignment if the termination has an effect.
+//                	if (!termination.effects.nullOrEmpty) {
+//	    		   		val assignment = sCGraph.addAssignment
+//						val transitionCopy = termination.copy
+//            			transitionCopy.setImmediate(false)
+//						val effect = transitionCopy.effects.get(0)
+//						val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
+//						assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
+//				        assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
+//				        assignment.setNext(controlFlowTermination)
+//				        join.setNext(assignment.createControlFlow)                	
+//            		} else {
 	                    join.setNext(controlFlowTermination)
-                    }
+//                    }
                     
                 }   
             } else {

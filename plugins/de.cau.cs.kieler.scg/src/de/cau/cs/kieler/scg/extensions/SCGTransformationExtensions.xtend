@@ -24,7 +24,7 @@ import de.cau.cs.kieler.scgsched.SCGraphSched
 import de.cau.cs.kieler.scg.transformations.SCGToSCGDEPTransformation
 import com.google.inject.Guice
 import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation
-import de.cau.cs.kieler.scg.schedulers.AbstractSCGScheduler
+import de.cau.cs.kieler.scg.schedulers.AbstractScheduler
 
 /** 
  * The SCG Transformation Extensions provide are collection of methods to 
@@ -157,7 +157,7 @@ class SCGTransformationExtensions {
 	 * 			the scheduler that should be invoked
 	 * @return Returns an upgraded SCG model with or without applied transformation.
 	 */
-    def SCGraph upgrade(SCGraphBB scg, boolean doTransformation, AbstractSCGScheduler scheduler) {
+    def SCGraph upgrade(SCGraphBB scg, boolean doTransformation, AbstractScheduler scheduler) {
     	if (doTransformation) {
 			return scheduler.schedule(scg)			    		
     	} else {

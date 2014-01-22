@@ -1,0 +1,210 @@
+modeltype GMFGEN uses gmfgen('http://www.eclipse.org/gmf/2009/GenModel');
+
+transformation SyncChartsCustomization(inout gmfgen:GMFGEN);
+
+main() {
+	var model := gmfgen.rootObjects()![GenEditorGenerator];
+	
+	// we want to use custom codegen templates which are required for
+	// certain special features such as attribute aware figures 
+	model.dynamicTemplates :=true;
+	model.templateDirectory := "de.cau.cs.kieler.synccharts/gmf-templates";
+	model.sameFileForDiagramAndModel := false;
+	
+	model.domainFileExtension := "kixs"; // kieler textual syntax for SyncCharts, in this case XMI
+	model.diagramFileExtension := "kids"; // kieler diagram syntax for SyncCharts
+	
+	// some general plugin settings	
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.ui";
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.model";
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.model.gmf";
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.synccharts.custom";
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.synccharts.text.bridge";
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.annotations";
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.annotations.edit";
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.kexpressions";
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.kexpressions.edit";
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.karma";
+	model.plugin.version := "0.5.0.qualifier";
+	model.plugin.provider := "Christian-Albrechts-Universität zu Kiel";
+	model.plugin.name := "SyncCharts Diagram Editor";
+	model.plugin.printingEnabled := true;
+	
+	// enable model validation
+	model.diagram.liveValidationUIFeedback := true;
+	model.diagram.validationDecorators := true;
+	model.diagram.validationEnabled := true;
+	
+	// use our own category for the "new" wizard
+	model.diagram.creationWizardCategoryID := "de.cau.cs.kieler";
+
+    // change all PolylineShapes back to Polylines
+    model.diagram.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] ->map changePolylineShapeToPolyline();
+
+	// special settings for all nodes, e.g. edit part names
+	model.diagram.allSubobjectsOfType(GenChildNode)[GenChildNode] ->map childNodeNames();
+    	
+	// special settings for all compartments
+	model.diagram.allSubobjectsOfType(GenCompartment)[GenCompartment] ->map compartmentSettings();
+	
+	// set some default preferences
+	model.diagram.preferences := object GenDiagramPreferences{
+		showPopupBars := true;
+		rulerUnits := RulerUnits::CENTIMETERS;
+		gridSpacing := 0.5;
+		snapToGrid := false;
+	};
+
+	// set some default colors
+	model.diagram.preferences.lineColor := object GenConstantColor{name := DiagramColors::black;}; 
+	model.diagram.preferences.fillColor := object GenConstantColor{name := DiagramColors::white;};
+	model.diagram.preferences.fontColor := object GenConstantColor{name := DiagramColors::black;};
+	model.diagram.preferences.noteFillColor := object GenConstantColor{name := DiagramColors::yellow;};
+	model.diagram.preferences.noteLineColor := object GenConstantColor{name := DiagramColors::orange;};
+	
+	// customize state edit parts so it shows textwrap for the body text
+	//model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureBodyTextFigure","StateFigure");
+	//model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureBodyTextFigure","StateFigure");
+		   
+    // customize state edit parts so it shows textwrap for the interface declaration
+    model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureInterfaceDeclFigure","StateFigure");
+    model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureInterfaceDeclFigure","StateFigure");
+    
+    // customize state edit parts so it shows textwrap for the textual code elements
+    model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureCodeLabelFigure","TextualCodeFigure");
+    model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureCodeLabelFigure","TextualCodeFigure");
+    
+    // customize state edit parts so it shows textwrap for the transition labels
+    model.diagram.links.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureTransitionTriggersAndEffectsFigure","TransitionFigure");
+}
+
+mapping inout GenCompartment::compartmentNames(inout signalIndex : Integer, inout entryIndex : Integer, inout innerIndex : Integer, inout exitIndex : Integer, inout suspendIndex : Integer){
+	var childName : String := "";
+	self.childNodes.allSubobjectsOfType(GenChildNode)[GenChildNode] ->forEach(child){			
+		if (child.editPartClassName.startsWith("Signal") or child.editPartClassName.startsWith("State")) then {
+		   childName := child.editPartClassName;
+		} endif;
+	};
+	switch {
+		case (childName.startsWith("Signal")) self ->map fixCompartmentName("Signal", signalIndex);
+		case (childName.startsWith("StateEntryAction")) self ->map fixCompartmentName("StateEntryAction", entryIndex);
+        case (childName.startsWith("StateInnerAction")) self ->map fixCompartmentName("StateInnerAction", innerIndex);
+        case (childName.startsWith("StateExitAction")) self ->map fixCompartmentName("StateExitAction", exitIndex);
+        case (childName.startsWith("StateSuspensionTrigger")) self ->map fixCompartmentName("StateSuspensionTrigger", suspendIndex);
+	}
+}
+
+// With helios a change in gmf was introduced changing polylines into polylineShapes
+// However this caused the separators in states to no longer be shown due to some obscure bug
+// Changing back to polyline for now.
+mapping inout InnerClassViewmap::changePolylineShapeToPolyline(){
+    var temp : String := self.classBody;
+    temp := temp.replace("org.eclipse.draw2d.PolylineShape", "de.cau.cs.kieler.core.model.figures.TranslatablePolyline");
+    self.classBody := temp;
+}
+
+mapping inout GenCompartment::fixCompartmentName(in prefix:String, inout index:Integer){
+	var indexString : String := "";
+	if (index > 1) then {
+		indexString := index.toString();
+	} endif;
+	self.editPartClassName := prefix + indexString + "CompartmentEditPart";
+	self.canonicalEditPolicyClassName := prefix + indexString + "CompartmentCanonicalEditPolicy";
+	self.itemSemanticEditPolicyClassName := prefix + indexString + "CompartmentItemSemanticEditPolicy";
+}
+
+mapping inout GenChildNode::childNodeNames(){
+	if (self.modelFacet <> null) then {	
+     if (self.modelFacet.childMetaFeature <> null) then {
+      switch { 
+        case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("signals")) self ->map fixChildNodeName("StateSignal");
+        case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("entryActions")) self ->map fixChildNodeName("StateEntryAction");
+        case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("innerActions")) self ->map fixChildNodeName("StateInnerAction");
+        case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("exitActions")) self ->map fixChildNodeName("StateExitAction");
+        case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("suspensionTrigger")) self ->map fixChildNodeName("StateSuspensionTrigger");
+        case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("regions")) self ->map fixChildNodeName("StateRegion");
+        case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("states")) self ->map fixChildNodeName("RegionState");
+     }
+     } endif;
+    } endif;
+}
+
+mapping inout GenChildNode::fixChildNodeName(in prefix:String){
+    if (not prefix.match("StateSignal")) then {
+	    self.canonicalEditPolicyClassName := prefix + "CanonicalEditPolicy";
+        self.createCommandClassName := prefix + "CreateCommand";
+        self.editPartClassName := prefix + "EditPart";
+        self.graphicalNodeEditPolicyClassName := prefix + "GraphicalNodeEditPolicy";
+        self.itemSemanticEditPolicyClassName := prefix + "ItemSemanticEditPolicy";
+
+		var index : Integer := 1;
+        self.labels ->forEach(label){
+			if(index = 1) then{
+	            label.editPartClassName := prefix + "LabelEditPart";
+			} else{
+				label.editPartClassName := prefix + index.toString() + "LabelEditPart";
+			} endif;       	
+            label.itemSemanticEditPolicyClassName := prefix + "LabelItemSemanticEditPolicy";
+            index := index.+(1);
+        };   
+    } endif;
+    var index : Integer := 1;
+    self.containers ->forEach(child){
+    	var indexString : String := "";
+        if (index > 1) then {
+           indexString := index.toString();
+        } endif;
+    	child.editPartClassName := prefix + "Compartment" + indexString + "EditPart";
+        child.canonicalEditPolicyClassName := prefix + "Compartment" + indexString + "CanonicalEditPolicy";
+        child.itemSemanticEditPolicyClassName := prefix + "Compartment" + indexString + "ItemSemanticEditPolicy";
+        index := index.+(1);
+    };
+}
+
+mapping inout GenCompartment::compartmentSettings(){
+	// we want to be able to collapse all compartments
+	self.canCollapse := true;
+	// do not show compartments when they are empty
+	self.hideIfEmpty := true;
+	// don't use list layout (which determines not only a simple layouter but
+	// makes the compartment subclass a very different class that does not support
+	// any layout. Hence here we use a standard non-list compartment with
+	// a simple row or flow layout
+	self.listLayout := false;
+	// customize the title of the compartment according to its type	
+	self.needsTitle := false;
+    
+    var name : String := self.editPartClassName.replace("EditPart","")
+                                            .replace("Compartment2","")
+                                            .replace("Compartment","");
+    
+	self.title := switch {
+		case (name = "StateSignal")  "Interface:";
+//		case (name = "StateVariable")  "Variable:";
+		case (name = "StateEntryAction")  "OnEntryAction:";
+    	case (name = "StateInnerAction")  "OnInsideAction:";
+		case (name = "StateExitAction")  "OnExitAction:";
+		case (name = "StateSuspensionTrigger")  "Suspend:";
+		case (name = "StateRegion")  "RegionCompartment";
+		case (name = "RegionState")  "StateCompartment";
+		else "";
+	};
+}
+
+// the GMFGen Model contains a class body attribute for each edit part which comprises
+// the whole Figure that corresponds to the edit Part
+// any customizations to that Figure have to be done in this big String in the GMFGen Model.
+// The following function searches for a special Child Figure declaration and adds the textwrap
+// option to it
+mapping inout InnerClassViewmap::customizeTextWrap(in figureName:String, in parentFigureName:String){	
+	// customize the Interface Declaration Label from a State
+    if (self.className = parentFigureName) then {
+        var find := ("f").+(figureName).+(".setText(\"\");");
+        var pre := self.classBody.substringBefore(find);
+        // setting TextWrap to true enables multi line display and editing
+        var inject := find.+("f").+(figureName).+(".setTextWrap(true);\n");
+        var after := self.classBody.substringAfter(find);
+        self.classBody := pre.+(inject).+(after);
+    } endif;
+}
+

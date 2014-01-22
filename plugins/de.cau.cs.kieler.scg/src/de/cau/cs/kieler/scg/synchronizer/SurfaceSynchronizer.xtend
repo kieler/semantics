@@ -53,7 +53,7 @@ import de.cau.cs.kieler.scgsched.ScgschedFactory
  * @extends AbstractSCGSynchronizer
  */
 
-class SurfaceSynchronizer extends AbstractSCGSynchronizer {
+class SurfaceSynchronizer extends AbstractSynchronizer {
  
     // -------------------------------------------------------------------------
     // -- Injections 
