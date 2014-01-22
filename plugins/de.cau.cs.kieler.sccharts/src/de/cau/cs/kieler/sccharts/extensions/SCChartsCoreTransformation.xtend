@@ -1495,7 +1495,7 @@ class SCChartsCoreTransformation {
              for (region : state.regions.filter(e | e != mainRegion).toList.immutableCopy) {
                   mainState.regions.add(region)
              }
-             val termTransition = mainState.createTransitionTo(mainRegion.createState(GENERATED_PREFIX + "Term"))
+             val termTransition = mainState.createTransitionTo(mainRegion.createState(GENERATED_PREFIX + "Term").setFinal)
              termTransition.setTypeTermination
              termTransition.addEffect(term.assign(TRUE))
 
