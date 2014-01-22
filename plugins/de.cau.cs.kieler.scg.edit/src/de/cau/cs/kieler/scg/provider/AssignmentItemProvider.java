@@ -226,11 +226,6 @@ public class AssignmentItemProvider
             (createChildParameter
                 (ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT,
-                 KExpressionsFactory.eINSTANCE.createDoubleValue()));
     }
 
 }
