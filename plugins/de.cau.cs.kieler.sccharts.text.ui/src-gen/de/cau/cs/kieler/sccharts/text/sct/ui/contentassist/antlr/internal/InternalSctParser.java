@@ -41985,11 +41985,11 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred90_InternalSct() {
+    public final boolean synpred109_InternalSct() {
         state.backtracking++;
         int start = input.mark();
         try {
-            synpred90_InternalSct_fragment(); // can never throw exception
+            synpred109_InternalSct_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -42654,21 +42654,6 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         if ( s>=0 ) return s;
                         break;
                     case 10 : 
-                        int LA12_12 = input.LA(1);
-
-                         
-                        int index12_12 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred14_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 14;}
-
-                         
-                        input.seek(index12_12);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 11 : 
                         int LA12_3 = input.LA(1);
 
                          
@@ -42681,6 +42666,21 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
                          
                         input.seek(index12_3);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 11 : 
+                        int LA12_4 = input.LA(1);
+
+                         
+                        int index12_4 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred14_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 14;}
+
+                         
+                        input.seek(index12_4);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -44130,10 +44130,10 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA77_6 = input.LA(1);
+                        int LA77_5 = input.LA(1);
 
                          
-                        int index77_6 = input.index();
+                        int index77_5 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred108_InternalSct()) ) {s = 1;}
@@ -44141,7 +44141,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 9;}
 
                          
-                        input.seek(index77_6);
+                        input.seek(index77_5);
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
@@ -44175,10 +44175,10 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
-                        int LA77_7 = input.LA(1);
+                        int LA77_4 = input.LA(1);
 
                          
-                        int index77_7 = input.index();
+                        int index77_4 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred108_InternalSct()) ) {s = 1;}
@@ -44186,7 +44186,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 9;}
 
                          
-                        input.seek(index77_7);
+                        input.seek(index77_4);
                         if ( s>=0 ) return s;
                         break;
                     case 4 : 
