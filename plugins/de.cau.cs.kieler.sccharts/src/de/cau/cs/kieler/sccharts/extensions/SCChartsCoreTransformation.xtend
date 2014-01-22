@@ -1491,7 +1491,7 @@ class SCChartsCoreTransformation {
              term.setInitialValue(FALSE)
               
              val mainRegion = state.createRegion(GENERATED_PREFIX + "Main").uniqueName
-             val mainState = mainRegion.createState(GENERATED_PREFIX + "Main")
+             val mainState = mainRegion.createState(GENERATED_PREFIX + "Main").setInitial
              for (region : state.regions.filter(e | e != mainRegion).toList.immutableCopy) {
                   mainState.regions.add(region)
              }
