@@ -67,10 +67,10 @@ public class ValuedObjectItemProvider
 
             addNamePropertyDescriptor(object);
             addTypePropertyDescriptor(object);
-            addIsInputPropertyDescriptor(object);
-            addIsOutputPropertyDescriptor(object);
-            addIsStaticPropertyDescriptor(object);
-            addIsSignalPropertyDescriptor(object);
+            addInputPropertyDescriptor(object);
+            addOutputPropertyDescriptor(object);
+            addStaticPropertyDescriptor(object);
+            addSignalPropertyDescriptor(object);
             addCombineOperatorPropertyDescriptor(object);
             addInitialValuePropertyDescriptor(object);
         }
@@ -122,6 +122,94 @@ public class ValuedObjectItemProvider
     }
 
     /**
+     * This adds a property descriptor for the Input feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addInputPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ValuedObject_input_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_input_feature", "_UI_ValuedObject_type"),
+                 KExpressionsPackage.Literals.VALUED_OBJECT__INPUT,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Output feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addOutputPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ValuedObject_output_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_output_feature", "_UI_ValuedObject_type"),
+                 KExpressionsPackage.Literals.VALUED_OBJECT__OUTPUT,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Static feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addStaticPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ValuedObject_static_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_static_feature", "_UI_ValuedObject_type"),
+                 KExpressionsPackage.Literals.VALUED_OBJECT__STATIC,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Signal feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addSignalPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ValuedObject_signal_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_signal_feature", "_UI_ValuedObject_type"),
+                 KExpressionsPackage.Literals.VALUED_OBJECT__SIGNAL,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
      * This adds a property descriptor for the Initial Value feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -139,94 +227,6 @@ public class ValuedObjectItemProvider
                  false,
                  false,
                  null,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Is Input feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addIsInputPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_isInput_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_isInput_feature", "_UI_ValuedObject_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT__INPUT,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Is Output feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addIsOutputPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_isOutput_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_isOutput_feature", "_UI_ValuedObject_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT__OUTPUT,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Is Static feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addIsStaticPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_isStatic_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_isStatic_feature", "_UI_ValuedObject_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT__STATIC,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Is Signal feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addIsSignalPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_isSignal_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_isSignal_feature", "_UI_ValuedObject_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT__SIGNAL,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
                  null,
                  null));
     }

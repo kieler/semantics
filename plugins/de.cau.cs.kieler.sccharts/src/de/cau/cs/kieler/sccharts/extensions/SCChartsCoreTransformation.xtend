@@ -317,12 +317,11 @@ class SCChartsCoreTransformation {
     //--     O P T I M I Z E : Immediate Transitions with no Trigger/Effect  --
     //-------------------------------------------------------------------------
     def Region optimize1(Region rootRegion) {
-        var targetRootRegion = rootRegion.copy;
-        var targetStates = targetRootRegion.allContainedStates
+        var targetStates = rootRegion.allContainedStates
         for (targetState : targetStates) {
-            targetState.optimize1(targetRootRegion);
+            targetState.optimize1(rootRegion);
         }
-        targetRootRegion;
+        rootRegion;
     }
 
     def void optimize1(State state, Region targetRootRegion) {
