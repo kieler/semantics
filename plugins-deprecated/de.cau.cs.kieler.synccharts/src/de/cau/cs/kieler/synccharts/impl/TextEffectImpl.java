@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.synccharts.impl;
 
-import de.cau.cs.kieler.core.kexpressions.impl.TextualCodeImpl;
+import de.cau.cs.kieler.esterel.kexpressions.impl.TextualCodeImpl;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.TextEffect;
