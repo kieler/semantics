@@ -1,0 +1,56 @@
+﻿/*
+ * Copyright (c) 2006, 2009 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Dmitry Stadnik (Borland) - initial API and implementation
+ *    Alexander Shatalin (Borland) - initial API and implementation
+ */
+
+«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'»
+«EXTENSION xpt::diagram::editparts::Utils»
+
+«DEFINE createFigure FOR gmfgen::GenCompartment-»
+	«IF not needsTitle-»
+		«REM»By default titles are shown even if there are no TitleStyle, we need to switch it off«ENDREM»«-»
+		«EXPAND xpt::Common::generatedMemberComment»
+		public org.eclipse.draw2d.IFigure createFigure() {
+			org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure result = (org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure) super.createFigure();
+			result.setTitleVisibility(false);
+			
+			«REM» Additions start here «ENDREM»
+			«REM» Make compartment borders invisible «ENDREM»
+			Object border = result.getBorder();
+			if (border instanceof org.eclipse.draw2d.LineBorder) {
+				org.eclipse.draw2d.LineBorder lineBorder = ((org.eclipse.draw2d.LineBorder) border);
+				lineBorder.setWidth(2);
+				lineBorder.setColor(org.eclipse.draw2d.ColorConstants.black); 
+			} 
+			result.setBorder(null);
+			«REM» Give all but state compartments a custom layout «ENDREM» 
+			«IF title != "StateCompartment"-»
+				«IF title != "RegionCompartment"-»
+				result.getContentPane().setLayoutManager(new de.cau.cs.kieler.synccharts.custom.ListCompartmentLayout());
+				«REM» Add the compartment's title as a new figure within the compartment «ENDREM»
+				«REM» «IF title != "RegionCompartment"-» «ENDREM»
+					org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel title = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();
+					title.setText(result.getCompartmentTitle() + " ");
+					title.setForegroundColor(org.eclipse.draw2d.ColorConstants.black);
+					result.getContentPane().add(title, 0);
+				«ENDIF-»
+				«REM» Set a StretchingXYLayout for the Region compartment such that all regions get extended to the full bounding box«ENDREM»
+				«REM»
+				«IF title = "RegionCompartment"-»
+					result.getContentPane().setLayoutManager(new de.cau.cs.kieler.synccharts.custom.StretchingXYLayout());
+				«ENDIF-»
+				«ENDREM»
+			«ENDIF-»
+			«REM» Additions end here «ENDREM»
+			return result;
+		}
+	«ENDIF-»
+«ENDDEFINE»

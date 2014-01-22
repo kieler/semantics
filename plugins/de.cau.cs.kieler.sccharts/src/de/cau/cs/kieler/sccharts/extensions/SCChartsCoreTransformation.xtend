@@ -39,6 +39,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.EntryAction
 import java.util.ArrayList
 import de.cau.cs.kieler.sccharts.SuspendAction
+import de.cau.cs.kieler.sccharts.Assignment
 
 /**
  * SCCharts CoreTransformation Extensions.
@@ -55,15 +56,16 @@ class SCChartsCoreTransformation {
     @Inject
     extension SCChartsExtension
     
-    // This prefix is used for namings of all generated signals, states and regions
+    // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
     
 
     //-------------------------------------------------------------------------
     //--             E X P O S E   L O C A L   S I G N A L S                 --
     //-------------------------------------------------------------------------
-    // @requires: none
-    // Transforming Local ValuedObjects.
+    // Transforming Local ValuedObjects and optionally exposing them as
+    // output signals.
+    
     def Region transformExposeLocalValuedObject(Region rootRegion) {
 
         // Clone the complete SCCharts region 
@@ -71,57 +73,11 @@ class SCChartsCoreTransformation {
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformExposeLocalValuedObject(targetRootRegion);
+            targetState.transformExposeLocalValuedObject(targetRootRegion, true);
         }
         targetRootRegion;
     }
-
-    // Traverse all states and transform possible local valuedObjects.
-    def void transformExposeLocalValuedObject(State state, Region targetRootRegion) {
-
-        // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
-        // and wherever the local valuedObject is emitted, also emit the new global 
-        // valuedObject.
-        // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
-        // Exclude the top level state
-        if (state.parentRegion == targetRootRegion) {
-            return;
-        }
-
-        // There are local valuedObjects, raise them
-        if (state.valuedObjects != null && state.valuedObjects.size > 0) {
-            val hierarchicalStateName = state.getHierarchicalName("LOCAL");
-
-            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
-                val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
-                val globalValuedObject = targetRootRegion.rootState.createValuedObject(newValuedObjectName).setOutput
-                globalValuedObject.applyAttributes(localValuedObject)
-
-                // For every Emission of the local ValuedObject add an Emission of the new
-                // global ValuedObject
-                val allActions = state.eAllContents().toIterable().filter(typeof(Action)).toList();
-                val localValuedObjectActions = allActions.filter(
-                    e|
-                        (e.allContainedEmissions.filter(ee|ee.valuedObject == localValuedObject)
-                       ).
-                            size > 0);
-
-                for (localValuedObjectAction : ImmutableList::copyOf(localValuedObjectActions)) {
-                    val lastMatchingEmission = localValuedObjectAction.allContainedEmissions.filter(
-                        ee|ee == localValuedObject).last as Emission;
-                    if (lastMatchingEmission != null) {
-                        val newValue = lastMatchingEmission.newValue
-                        val emission = localValuedObjectAction.addEmission(globalValuedObject.emit);
-                        if (newValue != null) {
-                            emission.setNewValue(newValue.copy)
-                        }
-                    }
-                }
-
-            }
-        } // end if local valuedObjects present
-
-    }
+    
 
     //-------------------------------------------------------------------------
     //--              N O R M A L   T E R M I N A T I O N                    --
@@ -2276,6 +2232,74 @@ class SCChartsCoreTransformation {
 //
 //        } // end if considered
 //    }
+
+
+
+//    //-------------------------------------------------------------------------
+//    //--             E X P O S E   L O C A L   S I G N A L S                 --
+//    //-------------------------------------------------------------------------
+//    // @requires: none
+//    // Transforming Local ValuedObjects.
+//    def Region transformExposeLocalValuedObject(Region rootRegion) {
+//
+//        // Clone the complete SCCharts region 
+//        val targetRootRegion = rootRegion.copy;
+//
+//        // Traverse all states
+//        for (targetState : targetRootRegion.getAllContainedStates) {
+//            targetState.transformExposeLocalValuedObject(targetRootRegion);
+//        }
+//        targetRootRegion;
+//    }
+//
+//    // Traverse all states and transform possible local valuedObjects.
+//    def void transformExposeLocalValuedObject(State state, Region targetRootRegion) {
+//
+//        // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
+//        // and wherever the local valuedObject is emitted, also emit the new global 
+//        // valuedObject.
+//        // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
+//        // Exclude the top level state
+//        if (state.parentRegion == targetRootRegion) {
+//            return;
+//        }
+//
+//        // There are local valuedObjects, raise them
+//        if (state.valuedObjects != null && state.valuedObjects.size > 0) {
+//            val hierarchicalStateName = state.getHierarchicalName("LOCAL");
+//
+//            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
+//                val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
+//                val globalValuedObject = targetRootRegion.rootState.createValuedObject(newValuedObjectName).setOutput
+//                globalValuedObject.applyAttributes(localValuedObject)
+//
+//                // For every Emission/Assignment of the local ValuedObject add an Emission of the new
+//                // global ValuedObject
+//                val allActions = state.eAllContents().toIterable().filter(typeof(Action)).toList();
+//                val localValuedObjectActions = allActions.filter(
+//                    e|
+//                        (e.allContainedEmissions.filter(ee|ee.valuedObject == localValuedObject)
+//                       ).
+//                            size > 0);
+//
+//                for (localValuedObjectAction : ImmutableList::copyOf(localValuedObjectActions)) {
+//                    val lastMatchingEmission = localValuedObjectAction.allContainedEmissions.filter(
+//                        ee|ee == localValuedObject).last as Emission;
+//                    if (lastMatchingEmission != null) {
+//                        val newValue = lastMatchingEmission.newValue
+//                        val emission = localValuedObjectAction.addEmission(globalValuedObject.emit);
+//                        if (newValue != null) {
+//                            emission.setNewValue(newValue.copy)
+//                        }
+//                    }
+//                }
+//
+//            }
+//        } // end if local valuedObjects present
+//
+//    }
+
+
 
 //    //-------------------------------------------------------------------------
 //    //--                   C O U N T   D E L A Y S                           --

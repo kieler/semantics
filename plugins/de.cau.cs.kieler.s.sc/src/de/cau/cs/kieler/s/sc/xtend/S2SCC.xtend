@@ -453,7 +453,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
 
       // Call input functions for each JSON s signal that is present.
    def callInputVariable(ValuedObject variable) {
-       if (!variable.isSignal && !variable.output) {
+       if (!variable.isSignal && variable.input) {
           return '''
           child = cJSON_GetObjectItem(object, "«variable.name»");
           {
