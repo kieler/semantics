@@ -35,19 +35,19 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface SCGraphBB extends SCGraphDep {
     /**
-	 * Returns the value of the '<em><b>Basic Blocks</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.scgbb.BasicBlock}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Basic Blocks</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.scgbb.BasicBlock}.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Basic Blocks</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Basic Blocks</em>' containment reference list.
-	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getSCGraphBB_BasicBlocks()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Basic Blocks</em>' containment reference list.
+     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getSCGraphBB_BasicBlocks()
+     * @model containment="true"
+     * @generated
+     */
     EList<BasicBlock> getBasicBlocks();
 
 } // SCGraphBB

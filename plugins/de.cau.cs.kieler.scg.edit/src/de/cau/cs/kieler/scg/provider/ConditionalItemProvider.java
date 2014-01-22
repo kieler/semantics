@@ -209,11 +209,6 @@ public class ConditionalItemProvider
             (createChildParameter
                 (ScgPackage.Literals.CONDITIONAL__CONDITION,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ScgPackage.Literals.CONDITIONAL__CONDITION,
-                 KExpressionsFactory.eINSTANCE.createDoubleValue()));
     }
 
     /**

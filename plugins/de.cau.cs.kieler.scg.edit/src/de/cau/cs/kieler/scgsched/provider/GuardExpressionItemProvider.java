@@ -230,11 +230,6 @@ public class GuardExpressionItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (ScgschedPackage.Literals.GUARD_EXPRESSION__EXPRESSION,
-                 KExpressionsFactory.eINSTANCE.createDoubleValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
                 (ScgschedPackage.Literals.GUARD_EXPRESSION__EMPTY_EXPRESSIONS,
                  ScgschedFactory.eINSTANCE.createEmptyExpression()));
     }
