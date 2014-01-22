@@ -40,132 +40,132 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface BasicBlock extends EObject {
     /**
-	 * Returns the value of the '<em><b>Scheduling Blocks</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.scgbb.SchedulingBlock}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Scheduling Blocks</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.scgbb.SchedulingBlock}.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Scheduling Blocks</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Scheduling Blocks</em>' containment reference list.
-	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_SchedulingBlocks()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Scheduling Blocks</em>' containment reference list.
+     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_SchedulingBlocks()
+     * @model containment="true"
+     * @generated
+     */
     EList<SchedulingBlock> getSchedulingBlocks();
 
     /**
-	 * Returns the value of the '<em><b>Guards</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Guards</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Guards</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Guards</em>' containment reference list.
-	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_Guards()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Guards</em>' containment reference list.
+     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_Guards()
+     * @model containment="true" required="true"
+     * @generated
+     */
 	EList<ValuedObject> getGuards();
 
 				/**
-	 * Returns the value of the '<em><b>Predecessors</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.scgbb.Predecessor}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Predecessors</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.scgbb.Predecessor}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Predecessors</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Predecessors</em>' containment reference list.
-	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_Predecessors()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Predecessors</em>' containment reference list.
+     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_Predecessors()
+     * @model containment="true"
+     * @generated
+     */
 	EList<Predecessor> getPredecessors();
 
 				/**
-	 * Returns the value of the '<em><b>Block Type</b></em>' attribute.
-	 * The literals are from the enumeration {@link de.cau.cs.kieler.scgbb.BlockType}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Block Type</b></em>' attribute.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.scgbb.BlockType}.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Block Type</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Block Type</em>' attribute.
-	 * @see de.cau.cs.kieler.scgbb.BlockType
-	 * @see #setBlockType(BlockType)
-	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_BlockType()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Block Type</em>' attribute.
+     * @see de.cau.cs.kieler.scgbb.BlockType
+     * @see #setBlockType(BlockType)
+     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_BlockType()
+     * @model
+     * @generated
+     */
 	BlockType getBlockType();
 
 				/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#getBlockType <em>Block Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#getBlockType <em>Block Type</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Block Type</em>' attribute.
-	 * @see de.cau.cs.kieler.scgbb.BlockType
-	 * @see #getBlockType()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Block Type</em>' attribute.
+     * @see de.cau.cs.kieler.scgbb.BlockType
+     * @see #getBlockType()
+     * @generated
+     */
 	void setBlockType(BlockType value);
 
 				/**
-	 * Returns the value of the '<em><b>Pre Guard</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Pre Guard</b></em>' reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Pre Guard</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Pre Guard</em>' reference.
-	 * @see #setPreGuard(ValuedObject)
-	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_PreGuard()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Pre Guard</em>' reference.
+     * @see #setPreGuard(ValuedObject)
+     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_PreGuard()
+     * @model
+     * @generated
+     */
 	ValuedObject getPreGuard();
 
 				/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#getPreGuard <em>Pre Guard</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#getPreGuard <em>Pre Guard</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Pre Guard</em>' reference.
-	 * @see #getPreGuard()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Pre Guard</em>' reference.
+     * @see #getPreGuard()
+     * @generated
+     */
 	void setPreGuard(ValuedObject value);
 
 				/**
-	 * Returns the value of the '<em><b>Go Block</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Go Block</b></em>' attribute.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Go Block</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Go Block</em>' attribute.
-	 * @see #setGoBlock(boolean)
-	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_GoBlock()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Go Block</em>' attribute.
+     * @see #setGoBlock(boolean)
+     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_GoBlock()
+     * @model
+     * @generated
+     */
 	boolean isGoBlock();
 
 				/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#isGoBlock <em>Go Block</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#isGoBlock <em>Go Block</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Go Block</em>' attribute.
-	 * @see #isGoBlock()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Go Block</em>' attribute.
+     * @see #isGoBlock()
+     * @generated
+     */
 	void setGoBlock(boolean value);
 
 } // BasicBlock

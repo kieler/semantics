@@ -70,8 +70,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.BOOL_VALUE: return createBoolValue();
             case KExpressionsPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
             case KExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
-            case KExpressionsPackage.DOUBLE_VALUE: return createDoubleValue();
-            case KExpressionsPackage.TYPE_GROUP: return createTypeGroup();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -203,26 +201,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public TextExpression createTextExpression() {
         TextExpressionImpl textExpression = new TextExpressionImpl();
         return textExpression;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public DoubleValue createDoubleValue() {
-        DoubleValueImpl doubleValue = new DoubleValueImpl();
-        return doubleValue;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public TypeGroup createTypeGroup() {
-        TypeGroupImpl typeGroup = new TypeGroupImpl();
-        return typeGroup;
     }
 
     /**
