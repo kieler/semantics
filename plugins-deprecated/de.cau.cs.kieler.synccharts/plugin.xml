@@ -13,8 +13,8 @@
          point="org.eclipse.ui.commands">
       <command
             categoryId="de.cau.cs.kieler.sccharts.commands.category"
-            id="de.cau.cs.kieler.sccharts.commands.SCChartsTransformation"
-            name="SCChartsTransformation">
+            id="de.cau.cs.kieler.sccharts.commands.SyncChartsTransformation"
+            name="SyncChartsTransformation">
       </command>
    </extension>
 
@@ -22,7 +22,7 @@
          point="org.eclipse.ui.handlers">
       <handler
             class="de.cau.cs.kieler.synccharts.sccharts.SyncChartsModelFileHandler"
-            commandId="de.cau.cs.kieler.sccharts.commands.SCChartsTransformation">
+            commandId="de.cau.cs.kieler.sccharts.commands.SyncChartsTransformation">
       </handler>
    </extension>
 
@@ -32,8 +32,8 @@
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
-               commandId="de.cau.cs.kieler.sccharts.commands.SCChartsTransformation"
-               label="Transform to SCCharts"
+               commandId="de.cau.cs.kieler.sccharts.commands.SyncChartsTransformation"
+               label="Convert to SCCharts (sct)"
                mnemonic="S"
                style="push">
             <visibleWhen>
