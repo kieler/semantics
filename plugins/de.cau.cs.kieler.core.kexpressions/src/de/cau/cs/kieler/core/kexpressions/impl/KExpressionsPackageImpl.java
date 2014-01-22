@@ -108,6 +108,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass typeGroupEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EEnum combineOperatorEEnum = null;
 
     /**
@@ -418,6 +425,42 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getTypeGroup() {
+        return typeGroupEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getTypeGroup_ValuedObjects() {
+        return (EReference)typeGroupEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getTypeGroup_ArrayCardinalities() {
+        return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getTypeGroup_Type() {
+        return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EEnum getCombineOperator() {
         return combineOperatorEEnum;
     }
@@ -502,6 +545,11 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         textExpressionEClass = createEClass(TEXT_EXPRESSION);
         createEAttribute(textExpressionEClass, TEXT_EXPRESSION__TEXT);
 
+        typeGroupEClass = createEClass(TYPE_GROUP);
+        createEReference(typeGroupEClass, TYPE_GROUP__VALUED_OBJECTS);
+        createEAttribute(typeGroupEClass, TYPE_GROUP__ARRAY_CARDINALITIES);
+        createEAttribute(typeGroupEClass, TYPE_GROUP__TYPE);
+
         // Create enums
         combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
         operatorTypeEEnum = createEEnum(OPERATOR_TYPE);
@@ -582,6 +630,11 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(textExpressionEClass, TextExpression.class, "TextExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTextExpression_Text(), ecorePackage.getEString(), "text", null, 0, 1, TextExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(typeGroupEClass, TypeGroup.class, "TypeGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getTypeGroup_ValuedObjects(), this.getValuedObject(), null, "valuedObjects", null, 0, -1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTypeGroup_ArrayCardinalities(), ecorePackage.getEInt(), "arrayCardinalities", null, 0, -1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTypeGroup_Type(), this.getValueType(), "type", null, 1, 1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");

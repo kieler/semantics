@@ -210,11 +210,6 @@ public class ValuedObjectReferenceItemProvider
             (createChildParameter
                 (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
-                 KExpressionsFactory.eINSTANCE.createDoubleValue()));
     }
 
 }

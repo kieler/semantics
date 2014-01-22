@@ -1245,7 +1245,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: A, varB
 	// ValuedObjectReference:
-	//	valuedObject=[ValuedObject];
+	//	valuedObject=[ValuedObject] ("[" arrayCardinalities+=Expression "]")*;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKExpressions.getValuedObjectReferenceAccess();
 	}
