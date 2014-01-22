@@ -23,6 +23,7 @@ package de.cau.cs.kieler.sccharts.tsccharts.annotation.extensions
 import static extension de.cau.cs.kieler.core.annotations.AnnotationsUtil.*
 import de.cau.cs.kieler.core.annotations.Annotatable
 import de.cau.cs.kieler.core.annotations.AnnotationsFactory
+import de.cau.cs.kieler.core.annotations.IntAnnotation
 
 class TSCChartsAnnotationExtension {
     
@@ -42,8 +43,12 @@ class TSCChartsAnnotationExtension {
  * Sets the annotated flat (without timing for children) WCRT value of this element.
  */
     def setTimeFlat(Annotatable annotatable, Integer value) {
-        val tFlat = createIntAnnotation;
+        val String key = "TimeFlat";
+        var tFlat = annotatable.getAnnotation(key) as IntAnnotation;
+        if (tFlat == null){
+        tFlat = createIntAnnotation;
         tFlat.name = "TimeFlat";
+        }
         tFlat.setValue(value);
         annotatable.annotations.add(tFlat);
     }
@@ -78,10 +83,15 @@ class TSCChartsAnnotationExtension {
  * Sets the annotated hierarchical (with timing for children) WCRT value of this element.
  */
     def setTimeHierarchical(Annotatable annotatable, Integer value) {
-        val tDeep = createIntAnnotation;
-        tDeep.name = "TimeHierarchical";
-        tDeep.setValue(value);
-        annotatable.annotations.add(tDeep);
+        val String key = "TimeHierarchical";
+        var tHierarchical = annotatable.getAnnotation(key) as IntAnnotation;
+        if (tHierarchical == null){
+            
+        tHierarchical = createIntAnnotation;
+        tHierarchical.name = "TimeHierarchical";
+        }
+        tHierarchical.setValue(value);
+        annotatable.annotations.add(tHierarchical);
     }
 
     /*
@@ -114,8 +124,12 @@ class TSCChartsAnnotationExtension {
  * Sets the timing domain Annotation
  */
     def setTimeDomain(Annotatable annotatable, Integer tag) {
-        val tDomain = createIntAnnotation;
+        val String key = "TimeDomain";
+        var tDomain = annotatable.getAnnotation(key) as IntAnnotation;
+        if (tDomain == null){  
+        tDomain = createIntAnnotation;
         tDomain.name = "TimeDomain";
+        }
         tDomain.setValue(tag);
         annotatable.annotations.add(tDomain);
     }
