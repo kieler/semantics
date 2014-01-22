@@ -211,8 +211,8 @@ class SyncChartsTransformation {
             else if (syncSignal.type == de.cau.cs.kieler.esterel.kexpressions.ValueType::DOUBLE) {
                 signal.setTypeDouble
                 if (!syncSignal.initialValue.nullOrEmpty) {
-                    val initial = Double.parseDouble(syncSignal.initialValue.replace("\"", ""))
-                    signal.setInitialValue(initial.createDoubleValue)
+                    val initial = Float.parseFloat(syncSignal.initialValue.replace("\"", ""))
+                    signal.setInitialValue(initial.createFloatValue)
                 }
             }
             else if (syncSignal.type == de.cau.cs.kieler.esterel.kexpressions.ValueType::FLOAT) {
