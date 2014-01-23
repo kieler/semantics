@@ -26,6 +26,10 @@ import de.cau.cs.kieler.scgsched.Schedule
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scgsched.AssignmentAddition
+import java.util.HashMap
+import de.cau.cs.kieler.scgsched.ConditionalAddition
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scgsched.ScgschedFactory
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -57,6 +61,12 @@ class SimpleSequentializer extends AbstractSequentializer {
     @Inject 
     extension SCGCopyExtensions	
     
+    // -------------------------------------------------------------------------
+    // -- Globals
+    // -------------------------------------------------------------------------
+           
+    private val AdditionalConditionals = new HashMap<ConditionalAddition, Conditional>            
+           
     // -------------------------------------------------------------------------
     // -- Transformation method
     // -------------------------------------------------------------------------    
@@ -133,6 +143,23 @@ class SimpleSequentializer extends AbstractSequentializer {
     	
     	// For each scheduling block in the schedule iterate.
     	for (sb : schedule.schedulingBlocks) {
+    	    
+    	    scgSched.alterations.filter(typeof(ConditionalAddition)).forEach[
+    	        if (sb.nodes.contains(it.beforeNode)) {
+    	            val condadd = ScgFactory::eINSTANCE.createConditional
+    	            condadd.condition = it.condition.copyExpression
+    	            nextFlows.forEach[ target = condadd ]
+    	            nextFlows.clear
+                    condadd.then = ScgFactory::eINSTANCE.createControlFlow => [
+                        nextFlows.add(it)
+                    ]
+                    ScgFactory::eINSTANCE.createControlFlow => [ condadd.^else = it ]
+    	            
+    	            AdditionalConditionals.put(it, condadd)
+    	            scg.nodes.add(condadd)
+    	        }
+    	    ]
+    	    
     		/**
     		 * Each scheduling block references a guard. Each guard results in an assignment. 
     		 * Create it and copy the corresponding object.
@@ -234,7 +261,14 @@ class SimpleSequentializer extends AbstractSequentializer {
     			// else branch to the control flow list. These are the new entry flows for the next assignment
     			// or the return value (in which case they will be connected to the exit node by the caller). 
     			nextFlows.add(conditional.^else)
+
     		}
+    		
+            scgSched.alterations.filter(typeof(ConditionalAddition)).forEach[
+                if (sb.nodes.contains(it.untilNode)) {
+                    nextFlows.add( AdditionalConditionals.get(it).^else )
+                }
+            ]
     		
      	}
     	
