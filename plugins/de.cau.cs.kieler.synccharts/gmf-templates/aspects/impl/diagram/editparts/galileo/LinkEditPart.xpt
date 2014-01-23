@@ -1,0 +1,36 @@
+﻿/*
+ * Copyright (c) 2006, 2009 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Dmitry Stadnik (Borland) - initial API and implementation
+ *    Alexander Shatalin (Borland) - initial API and implementation
+ */
+
+«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'»
+
+«DEFINE createLinkFigure(link : gmfgen::GenLink) FOR gmfgen::InnerClassViewmap»
+	protected org.eclipse.draw2d.Connection createConnectionFigure() {
+		org.eclipse.draw2d.Connection figure = new «className»();
+		«REM» added conditional setting of adapter target «ENDREM»
+		if (figure instanceof de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) {
+			((de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
+		}
+		«REM»temporary spline code«ENDREM»
+		if (figure instanceof de.cau.cs.kieler.core.ui.figures.SplineConnection) {
+			((de.cau.cs.kieler.core.ui.figures.SplineConnection) figure).setSplineMode(de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin.getInstance().getPreferenceStore().getInt(de.cau.cs.kieler.core.ui.figures.SplineConnection.PREF_SPLINE_MODE));
+		}
+		return figure;
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public «className» getPrimaryShape() {
+		return («className») getFigure();
+	}
+
+	«classBody»
+«ENDDEFINE»

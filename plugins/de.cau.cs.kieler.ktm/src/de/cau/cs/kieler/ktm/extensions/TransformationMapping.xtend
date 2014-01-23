@@ -178,7 +178,7 @@ class TransformationMapping {
     // -------------------------------------------------------------------------
     // Mapping helpers
     /**
-	 * Creates direct mapping between two identical models. 
+	 * Creates a copy of original and saves mapping. 
 	 * <p>
 	 * Use for transformations based on copies.
 	 * <p>
@@ -187,6 +187,18 @@ class TransformationMapping {
 	 * @return copy   
 	 */
     def <T extends EObject> T mappedCopy(T original) {
+        return original.mappedCopy(mapping);
+    }
+
+    /**
+     * Creates a copy of original and adds mapping information to given map.
+     * <p>
+     * Mapping will include given root elements.
+     * @param original model to copy
+     * @param map to store mapping information
+     * @return copy   
+     */    
+    def <T extends EObject> T mappedCopy(T original, HashMultimap<EObject, EObject> map) {
 
         // This code is taken from ECoreUtil.copy
         val copier = new Copier();
@@ -194,7 +206,7 @@ class TransformationMapping {
         copier.copyReferences();
 
         //copy mapping from copier to mapping
-        mapping.putAll(copier.forMap);
+        map.putAll(copier.forMap);
 
         return result;
     }

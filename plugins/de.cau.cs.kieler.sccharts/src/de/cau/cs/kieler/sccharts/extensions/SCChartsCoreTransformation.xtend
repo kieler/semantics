@@ -39,6 +39,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.EntryAction
 import java.util.ArrayList
 import de.cau.cs.kieler.sccharts.SuspendAction
+import de.cau.cs.kieler.sccharts.Assignment
 
 /**
  * SCCharts CoreTransformation Extensions.
@@ -55,15 +56,16 @@ class SCChartsCoreTransformation {
     @Inject
     extension SCChartsExtension
     
-    // This prefix is used for namings of all generated signals, states and regions
+    // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
     
 
     //-------------------------------------------------------------------------
     //--             E X P O S E   L O C A L   S I G N A L S                 --
     //-------------------------------------------------------------------------
-    // @requires: none
-    // Transforming Local ValuedObjects.
+    // Transforming Local ValuedObjects and optionally exposing them as
+    // output signals.
+    
     def Region transformExposeLocalValuedObject(Region rootRegion) {
 
         // Clone the complete SCCharts region 
@@ -71,57 +73,11 @@ class SCChartsCoreTransformation {
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformExposeLocalValuedObject(targetRootRegion);
+            targetState.transformExposeLocalValuedObject(targetRootRegion, true);
         }
         targetRootRegion;
     }
-
-    // Traverse all states and transform possible local valuedObjects.
-    def void transformExposeLocalValuedObject(State state, Region targetRootRegion) {
-
-        // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
-        // and wherever the local valuedObject is emitted, also emit the new global 
-        // valuedObject.
-        // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
-        // Exclude the top level state
-        if (state.parentRegion == targetRootRegion) {
-            return;
-        }
-
-        // There are local valuedObjects, raise them
-        if (state.valuedObjects != null && state.valuedObjects.size > 0) {
-            val hierarchicalStateName = state.getHierarchicalName("LOCAL");
-
-            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
-                val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
-                val globalValuedObject = targetRootRegion.rootState.createValuedObject(newValuedObjectName).setOutput
-                globalValuedObject.applyAttributes(localValuedObject)
-
-                // For every Emission of the local ValuedObject add an Emission of the new
-                // global ValuedObject
-                val allActions = state.eAllContents().toIterable().filter(typeof(Action)).toList();
-                val localValuedObjectActions = allActions.filter(
-                    e|
-                        (e.allContainedEmissions.filter(ee|ee.valuedObject == localValuedObject)
-                       ).
-                            size > 0);
-
-                for (localValuedObjectAction : ImmutableList::copyOf(localValuedObjectActions)) {
-                    val lastMatchingEmission = localValuedObjectAction.allContainedEmissions.filter(
-                        ee|ee == localValuedObject).last as Emission;
-                    if (lastMatchingEmission != null) {
-                        val newValue = lastMatchingEmission.newValue
-                        val emission = localValuedObjectAction.addEmission(globalValuedObject.emit);
-                        if (newValue != null) {
-                            emission.setNewValue(newValue.copy)
-                        }
-                    }
-                }
-
-            }
-        } // end if local valuedObjects present
-
-    }
+    
 
     //-------------------------------------------------------------------------
     //--              N O R M A L   T E R M I N A T I O N                    --
@@ -361,25 +317,26 @@ class SCChartsCoreTransformation {
     //--     O P T I M I Z E : Immediate Transitions with no Trigger/Effect  --
     //-------------------------------------------------------------------------
     def Region optimize1(Region rootRegion) {
-        var targetRootRegion = rootRegion.copy;
-        var targetStates = targetRootRegion.allContainedStates
+        var targetStates = rootRegion.allContainedStates
         for (targetState : targetStates) {
-            targetState.optimize1(targetRootRegion);
+            targetState.optimize1(rootRegion);
         }
-        targetRootRegion;
+        rootRegion;
     }
 
     def void optimize1(State state, Region targetRootRegion) {
         if (state.outgoingTransitions.size == 1 && !state.hierarchical) {
             val transition = state.outgoingTransitions.get(0)
+            val targetState = transition.targetState
             if (transition.immediate2) {
                 if (transition.trigger == null && transition.effects.nullOrEmpty) {
-                    val otherState = transition.targetState
-                    otherState.setInitial(state.initial)
-                    otherState.setFinal(state.final)
-                    otherState.setId(state.id)
-                    otherState.setLabel(state.label)
-                    otherState.parentRegion.states.remove(state)
+                    targetState.incomingTransitions.remove(transition)
+                    state.outgoingTransitions.remove(transition)
+                    targetState.setInitial(state.initial)
+                    targetState.setFinal(state.final)
+                    targetState.setId(state.id)
+                    targetState.setLabel(state.label)
+                    targetState.parentRegion.states.remove(state)
                 }
             }
         }
@@ -540,6 +497,9 @@ class SCChartsCoreTransformation {
                                 stateAfterDepth = K1
                                 val t = K2.incomingTransitions.get(0)
                                 t.setTargetState(stateAfterDepth)
+                                for (transition : K2.outgoingTransitions) {
+                                    transition.targetState.incomingTransitions.remove(transition)
+                                }
                                 K2.parentRegion.states.remove(K2)
                                 done = false
                                 T2tmp = t
@@ -2276,6 +2236,74 @@ class SCChartsCoreTransformation {
 //
 //        } // end if considered
 //    }
+
+
+
+//    //-------------------------------------------------------------------------
+//    //--             E X P O S E   L O C A L   S I G N A L S                 --
+//    //-------------------------------------------------------------------------
+//    // @requires: none
+//    // Transforming Local ValuedObjects.
+//    def Region transformExposeLocalValuedObject(Region rootRegion) {
+//
+//        // Clone the complete SCCharts region 
+//        val targetRootRegion = rootRegion.copy;
+//
+//        // Traverse all states
+//        for (targetState : targetRootRegion.getAllContainedStates) {
+//            targetState.transformExposeLocalValuedObject(targetRootRegion);
+//        }
+//        targetRootRegion;
+//    }
+//
+//    // Traverse all states and transform possible local valuedObjects.
+//    def void transformExposeLocalValuedObject(State state, Region targetRootRegion) {
+//
+//        // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
+//        // and wherever the local valuedObject is emitted, also emit the new global 
+//        // valuedObject.
+//        // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
+//        // Exclude the top level state
+//        if (state.parentRegion == targetRootRegion) {
+//            return;
+//        }
+//
+//        // There are local valuedObjects, raise them
+//        if (state.valuedObjects != null && state.valuedObjects.size > 0) {
+//            val hierarchicalStateName = state.getHierarchicalName("LOCAL");
+//
+//            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
+//                val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
+//                val globalValuedObject = targetRootRegion.rootState.createValuedObject(newValuedObjectName).setOutput
+//                globalValuedObject.applyAttributes(localValuedObject)
+//
+//                // For every Emission/Assignment of the local ValuedObject add an Emission of the new
+//                // global ValuedObject
+//                val allActions = state.eAllContents().toIterable().filter(typeof(Action)).toList();
+//                val localValuedObjectActions = allActions.filter(
+//                    e|
+//                        (e.allContainedEmissions.filter(ee|ee.valuedObject == localValuedObject)
+//                       ).
+//                            size > 0);
+//
+//                for (localValuedObjectAction : ImmutableList::copyOf(localValuedObjectActions)) {
+//                    val lastMatchingEmission = localValuedObjectAction.allContainedEmissions.filter(
+//                        ee|ee == localValuedObject).last as Emission;
+//                    if (lastMatchingEmission != null) {
+//                        val newValue = lastMatchingEmission.newValue
+//                        val emission = localValuedObjectAction.addEmission(globalValuedObject.emit);
+//                        if (newValue != null) {
+//                            emission.setNewValue(newValue.copy)
+//                        }
+//                    }
+//                }
+//
+//            }
+//        } // end if local valuedObjects present
+//
+//    }
+
+
 
 //    //-------------------------------------------------------------------------
 //    //--                   C O U N T   D E L A Y S                           --
