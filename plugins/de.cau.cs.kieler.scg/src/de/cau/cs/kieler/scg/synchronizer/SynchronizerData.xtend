@@ -21,6 +21,7 @@ import de.cau.cs.kieler.scgsched.GuardExpression
 import de.cau.cs.kieler.scgsched.ScgschedFactory
 import java.util.HashMap
 import java.util.List
+import de.cau.cs.kieler.scg.Node
 
 /**
  * The {@code SynchronizerData} class comprises members for the data mandatory to 
@@ -51,6 +52,9 @@ class SynchronizerData {
      * by the scheduler.
      */
     public var GuardExpression guardExpression = ScgschedFactory::eINSTANCE.createGuardExpression
+    
+    @Property
+    HashMap<Node, ValuedObject> threadMapping = new HashMap<Node, ValuedObject>
     
     /**
      * Map of additional assignments with respect to their scheduling blocks.

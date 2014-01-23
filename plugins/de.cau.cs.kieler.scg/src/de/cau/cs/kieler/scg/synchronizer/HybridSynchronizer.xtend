@@ -106,6 +106,7 @@ class HybridSynchronizer extends AbstractSynchronizer {
         	data.addAdditionalAssignment(forkSB, exitVar, TRUE)
         	data.addAdditionalAssignment(exitSB, exitVar, FALSE)
         	exitExpression.subExpressions.add(exitVar.reference)
+        	data.threadMapping.put(exit.entry, exitVar)
         ]
         
         data.guardExpression.expression = data.guardExpression.expression.and(exitExpression.not)

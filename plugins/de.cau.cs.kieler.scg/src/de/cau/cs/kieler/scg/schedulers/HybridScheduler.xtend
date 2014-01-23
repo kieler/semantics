@@ -26,6 +26,10 @@ import de.cau.cs.kieler.scg.synchronizer.SynchronizerData
 import de.cau.cs.kieler.scgsched.ScgschedFactory
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.Node
+import java.util.HashMap
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -58,9 +62,20 @@ import de.cau.cs.kieler.scg.extensions.SCGExtensions
  */
 
 class HybridScheduler extends ClusterScheduler {
+    
+    @Inject
+    extension SCGExtensions
+
+    @Inject
+    extension KExpressionsExtension
+
+    
+    private val HashMap<Node, ValuedObject> threadMapping = new HashMap<Node, ValuedObject>
 	
     protected override boolean createSchedule(SCGraphSched scg, Schedule schedule, SchedulingConstraints constraints) {
-		super.createSchedule(scg, schedule, constraints) 
+		super.createSchedule(scg, schedule, constraints) => [
+		    schedule.createConditionalAlteration(scg)
+		]
 	} 
 	
 	protected override GuardExpression createSynchronizerBlockGuardExpression(SchedulingBlock schedulingBlock, SCGraph scg) {
@@ -71,6 +86,10 @@ class HybridScheduler extends ClusterScheduler {
 
 		// Add additional valued objects to the SCG and use the guard expression of the synchronizer as it is.
 		scg.valuedObjects += joinData.valuedObjects
+		
+		joinData.threadMapping.keySet.forEach[
+		    this.threadMapping.put(it, joinData.threadMapping.get(it))
+		]
 		
 		joinData.createSynchronizerAlteration(scg as SCGraphSched).guardExpression
     }
@@ -94,6 +113,33 @@ class HybridScheduler extends ClusterScheduler {
     			]
     		]
     	]
+    }
+    
+    protected def Schedule createConditionalAlteration(Schedule schedule, SCGraphSched scg) {
+        var Node actualThreadEntry = null
+        val accList = <SchedulingBlock> newArrayList 
+        
+        for(s : schedule.schedulingBlocks) {
+            var threadEntry = s.nodes.head.threadEntryNode 
+            if (threadEntry != actualThreadEntry) {
+                if (actualThreadEntry != null) {
+                    val conditionNode = actualThreadEntry
+                    ScgschedFactory::eINSTANCE.createConditionalAddition => [
+                        beforeNode = accList.head.nodes.head
+                        untilNode = accList.last.nodes.last
+                        condition = threadMapping.get(conditionNode).reference
+                        
+                        scg.alterations.add(it)
+                    ]                    
+                }
+                accList.clear
+                actualThreadEntry = threadEntry
+            } 
+            else {
+                accList.add(s)    
+            }
+        }
+        schedule
     }
 	
 }
