@@ -25,6 +25,7 @@ import de.cau.cs.kieler.scgsched.SCGraphSched
 import de.cau.cs.kieler.scgsched.Schedule
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scgsched.AssignmentAddition
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -185,7 +186,9 @@ class SimpleSequentializer extends AbstractSequentializer {
     		 * evaluates to true. Therefore, create a conditional for the guard and add the assignment to the
     		 * true branch. They will execute their expression if the guard is active in this tick instance. 
     		 */
-    		if (sb.nodes.filter(typeof(Assignment)).size>0) {
+    		val alterations = scgSched.alterations.filter(typeof(AssignmentAddition)).filter[ sb.nodes.contains(it.position) ]
+    		 
+    		if (sb.nodes.filter(typeof(Assignment)).size>0 || alterations.size>0) {
     			// Create a conditional and set a reference of the guard as condition.
     			val conditional = ScgFactory::eINSTANCE.createConditional
     			conditional.condition = sb.guard.reference.copyExpression
@@ -209,13 +212,31 @@ class SimpleSequentializer extends AbstractSequentializer {
     				nextCFlow = ScgFactory::eINSTANCE.createControlFlow
     				cAssignment.next = nextCFlow
     			}
+    			nextFlows.add(nextCFlow)
+    			
+	    		// Check if alterations where added to this scheduling block
+    			alterations.forEach[ assadd |
+    				// Create new assignment
+    				ScgFactory::eINSTANCE.createAssignment => [ assignment |
+	    				assignment.valuedObject = assadd.valuedObject.getValuedObjectCopy
+    					assignment.assignment = assadd.expression.copyExpression
+    					scg.nodes.add(assignment)
+	    				nextFlows.forEach[ it.target = assignment ]
+	    				nextFlows.clear
+	    				assignment.next = ScgFactory::eINSTANCE.createControlFlow => [
+	    					nextFlows.add(it)
+	    				]
+    				]
+	    		]
+    			
+    			
     			// Subsequently, add the last control flow of the true branch and the control flow of the
     			// else branch to the control flow list. These are the new entry flows for the next assignment
     			// or the return value (in which case they will be connected to the exit node by the caller). 
-    			nextFlows.add(nextCFlow)
     			nextFlows.add(conditional.^else)
     		}
-    	}
+    		
+     	}
     	
     	// Return any remaining control flows for the caller.
     	nextFlows
