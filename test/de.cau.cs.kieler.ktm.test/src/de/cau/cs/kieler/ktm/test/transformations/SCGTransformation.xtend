@@ -378,7 +378,6 @@ class SCGTransformation {
         exit.map(region)
         for (state : region.states) {
             state.transformSCGGenerateNodes(sCGraph)
-            region.mapChildren(state.mappedChildren); //NEW - transformation mapping information - ??? correct semantic ???
             if(state.initial){ //NEW - not handled in transformSCGGenerateNodes
                 state.mapChild(entry);  //NEW - transformation mapping information
             }
@@ -441,7 +440,6 @@ class SCGTransformation {
             // Do recursion for all regions
             for (region : state.regions) {
                 region.transformSCGGenerateNodes(sCGraph)
-                region.mapChildren(state.mappedChildren); //NEW - transformation mapping information - ??? correct semantic ???
             }
         } else if (state.exit) {
             val exit = sCGraph.addExit
@@ -466,7 +464,6 @@ class SCGTransformation {
 
         for (state : region.states) {
             state.transformSCGConnectNodes(sCGraph)
-            region.mapChildren(state.mappedChildren);  //NEW - transformation mapping information - ??? correct semantic ???
         }
     }
 
