@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sccharts.text.sct.validation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -127,9 +128,14 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
 
     // -------------------------------------------------------------------------
 
+    // Must ensure not to loop forever when having cycles in the model
+    ArrayList<de.cau.cs.kieler.sccharts.State> visited = new ArrayList<de.cau.cs.kieler.sccharts.State>();
     
     private boolean checkReachableStates(final de.cau.cs.kieler.sccharts.State originalState, final de.cau.cs.kieler.sccharts.State state) {
-        
+        if (visited.contains(visited)) {
+            return false;
+        }
+        visited.add(state);
         if (state.isInitial()) {
             return true;
         }
