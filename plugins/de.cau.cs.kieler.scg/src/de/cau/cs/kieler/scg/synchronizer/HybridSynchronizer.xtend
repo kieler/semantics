@@ -108,7 +108,7 @@ class HybridSynchronizer extends AbstractSynchronizer {
         	exitExpression.subExpressions.add(exitVar.reference)
         ]
         
-        data.guardExpression.expression.and(exitExpression.not)
+        data.guardExpression.expression = data.guardExpression.expression.and(exitExpression.not)
         
         data		
 	}

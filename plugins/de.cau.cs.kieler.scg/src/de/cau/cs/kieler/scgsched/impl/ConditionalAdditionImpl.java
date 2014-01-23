@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.scgsched.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.scgbb.SchedulingBlock;
+import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scgsched.ConditionalAddition;
 import de.cau.cs.kieler.scgsched.ScgschedPackage;
 import org.eclipse.emf.common.notify.Notification;
@@ -30,8 +30,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scgsched.impl.ConditionalAdditionImpl#getBeforeBlock <em>Before Block</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgsched.impl.ConditionalAdditionImpl#getUntilBlock <em>Until Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.impl.ConditionalAdditionImpl#getBeforeNode <em>Before Node</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.impl.ConditionalAdditionImpl#getUntilNode <em>Until Node</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.impl.ConditionalAdditionImpl#getCondition <em>Condition</em>}</li>
  * </ul>
  * </p>
@@ -40,24 +40,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class ConditionalAdditionImpl extends AlterationImpl implements ConditionalAddition {
 	/**
-	 * The cached value of the '{@link #getBeforeBlock() <em>Before Block</em>}' reference.
+	 * The cached value of the '{@link #getBeforeNode() <em>Before Node</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getBeforeBlock()
+	 * @see #getBeforeNode()
 	 * @generated
 	 * @ordered
 	 */
-	protected SchedulingBlock beforeBlock;
+	protected Node beforeNode;
 
 	/**
-	 * The cached value of the '{@link #getUntilBlock() <em>Until Block</em>}' reference.
+	 * The cached value of the '{@link #getUntilNode() <em>Until Node</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getUntilBlock()
+	 * @see #getUntilNode()
 	 * @generated
 	 * @ordered
 	 */
-	protected SchedulingBlock untilBlock;
+	protected Node untilNode;
 
 	/**
 	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
@@ -86,6 +86,82 @@ public class ConditionalAdditionImpl extends AlterationImpl implements Condition
 	@Override
 	protected EClass eStaticClass() {
 		return ScgschedPackage.Literals.CONDITIONAL_ADDITION;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Node getBeforeNode() {
+		if (beforeNode != null && beforeNode.eIsProxy()) {
+			InternalEObject oldBeforeNode = (InternalEObject)beforeNode;
+			beforeNode = (Node)eResolveProxy(oldBeforeNode);
+			if (beforeNode != oldBeforeNode) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE, oldBeforeNode, beforeNode));
+			}
+		}
+		return beforeNode;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Node basicGetBeforeNode() {
+		return beforeNode;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBeforeNode(Node newBeforeNode) {
+		Node oldBeforeNode = beforeNode;
+		beforeNode = newBeforeNode;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE, oldBeforeNode, beforeNode));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Node getUntilNode() {
+		if (untilNode != null && untilNode.eIsProxy()) {
+			InternalEObject oldUntilNode = (InternalEObject)untilNode;
+			untilNode = (Node)eResolveProxy(oldUntilNode);
+			if (untilNode != oldUntilNode) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE, oldUntilNode, untilNode));
+			}
+		}
+		return untilNode;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Node basicGetUntilNode() {
+		return untilNode;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUntilNode(Node newUntilNode) {
+		Node oldUntilNode = untilNode;
+		untilNode = newUntilNode;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE, oldUntilNode, untilNode));
 	}
 
 	/**
@@ -136,82 +212,6 @@ public class ConditionalAdditionImpl extends AlterationImpl implements Condition
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SchedulingBlock getBeforeBlock() {
-		if (beforeBlock != null && beforeBlock.eIsProxy()) {
-			InternalEObject oldBeforeBlock = (InternalEObject)beforeBlock;
-			beforeBlock = (SchedulingBlock)eResolveProxy(oldBeforeBlock);
-			if (beforeBlock != oldBeforeBlock) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_BLOCK, oldBeforeBlock, beforeBlock));
-			}
-		}
-		return beforeBlock;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public SchedulingBlock basicGetBeforeBlock() {
-		return beforeBlock;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setBeforeBlock(SchedulingBlock newBeforeBlock) {
-		SchedulingBlock oldBeforeBlock = beforeBlock;
-		beforeBlock = newBeforeBlock;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_BLOCK, oldBeforeBlock, beforeBlock));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public SchedulingBlock getUntilBlock() {
-		if (untilBlock != null && untilBlock.eIsProxy()) {
-			InternalEObject oldUntilBlock = (InternalEObject)untilBlock;
-			untilBlock = (SchedulingBlock)eResolveProxy(oldUntilBlock);
-			if (untilBlock != oldUntilBlock) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_BLOCK, oldUntilBlock, untilBlock));
-			}
-		}
-		return untilBlock;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public SchedulingBlock basicGetUntilBlock() {
-		return untilBlock;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setUntilBlock(SchedulingBlock newUntilBlock) {
-		SchedulingBlock oldUntilBlock = untilBlock;
-		untilBlock = newUntilBlock;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_BLOCK, oldUntilBlock, untilBlock));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -229,12 +229,12 @@ public class ConditionalAdditionImpl extends AlterationImpl implements Condition
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_BLOCK:
-				if (resolve) return getBeforeBlock();
-				return basicGetBeforeBlock();
-			case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_BLOCK:
-				if (resolve) return getUntilBlock();
-				return basicGetUntilBlock();
+			case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE:
+				if (resolve) return getBeforeNode();
+				return basicGetBeforeNode();
+			case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE:
+				if (resolve) return getUntilNode();
+				return basicGetUntilNode();
 			case ScgschedPackage.CONDITIONAL_ADDITION__CONDITION:
 				return getCondition();
 		}
@@ -250,11 +250,11 @@ public class ConditionalAdditionImpl extends AlterationImpl implements Condition
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_BLOCK:
-				setBeforeBlock((SchedulingBlock)newValue);
+			case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE:
+				setBeforeNode((Node)newValue);
 				return;
-			case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_BLOCK:
-				setUntilBlock((SchedulingBlock)newValue);
+			case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE:
+				setUntilNode((Node)newValue);
 				return;
 			case ScgschedPackage.CONDITIONAL_ADDITION__CONDITION:
 				setCondition((Expression)newValue);
@@ -271,11 +271,11 @@ public class ConditionalAdditionImpl extends AlterationImpl implements Condition
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_BLOCK:
-				setBeforeBlock((SchedulingBlock)null);
+			case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE:
+				setBeforeNode((Node)null);
 				return;
-			case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_BLOCK:
-				setUntilBlock((SchedulingBlock)null);
+			case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE:
+				setUntilNode((Node)null);
 				return;
 			case ScgschedPackage.CONDITIONAL_ADDITION__CONDITION:
 				setCondition((Expression)null);
@@ -292,10 +292,10 @@ public class ConditionalAdditionImpl extends AlterationImpl implements Condition
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_BLOCK:
-				return beforeBlock != null;
-			case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_BLOCK:
-				return untilBlock != null;
+			case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE:
+				return beforeNode != null;
+			case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE:
+				return untilNode != null;
 			case ScgschedPackage.CONDITIONAL_ADDITION__CONDITION:
 				return condition != null;
 		}

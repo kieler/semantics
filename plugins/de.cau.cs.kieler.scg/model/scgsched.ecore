@@ -42,7 +42,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Alteration"/>
   <eClassifiers xsi:type="ecore:EClass" name="AssignmentAddition" eSuperTypes="#//Alteration">
     <eStructuralFeatures xsi:type="ecore:EReference" name="position" lowerBound="1"
-        eType="ecore:EClass scg.ecore#//ControlFlow"/>
+        eType="ecore:EClass scg.ecore#//Node"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
         eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
@@ -50,10 +50,10 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConditionalAddition" eSuperTypes="#//Alteration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="beforeBlock" lowerBound="1"
-        eType="ecore:EClass scgbb.ecore#//SchedulingBlock"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="untilBlock" lowerBound="1"
-        eType="ecore:EClass scgbb.ecore#//SchedulingBlock"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="beforeNode" lowerBound="1"
+        eType="ecore:EClass scg.ecore#//Node"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="untilNode" lowerBound="1"
+        eType="ecore:EClass scg.ecore#//Node"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="condition" lowerBound="1"
         eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>

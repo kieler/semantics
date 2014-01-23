@@ -27,6 +27,7 @@ import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scgdep.SCGraphDep;
 import de.cau.cs.kieler.scg.schedulers.AbstractScheduler;
 import de.cau.cs.kieler.scg.schedulers.ClusterScheduler;
+import de.cau.cs.kieler.scg.schedulers.HybridScheduler;
 import de.cau.cs.kieler.scg.schedulers.SimpleScheduler;
 import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation;
 
@@ -43,6 +44,8 @@ public class SCGraphSchedulingModelFileHandler extends AbstractConvertModelHandl
             "de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation";
     public static final String SCGSCHED_TRANSFORMATION_CLUSTERSCHEDULER =
             "de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation.ClusterScheduler";
+    public static final String SCGSCHED_TRANSFORMATION_HYBRIDSCHEDULER =
+            "de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation.HybridScheduler";
 
     private static Injector injector = new SctStandaloneSetup()
         .createInjectorAndDoEMFRegistration();
@@ -84,6 +87,11 @@ public class SCGraphSchedulingModelFileHandler extends AbstractConvertModelHandl
         if (commandString.equals(SCGSCHED_TRANSFORMATION_CLUSTERSCHEDULER)) {
             AbstractScheduler scheduler =
             		Guice.createInjector().getInstance(ClusterScheduler.class);
+            transformed = scheduler.schedule((SCGraph) model);
+        } 
+        if (commandString.equals(SCGSCHED_TRANSFORMATION_HYBRIDSCHEDULER)) {
+            AbstractScheduler scheduler =
+            		Guice.createInjector().getInstance(HybridScheduler.class);
             transformed = scheduler.schedule((SCGraph) model);
         } 
         return transformed;

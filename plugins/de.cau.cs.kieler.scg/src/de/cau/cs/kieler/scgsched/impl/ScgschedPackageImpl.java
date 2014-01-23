@@ -389,7 +389,7 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getConditionalAddition_BeforeBlock() {
+	public EReference getConditionalAddition_BeforeNode() {
 		return (EReference)conditionalAdditionEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -398,7 +398,7 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getConditionalAddition_UntilBlock() {
+	public EReference getConditionalAddition_UntilNode() {
 		return (EReference)conditionalAdditionEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -471,8 +471,8 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 		createEReference(assignmentAdditionEClass, ASSIGNMENT_ADDITION__EXPRESSION);
 
 		conditionalAdditionEClass = createEClass(CONDITIONAL_ADDITION);
-		createEReference(conditionalAdditionEClass, CONDITIONAL_ADDITION__BEFORE_BLOCK);
-		createEReference(conditionalAdditionEClass, CONDITIONAL_ADDITION__UNTIL_BLOCK);
+		createEReference(conditionalAdditionEClass, CONDITIONAL_ADDITION__BEFORE_NODE);
+		createEReference(conditionalAdditionEClass, CONDITIONAL_ADDITION__UNTIL_NODE);
 		createEReference(conditionalAdditionEClass, CONDITIONAL_ADDITION__CONDITION);
 	}
 
@@ -541,13 +541,13 @@ public class ScgschedPackageImpl extends EPackageImpl implements ScgschedPackage
 		initEClass(alterationEClass, Alteration.class, "Alteration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(assignmentAdditionEClass, AssignmentAddition.class, "AssignmentAddition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getAssignmentAddition_Position(), theScgPackage.getControlFlow(), null, "position", null, 1, 1, AssignmentAddition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getAssignmentAddition_Position(), theScgPackage.getNode(), null, "position", null, 1, 1, AssignmentAddition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAssignmentAddition_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, AssignmentAddition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAssignmentAddition_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 1, 1, AssignmentAddition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(conditionalAdditionEClass, ConditionalAddition.class, "ConditionalAddition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getConditionalAddition_BeforeBlock(), theScgbbPackage.getSchedulingBlock(), null, "beforeBlock", null, 1, 1, ConditionalAddition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getConditionalAddition_UntilBlock(), theScgbbPackage.getSchedulingBlock(), null, "untilBlock", null, 1, 1, ConditionalAddition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getConditionalAddition_BeforeNode(), theScgPackage.getNode(), null, "beforeNode", null, 1, 1, ConditionalAddition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getConditionalAddition_UntilNode(), theScgPackage.getNode(), null, "untilNode", null, 1, 1, ConditionalAddition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getConditionalAddition_Condition(), theKExpressionsPackage.getExpression(), null, "condition", null, 1, 1, ConditionalAddition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource

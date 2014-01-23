@@ -13,13 +13,14 @@
  */
 package de.cau.cs.kieler.scg.synchronizer
 
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.scgbb.SchedulingBlock
 import de.cau.cs.kieler.scgsched.GuardExpression
 import de.cau.cs.kieler.scgsched.ScgschedFactory
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import java.util.List
 import java.util.HashMap
-import de.cau.cs.kieler.core.kexpressions.Expression
+import java.util.List
 
 /**
  * The {@code SynchronizerData} class comprises members for the data mandatory to 
@@ -34,7 +35,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 class SynchronizerData {
 	/** List of predecessors of the join node */
 	@Property
-    List<SchedulingBlock> predecessors
+    List<SchedulingBlock> predecessors = <SchedulingBlock> newArrayList
     
     /** 
      * List of additional ValuedObjects
@@ -43,7 +44,7 @@ class SynchronizerData {
      * Any new created ValuedObject is stored in the valuedObjects list.
      */
     @Property
-    List<ValuedObject> valuedObjects
+    List<ValuedObject> valuedObjects = <ValuedObject> newArrayList
     
     /**
      * guardExpression holds the actual expression of the synchronizer. It can be modified or used directly 
@@ -57,7 +58,7 @@ class SynchronizerData {
      * Therefore this field allows storage after their creation so that the scheduler and the
      * sequentializer might use them.
      */
-    private val additionalAssignments = new HashMap<SchedulingBlock, List<Pair<ValuedObject, Expression>>>
+    private val additionalAssignments = new HashMap<SchedulingBlock, List<de.cau.cs.kieler.core.util.Pair<ValuedObject, Expression>>>
     
     
 	public def SynchronizerData addAdditionalAssignment(SchedulingBlock schedulingBlock, 
@@ -72,7 +73,7 @@ class SynchronizerData {
 		this
 	} 
 	
-	public def List<Pair<ValuedObject, Expression>> getAdditionalAssignments(SchedulingBlock schedulingBlock) {
+	public def List<de.cau.cs.kieler.core.util.Pair<ValuedObject, Expression>> getAdditionalAssignments(SchedulingBlock schedulingBlock) {
 		additionalAssignments.get(schedulingBlock)
 	}
 	

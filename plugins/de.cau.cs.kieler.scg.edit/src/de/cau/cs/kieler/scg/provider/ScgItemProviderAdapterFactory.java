@@ -45,430 +45,430 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  */
 public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
     /**
-     * This keeps track of the root adapter factory that delegates to this adapter factory.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the root adapter factory that delegates to this adapter factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ComposedAdapterFactory parentAdapterFactory;
 
     /**
-     * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
-     * <!-- begin-user-doc -->
+	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected IChangeNotifier changeNotifier = new ChangeNotifier();
 
     /**
-     * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
-     * <!-- begin-user-doc -->
+	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
     /**
-     * This constructs an instance.
-     * <!-- begin-user-doc -->
+	 * This constructs an instance.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ScgItemProviderAdapterFactory() {
-        supportedTypes.add(IEditingDomainItemProvider.class);
-        supportedTypes.add(IStructuredItemContentProvider.class);
-        supportedTypes.add(ITreeItemContentProvider.class);
-        supportedTypes.add(IItemLabelProvider.class);
-        supportedTypes.add(IItemPropertySource.class);
-    }
+		supportedTypes.add(IEditingDomainItemProvider.class);
+		supportedTypes.add(IStructuredItemContentProvider.class);
+		supportedTypes.add(ITreeItemContentProvider.class);
+		supportedTypes.add(IItemLabelProvider.class);
+		supportedTypes.add(IItemPropertySource.class);
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Node} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Node} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected NodeItemProvider nodeItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Node}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.Node}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createNodeAdapter() {
-        if (nodeItemProvider == null) {
-            nodeItemProvider = new NodeItemProvider(this);
-        }
+		if (nodeItemProvider == null) {
+			nodeItemProvider = new NodeItemProvider(this);
+		}
 
-        return nodeItemProvider;
-    }
+		return nodeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Conditional} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Conditional} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ConditionalItemProvider conditionalItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Conditional}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.Conditional}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createConditionalAdapter() {
-        if (conditionalItemProvider == null) {
-            conditionalItemProvider = new ConditionalItemProvider(this);
-        }
+		if (conditionalItemProvider == null) {
+			conditionalItemProvider = new ConditionalItemProvider(this);
+		}
 
-        return conditionalItemProvider;
-    }
+		return conditionalItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Surface} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Surface} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected SurfaceItemProvider surfaceItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Surface}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.Surface}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createSurfaceAdapter() {
-        if (surfaceItemProvider == null) {
-            surfaceItemProvider = new SurfaceItemProvider(this);
-        }
+		if (surfaceItemProvider == null) {
+			surfaceItemProvider = new SurfaceItemProvider(this);
+		}
 
-        return surfaceItemProvider;
-    }
+		return surfaceItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Depth} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Depth} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected DepthItemProvider depthItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Depth}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.Depth}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createDepthAdapter() {
-        if (depthItemProvider == null) {
-            depthItemProvider = new DepthItemProvider(this);
-        }
+		if (depthItemProvider == null) {
+			depthItemProvider = new DepthItemProvider(this);
+		}
 
-        return depthItemProvider;
-    }
+		return depthItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Assignment} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Assignment} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected AssignmentItemProvider assignmentItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Assignment}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.Assignment}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createAssignmentAdapter() {
-        if (assignmentItemProvider == null) {
-            assignmentItemProvider = new AssignmentItemProvider(this);
-        }
+		if (assignmentItemProvider == null) {
+			assignmentItemProvider = new AssignmentItemProvider(this);
+		}
 
-        return assignmentItemProvider;
-    }
+		return assignmentItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Fork} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Fork} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ForkItemProvider forkItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Fork}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.Fork}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createForkAdapter() {
-        if (forkItemProvider == null) {
-            forkItemProvider = new ForkItemProvider(this);
-        }
+		if (forkItemProvider == null) {
+			forkItemProvider = new ForkItemProvider(this);
+		}
 
-        return forkItemProvider;
-    }
+		return forkItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Join} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Join} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected JoinItemProvider joinItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Join}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.Join}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createJoinAdapter() {
-        if (joinItemProvider == null) {
-            joinItemProvider = new JoinItemProvider(this);
-        }
+		if (joinItemProvider == null) {
+			joinItemProvider = new JoinItemProvider(this);
+		}
 
-        return joinItemProvider;
-    }
+		return joinItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Link} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Link} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected LinkItemProvider linkItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Link}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.Link}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createLinkAdapter() {
-        if (linkItemProvider == null) {
-            linkItemProvider = new LinkItemProvider(this);
-        }
+		if (linkItemProvider == null) {
+			linkItemProvider = new LinkItemProvider(this);
+		}
 
-        return linkItemProvider;
-    }
+		return linkItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.SCGraph} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.SCGraph} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected SCGraphItemProvider scGraphItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scg.SCGraph}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.SCGraph}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createSCGraphAdapter() {
-        if (scGraphItemProvider == null) {
-            scGraphItemProvider = new SCGraphItemProvider(this);
-        }
+		if (scGraphItemProvider == null) {
+			scGraphItemProvider = new SCGraphItemProvider(this);
+		}
 
-        return scGraphItemProvider;
-    }
+		return scGraphItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Entry} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Entry} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected EntryItemProvider entryItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Entry}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.Entry}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createEntryAdapter() {
-        if (entryItemProvider == null) {
-            entryItemProvider = new EntryItemProvider(this);
-        }
+		if (entryItemProvider == null) {
+			entryItemProvider = new EntryItemProvider(this);
+		}
 
-        return entryItemProvider;
-    }
+		return entryItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Exit} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Exit} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ExitItemProvider exitItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Exit}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.Exit}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createExitAdapter() {
-        if (exitItemProvider == null) {
-            exitItemProvider = new ExitItemProvider(this);
-        }
+		if (exitItemProvider == null) {
+			exitItemProvider = new ExitItemProvider(this);
+		}
 
-        return exitItemProvider;
-    }
+		return exitItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.ControlFlow} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.ControlFlow} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ControlFlowItemProvider controlFlowItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scg.ControlFlow}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.scg.ControlFlow}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createControlFlowAdapter() {
-        if (controlFlowItemProvider == null) {
-            controlFlowItemProvider = new ControlFlowItemProvider(this);
-        }
+		if (controlFlowItemProvider == null) {
+			controlFlowItemProvider = new ControlFlowItemProvider(this);
+		}
 
-        return controlFlowItemProvider;
-    }
+		return controlFlowItemProvider;
+	}
 
     /**
-     * This returns the root adapter factory that contains this factory.
-     * <!-- begin-user-doc -->
+	 * This returns the root adapter factory that contains this factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ComposeableAdapterFactory getRootAdapterFactory() {
-        return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
-    }
+		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
+	}
 
     /**
-     * This sets the composed adapter factory that contains this factory.
-     * <!-- begin-user-doc -->
+	 * This sets the composed adapter factory that contains this factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
-        this.parentAdapterFactory = parentAdapterFactory;
-    }
+		this.parentAdapterFactory = parentAdapterFactory;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean isFactoryForType(Object type) {
-        return supportedTypes.contains(type) || super.isFactoryForType(type);
-    }
+		return supportedTypes.contains(type) || super.isFactoryForType(type);
+	}
 
     /**
-     * This implementation substitutes the factory itself as the key for the adapter.
-     * <!-- begin-user-doc -->
+	 * This implementation substitutes the factory itself as the key for the adapter.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter adapt(Notifier notifier, Object type) {
-        return super.adapt(notifier, this);
-    }
+		return super.adapt(notifier, this);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object adapt(Object object, Object type) {
-        if (isFactoryForType(type)) {
-            Object adapter = super.adapt(object, type);
-            if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
-                return adapter;
-            }
-        }
+		if (isFactoryForType(type)) {
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
+				return adapter;
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * This adds a listener.
-     * <!-- begin-user-doc -->
+	 * This adds a listener.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void addListener(INotifyChangedListener notifyChangedListener) {
-        changeNotifier.addListener(notifyChangedListener);
-    }
+		changeNotifier.addListener(notifyChangedListener);
+	}
 
     /**
-     * This removes a listener.
-     * <!-- begin-user-doc -->
+	 * This removes a listener.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void removeListener(INotifyChangedListener notifyChangedListener) {
-        changeNotifier.removeListener(notifyChangedListener);
-    }
+		changeNotifier.removeListener(notifyChangedListener);
+	}
 
     /**
-     * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
-     * <!-- begin-user-doc -->
+	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void fireNotifyChanged(Notification notification) {
-        changeNotifier.fireNotifyChanged(notification);
+		changeNotifier.fireNotifyChanged(notification);
 
-        if (parentAdapterFactory != null) {
-            parentAdapterFactory.fireNotifyChanged(notification);
-        }
-    }
+		if (parentAdapterFactory != null) {
+			parentAdapterFactory.fireNotifyChanged(notification);
+		}
+	}
 
     /**
-     * This disposes all of the item providers created by this factory. 
-     * <!-- begin-user-doc -->
+	 * This disposes all of the item providers created by this factory. 
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void dispose() {
-        if (nodeItemProvider != null) nodeItemProvider.dispose();
-        if (conditionalItemProvider != null) conditionalItemProvider.dispose();
-        if (surfaceItemProvider != null) surfaceItemProvider.dispose();
-        if (depthItemProvider != null) depthItemProvider.dispose();
-        if (assignmentItemProvider != null) assignmentItemProvider.dispose();
-        if (forkItemProvider != null) forkItemProvider.dispose();
-        if (joinItemProvider != null) joinItemProvider.dispose();
-        if (linkItemProvider != null) linkItemProvider.dispose();
-        if (scGraphItemProvider != null) scGraphItemProvider.dispose();
-        if (entryItemProvider != null) entryItemProvider.dispose();
-        if (exitItemProvider != null) exitItemProvider.dispose();
-        if (controlFlowItemProvider != null) controlFlowItemProvider.dispose();
-    }
+		if (nodeItemProvider != null) nodeItemProvider.dispose();
+		if (conditionalItemProvider != null) conditionalItemProvider.dispose();
+		if (surfaceItemProvider != null) surfaceItemProvider.dispose();
+		if (depthItemProvider != null) depthItemProvider.dispose();
+		if (assignmentItemProvider != null) assignmentItemProvider.dispose();
+		if (forkItemProvider != null) forkItemProvider.dispose();
+		if (joinItemProvider != null) joinItemProvider.dispose();
+		if (linkItemProvider != null) linkItemProvider.dispose();
+		if (scGraphItemProvider != null) scGraphItemProvider.dispose();
+		if (entryItemProvider != null) entryItemProvider.dispose();
+		if (exitItemProvider != null) exitItemProvider.dispose();
+		if (controlFlowItemProvider != null) controlFlowItemProvider.dispose();
+	}
 
 }

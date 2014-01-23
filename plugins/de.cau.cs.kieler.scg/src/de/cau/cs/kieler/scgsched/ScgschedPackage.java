@@ -456,22 +456,22 @@ public interface ScgschedPackage extends EPackage {
 	int CONDITIONAL_ADDITION = 7;
 
 				/**
-	 * The feature id for the '<em><b>Before Block</b></em>' reference.
+	 * The feature id for the '<em><b>Before Node</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONDITIONAL_ADDITION__BEFORE_BLOCK = ALTERATION_FEATURE_COUNT + 0;
+	int CONDITIONAL_ADDITION__BEFORE_NODE = ALTERATION_FEATURE_COUNT + 0;
 
 				/**
-	 * The feature id for the '<em><b>Until Block</b></em>' reference.
+	 * The feature id for the '<em><b>Until Node</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONDITIONAL_ADDITION__UNTIL_BLOCK = ALTERATION_FEATURE_COUNT + 1;
+	int CONDITIONAL_ADDITION__UNTIL_NODE = ALTERATION_FEATURE_COUNT + 1;
 
 				/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
@@ -768,26 +768,26 @@ public interface ScgschedPackage extends EPackage {
 	EClass getConditionalAddition();
 
 				/**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getBeforeBlock <em>Before Block</em>}'.
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getBeforeNode <em>Before Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Before Block</em>'.
-	 * @see de.cau.cs.kieler.scgsched.ConditionalAddition#getBeforeBlock()
+	 * @return the meta object for the reference '<em>Before Node</em>'.
+	 * @see de.cau.cs.kieler.scgsched.ConditionalAddition#getBeforeNode()
 	 * @see #getConditionalAddition()
 	 * @generated
 	 */
-	EReference getConditionalAddition_BeforeBlock();
+	EReference getConditionalAddition_BeforeNode();
 
 				/**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getUntilBlock <em>Until Block</em>}'.
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getUntilNode <em>Until Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Until Block</em>'.
-	 * @see de.cau.cs.kieler.scgsched.ConditionalAddition#getUntilBlock()
+	 * @return the meta object for the reference '<em>Until Node</em>'.
+	 * @see de.cau.cs.kieler.scgsched.ConditionalAddition#getUntilNode()
 	 * @see #getConditionalAddition()
 	 * @generated
 	 */
-	EReference getConditionalAddition_UntilBlock();
+	EReference getConditionalAddition_UntilNode();
 
 				/**
 	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getCondition <em>Condition</em>}'.
@@ -1040,20 +1040,20 @@ public interface ScgschedPackage extends EPackage {
 		EClass CONDITIONAL_ADDITION = eINSTANCE.getConditionalAddition();
 
 								/**
-		 * The meta object literal for the '<em><b>Before Block</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Before Node</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CONDITIONAL_ADDITION__BEFORE_BLOCK = eINSTANCE.getConditionalAddition_BeforeBlock();
+		EReference CONDITIONAL_ADDITION__BEFORE_NODE = eINSTANCE.getConditionalAddition_BeforeNode();
 
 								/**
-		 * The meta object literal for the '<em><b>Until Block</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Until Node</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CONDITIONAL_ADDITION__UNTIL_BLOCK = eINSTANCE.getConditionalAddition_UntilBlock();
+		EReference CONDITIONAL_ADDITION__UNTIL_NODE = eINSTANCE.getConditionalAddition_UntilNode();
 
 								/**
 		 * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.

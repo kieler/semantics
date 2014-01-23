@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.scgsched;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.scgbb.SchedulingBlock;
+import de.cau.cs.kieler.scg.Node;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,8 +24,8 @@ import de.cau.cs.kieler.scgbb.SchedulingBlock;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getBeforeBlock <em>Before Block</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getUntilBlock <em>Until Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getBeforeNode <em>Before Node</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getUntilNode <em>Until Node</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getCondition <em>Condition</em>}</li>
  * </ul>
  * </p>
@@ -36,56 +36,56 @@ import de.cau.cs.kieler.scgbb.SchedulingBlock;
  */
 public interface ConditionalAddition extends Alteration {
 	/**
-	 * Returns the value of the '<em><b>Before Block</b></em>' reference.
+	 * Returns the value of the '<em><b>Before Node</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Before Block</em>' reference isn't clear,
+	 * If the meaning of the '<em>Before Node</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Before Block</em>' reference.
-	 * @see #setBeforeBlock(SchedulingBlock)
-	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getConditionalAddition_BeforeBlock()
+	 * @return the value of the '<em>Before Node</em>' reference.
+	 * @see #setBeforeNode(Node)
+	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getConditionalAddition_BeforeNode()
 	 * @model required="true"
 	 * @generated
 	 */
-	SchedulingBlock getBeforeBlock();
+	Node getBeforeNode();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getBeforeBlock <em>Before Block</em>}' reference.
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getBeforeNode <em>Before Node</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Before Block</em>' reference.
-	 * @see #getBeforeBlock()
+	 * @param value the new value of the '<em>Before Node</em>' reference.
+	 * @see #getBeforeNode()
 	 * @generated
 	 */
-	void setBeforeBlock(SchedulingBlock value);
+	void setBeforeNode(Node value);
 
 	/**
-	 * Returns the value of the '<em><b>Until Block</b></em>' reference.
+	 * Returns the value of the '<em><b>Until Node</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Until Block</em>' reference isn't clear,
+	 * If the meaning of the '<em>Until Node</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Until Block</em>' reference.
-	 * @see #setUntilBlock(SchedulingBlock)
-	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getConditionalAddition_UntilBlock()
+	 * @return the value of the '<em>Until Node</em>' reference.
+	 * @see #setUntilNode(Node)
+	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getConditionalAddition_UntilNode()
 	 * @model required="true"
 	 * @generated
 	 */
-	SchedulingBlock getUntilBlock();
+	Node getUntilNode();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getUntilBlock <em>Until Block</em>}' reference.
+	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getUntilNode <em>Until Node</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Until Block</em>' reference.
-	 * @see #getUntilBlock()
+	 * @param value the new value of the '<em>Until Node</em>' reference.
+	 * @see #getUntilNode()
 	 * @generated
 	 */
-	void setUntilBlock(SchedulingBlock value);
+	void setUntilNode(Node value);
 
 	/**
 	 * Returns the value of the '<em><b>Condition</b></em>' containment reference.

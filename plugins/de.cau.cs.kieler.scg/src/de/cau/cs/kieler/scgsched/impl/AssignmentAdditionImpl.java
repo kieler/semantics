@@ -15,7 +15,7 @@ package de.cau.cs.kieler.scgsched.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.scg.ControlFlow;
+import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scgsched.AssignmentAddition;
 import de.cau.cs.kieler.scgsched.ScgschedPackage;
 import org.eclipse.emf.common.notify.Notification;
@@ -48,7 +48,7 @@ public class AssignmentAdditionImpl extends AlterationImpl implements Assignment
 	 * @generated
 	 * @ordered
 	 */
-	protected ControlFlow position;
+	protected Node position;
 
 	/**
 	 * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
@@ -175,10 +175,10 @@ public class AssignmentAdditionImpl extends AlterationImpl implements Assignment
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ControlFlow getPosition() {
+	public Node getPosition() {
 		if (position != null && position.eIsProxy()) {
 			InternalEObject oldPosition = (InternalEObject)position;
-			position = (ControlFlow)eResolveProxy(oldPosition);
+			position = (Node)eResolveProxy(oldPosition);
 			if (position != oldPosition) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgschedPackage.ASSIGNMENT_ADDITION__POSITION, oldPosition, position));
@@ -192,7 +192,7 @@ public class AssignmentAdditionImpl extends AlterationImpl implements Assignment
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ControlFlow basicGetPosition() {
+	public Node basicGetPosition() {
 		return position;
 	}
 
@@ -201,8 +201,8 @@ public class AssignmentAdditionImpl extends AlterationImpl implements Assignment
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPosition(ControlFlow newPosition) {
-		ControlFlow oldPosition = position;
+	public void setPosition(Node newPosition) {
+		Node oldPosition = position;
 		position = newPosition;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.ASSIGNMENT_ADDITION__POSITION, oldPosition, position));
@@ -252,7 +252,7 @@ public class AssignmentAdditionImpl extends AlterationImpl implements Assignment
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ScgschedPackage.ASSIGNMENT_ADDITION__POSITION:
-				setPosition((ControlFlow)newValue);
+				setPosition((Node)newValue);
 				return;
 			case ScgschedPackage.ASSIGNMENT_ADDITION__VALUED_OBJECT:
 				setValuedObject((ValuedObject)newValue);
@@ -273,7 +273,7 @@ public class AssignmentAdditionImpl extends AlterationImpl implements Assignment
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case ScgschedPackage.ASSIGNMENT_ADDITION__POSITION:
-				setPosition((ControlFlow)null);
+				setPosition((Node)null);
 				return;
 			case ScgschedPackage.ASSIGNMENT_ADDITION__VALUED_OBJECT:
 				setValuedObject((ValuedObject)null);
