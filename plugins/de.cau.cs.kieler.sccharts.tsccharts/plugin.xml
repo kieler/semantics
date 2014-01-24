@@ -15,16 +15,47 @@
             locationURI="toolbar:de.cau.cs.kieler.layout.toolbar">
          <command
                commandId="de.cau.cs.kieler.klighd.ui.actionExecution"
-               icon="icons/wcet.svg"
                label="WCET"
                style="push"
-               tooltip="Show WCET values">
+               tooltip="Show WCET values (old version)">
             <parameter
                   name="de.cau.cs.kieler.klighd.ui.action"
                   value="de.cau.cs.kieler.sccharts.tsccharts.TimingAction">
             </parameter>
          </command>
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:de.cau.cs.kieler.layout.toolbar">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysis"
+               icon="icons/wcet.svg"
+               label="WCET"
+               style="push"
+               tooltip="Show WCET values">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysis"
+            name="TimingAnalysis">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.sccharts.tsccharts.handler.TimingAnalysisHandler"
+            commandId="de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysis">
+         <enabledWhen>
+            <iterate>
+               <instanceof
+                     value="de.cau.cs.kieler.core.kgraph.KGraphElement">
+               </instanceof>
+            </iterate>
+         </enabledWhen>
+      </handler>
    </extension>
 
 </plugin>
