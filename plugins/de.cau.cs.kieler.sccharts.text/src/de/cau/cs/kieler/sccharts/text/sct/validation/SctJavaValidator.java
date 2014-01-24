@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sccharts.text.sct.validation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,7 +53,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     
     public static final String REGION_NO_INITIAL_STATE = "Every region must have an initial state";
     public static final String REGION_TWO_MANY_INITIAL_STATES = "Every region must not have more than one initial state";
-    public static final String REGION_NO_FINAL_STATE = "Every region must have a final state if its parent state has a termination transition";
+    public static final String REGION_NO_FINAL_STATE = "Every region should have a final state whenever its parent state has a termination transition";
     public static final String STATE_NOT_REACHABLE = "The state is not reachable";
 
     @Override
@@ -118,7 +119,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
                         }
                     }
                     if (!foundFinal) {
-                        error(REGION_NO_FINAL_STATE, region, null, -1);
+                        warning(REGION_NO_FINAL_STATE, region, null, -1);
                     }
                 }
             }
@@ -127,19 +128,24 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
 
     // -------------------------------------------------------------------------
 
+    // Must ensure not to loop forever when having cycles in the model
+    ArrayList<de.cau.cs.kieler.sccharts.State> visited = new ArrayList<de.cau.cs.kieler.sccharts.State>();
     
     private boolean checkReachableStates(final de.cau.cs.kieler.sccharts.State originalState, final de.cau.cs.kieler.sccharts.State state) {
-        
+        if (visited.contains(visited)) {
+            return false;
+        }
+        visited.add(state);
         if (state.isInitial()) {
             return true;
         }
         else {
-            boolean reachedAnyInitialState = false;
             for (Transition transition : state.getIncomingTransitions()) {
-            	if (transition.getSourceState() != state) 
-            		reachedAnyInitialState = reachedAnyInitialState | checkReachableStates(originalState, transition.getSourceState());
+            		if (checkReachableStates(originalState, transition.getSourceState())) {
+                            return true;
+            		}
             }
-            return reachedAnyInitialState;
+            return false;
         }
     }
 
@@ -152,6 +158,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      */
     @Check
     public void checkReachableStates(final de.cau.cs.kieler.sccharts.State state) {
+        visited.clear();
         if (state.getParentRegion().getParentState() != null && !checkReachableStates(state, state)) {
            warning(STATE_NOT_REACHABLE, state, null, -1);
         }
