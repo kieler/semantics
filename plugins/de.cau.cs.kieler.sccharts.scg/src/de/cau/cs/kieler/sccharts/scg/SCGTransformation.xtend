@@ -145,6 +145,8 @@ class SCGTransformation {
     def SCGraph transformSCG(Region rootRegion) {
         // Fix termination transitions that have effects
         var rootRegion2 = rootRegion.fixTerminationWithEffects
+        // Fix possible halt states
+        rootRegion2 = rootRegion2.fixPossibleHaltStates
         // Expose local variables
         rootRegion2 = rootRegion2.transformLocalValuedObject  
         // Clear mappings
