@@ -63,7 +63,7 @@ Assignment:
 ;
 
 Conditional:
-    'if' expression = Expression //'then'
+    'if' expression = Expression 'then'
         (valuedObjects+=ValuedObject)*
         (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
@@ -76,7 +76,7 @@ Conditional:
             (elseStatements +=  InstructionStatement elseStatements += EmptyStatement*)?
          )
          )?
-    // 'end' 
+    'end' 
 ;
 
 Goto:

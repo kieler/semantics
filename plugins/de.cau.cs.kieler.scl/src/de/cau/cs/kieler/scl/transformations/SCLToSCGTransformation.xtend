@@ -41,6 +41,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scl.scl.EmptyStatement
+import de.cau.cs.kieler.scl.scl.InstructionStatement
 
 /** 
  * SCL to SCG Transformation 
@@ -63,8 +65,8 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     // M2M Mapping
 //    private val nodeMapping = new HashMap<Node, Node>
 //    private val revNodeMapping = new HashMap<Node, Node>
-    private val processedNodes = <Node> newLinkedList
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
+    private val nodeMapping = new HashMap<EObject, List<Node>>()
     
     // -------------------------------------------------------------------------
     // -- M2M Transformation 
@@ -79,29 +81,117 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
         val scg = ScgFactory::eINSTANCE.createSCGraph
                   
         // ... and copy declarations.
-        for(valuedObject : scg.valuedObjects) {
+        for(valuedObject : scl.valuedObjects) {
             val newValuedObject = valuedObject.copy
-            scl.valuedObjects.add(newValuedObject)
+            scg.valuedObjects.add(newValuedObject)
             valuedObjectMapping.put(valuedObject, newValuedObject)
         }
         
-        scl.transform(scg)
+        scl.transform(scg, null)
         
         scg
     }
     
-    private dispatch def void transform(Program program, SCGraph scg) {
+    private dispatch def SCLContinuation transform(Program program, SCGraph scg, List<ControlFlow> incoming) {
+    	val entry = ScgFactory::eINSTANCE.createEntry.createNodeList(program) as Entry => [
+    		scg.nodes += it 
+    	]
+    	program.statements.transform(scg, entry.createControlFlow.toList) => [ continuation |
+    		ScgFactory::eINSTANCE.createExit.createNodeList(program) as Exit => [ 
+   				scg.nodes += it 
+    			it.entry = entry
+    			it.controlFlowTarget(continuation.controlFlows)
+    		]
+    	]
     	
+		new SCLContinuation => [ ]    	
     } 
+    
+    private dispatch def SCLContinuation transform(List<Statement> statements, SCGraph scg, List<ControlFlow> incoming) {
+    	var cf = incoming
+    	var continuation = new SCLContinuation
+    	for(statement : statements) {
+    		continuation = statement.transform(scg, cf)
+    		cf = continuation.controlFlows
+    	}
+    	    	
+    	continuation
+    }
+    
+    private dispatch def SCLContinuation transform(EmptyStatement statement, SCGraph scg, List<ControlFlow> incoming) {
+    	null
+    }
+    
+    private dispatch def SCLContinuation transform(InstructionStatement statement, SCGraph scg, List<ControlFlow> incoming) {
+    	statement.instruction.transform(scg, incoming)
+    }
+    
+    private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Assignment assignment, SCGraph scg, List<ControlFlow> incoming) {
+    	new SCLContinuation => [
+    		node = ScgFactory::eINSTANCE.createAssignment.createNodeList(assignment) as Assignment => [
+    			scg.nodes += it 
+    			it.assignment = assignment.expression.copyExpression
+    			it.valuedObject = assignment.valuedObject.copyValuedObject
+    			it.controlFlowTarget(incoming)
+    		]
+    		controlFlows += node.createControlFlow
+    	]
+    }
+    
+    private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Conditional conditional, SCGraph scg, List<ControlFlow> incoming) {
+    	new SCLContinuation => [ continue |
+	    	continue.node = ScgFactory::eINSTANCE.createConditional.createNodeList(conditional) as Conditional => [
+    			scg.nodes += it 
+    			it.condition = conditional.expression.copyExpression
+    			it.controlFlowTarget(incoming)
+    			conditional.statements.transform(scg, it.createControlFlow.toList) 
+    				=> [ continue.controlFlows += it.controlFlows ]
+    			conditional.elseStatements.transform(scg, it.createControlFlow.toList)
+    				=> [ continue.controlFlows += it.controlFlows ]
+    		]
+    	]
+    }
+    
+    private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Parallel parallel, SCGraph scg, List<ControlFlow> incoming) {
+    	new SCLContinuation => [
+	    	val fork = ScgFactory::eINSTANCE.createFork.createNodeList(parallel) as Fork => [ 
+    			scg.nodes += it 
+	    		it.controlFlowTarget(incoming)
+	    	]
+    		node = ScgFactory::eINSTANCE.createJoin.createNodeList(parallel) as Join => [ 
+    			scg.nodes += it 
+    			it.fork = fork
+    		]
+    		
+	    	parallel.threads.forEach[ it.statements.transform(scg, fork.createControlFlow.toList) ]
+	    	
+	    	controlFlows += node.createControlFlow
+    	]
+    }
+    
+    private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Pause pause, SCGraph scg, List<ControlFlow> incoming) {
+    	new SCLContinuation => [
+    		val surface = ScgFactory::eINSTANCE.createSurface.createNodeList(pause) as Surface => [
+    			scg.nodes += it 
+    			it.controlFlowTarget(incoming)
+    		]
+    		node = ScgFactory::eINSTANCE.createDepth.createNodeList(pause) as Depth => [
+    			scg.nodes += it 
+    			it.surface = surface
+    		]
+    		
+    		controlFlows += node.createControlFlow
+		]
+    }
            
     
     // Valued objects must be set according to the mapping!
-    def ValuedObject copyValuedObject(ValuedObject valuedObject) {
+    private def ValuedObject copyValuedObject(ValuedObject valuedObject) {
         valuedObjectMapping.get(valuedObject)
     }
     
     // References in expressions must be corrected as well!
-    def Expression copyExpression(Expression expression) {
+    private def Expression copyExpression(Expression expression) {
         val newExpression = expression.copy
         if (newExpression instanceof ValuedObjectReference) {
             (newExpression as ValuedObjectReference).valuedObject = 
@@ -113,7 +203,30 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
         newExpression
     }
 	
+	private def Node createNodeList(Node node, EObject eObject) {
+		if (!nodeMapping.keySet.contains(eObject)) {
+			nodeMapping.put(eObject, <Node> newArrayList(node))
+		} else {
+			node.addNode(eObject)
+		}  	
+		node
+	}
 
+	private def List<Node> getNodeList(EObject eObject) {
+		nodeMapping.get(eObject)
+	}
+	
+	private def Node addNode(Node node, EObject eObject) {
+		node => [ eObject.nodeList.add(it) ]
+	}
+	
+	private def Node controlFlowTarget(Node node, List<ControlFlow> controlFlows) {
+		node => [ n | controlFlows.forEach[ target = n ]]
+	}
+	
+	private def List<ControlFlow> toList(ControlFlow controlFlow) {
+		<ControlFlow> newArrayList(controlFlow)
+	}
 
    // -------------------------------------------------------------------------   
 

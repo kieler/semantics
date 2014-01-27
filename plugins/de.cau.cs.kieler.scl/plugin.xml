@@ -138,6 +138,10 @@
             class="de.cau.cs.kieler.scl.handlers.SCGraphSCLModelFileHandler"
             commandId="de.cau.cs.kieler.scl.commands.SCGToSCLTransformation">
       </handler>
+      <handler
+            class="de.cau.cs.kieler.scl.handlers.SCLSCGraphModelFileHandler"
+            commandId="de.cau.cs.kieler.scl.commands.SCLToSCGTransformation">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -150,6 +154,11 @@
             id="de.cau.cs.kieler.scl.commands.category"
             name="SCL Category">
       </category>
+      <command
+            categoryId="de.cau.cs.kieler.scl.commands.category"
+            id="de.cau.cs.kieler.scl.commands.SCLToSCGTransformation"
+            name="Transform SCL to SCG">
+      </command>
    </extension>
 
 
