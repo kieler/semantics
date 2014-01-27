@@ -5,7 +5,14 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
+         <separator
+               name="de.cau.cs.kieler.scl.separator1"
+               visible="true">
+         </separator>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
          <command
                commandId="de.cau.cs.kieler.scl.commands.SCGToSCLTransformation"
                label="Transform SCG to SCL"
@@ -29,7 +36,7 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
          <command
                commandId="de.cau.cs.kieler.scl.commands.SCGToSCLTransformation"
                label="Transform SCG to SCL"
@@ -53,7 +60,7 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
          <command
                commandId="de.cau.cs.kieler.scl.commands.SCGToSCLTransformation"
                label="Transform SCG to SCL"
@@ -76,11 +83,59 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
+         <command
+               commandId="de.cau.cs.kieler.scl.commands.SCGToSCLTransformation"
+               label="Transform SCG to SCL"
+               mnemonic="A"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scgsched">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.scl.commands.SCLToSCGTransformation"
+               label="Transform SCL to SCG"
+               mnemonic="A"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scl">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.cau.cs.kieler.scl.handler.SCGraphSCLModelFileHandler"
+            class="de.cau.cs.kieler.scl.handlers.SCGraphSCLModelFileHandler"
             commandId="de.cau.cs.kieler.scl.commands.SCGToSCLTransformation">
       </handler>
    </extension>

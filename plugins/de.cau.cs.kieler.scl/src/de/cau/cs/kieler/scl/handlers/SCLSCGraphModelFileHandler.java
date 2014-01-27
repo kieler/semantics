@@ -21,18 +21,18 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
-import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scl.SCLStandaloneSetup;
-import de.cau.cs.kieler.scl.transformations.SCGToSCLTransformation;
+import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.transformations.SCLToSCGTransformation;
 
 /**
  * @author ssm
  *
  */
-public class SCGraphSCLModelFileHandler extends AbstractConvertModelHandler {
+public class SCLSCGraphModelFileHandler extends AbstractConvertModelHandler {
 
-    public static final String SCG_TRANSFORMATION =
-            "de.cau.cs.kieler.scl.commands.SCGToSCLTransformation";
+    public static final String SCL_TRANSFORMATION =
+            "de.cau.cs.kieler.scl.commands.SCLToSCGTransformation";
 
     private static Injector injector = new SCLStandaloneSetup()
         .createInjectorAndDoEMFRegistration();
@@ -42,7 +42,7 @@ public class SCGraphSCLModelFileHandler extends AbstractConvertModelHandler {
      */
     @Override
     protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
-        return "scl";
+        return "scg";
     }
 
     /**
@@ -65,14 +65,14 @@ public class SCGraphSCLModelFileHandler extends AbstractConvertModelHandler {
         String commandString = event.getCommand().getId().toString();
         EObject transformed = null;
 
-        SCGToSCLTransformation transformation =
-        Guice.createInjector().getInstance(SCGToSCLTransformation.class);
+        SCLToSCGTransformation transformation =
+        		Guice.createInjector().getInstance(SCLToSCGTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         transformed = model;
-        if (commandString.equals(SCG_TRANSFORMATION)) {
-            transformed = transformation.transformSCGToSCL((SCGraph) model);
+        if (commandString.equals(SCL_TRANSFORMATION)) {
+            transformed = transformation.transformSCLToSCG((Program) model);
         } 
         return transformed;
     }
