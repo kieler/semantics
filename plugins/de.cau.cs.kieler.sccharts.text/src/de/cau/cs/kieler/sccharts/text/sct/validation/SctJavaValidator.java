@@ -132,7 +132,7 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     ArrayList<de.cau.cs.kieler.sccharts.State> visited = new ArrayList<de.cau.cs.kieler.sccharts.State>();
     
     private boolean checkReachableStates(final de.cau.cs.kieler.sccharts.State originalState, final de.cau.cs.kieler.sccharts.State state) {
-        if (visited.contains(visited)) {
+        if (visited.contains(state)) {
             return false;
         }
         visited.add(state);
@@ -145,8 +145,8 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
                             return true;
             		}
             }
-            return false;
         }
+        return false;
     }
 
     // -------------------------------------------------------------------------
