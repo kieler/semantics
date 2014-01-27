@@ -53,7 +53,7 @@ public class StateLayoutConfig extends SemanticLayoutConfig{
      */
     @Override
     protected Object getSemanticValue(final Object semanticElem,
-            final LayoutOptionData<?> layoutOption) {
+            final LayoutOptionData layoutOption) {
         if (semanticElem instanceof State) {
             if (layoutOption.equals(LayoutOptions.SPACING)) {
                 return 1f;
@@ -70,6 +70,6 @@ public class StateLayoutConfig extends SemanticLayoutConfig{
      */
     @Override
     protected void setSemanticValue(final Object semanticElem,
-            final LayoutOptionData<?> layoutOption, final Object value) {
+            final LayoutOptionData layoutOption, final Object value) {
         // not supported by this layout configuration
     }}
