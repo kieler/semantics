@@ -103,7 +103,7 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
      */
     @Override
     protected Object getSemanticValue(final Object semanticElem,
-            final LayoutOptionData<?> layoutOption) {
+            final LayoutOptionData layoutOption) {
         if (semanticElem instanceof Scope && layoutOption.equals(LayoutOptions.DIRECTION)) {
             int dist = getHVDistance((Scope) semanticElem);
             if (dist >= 0) {
@@ -132,7 +132,7 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
      */
     @Override
     protected void setSemanticValue(final Object semanticElem,
-            final LayoutOptionData<?> layoutOption, final Object value) {
+            final LayoutOptionData layoutOption, final Object value) {
         // not supported by this layout configuration
     }
 
