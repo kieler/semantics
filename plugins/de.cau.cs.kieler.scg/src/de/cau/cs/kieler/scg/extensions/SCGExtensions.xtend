@@ -35,6 +35,10 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.scgsched.Analysis
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -104,6 +108,45 @@ class SCGExtensions {
     	scg.valuedObjects.filter[it.name == name]?.head
     }
 
+
+    // -------------------------------------------------------------------------
+    // -- Control flow creation
+    // -------------------------------------------------------------------------
+    
+	dispatch def ControlFlow createControlFlow(Entry entry) {
+		ScgFactory::eINSTANCE.createControlFlow => [ entry.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Exit exit) {
+		ScgFactory::eINSTANCE.createControlFlow => [ exit.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Depth depth) {
+		ScgFactory::eINSTANCE.createControlFlow => [ depth.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Assignment assignment) {
+		ScgFactory::eINSTANCE.createControlFlow => [ assignment.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Conditional conditional) {
+		ScgFactory::eINSTANCE.createControlFlow => [ 
+			if (conditional.then == null) conditional.then = it
+			else if (conditional.^else == null) conditional.^else = it
+		]
+	}
+
+	dispatch def ControlFlow createControlFlow(Fork fork) {
+		ScgFactory::eINSTANCE.createControlFlow => [ fork.next += it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Join join) {
+		ScgFactory::eINSTANCE.createControlFlow => [ join.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Surface surface) {
+		ScgFactory::eINSTANCE.createControlFlow => [ ]
+	}
 
     // -------------------------------------------------------------------------
     // -- Control flow queries
