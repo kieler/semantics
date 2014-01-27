@@ -330,7 +330,6 @@ class SCChartsCoreTransformation {
             val targetState = transition.targetState
             if (transition.immediate2) {
                 if (transition.trigger == null && transition.effects.nullOrEmpty) {
-                    transition.setDeferred(true)
                     targetState.incomingTransitions.remove(transition)
                     state.outgoingTransitions.remove(transition)
                     targetState.setInitial(state.initial || targetState.initial)
