@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.scl.scl.Assignment;
@@ -229,6 +231,16 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
   public EClass getStatement()
   {
     return statementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_Annotations()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -486,6 +498,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     createEReference(programEClass, PROGRAM__VALUED_OBJECTS);
 
     statementEClass = createEClass(STATEMENT);
+    createEReference(statementEClass, STATEMENT__ANNOTATIONS);
 
     emptyStatementEClass = createEClass(EMPTY_STATEMENT);
     createEAttribute(emptyStatementEClass, EMPTY_STATEMENT__LABEL);
@@ -547,6 +560,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
 
     // Obtain other dependent packages
     KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
+    AnnotationsPackage theAnnotationsPackage = (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
 
     // Create type parameters
 
@@ -572,6 +586,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEReference(getProgram_ValuedObjects(), theKExpressionsPackage.getValuedObject(), null, "valuedObjects", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getStatement_Annotations(), theAnnotationsPackage.getAnnotation(), null, "annotations", null, 0, -1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(emptyStatementEClass, EmptyStatement.class, "EmptyStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getEmptyStatement_Label(), ecorePackage.getEString(), "label", null, 0, 1, EmptyStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

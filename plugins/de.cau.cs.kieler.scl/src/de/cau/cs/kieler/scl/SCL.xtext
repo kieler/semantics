@@ -40,13 +40,13 @@ Statement:
 ;
 
 EmptyStatement:
-//    (annotations += Annotation)*
+    (annotations += Annotation)*
     (label = ID ':')
 ;
 
 InstructionStatement:    
     (
-//        (annotations += Annotation)*
+        (annotations += Annotation)*
         instruction = (Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
     )
 ;
@@ -63,7 +63,7 @@ Assignment:
 ;
 
 Conditional:
-    'if' expression = Expression 'then'
+    'if' expression = Expression //'then'
         (valuedObjects+=ValuedObject)*
         (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
@@ -76,7 +76,7 @@ Conditional:
             (elseStatements +=  InstructionStatement elseStatements += EmptyStatement*)?
          )
          )?
-    'end' 
+    // 'end' 
 ;
 
 Goto:
