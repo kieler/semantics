@@ -21,6 +21,6 @@ Require-Bundle: org.junit;visibility:=reexport,
  de.cau.cs.kieler.sccharts.scg;bundle-version="0.1.0",
  de.cau.cs.kieler.scg;bundle-version="0.1.0",
  de.cau.cs.kieler.sccharts.text;bundle-version="0.5.1",
- org.eclipse.xtext;bundle-version="2.4.3"
+ org.eclipse.xtext;bundle-version="2.1.0"
 Bundle-ActivationPolicy: lazy
 
