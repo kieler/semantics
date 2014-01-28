@@ -1263,24 +1263,6 @@ ruleTransition returns [EObject current=null]
 )
 )(
 (
-		lv_priority_2_0=RULE_INT
-		{
-			newLeafNode(lv_priority_2_0, grammarAccess.getTransitionAccess().getPriorityINTTerminalRuleCall_2_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getTransitionRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"priority",
-        		lv_priority_2_0, 
-        		"INT");
-	    }
-
-)
-)?(
-(
 		{ 
 		  /* */ 
 		}
@@ -1289,17 +1271,17 @@ ruleTransition returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getTransitionRule());
 	        }
         }
-	otherlv_3=RULE_ID
+	otherlv_2=RULE_ID
 	{
-		newLeafNode(otherlv_3, grammarAccess.getTransitionAccess().getTargetStateStateCrossReference_3_0()); 
+		newLeafNode(otherlv_2, grammarAccess.getTransitionAccess().getTargetStateStateCrossReference_2_0()); 
 	}
 
 )
 )((
 (
-		lv_immediate_4_0=	'immediate' 
+		lv_immediate_3_0=	'immediate' 
     {
-        newLeafNode(lv_immediate_4_0, grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_4_0_0());
+        newLeafNode(lv_immediate_3_0, grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_3_0_0());
     }
  
 	    {
@@ -1312,9 +1294,9 @@ ruleTransition returns [EObject current=null]
 )
 )?(
 (
-		lv_deferred_5_0=	'deferred' 
+		lv_deferred_4_0=	'deferred' 
     {
-        newLeafNode(lv_deferred_5_0, grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_4_1_0());
+        newLeafNode(lv_deferred_4_0, grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_3_1_0());
     }
  
 	    {
@@ -1328,30 +1310,30 @@ ruleTransition returns [EObject current=null]
 )?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getHistoryHistoryTypeEnumRuleCall_4_2_0()); 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getHistoryHistoryTypeEnumRuleCall_3_2_0()); 
 	    }
-		lv_history_6_0=ruleHistoryType		{
+		lv_history_5_0=ruleHistoryType		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
 	        }
        		set(
        			$current, 
        			"history",
-        		lv_history_6_0, 
+        		lv_history_5_0, 
         		"HistoryType");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)?(	otherlv_7='with' 
+)?(	otherlv_6='with' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getTransitionAccess().getWithKeyword_4_3_0());
+    	newLeafNode(otherlv_6, grammarAccess.getTransitionAccess().getWithKeyword_3_3_0());
     }
 (((
 (
-		lv_delay_8_0=RULE_INT
+		lv_delay_7_0=RULE_INT
 		{
-			newLeafNode(lv_delay_8_0, grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_4_3_1_0_0_0()); 
+			newLeafNode(lv_delay_7_0, grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_3_3_1_0_0_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1360,7 +1342,7 @@ ruleTransition returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"delay",
-        		lv_delay_8_0, 
+        		lv_delay_7_0, 
         		"INT");
 	    }
 
@@ -1368,60 +1350,60 @@ ruleTransition returns [EObject current=null]
 )?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getTriggerBoolExpressionParserRuleCall_4_3_1_0_1_0()); 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getTriggerBoolExpressionParserRuleCall_3_3_1_0_1_0()); 
 	    }
-		lv_trigger_9_0=ruleBoolExpression		{
+		lv_trigger_8_0=ruleBoolExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
 	        }
        		set(
        			$current, 
        			"trigger",
-        		lv_trigger_9_0, 
+        		lv_trigger_8_0, 
         		"BoolExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)?(	otherlv_10='/' 
+)?(	otherlv_9='/' 
     {
-    	newLeafNode(otherlv_10, grammarAccess.getTransitionAccess().getSolidusKeyword_4_3_1_0_2_0());
+    	newLeafNode(otherlv_9, grammarAccess.getTransitionAccess().getSolidusKeyword_3_3_1_0_2_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_4_3_1_0_2_1_0()); 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_3_3_1_0_2_1_0()); 
 	    }
-		lv_effects_11_0=ruleEffect		{
+		lv_effects_10_0=ruleEffect		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
 	        }
        		add(
        			$current, 
        			"effects",
-        		lv_effects_11_0, 
+        		lv_effects_10_0, 
         		"Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(	otherlv_12=';' 
+)(	otherlv_11=';' 
     {
-    	newLeafNode(otherlv_12, grammarAccess.getTransitionAccess().getSemicolonKeyword_4_3_1_0_2_2_0());
+    	newLeafNode(otherlv_11, grammarAccess.getTransitionAccess().getSemicolonKeyword_3_3_1_0_2_2_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_4_3_1_0_2_2_1_0()); 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_3_3_1_0_2_2_1_0()); 
 	    }
-		lv_effects_13_0=ruleEffect		{
+		lv_effects_12_0=ruleEffect		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
 	        }
        		add(
        			$current, 
        			"effects",
-        		lv_effects_13_0, 
+        		lv_effects_12_0, 
         		"Effect");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1430,9 +1412,9 @@ ruleTransition returns [EObject current=null]
 ))*)?)
     |(
 (
-		lv_label_14_0=RULE_STRING
+		lv_label_13_0=RULE_STRING
 		{
-			newLeafNode(lv_label_14_0, grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_4_3_1_1_0()); 
+			newLeafNode(lv_label_13_0, grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_3_3_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1441,7 +1423,7 @@ ruleTransition returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"label",
-        		lv_label_14_0, 
+        		lv_label_13_0, 
         		"STRING");
 	    }
 
