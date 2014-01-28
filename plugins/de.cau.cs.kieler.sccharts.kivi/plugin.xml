@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.sccharts.kivi.SCChartsDataComponent"
+            id="de.cau.cs.kieler.sccharts.kivi.stateactivitydatacomponent"
+            name="SCCharts Visualization">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.core.kivi.combinations">
+    <combination
+            active="true"
+            class="de.cau.cs.kieler.sccharts.kivi.RandomLayoutCombination"
+            description="Apply a random layout on all components of the model. Can be used to experiment with other layouters afterwards."
+            name="Random Layout">
+    </combination>
+    <combination
+          active="true"
+          class="de.cau.cs.kieler.sccharts.kivi.LayoutAfterDiagramReinitCombination"
+          description="Performs an automatic layout after a diagram has been reinitialized from its model file"
+          name="Layout After Diagram Reinitialization">
+    </combination>
+     <combination
+            active="true"
+            class="de.cau.cs.kieler.sccharts.kivi.LayoutAfterCollapseExpandCombination"
+            description="Call automatic layout after the collapsed state of a compartment has been changed."
+            name="Layout after Collapse/Expand">
+      </combination>
+      <combination
+            class="de.cau.cs.kieler.sccharts.kivi.SCChartsCombination"
+            description="Highlights active states during simulation."
+            name="SCCharts Simulation Visualization"
+            active="true">
+      </combination>
+      <combination
+            class="de.cau.cs.kieler.sccharts.kivi.SignalFlowCombination"
+            description="Visualizes the flow of signals in a SyncChart diagram."
+            name="SCCharts Signal Flow Visualization"
+            active="true">
+      </combination>
+      <combination
+            class="de.cau.cs.kieler.sccharts.kivi.LayoutAfterModelChangedCombination"
+            description="Performs automatic layout after the model has been changed, e.g. a String label has been changed or a compartment has been collapsed or expanded."
+            name="SCCharts Layout After Model Changed"
+            active="true">
+      </combination>
+      <combination
+            active="true"
+            class="de.cau.cs.kieler.sccharts.kivi.ManualFocusCombination"
+            description="Focus&amp;Context by manual selection of elements in the focus, or by selecting hierarchy levels that should be visible."
+            name="Manual Focus (Semantic Zoom)">
+      </combination>
+      <combination
+            active="true"
+            class="de.cau.cs.kieler.sccharts.kivi.GenerateDefaultCombination"
+            description="Adds a default state and region to any empty SyncChart."
+            name="SCCharts Add Default State to Empty Diagrams">
+      </combination>
+      <combination
+            active="true"
+            class="de.cau.cs.kieler.sccharts.kivi.HideTransitionLabelsCombination"
+            description="Adds buttons to the toolbar to show or hide the labels of transitions in a SyncChart."
+            name="SCCharts Hide / Show Transition Labels">
+      </combination>
+   </extension>
+</plugin>
