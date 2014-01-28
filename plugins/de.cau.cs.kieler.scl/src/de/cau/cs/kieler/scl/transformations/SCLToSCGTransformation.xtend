@@ -153,19 +153,31 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     }
     
     private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Parallel parallel, SCGraph scg, List<ControlFlow> incoming) {
-    	new SCLContinuation => [
+    	new SCLContinuation => [ cont |
 	    	val fork = ScgFactory::eINSTANCE.createFork.createNodeList(parallel) as Fork => [ 
     			scg.nodes += it 
 	    		it.controlFlowTarget(incoming)
 	    	]
-    		node = ScgFactory::eINSTANCE.createJoin.createNodeList(parallel) as Join => [ 
+    		cont.node = ScgFactory::eINSTANCE.createJoin.createNodeList(parallel) as Join => [ 
     			scg.nodes += it 
     			it.fork = fork
     		]
     		
-	    	parallel.threads.forEach[ it.statements.transform(scg, fork.createControlFlow.toList) ]
+	    	parallel.threads.forEach[ 
+	    	    val forkFlow = fork.createControlFlow
+	    	    val threadEntry = ScgFactory::eINSTANCE.createEntry.createNodeList(it) => [
+                    scg.nodes += it
+	    	        it.controlFlowTarget(forkFlow.toList)
+	    	    ]
+	    	    val continuation = it.statements.transform(scg, threadEntry.createControlFlow.toList)
+	    	    ScgFactory::eINSTANCE.createExit.createNodeList(it) => [
+                    scg.nodes += it
+	    	        it.controlFlowTarget(continuation.controlFlows)
+	    	        it.createControlFlow.setTarget(cont.node)
+	    	    ]
+	    	]
 	    	
-	    	controlFlows += node.createControlFlow
+	    	cont.controlFlows += cont.node.createControlFlow
     	]
     }
     
