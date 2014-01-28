@@ -20,11 +20,35 @@ import java.util.List;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
+import com.google.common.collect.Lists;
+
+import de.cau.cs.kieler.core.kgraph.KNode;
+import de.cau.cs.kieler.core.krendering.Colors;
+import de.cau.cs.kieler.core.krendering.KContainerRendering;
+import de.cau.cs.kieler.core.krendering.KRendering;
+import de.cau.cs.kieler.core.krendering.KRenderingFactory;
+import de.cau.cs.kieler.core.krendering.KStyle;
+import de.cau.cs.kieler.core.krendering.KText;
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.properties.IProperty;
+import de.cau.cs.kieler.core.properties.Property;
+import de.cau.cs.kieler.klighd.LightDiagramServices;
+import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
+import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
+import de.cau.cs.kieler.klighd.util.Iterables2;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -67,7 +91,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     
     static final int KIEM_PROPERTY_MAX = 5;    
     
-    private DiagramEditor diagramEditor;
+    private IEditorPart diagramEditor;
 
     private Resource resource;
     
@@ -84,6 +108,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     private String errorTransitionKey;
 
     private DataComponentWrapper wrapper;
+    
+    private ViewContext viewContext;
 
     /** Remember when wrapup() was executed. */
     private boolean wrapupDone = false;
@@ -101,8 +127,24 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         if (diagramEditor == null) {
             return;
         }
-        modelRoot = ((View) diagramEditor.getDiagramEditPart().getModel()).getElement();
+        IEditorInput editorInput = diagramEditor.getEditorInput();
+        if (!(editorInput instanceof FileEditorInput)) {
+            return;
+        }
+        String id = ((FileEditorInput)editorInput).getPath().toPortableString().replace(":", "");
+        DiagramViewPart viewPart = DiagramViewManager.getInstance().getView(id);
+        if (viewPart == null) {
+            return;
+        }
+        viewContext = viewPart.getViewer().getViewContext();
+        
+        
+        modelRoot = getActiveModel();
         resource = modelRoot.eResource();
+        if (resource == null) {
+            throw new KiemInitializationException(
+                    "Model is not contained in a resource and cannot be visualized", true, null);
+        }
         stateKey = getProperties()[KIEM_PROPERTY_STATENAME].getValue();
         transitionKey = getProperties()[KIEM_PROPERTY_TRANSITIONNAME].getValue();
         errorStateKey = getProperties()[KIEM_PROPERTY_ERRORSTATENAME].getValue();
@@ -131,9 +173,10 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         if (diagramEditor == null) {
             return;
         }
-        if (StateActivityTrigger.getInstance() != null) {
-            StateActivityTrigger.getInstance().synchronizedStep(null, null, diagramEditor);
-        }
+//!!!//
+//        if (StateActivityTrigger.getInstance() != null) {
+//            StateActivityTrigger.getInstance().synchronizedStep(null, null, diagramEditor);
+//        }
         wrapupDone = true;
     }
 
@@ -293,25 +336,90 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                     long index = wrapper.getPoolIndex(currentStep - i - 1 + 0);
                     currentJSONObject = pool.getData(null, index);
                 }
-                if (StateActivityTrigger.getInstance() != null) {
-                    if (!wrapupDone) {
-                        // StateActivityTrigger.getInstance().step(statesByStep, diagramEditor);
 
-                        /*
-                         * performing a synchronized triggering of the KiVi trigger. This will block
-                         * until all effects have finished executing that are caused by this
-                         * triggering. This way we create back pressure from the effects to KIEM.
-                         */
-                        StateActivityTrigger.getInstance().synchronizedStep(statesByStep,
-                                errorStatesByStep, diagramEditor);
+                List<KNode> currentKNodes = Lists.newArrayList();
+                
+                List<EObject> currentStates = Iterables.getLast(statesByStep, null);
+                if (currentStates != null) {
+                    for (EObject eObject : currentStates ) {
+                        final KNode viewElementState = viewContext.getTargetElement(eObject, KNode.class);
+                        final KText viewElementLabel = viewContext.getTargetElement(eObject, KText.class);
+                        currentKNodes.add(viewElementState);
+                        
+                        final KContainerRendering ren = viewElementState.getData(KContainerRendering.class);
+                        final boolean flagged = Iterables.any(ren.getStyles(), filter);
+                        
+                        if (!flagged) {
+//                            KStyle style = KRenderingFactory.eINSTANCE.createKBackground().setColor(Colors.RED);
+//                            style.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);                    
+//                            ren.getStyles().add(style);
+                            KStyle style = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
+                            style.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);                    
+                            ren.getStyles().add(style);
+                            viewElementLabel.getStyles().add(EcoreUtil.copy(style));
+                            
+                            viewContext.getViewer().scale(viewElementState, 2f);
+                            Display.getDefault().syncExec(new Runnable() {
+                                
+                                public void run() {
+                                    for (KNode r : viewElementState.getChildren()) {
+                                        viewContext.getViewer().expand(r);
+                                    }
+                                    
+                                }
+                            });
+                        }
                     }
                 }
+                
+                @SuppressWarnings("unchecked")
+                List<? extends KNode> allNodes =
+                        (List<? extends KNode>) Lists
+                                .newArrayList(de.cau.cs.kieler.klighd.util.ModelingUtil
+                                        .eAllContentsOfType2(viewContext.getViewModel(),
+                                                KNode.class));
+                allNodes.removeAll(currentKNodes);
+                
+                for (KNode k : allNodes) {
+                    KRendering ren = k.getData(KRendering.class);
+                    if (Iterables.any(ren.getStyles(), filter)) {                        
+                        Iterables.removeIf(ren.getStyles(), filter);
+                        for (KText t: Iterables2.toIterable(Iterators.filter(ren.eAllContents(), KText.class))) {
+                            Iterables.removeIf(t.getStyles(), filter);                            
+                        }
+                    }
+                    viewContext.getViewer().scale(k, 1f);
+                }
+                LightDiagramServices.layoutDiagram(viewContext);
+                
+//!!!//                
+//                if (StateActivityTrigger.getInstance() != null) {
+//                    if (!wrapupDone) {
+//                        // StateActivityTrigger.getInstance().step(statesByStep, diagramEditor);
+//
+//                        /*
+//                         * performing a synchronized triggering of the KiVi trigger. This will block
+//                         * until all effects have finished executing that are caused by this
+//                         * triggering. This way we create back pressure from the effects to KIEM.
+//                         */
+//                        StateActivityTrigger.getInstance().synchronizedStep(statesByStep,
+//                                errorStatesByStep, diagramEditor);
+//                    }
+//                }
             } catch (JSONException e) {
                 // never happens because JSON.get() is checked by JSON.has()
             }
         }
         return null;
     }
+    
+    public static IProperty<Object> HIGHLIGHTING_MARKER = new Property<Object>("highlighting");
+    
+    private Predicate<KStyle> filter = new Predicate<KStyle>() {
+        public boolean apply(final KStyle style) {
+            return style.getProperty(HIGHLIGHTING_MARKER) == KiViDataComponent.this;
+        }
+    }; 
 
     // --------------------------------------------------------------------------
 
@@ -342,7 +450,16 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
      * 
      * @return the active editor
      */
-    protected abstract DiagramEditor getActiveEditor();
+    protected abstract IEditorPart getActiveEditor();
+    
+    // --------------------------------------------------------------------------
+
+    /**
+     * Implements a getter for the active model (root model element).
+     * 
+     * @return the active model
+     */
+    protected abstract EObject getActiveModel();
     
 
     // --------------------------------------------------------------------------

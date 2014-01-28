@@ -20,9 +20,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.ui.IEditorPart;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.klighd.ui.parts.DiagramEditorPart;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -65,7 +67,7 @@ public abstract class StateMachineKiViDataComponent extends JSONObjectDataCompon
     private static final int KIEM_PROPERTY_MAX = 3;
 
     /** The diagram editor. */
-    private DiagramEditor diagramEditor;
+    private IEditorPart diagramEditor;
 
     /** The resource. */
     private Resource resource;

@@ -7,12 +7,14 @@ Bundle-Activator: de.cau.cs.kieler.sim.kivi.Activator
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.4.0",
  com.google.guava;bundle-version="8.0.0",
  de.cau.cs.kieler.core.kivi,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.core.model,
- de.cau.cs.kieler.sim.signals
+ de.cau.cs.kieler.sim.signals,
+ de.cau.cs.kieler.klighd.ui,
+ org.eclipse.ui.workbench,
+ org.eclipse.ui.ide
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sim.kivi

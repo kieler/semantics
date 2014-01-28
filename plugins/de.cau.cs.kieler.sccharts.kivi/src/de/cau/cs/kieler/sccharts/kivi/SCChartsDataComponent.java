@@ -14,13 +14,14 @@
 package de.cau.cs.kieler.sccharts.kivi;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 
+import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.sim.kivi.KiViDataComponent;
 
@@ -35,17 +36,15 @@ public class SCChartsDataComponent extends KiViDataComponent {
     /**
      * {@inheritDoc}
      */
-    protected DiagramEditor getActiveEditor() {
-        final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
+    protected IEditorPart getActiveEditor() {
+        final Maybe<IEditorPart> maybe = new Maybe<IEditorPart>();
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 // get the active editor
                 IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
                 IWorkbenchPage activePage = window.getActivePage();
                 IEditorPart editor = activePage.getActiveEditor();
-                if (editor instanceof DiagramEditor) {
-                    maybe.set((DiagramEditor) editor);
-                }
+                maybe.set((IEditorPart) editor);
             }
         });
         return maybe.get();
@@ -57,6 +56,18 @@ public class SCChartsDataComponent extends KiViDataComponent {
             String uri = eObject.eResource().getURIFragment(eObject);
             uri = (uri.hashCode() + "").replace("-", "M");
             return uri;
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected EObject getActiveModel() {
+        final IEditorPart editor = getActiveEditor();
+        if (editor instanceof XtextEditor) {
+            return XtextModelingUtil.getModelFromXtextEditor((XtextEditor)editor, true);
         }
         return null;
     }
