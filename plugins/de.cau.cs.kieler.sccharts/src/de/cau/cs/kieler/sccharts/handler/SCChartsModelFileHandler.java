@@ -168,7 +168,7 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
 
         transformed = model;
         if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {
-            transformed = transformation.transformHistory((Region) model);
+            transformed = transformation.transformHistory((Region) transformed);
             transformed = transformation.transformWeakSuspend((Region) transformed);
             transformed = transformation.transformDeferred((Region) transformed);
             transformed = transformation.transformStatic((Region) transformed);
@@ -176,6 +176,7 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
             transformed = transformation.transformCountDelay((Region) transformed);
             transformed = transformation.transformPre((Region) transformed);
             transformed = transformation.transformSuspend((Region) transformed);
+            transformed = transformation.transformComplexFinalState((Region) transformed);
             // There are TWO options for the Aborts transformation
             // 1. transformAborts1() and 2. transformAborts2()
             transformed = transformation.transformAborts2((Region) transformed);
@@ -185,50 +186,50 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
             transformed = transformation.transformExit((Region) transformed);
             transformed = transformation.transformConnector((Region) transformed);
         } else if (commandString.equals(ALLNORMALIZE_TRANSFORMATIONS)) {
-            transformed = transformation.transformTriggerEffect((Region) model);
+            transformed = transformation.transformTriggerEffect((Region) transformed);
             transformed = transformation.transformSurfaceDepth((Region) transformed);
         } else if (commandString.equals(ABORT_TRANSFORMATION)) {
             // There are TWO options for the Aborts transformation
             // 1. transformAborts1() and 2. transformAborts2()
-            transformed = transformation.transformAborts2((Region) model);
+            transformed = transformation.transformAborts2((Region) transformed);
         } else if (commandString.equals(SURFACEDEPTH_TRANSFORMATION)) {
-            transformed = transformation.transformSurfaceDepth((Region) model);
+            transformed = transformation.transformSurfaceDepth((Region) transformed);
         } else if (commandString.equals(TRIGGEREFFECT_TRANSFORMATION)) {
-            transformed = transformation.transformTriggerEffect((Region) model);
+            transformed = transformation.transformTriggerEffect((Region) transformed);
         } else if (commandString.equals(SIGNAL_TRANSFORMATION)) {
-            transformed = transformation.transformSignal((Region) model);
+            transformed = transformation.transformSignal((Region) transformed);
         } else if (commandString.equals(INPUTOUTPUTVARIABLE_TRANSFORMATION)) {
-            transformed = transformation.transformInputOutputVariable((Region) model);
+            transformed = transformation.transformInputOutputVariable((Region) transformed);
         } else if (commandString.equals(ENTRY_TRANSFORMATION)) {
-            transformed = transformation.transformEntry((Region) model);
+            transformed = transformation.transformEntry((Region) transformed);
         } else if (commandString.equals(DURING_TRANSFORMATION)) {
-            transformed = transformation.transformDuring((Region) model);
+            transformed = transformation.transformDuring((Region) transformed);
         } else if (commandString.equals(STATIC_TRANSFORMATION)) {
-            transformed = transformation.transformStatic((Region) model);
+            transformed = transformation.transformStatic((Region) transformed);
         } else if (commandString.equals(EXIT_TRANSFORMATION)) {
-            transformed = transformation.transformExit((Region) model);
+            transformed = transformation.transformExit((Region) transformed);
         } else if (commandString.equals(CONNECTOR_TRANSFORMATION)) {
-            transformed = transformation.transformConnector((Region) model);
+            transformed = transformation.transformConnector((Region) transformed);
         } else if (commandString.equals(HISTORY_TRANSFORMATION)) {
-            transformed = transformation.transformHistory((Region) model);
+            transformed = transformation.transformHistory((Region) transformed);
         } else if (commandString.equals(SUSPEND_TRANSFORMATION)) {
-            transformed = transformation.transformSuspend((Region) model);
+            transformed = transformation.transformSuspend((Region) transformed);
         } else if (commandString.equals(WEAKSUSPEND_TRANSFORMATION)) {
-            transformed = transformation.transformWeakSuspend((Region) model);
+            transformed = transformation.transformWeakSuspend((Region) transformed);
         } else if (commandString.equals(COUNTDELAY_TRANSFORMATION)) {
-            transformed = transformation.transformCountDelay((Region) model);
+            transformed = transformation.transformCountDelay((Region) transformed);
         } else if (commandString.equals(DEFERRED_TRANSFORMATION)) {
-            transformed = transformation.transformDeferred((Region) model);
+            transformed = transformation.transformDeferred((Region) transformed);
         } else if (commandString.equals(PRE_TRANSFORMATION)) {
-            transformed = transformation.transformPre((Region) model);
+            transformed = transformation.transformPre((Region) transformed);
         } else if (commandString.equals(INITIALIZATION_TRANSFORMATION)) {
-            transformed = transformation.transformInitialization((Region) model);
+            transformed = transformation.transformInitialization((Region) transformed);
         } else if (commandString.equals(EXPOSELOCALVARIABLE_TRANSFORMATION)) {
-            transformed = transformation.transformExposeLocalValuedObject((Region) model);
+            transformed = transformation.transformExposeLocalValuedObject((Region) transformed);
         } else if (commandString.equals(TERMINATION_TRANSFORMATION)) {
-            transformed = transformation.transformTermination((Region) model);
+            transformed = transformation.transformTermination((Region) transformed);
         } else if (commandString.equals(COMPLEXFINALSTATE_TRANSFORMATION)) {
-            //TODO
+            transformed = transformation.transformComplexFinalState((Region) transformed);
         }
         return transformed;
     }
