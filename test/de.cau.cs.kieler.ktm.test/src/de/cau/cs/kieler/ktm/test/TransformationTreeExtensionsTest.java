@@ -132,19 +132,19 @@ public class TransformationTreeExtensionsTest extends TestCase {
 
     /**
      * Test method for
-     * {@link de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions#succeedingModels(de.cau.cs.kieler.ktm.transformationtree.ModelWrapper)}
+     * {@link de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions#succeedingModelWrappers(de.cau.cs.kieler.ktm.transformationtree.ModelWrapper)}
      * .
      */
     public final void testSucceedingModels() {
         // test chain and correct elements
-        List<ModelWrapper> succeedingModels = extension.succeedingModels(chain);
+        List<ModelWrapper> succeedingModels = extension.succeedingModelWrappers(chain);
         assertEquals(2, succeedingModels.size());
         assertTrue(succeedingModels.contains(objects[2]));
         assertTrue(succeedingModels.contains(objects[4]));
         // test tree
-        assertEquals(4, extension.succeedingModels(tree5parts).size());
+        assertEquals(4, extension.succeedingModelWrappers(tree5parts).size());
         // test leaf
-        assertEquals(0, extension.succeedingModels((ModelWrapper) objects[4]).size());
+        assertEquals(0, extension.succeedingModelWrappers((ModelWrapper) objects[4]).size());
     }
 
     /**

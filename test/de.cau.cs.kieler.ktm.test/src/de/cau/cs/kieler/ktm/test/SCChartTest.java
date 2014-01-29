@@ -121,7 +121,7 @@ public class SCChartTest extends TestCase {
         if (!tree.isTransient()) {
             resource.getContents().add(tree.getRootObject().getEObject());
         }
-        for (ModelWrapper model : transformationTree.succeedingModels(tree)) {
+        for (ModelWrapper model : transformationTree.succeedingModelWrappers(tree)) {
             if (!model.isTransient()) {
                 resource.getContents().add(model.getRootObject().getEObject());
             }

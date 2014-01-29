@@ -16,9 +16,9 @@ package de.cau.cs.kieler.ktm.exceptions;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * Indicates a violation of relation constraints in mapping.
- * Constraints are:
- *   - Object mapped as child cannot be a parent in the same mapping and vice versa.
+ * Indicates a violation of relation constraints in mapping. Constraints are: - Object mapped as
+ * child cannot be a parent in the same mapping and vice versa.
+ * 
  * @author als
  * 
  */
@@ -28,22 +28,31 @@ public class MappingException extends Exception {
 
     private EObject object;
 
+    /**
+     * Defalut constructor.
+     */
     public MappingException() {
     }
 
     /**
+     * Standard constructor with error message.
      * 
      * @param message
+     *            error message
      */
-    public MappingException(String message) {
+    public MappingException(final String message) {
         super(message);
     }
 
     /**
+     * Standard constructor with error message and causative object.
+     * 
      * @param message
-     * @param causativeObject - object caused mapping faliure
+     *            error message
+     * @param causativeObject
+     *            - object caused mapping failure
      */
-    public MappingException(String message, EObject causativeObject) {
+    public MappingException(final String message, final EObject causativeObject) {
         super(message);
         object = causativeObject;
     }

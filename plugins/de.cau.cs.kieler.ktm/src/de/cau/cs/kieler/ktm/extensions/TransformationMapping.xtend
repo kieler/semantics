@@ -34,7 +34,7 @@ import static extension com.google.common.collect.Sets.*
  */
 class TransformationMapping {
 
-    // internal data-structure for single model transformation
+    /** internal data-structure for single model transformation.*/
     private val HashMultimap<EObject, EObject> mapping = HashMultimap::create;
 
     // -------------------------------------------------------------------------
@@ -60,7 +60,8 @@ class TransformationMapping {
         checkNotNull(parents, "parents object is null");
         checkNotNull(child, "child list is null");
         checkArgument(!parents.contains(null), "Parents list contains null element");
-        parents.fold(false)[ boolean changes, EObject parent |
+
+        parents.fold(false) [ boolean changes, EObject parent |
             parent.mapChild(child) || changes;
         ];
     }
@@ -115,15 +116,15 @@ class TransformationMapping {
     }
 
     /**
-     * Returns all Children mapped to given parent
+     * Returns all children mapped to given parent
      * @return List of children for parent
      */
     def List<EObject> mappedChildren(EObject parent) {
-        (mapping.get(parent)?:emptyList).toList;
+        (mapping.get(parent) ?: emptyList).toList;
     }
 
     /**
-     * Returns all Parents mapped to given child
+     * Returns all parents mapped to given child
      * @return List of parents for child
      */
     def List<EObject> mappedParents(EObject child) {
@@ -144,7 +145,7 @@ class TransformationMapping {
             mapping.remove(first, second);
         } else if (mapping.containsKey(second)) { //if second is key
             mapping.remove(second, first);
-        } else{
+        } else {
             false
         }
     }
@@ -160,10 +161,10 @@ class TransformationMapping {
         if (mapping.containsKey(obj)) { //if object is key
             !mapping.removeAll(obj).empty;
         } else if (mapping.containsValue(obj)) { //if object is value
-            mapping.keySet.immutableCopy.fold(false)[ boolean changes, EObject key |
+            mapping.keySet.immutableCopy.fold(false) [ boolean changes, EObject key |
                 mapping.remove(key, obj) || changes;
             ];
-        } else{
+        } else {
             false
         }
     }
@@ -197,7 +198,7 @@ class TransformationMapping {
      * @param original model to copy
      * @param map to store mapping information
      * @return copy   
-     */    
+     */
     def <T extends EObject> T mappedCopy(T original, HashMultimap<EObject, EObject> map) {
 
         // This code is taken from ECoreUtil.copy
@@ -219,7 +220,7 @@ class TransformationMapping {
 	 * Returns Pair of two sets where were key-element is symmetric difference between source model objects and all parents and value-element is symmetric difference between target and children.
 	 * All elements are mapped correctly if both sets are empty.
 	 * @throws NullPointerException if sourceModel or targetMode is null.
-	 * @return Pair of two Sets with symmetric differences.	 
+	 * @return Pair of two Sets with symmetric differences.
 	 */
     def checkMappingCompleteness(EObject sourceModel, EObject targetModel) {
         checkNotNull(sourceModel, "Source model object is null");
