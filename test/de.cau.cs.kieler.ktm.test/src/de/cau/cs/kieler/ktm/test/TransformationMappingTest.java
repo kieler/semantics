@@ -39,10 +39,13 @@ import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation;
  */
 public class TransformationMappingTest extends TestCase {
 
+    // Transformations
     private final TransformationMapping mapper = Guice.createInjector().getInstance(
             TransformationMapping.class);
     private final SimpleModelGenerator modelGen = Guice.createInjector().getInstance(
             SimpleModelGenerator.class);
+
+    // Example models
     private final ModelWrapper chain = modelGen.generateThreePartsChain();
     private final EObject[] objects = new EObject[5];
 

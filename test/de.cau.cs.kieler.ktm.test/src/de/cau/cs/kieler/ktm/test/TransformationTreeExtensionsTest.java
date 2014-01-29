@@ -39,7 +39,7 @@ import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation;
  * 
  */
 public class TransformationTreeExtensionsTest extends TestCase {
-
+    // Transformations
     private final TransformationTreeExtensions extension = Guice.createInjector().getInstance(
             TransformationTreeExtensions.class);
     private final SimpleModelGenerator modelGen = Guice.createInjector().getInstance(
@@ -47,6 +47,7 @@ public class TransformationTreeExtensionsTest extends TestCase {
     private final SimpleTransformation transformer = Guice.createInjector().getInstance(
             SimpleTransformation.class);
 
+    // Example models
     private final ModelWrapper chain = modelGen.generateThreePartsChain();
     private final ModelWrapper tree3parts = modelGen.generateThreePartsTree();
     private final ModelWrapper tree5parts = modelGen.generateFivePartsTree();
@@ -500,15 +501,15 @@ public class TransformationTreeExtensionsTest extends TestCase {
         assertNull(extension.findModelInTree(tree, missingTransformedChain, "chain"));
         // test find structural changed models
         secondTransformedChain.getTargetTransformations().get(0).getTarget()
-                .getTargetTransformations().clear();        
+                .getTargetTransformations().clear();
         assertNull(extension
-                .findModelInTree(tree, secondTransformedChain, "secondTransformedChain"));        
+                .findModelInTree(tree, secondTransformedChain, "secondTransformedChain"));
         // test find root attribute changed models
         thirdTransformedChain.setModelTypeID("Hugo");
         assertNull(extension.findModelInTree(tree, thirdTransformedChain, "thirdTransformedChain"));
         // test find attribute changed models
         chain.getTargetTransformations().get(0).setTransformationID("Hugo");
-        assertNull(extension.findModelInTree(tree, chain, "sourceChain"));        
+        assertNull(extension.findModelInTree(tree, chain, "sourceChain"));
     }
 
     /**
