@@ -18,6 +18,7 @@ import de.cau.cs.kieler.scl.scl.Program
 import com.google.inject.Inject
 import de.cau.cs.kieler.scl.transformations.SCLToSCGTransformation
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
+import de.cau.cs.kieler.kiml.util.KimlUtil
 
 /**
  * @author ssm
@@ -26,19 +27,23 @@ import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 class SCLDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     
     @Inject
-    extension SCGraphDiagramSynthesis
+    extension SCGraphDiagramSynthesis SCGTransform
     
     @Inject
     extension SCLToSCGTransformation
+    
+    override getDisplayedSynthesisOptions() {
+        SCGTransform.displayedSynthesisOptions;
+    }
     
     override transform(Program model) {
         try {
             val scg = model.transformSCLToSCG
         
-            return scg.transform
+            return SCGTransform.transform(scg, usedContext)
         }
         catch (Exception e) {
-            
+            return KimlUtil.createInitializedNode
         }
     }
     

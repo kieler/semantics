@@ -161,14 +161,6 @@
       </command>
    </extension>
    <extension
-         point="de.cau.cs.kieler.core.kivi.combinations">
-      <combination
-            active="true"
-            class="de.cau.cs.kieler.scl.klighd.SCLShowDiagramCombination"
-            name="Show SCL as SCG with KLighD">
-      </combination>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.scl.klighd.SCLDiagramSynthesis"
