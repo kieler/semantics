@@ -528,10 +528,12 @@ class TransformationTreeExtensions {
             //Index in path were path direction in tree changes from upwards to downwards
             //index of first element in other direction
             var int downwardIndex;
+            //paths
             val sourceUpPath = new LinkedList;
             val targetUpPath = new LinkedList;
 
-            //First resolve a path from target model upward to root
+            //First create a path from target model upward to root,
+            // if source model is found meanwhile stop and use existing path
             var node = targetModelNode; //Iteration variable for models on paths
             do {
                 val sourceTransformation = node.sourceTransformation;
@@ -548,7 +550,8 @@ class TransformationTreeExtensions {
                 }
             } while (node != null);
 
-            //If no path is found yet, resolve a path from source model upward to root
+            //If no path is found yet, create a path from source model upward to root
+            // if target model is found meanwhile stop and use existing path
             if (path == null) {
                 node = sourceModelNode;
                 do {
@@ -568,6 +571,7 @@ class TransformationTreeExtensions {
             }
 
             //if no simply upward or downward path exist there might be a leaf-to-leaf-path with change of direction
+            // Therefore find a least common ancestor node (at least root) as connection between both paths
             if (path == null) {
 
                 //search for a connection between the two upward paths
