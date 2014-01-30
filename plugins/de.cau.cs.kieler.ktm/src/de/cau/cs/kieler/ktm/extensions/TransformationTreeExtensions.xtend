@@ -208,12 +208,12 @@ class TransformationTreeExtensions {
 
         //create basic tree
         val ModelWrapper source = factory.createModelWrapper();
-        source.rootObject = sourceModelCopy.createObject(source);
+        source.rootObject = sourceModelCopy.createEObjectWrapper(source);
         source.modelTypeID = sourceModelTypeID;
         source.transient = false;
 
         val ModelWrapper target = factory.createModelWrapper();
-        target.rootObject = targetModelCopy.createObject(target);
+        target.rootObject = targetModelCopy.createEObjectWrapper(target);
         target.modelTypeID = targetModelTypeID;
         target.transient = false;
 
@@ -228,8 +228,8 @@ class TransformationTreeExtensions {
         ].forEach [
             val trans = factory.createEObjectTransformation;
             trans.modelTransformation = transformation;
-            trans.source = sourceCopyMap.get(it.key).createObject(source);
-            trans.target = targetCopyMap.get(it.value).createObject(target);
+            trans.source = sourceCopyMap.get(it.key).createEObjectWrapper(source);
+            trans.target = targetCopyMap.get(it.value).createEObjectWrapper(target);
         ]
 
         return target;
@@ -296,7 +296,7 @@ class TransformationTreeExtensions {
             val ModelWrapper source = modelNode;
 
             val ModelWrapper target = factory.createModelWrapper();
-            target.rootObject = targetModelCopy.createObject(target);
+            target.rootObject = targetModelCopy.createEObjectWrapper(target);
             target.modelTypeID = targetModelTypeID;
             target.transient = false;
 
@@ -320,9 +320,9 @@ class TransformationTreeExtensions {
                     //So source.elements does not contain all object contained in source model.
                     //Adding additional elements.
                     //Its safe because both source model instances match
-                    eTransformation.source = sourceModelMap.get(entry.key).createObject(source);
+                    eTransformation.source = sourceModelMap.get(entry.key).createEObjectWrapper(source);
                 }
-                eTransformation.target = targetCopyMap.get(entry.value).createObject(target);
+                eTransformation.target = targetCopyMap.get(entry.value).createEObjectWrapper(target);
             ]
             return target;
         }
@@ -635,12 +635,28 @@ class TransformationTreeExtensions {
     // -------------------------------------------------------------------------
     // Helper
     /**
-     * creates element once and adds it to its container-model
+     * Creates a EObjectWrapper for a given EObject contained in given ModelWrapper.
      */
-    private def EObjectWrapper create element : factory.createEObjectWrapper() createObject(EObject obj,
+    private def EObjectWrapper create element : factory.createEObjectWrapper() createEObjectWrapper(EObject obj,
         ModelWrapper model) {
         element.model = model;
-        element.displayName = obj.toString;
+
+        //create textual representation of references EObject with all it attributes
+        val name = new StringBuilder(obj.class.simpleName);
+        //append all attribute representation
+        if (!obj.eClass.EAllAttributes.filterNull.empty) {
+            name.append("[");
+            obj.eClass.EAllAttributes.filterNull.map [ //get all attributes
+                //compose name and value of the attribute
+                name.append(it.name);
+                name.append(": ");
+                name.append(String::valueOf(obj.eGet(it)));
+                name.append(",");//pattern for next attribute
+            ]
+            name.deleteCharAt(name.length-1);//remove last comma
+            name.append("]");
+        }
+        element.displayName = name.toString;
         element.EObject = obj;
     }
 
