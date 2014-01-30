@@ -14,9 +14,11 @@
 package de.cau.cs.kieler.sim.kivi;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -34,11 +36,16 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 
+import de.cau.cs.kieler.core.kgraph.KGraphData;
+import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.Colors;
+import de.cau.cs.kieler.core.krendering.KBackground;
+import de.cau.cs.kieler.core.krendering.KColor;
 import de.cau.cs.kieler.core.krendering.KContainerRendering;
 import de.cau.cs.kieler.core.krendering.KRendering;
 import de.cau.cs.kieler.core.krendering.KRenderingFactory;
+import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
 import de.cau.cs.kieler.core.krendering.KStyle;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
@@ -114,6 +121,12 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     /** Remember when wrapup() was executed. */
     private boolean wrapupDone = false;
 
+    private static KColor SCCHARTSRED1 = KRenderingFactory.eINSTANCE.createKColor();
+    //=> [it.blue = 248; it.green = 249; it.red = 253];
+    private static KColor SCCHARTSRED2 = KRenderingFactory.eINSTANCE.createKColor();
+    //[it.blue = 205; it.green = 220; it.red = 243];
+    
+    
     // --------------------------------------------------------------------------
 
     /**
@@ -344,19 +357,54 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                     for (EObject eObject : currentStates ) {
                         final KNode viewElementState = viewContext.getTargetElement(eObject, KNode.class);
                         final KText viewElementLabel = viewContext.getTargetElement(eObject, KText.class);
+                        
+                        KGraphElement elem = (KGraphElement)viewElementState;
+                        EList<KGraphData> elemDatas = elem.getData();
+                        
+                        //final Collection<EObject> renchilds = viewContext.getTargetElements(eObject);
                         currentKNodes.add(viewElementState);
                         
                         final KContainerRendering ren = viewElementState.getData(KContainerRendering.class);
+                        //final KNode renchild = viewElementState.getParent();
+                        
                         final boolean flagged = Iterables.any(ren.getStyles(), filter);
                         
                         if (!flagged) {
 //                            KStyle style = KRenderingFactory.eINSTANCE.createKBackground().setColor(Colors.RED);
 //                            style.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);                    
 //                            ren.getStyles().add(style);
-                            KStyle style = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
-                            style.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);                    
-                            ren.getStyles().add(style);
-                            viewElementLabel.getStyles().add(EcoreUtil.copy(style));
+                            
+                            //private static KColor SCCHARTSRED1 = KRenderingFactory.eINSTANCE.createKColor();
+                            SCCHARTSRED1.setRed(255);
+                            SCCHARTSRED1.setGreen(215);
+                            SCCHARTSRED1.setBlue(215);
+                            //=> [it.blue = 248; it.green = 249; it.red = 253];
+                            
+                            //private static KColor SCCHARTSRED2 = KRenderingFactory.eINSTANCE.createKColor();
+                            //[it.blue = 205; it.green = 220; it.red = 243];
+                            SCCHARTSRED2.setRed(255);
+                            SCCHARTSRED2.setGreen(158);
+                            SCCHARTSRED2.setBlue(158);
+                            
+                            KBackground style1 = KRenderingFactory.eINSTANCE.createKBackground();
+                            style1.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);                    
+                            style1.setColor(EcoreUtil.copy(SCCHARTSRED1));
+                            style1.setTargetColor(EcoreUtil.copy(SCCHARTSRED2));
+                            style1.setGradientAngle(90);
+                            ren.getStyles().add(style1); 
+                            
+                            style1.setPropagateToChildren(true);
+                            
+                            
+//                            for (KRendering child : ren.getChildren()) {
+//                                child.getStyles().add(EcoreUtil.copy(style1));
+//                            }
+                            
+                            
+                            KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
+                            style2.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);                    
+                            ren.getStyles().add(style2);
+                            viewElementLabel.getStyles().add(EcoreUtil.copy(style2));
                             
                             viewContext.getViewer().scale(viewElementState, 2f);
                             Display.getDefault().syncExec(new Runnable() {
