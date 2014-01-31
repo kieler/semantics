@@ -17,6 +17,11 @@ import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 import de.cau.cs.kieler.ktm.transformationtree.impl.ModelWrapperImpl;
 
 /**
+ * A fake ModelWrapper which is a ModelWrapperImpl but only delegates to a real ModelWrapper.
+ * 
+ * Its propose is to reuse synthesis of ModelWrapper to trigger a different systhsis type based on a
+ * instanceof test.
+ * 
  * @author als
  * 
  */
@@ -37,5 +42,5 @@ public class EObjectSynthesisModelWrapperWrapper extends ModelWrapperImpl {
     public ModelWrapper getModelWrapper() {
         return modelWrapper;
     }
-    
+
 }

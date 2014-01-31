@@ -41,9 +41,10 @@ import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
- * KLighD visualization for Transformation Mapping Graphs.
+ * KLighD visualization for mappings between two ModelWrappers.
  * 
  * @author als
  */
@@ -81,9 +82,14 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
 
     // -------------------------------------------------------------------------
     // The Main entry transform function
+    private val sourceNodeHighlightingColor = RENDERING_FACTORY.createKColor() =>
+        [it.red = 0; it.green = 0; it.blue = 255];
+    private val targetNodeHighlightingColor = RENDERING_FACTORY.createKColor() =>
+        [it.red = 255; it.green = 0; it.blue = 0];
+    private val mappingEdgeColor = RENDERING_FACTORY.createKColor() => [it.red = 255; it.green = 0; it.blue = 0];
+
     /**
-     * Each Model is a element in a tree.
-     * Creates synthesis for tree with given model as root element
+     * Resolves a mapping between source and target ModelWraper in ResolveModelWrapper
      */
     override KNode transform(ResolveModelWrapper resolvePair) {
         val rootNode = createNode();
@@ -92,43 +98,64 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
         val sourceModelWrapper = resolvePair.sourceModel;
         val targetModelWrapper = resolvePair.targetModel;
 
+        //if one of the models is transient or should not be displayed with its own synthesis then add basic EObject synthesis
         if (sourceModelWrapper.transient || sourceModelWrapper.transient ||
             !TransformationTreeDiagramSynthesis::SHOW_MODELS.booleanValue) {
-            rootNode.addObjectMappingNodes(resolveWrapperMapping(sourceModelWrapper, targetModelWrapper));
-        } else {
+
+            //add node for EObjects with edges form resolved mapping
+            rootNode.addEObjectMappingNode(resolveWrapperMapping(sourceModelWrapper, targetModelWrapper));
+        } else { // if models should be displayed with their own synthesis           
             val vc = usedContext;
+
+            //translate internal models of source and target ModelWrappers
             val sourceDiagramNode = LightDiagramServices::translateModel(sourceModelWrapper.rootObject.EObject, vc);
             val targetDiagramNode = LightDiagramServices::translateModel(targetModelWrapper.rootObject.EObject, vc);
 
             if (sourceDiagramNode == null || targetDiagramNode == null || sourceDiagramNode.children.empty ||
-                targetDiagramNode.children.empty) {
-                rootNode.addObjectMappingNodes(resolveWrapperMapping(sourceModelWrapper, targetModelWrapper));
+                targetDiagramNode.children.empty) { //if no synthesis is available fall back to basic EObject synthesis
+                rootNode.addEObjectMappingNode(resolveWrapperMapping(sourceModelWrapper, targetModelWrapper));
             } else {
+
+                //if models of source and target ModelWrappers were translated correctly resolve a mapping on EObjects
                 val mapping = resolveMapping(sourceModelWrapper, sourceModelWrapper.rootObject.EObject,
                     targetModelWrapper, targetModelWrapper.rootObject.EObject);
                 if (mapping != null) {
+
+                    //add translated models to rootNode
                     sourceDiagramNode.addSourceRectangle;
                     targetDiagramNode.addTargetRectangle;
                     rootNode.children += sourceDiagramNode;
                     rootNode.children += targetDiagramNode;
+
+                    //add resulting mapping edges
                     translateMappingToEdges(sourceDiagramNode, targetDiagramNode, mapping);
                 } else {
-                    rootNode.children += createNode => [it.addRectangle.addText("ERROR: No mapping available");];
+
+                    //if mapping is faulty (null) display error node
+                    rootNode.addErrorNode();
                 }
             }
         }
         return rootNode;
     }
 
-    private def addObjectMappingNodes(KNode rootNode, Multimap<EObjectWrapper, EObjectWrapper> mapping) {
+    /**
+     * Adds a KNode containing a representation of all EObjectWrapper in mapping with their mapping-relation-edges
+     */
+    private def addEObjectMappingNode(KNode rootNode, Multimap<EObjectWrapper, EObjectWrapper> mapping) {
         if (mapping != null && !mapping.empty) {
+
+            // add all mapping edges           
             mapping.entries.forEach [ entry |
                 createEdge() => [
+                    //create nodes for EObjectWrappers
                     it.source = entry.key.transformObjectWrapperNode(rootNode, true);
                     it.target = entry.value.transformObjectWrapperNode(rootNode, false);
                     it.addPolyline.addArrowDecorator;
                 ]
             ];
+
+            //surrounding rectangle separating this collection
             rootNode.addRoundedRectangle(8, 8, 1) => [
                 it.lineWidth = 2;
                 it.foreground = "gray".color;
@@ -139,13 +166,22 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
                 }
             ];
         } else {
-            rootNode.children += createNode => [it.addRectangle.addText("ERROR: No mapping available");];
+
+            //if mapping is faulty (null) display error node
+            rootNode.addErrorNode();
         }
     }
 
+    /**
+     * Translates and adds an EObjectWrapper to a KNode of rootNode depending on synthesis from 
+     * TransformationTreeDiagramSysnthesis to maintain consistent L&F.
+     * Depending on flag isSource a source or target colored rectangle will be added
+     */
     private def KNode create node : translateObject(object,usedContext) transformObjectWrapperNode(
         EObjectWrapper object, KNode rootNode, boolean isSource) {
         rootNode.children += node;
+
+        //add colored rectangle
         if (isSource) {
             node.addSourceRectangle;
         } else {
@@ -153,15 +189,24 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
         }
     }
 
+    /**
+     * Adds mapping edges to already translated diagrams.
+     */
     private def translateMappingToEdges(KNode sourceDiagramNode, KNode targetDiagramNode,
         Multimap<EObject, EObject> mapping) {
+
+        //create a mapping between model elements and their translated diagram elements
         val elementMapping = HashMultimap::create;
+
+        //map source elements
         sourceDiagramNode.eAllContentsOfType(KGraphElement).forEach [
             val data = it.getData(KLayoutData);
             if (data != null) {
                 elementMapping.put(data.getProperty(KlighdInternalProperties.MODEL_ELEMEMT), it);
             }
         ];
+
+        //map target elements
         targetDiagramNode.eAllContentsOfType(KGraphElement).forEach [
             val data = it.getData(KLayoutData);
             if (data != null) {
@@ -169,36 +214,43 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
             }
         ];
 
+        //iterate over all mapping enbtreise and create edges between all elements in diagram 
+        // which source model elements are related in mapping
         mapping.entries.forEach [
             val sourceDiagramElements = elementMapping.get(it.key);
             val targetDiagramElements = elementMapping.get(it.value);
             sourceDiagramElements.forEach [ source |
                 targetDiagramElements.forEach [ target |
+                    //inter model mapping-edges are only supported for KGraphElements
                     if (source instanceof KGraphElement && source instanceof KGraphElement) {
                         val edge = createEdge;
                         edge.addPolyline => [
-                            it.foreground = "red".color;
+                            it.foreground = mappingEdgeColor.copy;
                             it.addArrowDecorator;
                         ]
+
+                        //NO_LAYOUT option provides attaching edges to all kinds of KGraphElement
                         edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true);
 
-                        // actual source
+                        // if source is a node attach edge to this node else calculate the nearest KNode 
+                        // to source-KGraphElement and attach edge to this node while setting a property 
+                        //  which indicates the actual source of the edge causing the layout algorithm to redirect edge.
                         if (source instanceof KNode) {
                             edge.setSource(source as KNode);
                         } else {
                             edge.setSource(getNearestNode(source as KGraphElement, sourceDiagramNode));
 
-                        //TODO activate when advanced Edge placement is implemented
+                        //TODO activate when advanced edge placement is implemented
                         //edge.setLayoutOption(KlighdProperties::ACTUAL_EDGE_SOURCE, source as KGraphElement);
                         }
 
-                        // actual target
+                        // set target node or actual target and nearest node
                         if (target instanceof KNode) {
                             edge.setTarget(target as KNode);
                         } else {
                             edge.setTarget(getNearestNode(target as KGraphElement, targetDiagramNode));
 
-                        //TODO activate when advanced Edge placement is implemented
+                        //TODO activate when advanced edge placement is implemented
                         //edge.setLayoutOption(KlighdProperties::ACTUAL_EDGE_TARGET,target as KGraphElement);
                         }
                     }
@@ -207,7 +259,10 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
         ];
     }
 
-    def KNode getNearestNode(KGraphElement elem, KNode defaultNode) {
+    /**
+     * Calculates the nearest KNode for a KGraphElement which is the most sensible node to use for associations
+     */
+    private def KNode getNearestNode(KGraphElement elem, KNode defaultNode) {
         if (elem instanceof KNode) {
             return elem as KNode;
         } else if (elem instanceof KEdge) {
@@ -220,19 +275,32 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
         return defaultNode;
     }
 
+    /**
+     * Adds a rectangle with style and color of a source node
+     */
     private def addSourceRectangle(KNode node) {
         node.addRectangle => [
-            it.foreground = "red".color;
+            it.foreground = sourceNodeHighlightingColor.copy;
             it.lineStyle = LineStyle.DOT;
         ];
     }
 
+    /**
+     * Adds a rectangle with style and color of a target node
+     */
     private def addTargetRectangle(KNode node) {
         node.addRectangle => [
-            it.foreground = "blue".color;
+            it.foreground = targetNodeHighlightingColor.copy;
             it.lineStyle = LineStyle.DOT;
         ];
 
+    }
+
+    /**
+     * Adds an node with an mapping error message to given node.
+     */
+    private def addErrorNode(KNode node) {
+        node.children += createNode => [it.addRectangle.addText("ERROR: No mapping available");];
     }
 
 }

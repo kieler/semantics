@@ -21,55 +21,67 @@ import de.cau.cs.kieler.ktm.klighd.resolve.ResolveModelWrapper;
 import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 
 /**
+ * Action to select an additional node in tree and display a resolved model.
+ * 
  * @author als
  * 
  */
-public class MultiSelectionDisplayAction extends SelectionDisplayAction implements IAction {
-    public static final String ID =
-            "de.cau.cs.kieler.ktm.klighd.actions.MultiSelectionDisplayAction";
+public class ModelResolveAction extends ModelSelectionAction implements IAction {
+
+    /** Action ID. */
+    public static final String ID = "de.cau.cs.kieler.ktm.klighd.actions.ModelResolveAction";
 
     /**
      * {@inheritDoc}
      */
-    public ActionResult execute(ActionContext context) {
+    public ActionResult execute(final ActionContext context) {
         KNode node = context.getKNode();
         final ViewContext vc = context.getViewContext();
         Object targetObject = vc.getSourceElement(node);
 
-        // if its an valid click in tree
+        // if clicked valid node (ModelWrapper node in TransformationTree)
         if (node != null && targetObject != null && targetObject instanceof ModelWrapper) {
+            // get diagrams root Node
+            KNode rootNode = node;
+            while (rootNode.getParent() != null) {
+                rootNode = rootNode.getParent();
+            }
             ModelWrapper targetMW = (ModelWrapper) targetObject;
 
-            // if source model is selected
+            // if a source-model-node is selected
             if (selectedSourceNode.containsKey(vc) && selectedSourceNode.get(vc) != node) {
-                // if no target model of if not another target is selected
+                // if no target model is selected or a new target is selected
                 if (!selectedTargetNode.containsKey(vc) || selectedTargetNode.get(vc) != node) {
                     ModelWrapper sourceMW =
                             (ModelWrapper) vc.getSourceElement(selectedSourceNode.get(vc));
 
-                    // remove old diagram (may not necessary if only source is displayed bit when
+                    // remove old diagram (may not necessary if only source is displayed but when
                     // already a resolved diagram is displayed source diagram will contain mapping
                     // edges)
-                    node.getParent().getChildren().remove(displayedSubDiagram.get(vc));
+                    rootNode.getChildren().remove(displayedSubDiagram.get(vc));
                     displayedSubDiagram.remove(vc);
 
-                    // Deselect old target if any
+                    // Deselect old target-node if any
                     if (selectedTargetNode.containsKey(vc)) {
                         KNode targetNode = selectedTargetNode.get(vc);
                         resetHighlightedNode(targetNode);
                         selectedTargetNode.remove(vc);
                     }
 
+                    // Translate source and target model to a diagram with a resolve relation
                     KNode subDiagram =
                             LightDiagramServices.translateModel(new ResolveModelWrapper(sourceMW,
                                     targetMW), vc);
+
+                    // if synthesis was successful add subdiagram
                     if (subDiagram != null) {
-                        node.getParent().getChildren().add(subDiagram);
+                        rootNode.getChildren().add(subDiagram);
                         displayedSubDiagram.put(vc, subDiagram);
 
-                        highlightNode(node, false);
+                        highlightNode(node, targetNodeHighlightingColor);
                         selectedTargetNode.put(vc, node);
                     }
+
                     return ActionResult.createResult(true);
                 }
             }

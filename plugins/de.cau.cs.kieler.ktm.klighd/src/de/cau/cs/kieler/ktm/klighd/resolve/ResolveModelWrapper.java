@@ -16,6 +16,10 @@ package de.cau.cs.kieler.ktm.klighd.resolve;
 import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 
 /**
+ * ResolveModelWrapper contains two ModelWrappers to resolve.
+ * 
+ * Its propose is to trigger a systhsis of a resolvage of contained ModelWrappers.
+ * 
  * @author als
  * 
  */
@@ -24,6 +28,8 @@ public class ResolveModelWrapper {
     private final ModelWrapper targetModel;
 
     /**
+     * Contruscts a ResolveWrapper for given source and target.
+     * 
      * @param sourceModel
      * @param targetModel
      */
