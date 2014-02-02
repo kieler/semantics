@@ -343,9 +343,15 @@ class SCGExtensions {
         returnList.add(entry)
         val exit = entry.exit
         
+        // If the exit node follows the entry node directly, exit here.
+        if (entry.next.target == exit) {
+	        returnList.add(exit)
+    	    return returnList
+        }
+        
         // Now, follow the control flow until the exit node is reached 
         // and add each node that is not already in the node list.
-        controlFlows.addAll(entry.getAllNext)
+        controlFlows.addAll(entry.getAllNext)              
         while(!controlFlows.empty) {
         	// Next node is the first target in the control flow list.
             var nextNode = controlFlows.head.target
