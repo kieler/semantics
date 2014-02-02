@@ -22,6 +22,10 @@
             class="de.cau.cs.kieler.ktm.klighd.actions.ModelResolveAction"
             id="de.cau.cs.kieler.ktm.klighd.actions.ModelResolveAction">
       </action>
+      <action
+            class="de.cau.cs.kieler.ktm.klighd.actions.EdgeSelectionAction"
+            id="de.cau.cs.kieler.ktm.klighd.actions.EdgeSelectionAction">
+      </action>
    </extension>
    <extension
          point="org.eclipse.ui.commands">

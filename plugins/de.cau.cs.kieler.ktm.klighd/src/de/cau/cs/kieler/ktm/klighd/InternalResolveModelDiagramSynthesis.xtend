@@ -42,6 +42,9 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.ktm.klighd.util.NearestNodeUtil
+import de.cau.cs.kieler.ktm.klighd.util.MappingEdgeProperties
+import de.cau.cs.kieler.core.krendering.KRendering
 
 /**
  * KLighD visualization for mappings between two ModelWrappers.
@@ -226,11 +229,19 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
                         val edge = createEdge;
                         edge.addPolyline => [
                             it.foreground = mappingEdgeColor.copy;
-                            it.addArrowDecorator;
+                            it.invisible = TransformationTreeDiagramSynthesis.HIDE_EDGES.booleanValue;
+                            //add action for selective displaying of mapping edge
+                            it.addSingleClickAction("de.cau.cs.kieler.ktm.klighd.actions.EdgeSelectionAction");
+                            it.addArrowDecorator => [
+                                it.invisible = TransformationTreeDiagramSynthesis.HIDE_EDGES.booleanValue;
+                            ]
                         ]
 
                         //NO_LAYOUT option provides attaching edges to all kinds of KGraphElement
-                        edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true);
+                        edge.setLayoutOption(LayoutOptions.NO_LAYOUT, true);
+
+                        //Set IS_MAPPING_EDGE to mark this edge as an mapping edge
+                        edge.setLayoutOption(MappingEdgeProperties.IS_MAPPING_EDGE, true);
 
                         // if source is a node attach edge to this node else calculate the nearest KNode 
                         // to source-KGraphElement and attach edge to this node while setting a property 
@@ -238,7 +249,7 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
                         if (source instanceof KNode) {
                             edge.setSource(source as KNode);
                         } else {
-                            edge.setSource(getNearestNode(source as KGraphElement, sourceDiagramNode));
+                            edge.setSource(NearestNodeUtil.getNearestNode(source as KGraphElement, sourceDiagramNode));
 
                         //TODO activate when advanced edge placement is implemented
                         //edge.setLayoutOption(KlighdProperties::ACTUAL_EDGE_SOURCE, source as KGraphElement);
@@ -248,31 +259,24 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
                         if (target instanceof KNode) {
                             edge.setTarget(target as KNode);
                         } else {
-                            edge.setTarget(getNearestNode(target as KGraphElement, targetDiagramNode));
+                            edge.setTarget(NearestNodeUtil.getNearestNode(target as KGraphElement, targetDiagramNode));
 
                         //TODO activate when advanced edge placement is implemented
                         //edge.setLayoutOption(KlighdProperties::ACTUAL_EDGE_TARGET,target as KGraphElement);
                         }
+
+                        //add action for selective displaying of mapping edges to all associated source and target renderings
+                        source.data.filter(KRendering).forEach [
+                            it.addSingleClickAction("de.cau.cs.kieler.ktm.klighd.actions.EdgeSelectionAction");
+                        ];
+                        target.data.filter(KRendering).forEach [
+                            it.addSingleClickAction("de.cau.cs.kieler.ktm.klighd.actions.EdgeSelectionAction");
+                        ];
+
                     }
                 ];
             ];
         ];
-    }
-
-    /**
-     * Calculates the nearest KNode for a KGraphElement which is the most sensible node to use for associations
-     */
-    private def KNode getNearestNode(KGraphElement elem, KNode defaultNode) {
-        if (elem instanceof KNode) {
-            return elem as KNode;
-        } else if (elem instanceof KEdge) {
-            return (elem as KEdge).source;
-        } else if (elem instanceof KLabel) {
-            return (elem as KLabel).parent.getNearestNode(defaultNode);
-        } else if (elem instanceof KPort) {
-            return (elem as KPort).node;
-        }
-        return defaultNode;
     }
 
     /**

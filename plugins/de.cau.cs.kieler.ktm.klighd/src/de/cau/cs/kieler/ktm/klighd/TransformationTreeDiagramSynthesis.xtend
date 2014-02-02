@@ -80,9 +80,10 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
     public static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadows", true);
     public static val SynthesisOption SHOW_MODELS = SynthesisOption::createCheckOption("Model visualization", true);
     public static val SynthesisOption SHOW_ATTRIBUTES = SynthesisOption::createCheckOption("EObject attributes", false);
+    public static val SynthesisOption HIDE_EDGES = SynthesisOption::createCheckOption("Selective display of mapping edges", false);
 
     override public getDisplayedSynthesisOptions() {
-        return newLinkedList(SHOW_SHADOW, SHOW_MODELS, SHOW_ATTRIBUTES);
+        return newLinkedList(SHOW_SHADOW, SHOW_MODELS, SHOW_ATTRIBUTES, HIDE_EDGES);
     }
 
     override public getDisplayedLayoutOptions() {
