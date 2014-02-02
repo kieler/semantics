@@ -13,12 +13,20 @@
  */
 package de.cau.cs.kieler.scl.klighd
 
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.scl.scl.Program
 import com.google.inject.Inject
-import de.cau.cs.kieler.scl.transformations.SCLToSCGTransformation
-import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
+import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.kiml.util.KimlUtil
+import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
+import de.cau.cs.kieler.scg.schedulers.SimpleScheduler
+import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation
+import de.cau.cs.kieler.scg.transformations.SCGToSCGDEPTransformation
+import de.cau.cs.kieler.scgbb.SCGraphBB
+import de.cau.cs.kieler.scgdep.SCGraphDep
+import de.cau.cs.kieler.scl.scl.Program
+import de.cau.cs.kieler.scl.transformations.SCLToSCGTransformation
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -32,19 +40,53 @@ class SCLDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     @Inject
     extension SCLToSCGTransformation
     
+    @Inject 
+    extension SCGToSCGDEPTransformation
+
+    @Inject 
+    extension SCGDEPToSCGBBTransformation
+    
+    @Inject
+    extension SimpleScheduler
+    
+    private val String SCGANNOTATION = "SCG"
+    private val String DEPENDENCYSCG = "dependency"
+    private val String BASICBLOCKSCG = "basicblock"
+    private val String SCHEDULINGSCG = "schedule"
+    
     override getDisplayedSynthesisOptions() {
         SCGTransform.displayedSynthesisOptions;
     }
     
     override transform(Program model) {
         try {
-            val scg = model.transformSCLToSCG
+        	var EObject scg = null
+            scg = model.transformSCLToSCG
+            
+            if (model.transformAnnotation(DEPENDENCYSCG) ||
+            	model.transformAnnotation(BASICBLOCKSCG) ||
+            	model.transformAnnotation(SCHEDULINGSCG)) {
+            	scg = (scg as SCGraph).transformSCGToSCGDEP
+           	}
+           	
+            if (model.transformAnnotation(BASICBLOCKSCG) ||
+            	model.transformAnnotation(SCHEDULINGSCG)) {
+            	scg = (scg as SCGraphDep).transformSCGDEPToSCGBB
+           	}           	
+
+            if (model.transformAnnotation(SCHEDULINGSCG)) {
+            	scg = (scg as SCGraphBB).schedule
+           	}           	
         
             return SCGTransform.transform(scg, usedContext)
         }
         catch (Exception e) {
             return KimlUtil.createInitializedNode
         }
+    }
+    
+    private def transformAnnotation(Program program, String transformation) {
+    	program.annotations.filter(StringAnnotation).filter[ name==SCGANNOTATION && value==transformation].size > 0
     }
     
 }
