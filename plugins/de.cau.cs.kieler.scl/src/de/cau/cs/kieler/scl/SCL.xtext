@@ -12,6 +12,7 @@ import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 generate scl "http://kieler.cs.cau.de/scl/scl"
 
 Program:
+	(annotations+=Annotation)*
     'module' name = ID
     (valuedObjects+=ValuedObject)*
     '{'

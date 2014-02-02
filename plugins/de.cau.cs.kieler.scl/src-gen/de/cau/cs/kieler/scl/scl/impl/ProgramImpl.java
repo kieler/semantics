@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
+import de.cau.cs.kieler.core.annotations.Annotation;
+
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.scl.scl.Program;
@@ -29,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getValuedObjects <em>Valued Objects</em>}</li>
  * </ul>
@@ -38,6 +41,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ProgramImpl extends StatementSequenceImpl implements Program
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -94,6 +107,20 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, SclPackage.PROGRAM__ANNOTATIONS);
+    }
+    return annotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getName()
   {
     return name;
@@ -136,6 +163,8 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   {
     switch (featureID)
     {
+      case SclPackage.PROGRAM__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case SclPackage.PROGRAM__VALUED_OBJECTS:
         return ((InternalEList<?>)getValuedObjects()).basicRemove(otherEnd, msgs);
     }
@@ -152,6 +181,8 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   {
     switch (featureID)
     {
+      case SclPackage.PROGRAM__ANNOTATIONS:
+        return getAnnotations();
       case SclPackage.PROGRAM__NAME:
         return getName();
       case SclPackage.PROGRAM__VALUED_OBJECTS:
@@ -171,6 +202,10 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   {
     switch (featureID)
     {
+      case SclPackage.PROGRAM__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case SclPackage.PROGRAM__NAME:
         setName((String)newValue);
         return;
@@ -192,6 +227,9 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   {
     switch (featureID)
     {
+      case SclPackage.PROGRAM__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case SclPackage.PROGRAM__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -212,6 +250,8 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   {
     switch (featureID)
     {
+      case SclPackage.PROGRAM__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case SclPackage.PROGRAM__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SclPackage.PROGRAM__VALUED_OBJECTS:

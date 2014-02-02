@@ -471,6 +471,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 	/**
 	 * Constraint:
 	 *     (
+	 *         annotations+=Annotation* 
 	 *         name=ID 
 	 *         valuedObjects+=ValuedObject* 
 	 *         (statements+=InstructionStatement | statements+=EmptyStatement)* 

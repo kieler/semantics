@@ -8,6 +8,7 @@
   <genPackages prefix="Scl" basePackage="de.cau.cs.kieler.scl" disposableProviderFactory="true"
       ecorePackage="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#/">
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Program">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Program/annotations"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Program/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Program/valuedObjects"/>
     </genClasses>
