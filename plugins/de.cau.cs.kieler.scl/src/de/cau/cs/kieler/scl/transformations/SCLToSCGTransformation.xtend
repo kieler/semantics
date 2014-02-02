@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.InstructionStatement
+import de.cau.cs.kieler.scl.scl.Goto
 
 /** 
  * SCL to SCG Transformation 
@@ -67,6 +68,9 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
 //    private val revNodeMapping = new HashMap<Node, Node>
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
     private val nodeMapping = new HashMap<EObject, List<Node>>()
+    private val reverseNodeMapping = new HashMap<Node, EObject>()
+    private val labelMapping = new HashMap<String, Node>()
+    private val gotoFlows = new HashMap<Goto, List<ControlFlow>>()
     
     // -------------------------------------------------------------------------
     // -- M2M Transformation 
@@ -88,6 +92,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
         }
         
         scl.transform(scg, null)
+        scl.eAllContents.filter(Goto).forEach[ transform(scg, gotoFlows.get(it)) ]
         
         scg
     }
@@ -110,20 +115,37 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     private dispatch def SCLContinuation transform(List<Statement> statements, SCGraph scg, List<ControlFlow> incoming) {
     	var cf = incoming
     	var continuation = new SCLContinuation
-    	for(statement : statements) {
-    		continuation = statement.transform(scg, cf)
-    		cf = continuation.controlFlows
-    	}
+    	var String label = ""
+    	if (statements.size>0) {
+    		for(statement : statements) {
+    			continuation = statement.transform(scg, cf)
+    			if (!label.nullOrEmpty) {
+    				labelMapping.put(label, continuation.node)
+    			}
+    			cf = continuation.controlFlows
+    			label = continuation.label
+    		}
+   		} else {
+   			continuation.controlFlows += incoming
+   		}
     	    	
     	continuation
     }
     
     private dispatch def SCLContinuation transform(EmptyStatement statement, SCGraph scg, List<ControlFlow> incoming) {
-    	null
+    	new SCLContinuation => [
+    		controlFlows += incoming
+    		label = statement.label
+    	]
     }
     
     private dispatch def SCLContinuation transform(InstructionStatement statement, SCGraph scg, List<ControlFlow> incoming) {
-    	statement.instruction.transform(scg, incoming)
+    	if (statement.instruction instanceof Goto) {
+    		gotoFlows.put(statement.instruction as Goto, incoming)
+    		new SCLContinuation =>	[]
+    	} else {
+    		statement.instruction.transform(scg, incoming)
+    	}
     }
     
     private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Assignment assignment, SCGraph scg, List<ControlFlow> incoming) {
@@ -158,26 +180,28 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     			scg.nodes += it 
 	    		it.controlFlowTarget(incoming)
 	    	]
-    		cont.node = ScgFactory::eINSTANCE.createJoin.createNodeList(parallel) as Join => [ 
+    		val join = ScgFactory::eINSTANCE.createJoin.createNodeList(parallel) as Join => [ 
     			scg.nodes += it 
     			it.fork = fork
     		]
     		
-	    	parallel.threads.forEach[ 
-	    	    val forkFlow = fork.createControlFlow
-	    	    val threadEntry = ScgFactory::eINSTANCE.createEntry.createNodeList(it) => [
-                    scg.nodes += it
-	    	        it.controlFlowTarget(forkFlow.toList)
-	    	    ]
-	    	    val continuation = it.statements.transform(scg, threadEntry.createControlFlow.toList)
-	    	    ScgFactory::eINSTANCE.createExit.createNodeList(it) => [
-                    scg.nodes += it
-	    	        it.controlFlowTarget(continuation.controlFlows)
-	    	        it.createControlFlow.setTarget(cont.node)
-	    	    ]
-	    	]
+	    		parallel.threads.forEach[ 
+	    	    	val forkFlow = fork.createControlFlow
+	    	    	val threadEntry = ScgFactory::eINSTANCE.createEntry.createNodeList(it) => [
+                    	scg.nodes += it
+	    	        	it.controlFlowTarget(forkFlow.toList)
+	    	    	]
+	    	    	val continuation = it.statements.transform(scg, threadEntry.createControlFlow.toList)
+	    	    	ScgFactory::eINSTANCE.createExit.createNodeList(it) => [
+	    	    		(it as Exit).entry = threadEntry as Entry
+                    	scg.nodes += it
+	    	        	it.controlFlowTarget(continuation.controlFlows)
+	    	        	it.createControlFlow.setTarget(join)
+	    	    	]
+	    		]
 	    	
-	    	cont.controlFlows += cont.node.createControlFlow
+	    	cont.node = fork
+	    	cont.controlFlows += join.createControlFlow
     	]
     }
     
@@ -194,6 +218,14 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     		
     		controlFlows += node.createControlFlow
 		]
+    }
+    
+    private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Goto goto, SCGraph scg, List<ControlFlow> incoming) {
+    	new SCLContinuation => [
+    		if (labelMapping.keySet.contains(goto.targetLabel)) {
+    			labelMapping.get(goto.targetLabel).controlFlowTarget(incoming)
+    		}
+    	]
     }
            
     
@@ -220,7 +252,8 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
 			nodeMapping.put(eObject, <Node> newArrayList(node))
 		} else {
 			node.addNode(eObject)
-		}  	
+		}
+		reverseNodeMapping.put(node, eObject)
 		node
 	}
 

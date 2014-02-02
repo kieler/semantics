@@ -11,4 +11,7 @@ class SCLContinuation {
 	
 	@Property
 	List<ControlFlow> controlFlows = <ControlFlow> newArrayList
+	
+	@Property
+	String Label = ""
 }
