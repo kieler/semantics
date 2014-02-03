@@ -147,6 +147,17 @@ public class TransformationTreeExtensionsTest extends TestCase {
         // test leaf
         assertEquals(0, extension.succeedingModelWrappers((ModelWrapper) objects[4]).size());
     }
+    
+    /**
+     * Test method for
+     * {@link de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions#depth(de.cau.cs.kieler.ktm.transformationtree.ModelWrapper)}
+     * .
+     */
+    public final void testDepth() {
+        assertEquals(0, extension.depth((ModelWrapper) objects[0]));
+        assertEquals(1, extension.depth((ModelWrapper) objects[2]));
+        assertEquals(2, extension.depth((ModelWrapper) objects[4]));
+    }
 
     /**
      * Test method for
