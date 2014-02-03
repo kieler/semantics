@@ -190,6 +190,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val SynthesisOption SHOW_SCHEDULINGBLOCKS 
         = SynthesisOption::createCheckOption("Scheduling Blocks", true);
 
+    /** Show scheduling path */
+    private static val SynthesisOption SHOW_SCHEDULINGPATH
+        = SynthesisOption::createCheckOption("Scheduling path", true);
+        
+    /** Show potential problems */
+    private static val SynthesisOption SHOW_POTENTIALPROBLEMS
+        = SynthesisOption::createCheckOption("Potential problems", true);
+        
     /** Show shadow */
     private static val SynthesisOption SHOW_SHADOW
         = SynthesisOption::createCheckOption("Shadow", true);
@@ -255,6 +263,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             SHOW_CONFLUENT,
             SHOW_BASICBLOCKS, 
             SHOW_SCHEDULINGBLOCKS, 
+            SHOW_SCHEDULINGPATH,
+            SHOW_POTENTIALPROBLEMS,
             SHOW_SHADOW,
             HIERARCHY_TRANSPARENCY,
             CONTROLFLOW_THICKNESS,            
@@ -904,7 +914,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
                     it.lineStyle = LineStyle::SOLID
                     it.addArrowDecorator
-                    if ((controlFlow.eContainer as Node).graph instanceof SCGraphSched) 
+                    if ((controlFlow.eContainer as Node).graph instanceof SCGraphSched
+                        && SHOW_SCHEDULINGPATH.booleanValue
+                    ) 
                         it.foreground = SCHEDULING_CONTROLFLOWEDGE.copy 
                         else it.foreground = STANDARD_CONTROLFLOWEDGE.copy
                     it.foreground.propagateToChildren = true
@@ -1110,7 +1122,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }                    
         }
         
-        if (scg instanceof SCGraphSched) {
+        if (scg instanceof SCGraphSched && SHOW_SCHEDULINGPATH.booleanValue) {
             var Node source = null
             var Node target = null 
             for(node : (scg as SCGraphSched).getSchedules.head.scheduleNodes) {
@@ -1169,6 +1181,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      */
     private def void synthesizeAnalyses(SCGraphSched scg) {
     	// val AnalysesVisualization analysesVisualization = Guice.createInjector().getInstance(typeof(AnalysesVisualization))
+    	if (!SHOW_POTENTIALPROBLEMS.booleanValue) return; 
     	scg.analyses.forEach[ visualize(it, this) ]
     }
    
