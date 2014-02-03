@@ -130,6 +130,25 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
                     rootNode.children += sourceDiagramNode;
                     rootNode.children += targetDiagramNode;
 
+                    //this edge will cause KLayLayed to position edges source node left and edges target node right
+                    createEdge => [
+                        if (sourceModelWrapper.depth <= targetModelWrapper.depth) {
+                            it.source = sourceDiagramNode;
+                            it.target = targetDiagramNode;
+                        } else {
+                            it.source = targetDiagramNode;
+                            it.target = sourceDiagramNode;
+                        }
+                        it.addPolyline => [
+                            if (sourceModelWrapper.depth <= targetModelWrapper.depth) {
+                                it.setForegroundGradient(sourceNodeHighlightingColor, targetNodeHighlightingColor, 0);
+                            } else {
+                                it.setForegroundGradient(targetNodeHighlightingColor, sourceNodeHighlightingColor, 0);
+                            }
+                            it.lineStyle = LineStyle.DOT;
+                        ]
+                    ]
+
                     //add resulting mapping edges
                     translateMappingToEdges(sourceDiagramNode, targetDiagramNode, mapping);
                 } else {

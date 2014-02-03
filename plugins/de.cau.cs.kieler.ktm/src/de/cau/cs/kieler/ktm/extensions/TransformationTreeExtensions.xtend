@@ -135,6 +135,23 @@ class TransformationTreeExtensions {
         modelNode.succeedingTransformations.map[it.target].filterNull.toList;
     }
 
+    /**
+     * Calculates the depth or level of a node in tree.
+     * @param modelNode node in tree
+     * @return depth: distance to root-node
+     */
+    def int depth(ModelWrapper modelNode) {
+        var depth = 0;
+        if (modelNode != null) {
+            var node = modelNode;
+            while (node.parent != null) {
+                node = node.parent;
+                depth = depth + 1;
+            }
+        }
+        return depth;
+    }
+
     // -------------------------------------------------------------------------
     // EObjectWrapper Utilities
     /**
@@ -528,6 +545,7 @@ class TransformationTreeExtensions {
             //Index in path were path direction in tree changes from upwards to downwards
             //index of first element in other direction
             var int downwardIndex;
+
             //paths
             val sourceUpPath = new LinkedList;
             val targetUpPath = new LinkedList;
@@ -647,6 +665,7 @@ class TransformationTreeExtensions {
 
         //create textual representation of references EObject with all it attributes
         val name = new StringBuilder(obj.class.simpleName);
+
         //append all attribute representation
         if (!obj.eClass.EAllAttributes.filterNull.empty) {
             name.append("[");
@@ -655,9 +674,9 @@ class TransformationTreeExtensions {
                 name.append(it.name);
                 name.append(": ");
                 name.append(String::valueOf(obj.eGet(it)));
-                name.append(",");//pattern for next attribute
+                name.append(","); //pattern for next attribute
             ]
-            name.deleteCharAt(name.length-1);//remove last comma
+            name.deleteCharAt(name.length - 1); //remove last comma
             name.append("]");
         }
         element.displayName = name.toString;
