@@ -185,20 +185,23 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     			it.fork = fork
     		]
     		
-	    		parallel.threads.forEach[ 
-	    	    	val forkFlow = fork.createControlFlow
-	    	    	val threadEntry = ScgFactory::eINSTANCE.createEntry.createNodeList(it) => [
-                    	scg.nodes += it
-	    	        	it.controlFlowTarget(forkFlow.toList)
-	    	    	]
-	    	    	val continuation = it.statements.transform(scg, threadEntry.createControlFlow.toList)
-	    	    	ScgFactory::eINSTANCE.createExit.createNodeList(it) => [
-	    	    		(it as Exit).entry = threadEntry as Entry
-                    	scg.nodes += it
-	    	        	it.controlFlowTarget(continuation.controlFlows)
-	    	        	it.createControlFlow.setTarget(join)
-	    	    	]
-	    		]
+    		parallel.threads.forEach[ 
+    	    	val forkFlow = fork.createControlFlow
+    	    	val threadEntry = ScgFactory::eINSTANCE.createEntry.createNodeList(it) => [
+                   	scg.nodes += it
+    	        	it.controlFlowTarget(forkFlow.toList)
+    	    	]
+    	    	val continuation = it.statements.transform(scg, threadEntry.createControlFlow.toList)
+    	    	ScgFactory::eINSTANCE.createExit.createNodeList(it) => [
+    	    		(it as Exit).entry = threadEntry as Entry
+                   	scg.nodes += it
+    	        	it.controlFlowTarget(continuation.controlFlows)
+    	        	it.createControlFlow.setTarget(join)
+                    if (!continuation.label.nullOrEmpty) {
+                        labelMapping.put(continuation.label, it)
+                    }
+    	    	]
+    		]
 	    	
 	    	cont.node = fork
 	    	cont.controlFlows += join.createControlFlow
@@ -223,7 +226,12 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Goto goto, SCGraph scg, List<ControlFlow> incoming) {
     	new SCLContinuation => [
     		if (labelMapping.keySet.contains(goto.targetLabel)) {
-    			labelMapping.get(goto.targetLabel).controlFlowTarget(incoming)
+    			val node = labelMapping.get(goto.targetLabel)
+    			if (node instanceof Depth) {
+    			     (node as Depth).surface.controlFlowTarget(incoming)    
+    			} else {
+    			    node.controlFlowTarget(incoming)
+ 			    }
     		}
     	]
     }
