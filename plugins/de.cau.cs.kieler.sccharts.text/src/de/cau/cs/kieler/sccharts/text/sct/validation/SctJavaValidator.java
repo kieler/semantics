@@ -75,7 +75,15 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public void checkInitialState(final de.cau.cs.kieler.sccharts.Region region) {
         // Do not consider the root region == SCChart
         if (region.getParentState() != null) {
+            // check if parent state has declard any REAL region not only a
+            // dummy region for entry/during/exit actions or suspends
+            de.cau.cs.kieler.sccharts.State parentState = region.getParentState();
             int foundInitial = 0;
+            if ((parentState.getLocalActions().size() > 0) && (parentState.getRegions().size() == 1)
+                    && parentState.getRegions().get(0).getStates().size() == 0
+                    && parentState.getRegions().get(0).getId().equals("")) {
+                foundInitial = 1;
+            }
             for (de.cau.cs.kieler.sccharts.State state : region.getStates()) {
                 if (state.isInitial()) {
                     foundInitial++;
