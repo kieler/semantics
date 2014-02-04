@@ -13,10 +13,14 @@
  */
 package de.cau.cs.kieler.ktm.klighd.actions;
 
+import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import de.cau.cs.kieler.core.kgraph.KGraphData;
+import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.KColor;
 import de.cau.cs.kieler.core.krendering.KColoring;
@@ -25,7 +29,10 @@ import de.cau.cs.kieler.core.krendering.KInvisibility;
 import de.cau.cs.kieler.core.krendering.KRectangle;
 import de.cau.cs.kieler.core.krendering.KRendering;
 import de.cau.cs.kieler.core.krendering.KRenderingFactory;
+import de.cau.cs.kieler.core.krendering.KStyle;
+import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.MapPropertyHolder;
+import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.klighd.IAction;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
@@ -45,19 +52,21 @@ public class ModelSelectionAction implements IAction {
     /** Action ID. */
     public static final String ID = "de.cau.cs.kieler.ktm.klighd.actions.ModelSelectionAction";
 
-    // TODO check if values prevent keys from being deleted
+    // All Referenced to Objects displayed in KLighD-View are weak-references, because this action
+    // is a Singleton, so diagrams can be closed and deleted even if this class holds references.
     /** Selected source node for open view context. */
-    protected static final WeakHashMap<ViewContext, KNode> selectedSourceNode =
-            new WeakHashMap<ViewContext, KNode>();
+    protected static final WeakHashMap<ViewContext, WeakReference<KNode>> selectedSourceNode =
+            new WeakHashMap<ViewContext, WeakReference<KNode>>();
     /** Selected source node for open view context. Used in {@link ModelSelectionAction}. */
-    protected static final WeakHashMap<ViewContext, KNode> selectedTargetNode =
-            new WeakHashMap<ViewContext, KNode>();
+    protected static final WeakHashMap<ViewContext, WeakReference<KNode>> selectedTargetNode =
+            new WeakHashMap<ViewContext, WeakReference<KNode>>();
     /** Root node of currently displayed model visualization added as submodel. */
-    protected static final WeakHashMap<ViewContext, KNode> displayedSubDiagram =
-            new WeakHashMap<ViewContext, KNode>();
-    /** Store for added highlighting color to correctly remove them after adding. */
-    protected static final WeakHashMap<KNode, KColoring<? extends KColoring<?>>> highlighting =
-            new WeakHashMap<KNode, KColoring<? extends KColoring<?>>>();
+    protected static final WeakHashMap<ViewContext, WeakReference<KNode>> displayedSubDiagram =
+            new WeakHashMap<ViewContext, WeakReference<KNode>>();
+
+    private static final IProperty<ModelSelectionAction> ADDED_HIGHLIGHTING =
+            new Property<ModelSelectionAction>("de.cau.cs.kieler.ktm.klighd.ModelSelectionAction",
+                    null);
 
     // Highlighting colors constants
     /** Color to highlight selected source nodes. */
@@ -76,6 +85,13 @@ public class ModelSelectionAction implements IAction {
      * {@inheritDoc}
      */
     public ActionResult execute(final ActionContext context) {
+        System.gc();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         KNode node = context.getKNode();
         final ViewContext vc = context.getViewContext();
         Object sourceObject = vc.getSourceElement(node);
@@ -90,7 +106,7 @@ public class ModelSelectionAction implements IAction {
             // if clicked valid node (ModelWrapper node in TransformationTree)
             if (sourceObject != null && sourceObject instanceof ModelWrapper) {
                 // if clicked an unselected node or switch from resolve to single display of models
-                if (!selectedSourceNode.containsKey(vc) || selectedSourceNode.get(vc) != node
+                if (!selectedSourceNode.containsKey(vc) || selectedSourceNode.get(vc).get() != node
                         || selectedTargetNode.containsKey(vc)) {
                     ModelWrapper sourceMW = (ModelWrapper) sourceObject;
 
@@ -128,10 +144,10 @@ public class ModelSelectionAction implements IAction {
 
                         // add diagram
                         rootNode.getChildren().add(subDiagram);
-                        displayedSubDiagram.put(vc, subDiagram);
+                        displayedSubDiagram.put(vc, new WeakReference<KNode>(subDiagram));
 
                         // highlight selected node
-                        selectedSourceNode.put(vc, node);
+                        selectedSourceNode.put(vc, new WeakReference<KNode>(node));
                         highlightNode(node, sourceNodeHighlightingColor);
 
                         return ActionResult.createResult(true);
@@ -157,21 +173,29 @@ public class ModelSelectionAction implements IAction {
     protected void clearSelectionAndSubmodel(final KNode rootNode, final ViewContext vc) {
         // remove source highlighting
         if (selectedSourceNode.containsKey(vc)) {
-            KNode sourceNode = selectedSourceNode.get(vc);
-            resetHighlightedNode(sourceNode);
-            selectedSourceNode.remove(vc);
+            KNode sourceNode = selectedSourceNode.get(vc).get();
+            if (sourceNode != null) {
+                resetHighlightedNode(sourceNode);
+                selectedSourceNode.remove(vc);
+            } else {
+                selectedSourceNode.remove(vc);
+            }
         }
 
         // remove target highlighting
         if (selectedTargetNode.containsKey(vc)) {
-            KNode targetNode = selectedTargetNode.get(vc);
-            resetHighlightedNode(targetNode);
-            selectedTargetNode.remove(vc);
+            KNode targetNode = selectedTargetNode.get(vc).get();
+            if (targetNode != null) {
+                resetHighlightedNode(targetNode);
+                selectedTargetNode.remove(vc);
+            } else {
+                selectedTargetNode.remove(vc);
+            }
         }
 
         // remove submodel
         if (displayedSubDiagram.containsKey(vc)) {
-            rootNode.getChildren().remove(displayedSubDiagram.get(vc));
+            rootNode.getChildren().remove(displayedSubDiagram.get(vc).get());
             displayedSubDiagram.remove(vc);
         }
     }
@@ -209,8 +233,8 @@ public class ModelSelectionAction implements IAction {
         KForeground fg = KRenderingFactory.eINSTANCE.createKForeground();
         // fg.setPropagateToChildren(true);
         fg.setColor(EcoreUtil.copy(color));
+        fg.setProperty(ADDED_HIGHLIGHTING, this);
         node.getData(KRendering.class).getStyles().add(fg);
-        highlighting.put(node, fg);
     }
 
     /**
@@ -220,10 +244,21 @@ public class ModelSelectionAction implements IAction {
      *            node to reset highlight
      */
     protected void resetHighlightedNode(final KNode node) {
-        if (highlighting.containsKey(node)) {
-            node.getData(KRendering.class).getStyles().remove(highlighting.get(node));
-            highlighting.remove(node);
+        for (KGraphData data : node.getData()) {
+            if (data instanceof KRendering) {
+                EList<KStyle> styles = ((KRendering) data).getStyles();
+                KStyle removeStyle = null;
+                for (KStyle style : styles) {
+                    // Check if this style is added by this action
+                    if (style.getProperty(ADDED_HIGHLIGHTING) == this) {
+                        removeStyle = style;
+                        break;
+                    }
+                }
+                styles.remove(removeStyle);
+            }
         }
+
     }
 
     /**
