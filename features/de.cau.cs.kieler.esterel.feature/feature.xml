@@ -215,9 +215,9 @@ litigation.
    </license>
 
    <url>
-      <update label="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/"/>
+      <update label="KIELER Update Site" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/"/>
    </url>
-
+   
    <requires>
       <import feature="com.google.guava.runtime.feature" version="9.0.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.emf" version="2.6.0" match="greaterOrEqual"/>
