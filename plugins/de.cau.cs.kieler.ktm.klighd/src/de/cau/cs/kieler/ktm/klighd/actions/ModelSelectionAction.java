@@ -85,13 +85,6 @@ public class ModelSelectionAction implements IAction {
      * {@inheritDoc}
      */
     public ActionResult execute(final ActionContext context) {
-        System.gc();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         KNode node = context.getKNode();
         final ViewContext vc = context.getViewContext();
         Object sourceObject = vc.getSourceElement(node);
