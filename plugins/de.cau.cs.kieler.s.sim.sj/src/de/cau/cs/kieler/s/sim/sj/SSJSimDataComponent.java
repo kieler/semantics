@@ -36,7 +36,7 @@ import org.eclipse.ui.console.MessageConsoleStream;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+ 
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;

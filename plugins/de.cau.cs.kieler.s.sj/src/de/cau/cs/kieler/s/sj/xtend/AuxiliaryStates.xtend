@@ -20,8 +20,9 @@ import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.SFactory
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
-import org.eclipse.xtend.util.stdlib.CloningExtensions
 import com.google.common.collect.ImmutableList
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Transformation of S code into S code that is
@@ -64,7 +65,7 @@ class AuxiliaryStates {
          def Program transform2Simulation (Program program) {
                
          // Clone the complete S program 
-         var target = CloningExtensions::clone(program) as Program;
+         var target = program.copy
 
          var originalInstructions = program.eAllContents().toIterable().filter(typeof(Instruction));
          var targetInstructions = target.eAllContents().toIterable().filter(typeof(Instruction)).toList();
