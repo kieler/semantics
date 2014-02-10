@@ -415,28 +415,30 @@ class SCGDEPToSCGBBTransformation extends AbstractModelTransformation {
     	// Process each predecessor basic block.
     	basicBlocks.forEach[bb|
     		// Create a new predecessor object and set its basic block.
-    		val predecessor = ScgbbFactory::eINSTANCE.createPredecessor => [ basicBlock = bb ]
+    		if (bb != null) {
+    		    val predecessor = ScgbbFactory::eINSTANCE.createPredecessor => [ basicBlock = bb ]
     		
-    		// Additionally, check the last node of the predecessor block.
-    		val lastNode = bb.schedulingBlocks.last.nodes.last
-       		if (lastNode instanceof Conditional) {
-       			/**
-       			 * If it is a conditional, we want to mark this block appropriately and store a reference
-       			 * to the condition of the conditional. The scheduler can use this information without extra 
-       			 * examination of the basic blocks to generate the guard expressions.
-       			 * Therefore, check whether first node of the target block is the target of the then or else 
-       			 * branch of the conditional and add this information to the predecessor object. 
-       			 */
-       			if (target.schedulingBlocks.head.nodes.head == (lastNode as Conditional).then.target) {
-        			predecessor.blockType =  BlockType::TRUEBRANCH
-       			} else {
-        			predecessor.blockType =  BlockType::ELSEBRANCH
-       			}
-       			predecessor.conditional = lastNode as Conditional
-       		}
+        		// Additionally, check the last node of the predecessor block.
+        		val lastNode = bb.schedulingBlocks.last.nodes.last
+                if (lastNode != null && lastNode instanceof Conditional) {
+       		   	   /**
+               	    * If it is a conditional, we want to mark this block appropriately and store a reference
+          		    * to the condition of the conditional. The scheduler can use this information without extra 
+       			    * examination of the basic blocks to generate the guard expressions.
+       			    * Therefore, check whether first node of the target block is the target of the then or else 
+       			    * branch of the conditional and add this information to the predecessor object. 
+       			    */
+       			    if (target.schedulingBlocks.head.nodes.head == (lastNode as Conditional).then.target) {
+        			    predecessor.blockType =  BlockType::TRUEBRANCH
+       			    } else {
+        			    predecessor.blockType =  BlockType::ELSEBRANCH
+       			    }
+                    predecessor.conditional = lastNode as Conditional
+                }
     		
-    		// Add the predecessor to the predecessors list.
-    		predecessors.add(predecessor)
+                // Add the predecessor to the predecessors list.
+                predecessors.add(predecessor)
+            }
     	]
     	
     	// Return the list.
