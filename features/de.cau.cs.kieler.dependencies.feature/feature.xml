@@ -52,27 +52,7 @@
          id="org.eclipse.emf.workspace"
          version="0.0.0"
          search-location="self"/>
-
-   <includes
-         id="org.eclipse.gmf"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
-         id="org.eclipse.gmf.runtime.notation"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
-         id="org.eclipse.gmf.runtime.thirdparty"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
-         id="org.eclipse.gef"
-         version="0.0.0"
-         search-location="self"/>
-
+         
    <includes
          id="org.eclipse.emf.edit"
          version="0.0.0"
@@ -94,42 +74,12 @@
          search-location="self"/>
 
    <includes
-         id="org.eclipse.xpand"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
-         id="org.eclipse.ocl"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
          id="org.eclipse.platform"
          version="0.0.0"
          search-location="self"/>
 
    <includes
          id="org.eclipse.draw2d"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
-         id="org.eclipse.xpand.ui"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
-         id="org.eclipse.emf.codegen.ecore"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
-         id="org.eclipse.emf.codegen"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
-         id="org.eclipse.emf.ecore.editor"
          version="0.0.0"
          search-location="self"/>
 
@@ -149,22 +99,12 @@
          search-location="self"/>
 
    <includes
-         id="org.eclipse.uml2"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
          id="org.eclipse.emf.mapping"
          version="0.0.0"
          search-location="self"/>
 
    <includes
          id="org.eclipse.emf.mapping.ecore"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
-         id="org.eclipse.ocl.uml"
          version="0.0.0"
          search-location="self"/>
 
@@ -184,32 +124,12 @@
          search-location="self"/>
 
    <includes
-         id="org.eclipse.emf.codegen.ecore.ui"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
-         id="org.eclipse.emf.mwe2.language.sdk"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
          id="org.eclipse.emf"
          version="0.0.0"
          search-location="self"/>
 
    <includes
-         id="org.eclipse.emf.ecoretools"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
          id="org.eclipse.emf.compare"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
-         id="org.eclipse.emf.validation.ocl"
          version="0.0.0"
          search-location="self"/>
 
@@ -258,13 +178,6 @@
 
    <plugin
          id="org.apache.commons.lang"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.jws"
          download-size="0"
          install-size="0"
          version="0.0.0"
