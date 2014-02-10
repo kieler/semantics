@@ -40,7 +40,7 @@
             <product>
               <id>de.cau.cs.kieler.product</id>
               <rootFolder>kieler</rootFolder>
-              <archiveFileName>kieler_rca_nightly_${buildQualifier}</archiveFileName>
+              <archiveFileName>kieler_0.9.0.v${buildQualifier}</archiveFileName>
             </product>
           </products>
         </configuration>
