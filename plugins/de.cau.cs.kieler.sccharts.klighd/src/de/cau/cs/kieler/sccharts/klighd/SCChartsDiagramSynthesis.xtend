@@ -348,15 +348,18 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     figure.setCornerSize(offset + cornerRadius, offset + cornerRadius)
                     figure.lineWidth = if(s.isInitial) 3 else 1;
                     // configure the inner one
-                    it.background = "white".color;
+//                    it.background = "white".color;
                     it.styleRef = figure;
+                    it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
                     it.shadow = null
                     it.lineWidth = if(s.isInitial) 1 else 1;
                     it.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset,
                         0);
                 ]
             else
-                figure
+                figure => [
+                    it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+                ]
                 
              ) => [
                 node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
@@ -365,7 +368,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 if (connector) {
                     return;
                 }
-                it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+//                it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
                 if (s.hasRegionsOrDeclarations) {
                     it.setGridPlacement(1);
                 }
