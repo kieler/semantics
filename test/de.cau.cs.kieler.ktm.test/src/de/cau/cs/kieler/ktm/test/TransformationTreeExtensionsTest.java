@@ -39,7 +39,7 @@ import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation;
  * 
  */
 public class TransformationTreeExtensionsTest extends TestCase {
-
+    // Transformations
     private final TransformationTreeExtensions extension = Guice.createInjector().getInstance(
             TransformationTreeExtensions.class);
     private final SimpleModelGenerator modelGen = Guice.createInjector().getInstance(
@@ -47,6 +47,7 @@ public class TransformationTreeExtensionsTest extends TestCase {
     private final SimpleTransformation transformer = Guice.createInjector().getInstance(
             SimpleTransformation.class);
 
+    // Example models
     private final ModelWrapper chain = modelGen.generateThreePartsChain();
     private final ModelWrapper tree3parts = modelGen.generateThreePartsTree();
     private final ModelWrapper tree5parts = modelGen.generateFivePartsTree();
@@ -132,19 +133,30 @@ public class TransformationTreeExtensionsTest extends TestCase {
 
     /**
      * Test method for
-     * {@link de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions#succeedingModels(de.cau.cs.kieler.ktm.transformationtree.ModelWrapper)}
+     * {@link de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions#succeedingModelWrappers(de.cau.cs.kieler.ktm.transformationtree.ModelWrapper)}
      * .
      */
     public final void testSucceedingModels() {
         // test chain and correct elements
-        List<ModelWrapper> succeedingModels = extension.succeedingModels(chain);
+        List<ModelWrapper> succeedingModels = extension.succeedingModelWrappers(chain);
         assertEquals(2, succeedingModels.size());
         assertTrue(succeedingModels.contains(objects[2]));
         assertTrue(succeedingModels.contains(objects[4]));
         // test tree
-        assertEquals(4, extension.succeedingModels(tree5parts).size());
+        assertEquals(4, extension.succeedingModelWrappers(tree5parts).size());
         // test leaf
-        assertEquals(0, extension.succeedingModels((ModelWrapper) objects[4]).size());
+        assertEquals(0, extension.succeedingModelWrappers((ModelWrapper) objects[4]).size());
+    }
+    
+    /**
+     * Test method for
+     * {@link de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions#depth(de.cau.cs.kieler.ktm.transformationtree.ModelWrapper)}
+     * .
+     */
+    public final void testDepth() {
+        assertEquals(0, extension.depth((ModelWrapper) objects[0]));
+        assertEquals(1, extension.depth((ModelWrapper) objects[2]));
+        assertEquals(2, extension.depth((ModelWrapper) objects[4]));
     }
 
     /**
@@ -500,15 +512,15 @@ public class TransformationTreeExtensionsTest extends TestCase {
         assertNull(extension.findModelInTree(tree, missingTransformedChain, "chain"));
         // test find structural changed models
         secondTransformedChain.getTargetTransformations().get(0).getTarget()
-                .getTargetTransformations().clear();        
+                .getTargetTransformations().clear();
         assertNull(extension
-                .findModelInTree(tree, secondTransformedChain, "secondTransformedChain"));        
+                .findModelInTree(tree, secondTransformedChain, "secondTransformedChain"));
         // test find root attribute changed models
         thirdTransformedChain.setModelTypeID("Hugo");
         assertNull(extension.findModelInTree(tree, thirdTransformedChain, "thirdTransformedChain"));
         // test find attribute changed models
         chain.getTargetTransformations().get(0).setTransformationID("Hugo");
-        assertNull(extension.findModelInTree(tree, chain, "sourceChain"));        
+        assertNull(extension.findModelInTree(tree, chain, "sourceChain"));
     }
 
     /**

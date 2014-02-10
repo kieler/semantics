@@ -36,6 +36,8 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 import static com.google.common.base.Preconditions.*
+import org.eclipse.emf.compare.scope.FilterComparisonScope
+import com.google.common.base.Predicates
 
 /**
  * Extension for easier access and manipulation of TranformationTrees.
@@ -47,16 +49,16 @@ class TransformationTreeExtensions {
 
     // -------------------------------------------------------------------------
     // ModelWrapper Utilities
-    /**
-	 * Returns root model-node of tree.
-	 * @param model any model-node in tree
+    /** 
+	 * Returns root node of tree.
+	 * @param modelNode any model-node in tree
 	 * @return root model-node.
 	 */
-    def ModelWrapper root(ModelWrapper model) {
-        if (model == null) {
+    def ModelWrapper root(ModelWrapper modelNode) {
+        if (modelNode == null) {
             return null;
         }
-        var root = model;
+        var root = modelNode;
 
         //this could end up in endless loop, 
         // but containment references of transformation tree in meta-model prevent cycles
@@ -67,17 +69,17 @@ class TransformationTreeExtensions {
     }
 
     /**
-	 * Returns source model-node in tree, where given model is transformed from.
+	 * Returns source node in tree, where given ModelWrapper-node is transformed from.
 	 * <p>
 	 * If model is root-node, returns null.
-	 * @param model model in tree
+	 * @param modelNode node in tree
 	 * @return parent model or null
 	 */
-    def ModelWrapper parent(ModelWrapper model) {
-        if (model == null) {
+    def ModelWrapper parent(ModelWrapper modelNode) {
+        if (modelNode == null) {
             return null;
         }
-        val sourceTransformation = model.sourceTransformation;
+        val sourceTransformation = modelNode.sourceTransformation;
         if (sourceTransformation != null) {
             return sourceTransformation.source;
         }
@@ -85,32 +87,32 @@ class TransformationTreeExtensions {
     }
 
     /**
-     * Returns all child models of this node in tree, where given model is transformed into.
-     * @param model model in tree
+     * Returns all child node as ModelWrapper of given ModelWrapper-node in tree, where given model is transformed into.
+     * @param modelNode node in tree
      * @return child models
      */
-    def List<ModelWrapper> children(ModelWrapper model) {
-        if (model == null) {
+    def List<ModelWrapper> children(ModelWrapper modelNode) {
+        if (modelNode == null) {
             return emptyList;
         }
-        return (model.targetTransformations ?: emptyList).map[it.target];
+        return (modelNode.targetTransformations ?: emptyList).map[it.target];
     }
 
     /**
 	 * Returns all succeeding ModelTransformations for given model-node.
      * <p>
 	 * BFS will be performed on sub tree.
-	 * @param model model in tree
+	 * @param modelNode node in tree
 	 * @return list of succeeding ModelTransformation.
 	 */
-    def List<ModelTransformation> succeedingTransformations(ModelWrapper model) {
+    def List<ModelTransformation> succeedingTransformations(ModelWrapper modelNode) {
         val transformations = new LinkedList<ModelTransformation>();
 
         //Simple implementation of breadth-first search.
         //visited nodes are not marked because we can estimate valid (acyclic) tree
-        if (model != null) {
+        if (modelNode != null) {
             val queue = new LinkedList<ModelWrapper>();
-            queue.add(model);
+            queue.add(modelNode);
             while (!queue.empty) {
                 val targetTransformations = queue.poll.targetTransformations ?: emptyList;
                 transformations.addAll(targetTransformations);
@@ -123,14 +125,31 @@ class TransformationTreeExtensions {
     }
 
     /**
-     * Returns all succeeding models for given model.
+     * Returns all succeeding ModelWrappers for given modelNode.
      * <p>
      * BFS will be performed on sub tree.
-     * @param model model in tree
+     * @param modelNode node in tree
      * @return list of succeeding models.
      */
-    def List<ModelWrapper> succeedingModels(ModelWrapper model) {
-        model.succeedingTransformations.map[it.target].filterNull.toList;
+    def List<ModelWrapper> succeedingModelWrappers(ModelWrapper modelNode) {
+        modelNode.succeedingTransformations.map[it.target].filterNull.toList;
+    }
+
+    /**
+     * Calculates the depth or level of a node in tree.
+     * @param modelNode node in tree
+     * @return depth: distance to root-node
+     */
+    def int depth(ModelWrapper modelNode) {
+        var depth = 0;
+        if (modelNode != null) {
+            var node = modelNode;
+            while (node.parent != null) {
+                node = node.parent;
+                depth = depth + 1;
+            }
+        }
+        return depth;
     }
 
     // -------------------------------------------------------------------------
@@ -161,14 +180,17 @@ class TransformationTreeExtensions {
 
     // -------------------------------------------------------------------------
     // Tree Modifiers
-    val TransformationTreeFactory factory = TransformationTreeFactory.eINSTANCE;
+    private val TransformationTreeFactory factory = TransformationTreeFactory.eINSTANCE;
 
     /**
      * Creates a new transformation tree containing given mapping as first transformation.
      * <p>
      * Completeness of mapping will not be checked.
-     * Only objects from mapping are created as Elements of Models in TransformationTree.
-     * If mapping is incomplete (model contains unmapped elements) later resolved mapping my be incomplete.
+     * <p>
+     * Only objects from mapping are created as EObjectWrapper of ModelWrapper in TransformationTree.
+     * <p>
+     * If mapping is incomplete (model contains unmapped objects) later resolved mapping may be incomplete.
+     * <p>
      * If mapping contains entries for objects not contained in given model instances they will omitted.
      * <p>
      * Returns leaf of new tree as ModelWrapper representing target model.
@@ -203,12 +225,12 @@ class TransformationTreeExtensions {
 
         //create basic tree
         val ModelWrapper source = factory.createModelWrapper();
-        source.rootObject = sourceModelCopy.createObject(source);
+        source.rootObject = sourceModelCopy.createEObjectWrapper(source);
         source.modelTypeID = sourceModelTypeID;
         source.transient = false;
 
         val ModelWrapper target = factory.createModelWrapper();
-        target.rootObject = targetModelCopy.createObject(target);
+        target.rootObject = targetModelCopy.createEObjectWrapper(target);
         target.modelTypeID = targetModelTypeID;
         target.transient = false;
 
@@ -223,8 +245,8 @@ class TransformationTreeExtensions {
         ].forEach [
             val trans = factory.createEObjectTransformation;
             trans.modelTransformation = transformation;
-            trans.source = sourceCopyMap.get(it.key).createObject(source);
-            trans.target = targetCopyMap.get(it.value).createObject(target);
+            trans.source = sourceCopyMap.get(it.key).createEObjectWrapper(source);
+            trans.target = targetCopyMap.get(it.value).createEObjectWrapper(target);
         ]
 
         return target;
@@ -241,17 +263,19 @@ class TransformationTreeExtensions {
      * Transformations CANNOT appended to transient models!
      * <p>
      * Completeness of mapping will not be checked.
-     * Only objects from mapping are created as Elements of Models in TransformationTree.
+     * <p>
+     * Only objects from mapping are created as EObjectWrapper of ModelWrapper in TransformationTree.
      * If previous transformation mapping of source model was incomplete and current mapping contains 
-     * information about missing objects in source model additional Elements of source model model in 
-     * transformation tree will be created. 
-     * If mapping is incomplete (model contains unmapped elements) later resolved mapping my be incomplete.
+     * information about missing objects in source model additional EObjectWrapper for missing elements will be inserted.
+     * <p> 
+     * If mapping is incomplete (model contains unmapped elements) later resolved mapping may be incomplete.
+     * <p>
      * If mapping contains entries for objects not contained in given model instances they will omitted.
      * <p>
      * <p>
      * Returns new leaf in tree as ModelWrapper representing target model.
      * <p>
-     * Return null if sourceModel is not modelNode or model is transient.
+     * Return null if sourceModel is not modelNode or ModelWrapper is transient.
      * @param mapping object mapping data
      * @param modelNode node in tree to append transformation, representing source model
      * @param transformationID a unique identifier for initial transformation
@@ -289,7 +313,7 @@ class TransformationTreeExtensions {
             val ModelWrapper source = modelNode;
 
             val ModelWrapper target = factory.createModelWrapper();
-            target.rootObject = targetModelCopy.createObject(target);
+            target.rootObject = targetModelCopy.createEObjectWrapper(target);
             target.modelTypeID = targetModelTypeID;
             target.transient = false;
 
@@ -313,9 +337,9 @@ class TransformationTreeExtensions {
                     //So source.elements does not contain all object contained in source model.
                     //Adding additional elements.
                     //Its safe because both source model instances match
-                    eTransformation.source = sourceModelMap.get(entry.key).createObject(source);
+                    eTransformation.source = sourceModelMap.get(entry.key).createEObjectWrapper(source);
                 }
-                eTransformation.target = targetCopyMap.get(entry.value).createObject(target);
+                eTransformation.target = targetCopyMap.get(entry.value).createEObjectWrapper(target);
             ]
             return target;
         }
@@ -325,11 +349,11 @@ class TransformationTreeExtensions {
     /**
      * Removes given model from tree including all succeeding Models and EObjectWrapper-Mappings
      * <p>
-     * Returns parent in tree
+     * Returns parent-node in tree
      * <p>
      * Returns null tree does not contain given model or model has no root
      * @param modelNode node in tree to remove
-     * @return parent node or null
+     * @return parent parent-node or null
      */
     def ModelWrapper removeModelFromTree(ModelWrapper modelNode) {
         val source = modelNode.parent;
@@ -365,12 +389,24 @@ class TransformationTreeExtensions {
 
     // -------------------------------------------------------------------------
     // Analyzer
+    private val LinkedList<Class<? extends EObject>> matchIgnoreClasses = new LinkedList;
+
     /**
-     * Searches given transformation tree for matching model-nodes for given model instance and typeID
+     * Returns a mutable list of classes which instances should be excluded in matching process.
+     * A matching is started when calling {@link findModelInTree} to check if the given model instance 
+     * matches the model internally stored by EObjectWrapper in a ModelWrapper.
+     * @returns list of ignored classes for matching
+     */
+    def getMatchIgnoreClasses() {
+        matchIgnoreClasses;
+    }
+
+    /**
+     * Searches given transformation tree for matching model-nodes for given model instance and typeID.
      * <p>
-     * If tree is malformed and there are more than one fully matching model the first one is returned.
+     * If tree is malformed and there are more than one fully matching models the first one is returned.
      * <p>
-     * Returns null if no model is found or can not be identified because it is transient.
+     * Returns null if no model is found or can not be identified because it is transient or mismatching.
      * @param tree root model of tree
      * @param modelRoot root element of a model instance to search for.
      * @param modelTypeID unique identifier for searched kind of models.
@@ -382,7 +418,7 @@ class TransformationTreeExtensions {
         } else {
 
             //get a list of all reachable models from root, add root because it is missing in it's succeeding models
-            (tree.succeedingModels.toList => [it.add(tree)]).filter [ //filter for not transient models
+            (tree.succeedingModelWrappers.toList => [it.add(tree)]).filter [ //filter for not transient models
                 it.transient == false;
             ].filter [ // filter for correct typeID
                 it.modelTypeID.equals(modelTypeID);
@@ -394,13 +430,13 @@ class TransformationTreeExtensions {
     }
 
     /**
-     * Returns a mapping from Elements of a model in tree to a model instance. 
+     * Returns a mapping from EObjectWrappers of a ModelWrapper in tree to a model instance. 
      * <p>
-     * ReferencedObjects of Elements in ModelWrapper in transformation tree are only copies of their origin instances.
-     * Returned mapping provides relations between Elements and their represented objects in given model instance.
+     * ReferencedObjects of EObjectWrappers in ModelWrapper in transformation tree may be only copies of their origin instances.
+     * Returned mapping provides relations between EObjectWrappers and their represented EObjects in given model instance.
      * <p>
      * Return null if any argument is null or model and model of modelNode does not match.
-     * If transformation tree was created on incomplete mappings returned mapping may be incomplete.
+     * If transformation tree was created with incomplete mappings returned mapping may be incomplete.
      * @param modelNode node in tree which models elements shall be mapped
      * @param model root element of a model instance to map to
      * @returns mapping from elements of modelNode to model objects
@@ -424,14 +460,14 @@ class TransformationTreeExtensions {
     /**
      * Resolves a mapping between all elements of source and target model instances by their nodes in transformation tree.
      * <p>
-     * Returns a multi-mapping from elements of source model to target model elements.
+     * Returns a multi-mapping from objects of source model to target model objects.
      * Mapping is created by resolving all transformations on a path from source to target.
-     * Source and target can be arbitrary model in tree, so path can be bottom up, top down or leaf to leaf.
+     * Source and target can be arbitrary models in tree, so path can be bottom up, top down or leaf to leaf.
      * <p>
      * A mapping can only be resolved if both source and target are NOT transient.
      * <p>
-     * Returns null if source or target model do not match to their models in tree or if they are not in the same tree.
-     * If transformation tree was created on incomplete mappings returned mapping may be incomplete.
+     * Returns null if source or target model do not match to their model of ModelWrapper in tree or if they are not in the same tree.
+     * If transformation tree was created with incomplete mappings returned mapping may be incomplete.
      * @param sourceModelNode model in transformation tree representing sourceModel model
      * @param sourceModel root element of a source model instance
      * @param targetModelNode model in transformation tree representing targetModel model
@@ -467,15 +503,15 @@ class TransformationTreeExtensions {
     }
 
     /**
-     * Resolves a mapping between all elements of source and target model as their wrappers.
+     * Resolves a mapping between all elements of source and target model as their EObjectWrappers.
      * <p>
      * If concrete instances shall be resolved use {@link resolveMapping}.
      * <p>
-     * Returns a multi-mapping from elements of source model to target model elements.
+     * Returns a multi-mapping from EObjectWrapper of source model to target model EObjectWrapper.
      * Mapping is created by resolving all transformations on a path from source to target.
      * Source and target can be arbitrary model in tree, so path can be bottom up, top down or leaf to leaf.
      * <p>
-     * A mapping can also be resolved for transient model wrapper.
+     * A mapping can also be resolved with transient ModelWrappers.
      * <p>
      * Returns null if models are not in the same tree.
      * If transformation tree was created on incomplete mappings returned mapping may be incomplete.
@@ -509,10 +545,13 @@ class TransformationTreeExtensions {
             //Index in path were path direction in tree changes from upwards to downwards
             //index of first element in other direction
             var int downwardIndex;
+
+            //paths
             val sourceUpPath = new LinkedList;
             val targetUpPath = new LinkedList;
 
-            //First resolve a path from target model upward to root
+            //First create a path from target model upward to root,
+            // if source model is found meanwhile stop and use existing path
             var node = targetModelNode; //Iteration variable for models on paths
             do {
                 val sourceTransformation = node.sourceTransformation;
@@ -529,7 +568,8 @@ class TransformationTreeExtensions {
                 }
             } while (node != null);
 
-            //If no path is found yet, resolve a path from source model upward to root
+            //If no path is found yet, create a path from source model upward to root
+            // if target model is found meanwhile stop and use existing path
             if (path == null) {
                 node = sourceModelNode;
                 do {
@@ -549,6 +589,7 @@ class TransformationTreeExtensions {
             }
 
             //if no simply upward or downward path exist there might be a leaf-to-leaf-path with change of direction
+            // Therefore find a least common ancestor node (at least root) as connection between both paths
             if (path == null) {
 
                 //search for a connection between the two upward paths
@@ -592,7 +633,6 @@ class TransformationTreeExtensions {
                 }
             ];
 
-            //val keys = elementMapping.keySet;
             path.drop(1).forEach [ transformation, index |
                 elementMapping.keySet.immutableCopy.forEach [
                     //resolve elementTransformation for all values and replace value
@@ -617,12 +657,29 @@ class TransformationTreeExtensions {
     // -------------------------------------------------------------------------
     // Helper
     /**
-     * creates element once and adds it to its container-model
+     * Creates a EObjectWrapper for a given EObject contained in given ModelWrapper.
      */
-    private def EObjectWrapper create element : factory.createEObjectWrapper() createObject(EObject obj,
+    private def EObjectWrapper create element : factory.createEObjectWrapper() createEObjectWrapper(EObject obj,
         ModelWrapper model) {
         element.model = model;
-        element.displayName = obj.toString;
+
+        //create textual representation of references EObject with all it attributes
+        val name = new StringBuilder(obj.class.simpleName);
+
+        //append all attribute representation
+        if (!obj.eClass.EAllAttributes.filterNull.empty) {
+            name.append("[");
+            obj.eClass.EAllAttributes.filterNull.map [ //get all attributes
+                //compose name and value of the attribute
+                name.append(it.name);
+                name.append(": ");
+                name.append(String::valueOf(obj.eGet(it)));
+                name.append(","); //pattern for next attribute
+            ]
+            name.deleteCharAt(name.length - 1); //remove last comma
+            name.append("]");
+        }
+        element.displayName = name.toString;
         element.EObject = obj;
     }
 
@@ -643,7 +700,13 @@ class TransformationTreeExtensions {
         val comparator = EMFCompare.builder().setMatchEngineFactoryRegistry(matchEngineRegistry).
             setPostProcessorRegistry(postProcessorRegistry).build();
 
-        val scope = EMFCompare.createDefaultScope(left, right);
+        val scope = new FilterComparisonScope(left, right, null);
+        scope.setEObjectContentFilter(
+            [ EObject eo |
+                matchIgnoreClasses.forall [
+                    !it.isInstance(eo);
+                ]
+            ]);
         val comparison = comparator.compare(scope);
 
         if (comparison.differences.empty && comparison.matches.size == 1) {

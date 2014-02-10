@@ -18,7 +18,7 @@ import de.cau.cs.kieler.ktm.transformationtree.ModelTransformation
 import de.cau.cs.kieler.ktm.transformationtree.TransformationTreeFactory
 
 /**
- * Generates example models from TransformationTree-MetaModel
+ * Generates example (invalid) models from TransformationTree-MetaModel
  * 
  * @author als
  *

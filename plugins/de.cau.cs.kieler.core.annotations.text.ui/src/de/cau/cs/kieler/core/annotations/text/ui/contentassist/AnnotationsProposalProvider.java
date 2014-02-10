@@ -144,11 +144,11 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
             ICompletionProposal completeProposal;
 
             LayoutDataService layoutServices = LayoutDataService.getInstance();
-            Collection<LayoutOptionData<?>> optionDataList = layoutServices.getOptionData();
-            LayoutOptionData<?> optionData;
+            Collection<LayoutOptionData> optionDataList = layoutServices.getOptionData();
+            LayoutOptionData optionData;
 
             /* create and register the completion proposal for every element in the list */
-            for (Iterator<LayoutOptionData<?>> i = optionDataList.iterator(); i.hasNext();) {
+            for (Iterator<LayoutOptionData> i = optionDataList.iterator(); i.hasNext();) {
                 optionData = i.next();
                 theStyle = (optionData.isAdvanced()) ? StyledString.COUNTER_STYLER : null;
                 displayString = new StyledString(optionData.toString(), theStyle);
@@ -187,7 +187,7 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
                     LayoutDataService layoutServices = LayoutDataService.getInstance();
 
                     // find the specific option an display all possible values
-                    LayoutOptionData<?> optionData = layoutServices.getOptionData(annotationName);
+                    LayoutOptionData optionData = layoutServices.getOptionData(annotationName);
                     Type theType = (optionData != null) ? optionData.getType() : Type.UNDEFINED;
                     String proposal = null;
                     

@@ -937,6 +937,20 @@ class SCChartsExtension {
     
 
     //-------------------------------------------------------------------------
+    //--                F I X   F O R   H A L T   S T A T E S                --
+    //-------------------------------------------------------------------------
+    // This fixes halt states and adds an explicit delayed self transition
+    def Region fixPossibleHaltStates(Region rootRegion) {
+        val haltStates = rootRegion.allContainedStates.filter[!hierarchical && outgoingTransitions.nullOrEmpty && !final]
+        
+        for (haltState : haltStates) {
+            haltState.createTransitionTo(haltState)
+        }
+        rootRegion
+    }
+
+
+    //-------------------------------------------------------------------------
     //--               L O C A L   V A L U E D O B J E C T S                 --
     //-------------------------------------------------------------------------
     

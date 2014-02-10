@@ -32,6 +32,8 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 
 /**
+ * Handler to open a ktmt file containing a transformation tree and visualize it with KLighD.
+ * 
  * @author als
  * 
  */
@@ -44,6 +46,7 @@ public class OpenTransformationTreeHandler extends AbstractHandler {
         final ISelection selection = HandlerUtil.getCurrentSelection(event);
 
         try {
+            // OPEN file
             ResourceSet resourceSet = new ResourceSetImpl();
             IFile file = (IFile) ((IStructuredSelection) selection).getFirstElement();
 
@@ -51,6 +54,7 @@ public class OpenTransformationTreeHandler extends AbstractHandler {
                     resourceSet.getResource(URI.createFileURI(file.getLocationURI().getPath()),
                             true);
 
+            // LOAD tree
             ModelWrapper tree = null;
             for (EObject obj : resource.getContents()) {
                 if (obj instanceof ModelWrapper) {
@@ -59,6 +63,7 @@ public class OpenTransformationTreeHandler extends AbstractHandler {
                 }
             }
 
+            // SHOW diagram
             DiagramViewManager.getInstance().createView(
                     "de.cau.cs.kieler.ktm.klighd.TransformationTreeDiagramSynthesis",
                     file.getName(), tree, KlighdSynthesisProperties.newInstance());

@@ -13,13 +13,15 @@
  */
 package de.cau.cs.kieler.ktm.test;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Collections;
 
 import junit.framework.TestCase;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -37,41 +39,50 @@ import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.scg.SCGraph;
 
 /**
- * @author als
+ * Test basic functions of KTM.
  * 
+ * Example use: transformation with MappingExtension and creation of TransformationTree
+ * 
+ * @author als
  */
 public class SCChartTest extends TestCase {
 
-    private final SCChartsCoreTransformation SCCtransformation = Guice.createInjector().getInstance(
-            SCChartsCoreTransformation.class);
+    // Transformations
+    private final SCChartsCoreTransformation SCCtransformation = Guice.createInjector()
+            .getInstance(SCChartsCoreTransformation.class);
     private final SCGTransformation SCGtransformation = Guice.createInjector().getInstance(
             SCGTransformation.class);
+
+    // TransformationTree Utilities
     private final TransformationTreeExtensions transformationTree = Guice.createInjector()
             .getInstance(TransformationTreeExtensions.class);
+
+    // Artifacts
     private Region abo;
     private Region aboSplitTE;
     private Region aboNormalized;
     private SCGraph aboSCG;
     private ModelWrapper tree;
 
+    // Paths
+    private final String projectPath = "de.cau.cs.kieler.ktm.test";
+    private final String pathABO = "/artifacts/ABO.scc";
+    private final String pathABO_TE = "artifacts/ABO.split.scc";
+    private final String pathABO_Norm = "artifacts/ABO.normalized.scc";
+    private final String pathABO_SCG = "artifacts/ABO.scg";
+    private final String pathKTMT = "artifacts/ABO.ktmt";
+
     /**
      * {@inheritDoc}
      */
     protected void setUp() throws Exception {
-        // LOAD test chart
+        // LOAD test ABO chart
 
         // Create a resource set.
         ResourceSet resourceSet = new ResourceSetImpl();
 
-        // Register the default resource factory -- only needed for stand-alone!
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-                .put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
-
         // Get the URI of the model file.
-        File file = new File("./artifacts/ABO.scc");
-        assertTrue(file.exists());
-        URI fileURI = URI.createFileURI(file.getAbsolutePath());
-
+        URI fileURI = URI.createPlatformPluginURI(projectPath + pathABO, true);
         // Demand load the resource for this file, here the actual loading is done.
         Resource resource = resourceSet.getResource(fileURI, true);
 
@@ -85,57 +96,61 @@ public class SCChartTest extends TestCase {
      * {@inheritDoc}
      */
     protected void tearDown() throws Exception {
-        // SAVE results
+        IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectPath);
+        // if project is open
+        if (project.exists() && project.isOpen()) {
+            // SAVE resulting artifacts
+            IFile file = project.getFile(new Path(pathABO_TE));
+            saveModel(aboSplitTE, file);
+            assertTrue(file.exists());
 
-        File file = new File("./artifacts/ABO.split.scc");
-        saveModel(aboSplitTE, file);
-        assertTrue(file.exists());
-        
-        file = new File("./artifacts/ABO.normalized.scc");
-        saveModel(aboNormalized, file);
-        assertTrue(file.exists());
-        
-        file = new File("./artifacts/ABO.scg");
-        saveModel(aboSCG, file);
-        assertTrue(file.exists());
-        
-        assertNotNull(tree);
+            file = project.getFile(new Path(pathABO_Norm));
+            saveModel(aboNormalized, file);
+            assertTrue(file.exists());
 
-        // Create a resource set.
-        ResourceSet resourceSet = new ResourceSetImpl();
+            file = project.getFile(new Path(pathABO_SCG));
+            saveModel(aboSCG, file);
+            assertTrue(file.exists());
 
-        // this tells EMF to use XML to save the model
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-                .put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
+            assertNotNull(tree);
 
-        // Get the URI of the model file.
-        file = new File("./artifacts/ABO.ktmt");
-        URI fileURI = URI.createFileURI(file.getAbsolutePath());
+            // Create a resource set.
+            ResourceSet resourceSet = new ResourceSetImpl();
 
-        // Create a resource for this file.
-        Resource resource = resourceSet.createResource(fileURI);
+            file = project.getFile(new Path(pathKTMT));
+            URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 
-        // Add the model objects to the contents.
-        resource.getContents().add(tree);
-        // Also add referenced Objects
-        if (!tree.isTransient()) {
-            resource.getContents().add(tree.getRootObject().getEObject());
-        }
-        for (ModelWrapper model : transformationTree.succeedingModels(tree)) {
-            if (!model.isTransient()) {
-                resource.getContents().add(model.getRootObject().getEObject());
+            // Create a resource for this file.
+            Resource resource = resourceSet.createResource(uri);
+
+            // Add the model objects to the contents.
+            resource.getContents().add(tree);
+            // IMPORTANT !!!! Also add referenced Objects
+            if (!tree.isTransient()) {
+                resource.getContents().add(tree.getRootObject().getEObject());
             }
+            for (ModelWrapper model : transformationTree.succeedingModelWrappers(tree)) {
+                if (!model.isTransient()) {
+                    resource.getContents().add(model.getRootObject().getEObject());
+                }
+            }
+
+            // Save the contents of the resource to the file system.
+            resource.save(Collections.EMPTY_MAP);
+
+            assertTrue(file.exists());
         }
-
-        // Save the contents of the resource to the file system.
-        resource.save(Collections.EMPTY_MAP);
-
-        assertTrue(file.exists());
-
         super.tearDown();
     }
 
-    public void saveModel(EObject model, File file) throws IOException {
+    /**
+     * Saves a model to a resource given as URI.
+     * 
+     * @param model
+     * @param uri
+     * @throws IOException
+     */
+    public void saveModel(EObject model, IFile file) throws IOException {
         assertNotNull(model);
 
         // Create a resource set.
@@ -145,11 +160,9 @@ public class SCChartTest extends TestCase {
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
                 .put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
 
-        // Get the URI of the model file.
-        URI fileURI = URI.createFileURI(file.getAbsolutePath());
-
         // Create a resource for this file.
-        Resource resource = resourceSet.createResource(fileURI);
+        URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+        Resource resource = resourceSet.createResource(uri);
 
         // Add the model objects to the contents.
         resource.getContents().add(model);
@@ -158,38 +171,47 @@ public class SCChartTest extends TestCase {
         resource.save(Collections.EMPTY_MAP);
     }
 
+    /**
+     * Performs example usage of KTM with SCChart transformations.
+     */
     public final void testSCC() {
         assertNotNull(abo);
         // clear mapping
         SCCtransformation.extractMapping();
 
+        // perform Trigger and Effects Transformation
         aboSplitTE = SCCtransformation.transformTriggerEffect(abo);
         assertNotNull(aboSplitTE);
 
+        // init tree with first transformation
         ModelWrapper aboSplitTEModel =
                 transformationTree.initializeTransformationTree(SCCtransformation.extractMapping(),
                         "TriggerEffect", abo, "coreSCChart", aboSplitTE,
                         "coreSCChart-splitTriggerEffect");
         assertNotNull(aboSplitTEModel);
 
+        // perform Surface Depth transformation
         aboNormalized = SCCtransformation.transformSurfaceDepth(aboSplitTE);
         assertNotNull(aboNormalized);
 
+        // append transformed model to the end of chain(tree)
         ModelWrapper aboNormalizedModel =
                 transformationTree.addTransformationToTree(SCCtransformation.extractMapping(),
                         aboSplitTEModel, "SurfaceDepth", aboSplitTE, aboNormalized,
                         "normalizedCoreSCChart");
         assertNotNull(aboNormalizedModel);
-        
+
+        // perform SCG transformation
         aboSCG = SCGtransformation.transformSCG(aboNormalized);
         assertNotNull(aboSCG);
 
+        // append transformed model to the end of chain(tree)
         ModelWrapper aboSCGModel =
                 transformationTree.addTransformationToTree(SCGtransformation.extractMapping(),
-                        aboNormalizedModel, "SCC2SCG", aboNormalized, aboSCG,
-                        "SCG");
+                        aboNormalizedModel, "SCC2SCG", aboNormalized, aboSCG, "SCG");
         assertNotNull(aboSCGModel);
 
+        // get root node of tree to save
         tree = transformationTree.root(aboSCGModel);
     }
 

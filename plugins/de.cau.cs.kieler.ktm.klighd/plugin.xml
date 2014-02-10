@@ -15,12 +15,16 @@
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <action
-            class="de.cau.cs.kieler.ktm.klighd.actions.SelectionDisplayAction"
-            id="de.cau.cs.kieler.ktm.klighd.actions.SelectionDisplayAction">
+            class="de.cau.cs.kieler.ktm.klighd.actions.ModelSelectionAction"
+            id="de.cau.cs.kieler.ktm.klighd.actions.ModelSelectionAction">
       </action>
       <action
-            class="de.cau.cs.kieler.ktm.klighd.actions.MultiSelectionDisplayAction"
-            id="de.cau.cs.kieler.ktm.klighd.actions.MultiSelectionDisplayAction">
+            class="de.cau.cs.kieler.ktm.klighd.actions.ModelResolveAction"
+            id="de.cau.cs.kieler.ktm.klighd.actions.ModelResolveAction">
+      </action>
+      <action
+            class="de.cau.cs.kieler.ktm.klighd.actions.EdgeSelectionAction"
+            id="de.cau.cs.kieler.ktm.klighd.actions.EdgeSelectionAction">
       </action>
    </extension>
    <extension
@@ -63,13 +67,5 @@
             </visibleWhen>
          </command>
       </menuContribution>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kiml.layoutProviders">
-      <layoutAlgorithm
-            class="de.cau.cs.kieler.ktm.klighd.layout.TransformationTreeLayoutProvider"
-            id="de.cau.cs.kieler.ktm.klighd.layout.TransformationTreeLayoutProvider"
-            name="TransformationTree Layout">
-      </layoutAlgorithm>
    </extension>
 null</plugin>
