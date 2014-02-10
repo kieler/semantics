@@ -109,7 +109,7 @@ class SCChartsCoreTransformation {
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformTermination(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform outgoing normal termination transitions into weak aborts
@@ -207,7 +207,7 @@ class SCChartsCoreTransformation {
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformSignal(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform outgoing normal termination transitions into weak aborts
@@ -535,7 +535,7 @@ class SCChartsCoreTransformation {
         for (targetTransition : targetRootRegion.getAllContainedTransitions) {
             targetTransition.transformTriggerEffect(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     def void transformTriggerEffect(Transition transition, Region targetRootRegion) {
@@ -581,7 +581,7 @@ class SCChartsCoreTransformation {
             targetTransition.transformConnector(targetRootRegion);
         }
         
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     def void transformConnector(State state, Region targetRootRegion) {
@@ -612,7 +612,7 @@ class SCChartsCoreTransformation {
         for (targetTransition : targetRootRegion.allContainedStates) {
             targetTransition.transformDeferred;
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
     
     
@@ -1078,7 +1078,7 @@ class SCChartsCoreTransformation {
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformComplexFinalState(rootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     def void transformComplexFinalState(State state, Region targetRootRegion) {
@@ -1155,7 +1155,7 @@ class SCChartsCoreTransformation {
         for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
             targetTransition.transformStatic(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     def void transformStatic(State state, Region targetRootRegion) {
@@ -1199,7 +1199,7 @@ class SCChartsCoreTransformation {
         for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
             targetTransition.transformWeakSuspend(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     def void transformWeakSuspend(State state, Region targetRootRegion) {
@@ -1256,7 +1256,7 @@ class SCChartsCoreTransformation {
             targetTransition.transformCountDelay(targetRootRegion);
         }
         
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // This will encode count delays in transitions.
@@ -1290,7 +1290,7 @@ class SCChartsCoreTransformation {
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformPre(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // Return a list of Pre Expressions for an action that references the valuedObject
@@ -1431,7 +1431,7 @@ class SCChartsCoreTransformation {
             targetState.transformSuspend(targetRootRegion);
         }
         
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
 
@@ -1477,7 +1477,7 @@ class SCChartsCoreTransformation {
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformDuring(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
@@ -1549,7 +1549,7 @@ class SCChartsCoreTransformation {
         for (targetState : targetRootRegion.getAllContainedStates.immutableCopy) {
             targetState.transformEntry(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
@@ -1636,7 +1636,7 @@ class SCChartsCoreTransformation {
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformExit(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     def void prepareExit(State state, Region targetRootRegion) {
@@ -1753,7 +1753,7 @@ class SCChartsCoreTransformation {
         for (targetState : targetRootRegion.getAllContainedStates.immutableCopy) {
             targetState.transformInitialization(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
@@ -1783,7 +1783,7 @@ class SCChartsCoreTransformation {
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformHistory(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have connecting
