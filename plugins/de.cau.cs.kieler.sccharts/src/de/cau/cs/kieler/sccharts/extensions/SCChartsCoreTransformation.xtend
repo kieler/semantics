@@ -103,7 +103,7 @@ class SCChartsCoreTransformation {
     def Region transformTermination(Region rootRegion) {
 
         // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates) {
@@ -201,7 +201,7 @@ class SCChartsCoreTransformation {
     def Region transformSignal(Region rootRegion) {
 
         // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates) {
@@ -530,7 +530,7 @@ class SCChartsCoreTransformation {
     //     Add T_eff to C's outgoing transitions. 
     def Region transformTriggerEffect(Region rootRegion) {
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
         // Traverse all transitions
         for (targetTransition : targetRootRegion.getAllContainedTransitions) {
             targetTransition.transformTriggerEffect(targetRootRegion);
@@ -574,7 +574,7 @@ class SCChartsCoreTransformation {
     def Region transformConnector(Region rootRegion) {
 
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetTransition : targetRootRegion.allContainedStates) {
@@ -606,7 +606,7 @@ class SCChartsCoreTransformation {
     def Region transformDeferred(Region rootRegion) {
 
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetTransition : targetRootRegion.allContainedStates) {
@@ -1072,7 +1072,7 @@ class SCChartsCoreTransformation {
     def Region transformComplexFinalState(Region rootRegion) {
 
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // For every state in the SyncChart do the transformation
         for (targetState : targetRootRegion.getAllContainedStates) {
@@ -1150,7 +1150,7 @@ class SCChartsCoreTransformation {
     //
     def Region transformStatic(Region rootRegion) {
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
         // For every state in the SyncChart do the transformation
         for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
             targetTransition.transformStatic(targetRootRegion);
@@ -1174,7 +1174,7 @@ class SCChartsCoreTransformation {
     // ...
     def Region transformInputOutputVariable(Region rootRegion) {
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
         // For every state in the SyncChart do the transformation
         for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
             targetTransition.transformInputOutputVariable(targetRootRegion);
@@ -1194,7 +1194,7 @@ class SCChartsCoreTransformation {
     // ...
     def Region transformWeakSuspend(Region rootRegion) {
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
         // For every state in the SyncChart do the transformation
         for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
             targetTransition.transformWeakSuspend(targetRootRegion);
@@ -1247,7 +1247,7 @@ class SCChartsCoreTransformation {
     def Region transformCountDelay(Region rootRegion) {
 
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // For every transition in the SyncChart do the transformation
         // Iterate over a copy of the list  
@@ -1286,7 +1286,7 @@ class SCChartsCoreTransformation {
     //-------------------------------------------------------------------------
     // Transforming PRE Operator.
     def Region transformPre(Region rootRegion) {
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformPre(targetRootRegion);
         }
@@ -1423,7 +1423,7 @@ class SCChartsCoreTransformation {
     // Transforming Suspends.
     def Region transformSuspend(Region rootRegion) {
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // For every state in the SyncChart do the transformation
         // Iterate over a copy of the list  
@@ -1471,7 +1471,7 @@ class SCChartsCoreTransformation {
     // Transforming During Actions.
     def Region transformDuring(Region rootRegion) {
         // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates) {
@@ -1525,6 +1525,7 @@ class SCChartsCoreTransformation {
                     transition3 = initialState.createImmediateTransitionTo(finalState) 
                 }
                 transition3.setTrigger(term.reference)
+                transition3.setHighestPriority
                 // After transforming during actions, erase them
                 state.localActions.remove(duringAction)
             }
@@ -1543,7 +1544,7 @@ class SCChartsCoreTransformation {
     // Transforming Entry Actions.
     def Region transformEntry(Region rootRegion) {
         // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates.immutableCopy) {
@@ -1627,7 +1628,7 @@ class SCChartsCoreTransformation {
     // Transforming Exit Actions. 
     def Region transformExit(Region rootRegion) {
         // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
         // Prepare all states so that each reagion has at most one final state
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.prepareExit(targetRootRegion);
@@ -1747,7 +1748,7 @@ class SCChartsCoreTransformation {
     // Transforming Variable Initializations
     def Region transformInitialization(Region rootRegion) {
         // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates.immutableCopy) {
@@ -1779,7 +1780,7 @@ class SCChartsCoreTransformation {
     // Transforming History. This is using the concept of suspend so it must
     // be followed by resolving suspension
     def Region transformHistory(Region rootRegion) {
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformHistory(targetRootRegion);
         }
