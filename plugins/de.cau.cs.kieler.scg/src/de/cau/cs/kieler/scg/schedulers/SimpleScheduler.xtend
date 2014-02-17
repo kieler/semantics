@@ -98,7 +98,7 @@ class SimpleScheduler extends AbstractScheduler {
     // -------------------------------------------------------------------------
     
     /** Storage space for the interleaved assignment analyzer id. */
-    private var String interleavedAssignmentAnalyzerId = ""
+    protected var String interleavedAssignmentAnalyzerId = ""
     
     // -------------------------------------------------------------------------
     // -- Scheduler 
@@ -206,10 +206,11 @@ class SimpleScheduler extends AbstractScheduler {
     	placeable
     }
     
-    protected def boolean topologicalPlacement(SchedulingBlock schedulingBlock, 
+    protected def int topologicalPlacement(SchedulingBlock schedulingBlock, 
         List<SchedulingBlock> schedulingBlocks, Schedule schedule, 
         SchedulingConstraints constraints, List<SchedulingBlock> visited, SCGraphSched scg
     ) {
+        var placed = 0 as int
         if (!visited.contains(schedulingBlock)) {
             visited.add(schedulingBlock)
             for(pred : schedulingBlock.basicBlock.predecessors) {
@@ -228,11 +229,11 @@ class SimpleScheduler extends AbstractScheduler {
                 schedule.schedulingBlocks.add(schedulingBlock)
                 scg.guards += schedulingBlock.createGuardExpression(scg)
                 schedulingBlocks.remove(schedulingBlock)
+                placed = placed + 1
             }
         } 
         
-        
-        return true 
+        placed
     }
     
     protected override boolean createSchedule(SCGraphSched scg, Schedule schedule, SchedulingConstraints constraints) {
