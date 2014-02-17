@@ -180,24 +180,29 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 		 * Therefore, for each thread a new expression, called thread expression, is created. 
 		 * Finally, the termination expression is added since at least one thread must exit in this tick instance. 
 		 */
-		// Create a new and-operator expression.
-        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-        expression.setOperator(OperatorType::AND)
+		if (data.guardExpression.emptyExpressions.size > 0) {
+    		// Create a new and-operator expression.
+            val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+            expression.setOperator(OperatorType::AND)
         
-        // Create thread expressions (or-operator expressions) for each thread. 
-        // They include the empty expression - the thread already finished in previous ticks - 
-        // and the threadExitObject - the thread just finished in this tick.
-        data.guardExpression.emptyExpressions.forEach[
-        	val threadExpr = KExpressionsFactory::eINSTANCE.createOperatorExpression
-        	threadExpr.setOperator(OperatorType::OR)
-        	threadExpr.subExpressions.add(it.valuedObject.reference)
-        	threadExpr.subExpressions.add(it.threadExitObject.reference)
-        	expression.subExpressions.add(threadExpr)
-        ]
+            // Create thread expressions (or-operator expressions) for each thread. 
+            // They include the empty expression - the thread already finished in previous ticks - 
+            // and the threadExitObject - the thread just finished in this tick.
+            data.guardExpression.emptyExpressions.forEach[
+        	   val threadExpr = KExpressionsFactory::eINSTANCE.createOperatorExpression
+        	   threadExpr.setOperator(OperatorType::OR)
+        	   threadExpr.subExpressions.add(it.valuedObject.reference)
+        	   threadExpr.subExpressions.add(it.threadExitObject.reference)
+        	   expression.subExpressions.add(threadExpr)
+            ]
         
-        // Conclusively, add the termination expression - at least one thread must exit this tick.
-        expression.subExpressions.add(terminationExpr)
-        data.guardExpression.expression = expression
+            // Conclusively, add the termination expression - at least one thread must exit this tick.
+            expression.subExpressions.add(terminationExpr)
+            data.guardExpression.expression = expression
+        } else {
+            // No surface found! Synchronizer exists immediately!
+            data.guardExpression.expression = terminationExpr
+        }
         
         // Return the gathered data (to the scheduler).
         data 
