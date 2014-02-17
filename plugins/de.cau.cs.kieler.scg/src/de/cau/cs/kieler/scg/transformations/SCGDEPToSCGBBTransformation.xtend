@@ -183,8 +183,10 @@ class SCGDEPToSCGBBTransformation extends AbstractModelTransformation {
         if (nodes.contains(rootNode)) {
         	// If the node has already been processed, add the predecessorList passed by the caller to the basic block
         	// of the node in question. Return afterwards with unmodified index since no new block was created.
-            val rootBasicBlock = rootNode.basicBlock
-            rootBasicBlock.predecessors.addAll(predecessorBlocks.createPredecessors(rootBasicBlock))
+        	if (predecessorBlocks != null && predecessorBlocks.size > 0) {
+                val rootBasicBlock = rootNode.basicBlock
+                rootBasicBlock.predecessors.addAll(predecessorBlocks.createPredecessors(rootBasicBlock))
+            }
             return newIndex;
         }
         
@@ -243,6 +245,9 @@ class SCGDEPToSCGBBTransformation extends AbstractModelTransformation {
                 // Call the createBasicBlock method for each control flow.
                 for(flow : node.eAllContents.filter(typeof(ControlFlow)).toList) {
                     newIndex = scg.createBasicBlocks(flow.target, newIndex, newLinkedList(block))
+                    
+                    // Make sure the exit node was processed.
+                    newIndex = scg.createBasicBlocks((flow.target as Entry).exit, newIndex, <BasicBlock> newLinkedList)
                 }
 				// Subsequently, retrieve all exit nodes that link to the join node and proceed
 				// with the basic block analysis at the corresponding join node.
@@ -315,9 +320,15 @@ class SCGDEPToSCGBBTransformation extends AbstractModelTransformation {
         val basicBlock = ScgbbFactory::eINSTANCE.createBasicBlock
         
         /** Assume that the basic block depends on the GO-Signal of a circuit if it has no predecessors. */ 
-        if (predecessorBlocks.size == 0) {
+        if (predecessorBlocks != null && predecessorBlocks.size == 0 && schedulingBlock.nodes.head instanceof Entry) {
         	basicBlock.goBlock = true
         }
+        
+        /** If the block has no predecessors but is also not the entry block, it is a dead block. */
+        if (!basicBlock.goBlock && predecessorBlocks.size == 0 && schedulingBlock.nodes.head.allPrevious.size == 0) {
+            basicBlock.deadBlock = true
+        }
+        
         /**  
          *If the basic block starts with a depth node, there should only be one predecessor.
          * Use this predecessor to determine the pre guards of the depth block and clear the predecessor list.

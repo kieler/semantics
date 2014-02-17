@@ -337,7 +337,8 @@ class SimpleScheduler extends AbstractSCGScheduler {
 					 * If we reach this point, the basic block contains no predecessor information but is not marked as go block.
 					 * This is not supported by this scheduler: throw an exception. 
 					 */
-					throw new UnsupportedSCGException("Cannot handle standard guard without predecessor information!")
+					if (!basicBlock.deadBlock)
+					   throw new UnsupportedSCGException("Cannot handle standard guard without predecessor information!")
 				}
 			}
 		} else {
