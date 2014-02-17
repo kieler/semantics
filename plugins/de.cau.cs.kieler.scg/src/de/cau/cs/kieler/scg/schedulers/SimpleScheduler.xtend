@@ -206,37 +206,46 @@ class SimpleScheduler extends AbstractScheduler {
     	placeable
     }
     
-    protected override boolean createSchedule(SCGraphSched scg, Schedule schedule, SchedulingConstraints constraints) {
-        // fixpoint is set to true if an iteration cannot set any remaining blocks.
-        var fixpoint  = false
-        
-        val schedulingBlocks = <SchedulingBlock> newArrayList => [ it.addAll(constraints.schedulingBlocks) ]
-        
-        // As long as there are blocks remaining and we have not reached a fix point.
-        while (schedulingBlocks.size > 0 && !fixpoint) {
-        	// Assume fix point.
-            fixpoint = true
-            
-            // Copy all remaining blocks.
-            var schedulingBlocksCopy = ImmutableList::copyOf(schedulingBlocks)
-            
-            // For each block try to process it.
-            for(block : schedulingBlocksCopy) {
-                
-                // If all preconditions are met, process this block, add it to the schedule and create its guard expression.
-                // Then, remove it from our list of remaining blocks.
-                if (block.isPlaceable(schedulingBlocks, schedule, scg)) {
-                    schedule.schedulingBlocks.add(block)
-                    scg.guards += block.createGuardExpression(scg)
-                    schedulingBlocks.remove(block)
-                    
-                    // This iteration updated the lists. This is not a fix point.
-                    fixpoint = false
+    protected def boolean topologicalPlacement(SchedulingBlock schedulingBlock, 
+        List<SchedulingBlock> schedulingBlocks, Schedule schedule, 
+        SchedulingConstraints constraints, List<SchedulingBlock> visited, SCGraphSched scg
+    ) {
+        if (!visited.contains(schedulingBlock)) {
+            visited.add(schedulingBlock)
+            for(pred : schedulingBlock.basicBlock.predecessors) {
+                for (sb : pred.basicBlock.schedulingBlocks) {
+                    sb.topologicalPlacement(schedulingBlocks, schedule, constraints, visited, scg)
                 }
             }
+            for(dep : schedulingBlock.dependencies) {
+                if (dep.concurrent && !dep.confluent) {
+                    if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
+                        (dep.eContainer as Node).schedulingBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, visited, scg) 
+                }
+            }
+            
+            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
+                schedule.schedulingBlocks.add(schedulingBlock)
+                scg.guards += schedulingBlock.createGuardExpression(scg)
+                schedulingBlocks.remove(schedulingBlock)
+            }
+        } 
+        
+        
+        return true 
+    }
+    
+    protected override boolean createSchedule(SCGraphSched scg, Schedule schedule, SchedulingConstraints constraints) {
+
+        val schedulingBlocks = <SchedulingBlock> newArrayList => [ it.addAll(constraints.schedulingBlocks) ]
+        
+        val schedulingBlocksCopy = ImmutableList::copyOf(schedulingBlocks)
+        
+        for (sb : schedulingBlocksCopy) {
+            sb.topologicalPlacement(schedulingBlocks, schedule, constraints, <SchedulingBlock> newArrayList, scg)
         }
-    	
-    	!fixpoint 
+        
+        schedule.schedulingBlocks.size == schedulingBlocksCopy.size
     }
 	
 	
