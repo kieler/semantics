@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
 import de.cau.cs.kieler.scgdep.SCGraphDep;
 import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation;
+import de.cau.cs.kieler.scg.transformations.BasicBlockTransformationSCplus;
 
 /**
  * Handler for menu contributions
@@ -35,8 +36,10 @@ import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation;
  */
 public class SCGraphBasicBlockModelFileHandler extends AbstractConvertModelHandler {
 
-    public static final String SCGDEP_TRANSFORMATION =
+    public static final String BASICBLOCKTRANSFORMATION =
             "de.cau.cs.kieler.scg.commands.SCGDEPToSCGBBTransformation";
+    public static final String BASICBLOCKTRANSFORMATIONSCPLUS =
+            "de.cau.cs.kieler.scg.commands.BasicBlockTransformationSCplus";
 
     private static Injector injector = new SctStandaloneSetup()
         .createInjectorAndDoEMFRegistration();
@@ -69,15 +72,20 @@ public class SCGraphBasicBlockModelFileHandler extends AbstractConvertModelHandl
         String commandString = event.getCommand().getId().toString();
         EObject transformed = null;
 
-        BasicBlockTransformation transformation =
-                Guice.createInjector().getInstance(BasicBlockTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         transformed = model;
-        if (commandString.equals(SCGDEP_TRANSFORMATION)) {
+        if (commandString.equals(BASICBLOCKTRANSFORMATION)) {
+            BasicBlockTransformation transformation =
+                    Guice.createInjector().getInstance(BasicBlockTransformation.class);
             transformed = transformation.transformSCGDEPToSCGBB((SCGraphDep) model);
-        } 
+        }
+        else if (commandString.equals(BASICBLOCKTRANSFORMATIONSCPLUS)) {
+            BasicBlockTransformationSCplus transformation =
+                    Guice.createInjector().getInstance(BasicBlockTransformationSCplus.class);
+            transformed = transformation.transformSCGDEPToSCGBB((SCGraphDep) model);
+        }
         return transformed;
     }
 

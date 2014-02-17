@@ -67,6 +67,10 @@
             class="de.cau.cs.kieler.scg.handlers.SCGraphSchedulingModelFileHandler"
             commandId="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation.HybridScheduler">
       </handler>
+      <handler
+            class="de.cau.cs.kieler.scg.handlers.SCGraphBasicBlockModelFileHandler"
+            commandId="de.cau.cs.kieler.scg.commands.BasicBlockTransformationSCplus">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -107,6 +111,11 @@
             categoryId="de.cau.cs.kieler.scg.commands.category"
             id="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation.HybridScheduler"
             name="SCG with Scheduling Data (HybridScheduler)">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.scg.commands.category"
+            id="de.cau.cs.kieler.scg.commands.BasicBlockTransformationSCplus"
+            name="SCG with Basic Block Data (SC+)">
       </command>
    </extension>
    <extension
@@ -232,6 +241,30 @@
          <command
                commandId="de.cau.cs.kieler.scg.commands.SCGDEPToSCGBBTransformation"
                label="SCG with Basic Block Data"
+               mnemonic="A"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scgdep">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
+         <command
+               commandId="de.cau.cs.kieler.scg.commands.BasicBlockTransformationSCplus"
+               label="SCG with Basic Block Data (SC+)"
                mnemonic="A"
                style="push">
             <visibleWhen
