@@ -23,9 +23,8 @@ import com.google.inject.Injector;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
-import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scgdep.SCGraphDep;
-import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation;
+import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation;
 
 /**
  * Handler for menu contributions
@@ -70,8 +69,8 @@ public class SCGraphBasicBlockModelFileHandler extends AbstractConvertModelHandl
         String commandString = event.getCommand().getId().toString();
         EObject transformed = null;
 
-        SCGDEPToSCGBBTransformation transformation =
-        		Guice.createInjector().getInstance(SCGDEPToSCGBBTransformation.class);
+        BasicBlockTransformation transformation =
+                Guice.createInjector().getInstance(BasicBlockTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).

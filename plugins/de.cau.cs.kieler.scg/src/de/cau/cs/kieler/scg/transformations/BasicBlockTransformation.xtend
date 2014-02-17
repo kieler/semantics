@@ -61,7 +61,7 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.rating 2013-10-24 proposed yellow
  */
 
-class SCGDEPToSCGBBTransformation extends AbstractModelTransformation {
+class BasicBlockTransformation extends AbstractModelTransformation {
     
     // -------------------------------------------------------------------------
     // -- Injections 

@@ -26,8 +26,8 @@ import de.cau.cs.kieler.scg.SCGPlugin;
 import de.cau.cs.kieler.scg.schedulers.AbstractScheduler;
 import de.cau.cs.kieler.scg.schedulers.SimpleScheduler;
 import de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer;
-import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation;
-import de.cau.cs.kieler.scg.transformations.SCGToSCGDEPTransformation;
+import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation;
+import de.cau.cs.kieler.scg.transformations.DependencyTransformation;
 import de.cau.cs.kieler.scgbb.SCGraphBB;
 import de.cau.cs.kieler.scgdep.SCGraphDep;
 import de.cau.cs.kieler.scgsched.SCGraphSched;
@@ -75,10 +75,10 @@ public class CompleteSCGraphModelFileHandler extends AbstractConvertModelHandler
         String commandString = event.getCommand().getId().toString();
         EObject transformed = null;
 
-        SCGToSCGDEPTransformation transformation1 =
-                Guice.createInjector().getInstance(SCGToSCGDEPTransformation.class);        
-        SCGDEPToSCGBBTransformation transformation2 =
-                Guice.createInjector().getInstance(SCGDEPToSCGBBTransformation.class);
+        DependencyTransformation transformation1 =
+                Guice.createInjector().getInstance(DependencyTransformation.class);        
+        BasicBlockTransformation transformation2 =
+                Guice.createInjector().getInstance(BasicBlockTransformation.class);
         AbstractScheduler transformation3 =
                 Guice.createInjector().getInstance(SimpleScheduler.class);        
         SimpleSequentializer transformation4 =

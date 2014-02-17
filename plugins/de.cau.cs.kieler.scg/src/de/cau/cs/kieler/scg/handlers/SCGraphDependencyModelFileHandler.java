@@ -24,7 +24,7 @@ import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
 import de.cau.cs.kieler.scg.SCGraph;
-import de.cau.cs.kieler.scg.transformations.SCGToSCGDEPTransformation;
+import de.cau.cs.kieler.scg.transformations.DependencyTransformation;
 
 /**
  * Handler for menu contributions
@@ -69,8 +69,8 @@ public class SCGraphDependencyModelFileHandler extends AbstractConvertModelHandl
         String commandString = event.getCommand().getId().toString();
         EObject transformed = null;
 
-        SCGToSCGDEPTransformation transformation =
-        		Guice.createInjector().getInstance(SCGToSCGDEPTransformation.class);
+        DependencyTransformation transformation =
+        	Guice.createInjector().getInstance(DependencyTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
