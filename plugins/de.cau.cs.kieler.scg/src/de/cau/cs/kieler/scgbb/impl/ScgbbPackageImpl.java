@@ -196,7 +196,7 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
      * @generated
      */
 	public EAttribute getBasicBlock_BlockType() {
-        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(4);
+        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(5);
     }
 
 				/**
@@ -205,7 +205,7 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
      * @generated
      */
 	public EReference getBasicBlock_PreGuard() {
-        return (EReference)basicBlockEClass.getEStructuralFeatures().get(5);
+        return (EReference)basicBlockEClass.getEStructuralFeatures().get(6);
     }
 
 				/**
@@ -218,6 +218,15 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
     }
 
 				/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getBasicBlock_DeadBlock() {
+        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(4);
+    }
+
+                /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -334,6 +343,7 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
         createEReference(basicBlockEClass, BASIC_BLOCK__GUARDS);
         createEReference(basicBlockEClass, BASIC_BLOCK__PREDECESSORS);
         createEAttribute(basicBlockEClass, BASIC_BLOCK__GO_BLOCK);
+        createEAttribute(basicBlockEClass, BASIC_BLOCK__DEAD_BLOCK);
         createEAttribute(basicBlockEClass, BASIC_BLOCK__BLOCK_TYPE);
         createEReference(basicBlockEClass, BASIC_BLOCK__PRE_GUARD);
 
@@ -395,6 +405,7 @@ public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
         initEReference(getBasicBlock_Guards(), theKExpressionsPackage.getValuedObject(), null, "guards", null, 1, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBasicBlock_Predecessors(), this.getPredecessor(), null, "predecessors", null, 0, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBasicBlock_GoBlock(), ecorePackage.getEBoolean(), "goBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getBasicBlock_DeadBlock(), ecorePackage.getEBoolean(), "deadBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBasicBlock_BlockType(), this.getBlockType(), "blockType", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBasicBlock_PreGuard(), theKExpressionsPackage.getValuedObject(), null, "preGuard", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
