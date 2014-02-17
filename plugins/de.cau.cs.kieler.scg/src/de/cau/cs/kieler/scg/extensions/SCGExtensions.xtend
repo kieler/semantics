@@ -35,6 +35,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.scgsched.Analysis
+import de.cau.cs.kieler.scg.Exit
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -412,6 +413,8 @@ class SCGExtensions {
 
 
     def Node getThreadEntryNode(Node node) {
+//        if (node instanceof Exit) return (node as Exit).entry
+        
         val fork = node.getAncestorFork
         if (fork == null) return null
 
