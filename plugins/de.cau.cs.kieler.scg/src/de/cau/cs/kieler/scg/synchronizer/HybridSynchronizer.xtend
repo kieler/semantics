@@ -101,7 +101,8 @@ class HybridSynchronizer extends AbstractSynchronizer {
         	val exit = it.eContainer as Exit
         	val exitSB = exit.schedulingBlock 
         	exitNodes.add(exit)
-        	val exitVar = createValuedObject(exitSB.guard.name + EXITVARSUFFIX)
+//        	val exitVar = createValuedObject(exitSB.guard.name + EXITVARSUFFIX)
+            val exitVar = createValuedObject(exitSB.basicBlock.guards.head.name + EXITVARSUFFIX)
         	data.valuedObjects.add(exitVar)
         	data.addAdditionalAssignment(forkSB, exitVar, TRUE)
         	data.addAdditionalAssignment(exitSB, exitVar, FALSE)

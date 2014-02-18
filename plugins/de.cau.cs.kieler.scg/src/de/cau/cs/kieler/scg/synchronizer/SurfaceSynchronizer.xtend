@@ -151,17 +151,20 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             	if (threadSurfaces.size>1) {
 	            	val subExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
     	        	subExpression.setOperator(OperatorType::OR)
-        	    	threadSurfaces.forEach[subExpression.subExpressions.add(it.schedulingBlock.guard.reference)]
+//        	    	threadSurfaces.forEach[subExpression.subExpressions.add(it.schedulingBlock.guard.reference)]
+                    threadSurfaces.forEach[subExpression.subExpressions.add(it.basicBlock.guards.head.reference)]
 	            	expression.subExpressions.add(subExpression)
             	} else {
             		// Otherwise, add a reference to the surface block directly.
-            		expression.subExpressions.add(threadSurfaces.head.schedulingBlock.guard.reference)
+//                    expression.subExpressions.add(threadSurfaces.head.schedulingBlock.guard.reference)
+                    expression.subExpressions.add(threadSurfaces.head.basicBlock.guards.head.reference)
             	}
             	// Add the newly created expression to the empty expression and link the thread exit object field
             	// to the guard of the exit node. This enables further processors to identify the block responsible
             	// for the creation of the empty expression. 
             	emptyExp.expression = expression
-            	emptyExp.threadExitObject = exitSB.guard
+//            	emptyExp.threadExitObject = exitSB.guard
+                emptyExp.threadExitObject = exitSB.basicBlock.guards.head
             
             	// Subsequently, add the newly created empty expression to the list of empty expressions
             	// in the guard expression of the synchronizer.
@@ -170,7 +173,8 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
            	
            	// For each exit node, add the guard of the scheduling block of the exit node to the termination expression.
            	// At least one thread must be exited in this tick to trigger the synchronizer.
-        	terminationExpr.subExpressions.add(exitSB.guard.reference)
+//            terminationExpr.subExpressions.add(exitSB.guard.reference)
+            terminationExpr.subExpressions.add(exitSB.basicBlock.guards.head.reference)
         }
 
 		/**
