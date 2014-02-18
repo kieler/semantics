@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scg.optimizer
 
-import de.cau.cs.kieler.scg.optimizer.AbstractSCGOptimizer
+import de.cau.cs.kieler.scg.optimizer.AbstractOptimizer
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.Expression
@@ -31,7 +31,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @author ssm
  *
  */
-class NotGuardMinimizer extends AbstractSCGOptimizer {
+class NotGuardMinimizer extends AbstractOptimizer {
     
     @Inject
     extension KExpressionsExtension
