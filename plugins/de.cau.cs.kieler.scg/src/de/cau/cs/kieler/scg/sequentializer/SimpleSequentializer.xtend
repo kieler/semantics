@@ -31,6 +31,8 @@ import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scgbb.BasicBlock
+import de.cau.cs.kieler.scg.optimizer.CopyPropagation
+import com.google.inject.Guice
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -119,8 +121,11 @@ class SimpleSequentializer extends AbstractSequentializer {
         exitFlows.forEach[it.target = exit]
         scg.nodes.add(exit)
         
+        val copyPropagation = Guice.createInjector().getInstance(typeof(CopyPropagation))
+        copyPropagation.optimize(scg)
+        
         // Return the SCG.
-        scg       	
+//        scg     	
     }
     
     /**
