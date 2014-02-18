@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getGuards <em>Guards</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getPredecessors <em>Predecessors</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#isGoBlock <em>Go Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#isDeadBlock <em>Dead Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getBlockType <em>Block Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.impl.BasicBlockImpl#getPreGuard <em>Pre Guard</em>}</li>
  * </ul>
@@ -100,6 +101,26 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 	protected boolean goBlock = GO_BLOCK_EDEFAULT;
 
 				/**
+     * The default value of the '{@link #isDeadBlock() <em>Dead Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isDeadBlock()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean DEAD_BLOCK_EDEFAULT = false;
+
+                /**
+     * The cached value of the '{@link #isDeadBlock() <em>Dead Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isDeadBlock()
+     * @generated
+     * @ordered
+     */
+    protected boolean deadBlock = DEAD_BLOCK_EDEFAULT;
+
+                /**
      * The default value of the '{@link #getBlockType() <em>Block Type</em>}' attribute.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -269,6 +290,27 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isDeadBlock() {
+        return deadBlock;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setDeadBlock(boolean newDeadBlock) {
+        boolean oldDeadBlock = deadBlock;
+        deadBlock = newDeadBlock;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgbbPackage.BASIC_BLOCK__DEAD_BLOCK, oldDeadBlock, deadBlock));
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -298,6 +340,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
                 return getPredecessors();
             case ScgbbPackage.BASIC_BLOCK__GO_BLOCK:
                 return isGoBlock();
+            case ScgbbPackage.BASIC_BLOCK__DEAD_BLOCK:
+                return isDeadBlock();
             case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
                 return getBlockType();
             case ScgbbPackage.BASIC_BLOCK__PRE_GUARD:
@@ -331,6 +375,9 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
             case ScgbbPackage.BASIC_BLOCK__GO_BLOCK:
                 setGoBlock((Boolean)newValue);
                 return;
+            case ScgbbPackage.BASIC_BLOCK__DEAD_BLOCK:
+                setDeadBlock((Boolean)newValue);
+                return;
             case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
                 setBlockType((BlockType)newValue);
                 return;
@@ -361,6 +408,9 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
             case ScgbbPackage.BASIC_BLOCK__GO_BLOCK:
                 setGoBlock(GO_BLOCK_EDEFAULT);
                 return;
+            case ScgbbPackage.BASIC_BLOCK__DEAD_BLOCK:
+                setDeadBlock(DEAD_BLOCK_EDEFAULT);
+                return;
             case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
                 setBlockType(BLOCK_TYPE_EDEFAULT);
                 return;
@@ -387,6 +437,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
                 return predecessors != null && !predecessors.isEmpty();
             case ScgbbPackage.BASIC_BLOCK__GO_BLOCK:
                 return goBlock != GO_BLOCK_EDEFAULT;
+            case ScgbbPackage.BASIC_BLOCK__DEAD_BLOCK:
+                return deadBlock != DEAD_BLOCK_EDEFAULT;
             case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
                 return blockType != BLOCK_TYPE_EDEFAULT;
             case ScgbbPackage.BASIC_BLOCK__PRE_GUARD:
@@ -407,6 +459,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (goBlock: ");
         result.append(goBlock);
+        result.append(", deadBlock: ");
+        result.append(deadBlock);
         result.append(", blockType: ");
         result.append(blockType);
         result.append(')');
