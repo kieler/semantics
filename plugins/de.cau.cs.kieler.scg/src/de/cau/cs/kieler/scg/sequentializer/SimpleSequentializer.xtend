@@ -30,6 +30,7 @@ import de.cau.cs.kieler.scgsched.Schedule
 import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scgbb.BasicBlock
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -145,6 +146,8 @@ class SimpleSequentializer extends AbstractSequentializer {
     	val nextFlows = <ControlFlow> newArrayList
     	nextFlows.add(controlFlow)
     	
+    	val processedBlockGuards = <BasicBlock> newArrayList
+    	
     	// For each scheduling block in the schedule iterate.
     	for (sb : schedule.schedulingBlocks) {
     	    
@@ -171,9 +174,12 @@ class SimpleSequentializer extends AbstractSequentializer {
     		 * Each scheduling block references a guard. Each guard results in an assignment. 
     		 * Create it and copy the corresponding object.
     		 */
-    		if (sb == basicBlock.schedulingBlocks.head) {
+//    		if (sb == basicBlock.schedulingBlocks.head) {
+            if (!processedBlockGuards.contains(basicBlock)) {
     		val newAssignment = ScgFactory::eINSTANCE.createAssignment
-    		newAssignment.valuedObject = sb.guard.getValuedObjectCopy
+//    		newAssignment.valuedObject = sb.guard.getValuedObjectCopy
+            newAssignment.valuedObject = basicBlock.guards.head.getValuedObjectCopy
+            processedBlockGuards.add(basicBlock)
 
 			/**
 			 * For each guard a guard expression exists.
@@ -182,7 +188,8 @@ class SimpleSequentializer extends AbstractSequentializer {
 			 * Otherwise, it is possible that the guard expression houses empty expressions for a synchronizer. Add them as well.
 			 */    		
 			// Retrieve the guard expression from the scheduling information.
-    		var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == sb.guard].head
+//    		var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == sb.guard].head
+            var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == basicBlock.guards.head].head
     		
     		if (guardExpression != null && guardExpression.expression != null) {
     			
