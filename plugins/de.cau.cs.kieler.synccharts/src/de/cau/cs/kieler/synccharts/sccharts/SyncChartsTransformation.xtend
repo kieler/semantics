@@ -180,12 +180,25 @@ class SyncChartsTransformation {
         }
     }
 
+   // -------------------------------------------------------------------------
+   
+   def String correctId(String syncChartsId) {
+        if (syncChartsId.startsWith("0")||syncChartsId.startsWith("1")||syncChartsId.startsWith("2")||syncChartsId.startsWith("3")||syncChartsId.startsWith("4")||
+            syncChartsId.startsWith("5")||syncChartsId.startsWith("6")||syncChartsId.startsWith("7")||syncChartsId.startsWith("8")||syncChartsId.startsWith("9")
+        ) {
+            return "S" + syncChartsId
+        }
+        syncChartsId
+   }   
+
    // -------------------------------------------------------------------------   
 
     // Transforming states
     def dispatch void transform(de.cau.cs.kieler.synccharts.State syncState, Region rootRegion) {
         val parentRegion = syncState.parentRegion.region
-        val state = parentRegion.createState(syncState.id) 
+        var syncId = syncState.id.correctId;
+        val state = parentRegion.createState(syncId).uniqueName
+        state.setLabel(syncState.label); 
         state.map(syncState)
         
         state.setInitial(syncState.isInitial)
