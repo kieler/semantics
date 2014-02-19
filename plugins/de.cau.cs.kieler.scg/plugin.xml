@@ -71,6 +71,10 @@
             class="de.cau.cs.kieler.scg.handlers.SCGraphBasicBlockModelFileHandler"
             commandId="de.cau.cs.kieler.scg.commands.BasicBlockTransformationSCplus">
       </handler>
+      <handler
+            class="de.cau.cs.kieler.scg.handlers.OptimizerModelFileHandler"
+            commandId="de.cau.cs.kieler.scg.commands.optimizer.copyPropagation">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -116,6 +120,11 @@
             categoryId="de.cau.cs.kieler.scg.commands.category"
             id="de.cau.cs.kieler.scg.commands.BasicBlockTransformationSCplus"
             name="SCG with Basic Block Data (SC+)">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.scg.commands.category"
+            id="de.cau.cs.kieler.scg.commands.optimizer.copyPropagation"
+            name="Optimization - Copy Propagation">
       </command>
    </extension>
    <extension
@@ -374,6 +383,37 @@
                            forcePluginActivation="true"
                            property="org.eclipse.core.resources.extension"
                            value="scgsched">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
+         <separator
+               name="de.cau.cs.kieler.scg.separator2"
+               visible="true">
+         </separator>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
+         <command
+               commandId="de.cau.cs.kieler.scg.commands.optimizer.copyPropagation"
+               label="Optimization - Copy Propagation"
+               mnemonic="A"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IFile">
+                     <test
+                           forcePluginActivation="true"
+                           property="org.eclipse.core.resources.extension"
+                           value="scg">
                      </test>
                   </adapt>
                </iterate>

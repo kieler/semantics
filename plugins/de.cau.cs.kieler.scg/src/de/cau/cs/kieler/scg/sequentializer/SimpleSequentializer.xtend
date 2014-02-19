@@ -120,10 +120,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         val exit = ScgFactory::eINSTANCE.createExit
         exitFlows.forEach[it.target = exit]
         scg.nodes.add(exit)
-        
-//        val copyPropagation = Guice.createInjector().getInstance(typeof(CopyPropagation))
-//        copyPropagation.optimize(scg)
-        
+                
         // Return the SCG.
         scg     	
     }
