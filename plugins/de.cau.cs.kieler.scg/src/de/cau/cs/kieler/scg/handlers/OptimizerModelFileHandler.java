@@ -24,6 +24,8 @@ import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
 import de.cau.cs.kieler.scg.SCGraph;
+import de.cau.cs.kieler.scg.ScgFactory;
+import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions;
 import de.cau.cs.kieler.scg.optimizer.CopyPropagation;
 import de.cau.cs.kieler.scg.optimizer.NotGuardMinimizer;
 import de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer;
@@ -49,7 +51,7 @@ public class OptimizerModelFileHandler extends AbstractConvertModelHandler {
      */
     @Override
     protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
-        return "seq.scg";
+        return "optimized.scg";
     }
 
     /**
@@ -76,9 +78,12 @@ public class OptimizerModelFileHandler extends AbstractConvertModelHandler {
         // refactored model).
         transformed = model;
         if (commandString.equals(OPTIMIZER_COPYPROPAGATION)) {
-
+    		SCGCopyExtensions copyExtensions = Guice.createInjector().getInstance(SCGCopyExtensions.class);
             CopyPropagation copyPropagation = Guice.createInjector().getInstance(CopyPropagation.class);
-            transformed = copyPropagation.optimize((SCGraph) model);
+            
+            SCGraph optSCG = ScgFactory.eINSTANCE.createSCGraph();
+            copyExtensions.copySCG((SCGraph) model, optSCG);
+            transformed = copyPropagation.optimize(optSCG);
         } 
         return transformed;
     }
