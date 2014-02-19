@@ -145,7 +145,7 @@ class SyncChartsTransformation {
             syncState.transformTransitionsAndActions(rootRegion)
         }
 
-        rootRegion
+        rootRegion.fixAllTextualOrdersByPriorities
     }
     
    // -------------------------------------------------------------------------   
