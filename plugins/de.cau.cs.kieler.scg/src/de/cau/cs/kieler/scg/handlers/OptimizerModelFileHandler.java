@@ -28,6 +28,7 @@ import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions;
 import de.cau.cs.kieler.scg.optimizer.CopyPropagation;
 import de.cau.cs.kieler.scg.optimizer.NotGuardMinimizer;
+import de.cau.cs.kieler.scg.optimizer.UnreferencedGuardElimination;
 import de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer;
 import de.cau.cs.kieler.scgsched.SCGraphSched;
 
@@ -42,6 +43,8 @@ public class OptimizerModelFileHandler extends AbstractConvertModelHandler {
 
     public static final String OPTIMIZER_COPYPROPAGATION =
             "de.cau.cs.kieler.scg.commands.optimizer.copyPropagation";
+    public static final String OPTIMIZER_UNREFERENCEDGUARDELIMINATION =
+            "de.cau.cs.kieler.scg.commands.optimizer.unreferencedGuardElimination";
 
     private static Injector injector = new SctStandaloneSetup()
         .createInjectorAndDoEMFRegistration();
@@ -84,6 +87,15 @@ public class OptimizerModelFileHandler extends AbstractConvertModelHandler {
             SCGraph optSCG = ScgFactory.eINSTANCE.createSCGraph();
             copyExtensions.copySCG((SCGraph) model, optSCG);
             transformed = copyPropagation.optimize(optSCG);
+        } 
+        if (commandString.equals(OPTIMIZER_UNREFERENCEDGUARDELIMINATION)) {
+    		SCGCopyExtensions copyExtensions = Guice.createInjector().getInstance(SCGCopyExtensions.class);
+            UnreferencedGuardElimination unreferencedGuardElimination = 
+            		Guice.createInjector().getInstance(UnreferencedGuardElimination.class);
+            
+            SCGraph optSCG = ScgFactory.eINSTANCE.createSCGraph();
+            copyExtensions.copySCG((SCGraph) model, optSCG);
+            transformed = unreferencedGuardElimination.optimize(optSCG);
         } 
         return transformed;
     }
