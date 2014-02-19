@@ -461,6 +461,8 @@ class SCGExtensions {
 
 
     def Node getThreadEntryNode(Node node) {
+//        if (node instanceof Exit) return (node as Exit).entry
+        
         val fork = node.getAncestorFork
         if (fork == null) return null
 

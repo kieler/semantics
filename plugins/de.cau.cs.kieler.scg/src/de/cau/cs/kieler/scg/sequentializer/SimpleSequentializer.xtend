@@ -15,21 +15,24 @@ package de.cau.cs.kieler.scg.sequentializer
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
+import de.cau.cs.kieler.scgsched.AssignmentAddition
+import de.cau.cs.kieler.scgsched.ConditionalAddition
 import de.cau.cs.kieler.scgsched.GuardExpression
 import de.cau.cs.kieler.scgsched.SCGraphSched
 import de.cau.cs.kieler.scgsched.Schedule
+import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scgsched.AssignmentAddition
-import java.util.HashMap
-import de.cau.cs.kieler.scgsched.ConditionalAddition
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scgsched.ScgschedFactory
+import de.cau.cs.kieler.scgbb.BasicBlock
+import de.cau.cs.kieler.scg.optimizer.CopyPropagation
+import com.google.inject.Guice
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -57,6 +60,10 @@ class SimpleSequentializer extends AbstractSequentializer {
     // -- Injections 
     // -------------------------------------------------------------------------
     
+    /** Inject SCG extensions. */  
+    @Inject 
+    extension SCGExtensions
+     
     /** Inject SCG copy extensions. */  
     @Inject 
     extension SCGCopyExtensions	
@@ -113,9 +120,9 @@ class SimpleSequentializer extends AbstractSequentializer {
         val exit = ScgFactory::eINSTANCE.createExit
         exitFlows.forEach[it.target = exit]
         scg.nodes.add(exit)
-        
+                
         // Return the SCG.
-        scg       	
+        scg     	
     }
     
     /**
@@ -141,8 +148,12 @@ class SimpleSequentializer extends AbstractSequentializer {
     	val nextFlows = <ControlFlow> newArrayList
     	nextFlows.add(controlFlow)
     	
+    	val processedBlockGuards = <BasicBlock> newArrayList
+    	
     	// For each scheduling block in the schedule iterate.
     	for (sb : schedule.schedulingBlocks) {
+    	    
+    	    val basicBlock = sb.basicBlock
     	    
     	    scgSched.alterations.filter(typeof(ConditionalAddition)).forEach[
     	        if (sb.nodes.contains(it.beforeNode)) {
@@ -160,12 +171,17 @@ class SimpleSequentializer extends AbstractSequentializer {
     	        }
     	    ]
     	    
+    	    
     		/**
     		 * Each scheduling block references a guard. Each guard results in an assignment. 
     		 * Create it and copy the corresponding object.
     		 */
+//    		if (sb == basicBlock.schedulingBlocks.head) {
+            if (!processedBlockGuards.contains(basicBlock)) {
     		val newAssignment = ScgFactory::eINSTANCE.createAssignment
-    		newAssignment.valuedObject = sb.guard.getValuedObjectCopy
+//    		newAssignment.valuedObject = sb.guard.getValuedObjectCopy
+            newAssignment.valuedObject = basicBlock.guards.head.getValuedObjectCopy
+            processedBlockGuards.add(basicBlock)
 
 			/**
 			 * For each guard a guard expression exists.
@@ -174,7 +190,8 @@ class SimpleSequentializer extends AbstractSequentializer {
 			 * Otherwise, it is possible that the guard expression houses empty expressions for a synchronizer. Add them as well.
 			 */    		
 			// Retrieve the guard expression from the scheduling information.
-    		var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == sb.guard].head
+//    		var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == sb.guard].head
+            var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == basicBlock.guards.head].head
     		
     		if (guardExpression != null && guardExpression.expression != null) {
     			
@@ -197,7 +214,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     			throw new UnsupportedSCGException("The guard expression is missing! [guard: "+sb.guard.toString+"]")
     		}
     		// Connect all control flows to the new assignment and clear the list.
-    		nextFlows.forEach[it.target = newAssignment]
+    		nextFlows.forEach[ target = newAssignment ]
     		nextFlows.clear
     		
     		// Create a new control flow and take the assignment node as source.
@@ -207,6 +224,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     		
     		// Add the assignment to the SCG.
     		scg.nodes.add(newAssignment)
+    		}
     		
     		/**
     		 * If the scheduling block includes assignment nodes, they must be executed if the corresponing guard 
@@ -218,12 +236,14 @@ class SimpleSequentializer extends AbstractSequentializer {
     		if (sb.nodes.filter(typeof(Assignment)).size>0 || alterations.size>0) {
     			// Create a conditional and set a reference of the guard as condition.
     			val conditional = ScgFactory::eINSTANCE.createConditional
-    			conditional.condition = sb.guard.reference.copyExpression
+//                conditional.condition = sb.guard.reference.copyExpression
+                conditional.condition = basicBlock.guards.head.reference.copyExpression
     			
     			// Create control flows for the two branches and set the actual control flow to the conditional.
     			conditional.then = ScgFactory::eINSTANCE.createControlFlow
     			conditional.^else = ScgFactory::eINSTANCE.createControlFlow
-    			nextFlows.head.target = conditional
+//    			nextFlows.head.target = conditional
+    			nextFlows.forEach[ target = conditional ]
     			nextFlows.clear
     			
     			// Add the conditional.
@@ -248,7 +268,7 @@ class SimpleSequentializer extends AbstractSequentializer {
 	    				assignment.valuedObject = assadd.valuedObject.getValuedObjectCopy
     					assignment.assignment = assadd.expression.copyExpression
     					scg.nodes.add(assignment)
-	    				nextFlows.forEach[ it.target = assignment ]
+	    				nextFlows.forEach[ target = assignment ]
 	    				nextFlows.clear
 	    				assignment.next = ScgFactory::eINSTANCE.createControlFlow => [
 	    					nextFlows.add(it)

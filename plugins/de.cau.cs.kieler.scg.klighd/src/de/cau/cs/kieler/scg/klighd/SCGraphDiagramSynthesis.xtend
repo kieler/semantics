@@ -448,7 +448,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // border and connects them via a port. Thus, a kind of pseudo hierarchical edge layout is archived. 
             if (SHOW_HIERARCHY.booleanValue) {    
                 scg.nodes.filter(typeof(Fork)).forEach[ allNext.map[ target ].filter(typeof(Entry)).forEach[
-                	getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY)
+                	if (it != null) getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY)
                 ]] 
             }
             

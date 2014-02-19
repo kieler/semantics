@@ -134,6 +134,7 @@ class HybridScheduler extends ClusterScheduler {
                 }
                 accList.clear
                 actualThreadEntry = threadEntry
+                accList.add(s)
             } 
             else {
                 accList.add(s)    

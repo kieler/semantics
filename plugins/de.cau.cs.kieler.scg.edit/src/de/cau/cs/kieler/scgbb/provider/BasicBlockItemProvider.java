@@ -72,6 +72,7 @@ public class BasicBlockItemProvider
             super.getPropertyDescriptors(object);
 
             addGoBlockPropertyDescriptor(object);
+            addDeadBlockPropertyDescriptor(object);
             addBlockTypePropertyDescriptor(object);
             addPreGuardPropertyDescriptor(object);
         }
@@ -145,6 +146,28 @@ public class BasicBlockItemProvider
     }
 
 				/**
+     * This adds a property descriptor for the Dead Block feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addDeadBlockPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_BasicBlock_deadBlock_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_BasicBlock_deadBlock_feature", "_UI_BasicBlock_type"),
+                 ScgbbPackage.Literals.BASIC_BLOCK__DEAD_BLOCK,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+                /**
      * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
      * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -212,6 +235,7 @@ public class BasicBlockItemProvider
 
         switch (notification.getFeatureID(BasicBlock.class)) {
             case ScgbbPackage.BASIC_BLOCK__GO_BLOCK:
+            case ScgbbPackage.BASIC_BLOCK__DEAD_BLOCK:
             case ScgbbPackage.BASIC_BLOCK__BLOCK_TYPE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;

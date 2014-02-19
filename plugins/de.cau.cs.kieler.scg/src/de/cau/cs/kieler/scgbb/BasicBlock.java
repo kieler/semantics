@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getGuards <em>Guards</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getPredecessors <em>Predecessors</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#isGoBlock <em>Go Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#isDeadBlock <em>Dead Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getBlockType <em>Block Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scgbb.BasicBlock#getPreGuard <em>Pre Guard</em>}</li>
  * </ul>
@@ -167,5 +168,31 @@ public interface BasicBlock extends EObject {
      * @generated
      */
 	void setGoBlock(boolean value);
+
+                /**
+     * Returns the value of the '<em><b>Dead Block</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Dead Block</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Dead Block</em>' attribute.
+     * @see #setDeadBlock(boolean)
+     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#getBasicBlock_DeadBlock()
+     * @model
+     * @generated
+     */
+    boolean isDeadBlock();
+
+                /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scgbb.BasicBlock#isDeadBlock <em>Dead Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Dead Block</em>' attribute.
+     * @see #isDeadBlock()
+     * @generated
+     */
+    void setDeadBlock(boolean value);
 
 } // BasicBlock

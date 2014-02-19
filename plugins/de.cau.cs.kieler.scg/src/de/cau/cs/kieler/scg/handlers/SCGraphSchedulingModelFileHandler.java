@@ -24,12 +24,10 @@ import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
 import de.cau.cs.kieler.scg.SCGraph;
-import de.cau.cs.kieler.scgdep.SCGraphDep;
 import de.cau.cs.kieler.scg.schedulers.AbstractScheduler;
 import de.cau.cs.kieler.scg.schedulers.ClusterScheduler;
 import de.cau.cs.kieler.scg.schedulers.HybridScheduler;
 import de.cau.cs.kieler.scg.schedulers.SimpleScheduler;
-import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation;
 
 /**
  * Handler for menu contributions

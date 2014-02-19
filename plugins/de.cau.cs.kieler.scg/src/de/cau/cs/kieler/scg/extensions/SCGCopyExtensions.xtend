@@ -246,6 +246,7 @@ class SCGCopyExtensions {
         bb => [
         	blockType = basicBlock.blockType
         	goBlock = basicBlock.goBlock
+        	deadBlock = basicBlock.deadBlock
         	preGuard = valuedObjectMapping.get(basicBlock.preGuard)
         ]
                 

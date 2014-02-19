@@ -20,8 +20,8 @@ import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 import de.cau.cs.kieler.scg.schedulers.SimpleScheduler
-import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation
-import de.cau.cs.kieler.scg.transformations.SCGToSCGDEPTransformation
+import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation
+import de.cau.cs.kieler.scg.transformations.DependencyTransformation
 import de.cau.cs.kieler.scgbb.SCGraphBB
 import de.cau.cs.kieler.scgdep.SCGraphDep
 import de.cau.cs.kieler.scl.scl.Program
@@ -41,10 +41,10 @@ class SCLDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
     extension SCLToSCGTransformation
     
     @Inject 
-    extension SCGToSCGDEPTransformation
+    extension DependencyTransformation
 
     @Inject 
-    extension SCGDEPToSCGBBTransformation
+    extension BasicBlockTransformation
     
     @Inject
     extension SimpleScheduler
