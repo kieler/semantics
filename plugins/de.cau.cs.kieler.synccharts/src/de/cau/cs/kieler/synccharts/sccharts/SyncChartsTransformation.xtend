@@ -164,7 +164,9 @@ class SyncChartsTransformation {
             }
             transition.setPriority(syncTransition.priority)
             if (syncTransition.trigger != null) {
-                transition.setTrigger(syncTransition.trigger.transformExpression)
+                val synchartsTrigger = syncTransition.trigger
+                val scchartsTrigger = synchartsTrigger.transformExpression;
+                transition.setTrigger(scchartsTrigger)
             }
             for (syncEffect : syncTransition.effects) {
                   transition.addEffect(syncEffect.transformEffect)
@@ -317,7 +319,7 @@ class SyncChartsTransformation {
             return OperatorType::NOT
         }
         else if (operatorType == de.cau.cs.kieler.esterel.kexpressions.OperatorType::OR) {
-            return OperatorType::PRE
+            return OperatorType::OR
         }
         else if (operatorType == de.cau.cs.kieler.esterel.kexpressions.OperatorType::PRE) {
             return OperatorType::PRE
