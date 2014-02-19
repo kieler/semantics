@@ -526,6 +526,12 @@ class KExpressionsExtension {
          expression
     }
 
+
+    // Create an empty text expression.
+    def TextExpression createTextExpression() {
+         val expression = KExpressionsFactory::eINSTANCE.createTextExpression()
+         expression
+    }
     // Create a text expression.
     def TextExpression createTextExpression(String text) {
          val expression = KExpressionsFactory::eINSTANCE.createTextExpression()

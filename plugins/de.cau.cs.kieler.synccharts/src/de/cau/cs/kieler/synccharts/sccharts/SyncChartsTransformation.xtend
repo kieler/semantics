@@ -358,7 +358,10 @@ class SyncChartsTransformation {
 
     // Apply conversion to textual host code 
     def dispatch Expression transformExpression(de.cau.cs.kieler.esterel.kexpressions.TextExpression expression) {
-        createTextExpression(expression.code)
+        var code = expression.code;
+        val textExpression = createTextExpression
+        textExpression.setText(code);
+        textExpression
     }    
     
     // Apply conversion to the default case
