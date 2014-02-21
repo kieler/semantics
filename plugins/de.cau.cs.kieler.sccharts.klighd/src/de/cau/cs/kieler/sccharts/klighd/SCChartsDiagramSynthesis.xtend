@@ -187,8 +187,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.foreground = "gray".color
                 it.lineWidth = 1;
                 it.addText("[-]" + if(r.label.nullOrEmpty) "" else " " + r.label).putToLookUpWith(r) => [
-                    it.foreground = "gray".color
-                    it.fontSize = 8
+                    it.foreground = "black".color
+                    it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
