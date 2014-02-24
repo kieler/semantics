@@ -65,6 +65,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -108,12 +109,45 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     extension SCChartsExtension
 
     @Inject
+    extension SCChartsCoreTransformation
+
+    @Inject
     extension DependencyTransformation
 
     // -------------------------------------------------------------------------
     // Transformation options   
-    private static val SynthesisOption SHOW_SIGNAL_DECLARATIONS = SynthesisOption::
-        createCheckOption("Declarations", true);
+    // CORE TRANSFORMATIONS
+    private static val SynthesisOption TRANSFORM_HISTORY = SynthesisOption::createCheckOption("Transform History", false);
+    private static val SynthesisOption TRANSFORM_WEAKSUSPEND = SynthesisOption::createCheckOption(
+        "Transform Weak Suspend", false);
+    private static val SynthesisOption TRANSFORM_DEFERRED = SynthesisOption::createCheckOption("Transform Deferred",
+        false);
+    private static val SynthesisOption TRANSFORM_STATIC = SynthesisOption::createCheckOption("Transform Static", false);
+    private static val SynthesisOption TRANSFORM_SIGNAL = SynthesisOption::createCheckOption("Transform Signal", false);
+    private static val SynthesisOption TRANSFORM_COUNTDELAY = SynthesisOption::createCheckOption("Transform Count Delay",
+        false);
+    private static val SynthesisOption TRANSFORM_PRE = SynthesisOption::createCheckOption("Transform Pre", false);
+    private static val SynthesisOption TRANSFORM_SUSPEND = SynthesisOption::createCheckOption("Transform Suspend", false);
+    private static val SynthesisOption TRANSFORM_COMPLEXFINALSTATE = SynthesisOption::createCheckOption(
+        "Transform Complex Final State", false);
+    private static val SynthesisOption TRANSFORM_ABORT1 = SynthesisOption::createCheckOption("Transform Abort1", false);
+    private static val SynthesisOption TRANSFORM_ABORT2 = SynthesisOption::createCheckOption("Transform Abort2", false);
+    private static val SynthesisOption TRANSFORM_DURING = SynthesisOption::createCheckOption("Transform During", false);
+    private static val SynthesisOption TRANSFORM_INITIALIZATION = SynthesisOption::createCheckOption(
+        "Transform Initialization", false);
+    private static val SynthesisOption TRANSFORM_ENTRY = SynthesisOption::createCheckOption("Transform Entry", false);
+    private static val SynthesisOption TRANSFORM_EXIT = SynthesisOption::createCheckOption("Transform Exit", false);
+    private static val SynthesisOption TRANSFORM_CONNECTOR = SynthesisOption::createCheckOption("Transform Connector",
+        false);
+    private static val SynthesisOption TRANSFORM_NORMALIZE = SynthesisOption::createCheckOption("Transform Normalize",
+        false);
+    private static val SynthesisOption TRANSFORM_CORE = SynthesisOption::createCheckOption("Transform All Core",
+        false);
+    private static val SynthesisOption TRANSFORM_CORENORMALIZE = SynthesisOption::createCheckOption(
+        "Transform All Core && Normalize", false);
+
+    private static val SynthesisOption SHOW_SIGNAL_DECLARATIONS = SynthesisOption::createCheckOption("Declarations",
+        true);
 
     private static val SynthesisOption SHOW_STATE_ACTIONS = SynthesisOption::createCheckOption("State actions",
         true);
@@ -133,13 +167,16 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_SHADOW);
+            SHOW_SHADOW, TRANSFORM_HISTORY, TRANSFORM_WEAKSUSPEND, TRANSFORM_DEFERRED, TRANSFORM_STATIC,
+            TRANSFORM_SIGNAL, TRANSFORM_COUNTDELAY, TRANSFORM_PRE, TRANSFORM_SUSPEND, TRANSFORM_COMPLEXFINALSTATE,
+            TRANSFORM_ABORT1, TRANSFORM_ABORT2, TRANSFORM_DURING, TRANSFORM_INITIALIZATION, TRANSFORM_ENTRY,
+            TRANSFORM_EXIT, TRANSFORM_CONNECTOR, TRANSFORM_NORMALIZE, TRANSFORM_CORE, TRANSFORM_CORENORMALIZE);
     }
 
     override public getDisplayedLayoutOptions() {
         return newLinkedList(
             new Pair<IProperty<?>, List<?>>(LayoutOptions::ALGORITHM, emptyList),
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[it.name]), 
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[it.name]),
             new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 50))
         );
     }
@@ -157,13 +194,98 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         [it.red = 205; it.green = 220; it.blue = 243];
     private static val KColor KEYWORD = RENDERING_FACTORY.createKColor() => [it.red = 115; it.green = 0; it.blue = 65];
     private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() => [it.red = 60; it.green = 60; it.blue = 60];
-    
+
     private static val String ANNOTATION_LABELBREAK = "break"
 
     // -------------------------------------------------------------------------
     // The Main entry transform function   
     override transform(Region model) {
-        return model.translate();
+        var transformed = model;
+
+        if (TRANSFORM_CORE.booleanValue || TRANSFORM_CORENORMALIZE.booleanValue) {
+            transformed = transformed.transformHistory;
+            transformed = transformed.transformWeakSuspend
+            transformed = transformed.transformDeferred
+            transformed = transformed.transformStatic
+            transformed = transformed.transformSignal
+            transformed = transformed.transformCountDelay
+            transformed = transformed.transformPre
+            transformed = transformed.transformSuspend
+            transformed = transformed.transformComplexFinalState
+            transformed = transformed.transformAborts2
+            transformed = transformed.transformDuring
+            transformed = transformed.transformInitialization
+            transformed = transformed.transformEntry
+            transformed = transformed.transformExit
+            transformed = transformed.transformConnector
+            transformed = transformed.transformTriggerEffect
+            if (TRANSFORM_CORENORMALIZE.booleanValue) {
+                transformed = transformed.transformSurfaceDepth
+            }
+        } else {
+            if (TRANSFORM_HISTORY.booleanValue) {
+                transformed = transformed.transformHistory;
+            }
+            if (TRANSFORM_WEAKSUSPEND.booleanValue) {
+                transformed = transformed.transformWeakSuspend
+            }
+            if (TRANSFORM_DEFERRED.booleanValue) {
+                transformed = transformed.transformDeferred
+            }
+            if (TRANSFORM_STATIC.booleanValue) {
+                transformed = transformed.transformStatic
+            }
+            if (TRANSFORM_SIGNAL.booleanValue) {
+                transformed = transformed.transformSignal
+            }
+            if (TRANSFORM_COUNTDELAY.booleanValue) {
+                transformed = transformed.transformCountDelay
+            }
+            if (TRANSFORM_PRE.booleanValue) {
+                transformed = transformed.transformPre
+            }
+            if (TRANSFORM_SUSPEND.booleanValue) {
+                transformed = transformed.transformSuspend
+            }
+            if (TRANSFORM_COMPLEXFINALSTATE.booleanValue) {
+                transformed = transformed.transformComplexFinalState
+            }
+            if (TRANSFORM_ABORT1.booleanValue) {
+
+                // There are TWO options for the Aborts transformation
+                // 1. transformAborts1() and 2. transformAborts2()
+                transformed = transformed.transformAborts1
+            }
+            if (TRANSFORM_ABORT2.booleanValue) {
+
+                // There are TWO options for the Aborts transformation
+                // 1. transformAborts1() and 2. transformAborts2()
+                transformed = transformed.transformAborts2
+            }
+            if (TRANSFORM_DURING.booleanValue) {
+                transformed = transformed.transformDuring
+            }
+            if (TRANSFORM_INITIALIZATION.booleanValue) {
+                transformed = transformed.transformInitialization
+            }
+            if (TRANSFORM_ENTRY.booleanValue) {
+                transformed = transformed.transformEntry
+            }
+            if (TRANSFORM_EXIT.booleanValue) {
+                transformed = transformed.transformExit
+            }
+            if (TRANSFORM_CONNECTOR.booleanValue) {
+                transformed = transformed.transformConnector
+            }
+            if (TRANSFORM_NORMALIZE.booleanValue) {
+                transformed = transformed.transformTriggerEffect
+            }
+            if (TRANSFORM_NORMALIZE.booleanValue) {
+                transformed = transformed.transformSurfaceDepth
+            }
+        }
+
+        return transformed.translate();
     }
 
     // -------------------------------------------------------------------------
@@ -187,8 +309,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.foreground = "gray".color
                 it.lineWidth = 1;
                 it.addText("[-]" + if(r.label.nullOrEmpty) "" else " " + r.label).putToLookUpWith(r) => [
-                    it.foreground = "gray".color
-                    it.fontSize = 8
+                    it.foreground = "darkGray".color
+                    it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
@@ -204,8 +326,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.foreground = "gray".color
                 it.lineWidth = 1;
                 it.addText("[+]" + if(r.label.nullOrEmpty) "" else " " + r.label).putToLookUpWith(r) => [
-                    it.foreground = "gray".color
-                    it.fontSize = 8
+                    it.foreground = "darkGray".color
+                    it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
@@ -296,7 +418,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 it.setGridPlacementData()
             ]
         }
-         parent
+        parent
     }
 
     // -------------------------------------------------------------------------
@@ -332,13 +454,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     it.background = "black".color
                     figure.lineWidth = 3
                     it.foreground = "white".color
-//                    it.addArc => [
-//                        it.foreground = "white".color;
-//                        it.startAngle = 45;
-//                        it.arcAngle = 270;
-//                        it.lineWidth = 2;
-//                        it.setSurroundingSpace(0, 0.3f);
-//                    ];
+                    //                    it.addArc => [
+                    //                        it.foreground = "white".color;
+                    //                        it.startAngle = 45;
+                    //                        it.arcAngle = 270;
+                    //                        it.lineWidth = 2;
+                    //                        it.setSurroundingSpace(0, 0.3f);
+                    //                    ];
                     node.setNodeSize(7, 7);
                 ]
             else if (s.isFinal)
@@ -348,7 +470,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     figure.setCornerSize(offset + cornerRadius, offset + cornerRadius)
                     figure.lineWidth = if(s.isInitial) 3 else 1;
                     // configure the inner one
-//                    it.background = "white".color;
+                    //                    it.background = "white".color;
                     it.styleRef = figure;
                     it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
                     it.shadow = null
@@ -368,7 +490,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 if (connector) {
                     return;
                 }
-//                it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+                //                it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
                 if (s.hasRegionsOrDeclarations) {
                     it.setGridPlacement(1);
                 }
@@ -475,7 +597,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                             it.invisible = true;
                             it.addRectangle => [
                                 it.invisible = true;
-                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0, 0);
+                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
+                                    0);
                                 scopeProvider.parent = s;
                                 var declaration = "";
                                 var type = "";
@@ -518,7 +641,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                             it.invisible = true;
                             it.addRectangle => [
                                 it.invisible = true;
-                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0, 0);
+                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
+                                    0);
                                 var text = serializer.serialize(action.copy);
                                 text = text.replace("'", "")
                                 if (text.length > 1 && text.substring(text.length - 1, text.length).equals(";")) {
@@ -526,7 +650,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 }
                                 it.printHighlightedText(text, action)
                             ]
-                            //it.addRectangle().invisible = true;
+                        //it.addRectangle().invisible = true;
                         ];
                     }
                     for (bodyText : s.bodyText) {
@@ -588,7 +712,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     if (t.deferred) {
                         it.parent.addDeferredDecorator(offset);
                         (it.placementData as KDecoratorPlacementData).absolute = -11.0f + offset;
-                    } 
+                    }
                 ];
                 // it.lineCap = LineCap::CAP_ROUND;
                 switch (t.type) {
@@ -600,16 +724,18 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             ];
             if (SHOW_LABELS.booleanValue) {
                 scopeProvider.parent = t.sourceState;
+
                 // For serialization set these flags to false to ommit them in the transition label
                 val tCopy = t.copy
                 tCopy.setDeferred(false)
                 tCopy.setHistory(HistoryType::RESET)
                 tCopy.setImmediate(false)
-                tCopy.annotations.clear                           // do not serialize copied annotations
+                tCopy.annotations.clear // do not serialize copied annotations
                 var String label = serializer.serialize(tCopy)
                 label = label.replace("'", "")
+
                 // break labels if they are annotated
-                if (t.getAnnotation(ANNOTATION_LABELBREAK)!=null) {
+                if (t.getAnnotation(ANNOTATION_LABELBREAK) != null) {
                     label = label.replace(";", ";\n")
                 }
 

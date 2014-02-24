@@ -145,7 +145,7 @@ class SyncChartsTransformation {
             syncState.transformTransitionsAndActions(rootRegion)
         }
 
-        rootRegion
+        rootRegion.fixAllTextualOrdersByPriorities
     }
     
    // -------------------------------------------------------------------------   
@@ -164,7 +164,9 @@ class SyncChartsTransformation {
             }
             transition.setPriority(syncTransition.priority)
             if (syncTransition.trigger != null) {
-                transition.setTrigger(syncTransition.trigger.transformExpression)
+                val synchartsTrigger = syncTransition.trigger
+                val scchartsTrigger = synchartsTrigger.transformExpression;
+                transition.setTrigger(scchartsTrigger)
             }
             for (syncEffect : syncTransition.effects) {
                   transition.addEffect(syncEffect.transformEffect)
@@ -178,12 +180,25 @@ class SyncChartsTransformation {
         }
     }
 
+   // -------------------------------------------------------------------------
+   
+   def String correctId(String syncChartsId) {
+        if (syncChartsId.startsWith("0")||syncChartsId.startsWith("1")||syncChartsId.startsWith("2")||syncChartsId.startsWith("3")||syncChartsId.startsWith("4")||
+            syncChartsId.startsWith("5")||syncChartsId.startsWith("6")||syncChartsId.startsWith("7")||syncChartsId.startsWith("8")||syncChartsId.startsWith("9")
+        ) {
+            return "S" + syncChartsId
+        }
+        syncChartsId
+   }   
+
    // -------------------------------------------------------------------------   
 
     // Transforming states
     def dispatch void transform(de.cau.cs.kieler.synccharts.State syncState, Region rootRegion) {
         val parentRegion = syncState.parentRegion.region
-        val state = parentRegion.createState(syncState.id) 
+        var syncId = syncState.id.correctId;
+        val state = parentRegion.createState(syncId).uniqueName
+        state.setLabel(syncState.label); 
         state.map(syncState)
         
         state.setInitial(syncState.isInitial)
@@ -317,7 +332,7 @@ class SyncChartsTransformation {
             return OperatorType::NOT
         }
         else if (operatorType == de.cau.cs.kieler.esterel.kexpressions.OperatorType::OR) {
-            return OperatorType::PRE
+            return OperatorType::OR
         }
         else if (operatorType == de.cau.cs.kieler.esterel.kexpressions.OperatorType::PRE) {
             return OperatorType::PRE
@@ -356,7 +371,10 @@ class SyncChartsTransformation {
 
     // Apply conversion to textual host code 
     def dispatch Expression transformExpression(de.cau.cs.kieler.esterel.kexpressions.TextExpression expression) {
-        createTextExpression(expression.code)
+        var code = expression.code;
+        val textExpression = createTextExpression
+        textExpression.setText(code);
+        textExpression
     }    
     
     // Apply conversion to the default case

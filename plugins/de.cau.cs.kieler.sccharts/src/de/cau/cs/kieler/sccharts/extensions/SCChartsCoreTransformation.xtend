@@ -348,6 +348,37 @@ class SCChartsCoreTransformation {
     
 
     //-------------------------------------------------------------------------
+    //--     O P T I M I Z E :  Conditional  States  --
+    //-------------------------------------------------------------------------
+    // Optimize states with two outgoing transitions
+    def Region optimizeSuperflousConditionalStates(Region rootRegion) {
+        var targetStates = rootRegion.allContainedStates
+        for (targetState : targetStates) {
+            targetState.optimizeSuperflousConditionalStates(rootRegion);
+        }
+        rootRegion;
+    }
+
+    def void optimizeSuperflousConditionalStates(State state, Region targetRootRegion) {
+        if (state.outgoingTransitions.size == 2 && !state.hierarchical) {
+            val transition1 = state.outgoingTransitions.get(0)
+            val transition2 = state.outgoingTransitions.get(1)
+            val targetState2 = transition1.targetState
+            if ((transition1.immediate2) && (transition1.trigger == null)) {
+                    targetState2.incomingTransitions.remove(transition2)
+                    state.outgoingTransitions.remove(transition2)
+                    //targetState2.setInitial(state.initial || targetState2.initial)
+                    //targetState2.setFinal(state.final || targetState2.final)
+                    //targetState.setId(state.id)
+                    //targetState.setLabel(state.label)
+                    //targetState.parentRegion.states.remove(state)
+                }
+        }
+        
+    }
+    
+
+    //-------------------------------------------------------------------------
     //--                S U R F A C E  &   D E P T H                         --
     //-------------------------------------------------------------------------
     //@requires: abort transformation (there must not be any weak or strong aborts outgoing from
@@ -380,7 +411,7 @@ class SCChartsCoreTransformation {
             targetState.transformSurfaceDepth(targetRootRegion);
         }
 
-        targetRootRegion.fixAllTextualOrdersByPriorities.optimizeSuperflousImmediateTransitions;
+        targetRootRegion.fixAllTextualOrdersByPriorities.optimizeSuperflousConditionalStates.optimizeSuperflousImmediateTransitions;
     }
 
     def void transformSurfaceDepth(State state, Region targetRootRegion) {
