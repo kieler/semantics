@@ -1,3 +1,4 @@
+package de.cau.cs.kieler.sccharts.tsccharts.action;
 /**
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  * 
