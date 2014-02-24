@@ -50,6 +50,7 @@ import de.cau.cs.kieler.core.krendering.VerticalAlignment;
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.klighd.IAction;
+import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.tsccharts.TimingAnnotationProvider;
@@ -111,6 +112,7 @@ public class TimingAction implements IAction {
             
             @Override
             protected IStatus run(IProgressMonitor monitor) {
+                ViewContext viewContext = context.getViewContext();
                 IWorkbenchPart part = context.getViewContext().getSourceWorkbenchPart();
                 IXtextDocument document = null;
                 
