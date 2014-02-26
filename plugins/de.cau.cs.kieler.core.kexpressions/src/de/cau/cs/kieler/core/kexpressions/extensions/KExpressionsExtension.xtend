@@ -30,9 +30,9 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.DoubleValue
 
 /**
- * S Extensions. 
+ * KExpressions Extensions. 
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
@@ -168,6 +168,47 @@ class KExpressionsExtension {
         }
         operatorExpression;
     }
+    
+    //-------------------------------------------------------------------------
+    //--             H O T F I X   F O R   O P E R A T O R S                 --
+    //-------------------------------------------------------------------------
+    // Because the KExpressions Parser has a problem with
+    // AND / OR lists of more than two elements the following fixes
+    // an OperatorExpression of such kind.
+    // Test 14
+    def Expression fix(Expression expression) {
+        if (expression instanceof OperatorExpression) {
+            (expression as OperatorExpression).fixForOperatorExpressionLists     
+        } else {
+            expression
+        }        
+    }
+    
+    def OperatorExpression fixForOperatorExpressionLists(OperatorExpression operatorExpression) {
+        if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty ||
+            operatorExpression.subExpressions.size <= 2) {
+
+            // In this case we do not need the fix
+//            return operatorExpression;
+              val oeCopy = operatorExpression.copy
+              oeCopy.subExpressions.clear
+              operatorExpression.subExpressions.forEach[
+                  oeCopy.subExpressions += it.copy.fix
+              ]    
+              return oeCopy                    
+        }
+
+        // Here we apply the fix recursively
+        val operatorExpressionCopy = operatorExpression.copy;
+        val newOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+        newOperatorExpression.setOperator(operatorExpression.operator);
+        newOperatorExpression.subExpressions.add(operatorExpression.subExpressions.head);
+
+        // Call recursively without the first element
+        operatorExpressionCopy.subExpressions.remove(0);
+        newOperatorExpression.subExpressions.add(operatorExpressionCopy.fixForOperatorExpressionLists);
+        return newOperatorExpression;
+    }    
 
     //==========  EXPRESSIONS  ==========
 
