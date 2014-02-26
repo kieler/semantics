@@ -112,10 +112,12 @@ class SCGToSTransformation {
 	    if (processedNodes.contains(assignment)) return;
         processedNodes += assignment
         
-	    val sAssignment = SFactory::eINSTANCE.createAssignment
-	    sAssignment.variable = valuedObjectMapping.get(assignment.valuedObject)
-	    sAssignment.expression = assignment.assignment.copyExpression.splitOperatorExpression
-	    instructions += sAssignment
+        if (assignment.valuedObject != null && assignment.assignment != null) {
+	    	val sAssignment = SFactory::eINSTANCE.createAssignment
+	    	sAssignment.variable = valuedObjectMapping.get(assignment.valuedObject)
+	    	sAssignment.expression = assignment.assignment.copyExpression.fix
+	    	instructions += sAssignment
+    	}
 	    
 	    if (assignment.next != null) assignment.next.target.transform(instructions)
 	}
