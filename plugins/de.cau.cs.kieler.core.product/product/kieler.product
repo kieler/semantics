@@ -13,7 +13,7 @@ A research project on enhancing the model-based design of complex systems
 For more information, visit our website:
 http://www.informatik.uni-kiel.de/rtsys/kieler/
 
-Copyright 2012 by Christian-Albrechts-University of Kiel, Department of Computer Science, Real-Time and Embedded Systems Group
+Copyright 2014 by Christian-Albrechts-University of Kiel, Department of Computer Science, Real-Time and Embedded Systems Group
       </text>
    </aboutInfo>
 
@@ -65,6 +65,7 @@ openFile</programArgsMac>
             winExtraLargeHigh="/de.cau.cs.kieler.core.product/icons/foerde-logo-256.bmp"/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>
@@ -168,14 +169,10 @@ This Agreement is governed by the laws of the State of New York and the intellec
    <features>
       <feature id="de.cau.cs.kieler.kgraph.feature"/>
       <feature id="de.cau.cs.kieler.kiml.graphviz.feature"/>
-      <feature id="de.cau.cs.kieler.kiml.ogdf.feature"/>
       <feature id="de.cau.cs.kieler.klighd.feature"/>
-      <feature id="de.cau.cs.kieler.ptview.feature"/>
       <feature id="de.cau.cs.kieler.dependencies.feature"/>
       <feature id="de.cau.cs.kieler.esterel.feature"/>
       <feature id="de.cau.cs.kieler.sccharts.feature"/>
-      <feature id="net.ogdf.bin.feature"/>
-      <feature id="org.ptolemy.feature"/>
    </features>
 
    <configurations>
