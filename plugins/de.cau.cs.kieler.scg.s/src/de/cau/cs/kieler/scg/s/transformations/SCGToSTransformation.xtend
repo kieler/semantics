@@ -114,7 +114,7 @@ class SCGToSTransformation {
         if (assignment.valuedObject != null && assignment.assignment != null) {
 	    	val sAssignment = SFactory::eINSTANCE.createAssignment
 	    	sAssignment.variable = valuedObjectMapping.get(assignment.valuedObject)
-	    	sAssignment.expression = assignment.assignment.copyExpression.splitOperatorExpression
+	    	sAssignment.expression = assignment.assignment.copyExpression.fix
 	    	instructions += sAssignment
     	}
 	    
