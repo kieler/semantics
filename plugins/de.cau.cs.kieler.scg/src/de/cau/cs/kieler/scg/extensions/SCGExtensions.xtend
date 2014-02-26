@@ -302,7 +302,7 @@ class SCGExtensions {
         
         // Now, follow the control flow until the exit node is reached 
         // and add each node that is not already in the node list.
-        controlFlows.addAll(entry.getAllNext)
+        controlFlows.addAll(entry.allNext)
         while(!controlFlows.empty) {
         	// Next node is the first target in the control flow list.
             var nextNode = controlFlows.head.target
@@ -324,11 +324,27 @@ class SCGExtensions {
             //   - that the flow is not already included in the flow list
             //   - the target of the flow is not already processed
             //   - and the target of the flow is not the exit node.  
-            nextNode.getAllNext.filter[ 
+            nextNode.allNext.filter[ 
             	(!returnList.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
                 (!it.target.equals(exit)) ] 
                 	=> [ controlFlows.addAll(it) ]
+        }
+        
+        // Reverse search outgoing from the exit node
+        controlFlows.addAll(exit.allPrevious)
+        while(!controlFlows.empty) {
+            var nextNode = controlFlows.head.eContainer as Node
+            controlFlows.remove(0)
+            if (!returnList.contains(nextNode)) returnList.add(nextNode)
+            if (nextNode instanceof Depth) {
+                nextNode = (nextNode as Depth).surface
+                if (!returnList.contains(nextNode)) returnList.add(nextNode)
+            }
+            nextNode.allPrevious.filter[ 
+                (!returnList.contains(it.eContainer)) && 
+                (!controlFlows.contains(it)) ] 
+                    => [ controlFlows.addAll(it) ]
         }
         
         // Add the exit node and return.
