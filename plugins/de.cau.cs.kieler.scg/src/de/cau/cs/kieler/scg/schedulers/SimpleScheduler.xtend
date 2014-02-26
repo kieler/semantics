@@ -41,6 +41,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scgsched.Schedule
 import java.util.List
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -84,6 +85,10 @@ class SimpleScheduler extends AbstractScheduler {
 	/** Inject SCG copy extensions. */
     @Inject
     extension SCGCopyExtensions    
+    
+    /** Inject KExpression extensions. */
+    @Inject
+    extension KExpressionsExtension
     
     
     // -------------------------------------------------------------------------
@@ -421,8 +426,12 @@ class SimpleScheduler extends AbstractScheduler {
 				 * If we reach this point, the basic block contains no predecessor information but is not marked as go block.
 				 * This is not supported by this scheduler: throw an exception. 
 				 */
-                if (!basicBlock.deadBlock)
+                if (!basicBlock.deadBlock) {
 				    throw new UnsupportedSCGException("Cannot handle standard guard without predecessor information!")
+			    } else {
+                    expression = FALSE  
+			    }
+				    
 			}    	
     	]
     }

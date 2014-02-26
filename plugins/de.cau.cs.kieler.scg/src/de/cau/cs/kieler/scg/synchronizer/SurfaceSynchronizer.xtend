@@ -199,9 +199,12 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         	   threadExpr.subExpressions.add(it.threadExitObject.reference)
         	   expression.subExpressions.add(threadExpr)
             ]
-        
             // Conclusively, add the termination expression - at least one thread must exit this tick.
-            expression.subExpressions.add(terminationExpr)
+            if (terminationExpr.subExpressions.size == 1) {
+                expression.subExpressions.add(terminationExpr.subExpressions.head)        
+            } else {
+                expression.subExpressions.add(terminationExpr)
+            }
             data.guardExpression.expression = expression
         } else {
             // No surface found! Synchronizer exists immediately!

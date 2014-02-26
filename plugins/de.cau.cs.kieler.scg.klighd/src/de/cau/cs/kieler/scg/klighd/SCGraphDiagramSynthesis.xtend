@@ -78,6 +78,7 @@ import javax.inject.Inject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -153,6 +154,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     /** Inject SCG copy extensions. */
     @Inject
     extension SCGCopyExtensions
+
+    /** Inject KExpression extension. */
+    @Inject
+    extension KExpressionsExtension
+
 
     @Inject
     extension AnalysesVisualization
@@ -485,8 +491,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 // Serialize the assignment
                 // Additionally, remove unnecessary parenthesis and add spacing in line breaks.
                 if (assignment.valuedObject != null && assignment.assignment != null) {
-                    var assignmentStr = assignment.valuedObject.name + " = " + 
-                        serializer.serialize(assignment.assignment.copy.splitOperatorExpression).removeParenthesis
+                    var assignmentStr = assignment.valuedObject.name + " = " 
+                        + serializer.serialize(assignment.assignment.copy.fix).removeParenthesis
                     if (assignmentStr.contains("&") && assignmentStr.indexOf("&") != assignmentStr.lastIndexOf("&")) {
                         assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
                         assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
@@ -529,7 +535,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             figure => [ node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
             	// Serialize the condition in the conditional
                 if (conditional.condition != null)  
-                    node.KContainerRendering.addText(serializer.serialize(conditional.condition.copy.splitOperatorExpression).removeParenthesis)
+                    node.KContainerRendering.addText(serializer.serialize(conditional.condition.copy.fix).removeParenthesis)
                         .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0)
                         .putToLookUpWith(conditional)
                 if (SHOW_SHADOW.booleanValue) it.shadow = "black".color
