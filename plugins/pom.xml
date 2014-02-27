@@ -71,7 +71,7 @@
     <module>de.cau.cs.kieler.sim.kiem.ui.datacomponent</module>
     <module>de.cau.cs.kieler.sim.kiem.ui.launching</module>
     <module>de.cau.cs.kieler.sim.kivi</module>
-    <module>de.cau.cs.kieler.sim.ptolemy</module>
+    <!-- <module>de.cau.cs.kieler.sim.ptolemy</module> -->
     <module>de.cau.cs.kieler.sim.signals</module>
     <module>de.cau.cs.kieler.sim.signals.ui</module>
     <module>de.cau.cs.kieler.sim.syncsignalreset</module>
