@@ -7,7 +7,7 @@
       plugin="de.cau.cs.kieler.sccharts">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
-      KIELER SCCharts feature contains the KIELER SCCharts Textual Editor (*.sct) with automatic KLighD diagram synthesis. SCCharts can be simulated with the Ptolemy II (UC Berkeley) simulation engine (KLePto). Code generation to Synchronous C (SC) or Syncchronous Java (SJ) is also provided.
+      KIELER SCCharts feature contains the KIELER SCCharts Textual Editor (*.sct) with automatic KLighD diagram synthesis. Code generation to Synchronous C (SC) or Syncchronous Java (SJ) is provided.
    </description>
 
    <copyright>
@@ -276,12 +276,12 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
-   <plugin
+   <!-- <plugin
          id="de.cau.cs.kieler.core.model.xtend"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
+         unpack="false"/> -->
 
    <plugin
          id="de.cau.cs.kieler.kev"
@@ -432,13 +432,6 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.sim.kivi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.ptolemy"
          download-size="0"
          install-size="0"
          version="0.0.0"
