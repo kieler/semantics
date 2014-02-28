@@ -33,6 +33,7 @@
                 <plugin id="de.cau.cs.kieler.esterel.cec.macosx.x86_64" />
                 <plugin id="de.cau.cs.kieler.esterel.cec.win32.x86" />
               </excludes>
+              <labelSuffix>${sourceFeatureLabelSuffix}</labelSuffix>
             </configuration>
           </execution>
         </executions>
