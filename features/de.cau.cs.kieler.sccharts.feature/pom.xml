@@ -26,10 +26,7 @@
               <goal>source-feature</goal>
             </goals>
             <configuration>
-<!--              <excludes>
-                <plugin id="de.cau.cs.kieler.sccharts.examples" />
-              </excludes>
--->              
+              <labelSuffix>${sourceFeatureLabelSuffix}</labelSuffix>
             </configuration>
           </execution>
         </executions>
