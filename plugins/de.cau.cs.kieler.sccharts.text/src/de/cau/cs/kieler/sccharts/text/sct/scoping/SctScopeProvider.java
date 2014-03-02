@@ -132,33 +132,33 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
      * @param logicalContainer
      * @return
      */
-    protected List<IEObjectDescription> scope_ValuedObject(final EObject obj,
-            final EReference reference, final Scope logicalContainer) {
-
-        // include all available valuedObjects
-        List<IEObjectDescription> l = this.scope_ValuedObject2(obj, reference, logicalContainer);
-
-        // this branch will be entered during linking if the valuedObjectReference
-        // is contained by a '?' OperatorExpression
-        if (KExpressionsPackage.eINSTANCE.getOperatorExpression().isInstance(obj.eContainer())
-                && (((OperatorExpression) obj.eContainer()).getOperator() == OperatorType.VAL || ((OperatorExpression) obj
-                        .eContainer()).getOperator() == OperatorType.PRE)) {
-            return l;
-        }
-
-        // this branch will be entered computing the content assist proposals
-        // if the text input leads to a valid model!
-        // otherwise used context is nearly unpredictable
-        if (KExpressionsPackage.eINSTANCE.getOperatorExpression().isInstance(obj)
-                && (((OperatorExpression) obj).getOperator() == OperatorType.VAL || ((OperatorExpression) obj)
-                        .getOperator() == OperatorType.PRE)) {
-            return l;
-        }
-
-        // add all available variables
-        l.addAll(this.scope_Variable(obj, reference, logicalContainer));
-        return l;
-    }
+//    protected List<IEObjectDescription> scope_ValuedObject(final EObject obj,
+//            final EReference reference, final Scope logicalContainer) {
+//
+//        // include all available valuedObjects
+//        List<IEObjectDescription> l = this.scope_ValuedObject2(obj, reference, logicalContainer);
+//
+//        // this branch will be entered during linking if the valuedObjectReference
+//        // is contained by a '?' OperatorExpression
+//        if (KExpressionsPackage.eINSTANCE.getOperatorExpression().isInstance(obj.eContainer())
+//                && (((OperatorExpression) obj.eContainer()).getOperator() == OperatorType.VAL || ((OperatorExpression) obj
+//                        .eContainer()).getOperator() == OperatorType.PRE)) {
+//            return l;
+//        }
+//
+//        // this branch will be entered computing the content assist proposals
+//        // if the text input leads to a valid model!
+//        // otherwise used context is nearly unpredictable
+//        if (KExpressionsPackage.eINSTANCE.getOperatorExpression().isInstance(obj)
+//                && (((OperatorExpression) obj).getOperator() == OperatorType.VAL || ((OperatorExpression) obj)
+//                        .getOperator() == OperatorType.PRE)) {
+//            return l;
+//        }
+//
+//        // add all available variables
+//        l.addAll(this.scope_Variable(obj, reference, logicalContainer));
+//        return l;
+//    }
 
     /**
      * A implementation of scoping for valuedObject emissions.
@@ -182,7 +182,7 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 	 * @param logicalContainer
 	 * @return
 	 */
-	protected List<IEObjectDescription> scope_ValuedObject2(final EObject obj,
+	protected List<IEObjectDescription> scope_ValuedObject(final EObject obj,
 			final EReference reference, final Scope logicalContainer) {
 
         List<IEObjectDescription> l = new LinkedList<IEObjectDescription>();
@@ -208,7 +208,12 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 //                l.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
 //                        Collections.<String, String> emptyMap()));
 //            }
-
+          for (ValuedObject s :  m) {
+          l.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
+                  Collections.<String, String> emptyMap()));
+      }
+            
+            
             scope = (Scope) scope.eContainer();
             if (scope == null && !inLogicalContainer && container != null) {
             	scope = logicalContainer;
