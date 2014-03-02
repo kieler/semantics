@@ -505,11 +505,7 @@ ruleValuedObject returns [EObject current=null]
 	    }
 
 )
-))?	otherlv_6=';' 
-    {
-    	newLeafNode(otherlv_6, grammarAccess.getValuedObjectAccess().getSemicolonKeyword_4());
-    }
-)
+))?)
 ;
 
 
@@ -818,17 +814,17 @@ ruleConditional returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getConditionalAccess().getValuedObjectsValuedObjectParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getConditionalAccess().getTypeGroupsTypeGroupParserRuleCall_3_0()); 
 	    }
-		lv_valuedObjects_3_0=ruleValuedObject		{
+		lv_typeGroups_3_0=ruleTypeGroup		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getConditionalRule());
 	        }
        		add(
        			$current, 
-       			"valuedObjects",
-        		lv_valuedObjects_3_0, 
-        		"ValuedObject");
+       			"typeGroups",
+        		lv_typeGroups_3_0, 
+        		"TypeGroup");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -917,17 +913,17 @@ ruleConditional returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getConditionalAccess().getValuedObjectsValuedObjectParserRuleCall_5_1_0()); 
+	        newCompositeNode(grammarAccess.getConditionalAccess().getTypeGroupsTypeGroupParserRuleCall_5_1_0()); 
 	    }
-		lv_valuedObjects_10_0=ruleValuedObject		{
+		lv_typeGroups_10_0=ruleTypeGroup		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getConditionalRule());
 	        }
        		add(
        			$current, 
-       			"valuedObjects",
-        		lv_valuedObjects_10_0, 
-        		"ValuedObject");
+       			"typeGroups",
+        		lv_typeGroups_10_0, 
+        		"TypeGroup");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1305,17 +1301,17 @@ ruleStatementScope returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getStatementScopeAccess().getValuedObjectsValuedObjectParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getStatementScopeAccess().getTypeGroupsTypeGroupParserRuleCall_2_0()); 
 	    }
-		lv_valuedObjects_2_0=ruleValuedObject		{
+		lv_typeGroups_2_0=ruleTypeGroup		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getStatementScopeRule());
 	        }
        		add(
        			$current, 
-       			"valuedObjects",
-        		lv_valuedObjects_2_0, 
-        		"ValuedObject");
+       			"typeGroups",
+        		lv_typeGroups_2_0, 
+        		"TypeGroup");
 	        afterParserOrEnumRuleCall();
 	    }
 

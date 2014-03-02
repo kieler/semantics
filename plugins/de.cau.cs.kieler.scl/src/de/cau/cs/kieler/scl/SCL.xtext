@@ -38,7 +38,7 @@ ValuedObject returns kexpressions::ValuedObject:
     name=ID ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
-    )? ';'
+    )?
 ;
 
 Statement:
@@ -70,13 +70,13 @@ Assignment:
 
 Conditional:
     'if' expression = Expression 'then'
-        (valuedObjects+=ValuedObject)*
+        (typeGroups+=TypeGroup)*
         (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
             (statements +=  InstructionStatement statements += EmptyStatement*)?
          )
      ('else'
-        (valuedObjects+=ValuedObject)*
+        (typeGroups+=TypeGroup)*
         (
             ((elseStatements += InstructionStatement';') | elseStatements += EmptyStatement)*
             (elseStatements +=  InstructionStatement elseStatements += EmptyStatement*)?
@@ -117,7 +117,7 @@ Pause:
 StatementScope:
     {StatementScope}
     '{'
-        (valuedObjects+=ValuedObject)*
+        (typeGroups+=TypeGroup)*
         (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
             (statements +=  InstructionStatement statements += EmptyStatement*)?

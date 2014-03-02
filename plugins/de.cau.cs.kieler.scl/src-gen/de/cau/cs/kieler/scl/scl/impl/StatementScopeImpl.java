@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 
 import de.cau.cs.kieler.scl.scl.SclPackage;
 import de.cau.cs.kieler.scl.scl.Statement;
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementScopeImpl#getStatements <em>Statements</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementScopeImpl#getValuedObjects <em>Valued Objects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementScopeImpl#getTypeGroups <em>Type Groups</em>}</li>
  * </ul>
  * </p>
  *
@@ -48,14 +48,14 @@ public class StatementScopeImpl extends InstructionImpl implements StatementScop
   protected EList<Statement> statements;
 
   /**
-   * The cached value of the '{@link #getValuedObjects() <em>Valued Objects</em>}' containment reference list.
+   * The cached value of the '{@link #getTypeGroups() <em>Type Groups</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getValuedObjects()
+   * @see #getTypeGroups()
    * @generated
    * @ordered
    */
-  protected EList<ValuedObject> valuedObjects;
+  protected EList<TypeGroup> typeGroups;
 
   /**
    * <!-- begin-user-doc -->
@@ -97,13 +97,13 @@ public class StatementScopeImpl extends InstructionImpl implements StatementScop
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<ValuedObject> getValuedObjects()
+  public EList<TypeGroup> getTypeGroups()
   {
-    if (valuedObjects == null)
+    if (typeGroups == null)
     {
-      valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, SclPackage.STATEMENT_SCOPE__VALUED_OBJECTS);
+      typeGroups = new EObjectContainmentEList<TypeGroup>(TypeGroup.class, this, SclPackage.STATEMENT_SCOPE__TYPE_GROUPS);
     }
-    return valuedObjects;
+    return typeGroups;
   }
 
   /**
@@ -118,8 +118,8 @@ public class StatementScopeImpl extends InstructionImpl implements StatementScop
     {
       case SclPackage.STATEMENT_SCOPE__STATEMENTS:
         return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
-      case SclPackage.STATEMENT_SCOPE__VALUED_OBJECTS:
-        return ((InternalEList<?>)getValuedObjects()).basicRemove(otherEnd, msgs);
+      case SclPackage.STATEMENT_SCOPE__TYPE_GROUPS:
+        return ((InternalEList<?>)getTypeGroups()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -136,8 +136,8 @@ public class StatementScopeImpl extends InstructionImpl implements StatementScop
     {
       case SclPackage.STATEMENT_SCOPE__STATEMENTS:
         return getStatements();
-      case SclPackage.STATEMENT_SCOPE__VALUED_OBJECTS:
-        return getValuedObjects();
+      case SclPackage.STATEMENT_SCOPE__TYPE_GROUPS:
+        return getTypeGroups();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -157,9 +157,9 @@ public class StatementScopeImpl extends InstructionImpl implements StatementScop
         getStatements().clear();
         getStatements().addAll((Collection<? extends Statement>)newValue);
         return;
-      case SclPackage.STATEMENT_SCOPE__VALUED_OBJECTS:
-        getValuedObjects().clear();
-        getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
+      case SclPackage.STATEMENT_SCOPE__TYPE_GROUPS:
+        getTypeGroups().clear();
+        getTypeGroups().addAll((Collection<? extends TypeGroup>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -178,8 +178,8 @@ public class StatementScopeImpl extends InstructionImpl implements StatementScop
       case SclPackage.STATEMENT_SCOPE__STATEMENTS:
         getStatements().clear();
         return;
-      case SclPackage.STATEMENT_SCOPE__VALUED_OBJECTS:
-        getValuedObjects().clear();
+      case SclPackage.STATEMENT_SCOPE__TYPE_GROUPS:
+        getTypeGroups().clear();
         return;
     }
     super.eUnset(featureID);
@@ -197,8 +197,8 @@ public class StatementScopeImpl extends InstructionImpl implements StatementScop
     {
       case SclPackage.STATEMENT_SCOPE__STATEMENTS:
         return statements != null && !statements.isEmpty();
-      case SclPackage.STATEMENT_SCOPE__VALUED_OBJECTS:
-        return valuedObjects != null && !valuedObjects.isEmpty();
+      case SclPackage.STATEMENT_SCOPE__TYPE_GROUPS:
+        return typeGroups != null && !typeGroups.isEmpty();
     }
     return super.eIsSet(featureID);
   }

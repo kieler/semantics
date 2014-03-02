@@ -326,13 +326,13 @@ public interface SclPackage extends EPackage
   int CONDITIONAL__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+   * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONDITIONAL__VALUED_OBJECTS = INSTRUCTION_FEATURE_COUNT + 2;
+  int CONDITIONAL__TYPE_GROUPS = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Else Statements</b></em>' containment reference list.
@@ -475,13 +475,13 @@ public interface SclPackage extends EPackage
   int STATEMENT_SCOPE__STATEMENTS = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+   * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATEMENT_SCOPE__VALUED_OBJECTS = INSTRUCTION_FEATURE_COUNT + 1;
+  int STATEMENT_SCOPE__TYPE_GROUPS = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Statement Scope</em>' class.
@@ -663,15 +663,15 @@ public interface SclPackage extends EPackage
   EReference getConditional_Expression();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Conditional#getValuedObjects <em>Valued Objects</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Conditional#getTypeGroups <em>Type Groups</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Conditional#getValuedObjects()
+   * @return the meta object for the containment reference list '<em>Type Groups</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Conditional#getTypeGroups()
    * @see #getConditional()
    * @generated
    */
-  EReference getConditional_ValuedObjects();
+  EReference getConditional_TypeGroups();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Conditional#getElseStatements <em>Else Statements</em>}'.
@@ -778,15 +778,15 @@ public interface SclPackage extends EPackage
   EClass getStatementScope();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.StatementScope#getValuedObjects <em>Valued Objects</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.StatementScope#getTypeGroups <em>Type Groups</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
-   * @see de.cau.cs.kieler.scl.scl.StatementScope#getValuedObjects()
+   * @return the meta object for the containment reference list '<em>Type Groups</em>'.
+   * @see de.cau.cs.kieler.scl.scl.StatementScope#getTypeGroups()
    * @see #getStatementScope()
    * @generated
    */
-  EReference getStatementScope_ValuedObjects();
+  EReference getStatementScope_TypeGroups();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -954,12 +954,12 @@ public interface SclPackage extends EPackage
     EReference CONDITIONAL__EXPRESSION = eINSTANCE.getConditional_Expression();
 
     /**
-     * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference CONDITIONAL__VALUED_OBJECTS = eINSTANCE.getConditional_ValuedObjects();
+    EReference CONDITIONAL__TYPE_GROUPS = eINSTANCE.getConditional_TypeGroups();
 
     /**
      * The meta object literal for the '<em><b>Else Statements</b></em>' containment reference list feature.
@@ -1054,12 +1054,12 @@ public interface SclPackage extends EPackage
     EClass STATEMENT_SCOPE = eINSTANCE.getStatementScope();
 
     /**
-     * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference STATEMENT_SCOPE__VALUED_OBJECTS = eINSTANCE.getStatementScope_ValuedObjects();
+    EReference STATEMENT_SCOPE__TYPE_GROUPS = eINSTANCE.getStatementScope_TypeGroups();
 
   }
 

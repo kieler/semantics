@@ -163,12 +163,12 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getValuedObjectAssignment_0(), "rule__Assignment__ValuedObjectAssignment_0");
 					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_2(), "rule__Assignment__ExpressionAssignment_2");
 					put(grammarAccess.getConditionalAccess().getExpressionAssignment_1(), "rule__Conditional__ExpressionAssignment_1");
-					put(grammarAccess.getConditionalAccess().getValuedObjectsAssignment_3(), "rule__Conditional__ValuedObjectsAssignment_3");
+					put(grammarAccess.getConditionalAccess().getTypeGroupsAssignment_3(), "rule__Conditional__TypeGroupsAssignment_3");
 					put(grammarAccess.getConditionalAccess().getStatementsAssignment_4_0_0_0(), "rule__Conditional__StatementsAssignment_4_0_0_0");
 					put(grammarAccess.getConditionalAccess().getStatementsAssignment_4_0_1(), "rule__Conditional__StatementsAssignment_4_0_1");
 					put(grammarAccess.getConditionalAccess().getStatementsAssignment_4_1_0(), "rule__Conditional__StatementsAssignment_4_1_0");
 					put(grammarAccess.getConditionalAccess().getStatementsAssignment_4_1_1(), "rule__Conditional__StatementsAssignment_4_1_1");
-					put(grammarAccess.getConditionalAccess().getValuedObjectsAssignment_5_1(), "rule__Conditional__ValuedObjectsAssignment_5_1");
+					put(grammarAccess.getConditionalAccess().getTypeGroupsAssignment_5_1(), "rule__Conditional__TypeGroupsAssignment_5_1");
 					put(grammarAccess.getConditionalAccess().getElseStatementsAssignment_5_2_0_0_0(), "rule__Conditional__ElseStatementsAssignment_5_2_0_0_0");
 					put(grammarAccess.getConditionalAccess().getElseStatementsAssignment_5_2_0_1(), "rule__Conditional__ElseStatementsAssignment_5_2_0_1");
 					put(grammarAccess.getConditionalAccess().getElseStatementsAssignment_5_2_1_0(), "rule__Conditional__ElseStatementsAssignment_5_2_1_0");
@@ -180,7 +180,7 @@ public class SCLParser extends AbstractContentAssistParser {
 					put(grammarAccess.getThreadAccess().getStatementsAssignment_1_1_1(), "rule__Thread__StatementsAssignment_1_1_1");
 					put(grammarAccess.getParallelAccess().getThreadsAssignment_1_0(), "rule__Parallel__ThreadsAssignment_1_0");
 					put(grammarAccess.getParallelAccess().getThreadsAssignment_1_1_1(), "rule__Parallel__ThreadsAssignment_1_1_1");
-					put(grammarAccess.getStatementScopeAccess().getValuedObjectsAssignment_2(), "rule__StatementScope__ValuedObjectsAssignment_2");
+					put(grammarAccess.getStatementScopeAccess().getTypeGroupsAssignment_2(), "rule__StatementScope__TypeGroupsAssignment_2");
 					put(grammarAccess.getStatementScopeAccess().getStatementsAssignment_3_0_0_0(), "rule__StatementScope__StatementsAssignment_3_0_0_0");
 					put(grammarAccess.getStatementScopeAccess().getStatementsAssignment_3_0_1(), "rule__StatementScope__StatementsAssignment_3_0_1");
 					put(grammarAccess.getStatementScopeAccess().getStatementsAssignment_3_1_0(), "rule__StatementScope__StatementsAssignment_3_1_0");

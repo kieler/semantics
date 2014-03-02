@@ -398,11 +398,11 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 	 * Constraint:
 	 *     (
 	 *         expression=Expression 
-	 *         valuedObjects+=ValuedObject* 
+	 *         typeGroups+=TypeGroup* 
 	 *         (statements+=InstructionStatement | statements+=EmptyStatement)* 
 	 *         (statements+=InstructionStatement statements+=EmptyStatement*)? 
 	 *         (
-	 *             valuedObjects+=ValuedObject* 
+	 *             typeGroups+=TypeGroup* 
 	 *             (elseStatements+=InstructionStatement | elseStatements+=EmptyStatement)* 
 	 *             (elseStatements+=InstructionStatement elseStatements+=EmptyStatement*)?
 	 *         )?
@@ -493,7 +493,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 	/**
 	 * Constraint:
 	 *     (
-	 *         valuedObjects+=ValuedObject* 
+	 *         typeGroups+=TypeGroup* 
 	 *         (statements+=InstructionStatement | statements+=EmptyStatement)* 
 	 *         (statements+=InstructionStatement statements+=EmptyStatement*)?
 	 *     )

@@ -3149,7 +3149,6 @@ rule__ValuedObject__Group__3
     }
 :
 	rule__ValuedObject__Group__3__Impl
-	rule__ValuedObject__Group__4
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -3170,38 +3169,6 @@ rule__ValuedObject__Group__3__Impl
 finally {
 	restoreStackSize(stackSize);
 }
-
-
-rule__ValuedObject__Group__4
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__ValuedObject__Group__4__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__ValuedObject__Group__4__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getValuedObjectAccess().getSemicolonKeyword_4()); }
-
-	';' 
-
-{ after(grammarAccess.getValuedObjectAccess().getSemicolonKeyword_4()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
 
 
 
@@ -3726,9 +3693,9 @@ rule__Conditional__Group__3__Impl
     }
 :
 (
-{ before(grammarAccess.getConditionalAccess().getValuedObjectsAssignment_3()); }
-(rule__Conditional__ValuedObjectsAssignment_3)*
-{ after(grammarAccess.getConditionalAccess().getValuedObjectsAssignment_3()); }
+{ before(grammarAccess.getConditionalAccess().getTypeGroupsAssignment_3()); }
+(rule__Conditional__TypeGroupsAssignment_3)*
+{ after(grammarAccess.getConditionalAccess().getTypeGroupsAssignment_3()); }
 )
 
 ;
@@ -4073,9 +4040,9 @@ rule__Conditional__Group_5__1__Impl
     }
 :
 (
-{ before(grammarAccess.getConditionalAccess().getValuedObjectsAssignment_5_1()); }
-(rule__Conditional__ValuedObjectsAssignment_5_1)*
-{ after(grammarAccess.getConditionalAccess().getValuedObjectsAssignment_5_1()); }
+{ before(grammarAccess.getConditionalAccess().getTypeGroupsAssignment_5_1()); }
+(rule__Conditional__TypeGroupsAssignment_5_1)*
+{ after(grammarAccess.getConditionalAccess().getTypeGroupsAssignment_5_1()); }
 )
 
 ;
@@ -4979,9 +4946,9 @@ rule__StatementScope__Group__2__Impl
     }
 :
 (
-{ before(grammarAccess.getStatementScopeAccess().getValuedObjectsAssignment_2()); }
-(rule__StatementScope__ValuedObjectsAssignment_2)*
-{ after(grammarAccess.getStatementScopeAccess().getValuedObjectsAssignment_2()); }
+{ before(grammarAccess.getStatementScopeAccess().getTypeGroupsAssignment_2()); }
+(rule__StatementScope__TypeGroupsAssignment_2)*
+{ after(grammarAccess.getStatementScopeAccess().getTypeGroupsAssignment_2()); }
 )
 
 ;
@@ -9088,14 +9055,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Conditional__ValuedObjectsAssignment_3
+rule__Conditional__TypeGroupsAssignment_3
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getConditionalAccess().getValuedObjectsValuedObjectParserRuleCall_3_0()); }
-	ruleValuedObject{ after(grammarAccess.getConditionalAccess().getValuedObjectsValuedObjectParserRuleCall_3_0()); }
+{ before(grammarAccess.getConditionalAccess().getTypeGroupsTypeGroupParserRuleCall_3_0()); }
+	ruleTypeGroup{ after(grammarAccess.getConditionalAccess().getTypeGroupsTypeGroupParserRuleCall_3_0()); }
 )
 
 ;
@@ -9163,14 +9130,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Conditional__ValuedObjectsAssignment_5_1
+rule__Conditional__TypeGroupsAssignment_5_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getConditionalAccess().getValuedObjectsValuedObjectParserRuleCall_5_1_0()); }
-	ruleValuedObject{ after(grammarAccess.getConditionalAccess().getValuedObjectsValuedObjectParserRuleCall_5_1_0()); }
+{ before(grammarAccess.getConditionalAccess().getTypeGroupsTypeGroupParserRuleCall_5_1_0()); }
+	ruleTypeGroup{ after(grammarAccess.getConditionalAccess().getTypeGroupsTypeGroupParserRuleCall_5_1_0()); }
 )
 
 ;
@@ -9343,14 +9310,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__StatementScope__ValuedObjectsAssignment_2
+rule__StatementScope__TypeGroupsAssignment_2
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getStatementScopeAccess().getValuedObjectsValuedObjectParserRuleCall_2_0()); }
-	ruleValuedObject{ after(grammarAccess.getStatementScopeAccess().getValuedObjectsValuedObjectParserRuleCall_2_0()); }
+{ before(grammarAccess.getStatementScopeAccess().getTypeGroupsTypeGroupParserRuleCall_2_0()); }
+	ruleTypeGroup{ after(grammarAccess.getStatementScopeAccess().getTypeGroupsTypeGroupParserRuleCall_2_0()); }
 )
 
 ;

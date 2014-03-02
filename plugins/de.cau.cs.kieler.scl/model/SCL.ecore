@@ -31,8 +31,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//Instruction #//StatementSequence">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObjects" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typeGroups" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//TypeGroup"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="elseStatements" upperBound="-1"
         eType="#//Statement" containment="true"/>
@@ -51,8 +51,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Pause" eSuperTypes="#//Instruction"/>
   <eClassifiers xsi:type="ecore:EClass" name="StatementScope" eSuperTypes="#//Instruction #//StatementSequence">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObjects" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typeGroups" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//TypeGroup"
         containment="true"/>
   </eClassifiers>
 </ecore:EPackage>
