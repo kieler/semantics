@@ -110,11 +110,44 @@ class ClusterScheduler extends SimpleScheduler {
     }
 	
 	
+    protected def int topologicalClusterPlacement(SchedulingBlock schedulingBlock, 
+        int clusterPos, 
+        List<SchedulingBlock> schedulingBlocks, Schedule schedule, 
+        SchedulingConstraints constraints, List<SchedulingBlock> visited, SCGraphSched scg
+    ) {
+        var placed = 0 as int
+        if (!visited.contains(schedulingBlock)) {
+            visited.add(schedulingBlock)
+            for(pred : schedulingBlock.basicBlock.predecessors) {
+                for (sb : pred.basicBlock.schedulingBlocks) {
+                    if (schedulingBlocks.contains(sb))
+                        sb.topologicalClusterPlacement(clusterPos, schedulingBlocks, schedule, constraints, visited, scg)
+                }
+            }
+            for(dep : schedulingBlock.dependencies) {
+                if (dep.concurrent && !dep.confluent) {
+                    if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty)
+                        if (schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) 
+                        (dep.eContainer as Node).schedulingBlock.topologicalClusterPlacement(clusterPos, schedulingBlocks, schedule, constraints, visited, scg) 
+                }
+            }
+            
+            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
+                schedule.schedulingBlocks.add(schedulingBlock)
+                scg.guards += schedulingBlock.createGuardExpression(scg)
+//                schedulingBlocks.remove(schedulingBlock)
+                constraints.schedulingBlockClusters.get(clusterPos).remove(schedulingBlock)
+                placed = placed + 1
+            }
+        } 
+        
+        placed
+    }	
+	
 	
     protected override boolean createSchedule(SCGraphSched scg, Schedule schedule, SchedulingConstraints constraints) {
         // fixpoint is set to true if an iteration cannot set any remaining blocks.
         var fixpoint  = false
-   	    var clusterPos = 0
         
         val schedulingBlocks = <SchedulingBlock> newArrayList => [ it.addAll(constraints.schedulingBlocks) ]
         
@@ -124,40 +157,24 @@ class ClusterScheduler extends SimpleScheduler {
 	        var clusterFixPoint = false
 	        val reiterateCluster = true
    	    	fixpoint = true
-         
-         	while(constraints.schedulingBlockClusters.size>0 && !clusterFixPoint) {
-	            // Copy all remaining blocks.
-    	        var clusterCopy = ImmutableList::copyOf(constraints.schedulingBlockClusters.get(clusterPos))
-    	        
-    	        clusterFixPoint = true
+   	    	
+            val visitList = <SchedulingBlock> newArrayList
+            val clusters = ImmutableList::copyOf(constraints.schedulingBlockClusters)
+
+            var clusterPos = 0
+            var clusterPlaced = 0
             
-        	    // For each block try to process it.
-            	for(block : clusterCopy) {
-                
-                	// If all preconditions are met, process this block, add it to the schedule and create its guard expression.
-	                // Then, remove it from our list of remaining blocks.
-    	            if (block.isPlaceable(schedulingBlocks, schedule, scg)) {
-        	            schedule.schedulingBlocks.add(block)
-            	        scg.guards += block.createGuardExpression(scg)
-                    
-                	    schedulingBlocks.remove(block)
-                    	constraints.schedulingBlockClusters.get(clusterPos) -= block
-                    
-	                    // This iteration updated the lists. This is not a fix point.
-    	                clusterFixPoint = false
-    	                fixpoint = false
-        	        }
-       	        }
-       	        
-       	        if (clusterFixPoint) {
-  	        		clusterPos = clusterPos + 1
-   	        		if (clusterPos >= constraints.schedulingBlockClusters.size) {
-   	        			clusterPos = 0
-	    	    	}
-       	        } else {
-//       	        	clusterPos = 0
-       	        }
-            }
+   	    	for(cluster : clusters) {
+   	    	   val clusterCopy = ImmutableList::copyOf(cluster)
+   	    	   for(sb : clusterCopy) {
+   	    	       val placed = sb.topologicalClusterPlacement(clusterPos, cluster, schedule, constraints, visitList, scg)
+   	    	       clusterPlaced = clusterPlaced + placed
+   	    	   }
+   	    	   clusterPos = clusterPos + 1
+   	    	}
+   	    	
+   	    	if (clusterPlaced != 0) fixpoint = false
+         
         }
     	
     	!fixpoint 

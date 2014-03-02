@@ -15,7 +15,7 @@ package de.cau.cs.kieler.scgsched;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-import de.cau.cs.kieler.scg.ControlFlow;
+import de.cau.cs.kieler.scg.Node;
 
 /**
  * <!-- begin-user-doc -->
@@ -45,12 +45,12 @@ public interface AssignmentAddition extends Alteration {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Position</em>' reference.
-	 * @see #setPosition(ControlFlow)
+	 * @see #setPosition(Node)
 	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getAssignmentAddition_Position()
 	 * @model required="true"
 	 * @generated
 	 */
-	ControlFlow getPosition();
+	Node getPosition();
 
 	/**
 	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.AssignmentAddition#getPosition <em>Position</em>}' reference.
@@ -60,7 +60,7 @@ public interface AssignmentAddition extends Alteration {
 	 * @see #getPosition()
 	 * @generated
 	 */
-	void setPosition(ControlFlow value);
+	void setPosition(Node value);
 
 	/**
 	 * Returns the value of the '<em><b>Valued Object</b></em>' reference.

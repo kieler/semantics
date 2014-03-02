@@ -34,12 +34,13 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0",
  de.cau.cs.kieler.sccharts.text,
  de.cau.cs.kieler.sccharts.text.ui,
  de.cau.cs.kieler.scg,
- de.cau.cs.kieler.scl
+ de.cau.cs.kieler.core.kivi
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.scl,
  de.cau.cs.kieler.scl.extensions,
  de.cau.cs.kieler.scl.formatting,
+ de.cau.cs.kieler.scl.handlers,
  de.cau.cs.kieler.scl.parser.antlr,
  de.cau.cs.kieler.scl.parser.antlr.internal,
  de.cau.cs.kieler.scl.scl,
@@ -48,4 +49,5 @@ Export-Package: de.cau.cs.kieler.scl,
  de.cau.cs.kieler.scl.scoping,
  de.cau.cs.kieler.scl.serializer,
  de.cau.cs.kieler.scl.services,
+ de.cau.cs.kieler.scl.transformations,
  de.cau.cs.kieler.scl.validation

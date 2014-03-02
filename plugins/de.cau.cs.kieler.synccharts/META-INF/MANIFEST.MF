@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts;singleton:=true
-Bundle-Version: 0.5.3.qualifier
+Bundle-Version: 0.5.4.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -20,8 +20,8 @@ Require-Bundle: org.eclipse.emf.ecore;bundle-version="2.5.0";visibility:=reexpor
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  com.google.inject;bundle-version="3.0.0",
- de.cau.cs.kieler.sccharts.text;bundle-version="0.5.1",
- de.cau.cs.kieler.sccharts.text.ui;bundle-version="0.5.1"
+ de.cau.cs.kieler.sccharts.text,
+ de.cau.cs.kieler.sccharts.text.ui
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.ui
 Export-Package: de.cau.cs.kieler.synccharts,

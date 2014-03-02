@@ -887,34 +887,6 @@ class SCChartsExtension {
 
 
     //-------------------------------------------------------------------------
-    //--             H O T F I X   F O R   S C C H A R T S                   --
-    //-------------------------------------------------------------------------
-    // Because the SCCharts KExpressions Parser has a problem with
-    // AND / OR lists of more than two elements the following fixes
-    // an OperatorExpression of such kind.
-    // Test 141
-    def OperatorExpression fixForOperatorExpressionLists(OperatorExpression operatorExpression) {
-        if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty ||
-            operatorExpression.subExpressions.size <= 2) {
-
-            // In this case we do not need the fix
-            return operatorExpression;
-        }
-
-        // Here we apply the fix recursively
-        val operatorExpressionCopy = operatorExpression.copy;
-        val newOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
-        newOperatorExpression.setOperator(operatorExpression.operator);
-        newOperatorExpression.subExpressions.add(operatorExpression.subExpressions.head);
-
-        // Call recursively without the first element
-        operatorExpressionCopy.subExpressions.remove(0);
-        newOperatorExpression.subExpressions.add(operatorExpressionCopy.fixForOperatorExpressionLists);
-        return newOperatorExpression;
-    }
-
-
-    //-------------------------------------------------------------------------
     //--  F I X   F O R   T E R M I N A T I O N S   / W    E F F E C T S     --
     //-------------------------------------------------------------------------
     // This fixes termination transitions that have effects
@@ -935,6 +907,20 @@ class SCChartsExtension {
         rootRegion
     }
     
+
+    //-------------------------------------------------------------------------
+    //--                F I X   F O R   H A L T   S T A T E S                --
+    //-------------------------------------------------------------------------
+    // This fixes halt states and adds an explicit delayed self transition
+    def Region fixPossibleHaltStates(Region rootRegion) {
+        val haltStates = rootRegion.allContainedStates.filter[!hierarchical && outgoingTransitions.nullOrEmpty && !final]
+        
+        for (haltState : haltStates) {
+            haltState.createTransitionTo(haltState)
+        }
+        rootRegion
+    }
+
 
     //-------------------------------------------------------------------------
     //--               L O C A L   V A L U E D O B J E C T S                 --

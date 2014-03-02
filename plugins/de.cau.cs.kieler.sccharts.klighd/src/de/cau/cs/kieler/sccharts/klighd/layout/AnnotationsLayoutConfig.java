@@ -56,13 +56,13 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
     protected IProperty<?>[] getAffectedOptions(final Object semanticElem) {
         if (semanticElem instanceof Annotatable) {
             LayoutDataService dataService = LayoutDataService.getInstance();
-            List<LayoutOptionData<?>> data = new LinkedList<LayoutOptionData<?>>();
+            List<LayoutOptionData> data = new LinkedList<LayoutOptionData>();
             for (Annotation annotation : ((Annotatable) semanticElem).getAnnotations()) {
                 // bugfix by alb
                 if (annotation.getName() == null) {
                     continue;
                 }
-                LayoutOptionData<?> option = dataService.getOptionDataBySuffix(annotation.getName());
+                LayoutOptionData option = dataService.getOptionDataBySuffix(annotation.getName());
                 if (option != null) {
                     data.add(option);
                 }
@@ -98,7 +98,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
      * @param optionData the layout option data
      * @return the annotation value, or {@code null}
      */
-    private Object getValue(final Annotation annotation, final LayoutOptionData<?> optionData) {
+    private Object getValue(final Annotation annotation, final LayoutOptionData optionData) {
         if (annotation instanceof StringAnnotation) {
             String value = ((StringAnnotation) annotation).getValue();
             if (optionData.equals(LayoutOptions.ALGORITHM)) {
@@ -135,7 +135,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
      */
     @Override
     protected Object getSemanticValue(final Object semanticElem,
-            final LayoutOptionData<?> layoutOption) {
+            final LayoutOptionData layoutOption) {
         if (semanticElem instanceof Annotatable) {
             Annotation annotation = getAnnotation((Annotatable) semanticElem, layoutOption.getId());
             if (annotation != null) {
@@ -152,7 +152,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
      * @param optionData the layout option data
      * @param value the new annotation value
      */
-    private void setValue(final Annotation annotation, final LayoutOptionData<?> optionData,
+    private void setValue(final Annotation annotation, final LayoutOptionData optionData,
             final Object value) {
         if (annotation instanceof StringAnnotation) {
             ((StringAnnotation) annotation).setValue(value.toString());
@@ -176,7 +176,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
      */
     @Override
     protected void setSemanticValue(final Object semanticElem,
-            final LayoutOptionData<?> layoutOption, final Object value) {
+            final LayoutOptionData layoutOption, final Object value) {
         if (semanticElem instanceof Annotatable) {
             Annotatable annotatable = (Annotatable) semanticElem;
             if (value == null) {

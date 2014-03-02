@@ -103,13 +103,13 @@ class SCChartsCoreTransformation {
     def Region transformTermination(Region rootRegion) {
 
         // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformTermination(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform outgoing normal termination transitions into weak aborts
@@ -201,13 +201,13 @@ class SCChartsCoreTransformation {
     def Region transformSignal(Region rootRegion) {
 
         // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformSignal(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform outgoing normal termination transitions into weak aborts
@@ -316,27 +316,63 @@ class SCChartsCoreTransformation {
     //-------------------------------------------------------------------------
     //--     O P T I M I Z E : Immediate Transitions with no Trigger/Effect  --
     //-------------------------------------------------------------------------
-    def Region optimize1(Region rootRegion) {
+    def Region optimizeSuperflousImmediateTransitions(Region rootRegion) {
         var targetStates = rootRegion.allContainedStates
         for (targetState : targetStates) {
-            targetState.optimize1(rootRegion);
+            targetState.optimizeSuperflousImmediateTransitions(rootRegion);
         }
         rootRegion;
     }
 
-    def void optimize1(State state, Region targetRootRegion) {
+    def void optimizeSuperflousImmediateTransitions(State state, Region targetRootRegion) {
         if (state.outgoingTransitions.size == 1 && !state.hierarchical) {
             val transition = state.outgoingTransitions.get(0)
+            val targetState = transition.targetState
             if (transition.immediate2) {
                 if (transition.trigger == null && transition.effects.nullOrEmpty) {
-                    val otherState = transition.targetState
-                    otherState.setInitial(state.initial)
-                    otherState.setFinal(state.final)
-                    otherState.setId(state.id)
-                    otherState.setLabel(state.label)
-                    otherState.parentRegion.states.remove(state)
+                    targetState.incomingTransitions.remove(transition)
+                    state.outgoingTransitions.remove(transition)
+                    targetState.setInitial(state.initial || targetState.initial)
+                    targetState.setFinal(state.final || targetState.final)
+                    for (incomingTransition : state.incomingTransitions.immutableCopy) {
+                        incomingTransition.setTargetState(targetState)
+                    }
+                    targetState.setId(state.id)
+                    targetState.setLabel(state.label)
+                    targetState.parentRegion.states.remove(state)
                 }
             }
+        }
+        
+    }
+    
+
+    //-------------------------------------------------------------------------
+    //--     O P T I M I Z E :  Conditional  States  --
+    //-------------------------------------------------------------------------
+    // Optimize states with two outgoing transitions
+    def Region optimizeSuperflousConditionalStates(Region rootRegion) {
+        var targetStates = rootRegion.allContainedStates
+        for (targetState : targetStates) {
+            targetState.optimizeSuperflousConditionalStates(rootRegion);
+        }
+        rootRegion;
+    }
+
+    def void optimizeSuperflousConditionalStates(State state, Region targetRootRegion) {
+        if (state.outgoingTransitions.size == 2 && !state.hierarchical) {
+            val transition1 = state.outgoingTransitions.get(0)
+            val transition2 = state.outgoingTransitions.get(1)
+            val targetState2 = transition1.targetState
+            if ((transition1.immediate2) && (transition1.trigger == null)) {
+                    targetState2.incomingTransitions.remove(transition2)
+                    state.outgoingTransitions.remove(transition2)
+                    //targetState2.setInitial(state.initial || targetState2.initial)
+                    //targetState2.setFinal(state.final || targetState2.final)
+                    //targetState.setId(state.id)
+                    //targetState.setLabel(state.label)
+                    //targetState.parentRegion.states.remove(state)
+                }
         }
         
     }
@@ -375,7 +411,7 @@ class SCChartsCoreTransformation {
             targetState.transformSurfaceDepth(targetRootRegion);
         }
 
-        targetRootRegion.fixAllTextualOrdersByPriorities.optimize1;
+        targetRootRegion.fixAllTextualOrdersByPriorities.optimizeSuperflousConditionalStates.optimizeSuperflousImmediateTransitions;
     }
 
     def void transformSurfaceDepth(State state, Region targetRootRegion) {
@@ -456,53 +492,56 @@ class SCChartsCoreTransformation {
             // Connect back depth with surface state
             var T2tmp = previousState.createImmediateTransitionTo(depthState)
 
-            // Afterwards do the DTO transformation
-            /* Der Knoten S_Depth ist ja besonders ausgezeichnet. Er hat immer zwei
-            eingehende Kanten T1 von der surface und T2 von dem feedback aus der depth.
-            Gehe beide Kanten T1 und T2 rückwärts zu jeweiligen Source-Knoten K1 und
-            K2 entlang und verleiche die ausgehenden Transitionen TK1 und TK2 (die
-            nicht T1 oder T2 sind). Wenn diese gleich sind wird K1 der neue S_Depth
-            Knoten und die eingehende Kanten von K2 zeigt nun auf den neuen S_Depth.
-            K2, T2 und TK2 werden eliminiert.
-            Vergleiche nun rekursiv wieder die eingehenden Kanten von neuen S_Depth
-            bis TK1 und TK2 ungleich sind.*/
-            var stateAfterDepth = depthState
-            var done = false
-            while (!done) {
-                done = true
-                if (stateAfterDepth.incomingTransitions.size == 2) {
-
-                    // T1 is the incoming node from the surface
-                    var T1tmp = stateAfterDepth.incomingTransitions.get(0)
-                    if (T1tmp == T2tmp) {
-                        T1tmp = stateAfterDepth.incomingTransitions.get(1)
-                    }
-                    val T1 = T1tmp
-                    val T2 = T2tmp
-
-                    // T2 is the incoming node from the feedback
-                    val K1 = T1.sourceState
-                    val K2 = T2.sourceState
-                    if (!K1.outgoingTransitions.filter(e|e != T1).nullOrEmpty &&
-                        !K2.outgoingTransitions.filter(e|e != T1).nullOrEmpty) {
-                        val TK1s = K2.outgoingTransitions.filter(e|e != T2)
-                        val TK2s = K2.outgoingTransitions.filter(e|e != T2)
-                        if (TK1s.size > 0 && TK2s.size > 0) {
-                            val TK1 = TK1s.get(0)
-                            val TK2 = TK2s.get(0)
-                            if ((TK1.targetState == TK2.targetState) &&
-                                ((TK1.trigger == TK2.trigger) || (TK1.trigger.equals2(TK2.trigger)))) {
-                                stateAfterDepth = K1
-                                val t = K2.incomingTransitions.get(0)
-                                t.setTargetState(stateAfterDepth)
-                                K2.parentRegion.states.remove(K2)
-                                done = false
-                                T2tmp = t
-                            }
-                        }
-                    }
-                }
-            }
+//            // Afterwards do the DTO transformation
+//            /* Der Knoten S_Depth ist ja besonders ausgezeichnet. Er hat immer zwei
+//            eingehende Kanten T1 von der surface und T2 von dem feedback aus der depth.
+//            Gehe beide Kanten T1 und T2 rückwärts zu jeweiligen Source-Knoten K1 und
+//            K2 entlang und verleiche die ausgehenden Transitionen TK1 und TK2 (die
+//            nicht T1 oder T2 sind). Wenn diese gleich sind wird K1 der neue S_Depth
+//            Knoten und die eingehende Kanten von K2 zeigt nun auf den neuen S_Depth.
+//            K2, T2 und TK2 werden eliminiert.
+//            Vergleiche nun rekursiv wieder die eingehenden Kanten von neuen S_Depth
+//            bis TK1 und TK2 ungleich sind.*/
+//            var stateAfterDepth = depthState
+//            var done = false
+//            while (!done) {
+//                done = true
+//                if (stateAfterDepth.incomingTransitions.size == 2) {
+//
+//                    // T1 is the incoming node from the surface
+//                    var T1tmp = stateAfterDepth.incomingTransitions.get(0)
+//                    if (T1tmp == T2tmp) {
+//                        T1tmp = stateAfterDepth.incomingTransitions.get(1)
+//                    }
+//                    val T1 = T1tmp
+//                    val T2 = T2tmp
+//
+//                    // T2 is the incoming node from the feedback
+//                    val K1 = T1.sourceState
+//                    val K2 = T2.sourceState
+//                    if (!K1.outgoingTransitions.filter(e|e != T1).nullOrEmpty &&
+//                        !K2.outgoingTransitions.filter(e|e != T1).nullOrEmpty) {
+//                        val TK1s = K2.outgoingTransitions.filter(e|e != T2)
+//                        val TK2s = K2.outgoingTransitions.filter(e|e != T2)
+//                        if (TK1s.size > 0 && TK2s.size > 0) {
+//                            val TK1 = TK1s.get(0)
+//                            val TK2 = TK2s.get(0)
+//                            if ((TK1.targetState == TK2.targetState) &&
+//                                ((TK1.trigger == TK2.trigger) || (TK1.trigger.equals2(TK2.trigger)))) {
+//                                stateAfterDepth = K1
+//                                val t = K2.incomingTransitions.get(0)
+//                                t.setTargetState(stateAfterDepth)
+//                                for (transition : K2.outgoingTransitions) {
+//                                    transition.targetState.incomingTransitions.remove(transition)
+//                                }
+//                                K2.parentRegion.states.remove(K2)
+//                                done = false
+//                                T2tmp = t
+//                            }
+//                        }
+//                    }
+//                }
+//            }
 
         // End of DTO transformation
         // This MUST be highest priority so that the control flow restarts and takes other 
@@ -522,12 +561,12 @@ class SCChartsCoreTransformation {
     //     Add T_eff to C's outgoing transitions. 
     def Region transformTriggerEffect(Region rootRegion) {
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
         // Traverse all transitions
         for (targetTransition : targetRootRegion.getAllContainedTransitions) {
             targetTransition.transformTriggerEffect(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     def void transformTriggerEffect(Transition transition, Region targetRootRegion) {
@@ -566,14 +605,14 @@ class SCChartsCoreTransformation {
     def Region transformConnector(Region rootRegion) {
 
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetTransition : targetRootRegion.allContainedStates) {
             targetTransition.transformConnector(targetRootRegion);
         }
         
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     def void transformConnector(State state, Region targetRootRegion) {
@@ -598,13 +637,13 @@ class SCChartsCoreTransformation {
     def Region transformDeferred(Region rootRegion) {
 
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetTransition : targetRootRegion.allContainedStates) {
             targetTransition.transformDeferred;
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
     
     
@@ -1064,13 +1103,13 @@ class SCChartsCoreTransformation {
     def Region transformComplexFinalState(Region rootRegion) {
 
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // For every state in the SyncChart do the transformation
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformComplexFinalState(rootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     def void transformComplexFinalState(State state, Region targetRootRegion) {
@@ -1142,12 +1181,12 @@ class SCChartsCoreTransformation {
     //
     def Region transformStatic(Region rootRegion) {
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
         // For every state in the SyncChart do the transformation
         for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
             targetTransition.transformStatic(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     def void transformStatic(State state, Region targetRootRegion) {
@@ -1166,7 +1205,7 @@ class SCChartsCoreTransformation {
     // ...
     def Region transformInputOutputVariable(Region rootRegion) {
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
         // For every state in the SyncChart do the transformation
         for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
             targetTransition.transformInputOutputVariable(targetRootRegion);
@@ -1186,12 +1225,12 @@ class SCChartsCoreTransformation {
     // ...
     def Region transformWeakSuspend(Region rootRegion) {
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
         // For every state in the SyncChart do the transformation
         for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
             targetTransition.transformWeakSuspend(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     def void transformWeakSuspend(State state, Region targetRootRegion) {
@@ -1239,7 +1278,7 @@ class SCChartsCoreTransformation {
     def Region transformCountDelay(Region rootRegion) {
 
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // For every transition in the SyncChart do the transformation
         // Iterate over a copy of the list  
@@ -1248,7 +1287,7 @@ class SCChartsCoreTransformation {
             targetTransition.transformCountDelay(targetRootRegion);
         }
         
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // This will encode count delays in transitions.
@@ -1278,11 +1317,11 @@ class SCChartsCoreTransformation {
     //-------------------------------------------------------------------------
     // Transforming PRE Operator.
     def Region transformPre(Region rootRegion) {
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformPre(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // Return a list of Pre Expressions for an action that references the valuedObject
@@ -1415,7 +1454,7 @@ class SCChartsCoreTransformation {
     // Transforming Suspends.
     def Region transformSuspend(Region rootRegion) {
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy;
+        var targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // For every state in the SyncChart do the transformation
         // Iterate over a copy of the list  
@@ -1423,7 +1462,7 @@ class SCChartsCoreTransformation {
             targetState.transformSuspend(targetRootRegion);
         }
         
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
 
@@ -1463,13 +1502,13 @@ class SCChartsCoreTransformation {
     // Transforming During Actions.
     def Region transformDuring(Region rootRegion) {
         // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformDuring(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
@@ -1486,11 +1525,11 @@ class SCChartsCoreTransformation {
              term.setInitialValue(FALSE)
               
              val mainRegion = state.createRegion(GENERATED_PREFIX + "Main").uniqueName
-             val mainState = mainRegion.createState(GENERATED_PREFIX + "Main")
+             val mainState = mainRegion.createState(GENERATED_PREFIX + "Main").setInitial
              for (region : state.regions.filter(e | e != mainRegion).toList.immutableCopy) {
                   mainState.regions.add(region)
              }
-             val termTransition = mainState.createTransitionTo(mainRegion.createState(GENERATED_PREFIX + "Term"))
+             val termTransition = mainState.createTransitionTo(mainRegion.createState(GENERATED_PREFIX + "Term").setFinal)
              termTransition.setTypeTermination
              termTransition.addEffect(term.assign(TRUE))
 
@@ -1517,6 +1556,7 @@ class SCChartsCoreTransformation {
                     transition3 = initialState.createImmediateTransitionTo(finalState) 
                 }
                 transition3.setTrigger(term.reference)
+                transition3.setHighestPriority
                 // After transforming during actions, erase them
                 state.localActions.remove(duringAction)
             }
@@ -1535,13 +1575,13 @@ class SCChartsCoreTransformation {
     // Transforming Entry Actions.
     def Region transformEntry(Region rootRegion) {
         // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates.immutableCopy) {
             targetState.transformEntry(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
@@ -1619,7 +1659,7 @@ class SCChartsCoreTransformation {
     // Transforming Exit Actions. 
     def Region transformExit(Region rootRegion) {
         // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
         // Prepare all states so that each reagion has at most one final state
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.prepareExit(targetRootRegion);
@@ -1628,7 +1668,7 @@ class SCChartsCoreTransformation {
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformExit(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     def void prepareExit(State state, Region targetRootRegion) {
@@ -1739,13 +1779,13 @@ class SCChartsCoreTransformation {
     // Transforming Variable Initializations
     def Region transformInitialization(Region rootRegion) {
         // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates.immutableCopy) {
             targetState.transformInitialization(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
@@ -1771,11 +1811,11 @@ class SCChartsCoreTransformation {
     // Transforming History. This is using the concept of suspend so it must
     // be followed by resolving suspension
     def Region transformHistory(Region rootRegion) {
-        val targetRootRegion = rootRegion.copy;
+        val targetRootRegion = rootRegion.copy.fixAllPriorities;
         for (targetState : targetRootRegion.getAllContainedStates) {
             targetState.transformHistory(targetRootRegion);
         }
-        targetRootRegion;
+        targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have connecting

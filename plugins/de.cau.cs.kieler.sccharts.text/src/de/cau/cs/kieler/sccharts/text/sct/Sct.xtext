@@ -106,7 +106,8 @@ LocalAction returns sccharts::LocalAction:
 
 Transition returns sccharts::Transition:
     (annotations += Annotation)*
-	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
+    type=TransitionType targetState=[sccharts::State|ID] 
+//	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
 	( (immediate?='immediate')? (deferred?='deferred')? (history=HistoryType)?  ('with'
 	 (
 	   ( (delay=INT)? (trigger=BoolExpression)? ('/' effects+=Effect (';'effects+=Effect)*)? )

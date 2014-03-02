@@ -41,6 +41,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scgsched.Schedule
 import java.util.List
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -85,6 +86,10 @@ class SimpleScheduler extends AbstractScheduler {
     @Inject
     extension SCGCopyExtensions    
     
+    /** Inject KExpression extensions. */
+    @Inject
+    extension KExpressionsExtension
+    
     
     // -------------------------------------------------------------------------
     // -- Constants 
@@ -98,7 +103,7 @@ class SimpleScheduler extends AbstractScheduler {
     // -------------------------------------------------------------------------
     
     /** Storage space for the interleaved assignment analyzer id. */
-    private var String interleavedAssignmentAnalyzerId = ""
+    protected var String interleavedAssignmentAnalyzerId = ""
     
     // -------------------------------------------------------------------------
     // -- Scheduler 
@@ -206,37 +211,47 @@ class SimpleScheduler extends AbstractScheduler {
     	placeable
     }
     
-    protected override boolean createSchedule(SCGraphSched scg, Schedule schedule, SchedulingConstraints constraints) {
-        // fixpoint is set to true if an iteration cannot set any remaining blocks.
-        var fixpoint  = false
-        
-        val schedulingBlocks = <SchedulingBlock> newArrayList => [ it.addAll(constraints.schedulingBlocks) ]
-        
-        // As long as there are blocks remaining and we have not reached a fix point.
-        while (schedulingBlocks.size > 0 && !fixpoint) {
-        	// Assume fix point.
-            fixpoint = true
-            
-            // Copy all remaining blocks.
-            var schedulingBlocksCopy = ImmutableList::copyOf(schedulingBlocks)
-            
-            // For each block try to process it.
-            for(block : schedulingBlocksCopy) {
-                
-                // If all preconditions are met, process this block, add it to the schedule and create its guard expression.
-                // Then, remove it from our list of remaining blocks.
-                if (block.isPlaceable(schedulingBlocks, schedule, scg)) {
-                    schedule.schedulingBlocks.add(block)
-                    scg.guards += block.createGuardExpression(scg)
-                    schedulingBlocks.remove(block)
-                    
-                    // This iteration updated the lists. This is not a fix point.
-                    fixpoint = false
+    protected def int topologicalPlacement(SchedulingBlock schedulingBlock, 
+        List<SchedulingBlock> schedulingBlocks, Schedule schedule, 
+        SchedulingConstraints constraints, List<SchedulingBlock> visited, SCGraphSched scg
+    ) {
+        var placed = 0 as int
+        if (!visited.contains(schedulingBlock)) {
+            visited.add(schedulingBlock)
+            for(pred : schedulingBlock.basicBlock.predecessors) {
+                for (sb : pred.basicBlock.schedulingBlocks) {
+                    sb.topologicalPlacement(schedulingBlocks, schedule, constraints, visited, scg)
                 }
             }
+            for(dep : schedulingBlock.dependencies) {
+                if (dep.concurrent && !dep.confluent) {
+                    if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
+                        (dep.eContainer as Node).schedulingBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, visited, scg) 
+                }
+            }
+            
+            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
+                schedule.schedulingBlocks.add(schedulingBlock)
+                scg.guards += schedulingBlock.createGuardExpression(scg)
+                schedulingBlocks.remove(schedulingBlock)
+                placed = placed + 1
+            }
+        } 
+        
+        placed
+    }
+    
+    protected override boolean createSchedule(SCGraphSched scg, Schedule schedule, SchedulingConstraints constraints) {
+
+        val schedulingBlocks = <SchedulingBlock> newArrayList => [ it.addAll(constraints.schedulingBlocks) ]
+        
+        val schedulingBlocksCopy = ImmutableList::copyOf(schedulingBlocks)
+        
+        for (sb : schedulingBlocksCopy) {
+            sb.topologicalPlacement(schedulingBlocks, schedule, constraints, <SchedulingBlock> newArrayList, scg)
         }
-    	
-    	!fixpoint 
+        
+        schedule.schedulingBlocks.size == schedulingBlocksCopy.size
     }
 	
 	
@@ -411,7 +426,12 @@ class SimpleScheduler extends AbstractScheduler {
 				 * If we reach this point, the basic block contains no predecessor information but is not marked as go block.
 				 * This is not supported by this scheduler: throw an exception. 
 				 */
-				throw new UnsupportedSCGException("Cannot handle standard guard without predecessor information!")
+                if (!basicBlock.deadBlock) {
+				    throw new UnsupportedSCGException("Cannot handle standard guard without predecessor information!")
+			    } else {
+                    expression = FALSE  
+			    }
+				    
 			}    	
     	]
     }

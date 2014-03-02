@@ -408,17 +408,10 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 	
 	/**
 	 * Constraint:
-	 *     label=ID
+	 *     (annotations+=Annotation* label=ID)
 	 */
 	protected void sequence_EmptyStatement(EObject context, EmptyStatement semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, SclPackage.Literals.EMPTY_STATEMENT__LABEL) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SclPackage.Literals.EMPTY_STATEMENT__LABEL));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getEmptyStatementAccess().getLabelIDTerminalRuleCall_0_0(), semanticObject.getLabel());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -441,12 +434,15 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 	/**
 	 * Constraint:
 	 *     (
-	 *         instruction=Assignment | 
-	 *         instruction=Conditional | 
-	 *         instruction=Goto | 
-	 *         instruction=Parallel | 
-	 *         instruction=Pause | 
-	 *         instruction=StatementScope
+	 *         annotations+=Annotation* 
+	 *         (
+	 *             instruction=Assignment | 
+	 *             instruction=Conditional | 
+	 *             instruction=Goto | 
+	 *             instruction=Parallel | 
+	 *             instruction=Pause | 
+	 *             instruction=StatementScope
+	 *         )
 	 *     )
 	 */
 	protected void sequence_InstructionStatement(EObject context, InstructionStatement semanticObject) {
@@ -475,6 +471,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 	/**
 	 * Constraint:
 	 *     (
+	 *         annotations+=Annotation* 
 	 *         name=ID 
 	 *         valuedObjects+=ValuedObject* 
 	 *         (statements+=InstructionStatement | statements+=EmptyStatement)* 
