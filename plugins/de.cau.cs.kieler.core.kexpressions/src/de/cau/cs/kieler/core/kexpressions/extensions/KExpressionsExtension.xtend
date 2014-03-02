@@ -15,19 +15,19 @@
 
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.DoubleValue
+import de.cau.cs.kieler.core.kexpressions.TypeGroup
 
 /**
  * KExpressions Extensions. 
@@ -44,6 +44,86 @@ class KExpressionsExtension {
     
 
     // -------------------------------------------------------------------------   
+    
+    //=======  TYPE GROUP WRAPPINGS  ======
+
+    def public TypeGroup getTypeGroup(ValuedObject valuedObject) {
+    	// TODO: Safeguard check for the time of transition. Remove at some later stage. 
+    	if (valuedObject.eContainer instanceof TypeGroup) {
+    		return valuedObject.eContainer as TypeGroup
+    	} else {
+    		throw new NullPointerException("Valued object is not contained in a type group!")
+    	}
+    }
+    
+    def public ValueType getType(ValuedObject valuedObject) {
+    	valuedObject.typeGroup.type
+    }
+    
+    def public ValuedObject setType(ValuedObject valuedObject, ValueType type) {
+    	valuedObject => [ typeGroup.type = type ]
+    }
+    
+    def public boolean getInput(ValuedObject valuedObject) {
+    	valuedObject.typeGroup.input
+    }
+
+    def public boolean isInput(ValuedObject valuedObject) {
+    	valuedObject.input
+    }
+    
+    /**
+     * @deprecated Use type groups instead.
+     */
+    def public ValuedObject setInput(ValuedObject valuedObject, boolean input) {
+    	valuedObject => [ typeGroup.input = input ]
+    }
+
+    def public boolean getOutput(ValuedObject valuedObject) {
+    	valuedObject.typeGroup.output
+    }
+
+    def public boolean isOutput(ValuedObject valuedObject) {
+    	valuedObject.output
+    }
+    
+    /**
+     * @deprecated Use type groups instead.
+     */
+    def public ValuedObject setOutput(ValuedObject valuedObject, boolean output) {
+    	valuedObject => [ typeGroup.output = output ]
+    }
+
+    def public boolean getStatic(ValuedObject valuedObject) {
+    	valuedObject.typeGroup.static
+    }
+
+    def public boolean isStatic(ValuedObject valuedObject) {
+    	valuedObject.static
+    }
+    
+    /**
+     * @deprecated Use type groups instead.
+     */
+    def public ValuedObject setStatic(ValuedObject valuedObject, boolean statik) {
+    	valuedObject => [ typeGroup.static = statik ]
+    }
+    
+    def public boolean getConstant(ValuedObject valuedObject) {
+    	valuedObject.typeGroup.constant
+    }
+
+    def public boolean isConstant(ValuedObject valuedObject) {
+    	valuedObject.constant
+    }
+    
+    /**
+     * @deprecated Use type groups instead.
+     */
+    def public ValuedObject setConstant(ValuedObject valuedObject, boolean constant) {
+    	valuedObject => [ typeGroup.constant = constant ]
+    }
+    
     
     //=======  STATIC EXPRESSIONS  ======
     
