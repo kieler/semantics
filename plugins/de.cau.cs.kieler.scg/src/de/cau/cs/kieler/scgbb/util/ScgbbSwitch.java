@@ -39,182 +39,182 @@ import org.eclipse.emf.ecore.util.Switch;
  */
 public class ScgbbSwitch<T> extends Switch<T> {
     /**
-     * The cached model package
-     * <!-- begin-user-doc -->
+	 * The cached model package
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected static ScgbbPackage modelPackage;
 
     /**
-     * Creates an instance of the switch.
-     * <!-- begin-user-doc -->
+	 * Creates an instance of the switch.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ScgbbSwitch() {
-        if (modelPackage == null) {
-            modelPackage = ScgbbPackage.eINSTANCE;
-        }
-    }
+		if (modelPackage == null) {
+			modelPackage = ScgbbPackage.eINSTANCE;
+		}
+	}
 
     /**
-     * Checks whether this is a switch for the given package.
-     * <!-- begin-user-doc -->
+	 * Checks whether this is a switch for the given package.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @parameter ePackage the package in question.
-     * @return whether this is a switch for the given package.
-     * @generated
-     */
+	 * @parameter ePackage the package in question.
+	 * @return whether this is a switch for the given package.
+	 * @generated
+	 */
     @Override
     protected boolean isSwitchFor(EPackage ePackage) {
-        return ePackage == modelPackage;
-    }
+		return ePackage == modelPackage;
+	}
 
     /**
-     * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-     * <!-- begin-user-doc -->
+	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the first non-null result returned by a <code>caseXXX</code> call.
-     * @generated
-     */
+	 * @return the first non-null result returned by a <code>caseXXX</code> call.
+	 * @generated
+	 */
     @Override
     protected T doSwitch(int classifierID, EObject theEObject) {
-        switch (classifierID) {
-            case ScgbbPackage.SC_GRAPH_BB: {
-                SCGraphBB scGraphBB = (SCGraphBB)theEObject;
-                T result = caseSCGraphBB(scGraphBB);
-                if (result == null) result = caseSCGraphDep(scGraphBB);
-                if (result == null) result = caseSCGraph(scGraphBB);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ScgbbPackage.BASIC_BLOCK: {
-                BasicBlock basicBlock = (BasicBlock)theEObject;
-                T result = caseBasicBlock(basicBlock);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ScgbbPackage.SCHEDULING_BLOCK: {
-                SchedulingBlock schedulingBlock = (SchedulingBlock)theEObject;
-                T result = caseSchedulingBlock(schedulingBlock);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case ScgbbPackage.PREDECESSOR: {
-                Predecessor predecessor = (Predecessor)theEObject;
-                T result = casePredecessor(predecessor);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            default: return defaultCase(theEObject);
-        }
-    }
+		switch (classifierID) {
+			case ScgbbPackage.SC_GRAPH_BB: {
+				SCGraphBB scGraphBB = (SCGraphBB)theEObject;
+				T result = caseSCGraphBB(scGraphBB);
+				if (result == null) result = caseSCGraphDep(scGraphBB);
+				if (result == null) result = caseSCGraph(scGraphBB);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ScgbbPackage.BASIC_BLOCK: {
+				BasicBlock basicBlock = (BasicBlock)theEObject;
+				T result = caseBasicBlock(basicBlock);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ScgbbPackage.SCHEDULING_BLOCK: {
+				SchedulingBlock schedulingBlock = (SchedulingBlock)theEObject;
+				T result = caseSchedulingBlock(schedulingBlock);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ScgbbPackage.PREDECESSOR: {
+				Predecessor predecessor = (Predecessor)theEObject;
+				T result = casePredecessor(predecessor);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			default: return defaultCase(theEObject);
+		}
+	}
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>SC Graph BB</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>SC Graph BB</em>'.
+	 * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>SC Graph BB</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>SC Graph BB</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
     public T caseSCGraphBB(SCGraphBB object) {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Basic Block</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>Basic Block</em>'.
+	 * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Basic Block</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Basic Block</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
     public T caseBasicBlock(BasicBlock object) {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Scheduling Block</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>Scheduling Block</em>'.
+	 * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Scheduling Block</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Scheduling Block</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
     public T caseSchedulingBlock(SchedulingBlock object) {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Predecessor</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>Predecessor</em>'.
+	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Predecessor</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Predecessor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
 	public T casePredecessor(Predecessor object) {
-        return null;
-    }
+		return null;
+	}
 
 				/**
-     * Returns the result of interpreting the object as an instance of '<em>SC Graph</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>SC Graph</em>'.
+	 * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>SC Graph</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>SC Graph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
     public T caseSCGraph(SCGraph object) {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>SC Graph Dep</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>SC Graph Dep</em>'.
+	 * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>SC Graph Dep</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>SC Graph Dep</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
     public T caseSCGraphDep(SCGraphDep object) {
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+	 * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch, but this is the last case anyway.
      * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject)
-     * @generated
-     */
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
+	 * @generated
+	 */
     @Override
     public T defaultCase(EObject object) {
-        return null;
-    }
+		return null;
+	}
 
 } //ScgbbSwitch

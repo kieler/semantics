@@ -38,397 +38,397 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  */
 public class ScgbbPackageImpl extends EPackageImpl implements ScgbbPackage {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass scGraphBBEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass basicBlockEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass schedulingBlockEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	private EClass predecessorEClass = null;
 
 				/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	private EEnum blockTypeEEnum = null;
 
 				/**
-     * Creates an instance of the model <b>Package</b>, registered with
-     * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
-     * package URI value.
-     * <p>Note: the correct way to create the package is via the static
-     * factory method {@link #init init()}, which also performs
-     * initialization of the package, or returns the registered package,
-     * if one already exists.
-     * <!-- begin-user-doc -->
+	 * Creates an instance of the model <b>Package</b>, registered with
+	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
+	 * package URI value.
+	 * <p>Note: the correct way to create the package is via the static
+	 * factory method {@link #init init()}, which also performs
+	 * initialization of the package, or returns the registered package,
+	 * if one already exists.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.emf.ecore.EPackage.Registry
-     * @see de.cau.cs.kieler.scgbb.ScgbbPackage#eNS_URI
-     * @see #init()
-     * @generated
-     */
+	 * @see org.eclipse.emf.ecore.EPackage.Registry
+	 * @see de.cau.cs.kieler.scgbb.ScgbbPackage#eNS_URI
+	 * @see #init()
+	 * @generated
+	 */
     private ScgbbPackageImpl() {
-        super(eNS_URI, ScgbbFactory.eINSTANCE);
-    }
+		super(eNS_URI, ScgbbFactory.eINSTANCE);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private static boolean isInited = false;
 
     /**
-     * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
-     * <p>This method is used to initialize {@link ScgbbPackage#eINSTANCE} when that field is accessed.
-     * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-     * <!-- begin-user-doc -->
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 * 
+	 * <p>This method is used to initialize {@link ScgbbPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #eNS_URI
-     * @see #createPackageContents()
-     * @see #initializePackageContents()
-     * @generated
-     */
+	 * @see #eNS_URI
+	 * @see #createPackageContents()
+	 * @see #initializePackageContents()
+	 * @generated
+	 */
     public static ScgbbPackage init() {
-        if (isInited) return (ScgbbPackage)EPackage.Registry.INSTANCE.getEPackage(ScgbbPackage.eNS_URI);
+		if (isInited) return (ScgbbPackage)EPackage.Registry.INSTANCE.getEPackage(ScgbbPackage.eNS_URI);
 
-        // Obtain or create and register package
-        ScgbbPackageImpl theScgbbPackage = (ScgbbPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ScgbbPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ScgbbPackageImpl());
+		// Obtain or create and register package
+		ScgbbPackageImpl theScgbbPackage = (ScgbbPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ScgbbPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ScgbbPackageImpl());
 
-        isInited = true;
+		isInited = true;
 
-        // Initialize simple dependencies
-        ScgdepPackage.eINSTANCE.eClass();
+		// Initialize simple dependencies
+		ScgdepPackage.eINSTANCE.eClass();
 
-        // Create package meta-data objects
-        theScgbbPackage.createPackageContents();
+		// Create package meta-data objects
+		theScgbbPackage.createPackageContents();
 
-        // Initialize created meta-data
-        theScgbbPackage.initializePackageContents();
+		// Initialize created meta-data
+		theScgbbPackage.initializePackageContents();
 
-        // Mark meta-data to indicate it can't be changed
-        theScgbbPackage.freeze();
+		// Mark meta-data to indicate it can't be changed
+		theScgbbPackage.freeze();
 
   
-        // Update the registry and return the package
-        EPackage.Registry.INSTANCE.put(ScgbbPackage.eNS_URI, theScgbbPackage);
-        return theScgbbPackage;
-    }
+		// Update the registry and return the package
+		EPackage.Registry.INSTANCE.put(ScgbbPackage.eNS_URI, theScgbbPackage);
+		return theScgbbPackage;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EClass getSCGraphBB() {
-        return scGraphBBEClass;
-    }
+		return scGraphBBEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EReference getSCGraphBB_BasicBlocks() {
-        return (EReference)scGraphBBEClass.getEStructuralFeatures().get(0);
-    }
+		return (EReference)scGraphBBEClass.getEStructuralFeatures().get(0);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EClass getBasicBlock() {
-        return basicBlockEClass;
-    }
+		return basicBlockEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EReference getBasicBlock_SchedulingBlocks() {
-        return (EReference)basicBlockEClass.getEStructuralFeatures().get(0);
-    }
+		return (EReference)basicBlockEClass.getEStructuralFeatures().get(0);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EReference getBasicBlock_Guards() {
-        return (EReference)basicBlockEClass.getEStructuralFeatures().get(1);
-    }
+		return (EReference)basicBlockEClass.getEStructuralFeatures().get(1);
+	}
 
 				/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EReference getBasicBlock_Predecessors() {
-        return (EReference)basicBlockEClass.getEStructuralFeatures().get(2);
-    }
+		return (EReference)basicBlockEClass.getEStructuralFeatures().get(2);
+	}
 
 				/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EAttribute getBasicBlock_BlockType() {
-        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(5);
-    }
+		return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(5);
+	}
 
 				/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EReference getBasicBlock_PreGuard() {
-        return (EReference)basicBlockEClass.getEStructuralFeatures().get(6);
-    }
+		return (EReference)basicBlockEClass.getEStructuralFeatures().get(6);
+	}
 
 				/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EAttribute getBasicBlock_GoBlock() {
-        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(3);
-    }
+		return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(3);
+	}
 
 				/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EAttribute getBasicBlock_DeadBlock() {
-        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(4);
-    }
+		return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(4);
+	}
 
                 /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EClass getSchedulingBlock() {
-        return schedulingBlockEClass;
-    }
+		return schedulingBlockEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EReference getSchedulingBlock_Nodes() {
-        return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(0);
-    }
+		return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(0);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EReference getSchedulingBlock_Dependencies() {
-        return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(1);
-    }
+		return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(1);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EReference getSchedulingBlock_Guard() {
-        return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(2);
-    }
+		return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(2);
+	}
 
 				/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EClass getPredecessor() {
-        return predecessorEClass;
-    }
+		return predecessorEClass;
+	}
 
 				/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EReference getPredecessor_BasicBlock() {
-        return (EReference)predecessorEClass.getEStructuralFeatures().get(0);
-    }
+		return (EReference)predecessorEClass.getEStructuralFeatures().get(0);
+	}
 
 				/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EAttribute getPredecessor_BlockType() {
-        return (EAttribute)predecessorEClass.getEStructuralFeatures().get(1);
-    }
+		return (EAttribute)predecessorEClass.getEStructuralFeatures().get(1);
+	}
 
 				/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EReference getPredecessor_Conditional() {
-        return (EReference)predecessorEClass.getEStructuralFeatures().get(2);
-    }
+		return (EReference)predecessorEClass.getEStructuralFeatures().get(2);
+	}
 
 				/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
 	public EEnum getBlockType() {
-        return blockTypeEEnum;
-    }
+		return blockTypeEEnum;
+	}
 
 				/**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ScgbbFactory getScgbbFactory() {
-        return (ScgbbFactory)getEFactoryInstance();
-    }
+		return (ScgbbFactory)getEFactoryInstance();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private boolean isCreated = false;
 
     /**
-     * Creates the meta-model objects for the package.  This method is
-     * guarded to have no affect on any invocation but its first.
-     * <!-- begin-user-doc -->
+	 * Creates the meta-model objects for the package.  This method is
+	 * guarded to have no affect on any invocation but its first.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void createPackageContents() {
-        if (isCreated) return;
-        isCreated = true;
+		if (isCreated) return;
+		isCreated = true;
 
-        // Create classes and their features
-        scGraphBBEClass = createEClass(SC_GRAPH_BB);
-        createEReference(scGraphBBEClass, SC_GRAPH_BB__BASIC_BLOCKS);
+		// Create classes and their features
+		scGraphBBEClass = createEClass(SC_GRAPH_BB);
+		createEReference(scGraphBBEClass, SC_GRAPH_BB__BASIC_BLOCKS);
 
-        basicBlockEClass = createEClass(BASIC_BLOCK);
-        createEReference(basicBlockEClass, BASIC_BLOCK__SCHEDULING_BLOCKS);
-        createEReference(basicBlockEClass, BASIC_BLOCK__GUARDS);
-        createEReference(basicBlockEClass, BASIC_BLOCK__PREDECESSORS);
-        createEAttribute(basicBlockEClass, BASIC_BLOCK__GO_BLOCK);
-        createEAttribute(basicBlockEClass, BASIC_BLOCK__DEAD_BLOCK);
-        createEAttribute(basicBlockEClass, BASIC_BLOCK__BLOCK_TYPE);
-        createEReference(basicBlockEClass, BASIC_BLOCK__PRE_GUARD);
+		basicBlockEClass = createEClass(BASIC_BLOCK);
+		createEReference(basicBlockEClass, BASIC_BLOCK__SCHEDULING_BLOCKS);
+		createEReference(basicBlockEClass, BASIC_BLOCK__GUARDS);
+		createEReference(basicBlockEClass, BASIC_BLOCK__PREDECESSORS);
+		createEAttribute(basicBlockEClass, BASIC_BLOCK__GO_BLOCK);
+		createEAttribute(basicBlockEClass, BASIC_BLOCK__DEAD_BLOCK);
+		createEAttribute(basicBlockEClass, BASIC_BLOCK__BLOCK_TYPE);
+		createEReference(basicBlockEClass, BASIC_BLOCK__PRE_GUARD);
 
-        schedulingBlockEClass = createEClass(SCHEDULING_BLOCK);
-        createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__NODES);
-        createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__DEPENDENCIES);
-        createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__GUARD);
+		schedulingBlockEClass = createEClass(SCHEDULING_BLOCK);
+		createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__NODES);
+		createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__DEPENDENCIES);
+		createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__GUARD);
 
-        predecessorEClass = createEClass(PREDECESSOR);
-        createEReference(predecessorEClass, PREDECESSOR__BASIC_BLOCK);
-        createEAttribute(predecessorEClass, PREDECESSOR__BLOCK_TYPE);
-        createEReference(predecessorEClass, PREDECESSOR__CONDITIONAL);
+		predecessorEClass = createEClass(PREDECESSOR);
+		createEReference(predecessorEClass, PREDECESSOR__BASIC_BLOCK);
+		createEAttribute(predecessorEClass, PREDECESSOR__BLOCK_TYPE);
+		createEReference(predecessorEClass, PREDECESSOR__CONDITIONAL);
 
-        // Create enums
-        blockTypeEEnum = createEEnum(BLOCK_TYPE);
-    }
+		// Create enums
+		blockTypeEEnum = createEEnum(BLOCK_TYPE);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private boolean isInitialized = false;
 
     /**
-     * Complete the initialization of the package and its meta-model.  This
-     * method is guarded to have no affect on any invocation but its first.
-     * <!-- begin-user-doc -->
+	 * Complete the initialization of the package and its meta-model.  This
+	 * method is guarded to have no affect on any invocation but its first.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void initializePackageContents() {
-        if (isInitialized) return;
-        isInitialized = true;
+		if (isInitialized) return;
+		isInitialized = true;
 
-        // Initialize package
-        setName(eNAME);
-        setNsPrefix(eNS_PREFIX);
-        setNsURI(eNS_URI);
+		// Initialize package
+		setName(eNAME);
+		setNsPrefix(eNS_PREFIX);
+		setNsURI(eNS_URI);
 
-        // Obtain other dependent packages
-        ScgdepPackage theScgdepPackage = (ScgdepPackage)EPackage.Registry.INSTANCE.getEPackage(ScgdepPackage.eNS_URI);
-        KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
-        ScgPackage theScgPackage = (ScgPackage)EPackage.Registry.INSTANCE.getEPackage(ScgPackage.eNS_URI);
+		// Obtain other dependent packages
+		ScgdepPackage theScgdepPackage = (ScgdepPackage)EPackage.Registry.INSTANCE.getEPackage(ScgdepPackage.eNS_URI);
+		KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
+		ScgPackage theScgPackage = (ScgPackage)EPackage.Registry.INSTANCE.getEPackage(ScgPackage.eNS_URI);
 
-        // Create type parameters
+		// Create type parameters
 
-        // Set bounds for type parameters
+		// Set bounds for type parameters
 
-        // Add supertypes to classes
-        scGraphBBEClass.getESuperTypes().add(theScgdepPackage.getSCGraphDep());
+		// Add supertypes to classes
+		scGraphBBEClass.getESuperTypes().add(theScgdepPackage.getSCGraphDep());
 
-        // Initialize classes, features, and operations; add parameters
-        initEClass(scGraphBBEClass, SCGraphBB.class, "SCGraphBB", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getSCGraphBB_BasicBlocks(), this.getBasicBlock(), null, "basicBlocks", null, 0, -1, SCGraphBB.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		// Initialize classes, features, and operations; add parameters
+		initEClass(scGraphBBEClass, SCGraphBB.class, "SCGraphBB", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSCGraphBB_BasicBlocks(), this.getBasicBlock(), null, "basicBlocks", null, 0, -1, SCGraphBB.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(basicBlockEClass, BasicBlock.class, "BasicBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getBasicBlock_SchedulingBlocks(), this.getSchedulingBlock(), null, "schedulingBlocks", null, 0, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getBasicBlock_Guards(), theKExpressionsPackage.getValuedObject(), null, "guards", null, 1, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getBasicBlock_Predecessors(), this.getPredecessor(), null, "predecessors", null, 0, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getBasicBlock_GoBlock(), ecorePackage.getEBoolean(), "goBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getBasicBlock_DeadBlock(), ecorePackage.getEBoolean(), "deadBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getBasicBlock_BlockType(), this.getBlockType(), "blockType", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getBasicBlock_PreGuard(), theKExpressionsPackage.getValuedObject(), null, "preGuard", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(basicBlockEClass, BasicBlock.class, "BasicBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getBasicBlock_SchedulingBlocks(), this.getSchedulingBlock(), null, "schedulingBlocks", null, 0, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBasicBlock_Guards(), theKExpressionsPackage.getValuedObject(), null, "guards", null, 1, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBasicBlock_Predecessors(), this.getPredecessor(), null, "predecessors", null, 0, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBasicBlock_GoBlock(), ecorePackage.getEBoolean(), "goBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBasicBlock_DeadBlock(), ecorePackage.getEBoolean(), "deadBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBasicBlock_BlockType(), this.getBlockType(), "blockType", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBasicBlock_PreGuard(), theKExpressionsPackage.getValuedObject(), null, "preGuard", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(schedulingBlockEClass, SchedulingBlock.class, "SchedulingBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getSchedulingBlock_Nodes(), theScgPackage.getNode(), null, "nodes", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSchedulingBlock_Dependencies(), theScgdepPackage.getDependency(), null, "dependencies", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getSchedulingBlock_Guard(), theKExpressionsPackage.getValuedObject(), null, "guard", null, 1, 1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(schedulingBlockEClass, SchedulingBlock.class, "SchedulingBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSchedulingBlock_Nodes(), theScgPackage.getNode(), null, "nodes", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSchedulingBlock_Dependencies(), theScgdepPackage.getDependency(), null, "dependencies", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSchedulingBlock_Guard(), theKExpressionsPackage.getValuedObject(), null, "guard", null, 1, 1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(predecessorEClass, Predecessor.class, "Predecessor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getPredecessor_BasicBlock(), this.getBasicBlock(), null, "basicBlock", null, 1, 1, Predecessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getPredecessor_BlockType(), this.getBlockType(), "blockType", null, 0, 1, Predecessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getPredecessor_Conditional(), theScgPackage.getConditional(), null, "conditional", null, 0, 1, Predecessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(predecessorEClass, Predecessor.class, "Predecessor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getPredecessor_BasicBlock(), this.getBasicBlock(), null, "basicBlock", null, 1, 1, Predecessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPredecessor_BlockType(), this.getBlockType(), "blockType", null, 0, 1, Predecessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPredecessor_Conditional(), theScgPackage.getConditional(), null, "conditional", null, 0, 1, Predecessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        // Initialize enums and add enum literals
-        initEEnum(blockTypeEEnum, BlockType.class, "BlockType");
-        addEEnumLiteral(blockTypeEEnum, BlockType.NORMAL);
-        addEEnumLiteral(blockTypeEEnum, BlockType.DEPTH);
-        addEEnumLiteral(blockTypeEEnum, BlockType.TRUEBRANCH);
-        addEEnumLiteral(blockTypeEEnum, BlockType.ELSEBRANCH);
-        addEEnumLiteral(blockTypeEEnum, BlockType.SYNCHRONIZER);
+		// Initialize enums and add enum literals
+		initEEnum(blockTypeEEnum, BlockType.class, "BlockType");
+		addEEnumLiteral(blockTypeEEnum, BlockType.NORMAL);
+		addEEnumLiteral(blockTypeEEnum, BlockType.DEPTH);
+		addEEnumLiteral(blockTypeEEnum, BlockType.TRUEBRANCH);
+		addEEnumLiteral(blockTypeEEnum, BlockType.ELSEBRANCH);
+		addEEnumLiteral(blockTypeEEnum, BlockType.SYNCHRONIZER);
 
-        // Create resource
-        createResource(eNS_URI);
-    }
+		// Create resource
+		createResource(eNS_URI);
+	}
 
 } //ScgbbPackageImpl

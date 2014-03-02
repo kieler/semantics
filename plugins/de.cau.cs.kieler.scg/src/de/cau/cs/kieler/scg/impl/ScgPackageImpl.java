@@ -419,14 +419,14 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
     /**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public EReference getSCGraph_ValuedObjects() {
+	public EReference getSCGraph_TypeGroups() {
 		return (EReference)scGraphEClass.getEStructuralFeatures().get(1);
 	}
 
-    /**
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -551,7 +551,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 		scGraphEClass = createEClass(SC_GRAPH);
 		createEReference(scGraphEClass, SC_GRAPH__NODES);
-		createEReference(scGraphEClass, SC_GRAPH__VALUED_OBJECTS);
+		createEReference(scGraphEClass, SC_GRAPH__TYPE_GROUPS);
 
 		entryEClass = createEClass(ENTRY);
 		createEReference(entryEClass, ENTRY__EXIT);
@@ -643,7 +643,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 		initEClass(scGraphEClass, SCGraph.class, "SCGraph", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSCGraph_Nodes(), this.getNode(), null, "nodes", null, 0, -1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getSCGraph_ValuedObjects(), theKExpressionsPackage.getValuedObject(), null, "valuedObjects", null, 0, -1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSCGraph_TypeGroups(), theKExpressionsPackage.getTypeGroup(), null, "typeGroups", null, 0, -1, SCGraph.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(entryEClass, Entry.class, "Entry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEntry_Exit(), this.getExit(), this.getExit_Entry(), "exit", null, 1, 1, Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

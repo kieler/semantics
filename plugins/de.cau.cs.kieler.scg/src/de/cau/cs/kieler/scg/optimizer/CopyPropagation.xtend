@@ -59,7 +59,7 @@ class CopyPropagation extends AbstractOptimizer {
                     ref.valuedObject = originalObject
             }
             
-            scg.valuedObjects -= ra.valuedObject
+            scg.typeGroups.removeValuedObject(ra.valuedObject)
             ra.next.target.incoming -= ra.next
             ra.remove
         ]

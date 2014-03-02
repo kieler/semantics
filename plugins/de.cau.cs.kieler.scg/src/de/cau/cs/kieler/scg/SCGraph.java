@@ -13,9 +13,8 @@
  */
 package de.cau.cs.kieler.scg;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -27,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getNodes <em>Nodes</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getValuedObjects <em>Valued Objects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getTypeGroups <em>Type Groups</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,19 +52,19 @@ public interface SCGraph extends EObject {
     EList<Node> getNodes();
 
     /**
-	 * Returns the value of the '<em><b>Valued Objects</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
+	 * Returns the value of the '<em><b>Type Groups</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.TypeGroup}.
 	 * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Valued Objects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-	 * @return the value of the '<em>Valued Objects</em>' containment reference list.
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_ValuedObjects()
+	 * <p>
+	 * If the meaning of the '<em>Type Groups</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Type Groups</em>' containment reference list.
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_TypeGroups()
 	 * @model containment="true"
 	 * @generated
 	 */
-    EList<ValuedObject> getValuedObjects();
+	EList<TypeGroup> getTypeGroups();
 
 } // SCGraph

@@ -13,35 +13,34 @@
  */
  package de.cau.cs.kieler.scg.schedulers
 
-import de.cau.cs.kieler.scgbb.SchedulingBlock
-import de.cau.cs.kieler.scgsched.ScgschedFactory
-import de.cau.cs.kieler.scgbb.BasicBlock
-
-import com.google.common.collect.ImmutableListimport com.google.inject.Inject
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scgsched.SCGraphSched
+import com.google.common.collect.ImmutableList
 import com.google.inject.Guice
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
-import de.cau.cs.kieler.scgsched.GuardExpression
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scgbb.BlockType
-import de.cau.cs.kieler.scg.synchronizer.SurfaceSynchronizer
-import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.scgbb.Predecessor
-import de.cau.cs.kieler.scg.analyzer.InterleavedAssignmentAnalyzer
-import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.analyzer.InterleavedAssignmentAnalyzer
+import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
+import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
+import de.cau.cs.kieler.scg.synchronizer.SurfaceSynchronizer
+import de.cau.cs.kieler.scgbb.BasicBlock
+import de.cau.cs.kieler.scgbb.BlockType
+import de.cau.cs.kieler.scgbb.Predecessor
+import de.cau.cs.kieler.scgbb.SchedulingBlock
+import de.cau.cs.kieler.scgsched.GuardExpression
+import de.cau.cs.kieler.scgsched.SCGraphSched
+import de.cau.cs.kieler.scgsched.ScgschedFactory
 import de.cau.cs.kieler.scgsched.Schedule
 import java.util.List
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -174,10 +173,8 @@ class SimpleScheduler extends AbstractScheduler {
          
         // Create a new signal using the kexpression factory for the GO signal.
         // Don't forget to add it to the SCG.
-        KExpressionsFactory::eINSTANCE.createValuedObject => [
-        	name = GOGUARDNAME
-        	type = ValueType::BOOL
-        	scg.valuedObjects.add(it)
+        creatVariableInBoolTypeGroup(GOGUARDNAME) => [
+        	scg.typeGroups += it.typeGroup
         ]
     }
     
@@ -397,7 +394,7 @@ class SimpleScheduler extends AbstractScheduler {
 		val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join)
 
 		// Add additional valued objects to the SCG and use the guard expression of the synchronizer as it is.
-		scg.valuedObjects += joinData.valuedObjects
+		scg.typeGroups += createTypeGroup(joinData.valuedObjects).setTypeBool
     	joinData.guardExpression
     }
     

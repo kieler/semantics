@@ -854,15 +854,15 @@ public interface ScgPackage extends EPackage {
     int SC_GRAPH__NODES = 0;
 
     /**
-	 * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SC_GRAPH__VALUED_OBJECTS = 1;
+	int SC_GRAPH__TYPE_GROUPS = 1;
 
-    /**
+				/**
 	 * The number of structural features of the '<em>SC Graph</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1433,17 +1433,17 @@ public interface ScgPackage extends EPackage {
     EReference getSCGraph_Nodes();
 
     /**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.SCGraph#getValuedObjects <em>Valued Objects</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.SCGraph#getTypeGroups <em>Type Groups</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
-	 * @see de.cau.cs.kieler.scg.SCGraph#getValuedObjects()
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Type Groups</em>'.
+	 * @see de.cau.cs.kieler.scg.SCGraph#getTypeGroups()
 	 * @see #getSCGraph()
 	 * @generated
 	 */
-    EReference getSCGraph_ValuedObjects();
+	EReference getSCGraph_TypeGroups();
 
-    /**
+				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Entry <em>Entry</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1767,14 +1767,14 @@ public interface ScgPackage extends EPackage {
         EReference SC_GRAPH__NODES = eINSTANCE.getSCGraph_Nodes();
 
         /**
-		 * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference SC_GRAPH__VALUED_OBJECTS = eINSTANCE.getSCGraph_ValuedObjects();
+		EReference SC_GRAPH__TYPE_GROUPS = eINSTANCE.getSCGraph_TypeGroups();
 
-        /**
+								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.EntryImpl <em>Entry</em>}' class.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->

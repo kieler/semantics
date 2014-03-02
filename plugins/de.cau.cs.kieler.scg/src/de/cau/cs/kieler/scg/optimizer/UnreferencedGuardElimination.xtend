@@ -53,7 +53,7 @@ class UnreferencedGuardElimination extends AbstractOptimizer {
             val incoming = ImmutableList::copyOf(ra.incoming.filter(typeof(ControlFlow)))
             incoming.forEach[ target = ra.next.target ]
             
-            scg.valuedObjects -= ra.valuedObject
+            scg.typeGroups.removeValuedObject(ra.valuedObject)
             ra.next.target.incoming -= ra.next
             ra.remove
         ]

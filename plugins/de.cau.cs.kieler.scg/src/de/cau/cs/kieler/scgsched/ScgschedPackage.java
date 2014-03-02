@@ -88,15 +88,15 @@ public interface ScgschedPackage extends EPackage {
     int SC_GRAPH_SCHED__NODES = ScgbbPackage.SC_GRAPH_BB__NODES;
 
     /**
-	 * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SC_GRAPH_SCHED__VALUED_OBJECTS = ScgbbPackage.SC_GRAPH_BB__VALUED_OBJECTS;
+	int SC_GRAPH_SCHED__TYPE_GROUPS = ScgbbPackage.SC_GRAPH_BB__TYPE_GROUPS;
 
-    /**
+				/**
 	 * The feature id for the '<em><b>Basic Blocks</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

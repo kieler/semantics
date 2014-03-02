@@ -74,11 +74,11 @@ class SCGExtensions {
      * 			the name of the valued object
      * @return Returns a new valued object with the given name.
      */
-    def ValuedObject createValuedObject(String valuedObjectName) {
-         KExpressionsFactory::eINSTANCE.createValuedObject => [
-             name = valuedObjectName
-         ]
-    }
+//    def ValuedObject createValuedObject(String valuedObjectName) {
+//         KExpressionsFactory::eINSTANCE.createValuedObject => [
+//             name = valuedObjectName
+//         ]
+//    }
    
     /** 
      * Creates a new ValuedObject in an SCG.
@@ -89,12 +89,12 @@ class SCGExtensions {
      * 			the name of the valued object
      * @return Returns the new valued object. 
      */
-    def ValuedObject createValuedObject(SCGraph scg, String valuedObjectName) {
-         createValuedObject(valuedObjectName) => [
-             scg.valuedObjects += it
-         ]
-    }
-   
+//    def ValuedObject createValuedObject(SCGraph scg, String valuedObjectName) {
+//         createValuedObject(valuedObjectName) => [
+//             scg.valuedObjects += it
+//         ]
+//    }
+//   
 	/** 
 	 * Finds and retrieves a valued object by its name. May return null.
 	 * 
@@ -105,7 +105,12 @@ class SCGExtensions {
 	 * @return Returns the (first) valued object with the given name or null.
 	 */
     def ValuedObject findValuedObjectByName(SCGraph scg, String name) {
-    	scg.valuedObjects.filter[it.name == name]?.head
+    	for(tg : scg.typeGroups) {
+    		for(vo : tg.valuedObjects) {
+    			if (vo.name == name) return vo
+    		}
+   		}
+   		return null
     }
 
 

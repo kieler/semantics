@@ -2,22 +2,16 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.ScgPackage;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -29,7 +23,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getNodes <em>Nodes</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getValuedObjects <em>Valued Objects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getTypeGroups <em>Type Groups</em>}</li>
  * </ul>
  * </p>
  *
@@ -47,16 +41,16 @@ public class SCGraphImpl extends MinimalEObjectImpl.Container implements SCGraph
     protected EList<Node> nodes;
 
     /**
-	 * The cached value of the '{@link #getValuedObjects() <em>Valued Objects</em>}' containment reference list.
+	 * The cached value of the '{@link #getTypeGroups() <em>Type Groups</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @see #getValuedObjects()
+	 * <!-- end-user-doc -->
+	 * @see #getTypeGroups()
 	 * @generated
 	 * @ordered
 	 */
-    protected EList<ValuedObject> valuedObjects;
+	protected EList<TypeGroup> typeGroups;
 
-    /**
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -89,17 +83,17 @@ public class SCGraphImpl extends MinimalEObjectImpl.Container implements SCGraph
 
     /**
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public EList<ValuedObject> getValuedObjects() {
-		if (valuedObjects == null) {
-			valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, ScgPackage.SC_GRAPH__VALUED_OBJECTS);
+	public EList<TypeGroup> getTypeGroups() {
+		if (typeGroups == null) {
+			typeGroups = new EObjectContainmentEList<TypeGroup>(TypeGroup.class, this, ScgPackage.SC_GRAPH__TYPE_GROUPS);
 		}
-		return valuedObjects;
+		return typeGroups;
 	}
 
-    /**
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -109,8 +103,8 @@ public class SCGraphImpl extends MinimalEObjectImpl.Container implements SCGraph
 		switch (featureID) {
 			case ScgPackage.SC_GRAPH__NODES:
 				return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
-			case ScgPackage.SC_GRAPH__VALUED_OBJECTS:
-				return ((InternalEList<?>)getValuedObjects()).basicRemove(otherEnd, msgs);
+			case ScgPackage.SC_GRAPH__TYPE_GROUPS:
+				return ((InternalEList<?>)getTypeGroups()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -125,8 +119,8 @@ public class SCGraphImpl extends MinimalEObjectImpl.Container implements SCGraph
 		switch (featureID) {
 			case ScgPackage.SC_GRAPH__NODES:
 				return getNodes();
-			case ScgPackage.SC_GRAPH__VALUED_OBJECTS:
-				return getValuedObjects();
+			case ScgPackage.SC_GRAPH__TYPE_GROUPS:
+				return getTypeGroups();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -144,9 +138,9 @@ public class SCGraphImpl extends MinimalEObjectImpl.Container implements SCGraph
 				getNodes().clear();
 				getNodes().addAll((Collection<? extends Node>)newValue);
 				return;
-			case ScgPackage.SC_GRAPH__VALUED_OBJECTS:
-				getValuedObjects().clear();
-				getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
+			case ScgPackage.SC_GRAPH__TYPE_GROUPS:
+				getTypeGroups().clear();
+				getTypeGroups().addAll((Collection<? extends TypeGroup>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -163,8 +157,8 @@ public class SCGraphImpl extends MinimalEObjectImpl.Container implements SCGraph
 			case ScgPackage.SC_GRAPH__NODES:
 				getNodes().clear();
 				return;
-			case ScgPackage.SC_GRAPH__VALUED_OBJECTS:
-				getValuedObjects().clear();
+			case ScgPackage.SC_GRAPH__TYPE_GROUPS:
+				getTypeGroups().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -180,8 +174,8 @@ public class SCGraphImpl extends MinimalEObjectImpl.Container implements SCGraph
 		switch (featureID) {
 			case ScgPackage.SC_GRAPH__NODES:
 				return nodes != null && !nodes.isEmpty();
-			case ScgPackage.SC_GRAPH__VALUED_OBJECTS:
-				return valuedObjects != null && !valuedObjects.isEmpty();
+			case ScgPackage.SC_GRAPH__TYPE_GROUPS:
+				return typeGroups != null && !typeGroups.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

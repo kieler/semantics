@@ -32,7 +32,7 @@ import java.util.HashMap
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scgbb.BasicBlock
 import de.cau.cs.kieler.scg.optimizer.CopyPropagation
-import com.google.inject.Guice
+import com.google.inject.Guiceimport de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -67,6 +67,11 @@ class SimpleSequentializer extends AbstractSequentializer {
     /** Inject SCG copy extensions. */  
     @Inject 
     extension SCGCopyExtensions	
+
+    /** Inject SCG copy extensions. */  
+    @Inject 
+    extension KExpressionsExtension	
+
     
     // -------------------------------------------------------------------------
     // -- Globals
@@ -99,11 +104,11 @@ class SimpleSequentializer extends AbstractSequentializer {
          * basic blocks.
          */
         scgSched.copyDeclarations(scg)
+        val guardTypeGroup = createTypeGroup.setTypeBool => [ scg.typeGroups += it ]
         scgSched.basicBlocks.forEach[
         	it.guards.forEach[
-        		val newGuard = it.copy
+        		val newGuard = createValuedObject(guardTypeGroup, it.name)
         		it.addToValuedObjectMapping(newGuard)
-        		scg.valuedObjects.add(newGuard)
         	]
         ]
 

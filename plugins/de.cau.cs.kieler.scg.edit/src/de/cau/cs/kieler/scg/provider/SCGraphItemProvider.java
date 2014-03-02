@@ -90,7 +90,7 @@ public class SCGraphItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__NODES);
-			childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__VALUED_OBJECTS);
+			childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__TYPE_GROUPS);
 		}
 		return childrenFeatures;
 	}
@@ -143,7 +143,7 @@ public class SCGraphItemProvider
 
 		switch (notification.getFeatureID(SCGraph.class)) {
 			case ScgPackage.SC_GRAPH__NODES:
-			case ScgPackage.SC_GRAPH__VALUED_OBJECTS:
+			case ScgPackage.SC_GRAPH__TYPE_GROUPS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -208,8 +208,8 @@ public class SCGraphItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ScgPackage.Literals.SC_GRAPH__VALUED_OBJECTS,
-				 KExpressionsFactory.eINSTANCE.createValuedObject()));
+				(ScgPackage.Literals.SC_GRAPH__TYPE_GROUPS,
+				 KExpressionsFactory.eINSTANCE.createTypeGroup()));
 	}
 
     /**
