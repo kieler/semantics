@@ -28,10 +28,10 @@
       <category name="kieler-sources"/>
    </feature>
 
-   <feature url="features/de.cau.cs.kieler.sccharts_0.8.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature" version="0.9.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.sccharts_0.1.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature" version="0.1.0.qualifier">
       <category name="kieler-sem"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.sccharts.source_0.8.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature.source" version="0.9.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.sccharts.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.sccharts.feature.source" version="0.1.0.qualifier">
       <category name="kieler-sources"/>
    </feature>
 
