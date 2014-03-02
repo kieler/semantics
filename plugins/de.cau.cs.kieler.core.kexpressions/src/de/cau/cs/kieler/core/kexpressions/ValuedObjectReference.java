@@ -32,7 +32,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getValuedObject <em>Valued Object</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getArrayCardinalities <em>Array Cardinalities</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getCardinalities <em>Cardinalities</em>}</li>
  * </ul>
  * </p>
  *
@@ -68,19 +68,19 @@ public interface ValuedObjectReference extends Expression {
     void setValuedObject(ValuedObject value);
 
     /**
-	 * Returns the value of the '<em><b>Array Cardinalities</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Cardinalities</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
 	 * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Array Cardinalities</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-	 * @return the value of the '<em>Array Cardinalities</em>' containment reference list.
-	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObjectReference_ArrayCardinalities()
+	 * <p>
+	 * If the meaning of the '<em>Cardinalities</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Cardinalities</em>' containment reference list.
+	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObjectReference_Cardinalities()
 	 * @model containment="true"
 	 * @generated
 	 */
-    EList<Expression> getArrayCardinalities();
+	EList<Expression> getCardinalities();
 
 } // ValuedObjectReference

@@ -131,7 +131,7 @@ ValuedObjectTestExpression returns Expression:
 
 // Example: A, varB
 ValuedObjectReference returns ValuedObjectReference:
-	valuedObject=[ValuedObject|ID] ('[' arrayCardinalities+=Expression ']')*;
+	valuedObject=[ValuedObject|ID] ('[' cardinalities+=Expression ']')*;
 
 
 // Example: 'printf(...)'

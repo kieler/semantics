@@ -10113,26 +10113,26 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__1__Impl"
-    // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:3469:1: rule__ValuedObjectReference__Group_1__1__Impl : ( ( rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_1 ) ) ;
+    // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:3469:1: rule__ValuedObjectReference__Group_1__1__Impl : ( ( rule__ValuedObjectReference__CardinalitiesAssignment_1_1 ) ) ;
     public final void rule__ValuedObjectReference__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:3473:1: ( ( ( rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_1 ) ) )
-            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:3474:1: ( ( rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_1 ) )
+            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:3473:1: ( ( ( rule__ValuedObjectReference__CardinalitiesAssignment_1_1 ) ) )
+            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:3474:1: ( ( rule__ValuedObjectReference__CardinalitiesAssignment_1_1 ) )
             {
-            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:3474:1: ( ( rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_1 ) )
-            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:3475:1: ( rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_1 )
+            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:3474:1: ( ( rule__ValuedObjectReference__CardinalitiesAssignment_1_1 ) )
+            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:3475:1: ( rule__ValuedObjectReference__CardinalitiesAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectReferenceAccess().getArrayCardinalitiesAssignment_1_1()); 
+               before(grammarAccess.getValuedObjectReferenceAccess().getCardinalitiesAssignment_1_1()); 
             }
-            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:3476:1: ( rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_1 )
-            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:3476:2: rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_1
+            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:3476:1: ( rule__ValuedObjectReference__CardinalitiesAssignment_1_1 )
+            // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:3476:2: rule__ValuedObjectReference__CardinalitiesAssignment_1_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_1_in_rule__ValuedObjectReference__Group_1__1__Impl7082);
-            rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_1();
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectReference__CardinalitiesAssignment_1_1_in_rule__ValuedObjectReference__Group_1__1__Impl7082);
+            rule__ValuedObjectReference__CardinalitiesAssignment_1_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10140,7 +10140,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectReferenceAccess().getArrayCardinalitiesAssignment_1_1()); 
+               after(grammarAccess.getValuedObjectReferenceAccess().getCardinalitiesAssignment_1_1()); 
             }
 
             }
@@ -15462,9 +15462,9 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
     // $ANTLR end "rule__ValuedObjectReference__ValuedObjectAssignment_0"
 
 
-    // $ANTLR start "rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_1"
-    // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:5392:1: rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_1 : ( ruleExpression ) ;
-    public final void rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_1() throws RecognitionException {
+    // $ANTLR start "rule__ValuedObjectReference__CardinalitiesAssignment_1_1"
+    // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:5392:1: rule__ValuedObjectReference__CardinalitiesAssignment_1_1 : ( ruleExpression ) ;
+    public final void rule__ValuedObjectReference__CardinalitiesAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -15476,15 +15476,15 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:5398:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectReferenceAccess().getArrayCardinalitiesExpressionParserRuleCall_1_1_0()); 
+               before(grammarAccess.getValuedObjectReferenceAccess().getCardinalitiesExpressionParserRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleExpression_in_rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_110897);
+            pushFollow(FollowSets000.FOLLOW_ruleExpression_in_rule__ValuedObjectReference__CardinalitiesAssignment_1_110897);
             ruleExpression();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectReferenceAccess().getArrayCardinalitiesExpressionParserRuleCall_1_1_0()); 
+               after(grammarAccess.getValuedObjectReferenceAccess().getCardinalitiesExpressionParserRuleCall_1_1_0()); 
             }
 
             }
@@ -15504,7 +15504,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
         }
         return ;
     }
-    // $ANTLR end "rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_1"
+    // $ANTLR end "rule__ValuedObjectReference__CardinalitiesAssignment_1_1"
 
 
     // $ANTLR start "rule__TextExpression__TextAssignment"
@@ -17735,7 +17735,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
         public static final BitSet FOLLOW_36_in_rule__ValuedObjectReference__Group_1__0__Impl7021 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__1__Impl_in_rule__ValuedObjectReference__Group_1__17052 = new BitSet(new long[]{0x0000002000000000L});
         public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__2_in_rule__ValuedObjectReference__Group_1__17055 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_1_in_rule__ValuedObjectReference__Group_1__1__Impl7082 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObjectReference__CardinalitiesAssignment_1_1_in_rule__ValuedObjectReference__Group_1__1__Impl7082 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__2__Impl_in_rule__ValuedObjectReference__Group_1__27112 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_37_in_rule__ValuedObjectReference__Group_1__2__Impl7140 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TagAnnotation__Group__0__Impl_in_rule__TagAnnotation__Group__07177 = new BitSet(new long[]{0x0000000000000020L});
@@ -17891,7 +17891,7 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
         public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0_in_rule__ValuedObjectTestExpression__OperatorAssignment_0_110794 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValuedObjectTestExpression_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_310827 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_rule__ValuedObjectReference__ValuedObjectAssignment_010862 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExpression_in_rule__ValuedObjectReference__ArrayCardinalitiesAssignment_1_110897 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExpression_in_rule__ValuedObjectReference__CardinalitiesAssignment_1_110897 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__TextExpression__TextAssignment10928 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment10959 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment10990 = new BitSet(new long[]{0x0000000000000002L});

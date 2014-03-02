@@ -142,18 +142,12 @@
       <details key="documentation" value="Base Class for Variables and Signals. A ValuedObject has a name and may carry a value. &#xA;Therefore the class has a type attribute which specifies the type of the value. &#xA;The type might either be given from a predefined list of internal (primitive) types or by the hostType String that &#xA;references some type in the target language, e.g. a Type in C or Java. An initial value can be given in String format.&#xA;"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//ValueType"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="input" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="static" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="signal" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="combineOperator" lowerBound="1"
         eType="#//CombineOperator"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="initialValue" eType="#//Expression"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cardinalities" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ValueType">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -182,7 +176,7 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
         eType="#//ValuedObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="arrayCardinalities" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cardinalities" upperBound="-1"
         eType="#//Expression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Value" eSuperTypes="#//Expression">
@@ -225,8 +219,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="TypeGroup">
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObjects" upperBound="-1"
         eType="#//ValuedObject" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="arrayCardinalities" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//ValueType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="input" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" lowerBound="1"

@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl#getValuedObjects <em>Valued Objects</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl#getArrayCardinalities <em>Array Cardinalities</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl#isInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl#isOutput <em>Output</em>}</li>
@@ -54,16 +53,6 @@ public class TypeGroupImpl extends EObjectImpl implements TypeGroup {
 	 * @ordered
 	 */
 	protected EList<ValuedObject> valuedObjects;
-
-	/**
-	 * The cached value of the '{@link #getArrayCardinalities() <em>Array Cardinalities</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getArrayCardinalities()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Integer> arrayCardinalities;
 
 	/**
 	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -221,18 +210,6 @@ public class TypeGroupImpl extends EObjectImpl implements TypeGroup {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Integer> getArrayCardinalities() {
-		if (arrayCardinalities == null) {
-			arrayCardinalities = new EDataTypeUniqueEList<Integer>(Integer.class, this, KExpressionsPackage.TYPE_GROUP__ARRAY_CARDINALITIES);
-		}
-		return arrayCardinalities;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public ValueType getType() {
 		return type;
 	}
@@ -378,8 +355,6 @@ public class TypeGroupImpl extends EObjectImpl implements TypeGroup {
 		switch (featureID) {
 			case KExpressionsPackage.TYPE_GROUP__VALUED_OBJECTS:
 				return getValuedObjects();
-			case KExpressionsPackage.TYPE_GROUP__ARRAY_CARDINALITIES:
-				return getArrayCardinalities();
 			case KExpressionsPackage.TYPE_GROUP__TYPE:
 				return getType();
 			case KExpressionsPackage.TYPE_GROUP__INPUT:
@@ -408,10 +383,6 @@ public class TypeGroupImpl extends EObjectImpl implements TypeGroup {
 			case KExpressionsPackage.TYPE_GROUP__VALUED_OBJECTS:
 				getValuedObjects().clear();
 				getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
-				return;
-			case KExpressionsPackage.TYPE_GROUP__ARRAY_CARDINALITIES:
-				getArrayCardinalities().clear();
-				getArrayCardinalities().addAll((Collection<? extends Integer>)newValue);
 				return;
 			case KExpressionsPackage.TYPE_GROUP__TYPE:
 				setType((ValueType)newValue);
@@ -446,9 +417,6 @@ public class TypeGroupImpl extends EObjectImpl implements TypeGroup {
 			case KExpressionsPackage.TYPE_GROUP__VALUED_OBJECTS:
 				getValuedObjects().clear();
 				return;
-			case KExpressionsPackage.TYPE_GROUP__ARRAY_CARDINALITIES:
-				getArrayCardinalities().clear();
-				return;
 			case KExpressionsPackage.TYPE_GROUP__TYPE:
 				setType(TYPE_EDEFAULT);
 				return;
@@ -481,8 +449,6 @@ public class TypeGroupImpl extends EObjectImpl implements TypeGroup {
 		switch (featureID) {
 			case KExpressionsPackage.TYPE_GROUP__VALUED_OBJECTS:
 				return valuedObjects != null && !valuedObjects.isEmpty();
-			case KExpressionsPackage.TYPE_GROUP__ARRAY_CARDINALITIES:
-				return arrayCardinalities != null && !arrayCardinalities.isEmpty();
 			case KExpressionsPackage.TYPE_GROUP__TYPE:
 				return type != TYPE_EDEFAULT;
 			case KExpressionsPackage.TYPE_GROUP__INPUT:
@@ -509,9 +475,7 @@ public class TypeGroupImpl extends EObjectImpl implements TypeGroup {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (arrayCardinalities: ");
-		result.append(arrayCardinalities);
-		result.append(", type: ");
+		result.append(" (type: ");
 		result.append(type);
 		result.append(", input: ");
 		result.append(input);

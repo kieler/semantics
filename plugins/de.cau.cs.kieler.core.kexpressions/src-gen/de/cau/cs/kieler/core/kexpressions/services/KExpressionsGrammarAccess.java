@@ -688,16 +688,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cArrayCardinalitiesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cArrayCardinalitiesExpressionParserRuleCall_1_1_0 = (RuleCall)cArrayCardinalitiesAssignment_1_1.eContents().get(0);
+		private final Assignment cCardinalitiesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cCardinalitiesExpressionParserRuleCall_1_1_0 = (RuleCall)cCardinalitiesAssignment_1_1.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
 		//// Example: A, varB
 		//ValuedObjectReference:
-		//	valuedObject=[ValuedObject] ("[" arrayCardinalities+=Expression "]")*;
+		//	valuedObject=[ValuedObject] ("[" cardinalities+=Expression "]")*;
 		public ParserRule getRule() { return rule; }
 
-		//valuedObject=[ValuedObject] ("[" arrayCardinalities+=Expression "]")*
+		//valuedObject=[ValuedObject] ("[" cardinalities+=Expression "]")*
 		public Group getGroup() { return cGroup; }
 
 		//valuedObject=[ValuedObject]
@@ -709,17 +709,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
 
-		//("[" arrayCardinalities+=Expression "]")*
+		//("[" cardinalities+=Expression "]")*
 		public Group getGroup_1() { return cGroup_1; }
 
 		//"["
 		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
 
-		//arrayCardinalities+=Expression
-		public Assignment getArrayCardinalitiesAssignment_1_1() { return cArrayCardinalitiesAssignment_1_1; }
+		//cardinalities+=Expression
+		public Assignment getCardinalitiesAssignment_1_1() { return cCardinalitiesAssignment_1_1; }
 
 		//Expression
-		public RuleCall getArrayCardinalitiesExpressionParserRuleCall_1_1_0() { return cArrayCardinalitiesExpressionParserRuleCall_1_1_0; }
+		public RuleCall getCardinalitiesExpressionParserRuleCall_1_1_0() { return cCardinalitiesExpressionParserRuleCall_1_1_0; }
 
 		//"]"
 		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
@@ -1502,7 +1502,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: A, varB
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject] ("[" arrayCardinalities+=Expression "]")*;
+	//	valuedObject=[ValuedObject] ("[" cardinalities+=Expression "]")*;
 	public ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return (pValuedObjectReference != null) ? pValuedObjectReference : (pValuedObjectReference = new ValuedObjectReferenceElements());
 	}

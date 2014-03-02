@@ -101,7 +101,7 @@ public class ValuedObjectReferenceItemProvider
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES);
+			childrenFeatures.add(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__CARDINALITIES);
 		}
 		return childrenFeatures;
 	}
@@ -153,7 +153,7 @@ public class ValuedObjectReferenceItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(ValuedObjectReference.class)) {
-			case KExpressionsPackage.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES:
+			case KExpressionsPackage.VALUED_OBJECT_REFERENCE__CARDINALITIES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -173,42 +173,42 @@ public class ValuedObjectReferenceItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
+				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__CARDINALITIES,
 				 KExpressionsFactory.eINSTANCE.createExpression()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
+				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__CARDINALITIES,
 				 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
+				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__CARDINALITIES,
 				 KExpressionsFactory.eINSTANCE.createValue()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
+				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__CARDINALITIES,
 				 KExpressionsFactory.eINSTANCE.createIntValue()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
+				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__CARDINALITIES,
 				 KExpressionsFactory.eINSTANCE.createFloatValue()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
+				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__CARDINALITIES,
 				 KExpressionsFactory.eINSTANCE.createBoolValue()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
+				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__CARDINALITIES,
 				 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__ARRAY_CARDINALITIES,
+				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__CARDINALITIES,
 				 KExpressionsFactory.eINSTANCE.createTextExpression()));
 	}
 

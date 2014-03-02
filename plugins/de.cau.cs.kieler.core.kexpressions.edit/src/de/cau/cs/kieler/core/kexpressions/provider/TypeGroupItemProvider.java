@@ -64,7 +64,6 @@ public class TypeGroupItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addArrayCardinalitiesPropertyDescriptor(object);
 			addTypePropertyDescriptor(object);
 			addInputPropertyDescriptor(object);
 			addOutputPropertyDescriptor(object);
@@ -73,28 +72,6 @@ public class TypeGroupItemProvider
 			addConstantPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Array Cardinalities feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addArrayCardinalitiesPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_TypeGroup_arrayCardinalities_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_arrayCardinalities_feature", "_UI_TypeGroup_type"),
-				 KExpressionsPackage.Literals.TYPE_GROUP__ARRAY_CARDINALITIES,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-				 null,
-				 null));
 	}
 
 	/**
@@ -297,7 +274,6 @@ public class TypeGroupItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(TypeGroup.class)) {
-			case KExpressionsPackage.TYPE_GROUP__ARRAY_CARDINALITIES:
 			case KExpressionsPackage.TYPE_GROUP__TYPE:
 			case KExpressionsPackage.TYPE_GROUP__INPUT:
 			case KExpressionsPackage.TYPE_GROUP__OUTPUT:
