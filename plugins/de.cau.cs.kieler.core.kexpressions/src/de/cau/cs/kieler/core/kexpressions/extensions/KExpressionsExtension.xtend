@@ -540,6 +540,17 @@ class KExpressionsExtension {
 			constant = typeGroup.constant
 		]    	
     }
+    
+    def public TypeGroup copyAttributes(TypeGroup target, TypeGroup typeGroup) {
+		target => [
+			type = typeGroup.type
+			input = typeGroup.input
+			output = typeGroup.output
+			signal = typeGroup.signal
+			static = typeGroup.static
+			constant = typeGroup.constant
+		]    	
+    }
 
     // Set the TypeGroup to be of type PURE.
     def TypeGroup setTypePure(TypeGroup typeGroup) {
@@ -575,6 +586,15 @@ class KExpressionsExtension {
     
     def ValuedObject createValuedObject(TypeGroup typeGroup, String valuedObjectName) {
     	createValuedObject(valuedObjectName) => [ typeGroup.valuedObjects += it ]
+    }
+    
+    def ValuedObject createValuedObjectInTypeGroup(String valuedObjectName) {
+        val tg = createTypeGroup 
+        createValuedObject(tg, valuedObjectName)	
+    }
+    
+    def public List<ValuedObject> getValuedObjects(List<TypeGroup> typeGroups) {
+    	<ValuedObject> newArrayList => [ list | typeGroups.forEach[ list += valuedObjects]]
     }
         
     def public removeValuedObject(List<TypeGroup> typeGroups, ValuedObject valuedObject) {
@@ -642,6 +662,11 @@ class KExpressionsExtension {
     	createValuedObject(typeGroup, variableName)
     }
     
+    def ValuedObject createVariableInTypeGroup(String variableName) {
+        val tg = createTypeGroup 
+        createVariable(tg, variableName)	
+    }
+    
     // Creates a new Int variable ValuedObject.
     def ValuedObject createVariableInIntTypeGroup(String variableName) {
         val tg = createTypeGroup => [ setTypeInt ]
@@ -649,7 +674,7 @@ class KExpressionsExtension {
     }
     
     // Creates a new Bool variable ValuedObject.
-    def ValuedObject creatVariableInBoolTypeGroup(String variableName) {
+    def ValuedObject createVariableInBoolTypeGroup(String variableName) {
         val tg = createTypeGroup => [ setTypeBool ]
         createVariable(tg, variableName)	
     }
