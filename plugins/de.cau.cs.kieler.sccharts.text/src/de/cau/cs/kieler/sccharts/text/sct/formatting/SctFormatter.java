@@ -11,7 +11,7 @@ import de.cau.cs.kieler.sccharts.text.sct.services.SctGrammarAccess;
 /**
  * Custom {@link IFormatter} contributing to sct serialization.
  *
- * @author chsch
+ * @author chsch ssm
  */
 public class SctFormatter extends ActionsFormatter {
 
@@ -85,7 +85,8 @@ public class SctFormatter extends ActionsFormatter {
          * SIGNAL
          */
         // does work :-)
-        c.setLinewrap().after(f.getValuedObjectRule());
+//        c.setLinewrap().after(f.getValuedObjectRule());
+        c.setLinewrap().after(f.getTypeGroupRule());
 
         /*
          * TEXTUAL CODE
@@ -99,7 +100,8 @@ public class SctFormatter extends ActionsFormatter {
         /*
          * DECLARATIONS
          */
-        c.setNoSpace().before(f.getValuedObjectAccess().getSemicolonKeyword_9());
+//        c.setNoSpace().before(f.getValuedObjectAccess().getSemicolonKeyword_9());
+        c.setNoSpace().before(f.getTypeGroupAccess().getSemicolonKeyword_8());
         
 
         

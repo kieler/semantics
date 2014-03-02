@@ -271,10 +271,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					sequence_ValuedObject2(context, (ValuedObject) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getValuedObjectRule()) {
-					sequence_ValuedObject(context, (ValuedObject) semanticObject); 
-					return; 
-				}
 				else break;
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				if(context == grammarAccess.getAddExpressionRule() ||
@@ -404,7 +400,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         annotations+=Annotation* 
 	 *         id=ID? 
 	 *         label=STRING? 
-	 *         valuedObjects+=ValuedObject* 
+	 *         typeGroups+=TypeGroup* 
 	 *         bodyText+=TextualCode* 
 	 *         states+=State+
 	 *     )
@@ -416,11 +412,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (
-	 *         annotations+=ImportAnnotation* 
-	 *         (annotations+=Annotation* id=ID label=STRING? valuedObjects+=ValuedObject* bodyText+=TextualCode*)? 
-	 *         states+=SCChart*
-	 *     )
+	 *     (annotations+=ImportAnnotation* (annotations+=Annotation* id=ID label=STRING? typeGroups+=TypeGroup* bodyText+=TextualCode*)? states+=SCChart*)
 	 */
 	protected void sequence_RootRegion(EObject context, Region semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -436,7 +428,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         label=STRING? 
 	 *         (
 	 *             (bodyReference=[State|ID] (renamings+=Substitution renamings+=Substitution*)?) | 
-	 *             ((valuedObjects+=ValuedObject | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
+	 *             ((typeGroups+=TypeGroup | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
 	 *         )?
 	 *     )
 	 */
@@ -447,7 +439,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((annotations+=Annotation* id=ID? label=STRING? valuedObjects+=ValuedObject* bodyText+=TextualCode*)? states+=State*)
+	 *     ((annotations+=Annotation* id=ID? label=STRING? typeGroups+=TypeGroup* bodyText+=TextualCode*)? states+=State*)
 	 */
 	protected void sequence_SingleRegion(EObject context, Region semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -520,7 +512,16 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (type=ValueType arrayCardinalities+=INT* valuedObjects+=ValuedObject2 valuedObjects+=ValuedObject2*)
+	 *     (
+	 *         constant?='const'? 
+	 *         input?='input'? 
+	 *         output?='output'? 
+	 *         static?='static'? 
+	 *         signal?='signal'? 
+	 *         type=ValueType 
+	 *         valuedObjects+=ValuedObject2 
+	 *         valuedObjects+=ValuedObject2*
+	 *     )
 	 */
 	protected void sequence_TypeGroup(EObject context, TypeGroup semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -529,28 +530,9 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (name=ID initialValue=Expression? combineOperator=CombineOperator?)
+	 *     (name=ID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject2(EObject context, ValuedObject semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         input?='input'? 
-	 *         output?='output'? 
-	 *         static?='static'? 
-	 *         signal?='signal'? 
-	 *         type=ValueType? 
-	 *         name=ID 
-	 *         initialValue=Expression? 
-	 *         combineOperator=CombineOperator?
-	 *     )
-	 */
-	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }

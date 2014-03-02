@@ -50,7 +50,7 @@ import de.cau.cs.kieler.sccharts.Transition;
 /**
  * This class contains custom scoping descriptions.
  *
- * @author chsch
+ * @author chsch ssm
  */
 public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 
@@ -203,10 +203,11 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
                 m.addAll(g.getValuedObjects());
             }
             
-            for (ValuedObject s : Iterables.concat(scope.getValuedObjects(), m)) {
-                l.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
-                        Collections.<String, String> emptyMap()));
-            }
+// TODO: Verify!            
+//            for (ValuedObject s : Iterables.concat(scope.getValuedObjects(), m)) {
+//                l.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
+//                        Collections.<String, String> emptyMap()));
+//            }
 
             scope = (Scope) scope.eContainer();
             if (scope == null && !inLogicalContainer && container != null) {
