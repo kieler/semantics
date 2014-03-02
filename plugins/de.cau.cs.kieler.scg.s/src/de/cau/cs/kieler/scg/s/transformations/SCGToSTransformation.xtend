@@ -59,10 +59,15 @@ class SCGToSTransformation {
 		sProgram.priority = 1
 		sProgram.name = "S"
 		
-		scg.valuedObjects.forEach[ 
-		    valuedObjectMapping.put(it, it.copy)
-		    sProgram.valuedObjects += valuedObjectMapping.get(it)
-		]
+        for(typeGroup : scg.typeGroups) {
+            val newTypeGroup = createTypeGroupWOValuedObjects(typeGroup)
+            for (valuedObject : typeGroup.valuedObjects) {
+            	val newValuedObject = createValuedObject(newTypeGroup, valuedObject.name)
+	            valuedObjectMapping.put(valuedObject, newValuedObject)
+            }
+            sProgram.typeGroups += newTypeGroup 
+        }		
+		
 		
         val initState = SFactory::eINSTANCE.createState => [
             name = "Init"
@@ -133,8 +138,13 @@ class SCGToSTransformation {
 	}
 	
 	def ValuedObject findValuedObjectByName(Program s, String name) {
-        s.valuedObjects.filter[it.name == name]?.head
-    }
+    	for(tg : s.typeGroups) {
+    		for(vo : tg.valuedObjects) {
+    			if (vo.name == name) return vo
+    		}
+   		}
+   		return null
+    }    
     
     def ValuedObject getValuedObjectCopy(ValuedObject valuedObject) {
         valuedObjectMapping.get(valuedObject)
