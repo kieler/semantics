@@ -861,96 +861,104 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	public class TypeGroupElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypeGroup");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cConstantAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Keyword cConstantConstKeyword_0_0 = (Keyword)cConstantAssignment_0.eContents().get(0);
-		private final Assignment cInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cInputInputKeyword_1_0 = (Keyword)cInputAssignment_1.eContents().get(0);
-		private final Assignment cOutputAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cOutputOutputKeyword_2_0 = (Keyword)cOutputAssignment_2.eContents().get(0);
-		private final Assignment cStaticAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cStaticStaticKeyword_3_0 = (Keyword)cStaticAssignment_3.eContents().get(0);
-		private final Assignment cSignalAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final Keyword cSignalSignalKeyword_4_0 = (Keyword)cSignalAssignment_4.eContents().get(0);
-		private final Assignment cTypeAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cTypeValueTypeEnumRuleCall_5_0 = (RuleCall)cTypeAssignment_5.eContents().get(0);
-		private final Assignment cValuedObjectsAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cValuedObjectsValuedObject2ParserRuleCall_6_0 = (RuleCall)cValuedObjectsAssignment_6.eContents().get(0);
-		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final Keyword cCommaKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
-		private final Assignment cValuedObjectsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cValuedObjectsValuedObject2ParserRuleCall_7_1_0 = (RuleCall)cValuedObjectsAssignment_7_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cConstantAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cConstantConstKeyword_1_0 = (Keyword)cConstantAssignment_1.eContents().get(0);
+		private final Assignment cInputAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cInputInputKeyword_2_0 = (Keyword)cInputAssignment_2.eContents().get(0);
+		private final Assignment cOutputAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cOutputOutputKeyword_3_0 = (Keyword)cOutputAssignment_3.eContents().get(0);
+		private final Assignment cStaticAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cStaticStaticKeyword_4_0 = (Keyword)cStaticAssignment_4.eContents().get(0);
+		private final Assignment cSignalAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final Keyword cSignalSignalKeyword_5_0 = (Keyword)cSignalAssignment_5.eContents().get(0);
+		private final Assignment cTypeAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cTypeValueTypeEnumRuleCall_6_0 = (RuleCall)cTypeAssignment_6.eContents().get(0);
+		private final Assignment cValuedObjectsAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_7_0 = (RuleCall)cValuedObjectsAssignment_7.eContents().get(0);
+		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
+		private final Keyword cCommaKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Assignment cValuedObjectsAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
+		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_8_1_0 = (RuleCall)cValuedObjectsAssignment_8_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_9 = (Keyword)cGroup.eContents().get(9);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//TypeGroup returns kexpressions::TypeGroup:
-		//	constant?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"? type=ValueType
-		//	valuedObjects+=ValuedObject2 ("," valuedObjects+=ValuedObject2)* ";";
+		//	annotations+=Annotation* constant?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
+		//	type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
 		public ParserRule getRule() { return rule; }
 
-		//constant?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"? type=ValueType
-		//valuedObjects+=ValuedObject2 ("," valuedObjects+=ValuedObject2)* ";"
+		//annotations+=Annotation* constant?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
+		//type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";"
 		public Group getGroup() { return cGroup; }
 
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+
 		//constant?="const"?
-		public Assignment getConstantAssignment_0() { return cConstantAssignment_0; }
+		public Assignment getConstantAssignment_1() { return cConstantAssignment_1; }
 
 		//"const"
-		public Keyword getConstantConstKeyword_0_0() { return cConstantConstKeyword_0_0; }
+		public Keyword getConstantConstKeyword_1_0() { return cConstantConstKeyword_1_0; }
 
 		//input?="input"?
-		public Assignment getInputAssignment_1() { return cInputAssignment_1; }
+		public Assignment getInputAssignment_2() { return cInputAssignment_2; }
 
 		//"input"
-		public Keyword getInputInputKeyword_1_0() { return cInputInputKeyword_1_0; }
+		public Keyword getInputInputKeyword_2_0() { return cInputInputKeyword_2_0; }
 
 		//output?="output"?
-		public Assignment getOutputAssignment_2() { return cOutputAssignment_2; }
+		public Assignment getOutputAssignment_3() { return cOutputAssignment_3; }
 
 		//"output"
-		public Keyword getOutputOutputKeyword_2_0() { return cOutputOutputKeyword_2_0; }
+		public Keyword getOutputOutputKeyword_3_0() { return cOutputOutputKeyword_3_0; }
 
 		//static?="static"?
-		public Assignment getStaticAssignment_3() { return cStaticAssignment_3; }
+		public Assignment getStaticAssignment_4() { return cStaticAssignment_4; }
 
 		//"static"
-		public Keyword getStaticStaticKeyword_3_0() { return cStaticStaticKeyword_3_0; }
+		public Keyword getStaticStaticKeyword_4_0() { return cStaticStaticKeyword_4_0; }
 
 		//signal?="signal"?
-		public Assignment getSignalAssignment_4() { return cSignalAssignment_4; }
+		public Assignment getSignalAssignment_5() { return cSignalAssignment_5; }
 
 		//"signal"
-		public Keyword getSignalSignalKeyword_4_0() { return cSignalSignalKeyword_4_0; }
+		public Keyword getSignalSignalKeyword_5_0() { return cSignalSignalKeyword_5_0; }
 
 		//type=ValueType
-		public Assignment getTypeAssignment_5() { return cTypeAssignment_5; }
+		public Assignment getTypeAssignment_6() { return cTypeAssignment_6; }
 
 		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_5_0() { return cTypeValueTypeEnumRuleCall_5_0; }
+		public RuleCall getTypeValueTypeEnumRuleCall_6_0() { return cTypeValueTypeEnumRuleCall_6_0; }
 
-		//valuedObjects+=ValuedObject2
-		public Assignment getValuedObjectsAssignment_6() { return cValuedObjectsAssignment_6; }
+		//valuedObjects+=ValuedObject
+		public Assignment getValuedObjectsAssignment_7() { return cValuedObjectsAssignment_7; }
 
-		//ValuedObject2
-		public RuleCall getValuedObjectsValuedObject2ParserRuleCall_6_0() { return cValuedObjectsValuedObject2ParserRuleCall_6_0; }
+		//ValuedObject
+		public RuleCall getValuedObjectsValuedObjectParserRuleCall_7_0() { return cValuedObjectsValuedObjectParserRuleCall_7_0; }
 
-		//("," valuedObjects+=ValuedObject2)*
-		public Group getGroup_7() { return cGroup_7; }
+		//("," valuedObjects+=ValuedObject)*
+		public Group getGroup_8() { return cGroup_8; }
 
 		//","
-		public Keyword getCommaKeyword_7_0() { return cCommaKeyword_7_0; }
+		public Keyword getCommaKeyword_8_0() { return cCommaKeyword_8_0; }
 
-		//valuedObjects+=ValuedObject2
-		public Assignment getValuedObjectsAssignment_7_1() { return cValuedObjectsAssignment_7_1; }
+		//valuedObjects+=ValuedObject
+		public Assignment getValuedObjectsAssignment_8_1() { return cValuedObjectsAssignment_8_1; }
 
-		//ValuedObject2
-		public RuleCall getValuedObjectsValuedObject2ParserRuleCall_7_1_0() { return cValuedObjectsValuedObject2ParserRuleCall_7_1_0; }
+		//ValuedObject
+		public RuleCall getValuedObjectsValuedObjectParserRuleCall_8_1_0() { return cValuedObjectsValuedObjectParserRuleCall_8_1_0; }
 
 		//";"
-		public Keyword getSemicolonKeyword_8() { return cSemicolonKeyword_8; }
+		public Keyword getSemicolonKeyword_9() { return cSemicolonKeyword_9; }
 	}
 
-	public class ValuedObject2Elements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValuedObject2");
+	public class ValuedObjectElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValuedObject");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
@@ -969,7 +977,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_3_1_0 = (RuleCall)cCombineOperatorAssignment_3_1.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		//ValuedObject2 returns kexpressions::ValuedObject:
+		//ValuedObject returns kexpressions::ValuedObject:
 		//	name=ID ("[" cardinalities+=INT "]")* ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
 		public ParserRule getRule() { return rule; }
 
@@ -1182,7 +1190,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	private LocalActionElements pLocalAction;
 	private TransitionElements pTransition;
 	private TypeGroupElements pTypeGroup;
-	private ValuedObject2Elements pValuedObject2;
+	private ValuedObjectElements pValuedObject;
 	private TextualCodeElements pTextualCode;
 	private SubstitutionElements pSubstitution;
 	private StateTypeElements unknownRuleStateType;
@@ -1316,8 +1324,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//TypeGroup returns kexpressions::TypeGroup:
-	//	constant?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"? type=ValueType
-	//	valuedObjects+=ValuedObject2 ("," valuedObjects+=ValuedObject2)* ";";
+	//	annotations+=Annotation* constant?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
+	//	type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
 	public TypeGroupElements getTypeGroupAccess() {
 		return (pTypeGroup != null) ? pTypeGroup : (pTypeGroup = new TypeGroupElements());
 	}
@@ -1327,14 +1335,14 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//ValuedObject2 returns kexpressions::ValuedObject:
+	//ValuedObject returns kexpressions::ValuedObject:
 	//	name=ID ("[" cardinalities+=INT "]")* ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
-	public ValuedObject2Elements getValuedObject2Access() {
-		return (pValuedObject2 != null) ? pValuedObject2 : (pValuedObject2 = new ValuedObject2Elements());
+	public ValuedObjectElements getValuedObjectAccess() {
+		return (pValuedObject != null) ? pValuedObject : (pValuedObject = new ValuedObjectElements());
 	}
 	
-	public ParserRule getValuedObject2Rule() {
-		return getValuedObject2Access().getRule();
+	public ParserRule getValuedObjectRule() {
+		return getValuedObjectAccess().getRule();
 	}
 
 	//// ---------------------------------------------------------------------------------------------------

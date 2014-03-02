@@ -267,8 +267,8 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else break;
 			case KExpressionsPackage.VALUED_OBJECT:
-				if(context == grammarAccess.getValuedObject2Rule()) {
-					sequence_ValuedObject2(context, (ValuedObject) semanticObject); 
+				if(context == grammarAccess.getValuedObjectRule()) {
+					sequence_ValuedObject(context, (ValuedObject) semanticObject); 
 					return; 
 				}
 				else break;
@@ -513,14 +513,15 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	/**
 	 * Constraint:
 	 *     (
+	 *         annotations+=Annotation* 
 	 *         constant?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 
 	 *         signal?='signal'? 
 	 *         type=ValueType 
-	 *         valuedObjects+=ValuedObject2 
-	 *         valuedObjects+=ValuedObject2*
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject*
 	 *     )
 	 */
 	protected void sequence_TypeGroup(EObject context, TypeGroup semanticObject) {
@@ -532,7 +533,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (name=ID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
 	 */
-	protected void sequence_ValuedObject2(EObject context, ValuedObject semanticObject) {
+	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }
