@@ -352,7 +352,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     def boolean hasRegionsOrDeclarations(State state) {
         val returnValue = (!state.hasNoRegionsWithStates ||
             (!state.localActions.nullOrEmpty && SHOW_STATE_ACTIONS.booleanValue) ||
-            (!state.valuedObjects.nullOrEmpty && SHOW_SIGNAL_DECLARATIONS.booleanValue))
+            (!state.typeGroups.valuedObjects.nullOrEmpty && SHOW_SIGNAL_DECLARATIONS.booleanValue))
         return returnValue
     }
 
@@ -594,8 +594,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         ]
                     }
                 }
+
+// TODO: Make use of the new type groups and organize visualization accordingly!
+
                 if (SHOW_SIGNAL_DECLARATIONS.booleanValue) {
-                    for (sig : s.valuedObjects) {
+                    for (sig : s.typeGroups.valuedObjects) {
                         it.addRectangle => [
                             it.invisible = true;
                             it.addRectangle => [
