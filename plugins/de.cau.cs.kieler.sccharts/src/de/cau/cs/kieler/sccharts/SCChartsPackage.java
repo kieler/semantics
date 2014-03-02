@@ -41,1843 +41,1805 @@ import org.eclipse.emf.ecore.EReference;
  */
 public interface SCChartsPackage extends EPackage {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * The package name.
-     * <!-- begin-user-doc -->
+	 * The package name.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String eNAME = "sccharts";
 
     /**
-     * The package namespace URI.
-     * <!-- begin-user-doc -->
+	 * The package namespace URI.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String eNS_URI = "http://kieler.cs.cau.de/sccharts/0.1.0";
 
     /**
-     * The package namespace name.
-     * <!-- begin-user-doc -->
+	 * The package namespace name.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String eNS_PREFIX = "sccharts";
 
     /**
-     * The singleton instance of the package.
-     * <!-- begin-user-doc -->
+	 * The singleton instance of the package.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     SCChartsPackage eINSTANCE = de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl.init();
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ActionImpl <em>Action</em>}' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ActionImpl <em>Action</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.ActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getAction()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.ActionImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getAction()
+	 * @generated
+	 */
     int ACTION = 0;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ACTION__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ACTION__EFFECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ACTION__TRIGGER = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Delay</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Delay</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ACTION__DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Immediate</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ACTION__IMMEDIATE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ACTION__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
-     * The number of structural features of the '<em>Action</em>' class.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>Action</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ACTION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.EffectImpl <em>Effect</em>}' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.EffectImpl <em>Effect</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.EffectImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEffect()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.EffectImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEffect()
+	 * @generated
+	 */
     int EFFECT = 2;
 
     /**
-     * The number of structural features of the '<em>Effect</em>' class.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>Effect</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int EFFECT_FEATURE_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.AssignmentImpl <em>Assignment</em>}' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.AssignmentImpl <em>Assignment</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.AssignmentImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getAssignment()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.AssignmentImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getAssignment()
+	 * @generated
+	 */
     int ASSIGNMENT = 1;
 
     /**
-     * The feature id for the '<em><b>Valued Object</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Valued Object</b></em>' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ASSIGNMENT__VALUED_OBJECT = EFFECT_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Expression</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ASSIGNMENT__EXPRESSION = EFFECT_FEATURE_COUNT + 1;
 
     /**
-     * The number of structural features of the '<em>Assignment</em>' class.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>Assignment</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ASSIGNMENT_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 2;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.EmissionImpl <em>Emission</em>}' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.EmissionImpl <em>Emission</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.EmissionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEmission()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.EmissionImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEmission()
+	 * @generated
+	 */
     int EMISSION = 3;
 
     /**
-     * The feature id for the '<em><b>Valued Object</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Valued Object</b></em>' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int EMISSION__VALUED_OBJECT = EFFECT_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>New Value</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>New Value</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int EMISSION__NEW_VALUE = EFFECT_FEATURE_COUNT + 1;
 
     /**
-     * The number of structural features of the '<em>Emission</em>' class.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>Emission</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int EMISSION_FEATURE_COUNT = EFFECT_FEATURE_COUNT + 2;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl <em>Scope</em>}' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl <em>Scope</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.ScopeImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getScope()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.ScopeImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getScope()
+	 * @generated
+	 */
     int SCOPE = 8;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SCOPE__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SCOPE__ID = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SCOPE__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__VALUED_OBJECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+	 * @generated
+	 * @ordered
+	 */
+    int SCOPE__LOCAL_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Body Reference</b></em>' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__LOCAL_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+	 * @generated
+	 * @ordered
+	 */
+    int SCOPE__BODY_REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Body Reference</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Body Contents</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__BODY_REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+	 * @generated
+	 * @ordered
+	 */
+    int SCOPE__BODY_CONTENTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
-     * The feature id for the '<em><b>Body Contents</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__BODY_CONTENTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+	 * @generated
+	 * @ordered
+	 */
+    int SCOPE__BODY_TEXT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
-     * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__BODY_TEXT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+	 * @generated
+	 * @ordered
+	 */
+    int SCOPE__RENAMINGS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
     /**
-     * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__RENAMINGS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
+	 * @generated
+	 * @ordered
+	 */
+    int SCOPE__TYPE_GROUPS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
-     * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>Scope</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__TYPE_GROUPS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
+	 * @generated
+	 * @ordered
+	 */
+    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
 
     /**
-     * The number of structural features of the '<em>Scope</em>' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.RegionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.RegionImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion()
+	 * @generated
+	 */
     int REGION = 4;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int REGION__ANNOTATIONS = SCOPE__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int REGION__ID = SCOPE__ID;
 
     /**
-     * The feature id for the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int REGION__LABEL = SCOPE__LABEL;
 
     /**
-     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__VALUED_OBJECTS = SCOPE__VALUED_OBJECTS;
-
-    /**
-     * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int REGION__LOCAL_ACTIONS = SCOPE__LOCAL_ACTIONS;
 
     /**
-     * The feature id for the '<em><b>Body Reference</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Body Reference</b></em>' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int REGION__BODY_REFERENCE = SCOPE__BODY_REFERENCE;
 
     /**
-     * The feature id for the '<em><b>Body Contents</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Body Contents</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int REGION__BODY_CONTENTS = SCOPE__BODY_CONTENTS;
 
     /**
-     * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int REGION__BODY_TEXT = SCOPE__BODY_TEXT;
 
     /**
-     * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int REGION__RENAMINGS = SCOPE__RENAMINGS;
 
     /**
-     * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int REGION__TYPE_GROUPS = SCOPE__TYPE_GROUPS;
 
     /**
-     * The feature id for the '<em><b>States</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>States</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int REGION__STATES = SCOPE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Parent State</b></em>' container reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Parent State</b></em>' container reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int REGION__PARENT_STATE = SCOPE_FEATURE_COUNT + 1;
 
     /**
-     * The number of structural features of the '<em>Region</em>' class.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>Region</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 2;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.SubstitutionImpl <em>Substitution</em>}' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.SubstitutionImpl <em>Substitution</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.SubstitutionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSubstitution()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.SubstitutionImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSubstitution()
+	 * @generated
+	 */
     int SUBSTITUTION = 5;
 
     /**
-     * The feature id for the '<em><b>Parent Scope</b></em>' container reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Parent Scope</b></em>' container reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SUBSTITUTION__PARENT_SCOPE = 0;
 
     /**
-     * The feature id for the '<em><b>Formal</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Formal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SUBSTITUTION__FORMAL = 1;
 
     /**
-     * The feature id for the '<em><b>Actual</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Actual</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SUBSTITUTION__ACTUAL = 2;
 
     /**
-     * The number of structural features of the '<em>Substitution</em>' class.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>Substitution</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SUBSTITUTION_FEATURE_COUNT = 3;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.StateImpl <em>State</em>}' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.StateImpl <em>State</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.StateImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getState()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.StateImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getState()
+	 * @generated
+	 */
     int STATE = 6;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__ANNOTATIONS = SCOPE__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__ID = SCOPE__ID;
 
     /**
-     * The feature id for the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__LABEL = SCOPE__LABEL;
 
     /**
-     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STATE__VALUED_OBJECTS = SCOPE__VALUED_OBJECTS;
-
-    /**
-     * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__LOCAL_ACTIONS = SCOPE__LOCAL_ACTIONS;
 
     /**
-     * The feature id for the '<em><b>Body Reference</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Body Reference</b></em>' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__BODY_REFERENCE = SCOPE__BODY_REFERENCE;
 
     /**
-     * The feature id for the '<em><b>Body Contents</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Body Contents</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__BODY_CONTENTS = SCOPE__BODY_CONTENTS;
 
     /**
-     * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__BODY_TEXT = SCOPE__BODY_TEXT;
 
     /**
-     * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__RENAMINGS = SCOPE__RENAMINGS;
 
     /**
-     * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__TYPE_GROUPS = SCOPE__TYPE_GROUPS;
 
     /**
-     * The feature id for the '<em><b>Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__TYPE = SCOPE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Regions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Regions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__REGIONS = SCOPE_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Parent Region</b></em>' container reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Parent Region</b></em>' container reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__PARENT_REGION = SCOPE_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Initial</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Initial</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__INITIAL = SCOPE_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Final</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Final</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__FINAL = SCOPE_FEATURE_COUNT + 4;
 
     /**
-     * The feature id for the '<em><b>Outgoing Transitions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__OUTGOING_TRANSITIONS = SCOPE_FEATURE_COUNT + 5;
 
     /**
-     * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE__INCOMING_TRANSITIONS = SCOPE_FEATURE_COUNT + 6;
 
     /**
-     * The number of structural features of the '<em>State</em>' class.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>State</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int STATE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 7;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.TransitionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransition()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.TransitionImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransition()
+	 * @generated
+	 */
     int TRANSITION = 7;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TRANSITION__ANNOTATIONS = ACTION__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TRANSITION__EFFECTS = ACTION__EFFECTS;
 
     /**
-     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TRANSITION__TRIGGER = ACTION__TRIGGER;
 
     /**
-     * The feature id for the '<em><b>Delay</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Delay</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TRANSITION__DELAY = ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Immediate</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TRANSITION__IMMEDIATE = ACTION__IMMEDIATE;
 
     /**
-     * The feature id for the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TRANSITION__LABEL = ACTION__LABEL;
 
     /**
-     * The feature id for the '<em><b>Priority</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Priority</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TRANSITION__PRIORITY = ACTION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TRANSITION__TYPE = ACTION_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Deferred</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Deferred</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TRANSITION__DEFERRED = ACTION_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>History</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>History</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TRANSITION__HISTORY = ACTION_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Target State</b></em>' reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Target State</b></em>' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TRANSITION__TARGET_STATE = ACTION_FEATURE_COUNT + 4;
 
     /**
-     * The feature id for the '<em><b>Source State</b></em>' container reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Source State</b></em>' container reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TRANSITION__SOURCE_STATE = ACTION_FEATURE_COUNT + 5;
 
     /**
-     * The number of structural features of the '<em>Transition</em>' class.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>Transition</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TRANSITION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 6;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TextEffectImpl <em>Text Effect</em>}' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TextEffectImpl <em>Text Effect</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.TextEffectImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTextEffect()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.TextEffectImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTextEffect()
+	 * @generated
+	 */
     int TEXT_EFFECT = 9;
 
     /**
-     * The feature id for the '<em><b>Text</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Text</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TEXT_EFFECT__TEXT = KExpressionsPackage.TEXT_EXPRESSION__TEXT;
 
     /**
-     * The number of structural features of the '<em>Text Effect</em>' class.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>Text Effect</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int TEXT_EFFECT_FEATURE_COUNT = KExpressionsPackage.TEXT_EXPRESSION_FEATURE_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.LocalActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getLocalAction()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.LocalActionImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getLocalAction()
+	 * @generated
+	 */
     int LOCAL_ACTION = 10;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int LOCAL_ACTION__ANNOTATIONS = ACTION__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int LOCAL_ACTION__EFFECTS = ACTION__EFFECTS;
 
     /**
-     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int LOCAL_ACTION__TRIGGER = ACTION__TRIGGER;
 
     /**
-     * The feature id for the '<em><b>Delay</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Delay</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int LOCAL_ACTION__DELAY = ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Immediate</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int LOCAL_ACTION__IMMEDIATE = ACTION__IMMEDIATE;
 
     /**
-     * The feature id for the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int LOCAL_ACTION__LABEL = ACTION__LABEL;
 
     /**
-     * The number of structural features of the '<em>Local Action</em>' class.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>Local Action</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int LOCAL_ACTION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.EntryActionImpl <em>Entry Action</em>}' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.EntryActionImpl <em>Entry Action</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.EntryActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEntryAction()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.EntryActionImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEntryAction()
+	 * @generated
+	 */
     int ENTRY_ACTION = 11;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ENTRY_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ENTRY_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
 
     /**
-     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ENTRY_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
 
     /**
-     * The feature id for the '<em><b>Delay</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Delay</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ENTRY_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Immediate</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ENTRY_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
 
     /**
-     * The feature id for the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ENTRY_ACTION__LABEL = LOCAL_ACTION__LABEL;
 
     /**
-     * The number of structural features of the '<em>Entry Action</em>' class.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>Entry Action</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int ENTRY_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DuringActionImpl <em>During Action</em>}' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DuringActionImpl <em>During Action</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.DuringActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDuringAction()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.DuringActionImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDuringAction()
+	 * @generated
+	 */
     int DURING_ACTION = 12;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int DURING_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int DURING_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
 
     /**
-     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int DURING_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
 
     /**
-     * The feature id for the '<em><b>Delay</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Delay</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int DURING_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Immediate</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int DURING_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
 
     /**
-     * The feature id for the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int DURING_ACTION__LABEL = LOCAL_ACTION__LABEL;
 
     /**
-     * The number of structural features of the '<em>During Action</em>' class.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>During Action</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int DURING_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ExitActionImpl <em>Exit Action</em>}' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ExitActionImpl <em>Exit Action</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.ExitActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getExitAction()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.ExitActionImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getExitAction()
+	 * @generated
+	 */
     int EXIT_ACTION = 13;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int EXIT_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int EXIT_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
 
     /**
-     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int EXIT_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
 
     /**
-     * The feature id for the '<em><b>Delay</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Delay</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int EXIT_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Immediate</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int EXIT_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
 
     /**
-     * The feature id for the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int EXIT_ACTION__LABEL = LOCAL_ACTION__LABEL;
 
     /**
-     * The number of structural features of the '<em>Exit Action</em>' class.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>Exit Action</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int EXIT_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.SuspendActionImpl <em>Suspend Action</em>}' class.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.SuspendActionImpl <em>Suspend Action</em>}' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.SuspendActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSuspendAction()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.impl.SuspendActionImpl
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSuspendAction()
+	 * @generated
+	 */
     int SUSPEND_ACTION = 14;
 
     /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SUSPEND_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
 
     /**
-     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SUSPEND_ACTION__EFFECTS = LOCAL_ACTION__EFFECTS;
 
     /**
-     * The feature id for the '<em><b>Trigger</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Trigger</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SUSPEND_ACTION__TRIGGER = LOCAL_ACTION__TRIGGER;
 
     /**
-     * The feature id for the '<em><b>Delay</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Delay</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SUSPEND_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Immediate</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SUSPEND_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
 
     /**
-     * The feature id for the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SUSPEND_ACTION__LABEL = LOCAL_ACTION__LABEL;
 
     /**
-     * The feature id for the '<em><b>Weak</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * The feature id for the '<em><b>Weak</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SUSPEND_ACTION__WEAK = LOCAL_ACTION_FEATURE_COUNT + 0;
 
     /**
-     * The number of structural features of the '<em>Suspend Action</em>' class.
-     * <!-- begin-user-doc -->
+	 * The number of structural features of the '<em>Suspend Action</em>' class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
+	 * @generated
+	 * @ordered
+	 */
     int SUSPEND_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.StateType
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.StateType
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
+	 * @generated
+	 */
     int STATE_TYPE = 15;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}' enum.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}' enum.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.TransitionType
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransitionType()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.TransitionType
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransitionType()
+	 * @generated
+	 */
     int TRANSITION_TYPE = 16;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.HistoryType
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
-     * @generated
-     */
+	 * @see de.cau.cs.kieler.sccharts.HistoryType
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
+	 * @generated
+	 */
     int HISTORY_TYPE = 17;
 
     /**
-     * The meta object id for the '<em>Parsable</em>' data type.
-     * <!-- begin-user-doc -->
+	 * The meta object id for the '<em>Parsable</em>' data type.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see java.lang.String
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
-     * @generated
-     */
+	 * @see java.lang.String
+	 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
+	 * @generated
+	 */
     int PARSABLE = 18;
 
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Action <em>Action</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Action <em>Action</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Action</em>'.
-     * @see de.cau.cs.kieler.sccharts.Action
-     * @generated
-     */
+	 * @return the meta object for class '<em>Action</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Action
+	 * @generated
+	 */
     EClass getAction();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Action#getEffects <em>Effects</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Action#getEffects <em>Effects</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Effects</em>'.
-     * @see de.cau.cs.kieler.sccharts.Action#getEffects()
-     * @see #getAction()
-     * @generated
-     */
+	 * @return the meta object for the containment reference list '<em>Effects</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Action#getEffects()
+	 * @see #getAction()
+	 * @generated
+	 */
     EReference getAction_Effects();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Action#getTrigger <em>Trigger</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Action#getTrigger <em>Trigger</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Trigger</em>'.
-     * @see de.cau.cs.kieler.sccharts.Action#getTrigger()
-     * @see #getAction()
-     * @generated
-     */
+	 * @return the meta object for the containment reference '<em>Trigger</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Action#getTrigger()
+	 * @see #getAction()
+	 * @generated
+	 */
     EReference getAction_Trigger();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#getDelay <em>Delay</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#getDelay <em>Delay</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Delay</em>'.
-     * @see de.cau.cs.kieler.sccharts.Action#getDelay()
-     * @see #getAction()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>Delay</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Action#getDelay()
+	 * @see #getAction()
+	 * @generated
+	 */
     EAttribute getAction_Delay();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#isImmediate <em>Immediate</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#isImmediate <em>Immediate</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Immediate</em>'.
-     * @see de.cau.cs.kieler.sccharts.Action#isImmediate()
-     * @see #getAction()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>Immediate</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Action#isImmediate()
+	 * @see #getAction()
+	 * @generated
+	 */
     EAttribute getAction_Immediate();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#getLabel <em>Label</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Action#getLabel <em>Label</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Label</em>'.
-     * @see de.cau.cs.kieler.sccharts.Action#getLabel()
-     * @see #getAction()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>Label</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Action#getLabel()
+	 * @see #getAction()
+	 * @generated
+	 */
     EAttribute getAction_Label();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Assignment <em>Assignment</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Assignment <em>Assignment</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Assignment</em>'.
-     * @see de.cau.cs.kieler.sccharts.Assignment
-     * @generated
-     */
+	 * @return the meta object for class '<em>Assignment</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Assignment
+	 * @generated
+	 */
     EClass getAssignment();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Assignment#getValuedObject <em>Valued Object</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Assignment#getValuedObject <em>Valued Object</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Valued Object</em>'.
-     * @see de.cau.cs.kieler.sccharts.Assignment#getValuedObject()
-     * @see #getAssignment()
-     * @generated
-     */
+	 * @return the meta object for the reference '<em>Valued Object</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Assignment#getValuedObject()
+	 * @see #getAssignment()
+	 * @generated
+	 */
     EReference getAssignment_ValuedObject();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Assignment#getExpression <em>Expression</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Assignment#getExpression <em>Expression</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Expression</em>'.
-     * @see de.cau.cs.kieler.sccharts.Assignment#getExpression()
-     * @see #getAssignment()
-     * @generated
-     */
+	 * @return the meta object for the containment reference '<em>Expression</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Assignment#getExpression()
+	 * @see #getAssignment()
+	 * @generated
+	 */
     EReference getAssignment_Expression();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Effect <em>Effect</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Effect <em>Effect</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Effect</em>'.
-     * @see de.cau.cs.kieler.sccharts.Effect
-     * @generated
-     */
+	 * @return the meta object for class '<em>Effect</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Effect
+	 * @generated
+	 */
     EClass getEffect();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Emission <em>Emission</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Emission <em>Emission</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Emission</em>'.
-     * @see de.cau.cs.kieler.sccharts.Emission
-     * @generated
-     */
+	 * @return the meta object for class '<em>Emission</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Emission
+	 * @generated
+	 */
     EClass getEmission();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Emission#getValuedObject <em>Valued Object</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Emission#getValuedObject <em>Valued Object</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Valued Object</em>'.
-     * @see de.cau.cs.kieler.sccharts.Emission#getValuedObject()
-     * @see #getEmission()
-     * @generated
-     */
+	 * @return the meta object for the reference '<em>Valued Object</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Emission#getValuedObject()
+	 * @see #getEmission()
+	 * @generated
+	 */
     EReference getEmission_ValuedObject();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Emission#getNewValue <em>New Value</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Emission#getNewValue <em>New Value</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>New Value</em>'.
-     * @see de.cau.cs.kieler.sccharts.Emission#getNewValue()
-     * @see #getEmission()
-     * @generated
-     */
+	 * @return the meta object for the containment reference '<em>New Value</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Emission#getNewValue()
+	 * @see #getEmission()
+	 * @generated
+	 */
     EReference getEmission_NewValue();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Region <em>Region</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Region <em>Region</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Region</em>'.
-     * @see de.cau.cs.kieler.sccharts.Region
-     * @generated
-     */
+	 * @return the meta object for class '<em>Region</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Region
+	 * @generated
+	 */
     EClass getRegion();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Region#getStates <em>States</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Region#getStates <em>States</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>States</em>'.
-     * @see de.cau.cs.kieler.sccharts.Region#getStates()
-     * @see #getRegion()
-     * @generated
-     */
+	 * @return the meta object for the containment reference list '<em>States</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Region#getStates()
+	 * @see #getRegion()
+	 * @generated
+	 */
     EReference getRegion_States();
 
     /**
-     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.Region#getParentState <em>Parent State</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.Region#getParentState <em>Parent State</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Parent State</em>'.
-     * @see de.cau.cs.kieler.sccharts.Region#getParentState()
-     * @see #getRegion()
-     * @generated
-     */
+	 * @return the meta object for the container reference '<em>Parent State</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Region#getParentState()
+	 * @see #getRegion()
+	 * @generated
+	 */
     EReference getRegion_ParentState();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Substitution <em>Substitution</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Substitution <em>Substitution</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Substitution</em>'.
-     * @see de.cau.cs.kieler.sccharts.Substitution
-     * @generated
-     */
+	 * @return the meta object for class '<em>Substitution</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Substitution
+	 * @generated
+	 */
     EClass getSubstitution();
 
     /**
-     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.Substitution#getParentScope <em>Parent Scope</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.Substitution#getParentScope <em>Parent Scope</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Parent Scope</em>'.
-     * @see de.cau.cs.kieler.sccharts.Substitution#getParentScope()
-     * @see #getSubstitution()
-     * @generated
-     */
+	 * @return the meta object for the container reference '<em>Parent Scope</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Substitution#getParentScope()
+	 * @see #getSubstitution()
+	 * @generated
+	 */
     EReference getSubstitution_ParentScope();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Substitution#getFormal <em>Formal</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Substitution#getFormal <em>Formal</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Formal</em>'.
-     * @see de.cau.cs.kieler.sccharts.Substitution#getFormal()
-     * @see #getSubstitution()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>Formal</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Substitution#getFormal()
+	 * @see #getSubstitution()
+	 * @generated
+	 */
     EAttribute getSubstitution_Formal();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Substitution#getActual <em>Actual</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Substitution#getActual <em>Actual</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Actual</em>'.
-     * @see de.cau.cs.kieler.sccharts.Substitution#getActual()
-     * @see #getSubstitution()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>Actual</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Substitution#getActual()
+	 * @see #getSubstitution()
+	 * @generated
+	 */
     EAttribute getSubstitution_Actual();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.State <em>State</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.State <em>State</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>State</em>'.
-     * @see de.cau.cs.kieler.sccharts.State
-     * @generated
-     */
+	 * @return the meta object for class '<em>State</em>'.
+	 * @see de.cau.cs.kieler.sccharts.State
+	 * @generated
+	 */
     EClass getState();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#getType <em>Type</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Type</em>'.
-     * @see de.cau.cs.kieler.sccharts.State#getType()
-     * @see #getState()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see de.cau.cs.kieler.sccharts.State#getType()
+	 * @see #getState()
+	 * @generated
+	 */
     EAttribute getState_Type();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.State#getRegions <em>Regions</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.State#getRegions <em>Regions</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Regions</em>'.
-     * @see de.cau.cs.kieler.sccharts.State#getRegions()
-     * @see #getState()
-     * @generated
-     */
+	 * @return the meta object for the containment reference list '<em>Regions</em>'.
+	 * @see de.cau.cs.kieler.sccharts.State#getRegions()
+	 * @see #getState()
+	 * @generated
+	 */
     EReference getState_Regions();
 
     /**
-     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.State#getParentRegion <em>Parent Region</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.State#getParentRegion <em>Parent Region</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Parent Region</em>'.
-     * @see de.cau.cs.kieler.sccharts.State#getParentRegion()
-     * @see #getState()
-     * @generated
-     */
+	 * @return the meta object for the container reference '<em>Parent Region</em>'.
+	 * @see de.cau.cs.kieler.sccharts.State#getParentRegion()
+	 * @see #getState()
+	 * @generated
+	 */
     EReference getState_ParentRegion();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#isInitial <em>Initial</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#isInitial <em>Initial</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Initial</em>'.
-     * @see de.cau.cs.kieler.sccharts.State#isInitial()
-     * @see #getState()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>Initial</em>'.
+	 * @see de.cau.cs.kieler.sccharts.State#isInitial()
+	 * @see #getState()
+	 * @generated
+	 */
     EAttribute getState_Initial();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#isFinal <em>Final</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.State#isFinal <em>Final</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Final</em>'.
-     * @see de.cau.cs.kieler.sccharts.State#isFinal()
-     * @see #getState()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>Final</em>'.
+	 * @see de.cau.cs.kieler.sccharts.State#isFinal()
+	 * @see #getState()
+	 * @generated
+	 */
     EAttribute getState_Final();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Outgoing Transitions</em>'.
-     * @see de.cau.cs.kieler.sccharts.State#getOutgoingTransitions()
-     * @see #getState()
-     * @generated
-     */
+	 * @return the meta object for the containment reference list '<em>Outgoing Transitions</em>'.
+	 * @see de.cau.cs.kieler.sccharts.State#getOutgoingTransitions()
+	 * @see #getState()
+	 * @generated
+	 */
     EReference getState_OutgoingTransitions();
 
     /**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.State#getIncomingTransitions <em>Incoming Transitions</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.State#getIncomingTransitions <em>Incoming Transitions</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Incoming Transitions</em>'.
-     * @see de.cau.cs.kieler.sccharts.State#getIncomingTransitions()
-     * @see #getState()
-     * @generated
-     */
+	 * @return the meta object for the reference list '<em>Incoming Transitions</em>'.
+	 * @see de.cau.cs.kieler.sccharts.State#getIncomingTransitions()
+	 * @see #getState()
+	 * @generated
+	 */
     EReference getState_IncomingTransitions();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Transition <em>Transition</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Transition <em>Transition</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Transition</em>'.
-     * @see de.cau.cs.kieler.sccharts.Transition
-     * @generated
-     */
+	 * @return the meta object for class '<em>Transition</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Transition
+	 * @generated
+	 */
     EClass getTransition();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#getPriority <em>Priority</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#getPriority <em>Priority</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Priority</em>'.
-     * @see de.cau.cs.kieler.sccharts.Transition#getPriority()
-     * @see #getTransition()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>Priority</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Transition#getPriority()
+	 * @see #getTransition()
+	 * @generated
+	 */
     EAttribute getTransition_Priority();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#getType <em>Type</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Type</em>'.
-     * @see de.cau.cs.kieler.sccharts.Transition#getType()
-     * @see #getTransition()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Transition#getType()
+	 * @see #getTransition()
+	 * @generated
+	 */
     EAttribute getTransition_Type();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#isDeferred <em>Deferred</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#isDeferred <em>Deferred</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Deferred</em>'.
-     * @see de.cau.cs.kieler.sccharts.Transition#isDeferred()
-     * @see #getTransition()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>Deferred</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Transition#isDeferred()
+	 * @see #getTransition()
+	 * @generated
+	 */
     EAttribute getTransition_Deferred();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#getHistory <em>History</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Transition#getHistory <em>History</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>History</em>'.
-     * @see de.cau.cs.kieler.sccharts.Transition#getHistory()
-     * @see #getTransition()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>History</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Transition#getHistory()
+	 * @see #getTransition()
+	 * @generated
+	 */
     EAttribute getTransition_History();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Transition#getTargetState <em>Target State</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Transition#getTargetState <em>Target State</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Target State</em>'.
-     * @see de.cau.cs.kieler.sccharts.Transition#getTargetState()
-     * @see #getTransition()
-     * @generated
-     */
+	 * @return the meta object for the reference '<em>Target State</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Transition#getTargetState()
+	 * @see #getTransition()
+	 * @generated
+	 */
     EReference getTransition_TargetState();
 
     /**
-     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.Transition#getSourceState <em>Source State</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.Transition#getSourceState <em>Source State</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Source State</em>'.
-     * @see de.cau.cs.kieler.sccharts.Transition#getSourceState()
-     * @see #getTransition()
-     * @generated
-     */
+	 * @return the meta object for the container reference '<em>Source State</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Transition#getSourceState()
+	 * @see #getTransition()
+	 * @generated
+	 */
     EReference getTransition_SourceState();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Scope <em>Scope</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Scope <em>Scope</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Scope</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope
-     * @generated
-     */
+	 * @return the meta object for class '<em>Scope</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Scope
+	 * @generated
+	 */
     EClass getScope();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Scope#getId <em>Id</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Scope#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Id</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getId()
-     * @see #getScope()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Scope#getId()
+	 * @see #getScope()
+	 * @generated
+	 */
     EAttribute getScope_Id();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Scope#getLabel <em>Label</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Scope#getLabel <em>Label</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Label</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getLabel()
-     * @see #getScope()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>Label</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Scope#getLabel()
+	 * @see #getScope()
+	 * @generated
+	 */
     EAttribute getScope_Label();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getValuedObjects <em>Valued Objects</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getLocalActions <em>Local Actions</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getValuedObjects()
-     * @see #getScope()
-     * @generated
-     */
-    EReference getScope_ValuedObjects();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getLocalActions <em>Local Actions</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Local Actions</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getLocalActions()
-     * @see #getScope()
-     * @generated
-     */
+	 * @return the meta object for the containment reference list '<em>Local Actions</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Scope#getLocalActions()
+	 * @see #getScope()
+	 * @generated
+	 */
     EReference getScope_LocalActions();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Scope#getBodyReference <em>Body Reference</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Scope#getBodyReference <em>Body Reference</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Body Reference</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getBodyReference()
-     * @see #getScope()
-     * @generated
-     */
+	 * @return the meta object for the reference '<em>Body Reference</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Scope#getBodyReference()
+	 * @see #getScope()
+	 * @generated
+	 */
     EReference getScope_BodyReference();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Scope#getBodyContents <em>Body Contents</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Scope#getBodyContents <em>Body Contents</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Body Contents</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getBodyContents()
-     * @see #getScope()
-     * @generated
-     */
+	 * @return the meta object for the containment reference '<em>Body Contents</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Scope#getBodyContents()
+	 * @see #getScope()
+	 * @generated
+	 */
     EReference getScope_BodyContents();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getBodyText <em>Body Text</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getBodyText <em>Body Text</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Body Text</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getBodyText()
-     * @see #getScope()
-     * @generated
-     */
+	 * @return the meta object for the containment reference list '<em>Body Text</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Scope#getBodyText()
+	 * @see #getScope()
+	 * @generated
+	 */
     EReference getScope_BodyText();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getRenamings <em>Renamings</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getRenamings <em>Renamings</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Renamings</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getRenamings()
-     * @see #getScope()
-     * @generated
-     */
+	 * @return the meta object for the containment reference list '<em>Renamings</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Scope#getRenamings()
+	 * @see #getScope()
+	 * @generated
+	 */
     EReference getScope_Renamings();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getTypeGroups <em>Type Groups</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getTypeGroups <em>Type Groups</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Type Groups</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getTypeGroups()
-     * @see #getScope()
-     * @generated
-     */
+	 * @return the meta object for the containment reference list '<em>Type Groups</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Scope#getTypeGroups()
+	 * @see #getScope()
+	 * @generated
+	 */
     EReference getScope_TypeGroups();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.TextEffect <em>Text Effect</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.TextEffect <em>Text Effect</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Text Effect</em>'.
-     * @see de.cau.cs.kieler.sccharts.TextEffect
-     * @generated
-     */
+	 * @return the meta object for class '<em>Text Effect</em>'.
+	 * @see de.cau.cs.kieler.sccharts.TextEffect
+	 * @generated
+	 */
     EClass getTextEffect();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.LocalAction <em>Local Action</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.LocalAction <em>Local Action</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Local Action</em>'.
-     * @see de.cau.cs.kieler.sccharts.LocalAction
-     * @generated
-     */
+	 * @return the meta object for class '<em>Local Action</em>'.
+	 * @see de.cau.cs.kieler.sccharts.LocalAction
+	 * @generated
+	 */
     EClass getLocalAction();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.EntryAction <em>Entry Action</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.EntryAction <em>Entry Action</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Entry Action</em>'.
-     * @see de.cau.cs.kieler.sccharts.EntryAction
-     * @generated
-     */
+	 * @return the meta object for class '<em>Entry Action</em>'.
+	 * @see de.cau.cs.kieler.sccharts.EntryAction
+	 * @generated
+	 */
     EClass getEntryAction();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DuringAction <em>During Action</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DuringAction <em>During Action</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>During Action</em>'.
-     * @see de.cau.cs.kieler.sccharts.DuringAction
-     * @generated
-     */
+	 * @return the meta object for class '<em>During Action</em>'.
+	 * @see de.cau.cs.kieler.sccharts.DuringAction
+	 * @generated
+	 */
     EClass getDuringAction();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ExitAction <em>Exit Action</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ExitAction <em>Exit Action</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Exit Action</em>'.
-     * @see de.cau.cs.kieler.sccharts.ExitAction
-     * @generated
-     */
+	 * @return the meta object for class '<em>Exit Action</em>'.
+	 * @see de.cau.cs.kieler.sccharts.ExitAction
+	 * @generated
+	 */
     EClass getExitAction();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.SuspendAction <em>Suspend Action</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.SuspendAction <em>Suspend Action</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Suspend Action</em>'.
-     * @see de.cau.cs.kieler.sccharts.SuspendAction
-     * @generated
-     */
+	 * @return the meta object for class '<em>Suspend Action</em>'.
+	 * @see de.cau.cs.kieler.sccharts.SuspendAction
+	 * @generated
+	 */
     EClass getSuspendAction();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.SuspendAction#isWeak <em>Weak</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.SuspendAction#isWeak <em>Weak</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Weak</em>'.
-     * @see de.cau.cs.kieler.sccharts.SuspendAction#isWeak()
-     * @see #getSuspendAction()
-     * @generated
-     */
+	 * @return the meta object for the attribute '<em>Weak</em>'.
+	 * @see de.cau.cs.kieler.sccharts.SuspendAction#isWeak()
+	 * @see #getSuspendAction()
+	 * @generated
+	 */
     EAttribute getSuspendAction_Weak();
 
     /**
-     * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for enum '<em>State Type</em>'.
-     * @see de.cau.cs.kieler.sccharts.StateType
-     * @generated
-     */
+	 * @return the meta object for enum '<em>State Type</em>'.
+	 * @see de.cau.cs.kieler.sccharts.StateType
+	 * @generated
+	 */
     EEnum getStateType();
 
     /**
-     * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for enum '<em>Transition Type</em>'.
-     * @see de.cau.cs.kieler.sccharts.TransitionType
-     * @generated
-     */
+	 * @return the meta object for enum '<em>Transition Type</em>'.
+	 * @see de.cau.cs.kieler.sccharts.TransitionType
+	 * @generated
+	 */
     EEnum getTransitionType();
 
     /**
-     * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for enum '<em>History Type</em>'.
-     * @see de.cau.cs.kieler.sccharts.HistoryType
-     * @generated
-     */
+	 * @return the meta object for enum '<em>History Type</em>'.
+	 * @see de.cau.cs.kieler.sccharts.HistoryType
+	 * @generated
+	 */
     EEnum getHistoryType();
 
     /**
-     * Returns the meta object for data type '{@link java.lang.String <em>Parsable</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the meta object for data type '{@link java.lang.String <em>Parsable</em>}'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for data type '<em>Parsable</em>'.
-     * @see java.lang.String
-     * @model instanceClass="java.lang.String"
-     * @generated
-     */
+	 * @return the meta object for data type '<em>Parsable</em>'.
+	 * @see java.lang.String
+	 * @model instanceClass="java.lang.String"
+	 * @generated
+	 */
     EDataType getParsable();
 
     /**
-     * Returns the factory that creates the instances of the model.
-     * <!-- begin-user-doc -->
+	 * Returns the factory that creates the instances of the model.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the factory that creates the instances of the model.
-     * @generated
-     */
+	 * @return the factory that creates the instances of the model.
+	 * @generated
+	 */
     SCChartsFactory getSCChartsFactory();
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * Defines literals for the meta objects that represent
      * <ul>
      *   <li>each class,</li>
@@ -1886,493 +1848,485 @@ public interface SCChartsPackage extends EPackage {
      *   <li>and each data type</li>
      * </ul>
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     interface Literals {
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ActionImpl <em>Action</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ActionImpl <em>Action</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.ActionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getAction()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.ActionImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getAction()
+		 * @generated
+		 */
         EClass ACTION = eINSTANCE.getAction();
 
         /**
-         * The meta object literal for the '<em><b>Effects</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Effects</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference ACTION__EFFECTS = eINSTANCE.getAction_Effects();
 
         /**
-         * The meta object literal for the '<em><b>Trigger</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Trigger</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference ACTION__TRIGGER = eINSTANCE.getAction_Trigger();
 
         /**
-         * The meta object literal for the '<em><b>Delay</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Delay</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute ACTION__DELAY = eINSTANCE.getAction_Delay();
 
         /**
-         * The meta object literal for the '<em><b>Immediate</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Immediate</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute ACTION__IMMEDIATE = eINSTANCE.getAction_Immediate();
 
         /**
-         * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute ACTION__LABEL = eINSTANCE.getAction_Label();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.AssignmentImpl <em>Assignment</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.AssignmentImpl <em>Assignment</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.AssignmentImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getAssignment()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.AssignmentImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getAssignment()
+		 * @generated
+		 */
         EClass ASSIGNMENT = eINSTANCE.getAssignment();
 
         /**
-         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference ASSIGNMENT__VALUED_OBJECT = eINSTANCE.getAssignment_ValuedObject();
 
         /**
-         * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference ASSIGNMENT__EXPRESSION = eINSTANCE.getAssignment_Expression();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.EffectImpl <em>Effect</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.EffectImpl <em>Effect</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.EffectImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEffect()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.EffectImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEffect()
+		 * @generated
+		 */
         EClass EFFECT = eINSTANCE.getEffect();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.EmissionImpl <em>Emission</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.EmissionImpl <em>Emission</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.EmissionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEmission()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.EmissionImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEmission()
+		 * @generated
+		 */
         EClass EMISSION = eINSTANCE.getEmission();
 
         /**
-         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference EMISSION__VALUED_OBJECT = eINSTANCE.getEmission_ValuedObject();
 
         /**
-         * The meta object literal for the '<em><b>New Value</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>New Value</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference EMISSION__NEW_VALUE = eINSTANCE.getEmission_NewValue();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.RegionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.RegionImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion()
+		 * @generated
+		 */
         EClass REGION = eINSTANCE.getRegion();
 
         /**
-         * The meta object literal for the '<em><b>States</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>States</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference REGION__STATES = eINSTANCE.getRegion_States();
 
         /**
-         * The meta object literal for the '<em><b>Parent State</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Parent State</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference REGION__PARENT_STATE = eINSTANCE.getRegion_ParentState();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.SubstitutionImpl <em>Substitution</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.SubstitutionImpl <em>Substitution</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.SubstitutionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSubstitution()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.SubstitutionImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSubstitution()
+		 * @generated
+		 */
         EClass SUBSTITUTION = eINSTANCE.getSubstitution();
 
         /**
-         * The meta object literal for the '<em><b>Parent Scope</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Parent Scope</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference SUBSTITUTION__PARENT_SCOPE = eINSTANCE.getSubstitution_ParentScope();
 
         /**
-         * The meta object literal for the '<em><b>Formal</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Formal</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute SUBSTITUTION__FORMAL = eINSTANCE.getSubstitution_Formal();
 
         /**
-         * The meta object literal for the '<em><b>Actual</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Actual</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute SUBSTITUTION__ACTUAL = eINSTANCE.getSubstitution_Actual();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.StateImpl <em>State</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.StateImpl <em>State</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.StateImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getState()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.StateImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getState()
+		 * @generated
+		 */
         EClass STATE = eINSTANCE.getState();
 
         /**
-         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute STATE__TYPE = eINSTANCE.getState_Type();
 
         /**
-         * The meta object literal for the '<em><b>Regions</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Regions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference STATE__REGIONS = eINSTANCE.getState_Regions();
 
         /**
-         * The meta object literal for the '<em><b>Parent Region</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Parent Region</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference STATE__PARENT_REGION = eINSTANCE.getState_ParentRegion();
 
         /**
-         * The meta object literal for the '<em><b>Initial</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Initial</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute STATE__INITIAL = eINSTANCE.getState_Initial();
 
         /**
-         * The meta object literal for the '<em><b>Final</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Final</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute STATE__FINAL = eINSTANCE.getState_Final();
 
         /**
-         * The meta object literal for the '<em><b>Outgoing Transitions</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Outgoing Transitions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference STATE__OUTGOING_TRANSITIONS = eINSTANCE.getState_OutgoingTransitions();
 
         /**
-         * The meta object literal for the '<em><b>Incoming Transitions</b></em>' reference list feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Incoming Transitions</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference STATE__INCOMING_TRANSITIONS = eINSTANCE.getState_IncomingTransitions();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.TransitionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransition()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.TransitionImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransition()
+		 * @generated
+		 */
         EClass TRANSITION = eINSTANCE.getTransition();
 
         /**
-         * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute TRANSITION__PRIORITY = eINSTANCE.getTransition_Priority();
 
         /**
-         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute TRANSITION__TYPE = eINSTANCE.getTransition_Type();
 
         /**
-         * The meta object literal for the '<em><b>Deferred</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Deferred</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute TRANSITION__DEFERRED = eINSTANCE.getTransition_Deferred();
 
         /**
-         * The meta object literal for the '<em><b>History</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>History</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute TRANSITION__HISTORY = eINSTANCE.getTransition_History();
 
         /**
-         * The meta object literal for the '<em><b>Target State</b></em>' reference feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Target State</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference TRANSITION__TARGET_STATE = eINSTANCE.getTransition_TargetState();
 
         /**
-         * The meta object literal for the '<em><b>Source State</b></em>' container reference feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Source State</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference TRANSITION__SOURCE_STATE = eINSTANCE.getTransition_SourceState();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl <em>Scope</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl <em>Scope</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.ScopeImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getScope()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.ScopeImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getScope()
+		 * @generated
+		 */
         EClass SCOPE = eINSTANCE.getScope();
 
         /**
-         * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute SCOPE__ID = eINSTANCE.getScope_Id();
 
         /**
-         * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute SCOPE__LABEL = eINSTANCE.getScope_Label();
 
         /**
-         * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Local Actions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SCOPE__VALUED_OBJECTS = eINSTANCE.getScope_ValuedObjects();
-
-        /**
-         * The meta object literal for the '<em><b>Local Actions</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference SCOPE__LOCAL_ACTIONS = eINSTANCE.getScope_LocalActions();
 
         /**
-         * The meta object literal for the '<em><b>Body Reference</b></em>' reference feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Body Reference</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference SCOPE__BODY_REFERENCE = eINSTANCE.getScope_BodyReference();
 
         /**
-         * The meta object literal for the '<em><b>Body Contents</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Body Contents</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference SCOPE__BODY_CONTENTS = eINSTANCE.getScope_BodyContents();
 
         /**
-         * The meta object literal for the '<em><b>Body Text</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Body Text</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference SCOPE__BODY_TEXT = eINSTANCE.getScope_BodyText();
 
         /**
-         * The meta object literal for the '<em><b>Renamings</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Renamings</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference SCOPE__RENAMINGS = eINSTANCE.getScope_Renamings();
 
         /**
-         * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EReference SCOPE__TYPE_GROUPS = eINSTANCE.getScope_TypeGroups();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TextEffectImpl <em>Text Effect</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TextEffectImpl <em>Text Effect</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.TextEffectImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTextEffect()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.TextEffectImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTextEffect()
+		 * @generated
+		 */
         EClass TEXT_EFFECT = eINSTANCE.getTextEffect();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.LocalActionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getLocalAction()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.LocalActionImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getLocalAction()
+		 * @generated
+		 */
         EClass LOCAL_ACTION = eINSTANCE.getLocalAction();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.EntryActionImpl <em>Entry Action</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.EntryActionImpl <em>Entry Action</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.EntryActionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEntryAction()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.EntryActionImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEntryAction()
+		 * @generated
+		 */
         EClass ENTRY_ACTION = eINSTANCE.getEntryAction();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DuringActionImpl <em>During Action</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DuringActionImpl <em>During Action</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.DuringActionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDuringAction()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.DuringActionImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDuringAction()
+		 * @generated
+		 */
         EClass DURING_ACTION = eINSTANCE.getDuringAction();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ExitActionImpl <em>Exit Action</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ExitActionImpl <em>Exit Action</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.ExitActionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getExitAction()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.ExitActionImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getExitAction()
+		 * @generated
+		 */
         EClass EXIT_ACTION = eINSTANCE.getExitAction();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.SuspendActionImpl <em>Suspend Action</em>}' class.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.SuspendActionImpl <em>Suspend Action</em>}' class.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.SuspendActionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSuspendAction()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.impl.SuspendActionImpl
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSuspendAction()
+		 * @generated
+		 */
         EClass SUSPEND_ACTION = eINSTANCE.getSuspendAction();
 
         /**
-         * The meta object literal for the '<em><b>Weak</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em><b>Weak</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @generated
-         */
+		 * @generated
+		 */
         EAttribute SUSPEND_ACTION__WEAK = eINSTANCE.getSuspendAction_Weak();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.StateType
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.StateType
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
+		 * @generated
+		 */
         EEnum STATE_TYPE = eINSTANCE.getStateType();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}' enum.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}' enum.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.TransitionType
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransitionType()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.TransitionType
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransitionType()
+		 * @generated
+		 */
         EEnum TRANSITION_TYPE = eINSTANCE.getTransitionType();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.HistoryType
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
-         * @generated
-         */
+		 * @see de.cau.cs.kieler.sccharts.HistoryType
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
+		 * @generated
+		 */
         EEnum HISTORY_TYPE = eINSTANCE.getHistoryType();
 
         /**
-         * The meta object literal for the '<em>Parsable</em>' data type.
-         * <!-- begin-user-doc -->
+		 * The meta object literal for the '<em>Parsable</em>' data type.
+		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see java.lang.String
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
-         * @generated
-         */
+		 * @see java.lang.String
+		 * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
+		 * @generated
+		 */
         EDataType PARSABLE = eINSTANCE.getParsable();
 
     }

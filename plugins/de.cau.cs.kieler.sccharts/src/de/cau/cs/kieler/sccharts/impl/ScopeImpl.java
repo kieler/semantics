@@ -51,7 +51,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLabel <em>Label</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getValuedObjects <em>Valued Objects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLocalActions <em>Local Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBodyReference <em>Body Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBodyContents <em>Body Contents</em>}</li>
@@ -65,524 +64,489 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
-     * @generated
-     * @ordered
-     */
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String ID_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
-     * @generated
-     * @ordered
-     */
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
     protected String id = ID_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLabel()
-     * @generated
-     * @ordered
-     */
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String LABEL_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLabel()
-     * @generated
-     * @ordered
-     */
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
     protected String label = LABEL_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getValuedObjects() <em>Valued Objects</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getLocalActions() <em>Local Actions</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getValuedObjects()
-     * @generated
-     * @ordered
-     */
-    protected EList<ValuedObject> valuedObjects;
-
-    /**
-     * The cached value of the '{@link #getLocalActions() <em>Local Actions</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getLocalActions()
-     * @generated
-     * @ordered
-     */
+	 * @see #getLocalActions()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<LocalAction> localActions;
 
     /**
-     * The cached value of the '{@link #getBodyReference() <em>Body Reference</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getBodyReference() <em>Body Reference</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getBodyReference()
-     * @generated
-     * @ordered
-     */
+	 * @see #getBodyReference()
+	 * @generated
+	 * @ordered
+	 */
     protected EObject bodyReference;
 
     /**
-     * The cached value of the '{@link #getBodyContents() <em>Body Contents</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getBodyContents() <em>Body Contents</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getBodyContents()
-     * @generated
-     * @ordered
-     */
+	 * @see #getBodyContents()
+	 * @generated
+	 * @ordered
+	 */
     protected EObject bodyContents;
 
     /**
-     * The cached value of the '{@link #getBodyText() <em>Body Text</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getBodyText() <em>Body Text</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getBodyText()
-     * @generated
-     * @ordered
-     */
+	 * @see #getBodyText()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<TextExpression> bodyText;
 
     /**
-     * The cached value of the '{@link #getRenamings() <em>Renamings</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getRenamings() <em>Renamings</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getRenamings()
-     * @generated
-     * @ordered
-     */
+	 * @see #getRenamings()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<Substitution> renamings;
 
     /**
-     * The cached value of the '{@link #getTypeGroups() <em>Type Groups</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getTypeGroups() <em>Type Groups</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTypeGroups()
-     * @generated
-     * @ordered
-     */
+	 * @see #getTypeGroups()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<TypeGroup> typeGroups;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ScopeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return SCChartsPackage.Literals.SCOPE;
-    }
+		return SCChartsPackage.Literals.SCOPE;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getId() {
-        return id;
-    }
+		return id;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setId(String newId) {
-        String oldId = id;
-        id = newId;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__ID, oldId, id));
-    }
+		String oldId = id;
+		id = newId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__ID, oldId, id));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getLabel() {
-        return label;
-    }
+		return label;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setLabel(String newLabel) {
-        String oldLabel = label;
-        label = newLabel;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__LABEL, oldLabel, label));
-    }
+		String oldLabel = label;
+		label = newLabel;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__LABEL, oldLabel, label));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<ValuedObject> getValuedObjects() {
-        if (valuedObjects == null) {
-            valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, SCChartsPackage.SCOPE__VALUED_OBJECTS);
-        }
-        return valuedObjects;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<LocalAction> getLocalActions() {
-        if (localActions == null) {
-            localActions = new EObjectContainmentEList<LocalAction>(LocalAction.class, this, SCChartsPackage.SCOPE__LOCAL_ACTIONS);
-        }
-        return localActions;
-    }
+		if (localActions == null) {
+			localActions = new EObjectContainmentEList<LocalAction>(LocalAction.class, this, SCChartsPackage.SCOPE__LOCAL_ACTIONS);
+		}
+		return localActions;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EObject getBodyReference() {
-        if (bodyReference != null && bodyReference.eIsProxy()) {
-            InternalEObject oldBodyReference = (InternalEObject)bodyReference;
-            bodyReference = eResolveProxy(oldBodyReference);
-            if (bodyReference != oldBodyReference) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.SCOPE__BODY_REFERENCE, oldBodyReference, bodyReference));
-            }
-        }
-        return bodyReference;
-    }
+		if (bodyReference != null && bodyReference.eIsProxy()) {
+			InternalEObject oldBodyReference = (InternalEObject)bodyReference;
+			bodyReference = eResolveProxy(oldBodyReference);
+			if (bodyReference != oldBodyReference) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.SCOPE__BODY_REFERENCE, oldBodyReference, bodyReference));
+			}
+		}
+		return bodyReference;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EObject basicGetBodyReference() {
-        return bodyReference;
-    }
+		return bodyReference;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setBodyReference(EObject newBodyReference) {
-        EObject oldBodyReference = bodyReference;
-        bodyReference = newBodyReference;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__BODY_REFERENCE, oldBodyReference, bodyReference));
-    }
+		EObject oldBodyReference = bodyReference;
+		bodyReference = newBodyReference;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__BODY_REFERENCE, oldBodyReference, bodyReference));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EObject getBodyContents() {
-        return bodyContents;
-    }
+		return bodyContents;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public NotificationChain basicSetBodyContents(EObject newBodyContents, NotificationChain msgs) {
-        EObject oldBodyContents = bodyContents;
-        bodyContents = newBodyContents;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__BODY_CONTENTS, oldBodyContents, newBodyContents);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
+		EObject oldBodyContents = bodyContents;
+		bodyContents = newBodyContents;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__BODY_CONTENTS, oldBodyContents, newBodyContents);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setBodyContents(EObject newBodyContents) {
-        if (newBodyContents != bodyContents) {
-            NotificationChain msgs = null;
-            if (bodyContents != null)
-                msgs = ((InternalEObject)bodyContents).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__BODY_CONTENTS, null, msgs);
-            if (newBodyContents != null)
-                msgs = ((InternalEObject)newBodyContents).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__BODY_CONTENTS, null, msgs);
-            msgs = basicSetBodyContents(newBodyContents, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__BODY_CONTENTS, newBodyContents, newBodyContents));
-    }
+		if (newBodyContents != bodyContents) {
+			NotificationChain msgs = null;
+			if (bodyContents != null)
+				msgs = ((InternalEObject)bodyContents).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__BODY_CONTENTS, null, msgs);
+			if (newBodyContents != null)
+				msgs = ((InternalEObject)newBodyContents).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__BODY_CONTENTS, null, msgs);
+			msgs = basicSetBodyContents(newBodyContents, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__BODY_CONTENTS, newBodyContents, newBodyContents));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<TextExpression> getBodyText() {
-        if (bodyText == null) {
-            bodyText = new EObjectContainmentEList<TextExpression>(TextExpression.class, this, SCChartsPackage.SCOPE__BODY_TEXT);
-        }
-        return bodyText;
-    }
+		if (bodyText == null) {
+			bodyText = new EObjectContainmentEList<TextExpression>(TextExpression.class, this, SCChartsPackage.SCOPE__BODY_TEXT);
+		}
+		return bodyText;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<Substitution> getRenamings() {
-        if (renamings == null) {
-            renamings = new EObjectContainmentWithInverseEList<Substitution>(Substitution.class, this, SCChartsPackage.SCOPE__RENAMINGS, SCChartsPackage.SUBSTITUTION__PARENT_SCOPE);
-        }
-        return renamings;
-    }
+		if (renamings == null) {
+			renamings = new EObjectContainmentWithInverseEList<Substitution>(Substitution.class, this, SCChartsPackage.SCOPE__RENAMINGS, SCChartsPackage.SUBSTITUTION__PARENT_SCOPE);
+		}
+		return renamings;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<TypeGroup> getTypeGroups() {
-        if (typeGroups == null) {
-            typeGroups = new EObjectContainmentEList<TypeGroup>(TypeGroup.class, this, SCChartsPackage.SCOPE__TYPE_GROUPS);
-        }
-        return typeGroups;
-    }
+		if (typeGroups == null) {
+			typeGroups = new EObjectContainmentEList<TypeGroup>(TypeGroup.class, this, SCChartsPackage.SCOPE__TYPE_GROUPS);
+		}
+		return typeGroups;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SCChartsPackage.SCOPE__RENAMINGS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getRenamings()).basicAdd(otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SCChartsPackage.SCOPE__RENAMINGS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getRenamings()).basicAdd(otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SCChartsPackage.SCOPE__VALUED_OBJECTS:
-                return ((InternalEList<?>)getValuedObjects()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
-                return ((InternalEList<?>)getLocalActions()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.SCOPE__BODY_CONTENTS:
-                return basicSetBodyContents(null, msgs);
-            case SCChartsPackage.SCOPE__BODY_TEXT:
-                return ((InternalEList<?>)getBodyText()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.SCOPE__RENAMINGS:
-                return ((InternalEList<?>)getRenamings()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                return ((InternalEList<?>)getTypeGroups()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
+				return ((InternalEList<?>)getLocalActions()).basicRemove(otherEnd, msgs);
+			case SCChartsPackage.SCOPE__BODY_CONTENTS:
+				return basicSetBodyContents(null, msgs);
+			case SCChartsPackage.SCOPE__BODY_TEXT:
+				return ((InternalEList<?>)getBodyText()).basicRemove(otherEnd, msgs);
+			case SCChartsPackage.SCOPE__RENAMINGS:
+				return ((InternalEList<?>)getRenamings()).basicRemove(otherEnd, msgs);
+			case SCChartsPackage.SCOPE__TYPE_GROUPS:
+				return ((InternalEList<?>)getTypeGroups()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case SCChartsPackage.SCOPE__ID:
-                return getId();
-            case SCChartsPackage.SCOPE__LABEL:
-                return getLabel();
-            case SCChartsPackage.SCOPE__VALUED_OBJECTS:
-                return getValuedObjects();
-            case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
-                return getLocalActions();
-            case SCChartsPackage.SCOPE__BODY_REFERENCE:
-                if (resolve) return getBodyReference();
-                return basicGetBodyReference();
-            case SCChartsPackage.SCOPE__BODY_CONTENTS:
-                return getBodyContents();
-            case SCChartsPackage.SCOPE__BODY_TEXT:
-                return getBodyText();
-            case SCChartsPackage.SCOPE__RENAMINGS:
-                return getRenamings();
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                return getTypeGroups();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case SCChartsPackage.SCOPE__ID:
+				return getId();
+			case SCChartsPackage.SCOPE__LABEL:
+				return getLabel();
+			case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
+				return getLocalActions();
+			case SCChartsPackage.SCOPE__BODY_REFERENCE:
+				if (resolve) return getBodyReference();
+				return basicGetBodyReference();
+			case SCChartsPackage.SCOPE__BODY_CONTENTS:
+				return getBodyContents();
+			case SCChartsPackage.SCOPE__BODY_TEXT:
+				return getBodyText();
+			case SCChartsPackage.SCOPE__RENAMINGS:
+				return getRenamings();
+			case SCChartsPackage.SCOPE__TYPE_GROUPS:
+				return getTypeGroups();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case SCChartsPackage.SCOPE__ID:
-                setId((String)newValue);
-                return;
-            case SCChartsPackage.SCOPE__LABEL:
-                setLabel((String)newValue);
-                return;
-            case SCChartsPackage.SCOPE__VALUED_OBJECTS:
-                getValuedObjects().clear();
-                getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
-                return;
-            case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
-                getLocalActions().clear();
-                getLocalActions().addAll((Collection<? extends LocalAction>)newValue);
-                return;
-            case SCChartsPackage.SCOPE__BODY_REFERENCE:
-                setBodyReference((EObject)newValue);
-                return;
-            case SCChartsPackage.SCOPE__BODY_CONTENTS:
-                setBodyContents((EObject)newValue);
-                return;
-            case SCChartsPackage.SCOPE__BODY_TEXT:
-                getBodyText().clear();
-                getBodyText().addAll((Collection<? extends TextExpression>)newValue);
-                return;
-            case SCChartsPackage.SCOPE__RENAMINGS:
-                getRenamings().clear();
-                getRenamings().addAll((Collection<? extends Substitution>)newValue);
-                return;
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                getTypeGroups().clear();
-                getTypeGroups().addAll((Collection<? extends TypeGroup>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case SCChartsPackage.SCOPE__ID:
+				setId((String)newValue);
+				return;
+			case SCChartsPackage.SCOPE__LABEL:
+				setLabel((String)newValue);
+				return;
+			case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
+				getLocalActions().clear();
+				getLocalActions().addAll((Collection<? extends LocalAction>)newValue);
+				return;
+			case SCChartsPackage.SCOPE__BODY_REFERENCE:
+				setBodyReference((EObject)newValue);
+				return;
+			case SCChartsPackage.SCOPE__BODY_CONTENTS:
+				setBodyContents((EObject)newValue);
+				return;
+			case SCChartsPackage.SCOPE__BODY_TEXT:
+				getBodyText().clear();
+				getBodyText().addAll((Collection<? extends TextExpression>)newValue);
+				return;
+			case SCChartsPackage.SCOPE__RENAMINGS:
+				getRenamings().clear();
+				getRenamings().addAll((Collection<? extends Substitution>)newValue);
+				return;
+			case SCChartsPackage.SCOPE__TYPE_GROUPS:
+				getTypeGroups().clear();
+				getTypeGroups().addAll((Collection<? extends TypeGroup>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case SCChartsPackage.SCOPE__ID:
-                setId(ID_EDEFAULT);
-                return;
-            case SCChartsPackage.SCOPE__LABEL:
-                setLabel(LABEL_EDEFAULT);
-                return;
-            case SCChartsPackage.SCOPE__VALUED_OBJECTS:
-                getValuedObjects().clear();
-                return;
-            case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
-                getLocalActions().clear();
-                return;
-            case SCChartsPackage.SCOPE__BODY_REFERENCE:
-                setBodyReference((EObject)null);
-                return;
-            case SCChartsPackage.SCOPE__BODY_CONTENTS:
-                setBodyContents((EObject)null);
-                return;
-            case SCChartsPackage.SCOPE__BODY_TEXT:
-                getBodyText().clear();
-                return;
-            case SCChartsPackage.SCOPE__RENAMINGS:
-                getRenamings().clear();
-                return;
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                getTypeGroups().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case SCChartsPackage.SCOPE__ID:
+				setId(ID_EDEFAULT);
+				return;
+			case SCChartsPackage.SCOPE__LABEL:
+				setLabel(LABEL_EDEFAULT);
+				return;
+			case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
+				getLocalActions().clear();
+				return;
+			case SCChartsPackage.SCOPE__BODY_REFERENCE:
+				setBodyReference((EObject)null);
+				return;
+			case SCChartsPackage.SCOPE__BODY_CONTENTS:
+				setBodyContents((EObject)null);
+				return;
+			case SCChartsPackage.SCOPE__BODY_TEXT:
+				getBodyText().clear();
+				return;
+			case SCChartsPackage.SCOPE__RENAMINGS:
+				getRenamings().clear();
+				return;
+			case SCChartsPackage.SCOPE__TYPE_GROUPS:
+				getTypeGroups().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case SCChartsPackage.SCOPE__ID:
-                return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-            case SCChartsPackage.SCOPE__LABEL:
-                return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
-            case SCChartsPackage.SCOPE__VALUED_OBJECTS:
-                return valuedObjects != null && !valuedObjects.isEmpty();
-            case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
-                return localActions != null && !localActions.isEmpty();
-            case SCChartsPackage.SCOPE__BODY_REFERENCE:
-                return bodyReference != null;
-            case SCChartsPackage.SCOPE__BODY_CONTENTS:
-                return bodyContents != null;
-            case SCChartsPackage.SCOPE__BODY_TEXT:
-                return bodyText != null && !bodyText.isEmpty();
-            case SCChartsPackage.SCOPE__RENAMINGS:
-                return renamings != null && !renamings.isEmpty();
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                return typeGroups != null && !typeGroups.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case SCChartsPackage.SCOPE__ID:
+				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case SCChartsPackage.SCOPE__LABEL:
+				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+			case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
+				return localActions != null && !localActions.isEmpty();
+			case SCChartsPackage.SCOPE__BODY_REFERENCE:
+				return bodyReference != null;
+			case SCChartsPackage.SCOPE__BODY_CONTENTS:
+				return bodyContents != null;
+			case SCChartsPackage.SCOPE__BODY_TEXT:
+				return bodyText != null && !bodyText.isEmpty();
+			case SCChartsPackage.SCOPE__RENAMINGS:
+				return renamings != null && !renamings.isEmpty();
+			case SCChartsPackage.SCOPE__TYPE_GROUPS:
+				return typeGroups != null && !typeGroups.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (id: ");
-        result.append(id);
-        result.append(", label: ");
-        result.append(label);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (id: ");
+		result.append(id);
+		result.append(", label: ");
+		result.append(label);
+		result.append(')');
+		return result.toString();
+	}
 
 } //ScopeImpl
