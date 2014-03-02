@@ -597,8 +597,51 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
 // TODO: Make use of the new type groups and organize visualization accordingly!
 
+//                if (SHOW_SIGNAL_DECLARATIONS.booleanValue) {
+//                    for (sig : s.typeGroups.valuedObjects) {
+//                        it.addRectangle => [
+//                            it.invisible = true;
+//                            it.addRectangle => [
+//                                it.invisible = true;
+//                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
+//                                    0);
+//                                scopeProvider.parent = s;
+//                                var declaration = "";
+//                                var type = "";
+//                                var init = "";
+//                                var combine = "";
+//                                if (sig.type != ValueType::PURE) {
+//                                    type = sig.type.literal.toLowerCase + " "
+//                                }
+//                                if (sig.combineOperator != null && sig.combineOperator != CombineOperator::NONE) {
+//                                    combine = " combine " + sig.combineOperator.literal.toLowerCase
+//                                }
+//                                if (sig.initialValue != null) {
+//                                    init = " = " + serializer.serialize(sig.initialValue.copy)
+//                                }
+//                                if (sig.isInput) {
+//                                    declaration = declaration + "input ";
+//                                }
+//                                if (sig.isOutput) {
+//                                    declaration = declaration + "output "
+//                                }
+//                                if (sig.isSignal) {
+//                                    declaration = declaration + "signal ";
+//                                }
+//                                if (sig.isStatic) {
+//                                    declaration = declaration + "static ";
+//                                }
+//                                if (!declaration.equals("")) {
+//                                    declaration = declaration.trim + " "
+//                                }
+//                                it.printHighlightedText(declaration + type + sig.name + init + combine, sig)
+//                            ];
+//                        ];
+//                    }
+//
+//                }
                 if (SHOW_SIGNAL_DECLARATIONS.booleanValue) {
-                    for (sig : s.typeGroups.valuedObjects) {
+                    for (tg : s.typeGroups) {
                         it.addRectangle => [
                             it.invisible = true;
                             it.addRectangle => [
@@ -608,38 +651,54 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 scopeProvider.parent = s;
                                 var declaration = "";
                                 var type = "";
-                                var init = "";
-                                var combine = "";
-                                if (sig.type != ValueType::PURE) {
-                                    type = sig.type.literal.toLowerCase + " "
+                                if (tg.type != ValueType::PURE) {
+                                    type = tg.type.literal.toLowerCase + " "
                                 }
-                                if (sig.combineOperator != null && sig.combineOperator != CombineOperator::NONE) {
-                                    combine = " combine " + sig.combineOperator.literal.toLowerCase
-                                }
-                                if (sig.initialValue != null) {
-                                    init = " = " + serializer.serialize(sig.initialValue.copy)
-                                }
-                                if (sig.isInput) {
+                                if (tg.isInput) {
                                     declaration = declaration + "input ";
                                 }
-                                if (sig.isOutput) {
+                                if (tg.isOutput) {
                                     declaration = declaration + "output "
                                 }
-                                if (sig.isSignal) {
+                                if (tg.isSignal) {
                                     declaration = declaration + "signal ";
                                 }
-                                if (sig.isStatic) {
+                                if (tg.isStatic) {
                                     declaration = declaration + "static ";
                                 }
                                 if (!declaration.equals("")) {
                                     declaration = declaration.trim + " "
                                 }
-                                it.printHighlightedText(declaration + type + sig.name + init + combine, sig)
+                                var sigs = ""
+                                var c = 0
+                                for(sig : tg.valuedObjects) {
+                                	var combine = ""
+	                                if (sig.combineOperator != null && sig.combineOperator != CombineOperator::NONE) {
+    	                                combine = " combine " + sig.combineOperator.literal.toLowerCase
+        	                        }
+        	                        var init = ""
+            	                    if (sig.initialValue != null) {
+                	                    init = " = " + serializer.serialize(sig.initialValue.copy)
+                    	            }
+                    	            var card = ""
+                    	            if (sig.cardinalities.size>0) {
+                    	            	for (ca : sig.cardinalities) {
+                    	            		card = card + "[" + ca.toString + "]"
+                    	            	}
+                    	            }
+                    	            sigs = sigs + sig.name + init + combine + card
+                    	            c = c + 1
+                    	            if (c < tg.valuedObjects.size) sigs = sigs + ","
+                                }
+                                it.printHighlightedText(declaration + type + sigs, tg)
                             ];
                         ];
                     }
 
                 }
+                
+                
+                
                 if (SHOW_STATE_ACTIONS.booleanValue) {
                     scopeProvider.parent = s;
                     for (action : s.localActions) {
@@ -686,7 +745,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             }
             for (t : s.outgoingTransitions)
                 t.translateTransition();
-        ];
+        ]
     }
 
     // -------------------------------------------------------------------------
