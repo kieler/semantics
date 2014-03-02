@@ -173,7 +173,7 @@ class SimpleScheduler extends AbstractScheduler {
          
         // Create a new signal using the kexpression factory for the GO signal.
         // Don't forget to add it to the SCG.
-        creatVariableInBoolTypeGroup(GOGUARDNAME) => [
+        createVariableInBoolTypeGroup(GOGUARDNAME) => [
         	scg.typeGroups += it.typeGroup
         ]
     }
