@@ -16,6 +16,7 @@ import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kexpressions.serializer.KExpressionsSemanticSequencer;
@@ -253,6 +254,12 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.TYPE_GROUP:
+				if(context == grammarAccess.getTypeGroupRule()) {
+					sequence_TypeGroup(context, (TypeGroup) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.VALUED_OBJECT:
 				if(context == grammarAccess.getValuedObjectRule()) {
 					sequence_ValuedObject(context, (ValuedObject) semanticObject); 
@@ -473,7 +480,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         name=ID 
-	 *         valuedObjects+=ValuedObject* 
+	 *         typeGroups+=TypeGroup* 
 	 *         (statements+=InstructionStatement | statements+=EmptyStatement)* 
 	 *         (statements+=InstructionStatement statements+=EmptyStatement*)?
 	 *     )
@@ -509,15 +516,24 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         constant?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 
 	 *         signal?='signal'? 
-	 *         type=ValueType? 
-	 *         name=ID 
-	 *         initialValue=Expression? 
-	 *         combineOperator=CombineOperator?
+	 *         type=ValueType 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject*
 	 *     )
+	 */
+	protected void sequence_TypeGroup(EObject context, TypeGroup semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (annotations+=Annotation* name=ID initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -122,13 +122,13 @@ public interface SclPackage extends EPackage
   int PROGRAM__NAME = STATEMENT_SEQUENCE_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+   * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__VALUED_OBJECTS = STATEMENT_SEQUENCE_FEATURE_COUNT + 2;
+  int PROGRAM__TYPE_GROUPS = STATEMENT_SEQUENCE_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Program</em>' class.
@@ -526,15 +526,15 @@ public interface SclPackage extends EPackage
   EAttribute getProgram_Name();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Program#getValuedObjects <em>Valued Objects</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Program#getTypeGroups <em>Type Groups</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Program#getValuedObjects()
+   * @return the meta object for the containment reference list '<em>Type Groups</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Program#getTypeGroups()
    * @see #getProgram()
    * @generated
    */
-  EReference getProgram_ValuedObjects();
+  EReference getProgram_TypeGroups();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Statement <em>Statement</em>}'.
@@ -838,12 +838,12 @@ public interface SclPackage extends EPackage
     EAttribute PROGRAM__NAME = eINSTANCE.getProgram_Name();
 
     /**
-     * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PROGRAM__VALUED_OBJECTS = eINSTANCE.getProgram_ValuedObjects();
+    EReference PROGRAM__TYPE_GROUPS = eINSTANCE.getProgram_TypeGroups();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.StatementImpl <em>Statement</em>}' class.

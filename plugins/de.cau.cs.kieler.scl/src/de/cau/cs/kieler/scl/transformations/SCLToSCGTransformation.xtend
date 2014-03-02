@@ -17,6 +17,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -27,23 +29,22 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
+import de.cau.cs.kieler.scl.scl.EmptyStatement
+import de.cau.cs.kieler.scl.scl.Goto
+import de.cau.cs.kieler.scl.scl.InstructionStatement
+import de.cau.cs.kieler.scl.scl.Parallel
+import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Program
-import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.StatementSequence
 import java.util.HashMap
 import java.util.List
+import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scl.scl.EmptyStatement
-import de.cau.cs.kieler.scl.scl.InstructionStatement
-import de.cau.cs.kieler.scl.scl.Goto
 
 /** 
  * SCL to SCG Transformation 
@@ -62,6 +63,9 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     
     @Inject 
     extension SCLExtensions
+    
+    @Inject
+    extension KExpressionsExtension
          
     // M2M Mapping
 //    private val nodeMapping = new HashMap<Node, Node>
@@ -85,10 +89,13 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
         val scg = ScgFactory::eINSTANCE.createSCGraph
                   
         // ... and copy declarations.
-        for(valuedObject : scl.valuedObjects) {
-            val newValuedObject = valuedObject.copy
-            scg.valuedObjects.add(newValuedObject)
-            valuedObjectMapping.put(valuedObject, newValuedObject)
+        for(typeGroup : scl.typeGroups) {
+            val newTypeGroup = createTypeGroupWOValuedObjects(typeGroup)
+            for (valuedObject : typeGroup.valuedObjects) {
+            	val newValuedObject = createValuedObject(newTypeGroup, valuedObject.name)
+	            valuedObjectMapping.put(valuedObject, newValuedObject)
+            }
+            scg.typeGroups += newTypeGroup 
         }
         
         scl.transform(scg, null)
@@ -174,7 +181,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     	]
     }
     
-    private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Parallel parallel, SCGraph scg, List<ControlFlow> incoming) {
+    private dispatch def SCLContinuation transform(Parallel parallel, SCGraph scg, List<ControlFlow> incoming) {
     	new SCLContinuation => [ cont |
 	    	val fork = ScgFactory::eINSTANCE.createFork.createNodeList(parallel) as Fork => [ 
     			scg.nodes += it 
@@ -208,7 +215,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     	]
     }
     
-    private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Pause pause, SCGraph scg, List<ControlFlow> incoming) {
+    private dispatch def SCLContinuation transform(Pause pause, SCGraph scg, List<ControlFlow> incoming) {
     	new SCLContinuation => [
     		val surface = ScgFactory::eINSTANCE.createSurface.createNodeList(pause) as Surface => [
     			scg.nodes += it 
@@ -223,7 +230,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
 		]
     }
     
-    private dispatch def SCLContinuation transform(de.cau.cs.kieler.scl.scl.Goto goto, SCGraph scg, List<ControlFlow> incoming) {
+    private dispatch def SCLContinuation transform(Goto goto, SCGraph scg, List<ControlFlow> incoming) {
     	new SCLContinuation => [
     		if (labelMapping.keySet.contains(goto.targetLabel)) {
     			val node = labelMapping.get(goto.targetLabel)

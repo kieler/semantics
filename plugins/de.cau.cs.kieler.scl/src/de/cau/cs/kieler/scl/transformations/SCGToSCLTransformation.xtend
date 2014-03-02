@@ -37,7 +37,7 @@ import de.cau.cs.kieler.scl.scl.StatementSequence
 import java.util.HashMap
 import java.util.List
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /** 
  * SCG to SCL Transformation 
@@ -56,6 +56,9 @@ class SCGToSCLTransformation {
     
     @Inject 
     extension SCLExtensions
+    
+    @Inject
+    extension KExpressionsExtension
          
     // M2M Mapping
 //    private val nodeMapping = new HashMap<Node, Node>
@@ -73,10 +76,13 @@ class SCGToSCLTransformation {
         scl.name = 'M' + scg.hashCode.toString
                   
         // ... and copy declarations.
-        for(valuedObject : scg.valuedObjects) {
-            val newValuedObject = valuedObject.copy
-            scl.valuedObjects.add(newValuedObject)
-            valuedObjectMapping.put(valuedObject, newValuedObject)
+        for(typeGroup : scg.typeGroups) {
+            val newTypeGroup = createTypeGroupWOValuedObjects(typeGroup)
+            for (valuedObject : typeGroup.valuedObjects) {
+            	val newValuedObject = createValuedObject(newTypeGroup, valuedObject.name)
+	            valuedObjectMapping.put(valuedObject, newValuedObject)
+            }
+            scl.typeGroups += newTypeGroup 
         }
         
         scg.transform(scl)
