@@ -194,7 +194,7 @@ class BasicBlockTransformationSCplus extends AbstractModelTransformation {
         // Each guard is identified by its unique name and is of boolean type.
         val guard = KExpressionsFactory::eINSTANCE.createValuedObject
         guard.name = GUARDPREFIX + newIndex.toString
-        guard.type = ValueType::BOOL;
+//        guard.type = ValueType::BOOL;
         
         // Increase the index for successive iterative calls.
         newIndex = newIndex + 1
@@ -392,7 +392,7 @@ class BasicBlockTransformationSCplus extends AbstractModelTransformation {
                 	// of the guards in the metamodel. The information is later used to serialize the guard names. 
 			        guard = KExpressionsFactory::eINSTANCE.createValuedObject
         			guard.name = basicBlock.guards.head.name + (96 + schedulingBlocks.size + 1) as char
-        			guard.type = ValueType::BOOL
+//        			guard.type = ValueType::BOOL
         			basicBlock.guards.add(guard)
                 }
                 // Create a new scheduling block, add all incoming dependencies of the node to the block for caching purposes

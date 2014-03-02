@@ -137,7 +137,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
       			val emptyExp = ScgschedFactory::eINSTANCE.createEmptyExpression  
       			emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
       			emptyExp.valuedObject.name = exitSB.guard.name + '_e' + exitNodeCount
-      			emptyExp.valuedObject.type = ValueType::BOOL
+//      			emptyExp.valuedObject.type = ValueType::BOOL
       			data.valuedObjects.add(emptyExp.valuedObject)
 
 				/**
