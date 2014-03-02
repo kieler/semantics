@@ -458,6 +458,51 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
     /**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTypeGroup_Input() {
+		return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(3);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTypeGroup_Output() {
+		return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(4);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTypeGroup_Static() {
+		return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(5);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTypeGroup_Signal() {
+		return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(6);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTypeGroup_Constant() {
+		return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(7);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -549,6 +594,11 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 		createEReference(typeGroupEClass, TYPE_GROUP__VALUED_OBJECTS);
 		createEAttribute(typeGroupEClass, TYPE_GROUP__ARRAY_CARDINALITIES);
 		createEAttribute(typeGroupEClass, TYPE_GROUP__TYPE);
+		createEAttribute(typeGroupEClass, TYPE_GROUP__INPUT);
+		createEAttribute(typeGroupEClass, TYPE_GROUP__OUTPUT);
+		createEAttribute(typeGroupEClass, TYPE_GROUP__STATIC);
+		createEAttribute(typeGroupEClass, TYPE_GROUP__SIGNAL);
+		createEAttribute(typeGroupEClass, TYPE_GROUP__CONSTANT);
 
 		// Create enums
 		combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
@@ -635,6 +685,11 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 		initEReference(getTypeGroup_ValuedObjects(), this.getValuedObject(), null, "valuedObjects", null, 0, -1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTypeGroup_ArrayCardinalities(), ecorePackage.getEInt(), "arrayCardinalities", null, 0, -1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTypeGroup_Type(), this.getValueType(), "type", null, 1, 1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTypeGroup_Input(), ecorePackage.getEBoolean(), "input", null, 1, 1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTypeGroup_Output(), ecorePackage.getEBoolean(), "output", null, 1, 1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTypeGroup_Static(), ecorePackage.getEBoolean(), "static", null, 1, 1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTypeGroup_Signal(), ecorePackage.getEBoolean(), "signal", null, 1, 1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTypeGroup_Constant(), ecorePackage.getEBoolean(), "constant", null, 1, 1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");

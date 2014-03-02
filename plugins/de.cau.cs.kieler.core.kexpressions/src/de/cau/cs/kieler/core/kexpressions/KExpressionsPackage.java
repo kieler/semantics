@@ -424,13 +424,58 @@ public interface KExpressionsPackage extends EPackage {
     int TYPE_GROUP__TYPE = 2;
 
     /**
+	 * The feature id for the '<em><b>Input</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_GROUP__INPUT = 3;
+
+				/**
+	 * The feature id for the '<em><b>Output</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_GROUP__OUTPUT = 4;
+
+				/**
+	 * The feature id for the '<em><b>Static</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_GROUP__STATIC = 5;
+
+				/**
+	 * The feature id for the '<em><b>Signal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_GROUP__SIGNAL = 6;
+
+				/**
+	 * The feature id for the '<em><b>Constant</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_GROUP__CONSTANT = 7;
+
+				/**
 	 * The number of structural features of the '<em>Type Group</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int TYPE_GROUP_FEATURE_COUNT = 3;
+    int TYPE_GROUP_FEATURE_COUNT = 8;
 
     /**
 	 * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
@@ -773,6 +818,61 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getTypeGroup_Type();
 
     /**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isInput <em>Input</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Input</em>'.
+	 * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isInput()
+	 * @see #getTypeGroup()
+	 * @generated
+	 */
+	EAttribute getTypeGroup_Input();
+
+				/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isOutput <em>Output</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Output</em>'.
+	 * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isOutput()
+	 * @see #getTypeGroup()
+	 * @generated
+	 */
+	EAttribute getTypeGroup_Output();
+
+				/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isStatic <em>Static</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Static</em>'.
+	 * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isStatic()
+	 * @see #getTypeGroup()
+	 * @generated
+	 */
+	EAttribute getTypeGroup_Static();
+
+				/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isSignal <em>Signal</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Signal</em>'.
+	 * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isSignal()
+	 * @see #getTypeGroup()
+	 * @generated
+	 */
+	EAttribute getTypeGroup_Signal();
+
+				/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isConstant <em>Constant</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Constant</em>'.
+	 * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isConstant()
+	 * @see #getTypeGroup()
+	 * @generated
+	 */
+	EAttribute getTypeGroup_Constant();
+
+				/**
 	 * Returns the meta object for enum '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1077,6 +1177,46 @@ public interface KExpressionsPackage extends EPackage {
         EAttribute TYPE_GROUP__TYPE = eINSTANCE.getTypeGroup_Type();
 
         /**
+		 * The meta object literal for the '<em><b>Input</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TYPE_GROUP__INPUT = eINSTANCE.getTypeGroup_Input();
+
+								/**
+		 * The meta object literal for the '<em><b>Output</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TYPE_GROUP__OUTPUT = eINSTANCE.getTypeGroup_Output();
+
+								/**
+		 * The meta object literal for the '<em><b>Static</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TYPE_GROUP__STATIC = eINSTANCE.getTypeGroup_Static();
+
+								/**
+		 * The meta object literal for the '<em><b>Signal</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TYPE_GROUP__SIGNAL = eINSTANCE.getTypeGroup_Signal();
+
+								/**
+		 * The meta object literal for the '<em><b>Constant</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TYPE_GROUP__CONSTANT = eINSTANCE.getTypeGroup_Constant();
+
+								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->

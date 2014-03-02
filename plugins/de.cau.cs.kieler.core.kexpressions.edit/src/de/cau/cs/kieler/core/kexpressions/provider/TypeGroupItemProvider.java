@@ -66,6 +66,11 @@ public class TypeGroupItemProvider
 
 			addArrayCardinalitiesPropertyDescriptor(object);
 			addTypePropertyDescriptor(object);
+			addInputPropertyDescriptor(object);
+			addOutputPropertyDescriptor(object);
+			addStaticPropertyDescriptor(object);
+			addSignalPropertyDescriptor(object);
+			addConstantPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -110,6 +115,116 @@ public class TypeGroupItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Input feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addInputPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_TypeGroup_input_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_input_feature", "_UI_TypeGroup_type"),
+				 KExpressionsPackage.Literals.TYPE_GROUP__INPUT,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Output feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addOutputPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_TypeGroup_output_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_output_feature", "_UI_TypeGroup_type"),
+				 KExpressionsPackage.Literals.TYPE_GROUP__OUTPUT,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Static feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addStaticPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_TypeGroup_static_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_static_feature", "_UI_TypeGroup_type"),
+				 KExpressionsPackage.Literals.TYPE_GROUP__STATIC,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Signal feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addSignalPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_TypeGroup_signal_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_signal_feature", "_UI_TypeGroup_type"),
+				 KExpressionsPackage.Literals.TYPE_GROUP__SIGNAL,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Constant feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addConstantPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_TypeGroup_constant_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_constant_feature", "_UI_TypeGroup_type"),
+				 KExpressionsPackage.Literals.TYPE_GROUP__CONSTANT,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -184,6 +299,11 @@ public class TypeGroupItemProvider
 		switch (notification.getFeatureID(TypeGroup.class)) {
 			case KExpressionsPackage.TYPE_GROUP__ARRAY_CARDINALITIES:
 			case KExpressionsPackage.TYPE_GROUP__TYPE:
+			case KExpressionsPackage.TYPE_GROUP__INPUT:
+			case KExpressionsPackage.TYPE_GROUP__OUTPUT:
+			case KExpressionsPackage.TYPE_GROUP__STATIC:
+			case KExpressionsPackage.TYPE_GROUP__SIGNAL:
+			case KExpressionsPackage.TYPE_GROUP__CONSTANT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case KExpressionsPackage.TYPE_GROUP__VALUED_OBJECTS:
