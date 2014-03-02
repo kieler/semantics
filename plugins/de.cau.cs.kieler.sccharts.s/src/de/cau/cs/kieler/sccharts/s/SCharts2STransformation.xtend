@@ -24,8 +24,11 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.s.extensions.SExtension
+import de.cau.cs.kieler.s.s.Fork
 import de.cau.cs.kieler.s.s.Instruction
+import de.cau.cs.kieler.s.s.Prio
 import de.cau.cs.kieler.s.s.SFactory
+import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.sccharts.Assignment
 import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.Region
@@ -36,11 +39,6 @@ import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.HashMap
 import java.util.List
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.s.s.Fork
-import de.cau.cs.kieler.s.s.Trans
-import de.cau.cs.kieler.s.s.Prio
 
 /**
  * Converts a SyncChart into an S program.
@@ -187,11 +185,20 @@ class SCCharts2STransformation {
         target.setName(rootState.id)
         
         // Add interface signals to s program (as the root state's signals)
-        for (valuedObject : rootState.valuedObjects) {
-            val sValuedObject = valuedObject.copy
-            sValuedObject.map(valuedObject)
-            target.valuedObjects.add(sValuedObject)
-        }
+//        for (valuedObject : rootState.valuedObjects) {
+//            val sValuedObject = valuedObject.copy
+//            sValuedObject.map(valuedObject)
+//            target.valuedObjects.add(sValuedObject)
+//        }
+        for(typeGroup : rootState.typeGroups) {
+            val newTypeGroup = createTypeGroupWOValuedObjects(typeGroup)
+            for (valuedObject : typeGroup.valuedObjects) {
+            	val newValuedObject = createValuedObject(newTypeGroup, valuedObject.name)
+//	            valuedObjectMapping.put(valuedObject, newValuedObject)
+            }
+            target.typeGroups += newTypeGroup 
+        }        
+        
 
         // Create all states and a mapping
         for (dependencyState : sortedDependencyStates) { 
