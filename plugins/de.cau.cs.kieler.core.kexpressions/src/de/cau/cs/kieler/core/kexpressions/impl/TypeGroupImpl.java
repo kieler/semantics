@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.core.kexpressions.impl;
 
+import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
@@ -43,7 +44,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class TypeGroupImpl extends EObjectImpl implements TypeGroup {
+public class TypeGroupImpl extends AnnotatableImpl implements TypeGroup {
 	/**
 	 * The cached value of the '{@link #getValuedObjects() <em>Valued Objects</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

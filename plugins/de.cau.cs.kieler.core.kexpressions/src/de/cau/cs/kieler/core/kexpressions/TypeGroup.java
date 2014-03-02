@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.core.kexpressions;
 
+import de.cau.cs.kieler.core.annotations.Annotatable;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -28,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface TypeGroup extends EObject {
+public interface TypeGroup extends Annotatable {
 	/**
 	 * Returns the value of the '<em><b>Valued Objects</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.

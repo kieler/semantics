@@ -595,6 +595,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 		boolValueEClass.getESuperTypes().add(this.getValue());
 		operatorExpressionEClass.getESuperTypes().add(this.getExpression());
 		textExpressionEClass.getESuperTypes().add(this.getExpression());
+		typeGroupEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

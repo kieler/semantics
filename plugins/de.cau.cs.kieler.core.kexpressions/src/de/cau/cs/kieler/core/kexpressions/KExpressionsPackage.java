@@ -361,13 +361,22 @@ public interface KExpressionsPackage extends EPackage {
     int TYPE_GROUP = 9;
 
     /**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TYPE_GROUP__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+
+				/**
 	 * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int TYPE_GROUP__VALUED_OBJECTS = 0;
+    int TYPE_GROUP__VALUED_OBJECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -376,7 +385,7 @@ public interface KExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int TYPE_GROUP__TYPE = 1;
+    int TYPE_GROUP__TYPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
 	 * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -385,7 +394,7 @@ public interface KExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_GROUP__INPUT = 2;
+	int TYPE_GROUP__INPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
 				/**
 	 * The feature id for the '<em><b>Output</b></em>' attribute.
@@ -394,7 +403,7 @@ public interface KExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_GROUP__OUTPUT = 3;
+	int TYPE_GROUP__OUTPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
 				/**
 	 * The feature id for the '<em><b>Static</b></em>' attribute.
@@ -403,7 +412,7 @@ public interface KExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_GROUP__STATIC = 4;
+	int TYPE_GROUP__STATIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
 				/**
 	 * The feature id for the '<em><b>Signal</b></em>' attribute.
@@ -412,7 +421,7 @@ public interface KExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_GROUP__SIGNAL = 5;
+	int TYPE_GROUP__SIGNAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
 				/**
 	 * The feature id for the '<em><b>Constant</b></em>' attribute.
@@ -421,7 +430,7 @@ public interface KExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TYPE_GROUP__CONSTANT = 6;
+	int TYPE_GROUP__CONSTANT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
 				/**
 	 * The number of structural features of the '<em>Type Group</em>' class.
@@ -430,7 +439,7 @@ public interface KExpressionsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int TYPE_GROUP_FEATURE_COUNT = 7;
+    int TYPE_GROUP_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
 	 * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.

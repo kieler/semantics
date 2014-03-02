@@ -142,6 +142,7 @@ public class KExpressionsSwitch<T> extends Switch<T> {
 			case KExpressionsPackage.TYPE_GROUP: {
 				TypeGroup typeGroup = (TypeGroup)theEObject;
 				T result = caseTypeGroup(typeGroup);
+				if (result == null) result = caseAnnotatable(typeGroup);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

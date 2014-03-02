@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.core.kexpressions.provider;
 
 
+import de.cau.cs.kieler.core.annotations.provider.AnnotatableItemProvider;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.TypeGroup;
@@ -36,7 +37,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class TypeGroupItemProvider
-	extends ItemProviderAdapter
+	extends AnnotatableItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
