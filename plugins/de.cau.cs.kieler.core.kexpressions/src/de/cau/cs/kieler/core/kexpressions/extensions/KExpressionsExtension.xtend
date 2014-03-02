@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.TypeGroup
+import java.util.List
 
 /**
  * KExpressions Extensions. 
@@ -519,7 +520,26 @@ class KExpressionsExtension {
 
     def public TypeGroup createTypeGroup(ValueType valueType) {
          KExpressionsFactory::eINSTANCE.createTypeGroup => [ type = valueType ]
-    }    
+    }
+    
+    def public TypeGroup createTypeGroup(ValuedObject valuedObject) {
+    	createTypeGroup() => [ valuedObjects += valuedObject ]
+    }
+    
+    def public TypeGroup createTypeGroup(List<ValuedObject> valueObjects) {
+    	createTypeGroup() => [ it.valuedObjects += valuedObjects ] 
+    }
+    
+    def public TypeGroup createTypeGroupWOValuedObjects(TypeGroup typeGroup) {
+		createTypeGroup => [
+			type = typeGroup.type
+			input = typeGroup.input
+			output = typeGroup.output
+			signal = typeGroup.signal
+			static = typeGroup.static
+			constant = typeGroup.constant
+		]    	
+    }
 
     // Set the TypeGroup to be of type PURE.
     def TypeGroup setTypePure(TypeGroup typeGroup) {
@@ -555,6 +575,12 @@ class KExpressionsExtension {
     
     def ValuedObject createValuedObject(TypeGroup typeGroup, String valuedObjectName) {
     	createValuedObject(valuedObjectName) => [ typeGroup.valuedObjects += it ]
+    }
+        
+    def public removeValuedObject(List<TypeGroup> typeGroups, ValuedObject valuedObject) {
+    	for (tg : typeGroups) {
+    		if (tg.valuedObjects.contains(valuedObject)) tg.valuedObjects -= valuedObject
+    	}
     }
     
 //    // Set the ValuedObject to be a signal.
