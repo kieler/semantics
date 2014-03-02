@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.core.kexpressions.test.scoping;
 
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl;
 
@@ -28,8 +29,8 @@ public class DummyValuedObject extends ValuedObjectImpl {
      *
      * @param name the name
      */
-    public DummyValuedObject(String name) {
-        this.setType(ValueType.INT);
+    public DummyValuedObject(TypeGroup typeGroup, String name) {
+        typeGroup.getValuedObjects().add(this);
         setName(name);
     }
 
