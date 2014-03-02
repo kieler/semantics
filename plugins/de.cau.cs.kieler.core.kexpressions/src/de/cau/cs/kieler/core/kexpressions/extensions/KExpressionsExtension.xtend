@@ -46,6 +46,15 @@ class KExpressionsExtension {
     // -------------------------------------------------------------------------   
     
     //=======  TYPE GROUP WRAPPINGS  ======
+    
+    /**
+     * Since the xtend editor does not support highlighting for deprecated methods,
+     * this runtime method prints such usages on the console.
+     * TODO: Remove at some later stage.
+     */
+    def private deprecatedValuedObjectAccess() {
+    	System::out.println("USED DEPRECATED VALUED OBJECT ACCESSOR! REMOVE THIS CALL SOON!")
+    }
 
     def public TypeGroup getTypeGroup(ValuedObject valuedObject) {
     	// TODO: Safeguard check for the time of transition. Remove at some later stage. 
@@ -76,6 +85,7 @@ class KExpressionsExtension {
      * @deprecated Use type groups instead.
      */
     def public ValuedObject setInput(ValuedObject valuedObject, boolean input) {
+    	deprecatedValuedObjectAccess
     	valuedObject => [ typeGroup.input = input ]
     }
 
@@ -91,6 +101,7 @@ class KExpressionsExtension {
      * @deprecated Use type groups instead.
      */
     def public ValuedObject setOutput(ValuedObject valuedObject, boolean output) {
+    	deprecatedValuedObjectAccess
     	valuedObject => [ typeGroup.output = output ]
     }
 
@@ -106,6 +117,7 @@ class KExpressionsExtension {
      * @deprecated Use type groups instead.
      */
     def public ValuedObject setStatic(ValuedObject valuedObject, boolean statik) {
+    	deprecatedValuedObjectAccess
     	valuedObject => [ typeGroup.static = statik ]
     }
     
@@ -121,6 +133,7 @@ class KExpressionsExtension {
      * @deprecated Use type groups instead.
      */
     def public ValuedObject setConstant(ValuedObject valuedObject, boolean constant) {
+    	deprecatedValuedObjectAccess
     	valuedObject => [ typeGroup.constant = constant ]
     }
     

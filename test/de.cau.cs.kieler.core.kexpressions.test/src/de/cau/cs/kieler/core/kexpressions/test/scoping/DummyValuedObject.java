@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.core.kexpressions.test.scoping;
 
 import de.cau.cs.kieler.core.kexpressions.TypeGroup;
-import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl;
 
 /**
