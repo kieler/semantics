@@ -65,7 +65,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformationimport de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -113,6 +113,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
     @Inject
     extension DependencyTransformation
+    
+    @Inject
+    extension KExpressionsExtension
 
     // -------------------------------------------------------------------------
     // Transformation options   
