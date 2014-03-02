@@ -128,6 +128,22 @@ class KExpressionsExtension {
     def public boolean isConstant(ValuedObject valuedObject) {
     	valuedObject.constant
     }
+
+    /**
+     * @deprecated Use type groups instead.
+     */
+    def public ValuedObject setSignal(ValuedObject valuedObject, boolean signal) {
+    	deprecatedValuedObjectAccess
+    	valuedObject => [ typeGroup.signal = signal ]
+    }
+    
+    def public boolean getSignal(ValuedObject valuedObject) {
+    	valuedObject.typeGroup.signal
+    }
+
+    def public boolean isSignal(ValuedObject valuedObject) {
+    	valuedObject.signal
+    }
     
     /**
      * @deprecated Use type groups instead.
@@ -496,6 +512,40 @@ class KExpressionsExtension {
 
     //=========  VALUED OBJECT  =========
 
+    // Creates a new TypeGroup.
+    def public TypeGroup createTypeGroup() {
+         KExpressionsFactory::eINSTANCE.createTypeGroup
+    }    
+
+    def public TypeGroup createTypeGroup(ValueType valueType) {
+         KExpressionsFactory::eINSTANCE.createTypeGroup => [ type = valueType ]
+    }    
+
+    // Set the TypeGroup to be of type PURE.
+    def TypeGroup setTypePure(TypeGroup typeGroup) {
+    	typeGroup => [ type = ValueType::PURE ]
+    }
+    
+    // Set the TypeGroup to be of type INT.
+    def TypeGroup setTypeInt(TypeGroup typeGroup) {
+    	typeGroup => [ type = ValueType::INT ]
+    }    
+
+    // Set the TypeGroup to be of type BOOL.
+    def TypeGroup setTypeBool(TypeGroup typeGroup) {
+    	typeGroup => [ type = ValueType::BOOL ]
+    }    
+
+    // Set the TypeGroup to be of type DOUBLE.
+    def TypeGroup setTypeDouble(TypeGroup typeGroup) {
+    	typeGroup => [ type = ValueType::DOUBLE ]
+    }    
+
+    // Set the TypeGroup to be of type FLOAT.
+    def TypeGroup setTypeFloat(TypeGroup typeGroup) {
+    	typeGroup => [ type = ValueType::FLOAT ]
+    }    
+            
     // Creates a new ValuedObject.
     def ValuedObject createValuedObject(String valuedObjectName) {
          val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
@@ -503,86 +553,91 @@ class KExpressionsExtension {
          valuedObject
     }
     
-    // Set the ValuedObject to be a signal.
-    def ValuedObject setSignal(ValuedObject valuedObject, boolean isSignal) {
-        valuedObject.setSignal(isSignal)
-        valuedObject
+    def ValuedObject createValuedObject(TypeGroup typeGroup, String valuedObjectName) {
+    	createValuedObject(valuedObjectName) => [ typeGroup.valuedObjects += it ]
     }
     
-    // Set the ValuedObject to be an input.
-    def ValuedObject setInput(ValuedObject valuedObject) {
-         valuedObject.setInput(true)
-         valuedObject
-    }    
-    
-    // Set the ValuedObject to be an output.
-    def ValuedObject setOutput(ValuedObject valuedObject) {
-         valuedObject.setOutput(true)
-         valuedObject
-    }    
-    
-    // Set the ValuedObject to be of type PURE.
-    def ValuedObject setTypePure(ValuedObject valuedObject) {
-         valuedObject.setType(ValueType::PURE)
-         valuedObject
-    }    
-
-    // Set the ValuedObject to be of type INT.
-    def ValuedObject setTypeInt(ValuedObject valuedObject) {
-         valuedObject.setType(ValueType::INT)
-         valuedObject
-    }   
-    
-    // Set the ValuedObject to be of type BOOL.
-    def ValuedObject setTypeBool(ValuedObject valuedObject) {
-         valuedObject.setType(ValueType::BOOL)
-         valuedObject
-    }    
-    
-    // Set the ValuedObject to be of type DOUBLE.
-    def ValuedObject setTypeDouble(ValuedObject valuedObject) {
-         valuedObject.setType(ValueType::DOUBLE)
-         valuedObject
-    }    
-    
-    // Set the ValuedObject to be of type FLOAT.
-    def ValuedObject setTypeFloat(ValuedObject valuedObject) {
-         valuedObject.setType(ValueType::FLOAT)
-         valuedObject
-    }    
+//    // Set the ValuedObject to be a signal.
+//    def ValuedObject setSignal(ValuedObject valuedObject, boolean isSignal) {
+//        valuedObject.setSignal(isSignal)
+//        valuedObject
+//    }
+//    
+//    // Set the ValuedObject to be an input.
+//    def ValuedObject setInput(ValuedObject valuedObject) {
+//         valuedObject.setInput(true)
+//         valuedObject
+//    }    
+//    
+//    // Set the ValuedObject to be an output.
+//    def ValuedObject setOutput(ValuedObject valuedObject) {
+//         valuedObject.setOutput(true)
+//         valuedObject
+//    }    
+//    
+//    // Set the ValuedObject to be of type PURE.
+//    def ValuedObject setTypePure(ValuedObject valuedObject) {
+//         valuedObject.setType(ValueType::PURE)
+//         valuedObject
+//    }    
+//
+//    // Set the ValuedObject to be of type INT.
+//    def ValuedObject setTypeInt(ValuedObject valuedObject) {
+//         valuedObject.setType(ValueType::INT)
+//         valuedObject
+//    }   
+//    
+//    // Set the ValuedObject to be of type BOOL.
+//    def ValuedObject setTypeBool(ValuedObject valuedObject) {
+//         valuedObject.setType(ValueType::BOOL)
+//         valuedObject
+//    }    
+//    
+//    // Set the ValuedObject to be of type DOUBLE.
+//    def ValuedObject setTypeDouble(ValuedObject valuedObject) {
+//         valuedObject.setType(ValueType::DOUBLE)
+//         valuedObject
+//    }    
+//    
+//    // Set the ValuedObject to be of type FLOAT.
+//    def ValuedObject setTypeFloat(ValuedObject valuedObject) {
+//         valuedObject.setType(ValueType::FLOAT)
+//         valuedObject
+//    }    
 
     //===========  VARIABLES  ===========
 
     // Creates a new variable ValuedObject.
     def ValuedObject createVariable(String variableName) {
-         val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-         valuedObject.setName(variableName)
-         valuedObject.setSignal(false)
-         valuedObject;
+    	createValuedObject(variableName)
+    }
+    
+    def ValuedObject createVariable(TypeGroup typeGroup, String variableName) {
+    	createValuedObject(typeGroup, variableName)
     }
     
     // Creates a new Int variable ValuedObject.
-    def ValuedObject createIntVariable(String variableName) {
-         val valuedObject = createVariable(variableName)
-         valuedObject.setTypeInt
+    def ValuedObject createVariableInIntTypeGroup(String variableName) {
+        val tg = createTypeGroup => [ setTypeInt ]
+        createVariable(tg, variableName)	
     }
     
     // Creates a new Bool variable ValuedObject.
-    def ValuedObject createBoolVariable(String variableName) {
-         val valuedObject = createVariable(variableName)
-         valuedObject.setTypeBool
+    def ValuedObject creatVariableInBoolTypeGroup(String variableName) {
+        val tg = createTypeGroup => [ setTypeBool ]
+        createVariable(tg, variableName)	
     }
 
     // Creates a new Double variable ValuedObject.
-    def ValuedObject createDoubleVariable(String variableName) {
-         val valuedObject = createVariable(variableName)
-         valuedObject.setTypeDouble
+    def ValuedObject createVariableInDoubleTypeGroup(String variableName) {
+        val tg = createTypeGroup => [ setTypeDouble ]
+        createVariable(tg, variableName)	
     }
 
     // Creates a new Float variable ValuedObject.
-    def ValuedObject createFloatVariable(String variableName) {
-         val valuedObject = createVariable(variableName)
-         valuedObject.setTypeFloat
+    def ValuedObject createVariableInFloatTypeGroup(String variableName) {
+        val tg = createTypeGroup => [ setTypeInt ]
+        createVariable(tg, variableName)	
     }
 
     // Apply attributes of another ValuedObject.
@@ -600,41 +655,41 @@ class KExpressionsExtension {
     //============  SIGNALS  ============
     
     // Creates a new signal ValuedObject.
-    def ValuedObject createSignal(String signalName) {
-         val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject()
-         valuedObject.setName(signalName)
-         valuedObject.setSignal(true)
-         valuedObject
+    def ValuedObject createSignal(TypeGroup typeGroup, String signalName) {
+    	if (typeGroup.signal == false) {
+    		throw new UnsupportedOperationException("The given type group does not accept signals!")
+    	}
+		createValuedObject(typeGroup, signalName)
     }
 
     // Creates a new pure signal ValuedObject.
-    def ValuedObject createPureSignal(String variableName) {
-         val valuedObject = createSignal(variableName)
-         valuedObject.setTypePure
+    def ValuedObject createSignalInPureTypeGroup(String variableName) {
+        val tg = createTypeGroup => [ setTypePure; signal = true ]
+        createSignal(tg, variableName)	
     }
 
     // Creates a new Int signal ValuedObject.
-    def ValuedObject createIntSignal(String variableName) {
-         val valuedObject = createSignal(variableName)
-         valuedObject.setTypeInt
+    def ValuedObject createSignalInIntTypeGroup(String variableName) {
+        val tg = createTypeGroup => [ setTypeInt; signal = true ]
+        createSignal(tg, variableName)	
     }
 
     // Creates a new Bool signal ValuedObject.
-    def ValuedObject createBoolSignal(String variableName) {
-         val valuedObject = createSignal(variableName)
-         valuedObject.setTypeBool
+    def ValuedObject createSignalInBoolTypeGroup(String variableName) {
+        val tg = createTypeGroup => [ setTypeBool; signal = true ]
+        createSignal(tg, variableName)	
     }
 
     // Creates a new Double signal ValuedObject.
-    def ValuedObject createDoubleSignal(String variableName) {
-         val valuedObject = createSignal(variableName)
-         valuedObject.setTypeDouble
+    def ValuedObject createSignalInDoubleTypeGroup(String variableName) {
+        val tg = createTypeGroup => [ setTypeDouble; signal = true ]
+        createSignal(tg, variableName)	
     }
 
     // Creates a new Float signal ValuedObject.
-    def ValuedObject createFloatSignal(String variableName) {
-         val valuedObject = createSignal(variableName)
-         valuedObject.setTypeFloat
+    def ValuedObject createSignalInFloatTypeGroup(String variableName) {
+        val tg = createTypeGroup => [ setTypeFloat; signal = true ]
+        createSignal(tg, variableName)	
     }
     
     //===========  VALUES  ===========
