@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.s.s;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getPriority <em>Priority</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.Program#getValuedObjects <em>Valued Objects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.Program#getTypeGroups <em>Type Groups</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getGlobalHostCodeInstruction <em>Global Host Code Instruction</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getStates <em>States</em>}</li>
  * </ul>
@@ -83,20 +83,20 @@ public interface Program extends EObject
   void setPriority(int value);
 
   /**
-   * Returns the value of the '<em><b>Valued Objects</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
+   * Returns the value of the '<em><b>Type Groups</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.TypeGroup}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Valued Objects</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Type Groups</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Valued Objects</em>' containment reference list.
-   * @see de.cau.cs.kieler.s.s.SPackage#getProgram_ValuedObjects()
+   * @return the value of the '<em>Type Groups</em>' containment reference list.
+   * @see de.cau.cs.kieler.s.s.SPackage#getProgram_TypeGroups()
    * @model containment="true"
    * @generated
    */
-  EList<ValuedObject> getValuedObjects();
+  EList<TypeGroup> getTypeGroups();
 
   /**
    * Returns the value of the '<em><b>Global Host Code Instruction</b></em>' attribute.

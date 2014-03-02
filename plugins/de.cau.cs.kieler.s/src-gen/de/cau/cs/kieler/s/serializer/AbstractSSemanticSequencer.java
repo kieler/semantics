@@ -16,6 +16,7 @@ import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kexpressions.serializer.KExpressionsSemanticSequencer;
@@ -262,6 +263,12 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 				   context == grammarAccess.getTextExpressionRule() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
 					sequence_TextExpression(context, (TextExpression) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.TYPE_GROUP:
+				if(context == grammarAccess.getTypeGroupRule()) {
+					sequence_TypeGroup(context, (TypeGroup) semanticObject); 
 					return; 
 				}
 				else break;
@@ -563,7 +570,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (name=ID priority=INT (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? globalHostCodeInstruction=HOSTCODE? states+=State+)
+	 *     (name=ID priority=INT typeGroups+=TypeGroup* globalHostCodeInstruction=HOSTCODE? states+=State+)
 	 */
 	protected void sequence_Program(EObject context, Program semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -572,7 +579,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (name=ID valuedObjects+=ValuedObject* instructions+=Instruction*)
+	 *     (name=ID typeGroups+=TypeGroup* instructions+=Instruction*)
 	 */
 	protected void sequence_State(EObject context, State semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -608,15 +615,24 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         constant?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 
 	 *         signal?='signal'? 
-	 *         type=ValueType? 
-	 *         name=ID 
-	 *         initialValue=Expression? 
-	 *         combineOperator=CombineOperator?
+	 *         type=ValueType 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject*
 	 *     )
+	 */
+	protected void sequence_TypeGroup(EObject context, TypeGroup semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (annotations+=Annotation* name=ID initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

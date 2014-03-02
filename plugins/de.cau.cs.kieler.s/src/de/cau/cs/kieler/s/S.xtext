@@ -21,7 +21,7 @@ Program :
 //	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 //	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
     
-    ((valuedObjects += ValuedObject) (valuedObjects += ValuedObject)*)?
+    (typeGroups += TypeGroup)*
 //    (((valuedObjects+=ValuedObject)+ ';')*)? 
 	('\'' globalHostCodeInstruction = HOSTCODE '\'')?
 	(states += State)+
@@ -41,21 +41,25 @@ Program :
 
 State:
 	'state' '(' name = ID ')' '{'
-	(((valuedObjects+=ValuedObject)+ ';')*)? 
+    (typeGroups += TypeGroup)*
 	(instructions+=Instruction';')*
 	'}'
 ;
 
 // TODO: ensure signal AND variable declaration in top level....
 
-
-ValuedObject returns kexpressions::ValuedObject:
+TypeGroup returns kexpressions::TypeGroup:
     (annotations+=Annotation)*
+	(constant?='const')?
     (input?='input')?
     (output?='output')?
     (static?='static')?
     (signal?='signal')?
-    (type = ValueType)?
+    type = ValueType valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+;
+
+ValuedObject returns kexpressions::ValuedObject:
+    (annotations+=Annotation)*
     name=ID ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
