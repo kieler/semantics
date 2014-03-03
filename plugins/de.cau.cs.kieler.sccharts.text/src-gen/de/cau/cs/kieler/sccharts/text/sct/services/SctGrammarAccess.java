@@ -396,7 +396,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public Group getGroup_5_1() { return cGroup_5_1; }
 
 		//"{"
-		public Keyword getLeftCurlyBracketKeyword_5_0() { return cLeftCurlyBracketKeyword_5_0; }
+		public Keyword getLeftCurlyBracketKeyword_5_1_0() { return cLeftCurlyBracketKeyword_5_1_0; }
 
 		//(typeGroups+=TypeGroup | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?
 		public Group getGroup_5_1_1() { return cGroup_5_1_1; }
@@ -411,34 +411,34 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getTypeGroupsTypeGroupParserRuleCall_5_1_1_0_0_0() { return cTypeGroupsTypeGroupParserRuleCall_5_1_1_0_0_0; }
 
 		//localActions+=LocalAction
-		public Assignment getLocalActionsAssignment_5_1_0_1() { return cLocalActionsAssignment_5_1_0_1; }
+		public Assignment getLocalActionsAssignment_5_1_1_0_1() { return cLocalActionsAssignment_5_1_1_0_1; }
 
 		//LocalAction
-		public RuleCall getLocalActionsLocalActionParserRuleCall_5_1_0_1_0() { return cLocalActionsLocalActionParserRuleCall_5_1_0_1_0; }
+		public RuleCall getLocalActionsLocalActionParserRuleCall_5_1_1_0_1_0() { return cLocalActionsLocalActionParserRuleCall_5_1_1_0_1_0; }
 
 		//bodyText+=TextualCode*
-		public Assignment getBodyTextAssignment_5_1_1() { return cBodyTextAssignment_5_1_1; }
+		public Assignment getBodyTextAssignment_5_1_1_1() { return cBodyTextAssignment_5_1_1_1; }
 
 		//TextualCode
-		public RuleCall getBodyTextTextualCodeParserRuleCall_5_1_1_0() { return cBodyTextTextualCodeParserRuleCall_5_1_1_0; }
+		public RuleCall getBodyTextTextualCodeParserRuleCall_5_1_1_1_0() { return cBodyTextTextualCodeParserRuleCall_5_1_1_1_0; }
 
 		//(regions+=SingleRegion regions+=Region*)?
-		public Group getGroup_5_1_2() { return cGroup_5_1_2; }
+		public Group getGroup_5_1_1_2() { return cGroup_5_1_1_2; }
 
 		//regions+=SingleRegion
-		public Assignment getRegionsAssignment_5_1_2_0() { return cRegionsAssignment_5_1_2_0; }
+		public Assignment getRegionsAssignment_5_1_1_2_0() { return cRegionsAssignment_5_1_1_2_0; }
 
 		//SingleRegion
-		public RuleCall getRegionsSingleRegionParserRuleCall_5_1_2_0_0() { return cRegionsSingleRegionParserRuleCall_5_1_2_0_0; }
+		public RuleCall getRegionsSingleRegionParserRuleCall_5_1_1_2_0_0() { return cRegionsSingleRegionParserRuleCall_5_1_1_2_0_0; }
 
 		//regions+=Region*
-		public Assignment getRegionsAssignment_5_1_2_1() { return cRegionsAssignment_5_1_2_1; }
+		public Assignment getRegionsAssignment_5_1_1_2_1() { return cRegionsAssignment_5_1_1_2_1; }
 
 		//Region
-		public RuleCall getRegionsRegionParserRuleCall_5_1_2_1_0() { return cRegionsRegionParserRuleCall_5_1_2_1_0; }
+		public RuleCall getRegionsRegionParserRuleCall_5_1_1_2_1_0() { return cRegionsRegionParserRuleCall_5_1_1_2_1_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_5_2() { return cRightCurlyBracketKeyword_5_2; }
+		public Keyword getRightCurlyBracketKeyword_5_1_2() { return cRightCurlyBracketKeyword_5_1_2; }
 	}
 
 	public class StateElements extends AbstractParserRuleElementFinder {
@@ -466,14 +466,19 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLabelSTRINGTerminalRuleCall_5_0 = (RuleCall)cLabelAssignment_5.eContents().get(0);
 		private final Alternatives cAlternatives_6 = (Alternatives)cGroup.eContents().get(6);
 		private final Group cGroup_6_0 = (Group)cAlternatives_6.eContents().get(0);
-		private final Keyword cReferencesKeyword_6_0_0 = (Keyword)cGroup_6_0.eContents().get(0);
+		private final Keyword cCommercialAtKeyword_6_0_0 = (Keyword)cGroup_6_0.eContents().get(0);
 		private final Assignment cBodyReferenceAssignment_6_0_1 = (Assignment)cGroup_6_0.eContents().get(1);
 		private final CrossReference cBodyReferenceStateCrossReference_6_0_1_0 = (CrossReference)cBodyReferenceAssignment_6_0_1.eContents().get(0);
 		private final RuleCall cBodyReferenceStateIDTerminalRuleCall_6_0_1_0_1 = (RuleCall)cBodyReferenceStateCrossReference_6_0_1_0.eContents().get(1);
 		private final Group cGroup_6_0_2 = (Group)cGroup_6_0.eContents().get(2);
-		private final Keyword cMapKeyword_6_0_2_0 = (Keyword)cGroup_6_0_2.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_6_0_2_0 = (Keyword)cGroup_6_0_2.eContents().get(0);
 		private final Assignment cRenamingsAssignment_6_0_2_1 = (Assignment)cGroup_6_0_2.eContents().get(1);
 		private final RuleCall cRenamingsSubstitutionParserRuleCall_6_0_2_1_0 = (RuleCall)cRenamingsAssignment_6_0_2_1.eContents().get(0);
+		private final Group cGroup_6_0_2_2 = (Group)cGroup_6_0_2.eContents().get(2);
+		private final Keyword cCommaKeyword_6_0_2_2_0 = (Keyword)cGroup_6_0_2_2.eContents().get(0);
+		private final Assignment cRenamingsAssignment_6_0_2_2_1 = (Assignment)cGroup_6_0_2_2.eContents().get(1);
+		private final RuleCall cRenamingsSubstitutionParserRuleCall_6_0_2_2_1_0 = (RuleCall)cRenamingsAssignment_6_0_2_2_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_6_0_2_3 = (Keyword)cGroup_6_0_2.eContents().get(3);
 		private final Group cGroup_6_1 = (Group)cAlternatives_6.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_6_1_0 = (Keyword)cGroup_6_1.eContents().get(0);
 		private final Group cGroup_6_1_1 = (Group)cGroup_6_1.eContents().get(1);
@@ -575,11 +580,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//| localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")?
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 
-		//"references" bodyReference=[sccharts::State] ("map" renamings+=Substitution)*
+		//"@" bodyReference=[sccharts::State] ("[" renamings+=Substitution ("," renamings+=Substitution)* "]")?
 		public Group getGroup_6_0() { return cGroup_6_0; }
 
-		//"references"
-		public Keyword getReferencesKeyword_6_0_0() { return cReferencesKeyword_6_0_0; }
+		//"@"
+		public Keyword getCommercialAtKeyword_6_0_0() { return cCommercialAtKeyword_6_0_0; }
 
 		//bodyReference=[sccharts::State]
 		public Assignment getBodyReferenceAssignment_6_0_1() { return cBodyReferenceAssignment_6_0_1; }
@@ -590,11 +595,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getBodyReferenceStateIDTerminalRuleCall_6_0_1_0_1() { return cBodyReferenceStateIDTerminalRuleCall_6_0_1_0_1; }
 
-		//("map" renamings+=Substitution)*
+		//("[" renamings+=Substitution ("," renamings+=Substitution)* "]")?
 		public Group getGroup_6_0_2() { return cGroup_6_0_2; }
 
-		//"map"
-		public Keyword getMapKeyword_6_0_2_0() { return cMapKeyword_6_0_2_0; }
+		//"["
+		public Keyword getLeftSquareBracketKeyword_6_0_2_0() { return cLeftSquareBracketKeyword_6_0_2_0; }
 
 		//renamings+=Substitution
 		public Assignment getRenamingsAssignment_6_0_2_1() { return cRenamingsAssignment_6_0_2_1; }
@@ -1067,7 +1072,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cActualAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cActualIDTerminalRuleCall_0_0 = (RuleCall)cActualAssignment_0.eContents().get(0);
-		private final Keyword cToKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cSolidusKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cFormalAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cFormalIDTerminalRuleCall_2_0 = (RuleCall)cFormalAssignment_2.eContents().get(0);
 		
@@ -1076,7 +1081,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//	actual=ID "/" formal=ID;
 		public ParserRule getRule() { return rule; }
 
-		//actual=ID "to" formal=ID
+		//actual=ID "/" formal=ID
 		public Group getGroup() { return cGroup; }
 
 		//actual=ID
@@ -1085,8 +1090,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getActualIDTerminalRuleCall_0_0() { return cActualIDTerminalRuleCall_0_0; }
 
-		//"to"
-		public Keyword getToKeyword_1() { return cToKeyword_1; }
+		//"/"
+		public Keyword getSolidusKeyword_1() { return cSolidusKeyword_1; }
 
 		//formal=ID
 		public Assignment getFormalAssignment_2() { return cFormalAssignment_2; }
@@ -1396,13 +1401,17 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
+	//
 	////Action returns sccharts::Action:
-	////    {sccharts::Action}
-	//////    (annotations += Annotation)*
+	// //    {sccharts::Action}
+	// ////    (annotations += Annotation)*
+	//
 	////	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 		
+	//
 	//EntryAction returns sccharts::EntryAction:
 	//	{sccharts::EntryAction} //    (annotations += Annotation)*
-	//	"entry" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+	// "entry" trigger=BoolExpression? ("/" effects+=Effect (";"
+	//	effects+=Effect)*)? ";";
 	public ActionsGrammarAccess.EntryActionElements getEntryActionAccess() {
 		return gaActions.getEntryActionAccess();
 	}
@@ -1413,7 +1422,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DuringAction returns sccharts::DuringAction:
 	//	{sccharts::DuringAction} //    (annotations += Annotation)*
-	//	immediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+	// immediate?="immediate"? "during" trigger=BoolExpression?
+	//	("/" effects+=Effect (";" effects+=Effect)*)? ";";
 	public ActionsGrammarAccess.DuringActionElements getDuringActionAccess() {
 		return gaActions.getDuringActionAccess();
 	}
@@ -1424,7 +1434,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExitAction returns sccharts::ExitAction:
 	//	{sccharts::ExitAction} //    (annotations += Annotation)*
-	//	"exit" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";";
+	// "exit" trigger=BoolExpression? ("/" effects+=Effect (";"
+	//	effects+=Effect)*)? ";";
 	public ActionsGrammarAccess.ExitActionElements getExitActionAccess() {
 		return gaActions.getExitActionAccess();
 	}
@@ -1435,7 +1446,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SuspendAction returns sccharts::SuspendAction:
 	//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-	//	immediate?="immediate"? weak?="weak"? "suspend" trigger=BoolExpression? ";";
+	// immediate?="immediate"? weak?="weak"? "suspend"
+	//	trigger=BoolExpression? ";";
 	public ActionsGrammarAccess.SuspendActionElements getSuspendActionAccess() {
 		return gaActions.getSuspendActionAccess();
 	}

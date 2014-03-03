@@ -19195,7 +19195,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleSCChart_in_ruleRootRegion309 = new BitSet(new long[]{0x001E0000000C0402L});
         public static final BitSet FOLLOW_ruleSingleRegion_in_entryRuleSingleRegion346 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleSingleRegion356 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleSingleRegion415 = new BitSet(new long[]{0x0000200000010400L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleSingleRegion415 = new BitSet(new long[]{0x0000000000090400L});
         public static final BitSet FOLLOW_16_in_ruleSingleRegion428 = new BitSet(new long[]{0x0000000000020030L});
         public static final BitSet FOLLOW_RULE_ID_in_ruleSingleRegion445 = new BitSet(new long[]{0x0000000000020020L});
         public static final BitSet FOLLOW_RULE_STRING_in_ruleSingleRegion468 = new BitSet(new long[]{0x0000000000020000L});
@@ -19205,7 +19205,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleState_in_ruleSingleRegion553 = new BitSet(new long[]{0x001E00000E080402L});
         public static final BitSet FOLLOW_ruleRegion_in_entryRuleRegion590 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleRegion600 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleRegion658 = new BitSet(new long[]{0x0000200000010400L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleRegion658 = new BitSet(new long[]{0x0000000000090400L});
         public static final BitSet FOLLOW_16_in_ruleRegion671 = new BitSet(new long[]{0x0000000000020030L});
         public static final BitSet FOLLOW_RULE_ID_in_ruleRegion688 = new BitSet(new long[]{0x0000000000020020L});
         public static final BitSet FOLLOW_RULE_STRING_in_ruleRegion711 = new BitSet(new long[]{0x0000000000020000L});
