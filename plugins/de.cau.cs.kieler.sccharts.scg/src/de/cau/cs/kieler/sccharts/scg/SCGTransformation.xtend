@@ -48,6 +48,7 @@ import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -60,6 +61,9 @@ class SCGTransformation {
 
     @Inject
     extension KExpressionsExtension
+    
+    @Inject
+    extension AnnotationsExtensions
 
     @Inject
     extension SCGExtensions
@@ -70,6 +74,8 @@ class SCGTransformation {
     private static val Injector i = ActionsStandaloneSetup::doSetup();
     private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
     private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
+    
+    private static val String ANNOTATION_REGIONNAME = "RegionName"
     
     //-------------------------------------------------------------------------
     //--                         U T I L I T Y                               --
@@ -342,6 +348,8 @@ class SCGTransformation {
        region.map(entry)
        entry.setExit(exit)
        exit.map(region)
+       if (!region.label.nullOrEmpty)
+       		entry.annotations += createStringAnnotation(ANNOTATION_REGIONNAME, region.label)
        for (state : region.states) {
            state.transformSCGGenerateNodes(sCGraph)
        }
