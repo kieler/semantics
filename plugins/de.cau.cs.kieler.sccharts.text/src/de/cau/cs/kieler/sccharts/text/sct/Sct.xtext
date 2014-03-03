@@ -5,18 +5,25 @@ import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
 import "http://kieler.cs.cau.de/sccharts/0.1.0" as sccharts
 
+generate sct "http://kieler.cs.cau.de/sccharts/textual/0.1.0"
+
 // ---------------------------------------------------------------------------------------------------
 
-RootRegion returns sccharts::Region:
-	{sccharts::Region}
-    (annotations+=ImportAnnotation)*
-    (
-      (annotations += Annotation)*
-      'region' id=ID (label=STRING)? ':'
-      (typeGroups+=TypeGroup)*
-      (bodyText+=TextualCode)* 
-     )?
-    (states+=SCChart)*;
+Root returns sccharts::State:
+    SCChart
+;
+
+//TheRootRegion:
+//    {TheRootRegion}
+//    
+////	{sccharts::Region}
+////    (annotations+=ImportAnnotation)*
+//    (
+//      (annotations += Annotation)*
+//      'region' id=ID (label=STRING)? ':'
+//      (typeGroups+=TypeGroup)*
+//     )?
+//    (states+=SCChart)*;
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -26,7 +33,6 @@ SingleRegion returns sccharts::Region:
       (annotations += Annotation)*
       'region' (id=ID)? (label=STRING)? ':'
       (typeGroups+=TypeGroup)*
-      (bodyText+=TextualCode)*
      )?
     (states+=State)*;
 
@@ -37,25 +43,26 @@ Region returns sccharts::Region:
     (annotations += Annotation)*
     'region' (id=ID)? (label=STRING)? ':'
       (typeGroups+=TypeGroup)*
-    (bodyText+=TextualCode)* 
     (states+=State)+;
 
 // ---------------------------------------------------------------------------------------------------
 
-SCChart returns sccharts::State:
+SCChart:
+    ('package' package = QualifiedName)?
+    imports += ImportDecl*
+    
     (annotations += Annotation)*
-    (type=StateType)? ('scchart') (id=ID) (label=STRING)?
+    ('scchart') (id=ID) (label=STRING)?
   
     (
-      ('@' bodyReference = [sccharts::State|ID]
-        ('[' renamings+= Substitution (',' renamings+= Substitution)* ']')?
+      ('references' referencedScope = [sccharts::State|ID]
+        ('bind' bindings += Binding (',' bindings += Binding)*)?
        )
      | 
       ('{'
           (
             (typeGroups+=TypeGroup |
              localActions+=LocalAction)*
-            (bodyText += TextualCode)*
             (
              (regions+=SingleRegion)(regions+=Region)*
              )?
@@ -63,6 +70,18 @@ SCChart returns sccharts::State:
           '}') 
      )?
 ;
+
+ImportDecl: 
+    'import' 
+        (importedType=[sccharts::State|QualifiedName] 
+        | importedNamespace=QualifiedNameWithWildcard)
+;
+
+QualifiedName:
+  ID ('.' ID)*;
+
+QualifiedNameWithWildcard :
+    QualifiedName  '.' '*';
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -77,16 +96,14 @@ State returns sccharts::State:
     (type=StateType)? ('state') (id=ID) (label=STRING)?
   
     (
-      ('@' bodyReference = [sccharts::State|ID]
-        ('[' renamings+= Substitution (',' renamings+= Substitution)* ']')?
+      ('references' referencedScope = [sccharts::State|ID]
+        ('bind' bindings += Binding (',' bindings += Binding)*)?
        )
      | 
       ('{'
           (
-            (//valuedObjects+=ValuedObject |
-             typeGroups+=TypeGroup |
+            (typeGroups+=TypeGroup |
              localActions+=LocalAction)*
-            (bodyText += TextualCode)*
             (
              (regions+=SingleRegion)(regions+=Region)*
              )?
@@ -162,8 +179,11 @@ TextualCode returns kexpressions::TextExpression:
 
 // ---------------------------------------------------------------------------------------------------
 
-Substitution returns sccharts::Substitution:
-	actual = ID '/' formal = ID;
+Binding returns sccharts::Binding:
+	formal = [kexpressions::ValuedObject|ID] 
+	'to' 
+	actual = [kexpressions::ValuedObject|ID]
+;
 
 // ---------------------------------------------------------------------------------------------------
 

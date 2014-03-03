@@ -227,14 +227,18 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
          * of the esterel model
          */
         if (KExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(obj)
-                && ((ValuedObjectReference) obj).getValuedObject() != null
+                && !obj.eIsProxy()
+                && ((ValuedObjectReference) obj).eGgetValuedObject() != null
+                && !((ValuedObjectReference) obj).getValuedObject().eIsProxy()
                 && KExpressionsPackage.eINSTANCE.getValuedObject().isInstance(((ValuedObjectReference) obj).getValuedObject())
                 && ((ValuedObjectReference) obj).getValuedObject().eResource() != obj.eResource()) {
             ValuedObject vObj = ((ValuedObjectReference) obj).getValuedObject();
             l.add(new EObjectDescription(QualifiedName.create(vObj.getName()), vObj,
                    Collections.<String, String> emptyMap()));
         } else if (SCChartsPackage.eINSTANCE.getEmission().isInstance(obj)
+                && !obj.eIsProxy()
                 && ((Emission) obj).getValuedObject() != null
+                && !((Emission) obj).getValuedObject().eIsProxy()
                 && ((Emission) obj).getValuedObject().eResource() != obj.eResource()) {
             ValuedObject s = ((Emission) obj).getValuedObject();
             l.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
@@ -300,6 +304,7 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
          * of the esterel model
          */
         if (KExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(obj)
+                && !obj.eIsProxy()
                 && ((ValuedObjectReference) obj).getValuedObject() != null
                 //&& KExpressionsPackage.eINSTANCE.getVariable().isInstance(((ValuedObjectReference) obj).getValuedObject())
                 && ((ValuedObjectReference) obj).getValuedObject().eResource() != obj.eResource()) {

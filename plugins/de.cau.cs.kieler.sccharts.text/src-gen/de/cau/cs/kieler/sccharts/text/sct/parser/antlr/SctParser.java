@@ -25,7 +25,7 @@ public class SctParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParse
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "RootRegion";
+		return "Root";
 	}
 	
 	public SctGrammarAccess getGrammarAccess() {

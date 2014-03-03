@@ -14,17 +14,12 @@
 package de.cau.cs.kieler.sccharts.text.sct.validation;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.xtext.validation.Check;
-
-
-
-
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.xtext.validation.Check;
 
 import de.cau.cs.kieler.core.model.validation.CustomEValidator;
 import de.cau.cs.kieler.sccharts.Region;

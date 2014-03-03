@@ -24,9 +24,9 @@ public class SctRuntimeModule extends
         return SctResource.class;
     }
 
-    public Class<? extends org.eclipse.xtext.linking.ILinker> bindILinker() {
-        return SctLinker.class;
-    }
+//    public Class<? extends org.eclipse.xtext.linking.ILinker> bindILinker() {
+//        return SctLinker.class;
+//    }
 
     public Class<? extends org.eclipse.xtext.parsetree.reconstr.ITransientValueService> bindITransientValueService() {
         return SctTransientValueService.class;

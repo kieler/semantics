@@ -45,8 +45,8 @@ public class SctKeywordSerializer extends KeywordSerializer {
     SctGrammarAccess grammarAccess;
 
     public String serializeUnassignedKeyword(EObject context, Keyword keyword, INode node) {
-        if (keyword == grammarAccess.getRootRegionAccess().getRegionKeyword_2_1()
-                || keyword == grammarAccess.getRootRegionAccess().getColonKeyword_2_4()) {
+        if (keyword == grammarAccess.getTheRootRegionAccess().getRegionKeyword_4_1()
+                || keyword == grammarAccess.getTheRootRegionAccess().getColonKeyword_4_4()) {
             Region region = (Region) context;
             if (Strings.isEmpty(region.getId())
                     && Strings.isEmpty(region.getLabel())

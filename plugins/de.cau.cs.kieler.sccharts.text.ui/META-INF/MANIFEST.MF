@@ -27,4 +27,4 @@ Export-Package: de.cau.cs.kieler.sccharts.text.actions.ui.contentassist.antlr,
  de.cau.cs.kieler.sccharts.text.sct.ui.contentassist,
  de.cau.cs.kieler.sccharts.text.actions.ui.quickfix,
  de.cau.cs.kieler.sccharts.text.sct.ui.quickfix
-Bundle-Activator: de.cau.cs.kieler.sccharts.text.ui.SctUIPlugin
+Bundle-Activator: de.cau.cs.kieler.sccharts.text.sct.ui.internal.SctActivator

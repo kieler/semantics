@@ -26,13 +26,12 @@ import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.impl.AnnotationImpl;
 import de.cau.cs.kieler.core.kexpressions.CombineOperator;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.StateType;
-import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.text.sct.formatting.SctValueSerializer;
 
@@ -81,7 +80,8 @@ public class SctTransientValueService extends DefaultTransientValueService {
                 || feature == SCChartsPackage.eINSTANCE.getState_IncomingTransitions()
                 || feature == SCChartsPackage.eINSTANCE.getRegion_ParentState()
                 || feature == SCChartsPackage.eINSTANCE.getTransition_SourceState()
-                || feature == SCChartsPackage.eINSTANCE.getSubstitution_ParentScope()) {
+//                || feature == SCChartsPackage.eINSTANCE.getSubstitution_ParentScope()) 
+        ) {
             return true;
         }
 
@@ -102,13 +102,13 @@ public class SctTransientValueService extends DefaultTransientValueService {
             return (scope.getLabel() == null || scope.getLabel().equals(scope.getId()));
         }
 
-        if (feature == SCChartsPackage.eINSTANCE.getScope_BodyContents()) {
-            return true;
-        }
+//        if (feature == SCChartsPackage.eINSTANCE.getScope_BodyContents()) {
+//            return true;
+//        }
 
-        if (feature == SCChartsPackage.eINSTANCE.getScope_BodyReference()) {
-            return true;
-        }
+//        if (feature == SCChartsPackage.eINSTANCE.getScope_BodyReference()) {
+//            return true;
+//        }
 
 
         /* suppress id serialization if id is equals to "" */
