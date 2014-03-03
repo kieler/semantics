@@ -373,7 +373,8 @@ class SCGExtensions {
             //   - that the flow is not already included in the flow list
             //   - the target of the flow is not already processed
             //   - and the target of the flow is not the exit node.  
-            nextNode.allNext.filter[ 
+            if (nextNode != null)
+            nextNode.allNext?.filter[ 
             	(!returnList.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
                 (!it.target.equals(exit)) ] 

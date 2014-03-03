@@ -78,7 +78,7 @@ import javax.inject.Inject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtensionimport de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -158,7 +158,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     /** Inject KExpression extension. */
     @Inject
     extension KExpressionsExtension
-
+    
+    @Inject
+    extension AnnotationsExtensions
 
     @Inject
     extension AnalysesVisualization
@@ -317,6 +319,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     /** Color codes */
     private static val KColor SCCHARTSBLUE = RENDERING_FACTORY.createKColor()=>[it.red=205;it.green=220;it.blue=243];
+    private static val KColor REGIONLABEL = RENDERING_FACTORY.createKColor()=>[it.red=80;it.green=80;it.blue=80];
     private static val KColor BASICBLOCKBORDER = RENDERING_FACTORY.createKColor()=>[it.red=248;it.green=0;it.blue=253];
     private static val KColor SCHEDULINGBLOCKBORDER = RENDERING_FACTORY.createKColor()=>[it.red=128;it.green=0;it.blue=243];
     private static val KColor DEPENDENCY_ABSWRITEREAD = RENDERING_FACTORY.createKColor()=>[it.red = 0; it.green = 192; it.blue = 0;]
@@ -340,6 +343,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     
     /** Constants for annotations */
     private static val String ANNOTATION_BRANCH = "branch"
+    private static val String ANNOTATION_REGIONNAME = "RegionName"
 
 	/** 
 	 * Constants for hierarchical node groups
@@ -454,7 +458,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // border and connects them via a port. Thus, a kind of pseudo hierarchical edge layout is archived. 
             if (SHOW_HIERARCHY.booleanValue) {    
                 scg.nodes.filter(typeof(Fork)).forEach[ allNext.map[ target ].filter(typeof(Entry)).forEach[
-                	if (it != null) getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY)
+                	if (it != null) {
+                		val regionLabel = it.getStringAnnotationValue(ANNOTATION_REGIONNAME)
+                		getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY) => [
+                			if (!regionLabel.nullOrEmpty)
+                				addInsideTopLeftNodeLabel(regionLabel, 8, KlighdConstants::DEFAULT_FONT_NAME).foreground =  
+                					REGIONLABEL
+                		]
+               		}
                 ]] 
             }
             

@@ -348,11 +348,11 @@ class SCGTransformation {
        region.map(entry)
        entry.setExit(exit)
        exit.map(region)
-       if (!region.label.nullOrEmpty)
-       		entry.annotations += createStringAnnotation(ANNOTATION_REGIONNAME, region.label)
        for (state : region.states) {
            state.transformSCGGenerateNodes(sCGraph)
        }
+       if (!region.label.nullOrEmpty)
+       		entry.annotations += createStringAnnotation(ANNOTATION_REGIONNAME, region.label)
    }
            
    // -------------------------------------------------------------------------   
