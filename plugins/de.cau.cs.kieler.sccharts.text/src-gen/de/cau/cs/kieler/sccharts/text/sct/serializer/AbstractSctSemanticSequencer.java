@@ -11,12 +11,12 @@ import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
-import de.cau.cs.kieler.core.kexpressions.DoubleValue;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.sccharts.Assignment;
@@ -144,29 +144,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					return; 
 				}
 				else break;
-			case KExpressionsPackage.DOUBLE_VALUE:
-				if(context == grammarAccess.getAddExpressionRule() ||
-				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getAtomicValuedExpressionRule() ||
-				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
-				   context == grammarAccess.getDivExpressionRule() ||
-				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getDoubleValueRule() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getModExpressionRule() ||
-				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getMultExpressionRule() ||
-				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getNegExpressionRule() ||
-				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getRootRule() ||
-				   context == grammarAccess.getSubExpressionRule() ||
-				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
-				   context == grammarAccess.getValuedExpressionRule()) {
-					sequence_DoubleValue(context, (DoubleValue) semanticObject); 
-					return; 
-				}
-				else break;
 			case KExpressionsPackage.FLOAT_VALUE:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -280,6 +257,12 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else if(context == grammarAccess.getTextualCodeRule()) {
 					sequence_TextualCode(context, (TextExpression) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.TYPE_GROUP:
+				if(context == grammarAccess.getTypeGroupRule()) {
+					sequence_TypeGroup(context, (TypeGroup) semanticObject); 
 					return; 
 				}
 				else break;
@@ -417,7 +400,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         annotations+=Annotation* 
 	 *         id=ID? 
 	 *         label=STRING? 
-	 *         valuedObjects+=ValuedObject* 
+	 *         typeGroups+=TypeGroup* 
 	 *         bodyText+=TextualCode* 
 	 *         states+=State+
 	 *     )
@@ -429,11 +412,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (
-	 *         annotations+=ImportAnnotation* 
-	 *         (annotations+=Annotation* id=ID label=STRING? valuedObjects+=ValuedObject* bodyText+=TextualCode*)? 
-	 *         states+=SCChart*
-	 *     )
+	 *     (annotations+=ImportAnnotation* (annotations+=Annotation* id=ID label=STRING? typeGroups+=TypeGroup* bodyText+=TextualCode*)? states+=SCChart*)
 	 */
 	protected void sequence_RootRegion(EObject context, Region semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -447,7 +426,10 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         type=StateType? 
 	 *         id=ID 
 	 *         label=STRING? 
-	 *         ((valuedObjects+=ValuedObject | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)?
+	 *         (
+	 *             (bodyReference=[State|ID] (renamings+=Substitution renamings+=Substitution*)?) | 
+	 *             ((typeGroups+=TypeGroup | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
+	 *         )?
 	 *     )
 	 */
 	protected void sequence_SCChart(EObject context, State semanticObject) {
@@ -457,7 +439,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((annotations+=Annotation* id=ID? label=STRING? valuedObjects+=ValuedObject* bodyText+=TextualCode*)? states+=State*)
+	 *     ((annotations+=Annotation* id=ID? label=STRING? typeGroups+=TypeGroup* bodyText+=TextualCode*)? states+=State*)
 	 */
 	protected void sequence_SingleRegion(EObject context, Region semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -473,8 +455,8 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         id=ID 
 	 *         label=STRING? 
 	 *         (
-	 *             (bodyReference=[State|ID] renamings+=Substitution*) | 
-	 *             ((valuedObjects+=ValuedObject | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
+	 *             (bodyReference=[State|ID] (renamings+=Substitution renamings+=Substitution*)?) | 
+	 *             ((typeGroups+=TypeGroup | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
 	 *         )? 
 	 *         outgoingTransitions+=Transition*
 	 *     )
@@ -514,7 +496,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         type=TransitionType 
-	 *         priority=INT? 
 	 *         targetState=[State|ID] 
 	 *         (
 	 *             immediate?='immediate'? 
@@ -533,15 +514,24 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         constant?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 
 	 *         signal?='signal'? 
-	 *         type=ValueType? 
-	 *         name=ID 
-	 *         initialValue=Expression? 
-	 *         combineOperator=CombineOperator?
+	 *         type=ValueType 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject*
 	 *     )
+	 */
+	protected void sequence_TypeGroup(EObject context, TypeGroup semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (name=ID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

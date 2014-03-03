@@ -605,7 +605,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public EReference getScope_ValuedObjects() {
+    public EReference getScope_LocalActions() {
 		return (EReference)scopeEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -614,7 +614,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public EReference getScope_LocalActions() {
+    public EReference getScope_BodyReference() {
 		return (EReference)scopeEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -623,7 +623,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public EReference getScope_BodyReference() {
+    public EReference getScope_BodyContents() {
 		return (EReference)scopeEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -632,7 +632,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public EReference getScope_BodyContents() {
+    public EReference getScope_BodyText() {
 		return (EReference)scopeEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -641,7 +641,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public EReference getScope_BodyText() {
+    public EReference getScope_Renamings() {
 		return (EReference)scopeEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -650,7 +650,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public EReference getScope_Renamings() {
+    public EReference getScope_TypeGroups() {
 		return (EReference)scopeEClass.getEStructuralFeatures().get(7);
 	}
 
@@ -827,12 +827,12 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 		scopeEClass = createEClass(SCOPE);
 		createEAttribute(scopeEClass, SCOPE__ID);
 		createEAttribute(scopeEClass, SCOPE__LABEL);
-		createEReference(scopeEClass, SCOPE__VALUED_OBJECTS);
 		createEReference(scopeEClass, SCOPE__LOCAL_ACTIONS);
 		createEReference(scopeEClass, SCOPE__BODY_REFERENCE);
 		createEReference(scopeEClass, SCOPE__BODY_CONTENTS);
 		createEReference(scopeEClass, SCOPE__BODY_TEXT);
 		createEReference(scopeEClass, SCOPE__RENAMINGS);
+		createEReference(scopeEClass, SCOPE__TYPE_GROUPS);
 
 		textEffectEClass = createEClass(TEXT_EFFECT);
 
@@ -950,12 +950,12 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 		initEClass(scopeEClass, Scope.class, "Scope", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getScope_Id(), ecorePackage.getEString(), "id", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getScope_Label(), ecorePackage.getEString(), "label", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getScope_ValuedObjects(), theKExpressionsPackage.getValuedObject(), null, "valuedObjects", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getScope_LocalActions(), this.getLocalAction(), null, "localActions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getScope_BodyReference(), ecorePackage.getEObject(), null, "bodyReference", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getScope_BodyContents(), ecorePackage.getEObject(), null, "bodyContents", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getScope_BodyText(), theKExpressionsPackage.getTextExpression(), null, "bodyText", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getScope_Renamings(), this.getSubstitution(), this.getSubstitution_ParentScope(), "renamings", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getScope_TypeGroups(), theKExpressionsPackage.getTypeGroup(), null, "typeGroups", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(textEffectEClass, TextEffect.class, "TextEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

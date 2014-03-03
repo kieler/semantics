@@ -700,15 +700,15 @@ public interface ScgdepPackage extends EPackage {
     int SC_GRAPH_DEP__NODES = ScgPackage.SC_GRAPH__NODES;
 
     /**
-	 * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SC_GRAPH_DEP__VALUED_OBJECTS = ScgPackage.SC_GRAPH__VALUED_OBJECTS;
+	int SC_GRAPH_DEP__TYPE_GROUPS = ScgPackage.SC_GRAPH__TYPE_GROUPS;
 
-    /**
+				/**
 	 * The number of structural features of the '<em>SC Graph Dep</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

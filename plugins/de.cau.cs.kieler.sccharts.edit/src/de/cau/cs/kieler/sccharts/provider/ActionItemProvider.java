@@ -306,11 +306,6 @@ public class ActionItemProvider
 			(createChildParameter
 				(SCChartsPackage.Literals.ACTION__TRIGGER,
 				 KExpressionsFactory.eINSTANCE.createTextExpression()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SCChartsPackage.Literals.ACTION__TRIGGER,
-				 KExpressionsFactory.eINSTANCE.createDoubleValue()));
 	}
 
     /**

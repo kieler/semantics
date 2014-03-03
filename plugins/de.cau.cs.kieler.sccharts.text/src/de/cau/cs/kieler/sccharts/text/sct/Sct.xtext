@@ -13,7 +13,7 @@ RootRegion returns sccharts::Region:
     (
       (annotations += Annotation)*
       'region' id=ID (label=STRING)? ':'
-      (valuedObjects+=ValuedObject)*
+      (typeGroups+=TypeGroup)*
       (bodyText+=TextualCode)* 
      )?
     (states+=SCChart)*;
@@ -25,7 +25,7 @@ SingleRegion returns sccharts::Region:
     (
       (annotations += Annotation)*
       'region' (id=ID)? (label=STRING)? ':'
-      (valuedObjects+=ValuedObject)*
+      (typeGroups+=TypeGroup)*
       (bodyText+=TextualCode)*
      )?
     (states+=State)*;
@@ -36,7 +36,7 @@ Region returns sccharts::Region:
 	{sccharts::Region}
     (annotations += Annotation)*
     'region' (id=ID)? (label=STRING)? ':'
-    (valuedObjects+=ValuedObject)*
+      (typeGroups+=TypeGroup)*
     (bodyText+=TextualCode)* 
     (states+=State)+;
 
@@ -47,13 +47,13 @@ SCChart returns sccharts::State:
     (type=StateType)? ('scchart') (id=ID) (label=STRING)?
   
     (
-//      ('@' bodyReference = [sccharts::State|ID]
-//        ('[' renamings+= Substitution (',' renamings+= Substitution)* ']')?
-//       )
-//     | 
+      ('@' bodyReference = [sccharts::State|ID]
+        ('[' renamings+= Substitution (',' renamings+= Substitution)* ']')?
+       )
+     | 
       ('{'
           (
-            (valuedObjects+=ValuedObject |
+            (typeGroups+=TypeGroup |
              localActions+=LocalAction)*
             (bodyText += TextualCode)*
             (
@@ -77,16 +77,14 @@ State returns sccharts::State:
     (type=StateType)? ('state') (id=ID) (label=STRING)?
   
     (
-//      ('@' bodyReference = [sccharts::State|ID]
-//        ('[' renamings+= Substitution (',' renamings+= Substitution)* ']')?
-//       )
-		('references' bodyReference = [sccharts::State|ID]
-			('map' renamings += Substitution )*
-		)
+      ('@' bodyReference = [sccharts::State|ID]
+        ('[' renamings+= Substitution (',' renamings+= Substitution)* ']')?
+       )
      | 
       ('{'
           (
-            (valuedObjects+=ValuedObject |
+            (//valuedObjects+=ValuedObject |
+             typeGroups+=TypeGroup |
              localActions+=LocalAction)*
             (bodyText += TextualCode)*
             (
@@ -108,7 +106,8 @@ LocalAction returns sccharts::LocalAction:
 
 Transition returns sccharts::Transition:
     (annotations += Annotation)*
-	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
+    type=TransitionType targetState=[sccharts::State|ID] 
+//	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
 	( (immediate?='immediate')? (deferred?='deferred')? (history=HistoryType)?  ('with'
 	 (
 	   ( (delay=INT)? (trigger=BoolExpression)? ('/' effects+=Effect (';'effects+=Effect)*)? )
@@ -120,17 +119,40 @@ Transition returns sccharts::Transition:
 
 // ---------------------------------------------------------------------------------------------------
 
-ValuedObject returns kexpressions::ValuedObject:
+TypeGroup returns kexpressions::TypeGroup:
     (annotations+=Annotation)*
+	(constant?='const')?
     (input?='input')?
     (output?='output')?
     (static?='static')?
     (signal?='signal')?
-    (type = ValueType)?
-    name=ID ('=' initialValue=Expression)?
+    type = ValueType valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+;
+
+// ---------------------------------------------------------------------------------------------------
+
+ValuedObject returns kexpressions::ValuedObject:
+    name=ID
+    ('[' cardinalities+=INT ']')* 
+    ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
-    )? ';' ;
+    )?
+;
+
+// ---------------------------------------------------------------------------------------------------
+
+//ValuedObject returns kexpressions::ValuedObject:
+//    (annotations+=Annotation)*
+//    (input?='input')?
+//    (output?='output')?
+//    (static?='static')?
+//    (signal?='signal')?
+//    (type = ValueType)?
+//    name=ID ('=' initialValue=Expression)?
+//    ( 'combine'
+//      (combineOperator = CombineOperator)
+//    )? ';' ;
 
 
 // ---------------------------------------------------------------------------------------------------
@@ -141,7 +163,7 @@ TextualCode returns kexpressions::TextExpression:
 // ---------------------------------------------------------------------------------------------------
 
 Substitution returns sccharts::Substitution:
-	actual = ID 'to' formal = ID;
+	actual = ID '/' formal = ID;
 
 // ---------------------------------------------------------------------------------------------------
 

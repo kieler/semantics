@@ -35,6 +35,10 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.scgsched.Analysis
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -70,11 +74,11 @@ class SCGExtensions {
      * 			the name of the valued object
      * @return Returns a new valued object with the given name.
      */
-    def ValuedObject createValuedObject(String valuedObjectName) {
-         KExpressionsFactory::eINSTANCE.createValuedObject => [
-             name = valuedObjectName
-         ]
-    }
+//    def ValuedObject createValuedObject(String valuedObjectName) {
+//         KExpressionsFactory::eINSTANCE.createValuedObject => [
+//             name = valuedObjectName
+//         ]
+//    }
    
     /** 
      * Creates a new ValuedObject in an SCG.
@@ -85,12 +89,12 @@ class SCGExtensions {
      * 			the name of the valued object
      * @return Returns the new valued object. 
      */
-    def ValuedObject createValuedObject(SCGraph scg, String valuedObjectName) {
-         createValuedObject(valuedObjectName) => [
-             scg.valuedObjects += it
-         ]
-    }
-   
+//    def ValuedObject createValuedObject(SCGraph scg, String valuedObjectName) {
+//         createValuedObject(valuedObjectName) => [
+//             scg.valuedObjects += it
+//         ]
+//    }
+//   
 	/** 
 	 * Finds and retrieves a valued object by its name. May return null.
 	 * 
@@ -101,9 +105,53 @@ class SCGExtensions {
 	 * @return Returns the (first) valued object with the given name or null.
 	 */
     def ValuedObject findValuedObjectByName(SCGraph scg, String name) {
-    	scg.valuedObjects.filter[it.name == name]?.head
+    	for(tg : scg.typeGroups) {
+    		for(vo : tg.valuedObjects) {
+    			if (vo.name == name) return vo
+    		}
+   		}
+   		return null
     }
 
+
+    // -------------------------------------------------------------------------
+    // -- Control flow creation
+    // -------------------------------------------------------------------------
+    
+	dispatch def ControlFlow createControlFlow(Entry entry) {
+		ScgFactory::eINSTANCE.createControlFlow => [ entry.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Exit exit) {
+		ScgFactory::eINSTANCE.createControlFlow => [ exit.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Depth depth) {
+		ScgFactory::eINSTANCE.createControlFlow => [ depth.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Assignment assignment) {
+		ScgFactory::eINSTANCE.createControlFlow => [ assignment.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Conditional conditional) {
+		ScgFactory::eINSTANCE.createControlFlow => [ 
+			if (conditional.then == null) conditional.then = it
+			else if (conditional.^else == null) conditional.^else = it
+		]
+	}
+
+	dispatch def ControlFlow createControlFlow(Fork fork) {
+		ScgFactory::eINSTANCE.createControlFlow => [ fork.next += it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Join join) {
+		ScgFactory::eINSTANCE.createControlFlow => [ join.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Surface surface) {
+		ScgFactory::eINSTANCE.createControlFlow => [ ]
+	}
 
     // -------------------------------------------------------------------------
     // -- Control flow queries
@@ -300,9 +348,15 @@ class SCGExtensions {
         returnList.add(entry)
         val exit = entry.exit
         
+        // If the exit node follows the entry node directly, exit here.
+        if (entry.next.target == exit) {
+	        returnList.add(exit)
+    	    return returnList
+        }
+        
         // Now, follow the control flow until the exit node is reached 
         // and add each node that is not already in the node list.
-        controlFlows.addAll(entry.getAllNext)
+        controlFlows.addAll(entry.allNext)
         while(!controlFlows.empty) {
         	// Next node is the first target in the control flow list.
             var nextNode = controlFlows.head.target
@@ -324,11 +378,27 @@ class SCGExtensions {
             //   - that the flow is not already included in the flow list
             //   - the target of the flow is not already processed
             //   - and the target of the flow is not the exit node.  
-            nextNode.getAllNext.filter[ 
+            nextNode.allNext.filter[ 
             	(!returnList.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
                 (!it.target.equals(exit)) ] 
                 	=> [ controlFlows.addAll(it) ]
+        }
+        
+        // Reverse search outgoing from the exit node
+        controlFlows.addAll(exit.allPrevious)
+        while(!controlFlows.empty) {
+            var nextNode = controlFlows.head.eContainer as Node
+            controlFlows.remove(0)
+            if (!returnList.contains(nextNode)) returnList.add(nextNode)
+            if (nextNode instanceof Depth) {
+                nextNode = (nextNode as Depth).surface
+                if (!returnList.contains(nextNode)) returnList.add(nextNode)
+            }
+            nextNode.allPrevious.filter[ 
+                (!returnList.contains(it.eContainer)) && 
+                (!controlFlows.contains(it)) ] 
+                    => [ controlFlows.addAll(it) ]
         }
         
         // Add the exit node and return.
@@ -352,6 +422,7 @@ class SCGExtensions {
        
         // Add all incoming control flows to the list an repeat until the list is empty.
         controlFlows += node.allPrevious
+        if (node instanceof Depth) controlFlows += (node as Depth).surface.allPrevious
         while(!controlFlows.empty) {
             // Check the first control flow and its parent node.
             var prevNode = controlFlows.head.eContainer as Node
@@ -409,6 +480,18 @@ class SCGExtensions {
         return returnList
     }
 
+
+    def Node getThreadEntryNode(Node node) {
+//        if (node instanceof Exit) return (node as Exit).entry
+        
+        val fork = node.getAncestorFork
+        if (fork == null) return null
+
+        for (ent : fork.allNext.map[target].filter(typeof(Entry))) {
+            if (ent.threadNodes.contains(node)) return ent;
+        }
+        null
+    }
 
     // -------------------------------------------------------------------------
     // -- Block queries

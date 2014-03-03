@@ -36,47 +36,47 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Node extends Annotatable {
     /**
-     * Returns the value of the '<em><b>Incoming</b></em>' reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scg.Link}.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.scg.Link#getTarget <em>Target</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Incoming</b></em>' reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scg.Link}.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.scg.Link#getTarget <em>Target</em>}'.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Incoming</em>' reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Incoming</em>' reference list.
-     * @see de.cau.cs.kieler.scg.ScgPackage#getNode_Incoming()
-     * @see de.cau.cs.kieler.scg.Link#getTarget
-     * @model opposite="target"
-     * @generated
-     */
+	 * @return the value of the '<em>Incoming</em>' reference list.
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getNode_Incoming()
+	 * @see de.cau.cs.kieler.scg.Link#getTarget
+	 * @model opposite="target"
+	 * @generated
+	 */
     EList<Link> getIncoming();
 
     /**
-     * Returns the value of the '<em><b>Is Initial</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Is Initial</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Is Initial</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Is Initial</em>' attribute.
-     * @see #setIsInitial(boolean)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getNode_IsInitial()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Is Initial</em>' attribute.
+	 * @see #setIsInitial(boolean)
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getNode_IsInitial()
+	 * @model
+	 * @generated
+	 */
     boolean isIsInitial();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.Node#isIsInitial <em>Is Initial</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Node#isIsInitial <em>Is Initial</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is Initial</em>' attribute.
-     * @see #isIsInitial()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Is Initial</em>' attribute.
+	 * @see #isIsInitial()
+	 * @generated
+	 */
     void setIsInitial(boolean value);
 
 } // Node

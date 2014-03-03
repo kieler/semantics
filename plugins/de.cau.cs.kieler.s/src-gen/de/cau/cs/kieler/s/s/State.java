@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.s.s;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.State#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.State#getValuedObjects <em>Valued Objects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.State#getTypeGroups <em>Type Groups</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.State#getInstructions <em>Instructions</em>}</li>
  * </ul>
  * </p>
@@ -55,20 +55,20 @@ public interface State extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Valued Objects</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
+   * Returns the value of the '<em><b>Type Groups</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.TypeGroup}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Valued Objects</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Type Groups</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Valued Objects</em>' containment reference list.
-   * @see de.cau.cs.kieler.s.s.SPackage#getState_ValuedObjects()
+   * @return the value of the '<em>Type Groups</em>' containment reference list.
+   * @see de.cau.cs.kieler.s.s.SPackage#getState_TypeGroups()
    * @model containment="true"
    * @generated
    */
-  EList<ValuedObject> getValuedObjects();
+  EList<TypeGroup> getTypeGroups();
 
   /**
    * Returns the value of the '<em><b>Instructions</b></em>' containment reference list.

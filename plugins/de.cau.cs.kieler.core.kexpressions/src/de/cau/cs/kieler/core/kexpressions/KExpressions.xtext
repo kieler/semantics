@@ -118,7 +118,6 @@ AtomicExpression returns Expression:
 AtomicValuedExpression returns Expression:
     IntValue
     | FloatValue 
-    | DoubleValue
     | '(' ValuedExpression ')'
     | AtomicExpression 
 ;
@@ -132,7 +131,7 @@ ValuedObjectTestExpression returns Expression:
 
 // Example: A, varB
 ValuedObjectReference returns ValuedObjectReference:
-	valuedObject=[ValuedObject|ID];
+	valuedObject=[ValuedObject|ID] ('[' cardinalities+=Expression ']')*;
 
 
 // Example: 'printf(...)'
@@ -149,9 +148,6 @@ FloatValue returns FloatValue:
 BoolValue returns BoolValue:
 	value=BOOLEAN;
 
-
-DoubleValue returns DoubleValue:
-    value=FLOAT;
 
 // data type rule allowing any kind of value to be accepted,
 // e.g. as initialValues of valuedObjects
@@ -204,7 +200,7 @@ enum LogicalAndOperator returns OperatorType:
 */
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned"	| 
-	INT="int" | FLOAT="float" | DOUBLE="double" |
+	INT="int" | FLOAT="float" |
 	STRING="string" | HOST="host";
 
 

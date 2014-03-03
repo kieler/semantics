@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts;
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import org.eclipse.emf.common.util.EList;
@@ -50,12 +51,12 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLabel <em>Label</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getValuedObjects <em>Valued Objects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLocalActions <em>Local Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBodyReference <em>Body Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBodyContents <em>Body Contents</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBodyText <em>Body Text</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getRenamings <em>Renamings</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getTypeGroups <em>Type Groups</em>}</li>
  * </ul>
  * </p>
  *
@@ -122,22 +123,6 @@ public interface Scope extends Annotatable {
 	 * @generated
 	 */
     void setLabel(String value);
-
-    /**
-	 * Returns the value of the '<em><b>Valued Objects</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
-	 * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Valued Objects</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-	 * @return the value of the '<em>Valued Objects</em>' containment reference list.
-	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_ValuedObjects()
-	 * @model containment="true"
-	 * @generated
-	 */
-    EList<ValuedObject> getValuedObjects();
 
     /**
 	 * Returns the value of the '<em><b>Local Actions</b></em>' containment reference list.
@@ -240,5 +225,21 @@ public interface Scope extends Annotatable {
 	 * @generated
 	 */
     EList<Substitution> getRenamings();
+
+    /**
+	 * Returns the value of the '<em><b>Type Groups</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.TypeGroup}.
+	 * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Type Groups</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+	 * @return the value of the '<em>Type Groups</em>' containment reference list.
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_TypeGroups()
+	 * @model containment="true"
+	 * @generated
+	 */
+    EList<TypeGroup> getTypeGroups();
 
 } // Scope

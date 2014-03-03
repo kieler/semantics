@@ -13,10 +13,15 @@
  */
 package de.cau.cs.kieler.scg.synchronizer
 
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.scgbb.SchedulingBlock
 import de.cau.cs.kieler.scgsched.GuardExpression
 import de.cau.cs.kieler.scgsched.ScgschedFactory
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import java.util.HashMap
+import java.util.List
+import de.cau.cs.kieler.scg.Node
 
 /**
  * The {@code SynchronizerData} class comprises members for the data mandatory to 
@@ -30,7 +35,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 class SynchronizerData {
 	/** List of predecessors of the join node */
-    public var predecessors = <SchedulingBlock> newArrayList
+	@Property
+    List<SchedulingBlock> predecessors = <SchedulingBlock> newArrayList
     
     /** 
      * List of additional ValuedObjects
@@ -38,11 +44,45 @@ class SynchronizerData {
      * Therefore, additional needed ValuedObjects must be added to the SCG valuedObjects list. 
      * Any new created ValuedObject is stored in the valuedObjects list.
      */
-    public var valuedObjects = <ValuedObject> newArrayList
+    @Property
+    List<ValuedObject> valuedObjects = <ValuedObject> newArrayList
     
     /**
      * guardExpression holds the actual expression of the synchronizer. It can be modified or used directly 
      * by the scheduler.
      */
     public var GuardExpression guardExpression = ScgschedFactory::eINSTANCE.createGuardExpression
+    
+    @Property
+    HashMap<Node, ValuedObject> threadMapping = new HashMap<Node, ValuedObject>
+    
+    /**
+     * Map of additional assignments with respect to their scheduling blocks.
+     * The synchronizer might want to add additional assignments to synchronize threads. 
+     * Therefore this field allows storage after their creation so that the scheduler and the
+     * sequentializer might use them.
+     */
+    private val additionalAssignments = new HashMap<SchedulingBlock, List<de.cau.cs.kieler.core.util.Pair<ValuedObject, Expression>>>
+    
+    
+	public def SynchronizerData addAdditionalAssignment(SchedulingBlock schedulingBlock, 
+		ValuedObject valuedObject, Expression assignment
+	) {
+		var list = additionalAssignments.get(schedulingBlock)
+		if (list == null) {
+			list = <Pair<ValuedObject, Expression>> newArrayList
+			additionalAssignments.put(schedulingBlock, list)
+		}
+		list.add(new Pair<ValuedObject, Expression>(valuedObject, assignment))
+		this
+	} 
+	
+	public def List<de.cau.cs.kieler.core.util.Pair<ValuedObject, Expression>> getAdditionalAssignments(SchedulingBlock schedulingBlock) {
+		additionalAssignments.get(schedulingBlock)
+	}
+	
+	public def List<SchedulingBlock> getAdditionalAssignmentBlocks() {
+		additionalAssignments.keySet.toList
+	}
+    
 }

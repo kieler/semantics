@@ -586,18 +586,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cIntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cDoubleValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
-		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final RuleCall cValuedExpressionParserRuleCall_3_1 = (RuleCall)cGroup_3.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
-		private final RuleCall cAtomicExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final RuleCall cValuedExpressionParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final RuleCall cAtomicExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//AtomicValuedExpression returns Expression:
-		//	IntValue | FloatValue | DoubleValue | "(" ValuedExpression ")" | AtomicExpression;
+		//	IntValue | FloatValue | "(" ValuedExpression ")" | AtomicExpression;
 		public ParserRule getRule() { return rule; }
 
-		//IntValue | FloatValue | DoubleValue | "(" ValuedExpression ")" | AtomicExpression
+		//IntValue | FloatValue | "(" ValuedExpression ")" | AtomicExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//IntValue
@@ -606,23 +605,20 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//FloatValue
 		public RuleCall getFloatValueParserRuleCall_1() { return cFloatValueParserRuleCall_1; }
 
-		//DoubleValue
-		public RuleCall getDoubleValueParserRuleCall_2() { return cDoubleValueParserRuleCall_2; }
-
 		//"(" ValuedExpression ")"
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup_2() { return cGroup_2; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
 
 		//ValuedExpression
-		public RuleCall getValuedExpressionParserRuleCall_3_1() { return cValuedExpressionParserRuleCall_3_1; }
+		public RuleCall getValuedExpressionParserRuleCall_2_1() { return cValuedExpressionParserRuleCall_2_1; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
+		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
 
 		//AtomicExpression
-		public RuleCall getAtomicExpressionParserRuleCall_4() { return cAtomicExpressionParserRuleCall_4; }
+		public RuleCall getAtomicExpressionParserRuleCall_3() { return cAtomicExpressionParserRuleCall_3; }
 	}
 
 	public class ValuedObjectTestExpressionElements extends AbstractParserRuleElementFinder {
@@ -686,23 +682,47 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class ValuedObjectReferenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValuedObjectReference");
-		private final Assignment cValuedObjectAssignment = (Assignment)rule.eContents().get(1);
-		private final CrossReference cValuedObjectValuedObjectCrossReference_0 = (CrossReference)cValuedObjectAssignment.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0.eContents().get(1);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cCardinalitiesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cCardinalitiesExpressionParserRuleCall_1_1_0 = (RuleCall)cCardinalitiesAssignment_1_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
 		//// Example: A, varB
 		//ValuedObjectReference:
-		//	valuedObject=[ValuedObject];
+		//	valuedObject=[ValuedObject] ("[" cardinalities+=Expression "]")*;
 		public ParserRule getRule() { return rule; }
 
+		//valuedObject=[ValuedObject] ("[" cardinalities+=Expression "]")*
+		public Group getGroup() { return cGroup; }
+
 		//valuedObject=[ValuedObject]
-		public Assignment getValuedObjectAssignment() { return cValuedObjectAssignment; }
+		public Assignment getValuedObjectAssignment_0() { return cValuedObjectAssignment_0; }
 
 		//[ValuedObject]
-		public CrossReference getValuedObjectValuedObjectCrossReference_0() { return cValuedObjectValuedObjectCrossReference_0; }
+		public CrossReference getValuedObjectValuedObjectCrossReference_0_0() { return cValuedObjectValuedObjectCrossReference_0_0; }
 
 		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_1; }
+		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
+
+		//("[" cardinalities+=Expression "]")*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
+
+		//cardinalities+=Expression
+		public Assignment getCardinalitiesAssignment_1_1() { return cCardinalitiesAssignment_1_1; }
+
+		//Expression
+		public RuleCall getCardinalitiesExpressionParserRuleCall_1_1_0() { return cCardinalitiesExpressionParserRuleCall_1_1_0; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
 	}
 
 	public class TextExpressionElements extends AbstractParserRuleElementFinder {
@@ -768,22 +788,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//BOOLEAN
 		public RuleCall getValueBOOLEANTerminalRuleCall_0() { return cValueBOOLEANTerminalRuleCall_0; }
-	}
-
-	public class DoubleValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DoubleValue");
-		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueFLOATTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
-		
-		//DoubleValue:
-		//	value=FLOAT;
-		public ParserRule getRule() { return rule; }
-
-		//value=FLOAT
-		public Assignment getValueAssignment() { return cValueAssignment; }
-
-		//FLOAT
-		public RuleCall getValueFLOATTerminalRuleCall_0() { return cValueFLOATTerminalRuleCall_0; }
 	}
 
 	public class AnyTypeElements extends AbstractParserRuleElementFinder {
@@ -1087,22 +1091,18 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cINTIntKeyword_3_0 = (Keyword)cINTEnumLiteralDeclaration_3.eContents().get(0);
 		private final EnumLiteralDeclaration cFLOATEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
 		private final Keyword cFLOATFloatKeyword_4_0 = (Keyword)cFLOATEnumLiteralDeclaration_4.eContents().get(0);
-		private final EnumLiteralDeclaration cDOUBLEEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
-		private final Keyword cDOUBLEDoubleKeyword_5_0 = (Keyword)cDOUBLEEnumLiteralDeclaration_5.eContents().get(0);
-		private final EnumLiteralDeclaration cSTRINGEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
-		private final Keyword cSTRINGStringKeyword_6_0 = (Keyword)cSTRINGEnumLiteralDeclaration_6.eContents().get(0);
-		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
-		private final Keyword cHOSTHostKeyword_7_0 = (Keyword)cHOSTEnumLiteralDeclaration_7.eContents().get(0);
+		private final EnumLiteralDeclaration cSTRINGEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cSTRINGStringKeyword_5_0 = (Keyword)cSTRINGEnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cHOSTHostKeyword_6_0 = (Keyword)cHOSTEnumLiteralDeclaration_6.eContents().get(0);
 		
 		/// *
 		//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 		// * / enum ValueType:
-		//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | DOUBLE="double" | STRING="string" |
-		//	HOST="host";
+		//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | STRING="string" | HOST="host";
 		public EnumRule getRule() { return rule; }
 
-		//PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | DOUBLE="double" | STRING="string" |
-		//HOST="host"
+		//PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | STRING="string" | HOST="host"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//PURE="pure"
@@ -1135,23 +1135,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"float"
 		public Keyword getFLOATFloatKeyword_4_0() { return cFLOATFloatKeyword_4_0; }
 
-		//DOUBLE="double"
-		public EnumLiteralDeclaration getDOUBLEEnumLiteralDeclaration_5() { return cDOUBLEEnumLiteralDeclaration_5; }
-
-		//"double"
-		public Keyword getDOUBLEDoubleKeyword_5_0() { return cDOUBLEDoubleKeyword_5_0; }
-
 		//STRING="string"
-		public EnumLiteralDeclaration getSTRINGEnumLiteralDeclaration_6() { return cSTRINGEnumLiteralDeclaration_6; }
+		public EnumLiteralDeclaration getSTRINGEnumLiteralDeclaration_5() { return cSTRINGEnumLiteralDeclaration_5; }
 
 		//"string"
-		public Keyword getSTRINGStringKeyword_6_0() { return cSTRINGStringKeyword_6_0; }
+		public Keyword getSTRINGStringKeyword_5_0() { return cSTRINGStringKeyword_5_0; }
 
 		//HOST="host"
-		public EnumLiteralDeclaration getHOSTEnumLiteralDeclaration_7() { return cHOSTEnumLiteralDeclaration_7; }
+		public EnumLiteralDeclaration getHOSTEnumLiteralDeclaration_6() { return cHOSTEnumLiteralDeclaration_6; }
 
 		//"host"
-		public Keyword getHOSTHostKeyword_7_0() { return cHOSTHostKeyword_7_0; }
+		public Keyword getHOSTHostKeyword_6_0() { return cHOSTHostKeyword_6_0; }
 	}
 
 	public class CombineOperatorElements extends AbstractEnumRuleElementFinder {
@@ -1252,7 +1246,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private IntValueElements pIntValue;
 	private FloatValueElements pFloatValue;
 	private BoolValueElements pBoolValue;
-	private DoubleValueElements pDoubleValue;
 	private AnyTypeElements pAnyType;
 	private CompareOperatorElements unknownRuleCompareOperator;
 	private PreOperatorElements unknownRulePreOperator;
@@ -1486,7 +1479,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicValuedExpression returns Expression:
-	//	IntValue | FloatValue | DoubleValue | "(" ValuedExpression ")" | AtomicExpression;
+	//	IntValue | FloatValue | "(" ValuedExpression ")" | AtomicExpression;
 	public AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return (pAtomicValuedExpression != null) ? pAtomicValuedExpression : (pAtomicValuedExpression = new AtomicValuedExpressionElements());
 	}
@@ -1509,7 +1502,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: A, varB
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject];
+	//	valuedObject=[ValuedObject] ("[" cardinalities+=Expression "]")*;
 	public ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return (pValuedObjectReference != null) ? pValuedObjectReference : (pValuedObjectReference = new ValuedObjectReferenceElements());
 	}
@@ -1557,16 +1550,6 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getBoolValueRule() {
 		return getBoolValueAccess().getRule();
-	}
-
-	//DoubleValue:
-	//	value=FLOAT;
-	public DoubleValueElements getDoubleValueAccess() {
-		return (pDoubleValue != null) ? pDoubleValue : (pDoubleValue = new DoubleValueElements());
-	}
-	
-	public ParserRule getDoubleValueRule() {
-		return getDoubleValueAccess().getRule();
 	}
 
 	//// data type rule allowing any kind of value to be accepted,
@@ -1715,8 +1698,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 	// * / enum ValueType:
-	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | DOUBLE="double" | STRING="string" |
-	//	HOST="host";
+	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | STRING="string" | HOST="host";
 	public ValueTypeElements getValueTypeAccess() {
 		return (unknownRuleValueType != null) ? unknownRuleValueType : (unknownRuleValueType = new ValueTypeElements());
 	}

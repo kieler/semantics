@@ -11,7 +11,7 @@ import de.cau.cs.kieler.sccharts.text.sct.services.SctGrammarAccess;
 /**
  * Custom {@link IFormatter} contributing to sct serialization.
  *
- * @author chsch
+ * @author chsch ssm
  */
 public class SctFormatter extends ActionsFormatter {
 
@@ -85,7 +85,8 @@ public class SctFormatter extends ActionsFormatter {
          * SIGNAL
          */
         // does work :-)
-        c.setLinewrap().after(f.getValuedObjectRule());
+//        c.setLinewrap().after(f.getValuedObjectRule());
+        c.setLinewrap().after(f.getTypeGroupRule());
 
         /*
          * TEXTUAL CODE
@@ -99,7 +100,8 @@ public class SctFormatter extends ActionsFormatter {
         /*
          * DECLARATIONS
          */
-        c.setNoSpace().before(f.getValuedObjectAccess().getSemicolonKeyword_9());
+//        c.setNoSpace().before(f.getValuedObjectAccess().getSemicolonKeyword_9());
+        c.setNoSpace().before(f.getTypeGroupAccess().getSemicolonKeyword_9());
         
 
         
@@ -109,9 +111,9 @@ public class SctFormatter extends ActionsFormatter {
 
         // let each transition declaration begin on a new line
         c.setLinewrap().before(f.getTransitionRule());
-        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_4_3_1_0_2_2_0());
-        c.setNoLinewrap().before(f.getTransitionAccess().getSolidusKeyword_4_3_1_0_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
-        c.setNoLinewrap().before(f.getTransitionAccess().getSemicolonKeyword_4_3_1_0_2_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
+        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_3_3_1_0_2_2_0());
+        c.setNoLinewrap().before(f.getTransitionAccess().getSolidusKeyword_3_3_1_0_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
+        c.setNoLinewrap().before(f.getTransitionAccess().getSemicolonKeyword_3_3_1_0_2_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
         c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_8());
 
     }

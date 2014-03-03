@@ -21,10 +21,10 @@ import de.cau.cs.kieler.scgbb.ScgbbFactory
 import de.cau.cs.kieler.scgbb.SCGraphBB
 import de.cau.cs.kieler.scgsched.ScgschedFactory
 import de.cau.cs.kieler.scgsched.SCGraphSched
-import de.cau.cs.kieler.scg.transformations.SCGToSCGDEPTransformation
+import de.cau.cs.kieler.scg.transformations.DependencyTransformation
 import com.google.inject.Guice
-import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation
-import de.cau.cs.kieler.scg.schedulers.AbstractSCGScheduler
+import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation
+import de.cau.cs.kieler.scg.schedulers.AbstractScheduler
 
 /** 
  * The SCG Transformation Extensions provide are collection of methods to 
@@ -92,7 +92,7 @@ class SCGTransformationExtensions {
      */
     def dispatch SCGraph upgrade(SCGraph scg, boolean doTransformation) {
     	if (doTransformation) {
-			val SCGToSCGDEPTransformation transformation = Guice.createInjector().getInstance(typeof(SCGToSCGDEPTransformation))
+			val DependencyTransformation transformation = Guice.createInjector().getInstance(typeof(DependencyTransformation))
 			return transformation.transformSCGToSCGDEP(scg)			    		
     	} else {
         	val scgdep = ScgdepFactory::eINSTANCE.createSCGraphDep
@@ -114,7 +114,7 @@ class SCGTransformationExtensions {
      */
     def dispatch SCGraph upgrade(SCGraphDep scg, boolean doTransformation) {
     	if (doTransformation) {
-			val SCGDEPToSCGBBTransformation transformation = Guice.createInjector().getInstance(typeof(SCGDEPToSCGBBTransformation))
+			val BasicBlockTransformation transformation = Guice.createInjector().getInstance(typeof(BasicBlockTransformation))
 			return transformation.transformSCGDEPToSCGBB(scg)			    		
     	} else {
 	        val scgbb = ScgbbFactory::eINSTANCE.createSCGraphBB
@@ -157,7 +157,7 @@ class SCGTransformationExtensions {
 	 * 			the scheduler that should be invoked
 	 * @return Returns an upgraded SCG model with or without applied transformation.
 	 */
-    def SCGraph upgrade(SCGraphBB scg, boolean doTransformation, AbstractSCGScheduler scheduler) {
+    def SCGraph upgrade(SCGraphBB scg, boolean doTransformation, AbstractScheduler scheduler) {
     	if (doTransformation) {
 			return scheduler.schedule(scg)			    		
     	} else {

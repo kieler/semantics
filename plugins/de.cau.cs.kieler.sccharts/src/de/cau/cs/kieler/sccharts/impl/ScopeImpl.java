@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts.impl;
 import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.sccharts.Action;
@@ -50,12 +51,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLabel <em>Label</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getValuedObjects <em>Valued Objects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLocalActions <em>Local Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBodyReference <em>Body Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBodyContents <em>Body Contents</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBodyText <em>Body Text</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getRenamings <em>Renamings</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getTypeGroups <em>Type Groups</em>}</li>
  * </ul>
  * </p>
  *
@@ -110,16 +111,6 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     protected String label = LABEL_EDEFAULT;
 
     /**
-	 * The cached value of the '{@link #getValuedObjects() <em>Valued Objects</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @see #getValuedObjects()
-	 * @generated
-	 * @ordered
-	 */
-    protected EList<ValuedObject> valuedObjects;
-
-    /**
 	 * The cached value of the '{@link #getLocalActions() <em>Local Actions</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -168,6 +159,16 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 	 * @ordered
 	 */
     protected EList<Substitution> renamings;
+
+    /**
+	 * The cached value of the '{@link #getTypeGroups() <em>Type Groups</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @see #getTypeGroups()
+	 * @generated
+	 * @ordered
+	 */
+    protected EList<TypeGroup> typeGroups;
 
     /**
 	 * <!-- begin-user-doc -->
@@ -228,18 +229,6 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 		label = newLabel;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__LABEL, oldLabel, label));
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public EList<ValuedObject> getValuedObjects() {
-		if (valuedObjects == null) {
-			valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, SCChartsPackage.SCOPE__VALUED_OBJECTS);
-		}
-		return valuedObjects;
 	}
 
     /**
@@ -364,6 +353,18 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
+    public EList<TypeGroup> getTypeGroups() {
+		if (typeGroups == null) {
+			typeGroups = new EObjectContainmentEList<TypeGroup>(TypeGroup.class, this, SCChartsPackage.SCOPE__TYPE_GROUPS);
+		}
+		return typeGroups;
+	}
+
+    /**
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -382,8 +383,6 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case SCChartsPackage.SCOPE__VALUED_OBJECTS:
-				return ((InternalEList<?>)getValuedObjects()).basicRemove(otherEnd, msgs);
 			case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
 				return ((InternalEList<?>)getLocalActions()).basicRemove(otherEnd, msgs);
 			case SCChartsPackage.SCOPE__BODY_CONTENTS:
@@ -392,6 +391,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 				return ((InternalEList<?>)getBodyText()).basicRemove(otherEnd, msgs);
 			case SCChartsPackage.SCOPE__RENAMINGS:
 				return ((InternalEList<?>)getRenamings()).basicRemove(otherEnd, msgs);
+			case SCChartsPackage.SCOPE__TYPE_GROUPS:
+				return ((InternalEList<?>)getTypeGroups()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -408,8 +409,6 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 				return getId();
 			case SCChartsPackage.SCOPE__LABEL:
 				return getLabel();
-			case SCChartsPackage.SCOPE__VALUED_OBJECTS:
-				return getValuedObjects();
 			case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
 				return getLocalActions();
 			case SCChartsPackage.SCOPE__BODY_REFERENCE:
@@ -421,6 +420,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 				return getBodyText();
 			case SCChartsPackage.SCOPE__RENAMINGS:
 				return getRenamings();
+			case SCChartsPackage.SCOPE__TYPE_GROUPS:
+				return getTypeGroups();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -440,10 +441,6 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 			case SCChartsPackage.SCOPE__LABEL:
 				setLabel((String)newValue);
 				return;
-			case SCChartsPackage.SCOPE__VALUED_OBJECTS:
-				getValuedObjects().clear();
-				getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
-				return;
 			case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
 				getLocalActions().clear();
 				getLocalActions().addAll((Collection<? extends LocalAction>)newValue);
@@ -461,6 +458,10 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 			case SCChartsPackage.SCOPE__RENAMINGS:
 				getRenamings().clear();
 				getRenamings().addAll((Collection<? extends Substitution>)newValue);
+				return;
+			case SCChartsPackage.SCOPE__TYPE_GROUPS:
+				getTypeGroups().clear();
+				getTypeGroups().addAll((Collection<? extends TypeGroup>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -480,9 +481,6 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 			case SCChartsPackage.SCOPE__LABEL:
 				setLabel(LABEL_EDEFAULT);
 				return;
-			case SCChartsPackage.SCOPE__VALUED_OBJECTS:
-				getValuedObjects().clear();
-				return;
 			case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
 				getLocalActions().clear();
 				return;
@@ -497,6 +495,9 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 				return;
 			case SCChartsPackage.SCOPE__RENAMINGS:
 				getRenamings().clear();
+				return;
+			case SCChartsPackage.SCOPE__TYPE_GROUPS:
+				getTypeGroups().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -514,8 +515,6 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case SCChartsPackage.SCOPE__LABEL:
 				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
-			case SCChartsPackage.SCOPE__VALUED_OBJECTS:
-				return valuedObjects != null && !valuedObjects.isEmpty();
 			case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
 				return localActions != null && !localActions.isEmpty();
 			case SCChartsPackage.SCOPE__BODY_REFERENCE:
@@ -526,6 +525,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
 				return bodyText != null && !bodyText.isEmpty();
 			case SCChartsPackage.SCOPE__RENAMINGS:
 				return renamings != null && !renamings.isEmpty();
+			case SCChartsPackage.SCOPE__TYPE_GROUPS:
+				return typeGroups != null && !typeGroups.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

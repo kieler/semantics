@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.klighd
+package de.cau.cs.kieler.scg.klighd 
 
 import com.google.inject.Guice
 import com.google.inject.Injector
@@ -78,6 +78,7 @@ import javax.inject.Inject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -154,6 +155,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     @Inject
     extension SCGCopyExtensions
 
+    /** Inject KExpression extension. */
+    @Inject
+    extension KExpressionsExtension
+
+
     @Inject
     extension AnalysesVisualization
     
@@ -190,6 +196,14 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val SynthesisOption SHOW_SCHEDULINGBLOCKS 
         = SynthesisOption::createCheckOption("Scheduling Blocks", true);
 
+    /** Show scheduling path */
+    private static val SynthesisOption SHOW_SCHEDULINGPATH
+        = SynthesisOption::createCheckOption("Scheduling path", true);
+        
+    /** Show potential problems */
+    private static val SynthesisOption SHOW_POTENTIALPROBLEMS
+        = SynthesisOption::createCheckOption("Potential problems", true);
+        
     /** Show shadow */
     private static val SynthesisOption SHOW_SHADOW
         = SynthesisOption::createCheckOption("Shadow", true);
@@ -255,6 +269,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             SHOW_CONFLUENT,
             SHOW_BASICBLOCKS, 
             SHOW_SCHEDULINGBLOCKS, 
+            SHOW_SCHEDULINGPATH,
+            SHOW_POTENTIALPROBLEMS,
             SHOW_SHADOW,
             HIERARCHY_TRANSPARENCY,
             CONTROLFLOW_THICKNESS,            
@@ -438,7 +454,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // border and connects them via a port. Thus, a kind of pseudo hierarchical edge layout is archived. 
             if (SHOW_HIERARCHY.booleanValue) {    
                 scg.nodes.filter(typeof(Fork)).forEach[ allNext.map[ target ].filter(typeof(Entry)).forEach[
-                	getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY)
+                	if (it != null) getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY)
                 ]] 
             }
             
@@ -475,8 +491,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 // Serialize the assignment
                 // Additionally, remove unnecessary parenthesis and add spacing in line breaks.
                 if (assignment.valuedObject != null && assignment.assignment != null) {
-                    var assignmentStr = assignment.valuedObject.name + " = " + 
-                        serializer.serialize(assignment.assignment.copy.splitOperatorExpression).removeParenthesis
+                    var assignmentStr = assignment.valuedObject.name + " = " 
+                        + serializer.serialize(assignment.assignment.copy.fix).removeParenthesis
                     if (assignmentStr.contains("&") && assignmentStr.indexOf("&") != assignmentStr.lastIndexOf("&")) {
                         assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
                         assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
@@ -519,7 +535,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             figure => [ node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
             	// Serialize the condition in the conditional
                 if (conditional.condition != null)  
-                    node.KContainerRendering.addText(serializer.serialize(conditional.condition.copy.splitOperatorExpression).removeParenthesis)
+                    node.KContainerRendering.addText(serializer.serialize(conditional.condition.copy.fix).removeParenthesis)
                         .setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0)
                         .putToLookUpWith(conditional)
                 if (SHOW_SHADOW.booleanValue) it.shadow = "black".color
@@ -904,7 +920,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
                     it.lineStyle = LineStyle::SOLID
                     it.addArrowDecorator
-                    if ((controlFlow.eContainer as Node).graph instanceof SCGraphSched) 
+                    if ((controlFlow.eContainer as Node).graph instanceof SCGraphSched
+                        && SHOW_SCHEDULINGPATH.booleanValue
+                    ) 
                         it.foreground = SCHEDULING_CONTROLFLOWEDGE.copy 
                         else it.foreground = STANDARD_CONTROLFLOWEDGE.copy
                     it.foreground.propagateToChildren = true
@@ -1110,7 +1128,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }                    
         }
         
-        if (scg instanceof SCGraphSched) {
+        if (scg instanceof SCGraphSched && SHOW_SCHEDULINGPATH.booleanValue) {
             var Node source = null
             var Node target = null 
             for(node : (scg as SCGraphSched).getSchedules.head.scheduleNodes) {
@@ -1169,6 +1187,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      */
     private def void synthesizeAnalyses(SCGraphSched scg) {
     	// val AnalysesVisualization analysesVisualization = Guice.createInjector().getInstance(typeof(AnalysesVisualization))
+    	if (!SHOW_POTENTIALPROBLEMS.booleanValue) return; 
     	scg.analyses.forEach[ visualize(it, this) ]
     }
    

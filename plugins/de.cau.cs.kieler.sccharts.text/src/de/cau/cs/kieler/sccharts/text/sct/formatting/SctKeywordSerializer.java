@@ -37,7 +37,7 @@ import de.cau.cs.kieler.sccharts.text.sct.services.SctGrammarAccess;
  * Object, org.eclipse.xtext.parsetree.reconstr.ITokenSerializer.IErrorAcceptor)}
  * does not lead to the intended behavior.
  *
- * @author chsch
+ * @author chsch ssm
  */
 public class SctKeywordSerializer extends KeywordSerializer {
 
@@ -51,7 +51,8 @@ public class SctKeywordSerializer extends KeywordSerializer {
             if (Strings.isEmpty(region.getId())
                     && Strings.isEmpty(region.getLabel())
                     && (region.getAnnotations() == null || region.getAnnotations().isEmpty())
-                    && (region.getValuedObjects() == null || region.getValuedObjects().isEmpty())) {
+//                    && (region.getValuedObjects() == null || region.getValuedObjects().isEmpty())) {
+            		&& (region.getTypeGroups() == null || region.getTypeGroups().isEmpty())) {
 //                    && (region.getVariables() == null || region.getVariables().isEmpty())) {
                 return null;
             }
@@ -64,7 +65,8 @@ public class SctKeywordSerializer extends KeywordSerializer {
                     && Strings.isEmpty(region.getId())
                     && Strings.isEmpty(region.getLabel())
                     && (region.getAnnotations() == null || region.getAnnotations().isEmpty())
-                    && (region.getValuedObjects() == null || region.getValuedObjects().isEmpty())) {
+//                    && (region.getValuedObjects() == null || region.getValuedObjects().isEmpty())) {
+            		&& (region.getTypeGroups() == null || region.getTypeGroups().isEmpty())) {
 //                    && (region.getVariables() == null || region.getVariables().isEmpty())) {
                 return null;
             }

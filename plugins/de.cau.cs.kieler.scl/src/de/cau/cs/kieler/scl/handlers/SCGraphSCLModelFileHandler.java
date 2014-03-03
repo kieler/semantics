@@ -31,8 +31,8 @@ import de.cau.cs.kieler.scl.transformations.SCGToSCLTransformation;
  */
 public class SCGraphSCLModelFileHandler extends AbstractConvertModelHandler {
 
-    public static final String SCGDEP_TRANSFORMATION =
-            "de.cau.cs.kieler.scg.scl.commands.SCGToSCLTransformation";
+    public static final String SCG_TRANSFORMATION =
+            "de.cau.cs.kieler.scl.commands.SCGToSCLTransformation";
 
     private static Injector injector = new SCLStandaloneSetup()
         .createInjectorAndDoEMFRegistration();
@@ -71,7 +71,7 @@ public class SCGraphSCLModelFileHandler extends AbstractConvertModelHandler {
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         transformed = model;
-        if (commandString.equals(SCGDEP_TRANSFORMATION)) {
+        if (commandString.equals(SCG_TRANSFORMATION)) {
             transformed = transformation.transformSCGToSCL((SCGraph) model);
         } 
         return transformed;

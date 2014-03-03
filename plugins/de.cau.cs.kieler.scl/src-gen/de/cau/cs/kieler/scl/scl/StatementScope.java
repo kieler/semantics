@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.scl.scl;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scl.scl.StatementScope#getValuedObjects <em>Valued Objects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.StatementScope#getTypeGroups <em>Type Groups</em>}</li>
  * </ul>
  * </p>
  *
@@ -25,19 +25,19 @@ import org.eclipse.emf.common.util.EList;
 public interface StatementScope extends Instruction, StatementSequence
 {
   /**
-   * Returns the value of the '<em><b>Valued Objects</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
+   * Returns the value of the '<em><b>Type Groups</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.TypeGroup}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Valued Objects</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Type Groups</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Valued Objects</em>' containment reference list.
-   * @see de.cau.cs.kieler.scl.scl.SclPackage#getStatementScope_ValuedObjects()
+   * @return the value of the '<em>Type Groups</em>' containment reference list.
+   * @see de.cau.cs.kieler.scl.scl.SclPackage#getStatementScope_TypeGroups()
    * @model containment="true"
    * @generated
    */
-  EList<ValuedObject> getValuedObjects();
+  EList<TypeGroup> getTypeGroups();
 
 } // StatementScope

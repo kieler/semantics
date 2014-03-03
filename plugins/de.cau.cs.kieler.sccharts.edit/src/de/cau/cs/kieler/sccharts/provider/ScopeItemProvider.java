@@ -172,11 +172,11 @@ public class ScopeItemProvider
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS);
 			childrenFeatures.add(SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS);
 			childrenFeatures.add(SCChartsPackage.Literals.SCOPE__BODY_CONTENTS);
 			childrenFeatures.add(SCChartsPackage.Literals.SCOPE__BODY_TEXT);
 			childrenFeatures.add(SCChartsPackage.Literals.SCOPE__RENAMINGS);
+			childrenFeatures.add(SCChartsPackage.Literals.SCOPE__TYPE_GROUPS);
 		}
 		return childrenFeatures;
 	}
@@ -224,11 +224,11 @@ public class ScopeItemProvider
 			case SCChartsPackage.SCOPE__LABEL:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case SCChartsPackage.SCOPE__VALUED_OBJECTS:
 			case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
 			case SCChartsPackage.SCOPE__BODY_CONTENTS:
 			case SCChartsPackage.SCOPE__BODY_TEXT:
 			case SCChartsPackage.SCOPE__RENAMINGS:
+			case SCChartsPackage.SCOPE__TYPE_GROUPS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -245,11 +245,6 @@ public class ScopeItemProvider
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS,
-				 KExpressionsFactory.eINSTANCE.createValuedObject()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -424,7 +419,7 @@ public class ScopeItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-				 KExpressionsFactory.eINSTANCE.createDoubleValue()));
+				 KExpressionsFactory.eINSTANCE.createTypeGroup()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -440,6 +435,11 @@ public class ScopeItemProvider
 			(createChildParameter
 				(SCChartsPackage.Literals.SCOPE__RENAMINGS,
 				 SCChartsFactory.eINSTANCE.createSubstitution()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(SCChartsPackage.Literals.SCOPE__TYPE_GROUPS,
+				 KExpressionsFactory.eINSTANCE.createTypeGroup()));
 	}
 
     /**
@@ -456,10 +456,10 @@ public class ScopeItemProvider
 		boolean qualify =
 			childFeature == AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS ||
 			childFeature == SCChartsPackage.Literals.SCOPE__BODY_CONTENTS ||
-			childFeature == SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS ||
 			childFeature == SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS ||
 			childFeature == SCChartsPackage.Literals.SCOPE__RENAMINGS ||
-			childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT;
+			childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT ||
+			childFeature == SCChartsPackage.Literals.SCOPE__TYPE_GROUPS;
 
 		if (qualify) {
 			return getString

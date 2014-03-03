@@ -293,12 +293,12 @@ public class StateItemProvider
 		boolean qualify =
 			childFeature == AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS ||
 			childFeature == SCChartsPackage.Literals.SCOPE__BODY_CONTENTS ||
-			childFeature == SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS ||
 			childFeature == SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS ||
 			childFeature == SCChartsPackage.Literals.STATE__REGIONS ||
 			childFeature == SCChartsPackage.Literals.SCOPE__RENAMINGS ||
 			childFeature == SCChartsPackage.Literals.STATE__OUTGOING_TRANSITIONS ||
-			childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT;
+			childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT ||
+			childFeature == SCChartsPackage.Literals.SCOPE__TYPE_GROUPS;
 
 		if (qualify) {
 			return getString

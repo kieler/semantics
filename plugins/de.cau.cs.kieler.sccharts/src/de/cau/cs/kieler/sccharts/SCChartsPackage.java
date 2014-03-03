@@ -283,22 +283,13 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
-	 * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int SCOPE__VALUED_OBJECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
-
-    /**
 	 * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SCOPE__LOCAL_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int SCOPE__LOCAL_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
 	 * The feature id for the '<em><b>Body Reference</b></em>' reference.
@@ -307,7 +298,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int SCOPE__BODY_REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int SCOPE__BODY_REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
 	 * The feature id for the '<em><b>Body Contents</b></em>' containment reference.
@@ -316,7 +307,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int SCOPE__BODY_CONTENTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int SCOPE__BODY_CONTENTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
 	 * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
@@ -325,7 +316,7 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int SCOPE__BODY_TEXT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+    int SCOPE__BODY_TEXT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
 	 * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
@@ -334,7 +325,16 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int SCOPE__RENAMINGS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
+    int SCOPE__RENAMINGS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+
+    /**
+	 * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int SCOPE__TYPE_GROUPS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
 	 * The number of structural features of the '<em>Scope</em>' class.
@@ -383,15 +383,6 @@ public interface SCChartsPackage extends EPackage {
     int REGION__LABEL = SCOPE__LABEL;
 
     /**
-	 * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int REGION__VALUED_OBJECTS = SCOPE__VALUED_OBJECTS;
-
-    /**
 	 * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -435,6 +426,15 @@ public interface SCChartsPackage extends EPackage {
 	 * @ordered
 	 */
     int REGION__RENAMINGS = SCOPE__RENAMINGS;
+
+    /**
+	 * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int REGION__TYPE_GROUPS = SCOPE__TYPE_GROUPS;
 
     /**
 	 * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -547,15 +547,6 @@ public interface SCChartsPackage extends EPackage {
     int STATE__LABEL = SCOPE__LABEL;
 
     /**
-	 * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-    int STATE__VALUED_OBJECTS = SCOPE__VALUED_OBJECTS;
-
-    /**
 	 * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -599,6 +590,15 @@ public interface SCChartsPackage extends EPackage {
 	 * @ordered
 	 */
     int STATE__RENAMINGS = SCOPE__RENAMINGS;
+
+    /**
+	 * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+    int STATE__TYPE_GROUPS = SCOPE__TYPE_GROUPS;
 
     /**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1652,17 +1652,6 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getScope_Label();
 
     /**
-	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getValuedObjects <em>Valued Objects</em>}'.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
-	 * @see de.cau.cs.kieler.sccharts.Scope#getValuedObjects()
-	 * @see #getScope()
-	 * @generated
-	 */
-    EReference getScope_ValuedObjects();
-
-    /**
 	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getLocalActions <em>Local Actions</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1716,6 +1705,17 @@ public interface SCChartsPackage extends EPackage {
 	 * @generated
 	 */
     EReference getScope_Renamings();
+
+    /**
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getTypeGroups <em>Type Groups</em>}'.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Type Groups</em>'.
+	 * @see de.cau.cs.kieler.sccharts.Scope#getTypeGroups()
+	 * @see #getScope()
+	 * @generated
+	 */
+    EReference getScope_TypeGroups();
 
     /**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.TextEffect <em>Text Effect</em>}'.
@@ -2174,14 +2174,6 @@ public interface SCChartsPackage extends EPackage {
         EAttribute SCOPE__LABEL = eINSTANCE.getScope_Label();
 
         /**
-		 * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-		 * @generated
-		 */
-        EReference SCOPE__VALUED_OBJECTS = eINSTANCE.getScope_ValuedObjects();
-
-        /**
 		 * The meta object literal for the '<em><b>Local Actions</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2220,6 +2212,14 @@ public interface SCChartsPackage extends EPackage {
 		 * @generated
 		 */
         EReference SCOPE__RENAMINGS = eINSTANCE.getScope_Renamings();
+
+        /**
+		 * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+		 * @generated
+		 */
+        EReference SCOPE__TYPE_GROUPS = eINSTANCE.getScope_TypeGroups();
 
         /**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TextEffectImpl <em>Text Effect</em>}' class.

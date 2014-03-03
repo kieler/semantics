@@ -41,7 +41,9 @@ import de.cau.cs.kieler.scgsched.ScgschedFactory
 import de.cau.cs.kieler.scgsched.Schedule
 import java.util.HashMap
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.TypeGroup
 
 /** 
  * The SCG copy extensions are used to copy SCG model data to another SCG model. 
@@ -58,6 +60,9 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 
 class SCGCopyExtensions {
+	
+	@Inject
+	extension KExpressionsExtension
      
     // -------------------------------------------------------------------------
     // -- Mapping globals 
@@ -181,11 +186,17 @@ class SCGCopyExtensions {
      * 			the target SCG
      */
     public def void copyDeclarations(SCGraph source, SCGraph target) {
-        for(valuedObject : source.valuedObjects) {
-            val newValuedObject = valuedObject.copy
-            target.valuedObjects.add(newValuedObject)
-            valuedObjectMapping.put(valuedObject, newValuedObject)
-        }    	
+    	for (typeGroup : source.typeGroups) {
+    		val newTypeGroup = createTypeGroupWOValuedObjects(typeGroup)
+    		typeGroup.valuedObjects.forEach[ copyValuedObject(newTypeGroup) ]
+    		target.typeGroups += newTypeGroup
+    	}
+	}     
+    
+    public def void copyValuedObject(ValuedObject sourceObject, TypeGroup targetTypeGroup) {
+        val newValuedObject = sourceObject.copy
+        targetTypeGroup.valuedObjects += newValuedObject
+        valuedObjectMapping.put(sourceObject, newValuedObject)
     }
     
     
@@ -246,6 +257,7 @@ class SCGCopyExtensions {
         bb => [
         	blockType = basicBlock.blockType
         	goBlock = basicBlock.goBlock
+        	deadBlock = basicBlock.deadBlock
         	preGuard = valuedObjectMapping.get(basicBlock.preGuard)
         ]
                 

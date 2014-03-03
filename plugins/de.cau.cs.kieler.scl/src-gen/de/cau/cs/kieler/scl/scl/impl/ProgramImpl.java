@@ -2,7 +2,9 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.annotations.Annotation;
+
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
@@ -29,8 +31,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getValuedObjects <em>Valued Objects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getTypeGroups <em>Type Groups</em>}</li>
  * </ul>
  * </p>
  *
@@ -38,6 +41,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ProgramImpl extends StatementSequenceImpl implements Program
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -59,14 +72,14 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getValuedObjects() <em>Valued Objects</em>}' containment reference list.
+   * The cached value of the '{@link #getTypeGroups() <em>Type Groups</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getValuedObjects()
+   * @see #getTypeGroups()
    * @generated
    * @ordered
    */
-  protected EList<ValuedObject> valuedObjects;
+  protected EList<TypeGroup> typeGroups;
 
   /**
    * <!-- begin-user-doc -->
@@ -87,6 +100,20 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   protected EClass eStaticClass()
   {
     return SclPackage.Literals.PROGRAM;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, SclPackage.PROGRAM__ANNOTATIONS);
+    }
+    return annotations;
   }
 
   /**
@@ -117,13 +144,13 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<ValuedObject> getValuedObjects()
+  public EList<TypeGroup> getTypeGroups()
   {
-    if (valuedObjects == null)
+    if (typeGroups == null)
     {
-      valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, SclPackage.PROGRAM__VALUED_OBJECTS);
+      typeGroups = new EObjectContainmentEList<TypeGroup>(TypeGroup.class, this, SclPackage.PROGRAM__TYPE_GROUPS);
     }
-    return valuedObjects;
+    return typeGroups;
   }
 
   /**
@@ -136,8 +163,10 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   {
     switch (featureID)
     {
-      case SclPackage.PROGRAM__VALUED_OBJECTS:
-        return ((InternalEList<?>)getValuedObjects()).basicRemove(otherEnd, msgs);
+      case SclPackage.PROGRAM__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
+      case SclPackage.PROGRAM__TYPE_GROUPS:
+        return ((InternalEList<?>)getTypeGroups()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -152,10 +181,12 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   {
     switch (featureID)
     {
+      case SclPackage.PROGRAM__ANNOTATIONS:
+        return getAnnotations();
       case SclPackage.PROGRAM__NAME:
         return getName();
-      case SclPackage.PROGRAM__VALUED_OBJECTS:
-        return getValuedObjects();
+      case SclPackage.PROGRAM__TYPE_GROUPS:
+        return getTypeGroups();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -171,12 +202,16 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   {
     switch (featureID)
     {
+      case SclPackage.PROGRAM__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case SclPackage.PROGRAM__NAME:
         setName((String)newValue);
         return;
-      case SclPackage.PROGRAM__VALUED_OBJECTS:
-        getValuedObjects().clear();
-        getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
+      case SclPackage.PROGRAM__TYPE_GROUPS:
+        getTypeGroups().clear();
+        getTypeGroups().addAll((Collection<? extends TypeGroup>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -192,11 +227,14 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   {
     switch (featureID)
     {
+      case SclPackage.PROGRAM__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case SclPackage.PROGRAM__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case SclPackage.PROGRAM__VALUED_OBJECTS:
-        getValuedObjects().clear();
+      case SclPackage.PROGRAM__TYPE_GROUPS:
+        getTypeGroups().clear();
         return;
     }
     super.eUnset(featureID);
@@ -212,10 +250,12 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   {
     switch (featureID)
     {
+      case SclPackage.PROGRAM__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case SclPackage.PROGRAM__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case SclPackage.PROGRAM__VALUED_OBJECTS:
-        return valuedObjects != null && !valuedObjects.isEmpty();
+      case SclPackage.PROGRAM__TYPE_GROUPS:
+        return typeGroups != null && !typeGroups.isEmpty();
     }
     return super.eIsSet(featureID);
   }

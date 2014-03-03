@@ -60,7 +60,7 @@ public enum StateType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-    REFERENCE(2, "REFERENCE", "REFERENCE"),
+    REFERENCE(0, "REFERENCE", "REFERENCE"),
 
     /**
 	 * The '<em><b>TEXTUAL</b></em>' literal object.
@@ -126,7 +126,7 @@ public enum StateType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-    public static final int REFERENCE_VALUE = 2;
+    public static final int REFERENCE_VALUE = 0;
 
     /**
 	 * The '<em><b>TEXTUAL</b></em>' literal value.
@@ -208,7 +208,6 @@ public enum StateType implements Enumerator {
 		switch (value) {
 			case NORMAL_VALUE: return NORMAL;
 			case CONNECTOR_VALUE: return CONNECTOR;
-			case REFERENCE_VALUE: return REFERENCE;
 		}
 		return null;
 	}

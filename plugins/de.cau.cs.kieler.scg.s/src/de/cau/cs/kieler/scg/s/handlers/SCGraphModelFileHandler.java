@@ -25,6 +25,15 @@ import de.cau.cs.kieler.s.SPlugin;
 import de.cau.cs.kieler.s.SStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.s.transformations.SCGToSTransformation;
+import de.cau.cs.kieler.scg.schedulers.AbstractScheduler;
+import de.cau.cs.kieler.scg.schedulers.SimpleScheduler;
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer;
+import de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer;
+import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation;
+import de.cau.cs.kieler.scg.transformations.DependencyTransformation;
+import de.cau.cs.kieler.scgbb.SCGraphBB;
+import de.cau.cs.kieler.scgdep.SCGraphDep;
+import de.cau.cs.kieler.scgsched.SCGraphSched;
 
 /**
  * Handler for menu contributions
@@ -69,14 +78,32 @@ public class SCGraphModelFileHandler extends AbstractConvertModelHandler {
         String commandString = event.getCommand().getId().toString();
         EObject transformed = null;
 
-        SCGToSTransformation transformation =
+        DependencyTransformation transformation1 =
+                Guice.createInjector().getInstance(DependencyTransformation.class);        
+        BasicBlockTransformation transformation2 =
+                Guice.createInjector().getInstance(BasicBlockTransformation.class);
+        AbstractScheduler transformation3 =
+                Guice.createInjector().getInstance(SimpleScheduler.class);        
+        AbstractSequentializer transformation4 =
+                        Guice.createInjector().getInstance(SimpleSequentializer.class);
+        SCGToSTransformation transformation5 =
         		Guice.createInjector().getInstance(SCGToSTransformation.class);
         
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         transformed = model;
         if (commandString.equals(SCG_TRANSFORMATION)) {
-            transformed = transformation.transformSCGToS((SCGraph) model);
+            if (!selection.toString().contains(".seq.scg")) {
+                if (!(transformed instanceof SCGraphDep)) 
+                    transformed = transformation1.transform(transformed);
+                if (!(transformed instanceof SCGraphBB)) 
+                    transformed = transformation2.transform(transformed);
+                if (!(transformed instanceof SCGraphSched)) 
+                    transformed = transformation3.transform(transformed);            
+                transformed = transformation4.transform(transformed);
+            }
+            
+            transformed = transformation5.transformSCGToS((SCGraph) transformed);
         } 
         return transformed;
     }
