@@ -212,16 +212,16 @@ public class SctTransientValueService extends DefaultTransientValueService {
             	return false;
             }
 
-            // During the esterel2sccharts transformation, TrapDecls may occur in SCCharts models.
-            //  Since Traps are Esterel stuff and the SCCharts stuff must not have any dependency
-            //  on this I cannot explicitly check "instanceof TrapDecl".
-            // what an evil hack ... :-(
-            if (((EList<ValuedObject>) owner.eGet(feature)).get(index).eClass().getName()
-                    .startsWith("T")) {
-                return true;
-            } else {
-                return false;
-            }
+//            // During the esterel2sccharts transformation, TrapDecls may occur in SCCharts models.
+//            //  Since Traps are Esterel stuff and the SCCharts stuff must not have any dependency
+//            //  on this I cannot explicitly check "instanceof TrapDecl".
+//            // what an evil hack ... :-(
+//            if (((EList<ValuedObject>) owner.eGet(feature)).get(index).eClass().getName()
+//                    .startsWith("T")) {
+//                return true;
+//            } else {
+//                return false;
+//            }
         }
 
         /* try not to serialize annotations that are of type unequal to StringAnnotations */

@@ -241,7 +241,7 @@ class SCChartsExtension {
         return notFoundOtherValuedObjectInState && notFoundInParents
     }
     def private dispatch boolean uniqueNameTest(ValuedObject valuedObject, String newName) {
-        valuedObject.uniqueNameTest((valuedObject.eContainer as State), newName)
+        valuedObject.uniqueNameTest((valuedObject.typeGroup.eContainer as State), newName)
     }
     def private dispatch boolean uniqueNameTest(EObject eObject, String newName) {
         false
