@@ -23,6 +23,7 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scgsched.ScgschedFactory
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -58,6 +59,9 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
+    
+    @Inject
+    extension KExpressionsExtension
     
     /** Inject SCG extensions. */    
     @Inject

@@ -664,18 +664,18 @@ class SCGCopyExtensions {
         newExpression
     }
     
-    /**
-     * Create a new reference to a valued object.
-     * 
-     * @param valuedObject
-     * 			the valued object in question
-     * @return Returns a new reference to the given object.
-     */
-    def Expression reference(ValuedObject valuedObject) {
-        val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-        valuedObjectReference.valuedObject = valuedObject
-        valuedObjectReference
-    }
+//    /**
+//     * Create a new reference to a valued object.
+//     * 
+//     * @param valuedObject
+//     * 			the valued object in question
+//     * @return Returns a new reference to the given object.
+//     */
+//    def Expression reference(ValuedObject valuedObject) {
+//        val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+//        valuedObjectReference.valuedObject = valuedObject
+//        valuedObjectReference
+//    }
     
 
     // -------------------------------------------------------------------------
