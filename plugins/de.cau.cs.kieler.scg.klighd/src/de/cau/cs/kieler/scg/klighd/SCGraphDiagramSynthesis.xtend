@@ -80,6 +80,7 @@ import org.eclipse.xtext.serializer.ISerializer
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -310,7 +311,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val KColor SCCHARTSBLUE = RENDERING_FACTORY.createKColor() =>
         [it.red = 205; it.green = 220; it.blue = 243];
     private static val KColor REGIONLABEL = RENDERING_FACTORY.createKColor() =>
-        [it.red = 80; it.green = 80; it.blue = 80];
+        [it.red = 64; it.green = 80; it.blue = 128];
     private static val KColor BASICBLOCKBORDER = RENDERING_FACTORY.createKColor() =>
         [it.red = 248; it.green = 0; it.blue = 253];
     private static val KColor SCHEDULINGBLOCKBORDER = RENDERING_FACTORY.createKColor() =>
@@ -1014,6 +1015,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // They will be removed from the original parent!
         for (tn : nodes) {
             kContainer.children += tn.node
+            
+            if (nodeGrouping != NODEGROUPING_HIERARCHY) 
+            if (tn.node.getData(typeof(KShapeLayout)).getProperty(Properties::LAYER_CONSTRAINT) == LayerConstraint::FIRST) {
+                kContainer.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+            }
         }
 
         // Add the container to the original parent.
