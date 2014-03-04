@@ -4,6 +4,7 @@ import de.cau.cs.kieler.core.annotations.AnnotationsFactory
 import de.cau.cs.kieler.core.annotations.Annotation
 import de.cau.cs.kieler.core.annotations.Annotatable
 import de.cau.cs.kieler.core.annotations.StringAnnotation
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 class AnnotationsExtensions {
 	
@@ -30,4 +31,10 @@ class AnnotationsExtensions {
 		]
 	}
 		
+		
+	def public void copyAnnotations(Annotatable source, Annotatable target) {
+	    source.annotations.forEach[
+	        target.annotations += it.copy
+	    ]
+	}
 }
