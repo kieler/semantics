@@ -79,7 +79,7 @@ class KExpressionsExtension {
     }
 
     def public boolean isInput(ValuedObject valuedObject) {
-    	valuedObject.input
+    	valuedObject.getInput()
     }
     
     /**
@@ -95,7 +95,7 @@ class KExpressionsExtension {
     }
 
     def public boolean isOutput(ValuedObject valuedObject) {
-    	valuedObject.output
+    	valuedObject.getOutput()
     }
     
     /**
@@ -111,7 +111,7 @@ class KExpressionsExtension {
     }
 
     def public boolean isStatic(ValuedObject valuedObject) {
-    	valuedObject.static
+    	valuedObject.getStatic()
     }
     
     /**
@@ -127,7 +127,7 @@ class KExpressionsExtension {
     }
 
     def public boolean isConstant(ValuedObject valuedObject) {
-    	valuedObject.constant
+    	valuedObject.getConstant()
     }
 
     /**
@@ -143,7 +143,7 @@ class KExpressionsExtension {
     }
 
     def public boolean isSignal(ValuedObject valuedObject) {
-    	valuedObject.signal
+    	valuedObject.getSignal()
     }
     
     /**
