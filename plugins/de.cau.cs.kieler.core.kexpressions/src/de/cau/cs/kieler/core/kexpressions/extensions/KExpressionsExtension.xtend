@@ -84,6 +84,7 @@ class KExpressionsExtension {
     
     /**
      * @deprecated Use type groups instead.
+     * TODO: currently changes typegroup property for ALL contained valued object. this might be WRONG.
      */
     def public ValuedObject setInput(ValuedObject valuedObject, boolean input) {
     	deprecatedValuedObjectAccess
@@ -100,6 +101,7 @@ class KExpressionsExtension {
     
     /**
      * @deprecated Use type groups instead.
+     * TODO: currently changes typegroup property for ALL contained valued object. this might be WRONG.
      */
     def public ValuedObject setOutput(ValuedObject valuedObject, boolean output) {
     	deprecatedValuedObjectAccess
@@ -116,6 +118,7 @@ class KExpressionsExtension {
     
     /**
      * @deprecated Use type groups instead.
+     * TODO: currently changes typegroup property for ALL contained valued object. this might be WRONG.
      */
     def public ValuedObject setStatic(ValuedObject valuedObject, boolean statik) {
     	deprecatedValuedObjectAccess
@@ -132,6 +135,7 @@ class KExpressionsExtension {
 
     /**
      * @deprecated Use type groups instead.
+     * TODO: currently changes typegroup property for ALL contained valued object. this might be WRONG.
      */
     def public ValuedObject setSignal(ValuedObject valuedObject, boolean signal) {
     	deprecatedValuedObjectAccess
@@ -148,6 +152,7 @@ class KExpressionsExtension {
     
     /**
      * @deprecated Use type groups instead.
+     * TODO: currently changes typegroup property for ALL contained valued object. this might be WRONG.
      */
     def public ValuedObject setConstant(ValuedObject valuedObject, boolean constant) {
     	deprecatedValuedObjectAccess
