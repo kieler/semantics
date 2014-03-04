@@ -109,7 +109,7 @@ public class TimingAction implements IAction {
     @Override
     public ActionResult execute(final ActionContext context) {
         
-        Job job = new Job("TiminAnalysis") {
+        Job job = new Job("TimingAnalysis") {
             
             @Override
             protected IStatus run(IProgressMonitor monitor) {
@@ -226,6 +226,8 @@ public class TimingAction implements IAction {
 //        Integer timeDomain = annotationExtension.getTimeDomain(region);
 //        String domain = timeDomain.toString();
         String timeString = fWCETString + "/" + hWCETString;
+        // next line only for debugging
+        ViewContext vC = context.getViewContext();
         EObject viewModelElement = context.getViewContext().getTargetElement(region, null);
 
         if (viewModelElement instanceof KNode) {

@@ -15,10 +15,9 @@
             locationURI="toolbar:de.cau.cs.kieler.layout.toolbar">
          <command
                commandId="de.cau.cs.kieler.klighd.ui.actionExecution"
-               icon="icons/wcet.svg"
-               label="WCET"
+               label="TA"
                style="push"
-               tooltip="Show WCET values (action)">
+               tooltip="Show WCET values (old Version)">
             <parameter
                   name="de.cau.cs.kieler.klighd.ui.action"
                   value="de.cau.cs.kieler.sccharts.tsccharts.TimingAction">
@@ -30,6 +29,7 @@
             locationURI="toolbar:de.cau.cs.kieler.layout.toolbar">
          <command
                commandId="de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysis"
+               icon="icons/wcet.svg"
                label="TH"
                style="push"
                tooltip="Show WCET values (handler, under construction)">

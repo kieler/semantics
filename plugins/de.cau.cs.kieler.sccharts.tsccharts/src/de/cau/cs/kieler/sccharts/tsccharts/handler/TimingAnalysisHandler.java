@@ -36,8 +36,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.resource.XtextResource;
@@ -51,6 +53,7 @@ import com.google.inject.Guice;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.HorizontalAlignment;
 import de.cau.cs.kieler.core.krendering.KContainerRendering;
+import de.cau.cs.kieler.core.krendering.KRenderingFactory;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.VerticalAlignment;
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions;
@@ -118,6 +121,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
         } else {
             return null;
         }
+       
         
         Job job = new Job("TimingAnalysis") {
             
@@ -148,10 +152,21 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     }
                 });
                 
-                Region rootRegion = (Region) EcoreUtil.copy(maybe.get());
+                Region rootRegion = (Region) /*EcoreUtil.copy(*/maybe.get();
+                
+                //annotationProvider.setTimingDomainsSimple(rootRegion, 0);
+                
                 
                 EList<State> rootRegionStates = rootRegion.getStates();
                 
+//                PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+//                    
+//                    @Override
+//                    public void run() {
+//                        // TODO Auto-generated method stub
+//                        
+//                    }
+//                });
                 
                 State state = rootRegionStates.get(0);
                 annotationProvider.doTimingAnnotations(state, "robot");
@@ -160,30 +175,8 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 while (childRegionsIterator.hasNext()) {
                     Region childRegion = childRegionsIterator.next();
                     showRegionTimingRecursive(childRegion, kts.getViewContext());
-                    // Integer hierarchicalWCET = annotationExtension.getTimeHierarchical(childRegion);
-                    // String hWCETString = hierarchicalWCET.toString();
-                    // EObject viewModelElement =
-                    // context.getViewContext().getTargetElement(childRegion, null);
-                    //
-                    // if (viewModelElement instanceof KNode) {
-                    // KContainerRendering rect =
-                    // ((KNode) viewModelElement).getData(KContainerRendering.class);
-                    //
-                    //
-                    // if (rect != null) {
-                    // KText text = containerRenderingExtensions.addText(rect, hWCETString);
-                    // renderingExtensions.setFontSize(text, 12);
-                    // renderingExtensions.setForegroundColor(text, 255, 0, 0);
-                    // renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5, 0,
-                    // renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT,
-                    // VerticalAlignment.TOP, 5, 5, 0, 0);
-                    //
-                    // rect.getChildren().add(text);
                 }
-                
-                
-                
-                
+                     
 //                
 //                
 //                annotationProvider.setTimingDomainsSimple(rootRegion, 0);
@@ -221,6 +214,8 @@ public class TimingAnalysisHandler extends AbstractHandler {
         
         return null;
     }
+    
+    
     /* Displays flat and hierarchical timing values for all regions */
     private void showRegionTimingRecursive(Region region, ViewContext viewContext) {
         Integer hierarchicalWCET = annotationExtension.getTimeHierarchical(region);
@@ -237,7 +232,8 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     ((KNode) viewModelElement).getData(KContainerRendering.class);
 
             if (rect != null) {
-                KText text = containerRenderingExtensions.addText(rect, timeString);
+                KText text = KRenderingFactory.eINSTANCE.createKText();
+                text.setText(timeString);
                 renderingExtensions.setFontSize(text, 12);
                 renderingExtensions.setForegroundColor(text, 255, 0, 0);
                 renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5, 0,
