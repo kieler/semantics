@@ -44,6 +44,7 @@ import java.util.HashMap
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kexpressions.TypeGroup
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 /** 
  * The SCG copy extensions are used to copy SCG model data to another SCG model. 
@@ -63,6 +64,9 @@ class SCGCopyExtensions {
 	
 	@Inject
 	extension KExpressionsExtension
+	
+	@Inject
+	extension AnnotationsExtensions
      
     // -------------------------------------------------------------------------
     // -- Mapping globals 
@@ -117,6 +121,7 @@ class SCGCopyExtensions {
         // Additionally, copy all nodes and fill the mapping structures.
         for(node : source.nodes) {
             val nodeCopy = node.copySCGNode(target)
+            node.copyAnnotations(nodeCopy)
             nodeMapping.put(node, nodeCopy)
             revNodeMapping.put(nodeCopy, node)
             target.nodes.add(nodeCopy)
