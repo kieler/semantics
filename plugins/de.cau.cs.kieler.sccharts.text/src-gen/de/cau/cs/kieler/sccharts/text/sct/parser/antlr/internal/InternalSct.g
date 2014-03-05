@@ -380,16 +380,16 @@ ruleSCChart returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSCChartAccess().getPackageQualifiedNameParserRuleCall_0_1_0()); 
+	        newCompositeNode(grammarAccess.getSCChartAccess().getNameQualifiedNameParserRuleCall_0_1_0()); 
 	    }
-		lv_package_1_0=ruleQualifiedName		{
+		lv_name_1_0=ruleQualifiedName		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSCChartRule());
 	        }
        		set(
        			$current, 
-       			"package",
-        		lv_package_1_0, 
+       			"name",
+        		lv_name_1_0, 
         		"QualifiedName");
 	        afterParserOrEnumRuleCall();
 	    }

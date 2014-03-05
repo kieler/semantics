@@ -3544,9 +3544,9 @@ rule__SCChart__Group_0__1__Impl
     }
 :
 (
-{ before(grammarAccess.getSCChartAccess().getPackageAssignment_0_1()); }
-(rule__SCChart__PackageAssignment_0_1)
-{ after(grammarAccess.getSCChartAccess().getPackageAssignment_0_1()); }
+{ before(grammarAccess.getSCChartAccess().getNameAssignment_0_1()); }
+(rule__SCChart__NameAssignment_0_1)
+{ after(grammarAccess.getSCChartAccess().getNameAssignment_0_1()); }
 )
 
 ;
@@ -11524,14 +11524,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__SCChart__PackageAssignment_0_1
+rule__SCChart__NameAssignment_0_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getSCChartAccess().getPackageQualifiedNameParserRuleCall_0_1_0()); }
-	ruleQualifiedName{ after(grammarAccess.getSCChartAccess().getPackageQualifiedNameParserRuleCall_0_1_0()); }
+{ before(grammarAccess.getSCChartAccess().getNameQualifiedNameParserRuleCall_0_1_0()); }
+	ruleQualifiedName{ after(grammarAccess.getSCChartAccess().getNameQualifiedNameParserRuleCall_0_1_0()); }
 )
 
 ;

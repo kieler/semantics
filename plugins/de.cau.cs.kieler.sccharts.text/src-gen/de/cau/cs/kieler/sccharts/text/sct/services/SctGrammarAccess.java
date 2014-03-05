@@ -184,8 +184,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
 		private final Keyword cPackageKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final Assignment cPackageAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cPackageQualifiedNameParserRuleCall_0_1_0 = (RuleCall)cPackageAssignment_0_1.eContents().get(0);
+		private final Assignment cNameAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cNameQualifiedNameParserRuleCall_0_1_0 = (RuleCall)cNameAssignment_0_1.eContents().get(0);
 		private final Assignment cImportsAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cImportsImportDeclParserRuleCall_1_0 = (RuleCall)cImportsAssignment_1.eContents().get(0);
 		private final Assignment cAnnotationsAssignment_2 = (Assignment)cGroup.eContents().get(2);
@@ -226,27 +226,27 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//SCChart:
-		//	("package" package=QualifiedName)? imports+=ImportDecl* annotations+=Annotation* "scchart" id=ID label=STRING?
+		//	("package" name=QualifiedName)? imports+=ImportDecl* annotations+=Annotation* "scchart" id=ID label=STRING?
 		//	("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)? | "{"
 		//	((typeGroups+=TypeGroup | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?) "}")?;
 		public ParserRule getRule() { return rule; }
 
-		//("package" package=QualifiedName)? imports+=ImportDecl* annotations+=Annotation* "scchart" id=ID label=STRING?
+		//("package" name=QualifiedName)? imports+=ImportDecl* annotations+=Annotation* "scchart" id=ID label=STRING?
 		//("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)? | "{"
 		//((typeGroups+=TypeGroup | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?) "}")?
 		public Group getGroup() { return cGroup; }
 
-		//("package" package=QualifiedName)?
+		//("package" name=QualifiedName)?
 		public Group getGroup_0() { return cGroup_0; }
 
 		//"package"
 		public Keyword getPackageKeyword_0_0() { return cPackageKeyword_0_0; }
 
-		//package=QualifiedName
-		public Assignment getPackageAssignment_0_1() { return cPackageAssignment_0_1; }
+		//name=QualifiedName
+		public Assignment getNameAssignment_0_1() { return cNameAssignment_0_1; }
 
 		//QualifiedName
-		public RuleCall getPackageQualifiedNameParserRuleCall_0_1_0() { return cPackageQualifiedNameParserRuleCall_0_1_0; }
+		public RuleCall getNameQualifiedNameParserRuleCall_0_1_0() { return cNameQualifiedNameParserRuleCall_0_1_0; }
 
 		//imports+=ImportDecl*
 		public Assignment getImportsAssignment_1() { return cImportsAssignment_1; }
@@ -1286,7 +1286,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//SCChart:
-	//	("package" package=QualifiedName)? imports+=ImportDecl* annotations+=Annotation* "scchart" id=ID label=STRING?
+	//	("package" name=QualifiedName)? imports+=ImportDecl* annotations+=Annotation* "scchart" id=ID label=STRING?
 	//	("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)? | "{"
 	//	((typeGroups+=TypeGroup | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?) "}")?;
 	public SCChartElements getSCChartAccess() {

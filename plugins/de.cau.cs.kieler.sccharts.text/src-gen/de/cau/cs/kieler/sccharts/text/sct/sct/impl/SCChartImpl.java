@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.text.sct.sct.impl.SCChartImpl#getPackage <em>Package</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.text.sct.sct.impl.SCChartImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.text.sct.sct.impl.SCChartImpl#getImports <em>Imports</em>}</li>
  * </ul>
  * </p>
@@ -40,24 +40,24 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class SCChartImpl extends StateImpl implements SCChart
 {
   /**
-   * The default value of the '{@link #getPackage() <em>Package</em>}' attribute.
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPackage()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected static final String PACKAGE_EDEFAULT = null;
+  protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getPackage() <em>Package</em>}' attribute.
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getPackage()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected String package_ = PACKAGE_EDEFAULT;
+  protected String name = NAME_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getImports() <em>Imports</em>}' containment reference list.
@@ -95,9 +95,9 @@ public class SCChartImpl extends StateImpl implements SCChart
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getPackage()
+  public String getName()
   {
-    return package_;
+    return name;
   }
 
   /**
@@ -105,12 +105,12 @@ public class SCChartImpl extends StateImpl implements SCChart
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setPackage(String newPackage)
+  public void setName(String newName)
   {
-    String oldPackage = package_;
-    package_ = newPackage;
+    String oldName = name;
+    name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SctPackage.SC_CHART__PACKAGE, oldPackage, package_));
+      eNotify(new ENotificationImpl(this, Notification.SET, SctPackage.SC_CHART__NAME, oldName, name));
   }
 
   /**
@@ -153,8 +153,8 @@ public class SCChartImpl extends StateImpl implements SCChart
   {
     switch (featureID)
     {
-      case SctPackage.SC_CHART__PACKAGE:
-        return getPackage();
+      case SctPackage.SC_CHART__NAME:
+        return getName();
       case SctPackage.SC_CHART__IMPORTS:
         return getImports();
     }
@@ -172,8 +172,8 @@ public class SCChartImpl extends StateImpl implements SCChart
   {
     switch (featureID)
     {
-      case SctPackage.SC_CHART__PACKAGE:
-        setPackage((String)newValue);
+      case SctPackage.SC_CHART__NAME:
+        setName((String)newValue);
         return;
       case SctPackage.SC_CHART__IMPORTS:
         getImports().clear();
@@ -193,8 +193,8 @@ public class SCChartImpl extends StateImpl implements SCChart
   {
     switch (featureID)
     {
-      case SctPackage.SC_CHART__PACKAGE:
-        setPackage(PACKAGE_EDEFAULT);
+      case SctPackage.SC_CHART__NAME:
+        setName(NAME_EDEFAULT);
         return;
       case SctPackage.SC_CHART__IMPORTS:
         getImports().clear();
@@ -213,8 +213,8 @@ public class SCChartImpl extends StateImpl implements SCChart
   {
     switch (featureID)
     {
-      case SctPackage.SC_CHART__PACKAGE:
-        return PACKAGE_EDEFAULT == null ? package_ != null : !PACKAGE_EDEFAULT.equals(package_);
+      case SctPackage.SC_CHART__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SctPackage.SC_CHART__IMPORTS:
         return imports != null && !imports.isEmpty();
     }
@@ -232,8 +232,8 @@ public class SCChartImpl extends StateImpl implements SCChart
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (package: ");
-    result.append(package_);
+    result.append(" (name: ");
+    result.append(name);
     result.append(')');
     return result.toString();
   }

@@ -195,13 +195,13 @@ public interface SctPackage extends EPackage
   int SC_CHART__INCOMING_TRANSITIONS = SCChartsPackage.STATE__INCOMING_TRANSITIONS;
 
   /**
-   * The feature id for the '<em><b>Package</b></em>' attribute.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SC_CHART__PACKAGE = SCChartsPackage.STATE_FEATURE_COUNT + 0;
+  int SC_CHART__NAME = SCChartsPackage.STATE_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Imports</b></em>' containment reference list.
@@ -270,15 +270,15 @@ public interface SctPackage extends EPackage
   EClass getSCChart();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getPackage <em>Package</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Package</em>'.
-   * @see de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getPackage()
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getName()
    * @see #getSCChart()
    * @generated
    */
-  EAttribute getSCChart_Package();
+  EAttribute getSCChart_Name();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getImports <em>Imports</em>}'.
@@ -357,12 +357,12 @@ public interface SctPackage extends EPackage
     EClass SC_CHART = eINSTANCE.getSCChart();
 
     /**
-     * The meta object literal for the '<em><b>Package</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SC_CHART__PACKAGE = eINSTANCE.getSCChart_Package();
+    EAttribute SC_CHART__NAME = eINSTANCE.getSCChart_Name();
 
     /**
      * The meta object literal for the '<em><b>Imports</b></em>' containment reference list feature.

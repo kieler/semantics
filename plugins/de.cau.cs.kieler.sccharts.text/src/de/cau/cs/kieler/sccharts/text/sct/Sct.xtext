@@ -48,7 +48,7 @@ Region returns sccharts::Region:
 // ---------------------------------------------------------------------------------------------------
 
 SCChart:
-    ('package' package = QualifiedName)?
+    ('package' name = QualifiedName)?
     imports += ImportDecl*
     
     (annotations += Annotation)*

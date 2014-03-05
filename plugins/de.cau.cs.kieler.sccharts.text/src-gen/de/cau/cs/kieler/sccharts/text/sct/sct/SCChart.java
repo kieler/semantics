@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getPackage <em>Package</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getImports <em>Imports</em>}</li>
  * </ul>
  * </p>
@@ -26,30 +26,30 @@ import org.eclipse.emf.common.util.EList;
 public interface SCChart extends State
 {
   /**
-   * Returns the value of the '<em><b>Package</b></em>' attribute.
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Package</em>' attribute isn't clear,
+   * If the meaning of the '<em>Name</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Package</em>' attribute.
-   * @see #setPackage(String)
-   * @see de.cau.cs.kieler.sccharts.text.sct.sct.SctPackage#getSCChart_Package()
+   * @return the value of the '<em>Name</em>' attribute.
+   * @see #setName(String)
+   * @see de.cau.cs.kieler.sccharts.text.sct.sct.SctPackage#getSCChart_Name()
    * @model
    * @generated
    */
-  String getPackage();
+  String getName();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getPackage <em>Package</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getName <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Package</em>' attribute.
-   * @see #getPackage()
+   * @param value the new value of the '<em>Name</em>' attribute.
+   * @see #getName()
    * @generated
    */
-  void setPackage(String value);
+  void setName(String value);
 
   /**
    * Returns the value of the '<em><b>Imports</b></em>' containment reference list.

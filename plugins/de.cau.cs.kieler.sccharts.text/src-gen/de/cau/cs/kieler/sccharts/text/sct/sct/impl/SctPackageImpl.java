@@ -119,7 +119,7 @@ public class SctPackageImpl extends EPackageImpl implements SctPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getSCChart_Package()
+  public EAttribute getSCChart_Name()
   {
     return (EAttribute)scChartEClass.getEStructuralFeatures().get(0);
   }
@@ -195,7 +195,7 @@ public class SctPackageImpl extends EPackageImpl implements SctPackage
 
     // Create classes and their features
     scChartEClass = createEClass(SC_CHART);
-    createEAttribute(scChartEClass, SC_CHART__PACKAGE);
+    createEAttribute(scChartEClass, SC_CHART__NAME);
     createEReference(scChartEClass, SC_CHART__IMPORTS);
 
     importDeclEClass = createEClass(IMPORT_DECL);
@@ -239,7 +239,7 @@ public class SctPackageImpl extends EPackageImpl implements SctPackage
 
     // Initialize classes and features; add operations and parameters
     initEClass(scChartEClass, SCChart.class, "SCChart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSCChart_Package(), ecorePackage.getEString(), "package", null, 0, 1, SCChart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSCChart_Name(), ecorePackage.getEString(), "name", null, 0, 1, SCChart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSCChart_Imports(), this.getImportDecl(), null, "imports", null, 0, -1, SCChart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(importDeclEClass, ImportDecl.class, "ImportDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

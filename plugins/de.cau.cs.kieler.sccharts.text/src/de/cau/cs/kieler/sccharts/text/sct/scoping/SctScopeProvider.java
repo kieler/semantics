@@ -40,6 +40,8 @@ import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
+import de.cau.cs.kieler.sccharts.text.sct.sct.ImportDecl;
+import de.cau.cs.kieler.sccharts.text.sct.sct.SCChart;
 
 /**
  * This class contains custom scoping descriptions.
@@ -48,7 +50,17 @@ import de.cau.cs.kieler.sccharts.Transition;
  */
 public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 
-    private static final SCChartsPackage pack = SCChartsPackage.eINSTANCE; 
+    private static final SCChartsPackage pack = SCChartsPackage.eINSTANCE;
+    
+    public IScope scope_State(EObject context, EReference reference) {
+       if ((context instanceof SCChart) && (reference.getName() == "importedType")) {
+
+           
+           return IScope.NULLSCOPE;
+       } else {
+           return IScope.NULLSCOPE;
+       }
+    }
     
     public IScope scope_Binding_formal(EObject context, EReference reference) {
         if (context instanceof Binding) {

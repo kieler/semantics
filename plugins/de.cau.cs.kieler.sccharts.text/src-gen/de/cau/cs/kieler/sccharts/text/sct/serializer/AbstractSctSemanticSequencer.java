@@ -438,7 +438,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	/**
 	 * Constraint:
 	 *     (
-	 *         package=QualifiedName? 
+	 *         name=QualifiedName? 
 	 *         imports+=ImportDecl* 
 	 *         annotations+=Annotation* 
 	 *         id=ID 

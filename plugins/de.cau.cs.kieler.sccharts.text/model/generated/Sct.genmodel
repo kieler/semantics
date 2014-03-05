@@ -8,8 +8,9 @@
   <genPackages prefix="Sct" basePackage="de.cau.cs.kieler.sccharts.text.sct" disposableProviderFactory="true"
       ecorePackage="Sct.ecore#/">
     <genClasses ecoreClass="Sct.ecore#//SCChart">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sct.ecore#//SCChart/package"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sct.ecore#//SCChart/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sct.ecore#//SCChart/imports"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sct.ecore#//SCChart/package"/>
     </genClasses>
     <genClasses ecoreClass="Sct.ecore#//ImportDecl">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sct.ecore#//ImportDecl/importedType"/>

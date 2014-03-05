@@ -166,7 +166,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRegionAccess().getLabelAssignment_4(), "rule__Region__LabelAssignment_4");
 					put(grammarAccess.getRegionAccess().getTypeGroupsAssignment_6(), "rule__Region__TypeGroupsAssignment_6");
 					put(grammarAccess.getRegionAccess().getStatesAssignment_7(), "rule__Region__StatesAssignment_7");
-					put(grammarAccess.getSCChartAccess().getPackageAssignment_0_1(), "rule__SCChart__PackageAssignment_0_1");
+					put(grammarAccess.getSCChartAccess().getNameAssignment_0_1(), "rule__SCChart__NameAssignment_0_1");
 					put(grammarAccess.getSCChartAccess().getImportsAssignment_1(), "rule__SCChart__ImportsAssignment_1");
 					put(grammarAccess.getSCChartAccess().getAnnotationsAssignment_2(), "rule__SCChart__AnnotationsAssignment_2");
 					put(grammarAccess.getSCChartAccess().getIdAssignment_4(), "rule__SCChart__IdAssignment_4");
