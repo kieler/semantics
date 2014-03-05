@@ -94,7 +94,7 @@ public class TimingAction implements IAction {
                 
                 Region rootRegion = (Region) EcoreUtil.copy(resource.getContents().get(0));
                 
-                annotationProvider.setTimingDomainsSimple(rootRegion, 0);
+                // annotationProvider.setTimingDomainsSimple(rootRegion, 0);
                 
                 r.getContents().add(rootRegion);
                 

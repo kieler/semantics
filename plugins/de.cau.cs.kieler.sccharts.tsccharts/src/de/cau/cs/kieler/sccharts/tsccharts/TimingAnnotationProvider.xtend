@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sccharts.Region
 import javax.inject.Inject
 import java.util.List
 import java.util.LinkedList
+import com.google.common.base.Preconditions
 
 /**
  * This class provides an SCChart with WCRT information by annotating all regions with two values: The
@@ -57,43 +58,27 @@ class TimingAnnotationProvider {
         val regionListIterator = regionList.iterator;
         while (regionListIterator.hasNext()) {
             val childRegion = regionListIterator.next;
-            domainNumber = setTimingDomainsSimple(childRegion, domainNumber);
+
+            // threadTree will be used to determine program point pairs for requests of local timing
+            val HashMap<Integer, LinkedList<Integer>> threadTree = new HashMap<Integer, LinkedList<Integer>>;
+            domainNumber = setTimingDomainsSimple(childRegion, domainNumber, threadTree, null);
         }
 
         val Map<Integer, Integer> timingInformation = getTimingInformation(fileName);
         if (timingInformation != null) {
             annotateStatesAndRegions(scchart, timingInformation);
         }
-
-        //        if (timingInformation == null) {
-        //
-        //            // We have no timing information, so we should check whether we have already set the timing
-        //            // domains in the SCChart (and the KTM).
-        //           if (scchart.getAnnotation("TimeDomain") == null) {
-        //                setTimingDomains(scchart, KTMRoot, 1);
-        //            }
-        //        }
-        //        annotateRegions(scchart, KTMRoot, timingInformation);
         }
 
         /*Annotates states and regions of the scchart with flat and hierarchical timing values.*/
         def void annotateStatesAndRegions(State state, Map<Integer, Integer> map) {
+
             // reset hierarchical time for the state
             state.setTimeHierarchical(0);
             val regionList = state.regions;
             val regionListIterator = regionList.iterator;
             val macroChildStates = state.getMacroChildStates;
             if (!macroChildStates.empty) {
-
-                // former if (macroChildStates.empty) case:
-                //            while(regionListIterator.hasNext){
-                //                val childRegion = regionListIterator.next;
-                //                val Integer flatTiming = map.get(childRegion.getTimeDomain());
-                //                childRegion.setTimeFlat(flatTiming);
-                //                state.addToTimeHierarchical(flatTiming);
-                //            }
-                //            }
-                //             else {
                 val macroChildStatesIterator = macroChildStates.iterator;
                 while (macroChildStatesIterator.hasNext) {
                     val macroChild = macroChildStatesIterator.next;
@@ -115,16 +100,6 @@ class TimingAnnotationProvider {
      */
         def void sumUpHierarchicalTiming(Region region) {
 
-            //            val states = region.states;
-            //            val stateIterator = states.iterator;
-            //            while(stateIterator.hasNext){
-            //                val state = stateIterator.next;
-            //                if (!state.regions.empty){
-            //                    region.addToTimeHierarchical(state.timeHierarchical);
-            //                }
-            //            }
-            
-            
             // Reset timing before new calculation
             region.setTimeHierarchical(0);
 
@@ -157,6 +132,8 @@ class TimingAnnotationProvider {
         /* This method assigns time domains for each region of a state chart and annotates the 
      * the corresponding S-Code-Objects in the KTM accordingly.
      */
+     // old method, deprecated
+    
         def Integer setTimingDomains(State state, ModelWrapper model, Integer currentDomainNumber) {
             var domainNumber = currentDomainNumber;
             val regionList = state.regions;
@@ -194,11 +171,21 @@ class TimingAnnotationProvider {
 
         /* This method is a test method that sets the timing Domains for regions, but not for the 
      * elements of the according S model. To test the "upwards" timing information path*/
-        def Integer setTimingDomainsSimple(Region region, Integer currentDomainNumber) {
+        def Integer setTimingDomainsSimple(Region region, Integer currentDomainNumber,
+            HashMap<Integer, LinkedList<Integer>> threadTree, Integer parentDomain) {
             var domainNumber = currentDomainNumber;
             if (!region.hasChildRegions) {
                 region.setTimeDomain(domainNumber);
+                // Save this region in the threadTree in the List of its parent
+                if (parentDomain != null){
+                    threadTree.get(parentDomain).add(domainNumber);
+                }  
             } else {
+                region.setTimeDomain(domainNumber);
+                // Prepare descendant list for this region and add it to the thread tree
+                threadTree.put(domainNumber, new LinkedList<Integer>);
+                val regionDomain = domainNumber;
+                domainNumber = domainNumber + 1;
                 val stateList = region.states;
                 val stateListIterator = stateList.iterator;
                 while (stateListIterator.hasNext()) {
@@ -207,10 +194,10 @@ class TimingAnnotationProvider {
                     val childRegionListIterator = childRegionList.iterator;
                     while (childRegionListIterator.hasNext()) {
                         val childRegion = childRegionListIterator.next();
-                        domainNumber = setTimingDomainsSimple(childRegion, domainNumber);
+                        domainNumber = 
+                            setTimingDomainsSimple(childRegion, domainNumber, threadTree, regionDomain);
                     }
                 }
-                region.setTimeDomain(domainNumber);
             }
             return (domainNumber + 1);
         }
@@ -251,17 +238,19 @@ class TimingAnnotationProvider {
         //            }
         //        }
         //    }
+        
+        
         /* Method retrieves the timing information from file and stores them in a Hashmap. The WCRT between 
      * annotations @T1 and @T2 will be stored with String key @T1. Method returns null, if no timing 
      * information file can be found
      */
-        def Map<Integer, Integer> getTimingInformation(String filename) {
+        def Map<Integer, Integer> getTimingInformation(String uri) {
 
             val retMap = new HashMap<Integer, Integer>();
 
             var BufferedReader br = null;
             try {
-                br = new BufferedReader(new FileReader("/home/ima/runtime-SemanticsM/test/robot.txt"));
+                br = new BufferedReader(new FileReader(uri));
                 var String line = null;
                 while ((line = br.readLine()) != null) {
 

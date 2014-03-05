@@ -169,7 +169,11 @@ public class TimingAnalysisHandler extends AbstractHandler {
 //                });
                 
                 State state = rootRegionStates.get(0);
-                annotationProvider.doTimingAnnotations(state, "robot");
+                IFile file = ResourceUtil.getFile(maybe.get().eResource());
+                String uri = file.getLocationURI().toString();
+                String taFile = uri.replace(".sct", ".ta");
+                String taPath = taFile.replace("file:", "");
+                annotationProvider.doTimingAnnotations(state, taPath);
                 List<Region> childRegions = state.getRegions();
                 Iterator<Region> childRegionsIterator = childRegions.iterator();
                 while (childRegionsIterator.hasNext()) {
