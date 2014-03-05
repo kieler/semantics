@@ -22,9 +22,11 @@ import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.xtend.S2SCC;
 import de.cau.cs.kieler.s.sc.xtend.S2SCALT;
+import de.cau.cs.kieler.s.extensions.SExtension;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -50,6 +52,10 @@ public class S2SCPlugin extends AbstractUIPlugin {
     /** The shared instance. */
     private static S2SCPlugin plugin;
 
+    /** The single s / kexpression extension. */
+    private static SExtension sExtension = new SExtension();
+    private static KExpressionsExtension kExpressionExtension = new KExpressionsExtension();
+    
     // -----------------------------------------------------------------------------
 
     /**
@@ -133,9 +139,9 @@ public class S2SCPlugin extends AbstractUIPlugin {
      */
     public static String estimateBufferSize(final Program program) {
         int bufferSizeInt = 0;
-        for (ValuedObject signal : program.getValuedObjects()) {
-            if (signal.isSignal()) {
-                if (signal.getType() == ValueType.PURE) {
+        for (ValuedObject signal : sExtension.getValuedObjects(program)) {
+            if (kExpressionExtension.isSignal(signal)) {
+                if (kExpressionExtension.getType(signal) == ValueType.PURE) {
                     bufferSizeInt += signal.getName().length() + PURE_SIGNAL_BUFFER_CONSTANT;
                 } else {
                     bufferSizeInt += signal.getName().length() + VALUED_SIGNAL_BUFFER_CONSTANT;

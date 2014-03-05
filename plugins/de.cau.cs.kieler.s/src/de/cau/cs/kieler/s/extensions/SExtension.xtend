@@ -40,6 +40,8 @@ import de.cau.cs.kieler.s.s.Fork
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Halt
 import de.cau.cs.kieler.s.s.Prio
+import org.eclipse.emf.common.util.EList
+import java.util.ArrayList
 
 /**
  * S Extensions. 
@@ -57,6 +59,14 @@ class SExtension {
 //    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
 //    public val ISerializer serializer = i.getInstance(typeof(ISerializer));
     
+
+    def List<ValuedObject> getValuedObjects(Program program) {
+        val returnList = new ArrayList<ValuedObject>();
+        for (typeGroup : program.typeGroups) {
+            returnList.addAll(typeGroup.valuedObjects)
+        }
+        return returnList;
+    }
 
     //-------------------------------------------------------------------------
     //--             B A S I C   C R E A T I O N   M E T H O D S             --
