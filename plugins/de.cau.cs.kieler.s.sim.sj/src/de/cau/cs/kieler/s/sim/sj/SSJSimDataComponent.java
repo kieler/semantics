@@ -37,11 +37,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
  
+
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
+import de.cau.cs.kieler.s.extensions.SExtension;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sim.SSimPlugin;
 import de.cau.cs.kieler.s.sj.S2SJPlugin;
@@ -160,6 +163,10 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
 
     /** The Constant KIEM_PROPERTY_MAX. */
     private static final int KIEM_PROPERTY_MAX = 7;
+    
+    /** The single s / kexpression extension. */
+    private static SExtension sExtension = new SExtension();
+    private static KExpressionsExtension kExpressionExtension = new KExpressionsExtension();        
 
     // -------------------------------------------------------------------------
 
@@ -710,19 +717,19 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
         outputVariableList = new LinkedList<String>();
         JSONObject res = new JSONObject();
         try {
-            if (myModel != null && myModel.getValuedObjects() != null) {
-                for (ValuedObject valuedObject : myModel.getValuedObjects()) {
-                        if (valuedObject.isInput()) {
-                            if (valuedObject.isSignal()) {
+            if (myModel != null && sExtension.getValuedObjects(myModel) != null) {
+                for (ValuedObject valuedObject : sExtension.getValuedObjects(myModel)) {
+                        if (kExpressionExtension.isInput(valuedObject)) {
+                            if (kExpressionExtension.isSignal(valuedObject)) {
                                 res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
                             } else {
                                 res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
                             }
                         }
-                        if (valuedObject.isOutput()) {
+                        if (kExpressionExtension.isOutput(valuedObject)) {
                             String signalName = valuedObject.getName();
                             if (!signalName.startsWith(SSimPlugin.AUXILIARY_VARIABLE_TAG)) {
-                                if (valuedObject.isSignal()) {
+                                if (kExpressionExtension.isSignal(valuedObject)) {
                                     res.accumulate(signalName, JSONSignalValues.newValue(false));
                                     outputSignalList.add(signalName);
                                 } else {
