@@ -41,6 +41,7 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import java.util.ArrayList
 
 /**
  * SCCharts Extensions.
@@ -60,6 +61,15 @@ class SCChartsExtension {
     //    public val Injector i = ActionsStandaloneSetup::doSetup();
     //    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
     //    public val ISerializer serializer = i.getInstance(typeof(ISerializer));
+    
+    def List<ValuedObject> getValuedObjects(Scope scope) {
+        val returnList = new ArrayList<ValuedObject>();
+        for (typeGroup : scope.typeGroups) {
+            returnList.addAll(typeGroup.valuedObjects)
+        }
+        return returnList;
+    }    
+    
     //-------------------------------------------------------------------------
     //--             B A S I C   C R E A T I O N   M E T H O D S             --
     //-------------------------------------------------------------------------
