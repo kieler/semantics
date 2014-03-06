@@ -28,7 +28,8 @@ import de.cau.cs.kieler.sccharts.Region
 import javax.inject.Inject
 import java.util.List
 import java.util.LinkedList
-import com.google.common.base.Preconditions
+import de.cau.cs.kieler.sccharts.tsccharts.handler.TimingRequestResult
+
 
 /**
  * This class provides an SCChart with WCRT information by annotating all regions with two values: The
@@ -239,10 +240,52 @@ class TimingAnnotationProvider {
         //        }
         //    }
         
+        /** Method retrieves the timing information from the .ta.out file and stores them in a result 
+         * map under the according requests.
+         *  @param resultTable This is to be supposed as a HashMap
+         */
+        def void getTimingInformation(LinkedList<TimingRequestResult> resultList, String uri) {
+            var BufferedReader br = null;
+            try {
+                br = new BufferedReader(new FileReader(uri));
+                var String line = null;
+                var Integer lineNumber = 0;
+                // each line will be a new timing analysis result
+                while ((line = br.readLine()) != null) {
+                    // the result may consist of more than one number, comma-separated, store them in 
+                    // list and write the list back to the corresponding timing request. This 
+                    // correspondence is determined by the ordering.
+                    var String[] parts = line.split(",");
+                    val resultIterator = parts.iterator;
+                    val results = new LinkedList<Integer>;
+                    while (resultIterator.hasNext){
+                        val nextNumber = resultIterator.next;
+                        results.add(Integer.parseInt(nextNumber));       
+                    }
+                    resultList.get(lineNumber).setResult(results);
+                    lineNumber = lineNumber + 1;
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println("Timing information could not be found.");
+                e.printStackTrace();
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (br != null) {
+                    try {
+                        br.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } 
+        }
         
         /* Method retrieves the timing information from file and stores them in a Hashmap. The WCRT between 
      * annotations @T1 and @T2 will be stored with String key @T1. Method returns null, if no timing 
      * information file can be found
+     * This method relates to an old version of the timing interface files.
      */
         def Map<Integer, Integer> getTimingInformation(String uri) {
 
