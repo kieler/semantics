@@ -16,6 +16,7 @@
 package de.cau.cs.kieler.sccharts.tsccharts.handler;
 
 import java.util.LinkedList;
+import de.cau.cs.kieler.sccharts.tsccharts.handler.RequestType;
 
 /**
  * This class represents a timing request for the interface of interactive timing analysis. A request 
@@ -27,7 +28,6 @@ import java.util.LinkedList;
  * @kieler.rating
  */
 public class TimingRequestResult{
-    public enum RequestType {WCP, BCP, LWCET, LBCET, FWCET, FBCET}
     
     private RequestType requestType;
     //labels of program points that mark start and end of the code section that is subject to analysis
