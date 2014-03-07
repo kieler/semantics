@@ -46,7 +46,6 @@ class TimingAnnotationProvider {
     extension TSCChartsKTMExtension;
     @Inject
     extension TSCChartsAnnotationExtension;
-   
 
     /* This method checks, whether we have timing information for this SCChart. If yes, it provides all 
      * regions of the SCChart with two timing value annotations, one including,
@@ -283,18 +282,38 @@ class TimingAnnotationProvider {
     def TimeValueTable extractTimeValueTable(LinkedList<TimingRequestResult> resultList) {
         val TimeValueTable timeValueTable = new TimeValueTable();
         val resultListIterator = resultList.iterator;
-        while (resultListIterator.hasNext){
+        while (resultListIterator.hasNext) {
             val currentResult = resultListIterator.next;
             switch currentResult.requestType {
-                case RequestType::LWCET:{}
-                case RequestType::LBCET:{} 
-                case RequestType::FWCET:{} 
-                case RequestType::FBCET:{} 
+                case RequestType::LWCET: {
+                    timeValueTable.LWCETMap.put(
+                        currentResult.startPoint,
+                        Integer.parseInt(currentResult.result.get(0))
+                    );
+                }
+                case RequestType::LBCET: {
+                    timeValueTable.LBCETMap.put(
+                        currentResult.startPoint,
+                        Integer.parseInt(currentResult.result.get(0)))
+                }
+                case RequestType::FWCET: {
+                    timeValueTable.FWCETMap.put(
+                        currentResult.startPoint,
+                        Integer.parseInt(currentResult.result.get(0)))
+                }
+                case RequestType::FBCET: {
+                    timeValueTable.FBCETMap.put(
+                        currentResult.startPoint,
+                        Integer.parseInt(currentResult.result.get(0)))
+                }
+                case RequestType::WCP: {
+                    // do nothing, here we are interested in timing values, not in paths
+                }
+                case RequestType::BCP: {
+                    // do nothing, here we are interested in timing values, not in paths
+                }
             }
         }
-        
-        
-        
         return timeValueTable;
     }
 
