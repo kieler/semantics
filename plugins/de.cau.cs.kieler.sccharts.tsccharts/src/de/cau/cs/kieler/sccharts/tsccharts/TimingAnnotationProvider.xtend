@@ -257,10 +257,10 @@ class TimingAnnotationProvider {
                     // correspondence is determined by the ordering.
                     var String[] parts = line.split(",");
                     val resultIterator = parts.iterator;
-                    val results = new LinkedList<Integer>;
+                    val results = new LinkedList<String>;
                     while (resultIterator.hasNext){
                         val nextNumber = resultIterator.next;
-                        results.add(Integer.parseInt(nextNumber));       
+                        results.add(nextNumber);       
                     }
                     resultList.get(lineNumber).setResult(results);
                     lineNumber = lineNumber + 1;

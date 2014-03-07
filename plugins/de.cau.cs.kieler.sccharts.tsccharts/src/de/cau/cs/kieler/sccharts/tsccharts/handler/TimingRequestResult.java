@@ -26,16 +26,17 @@ import java.util.LinkedList;
  * @kieler.design
  * @kieler.rating
  */
-class TimingRequestResult{
+public class TimingRequestResult{
     public enum RequestType {WCP, BCP, LWCET, LBCET, FWCET, FBCET}
     
     private RequestType requestType;
-    private Integer startPoint;
-    private Integer endPoint;
-    private LinkedList<Integer> result;
+    //labels of program points that mark start and end of the code section that is subject to analysis
+    private String startPoint;
+    private String endPoint;
+    private LinkedList<String> result;
     
     TimingRequestResult
-      (RequestType requestType, Integer startPoint, Integer endPoint, LinkedList<Integer> result){
+      (RequestType requestType, String startPoint, String endPoint, LinkedList<String> result){
         this.setRequestType(requestType);
         this.setStartPoint(startPoint);
         this.setEndPoint(endPoint);
@@ -50,28 +51,28 @@ class TimingRequestResult{
         this.requestType = requestType;
     }
 
-    public Integer getStartPoint() {
+    public String getStartPoint() {
         return startPoint;
     }
 
-    public void setStartPoint(Integer startPoint) {
-        this.startPoint = startPoint;
+    public void setStartPoint(String startPoint2) {
+        this.startPoint = startPoint2;
     }
 
-    public Integer getEndPoint() {
+    public String getEndPoint() {
         return endPoint;
     }
 
-    public void setEndPoint(Integer endPoint) {
-        this.endPoint = endPoint;
+    public void setEndPoint(String endPoint2) {
+        this.endPoint = endPoint2;
     }
 
-    public LinkedList<Integer> getResult() {
+    public LinkedList<String> getResult() {
         return result;
     }
 
-    public void setResult(LinkedList<Integer> result) {
-        this.result = result;
+    public void setResult(LinkedList<String> result2) {
+        this.result = result2;
     }
     
 }
