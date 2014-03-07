@@ -65,7 +65,7 @@ class TimingAnnotationProvider {
             val HashMap<Integer, LinkedList<Integer>> threadTree = new HashMap<Integer, LinkedList<Integer>>;
             domainNumber = setTimingDomainsSimple(childRegion, domainNumber, threadTree, null);
         }
-
+        
         val Map<Integer, Integer> timingInformation = getTimingInformation(fileName);
         if (timingInformation != null) {
             annotateStatesAndRegions(scchart, timingInformation);
@@ -239,7 +239,7 @@ class TimingAnnotationProvider {
             // each line will be a new timing analysis result
             while ((line = br.readLine()) != null) {
 
-                // the result may consist of more than one number, comma-separated, store them in 
+                // the result may consist of more than one element, comma-separated, store them in 
                 // list and write the list back to the corresponding timing request. This 
                 // correspondence is determined by the ordering.
                 var String[] parts = line.split(",");
