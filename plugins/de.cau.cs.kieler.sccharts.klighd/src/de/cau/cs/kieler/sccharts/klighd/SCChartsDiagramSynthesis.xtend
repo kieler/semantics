@@ -352,7 +352,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     def boolean hasRegionsOrDeclarations(State state) {
         val returnValue = (!state.hasNoRegionsWithStates ||
             (!state.localActions.nullOrEmpty && SHOW_STATE_ACTIONS.booleanValue) ||
-            (!state.typeGroups.valuedObjects.nullOrEmpty && SHOW_SIGNAL_DECLARATIONS.booleanValue))
+            (!state.valuedObjects.nullOrEmpty && SHOW_SIGNAL_DECLARATIONS.booleanValue))
         return returnValue
     }
 
