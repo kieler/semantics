@@ -48,6 +48,16 @@ class KExpressionsExtension {
     //=======  TYPE GROUP WRAPPINGS  ======
     
     // Return the list of all contained ValuedObjects.
+    def public List<ValuedObject> getValuedObjects(EObject eObject) {
+        val typeGroups = eObject.eContents.filter(typeof(TypeGroup)).toList
+        val returnList = <ValuedObject>newArrayList()
+        for (typeGroup : typeGroups) {
+            returnList.addAll(typeGroup.valuedObjects)
+        }
+        returnList
+    }
+    
+    // Return the list of all contained ValuedObjects.
     def public List<ValuedObject> getValuedObjects(List<TypeGroup> typeGroups) {
         <ValuedObject>newArrayList => [list|typeGroups.forEach[list += valuedObjects]]
     }
@@ -127,14 +137,25 @@ class KExpressionsExtension {
         uniqueTypeGroup.setInput(isInput)
         valuedObject;
     }
-
+    def public ValuedObject setIsInput(ValuedObject valuedObject) {
+        valuedObject.setInput(true)
+    } 
+    def public ValuedObject setIsNotInput(ValuedObject valuedObject) {
+        valuedObject.setInput(false)
+    } 
+    
     // Set the ValuedObject to be or not be an output.
     def public ValuedObject setOutput(ValuedObject valuedObject, boolean isOutput) {
         val uniqueTypeGroup = valuedObject.uniqueTypeGroup
         uniqueTypeGroup.setOutput(isOutput)
         valuedObject;
     }
-
+    def public ValuedObject setIsOutput(ValuedObject valuedObject) {
+        valuedObject.setConstant(true)
+    } 
+    def public ValuedObject setIsNotOutput(ValuedObject valuedObject) {
+        valuedObject.setConstant(false)
+    } 
 
     // Set the ValuedObject to be or not be static.
     def public ValuedObject setStatic(ValuedObject valuedObject, boolean isStatic) {
@@ -142,13 +163,25 @@ class KExpressionsExtension {
         uniqueTypeGroup.setInput(isStatic)
         valuedObject;
     }
-
+    def public ValuedObject setIsStatic(ValuedObject valuedObject) {
+        valuedObject.setConstant(true)
+    } 
+    def public ValuedObject setIsNotStatic(ValuedObject valuedObject) {
+        valuedObject.setConstant(false)
+    } 
+    
    // Set the ValuedObject to be or not be a constant.
    def public ValuedObject setConstant(ValuedObject valuedObject, boolean isConstant) {
         val uniqueTypeGroup = valuedObject.uniqueTypeGroup
         uniqueTypeGroup.setConstant(isConstant)
         valuedObject;
     }
+    def public ValuedObject setIsConstant(ValuedObject valuedObject) {
+        valuedObject.setConstant(true)
+    } 
+    def public ValuedObject setIsNotConstant(ValuedObject valuedObject) {
+        valuedObject.setConstant(false)
+    } 
 
     // Set the ValuedObject to be or not be a sinal.
     def public ValuedObject setSignal(ValuedObject valuedObject, boolean isSignal) {
@@ -156,6 +189,12 @@ class KExpressionsExtension {
         uniqueTypeGroup.setSignal(isSignal)
         valuedObject;
     }
+    def public ValuedObject setIsSignal(ValuedObject valuedObject) {
+        valuedObject.setSignal(true)
+    } 
+    def public ValuedObject setIsNotSignal(ValuedObject valuedObject) {
+        valuedObject.setSignal(false)
+    } 
 
 
     //=======  TYPE GROUPS  ======
