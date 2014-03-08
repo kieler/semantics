@@ -517,86 +517,147 @@ class KExpressionsExtension {
 
 
     //=========  VALUED OBJECT  =========
-
-    // Creates a new TypeGroup.
-    def public TypeGroup createTypeGroup() {
-         KExpressionsFactory::eINSTANCE.createTypeGroup
-    }    
-
-    def public TypeGroup createTypeGroup(ValueType valueType) {
-         KExpressionsFactory::eINSTANCE.createTypeGroup => [ type = valueType ]
-    }
     
-    def public TypeGroup createTypeGroup(ValuedObject valuedObject) {
-    	createTypeGroup() => [ valuedObjects += valuedObject ]
-    }
-    
-    def public TypeGroup createTypeGroup(List<ValuedObject> valueObjects) {
-    	createTypeGroup() => [ it.valuedObjects += valuedObjects ] 
-    }
-    
-    def public TypeGroup createTypeGroupWOValuedObjects(TypeGroup typeGroup) {
-		createTypeGroup => [
-			type = typeGroup.type
-			input = typeGroup.input
-			output = typeGroup.output
-			signal = typeGroup.signal
-			static = typeGroup.static
-			constant = typeGroup.constant
-		]    	
-    }
-    
-    def public TypeGroup copyAttributes(TypeGroup target, TypeGroup typeGroup) {
-		target => [
-			type = typeGroup.type
-			input = typeGroup.input
-			output = typeGroup.output
-			signal = typeGroup.signal
-			static = typeGroup.static
-			constant = typeGroup.constant
-		]    	
-    }
-
-    // Set the TypeGroup to be of type PURE.
-    def TypeGroup setTypePure(TypeGroup typeGroup) {
-    	typeGroup => [ type = ValueType::PURE ]
-    }
-    
-    // Set the TypeGroup to be of type INT.
-    def TypeGroup setTypeInt(TypeGroup typeGroup) {
-    	typeGroup => [ type = ValueType::INT ]
-    }    
-
-    // Set the TypeGroup to be of type BOOL.
-    def TypeGroup setTypeBool(TypeGroup typeGroup) {
-    	typeGroup => [ type = ValueType::BOOL ]
-    }    
-
-    // Set the TypeGroup to be of type DOUBLE.
-    def TypeGroup setTypeDouble(TypeGroup typeGroup) {
-    	typeGroup => [ type = ValueType::DOUBLE ]
-    }    
-
-    // Set the TypeGroup to be of type FLOAT.
-    def TypeGroup setTypeFloat(TypeGroup typeGroup) {
-    	typeGroup => [ type = ValueType::FLOAT ]
-    }    
-            
     // Creates a new ValuedObject.
-    def ValuedObject createValuedObject(String valuedObjectName) {
+    def  ValuedObject createValuedObject(String valuedObjectName) {
          val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
          valuedObject.setName(valuedObjectName)
          valuedObject
     }
     
-    def ValuedObject createValuedObject(TypeGroup typeGroup, String valuedObjectName) {
-    	createValuedObject(valuedObjectName) => [ typeGroup.valuedObjects += it ]
+    // Set the ValuedObject to be of type PURE.
+    def public  ValuedObject setTypePure(ValuedObject valuedObject) {
+        valuedObject.setType(ValueType::PURE);
+        valuedObject
+    }    
+
+    // Set the ValuedObject to be of type INT.
+    def public  ValuedObject setTypeInt(ValuedObject valuedObject) {
+        valuedObject.setType(ValueType::INT);
+        valuedObject
+    }    
+
+    // Set the ValuedObject to be of type BOOL.
+    def public  ValuedObject setTypeBoolean(ValuedObject valuedObject) {
+        valuedObject.setType(ValueType::BOOL);
+        valuedObject
+    }    
+
+    // Set the ValuedObject to be of type DOUBLE.
+    def public  ValuedObject setTypeDouble(ValuedObject valuedObject) {
+        valuedObject.setType(ValueType::DOUBLE);
+        valuedObject
+    }    
+    
+    // Set the ValuedObject to be of type FLOAT.
+    def public  ValuedObject setTypeFloat(ValuedObject valuedObject) {
+        valuedObject.setType(ValueType::FLOAT);
+        valuedObject
+    }    
+    
+    // Set the ValuedObject to be of type HOST.
+    def public  ValuedObject setTypeHost(ValuedObject valuedObject) {
+        valuedObject.setType(ValueType::HOST);
+        valuedObject
+    }    
+    
+    // Apply attributes of another ValuedObject.
+    def ValuedObject applyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
+        valuedObject.setInput(valuedObjectWithAttributes.isInput)
+        valuedObject.setOutput(valuedObjectWithAttributes.isOutput)
+        valuedObject.setStatic(valuedObjectWithAttributes.isStatic)
+        valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
+        valuedObject.setType(valuedObjectWithAttributes.type)
+        valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
+        valuedObject
     }
     
-    def ValuedObject createValuedObjectInTypeGroup(String valuedObjectName) {
-        val tg = createTypeGroup 
-        createValuedObject(tg, valuedObjectName)	
+    
+    
+//    def public void addValuedObject(EObject eObject, ValuedObject valuedObject) {
+//        val typeGroups = eObject.eAllContents.filter(typeof(TypeGroup)); 
+//    }
+//
+//    def public void removeValuedObject(EObject eObject, ValuedObject valuedObject) {
+//        val typeGroups = eObject.eAllContents.filter(typeof(TypeGroup)).filter[valuedObjects.contains(valuedObject)].toList;
+//        for (typeGroup : typeGroups.immutableCopy) {
+//            typeGroup.valuedObjects.remove(valuedObject)
+//        } 
+//    }
+
+    // Creates a new TypeGroup.
+    def private TypeGroup createTypeGroup() {
+         KExpressionsFactory::eINSTANCE.createTypeGroup
+    }    
+
+//    def private TypeGroup createTypeGroup(ValueType valueType) {
+//         KExpressionsFactory::eINSTANCE.createTypeGroup => [ type = valueType ]
+//    }
+//    
+//    def private TypeGroup createTypeGroup(ValuedObject valuedObject) {
+//    	createTypeGroup() => [ valuedObjects += valuedObject ]
+//    }
+//    
+//    def private TypeGroup createTypeGroup(List<ValuedObject> valueObjects) {
+//    	createTypeGroup() => [ it.valuedObjects += valuedObjects ] 
+//    }
+//    
+//    def private TypeGroup createTypeGroupWOValuedObjects(TypeGroup typeGroup) {
+//		createTypeGroup => [
+//			type = typeGroup.type
+//			input = typeGroup.input
+//			output = typeGroup.output
+//			signal = typeGroup.signal
+//			static = typeGroup.static
+//			constant = typeGroup.constant
+//		]    	
+//    }
+//    
+//    def private TypeGroup copyAttributes(TypeGroup target, TypeGroup typeGroup) {
+//		target => [
+//			type = typeGroup.type
+//			input = typeGroup.input
+//			output = typeGroup.output
+//			signal = typeGroup.signal
+//			static = typeGroup.static
+//			constant = typeGroup.constant
+//		]    	
+//    }
+
+    // Set the TypeGroup to be of type PURE.
+    def private TypeGroup setTypePure(TypeGroup typeGroup) {
+    	typeGroup => [ type = ValueType::PURE ]
     }
+
+    // Set the TypeGroup to be of type INT.
+    def private TypeGroup setTypeInt(TypeGroup typeGroup) {
+    	typeGroup => [ type = ValueType::INT ]
+    }    
+
+    // Set the TypeGroup to be of type BOOL.
+    def private TypeGroup setTypeBool(TypeGroup typeGroup) {
+    	typeGroup => [ type = ValueType::BOOL ]
+    }    
+
+    // Set the TypeGroup to be of type DOUBLE.
+    def private TypeGroup setTypeDouble(TypeGroup typeGroup) {
+    	typeGroup => [ type = ValueType::DOUBLE ]
+    }    
+
+    // Set the TypeGroup to be of type FLOAT.
+    def private TypeGroup setTypeFloat(TypeGroup typeGroup) {
+    	typeGroup => [ type = ValueType::FLOAT ]
+    }    
+    
+    
+//    def private ValuedObject createValuedObject(TypeGroup typeGroup, String valuedObjectName) {
+//    	createValuedObject(valuedObjectName) => [ typeGroup.valuedObjects += it ]
+//    }
+//    
+//    def private ValuedObject createValuedObjectInTypeGroup(String valuedObjectName) {
+//        val tg = createTypeGroup 
+//        createValuedObject(tg, valuedObjectName)	
+//    }
     
     def public List<ValuedObject> getValuedObjects(List<TypeGroup> typeGroups) {
     	<ValuedObject> newArrayList => [ list | typeGroups.forEach[ list += valuedObjects]]
@@ -607,6 +668,8 @@ class KExpressionsExtension {
     		if (tg.valuedObjects.contains(valuedObject)) tg.valuedObjects -= valuedObject
     	}
     }
+    
+    
     
 //    // Set the ValuedObject to be a signal.
 //    def ValuedObject setSignal(ValuedObject valuedObject, boolean isSignal) {
@@ -663,50 +726,6 @@ class KExpressionsExtension {
     	createValuedObject(variableName)
     }
     
-    def ValuedObject createVariable(TypeGroup typeGroup, String variableName) {
-    	createValuedObject(typeGroup, variableName)
-    }
-    
-    def ValuedObject createVariableInTypeGroup(String variableName) {
-        val tg = createTypeGroup 
-        createVariable(tg, variableName)	
-    }
-    
-    // Creates a new Int variable ValuedObject.
-    def ValuedObject createVariableInIntTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeInt ]
-        createVariable(tg, variableName)	
-    }
-    
-    // Creates a new Bool variable ValuedObject.
-    def ValuedObject createVariableInBoolTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeBool ]
-        createVariable(tg, variableName)	
-    }
-
-    // Creates a new Double variable ValuedObject.
-    def ValuedObject createVariableInDoubleTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeDouble ]
-        createVariable(tg, variableName)	
-    }
-
-    // Creates a new Float variable ValuedObject.
-    def ValuedObject createVariableInFloatTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeInt ]
-        createVariable(tg, variableName)	
-    }
-
-    // Apply attributes of another ValuedObject.
-    def ValuedObject applyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
-        valuedObject.setInput(valuedObjectWithAttributes.isInput)
-        valuedObject.setOutput(valuedObjectWithAttributes.isOutput)
-        valuedObject.setStatic(valuedObjectWithAttributes.isStatic)
-        valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
-        valuedObject.setType(valuedObjectWithAttributes.type)
-        valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
-        valuedObject
-    }
-    
 
     //============  SIGNALS  ============
     
@@ -718,35 +737,6 @@ class KExpressionsExtension {
 		createValuedObject(typeGroup, signalName)
     }
 
-    // Creates a new pure signal ValuedObject.
-    def ValuedObject createSignalInPureTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypePure; signal = true ]
-        createSignal(tg, variableName)	
-    }
-
-    // Creates a new Int signal ValuedObject.
-    def ValuedObject createSignalInIntTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeInt; signal = true ]
-        createSignal(tg, variableName)	
-    }
-
-    // Creates a new Bool signal ValuedObject.
-    def ValuedObject createSignalInBoolTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeBool; signal = true ]
-        createSignal(tg, variableName)	
-    }
-
-    // Creates a new Double signal ValuedObject.
-    def ValuedObject createSignalInDoubleTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeDouble; signal = true ]
-        createSignal(tg, variableName)	
-    }
-
-    // Creates a new Float signal ValuedObject.
-    def ValuedObject createSignalInFloatTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeFloat; signal = true ]
-        createSignal(tg, variableName)	
-    }
     
     //===========  VALUES  ===========
     
