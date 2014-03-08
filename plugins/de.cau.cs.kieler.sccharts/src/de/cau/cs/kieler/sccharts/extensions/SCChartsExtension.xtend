@@ -16,6 +16,8 @@ package de.cau.cs.kieler.sccharts.extensions
 import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
@@ -26,7 +28,6 @@ import de.cau.cs.kieler.sccharts.Effect
 import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
-import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
@@ -34,19 +35,19 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.SuspendAction
-import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import java.util.ArrayList
+import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.TextEffect
 
 /**
  * SCCharts Extensions.
  * 
- * @author cmot ssm
+ * @author cmot
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
@@ -61,15 +62,6 @@ class SCChartsExtension {
     //    public val Injector i = ActionsStandaloneSetup::doSetup();
     //    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
     //    public val ISerializer serializer = i.getInstance(typeof(ISerializer));
-    
-    def List<ValuedObject> getValuedObjects(Scope scope) {
-        val returnList = new ArrayList<ValuedObject>();
-        for (typeGroup : scope.typeGroups) {
-            returnList.addAll(typeGroup.valuedObjects)
-        }
-        return returnList;
-    }    
-    
     //-------------------------------------------------------------------------
     //--             B A S I C   C R E A T I O N   M E T H O D S             --
     //-------------------------------------------------------------------------
@@ -122,26 +114,17 @@ class SCChartsExtension {
 
     // Return the list of pure signals of a state.
     def List<ValuedObject> getPureSignals(State state) {
-//        state.valuedObjects.filter[e|e.isSignal && e.type == ValueType::PURE].toList
-    	<ValuedObject> newArrayList => [ list |
-    		state.typeGroups.forEach[ list += valuedObjects.filter[ isSignal && type == ValueType::PURE ]]
-    	] 
+        state.valuedObjects.filter[e|e.isSignal && e.type == ValueType::PURE].toList
     }
 
     // Return the list of valued signals of a state.
     def List<ValuedObject> getValuedSignals(State state) {
-//        state.valuedObjects.filter[e|e.isSignal && e.type != ValueType::PURE].toList
-    	<ValuedObject> newArrayList => [ list |
-    		state.typeGroups.forEach[ list += valuedObjects.filter[ isSignal && type == ValueType::PURE ]]
-    	] 
+        state.valuedObjects.filter[e|e.isSignal && e.type != ValueType::PURE].toList
     }
 
     // Return the list of all signals of a state.
     def List<ValuedObject> getSignals(State state) {
-//        state.valuedObjects.filter[e|e.isSignal].toList
-    	<ValuedObject> newArrayList => [ list |
-    		state.typeGroups.forEach[ list += valuedObjects.filter[ isSignal && type == ValueType::PURE ]]
-    	] 
+        state.valuedObjects.filter[e|e.isSignal].toList
     }
 
     // Return true if the valued Object is a pure signal
@@ -242,7 +225,7 @@ class SCChartsExtension {
         if (state == null) { //seems wrong!! --> || state.valuedObjects.nullOrEmpty) {
             return true
         }
-        val notFoundOtherValuedObjectInState = state.typeGroups.valuedObjects.filter[it != valuedObject && name == newName].size == 0
+        val notFoundOtherValuedObjectInState = state.valuedObjects.filter[it != valuedObject && name == newName].size == 0
         val parentRegion = state.parentRegion
         var notFoundInParents = true
         if (parentRegion != null) {
@@ -251,7 +234,7 @@ class SCChartsExtension {
         return notFoundOtherValuedObjectInState && notFoundInParents
     }
     def private dispatch boolean uniqueNameTest(ValuedObject valuedObject, String newName) {
-        valuedObject.uniqueNameTest((valuedObject.typeGroup.eContainer as State), newName)
+        valuedObject.uniqueNameTest((valuedObject.eContainer as State), newName)
     }
     def private dispatch boolean uniqueNameTest(EObject eObject, String newName) {
         false
@@ -758,71 +741,79 @@ class SCChartsExtension {
     //=========  VALUED OBJECT  =========
     // Creates a new ValuedObject in a scope.
     def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
-        createValuedObjectInTypeGroup(valuedObjectName) => [ scope.typeGroups += it.typeGroup ]
+        val valuedObject = createValuedObject(valuedObjectName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
     }
 
     //===========  VARIABLES  ===========
     // Creates a new variable ValuedObject in a Scope.
     def ValuedObject createVariable(Scope scope, String variableName) {
-        createVariableInTypeGroup(variableName) => [ scope.typeGroups += it.typeGroup ]
+        val valuedObject = variableName.createVariable
+        scope.valuedObjects.add(valuedObject)
+         valuedObject;
     }
 
     // Creates a new Int variable ValuedObject in a Scope.
     def ValuedObject createIntVariable(Scope scope, String variableName) {
-        createVariableInIntTypeGroup(variableName) => [ scope.typeGroups += it.typeGroup ]
+        val valuedObject = createIntVariable(variableName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
     }
 
     // Creates a new Bool variable ValuedObject in a Scope.
     def ValuedObject createBoolVariable(Scope scope, String variableName) {
-        createVariableInBoolTypeGroup(variableName) => [ scope.typeGroups += it.typeGroup ]
+        val valuedObject = createBoolVariable(variableName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
     }
-//
-//    // Creates a new Double variable ValuedObject in a Scope.
-//    def ValuedObject createDoubleVariable(Scope scope, String variableName) {
-//        val valuedObject = createDoubleVariable(variableName)
-//        scope.valuedObjects.add(valuedObject)
-//        valuedObject
-//    }
-//
-//    // Creates a new Float variable ValuedObject in a Scope.
-//    def ValuedObject createFloatVariable(Scope scope, String variableName) {
-//        val valuedObject = createFloatVariable(variableName)
-//        scope.valuedObjects.add(valuedObject)
-//        valuedObject
-//    }
-//
-//    //============  SIGNALS  ============
-//    // Creates a new variable ValuedObject in a Scope.
-//    def ValuedObject createSignal(Scope scope, String variableName) {
-//        val valuedObject = variableName.createSignal
-//        scope.valuedObjects.add(valuedObject)
-//         valuedObject;
-//    }
-//
+
+    // Creates a new Double variable ValuedObject in a Scope.
+    def ValuedObject createDoubleVariable(Scope scope, String variableName) {
+        val valuedObject = createDoubleVariable(variableName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
+    }
+
+    // Creates a new Float variable ValuedObject in a Scope.
+    def ValuedObject createFloatVariable(Scope scope, String variableName) {
+        val valuedObject = createFloatVariable(variableName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
+    }
+
+    //============  SIGNALS  ============
+    // Creates a new variable ValuedObject in a Scope.
+    def ValuedObject createSignal(Scope scope, String variableName) {
+        val valuedObject = variableName.createSignal
+        scope.valuedObjects.add(valuedObject)
+         valuedObject;
+    }
+
     // Creates a new pure signal ValuedObject in a Scope.
     def ValuedObject createPureSignal(Scope scope, String variableName) {
-        createSignalInPureTypeGroup(variableName) => [ scope.typeGroups += it.typeGroup ]
+        scope.createSignal(variableName)
     }
-//
-//    // Creates a new Int signal ValuedObject in a Scope.
-//    def ValuedObject createIntSignal(Scope scope, String variableName) {
-//        scope.createIntSignal(variableName)
-//    }
-//
-//    // Creates a new Bool signal ValuedObject in a Scope.
-//    def ValuedObject createBoolSignal(Scope scope, String variableName) {
-//        scope.createBoolSignal(variableName)
-//    }
-//
-//    // Creates a new Double signal ValuedObject in a Scope.
-//    def ValuedObject createDoubleSignal(Scope scope, String variableName) {
-//        scope.createDoubleSignal(variableName)
-//    }
-//
-//    // Creates a new Float signal ValuedObject in a Scope.
-//    def ValuedObject createFloatSignal(Scope scope, String variableName) {
-//        scope.createFloatSignal(variableName)
-//    }
+
+    // Creates a new Int signal ValuedObject in a Scope.
+    def ValuedObject createIntSignal(Scope scope, String variableName) {
+        scope.createIntSignal(variableName)
+    }
+
+    // Creates a new Bool signal ValuedObject in a Scope.
+    def ValuedObject createBoolSignal(Scope scope, String variableName) {
+        scope.createBoolSignal(variableName)
+    }
+
+    // Creates a new Double signal ValuedObject in a Scope.
+    def ValuedObject createDoubleSignal(Scope scope, String variableName) {
+        scope.createDoubleSignal(variableName)
+    }
+
+    // Creates a new Float signal ValuedObject in a Scope.
+    def ValuedObject createFloatSignal(Scope scope, String variableName) {
+        scope.createFloatSignal(variableName)
+    }
 
     //-------------------------------------------------------------------------
     //--                           N A M I N G S                             --
@@ -896,6 +887,34 @@ class SCChartsExtension {
 
 
     //-------------------------------------------------------------------------
+    //--             H O T F I X   F O R   S C C H A R T S                   --
+    //-------------------------------------------------------------------------
+    // Because the SCCharts KExpressions Parser has a problem with
+    // AND / OR lists of more than two elements the following fixes
+    // an OperatorExpression of such kind.
+    // Test 141
+    def OperatorExpression fixForOperatorExpressionLists(OperatorExpression operatorExpression) {
+        if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty ||
+            operatorExpression.subExpressions.size <= 2) {
+
+            // In this case we do not need the fix
+            return operatorExpression;
+        }
+
+        // Here we apply the fix recursively
+        val operatorExpressionCopy = operatorExpression.copy;
+        val newOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
+        newOperatorExpression.setOperator(operatorExpression.operator);
+        newOperatorExpression.subExpressions.add(operatorExpression.subExpressions.head);
+
+        // Call recursively without the first element
+        operatorExpressionCopy.subExpressions.remove(0);
+        newOperatorExpression.subExpressions.add(operatorExpressionCopy.fixForOperatorExpressionLists);
+        return newOperatorExpression;
+    }
+
+
+    //-------------------------------------------------------------------------
     //--  F I X   F O R   T E R M I N A T I O N S   / W    E F F E C T S     --
     //-------------------------------------------------------------------------
     // This fixes termination transitions that have effects
@@ -946,10 +965,6 @@ class SCChartsExtension {
         }
         targetRootRegion;
     }
-
-
-// TODO: Why is this in this extension? Would it not be better to put this code fragment in the transformation extensions?
-// by ssm
     
     // Traverse all states and transform possible local valuedObjects.
     def void transformExposeLocalValuedObject(State state, Region targetRootRegion, boolean expose) {
@@ -964,23 +979,19 @@ class SCChartsExtension {
         }
 
         // There are local valuedObjects, raise them
-        if (state.typeGroups.valuedObjects != null && state.typeGroups.valuedObjects.size > 0) {
+        if (state.valuedObjects != null && state.valuedObjects.size > 0) {
             val hierarchicalStateName = state.getHierarchicalName("LOCAL");
 
-            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.typeGroups.valuedObjects)) {
+            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
                 val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
-                
-                val newTypeGroup = createTypeGroupWOValuedObjects(localValuedObject.typeGroup) => [
-                	valuedObjects += localValuedObject.copy
-                ]
                 
                 // Possibly expose
                 if (expose) {
-                    newTypeGroup.output = true
+                    localValuedObject.setOutput
                 }
 
                 // Relocate
-                targetRootRegion.rootState.typeGroups.add(newTypeGroup)
+                targetRootRegion.rootState.valuedObjects.add(localValuedObject)
                 
                 // Rename
                 if (expose) {

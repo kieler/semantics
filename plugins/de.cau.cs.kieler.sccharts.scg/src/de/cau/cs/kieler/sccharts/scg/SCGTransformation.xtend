@@ -48,7 +48,6 @@ import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -68,14 +67,9 @@ class SCGTransformation {
     @Inject
     extension SCChartsExtension
     
-    @Inject
-    extension AnnotationsExtensions
-    
     private static val Injector i = ActionsStandaloneSetup::doSetup();
     private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
     private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
-    
-    private static val String ANNOTATION_REGIONNAME = "RegionName"
     
     //-------------------------------------------------------------------------
     //--                         U T I L I T Y                               --
@@ -160,21 +154,11 @@ class SCGTransformation {
         // Create a new SCGraph
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph
         // Handle declarations
-//        for (valuedObject : rootRegion2.rootState.valuedObjects) {
-//            val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
-//            valuedObjectSCG.applyAttributes(valuedObject)
-//            valuedObjectSCG.map(valuedObject)
-//        }
-        for(typeGroup : rootRegion2.rootState.typeGroups) {
-            val newTypeGroup = createTypeGroupWOValuedObjects(typeGroup)
-            for (valuedObject : typeGroup.valuedObjects) {
-            	val newValuedObject = createValuedObject(newTypeGroup, valuedObject.name)
-//	            valuedObjectMapping.put(valuedObject, newValuedObject)
-				newValuedObject.map(valuedObject)
-            }
-            sCGraph.typeGroups += newTypeGroup 
-        }        
-        
+        for (valuedObject : rootRegion2.rootState.valuedObjects) {
+            val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
+            valuedObjectSCG.applyAttributes(valuedObject)
+            valuedObjectSCG.map(valuedObject)
+        }
         // Include top most level of hierarchy 
         // if the root state itself already contains multiple regions.
         // Otherwise skip the first layer of hierarchy.
@@ -361,9 +345,6 @@ class SCGTransformation {
        for (state : region.states) {
            state.transformSCGGenerateNodes(sCGraph)
        }
-       
-       if (!region.label.nullOrEmpty)
-            entry.annotations += createStringAnnotation(ANNOTATION_REGIONNAME, region.label)
    }
            
    // -------------------------------------------------------------------------   

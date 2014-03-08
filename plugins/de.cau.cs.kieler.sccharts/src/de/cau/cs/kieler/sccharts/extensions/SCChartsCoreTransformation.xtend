@@ -132,7 +132,6 @@ class SCChartsCoreTransformation {
             // Setup the auxiliary terminated valuedObject indicating that a normal termination
             // has been taken in the same synchronous tick and must not be taken again.
             val rootState = state.rootState
-//            val terminatedValuedObject = rootState.createPureSignal(GENERATED_PREFIX + "terminated").uniqueName;
             val terminatedValuedObject = rootState.createPureSignal(GENERATED_PREFIX + "terminated").uniqueName;
 
             val terminatedEmission = terminatedValuedObject.emit
@@ -265,14 +264,9 @@ class SCChartsCoreTransformation {
                 }
             }
 
-// FIXME: Fix this!
             // Change signal to variable
-//            presentVariable.setSignal(false)
-//            presentVariable.setTypeBool
-
             presentVariable.setSignal(false)
-            presentVariable.typeGroup.setTypeBool
-
+            presentVariable.setTypeBool
             
             // Reset initial value and combine operator because we want to reset
             // the signal manually in every
@@ -1195,15 +1189,12 @@ class SCChartsCoreTransformation {
         targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
-// TODO: Validate this!
     def void transformStatic(State state, Region targetRootRegion) {
-        val staticValuedObjects = state.typeGroups.valuedObjects.filter[isStatic].toList
-//        for (staticValuedObject : staticValuedObjects.immutableCopy) {
-        for (staticValuedObject : staticValuedObjects) {
+        val staticValuedObjects = state.valuedObjects.filter[isStatic].toList
+        for (staticValuedObject : staticValuedObjects.immutableCopy) {
             staticValuedObject.setName(state.getHierarchicalName(GENERATED_PREFIX) + GENERATED_PREFIX + staticValuedObject.name)
-//            state.rootState.valuedObjects.add(staticValuedObject)
-            state.rootState.typeGroups += createTypeGroup(staticValuedObject.copy).copyAttributes(staticValuedObject.typeGroup)
-//            staticValuedObject.setStatic(false)
+            state.rootState.valuedObjects.add(staticValuedObject)
+            staticValuedObject.setStatic(false)
         }
     }
      
@@ -1368,7 +1359,7 @@ class SCChartsCoreTransformation {
 
         // Filter all valuedObjects and retrieve those that are referenced
         val allActions = state.eAllContents.filter(typeof(Action)).toList();
-        val allPreValuedObjects = state.typeGroups.valuedObjects.filter(
+        val allPreValuedObjects = state.valuedObjects.filter(
             valuedObject|
                 allActions.filter(
                     action|
@@ -1799,7 +1790,7 @@ class SCChartsCoreTransformation {
 
     // Traverse all states and transform macro states that have actions to transform
     def void transformInitialization(State state, Region targetRootRegion) {
-        val valuedObjects = state.typeGroups.valuedObjects.filter[initialValue != null]
+        val valuedObjects = state.valuedObjects.filter[initialValue != null]
         
         if (!valuedObjects.nullOrEmpty) {
             for (valuedObject : valuedObjects) {
@@ -3840,8 +3831,7 @@ class SCChartsCoreTransformation {
                     }
                     transitionValuedObject.setInput(false);
                     transitionValuedObject.setOutput(false);
-// FIXME: Is this still necessary? OLD_IMPLEMENTATION?
-//                    state.parentRegion.parentState.valuedObjects.add(transitionValuedObject);
+                    state.parentRegion.parentState.valuedObjects.add(transitionValuedObject);
 
                     val watcherTransition = SCChartsFactory::eINSTANCE.createTransition();
                     watcherTransition.setTargetState(abortState);
@@ -3969,8 +3959,7 @@ class SCChartsCoreTransformation {
                 val exitValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
                 exitValuedObjectReference.setValuedObject(exitValuedObject);
                 exitValuedObject.setName("_Term_" + state.id);
-// FIXME: Is this still necessary? OLD_IMPLEMENTATION?
-//                state.valuedObjects.add(exitValuedObject);
+                state.valuedObjects.add(exitValuedObject);
 
                 // Add a watcher transition from Run to Abort triggered by _Exit
                 val watcherTransition = SCChartsFactory::eINSTANCE.createTransition();
