@@ -75,7 +75,7 @@ public class SCChartsGenerateRandomInputs implements IHandler {
     
     /** The single s / kexpression extension. */
     private static SCChartsExtension sCChartExtension = new SCChartsExtension();
-    private static KExpressionsExtension kExpressionExtension = new KExpressionsExtension();        
+    private static KExpressionsExtension kExpressionsExtension = new KExpressionsExtension();        
 
     // -------------------------------------------------------------------------
 
@@ -256,8 +256,8 @@ public class SCChartsGenerateRandomInputs implements IHandler {
     private List<String> getInputSignalList(final Region rootRegion) {
         List<String> returnList = new LinkedList<String>();
         if (rootRegion.getStates() != null && rootRegion.getStates().size() > 0) {
-            for (ValuedObject valuedObject : sCChartExtension.getValuedObjects(rootRegion.getStates().get(0))) {
-                if (kExpressionExtension.isInput(valuedObject)) {
+            for (ValuedObject valuedObject : kExpressionsExtension.getValuedObjects(rootRegion.getStates().get(0))) {
+                if (kExpressionsExtension.isInput(valuedObject)) {
                     returnList.add(valuedObject.getName());
                 }
             }
