@@ -29,6 +29,9 @@ import org.eclipse.emf.ecore.EObject
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.TypeGroup
 import java.util.List
+import org.eclipse.emf.ecore.EStructuralFeature
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage
+import org.eclipse.emf.common.util.EList
 
 /**
  * KExpressions Extensions. 
@@ -38,7 +41,7 @@ import java.util.List
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class KExpressionsExtension {
-
+    
     //    public val Injector i = ActionsStandaloneSetup::doSetup();
     //    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
     //    public val ISerializer serializer = i.getInstance(typeof(ISerializer));
@@ -50,7 +53,11 @@ class KExpressionsExtension {
     // Add a valuedObject to an eObject
     def public void addValuedObject(EObject eObject, ValuedObject valuedObject) {
         val typeGroup = valuedObject.uniqueTypeGroup
-        eObject.eContents.add(typeGroup);        
+        //val typeGroupFeature = eObject.eClass().getEStructuralFeature(KExpressionsPackage.TYPE_GROUP__VALUED_OBJECTS)
+        val getTypeGroups =  eObject.class.getMethod("getTypeGroups")
+        val possibleList = getTypeGroups.invoke(eObject);
+        val list = possibleList as EList<Object>
+        list.add(typeGroup);        
     }
     
     // Return the list of all contained ValuedObjects. 
