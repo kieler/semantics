@@ -47,6 +47,18 @@ class KExpressionsExtension {
 
     //=======  TYPE GROUP WRAPPINGS  ======
     
+    // Return the list of all contained ValuedObjects.
+    def public List<ValuedObject> getValuedObjects(List<TypeGroup> typeGroups) {
+        <ValuedObject>newArrayList => [list|typeGroups.forEach[list += valuedObjects]]
+    }
+
+    // Remove a specific ValuedObject.
+    def public removeValuedObject(List<TypeGroup> typeGroups, ValuedObject valuedObject) {
+        for (typeGroup : typeGroups) {
+            typeGroup.removeValuedObject(valuedObject)
+        }
+    }
+    
     // Return the type of the ValuedObject.
     def public ValueType getType(ValuedObject valuedObject) {
         valuedObject.typeGroup.type
@@ -209,17 +221,6 @@ class KExpressionsExtension {
         (typeGroup.valuedObjects.contains(valuedObject))&&(typeGroup.valuedObjects.size == 1)
     }
 
-    // Return the list of all contained ValuedObjects.
-    def private List<ValuedObject> getValuedObjects(List<TypeGroup> typeGroups) {
-        <ValuedObject>newArrayList => [list|typeGroups.forEach[list += valuedObjects]]
-    }
-
-    // Remove a specific ValuedObject.
-    def private removeValuedObject(List<TypeGroup> typeGroups, ValuedObject valuedObject) {
-        for (typeGroup : typeGroups) {
-            typeGroup.removeValuedObject(valuedObject)
-        }
-    }
     // Remove a specific ValuedObject.
     def private removeValuedObject(TypeGroup typeGroup, ValuedObject valuedObject) {
          if (typeGroup.valuedObjects.contains(valuedObject)) {
