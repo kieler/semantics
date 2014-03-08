@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.scg.extensions
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.ControlFlow
@@ -39,6 +40,7 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -62,6 +64,9 @@ import de.cau.cs.kieler.scg.Conditional
  * @kieler.rating 2013-08-20 proposed yellow
  */
 class SCGExtensions { 
+    
+    @Inject
+    extension KExpressionsExtension
 
     // -------------------------------------------------------------------------
     // -- Valued object handling
@@ -74,11 +79,11 @@ class SCGExtensions {
      * 			the name of the valued object
      * @return Returns a new valued object with the given name.
      */
-//    def ValuedObject createValuedObject(String valuedObjectName) {
-//         KExpressionsFactory::eINSTANCE.createValuedObject => [
-//             name = valuedObjectName
-//         ]
-//    }
+    def ValuedObject createValuedObject(String valuedObjectName) {
+         KExpressionsFactory::eINSTANCE.createValuedObject => [
+             name = valuedObjectName
+         ]
+    }
    
     /** 
      * Creates a new ValuedObject in an SCG.
@@ -89,12 +94,12 @@ class SCGExtensions {
      * 			the name of the valued object
      * @return Returns the new valued object. 
      */
-//    def ValuedObject createValuedObject(SCGraph scg, String valuedObjectName) {
-//         createValuedObject(valuedObjectName) => [
-//             scg.valuedObjects += it
-//         ]
-//    }
-//   
+    def ValuedObject createValuedObject(SCGraph scg, String valuedObjectName) {
+         createValuedObject(valuedObjectName) => [
+             scg.valuedObjects.add(it)
+         ]
+    }
+   
 	/** 
 	 * Finds and retrieves a valued object by its name. May return null.
 	 * 
