@@ -47,28 +47,38 @@ class KExpressionsExtension {
 
     //=======  TYPE GROUP WRAPPINGS  ======
     
-    // Return the list of all contained ValuedObjects.
-    def public List<ValuedObject> getValuedObjects(EObject eObject) {
+    // Add a valuedObject to an eObject
+    def public void addValuedObject(EObject eObject, ValuedObject valuedObject) {
+        val typeGroup = valuedObject.uniqueTypeGroup
+        eObject.eContents.add(typeGroup);        
+    }
+    
+    // Return the list of all contained ValuedObjects. 
+    // ATTENTION: This method returns a specific list. If you add ValuedObjects to this
+    // list they will be added to  the container of a TypeGroup
+    def public ValuedObjectList getValuedObjects(EObject eObject) {
         val typeGroups = eObject.eContents.filter(typeof(TypeGroup)).toList
-        val returnList = <ValuedObject>newArrayList()
+        val returnList = new ValuedObjectList()
+        // This is necessary for adding ValuedObjects later
+        returnList.setContainer(eObject)
         for (typeGroup : typeGroups) {
             returnList.addAll(typeGroup.valuedObjects)
         }
         returnList
     }
-    
-    // Return the list of all contained ValuedObjects.
-    def public List<ValuedObject> getValuedObjects(List<TypeGroup> typeGroups) {
-        <ValuedObject>newArrayList => [list|typeGroups.forEach[list += valuedObjects]]
-    }
 
-    // Remove a specific ValuedObject.
-    def public removeValuedObject(List<TypeGroup> typeGroups, ValuedObject valuedObject) {
-        for (typeGroup : typeGroups) {
-            typeGroup.removeValuedObject(valuedObject)
-        }
-    }
-    
+//    // Return the list of all contained ValuedObjects.
+//    def private List<ValuedObject> getValuedObjects(List<TypeGroup> typeGroups) {
+//        <ValuedObject>newArrayList => [list|typeGroups.forEach[list += valuedObjects]]
+//    }
+//
+//    // Remove a specific ValuedObject.
+//    def private removeValuedObject(List<TypeGroup> typeGroups, ValuedObject valuedObject) {
+//        for (typeGroup : typeGroups) {
+//            typeGroup._removeValuedObject(valuedObject)
+//        }
+//    }
+
     // Return the type of the ValuedObject.
     def public ValueType getType(ValuedObject valuedObject) {
         valuedObject.typeGroup.type
@@ -216,23 +226,25 @@ class KExpressionsExtension {
         ]
     }
 
-    // Set the TypeGroup to a specific type.
-    def private TypeGroup setType(TypeGroup typeGroup, ValueType type) {
-        typeGroup.type = type
-        typeGroup
-    }
+//    // Set the TypeGroup to a specific type.
+//    def private TypeGroup setType(TypeGroup typeGroup, ValueType type) {
+//        typeGroup.type = type
+//        typeGroup
+//    }
 
 
     //=======  TYPE GROUPS AND VALUED OBJECTS  ======
     
     // Get the surrounding TypeGroup of a ValuedObject that contains the ValuedObject. 
     // This TypeGroup may also contain other ValuedObjects, see containsOnly().
+    // If the valuedObject does not have any TypeGroup yet, then create a new one.
     def private TypeGroup getTypeGroup(ValuedObject valuedObject) {
-        // TODO: Safeguard check for the time of transition. Remove at some later stage. 
         if (valuedObject.eContainer instanceof TypeGroup) {
             return valuedObject.eContainer as TypeGroup
         } else {
-            throw new NullPointerException("Valued object is not contained in a type group!")
+            val newTypeGroup = createTypeGroup;
+            newTypeGroup.addValuedObject(valuedObject)
+            newTypeGroup
         }
     }
     
@@ -240,35 +252,38 @@ class KExpressionsExtension {
     // if there are no other ValuedObjects in this group. Otherwise it creates and returns
     // a new TypeGroup and removes the ValuedObject from the old one, adding it to the 
     // new one.
-    def private TypeGroup getUniqueTypeGroup(ValuedObject valuedObject) {
+    def public TypeGroup getUniqueTypeGroup(ValuedObject valuedObject) {
         val typeGroup = valuedObject.typeGroup
-        if (typeGroup.containsOnly(valuedObject)) {
+        if (typeGroup._containsOnly(valuedObject)) {
             // We don't have to care about other valuedObjects
             return typeGroup
         } else {
             // Make a new TypeGroup
             val newTypeGroup = createTypeGroup(typeGroup)
             // Remove the valuedObject from the old group and add it to the new group
-            typeGroup.removeValuedObject(valuedObject)
-            newTypeGroup.addValuedObject(valuedObject)
+            typeGroup._removeValuedObject(valuedObject)
+            if (typeGroup.valuedObjects.size == 0) {
+                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN CASE ONE!
+            }
+            newTypeGroup._addValuedObject(valuedObject)
             newTypeGroup
         }
     }    
 
     // Check if a TypeGroup only contains a single ValuedObject.
-    def private boolean containsOnly(TypeGroup typeGroup, ValuedObject valuedObject) {
+    def private boolean _containsOnly(TypeGroup typeGroup, ValuedObject valuedObject) {
         (typeGroup.valuedObjects.contains(valuedObject))&&(typeGroup.valuedObjects.size == 1)
     }
 
     // Remove a specific ValuedObject.
-    def private removeValuedObject(TypeGroup typeGroup, ValuedObject valuedObject) {
+    def private _removeValuedObject(TypeGroup typeGroup, ValuedObject valuedObject) {
          if (typeGroup.valuedObjects.contains(valuedObject)) {
            typeGroup.valuedObjects -= valuedObject  
          } 
     }
     
     // Add a ValuedObject.
-    def private TypeGroup addValuedObject(TypeGroup typeGroup, ValuedObject valuedObject) {
+    def private TypeGroup _addValuedObject(TypeGroup typeGroup, ValuedObject valuedObject) {
         typeGroup.valuedObjects.add(valuedObject)
         typeGroup
     }
