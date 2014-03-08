@@ -20,8 +20,12 @@ import org.eclipse.emf.ecore.EObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 /**
- * @author cmot
+ * ValuedObjectList is a specific list. If you add ValuedObjects to this list their TypeGroup will
+ * be added to the container. If they do not have a TypeGroup yet, a TypeGroup will be created.
  * 
+ * @author cmot
+ * @kieler.design 2014-03-08 proposed
+ * @kieler.rating 2014-03-08 proposed yellow
  */
 public class ValuedObjectList extends ArrayList<ValuedObject> {
 
@@ -49,11 +53,11 @@ public class ValuedObjectList extends ArrayList<ValuedObject> {
         return returnValue;
     }
 
+    // FIXME: Is addAll() calling add() above? Then the following can be deleted,
+    // otherwise one needs to implement addAll() too.
     // public boolean addAll(Collection<ValuedObject> valuedObjectList) {
     // // public boolean addAll(Collection<ValuedObject> valuedObjectList) {
     // boolean returnValue = super.addAll(valuedObjectList);
-    // // Also create a typeGroup
-    //
     // return returnValue;
     // }
 

@@ -55,7 +55,7 @@ class KExpressionsExtension {
     
     // Return the list of all contained ValuedObjects. 
     // ATTENTION: This method returns a specific list. If you add ValuedObjects to this
-    // list they will be added to  the container of a TypeGroup
+    // list they will be added to  the container of a TypeGroup.
     def public ValuedObjectList getValuedObjects(EObject eObject) {
         val typeGroups = eObject.eContents.filter(typeof(TypeGroup)).toList
         val returnList = new ValuedObjectList()
