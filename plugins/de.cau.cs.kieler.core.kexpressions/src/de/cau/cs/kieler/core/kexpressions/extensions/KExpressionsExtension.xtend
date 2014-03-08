@@ -277,20 +277,6 @@ class KExpressionsExtension {
     
     //=======  STATIC EXPRESSIONS  ======
     
-    def public BoolValue TRUE() {
-        createBooleanValue(true)
-    }
-
-    def public BoolValue FALSE() {
-        createBooleanValue(false)
-    }
-
-    def public BoolValue createBooleanValue(boolean value) {
-        val booleanValue = KExpressionsFactory::eINSTANCE.createBoolValue
-        booleanValue.setValue(value)
-        booleanValue
-    }
-
     // In an EObject replace one expression by another
     //    def dispatch equals2(Object expression1, Object expression2) {
     //        if (expression1 == null && expression2 == null) {
@@ -642,7 +628,7 @@ class KExpressionsExtension {
     }
 
     // Set the ValuedObject to be of type BOOL.
-    def public ValuedObject setTypeBoolean(ValuedObject valuedObject) {
+    def public ValuedObject setTypeBool(ValuedObject valuedObject) {
         valuedObject.setType(ValueType::BOOL);
         valuedObject
     }
@@ -781,6 +767,16 @@ class KExpressionsExtension {
 
     //===========  VALUES  ===========
     
+    // Create a TRUE value.
+    def public BoolValue TRUE() {
+        createBoolValue(true)
+    }
+
+    // Create a FALSE value.
+    def public BoolValue FALSE() {
+        createBoolValue(false)
+    }
+        
     // Create an int value.
     def IntValue createIntValue(int value) {
         val expression = KExpressionsFactory::eINSTANCE.createIntValue()
