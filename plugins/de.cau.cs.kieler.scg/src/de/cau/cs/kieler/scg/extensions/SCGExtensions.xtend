@@ -79,11 +79,11 @@ class SCGExtensions {
      * 			the name of the valued object
      * @return Returns a new valued object with the given name.
      */
-    def ValuedObject createValuedObject(String valuedObjectName) {
-         KExpressionsFactory::eINSTANCE.createValuedObject => [
-             name = valuedObjectName
-         ]
-    }
+//    def ValuedObject createValuedObject(String valuedObjectName) {
+//         KExpressionsFactory::eINSTANCE.createValuedObject => [
+//             name = valuedObjectName
+//         ]
+//    }
    
     /** 
      * Creates a new ValuedObject in an SCG.
