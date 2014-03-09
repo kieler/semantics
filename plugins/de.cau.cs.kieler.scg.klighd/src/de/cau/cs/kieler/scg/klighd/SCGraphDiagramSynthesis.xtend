@@ -81,6 +81,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.kexpressions.Expression
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -412,8 +414,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // Set root node and layout options.
             rootNode = node
             if(ORIENTATION.objectValue == "Left-Right") orientation = ORIENTATION_LANDSCAPE else orientation = ORIENTATION_PORTRAIT
-            if(topdown) node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN) else node.
-                setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT)
+            if (topdown)
+                node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
+            else
+                node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT)
             node.setLayoutOption(LayoutOptions::SPACING, 25f);
             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
@@ -466,6 +470,31 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         ]
     }
 
+    // added by cmot (9.3.14)
+    private def String replaceEnclosingQuotes(String text) {
+            var returnText = text
+            if (returnText.startsWith("'") && returnText.endsWith("'")) {
+                returnText = returnText.replaceFirst("'", "")
+                returnText = returnText.substring(0, returnText.length - 1)
+                return returnText.replaceEnclosingQuotes
+            }
+            if (returnText.startsWith("\"") && returnText.endsWith("\"")) {
+                returnText = returnText.substring(0, returnText.length - 1)
+                returnText = returnText.replaceFirst("'", "")
+                return returnText.replaceEnclosingQuotes
+            }
+            return text
+    }
+
+    // added by cmot (9.3.14)
+    private def String getTextExpressionString(Expression expression) {
+        if (expression instanceof TextExpression) {
+            val text = (expression as TextExpression).getText
+            return replaceEnclosingQuotes(text)
+        }
+        return null
+    }
+
     /**
 	 * This dispatch method is triggered when an assignment must be synthesized.
 	 * 
@@ -483,14 +512,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 // Serialize the assignment
                 // Additionally, remove unnecessary parenthesis and add spacing in line breaks.
                 if (assignment.valuedObject != null && assignment.assignment != null) {
-                    var assignmentStr = assignment.valuedObject.name + " = " +
-                        serializer.serialize(assignment.assignment.copy.fix).removeParenthesis
+                    var assignmentText = serializer.serialize(assignment.assignment.copy.fix).removeParenthesis
+                    // added by cmot (9.3.14)
+                    if (assignment.assignment instanceof TextExpression) {
+                        assignmentText = assignment.assignment.getTextExpressionString
+                    }
+                    var assignmentStr = assignment.valuedObject.name + " = " + assignmentText
+                        
                     if (assignmentStr.contains("&") && assignmentStr.indexOf("&") != assignmentStr.lastIndexOf("&")) {
                         assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
                         assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
-
                     }
                     it.addText(assignmentStr).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0)
+                } else if (assignment.assignment instanceof TextExpression) {
+                    // added by cmot (9.3.14)
+                    it.addText(assignment.assignment.getTextExpressionString).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0)
                 }
             ]
             // Add ports for control-flow and dependency routing.
@@ -853,8 +889,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // Otherwise, use the outgoing port identified by the given parameter.
             if (sourceObj instanceof Fork) {
                 edge.sourcePort = sourceObj.node.createPort("fork" + targetObj.hashCode()) => [
-                    if(topdown()) it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH) else it.
-                        addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::EAST)
+                    if (topdown())
+                        it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::SOUTH)
+                    else
+                        it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::EAST)
                     it.setPortSize(3, 3)
                     it.addRectangle.invisible = true;
                     it.addLayoutParam(LayoutOptions::OFFSET, -3f)
@@ -867,8 +905,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // Otherwise, use the default incoming port.
             if (targetObj instanceof Join) {
                 edge.targetPort = targetObj.node.createPort("join" + sourceObj.hashCode()) => [
-                    if(topdown()) it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH) else it.
-                        addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::WEST)
+                    if (topdown())
+                        it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::NORTH)
+                    else
+                        it.addLayoutParam(LayoutOptions::PORT_SIDE, PortSide::WEST)
                     it.setPortSize(3, 3)
                     it.addRectangle.invisible = true;
                     it.addLayoutParam(LayoutOptions::OFFSET, -1.5f)
@@ -975,8 +1015,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
         // Set options for the container.
         kContainer.addLayoutParam(LayoutOptions::SPACING, 10.0f)
-        if(topdown()) kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN) else kContainer.
-            addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT)
+        if (topdown())
+            kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
+        else
+            kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT)
         kContainer.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
         kContainer.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
         kContainer.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
@@ -1015,11 +1057,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // They will be removed from the original parent!
         for (tn : nodes) {
             kContainer.children += tn.node
-            
-            if (nodeGrouping != NODEGROUPING_HIERARCHY) 
-            if (tn.node.getData(typeof(KShapeLayout)).getProperty(Properties::LAYER_CONSTRAINT) == LayerConstraint::FIRST) {
-                kContainer.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
-            }
+
+            if (nodeGrouping != NODEGROUPING_HIERARCHY)
+                if (tn.node.getData(typeof(KShapeLayout)).getProperty(Properties::LAYER_CONSTRAINT) ==
+                    LayerConstraint::FIRST) {
+                    kContainer.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+                }
         }
 
         // Add the container to the original parent.
