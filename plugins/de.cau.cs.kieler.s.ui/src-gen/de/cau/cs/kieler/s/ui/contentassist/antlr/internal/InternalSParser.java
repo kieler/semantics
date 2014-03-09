@@ -10027,22 +10027,22 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypeGroup__Group__1__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3170:1: rule__TypeGroup__Group__1__Impl : ( ( rule__TypeGroup__ConstantAssignment_1 )? ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3170:1: rule__TypeGroup__Group__1__Impl : ( ( rule__TypeGroup__ConstAssignment_1 )? ) ;
     public final void rule__TypeGroup__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3174:1: ( ( ( rule__TypeGroup__ConstantAssignment_1 )? ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3175:1: ( ( rule__TypeGroup__ConstantAssignment_1 )? )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3174:1: ( ( ( rule__TypeGroup__ConstAssignment_1 )? ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3175:1: ( ( rule__TypeGroup__ConstAssignment_1 )? )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3175:1: ( ( rule__TypeGroup__ConstantAssignment_1 )? )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3176:1: ( rule__TypeGroup__ConstantAssignment_1 )?
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3175:1: ( ( rule__TypeGroup__ConstAssignment_1 )? )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3176:1: ( rule__TypeGroup__ConstAssignment_1 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getConstantAssignment_1()); 
+               before(grammarAccess.getTypeGroupAccess().getConstAssignment_1()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3177:1: ( rule__TypeGroup__ConstantAssignment_1 )?
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3177:1: ( rule__TypeGroup__ConstAssignment_1 )?
             int alt28=2;
             int LA28_0 = input.LA(1);
 
@@ -10051,10 +10051,10 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
             switch (alt28) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3177:2: rule__TypeGroup__ConstantAssignment_1
+                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3177:2: rule__TypeGroup__ConstAssignment_1
                     {
-                    pushFollow(FOLLOW_rule__TypeGroup__ConstantAssignment_1_in_rule__TypeGroup__Group__1__Impl6779);
-                    rule__TypeGroup__ConstantAssignment_1();
+                    pushFollow(FOLLOW_rule__TypeGroup__ConstAssignment_1_in_rule__TypeGroup__Group__1__Impl6779);
+                    rule__TypeGroup__ConstAssignment_1();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -10065,7 +10065,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getConstantAssignment_1()); 
+               after(grammarAccess.getTypeGroupAccess().getConstAssignment_1()); 
             }
 
             }
@@ -27983,9 +27983,9 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TypeGroup__AnnotationsAssignment_0"
 
 
-    // $ANTLR start "rule__TypeGroup__ConstantAssignment_1"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9848:1: rule__TypeGroup__ConstantAssignment_1 : ( ( 'const' ) ) ;
-    public final void rule__TypeGroup__ConstantAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__TypeGroup__ConstAssignment_1"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9848:1: rule__TypeGroup__ConstAssignment_1 : ( ( 'const' ) ) ;
+    public final void rule__TypeGroup__ConstAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -27997,23 +27997,23 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9854:1: ( 'const' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getConstantConstKeyword_1_0()); 
+               before(grammarAccess.getTypeGroupAccess().getConstConstKeyword_1_0()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9855:1: ( 'const' )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9856:1: 'const'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getConstantConstKeyword_1_0()); 
+               before(grammarAccess.getTypeGroupAccess().getConstConstKeyword_1_0()); 
             }
-            match(input,72,FOLLOW_72_in_rule__TypeGroup__ConstantAssignment_119901); if (state.failed) return ;
+            match(input,72,FOLLOW_72_in_rule__TypeGroup__ConstAssignment_119901); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getConstantConstKeyword_1_0()); 
+               after(grammarAccess.getTypeGroupAccess().getConstConstKeyword_1_0()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getConstantConstKeyword_1_0()); 
+               after(grammarAccess.getTypeGroupAccess().getConstConstKeyword_1_0()); 
             }
 
             }
@@ -28033,7 +28033,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__ConstantAssignment_1"
+    // $ANTLR end "rule__TypeGroup__ConstAssignment_1"
 
 
     // $ANTLR start "rule__TypeGroup__InputAssignment_2"
@@ -33041,7 +33041,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__TypeGroup__AnnotationsAssignment_0_in_rule__TypeGroup__Group__0__Impl6718 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
     public static final BitSet FOLLOW_rule__TypeGroup__Group__1__Impl_in_rule__TypeGroup__Group__16749 = new BitSet(new long[]{0x800003F800000400L,0x0000000000000F40L});
     public static final BitSet FOLLOW_rule__TypeGroup__Group__2_in_rule__TypeGroup__Group__16752 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__ConstantAssignment_1_in_rule__TypeGroup__Group__1__Impl6779 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypeGroup__ConstAssignment_1_in_rule__TypeGroup__Group__1__Impl6779 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__TypeGroup__Group__2__Impl_in_rule__TypeGroup__Group__26810 = new BitSet(new long[]{0x800003F800000400L,0x0000000000000F40L});
     public static final BitSet FOLLOW_rule__TypeGroup__Group__3_in_rule__TypeGroup__Group__26813 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__TypeGroup__InputAssignment_2_in_rule__TypeGroup__Group__2__Impl6840 = new BitSet(new long[]{0x0000000000000002L});
@@ -33593,7 +33593,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_ruleTypeGroup_in_rule__State__TypeGroupsAssignment_519803 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleInstruction_in_rule__State__InstructionsAssignment_6_019834 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAnnotation_in_rule__TypeGroup__AnnotationsAssignment_019865 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_72_in_rule__TypeGroup__ConstantAssignment_119901 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_72_in_rule__TypeGroup__ConstAssignment_119901 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_73_in_rule__TypeGroup__InputAssignment_219945 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_74_in_rule__TypeGroup__OutputAssignment_319989 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_75_in_rule__TypeGroup__StaticAssignment_420033 = new BitSet(new long[]{0x0000000000000002L});

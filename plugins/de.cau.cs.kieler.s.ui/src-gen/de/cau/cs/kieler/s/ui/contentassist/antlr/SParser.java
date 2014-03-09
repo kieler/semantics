@@ -132,7 +132,7 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getTypeGroupsAssignment_5(), "rule__State__TypeGroupsAssignment_5");
 					put(grammarAccess.getStateAccess().getInstructionsAssignment_6_0(), "rule__State__InstructionsAssignment_6_0");
 					put(grammarAccess.getTypeGroupAccess().getAnnotationsAssignment_0(), "rule__TypeGroup__AnnotationsAssignment_0");
-					put(grammarAccess.getTypeGroupAccess().getConstantAssignment_1(), "rule__TypeGroup__ConstantAssignment_1");
+					put(grammarAccess.getTypeGroupAccess().getConstAssignment_1(), "rule__TypeGroup__ConstAssignment_1");
 					put(grammarAccess.getTypeGroupAccess().getInputAssignment_2(), "rule__TypeGroup__InputAssignment_2");
 					put(grammarAccess.getTypeGroupAccess().getOutputAssignment_3(), "rule__TypeGroup__OutputAssignment_3");
 					put(grammarAccess.getTypeGroupAccess().getStaticAssignment_4(), "rule__TypeGroup__StaticAssignment_4");

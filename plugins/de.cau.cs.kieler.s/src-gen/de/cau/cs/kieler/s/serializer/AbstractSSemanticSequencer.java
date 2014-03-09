@@ -615,7 +615,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         constant?='const'? 
+	 *         const?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 
