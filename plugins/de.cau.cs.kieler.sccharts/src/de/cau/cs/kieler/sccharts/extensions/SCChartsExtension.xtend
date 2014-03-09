@@ -750,13 +750,13 @@ class SCChartsExtension {
     //===========  VARIABLES  ===========
     // Creates a new variable ValuedObject in a Scope.
     def ValuedObject createVariable(Scope scope, String variableName) {
-        variableName.createValuedObject
+        scope.createValuedObject(variableName)
     }
 
     //============  SIGNALS  ============
     // Creates a new variable ValuedObject in a Scope.
     def ValuedObject createSignal(Scope scope, String variableName) {
-        variableName.createValuedObject.setIsSignal
+        scope.createValuedObject(variableName).setIsSignal
     }
 
 
