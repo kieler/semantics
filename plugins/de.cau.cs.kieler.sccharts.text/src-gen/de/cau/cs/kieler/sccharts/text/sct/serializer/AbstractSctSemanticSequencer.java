@@ -519,7 +519,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         output?='output'? 
 	 *         static?='static'? 
 	 *         signal?='signal'? 
-	 *         type=ValueType 
+	 *         type=ValueType? 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject*
 	 *     )

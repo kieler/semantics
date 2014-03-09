@@ -6041,7 +6041,7 @@ rule__TypeGroup__Group__6__Impl
 :
 (
 { before(grammarAccess.getTypeGroupAccess().getTypeAssignment_6()); }
-(rule__TypeGroup__TypeAssignment_6)
+(rule__TypeGroup__TypeAssignment_6)?
 { after(grammarAccess.getTypeGroupAccess().getTypeAssignment_6()); }
 )
 

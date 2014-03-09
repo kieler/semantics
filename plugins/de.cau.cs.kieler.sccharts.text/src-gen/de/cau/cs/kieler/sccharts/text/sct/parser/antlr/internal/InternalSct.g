@@ -1560,7 +1560,7 @@ ruleTypeGroup returns [EObject current=null]
 	    }
 
 )
-)(
+)?(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getTypeGroupAccess().getValuedObjectsValuedObjectParserRuleCall_7_0()); 
