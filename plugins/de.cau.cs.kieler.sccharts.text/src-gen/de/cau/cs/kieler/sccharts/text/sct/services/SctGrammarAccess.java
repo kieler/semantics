@@ -863,8 +863,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
-		private final Assignment cConstantAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cConstantConstKeyword_1_0 = (Keyword)cConstantAssignment_1.eContents().get(0);
+		private final Assignment cConstAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cConstConstKeyword_1_0 = (Keyword)cConstAssignment_1.eContents().get(0);
 		private final Assignment cInputAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final Keyword cInputInputKeyword_2_0 = (Keyword)cInputAssignment_2.eContents().get(0);
 		private final Assignment cOutputAssignment_3 = (Assignment)cGroup.eContents().get(3);
@@ -885,11 +885,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//TypeGroup returns kexpressions::TypeGroup:
-		//	annotations+=Annotation* constant?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
+		//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
 		//	type=ValueType? valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* constant?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
+		//annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
 		//type=ValueType? valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";"
 		public Group getGroup() { return cGroup; }
 
@@ -899,11 +899,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
-		//constant?="const"?
-		public Assignment getConstantAssignment_1() { return cConstantAssignment_1; }
+		//const?="const"?
+		public Assignment getConstAssignment_1() { return cConstAssignment_1; }
 
 		//"const"
-		public Keyword getConstantConstKeyword_1_0() { return cConstantConstKeyword_1_0; }
+		public Keyword getConstConstKeyword_1_0() { return cConstConstKeyword_1_0; }
 
 		//input?="input"?
 		public Assignment getInputAssignment_2() { return cInputAssignment_2; }
@@ -1324,7 +1324,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//TypeGroup returns kexpressions::TypeGroup:
-	//	annotations+=Annotation* constant?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
+	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
 	//	type=ValueType? valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
 	public TypeGroupElements getTypeGroupAccess() {
 		return (pTypeGroup != null) ? pTypeGroup : (pTypeGroup = new TypeGroupElements());

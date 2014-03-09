@@ -514,7 +514,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         constant?='const'? 
+	 *         const?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 

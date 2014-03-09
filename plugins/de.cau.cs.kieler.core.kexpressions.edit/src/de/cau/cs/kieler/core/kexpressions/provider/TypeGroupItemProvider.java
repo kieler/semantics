@@ -45,277 +45,277 @@ public class TypeGroupItemProvider
 		IItemLabelProvider,
 		IItemPropertySource {
 	/**
-	 * This constructs an instance from a factory and a notifier.
-	 * <!-- begin-user-doc -->
+     * This constructs an instance from a factory and a notifier.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public TypeGroupItemProvider(AdapterFactory adapterFactory) {
-		super(adapterFactory);
-	}
+        super(adapterFactory);
+    }
 
 	/**
-	 * This returns the property descriptors for the adapted class.
-	 * <!-- begin-user-doc -->
+     * This returns the property descriptors for the adapted class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null) {
-			super.getPropertyDescriptors(object);
+        if (itemPropertyDescriptors == null) {
+            super.getPropertyDescriptors(object);
 
-			addTypePropertyDescriptor(object);
-			addInputPropertyDescriptor(object);
-			addOutputPropertyDescriptor(object);
-			addStaticPropertyDescriptor(object);
-			addSignalPropertyDescriptor(object);
-			addConstantPropertyDescriptor(object);
-		}
-		return itemPropertyDescriptors;
-	}
+            addTypePropertyDescriptor(object);
+            addInputPropertyDescriptor(object);
+            addOutputPropertyDescriptor(object);
+            addStaticPropertyDescriptor(object);
+            addSignalPropertyDescriptor(object);
+            addConstPropertyDescriptor(object);
+        }
+        return itemPropertyDescriptors;
+    }
 
 	/**
-	 * This adds a property descriptor for the Type feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Type feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addTypePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_TypeGroup_type_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_type_feature", "_UI_TypeGroup_type"),
-				 KExpressionsPackage.Literals.TYPE_GROUP__TYPE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_TypeGroup_type_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_type_feature", "_UI_TypeGroup_type"),
+                 KExpressionsPackage.Literals.TYPE_GROUP__TYPE,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This adds a property descriptor for the Input feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Input feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addInputPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_TypeGroup_input_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_input_feature", "_UI_TypeGroup_type"),
-				 KExpressionsPackage.Literals.TYPE_GROUP__INPUT,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_TypeGroup_input_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_input_feature", "_UI_TypeGroup_type"),
+                 KExpressionsPackage.Literals.TYPE_GROUP__INPUT,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This adds a property descriptor for the Output feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Output feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addOutputPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_TypeGroup_output_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_output_feature", "_UI_TypeGroup_type"),
-				 KExpressionsPackage.Literals.TYPE_GROUP__OUTPUT,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_TypeGroup_output_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_output_feature", "_UI_TypeGroup_type"),
+                 KExpressionsPackage.Literals.TYPE_GROUP__OUTPUT,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This adds a property descriptor for the Static feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Static feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addStaticPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_TypeGroup_static_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_static_feature", "_UI_TypeGroup_type"),
-				 KExpressionsPackage.Literals.TYPE_GROUP__STATIC,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_TypeGroup_static_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_static_feature", "_UI_TypeGroup_type"),
+                 KExpressionsPackage.Literals.TYPE_GROUP__STATIC,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This adds a property descriptor for the Signal feature.
-	 * <!-- begin-user-doc -->
+     * This adds a property descriptor for the Signal feature.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected void addSignalPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_TypeGroup_signal_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_signal_feature", "_UI_TypeGroup_type"),
-				 KExpressionsPackage.Literals.TYPE_GROUP__SIGNAL,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
-	}
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_TypeGroup_signal_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_signal_feature", "_UI_TypeGroup_type"),
+                 KExpressionsPackage.Literals.TYPE_GROUP__SIGNAL,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
 
 	/**
-	 * This adds a property descriptor for the Constant feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addConstantPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_TypeGroup_constant_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_constant_feature", "_UI_TypeGroup_type"),
-				 KExpressionsPackage.Literals.TYPE_GROUP__CONSTANT,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
-	}
+     * This adds a property descriptor for the Const feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addConstPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_TypeGroup_const_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_TypeGroup_const_feature", "_UI_TypeGroup_type"),
+                 KExpressionsPackage.Literals.TYPE_GROUP__CONST,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
 
-	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-	 * <!-- begin-user-doc -->
+    /**
+     * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+     * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+     * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(KExpressionsPackage.Literals.TYPE_GROUP__VALUED_OBJECTS);
-		}
-		return childrenFeatures;
-	}
+        if (childrenFeatures == null) {
+            super.getChildrenFeatures(object);
+            childrenFeatures.add(KExpressionsPackage.Literals.TYPE_GROUP__VALUED_OBJECTS);
+        }
+        return childrenFeatures;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EStructuralFeature getChildFeature(Object object, Object child) {
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
+        // Check the type of the specified child object and return the proper feature to use for
+        // adding (see {@link AddCommand}) it as a child.
 
-		return super.getChildFeature(object, child);
-	}
+        return super.getChildFeature(object, child);
+    }
 
 	/**
-	 * This returns TypeGroup.gif.
-	 * <!-- begin-user-doc -->
+     * This returns TypeGroup.gif.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/TypeGroup"));
-	}
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/TypeGroup"));
+    }
 
 	/**
-	 * This returns the label text for the adapted class.
-	 * <!-- begin-user-doc -->
+     * This returns the label text for the adapted class.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public String getText(Object object) {
-		ValueType labelValue = ((TypeGroup)object).getType();
-		String label = labelValue == null ? null : labelValue.toString();
-		return label == null || label.length() == 0 ?
-			getString("_UI_TypeGroup_type") :
-			getString("_UI_TypeGroup_type") + " " + label;
-	}
+        ValueType labelValue = ((TypeGroup)object).getType();
+        String label = labelValue == null ? null : labelValue.toString();
+        return label == null || label.length() == 0 ?
+            getString("_UI_TypeGroup_type") :
+            getString("_UI_TypeGroup_type") + " " + label;
+    }
 
 	/**
-	 * This handles model notifications by calling {@link #updateChildren} to update any cached
-	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-	 * <!-- begin-user-doc -->
+     * This handles model notifications by calling {@link #updateChildren} to update any cached
+     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void notifyChanged(Notification notification) {
-		updateChildren(notification);
+        updateChildren(notification);
 
-		switch (notification.getFeatureID(TypeGroup.class)) {
-			case KExpressionsPackage.TYPE_GROUP__TYPE:
-			case KExpressionsPackage.TYPE_GROUP__INPUT:
-			case KExpressionsPackage.TYPE_GROUP__OUTPUT:
-			case KExpressionsPackage.TYPE_GROUP__STATIC:
-			case KExpressionsPackage.TYPE_GROUP__SIGNAL:
-			case KExpressionsPackage.TYPE_GROUP__CONSTANT:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-			case KExpressionsPackage.TYPE_GROUP__VALUED_OBJECTS:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-				return;
-		}
-		super.notifyChanged(notification);
-	}
+        switch (notification.getFeatureID(TypeGroup.class)) {
+            case KExpressionsPackage.TYPE_GROUP__TYPE:
+            case KExpressionsPackage.TYPE_GROUP__INPUT:
+            case KExpressionsPackage.TYPE_GROUP__OUTPUT:
+            case KExpressionsPackage.TYPE_GROUP__STATIC:
+            case KExpressionsPackage.TYPE_GROUP__SIGNAL:
+            case KExpressionsPackage.TYPE_GROUP__CONST:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
+            case KExpressionsPackage.TYPE_GROUP__VALUED_OBJECTS:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+                return;
+        }
+        super.notifyChanged(notification);
+    }
 
 	/**
-	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-	 * that can be created under this object.
-	 * <!-- begin-user-doc -->
+     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+     * that can be created under this object.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
-		super.collectNewChildDescriptors(newChildDescriptors, object);
+        super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-				(KExpressionsPackage.Literals.TYPE_GROUP__VALUED_OBJECTS,
-				 KExpressionsFactory.eINSTANCE.createValuedObject()));
-	}
+        newChildDescriptors.add
+            (createChildParameter
+                (KExpressionsPackage.Literals.TYPE_GROUP__VALUED_OBJECTS,
+                 KExpressionsFactory.eINSTANCE.createValuedObject()));
+    }
 
 	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
+     * Return the resource locator for this item provider's resources.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return KExpressionsEditPlugin.INSTANCE;
-	}
+        return KExpressionsEditPlugin.INSTANCE;
+    }
 
 }
