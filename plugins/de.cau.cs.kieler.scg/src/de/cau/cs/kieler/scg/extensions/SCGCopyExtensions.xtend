@@ -192,7 +192,7 @@ class SCGCopyExtensions {
      */
     public def void copyDeclarations(SCGraph source, SCGraph target) {
     	for (typeGroup : source.typeGroups) {
-    		val newTypeGroup = createTypeGroupWOValuedObjects(typeGroup)
+    		val newTypeGroup = createTypeGroup(typeGroup)
     		typeGroup.valuedObjects.forEach[ copyValuedObject(newTypeGroup) ]
     		target.typeGroups += newTypeGroup
     	}

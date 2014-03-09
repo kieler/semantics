@@ -222,12 +222,12 @@ class KExpressionsExtension {
     //=======  TYPE GROUPS  ======
 
     // Creates a new TypeGroup.
-    def private TypeGroup createTypeGroup() {
+    def public TypeGroup createTypeGroup() {
         KExpressionsFactory::eINSTANCE.createTypeGroup
     }
 
     // Creates a new TypeGroup as a copy of another TypeGroup.
-    def private TypeGroup createTypeGroup(TypeGroup typeGroup) {
+    def public TypeGroup createTypeGroup(TypeGroup typeGroup) {
         createTypeGroup => [
             type = typeGroup.type
             input = typeGroup.input
