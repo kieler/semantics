@@ -74,6 +74,7 @@ class KExpressionsExtension {
         returnList
     }
 
+    // Get the real container of a ValuedObject (not the TypeGroup).
     def public EObject getEContainer(ValuedObject valuedObject) {
         valuedObject.eContainer.eContainer
     }
