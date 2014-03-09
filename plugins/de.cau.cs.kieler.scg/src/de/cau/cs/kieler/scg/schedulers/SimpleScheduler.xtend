@@ -173,9 +173,11 @@ class SimpleScheduler extends AbstractScheduler {
          
         // Create a new signal using the kexpression factory for the GO signal.
         // Don't forget to add it to the SCG.
-        createVariableInBoolTypeGroup(GOGUARDNAME) => [
-        	scg.typeGroups += it.typeGroup
-        ]
+//TODO: CHECK IF CORRECT        
+        scg.createValuedObject(GOGUARDNAME).setTypeBool
+//        createVariableInBoolTypeGroup(GOGUARDNAME) => [
+//        	scg.typeGroups += it.typeGroup
+//        ]
     }
     
     protected def boolean isPlaceable(SchedulingBlock schedulingBlock, List<SchedulingBlock> remainingBlocks, 
@@ -394,7 +396,11 @@ class SimpleScheduler extends AbstractScheduler {
 		val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join)
 
 		// Add additional valued objects to the SCG and use the guard expression of the synchronizer as it is.
-		scg.typeGroups += createTypeGroup(joinData.valuedObjects).setTypeBool
+//TODO: CHECK IF CORRECT        
+//      scg.typeGroups += createTypeGroup(joinData.valuedObjects).setTypeBool
+        for (valuedObject : joinData.valuedObjects) {
+            scg.addValuedObject(valuedObject.setTypeBool)
+        }
     	joinData.guardExpression
     }
     

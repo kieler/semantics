@@ -85,7 +85,11 @@ class HybridScheduler extends ClusterScheduler {
 		val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join)
 
 		// Add additional valued objects to the SCG and use the guard expression of the synchronizer as it is.
-		scg.typeGroups += createTypeGroup(joinData.valuedObjects).setTypeBool
+//TODO: CHECK IF CORRECT		
+//		scg.typeGroups += createTypeGroup(joinData.valuedObjects).setTypeBool
+        for (valuedObject : joinData.valuedObjects) {
+            scg.addValuedObject(valuedObject.setTypeBool)
+        }
 		
 		joinData.threadMapping.keySet.forEach[
 		    this.threadMapping.put(it, joinData.threadMapping.get(it))
