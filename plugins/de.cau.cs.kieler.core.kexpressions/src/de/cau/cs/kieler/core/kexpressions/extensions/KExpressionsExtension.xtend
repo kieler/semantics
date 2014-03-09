@@ -47,6 +47,24 @@ class KExpressionsExtension {
     //    public val ISerializer serializer = i.getInstance(typeof(ISerializer));
     // -------------------------------------------------------------------------   
 
+    //=======  GENERAL  ======
+
+    // added by cmot (9.3.14)
+    public def String removeEnclosingQuotes(String text) {
+            var returnText = text
+            if (returnText.startsWith("'") && returnText.endsWith("'")) {
+                returnText = returnText.replaceFirst("'", "")
+                returnText = returnText.substring(0, returnText.length - 1)
+                return returnText.removeEnclosingQuotes
+            }
+            if (returnText.startsWith("\"") && returnText.endsWith("\"")) {
+                returnText = returnText.substring(0, returnText.length - 1)
+                returnText = returnText.replaceFirst("'", "")
+                return returnText.removeEnclosingQuotes
+            }
+            return text
+    }
+
 
     //=======  TYPE GROUP WRAPPINGS  ======
     

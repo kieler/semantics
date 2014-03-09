@@ -470,27 +470,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         ]
     }
 
-    // added by cmot (9.3.14)
-    private def String replaceEnclosingQuotes(String text) {
-            var returnText = text
-            if (returnText.startsWith("'") && returnText.endsWith("'")) {
-                returnText = returnText.replaceFirst("'", "")
-                returnText = returnText.substring(0, returnText.length - 1)
-                return returnText.replaceEnclosingQuotes
-            }
-            if (returnText.startsWith("\"") && returnText.endsWith("\"")) {
-                returnText = returnText.substring(0, returnText.length - 1)
-                returnText = returnText.replaceFirst("'", "")
-                return returnText.replaceEnclosingQuotes
-            }
-            return text
-    }
+
 
     // added by cmot (9.3.14)
     private def String getTextExpressionString(Expression expression) {
         if (expression instanceof TextExpression) {
             val text = (expression as TextExpression).getText
-            return replaceEnclosingQuotes(text)
+            return removeEnclosingQuotes(text)
         }
         return null
     }

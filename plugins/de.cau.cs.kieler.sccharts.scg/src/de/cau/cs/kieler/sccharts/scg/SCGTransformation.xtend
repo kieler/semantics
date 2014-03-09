@@ -577,7 +577,7 @@ class SCGTransformation {
 
     // Apply conversion to textual host code 
     def dispatch Expression convertToSCGExpression(TextExpression expression) {
-        createTextExpression(expression.text)
+        createTextExpression(expression.text.removeEnclosingQuotes)
     }    
     
     // Apply conversion to the default case
