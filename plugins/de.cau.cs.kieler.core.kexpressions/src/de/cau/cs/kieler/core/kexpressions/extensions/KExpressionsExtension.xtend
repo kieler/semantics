@@ -60,6 +60,16 @@ class KExpressionsExtension {
         list.add(typeGroup);        
     }
     
+    // Remove a valuedObject from an eObject
+    def public void removeValuedObject(EObject eObject, ValuedObject valuedObject) {
+        val getTypeGroups =  eObject.class.getMethod("getTypeGroups")
+        val possibleList = getTypeGroups.invoke(eObject);
+        val typeGroups = possibleList as EList<TypeGroup>
+        for (typeGroup : typeGroups) {
+            typeGroup._removeValuedObject(valuedObject)
+        }
+    }    
+    
     // Return the list of all contained ValuedObjects. 
     // ATTENTION: This method returns a specific list. If you add ValuedObjects to this
     // list they will be added to  the container of a TypeGroup.
