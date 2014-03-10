@@ -717,8 +717,8 @@ public class SSJSimDataComponent extends JSONObjectSimulationDataComponent imple
         outputVariableList = new LinkedList<String>();
         JSONObject res = new JSONObject();
         try {
-            if (myModel != null && sExtension.getValuedObjects(myModel) != null) {
-                for (ValuedObject valuedObject : sExtension.getValuedObjects(myModel)) {
+            if (myModel != null && kExpressionExtension.getValuedObjects(myModel) != null) {
+                for (ValuedObject valuedObject : kExpressionExtension.getValuedObjects(myModel)) {
                         if (kExpressionExtension.isInput(valuedObject)) {
                             if (kExpressionExtension.isSignal(valuedObject)) {
                                 res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
