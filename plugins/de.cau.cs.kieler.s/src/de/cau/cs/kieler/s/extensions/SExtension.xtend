@@ -42,6 +42,9 @@ import de.cau.cs.kieler.s.s.Halt
 import de.cau.cs.kieler.s.s.Prio
 import org.eclipse.emf.common.util.EList
 import java.util.ArrayList
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import com.google.inject.Inject
+import de.cau.cs.kieler.s.s.HostCodeInstruction
 
 /**
  * S Extensions. 
@@ -51,6 +54,10 @@ import java.util.ArrayList
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class SExtension { 
+    
+    @Inject
+    extension KExpressionsExtension
+    
 
     // This prefix is used for namings of all generated signals, states and regions
     static final String GENERATED_PREFIX = "_"
@@ -59,14 +66,6 @@ class SExtension {
 //    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
 //    public val ISerializer serializer = i.getInstance(typeof(ISerializer));
     
-
-    def List<ValuedObject> getValuedObjects(Program program) {
-        val returnList = new ArrayList<ValuedObject>();
-        for (typeGroup : program.typeGroups) {
-            returnList.addAll(typeGroup.valuedObjects)
-        }
-        return returnList;
-    }
 
     //-------------------------------------------------------------------------
     //--             B A S I C   C R E A T I O N   M E T H O D S             --
@@ -165,6 +164,13 @@ class SExtension {
         val emitInstruction = SFactory::eINSTANCE.createEmit
         emitInstruction.setSignal(valuedObject)
         emitInstruction
+    }
+
+    // Create host code instruction.
+    def HostCodeInstruction createHostCode(String hostCodeString) {
+        val hostCodeInstruction = SFactory::eINSTANCE.createHostCodeInstruction
+        hostCodeInstruction.setHostCode("'" + hostCodeString + "'")
+        hostCodeInstruction
     }
     
     // Create a valued emission.
