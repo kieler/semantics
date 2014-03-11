@@ -889,25 +889,25 @@ class SCChartsExtension {
     }
     
     def  boolean isStateReachable(State originalState, State state, List<State> visited) {
-        if (visited.contains(state)) {
-            return false
-        }
-        if (originalState.parentRegion.parentState == null) {
-            // Root states ARE reachable
+        if (visited.contains(state) || state == null) {
             return false
         }
         visited.add(state);
+        if (originalState.parentRegion.parentState == null) {
+            // Root states ARE reachable
+            return true
+        }
         if (state.isInitial()) {
             return true
         }
         else {
             for (Transition transition : state.getIncomingTransitions()) {
                     if (isStateReachable(originalState, transition.getSourceState(), visited)) {
-                            return true;
+                            return true
                     }
             }
         }
-        return false;
+        return false
     }
 
 
