@@ -54,17 +54,17 @@ class TimingAnnotationProvider {
      */
     def public doTimingAnnotations(State scchart, /* ModelWrapper KTMRoot,*/ String fileName) {
 
-        // TimingDomains for test reasons
-        var Integer domainNumber = 0;
-        val regionList = scchart.regions;
-        val regionListIterator = regionList.iterator;
-        while (regionListIterator.hasNext()) {
-            val childRegion = regionListIterator.next;
-
-            // threadTree will be used to determine program point pairs for requests of local timing
-            val HashMap<Integer, LinkedList<Integer>> threadTree = new HashMap<Integer, LinkedList<Integer>>;
-            domainNumber = setTimingDomainsSimple(childRegion, domainNumber, threadTree, null);
-        }
+//        // TimingDomains for test reasons
+//        var Integer domainNumber = 0;
+//        val regionList = scchart.regions;
+//        val regionListIterator = regionList.iterator;
+//        while (regionListIterator.hasNext()) {
+//            val childRegion = regionListIterator.next;
+//
+////            // threadTree will be used to determine program point pairs for requests of local timing
+////            val HashMap<Integer, LinkedList<Integer>> threadTree = new HashMap<Integer, LinkedList<Integer>>;
+////            domainNumber = setTimingDomainsSimple(childRegion, domainNumber, threadTree, null);
+//        }
         
         val Map<Integer, Integer> timingInformation = getTimingInformation(fileName);
         if (timingInformation != null) {
@@ -172,7 +172,7 @@ class TimingAnnotationProvider {
 
     /* This method is a test method that sets the timing Domains for regions, but not for the 
      * elements of the according S model. To test the "upwards" timing information path*/
-    def Integer setTimingDomainsSimple(Region region, Integer currentDomainNumber,
+    def Integer setTimingDomainsWithS(Region region, Integer currentDomainNumber,
         HashMap<Integer, LinkedList<Integer>> threadTree, Integer parentDomain) {
         var domainNumber = currentDomainNumber;
         if (!region.hasChildRegions) {
@@ -197,7 +197,7 @@ class TimingAnnotationProvider {
                 val childRegionListIterator = childRegionList.iterator;
                 while (childRegionListIterator.hasNext()) {
                     val childRegion = childRegionListIterator.next();
-                    domainNumber = setTimingDomainsSimple(childRegion, domainNumber, threadTree, regionDomain);
+                    domainNumber = setTimingDomainsWithS(childRegion, domainNumber, threadTree, regionDomain);
                 }
             }
         }

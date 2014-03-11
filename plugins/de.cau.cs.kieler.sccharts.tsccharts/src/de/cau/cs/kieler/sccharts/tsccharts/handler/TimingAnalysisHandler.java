@@ -14,9 +14,10 @@
 
 package de.cau.cs.kieler.sccharts.tsccharts.handler;
 
-import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -24,24 +25,16 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.program.Program;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
@@ -60,13 +53,17 @@ import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.klighd.KlighdTreeSelection;
-import de.cau.cs.kieler.klighd.IAction.ActionContext;
 import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions;
+import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation;
+import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
 import de.cau.cs.kieler.sccharts.tsccharts.TimingAnnotationProvider;
 import de.cau.cs.kieler.sccharts.tsccharts.annotation.extensions.TSCChartsAnnotationExtension;
+import de.cau.cs.kieler.scg.SCGraph;
+import de.cau.cs.kieler.scg.s.transformations.SCGToSTransformation;
 
 
 /**
@@ -91,10 +88,19 @@ public class TimingAnalysisHandler extends AbstractHandler {
     
     @Inject
     private TimingAnnotationProvider annotationProvider;
-    
+      
+    @Inject
+    private SCChartsCoreTransformation SCCtransformation;
     
     @Inject
-    private SCChartsCoreTransformation transformation;
+    private SCGTransformation SCGtransformation;
+    
+    @Inject
+    private SCGToSTransformation Stransformation;
+    
+    private final TransformationTreeExtensions transformationTree = Guice.createInjector()
+            .getInstance(TransformationTreeExtensions.class);
+
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -154,6 +160,51 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 
                 Region rootRegion = (Region) /*EcoreUtil.copy(*/maybe.get();
                 
+                
+///////////////Transformations to S and building of Transformation Tree/////////////////////////////////
+///////////////Momentarily restricted to transformations form core SCChart downwards////////////////////
+                
+                Region modelSplitTE = SCCtransformation.transformTriggerEffect(rootRegion);
+                
+                ModelWrapper modelSplitTEModelWrapper = transformationTree.initializeTransformationTree
+                        (SCCtransformation.extractMapping(), "TriggerEffect", rootRegion, 
+                                "coreSCChart", modelSplitTE, "coreSCChart-splitTriggerEffect");
+                
+                Region modelNormalized = SCCtransformation.transformSurfaceDepth(modelSplitTE);
+                
+                ModelWrapper modelNormalizedModelWrapper = transformationTree.
+                        addTransformationToTree(SCCtransformation.extractMapping(), 
+                                modelSplitTEModelWrapper, "SurfaceDepth", modelSplitTE, 
+                                modelNormalized, "NormalizedChoreSCChart");
+                
+                SCGraph modelSCG = SCGtransformation.transformSCG(modelNormalized);
+                
+                ModelWrapper modelSCGModelWrapper = transformationTree.
+                        addTransformationToTree(SCGtransformation.extractMapping(), 
+                                modelNormalizedModelWrapper, "SCC2SCG",
+                                modelNormalized, modelSCG, "SCG");
+                
+                de.cau.cs.kieler.s.s.Program modelS = Stransformation.transformSCGToS(modelSCG);
+                
+                ModelWrapper modelSModelWrapper = transformationTree.
+                        addTransformationToTree(Stransformation.extractMapping(), modelSCGModelWrapper,
+                                "SCG2S", 
+                                modelSCG, modelS, "S");
+                
+                ModelWrapper KTM = transformationTree.root(modelSModelWrapper);
+                
+/////////////////Setting of timing domains in both SCChart and S code with the help of the KTM tree.////
+/////////////////Get thread tree on the fly.////////////////////////////////////////////////////////////
+                
+                HashMap<Integer, LinkedList<Integer>> threadTree = 
+                        new HashMap<Integer, LinkedList<Integer>>();
+                
+                Integer domainNumber = annotationProvider.
+                        setTimingDomainsWithS(rootRegion, 0, threadTree, null);
+                
+                
+                
+                
                 //annotationProvider.setTimingDomainsSimple(rootRegion, 0);
                 
                 
@@ -185,8 +236,8 @@ public class TimingAnalysisHandler extends AbstractHandler {
 //                
 //                annotationProvider.setTimingDomainsSimple(rootRegion, 0);
 //                
-//                Region transformed = transformation.transformTriggerEffect(rootRegion);
-//                transformed = transformation.transformSurfaceDepth((Region) transformed);
+//                Region transformed = SCCtransformation.transformTriggerEffect(rootRegion);
+//                transformed = SCCtransformation.transformSurfaceDepth((Region) transformed);
 //                
 //                // in the following only memory related issues
 //                
