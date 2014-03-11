@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.EObject
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.TextEffect
+import java.util.ArrayList
 
 /**
  * SCCharts Extensions.
@@ -864,6 +865,49 @@ class SCChartsExtension {
             haltState.createTransitionTo(haltState)
         }
         rootRegion
+    }
+
+
+
+    //-------------------------------------------------------------------------
+    //--                F I X   F O R   D E A D    C O D E                   --
+    //-------------------------------------------------------------------------
+    // This fixes halt states and adds an explicit delayed self transition
+    def Region fixDeadCode(Region rootRegion) {
+        val nonReachabledStates = rootRegion.allContainedStates.filter[!isStateReachable].toList
+        
+        for (nonReachabledState : nonReachabledStates.immutableCopy) {
+            val parentRegion = (nonReachabledState.eContainer as Region)
+            parentRegion.states.remove(nonReachabledState)
+        }
+        rootRegion
+    }
+    def  boolean isStateReachable(State originalState) {
+        // Must ensure not to loop forever when having cycles in the model
+        val visited = new ArrayList<State>()
+        isStateReachable(originalState,  originalState, visited)
+    }
+    
+    def  boolean isStateReachable(State originalState, State state, List<State> visited) {
+        if (visited.contains(state)) {
+            return false
+        }
+        if (originalState.parentRegion.parentState == null) {
+            // Root states ARE reachable
+            return false
+        }
+        visited.add(state);
+        if (state.isInitial()) {
+            return true
+        }
+        else {
+            for (Transition transition : state.getIncomingTransitions()) {
+                    if (isStateReachable(originalState, transition.getSourceState(), visited)) {
+                            return true;
+                    }
+            }
+        }
+        return false;
     }
 
 
