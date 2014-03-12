@@ -44,7 +44,7 @@ import de.cau.cs.kieler.scg.SCGraph
  * @kieler.rating 2013-12-02 proposed yellow
  * @abstract
  */
-abstract class AbstractSCGOptimizer {
+abstract class AbstractOptimizer {
   
     /**
      * This function is the entry point for the scheduler or subsequent transformations. 

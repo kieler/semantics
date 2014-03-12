@@ -6,16 +6,22 @@
  */
 package de.cau.cs.kieler.core.kexpressions.impl;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,6 +31,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl#getCardinalities <em>Cardinalities</em>}</li>
  * </ul>
  * </p>
  *
@@ -42,6 +49,16 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
     protected ValuedObject valuedObject;
 
     /**
+     * The cached value of the '{@link #getCardinalities() <em>Cardinalities</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see #getCardinalities()
+     * @generated
+     * @ordered
+     */
+	protected EList<Expression> cardinalities;
+
+				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -100,6 +117,32 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
 
     /**
      * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EList<Expression> getCardinalities() {
+        if (cardinalities == null) {
+            cardinalities = new EObjectContainmentEList<Expression>(Expression.class, this, KExpressionsPackage.VALUED_OBJECT_REFERENCE__CARDINALITIES);
+        }
+        return cardinalities;
+    }
+
+				/**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__CARDINALITIES:
+                return ((InternalEList<?>)getCardinalities()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
@@ -109,6 +152,8 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 if (resolve) return getValuedObject();
                 return basicGetValuedObject();
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__CARDINALITIES:
+                return getCardinalities();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -118,11 +163,16 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 setValuedObject((ValuedObject)newValue);
+                return;
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__CARDINALITIES:
+                getCardinalities().clear();
+                getCardinalities().addAll((Collection<? extends Expression>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -139,6 +189,9 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 setValuedObject((ValuedObject)null);
                 return;
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__CARDINALITIES:
+                getCardinalities().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -153,6 +206,8 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 return valuedObject != null;
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__CARDINALITIES:
+                return cardinalities != null && !cardinalities.isEmpty();
         }
         return super.eIsSet(featureID);
     }

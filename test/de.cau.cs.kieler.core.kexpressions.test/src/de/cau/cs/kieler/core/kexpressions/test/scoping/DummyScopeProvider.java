@@ -23,6 +23,8 @@ import org.eclipse.xtext.scoping.Scopes;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.util.SimpleAttributeResolver;
 
+import de.cau.cs.kieler.core.kexpressions.ValueType;
+
 /**
  * This class implements a dummy scope provided declaring a bunch of dummy signals and dummy
  * variables for the KExpressions tests.
@@ -36,10 +38,12 @@ public class DummyScopeProvider extends AbstractDeclarativeScopeProvider {
     public IScope getScope(EObject context, EReference reference) {
         LinkedList<EObject> eObjectList = new LinkedList<EObject>();
 
-        eObjectList.add(new DummyValuedObject("A"));
-        eObjectList.add(new DummyValuedObject("B"));
-        eObjectList.add(new DummyValuedObject("C"));
-        eObjectList.add(new DummyValuedObject("D"));
+        DummyTypeGroup typeGroup = new DummyTypeGroup(ValueType.INT);
+        
+        eObjectList.add(new DummyValuedObject(typeGroup, "A"));
+        eObjectList.add(new DummyValuedObject(typeGroup, "B"));
+        eObjectList.add(new DummyValuedObject(typeGroup, "C"));
+        eObjectList.add(new DummyValuedObject(typeGroup, "D"));
 
         return Scopes.scopeFor(eObjectList,
                 QualifiedName.wrapper(SimpleAttributeResolver.newResolver(String.class, "name")),

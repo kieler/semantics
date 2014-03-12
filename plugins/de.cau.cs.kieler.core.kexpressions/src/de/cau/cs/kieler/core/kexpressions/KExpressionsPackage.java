@@ -110,58 +110,13 @@ public interface KExpressionsPackage extends EPackage {
     int VALUED_OBJECT__NAME = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int VALUED_OBJECT__TYPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
-
-    /**
-     * The feature id for the '<em><b>Input</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int VALUED_OBJECT__INPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
-
-    /**
-     * The feature id for the '<em><b>Output</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int VALUED_OBJECT__OUTPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
-
-    /**
-     * The feature id for the '<em><b>Static</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int VALUED_OBJECT__STATIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
-
-    /**
-     * The feature id for the '<em><b>Signal</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int VALUED_OBJECT__SIGNAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
-
-    /**
      * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__COMBINE_OPERATOR = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+    int VALUED_OBJECT__COMBINE_OPERATOR = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
@@ -170,16 +125,25 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__INITIAL_VALUE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
+    int VALUED_OBJECT__INITIAL_VALUE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
+     * The feature id for the '<em><b>Cardinalities</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int VALUED_OBJECT__CARDINALITIES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+
+				/**
      * The number of structural features of the '<em>Valued Object</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
+    int VALUED_OBJECT_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl <em>Valued Object Reference</em>}' class.
@@ -201,13 +165,22 @@ public interface KExpressionsPackage extends EPackage {
     int VALUED_OBJECT_REFERENCE__VALUED_OBJECT = EXPRESSION_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Cardinalities</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int VALUED_OBJECT_REFERENCE__CARDINALITIES = EXPRESSION_FEATURE_COUNT + 1;
+
+				/**
      * The number of structural features of the '<em>Valued Object Reference</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT_REFERENCE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
+    int VALUED_OBJECT_REFERENCE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ValueImpl <em>Value</em>}' class.
@@ -378,6 +351,97 @@ public interface KExpressionsPackage extends EPackage {
     int TEXT_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl <em>Type Group</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl
+     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getTypeGroup()
+     * @generated
+     */
+    int TYPE_GROUP = 9;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int TYPE_GROUP__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+
+				/**
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPE_GROUP__VALUED_OBJECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPE_GROUP__TYPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Input</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int TYPE_GROUP__INPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+
+				/**
+     * The feature id for the '<em><b>Output</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int TYPE_GROUP__OUTPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+
+				/**
+     * The feature id for the '<em><b>Static</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int TYPE_GROUP__STATIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+
+				/**
+     * The feature id for the '<em><b>Signal</b></em>' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+	int TYPE_GROUP__SIGNAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+
+				/**
+     * The feature id for the '<em><b>Const</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPE_GROUP__CONST = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+
+                /**
+     * The number of structural features of the '<em>Type Group</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPE_GROUP_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -385,7 +449,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 9;
+    int COMBINE_OPERATOR = 10;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -395,7 +459,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 10;
+    int OPERATOR_TYPE = 11;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -405,7 +469,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 11;
+    int VALUE_TYPE = 12;
 
 
     /**
@@ -440,61 +504,6 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getValuedObject_Name();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getType <em>Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Type</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#getType()
-     * @see #getValuedObject()
-     * @generated
-     */
-    EAttribute getValuedObject_Type();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isInput <em>Input</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Input</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#isInput()
-     * @see #getValuedObject()
-     * @generated
-     */
-    EAttribute getValuedObject_Input();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isOutput <em>Output</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Output</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#isOutput()
-     * @see #getValuedObject()
-     * @generated
-     */
-    EAttribute getValuedObject_Output();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isStatic <em>Static</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Static</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#isStatic()
-     * @see #getValuedObject()
-     * @generated
-     */
-    EAttribute getValuedObject_Static();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#isSignal <em>Signal</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Signal</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#isSignal()
-     * @see #getValuedObject()
-     * @generated
-     */
-    EAttribute getValuedObject_Signal();
-
-    /**
      * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -506,6 +515,17 @@ public interface KExpressionsPackage extends EPackage {
     EReference getValuedObject_InitialValue();
 
     /**
+     * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCardinalities <em>Cardinalities</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Cardinalities</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#getCardinalities()
+     * @see #getValuedObject()
+     * @generated
+     */
+	EAttribute getValuedObject_Cardinalities();
+
+				/**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -538,6 +558,17 @@ public interface KExpressionsPackage extends EPackage {
     EReference getValuedObjectReference_ValuedObject();
 
     /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getCardinalities <em>Cardinalities</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Cardinalities</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getCardinalities()
+     * @see #getValuedObjectReference()
+     * @generated
+     */
+	EReference getValuedObjectReference_Cardinalities();
+
+				/**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.Value <em>Value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -664,6 +695,93 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getTextExpression_Text();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup <em>Type Group</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Type Group</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup
+     * @generated
+     */
+    EClass getTypeGroup();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#getValuedObjects <em>Valued Objects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#getValuedObjects()
+     * @see #getTypeGroup()
+     * @generated
+     */
+    EReference getTypeGroup_ValuedObjects();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Type</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#getType()
+     * @see #getTypeGroup()
+     * @generated
+     */
+    EAttribute getTypeGroup_Type();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isInput <em>Input</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Input</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isInput()
+     * @see #getTypeGroup()
+     * @generated
+     */
+	EAttribute getTypeGroup_Input();
+
+				/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isOutput <em>Output</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Output</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isOutput()
+     * @see #getTypeGroup()
+     * @generated
+     */
+	EAttribute getTypeGroup_Output();
+
+				/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isStatic <em>Static</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Static</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isStatic()
+     * @see #getTypeGroup()
+     * @generated
+     */
+	EAttribute getTypeGroup_Static();
+
+				/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isSignal <em>Signal</em>}'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Signal</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isSignal()
+     * @see #getTypeGroup()
+     * @generated
+     */
+	EAttribute getTypeGroup_Signal();
+
+				/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isConst <em>Const</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Const</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isConst()
+     * @see #getTypeGroup()
+     * @generated
+     */
+    EAttribute getTypeGroup_Const();
+
+                /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -744,46 +862,6 @@ public interface KExpressionsPackage extends EPackage {
         EAttribute VALUED_OBJECT__NAME = eINSTANCE.getValuedObject_Name();
 
         /**
-         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute VALUED_OBJECT__TYPE = eINSTANCE.getValuedObject_Type();
-
-        /**
-         * The meta object literal for the '<em><b>Input</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute VALUED_OBJECT__INPUT = eINSTANCE.getValuedObject_Input();
-
-        /**
-         * The meta object literal for the '<em><b>Output</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute VALUED_OBJECT__OUTPUT = eINSTANCE.getValuedObject_Output();
-
-        /**
-         * The meta object literal for the '<em><b>Static</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute VALUED_OBJECT__STATIC = eINSTANCE.getValuedObject_Static();
-
-        /**
-         * The meta object literal for the '<em><b>Signal</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute VALUED_OBJECT__SIGNAL = eINSTANCE.getValuedObject_Signal();
-
-        /**
          * The meta object literal for the '<em><b>Initial Value</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -792,6 +870,14 @@ public interface KExpressionsPackage extends EPackage {
         EReference VALUED_OBJECT__INITIAL_VALUE = eINSTANCE.getValuedObject_InitialValue();
 
         /**
+         * The meta object literal for the '<em><b>Cardinalities</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @generated
+         */
+		EAttribute VALUED_OBJECT__CARDINALITIES = eINSTANCE.getValuedObject_Cardinalities();
+
+								/**
          * The meta object literal for the '<em><b>Combine Operator</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -818,6 +904,14 @@ public interface KExpressionsPackage extends EPackage {
         EReference VALUED_OBJECT_REFERENCE__VALUED_OBJECT = eINSTANCE.getValuedObjectReference_ValuedObject();
 
         /**
+         * The meta object literal for the '<em><b>Cardinalities</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @generated
+         */
+		EReference VALUED_OBJECT_REFERENCE__CARDINALITIES = eINSTANCE.getValuedObjectReference_Cardinalities();
+
+								/**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ValueImpl <em>Value</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -926,6 +1020,72 @@ public interface KExpressionsPackage extends EPackage {
         EAttribute TEXT_EXPRESSION__TEXT = eINSTANCE.getTextExpression_Text();
 
         /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl <em>Type Group</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl
+         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getTypeGroup()
+         * @generated
+         */
+        EClass TYPE_GROUP = eINSTANCE.getTypeGroup();
+
+        /**
+         * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TYPE_GROUP__VALUED_OBJECTS = eINSTANCE.getTypeGroup_ValuedObjects();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TYPE_GROUP__TYPE = eINSTANCE.getTypeGroup_Type();
+
+        /**
+         * The meta object literal for the '<em><b>Input</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @generated
+         */
+		EAttribute TYPE_GROUP__INPUT = eINSTANCE.getTypeGroup_Input();
+
+								/**
+         * The meta object literal for the '<em><b>Output</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @generated
+         */
+		EAttribute TYPE_GROUP__OUTPUT = eINSTANCE.getTypeGroup_Output();
+
+								/**
+         * The meta object literal for the '<em><b>Static</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @generated
+         */
+		EAttribute TYPE_GROUP__STATIC = eINSTANCE.getTypeGroup_Static();
+
+								/**
+         * The meta object literal for the '<em><b>Signal</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @generated
+         */
+		EAttribute TYPE_GROUP__SIGNAL = eINSTANCE.getTypeGroup_Signal();
+
+								/**
+         * The meta object literal for the '<em><b>Const</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TYPE_GROUP__CONST = eINSTANCE.getTypeGroup_Const();
+
+                                /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->

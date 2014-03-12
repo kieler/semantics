@@ -9,7 +9,7 @@
   </parent>
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>de.cau.cs.kieler.sccharts.feature</artifactId>
-  <version>0.8.0-SNAPSHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
   <build>
@@ -26,10 +26,7 @@
               <goal>source-feature</goal>
             </goals>
             <configuration>
-<!--              <excludes>
-                <plugin id="de.cau.cs.kieler.sccharts.examples" />
-              </excludes>
--->              
+              <labelSuffix>${sourceFeatureLabelSuffix}</labelSuffix>
             </configuration>
           </execution>
         </executions>

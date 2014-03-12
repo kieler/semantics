@@ -47,118 +47,118 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public abstract class NodeDepImpl extends MinimalEObjectImpl.Container implements NodeDep {
     /**
-     * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getDependencies()
-     * @generated
-     * @ordered
-     */
+	 * @see #getDependencies()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<Link> dependencies;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected NodeDepImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return ScgdepPackage.Literals.NODE_DEP;
-    }
+		return ScgdepPackage.Literals.NODE_DEP;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<Link> getDependencies() {
-        if (dependencies == null) {
-            dependencies = new EObjectContainmentEList<Link>(Link.class, this, ScgdepPackage.NODE_DEP__DEPENDENCIES);
-        }
-        return dependencies;
-    }
+		if (dependencies == null) {
+			dependencies = new EObjectContainmentEList<Link>(Link.class, this, ScgdepPackage.NODE_DEP__DEPENDENCIES);
+		}
+		return dependencies;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case ScgdepPackage.NODE_DEP__DEPENDENCIES:
-                return ((InternalEList<?>)getDependencies()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case ScgdepPackage.NODE_DEP__DEPENDENCIES:
+				return ((InternalEList<?>)getDependencies()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case ScgdepPackage.NODE_DEP__DEPENDENCIES:
-                return getDependencies();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case ScgdepPackage.NODE_DEP__DEPENDENCIES:
+				return getDependencies();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case ScgdepPackage.NODE_DEP__DEPENDENCIES:
-                getDependencies().clear();
-                getDependencies().addAll((Collection<? extends Link>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case ScgdepPackage.NODE_DEP__DEPENDENCIES:
+				getDependencies().clear();
+				getDependencies().addAll((Collection<? extends Link>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case ScgdepPackage.NODE_DEP__DEPENDENCIES:
-                getDependencies().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case ScgdepPackage.NODE_DEP__DEPENDENCIES:
+				getDependencies().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case ScgdepPackage.NODE_DEP__DEPENDENCIES:
-                return dependencies != null && !dependencies.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case ScgdepPackage.NODE_DEP__DEPENDENCIES:
+				return dependencies != null && !dependencies.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //NodeDepImpl

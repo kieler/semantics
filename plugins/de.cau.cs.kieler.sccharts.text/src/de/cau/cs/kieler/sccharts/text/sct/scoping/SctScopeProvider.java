@@ -31,23 +31,26 @@ import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.OperatorType;
+import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.sccharts.Assignment;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
 
 /**
  * This class contains custom scoping descriptions.
  *
- * @author chsch
+ * @author chsch ssm
  */
 public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 
@@ -129,33 +132,33 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
      * @param logicalContainer
      * @return
      */
-    protected List<IEObjectDescription> scope_ValuedObject(final EObject obj,
-            final EReference reference, final Scope logicalContainer) {
-
-        // include all available valuedObjects
-        List<IEObjectDescription> l = this.scope_ValuedObject2(obj, reference, logicalContainer);
-
-        // this branch will be entered during linking if the valuedObjectReference
-        // is contained by a '?' OperatorExpression
-        if (KExpressionsPackage.eINSTANCE.getOperatorExpression().isInstance(obj.eContainer())
-                && (((OperatorExpression) obj.eContainer()).getOperator() == OperatorType.VAL || ((OperatorExpression) obj
-                        .eContainer()).getOperator() == OperatorType.PRE)) {
-            return l;
-        }
-
-        // this branch will be entered computing the content assist proposals
-        // if the text input leads to a valid model!
-        // otherwise used context is nearly unpredictable
-        if (KExpressionsPackage.eINSTANCE.getOperatorExpression().isInstance(obj)
-                && (((OperatorExpression) obj).getOperator() == OperatorType.VAL || ((OperatorExpression) obj)
-                        .getOperator() == OperatorType.PRE)) {
-            return l;
-        }
-
-        // add all available variables
-        l.addAll(this.scope_Variable(obj, reference, logicalContainer));
-        return l;
-    }
+//    protected List<IEObjectDescription> scope_ValuedObject(final EObject obj,
+//            final EReference reference, final Scope logicalContainer) {
+//
+//        // include all available valuedObjects
+//        List<IEObjectDescription> l = this.scope_ValuedObject2(obj, reference, logicalContainer);
+//
+//        // this branch will be entered during linking if the valuedObjectReference
+//        // is contained by a '?' OperatorExpression
+//        if (KExpressionsPackage.eINSTANCE.getOperatorExpression().isInstance(obj.eContainer())
+//                && (((OperatorExpression) obj.eContainer()).getOperator() == OperatorType.VAL || ((OperatorExpression) obj
+//                        .eContainer()).getOperator() == OperatorType.PRE)) {
+//            return l;
+//        }
+//
+//        // this branch will be entered computing the content assist proposals
+//        // if the text input leads to a valid model!
+//        // otherwise used context is nearly unpredictable
+//        if (KExpressionsPackage.eINSTANCE.getOperatorExpression().isInstance(obj)
+//                && (((OperatorExpression) obj).getOperator() == OperatorType.VAL || ((OperatorExpression) obj)
+//                        .getOperator() == OperatorType.PRE)) {
+//            return l;
+//        }
+//
+//        // add all available variables
+//        l.addAll(this.scope_Variable(obj, reference, logicalContainer));
+//        return l;
+//    }
 
     /**
      * A implementation of scoping for valuedObject emissions.
@@ -179,7 +182,7 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 	 * @param logicalContainer
 	 * @return
 	 */
-	protected List<IEObjectDescription> scope_ValuedObject2(final EObject obj,
+	protected List<IEObjectDescription> scope_ValuedObject(final EObject obj,
 			final EReference reference, final Scope logicalContainer) {
 
         List<IEObjectDescription> l = new LinkedList<IEObjectDescription>();
@@ -194,11 +197,23 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         boolean inLogicalContainer = false;
         Scope scope = (Scope) container;
         do {
-            for (ValuedObject s : scope.getValuedObjects()) {
-                l.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
-                        Collections.<String, String> emptyMap()));
+            
+            List<ValuedObject> m = Lists.newArrayList();
+            for (TypeGroup g : scope.getTypeGroups()) {
+                m.addAll(g.getValuedObjects());
             }
-
+            
+// TODO: Verify!            
+//            for (ValuedObject s : Iterables.concat(scope.getValuedObjects(), m)) {
+//                l.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
+//                        Collections.<String, String> emptyMap()));
+//            }
+          for (ValuedObject s :  m) {
+          l.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
+                  Collections.<String, String> emptyMap()));
+      }
+            
+            
             scope = (Scope) scope.eContainer();
             if (scope == null && !inLogicalContainer && container != null) {
             	scope = logicalContainer;

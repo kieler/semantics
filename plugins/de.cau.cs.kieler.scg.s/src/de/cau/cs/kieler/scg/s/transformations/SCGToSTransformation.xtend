@@ -18,21 +18,22 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.SFactory
-import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import java.util.HashMap
 import java.util.List
-import de.cau.cs.kieler.s.s.Instruction
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.s.extensions.SExtension
 
 /**
  * Transform SCG to S
@@ -49,6 +50,9 @@ class SCGToSTransformation {
     
     @Inject
     extension SCGExtensions
+
+    @Inject
+    extension SExtension
     
     private static val GOGUARDNAME = "_GO"
     
@@ -60,10 +64,16 @@ class SCGToSTransformation {
 		sProgram.priority = 1
 		sProgram.name = "S"
 		
-		scg.valuedObjects.forEach[ 
-		    valuedObjectMapping.put(it, it.copy)
-		    sProgram.valuedObjects += valuedObjectMapping.get(it)
-		]
+//        for(typeGroup : scg.typeGroups) {
+//            val newTypeGroup = createTypeGroup(typeGroup)
+            for (valuedObject : scg.valuedObjects) {
+            	val newValuedObject = createValuedObject(valuedObject.name).setTypeBool
+            	sProgram.valuedObjects.add(newValuedObject)
+	            valuedObjectMapping.put(valuedObject, newValuedObject)
+            }
+//            sProgram.typeGroups += newTypeGroup 
+//        }		
+		
 		
         val initState = SFactory::eINSTANCE.createState => [
             name = "Init"
@@ -112,10 +122,17 @@ class SCGToSTransformation {
 	    if (processedNodes.contains(assignment)) return;
         processedNodes += assignment
         
-	    val sAssignment = SFactory::eINSTANCE.createAssignment
-	    sAssignment.variable = valuedObjectMapping.get(assignment.valuedObject)
-	    sAssignment.expression = assignment.assignment.copyExpression.splitOperatorExpression
-	    instructions += sAssignment
+        if (assignment.valuedObject != null && assignment.assignment != null) {
+	    	val sAssignment = SFactory::eINSTANCE.createAssignment
+	    	sAssignment.variable = valuedObjectMapping.get(assignment.valuedObject)
+	    	val expression = assignment.assignment.copyExpression.fix
+            sAssignment.expression = expression
+	    	instructions += sAssignment
+    	} else if (assignment.assignment instanceof TextExpression) {
+    	     // This is the case when the valuedObject is null
+    	     val hostCode = (assignment.assignment as TextExpression).text
+    	     instructions += hostCode.createHostCode
+    	}
 	    
 	    if (assignment.next != null) assignment.next.target.transform(instructions)
 	}
@@ -132,8 +149,13 @@ class SCGToSTransformation {
 	}
 	
 	def ValuedObject findValuedObjectByName(Program s, String name) {
-        s.valuedObjects.filter[it.name == name]?.head
-    }
+    	for(tg : s.typeGroups) {
+    		for(vo : tg.valuedObjects) {
+    			if (vo.name == name) return vo
+    		}
+   		}
+   		return null
+    }    
     
     def ValuedObject getValuedObjectCopy(ValuedObject valuedObject) {
         valuedObjectMapping.get(valuedObject)

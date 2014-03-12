@@ -31,6 +31,7 @@ import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.TransitionType;
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 
 /**
  * SCCharts Validation Rules
@@ -55,6 +56,8 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public static final String REGION_TWO_MANY_INITIAL_STATES = "Every region must not have more than one initial state";
     public static final String REGION_NO_FINAL_STATE = "Every region should have a final state whenever its parent state has a termination transition";
     public static final String STATE_NOT_REACHABLE = "The state is not reachable";
+    
+    public static final SCChartsExtension sCChartExtension = new SCChartsExtension();
 
     @Override
     protected List<EPackage> getEPackages() {
@@ -75,7 +78,15 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public void checkInitialState(final de.cau.cs.kieler.sccharts.Region region) {
         // Do not consider the root region == SCChart
         if (region.getParentState() != null) {
+            // check if parent state has declard any REAL region not only a
+            // dummy region for entry/during/exit actions or suspends
+            de.cau.cs.kieler.sccharts.State parentState = region.getParentState();
             int foundInitial = 0;
+            if ((parentState.getLocalActions().size() > 0) && (parentState.getRegions().size() == 1)
+                    && parentState.getRegions().get(0).getStates().size() == 0
+                    && parentState.getRegions().get(0).getId().equals("")) {
+                foundInitial = 1;
+            }
             for (de.cau.cs.kieler.sccharts.State state : region.getStates()) {
                 if (state.isInitial()) {
                     foundInitial++;
@@ -128,26 +139,26 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
 
     // -------------------------------------------------------------------------
 
-    // Must ensure not to loop forever when having cycles in the model
-    ArrayList<de.cau.cs.kieler.sccharts.State> visited = new ArrayList<de.cau.cs.kieler.sccharts.State>();
-    
-    private boolean checkReachableStates(final de.cau.cs.kieler.sccharts.State originalState, final de.cau.cs.kieler.sccharts.State state) {
-        if (visited.contains(state)) {
-            return false;
-        }
-        visited.add(state);
-        if (state.isInitial()) {
-            return true;
-        }
-        else {
-            for (Transition transition : state.getIncomingTransitions()) {
-            		if (checkReachableStates(originalState, transition.getSourceState())) {
-                            return true;
-            		}
-            }
-        }
-        return false;
-    }
+//    // Must ensure not to loop forever when having cycles in the model
+//    ArrayList<de.cau.cs.kieler.sccharts.State> visited = new ArrayList<de.cau.cs.kieler.sccharts.State>();
+//    
+//    private boolean checkReachableStates(final de.cau.cs.kieler.sccharts.State originalState, final de.cau.cs.kieler.sccharts.State state) {
+//        if (visited.contains(state)) {
+//            return false;
+//        }
+//        visited.add(state);
+//        if (state.isInitial()) {
+//            return true;
+//        }
+//        else {
+//            for (Transition transition : state.getIncomingTransitions()) {
+//            		if (checkReachableStates(originalState, transition.getSourceState())) {
+//                            return true;
+//            		}
+//            }
+//        }
+//        return false;
+//    }
 
     // -------------------------------------------------------------------------
 
@@ -158,8 +169,8 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      */
     @Check
     public void checkReachableStates(final de.cau.cs.kieler.sccharts.State state) {
-        visited.clear();
-        if (state.getParentRegion().getParentState() != null && !checkReachableStates(state, state)) {
+//        visited.clear();
+        if (!sCChartExtension.isStateReachable(state)) {
            warning(STATE_NOT_REACHABLE, state, null, -1);
         }
     }

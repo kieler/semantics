@@ -124,6 +124,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     private static KColor SCCHARTSRED1 = KRenderingFactory.eINSTANCE.createKColor().setColor(255, 215, 215);
     private static KColor SCCHARTSRED2 = KRenderingFactory.eINSTANCE.createKColor().setColor(255, 158, 158);
 
+    private static KBackground STYLE1 = KRenderingFactory.eINSTANCE.createKBackground().setColors(SCCHARTSRED1, SCCHARTSRED2).setGradientAngle2(90);
+    
     private ArrayList<KNode> expanded = new ArrayList<KNode>();
 
     // --------------------------------------------------------------------------
@@ -400,11 +402,15 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                                 }
                             });
 
-                            KBackground style1 = KRenderingFactory.eINSTANCE.createKBackground()
-                                    .setColor2(EcoreUtil.copy(SCCHARTSRED1))
-                                    .setTargetColor2(EcoreUtil.copy(SCCHARTSRED2));
+                            
+//                            KBackground style1 = KRenderingFactory.eINSTANCE.createKBackground()
+//                                    .setColor2(EcoreUtil.copy(SCCHARTSRED1))
+//                                    .setTargetColor2(EcoreUtil.copy(SCCHARTSRED2));
+//                            style1.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
+//                            style1.setGradientAngle(90);
+                            
+                            KBackground style1 = KRenderingFactory.eINSTANCE.createKBackground().setColorsAlphasGradientAngleCopiedFrom(STYLE1);
                             style1.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
-                            style1.setGradientAngle(90);
                             style1.setPropagateToChildren(true);
                             ren.getStyles().add(style1);
 

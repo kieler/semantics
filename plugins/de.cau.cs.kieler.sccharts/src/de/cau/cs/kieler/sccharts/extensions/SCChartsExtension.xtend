@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.EObject
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.TextEffect
+import java.util.ArrayList
 
 /**
  * SCCharts Extensions.
@@ -234,7 +235,7 @@ class SCChartsExtension {
         return notFoundOtherValuedObjectInState && notFoundInParents
     }
     def private dispatch boolean uniqueNameTest(ValuedObject valuedObject, String newName) {
-        valuedObject.uniqueNameTest((valuedObject.eContainer as State), newName)
+        valuedObject.uniqueNameTest((valuedObject.getEContainer as State), newName)
     }
     def private dispatch boolean uniqueNameTest(EObject eObject, String newName) {
         false
@@ -733,6 +734,7 @@ class SCChartsExtension {
     //-------------------------------------------------------------------------
     //--                     K E X P R E S S I O N S                         --
     //-------------------------------------------------------------------------
+    
     //==  EXPRESSION MODIFICATIONS  ==
     def void replace(Action action, Expression searchExpression, Expression replaceExpression) {
         action.setTrigger(action.trigger.replace(searchExpression, replaceExpression))
@@ -749,71 +751,15 @@ class SCChartsExtension {
     //===========  VARIABLES  ===========
     // Creates a new variable ValuedObject in a Scope.
     def ValuedObject createVariable(Scope scope, String variableName) {
-        val valuedObject = variableName.createVariable
-        scope.valuedObjects.add(valuedObject)
-         valuedObject;
-    }
-
-    // Creates a new Int variable ValuedObject in a Scope.
-    def ValuedObject createIntVariable(Scope scope, String variableName) {
-        val valuedObject = createIntVariable(variableName)
-        scope.valuedObjects.add(valuedObject)
-        valuedObject
-    }
-
-    // Creates a new Bool variable ValuedObject in a Scope.
-    def ValuedObject createBoolVariable(Scope scope, String variableName) {
-        val valuedObject = createBoolVariable(variableName)
-        scope.valuedObjects.add(valuedObject)
-        valuedObject
-    }
-
-    // Creates a new Double variable ValuedObject in a Scope.
-    def ValuedObject createDoubleVariable(Scope scope, String variableName) {
-        val valuedObject = createDoubleVariable(variableName)
-        scope.valuedObjects.add(valuedObject)
-        valuedObject
-    }
-
-    // Creates a new Float variable ValuedObject in a Scope.
-    def ValuedObject createFloatVariable(Scope scope, String variableName) {
-        val valuedObject = createFloatVariable(variableName)
-        scope.valuedObjects.add(valuedObject)
-        valuedObject
+        scope.createValuedObject(variableName)
     }
 
     //============  SIGNALS  ============
     // Creates a new variable ValuedObject in a Scope.
     def ValuedObject createSignal(Scope scope, String variableName) {
-        val valuedObject = variableName.createSignal
-        scope.valuedObjects.add(valuedObject)
-         valuedObject;
+        scope.createValuedObject(variableName).setIsSignal
     }
 
-    // Creates a new pure signal ValuedObject in a Scope.
-    def ValuedObject createPureSignal(Scope scope, String variableName) {
-        scope.createSignal(variableName)
-    }
-
-    // Creates a new Int signal ValuedObject in a Scope.
-    def ValuedObject createIntSignal(Scope scope, String variableName) {
-        scope.createIntSignal(variableName)
-    }
-
-    // Creates a new Bool signal ValuedObject in a Scope.
-    def ValuedObject createBoolSignal(Scope scope, String variableName) {
-        scope.createBoolSignal(variableName)
-    }
-
-    // Creates a new Double signal ValuedObject in a Scope.
-    def ValuedObject createDoubleSignal(Scope scope, String variableName) {
-        scope.createDoubleSignal(variableName)
-    }
-
-    // Creates a new Float signal ValuedObject in a Scope.
-    def ValuedObject createFloatSignal(Scope scope, String variableName) {
-        scope.createFloatSignal(variableName)
-    }
 
     //-------------------------------------------------------------------------
     //--                           N A M I N G S                             --
@@ -887,34 +833,6 @@ class SCChartsExtension {
 
 
     //-------------------------------------------------------------------------
-    //--             H O T F I X   F O R   S C C H A R T S                   --
-    //-------------------------------------------------------------------------
-    // Because the SCCharts KExpressions Parser has a problem with
-    // AND / OR lists of more than two elements the following fixes
-    // an OperatorExpression of such kind.
-    // Test 141
-    def OperatorExpression fixForOperatorExpressionLists(OperatorExpression operatorExpression) {
-        if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty ||
-            operatorExpression.subExpressions.size <= 2) {
-
-            // In this case we do not need the fix
-            return operatorExpression;
-        }
-
-        // Here we apply the fix recursively
-        val operatorExpressionCopy = operatorExpression.copy;
-        val newOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
-        newOperatorExpression.setOperator(operatorExpression.operator);
-        newOperatorExpression.subExpressions.add(operatorExpression.subExpressions.head);
-
-        // Call recursively without the first element
-        operatorExpressionCopy.subExpressions.remove(0);
-        newOperatorExpression.subExpressions.add(operatorExpressionCopy.fixForOperatorExpressionLists);
-        return newOperatorExpression;
-    }
-
-
-    //-------------------------------------------------------------------------
     //--  F I X   F O R   T E R M I N A T I O N S   / W    E F F E C T S     --
     //-------------------------------------------------------------------------
     // This fixes termination transitions that have effects
@@ -947,6 +865,49 @@ class SCChartsExtension {
             haltState.createTransitionTo(haltState)
         }
         rootRegion
+    }
+
+
+
+    //-------------------------------------------------------------------------
+    //--                F I X   F O R   D E A D    C O D E                   --
+    //-------------------------------------------------------------------------
+    // This fixes halt states and adds an explicit delayed self transition
+    def Region fixDeadCode(Region rootRegion) {
+        val nonReachabledStates = rootRegion.allContainedStates.filter[!isStateReachable].toList
+        
+        for (nonReachabledState : nonReachabledStates.immutableCopy) {
+            val parentRegion = (nonReachabledState.eContainer as Region)
+            parentRegion.states.remove(nonReachabledState)
+        }
+        rootRegion
+    }
+    def  boolean isStateReachable(State originalState) {
+        // Must ensure not to loop forever when having cycles in the model
+        val visited = new ArrayList<State>()
+        isStateReachable(originalState,  originalState, visited)
+    }
+    
+    def  boolean isStateReachable(State originalState, State state, List<State> visited) {
+        if (visited.contains(state) || state == null) {
+            return false
+        }
+        visited.add(state);
+        if (originalState.parentRegion.parentState == null) {
+            // Root states ARE reachable
+            return true
+        }
+        if (state.isInitial()) {
+            return true
+        }
+        else {
+            for (Transition transition : state.getIncomingTransitions()) {
+                    if (isStateReachable(originalState, transition.getSourceState(), visited)) {
+                            return true
+                    }
+            }
+        }
+        return false
     }
 
 
@@ -987,7 +948,7 @@ class SCChartsExtension {
                 
                 // Possibly expose
                 if (expose) {
-                    localValuedObject.setOutput
+                    localValuedObject.setIsOutput
                 }
 
                 // Relocate

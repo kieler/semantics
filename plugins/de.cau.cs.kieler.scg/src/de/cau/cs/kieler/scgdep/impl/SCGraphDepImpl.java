@@ -31,22 +31,22 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class SCGraphDepImpl extends SCGraphImpl implements SCGraphDep {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected SCGraphDepImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return ScgdepPackage.Literals.SC_GRAPH_DEP;
-    }
+		return ScgdepPackage.Literals.SC_GRAPH_DEP;
+	}
 
 } //SCGraphDepImpl

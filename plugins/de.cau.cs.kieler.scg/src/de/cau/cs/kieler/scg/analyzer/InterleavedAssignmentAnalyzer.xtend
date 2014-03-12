@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scg.analyzer
 
-import de.cau.cs.kieler.scg.analyzer.AbstractSCGAnalyzer
+import de.cau.cs.kieler.scg.analyzer.AbstractAnalyzer
 import de.cau.cs.kieler.scgdep.Write_Write
 import de.cau.cs.kieler.scg.Node
 import com.google.inject.Inject
@@ -27,7 +27,7 @@ import de.cau.cs.kieler.scg.Surface
  * @kieler.design 2014-01-08 proposed 
  * @kieler.rating 2014-01-08 proposed yellow
  */
-class InterleavedAssignmentAnalyzer extends AbstractSCGAnalyzer {
+class InterleavedAssignmentAnalyzer extends AbstractAnalyzer {
     
     @Inject
     extension SCGExtensions

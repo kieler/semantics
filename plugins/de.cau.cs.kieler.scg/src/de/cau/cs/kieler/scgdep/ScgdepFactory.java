@@ -25,83 +25,83 @@ import org.eclipse.emf.ecore.EFactory;
  */
 public interface ScgdepFactory extends EFactory {
     /**
-     * The singleton instance of the factory.
-     * <!-- begin-user-doc -->
+	 * The singleton instance of the factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     ScgdepFactory eINSTANCE = de.cau.cs.kieler.scgdep.impl.ScgdepFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Dependency</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Dependency</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Dependency</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Dependency</em>'.
+	 * @generated
+	 */
     Dependency createDependency();
 
     /**
-     * Returns a new object of class '<em>Absolute Write Read</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Absolute Write Read</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Absolute Write Read</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Absolute Write Read</em>'.
+	 * @generated
+	 */
     AbsoluteWrite_Read createAbsoluteWrite_Read();
 
     /**
-     * Returns a new object of class '<em>Relative Write Read</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Relative Write Read</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Relative Write Read</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Relative Write Read</em>'.
+	 * @generated
+	 */
     RelativeWrite_Read createRelativeWrite_Read();
 
     /**
-     * Returns a new object of class '<em>Absolute Write Relative Write</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Absolute Write Relative Write</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Absolute Write Relative Write</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Absolute Write Relative Write</em>'.
+	 * @generated
+	 */
     AbsoluteWrite_RelativeWrite createAbsoluteWrite_RelativeWrite();
 
     /**
-     * Returns a new object of class '<em>Write Write</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Write Write</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Write Write</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Write Write</em>'.
+	 * @generated
+	 */
     Write_Write createWrite_Write();
 
     /**
-     * Returns a new object of class '<em>Assignment Dep</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Assignment Dep</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Assignment Dep</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Assignment Dep</em>'.
+	 * @generated
+	 */
     AssignmentDep createAssignmentDep();
 
     /**
-     * Returns a new object of class '<em>SC Graph Dep</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>SC Graph Dep</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>SC Graph Dep</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>SC Graph Dep</em>'.
+	 * @generated
+	 */
     SCGraphDep createSCGraphDep();
 
     /**
-     * Returns the package supported by this factory.
-     * <!-- begin-user-doc -->
+	 * Returns the package supported by this factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the package supported by this factory.
-     * @generated
-     */
+	 * @return the package supported by this factory.
+	 * @generated
+	 */
     ScgdepPackage getScgdepPackage();
 
 } //ScgdepFactory

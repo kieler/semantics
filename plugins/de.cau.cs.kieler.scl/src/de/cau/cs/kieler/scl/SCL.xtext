@@ -12,8 +12,9 @@ import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 generate scl "http://kieler.cs.cau.de/scl/scl"
 
 Program:
+	(annotations+=Annotation)*
     'module' name = ID
-    (valuedObjects+=ValuedObject)*
+    (typeGroups+=TypeGroup)*
     '{'
         (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
@@ -22,17 +23,22 @@ Program:
     '}' 
 ;
 
-ValuedObject returns kexpressions::ValuedObject:
+TypeGroup returns kexpressions::TypeGroup:
     (annotations+=Annotation)*
+	(constant?='const')?
     (input?='input')?
     (output?='output')?
     (static?='static')?
     (signal?='signal')?
-    (type = ValueType)?
+    type = ValueType valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+;
+
+ValuedObject returns kexpressions::ValuedObject:
+    (annotations+=Annotation)*
     name=ID ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
-    )? ';'
+    )?
 ;
 
 Statement:
@@ -40,13 +46,13 @@ Statement:
 ;
 
 EmptyStatement:
-//    (annotations += Annotation)*
+    (annotations += Annotation)*
     (label = ID ':')
 ;
 
 InstructionStatement:    
     (
-//        (annotations += Annotation)*
+        (annotations += Annotation)*
         instruction = (Assignment | Conditional | Goto | Parallel | Pause | StatementScope)
     )
 ;
@@ -64,13 +70,13 @@ Assignment:
 
 Conditional:
     'if' expression = Expression 'then'
-        (valuedObjects+=ValuedObject)*
+        (typeGroups+=TypeGroup)*
         (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
             (statements +=  InstructionStatement statements += EmptyStatement*)?
          )
      ('else'
-        (valuedObjects+=ValuedObject)*
+        (typeGroups+=TypeGroup)*
         (
             ((elseStatements += InstructionStatement';') | elseStatements += EmptyStatement)*
             (elseStatements +=  InstructionStatement elseStatements += EmptyStatement*)?
@@ -111,7 +117,7 @@ Pause:
 StatementScope:
     {StatementScope}
     '{'
-        (valuedObjects+=ValuedObject)*
+        (typeGroups+=TypeGroup)*
         (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
             (statements +=  InstructionStatement statements += EmptyStatement*)?

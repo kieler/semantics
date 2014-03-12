@@ -46,7 +46,7 @@ import de.cau.cs.kieler.scgsched.ScgschedFactory
  * @kieler.design 2013-12-02 proposed 
  * @kieler.rating 2013-12-02 proposed yellow
  */
-class PotentialInstantaneousLoopAnalyzer extends AbstractSCGAnalyzer {
+class PotentialInstantaneousLoopAnalyzer extends AbstractAnalyzer {
 	
     // -------------------------------------------------------------------------
     // -- Injections 

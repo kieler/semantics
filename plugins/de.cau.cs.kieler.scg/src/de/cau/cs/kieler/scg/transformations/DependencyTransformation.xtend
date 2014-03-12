@@ -53,7 +53,7 @@ import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
  * @kieler.rating 2013-10-23 proposed yellow
  */
 
-class SCGToSCGDEPTransformation extends AbstractModelTransformation {
+class DependencyTransformation extends AbstractModelTransformation {
     
     // -------------------------------------------------------------------------
     // -- Injections 

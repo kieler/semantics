@@ -25,11 +25,12 @@ import de.cau.cs.kieler.s.SPlugin;
 import de.cau.cs.kieler.s.SStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.s.transformations.SCGToSTransformation;
-import de.cau.cs.kieler.scg.schedulers.AbstractSCGScheduler;
+import de.cau.cs.kieler.scg.schedulers.AbstractScheduler;
 import de.cau.cs.kieler.scg.schedulers.SimpleScheduler;
-import de.cau.cs.kieler.scg.transformations.SCGDEPToSCGBBTransformation;
-import de.cau.cs.kieler.scg.transformations.SCGSchedToSeqSCGTransformation;
-import de.cau.cs.kieler.scg.transformations.SCGToSCGDEPTransformation;
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer;
+import de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer;
+import de.cau.cs.kieler.scg.transformations.BasicBlockTransformation;
+import de.cau.cs.kieler.scg.transformations.DependencyTransformation;
 import de.cau.cs.kieler.scgbb.SCGraphBB;
 import de.cau.cs.kieler.scgdep.SCGraphDep;
 import de.cau.cs.kieler.scgsched.SCGraphSched;
@@ -77,14 +78,14 @@ public class SCGraphModelFileHandler extends AbstractConvertModelHandler {
         String commandString = event.getCommand().getId().toString();
         EObject transformed = null;
 
-        SCGToSCGDEPTransformation transformation1 =
-                Guice.createInjector().getInstance(SCGToSCGDEPTransformation.class);        
-        SCGDEPToSCGBBTransformation transformation2 =
-                Guice.createInjector().getInstance(SCGDEPToSCGBBTransformation.class);
-        AbstractSCGScheduler transformation3 =
+        DependencyTransformation transformation1 =
+                Guice.createInjector().getInstance(DependencyTransformation.class);        
+        BasicBlockTransformation transformation2 =
+                Guice.createInjector().getInstance(BasicBlockTransformation.class);
+        AbstractScheduler transformation3 =
                 Guice.createInjector().getInstance(SimpleScheduler.class);        
-        SCGSchedToSeqSCGTransformation transformation4 =
-                        Guice.createInjector().getInstance(SCGSchedToSeqSCGTransformation.class);
+        AbstractSequentializer transformation4 =
+                        Guice.createInjector().getInstance(SimpleSequentializer.class);
         SCGToSTransformation transformation5 =
         		Guice.createInjector().getInstance(SCGToSTransformation.class);
         

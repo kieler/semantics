@@ -66,13 +66,9 @@ public class ValuedObjectItemProvider
             super.getPropertyDescriptors(object);
 
             addNamePropertyDescriptor(object);
-            addTypePropertyDescriptor(object);
-            addInputPropertyDescriptor(object);
-            addOutputPropertyDescriptor(object);
-            addStaticPropertyDescriptor(object);
-            addSignalPropertyDescriptor(object);
             addCombineOperatorPropertyDescriptor(object);
             addInitialValuePropertyDescriptor(object);
+            addCardinalitiesPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -100,116 +96,6 @@ public class ValuedObjectItemProvider
     }
 
     /**
-     * This adds a property descriptor for the Type feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addTypePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_type_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_type_feature", "_UI_ValuedObject_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT__TYPE,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Input feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addInputPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_input_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_input_feature", "_UI_ValuedObject_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT__INPUT,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Output feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addOutputPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_output_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_output_feature", "_UI_ValuedObject_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT__OUTPUT,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Static feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addStaticPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_static_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_static_feature", "_UI_ValuedObject_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT__STATIC,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Signal feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addSignalPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_signal_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_signal_feature", "_UI_ValuedObject_type"),
-                 KExpressionsPackage.Literals.VALUED_OBJECT__SIGNAL,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
      * This adds a property descriptor for the Initial Value feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -232,6 +118,28 @@ public class ValuedObjectItemProvider
     }
 
     /**
+     * This adds a property descriptor for the Cardinalities feature.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	protected void addCardinalitiesPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ValuedObject_cardinalities_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_cardinalities_feature", "_UI_ValuedObject_type"),
+                 KExpressionsPackage.Literals.VALUED_OBJECT__CARDINALITIES,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+				/**
      * This adds a property descriptor for the Combine Operator feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -291,13 +199,9 @@ public class ValuedObjectItemProvider
 
         switch (notification.getFeatureID(ValuedObject.class)) {
             case KExpressionsPackage.VALUED_OBJECT__NAME:
-            case KExpressionsPackage.VALUED_OBJECT__TYPE:
-            case KExpressionsPackage.VALUED_OBJECT__INPUT:
-            case KExpressionsPackage.VALUED_OBJECT__OUTPUT:
-            case KExpressionsPackage.VALUED_OBJECT__STATIC:
-            case KExpressionsPackage.VALUED_OBJECT__SIGNAL:
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
+            case KExpressionsPackage.VALUED_OBJECT__CARDINALITIES:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

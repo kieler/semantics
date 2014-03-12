@@ -58,7 +58,8 @@ public class SctTransientValueService extends DefaultTransientValueService {
         if (feature == AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations()) {
             return true;
         }
-        if (feature == SCChartsPackage.eINSTANCE.getScope_ValuedObjects()) {
+//        if (feature == SCChartsPackage.eINSTANCE.getScope_ValuedObjects()) {
+      if (feature == SCChartsPackage.eINSTANCE.getScope_TypeGroups()) {
             // check all valuedObjects in order to prevent attempts to serialize trapdecls (kies)
 //                && scchartsPackage.eINSTANCE.getRegion().isInstance(owner)
 //                && owner.eContainer() == null) {
@@ -201,23 +202,26 @@ public class SctTransientValueService extends DefaultTransientValueService {
         }
 
 
-        if (feature == SCChartsPackage.eINSTANCE.getScope_ValuedObjects()) {
+//        if (feature == SCChartsPackage.eINSTANCE.getScope_ValuedObjects()) {
+        if (feature == SCChartsPackage.eINSTANCE.getScope_TypeGroups()) {
             if (SCChartsPackage.eINSTANCE.getRegion().isInstance(owner)
                     && owner.eContainer() == null) {
                 /* do not serialized the implicit 'tick' valuedObject! */
-                return ((Region) owner).getValuedObjects().get(index).getName().equals("tick");
+            	// TODO: Why not?
+//                return ((Region) owner).getValuedObjects().get(index).getName().equals("tick");
+            	return false;
             }
 
-            // During the esterel2sccharts transformation, TrapDecls may occur in SCCharts models.
-            //  Since Traps are Esterel stuff and the SCCharts stuff must not have any dependency
-            //  on this I cannot explicitly check "instanceof TrapDecl".
-            // what an evil hack ... :-(
-            if (((EList<ValuedObject>) owner.eGet(feature)).get(index).eClass().getName()
-                    .startsWith("T")) {
-                return true;
-            } else {
-                return false;
-            }
+//            // During the esterel2sccharts transformation, TrapDecls may occur in SCCharts models.
+//            //  Since Traps are Esterel stuff and the SCCharts stuff must not have any dependency
+//            //  on this I cannot explicitly check "instanceof TrapDecl".
+//            // what an evil hack ... :-(
+//            if (((EList<ValuedObject>) owner.eGet(feature)).get(index).eClass().getName()
+//                    .startsWith("T")) {
+//                return true;
+//            } else {
+//                return false;
+//            }
         }
 
         /* try not to serialize annotations that are of type unequal to StringAnnotations */

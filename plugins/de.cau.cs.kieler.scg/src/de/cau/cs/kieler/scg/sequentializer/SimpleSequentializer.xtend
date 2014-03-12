@@ -11,22 +11,28 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scg.transformations
+package de.cau.cs.kieler.scg.sequentializer
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
+import de.cau.cs.kieler.scgsched.AssignmentAddition
+import de.cau.cs.kieler.scgsched.ConditionalAddition
 import de.cau.cs.kieler.scgsched.GuardExpression
 import de.cau.cs.kieler.scgsched.SCGraphSched
 import de.cau.cs.kieler.scgsched.Schedule
+import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
-import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.scgbb.BasicBlock
+import de.cau.cs.kieler.scg.optimizer.CopyPropagation
+import com.google.inject.Guiceimport de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -48,24 +54,35 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.rating 2013-12-05 proposed yellow
  */
 
-class SCGSchedToSeqSCGTransformation extends AbstractModelTransformation {
+class SimpleSequentializer extends AbstractSequentializer {
 
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
     
+    /** Inject SCG extensions. */  
+    @Inject 
+    extension SCGExtensions
+     
     /** Inject SCG copy extensions. */  
     @Inject 
     extension SCGCopyExtensions	
+
+    /** Inject SCG copy extensions. */  
+    @Inject 
+    extension KExpressionsExtension	
+
     
+    // -------------------------------------------------------------------------
+    // -- Globals
+    // -------------------------------------------------------------------------
+           
+    private val AdditionalConditionals = new HashMap<ConditionalAddition, Conditional>            
+           
     // -------------------------------------------------------------------------
     // -- Transformation method
     // -------------------------------------------------------------------------    
-    
-    override transform(EObject eObject) {
-		return transformSCGSchedToSeqSCG(eObject as SCGraphSched)
-	}
-    
+      
     /**
      * transformSCGSchedToSeqSCG executes the transformation of an SCG with scheduling information to an
      * standard SCG without any further information. Naturally, the SCG will only consist of an 
@@ -76,7 +93,7 @@ class SCGSchedToSeqSCGTransformation extends AbstractModelTransformation {
      * 			the source SCG with scheduling information
      * @return Returns a sequentialized standard SCG.
      */    
-     def SCGraph transformSCGSchedToSeqSCG(SCGraphSched scgSched) {
+     override SCGraph sequentialize(SCGraphSched scgSched) {
         // Create new standard SCG with the Scg factory.
         val scg = ScgFactory::eINSTANCE.createSCGraph()
         
@@ -87,11 +104,13 @@ class SCGSchedToSeqSCGTransformation extends AbstractModelTransformation {
          * basic blocks.
          */
         scgSched.copyDeclarations(scg)
+//TODO: CHECK IF CORRECT        
+//        val guardTypeGroup = createTypeGroup.setTypeBool => [ scg.typeGroups += it ]
         scgSched.basicBlocks.forEach[
         	it.guards.forEach[
-        		val newGuard = it.copy
+                val newGuard = scg.createValuedObject(it.name).setTypeBool
+//        		val newGuard = createValuedObject(guardTypeGroup, it.name)
         		it.addToValuedObjectMapping(newGuard)
-        		scg.valuedObjects.add(newGuard)
         	]
         ]
 
@@ -108,9 +127,9 @@ class SCGSchedToSeqSCGTransformation extends AbstractModelTransformation {
         val exit = ScgFactory::eINSTANCE.createExit
         exitFlows.forEach[it.target = exit]
         scg.nodes.add(exit)
-        
+                
         // Return the SCG.
-        scg       	
+        scg     	
     }
     
     /**
@@ -127,7 +146,7 @@ class SCGSchedToSeqSCGTransformation extends AbstractModelTransformation {
      * @throws UnsupportedSCGException
      * 			if no guard expression can be found for a specific guard.
      */
-    private def transformSchedule(Schedule schedule, SCGraph scg, ControlFlow controlFlow) {
+    protected def transformSchedule(Schedule schedule, SCGraph scg, ControlFlow controlFlow) {
     	// The source SCG is easily determined as it includes the schedule. Its container is the source SCG.
     	val scgSched = schedule.eContainer as SCGraphSched
     	
@@ -136,14 +155,40 @@ class SCGSchedToSeqSCGTransformation extends AbstractModelTransformation {
     	val nextFlows = <ControlFlow> newArrayList
     	nextFlows.add(controlFlow)
     	
+    	val processedBlockGuards = <BasicBlock> newArrayList
+    	
     	// For each scheduling block in the schedule iterate.
     	for (sb : schedule.schedulingBlocks) {
+    	    
+    	    val basicBlock = sb.basicBlock
+    	    
+    	    scgSched.alterations.filter(typeof(ConditionalAddition)).forEach[
+    	        if (sb.nodes.contains(it.beforeNode)) {
+    	            val condadd = ScgFactory::eINSTANCE.createConditional
+    	            condadd.condition = it.condition.copyExpression
+    	            nextFlows.forEach[ target = condadd ]
+    	            nextFlows.clear
+                    condadd.then = ScgFactory::eINSTANCE.createControlFlow => [
+                        nextFlows.add(it)
+                    ]
+                    ScgFactory::eINSTANCE.createControlFlow => [ condadd.^else = it ]
+    	            
+    	            AdditionalConditionals.put(it, condadd)
+    	            scg.nodes.add(condadd)
+    	        }
+    	    ]
+    	    
+    	    
     		/**
     		 * Each scheduling block references a guard. Each guard results in an assignment. 
     		 * Create it and copy the corresponding object.
     		 */
+//    		if (sb == basicBlock.schedulingBlocks.head) {
+            if (!processedBlockGuards.contains(basicBlock)) {
     		val newAssignment = ScgFactory::eINSTANCE.createAssignment
-    		newAssignment.valuedObject = sb.guard.getValuedObjectCopy
+//    		newAssignment.valuedObject = sb.guard.getValuedObjectCopy
+            newAssignment.valuedObject = basicBlock.guards.head.getValuedObjectCopy
+            processedBlockGuards.add(basicBlock)
 
 			/**
 			 * For each guard a guard expression exists.
@@ -152,7 +197,8 @@ class SCGSchedToSeqSCGTransformation extends AbstractModelTransformation {
 			 * Otherwise, it is possible that the guard expression houses empty expressions for a synchronizer. Add them as well.
 			 */    		
 			// Retrieve the guard expression from the scheduling information.
-    		var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == sb.guard].head
+//    		var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == sb.guard].head
+            var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == basicBlock.guards.head].head
     		
     		if (guardExpression != null && guardExpression.expression != null) {
     			
@@ -175,7 +221,7 @@ class SCGSchedToSeqSCGTransformation extends AbstractModelTransformation {
     			throw new UnsupportedSCGException("The guard expression is missing! [guard: "+sb.guard.toString+"]")
     		}
     		// Connect all control flows to the new assignment and clear the list.
-    		nextFlows.forEach[it.target = newAssignment]
+    		nextFlows.forEach[ target = newAssignment ]
     		nextFlows.clear
     		
     		// Create a new control flow and take the assignment node as source.
@@ -185,21 +231,26 @@ class SCGSchedToSeqSCGTransformation extends AbstractModelTransformation {
     		
     		// Add the assignment to the SCG.
     		scg.nodes.add(newAssignment)
+    		}
     		
     		/**
     		 * If the scheduling block includes assignment nodes, they must be executed if the corresponing guard 
     		 * evaluates to true. Therefore, create a conditional for the guard and add the assignment to the
     		 * true branch. They will execute their expression if the guard is active in this tick instance. 
     		 */
-    		if (sb.nodes.filter(typeof(Assignment)).size>0) {
+    		val alterations = scgSched.alterations.filter(typeof(AssignmentAddition)).filter[ sb.nodes.contains(it.position) ]
+    		 
+    		if (sb.nodes.filter(typeof(Assignment)).size>0 || alterations.size>0) {
     			// Create a conditional and set a reference of the guard as condition.
     			val conditional = ScgFactory::eINSTANCE.createConditional
-    			conditional.condition = sb.guard.reference.copyExpression
+//                conditional.condition = sb.guard.reference.copyExpression
+                conditional.condition = basicBlock.guards.head.reference.copyExpression
     			
     			// Create control flows for the two branches and set the actual control flow to the conditional.
     			conditional.then = ScgFactory::eINSTANCE.createControlFlow
     			conditional.^else = ScgFactory::eINSTANCE.createControlFlow
-    			nextFlows.head.target = conditional
+//    			nextFlows.head.target = conditional
+    			nextFlows.forEach[ target = conditional ]
     			nextFlows.clear
     			
     			// Add the conditional.
@@ -215,13 +266,38 @@ class SCGSchedToSeqSCGTransformation extends AbstractModelTransformation {
     				nextCFlow = ScgFactory::eINSTANCE.createControlFlow
     				cAssignment.next = nextCFlow
     			}
+    			nextFlows.add(nextCFlow)
+    			
+	    		// Check if alterations where added to this scheduling block
+    			alterations.forEach[ assadd |
+    				// Create new assignment
+    				ScgFactory::eINSTANCE.createAssignment => [ assignment |
+	    				assignment.valuedObject = assadd.valuedObject.getValuedObjectCopy
+    					assignment.assignment = assadd.expression.copyExpression
+    					scg.nodes.add(assignment)
+	    				nextFlows.forEach[ target = assignment ]
+	    				nextFlows.clear
+	    				assignment.next = ScgFactory::eINSTANCE.createControlFlow => [
+	    					nextFlows.add(it)
+	    				]
+    				]
+	    		]
+    			
+    			
     			// Subsequently, add the last control flow of the true branch and the control flow of the
     			// else branch to the control flow list. These are the new entry flows for the next assignment
     			// or the return value (in which case they will be connected to the exit node by the caller). 
-    			nextFlows.add(nextCFlow)
     			nextFlows.add(conditional.^else)
+
     		}
-    	}
+    		
+            scgSched.alterations.filter(typeof(ConditionalAddition)).forEach[
+                if (sb.nodes.contains(it.untilNode)) {
+                    nextFlows.add( AdditionalConditionals.get(it).^else )
+                }
+            ]
+    		
+     	}
     	
     	// Return any remaining control flows for the caller.
     	nextFlows

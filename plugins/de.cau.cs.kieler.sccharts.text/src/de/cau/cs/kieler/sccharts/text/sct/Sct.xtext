@@ -13,7 +13,7 @@ RootRegion returns sccharts::Region:
     (
       (annotations += Annotation)*
       'region' id=ID (label=STRING)? ':'
-      (valuedObjects+=ValuedObject)*
+      (typeGroups+=TypeGroup)*
       (bodyText+=TextualCode)* 
      )?
     (states+=SCChart)*;
@@ -25,7 +25,7 @@ SingleRegion returns sccharts::Region:
     (
       (annotations += Annotation)*
       'region' (id=ID)? (label=STRING)? ':'
-      (valuedObjects+=ValuedObject)*
+      (typeGroups+=TypeGroup)*
       (bodyText+=TextualCode)*
      )?
     (states+=State)*;
@@ -36,7 +36,7 @@ Region returns sccharts::Region:
 	{sccharts::Region}
     (annotations += Annotation)*
     'region' (id=ID)? (label=STRING)? ':'
-    (valuedObjects+=ValuedObject)*
+      (typeGroups+=TypeGroup)*
     (bodyText+=TextualCode)* 
     (states+=State)+;
 
@@ -53,7 +53,7 @@ SCChart returns sccharts::State:
      | 
       ('{'
           (
-            (valuedObjects+=ValuedObject |
+            (typeGroups+=TypeGroup |
              localActions+=LocalAction)*
             (bodyText += TextualCode)*
             (
@@ -83,7 +83,8 @@ State returns sccharts::State:
      | 
       ('{'
           (
-            (valuedObjects+=ValuedObject |
+            (//valuedObjects+=ValuedObject |
+             typeGroups+=TypeGroup |
              localActions+=LocalAction)*
             (bodyText += TextualCode)*
             (
@@ -118,17 +119,40 @@ Transition returns sccharts::Transition:
 
 // ---------------------------------------------------------------------------------------------------
 
-ValuedObject returns kexpressions::ValuedObject:
+TypeGroup returns kexpressions::TypeGroup:
     (annotations+=Annotation)*
+	(const?='const')?
     (input?='input')?
     (output?='output')?
     (static?='static')?
     (signal?='signal')?
-    (type = ValueType)?
-    name=ID ('=' initialValue=Expression)?
+    (type=ValueType)? valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+;
+
+// ---------------------------------------------------------------------------------------------------
+
+ValuedObject returns kexpressions::ValuedObject:
+    name=ID
+    ('[' cardinalities+=INT ']')* 
+    ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
-    )? ';' ;
+    )?
+;
+
+// ---------------------------------------------------------------------------------------------------
+
+//ValuedObject returns kexpressions::ValuedObject:
+//    (annotations+=Annotation)*
+//    (input?='input')?
+//    (output?='output')?
+//    (static?='static')?
+//    (signal?='signal')?
+//    (type = ValueType)?
+//    name=ID ('=' initialValue=Expression)?
+//    ( 'combine'
+//      (combineOperator = CombineOperator)
+//    )? ';' ;
 
 
 // ---------------------------------------------------------------------------------------------------

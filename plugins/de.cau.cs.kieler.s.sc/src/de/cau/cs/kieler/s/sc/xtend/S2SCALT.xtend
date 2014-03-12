@@ -13,6 +13,7 @@
  */
  package de.cau.cs.kieler.s.sc.xtend
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
@@ -37,6 +38,8 @@ import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.FloatValue
 import java.util.LinkedList
 import java.util.HashMap
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.s.extensions.SExtension
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -46,6 +49,12 @@ import java.util.HashMap
  */
 class S2SCALT { 
 	
+    @Inject 
+    extension KExpressionsExtension    
+
+    @Inject
+    extension SExtension    
+    	
 	// These static lists are used in  expand(Fork forkInstruction)
 	// to combine consecutive fork statements.
 	static var forkThreadNameList = new LinkedList<String>();

@@ -85,13 +85,13 @@ public interface SPackage extends EPackage
   int PROGRAM__PRIORITY = 1;
 
   /**
-   * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+   * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__VALUED_OBJECTS = 2;
+  int PROGRAM__TYPE_GROUPS = 2;
 
   /**
    * The feature id for the '<em><b>Global Host Code Instruction</b></em>' attribute.
@@ -140,13 +140,13 @@ public interface SPackage extends EPackage
   int STATE__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+   * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE__VALUED_OBJECTS = 1;
+  int STATE__TYPE_GROUPS = 1;
 
   /**
    * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
@@ -683,15 +683,15 @@ public interface SPackage extends EPackage
   EAttribute getProgram_Priority();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getValuedObjects <em>Valued Objects</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getTypeGroups <em>Type Groups</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
-   * @see de.cau.cs.kieler.s.s.Program#getValuedObjects()
+   * @return the meta object for the containment reference list '<em>Type Groups</em>'.
+   * @see de.cau.cs.kieler.s.s.Program#getTypeGroups()
    * @see #getProgram()
    * @generated
    */
-  EReference getProgram_ValuedObjects();
+  EReference getProgram_TypeGroups();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.Program#getGlobalHostCodeInstruction <em>Global Host Code Instruction</em>}'.
@@ -737,15 +737,15 @@ public interface SPackage extends EPackage
   EAttribute getState_Name();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.State#getValuedObjects <em>Valued Objects</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.State#getTypeGroups <em>Type Groups</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
-   * @see de.cau.cs.kieler.s.s.State#getValuedObjects()
+   * @return the meta object for the containment reference list '<em>Type Groups</em>'.
+   * @see de.cau.cs.kieler.s.s.State#getTypeGroups()
    * @see #getState()
    * @generated
    */
-  EReference getState_ValuedObjects();
+  EReference getState_TypeGroups();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.State#getInstructions <em>Instructions</em>}'.
@@ -1200,12 +1200,12 @@ public interface SPackage extends EPackage
     EAttribute PROGRAM__PRIORITY = eINSTANCE.getProgram_Priority();
 
     /**
-     * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PROGRAM__VALUED_OBJECTS = eINSTANCE.getProgram_ValuedObjects();
+    EReference PROGRAM__TYPE_GROUPS = eINSTANCE.getProgram_TypeGroups();
 
     /**
      * The meta object literal for the '<em><b>Global Host Code Instruction</b></em>' attribute feature.
@@ -1242,12 +1242,12 @@ public interface SPackage extends EPackage
     EAttribute STATE__NAME = eINSTANCE.getState_Name();
 
     /**
-     * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference STATE__VALUED_OBJECTS = eINSTANCE.getState_ValuedObjects();
+    EReference STATE__TYPE_GROUPS = eINSTANCE.getState_TypeGroups();
 
     /**
      * The meta object literal for the '<em><b>Instructions</b></em>' containment reference list feature.
