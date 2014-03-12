@@ -24,8 +24,8 @@ This extension point allowes the contribution of a compiler transformation to th
          </appinfo>
       </annotation>
       <complexType>
-         <sequence>
-            <element ref="content"/>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="transformation"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -54,7 +54,7 @@ This extension point allowes the contribution of a compiler transformation to th
       </complexType>
    </element>
 
-   <element name="content">
+   <element name="transformation">
       <complexType>
          <attribute name="class" type="string" use="required">
             <annotation>

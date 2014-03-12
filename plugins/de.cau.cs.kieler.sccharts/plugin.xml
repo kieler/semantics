@@ -777,6 +777,12 @@
       </menuContribution> <!--  -->
 
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <transformation
+            class="de.cau.cs.kieler.sccharts.Transformation1">
+      </transformation>
+   </extension>
 
 
 
