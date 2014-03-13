@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.kico;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +23,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -29,6 +32,7 @@ import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
+import com.google.inject.Guice;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -79,7 +83,7 @@ public class KiCoPlugin extends AbstractUIPlugin {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -116,6 +120,60 @@ public class KiCoPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
+     * Checks if is e object.
+     * 
+     * @param clazz
+     *            the clazz
+     * @return true, if is e object
+     */
+    private static boolean isEObject(Class clazz) {
+        if (EObject.class.isAssignableFrom(clazz)) {
+            return true;
+        }
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the guice instance.
+     *
+     * @param object the object
+     * @return the guice instance
+     */
+    private Object getGuiceInstance(Object object) {
+        Object guiceInstance = Guice.createInjector().getInstance(object.getClass());
+        return guiceInstance;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the invokable method.
+     *
+     * @param object the object
+     * @param method the method
+     * @return the invokable method
+     */
+    private Method getInvokableMethod(Object object, String method) {
+        for (Method providedMethod : object.getClass().getMethods()) {
+            String providedMethodName = providedMethod.getName();
+            Class<?>[] parameterTypes = providedMethod.getParameterTypes();
+            if (providedMethodName.equals(method)) {
+                if (parameterTypes.length == 1) {
+                    Class<?> parameterType = parameterTypes[0];
+                    if (isEObject(parameterType)) {
+                        return providedMethod;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * This initializes the TransformationMap with all registered and loaded plug-ins that extend
      * the KiCo extension point
      * 
@@ -143,25 +201,33 @@ public class KiCoPlugin extends AbstractUIPlugin {
                     System.out.println("KiCo loading component: "
                             + transformations[i].getContributor().getName());
                 }
-                
-                
-                Object transformationInstance = transformations[i].createExecutableExtension("class");
-                Transformation transformation;
-                if (transformationInstance instanceof Transformation) {
-                    // The specified class is a Transformation, use it directly  
-                 transformation =
-                            (Transformation) transformations[i].createExecutableExtension("class");
-                } else {
-                    // The specified class is not a Transformation, use a new Transformation instance as a wrapper
-                    transformation = new TransformationWrapper();
-                    transformation.setTransformationInstance(transformationInstance);
-                }
 
-                transformation.setConfigurationElemenet(transformations[i]);
+                Object transformationInstance =
+                        transformations[i].createExecutableExtension("class");
                 String id = transformations[i].getAttribute("id");
                 String name = transformations[i].getAttribute("name");
                 String method = transformations[i].getAttribute("method");
                 String dependenciesString = transformations[i].getAttribute("dependencies");
+                
+                Transformation transformation;
+                if (transformationInstance instanceof Transformation) {
+                    // The specified class is a Transformation, use it directly
+                    transformation =
+                            (Transformation) transformations[i].createExecutableExtension("class");
+                    // Handle the case that wee need Google Guice for instantiation
+                    transformation.setTransformationInstance(getGuiceInstance(transformation));
+                } else {
+                    // The specified class is not a Transformation, use a new Transformation
+                    // instance as a wrapper
+                    transformation = new TransformationWrapper();
+                    // Handle the case that wee need Google Guice for instantiation
+                    transformation.setTransformationInstance(getGuiceInstance(transformationInstance));
+                    // Find the correct method and save it in the wrapper for later reflection calls
+                    Method transformationMethod = getInvokableMethod(transformationInstance, method);
+                    transformation.setTransformationMethod(transformationMethod);
+                }
+
+                transformation.setConfigurationElemenet(transformations[i]);
 
                 if (id != null) {
                     transformation.setId(id);
@@ -175,10 +241,10 @@ public class KiCoPlugin extends AbstractUIPlugin {
                 if (name != null) {
                     transformation.setName(name);
                 }
-               
+
                 if (method != null) {
                     transformation.setMethod(method);
-                }                
+                }
 
                 if (dependenciesString != null) {
                     String[] dependenciesArray = dependenciesString.split(",");

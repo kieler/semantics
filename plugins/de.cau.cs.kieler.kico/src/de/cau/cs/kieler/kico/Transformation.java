@@ -35,7 +35,10 @@ public abstract class Transformation {
     /** The configuration element for accessing the plug-in ID. */
     private IConfigurationElement configEle;
 
-    /** The transformation instance, if this is a wrapper only. */
+    /** The transformation method */
+    private Method transformationMethod = null;
+
+    /** The transformation instance, if this is a wrapper only. May be guiced for the injected case. */
     private Object transformationInstance = null;
 
     /** The name. */
@@ -80,6 +83,19 @@ public abstract class Transformation {
      */
     public final IConfigurationElement getConfigurationElement() {
         return this.configEle;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the transformation method that contains the transform method specified. This class
+     * instance then is just a wrapper for this transformation instance.
+     * 
+     * @param object
+     *            the new transformation instance
+     */
+    void setTransformationMethod(Method method) {
+        transformationMethod = method;
     }
 
     // -------------------------------------------------------------------------
@@ -185,22 +201,6 @@ public abstract class Transformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Checks if is e object.
-     * 
-     * @param clazz
-     *            the clazz
-     * @return true, if is e object
-     */
-    private static boolean isEObject(Class clazz) {
-        if (EObject.class.isAssignableFrom(clazz)) {
-            return true;
-        }
-        return false;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Do the transformation based on the method field.
      * 
      * @param eObject
@@ -210,65 +210,15 @@ public abstract class Transformation {
     public final EObject doTransform(EObject eObject) {
         if (method == null) {
             // A Transformation instance with the standard transformation method
-            return (transform(eObject));
-        } else if ((method != null) && (transformationInstance == null)) {
-            // A Transformation instance with an individual transformation method
-            Method classMethod;
-            try {
-                classMethod = this.getClass().getMethod(method, new Class[] { EObject.class });
-                if (classMethod != null) {
-                    Object result = classMethod.invoke(transformationInstance, eObject);
-                    if (result instanceof EObject) {
-                        return (EObject) result;
-                    }
-                } else {
-                    // This means that the transformation method declared does not exist.
-                }
-            } catch (NoSuchMethodException e) {
-                // This means that the transformation method declared does not exist.
-                e.printStackTrace();
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-            return null;
-        } else if (transformationInstance != null) {
+            return ((Transformation) transformationInstance).transform(eObject);
+        } else {
             // Some other class instance with an individual transformation method
-            Method classMethod = null;
+            Object result;
             try {
-                for (Method providedMethod : transformationInstance.getClass().getMethods()) {
-                    String providedMethodName = providedMethod.getName();
-                    Class[] parameterTypes = providedMethod.getParameterTypes();
-                    if (providedMethodName.equals(method)) {
-                        if (parameterTypes.length == 1) {
-                            Class parameterType = parameterTypes[0];
-                            if (isEObject(parameterType)) {
-                                classMethod = providedMethod;
-                                break;
-                            }
-                        }
-                    }
+                result = transformationMethod.invoke(transformationInstance, eObject);
+                if (result instanceof EObject) {
+                    return (EObject) result;
                 }
-                // classMethod = transformationInstance.getClass().getMethod(method, new
-                // Class[]{EObject.class});
-                if (classMethod != null) {
-                    Object result = classMethod.invoke(transformationInstance, eObject);
-                    if (result instanceof EObject) {
-                        return (EObject) result;
-                    }
-                } else {
-                    // This means that the transformation method declared does not exist.
-                }
-                // } catch (NoSuchMethodException e) {
-                // This means that the transformation method declared does not exist.
-                // e.printStackTrace();
-            } catch (SecurityException e) {
-                e.printStackTrace();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (IllegalArgumentException e) {
@@ -277,10 +227,6 @@ public abstract class Transformation {
                 e.printStackTrace();
                 e.getTargetException().printStackTrace();
             }
-            return null;
-        } else {
-            // This means that the class in neither a Transformation nor a transformation method
-            // has been declared
             return null;
         }
 
