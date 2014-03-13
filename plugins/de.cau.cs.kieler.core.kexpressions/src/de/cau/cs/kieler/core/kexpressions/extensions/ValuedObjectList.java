@@ -53,12 +53,4 @@ public class ValuedObjectList extends ArrayList<ValuedObject> {
         return returnValue;
     }
 
-    // FIXME: Is addAll() calling add() above? Then the following can be deleted,
-    // otherwise one needs to implement addAll() too.
-    // public boolean addAll(Collection<ValuedObject> valuedObjectList) {
-    // // public boolean addAll(Collection<ValuedObject> valuedObjectList) {
-    // boolean returnValue = super.addAll(valuedObjectList);
-    // return returnValue;
-    // }
-
 }

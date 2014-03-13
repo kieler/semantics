@@ -21,17 +21,14 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.TypeGroup
-import java.util.List
-import org.eclipse.emf.ecore.EStructuralFeature
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage
-import org.eclipse.emf.common.util.EList
 
 /**
  * KExpressions Extensions. 
@@ -46,6 +43,96 @@ class KExpressionsExtension {
     //    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
     //    public val ISerializer serializer = i.getInstance(typeof(ISerializer));
     // -------------------------------------------------------------------------   
+
+
+
+    //=======  SYNC MEETING DEMO  ======
+
+    // Return the type of the ValuedObject.
+    def public ValueType getType(ValuedObject valuedObject) {
+        valuedObject.declaration.type
+    }
+
+
+    // Set the type of a ValuedObject. 
+    def public ValuedObject setType(ValuedObject valuedObject, ValueType type) {
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setType(type)
+        valuedObject;
+    }
+    
+    
+    // Helper method for Setter-Wrapper. It returns the direct Declaration of a ValuedObject
+    // if there are no other ValuedObjects in this group. Otherwise it creates and returns
+    // a new Declaration and removes the ValuedObject from the old one, adding it to the 
+    // new one.
+    def public Declaration getUniqueDeclaration(ValuedObject valuedObject) {
+        val declaration = valuedObject.declaration
+        if (declaration._containsOnly(valuedObject)) {
+            // We don't have to care about other valuedObjects
+            return declaration
+        } else {
+            // Make a new Declaration
+            val newDeclaration = createDeclaration(declaration)
+            // Remove the valuedObject from the old group and add it to the new group
+            declaration._removeValuedObject(valuedObject)
+            if (declaration.valuedObjects.size == 0) {
+                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN CASE ONE!
+            }
+            newDeclaration._addValuedObject(valuedObject)
+            newDeclaration
+        }
+    } 
+         
+         
+//    // Return the list of all contained ValuedObjects.
+//    def private List<ValuedObject> getValuedObjects(List<Declaration> declarations) {
+//        <ValuedObject>newArrayList => [list|declarations.forEach[list += valuedObjects]]
+//    }
+            
+    
+    // Return the list of all contained ValuedObjects. 
+    // ATTENTION: This method returns a specific list. If you add ValuedObjects to this
+    // list they will be added to  the container of a Declaration.
+    def public ValuedObjectList getValuedObjects(EObject eObject) {
+        val declarations = eObject.eContents.filter(typeof(Declaration)).toList
+        val returnList = new ValuedObjectList()
+        // This is necessary for adding ValuedObjects later
+        returnList.setContainer(eObject)
+        for (declaration : declarations) {
+            returnList.addAll(declaration.valuedObjects)
+        }
+        returnList
+    }
+
+    
+    
+    
+    //=======  DECLARATION WRAPPINGS  ======
+    
+    // Add a valuedObject to an eObject
+    def public void addValuedObject(EObject eObject, ValuedObject valuedObject) {
+        val declaration = valuedObject.uniqueDeclaration
+        //val declarationFeature = eObject.eClass().getEStructuralFeature(KExpressionsPackage.TYPE_GROUP__VALUED_OBJECTS)
+        val getDeclarations =  eObject.class.getMethod("getDeclarations")
+        val possibleList = getDeclarations.invoke(eObject);
+        val list = possibleList as EList<Object>
+        list.add(declaration);        
+    }
+    
+    
+    // Remove a valuedObject from an eObject
+    def public void removeValuedObject(EObject eObject, ValuedObject valuedObject) {
+        val getDeclarations =  eObject.class.getMethod("getDeclarations")
+        val possibleList = getDeclarations.invoke(eObject);
+        val declarations = possibleList as EList<Declaration>
+        for (declaration : declarations) {
+            declaration._removeValuedObject(valuedObject)
+        }
+    }   
+    
+        
+    
 
     //=======  GENERAL  ======
 
@@ -66,67 +153,48 @@ class KExpressionsExtension {
     }
 
 
-    //=======  TYPE GROUP WRAPPINGS  ======
-    
-    // Add a valuedObject to an eObject
-    def public void addValuedObject(EObject eObject, ValuedObject valuedObject) {
-        val typeGroup = valuedObject.uniqueTypeGroup
-        //val typeGroupFeature = eObject.eClass().getEStructuralFeature(KExpressionsPackage.TYPE_GROUP__VALUED_OBJECTS)
-        val getTypeGroups =  eObject.class.getMethod("getTypeGroups")
-        val possibleList = getTypeGroups.invoke(eObject);
-        val list = possibleList as EList<Object>
-        list.add(typeGroup);        
-    }
-    
-    // Remove a valuedObject from an eObject
-    def public void removeValuedObject(EObject eObject, ValuedObject valuedObject) {
-        val getTypeGroups =  eObject.class.getMethod("getTypeGroups")
-        val possibleList = getTypeGroups.invoke(eObject);
-        val typeGroups = possibleList as EList<TypeGroup>
-        for (typeGroup : typeGroups) {
-            typeGroup._removeValuedObject(valuedObject)
-        }
-    }    
-    
-    // Return the list of all contained ValuedObjects. 
-    // ATTENTION: This method returns a specific list. If you add ValuedObjects to this
-    // list they will be added to  the container of a TypeGroup.
-    def public ValuedObjectList getValuedObjects(EObject eObject) {
-        val typeGroups = eObject.eContents.filter(typeof(TypeGroup)).toList
-        val returnList = new ValuedObjectList()
-        // This is necessary for adding ValuedObjects later
-        returnList.setContainer(eObject)
-        for (typeGroup : typeGroups) {
-            returnList.addAll(typeGroup.valuedObjects)
-        }
-        returnList
-    }
 
-    // Get the real container of a ValuedObject (not the TypeGroup).
+        
+    
+//    // Return the list of all contained ValuedObjects. 
+//    // ATTENTION: This method returns a specific list. If you add ValuedObjects to this
+//    // list they will be added to  the container of a Declaration.
+//    def public ValuedObjectList getValuedObjects(EObject eObject) {
+//        val declarations = eObject.eContents.filter(typeof(Declaration)).toList
+//        val returnList = new ValuedObjectList()
+//        // This is necessary for adding ValuedObjects later
+//        returnList.setContainer(eObject)
+//        for (declaration : declarations) {
+//            returnList.addAll(declaration.valuedObjects)
+//        }
+//        returnList
+//    }
+
+    // Get the real container of a ValuedObject (not the Declaration).
     def public EObject getEContainer(ValuedObject valuedObject) {
         valuedObject.eContainer.eContainer
     }
 
 //    // Return the list of all contained ValuedObjects.
-//    def private List<ValuedObject> getValuedObjects(List<TypeGroup> typeGroups) {
-//        <ValuedObject>newArrayList => [list|typeGroups.forEach[list += valuedObjects]]
+//    def private List<ValuedObject> getValuedObjects(List<Declaration> declarations) {
+//        <ValuedObject>newArrayList => [list|declarations.forEach[list += valuedObjects]]
 //    }
 //
 //    // Remove a specific ValuedObject.
-//    def private removeValuedObject(List<TypeGroup> typeGroups, ValuedObject valuedObject) {
-//        for (typeGroup : typeGroups) {
-//            typeGroup._removeValuedObject(valuedObject)
+//    def private removeValuedObject(List<Declaration> declarations, ValuedObject valuedObject) {
+//        for (declaration : declarations) {
+//            declaration._removeValuedObject(valuedObject)
 //        }
 //    }
 
-    // Return the type of the ValuedObject.
-    def public ValueType getType(ValuedObject valuedObject) {
-        valuedObject.typeGroup.type
-    }
+//    // Return the type of the ValuedObject.
+//    def public ValueType getType(ValuedObject valuedObject) {
+//        valuedObject.declaration.type
+//    }
 
     // Return whether the ValuedObject is an input.
     def public boolean getInput(ValuedObject valuedObject) {
-        valuedObject.typeGroup.input
+        valuedObject.declaration.input
     }
 
     // Return whether the ValuedObject is an input.
@@ -136,7 +204,7 @@ class KExpressionsExtension {
 
     // Return whether the ValuedObject is an output.
     def public boolean getOutput(ValuedObject valuedObject) {
-        valuedObject.typeGroup.output
+        valuedObject.declaration.output
     }
 
     // Return whether the ValuedObject is an output.
@@ -146,7 +214,7 @@ class KExpressionsExtension {
     
     // Return whether the ValuedObject is static.
     def public boolean getStatic(ValuedObject valuedObject) {
-        valuedObject.typeGroup.static
+        valuedObject.declaration.static
     }
 
     // Return whether the ValuedObject is static.
@@ -156,7 +224,7 @@ class KExpressionsExtension {
     
     // Return whether the ValuedObject is a const.
     def public boolean getConst(ValuedObject valuedObject) {
-        valuedObject.typeGroup.const
+        valuedObject.declaration.const
     }
 
     // Return whether the ValuedObject is a const.
@@ -166,7 +234,7 @@ class KExpressionsExtension {
 
     // Return whether the ValuedObject is a signal.
     def public boolean getSignal(ValuedObject valuedObject) {
-        valuedObject.typeGroup.signal
+        valuedObject.declaration.signal
     }
 
     // Return whether the ValuedObject is a signal.
@@ -174,17 +242,17 @@ class KExpressionsExtension {
         valuedObject.getSignal()
     }
     
-    // Set the type of a ValuedObject. 
-    def public ValuedObject setType(ValuedObject valuedObject, ValueType type) {
-        val uniqueTypeGroup = valuedObject.uniqueTypeGroup
-        uniqueTypeGroup.setType(type)
-        valuedObject;
-    }
+//    // Set the type of a ValuedObject. 
+//    def public ValuedObject setType(ValuedObject valuedObject, ValueType type) {
+//        val uniqueDeclaration = valuedObject.uniqueDeclaration
+//        uniqueDeclaration.setType(type)
+//        valuedObject;
+//    }
 
     // Set the ValuedObject to be or not be an input.
     def public ValuedObject setInput(ValuedObject valuedObject, boolean isInput) {
-        val uniqueTypeGroup = valuedObject.uniqueTypeGroup
-        uniqueTypeGroup.setInput(isInput)
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setInput(isInput)
         valuedObject;
     }
     def public ValuedObject setIsInput(ValuedObject valuedObject) {
@@ -196,8 +264,8 @@ class KExpressionsExtension {
     
     // Set the ValuedObject to be or not be an output.
     def public ValuedObject setOutput(ValuedObject valuedObject, boolean isOutput) {
-        val uniqueTypeGroup = valuedObject.uniqueTypeGroup
-        uniqueTypeGroup.setOutput(isOutput)
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setOutput(isOutput)
         valuedObject;
     }
     def public ValuedObject setIsOutput(ValuedObject valuedObject) {
@@ -209,8 +277,8 @@ class KExpressionsExtension {
 
     // Set the ValuedObject to be or not be static.
     def public ValuedObject setStatic(ValuedObject valuedObject, boolean isStatic) {
-        val uniqueTypeGroup = valuedObject.uniqueTypeGroup
-        uniqueTypeGroup.setInput(isStatic)
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setInput(isStatic)
         valuedObject;
     }
     def public ValuedObject setIsStatic(ValuedObject valuedObject) {
@@ -222,8 +290,8 @@ class KExpressionsExtension {
     
    // Set the ValuedObject to be or not be a Const.
    def public ValuedObject setConst(ValuedObject valuedObject, boolean isConst) {
-        val uniqueTypeGroup = valuedObject.uniqueTypeGroup
-        uniqueTypeGroup.setConst(isConst)
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setConst(isConst)
         valuedObject;
     }
     def public ValuedObject setIsConst(ValuedObject valuedObject) {
@@ -235,8 +303,8 @@ class KExpressionsExtension {
 
     // Set the ValuedObject to be or not be a sinal.
     def public ValuedObject setSignal(ValuedObject valuedObject, boolean isSignal) {
-        val uniqueTypeGroup = valuedObject.uniqueTypeGroup
-        uniqueTypeGroup.setSignal(isSignal)
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setSignal(isSignal)
         valuedObject;
     }
     def public ValuedObject setIsSignal(ValuedObject valuedObject) {
@@ -247,85 +315,85 @@ class KExpressionsExtension {
     } 
 
 
-    //=======  TYPE GROUPS  ======
+    //=======  DECLARATIONS  ======
 
-    // Creates a new TypeGroup.
-    def public TypeGroup createTypeGroup() {
-        KExpressionsFactory::eINSTANCE.createTypeGroup
+    // Creates a new Declaration.
+    def public Declaration createDeclaration() {
+        KExpressionsFactory::eINSTANCE.createDeclaration
     }
 
-    // Creates a new TypeGroup as a copy of another TypeGroup.
-    def public TypeGroup createTypeGroup(TypeGroup typeGroup) {
-        createTypeGroup => [
-            type = typeGroup.type
-            input = typeGroup.input
-            output = typeGroup.output
-            signal = typeGroup.signal
-            static = typeGroup.static
-            const = typeGroup.const
+    // Creates a new Declaration as a copy of another Declaration.
+    def public Declaration createDeclaration(Declaration declaration) {
+        createDeclaration => [
+            type = declaration.type
+            input = declaration.input
+            output = declaration.output
+            signal = declaration.signal
+            static = declaration.static
+            const = declaration.const
         ]
     }
 
-//    // Set the TypeGroup to a specific type.
-//    def private TypeGroup setType(TypeGroup typeGroup, ValueType type) {
-//        typeGroup.type = type
-//        typeGroup
+//    // Set the Declaration to a specific type.
+//    def private Declaration setType(Declaration declaration, ValueType type) {
+//        declaration.type = type
+//        declaration
 //    }
 
 
-    //=======  TYPE GROUPS AND VALUED OBJECTS  ======
+    //=======  DECLARATIONS AND VALUED OBJECTS  ======
     
-    // Get the surrounding TypeGroup of a ValuedObject that contains the ValuedObject. 
-    // This TypeGroup may also contain other ValuedObjects, see containsOnly().
-    // If the valuedObject does not have any TypeGroup yet, then create a new one.
-    def private TypeGroup getTypeGroup(ValuedObject valuedObject) {
-        if (valuedObject.eContainer instanceof TypeGroup) {
-            return valuedObject.eContainer as TypeGroup
+    // Get the surrounding Declaration of a ValuedObject that contains the ValuedObject. 
+    // This Declaration may also contain other ValuedObjects, see containsOnly().
+    // If the valuedObject does not have any Declaration yet, then create a new one.
+    def private Declaration getDeclaration(ValuedObject valuedObject) {
+        if (valuedObject.eContainer instanceof Declaration) {
+            return valuedObject.eContainer as Declaration
         } else {
-            val newTypeGroup = createTypeGroup;
-            newTypeGroup._addValuedObject(valuedObject)
-            newTypeGroup
+            val newDeclaration = createDeclaration;
+            newDeclaration._addValuedObject(valuedObject)
+            newDeclaration
         }
     }
     
-    // Helper method for Setter-Wrapper. It returns the direct TypeGroup of a ValuedObject
-    // if there are no other ValuedObjects in this group. Otherwise it creates and returns
-    // a new TypeGroup and removes the ValuedObject from the old one, adding it to the 
-    // new one.
-    def public TypeGroup getUniqueTypeGroup(ValuedObject valuedObject) {
-        val typeGroup = valuedObject.typeGroup
-        if (typeGroup._containsOnly(valuedObject)) {
-            // We don't have to care about other valuedObjects
-            return typeGroup
-        } else {
-            // Make a new TypeGroup
-            val newTypeGroup = createTypeGroup(typeGroup)
-            // Remove the valuedObject from the old group and add it to the new group
-            typeGroup._removeValuedObject(valuedObject)
-            if (typeGroup.valuedObjects.size == 0) {
-                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN CASE ONE!
-            }
-            newTypeGroup._addValuedObject(valuedObject)
-            newTypeGroup
-        }
-    }    
+//    // Helper method for Setter-Wrapper. It returns the direct Declaration of a ValuedObject
+//    // if there are no other ValuedObjects in this group. Otherwise it creates and returns
+//    // a new Declaration and removes the ValuedObject from the old one, adding it to the 
+//    // new one.
+//    def public Declaration getUniqueDeclaration(ValuedObject valuedObject) {
+//        val declaration = valuedObject.declaration
+//        if (declaration._containsOnly(valuedObject)) {
+//            // We don't have to care about other valuedObjects
+//            return declaration
+//        } else {
+//            // Make a new Declaration
+//            val newDeclaration = createDeclaration(declaration)
+//            // Remove the valuedObject from the old group and add it to the new group
+//            declaration._removeValuedObject(valuedObject)
+//            if (declaration.valuedObjects.size == 0) {
+//                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN CASE ONE!
+//            }
+//            newDeclaration._addValuedObject(valuedObject)
+//            newDeclaration
+//        }
+//    }    
 
-    // Check if a TypeGroup only contains a single ValuedObject.
-    def private boolean _containsOnly(TypeGroup typeGroup, ValuedObject valuedObject) {
-        (typeGroup.valuedObjects.contains(valuedObject))&&(typeGroup.valuedObjects.size == 1)
+    // Check if a Declaration only contains a single ValuedObject.
+    def private boolean _containsOnly(Declaration declaration, ValuedObject valuedObject) {
+        (declaration.valuedObjects.contains(valuedObject))&&(declaration.valuedObjects.size == 1)
     }
 
     // Remove a specific ValuedObject.
-    def private _removeValuedObject(TypeGroup typeGroup, ValuedObject valuedObject) {
-         if (typeGroup.valuedObjects.contains(valuedObject)) {
-           typeGroup.valuedObjects -= valuedObject  
+    def private _removeValuedObject(Declaration declaration, ValuedObject valuedObject) {
+         if (declaration.valuedObjects.contains(valuedObject)) {
+           declaration.valuedObjects -= valuedObject  
          } 
     }
     
     // Add a ValuedObject.
-    def private TypeGroup _addValuedObject(TypeGroup typeGroup, ValuedObject valuedObject) {
-        typeGroup.valuedObjects.add(valuedObject)
-        typeGroup
+    def private Declaration _addValuedObject(Declaration declaration, ValuedObject valuedObject) {
+        declaration.valuedObjects.add(valuedObject)
+        declaration
     }
 
     // -------------------------------------------------------------------------   
@@ -718,41 +786,41 @@ class KExpressionsExtension {
     }
 
     //    def public void addValuedObject(EObject eObject, ValuedObject valuedObject) {
-    //        val typeGroups = eObject.eAllContents.filter(typeof(TypeGroup)); 
+    //        val declarations = eObject.eAllContents.filter(typeof(Declaration)); 
     //    }
     //
     //    def public void removeValuedObject(EObject eObject, ValuedObject valuedObject) {
-    //        val typeGroups = eObject.eAllContents.filter(typeof(TypeGroup)).filter[valuedObjects.contains(valuedObject)].toList;
-    //        for (typeGroup : typeGroups.immutableCopy) {
-    //            typeGroup.valuedObjects.remove(valuedObject)
+    //        val declarations = eObject.eAllContents.filter(typeof(Declaration)).filter[valuedObjects.contains(valuedObject)].toList;
+    //        for (declaration : declarations.immutableCopy) {
+    //            declaration.valuedObjects.remove(valuedObject)
     //        } 
     //    }
     //    
-    //    def private TypeGroup createTypeGroup(ValuedObject valuedObject) {
-    //    	createTypeGroup() => [ valuedObjects += valuedObject ]
+    //    def private Declaration createDeclaration(ValuedObject valuedObject) {
+    //    	createDeclaration() => [ valuedObjects += valuedObject ]
     //    }
     //    
-    //    def private TypeGroup createTypeGroup(List<ValuedObject> valueObjects) {
-    //    	createTypeGroup() => [ it.valuedObjects += valuedObjects ] 
+    //    def private Declaration createDeclaration(List<ValuedObject> valueObjects) {
+    //    	createDeclaration() => [ it.valuedObjects += valuedObjects ] 
     //    }
     //    
     //    
-    //    def private TypeGroup copyAttributes(TypeGroup target, TypeGroup typeGroup) {
+    //    def private Declaration copyAttributes(Declaration target, Declaration declaration) {
     //		target => [
-    //			type = typeGroup.type
-    //			input = typeGroup.input
-    //			output = typeGroup.output
-    //			signal = typeGroup.signal
-    //			static = typeGroup.static
-    //			Const = typeGroup.Const
+    //			type = declaration.type
+    //			input = declaration.input
+    //			output = declaration.output
+    //			signal = declaration.signal
+    //			static = declaration.static
+    //			Const = declaration.Const
     //		]    	
     //    }
-    //    def private ValuedObject createValuedObject(TypeGroup typeGroup, String valuedObjectName) {
-    //    	createValuedObject(valuedObjectName) => [ typeGroup.valuedObjects += it ]
+    //    def private ValuedObject createValuedObject(Declaration declaration, String valuedObjectName) {
+    //    	createValuedObject(valuedObjectName) => [ declaration.valuedObjects += it ]
     //    }
     //    
-    //    def private ValuedObject createValuedObjectInTypeGroup(String valuedObjectName) {
-    //        val tg = createTypeGroup 
+    //    def private ValuedObject createValuedObjectInDeclaration(String valuedObjectName) {
+    //        val tg = createDeclaration 
     //        createValuedObject(tg, valuedObjectName)	
     //    }
     //    // Set the ValuedObject to be a signal.
@@ -815,7 +883,7 @@ class KExpressionsExtension {
     //============  SIGNALS  ============
     
     // Creates a new signal ValuedObject.
-    def ValuedObject createSignal(TypeGroup typeGroup, String signalName) {
+    def ValuedObject createSignal(Declaration declaration, String signalName) {
         createValuedObject(signalName).setSignal(true)
     }
 

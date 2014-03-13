@@ -10,6 +10,7 @@ import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
 import de.cau.cs.kieler.core.kexpressions.CombineOperator;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.DoubleValue;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
@@ -108,7 +109,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass typeGroupEClass = null;
+    private EClass declarationEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -389,8 +390,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getTypeGroup() {
-        return typeGroupEClass;
+    public EClass getDeclaration() {
+        return declarationEClass;
     }
 
     /**
@@ -398,8 +399,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTypeGroup_ValuedObjects() {
-        return (EReference)typeGroupEClass.getEStructuralFeatures().get(0);
+    public EReference getDeclaration_ValuedObjects() {
+        return (EReference)declarationEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -407,56 +408,56 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getTypeGroup_Type() {
-        return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(1);
+    public EAttribute getDeclaration_Type() {
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(1);
     }
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getTypeGroup_Input() {
-        return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(2);
+    public EAttribute getDeclaration_Input() {
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(2);
     }
 
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public EAttribute getTypeGroup_Output() {
-        return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(3);
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public EAttribute getTypeGroup_Static() {
-        return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(4);
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public EAttribute getTypeGroup_Signal() {
-        return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(5);
-    }
-
-				/**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getTypeGroup_Const() {
-        return (EAttribute)typeGroupEClass.getEStructuralFeatures().get(6);
+    public EAttribute getDeclaration_Output() {
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(3);
     }
 
-                /**
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDeclaration_Static() {
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDeclaration_Signal() {
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDeclaration_Const() {
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -541,14 +542,14 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         textExpressionEClass = createEClass(TEXT_EXPRESSION);
         createEAttribute(textExpressionEClass, TEXT_EXPRESSION__TEXT);
 
-        typeGroupEClass = createEClass(TYPE_GROUP);
-        createEReference(typeGroupEClass, TYPE_GROUP__VALUED_OBJECTS);
-        createEAttribute(typeGroupEClass, TYPE_GROUP__TYPE);
-        createEAttribute(typeGroupEClass, TYPE_GROUP__INPUT);
-        createEAttribute(typeGroupEClass, TYPE_GROUP__OUTPUT);
-        createEAttribute(typeGroupEClass, TYPE_GROUP__STATIC);
-        createEAttribute(typeGroupEClass, TYPE_GROUP__SIGNAL);
-        createEAttribute(typeGroupEClass, TYPE_GROUP__CONST);
+        declarationEClass = createEClass(DECLARATION);
+        createEReference(declarationEClass, DECLARATION__VALUED_OBJECTS);
+        createEAttribute(declarationEClass, DECLARATION__TYPE);
+        createEAttribute(declarationEClass, DECLARATION__INPUT);
+        createEAttribute(declarationEClass, DECLARATION__OUTPUT);
+        createEAttribute(declarationEClass, DECLARATION__STATIC);
+        createEAttribute(declarationEClass, DECLARATION__SIGNAL);
+        createEAttribute(declarationEClass, DECLARATION__CONST);
 
         // Create enums
         combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
@@ -595,7 +596,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         boolValueEClass.getESuperTypes().add(this.getValue());
         operatorExpressionEClass.getESuperTypes().add(this.getExpression());
         textExpressionEClass.getESuperTypes().add(this.getExpression());
-        typeGroupEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        declarationEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
 
         // Initialize classes and features; add operations and parameters
         initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -628,14 +629,14 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(textExpressionEClass, TextExpression.class, "TextExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTextExpression_Text(), ecorePackage.getEString(), "text", null, 0, 1, TextExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(typeGroupEClass, TypeGroup.class, "TypeGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getTypeGroup_ValuedObjects(), this.getValuedObject(), null, "valuedObjects", null, 0, -1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getTypeGroup_Type(), this.getValueType(), "type", null, 1, 1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getTypeGroup_Input(), ecorePackage.getEBoolean(), "input", null, 1, 1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getTypeGroup_Output(), ecorePackage.getEBoolean(), "output", null, 1, 1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getTypeGroup_Static(), ecorePackage.getEBoolean(), "static", null, 1, 1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getTypeGroup_Signal(), ecorePackage.getEBoolean(), "signal", null, 1, 1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getTypeGroup_Const(), ecorePackage.getEBoolean(), "const", null, 1, 1, TypeGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(declarationEClass, Declaration.class, "Declaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getDeclaration_ValuedObjects(), this.getValuedObject(), null, "valuedObjects", null, 0, -1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDeclaration_Type(), this.getValueType(), "type", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDeclaration_Input(), ecorePackage.getEBoolean(), "input", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDeclaration_Output(), ecorePackage.getEBoolean(), "output", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDeclaration_Static(), ecorePackage.getEBoolean(), "static", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDeclaration_Signal(), ecorePackage.getEBoolean(), "signal", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDeclaration_Const(), ecorePackage.getEBoolean(), "const", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");
