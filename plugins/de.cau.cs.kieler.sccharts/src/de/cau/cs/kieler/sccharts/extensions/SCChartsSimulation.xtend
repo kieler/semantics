@@ -22,6 +22,8 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import com.google.inject.Inject
 
 /**
  * SCCharts Extensions.
@@ -32,8 +34,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class SCChartsSimulation { 
 
-//    @Inject
-//    extension Extension
+    @Inject
+    extension KExpressionsExtension
     
     //-------------------------------------------------------------------------
     //--         S I M U L A T I O N    V I S U A L I Z A T I O N            --
@@ -116,20 +118,15 @@ class SCChartsSimulation {
      // Transform a transition as described in 1.
      def void transformTransition(Transition transition, Region targetRootRegion, String UID) {
           // auxiliary valuedObject
-          val auxiliaryTypeGroup = KExpressionsFactory::eINSTANCE.createTypeGroup();
           val auxiliaryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
           val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
           
           // Setup the auxiliaryValuedObject as an OUTPUT to the module
           auxiliaryValuedObject.setName(UID);
-//          auxiliaryValuedObject.setSignal(true);
-//          auxiliaryValuedObject.setInput(false);
-//          auxiliaryValuedObject.setOutput(true);
-//          auxiliaryValuedObject.setType(ValueType::PURE);
-          auxiliaryTypeGroup.output = true
-          auxiliaryTypeGroup.signal = true
-          auxiliaryTypeGroup.type = ValueType::PURE
-          auxiliaryTypeGroup.valuedObjects += auxiliaryValuedObject
+          auxiliaryValuedObject.setSignal(true);
+          auxiliaryValuedObject.setInput(false);
+          auxiliaryValuedObject.setOutput(true);
+          auxiliaryValuedObject.setType(ValueType::PURE);
           // Set the auxliiaryValuedObject for emission 
           auxiliaryEmission.setValuedObject(auxiliaryValuedObject);
           
@@ -137,8 +134,7 @@ class SCChartsSimulation {
           transition.effects.add(auxiliaryEmission);
 
           // Add auxiliaryValuedObject to first (and only) root region state SyncCharts main interface
-//          targetRootRegion.states.get(0).valuedObjects.add(auxiliaryValuedObject);
-          targetRootRegion.states.get(0).typeGroups.add(auxiliaryTypeGroup);
+          targetRootRegion.states.get(0).valuedObjects.add(auxiliaryValuedObject);
      }
 
     
@@ -155,19 +151,14 @@ class SCChartsSimulation {
           // Do the following only for NON-top-most-states
           if (!state.isFinal && state.parentRegion != targetRootRegion) {
                // auxiliary valuedObject
-               val auxiliaryTypeGroup = KExpressionsFactory::eINSTANCE.createTypeGroup();
                val auxiliaryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
           
                // Setup the auxiliaryValuedObject as an OUTPUT to the module
                auxiliaryValuedObject.setName(UID);
-//               auxiliaryValuedObject.setSignal(true);
-//               auxiliaryValuedObject.setInput(false);
-//               auxiliaryValuedObject.setOutput(true);
-//               auxiliaryValuedObject.setType(ValueType::PURE);
-	          auxiliaryTypeGroup.output = true
-    	      auxiliaryTypeGroup.signal = true
-        	  auxiliaryTypeGroup.type = ValueType::PURE
-          	  auxiliaryTypeGroup.valuedObjects += auxiliaryValuedObject
+               auxiliaryValuedObject.setSignal(true);
+               auxiliaryValuedObject.setInput(false);
+               auxiliaryValuedObject.setOutput(true);
+               auxiliaryValuedObject.setType(ValueType::PURE);
 
                // Add emission of auxiliary ValuedObject as an immediate during action for this state
                val immediateDuringAction = SCChartsFactory::eINSTANCE.createDuringAction();
@@ -180,8 +171,7 @@ class SCChartsSimulation {
                state.localActions.add(immediateDuringAction);
 
                // Add auxiliaryValuedObject to first (and only) root region state SyncCharts main interface
-//               targetRootRegion.states.get(0).valuedObjects.add(auxiliaryValuedObject);
-               targetRootRegion.states.get(0).typeGroups.add(auxiliaryTypeGroup);
+               targetRootRegion.states.get(0).valuedObjects.add(auxiliaryValuedObject);
           }
           
      }     
