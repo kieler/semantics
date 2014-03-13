@@ -51,12 +51,12 @@ public abstract class Transformation {
     private List<String> dependencies = new ArrayList<String>();
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Implements the transformation from EObject to EObject.
      */
     public abstract EObject transform(EObject eObject);
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -185,6 +185,22 @@ public abstract class Transformation {
     // -------------------------------------------------------------------------
 
     /**
+     * Checks if is e object.
+     * 
+     * @param clazz
+     *            the clazz
+     * @return true, if is e object
+     */
+    private static boolean isEObject(Class clazz) {
+        if (EObject.class.isAssignableFrom(clazz)) {
+            return true;
+        }
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Do the transformation based on the method field.
      * 
      * @param eObject
@@ -196,13 +212,17 @@ public abstract class Transformation {
             // A Transformation instance with the standard transformation method
             return (transform(eObject));
         } else if ((method != null) && (transformationInstance == null)) {
-            // A Transformation instance with  an individual transformation method
+            // A Transformation instance with an individual transformation method
             Method classMethod;
             try {
-                classMethod = this.getClass().getMethod(method);
-                Object result = classMethod.invoke(eObject);
-                if (result instanceof EObject) {
-                    return (EObject) result;
+                classMethod = this.getClass().getMethod(method, new Class[] { EObject.class });
+                if (classMethod != null) {
+                    Object result = classMethod.invoke(transformationInstance, eObject);
+                    if (result instanceof EObject) {
+                        return (EObject) result;
+                    }
+                } else {
+                    // This means that the transformation method declared does not exist.
                 }
             } catch (NoSuchMethodException e) {
                 // This means that the transformation method declared does not exist.
@@ -219,16 +239,34 @@ public abstract class Transformation {
             return null;
         } else if (transformationInstance != null) {
             // Some other class instance with an individual transformation method
-            Method classMethod;
+            Method classMethod = null;
             try {
-                classMethod = transformationInstance.getClass().getMethod(method);
-                Object result = classMethod.invoke(eObject);
-                if (result instanceof EObject) {
-                    return (EObject) result;
+                for (Method providedMethod : transformationInstance.getClass().getMethods()) {
+                    String providedMethodName = providedMethod.getName();
+                    Class[] parameterTypes = providedMethod.getParameterTypes();
+                    if (providedMethodName.equals(method)) {
+                        if (parameterTypes.length == 1) {
+                            Class parameterType = parameterTypes[0];
+                            if (isEObject(parameterType)) {
+                                classMethod = providedMethod;
+                                break;
+                            }
+                        }
+                    }
                 }
-            } catch (NoSuchMethodException e) {
+                // classMethod = transformationInstance.getClass().getMethod(method, new
+                // Class[]{EObject.class});
+                if (classMethod != null) {
+                    Object result = classMethod.invoke(transformationInstance, eObject);
+                    if (result instanceof EObject) {
+                        return (EObject) result;
+                    }
+                } else {
+                    // This means that the transformation method declared does not exist.
+                }
+                // } catch (NoSuchMethodException e) {
                 // This means that the transformation method declared does not exist.
-                e.printStackTrace();
+                // e.printStackTrace();
             } catch (SecurityException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -237,6 +275,7 @@ public abstract class Transformation {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
+                e.getTargetException().printStackTrace();
             }
             return null;
         } else {
@@ -244,7 +283,7 @@ public abstract class Transformation {
             // has been declared
             return null;
         }
-        
+
     }
 
     // -------------------------------------------------------------------------

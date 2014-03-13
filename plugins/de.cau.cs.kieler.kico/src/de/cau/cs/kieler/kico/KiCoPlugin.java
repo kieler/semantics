@@ -154,11 +154,13 @@ public class KiCoPlugin extends AbstractUIPlugin {
                 } else {
                     // The specified class is not a Transformation, use a new Transformation instance as a wrapper
                     transformation = new TransformationWrapper();
+                    transformation.setTransformationInstance(transformationInstance);
                 }
 
                 transformation.setConfigurationElemenet(transformations[i]);
                 String id = transformations[i].getAttribute("id");
                 String name = transformations[i].getAttribute("name");
+                String method = transformations[i].getAttribute("method");
                 String dependenciesString = transformations[i].getAttribute("dependencies");
 
                 if (id != null) {
@@ -173,6 +175,10 @@ public class KiCoPlugin extends AbstractUIPlugin {
                 if (name != null) {
                     transformation.setName(name);
                 }
+               
+                if (method != null) {
+                    transformation.setMethod(method);
+                }                
 
                 if (dependenciesString != null) {
                     String[] dependenciesArray = dependenciesString.split(",");
