@@ -574,7 +574,7 @@ class SCChartsCoreTransformation {
     def Region transformTriggerEffect(Region rootRegion) {
         clearMapping; // KTM - clear previous mapping information to assure a single consistent mapping
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.mappedCopy; //KTM - mapping information (changed copy to mappedCopy)
+        var targetRootRegion = rootRegion.mappedCopy.fixAllPriorities; //KTM - mapping information (changed copy to mappedCopy)
         //var targetRootRegion = rootRegion.copy.fixAllPriorities;
         // Traverse all transitions
         for (targetTransition : targetRootRegion.getAllContainedTransitions) {
