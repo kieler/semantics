@@ -598,7 +598,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 // TODO: Make use of the new type groups and organize visualization accordingly!
 
 //                if (SHOW_SIGNAL_DECLARATIONS.booleanValue) {
-//                    for (sig : s.typeGroups.valuedObjects) {
+//                    for (sig : s.declarations.valuedObjects) {
 //                        it.addRectangle => [
 //                            it.invisible = true;
 //                            it.addRectangle => [
@@ -641,7 +641,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 //
 //                }
                 if (SHOW_SIGNAL_DECLARATIONS.booleanValue) {
-                    for (tg : s.typeGroups) {
+                    for (tg : s.declarations) {
                         it.addRectangle => [
                             it.invisible = true;
                             it.addRectangle => [
