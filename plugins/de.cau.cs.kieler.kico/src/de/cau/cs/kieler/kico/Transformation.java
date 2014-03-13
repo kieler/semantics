@@ -21,7 +21,6 @@ import java.util.List;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.ecore.EObject;
 
-
 /**
  * An instance of this class represents a registered transformation that may be called indirectly by
  * invoking the KielerCompiler.compile() method.
@@ -31,10 +30,13 @@ import org.eclipse.emf.ecore.EObject;
  * @kieler.rating 2014-03-11 proposed yellow
  * 
  */
-public abstract class Transformation implements ITransformation {
+public abstract class Transformation {
 
     /** The configuration element for accessing the plug-in ID. */
     private IConfigurationElement configEle;
+
+    /** The transformation instance, if this is a wrapper only. */
+    private Object transformationInstance = null;
 
     /** The name. */
     private String name = null;
@@ -48,8 +50,15 @@ public abstract class Transformation implements ITransformation {
     /** The dependencies. */
     private List<String> dependencies = new ArrayList<String>();
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     
+    /**
+     * Implements the transformation from EObject to EObject.
+     */
+    public abstract EObject transform(EObject eObject);
+    
+    // -------------------------------------------------------------------------
+
     /**
      * Sets the configuration element. This method is needed to instantiate several component
      * instances only.
@@ -72,79 +81,97 @@ public abstract class Transformation implements ITransformation {
     public final IConfigurationElement getConfigurationElement() {
         return this.configEle;
     }
-    
-    //-------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the transformation instance that contains the transform method specified. This class
+     * instance then is just a wrapper for this transformation instance.
+     * 
+     * @param object
+     *            the new transformation instance
+     */
+    void setTransformationInstance(Object object) {
+        transformationInstance = object;
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Sets the name of the transformation.
-     *
-     * @param name the new name
+     * 
+     * @param name
+     *            the new name
      */
     void setName(String name) {
         this.name = name;
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * Sets the id of this transformation.
-     *
-     * @param id the new id
+     * 
+     * @param id
+     *            the new id
      */
     void setId(String id) {
         this.id = id.trim();
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     /**
-     * Sets the method name that will be called when doTransform() is called. Set this to null
-     * if the class implements the ITransformation interface.
-     *
-     * @param method the new method
+     * Sets the method name that will be called when doTransform() is called. Set this to null if
+     * the class implements the ITransformation interface.
+     * 
+     * @param method
+     *            the new method
      */
     void setMethod(String method) {
         this.method = method;
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     /**
      * Sets the list of transformation IDs that represent dependencies to other transformations.
-     *
-     * @param dependencies the new dependencies
+     * 
+     * @param dependencies
+     *            the new dependencies
      */
     void setDependencies(List<String> dependencies) {
         this.dependencies = dependencies;
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     /**
      * Gets the list of transformation IDs that represent dependencies to other transformations.
-     *
+     * 
      * @return the dependencies
      */
     public List<String> getDependencies() {
         return dependencies;
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the id of the transformation.
-     *
+     * 
      * @return the id
      */
     public String getId() {
         return id;
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     /**
-     * Gets the name of this transformation. If the name is null then it returns the id that must no be null at any time.
-     *
+     * Gets the name of this transformation. If the name is null then it returns the id that must no
+     * be null at any time.
+     * 
      * @return the name
      */
     public String getName() {
@@ -155,8 +182,8 @@ public abstract class Transformation implements ITransformation {
         }
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     /**
      * Do the transformation based on the method field.
      * 
@@ -166,8 +193,10 @@ public abstract class Transformation implements ITransformation {
      */
     public final EObject doTransform(EObject eObject) {
         if (method == null) {
+            // A Transformation instance with the standard transformation method
             return (transform(eObject));
-        } else {
+        } else if ((method != null) && (transformationInstance == null)) {
+            // A Transformation instance with  an individual transformation method
             Method classMethod;
             try {
                 classMethod = this.getClass().getMethod(method);
@@ -176,6 +205,7 @@ public abstract class Transformation implements ITransformation {
                     return (EObject) result;
                 }
             } catch (NoSuchMethodException e) {
+                // This means that the transformation method declared does not exist.
                 e.printStackTrace();
             } catch (SecurityException e) {
                 e.printStackTrace();
@@ -187,8 +217,35 @@ public abstract class Transformation implements ITransformation {
                 e.printStackTrace();
             }
             return null;
+        } else if (transformationInstance != null) {
+            // Some other class instance with an individual transformation method
+            Method classMethod;
+            try {
+                classMethod = transformationInstance.getClass().getMethod(method);
+                Object result = classMethod.invoke(eObject);
+                if (result instanceof EObject) {
+                    return (EObject) result;
+                }
+            } catch (NoSuchMethodException e) {
+                // This means that the transformation method declared does not exist.
+                e.printStackTrace();
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            return null;
+        } else {
+            // This means that the class in neither a Transformation nor a transformation method
+            // has been declared
+            return null;
         }
+        
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 }

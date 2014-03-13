@@ -30,7 +30,7 @@ public interface ITransformation {
      * 
      * @return the string
      */
-    public String id();
+    public String getId();
     
     //-------------------------------------------------------------------------
 
@@ -40,7 +40,7 @@ public interface ITransformation {
      * 
      * @return the string
      */
-    public String name();
+    public String getName();
 
     //-------------------------------------------------------------------------
 
@@ -51,7 +51,7 @@ public interface ITransformation {
      * 
      * @return the list
      */
-    public List<String> dependencies();
+    public List<String> getDependencies();
 
     //-------------------------------------------------------------------------
 

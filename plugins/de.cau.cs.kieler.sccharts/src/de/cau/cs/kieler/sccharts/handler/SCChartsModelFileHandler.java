@@ -13,12 +13,14 @@ import org.eclipse.jface.viewers.ISelection;
 //import org.eclipse.xtext.serializer.ISerializer;
 
 
+
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
+import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPlugin;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation;
@@ -195,7 +197,8 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
         } else if (commandString.equals(SURFACEDEPTH_TRANSFORMATION)) {
             transformed = transformation.transformSurfaceDepth((Region) transformed);
         } else if (commandString.equals(TRIGGEREFFECT_TRANSFORMATION)) {
-            transformed = transformation.transformTriggerEffect((Region) transformed);
+            //transformed = transformation.transformTriggerEffect((Region) transformed);
+            transformed = (EObject) KielerCompiler.compile("TRIGGEREFFECT", (Region) transformed);
         } else if (commandString.equals(SIGNAL_TRANSFORMATION)) {
             transformed = transformation.transformSignal((Region) transformed);
         } else if (commandString.equals(INPUTOUTPUTVARIABLE_TRANSFORMATION)) {

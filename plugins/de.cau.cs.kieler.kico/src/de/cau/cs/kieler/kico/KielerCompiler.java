@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.kico;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -30,7 +33,24 @@ public class KielerCompiler {
 
     /**
      * Central KIELER Compiler compile method. It can be called in order to call several consecutive
-     * transformation.
+     * transformations. Specify desired transformations with comma separated IDs.
+     *
+     * @param transformationIDs the transformation i ds
+     * @param eObject the e object
+     * @return the object
+     */
+    public static Object compile(final String transformationIDs, final EObject eObject) {
+        String[] transformationIDArray = transformationIDs.split(",");
+        if (transformationIDArray == null) {
+            return null;
+        }
+        return compile(Arrays.asList(transformationIDArray), eObject);
+    }
+
+    
+    /**
+     * Central KIELER Compiler compile method. It can be called in order to call several consecutive
+     * transformations. Specify desired transformations as a String List of IDs.
      * 
      * @param transformationID
      *            the transformation id
@@ -38,21 +58,24 @@ public class KielerCompiler {
      *            the e object
      * @return the object
      */
-    static Object compile(final List<String> transformationID, final EObject eObject) {
-        
-        EObject transformedObject = eObject; 
-        
-        List<Transformation> transformations = KiCoPlugin.getDefault().getRegisteredTransformations();
-        
-        for (Transformation transformation : transformations) {
-            transformedObject = transformation.transform(transformedObject);
+    public static Object compile(final List<String> transformationIDs, final EObject eObject) {
+
+        EObject transformedObject = eObject;
+
+        HashMap<String, Transformation> transformations =
+                KiCoPlugin.getDefault().getRegisteredTransformations(true);
+
+        for (String requestedTransformationID : transformationIDs) {
+
+            Transformation transformation = transformations.get(requestedTransformationID);
+
+            if (transformation != null)
+                // If the requested TransformationID
+                if (transformation.getId().equals(requestedTransformationID)) {
+                    transformedObject = transformation.doTransform(transformedObject);
+                }
         }
-        
         return transformedObject;
     }
-    
-    
-    
-    
 
 }

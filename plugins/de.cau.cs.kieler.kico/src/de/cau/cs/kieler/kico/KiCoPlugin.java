@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.kico;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -53,7 +54,7 @@ public class KiCoPlugin extends AbstractUIPlugin {
     private static KiCoPlugin plugin;
 
     /** The currently registered list of transformations. */
-    private List<Transformation> transformationList;
+    private HashMap<String, Transformation> transformationMap;
 
     /**
      * The parent shell iff a GUI is used. This shell may be used to prompt a save-dialog to save
@@ -115,16 +116,16 @@ public class KiCoPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * This initializes the TransformationList with all registered and loaded plug-ins that extend
+     * This initializes the TransformationMap with all registered and loaded plug-ins that extend
      * the KiCo extension point
      * 
      * @return the TransformationList
      */
-    public List<Transformation> getRegisteredTransformations() {
-        if (transformationList != null) {
+    public HashMap<String, Transformation> getRegisteredTransformations(boolean forceUpdate) {
+        if (transformationMap != null && !forceUpdate) {
             // return a cached version of the list
             // it is only built the first time
-            return transformationList;
+            return transformationMap;
         }
         // suggest calling the garbage collector: this may
         // remove any DataComponent threads still running (but not
@@ -134,7 +135,7 @@ public class KiCoPlugin extends AbstractUIPlugin {
         IConfigurationElement[] transformations =
                 Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_ID);
 
-        transformationList = new ArrayList<Transformation>(transformations.length);
+        transformationMap = new HashMap<String, Transformation>(transformations.length);
 
         for (int i = 0; i < transformations.length; i++) {
             try {
@@ -142,17 +143,27 @@ public class KiCoPlugin extends AbstractUIPlugin {
                     System.out.println("KiCo loading component: "
                             + transformations[i].getContributor().getName());
                 }
-                Transformation transformation =
-                        (Transformation) transformations[i].createExecutableExtension("class");
+                
+                
+                Object transformationInstance = transformations[i].createExecutableExtension("class");
+                Transformation transformation;
+                if (transformationInstance instanceof Transformation) {
+                    // The specified class is a Transformation, use it directly  
+                 transformation =
+                            (Transformation) transformations[i].createExecutableExtension("class");
+                } else {
+                    // The specified class is not a Transformation, use a new Transformation instance as a wrapper
+                    transformation = new TransformationWrapper();
+                }
 
                 transformation.setConfigurationElemenet(transformations[i]);
-                transformationList.add(transformation);
                 String id = transformations[i].getAttribute("id");
                 String name = transformations[i].getAttribute("name");
                 String dependenciesString = transformations[i].getAttribute("dependencies");
 
                 if (id != null) {
                     transformation.setId(id);
+                    transformationMap.put(id, transformation);
                 } else {
                     showWarning("Extension id not configured for component: "
                             + transformations[i].getContributor().getName(), KiCoPlugin.PLUGIN_ID,
@@ -176,7 +187,7 @@ public class KiCoPlugin extends AbstractUIPlugin {
                         + " could not be loaded.", null, e, true);
             }
         }
-        return transformationList;
+        return transformationMap;
     }
 
     // -------------------------------------------------------------------------
