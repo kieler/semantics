@@ -24,8 +24,9 @@ This extension point allowes the contribution of a compiler transformation to th
          </appinfo>
       </annotation>
       <complexType>
-         <sequence minOccurs="1" maxOccurs="unbounded">
-            <element ref="transformation"/>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="transformationMethod" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="transformationClass" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -34,36 +35,70 @@ This extension point allowes the contribution of a compiler transformation to th
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="id" type="string">
+      </complexType>
+   </element>
+
+   <element name="transformationClass">
+      <annotation>
+         <documentation>
+            A class file that implements an interface declaring a transform() method, an id() method, a name(), and a dependencies() method.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="name" type="string">
-            <annotation>
-               <documentation>
-                  
+                  The implementing class for this specific transformations. It must satisfy the interface ITransformation.
                </documentation>
                <appinfo>
-                  <meta.attribute translatable="true"/>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kico.Transformation:de.cau.cs.kieler.kico.ITransformation"/>
                </appinfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
-   <element name="transformation">
+   <element name="transformationMethod">
       <complexType>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The implementing class for this DataComponent.
+                  The implementing class for this or a bunch of transformations.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kico.Transformation:de.cau.cs.kieler.kico.ITransformation"/>
+                  <meta.attribute kind="java"/>
                </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="method" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The method that implements the transform interface, e.g.:
+myTransform
+In the provided class there must be a method of type EObject myTransform(EObject eObject)
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A unique id of this transformation that is also used by other transformations to reference it.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  The optional name of the transformation. If nothing is provided the id will be taken inplace of the name.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="dependencies" type="string">
+            <annotation>
+               <documentation>
+                  Optional dependencies as comma seperated values, e.g.:
+dep1, dep2, dep3
+               </documentation>
             </annotation>
          </attribute>
       </complexType>

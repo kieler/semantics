@@ -779,9 +779,12 @@
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
-      <transformation
-            class="de.cau.cs.kieler.sccharts.Transformation1">
-      </transformation>
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+            id="TRIGGEREFFECT"
+            method="transformTriggerEffect"
+            name="Transform Trigger and Effect">
+      </transformationMethod>
    </extension>
 
 

@@ -13,16 +13,46 @@
  */
 package de.cau.cs.kieler.kico;
 
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
+
 /**
- * This is the main class of the Kieler Compiler (KiCo) Project that aims to provide an infrastructure for
- * compiling via consecutive modal transformations.
+ * This is the main class of the Kieler Compiler (KiCo) Project that aims to provide an
+ * infrastructure for compiling via consecutive modal transformations.
  * 
  * @author cmot
- * @kieler.design 2014-03-11 proposed 
- * @kieler.rating 2014-03-11 proposed yellow
- *
+ * @kieler.design 2014-03-13 proposed
+ * @kieler.rating 2014-03-13 proposed yellow
+ * 
  */
 public class KielerCompiler {
 
+    /**
+     * Central KIELER Compiler compile method. It can be called in order to call several consecutive
+     * transformation.
+     * 
+     * @param transformationID
+     *            the transformation id
+     * @param eObject
+     *            the e object
+     * @return the object
+     */
+    static Object compile(final List<String> transformationID, final EObject eObject) {
+        
+        EObject transformedObject = eObject; 
+        
+        List<Transformation> transformations = KiCoPlugin.getDefault().getRegisteredTransformations();
+        
+        for (Transformation transformation : transformations) {
+            transformedObject = transformation.transform(transformedObject);
+        }
+        
+        return transformedObject;
+    }
+    
+    
+    
+    
+
 }
- 

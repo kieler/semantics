@@ -13,8 +13,21 @@
  */
 package de.cau.cs.kieler.kico;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
+import org.eclipse.ui.statushandlers.StatusAdapter;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
+
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -25,18 +38,47 @@ import org.osgi.framework.BundleContext;
  */
 public class KiCoPlugin extends AbstractUIPlugin {
 
-    // The plug-in ID
+    /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kico"; //$NON-NLS-1$
 
-    // The shared instance
+    /** The Constant EXTENSION_POINT_ID. */
+    public static final String EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.transformation";
+
+    public static final String KICO_MSGDLG_TITLE = "KIELER Compiler";
+
+    /** The Constant DEBUG. */
+    public static final boolean DEBUG = !System.getProperty("java.vm.info", "").contains("sharing");
+
+    /** The shared instance. */
     private static KiCoPlugin plugin;
+
+    /** The currently registered list of transformations. */
+    private List<Transformation> transformationList;
+
+    /**
+     * The parent shell iff a GUI is used. This shell may be used to prompt a save-dialog to save
+     * execution files. UI's should listen to the KiemEvent CALL_FOR_SHELL and then call the method
+     * setShell() of KiemPlugin.
+     */
+    private static Shell parentShell;
+
+    /** The no error output. */
+    private boolean forceNoErrorOutput = false;
+
+    /** The last error. */
+    private static String lastError = null;
+
+    // -------------------------------------------------------------------------
 
     /**
      * The constructor
      */
     public KiCoPlugin() {
+        plugin = this;
     }
 
+    // -------------------------------------------------------------------------
+    
     /*
      * (non-Javadoc)
      * 
@@ -46,6 +88,8 @@ public class KiCoPlugin extends AbstractUIPlugin {
         super.start(context);
         plugin = this;
     }
+
+    // -------------------------------------------------------------------------
 
     /*
      * (non-Javadoc)
@@ -57,6 +101,8 @@ public class KiCoPlugin extends AbstractUIPlugin {
         super.stop(context);
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * Returns the shared instance
      * 
@@ -65,5 +111,358 @@ public class KiCoPlugin extends AbstractUIPlugin {
     public static KiCoPlugin getDefault() {
         return plugin;
     }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * This initializes the TransformationList with all registered and loaded plug-ins that extend
+     * the KiCo extension point
+     * 
+     * @return the TransformationList
+     */
+    public List<Transformation> getRegisteredTransformations() {
+        if (transformationList != null) {
+            // return a cached version of the list
+            // it is only built the first time
+            return transformationList;
+        }
+        // suggest calling the garbage collector: this may
+        // remove any DataComponent threads still running (but not
+        // linked==needed any more)
+        System.gc();
+        // get the available interfaces and initialize them
+        IConfigurationElement[] transformations =
+                Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_ID);
+
+        transformationList = new ArrayList<Transformation>(transformations.length);
+
+        for (int i = 0; i < transformations.length; i++) {
+            try {
+                if (DEBUG) {
+                    System.out.println("KiCo loading component: "
+                            + transformations[i].getContributor().getName());
+                }
+                Transformation transformation =
+                        (Transformation) transformations[i].createExecutableExtension("class");
+
+                transformation.setConfigurationElemenet(transformations[i]);
+                transformationList.add(transformation);
+                String id = transformations[i].getAttribute("id");
+                String name = transformations[i].getAttribute("name");
+                String dependenciesString = transformations[i].getAttribute("dependencies");
+
+                if (id != null) {
+                    transformation.setId(id);
+                } else {
+                    showWarning("Extension id not configured for component: "
+                            + transformations[i].getContributor().getName(), KiCoPlugin.PLUGIN_ID,
+                            null, true);
+                }
+
+                if (name != null) {
+                    transformation.setName(name);
+                }
+
+                if (dependenciesString != null) {
+                    String[] dependenciesArray = dependenciesString.split(",");
+                    for (String dependency : dependenciesArray) {
+                        transformation.getDependencies().add(dependency.trim());
+                    }
+                    transformation.setId(id);
+                }
+
+            } catch (Exception e) {
+                this.showWarning(transformations[i].getContributor().getName()
+                        + " could not be loaded.", null, e, true);
+            }
+        }
+        return transformationList;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the parent shell that KIEM should use to display user dialogs.
+     * 
+     * @param parentShellParam
+     *            the new shell
+     */
+    public void setShell(final Shell parentShellParam) {
+        if (parentShellParam != null) {
+            KiCoPlugin.parentShell = parentShellParam;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the error warning message.
+     * 
+     * @param textMessage
+     *            the text message
+     * @param pluginID
+     *            the plugin id
+     * @param exception
+     *            the exception
+     * @return the error warning message
+     */
+    private String getErrorWarningMessage(final String textMessage, final String pluginID,
+            final Exception exception) {
+        String message = "";
+
+        if (textMessage != null) {
+            message = textMessage + message;
+            // exception = null;
+        } else if (exception != null) {
+            message = exception.getMessage() + message;
+            // exception = null;
+        }
+
+        // do not post the same message twice
+        if ((exception != null) && (textMessage != null)
+                && (exception.getMessage().startsWith(textMessage))) {
+            message = "" + pluginID + "";
+        } else {
+            message += " (" + pluginID + ")";
+        }
+        return message;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the plugin id.
+     * 
+     * @param textMessage
+     *            the text message
+     * @param pluginID
+     *            the plugin id
+     * @param exception
+     *            the exception
+     * @return the plugin id
+     */
+    private String getPluginID(final String textMessage, final String pluginID,
+            final Exception exception) {
+        String pluginID2 = null;
+        if (pluginID == null) {
+            pluginID2 = KiCoPlugin.PLUGIN_ID;
+        } else {
+            pluginID2 = pluginID;
+        }
+        return pluginID2;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Show warning dialog with the message.
+     * 
+     * @param message
+     *            the message to present
+     */
+    private void showWarning(final String message) {
+        if (parentShell != null) {
+            MessageDialog.openWarning(parentShell, KICO_MSGDLG_TITLE, message);
+        } else {
+            showWarning(message, KiCoPlugin.PLUGIN_ID, null, true);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Show error dialog with the message.
+     * 
+     * @param message
+     *            the message to present
+     */
+    public void showError(final String message) {
+        if (parentShell != null) {
+            MessageDialog.openError(parentShell, KICO_MSGDLG_TITLE, message);
+        } else {
+            showError(message, KiCoPlugin.PLUGIN_ID, null, true);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Shows a warning dialog using the StatusAdapter. This dialog will *NOT* be modal, so that the
+     * user is notified but the current work is not interrupted. <BR>
+     * Additionally the information will be logged in the error log so that the user has the
+     * opportunity to e.g., access the error stack trace. The plug-in id is required, textMessage
+     * and exception are optional.
+     * 
+     * @param textMessage
+     *            the text message
+     * @param pluginID
+     *            the plug-in id
+     * @param exception
+     *            the exception
+     * @param silent
+     *            the silent tag indicates that only logging occurs, no message dialog is displayed
+     */
+    public void showWarning(final String textMessage, final String pluginID,
+            final Exception exception, final boolean silent) {
+        if (forceNoErrorOutput) {
+            return;
+        }
+        try {
+            String message = getErrorWarningMessage(textMessage, pluginID, exception);
+            String pluginID2 = getPluginID(textMessage, pluginID, exception);
+
+            IStatus status;
+            if ((exception == null) || (exception instanceof RuntimeException)) {
+                status =
+                        new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message, exception);
+            } else {
+                try {
+                    status =
+                            new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
+                                    exception.getCause());
+                } catch (Exception e) {
+                    status =
+                            new Status(IStatus.WARNING, pluginID2, IStatus.WARNING, message,
+                                    exception);
+                }
+            }
+
+            StatusAdapter statusAdapter = new StatusAdapter(status);
+            statusAdapter.setProperty(IStatusAdapterConstants.TIMESTAMP_PROPERTY,
+                    System.currentTimeMillis());
+
+            // use status manager (log and (optionally) show)
+            if (!silent) {
+                StatusManager.getManager().handle(statusAdapter,
+                        StatusManager.LOG | StatusManager.SHOW);
+            } else {
+                StatusManager.getManager().handle(statusAdapter, StatusManager.LOG);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Shows an error dialog using the StatusAdapter. This dialog will be modal, so that the user
+     * has to click OK to end it. Additionally the information will be logged in the error log so
+     * that the user has the opportunity to e.g., access the error stack trace. The plug-in id is
+     * required, textMessage and exception are optional.
+     * 
+     * @param textMessage
+     *            the optional text message
+     * @param pluginID
+     *            the plug-in id
+     * @param exception
+     *            the exception if any, null otherwise
+     * @param silent
+     *            the silent tag indicates that only logging occurs, no message dialog is displayed
+     */
+    // StatusAdapter statusAdapter;
+
+    public void showError(final String textMessage, final String pluginID,
+            final Exception exception, final boolean silent) {
+        if (isForceNoErrorOutput()) {
+            KiCoPlugin.lastError = "";
+            if (pluginID != null) {
+                KiCoPlugin.lastError += pluginID + ":";
+            }
+            if (textMessage != null) {
+                KiCoPlugin.lastError += textMessage;
+            }
+            if (exception != null) {
+                KiCoPlugin.lastError += exception.getMessage();
+            }
+            return;
+        }
+        try {
+            String message = getErrorWarningMessage(textMessage, pluginID, exception);
+            String pluginID2 = getPluginID(textMessage, pluginID, exception);
+
+            IStatus status;
+            if ((exception == null) || (exception instanceof RuntimeException)) {
+                status = new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message, exception);
+            } else {
+                try {
+                    status =
+                            new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message,
+                                    exception.getCause());
+                } catch (Exception e) {
+                    status =
+                            new Status(IStatus.ERROR, pluginID2, IStatus.ERROR, message, exception);
+                }
+            }
+
+            StatusAdapter statusAdapter = new StatusAdapter(status);
+            statusAdapter.setProperty(IStatusAdapterConstants.TIMESTAMP_PROPERTY,
+                    System.currentTimeMillis());
+
+            // use status manager (log and show)
+            // BLOCK = modal window, force the user to act!
+            // use status manager (log and (optionally) show)
+            if (!silent) {
+                // Display.getDefault().asyncExec(new Runnable() {
+                // public void run() {
+                StatusManager.getManager().handle(statusAdapter,
+                        StatusManager.BLOCK | StatusManager.LOG | StatusManager.SHOW);
+                // }
+                // });
+            } else {
+                StatusManager.getManager().handle(statusAdapter, StatusManager.LOG);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if is force no error output.
+     * 
+     * @return true, if is force no error output
+     */
+    public boolean isForceNoErrorOutput() {
+        return forceNoErrorOutput;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the force no error output.
+     * 
+     * @param forceNoErrorOutput
+     *            the new force no error output
+     */
+    public void setForceNoErrorOutput(final boolean forceNoErrorOutput) {
+        this.forceNoErrorOutput = forceNoErrorOutput;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the last error.
+     * 
+     * @return the last error
+     */
+    public static String getLastError() {
+        return lastError;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Resets the last error.
+     * 
+     */
+    public static void resetLastError() {
+        KiCoPlugin.lastError = null;
+    }
+
+    // -------------------------------------------------------------------------
 
 }

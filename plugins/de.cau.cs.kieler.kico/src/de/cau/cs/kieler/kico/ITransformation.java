@@ -15,45 +15,69 @@ package de.cau.cs.kieler.kico;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * @author cmot
- * @kieler.design 2014-03-11 proposed 
+ * @kieler.design 2014-03-11 proposed
  * @kieler.rating 2014-03-11 proposed yellow
- *
+ * 
  */
 public interface ITransformation {
-    
-    
+
     /**
-     * Must supply a unique ID to identify this transformation. 
-     *
+     * Must supply a unique ID to identify this transformation.
+     * 
      * @return the string
      */
     public String id();
     
+    //-------------------------------------------------------------------------
+
     /**
-     * Must supply a list of transformation IDs that this transformation depends on. Be advised to
-     * use the minimal set of transformation IDs here. Transformations specified here will be forced
-     * to run before.
-     *
+     * Optionally supply a name for this transformation. If null is returned then the id will be
+     * used inplace of the name.
+     * 
+     * @return the string
+     */
+    public String name();
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * Optionally supply a list of transformation IDs that this transformation depends on. Be
+     * advised to use the minimal set of transformation IDs here. Transformations specified here
+     * will be forced to run before. If null is returned then this means there are no dependencies.
+     * 
      * @return the list
      */
-    public List<String> dependsOn();
-    
-    
-//    /**
-//     * The transformation may optionally declare its input type.
-//     *
-//     * @return the class
-//     */
-//    public Class inputType();
-//
-//    /**
-//     * The transformation may optionally declare its output type.
-//     *
-//     * @return the class
-//     */
-//    public Class outputType();
+    public List<String> dependencies();
 
+    //-------------------------------------------------------------------------
+
+    /**
+     * Central transform method that implements the transformation.
+     * 
+     * @param eObject
+     *            the e object
+     * @return the e object
+     */
+    public EObject transform(EObject eObject);
+
+    //-------------------------------------------------------------------------
+
+    // /**
+    // * The transformation may optionally declare its input type.
+    // *
+    // * @return the class
+    // */
+    // public Class inputType();
+    //
+    // /**
+    // * The transformation may optionally declare its output type.
+    // *
+    // * @return the class
+    // */
+    // public Class outputType();
 
 }

@@ -40,6 +40,8 @@ import de.cau.cs.kieler.sccharts.EntryAction
 import java.util.ArrayList
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Assignment
+import de.cau.cs.kieler.kico.ITransformation
+import de.cau.cs.kieler.kico.Transformation
 
 /**
  * SCCharts CoreTransformation Extensions.
