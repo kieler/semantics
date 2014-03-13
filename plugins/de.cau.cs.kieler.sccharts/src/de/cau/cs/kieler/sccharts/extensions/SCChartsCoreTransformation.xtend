@@ -23,6 +23,7 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.ktm.extensions.TransformationMapping
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.HistoryType
@@ -34,6 +35,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import java.util.HashMap
 import java.util.List
+
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.EntryAction
@@ -56,9 +58,19 @@ class SCChartsCoreTransformation {
     @Inject
     extension SCChartsExtension
     
+    @Inject
+    extension TransformationMapping
+    
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
     
+    //-------------------------------------------------------------------------
+    //--     K T M  -  M A P P I N G   A C C E S S  D E L E G A T I O N      --
+    //-------------------------------------------------------------------------
+    
+    def extractMapping(){
+        extractMappingData;
+    }
 
     //-------------------------------------------------------------------------
     //--             E X P O S E   L O C A L   S I G N A L S                 --
@@ -560,12 +572,15 @@ class SCChartsCoreTransformation {
     //     Set the T_eff to have T's target state. Set T to have the target C.
     //     Add T_eff to C's outgoing transitions. 
     def Region transformTriggerEffect(Region rootRegion) {
+        clearMapping; // KTM - clear previous mapping information to assure a single consistent mapping
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy.fixAllPriorities;
+        var targetRootRegion = rootRegion.mappedCopy; //KTM - mapping information (changed copy to mappedCopy)
+        //var targetRootRegion = rootRegion.copy.fixAllPriorities;
         // Traverse all transitions
         for (targetTransition : targetRootRegion.getAllContainedTransitions) {
             targetTransition.transformTriggerEffect(targetRootRegion);
         }
+        val completeness = checkMappingCompleteness(rootRegion, targetRootRegion); // KTM -debug
         targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
@@ -585,8 +600,10 @@ class SCChartsCoreTransformation {
                         // skip
                  } else { 
                     val effectState = parentRegion.createState(GENERATED_PREFIX + "S")
+                    effectState.mapParents(transition.mappedParents); // KTM - Mapping information
                     effectState.uniqueName
                     val effectTransition = createImmediateTransition.addEffect(effect)
+                    effectTransition.mapParents(transition.mappedParents); // KTM - Mapping information
                     effectTransition.setSourceState(effectState)
                     lastTransition.setTargetState(effectState)
                     lastTransition = effectTransition
