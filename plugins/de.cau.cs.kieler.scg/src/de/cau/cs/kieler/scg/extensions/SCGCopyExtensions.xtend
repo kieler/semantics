@@ -43,7 +43,7 @@ import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.core.kexpressions.TypeGroup
+import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 /** 
@@ -191,16 +191,16 @@ class SCGCopyExtensions {
      * 			the target SCG
      */
     public def void copyDeclarations(SCGraph source, SCGraph target) {
-    	for (typeGroup : source.typeGroups) {
-    		val newTypeGroup = createTypeGroup(typeGroup)
-    		typeGroup.valuedObjects.forEach[ copyValuedObject(newTypeGroup) ]
-    		target.typeGroups += newTypeGroup
+    	for (declaration : source.declarations) {
+    		val newDeclaration = createDeclaration(declaration)
+    		declaration.valuedObjects.forEach[ copyValuedObject(newDeclaration) ]
+    		target.declarations += newDeclaration
     	}
 	}     
     
-    public def void copyValuedObject(ValuedObject sourceObject, TypeGroup targetTypeGroup) {
+    public def void copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
         val newValuedObject = sourceObject.copy
-        targetTypeGroup.valuedObjects += newValuedObject
+        targetDeclaration.valuedObjects += newValuedObject
         valuedObjectMapping.put(sourceObject, newValuedObject)
     }
     

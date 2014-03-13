@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.scg;
 
-import de.cau.cs.kieler.core.kexpressions.TypeGroup;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getNodes <em>Nodes</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getTypeGroups <em>Type Groups</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  * </p>
  *
@@ -36,35 +36,35 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface SCGraph extends EObject {
     /**
-	 * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.scg.Node}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.scg.Node}.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Nodes</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Nodes</em>' containment reference list.
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_Nodes()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Nodes</em>' containment reference list.
+     * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_Nodes()
+     * @model containment="true"
+     * @generated
+     */
     EList<Node> getNodes();
 
     /**
-	 * Returns the value of the '<em><b>Type Groups</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.TypeGroup}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Type Groups</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Type Groups</em>' containment reference list.
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_TypeGroups()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<TypeGroup> getTypeGroups();
+     * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Declarations</em>' containment reference list.
+     * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_Declarations()
+     * @model containment="true"
+     * @generated
+     */
+    EList<Declaration> getDeclarations();
 
 } // SCGraph

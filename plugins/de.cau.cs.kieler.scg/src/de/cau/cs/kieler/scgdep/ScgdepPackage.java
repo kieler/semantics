@@ -706,7 +706,7 @@ public interface ScgdepPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SC_GRAPH_DEP__TYPE_GROUPS = ScgPackage.SC_GRAPH__TYPE_GROUPS;
+	int SC_GRAPH_DEP__DECLARATIONS = ScgPackage.SC_GRAPH__DECLARATIONS;
 
 				/**
 	 * The number of structural features of the '<em>SC Graph Dep</em>' class.
