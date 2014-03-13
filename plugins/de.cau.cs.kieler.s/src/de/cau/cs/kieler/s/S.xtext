@@ -48,7 +48,7 @@ State:
 
 // TODO: ensure signal AND variable declaration in top level....
 
-TypeGroup returns kexpressions::TypeGroup:
+TypeGroup returns kexpressions::Declaration:
     (annotations+=Annotation)*
 	(const?='const')?
     (input?='input')?

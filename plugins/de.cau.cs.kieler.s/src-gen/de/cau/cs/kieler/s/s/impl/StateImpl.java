@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.core.kexpressions.TypeGroup;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.SPackage;
@@ -69,7 +69,7 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * @generated
    * @ordered
    */
-  protected EList<TypeGroup> typeGroups;
+  protected EList<Declaration> typeGroups;
 
   /**
    * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference list.
@@ -130,11 +130,11 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<TypeGroup> getTypeGroups()
+  public EList<Declaration> getTypeGroups()
   {
     if (typeGroups == null)
     {
-      typeGroups = new EObjectContainmentEList<TypeGroup>(TypeGroup.class, this, SPackage.STATE__TYPE_GROUPS);
+      typeGroups = new EObjectContainmentEList<Declaration>(Declaration.class, this, SPackage.STATE__TYPE_GROUPS);
     }
     return typeGroups;
   }
@@ -207,7 +207,7 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
         return;
       case SPackage.STATE__TYPE_GROUPS:
         getTypeGroups().clear();
-        getTypeGroups().addAll((Collection<? extends TypeGroup>)newValue);
+        getTypeGroups().addAll((Collection<? extends Declaration>)newValue);
         return;
       case SPackage.STATE__INSTRUCTIONS:
         getInstructions().clear();

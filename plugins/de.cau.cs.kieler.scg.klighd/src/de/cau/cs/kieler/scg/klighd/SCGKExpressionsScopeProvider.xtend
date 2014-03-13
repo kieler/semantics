@@ -49,7 +49,7 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
     def void setParent(SCGraph theParent) {
         parent = theParent;
         valuedObjects.clear;
-        for(tg : parent.typeGroups) {
+        for(tg : parent.declarations) {
         	valuedObjects.addAll(tg.valuedObjects)
         }
     }

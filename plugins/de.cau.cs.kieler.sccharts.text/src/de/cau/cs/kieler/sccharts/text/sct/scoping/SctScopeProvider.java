@@ -34,10 +34,10 @@ import org.eclipse.xtext.scoping.impl.SimpleScope;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.OperatorType;
-import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.sccharts.Emission;
@@ -199,7 +199,7 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         do {
             
             List<ValuedObject> m = Lists.newArrayList();
-            for (TypeGroup g : scope.getTypeGroups()) {
+            for (Declaration g : scope.getDeclarations()) {
                 m.addAll(g.getValuedObjects());
             }
             

@@ -96,7 +96,7 @@ public interface ScgbbPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SC_GRAPH_BB__TYPE_GROUPS = ScgdepPackage.SC_GRAPH_DEP__TYPE_GROUPS;
+	int SC_GRAPH_BB__DECLARATIONS = ScgdepPackage.SC_GRAPH_DEP__DECLARATIONS;
 
 				/**
 	 * The feature id for the '<em><b>Basic Blocks</b></em>' containment reference list.

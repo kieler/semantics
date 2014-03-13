@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.s.s;
 
-import de.cau.cs.kieler.core.kexpressions.TypeGroup;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -84,7 +84,7 @@ public interface Program extends EObject
 
   /**
    * Returns the value of the '<em><b>Type Groups</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.TypeGroup}.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Type Groups</em>' containment reference list isn't clear,
@@ -96,7 +96,7 @@ public interface Program extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<TypeGroup> getTypeGroups();
+  EList<Declaration> getTypeGroups();
 
   /**
    * Returns the value of the '<em><b>Global Host Code Instruction</b></em>' attribute.

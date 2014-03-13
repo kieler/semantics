@@ -107,13 +107,13 @@ public interface KExpressionsFactory extends EFactory {
     TextExpression createTextExpression();
 
     /**
-     * Returns a new object of class '<em>Type Group</em>'.
+     * Returns a new object of class '<em>Declaration</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Type Group</em>'.
+     * @return a new object of class '<em>Declaration</em>'.
      * @generated
      */
-    TypeGroup createTypeGroup();
+    Declaration createDeclaration();
 
     /**
      * Returns the package supported by this factory.

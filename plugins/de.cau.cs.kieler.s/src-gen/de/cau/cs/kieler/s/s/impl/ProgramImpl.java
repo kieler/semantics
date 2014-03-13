@@ -2,7 +2,7 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.core.kexpressions.TypeGroup;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.s.SPackage;
@@ -91,7 +91,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * @generated
    * @ordered
    */
-  protected EList<TypeGroup> typeGroups;
+  protected EList<Declaration> typeGroups;
 
   /**
    * The default value of the '{@link #getGlobalHostCodeInstruction() <em>Global Host Code Instruction</em>}' attribute.
@@ -195,11 +195,11 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<TypeGroup> getTypeGroups()
+  public EList<Declaration> getTypeGroups()
   {
     if (typeGroups == null)
     {
-      typeGroups = new EObjectContainmentEList<TypeGroup>(TypeGroup.class, this, SPackage.PROGRAM__TYPE_GROUPS);
+      typeGroups = new EObjectContainmentEList<Declaration>(Declaration.class, this, SPackage.PROGRAM__TYPE_GROUPS);
     }
     return typeGroups;
   }
@@ -302,7 +302,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return;
       case SPackage.PROGRAM__TYPE_GROUPS:
         getTypeGroups().clear();
-        getTypeGroups().addAll((Collection<? extends TypeGroup>)newValue);
+        getTypeGroups().addAll((Collection<? extends Declaration>)newValue);
         return;
       case SPackage.PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION:
         setGlobalHostCodeInstruction((String)newValue);
