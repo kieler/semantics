@@ -110,7 +110,7 @@ class SCGExtensions {
 	 * @return Returns the (first) valued object with the given name or null.
 	 */
     def ValuedObject findValuedObjectByName(SCGraph scg, String name) {
-    	for(tg : scg.typeGroups) {
+    	for(tg : scg.declarations) {
     		for(vo : tg.valuedObjects) {
     			if (vo.name == name) return vo
     		}

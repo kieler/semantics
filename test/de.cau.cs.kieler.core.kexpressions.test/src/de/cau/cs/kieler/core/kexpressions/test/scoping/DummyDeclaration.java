@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.core.kexpressions.test.scoping;
 
 import de.cau.cs.kieler.core.kexpressions.ValueType;
-import de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl;
+import de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl;
 
 /**
  * This class implements a dummy scope provided declaring a bunch of dummy signals and dummy
@@ -23,9 +23,9 @@ import de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl;
  * @author ssm
  * 
  */
-public class DummyTypeGroup extends TypeGroupImpl {
+public class DummyDeclaration extends DeclarationImpl {
 
-	public DummyTypeGroup(ValueType valueType) {
+	public DummyDeclaration(ValueType valueType) {
 		setType(valueType);
 	}
 }

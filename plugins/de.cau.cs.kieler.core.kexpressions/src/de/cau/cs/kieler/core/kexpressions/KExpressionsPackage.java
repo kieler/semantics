@@ -351,32 +351,32 @@ public interface KExpressionsPackage extends EPackage {
     int TEXT_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl <em>Type Group</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl <em>Declaration</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl
-     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getTypeGroup()
+     * @see de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl
+     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getDeclaration()
      * @generated
      */
-    int TYPE_GROUP = 9;
+    int DECLARATION = 9;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int TYPE_GROUP__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+    int DECLARATION__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
-				/**
+    /**
      * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TYPE_GROUP__VALUED_OBJECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+    int DECLARATION__VALUED_OBJECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -385,61 +385,61 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TYPE_GROUP__TYPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int DECLARATION__TYPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int TYPE_GROUP__INPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+    int DECLARATION__INPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
-				/**
+    /**
      * The feature id for the '<em><b>Output</b></em>' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int TYPE_GROUP__OUTPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int DECLARATION__OUTPUT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
-				/**
+    /**
      * The feature id for the '<em><b>Static</b></em>' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int TYPE_GROUP__STATIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int DECLARATION__STATIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
-				/**
+    /**
      * The feature id for the '<em><b>Signal</b></em>' attribute.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int TYPE_GROUP__SIGNAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int DECLARATION__SIGNAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
-				/**
+    /**
      * The feature id for the '<em><b>Const</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TYPE_GROUP__CONST = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+    int DECLARATION__CONST = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
-                /**
-     * The number of structural features of the '<em>Type Group</em>' class.
+    /**
+     * The number of structural features of the '<em>Declaration</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TYPE_GROUP_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
+    int DECLARATION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
@@ -695,93 +695,93 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getTextExpression_Text();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup <em>Type Group</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.Declaration <em>Declaration</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Type Group</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup
+     * @return the meta object for class '<em>Declaration</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.Declaration
      * @generated
      */
-    EClass getTypeGroup();
+    EClass getDeclaration();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#getValuedObjects <em>Valued Objects</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.Declaration#getValuedObjects <em>Valued Objects</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference list '<em>Valued Objects</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#getValuedObjects()
-     * @see #getTypeGroup()
+     * @see de.cau.cs.kieler.core.kexpressions.Declaration#getValuedObjects()
+     * @see #getDeclaration()
      * @generated
      */
-    EReference getTypeGroup_ValuedObjects();
+    EReference getDeclaration_ValuedObjects();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#getType <em>Type</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.Declaration#getType <em>Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Type</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#getType()
-     * @see #getTypeGroup()
+     * @see de.cau.cs.kieler.core.kexpressions.Declaration#getType()
+     * @see #getDeclaration()
      * @generated
      */
-    EAttribute getTypeGroup_Type();
+    EAttribute getDeclaration_Type();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isInput <em>Input</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.Declaration#isInput <em>Input</em>}'.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Input</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isInput()
-     * @see #getTypeGroup()
+     * @see de.cau.cs.kieler.core.kexpressions.Declaration#isInput()
+     * @see #getDeclaration()
      * @generated
      */
-	EAttribute getTypeGroup_Input();
+    EAttribute getDeclaration_Input();
 
-				/**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isOutput <em>Output</em>}'.
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.Declaration#isOutput <em>Output</em>}'.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Output</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isOutput()
-     * @see #getTypeGroup()
+     * @see de.cau.cs.kieler.core.kexpressions.Declaration#isOutput()
+     * @see #getDeclaration()
      * @generated
      */
-	EAttribute getTypeGroup_Output();
+    EAttribute getDeclaration_Output();
 
-				/**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isStatic <em>Static</em>}'.
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.Declaration#isStatic <em>Static</em>}'.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Static</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isStatic()
-     * @see #getTypeGroup()
+     * @see de.cau.cs.kieler.core.kexpressions.Declaration#isStatic()
+     * @see #getDeclaration()
      * @generated
      */
-	EAttribute getTypeGroup_Static();
+    EAttribute getDeclaration_Static();
 
-				/**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isSignal <em>Signal</em>}'.
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.Declaration#isSignal <em>Signal</em>}'.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Signal</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isSignal()
-     * @see #getTypeGroup()
+     * @see de.cau.cs.kieler.core.kexpressions.Declaration#isSignal()
+     * @see #getDeclaration()
      * @generated
      */
-	EAttribute getTypeGroup_Signal();
+    EAttribute getDeclaration_Signal();
 
-				/**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.TypeGroup#isConst <em>Const</em>}'.
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.Declaration#isConst <em>Const</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Const</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.TypeGroup#isConst()
-     * @see #getTypeGroup()
+     * @see de.cau.cs.kieler.core.kexpressions.Declaration#isConst()
+     * @see #getDeclaration()
      * @generated
      */
-    EAttribute getTypeGroup_Const();
+    EAttribute getDeclaration_Const();
 
-                /**
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1020,14 +1020,14 @@ public interface KExpressionsPackage extends EPackage {
         EAttribute TEXT_EXPRESSION__TEXT = eINSTANCE.getTextExpression_Text();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl <em>Type Group</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl <em>Declaration</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.core.kexpressions.impl.TypeGroupImpl
-         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getTypeGroup()
+         * @see de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl
+         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getDeclaration()
          * @generated
          */
-        EClass TYPE_GROUP = eINSTANCE.getTypeGroup();
+        EClass DECLARATION = eINSTANCE.getDeclaration();
 
         /**
          * The meta object literal for the '<em><b>Valued Objects</b></em>' containment reference list feature.
@@ -1035,7 +1035,7 @@ public interface KExpressionsPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference TYPE_GROUP__VALUED_OBJECTS = eINSTANCE.getTypeGroup_ValuedObjects();
+        EReference DECLARATION__VALUED_OBJECTS = eINSTANCE.getDeclaration_ValuedObjects();
 
         /**
          * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
@@ -1043,49 +1043,49 @@ public interface KExpressionsPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute TYPE_GROUP__TYPE = eINSTANCE.getTypeGroup_Type();
+        EAttribute DECLARATION__TYPE = eINSTANCE.getDeclaration_Type();
 
         /**
          * The meta object literal for the '<em><b>Input</b></em>' attribute feature.
          * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
          * @generated
          */
-		EAttribute TYPE_GROUP__INPUT = eINSTANCE.getTypeGroup_Input();
+        EAttribute DECLARATION__INPUT = eINSTANCE.getDeclaration_Input();
 
-								/**
+        /**
          * The meta object literal for the '<em><b>Output</b></em>' attribute feature.
          * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
          * @generated
          */
-		EAttribute TYPE_GROUP__OUTPUT = eINSTANCE.getTypeGroup_Output();
+        EAttribute DECLARATION__OUTPUT = eINSTANCE.getDeclaration_Output();
 
-								/**
+        /**
          * The meta object literal for the '<em><b>Static</b></em>' attribute feature.
          * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
          * @generated
          */
-		EAttribute TYPE_GROUP__STATIC = eINSTANCE.getTypeGroup_Static();
+        EAttribute DECLARATION__STATIC = eINSTANCE.getDeclaration_Static();
 
-								/**
+        /**
          * The meta object literal for the '<em><b>Signal</b></em>' attribute feature.
          * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
          * @generated
          */
-		EAttribute TYPE_GROUP__SIGNAL = eINSTANCE.getTypeGroup_Signal();
+        EAttribute DECLARATION__SIGNAL = eINSTANCE.getDeclaration_Signal();
 
-								/**
+        /**
          * The meta object literal for the '<em><b>Const</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute TYPE_GROUP__CONST = eINSTANCE.getTypeGroup_Const();
+        EAttribute DECLARATION__CONST = eINSTANCE.getDeclaration_Const();
 
-                                /**
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->

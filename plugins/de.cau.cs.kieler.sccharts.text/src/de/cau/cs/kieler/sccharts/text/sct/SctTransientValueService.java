@@ -59,7 +59,7 @@ public class SctTransientValueService extends DefaultTransientValueService {
             return true;
         }
 //        if (feature == SCChartsPackage.eINSTANCE.getScope_ValuedObjects()) {
-      if (feature == SCChartsPackage.eINSTANCE.getScope_TypeGroups()) {
+      if (feature == SCChartsPackage.eINSTANCE.getScope_Declarations()) {
             // check all valuedObjects in order to prevent attempts to serialize trapdecls (kies)
 //                && scchartsPackage.eINSTANCE.getRegion().isInstance(owner)
 //                && owner.eContainer() == null) {
@@ -203,7 +203,7 @@ public class SctTransientValueService extends DefaultTransientValueService {
 
 
 //        if (feature == SCChartsPackage.eINSTANCE.getScope_ValuedObjects()) {
-        if (feature == SCChartsPackage.eINSTANCE.getScope_TypeGroups()) {
+        if (feature == SCChartsPackage.eINSTANCE.getScope_Declarations()) {
             if (SCChartsPackage.eINSTANCE.getRegion().isInstance(owner)
                     && owner.eContainer() == null) {
                 /* do not serialized the implicit 'tick' valuedObject! */

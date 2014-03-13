@@ -283,26 +283,26 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.TypeGroup} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.Declaration} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected TypeGroupItemProvider typeGroupItemProvider;
+    protected DeclarationItemProvider declarationItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.TypeGroup}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public Adapter createTypeGroupAdapter() {
-        if (typeGroupItemProvider == null) {
-            typeGroupItemProvider = new TypeGroupItemProvider(this);
+    public Adapter createDeclarationAdapter() {
+        if (declarationItemProvider == null) {
+            declarationItemProvider = new DeclarationItemProvider(this);
         }
 
-        return typeGroupItemProvider;
+        return declarationItemProvider;
     }
 
     /**
@@ -413,7 +413,7 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
         if (boolValueItemProvider != null) boolValueItemProvider.dispose();
         if (operatorExpressionItemProvider != null) operatorExpressionItemProvider.dispose();
         if (textExpressionItemProvider != null) textExpressionItemProvider.dispose();
-        if (typeGroupItemProvider != null) typeGroupItemProvider.dispose();
+        if (declarationItemProvider != null) declarationItemProvider.dispose();
     }
 
 }
