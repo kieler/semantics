@@ -35,8 +35,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cLabelAssignment_2_3 = (Assignment)cGroup_2.eContents().get(3);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_2_3_0 = (RuleCall)cLabelAssignment_2_3.eContents().get(0);
 		private final Keyword cColonKeyword_2_4 = (Keyword)cGroup_2.eContents().get(4);
-		private final Assignment cTypeGroupsAssignment_2_5 = (Assignment)cGroup_2.eContents().get(5);
-		private final RuleCall cTypeGroupsTypeGroupParserRuleCall_2_5_0 = (RuleCall)cTypeGroupsAssignment_2_5.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_2_5 = (Assignment)cGroup_2.eContents().get(5);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_2_5_0 = (RuleCall)cDeclarationsAssignment_2_5.eContents().get(0);
 		private final Assignment cBodyTextAssignment_2_6 = (Assignment)cGroup_2.eContents().get(6);
 		private final RuleCall cBodyTextTextualCodeParserRuleCall_2_6_0 = (RuleCall)cBodyTextAssignment_2_6.eContents().get(0);
 		private final Assignment cStatesAssignment_3 = (Assignment)cGroup.eContents().get(3);
@@ -45,11 +45,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//// ---------------------------------------------------------------------------------------------------
 		//RootRegion returns sccharts::Region:
 		//	{sccharts::Region} annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID label=STRING? ":"
-		//	typeGroups+=TypeGroup* bodyText+=TextualCode*)? states+=SCChart*;
+		//	declarations+=Declaration* bodyText+=TextualCode*)? states+=SCChart*;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::Region} annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID label=STRING? ":"
-		//typeGroups+=TypeGroup* bodyText+=TextualCode*)? states+=SCChart*
+		//declarations+=Declaration* bodyText+=TextualCode*)? states+=SCChart*
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Region}
@@ -61,7 +61,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//ImportAnnotation
 		public RuleCall getAnnotationsImportAnnotationParserRuleCall_1_0() { return cAnnotationsImportAnnotationParserRuleCall_1_0; }
 
-		//(annotations+=Annotation* "region" id=ID label=STRING? ":" typeGroups+=TypeGroup* bodyText+=TextualCode*)?
+		//(annotations+=Annotation* "region" id=ID label=STRING? ":" declarations+=Declaration* bodyText+=TextualCode*)?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//annotations+=Annotation*
@@ -88,11 +88,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//":"
 		public Keyword getColonKeyword_2_4() { return cColonKeyword_2_4; }
 
-		//typeGroups+=TypeGroup*
-		public Assignment getTypeGroupsAssignment_2_5() { return cTypeGroupsAssignment_2_5; }
+		//declarations+=Declaration*
+		public Assignment getDeclarationsAssignment_2_5() { return cDeclarationsAssignment_2_5; }
 
-		//TypeGroup
-		public RuleCall getTypeGroupsTypeGroupParserRuleCall_2_5_0() { return cTypeGroupsTypeGroupParserRuleCall_2_5_0; }
+		//Declaration
+		public RuleCall getDeclarationsDeclarationParserRuleCall_2_5_0() { return cDeclarationsDeclarationParserRuleCall_2_5_0; }
 
 		//bodyText+=TextualCode*
 		public Assignment getBodyTextAssignment_2_6() { return cBodyTextAssignment_2_6; }
@@ -120,8 +120,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cLabelAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_1_3_0 = (RuleCall)cLabelAssignment_1_3.eContents().get(0);
 		private final Keyword cColonKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
-		private final Assignment cTypeGroupsAssignment_1_5 = (Assignment)cGroup_1.eContents().get(5);
-		private final RuleCall cTypeGroupsTypeGroupParserRuleCall_1_5_0 = (RuleCall)cTypeGroupsAssignment_1_5.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_1_5 = (Assignment)cGroup_1.eContents().get(5);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_1_5_0 = (RuleCall)cDeclarationsAssignment_1_5.eContents().get(0);
 		private final Assignment cBodyTextAssignment_1_6 = (Assignment)cGroup_1.eContents().get(6);
 		private final RuleCall cBodyTextTextualCodeParserRuleCall_1_6_0 = (RuleCall)cBodyTextAssignment_1_6.eContents().get(0);
 		private final Assignment cStatesAssignment_2 = (Assignment)cGroup.eContents().get(2);
@@ -129,18 +129,18 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//SingleRegion returns sccharts::Region:
-		//	{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ":" typeGroups+=TypeGroup*
+		//	{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ":" declarations+=Declaration*
 		//	bodyText+=TextualCode*)? states+=State*;
 		public ParserRule getRule() { return rule; }
 
-		//{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ":" typeGroups+=TypeGroup*
+		//{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ":" declarations+=Declaration*
 		//bodyText+=TextualCode*)? states+=State*
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Region}
 		public Action getRegionAction_0() { return cRegionAction_0; }
 
-		//(annotations+=Annotation* "region" id=ID? label=STRING? ":" typeGroups+=TypeGroup* bodyText+=TextualCode*)?
+		//(annotations+=Annotation* "region" id=ID? label=STRING? ":" declarations+=Declaration* bodyText+=TextualCode*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//annotations+=Annotation*
@@ -167,11 +167,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//":"
 		public Keyword getColonKeyword_1_4() { return cColonKeyword_1_4; }
 
-		//typeGroups+=TypeGroup*
-		public Assignment getTypeGroupsAssignment_1_5() { return cTypeGroupsAssignment_1_5; }
+		//declarations+=Declaration*
+		public Assignment getDeclarationsAssignment_1_5() { return cDeclarationsAssignment_1_5; }
 
-		//TypeGroup
-		public RuleCall getTypeGroupsTypeGroupParserRuleCall_1_5_0() { return cTypeGroupsTypeGroupParserRuleCall_1_5_0; }
+		//Declaration
+		public RuleCall getDeclarationsDeclarationParserRuleCall_1_5_0() { return cDeclarationsDeclarationParserRuleCall_1_5_0; }
 
 		//bodyText+=TextualCode*
 		public Assignment getBodyTextAssignment_1_6() { return cBodyTextAssignment_1_6; }
@@ -198,8 +198,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cLabelAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cLabelSTRINGTerminalRuleCall_4_0 = (RuleCall)cLabelAssignment_4.eContents().get(0);
 		private final Keyword cColonKeyword_5 = (Keyword)cGroup.eContents().get(5);
-		private final Assignment cTypeGroupsAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cTypeGroupsTypeGroupParserRuleCall_6_0 = (RuleCall)cTypeGroupsAssignment_6.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_6_0 = (RuleCall)cDeclarationsAssignment_6.eContents().get(0);
 		private final Assignment cBodyTextAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final RuleCall cBodyTextTextualCodeParserRuleCall_7_0 = (RuleCall)cBodyTextAssignment_7.eContents().get(0);
 		private final Assignment cStatesAssignment_8 = (Assignment)cGroup.eContents().get(8);
@@ -207,11 +207,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//Region returns sccharts::Region:
-		//	{sccharts::Region} annotations+=Annotation* "region" id=ID? label=STRING? ":" typeGroups+=TypeGroup*
+		//	{sccharts::Region} annotations+=Annotation* "region" id=ID? label=STRING? ":" declarations+=Declaration*
 		//	bodyText+=TextualCode* states+=State+;
 		public ParserRule getRule() { return rule; }
 
-		//{sccharts::Region} annotations+=Annotation* "region" id=ID? label=STRING? ":" typeGroups+=TypeGroup*
+		//{sccharts::Region} annotations+=Annotation* "region" id=ID? label=STRING? ":" declarations+=Declaration*
 		//bodyText+=TextualCode* states+=State+
 		public Group getGroup() { return cGroup; }
 
@@ -242,11 +242,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//":"
 		public Keyword getColonKeyword_5() { return cColonKeyword_5; }
 
-		//typeGroups+=TypeGroup*
-		public Assignment getTypeGroupsAssignment_6() { return cTypeGroupsAssignment_6; }
+		//declarations+=Declaration*
+		public Assignment getDeclarationsAssignment_6() { return cDeclarationsAssignment_6; }
 
-		//TypeGroup
-		public RuleCall getTypeGroupsTypeGroupParserRuleCall_6_0() { return cTypeGroupsTypeGroupParserRuleCall_6_0; }
+		//Declaration
+		public RuleCall getDeclarationsDeclarationParserRuleCall_6_0() { return cDeclarationsDeclarationParserRuleCall_6_0; }
 
 		//bodyText+=TextualCode*
 		public Assignment getBodyTextAssignment_7() { return cBodyTextAssignment_7; }
@@ -292,8 +292,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLeftCurlyBracketKeyword_5_1_0 = (Keyword)cGroup_5_1.eContents().get(0);
 		private final Group cGroup_5_1_1 = (Group)cGroup_5_1.eContents().get(1);
 		private final Alternatives cAlternatives_5_1_1_0 = (Alternatives)cGroup_5_1_1.eContents().get(0);
-		private final Assignment cTypeGroupsAssignment_5_1_1_0_0 = (Assignment)cAlternatives_5_1_1_0.eContents().get(0);
-		private final RuleCall cTypeGroupsTypeGroupParserRuleCall_5_1_1_0_0_0 = (RuleCall)cTypeGroupsAssignment_5_1_1_0_0.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_5_1_1_0_0 = (Assignment)cAlternatives_5_1_1_0.eContents().get(0);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_5_1_1_0_0_0 = (RuleCall)cDeclarationsAssignment_5_1_1_0_0.eContents().get(0);
 		private final Assignment cLocalActionsAssignment_5_1_1_0_1 = (Assignment)cAlternatives_5_1_1_0.eContents().get(1);
 		private final RuleCall cLocalActionsLocalActionParserRuleCall_5_1_1_0_1_0 = (RuleCall)cLocalActionsAssignment_5_1_1_0_1.eContents().get(0);
 		private final Assignment cBodyTextAssignment_5_1_1_1 = (Assignment)cGroup_5_1_1.eContents().get(1);
@@ -308,12 +308,12 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//// ---------------------------------------------------------------------------------------------------
 		//SCChart returns sccharts::State:
 		//	annotations+=Annotation* type=StateType? "scchart" id=ID label=STRING? ("@" bodyReference=[sccharts::State] ("["
-		//	renamings+=Substitution ("," renamings+=Substitution)* "]")? | "{" ((typeGroups+=TypeGroup |
+		//	renamings+=Substitution ("," renamings+=Substitution)* "]")? | "{" ((declarations+=Declaration |
 		//	localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")?;
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* type=StateType? "scchart" id=ID label=STRING? ("@" bodyReference=[sccharts::State] ("["
-		//renamings+=Substitution ("," renamings+=Substitution)* "]")? | "{" ((typeGroups+=TypeGroup |
+		//renamings+=Substitution ("," renamings+=Substitution)* "]")? | "{" ((declarations+=Declaration |
 		//localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")?
 		public Group getGroup() { return cGroup; }
 
@@ -345,7 +345,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getLabelSTRINGTerminalRuleCall_4_0() { return cLabelSTRINGTerminalRuleCall_4_0; }
 
 		//("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution ("," renamings+=Substitution)* "]")? | "{"
-		//((typeGroups+=TypeGroup | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion
+		//((declarations+=Declaration | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion
 		//regions+=Region*)?) "}")?
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 
@@ -391,24 +391,25 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_5_0_2_3() { return cRightSquareBracketKeyword_5_0_2_3; }
 
-		//"{" ((typeGroups+=TypeGroup | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion
+		//"{" ((declarations+=Declaration | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion
 		//regions+=Region*)?) "}"
 		public Group getGroup_5_1() { return cGroup_5_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_5_1_0() { return cLeftCurlyBracketKeyword_5_1_0; }
 
-		//(typeGroups+=TypeGroup | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?
+		//(declarations+=Declaration | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion
+		//regions+=Region*)?
 		public Group getGroup_5_1_1() { return cGroup_5_1_1; }
 
-		//(typeGroups+=TypeGroup | localActions+=LocalAction)*
+		//(declarations+=Declaration | localActions+=LocalAction)*
 		public Alternatives getAlternatives_5_1_1_0() { return cAlternatives_5_1_1_0; }
 
-		//typeGroups+=TypeGroup
-		public Assignment getTypeGroupsAssignment_5_1_1_0_0() { return cTypeGroupsAssignment_5_1_1_0_0; }
+		//declarations+=Declaration
+		public Assignment getDeclarationsAssignment_5_1_1_0_0() { return cDeclarationsAssignment_5_1_1_0_0; }
 
-		//TypeGroup
-		public RuleCall getTypeGroupsTypeGroupParserRuleCall_5_1_1_0_0_0() { return cTypeGroupsTypeGroupParserRuleCall_5_1_1_0_0_0; }
+		//Declaration
+		public RuleCall getDeclarationsDeclarationParserRuleCall_5_1_1_0_0_0() { return cDeclarationsDeclarationParserRuleCall_5_1_1_0_0_0; }
 
 		//localActions+=LocalAction
 		public Assignment getLocalActionsAssignment_5_1_1_0_1() { return cLocalActionsAssignment_5_1_1_0_1; }
@@ -483,8 +484,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLeftCurlyBracketKeyword_6_1_0 = (Keyword)cGroup_6_1.eContents().get(0);
 		private final Group cGroup_6_1_1 = (Group)cGroup_6_1.eContents().get(1);
 		private final Alternatives cAlternatives_6_1_1_0 = (Alternatives)cGroup_6_1_1.eContents().get(0);
-		private final Assignment cTypeGroupsAssignment_6_1_1_0_0 = (Assignment)cAlternatives_6_1_1_0.eContents().get(0);
-		private final RuleCall cTypeGroupsTypeGroupParserRuleCall_6_1_1_0_0_0 = (RuleCall)cTypeGroupsAssignment_6_1_1_0_0.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_6_1_1_0_0 = (Assignment)cAlternatives_6_1_1_0.eContents().get(0);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_6_1_1_0_0_0 = (RuleCall)cDeclarationsAssignment_6_1_1_0_0.eContents().get(0);
 		private final Assignment cLocalActionsAssignment_6_1_1_0_1 = (Assignment)cAlternatives_6_1_1_0.eContents().get(1);
 		private final RuleCall cLocalActionsLocalActionParserRuleCall_6_1_1_0_1_0 = (RuleCall)cLocalActionsAssignment_6_1_1_0_1.eContents().get(0);
 		private final Assignment cBodyTextAssignment_6_1_1_1 = (Assignment)cGroup_6_1_1.eContents().get(1);
@@ -503,14 +504,14 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//State returns sccharts::State:
 		//	annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 		//	"state" id=ID label=STRING? ("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution (","
-		//	renamings+=Substitution)* "]")? | "{" ((typeGroups+=TypeGroup //valuedObjects+=ValuedObject |
+		//	renamings+=Substitution)* "]")? | "{" ((declarations+=Declaration //valuedObjects+=ValuedObject |
 		//	| localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")?
 		//	outgoingTransitions+=Transition* ";";
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 		//"state" id=ID label=STRING? ("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution (","
-		//renamings+=Substitution)* "]")? | "{" ((typeGroups+=TypeGroup //valuedObjects+=ValuedObject |
+		//renamings+=Substitution)* "]")? | "{" ((declarations+=Declaration //valuedObjects+=ValuedObject |
 		//| localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")?
 		//outgoingTransitions+=Transition* ";"
 		public Group getGroup() { return cGroup; }
@@ -576,7 +577,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getLabelSTRINGTerminalRuleCall_5_0() { return cLabelSTRINGTerminalRuleCall_5_0; }
 
 		//("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution ("," renamings+=Substitution)* "]")? | "{"
-		//((typeGroups+=TypeGroup //valuedObjects+=ValuedObject |
+		//((declarations+=Declaration //valuedObjects+=ValuedObject |
 		//| localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")?
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 
@@ -622,26 +623,26 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_6_0_2_3() { return cRightSquareBracketKeyword_6_0_2_3; }
 
-		//"{" ((typeGroups+=TypeGroup //valuedObjects+=ValuedObject |
+		//"{" ((declarations+=Declaration //valuedObjects+=ValuedObject |
 		//| localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}"
 		public Group getGroup_6_1() { return cGroup_6_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_6_1_0() { return cLeftCurlyBracketKeyword_6_1_0; }
 
-		//(typeGroups+=TypeGroup //valuedObjects+=ValuedObject |
+		//(declarations+=Declaration //valuedObjects+=ValuedObject |
 		//| localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?
 		public Group getGroup_6_1_1() { return cGroup_6_1_1; }
 
-		//(typeGroups+=TypeGroup //valuedObjects+=ValuedObject |
+		//(declarations+=Declaration //valuedObjects+=ValuedObject |
 		//| localActions+=LocalAction)*
 		public Alternatives getAlternatives_6_1_1_0() { return cAlternatives_6_1_1_0; }
 
-		//typeGroups+=TypeGroup
-		public Assignment getTypeGroupsAssignment_6_1_1_0_0() { return cTypeGroupsAssignment_6_1_1_0_0; }
+		//declarations+=Declaration
+		public Assignment getDeclarationsAssignment_6_1_1_0_0() { return cDeclarationsAssignment_6_1_1_0_0; }
 
-		//TypeGroup
-		public RuleCall getTypeGroupsTypeGroupParserRuleCall_6_1_1_0_0_0() { return cTypeGroupsTypeGroupParserRuleCall_6_1_1_0_0_0; }
+		//Declaration
+		public RuleCall getDeclarationsDeclarationParserRuleCall_6_1_1_0_0_0() { return cDeclarationsDeclarationParserRuleCall_6_1_1_0_0_0; }
 
 		//localActions+=LocalAction
 		public Assignment getLocalActionsAssignment_6_1_1_0_1() { return cLocalActionsAssignment_6_1_1_0_1; }
@@ -858,8 +859,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getLabelSTRINGTerminalRuleCall_3_3_1_1_0() { return cLabelSTRINGTerminalRuleCall_3_3_1_1_0; }
 	}
 
-	public class TypeGroupElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypeGroup");
+	public class DeclarationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Declaration");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
@@ -884,7 +885,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_9 = (Keyword)cGroup.eContents().get(9);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		//TypeGroup returns kexpressions::Declaration:
+		//Declaration returns kexpressions::Declaration:
 		//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
 		//	type=ValueType? valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
 		public ParserRule getRule() { return rule; }
@@ -1189,7 +1190,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	private StateElements pState;
 	private LocalActionElements pLocalAction;
 	private TransitionElements pTransition;
-	private TypeGroupElements pTypeGroup;
+	private DeclarationElements pDeclaration;
 	private ValuedObjectElements pValuedObject;
 	private TextualCodeElements pTextualCode;
 	private SubstitutionElements pSubstitution;
@@ -1237,7 +1238,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// ---------------------------------------------------------------------------------------------------
 	//RootRegion returns sccharts::Region:
 	//	{sccharts::Region} annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID label=STRING? ":"
-	//	typeGroups+=TypeGroup* bodyText+=TextualCode*)? states+=SCChart*;
+	//	declarations+=Declaration* bodyText+=TextualCode*)? states+=SCChart*;
 	public RootRegionElements getRootRegionAccess() {
 		return (pRootRegion != null) ? pRootRegion : (pRootRegion = new RootRegionElements());
 	}
@@ -1248,7 +1249,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//SingleRegion returns sccharts::Region:
-	//	{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ":" typeGroups+=TypeGroup*
+	//	{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ":" declarations+=Declaration*
 	//	bodyText+=TextualCode*)? states+=State*;
 	public SingleRegionElements getSingleRegionAccess() {
 		return (pSingleRegion != null) ? pSingleRegion : (pSingleRegion = new SingleRegionElements());
@@ -1260,7 +1261,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//Region returns sccharts::Region:
-	//	{sccharts::Region} annotations+=Annotation* "region" id=ID? label=STRING? ":" typeGroups+=TypeGroup*
+	//	{sccharts::Region} annotations+=Annotation* "region" id=ID? label=STRING? ":" declarations+=Declaration*
 	//	bodyText+=TextualCode* states+=State+;
 	public RegionElements getRegionAccess() {
 		return (pRegion != null) ? pRegion : (pRegion = new RegionElements());
@@ -1273,7 +1274,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// ---------------------------------------------------------------------------------------------------
 	//SCChart returns sccharts::State:
 	//	annotations+=Annotation* type=StateType? "scchart" id=ID label=STRING? ("@" bodyReference=[sccharts::State] ("["
-	//	renamings+=Substitution ("," renamings+=Substitution)* "]")? | "{" ((typeGroups+=TypeGroup |
+	//	renamings+=Substitution ("," renamings+=Substitution)* "]")? | "{" ((declarations+=Declaration |
 	//	localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")?;
 	public SCChartElements getSCChartAccess() {
 		return (pSCChart != null) ? pSCChart : (pSCChart = new SCChartElements());
@@ -1287,7 +1288,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//State returns sccharts::State:
 	//	annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 	//	"state" id=ID label=STRING? ("@" bodyReference=[sccharts::State] ("[" renamings+=Substitution (","
-	//	renamings+=Substitution)* "]")? | "{" ((typeGroups+=TypeGroup //valuedObjects+=ValuedObject |
+	//	renamings+=Substitution)* "]")? | "{" ((declarations+=Declaration //valuedObjects+=ValuedObject |
 	//	| localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")?
 	//	outgoingTransitions+=Transition* ";";
 	public StateElements getStateAccess() {
@@ -1323,15 +1324,15 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//TypeGroup returns kexpressions::Declaration:
+	//Declaration returns kexpressions::Declaration:
 	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
 	//	type=ValueType? valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
-	public TypeGroupElements getTypeGroupAccess() {
-		return (pTypeGroup != null) ? pTypeGroup : (pTypeGroup = new TypeGroupElements());
+	public DeclarationElements getDeclarationAccess() {
+		return (pDeclaration != null) ? pDeclaration : (pDeclaration = new DeclarationElements());
 	}
 	
-	public ParserRule getTypeGroupRule() {
-		return getTypeGroupAccess().getRule();
+	public ParserRule getDeclarationRule() {
+		return getDeclarationAccess().getRule();
 	}
 
 	//// ---------------------------------------------------------------------------------------------------

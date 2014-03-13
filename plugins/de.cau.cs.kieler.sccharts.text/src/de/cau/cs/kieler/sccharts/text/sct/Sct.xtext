@@ -13,7 +13,7 @@ RootRegion returns sccharts::Region:
     (
       (annotations += Annotation)*
       'region' id=ID (label=STRING)? ':'
-      (typeGroups+=TypeGroup)*
+      (declarations+=Declaration)*
       (bodyText+=TextualCode)* 
      )?
     (states+=SCChart)*;
@@ -25,7 +25,7 @@ SingleRegion returns sccharts::Region:
     (
       (annotations += Annotation)*
       'region' (id=ID)? (label=STRING)? ':'
-      (typeGroups+=TypeGroup)*
+      (declarations+=Declaration)*
       (bodyText+=TextualCode)*
      )?
     (states+=State)*;
@@ -36,7 +36,7 @@ Region returns sccharts::Region:
 	{sccharts::Region}
     (annotations += Annotation)*
     'region' (id=ID)? (label=STRING)? ':'
-      (typeGroups+=TypeGroup)*
+      (declarations+=Declaration)*
     (bodyText+=TextualCode)* 
     (states+=State)+;
 
@@ -53,7 +53,7 @@ SCChart returns sccharts::State:
      | 
       ('{'
           (
-            (typeGroups+=TypeGroup |
+            (declarations+=Declaration |
              localActions+=LocalAction)*
             (bodyText += TextualCode)*
             (
@@ -84,7 +84,7 @@ State returns sccharts::State:
       ('{'
           (
             (//valuedObjects+=ValuedObject |
-             typeGroups+=TypeGroup |
+             declarations+=Declaration |
              localActions+=LocalAction)*
             (bodyText += TextualCode)*
             (
@@ -119,7 +119,7 @@ Transition returns sccharts::Transition:
 
 // ---------------------------------------------------------------------------------------------------
 
-TypeGroup returns kexpressions::Declaration:
+Declaration returns kexpressions::Declaration:
     (annotations+=Annotation)*
 	(const?='const')?
     (input?='input')?
