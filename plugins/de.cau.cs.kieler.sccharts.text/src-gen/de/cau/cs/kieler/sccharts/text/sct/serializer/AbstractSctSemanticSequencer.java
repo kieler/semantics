@@ -11,12 +11,12 @@ import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
-import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.sccharts.Assignment;
@@ -144,6 +144,12 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.DECLARATION:
+				if(context == grammarAccess.getTypeGroupRule()) {
+					sequence_TypeGroup(context, (Declaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.FLOAT_VALUE:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -257,12 +263,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else if(context == grammarAccess.getTextualCodeRule()) {
 					sequence_TextualCode(context, (TextExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case KExpressionsPackage.TYPE_GROUP:
-				if(context == grammarAccess.getTypeGroupRule()) {
-					sequence_TypeGroup(context, (TypeGroup) semanticObject); 
 					return; 
 				}
 				else break;
@@ -524,7 +524,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         valuedObjects+=ValuedObject*
 	 *     )
 	 */
-	protected void sequence_TypeGroup(EObject context, TypeGroup semanticObject) {
+	protected void sequence_TypeGroup(EObject context, Declaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

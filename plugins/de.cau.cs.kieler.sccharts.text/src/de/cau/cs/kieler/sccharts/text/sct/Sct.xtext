@@ -119,7 +119,7 @@ Transition returns sccharts::Transition:
 
 // ---------------------------------------------------------------------------------------------------
 
-TypeGroup returns kexpressions::TypeGroup:
+TypeGroup returns kexpressions::Declaration:
     (annotations+=Annotation)*
 	(const?='const')?
     (input?='input')?

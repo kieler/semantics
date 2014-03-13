@@ -884,7 +884,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_9 = (Keyword)cGroup.eContents().get(9);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		//TypeGroup returns kexpressions::TypeGroup:
+		//TypeGroup returns kexpressions::Declaration:
 		//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
 		//	type=ValueType? valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
 		public ParserRule getRule() { return rule; }
@@ -1323,7 +1323,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//TypeGroup returns kexpressions::TypeGroup:
+	//TypeGroup returns kexpressions::Declaration:
 	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
 	//	type=ValueType? valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
 	public TypeGroupElements getTypeGroupAccess() {

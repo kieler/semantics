@@ -56,7 +56,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBodyContents <em>Body Contents</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBodyText <em>Body Text</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getRenamings <em>Renamings</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getTypeGroups <em>Type Groups</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  * </p>
  *
@@ -161,14 +161,14 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     protected EList<Substitution> renamings;
 
     /**
-     * The cached value of the '{@link #getTypeGroups() <em>Type Groups</em>}' containment reference list.
+     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTypeGroups()
+     * @see #getDeclarations()
      * @generated
      * @ordered
      */
-    protected EList<Declaration> typeGroups;
+    protected EList<Declaration> declarations;
 
     /**
      * <!-- begin-user-doc -->
@@ -353,11 +353,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Declaration> getTypeGroups() {
-        if (typeGroups == null) {
-            typeGroups = new EObjectContainmentEList<Declaration>(Declaration.class, this, SCChartsPackage.SCOPE__TYPE_GROUPS);
+    public EList<Declaration> getDeclarations() {
+        if (declarations == null) {
+            declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SCChartsPackage.SCOPE__DECLARATIONS);
         }
-        return typeGroups;
+        return declarations;
     }
 
     /**
@@ -391,8 +391,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return ((InternalEList<?>)getBodyText()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__RENAMINGS:
                 return ((InternalEList<?>)getRenamings()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                return ((InternalEList<?>)getTypeGroups()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.SCOPE__DECLARATIONS:
+                return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -420,8 +420,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return getBodyText();
             case SCChartsPackage.SCOPE__RENAMINGS:
                 return getRenamings();
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                return getTypeGroups();
+            case SCChartsPackage.SCOPE__DECLARATIONS:
+                return getDeclarations();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -459,9 +459,9 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 getRenamings().clear();
                 getRenamings().addAll((Collection<? extends Substitution>)newValue);
                 return;
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                getTypeGroups().clear();
-                getTypeGroups().addAll((Collection<? extends Declaration>)newValue);
+            case SCChartsPackage.SCOPE__DECLARATIONS:
+                getDeclarations().clear();
+                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -496,8 +496,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SCChartsPackage.SCOPE__RENAMINGS:
                 getRenamings().clear();
                 return;
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                getTypeGroups().clear();
+            case SCChartsPackage.SCOPE__DECLARATIONS:
+                getDeclarations().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -525,8 +525,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return bodyText != null && !bodyText.isEmpty();
             case SCChartsPackage.SCOPE__RENAMINGS:
                 return renamings != null && !renamings.isEmpty();
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                return typeGroups != null && !typeGroups.isEmpty();
+            case SCChartsPackage.SCOPE__DECLARATIONS:
+                return declarations != null && !declarations.isEmpty();
         }
         return super.eIsSet(featureID);
     }

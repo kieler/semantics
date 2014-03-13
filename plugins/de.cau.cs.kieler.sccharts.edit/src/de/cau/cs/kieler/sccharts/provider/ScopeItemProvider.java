@@ -176,7 +176,7 @@ public class ScopeItemProvider
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__BODY_CONTENTS);
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__BODY_TEXT);
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__RENAMINGS);
-            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__TYPE_GROUPS);
+            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__DECLARATIONS);
         }
         return childrenFeatures;
     }
@@ -228,7 +228,7 @@ public class ScopeItemProvider
             case SCChartsPackage.SCOPE__BODY_CONTENTS:
             case SCChartsPackage.SCOPE__BODY_TEXT:
             case SCChartsPackage.SCOPE__RENAMINGS:
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
+            case SCChartsPackage.SCOPE__DECLARATIONS:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -438,7 +438,7 @@ public class ScopeItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__TYPE_GROUPS,
+                (SCChartsPackage.Literals.SCOPE__DECLARATIONS,
                  KExpressionsFactory.eINSTANCE.createDeclaration()));
     }
 
@@ -459,7 +459,7 @@ public class ScopeItemProvider
             childFeature == SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS ||
             childFeature == SCChartsPackage.Literals.SCOPE__RENAMINGS ||
             childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT ||
-            childFeature == SCChartsPackage.Literals.SCOPE__TYPE_GROUPS;
+            childFeature == SCChartsPackage.Literals.SCOPE__DECLARATIONS;
 
         if (qualify) {
             return getString

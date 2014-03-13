@@ -328,13 +328,13 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__RENAMINGS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
     /**
-     * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE__TYPE_GROUPS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
+    int SCOPE__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
      * The number of structural features of the '<em>Scope</em>' class.
@@ -428,13 +428,13 @@ public interface SCChartsPackage extends EPackage {
     int REGION__RENAMINGS = SCOPE__RENAMINGS;
 
     /**
-     * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REGION__TYPE_GROUPS = SCOPE__TYPE_GROUPS;
+    int REGION__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -592,13 +592,13 @@ public interface SCChartsPackage extends EPackage {
     int STATE__RENAMINGS = SCOPE__RENAMINGS;
 
     /**
-     * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__TYPE_GROUPS = SCOPE__TYPE_GROUPS;
+    int STATE__DECLARATIONS = SCOPE__DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1707,15 +1707,15 @@ public interface SCChartsPackage extends EPackage {
     EReference getScope_Renamings();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getTypeGroups <em>Type Groups</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getDeclarations <em>Declarations</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Type Groups</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getTypeGroups()
+     * @return the meta object for the containment reference list '<em>Declarations</em>'.
+     * @see de.cau.cs.kieler.sccharts.Scope#getDeclarations()
      * @see #getScope()
      * @generated
      */
-    EReference getScope_TypeGroups();
+    EReference getScope_Declarations();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.TextEffect <em>Text Effect</em>}'.
@@ -2214,12 +2214,12 @@ public interface SCChartsPackage extends EPackage {
         EReference SCOPE__RENAMINGS = eINSTANCE.getScope_Renamings();
 
         /**
-         * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference SCOPE__TYPE_GROUPS = eINSTANCE.getScope_TypeGroups();
+        EReference SCOPE__DECLARATIONS = eINSTANCE.getScope_Declarations();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TextEffectImpl <em>Text Effect</em>}' class.
