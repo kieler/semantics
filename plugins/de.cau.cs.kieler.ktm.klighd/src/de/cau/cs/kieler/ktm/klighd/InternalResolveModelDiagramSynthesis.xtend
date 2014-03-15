@@ -45,6 +45,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.ktm.klighd.util.NearestNodeUtil
 import de.cau.cs.kieler.ktm.klighd.util.MappingEdgeProperties
 import de.cau.cs.kieler.core.krendering.KRendering
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 /**
  * KLighD visualization for mappings between two ModelWrappers.
@@ -92,7 +93,7 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
     private val mappingEdgeColor = RENDERING_FACTORY.createKColor() => [it.red = 255; it.green = 0; it.blue = 0];
 
     /**
-     * Resolves a mapping between source and target ModelWraper in ResolveModelWrapper
+     * Resolves a joined mapping between source and target ModelWraper in ResolveModelWrapper
      */
     override KNode transform(ResolveModelWrapper resolvePair) {
         val rootNode = createNode();
@@ -106,7 +107,7 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
             !TransformationTreeDiagramSynthesis::SHOW_MODELS.booleanValue) {
 
             //add node for EObjects with edges form resolved mapping
-            rootNode.addEObjectMappingNode(resolveWrapperMapping(sourceModelWrapper, targetModelWrapper));
+            rootNode.addEObjectMappingNode(joinWrapperMappings(sourceModelWrapper, targetModelWrapper));
         } else { // if models should be displayed with their own synthesis           
             val vc = usedContext;
 
@@ -116,11 +117,11 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
 
             if (sourceDiagramNode == null || targetDiagramNode == null || sourceDiagramNode.children.empty ||
                 targetDiagramNode.children.empty) { //if no synthesis is available fall back to basic EObject synthesis
-                rootNode.addEObjectMappingNode(resolveWrapperMapping(sourceModelWrapper, targetModelWrapper));
+                rootNode.addEObjectMappingNode(joinWrapperMappings(sourceModelWrapper, targetModelWrapper));
             } else {
 
-                //if models of source and target ModelWrappers were translated correctly resolve a mapping on EObjects
-                val mapping = resolveMapping(sourceModelWrapper, sourceModelWrapper.rootObject.EObject,
+                //if models of source and target ModelWrappers were translated correctly join mappings of EObjects
+                val mapping = joinMappings(sourceModelWrapper, sourceModelWrapper.rootObject.EObject,
                     targetModelWrapper, targetModelWrapper.rootObject.EObject);
                 if (mapping != null) {
 
@@ -271,7 +272,7 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
                             edge.setSource(NearestNodeUtil.getNearestNode(source as KGraphElement, sourceDiagramNode));
 
                         //TODO activate when advanced edge placement is implemented
-                        //edge.setLayoutOption(KlighdProperties::ACTUAL_EDGE_SOURCE, source as KGraphElement);
+                        //edge.setLayoutOption(KlighdProperties.ACTUAL_EDGE_SOURCE, source as KGraphElement);
                         }
 
                         // set target node or actual target and nearest node
@@ -281,7 +282,7 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
                             edge.setTarget(NearestNodeUtil.getNearestNode(target as KGraphElement, targetDiagramNode));
 
                         //TODO activate when advanced edge placement is implemented
-                        //edge.setLayoutOption(KlighdProperties::ACTUAL_EDGE_TARGET,target as KGraphElement);
+                        //edge.setLayoutOption(KlighdProperties.ACTUAL_EDGE_TARGET,target as KGraphElement);
                         }
 
                         //add action for selective displaying of mapping edges to all associated source and target renderings

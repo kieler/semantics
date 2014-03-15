@@ -441,7 +441,7 @@ class TransformationTreeExtensions {
      * @param model root element of a model instance to map to
      * @returns mapping from elements of modelNode to model objects
      */
-    def Map<EObjectWrapper, EObject> objectMapping(ModelWrapper modelNode, EObject model) {
+    def Map<EObjectWrapper, EObject> modelInstanceMapping(ModelWrapper modelNode, EObject model) {
 
         if (modelNode != null && model != null && !modelNode.transient &&
             modelNode.rootObject.EObject.eClass.equals(model.eClass)) {
@@ -458,7 +458,7 @@ class TransformationTreeExtensions {
     }
 
     /**
-     * Resolves a mapping between all elements of source and target model instances by their nodes in transformation tree.
+     * Performs a transitive join of all mappings between source and target model and map it to given model instances.
      * <p>
      * Returns a multi-mapping from objects of source model to target model objects.
      * Mapping is created by resolving all transformations on a path from source to target.
@@ -474,25 +474,25 @@ class TransformationTreeExtensions {
      * @param targetModel root element of a target model instance
      * @return multi-mapping from source model objects to target model objects or null
      */
-    def Multimap<EObject, EObject> resolveMapping(ModelWrapper sourceModelNode, EObject sourceModel,
+    def Multimap<EObject, EObject> joinMappings(ModelWrapper sourceModelNode, EObject sourceModel,
         ModelWrapper targetModelNode, EObject targetModel) {
         if (sourceModelNode.root != targetModelNode.root) {
             return null;
         }
 
         //get mapping for given source model instance
-        val sourceMapping = sourceModelNode.objectMapping(sourceModel);
+        val sourceMapping = sourceModelNode.modelInstanceMapping(sourceModel);
         if (sourceMapping == null) {
             return null;
         }
 
         //get mapping for given target model instance
-        val targetMapping = targetModelNode.objectMapping(targetModel);
+        val targetMapping = targetModelNode.modelInstanceMapping(targetModel);
         if (targetMapping == null) {
             return null;
         }
 
-        val mapping = resolveWrapperMapping(sourceModelNode, targetModelNode);
+        val mapping = joinWrapperMappings(sourceModelNode, targetModelNode);
 
         //transform element mapping into mapping between EObjects of given input models
         val objectMapping = HashMultimap::create(sourceMapping.size, 10);
@@ -503,7 +503,7 @@ class TransformationTreeExtensions {
     }
 
     /**
-     * Resolves a mapping between all elements of source and target model as their EObjectWrappers.
+     * Performs a transitive join of all mappings between source and target model based on their EObjectWrappers.
      * <p>
      * If concrete instances shall be resolved use {@link resolveMapping}.
      * <p>
@@ -519,7 +519,7 @@ class TransformationTreeExtensions {
      * @param targetModelNode model in transformation tree representing targetModel model
      * @return multi-mapping from source model object wrappers to target model object wrappers or null
      */
-    def Multimap<EObjectWrapper, EObjectWrapper> resolveWrapperMapping(ModelWrapper sourceModelNode,
+    def Multimap<EObjectWrapper, EObjectWrapper> joinWrapperMappings(ModelWrapper sourceModelNode,
         ModelWrapper targetModelNode) {
 
         if (sourceModelNode.root != targetModelNode.root) {
@@ -690,8 +690,7 @@ class TransformationTreeExtensions {
         if (left == null || right == null) {
             return null;
         }
-
-        //This comparison might not be configured correctly
+  
         val matcher = DefaultMatchEngine.createDefaultEObjectMatcher(UseIdentifiers.NEVER);
         val comparisonFactory = new DefaultComparisonFactory(new DefaultEqualityHelperFactory());
         val matchEngine = new DefaultMatchEngine(matcher, comparisonFactory);

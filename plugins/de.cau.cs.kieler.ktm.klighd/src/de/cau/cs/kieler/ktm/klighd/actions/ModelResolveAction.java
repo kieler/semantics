@@ -23,7 +23,7 @@ import de.cau.cs.kieler.ktm.klighd.resolve.ResolveModelWrapper;
 import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 
 /**
- * Action to select an additional node in tree and display a resolved model.
+ * Action to select an additional node in tree and display a resolved model with joined mapping.
  * 
  * @author als
  * 

@@ -525,10 +525,10 @@ public class TransformationTreeExtensionsTest extends TestCase {
 
     /**
      * Test method for
-     * {@link de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions#objectMapping(de.cau.cs.kieler.ktm.transformationtree.ModelWrapper, org.eclipse.emf.ecore.EObject)}
+     * {@link de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions#modelInstanceMapping(de.cau.cs.kieler.ktm.transformationtree.ModelWrapper, org.eclipse.emf.ecore.EObject)}
      * .
      */
-    public final void testObjectMapping() {
+    public final void testModelInstanceMapping() {
         // clear mapping
         transformer.extractMapping();
 
@@ -541,7 +541,7 @@ public class TransformationTreeExtensionsTest extends TestCase {
                         "transformedChain");
 
         Map<EObjectWrapper, EObject> mapping =
-                extension.objectMapping(transformationTreeLeaf, transformedChain);
+                extension.modelInstanceMapping(transformationTreeLeaf, transformedChain);
 
         assertNotNull(mapping);
         assertEquals(9, mapping.size());
@@ -553,15 +553,15 @@ public class TransformationTreeExtensionsTest extends TestCase {
         }
 
         // test illegal model modelNode pair
-        assertNull(extension.objectMapping(transformationTreeLeaf, chain));
+        assertNull(extension.modelInstanceMapping(transformationTreeLeaf, chain));
     }
 
     /**
      * Test method for
-     * {@link de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions#resolveMapping(de.cau.cs.kieler.ktm.transformationtree.ModelWrapper, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject)}
+     * {@link de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions#joinMappings(de.cau.cs.kieler.ktm.transformationtree.ModelWrapper, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EObject)}
      * .
      */
-    public final void testResolveMapping() {
+    public final void testJoinMappings() {
         // INIT A TRANSFORMTION TREE
 
         // clear mapping
@@ -607,7 +607,7 @@ public class TransformationTreeExtensionsTest extends TestCase {
         // test resolve down
         mapping =
                 extension
-                        .resolveMapping(chainModel, chain, transformedChainModel, transformedChain);
+                        .joinMappings(chainModel, chain, transformedChainModel, transformedChain);
         assertNotNull(mapping);
         assertEquals(9, mapping.size());
         assertEquals(5, mapping.keySet().size());
@@ -623,7 +623,7 @@ public class TransformationTreeExtensionsTest extends TestCase {
         // test resolve up
         mapping =
                 extension
-                        .resolveMapping(transformedChainModel, transformedChain, chainModel, chain);
+                        .joinMappings(transformedChainModel, transformedChain, chainModel, chain);
         assertNotNull(mapping);
         assertEquals(9, mapping.size());
         assertEquals(9, mapping.keySet().size());
@@ -633,7 +633,7 @@ public class TransformationTreeExtensionsTest extends TestCase {
         }
         // test resolve leaf leaf
         mapping =
-                extension.resolveMapping(secondTransformedChainModel, secondTransformedChain,
+                extension.joinMappings(secondTransformedChainModel, secondTransformedChain,
                         thirdTransformedChainModel, thirdTransformedChain);
         assertNotNull(mapping);
         assertEquals(17, mapping.size());
@@ -645,7 +645,7 @@ public class TransformationTreeExtensionsTest extends TestCase {
         }
 
         // test resolve same model
-        mapping = extension.resolveMapping(chainModel, chain, chainModel, chain);
+        mapping = extension.joinMappings(chainModel, chain, chainModel, chain);
         assertNotNull(mapping);
         assertEquals(5, mapping.size());
         for (java.util.Map.Entry<EObject, EObject> entry : mapping.entries()) {
@@ -656,7 +656,7 @@ public class TransformationTreeExtensionsTest extends TestCase {
         extension.makeTransient(sameChainModel);
         mapping =
                 extension
-                        .resolveMapping(chainModel, chain, transformedChainModel, transformedChain);
+                        .joinMappings(chainModel, chain, transformedChainModel, transformedChain);
         assertNotNull(mapping);
         assertEquals(9, mapping.size());
         assertEquals(5, mapping.keySet().size());
@@ -670,12 +670,12 @@ public class TransformationTreeExtensionsTest extends TestCase {
         }
 
         // test unreachable
-        assertNull(extension.resolveMapping(chainModel, chain, tree3parts, tree3parts));
+        assertNull(extension.joinMappings(chainModel, chain, tree3parts, tree3parts));
 
         // test not matching models
-        assertNull(extension.resolveMapping(chainModel, transformedChain, transformedChainModel,
+        assertNull(extension.joinMappings(chainModel, transformedChain, transformedChainModel,
                 transformedChain));
-        assertNull(extension.resolveMapping(chainModel, chain, transformedChainModel,
+        assertNull(extension.joinMappings(chainModel, chain, transformedChainModel,
                 thirdTransformedChain));
     }
 }
