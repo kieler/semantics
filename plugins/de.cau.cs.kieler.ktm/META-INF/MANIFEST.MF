@@ -15,8 +15,7 @@ Require-Bundle: org.eclipse.core.runtime,
  com.google.guava,
  com.google.inject;bundle-version="3.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.ktm.exceptions,
- de.cau.cs.kieler.ktm.extensions,
+Export-Package: de.cau.cs.kieler.ktm.extensions,
  de.cau.cs.kieler.ktm.transformationtree,
  de.cau.cs.kieler.ktm.transformationtree.impl,
  de.cau.cs.kieler.ktm.transformationtree.util

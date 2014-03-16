@@ -25,7 +25,6 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.ktm.exceptions.MappingException;
 import de.cau.cs.kieler.ktm.extensions.TransformationMapping;
 import de.cau.cs.kieler.ktm.test.generators.SimpleModelGenerator;
 import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
@@ -108,26 +107,6 @@ public class TransformationMappingTest extends TestCase {
         } catch (Exception ex) {
             assertTrue(ex instanceof NullPointerException);
         }
-
-        // error if parent is child
-        mapper.clearMapping();
-        mapper.mapParent(objects[0], objects[1]);
-        try {
-            mapper.mapParent(objects[1], objects[2]);
-            fail();
-        } catch (Exception ex) {
-            assertTrue(ex instanceof MappingException);
-        }
-
-        // error if child is parent
-        mapper.clearMapping();
-        mapper.mapParent(objects[0], objects[1]);
-        try {
-            mapper.mapParent(objects[2], objects[0]);
-            fail();
-        } catch (Exception ex) {
-            assertTrue(ex instanceof MappingException);
-        }
     }
 
     /**
@@ -186,25 +165,6 @@ public class TransformationMappingTest extends TestCase {
         } catch (Exception ex) {
             assertTrue(ex instanceof IllegalArgumentException);
         }
-
-        // error if parent is child
-        mapper.clearMapping();
-        mapper.mapParent(objects[2], objects[4]);
-        try {
-            mapper.mapParents(objects[3], parents);
-            fail();
-        } catch (Exception ex) {
-            assertTrue(ex instanceof MappingException);
-        }
-        // error if child is parent
-        mapper.clearMapping();
-        mapper.mapParent(objects[0], objects[3]);
-        try {
-            mapper.mapParents(objects[3], parents);
-            fail();
-        } catch (Exception ex) {
-            assertTrue(ex instanceof MappingException);
-        }
     }
 
     /**
@@ -253,25 +213,6 @@ public class TransformationMappingTest extends TestCase {
             assertTrue(ex instanceof NullPointerException);
         }
 
-        // error if parent is child
-        mapper.clearMapping();
-        mapper.mapChild(objects[0], objects[1]);
-        try {
-            mapper.mapChild(objects[2], objects[0]);
-            fail();
-        } catch (Exception ex) {
-            assertTrue(ex instanceof MappingException);
-        }
-
-        // error if child is parent
-        mapper.clearMapping();
-        mapper.mapChild(objects[0], objects[1]);
-        try {
-            mapper.mapChild(objects[1], objects[2]);
-            fail();
-        } catch (Exception ex) {
-            assertTrue(ex instanceof MappingException);
-        }
     }
 
     /**
@@ -329,26 +270,6 @@ public class TransformationMappingTest extends TestCase {
             fail();
         } catch (Exception ex) {
             assertTrue(ex instanceof IllegalArgumentException);
-        }
-
-        // error if child is parent
-        mapper.clearMapping();
-        mapper.mapChild(objects[2], objects[4]);
-        try {
-            mapper.mapChildren(objects[3], children);
-            fail();
-        } catch (Exception ex) {
-            assertTrue(ex instanceof MappingException);
-        }
-
-        // error if parent is child
-        mapper.clearMapping();
-        mapper.mapChild(objects[0], objects[3]);
-        try {
-            mapper.mapChildren(objects[3], children);
-            fail();
-        } catch (Exception ex) {
-            assertTrue(ex instanceof MappingException);
         }
     }
 

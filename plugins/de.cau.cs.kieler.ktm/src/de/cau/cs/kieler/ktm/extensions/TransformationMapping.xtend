@@ -15,7 +15,6 @@ package de.cau.cs.kieler.ktm.extensions
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.ImmutableMultimap
-import de.cau.cs.kieler.ktm.exceptions.MappingException
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
@@ -34,15 +33,14 @@ import static extension com.google.common.collect.Sets.*
  */
 class TransformationMapping {
 
-    /** internal data-structure for single model transformation.*/
-    private val HashMultimap<EObject, EObject> mapping = HashMultimap::create;
+    /** Internal data-structure for single model transformation. Initial capacity 100 Entries with 8 Values preventing early rehash */
+    private val HashMultimap<EObject, EObject> mapping = HashMultimap::create(100,10);
 
     // -------------------------------------------------------------------------
     // Basic mapping generation
     /**
 	 * Maps given parent as source of given child in this transformation.
      * @return true if the mapping changed.
-     * @throws MappingException when child parent relations were mixed (i.e. when one object is will be mapped as parent when it is already mapped as child).
      * @throws NullPointerException if parent or child is null.
 	 */
     def boolean mapParent(EObject child, EObject parent) {
@@ -52,7 +50,6 @@ class TransformationMapping {
     /**
      * Maps given parents as source of given child in this transformation.
      * @return true if the mapping changed.
-     * @throws MappingException when child parent relations were mixed (i.e. when one object is will be mapped as parent when it is already mapped as child).
      * @throws NullPointerException if parents or child is null.
      * @throws IllegalArgumentException if children list contains null element.
      */
@@ -69,22 +66,11 @@ class TransformationMapping {
     /**
 	 * Maps given child as result of this transformation for given parent.
      * @return true if the mapping changed.
-     * @throws MappingException when child parent relations were mixed (i.e. when one object is will be mapped as parent when it is already mapped as child).
      * @throws NullPointerException if parent or child is null.
 	 */
     def boolean mapChild(EObject parent, EObject child) {
         checkNotNull(parent, "parent object is null");
         checkNotNull(child, "child object is null");
-
-        //if child was already mapped as an parent throw exception
-        if (mapping.containsKey(child)) {
-            throw new MappingException("Cannot map object as child when already mapped as parent", child);
-        }
-
-        //if parent was already mapped as an child throw exception
-        if (mapping.containsValue(parent)) {
-            throw new MappingException("Cannot map object as parent when already mapped as child", parent);
-        }
 
         mapping.put(parent, child);
     }
@@ -92,7 +78,6 @@ class TransformationMapping {
     /**
 	 * Maps given children as results of this transformation for given parent. 
      * @return true if the mapping changed.
-	 * @throws MappingException when child parent relations were mixed (i.e. when one object is will be mapped as parent when it is already mapped as child).
 	 * @throws NullPointerException if parent or children list is null.
 	 * @throws IllegalArgumentException if children list contains null element.
 	 */
@@ -100,17 +85,6 @@ class TransformationMapping {
         checkNotNull(parent, "parent object is null");
         checkNotNull(children, "children list is null");
         checkArgument(!children.contains(null), "Children list contains null element");
-
-        //if child was already mapped as an parent throw exception
-        val badChild = children.findFirst[mapping.containsKey(it)];
-        if (badChild != null) {
-            throw new MappingException("Cannot map object as child when already mapped as parent", badChild);
-        }
-
-        //if parent was already mapped as an child throw exception
-        if (mapping.containsValue(parent)) {
-            throw new MappingException("Cannot map object as parent when already mapped as child", parent);
-        }
 
         mapping.putAll(parent, children);
     }
