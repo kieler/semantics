@@ -30,70 +30,75 @@ import org.eclipse.emf.ecore.EObject;
  * 
  */
 public class KielerCompiler {
-    
+
     /** The Constant DEBUG. */
     public static final boolean DEBUG = !System.getProperty("java.vm.info", "").contains("sharing");
-    
+
     /** The cached transformations. */
     private static HashMap<String, Transformation> transformations = null;
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     private static HashMap<String, Transformation> getTransformations() {
         if (transformations == null) {
-            transformations =
-                    KiCoPlugin.getDefault().getRegisteredTransformations(false);
+            transformations = KiCoPlugin.getDefault().getRegisteredTransformations(false);
         }
         return transformations;
     }
-    
-    //-------------------------------------------------------------------------
 
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the transformation for a transformationID.
-     *
-     * @param transformationId the transformation id
+     * 
+     * @param transformationId
+     *            the transformation id
      * @return the dependencies
      */
     private static Transformation getTransformation(String transformationID) {
         Transformation transformation = transformations.get(transformationID);
         if (transformation == null) {
-            new RuntimeException("Cannot find a transformation with the ID '"+transformationID+"'");
+            new RuntimeException("Cannot find a transformation with the ID '" + transformationID
+                    + "'");
         }
         return transformation;
     }
-    
-    
-    //-------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the dependencies for a transformationID.
-     *
-     * @param transformationId the transformation id
+     * 
+     * @param transformationId
+     *            the transformation id
      * @return the dependencies
      */
     private static List<String> getDependencies(String transformationID) {
         Transformation transformation = getTransformation(transformationID);
         if (transformation == null) {
-            new RuntimeException("Cannot find a transformation with the ID '"+transformationID+"'");
+            new RuntimeException("Cannot find a transformation with the ID '" + transformationID
+                    + "'");
             return new ArrayList<String>();
         }
         return transformation.getDependencies();
     }
-    
-    //-------------------------------------------------------------------------
-    
+
+    // -------------------------------------------------------------------------
+
     /**
-     * Checks if transformationID depending on possiblyDependOnTransformationId (directly or transitively).
+     * Checks if transformationID depending on possiblyDependOnTransformationId (directly or
+     * transitively).
      * 
-     * Go thru all dependencies and recursively check if transformationID is part of them. 
-     *
-     * @param transformationID the transformation id
-     * @param possiblyDependOnTransformationId the possibly depend on transformation id
+     * Go thru all dependencies and recursively check if transformationID is part of them.
+     * 
+     * @param transformationID
+     *            the transformation id
+     * @param possiblyDependOnTransformationId
+     *            the possibly depend on transformation id
      * @return true, if is depending on
      */
-    private static boolean isDependingOn(String transformationID, String possiblyDependOnTransformationId) {
+    private static boolean isDependingOn(String transformationID,
+            String possiblyDependOnTransformationId) {
         List<String> dependencies = getDependencies(transformationID);
         for (String dependency : dependencies) {
             if (dependency.equals(possiblyDependOnTransformationId)) {
@@ -105,86 +110,101 @@ public class KielerCompiler {
         }
         return false;
     }
-    
-    //-------------------------------------------------------------------------
-    
+
+    // -------------------------------------------------------------------------
+
     /**
      * Insert transformationID in the correct order into list of transformationIDs.
-     *
-     * @param transformationIDs the transformation i ds
-     * @param dependencyID the dependency id
+     * 
+     * @param transformationIDs
+     *            the transformation i ds
+     * @param dependencyID
+     *            the dependency id
      * @return the list
      */
-    private static List<String> insertTransformationID(List<String> transformationIDs, String insertTransformationID) {
+    private static List<String> insertTransformationID(List<String> transformationIDs,
+            String insertTransformationID) {
         // Do not insert if already part
-        for(String checkTransformationID : transformationIDs) {
+        for (String checkTransformationID : transformationIDs) {
             if (checkTransformationID.equals(insertTransformationID)) {
                 return transformationIDs;
             }
         }
         int insertPosition = 0;
-        for(int i = transformationIDs.size()-1; i >=0; i--) {
+        for (int i = transformationIDs.size() - 1; i >= 0; i--) {
             String checkTransformationID = transformationIDs.get(i);
             if (isDependingOn(insertTransformationID, checkTransformationID)) {
-                // We have found a checkTransformationID that the instertTransformationID is depended
-                // on so we have to ensure checkTransformationID is done BEFORE instertTransformationID
+                // We have found a checkTransformationID that the instertTransformationID is
+                // depended
+                // on so we have to ensure checkTransformationID is done BEFORE
+                // instertTransformationID
                 // => order insterTransformationID AFTER checkTransformationID (=pos + 1)
-                insertPosition = i+1;
+                insertPosition = i + 1;
                 break;
             }
         }
         transformationIDs.add(insertPosition, insertTransformationID);
         return transformationIDs;
     }
-    
-    //-------------------------------------------------------------------------
-    
+
+    // -------------------------------------------------------------------------
+
     /**
      * Expanding dependencies will insert dependend transformation IDs into the transformationIDs
      * list and return this updated list.
-     *
-     * @param transformationIDs the transformation IDs
+     * 
+     * @param transformationIDs
+     *            the transformation IDs
      * @return the list
      */
-    private static List<String> expandDependencies(String transformationID, List<String> transformationIDs) {
+    private static List<String> expandDependencies(String transformationID,
+            List<String> transformationIDs) {
         List<String> dependencies = getDependencies(transformationID);
-        for(String dependency : dependencies) {
+        for (String dependency : dependencies) {
             insertTransformationID(transformationIDs, dependency);
         }
         return dependencies;
     }
-    
-    //-------------------------------------------------------------------------
-    
+
+    // -------------------------------------------------------------------------
+
     /**
      * Expand dependencies of all transformationIDs. If the transformationID is a GROUP then only
      * consider its dependencies and remove the GROUP transformationID.
-     *
-     * @param transformationIDs the transformation i ds
+     * 
+     * @param transformationIDs
+     *            the transformation i ds
      * @return the list
      */
     private static List<String> expandDependencies(List<String> transformationIDs) {
         List<String> returnList = new ArrayList<String>();
-        
-        for(String transformationID : transformationIDs) {
+        for (String transformationID : transformationIDs) {
             Transformation transformation = getTransformation(transformationID);
-            List<String> dependencies = getDependencies(transformationID);
-            
             if (!(transformation instanceof TransformationGroup)) {
                 // Only add if no group
                 returnList.add(transformationID);
             }
             // Now add all dependencies
-            returnList = expandDependencies(transformationID, returnList);            
+            returnList = expandDependencies(transformationID, returnList);
+        }
+        // Finally check if there is any left GROUP (that may be freshly inserted as a dependency)
+        // If this is the case => recursive closure
+        for (String transformationID : returnList) {
+            Transformation transformation = getTransformation(transformationID);
+            if (transformation instanceof TransformationGroup) {
+                // We need to run this method again until ALL groups are gone!
+                return expandDependencies(returnList);
+            }
         }
         return returnList;
-    }    
+    }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * Central KIELER Compiler compile method. It can be called in order to call several consecutive
-     * transformations. Specify desired transformations with comma separated IDs.
+     * transformations. Specify desired transformations or transformation groups with comma
+     * separated IDs.
      * 
      * @param transformationIDs
      *            the transformation i ds
@@ -192,7 +212,7 @@ public class KielerCompiler {
      *            the e object
      * @return the object
      */
-    public static Object compile(final String transformationIDs, final EObject eObject) {
+    public static EObject compile(final String transformationIDs, final EObject eObject) {
         String[] transformationIDArray = transformationIDs.split(",");
         if (transformationIDArray == null) {
             return null;
@@ -200,11 +220,12 @@ public class KielerCompiler {
         return compile(Arrays.asList(transformationIDArray), eObject);
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * Central KIELER Compiler compile method. It can be called in order to call several consecutive
-     * transformations. Specify desired transformations as a String List of IDs.
+     * transformations. Specify desired transformations or transformation groups as a String List of
+     * their IDs.
      * 
      * @param transformationID
      *            the transformation id
@@ -212,19 +233,42 @@ public class KielerCompiler {
      *            the e object
      * @return the object
      */
-    public static Object compile(final List<String> transformationIDs, final EObject eObject) {
+    public static EObject compile(final List<String> transformationIDs, final EObject eObject) {
+        return compile(transformationIDs, eObject, true);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Advanced KIELER Compiler compile method. It can be called in order to call several
+     * consecutive transformations. Specify desired transformations as a String List of IDs. Use
+     * this with care! Note that if switching autoexpand off you cannot use transformation group IDs
+     * any more. Also no dependencies will be considered. The transformations will be applied
+     * straight forward in the order defined by the transformationIDs list.
+     * 
+     * @param transformationID
+     *            the transformation id
+     * @param eObject
+     *            the e object
+     * @return the object
+     */
+    public static EObject compile(final List<String> transformationIDs, final EObject eObject,
+            final boolean autoexpand) {
 
         EObject transformedObject = eObject;
 
         // For debugging ALWAYS update the registered transformations
-        transformations =
-                KiCoPlugin.getDefault().getRegisteredTransformations(DEBUG);
+        transformations = KiCoPlugin.getDefault().getRegisteredTransformations(DEBUG);
 
-        List<String> processedTransformationIDs = expandDependencies(transformationIDs);        
-        
+        // Auto expansion will resolve dependencies and expand transformation groups
+        List<String> processedTransformationIDs = transformationIDs;
+        if (autoexpand) {
+           processedTransformationIDs = expandDependencies(transformationIDs);
+        }
+
         for (String processedTransformationID : processedTransformationIDs) {
 
-            Transformation transformation =  getTransformation(processedTransformationID);
+            Transformation transformation = getTransformation(processedTransformationID);
 
             if (transformation != null)
                 // If the requested TransformationID
@@ -236,6 +280,6 @@ public class KielerCompiler {
         return transformedObject;
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
 }

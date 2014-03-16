@@ -1008,7 +1008,7 @@
          point="de.cau.cs.kieler.kico.transformation">
       <transformationGroup
             id="ALL"
-            dependencies="HISTORY, WEAKSUSPEND, DEFERRED, STATIC, SIGNAL, COUNTDELAY, PRE, SUSPEND, COMPLEXFINALSTATE, ABORT, DURING, INITIALIZATION, ENTRY, EXIT, CONNECTOR, TRIGGEREFFECT, SURFACEDEPTH"
+            dependencies="CORE NORMALIZE"
             name="Transform All">
       </transformationGroup>
    </extension>

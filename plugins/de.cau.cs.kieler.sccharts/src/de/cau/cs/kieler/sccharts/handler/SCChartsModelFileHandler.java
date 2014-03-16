@@ -166,7 +166,7 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
 
         transformed = model;
         
-        transformed = (EObject) KielerCompiler.compile(commandString, (Region) transformed);
+        transformed = KielerCompiler.compile(commandString, (Region) transformed);
 
 //        if (commandString.equals(CORE_TRANSFORMATIONS)) {
 //            transformed = transformation.transformHistory((Region) transformed);
