@@ -561,7 +561,7 @@ class SCChartsCoreTransformation {
         clearMapping; //NEW - clear previous mapping information to assure a single consistent mapping
 
         // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.mappedCopy; //NEW - mapping information (changed copy to mappedCopy)
+        var targetRootRegion = rootRegion.mappedCopy.fixAllPriorities; //NEW - mapping information (changed copy to mappedCopy)
 
         // Traverse all transitions
         for (targetTransition : targetRootRegion.getAllContainedTransitions) {
