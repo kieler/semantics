@@ -199,15 +199,23 @@ public class KiCoPlugin extends AbstractUIPlugin {
                             + transformations[i].getContributor().getName());
                 }
 
-                Object transformationInstance =
-                        transformations[i].createExecutableExtension("class");
+                String transformationClass = transformations[i].getAttribute("class");
+                Object transformationInstance = null;
+                if (transformationClass != null) {
+                    transformationInstance =
+                            transformations[i].createExecutableExtension("class");
+                }
                 String id = transformations[i].getAttribute("id");
                 String name = transformations[i].getAttribute("name");
                 String method = transformations[i].getAttribute("method");
                 String dependenciesString = transformations[i].getAttribute("dependencies");
                 
                 Transformation transformation;
-                if (transformationInstance instanceof Transformation) {
+                if (transformationInstance == null) {
+                    // The Transformation is defined as a GROUP by its dependencies
+                    transformation = new TransformationGroup();
+                }
+                else if (transformationInstance instanceof Transformation) {
                     // The specified class is a Transformation, use it directly
                     transformation =
                             (Transformation) transformations[i].createExecutableExtension("class");

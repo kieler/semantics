@@ -66,6 +66,8 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformationimport de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import static de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramSynthesis.*
+import de.cau.cs.kieler.kico.KielerCompiler
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -133,8 +135,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     private static val SynthesisOption TRANSFORM_SUSPEND = SynthesisOption::createCheckOption("Transform Suspend", false);
     private static val SynthesisOption TRANSFORM_COMPLEXFINALSTATE = SynthesisOption::createCheckOption(
         "Transform Complex Final State", false);
-    private static val SynthesisOption TRANSFORM_ABORT1 = SynthesisOption::createCheckOption("Transform Abort1", false);
-    private static val SynthesisOption TRANSFORM_ABORT2 = SynthesisOption::createCheckOption("Transform Abort2", false);
+    private static val SynthesisOption TRANSFORM_ABORTALTERNATIVE = SynthesisOption::createCheckOption("Transform Abort Alternative", false);
+    private static val SynthesisOption TRANSFORM_ABORT = SynthesisOption::createCheckOption("Transform Abort", false);
     private static val SynthesisOption TRANSFORM_DURING = SynthesisOption::createCheckOption("Transform During", false);
     private static val SynthesisOption TRANSFORM_INITIALIZATION = SynthesisOption::createCheckOption(
         "Transform Initialization", false);
@@ -172,7 +174,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
             SHOW_SHADOW, TRANSFORM_HISTORY, TRANSFORM_WEAKSUSPEND, TRANSFORM_DEFERRED, TRANSFORM_STATIC,
             TRANSFORM_SIGNAL, TRANSFORM_COUNTDELAY, TRANSFORM_PRE, TRANSFORM_SUSPEND, TRANSFORM_COMPLEXFINALSTATE,
-            TRANSFORM_ABORT1, TRANSFORM_ABORT2, TRANSFORM_DURING, TRANSFORM_INITIALIZATION, TRANSFORM_ENTRY,
+            TRANSFORM_ABORTALTERNATIVE, TRANSFORM_ABORT, TRANSFORM_DURING, TRANSFORM_INITIALIZATION, TRANSFORM_ENTRY,
             TRANSFORM_EXIT, TRANSFORM_CONNECTOR, TRANSFORM_NORMALIZE, TRANSFORM_CORE, TRANSFORM_CORENORMALIZE);
     }
 
@@ -205,86 +207,101 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     override transform(Region model) {
         var transformed = model;
 
-        if (TRANSFORM_CORE.booleanValue || TRANSFORM_CORENORMALIZE.booleanValue) {
-            transformed = transformed.transformHistory;
-            transformed = transformed.transformWeakSuspend
-            transformed = transformed.transformDeferred
-            transformed = transformed.transformStatic
-            transformed = transformed.transformSignal
-            transformed = transformed.transformCountDelay
-            transformed = transformed.transformPre
-            transformed = transformed.transformSuspend
-            transformed = transformed.transformComplexFinalState
-            transformed = transformed.transformAborts2
-            transformed = transformed.transformDuring
-            transformed = transformed.transformInitialization
-            transformed = transformed.transformEntry
-            transformed = transformed.transformExit
-            transformed = transformed.transformConnector
-            transformed = transformed.transformTriggerEffect
+        if (TRANSFORM_CORE.booleanValue || TRANSFORM_CORENORMALIZE.booleanValue || TRANSFORM_NORMALIZE.booleanValue) {
             if (TRANSFORM_CORENORMALIZE.booleanValue) {
-                transformed = transformed.transformSurfaceDepth
+                transformed = KielerCompiler.compile("ALL", transformed) as Region
+            } else if (TRANSFORM_CORE.booleanValue) {
+                transformed = KielerCompiler.compile("CORE", transformed) as Region
+            } else if (TRANSFORM_NORMALIZE.booleanValue) {
+                transformed = KielerCompiler.compile("NORMALIZE", transformed) as Region
             }
+//            transformed = transformed.transformHistory;
+//            transformed = transformed.transformWeakSuspend
+//            transformed = transformed.transformDeferred
+//            transformed = transformed.transformStatic
+//            transformed = transformed.transformSignal
+//            transformed = transformed.transformCountDelay
+//            transformed = transformed.transformPre
+//            transformed = transformed.transformSuspend
+//            transformed = transformed.transformComplexFinalState
+//            transformed = transformed.transformAbort
+//            transformed = transformed.transformDuring
+//            transformed = transformed.transformInitialization
+//            transformed = transformed.transformEntry
+//            transformed = transformed.transformExit
+//            transformed = transformed.transformConnector
+//            transformed = transformed.transformTriggerEffect
+//            if (TRANSFORM_CORENORMALIZE.booleanValue) {
+//                transformed = transformed.transformSurfaceDepth
+//            }
         } else {
             if (TRANSFORM_HISTORY.booleanValue) {
-                transformed = transformed.transformHistory;
+                transformed = KielerCompiler.compile("HISTORY", transformed) as Region
+//                transformed = transformed.transformHistory;
             }
             if (TRANSFORM_WEAKSUSPEND.booleanValue) {
-                transformed = transformed.transformWeakSuspend
+                transformed = KielerCompiler.compile("WEAKSUSPEND", transformed) as Region
+//                transformed = transformed.transformWeakSuspend
             }
             if (TRANSFORM_DEFERRED.booleanValue) {
-                transformed = transformed.transformDeferred
+                transformed = KielerCompiler.compile("DEFERRED", transformed) as Region
+//                transformed = transformed.transformDeferred
             }
             if (TRANSFORM_STATIC.booleanValue) {
-                transformed = transformed.transformStatic
+                transformed = KielerCompiler.compile("STATIC", transformed) as Region
+//                transformed = transformed.transformStatic
             }
             if (TRANSFORM_SIGNAL.booleanValue) {
-                transformed = transformed.transformSignal
+                transformed = KielerCompiler.compile("SIGNAL", transformed) as Region
+//                transformed = transformed.transformSignal
             }
             if (TRANSFORM_COUNTDELAY.booleanValue) {
-                transformed = transformed.transformCountDelay
+                transformed = KielerCompiler.compile("COUNTDELAY", transformed) as Region
+//                transformed = transformed.transformCountDelay
             }
             if (TRANSFORM_PRE.booleanValue) {
-                transformed = transformed.transformPre
+                transformed = KielerCompiler.compile("PRE", transformed) as Region
+//                transformed = transformed.transformPre
             }
             if (TRANSFORM_SUSPEND.booleanValue) {
-                transformed = transformed.transformSuspend
+                transformed = KielerCompiler.compile("SUSPEND", transformed) as Region
+//                transformed = transformed.transformSuspend
             }
             if (TRANSFORM_COMPLEXFINALSTATE.booleanValue) {
-                transformed = transformed.transformComplexFinalState
+                transformed = KielerCompiler.compile("COMPLEXFINALSTATE", transformed) as Region
+//                transformed = transformed.transformComplexFinalState
             }
-            if (TRANSFORM_ABORT1.booleanValue) {
-
+            if (TRANSFORM_ABORTALTERNATIVE.booleanValue) {
                 // There are TWO options for the Aborts transformation
                 // 1. transformAborts1() and 2. transformAborts2()
-                transformed = transformed.transformAborts1
+                transformed = KielerCompiler.compile("ABORTALTERNATIVE", transformed) as Region
+//                transformed = transformed.transformAbortAlternative
             }
-            if (TRANSFORM_ABORT2.booleanValue) {
-
+            if (TRANSFORM_ABORT.booleanValue) {
                 // There are TWO options for the Aborts transformation
                 // 1. transformAborts1() and 2. transformAborts2()
-                transformed = transformed.transformAborts2
+                transformed = KielerCompiler.compile("ABORT", transformed) as Region
+//                transformed = transformed.transformAbort
             }
             if (TRANSFORM_DURING.booleanValue) {
-                transformed = transformed.transformDuring
+                transformed = KielerCompiler.compile("DURING", transformed) as Region
+//                transformed = transformed.transformDuring
             }
             if (TRANSFORM_INITIALIZATION.booleanValue) {
-                transformed = transformed.transformInitialization
+                transformed = KielerCompiler.compile("INITIALIZATION", transformed) as Region
+//                transformed = transformed.transformInitialization
             }
             if (TRANSFORM_ENTRY.booleanValue) {
-                transformed = transformed.transformEntry
+                transformed = KielerCompiler.compile("ENTRY", transformed) as Region
+//                transformed = transformed.transformEntry
             }
             if (TRANSFORM_EXIT.booleanValue) {
-                transformed = transformed.transformExit
+                transformed = KielerCompiler.compile("EXIT", transformed) as Region
+//                transformed = transformed.transformExit
             }
             if (TRANSFORM_CONNECTOR.booleanValue) {
-                transformed = transformed.transformConnector
-            }
-            if (TRANSFORM_NORMALIZE.booleanValue) {
-                transformed = transformed.transformTriggerEffect
-            }
-            if (TRANSFORM_NORMALIZE.booleanValue) {
-                transformed = transformed.transformSurfaceDepth
+                transformed = KielerCompiler.compile("CONNECTOR", transformed) as Region
+//                transformed = transformed.transformConnector
             }
         }
 

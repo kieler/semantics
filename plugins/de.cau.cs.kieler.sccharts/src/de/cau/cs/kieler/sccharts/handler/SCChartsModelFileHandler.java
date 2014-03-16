@@ -24,71 +24,77 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation;
  */
 public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandler {
 
-    public static final String ALLCORE_TRANSFORMATIONS =
-            "de.cau.cs.kieler.sccharts.commands.AllCoreTransformations";
+    public static final String ALL_TRANSFORMATIONS =
+            "ALL";
 
-    public static final String ALLNORMALIZE_TRANSFORMATIONS =
-            "de.cau.cs.kieler.sccharts.commands.AllNormalizeTransformations";
+    public static final String CORE_TRANSFORMATIONS =
+            "CORE";
+
+    public static final String NORMALIZE_TRANSFORMATIONS =
+            "NORMALIZE";
 
     public static final String ABORT_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.AbortTransformation";
+            "ABORT";
+
+    public static final String ABORTALTERNATIVE_TRANSFORMATION =
+            "ABORTALTERNATIVE";
 
     public static final String SURFACEDEPTH_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.SurfaceDepthTransformation";
+            "SURFACEDEPTH";
 
     public static final String TRIGGEREFFECT_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.TriggerEffectTransformation";
+            "TRIGGEREFFECT";
 
     public static final String SIGNAL_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.SignalTransformation";
+            "SIGNAL";
 
     public static final String INPUTOUTPUTVARIABLE_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.InputOutputVariableTransformation";
+            "INPUTOUTPUTVARIABLE";
 
     public static final String ENTRY_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.EntryTransformation";
+            "ENTRY";
 
     public static final String DURING_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.DuringTransformation";
+            "DURING";
 
     public static final String STATIC_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.StaticTransformation";
+            "STATIC";
 
     public static final String EXIT_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.ExitTransformation";
+            "EXIT";
 
     public static final String CONNECTOR_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.ConnectorTransformation";
+            "CONNECTOR";
 
     public static final String HISTORY_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.HistoryTransformation";
+            "HISTORY";
 
     public static final String SUSPEND_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.SuspendTransformation";
+            "SUSPENBD";
 
     public static final String WEAKSUSPEND_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.WeakSuspendTransformation";
+            "WEAKSUSPEND";
 
     public static final String COUNTDELAY_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.CountDelayTransformation";
+            "COUNTDELAY";
 
     public static final String DEFERRED_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.DeferredTransformation";
+            "DEFERRED";
 
     public static final String PRE_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.PreTransformation";
+            "PRE";
 
     public static final String INITIALIZATION_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.InitializationTransformation";
+            "INITIALIZATION";
 
     public static final String EXPOSELOCALVARIABLE_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.ExposeLocalVariableTransformation";
+            "EXPOSELOCALVARIABLE";
 
     public static final String TERMINATION_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.TerminationTransformation";
+            "TERMINATION";
 
     public static final String COMPLEXFINALSTATE_TRANSFORMATION =
-            "de.cau.cs.kieler.sccharts.commands.ComplexFinalStateTransformation";
+            "COMPLEXFINALSTATE";
 
     // -------------------------------------------------------------------------
 
@@ -117,9 +123,9 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     @Override
     protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
         String commandString = getCommandString(event);
-        if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {
+        if (commandString.equals(CORE_TRANSFORMATIONS)) {
             return "core";
-        } else if (commandString.equals(ALLNORMALIZE_TRANSFORMATIONS)) {
+        } else if (commandString.equals(NORMALIZE_TRANSFORMATIONS)) {
             return "normalized";
         } else {
             return "transformed";
@@ -140,8 +146,8 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         // Use commandString for Scc and Sct Transformation
-        commandString = commandString.replace("commands.Scc", "commands.");
-        commandString = commandString.replace("commands.Sct", "commands.");
+        commandString = commandString.replace("SCC_", "");
+        commandString = commandString.replace("SCT_", "");
         return commandString;
     }
 
@@ -159,71 +165,74 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
                 Guice.createInjector().getInstance(SCChartsCoreTransformation.class);
 
         transformed = model;
-        if (commandString.equals(ALLCORE_TRANSFORMATIONS)) {
-            transformed = transformation.transformHistory((Region) transformed);
-            transformed = transformation.transformWeakSuspend((Region) transformed);
-            transformed = transformation.transformDeferred((Region) transformed);
-            transformed = transformation.transformStatic((Region) transformed);
-            transformed = transformation.transformSignal((Region) transformed);
-            transformed = transformation.transformCountDelay((Region) transformed);
-            transformed = transformation.transformPre((Region) transformed);
-            transformed = transformation.transformSuspend((Region) transformed);
-            transformed = transformation.transformComplexFinalState((Region) transformed);
-            // There are TWO options for the Aborts transformation
-            // 1. transformAborts1() and 2. transformAborts2()
-            transformed = transformation.transformAborts2((Region) transformed);
-            transformed = transformation.transformDuring((Region) transformed);
-            transformed = transformation.transformInitialization((Region) transformed);
-            transformed = transformation.transformEntry((Region) transformed);
-            transformed = transformation.transformExit((Region) transformed);
-            transformed = transformation.transformConnector((Region) transformed);
-        } else if (commandString.equals(ALLNORMALIZE_TRANSFORMATIONS)) {
-            transformed = transformation.transformTriggerEffect((Region) transformed);
-            transformed = transformation.transformSurfaceDepth((Region) transformed);
-        } else if (commandString.equals(ABORT_TRANSFORMATION)) {
-            // There are TWO options for the Aborts transformation
-            // 1. transformAborts1() and 2. transformAborts2()
-            transformed = transformation.transformAborts2((Region) transformed);
-        } else if (commandString.equals(SURFACEDEPTH_TRANSFORMATION)) {
-            transformed = transformation.transformSurfaceDepth((Region) transformed);
-        } else if (commandString.equals(TRIGGEREFFECT_TRANSFORMATION)) {
-            //transformed = transformation.transformTriggerEffect((Region) transformed);
-            transformed = (EObject) KielerCompiler.compile("TRIGGEREFFECT", (Region) transformed);
-        } else if (commandString.equals(SIGNAL_TRANSFORMATION)) {
-            transformed = transformation.transformSignal((Region) transformed);
-        } else if (commandString.equals(INPUTOUTPUTVARIABLE_TRANSFORMATION)) {
-            transformed = transformation.transformInputOutputVariable((Region) transformed);
-        } else if (commandString.equals(ENTRY_TRANSFORMATION)) {
-            transformed = transformation.transformEntry((Region) transformed);
-        } else if (commandString.equals(DURING_TRANSFORMATION)) {
-            transformed = transformation.transformDuring((Region) transformed);
-        } else if (commandString.equals(STATIC_TRANSFORMATION)) {
-            transformed = transformation.transformStatic((Region) transformed);
-        } else if (commandString.equals(EXIT_TRANSFORMATION)) {
-            transformed = transformation.transformExit((Region) transformed);
-        } else if (commandString.equals(CONNECTOR_TRANSFORMATION)) {
-            transformed = transformation.transformConnector((Region) transformed);
-        } else if (commandString.equals(HISTORY_TRANSFORMATION)) {
-            transformed = transformation.transformHistory((Region) transformed);
-        } else if (commandString.equals(SUSPEND_TRANSFORMATION)) {
-            transformed = transformation.transformSuspend((Region) transformed);
-        } else if (commandString.equals(WEAKSUSPEND_TRANSFORMATION)) {
-            transformed = transformation.transformWeakSuspend((Region) transformed);
-        } else if (commandString.equals(COUNTDELAY_TRANSFORMATION)) {
-            transformed = transformation.transformCountDelay((Region) transformed);
-        } else if (commandString.equals(DEFERRED_TRANSFORMATION)) {
-            transformed = transformation.transformDeferred((Region) transformed);
-        } else if (commandString.equals(PRE_TRANSFORMATION)) {
-            transformed = transformation.transformPre((Region) transformed);
-        } else if (commandString.equals(INITIALIZATION_TRANSFORMATION)) {
-            transformed = transformation.transformInitialization((Region) transformed);
-        } else if (commandString.equals(EXPOSELOCALVARIABLE_TRANSFORMATION)) {
-            transformed = transformation.transformExposeLocalValuedObject((Region) transformed);
-        } else if (commandString.equals(TERMINATION_TRANSFORMATION)) {
-            transformed = transformation.transformTermination((Region) transformed);
-        } else if (commandString.equals(COMPLEXFINALSTATE_TRANSFORMATION)) {
-            transformed = transformation.transformComplexFinalState((Region) transformed);
-        }
+        
+        transformed = (EObject) KielerCompiler.compile(commandString, (Region) transformed);
+
+//        if (commandString.equals(CORE_TRANSFORMATIONS)) {
+//            transformed = transformation.transformHistory((Region) transformed);
+//            transformed = transformation.transformWeakSuspend((Region) transformed);
+//            transformed = transformation.transformDeferred((Region) transformed);
+//            transformed = transformation.transformStatic((Region) transformed);
+//            transformed = transformation.transformSignal((Region) transformed);
+//            transformed = transformation.transformCountDelay((Region) transformed);
+//            transformed = transformation.transformPre((Region) transformed);
+//            transformed = transformation.transformSuspend((Region) transformed);
+//            transformed = transformation.transformComplexFinalState((Region) transformed);
+//            // There are TWO options for the Aborts transformation
+//            // 1. transformAborts1() and 2. transformAborts2()
+//            transformed = transformation.transformAbort((Region) transformed);
+//            transformed = transformation.transformDuring((Region) transformed);
+//            transformed = transformation.transformInitialization((Region) transformed);
+//            transformed = transformation.transformEntry((Region) transformed);
+//            transformed = transformation.transformExit((Region) transformed);
+//            transformed = transformation.transformConnector((Region) transformed);
+//        } else if (commandString.equals(NORMALIZE_TRANSFORMATIONS)) {
+//            transformed = transformation.transformTriggerEffect((Region) transformed);
+//            transformed = transformation.transformSurfaceDepth((Region) transformed);
+//        } else if (commandString.equals(ABORT_TRANSFORMATION)) {
+//            // There are TWO options for the Aborts transformation
+//            // 1. transformAbortAlternative() and 2. transformAbort()
+//            transformed = transformation.transformAbort((Region) transformed);
+//        } else if (commandString.equals(SURFACEDEPTH_TRANSFORMATION)) {
+//            transformed = transformation.transformSurfaceDepth((Region) transformed);
+//        } else if (commandString.equals(TRIGGEREFFECT_TRANSFORMATION)) {
+//            //transformed = transformation.transformTriggerEffect((Region) transformed);
+//            transformed = (EObject) KielerCompiler.compile("TRIGGEREFFECT", (Region) transformed);
+//        } else if (commandString.equals(SIGNAL_TRANSFORMATION)) {
+//            transformed = transformation.transformSignal((Region) transformed);
+//        } else if (commandString.equals(INPUTOUTPUTVARIABLE_TRANSFORMATION)) {
+//            transformed = transformation.transformInputOutputVariable((Region) transformed);
+//        } else if (commandString.equals(ENTRY_TRANSFORMATION)) {
+//            transformed = transformation.transformEntry((Region) transformed);
+//        } else if (commandString.equals(DURING_TRANSFORMATION)) {
+//            transformed = transformation.transformDuring((Region) transformed);
+//        } else if (commandString.equals(STATIC_TRANSFORMATION)) {
+//            transformed = transformation.transformStatic((Region) transformed);
+//        } else if (commandString.equals(EXIT_TRANSFORMATION)) {
+//            transformed = transformation.transformExit((Region) transformed);
+//        } else if (commandString.equals(CONNECTOR_TRANSFORMATION)) {
+//            transformed = transformation.transformConnector((Region) transformed);
+//        } else if (commandString.equals(HISTORY_TRANSFORMATION)) {
+//            transformed = transformation.transformHistory((Region) transformed);
+//        } else if (commandString.equals(SUSPEND_TRANSFORMATION)) {
+//            transformed = transformation.transformSuspend((Region) transformed);
+//        } else if (commandString.equals(WEAKSUSPEND_TRANSFORMATION)) {
+//            transformed = transformation.transformWeakSuspend((Region) transformed);
+//        } else if (commandString.equals(COUNTDELAY_TRANSFORMATION)) {
+//            transformed = transformation.transformCountDelay((Region) transformed);
+//        } else if (commandString.equals(DEFERRED_TRANSFORMATION)) {
+//            transformed = transformation.transformDeferred((Region) transformed);
+//        } else if (commandString.equals(PRE_TRANSFORMATION)) {
+//            transformed = transformation.transformPre((Region) transformed);
+//        } else if (commandString.equals(INITIALIZATION_TRANSFORMATION)) {
+//            transformed = transformation.transformInitialization((Region) transformed);
+//        } else if (commandString.equals(EXPOSELOCALVARIABLE_TRANSFORMATION)) {
+//            transformed = transformation.transformExposeLocalValuedObject((Region) transformed);
+//        } else if (commandString.equals(TERMINATION_TRANSFORMATION)) {
+//            transformed = transformation.transformTermination((Region) transformed);
+//        } else if (commandString.equals(COMPLEXFINALSTATE_TRANSFORMATION)) {
+//            transformed = transformation.transformComplexFinalState((Region) transformed);
+//        }
         return transformed;
     }
 
