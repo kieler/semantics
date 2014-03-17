@@ -23,7 +23,7 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.ktm.extensions.TransformationMapping
+import de.cau.cs.kieler.ktm.extensions.TransformationMapping // KTM
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.HistoryType

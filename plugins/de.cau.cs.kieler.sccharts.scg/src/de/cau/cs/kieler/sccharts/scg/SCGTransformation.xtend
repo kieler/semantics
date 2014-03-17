@@ -37,6 +37,8 @@ import java.util.HashMap
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
+import de.cau.cs.kieler.ktm.extensions.TransformationMapping // KTM
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
@@ -67,9 +69,20 @@ class SCGTransformation {
     @Inject
     extension SCChartsExtension
     
+    @Inject
+    extension TransformationMapping // KTM
+    
     private static val Injector i = ActionsStandaloneSetup::doSetup();
     private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
     private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
+    
+    //-------------------------------------------------------------------------
+    //--               KTM Mapping access delegation                         --
+    //-------------------------------------------------------------------------
+    
+    def extractMapping() {
+        extractMappingData;
+    }
     
     //-------------------------------------------------------------------------
     //--                         U T I L I T Y                               --
@@ -143,6 +156,11 @@ class SCGTransformation {
 
     // Transforming Local ValuedObjects.
     def SCGraph transformSCG(Region rootRegion) {
+        // KTM - clear previous mapping information to assure a single consistent mapping. Create a new 
+        // mapping for each transformation, mappings have to be saved with extractMapping between the 
+        // transformations or they will be lost.
+        clearMapping;    
+        
         // Fix termination transitions that have effects
         var rootRegion2 = rootRegion.fixTerminationWithEffects
         // Fix possible halt states
@@ -153,11 +171,14 @@ class SCGTransformation {
         resetMapping
         // Create a new SCGraph
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph
+        rootRegion.mapChild(sCGraph); // KTM - transformation mapping information
+        rootRegion.rootState.mapChild(sCGraph); // KTM - transformation mapping information
         // Handle declarations
         for (valuedObject : rootRegion2.rootState.valuedObjects) {
             val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
             valuedObjectSCG.applyAttributes(valuedObject)
             valuedObjectSCG.map(valuedObject)
+            valuedObjectSCG.mapParent(valuedObject); // KTM - transformation mapping information
         }
         // Include top most level of hierarchy 
         // if the root state itself already contains multiple regions.
@@ -178,6 +199,9 @@ class SCGTransformation {
         }
         // Fix superfluous exit nodes
         sCGraph.trimExitNodes.trimConditioanlNodes
+        
+        val completeness = checkMappingCompleteness(rootRegion, sCGraph); // KTM - DEBUG
+        return sCGraph;
     }
            
    // -------------------------------------------------------------------------   
