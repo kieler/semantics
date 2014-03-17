@@ -500,6 +500,7 @@ class SCChartsCoreTransformation {
 
                                 // Create a new state
                                 currentState = parentRegion.createState(GENERATED_PREFIX + "S").uniqueName
+                                currentState.mapParents(surfaceState.mappedParents); // KTM - mapping information
 
                                 // Connect
                                 val connect = previousState.createTransitionTo(currentState)
@@ -523,6 +524,7 @@ class SCChartsCoreTransformation {
 
                         // Connect back depth with surface state
                         var T2tmp = previousState.createImmediateTransitionTo(depthState)
+                        T2tmp.mapParents(previousState.mappedParents); // KTM - mapping information
 
                         // Afterwards do the DTO transformation
                         /* Der Knoten S_Depth ist ja besonders ausgezeichnet. Er hat immer zwei
@@ -565,8 +567,12 @@ class SCChartsCoreTransformation {
                                             t.setTargetState(stateAfterDepth)
                                             for (transition : K2.outgoingTransitions) {
                                                 transition.targetState.incomingTransitions.remove(transition)
+                                                stateAfterDepth.mapParents(transition.mappedParents); // KTM - redirect mapping information
+                                                transition.unmapAll; // KTM - remove mapping information
                                             }
                                             K2.parentRegion.states.remove(K2)
+                                            stateAfterDepth.mapParents(K2.mappedParents); // KTM - redirect mapping information
+                                            K2.unmapAll; // KTM - remove mapping information
                                             done = false
                                             T2tmp = t
                                         }
