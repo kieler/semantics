@@ -392,9 +392,9 @@ class SCChartsCoreTransformation {
             targetState.transformSurfaceDepth(targetRootRegion);
         } 
         
-        val completeness0 = checkMappingCompleteness(rootRegion, targetRootRegion); //NEW - DEBUG
+        //val completeness0 = checkMappingCompleteness(rootRegion, targetRootRegion); //NEW - DEBUG
         targetRootRegion = targetRootRegion.fixAllTextualOrdersByPriorities.optimize1;
-        val completeness1 = checkMappingCompleteness(rootRegion, targetRootRegion); //NEW - DEBUG
+        //val completeness1 = checkMappingCompleteness(rootRegion, targetRootRegion); //NEW - DEBUG
         targetRootRegion;
     }
 
@@ -568,7 +568,7 @@ class SCChartsCoreTransformation {
             targetTransition.transformTriggerEffect(targetRootRegion);
         }
 
-        val completeness = checkMappingCompleteness(rootRegion, targetRootRegion); //NEW - DEBUG
+        //val completeness = checkMappingCompleteness(rootRegion, targetRootRegion); //NEW - DEBUG
         targetRootRegion;
     }
 

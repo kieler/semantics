@@ -201,7 +201,7 @@ class SCGTransformation {
         // Fix superfluous exit nodes
         sCGraph.trimExitNodes.trimConditioanlNodes
 
-        val completeness = checkMappingCompleteness(rootRegion, sCGraph);//NEW - DEBUG
+        //val completeness = checkMappingCompleteness(rootRegion, sCGraph);//NEW - DEBUG
         return sCGraph;
 
     }
