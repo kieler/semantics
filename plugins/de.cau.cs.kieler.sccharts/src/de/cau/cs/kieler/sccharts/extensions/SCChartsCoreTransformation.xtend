@@ -569,6 +569,11 @@ class SCChartsCoreTransformation {
                                                 transition.targetState.incomingTransitions.remove(transition)
                                                 stateAfterDepth.mapParents(transition.mappedParents); // KTM - redirect mapping information
                                                 transition.unmapAll; // KTM - remove mapping information
+                                                val finalStateAfterDepth = stateAfterDepth;
+                                                transition.getAllContents(true).forEach[// KTM - redirect mapping information of transition content
+                                                    finalStateAfterDepth.mapParents(it.mappedParents);// KTM - redirect mapping information
+                                                    it.unmapAll; // KTM - remove mapping information
+                                                ]
                                             }
                                             K2.parentRegion.states.remove(K2)
                                             stateAfterDepth.mapParents(K2.mappedParents); // KTM - redirect mapping information
