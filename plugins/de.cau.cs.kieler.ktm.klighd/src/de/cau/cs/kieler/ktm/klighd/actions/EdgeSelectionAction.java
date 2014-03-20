@@ -29,8 +29,9 @@ import de.cau.cs.kieler.core.krendering.KRenderingFactory;
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
 import de.cau.cs.kieler.klighd.IAction;
 import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.util.KlighdProperties;
 import de.cau.cs.kieler.ktm.klighd.TransformationTreeDiagramSynthesis;
-import de.cau.cs.kieler.ktm.klighd.util.MappingEdgeProperties;
+import de.cau.cs.kieler.ktm.klighd.util.MappingProperties;
 import de.cau.cs.kieler.ktm.klighd.util.NearestNodeUtil;
 
 /**
@@ -61,14 +62,14 @@ public class EdgeSelectionAction implements IAction {
             if (element instanceof KEdge) {
                 KLayoutData data = ((KEdge) element).getData(KLayoutData.class);
                 if (data != null) {
-                    Boolean isMappingEdge = data.getProperty(MappingEdgeProperties.IS_MAPPING_EDGE);
+                    Boolean isMappingEdge = data.getProperty(MappingProperties.IS_MAPPING_EDGE);
                     if (isMappingEdge != null) {
                         clickedMappingEdge = isMappingEdge.booleanValue();
                     }
                 }
             }
             if (clickedMappingEdge) {
-                //hide selected mapping edge
+                // hide selected mapping edge
                 setInvisible((KEdge) element, true);
             } else { // else clicked on element in a resolved model
 
@@ -97,20 +98,18 @@ public class EdgeSelectionAction implements IAction {
                         KLayoutData data = edge.getData(KLayoutData.class);
                         if (data != null) {
                             Boolean isMappingEdge =
-                                    data.getProperty(MappingEdgeProperties.IS_MAPPING_EDGE);
+                                    data.getProperty(MappingProperties.IS_MAPPING_EDGE);
                             if (isMappingEdge != null && isMappingEdge.booleanValue()) {
                                 // TODO activate when advanced edge placement is implemented
-                                // KGraphElement actualSource =
-                                // data.getProperty(KlighdProperties::ACTUAL_EDGE_SOURCE);
-                                // KGraphElement actualTarget =
-                                // data.getProperty(KlighdProperties::ACTUAL_EDGE_TARGET);
-                                // if(selectedElements.contains(edge.getSource()) ||
-                                // selectedElements.contains(edge.getTarget()) || (actualSource !=
-                                // null && selectedElements.contains(actualSource)) || (actualTarget
-                                // != null && selectedElements.contains(actualTarget))){
+                                KGraphElement actualSource = null;// data.getProperty(KlighdProperties.ACTUAL_EDGE_SOURCE);
+                                KGraphElement actualTarget = null;// data.getProperty(KlighdProperties.ACTUAL_EDGE_TARGET);
                                 // show edge if selected
                                 if (selectedElements.contains(edge.getSource())
-                                        || selectedElements.contains(edge.getTarget())) {
+                                        || selectedElements.contains(edge.getTarget())
+                                        || (actualSource != null && selectedElements
+                                                .contains(actualSource))
+                                        || (actualTarget != null && selectedElements
+                                                .contains(actualTarget))) {
                                     setInvisible(edge, false);
                                 } else {// else hide it
                                     setInvisible(edge, true);

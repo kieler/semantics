@@ -28,18 +28,19 @@ import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions
-import de.cau.cs.kieler.ktm.klighd.resolve.EObjectSynthesisModelWrapperWrapper
 import de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper
 import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper
 import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.krendering.KContainerRendering
 
 /**
  * KLighD visualization for TransformationTrees and EObjectsCollections in ModelWrappers.
@@ -80,7 +81,7 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
     public static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadows", true);
     public static val SynthesisOption SHOW_MODELS = SynthesisOption::createCheckOption("Model visualization", true);
     public static val SynthesisOption SHOW_ATTRIBUTES = SynthesisOption::createCheckOption("EObject attributes", false);
-    public static val SynthesisOption HIDE_EDGES = SynthesisOption::createCheckOption("Selective display of mapping edges", false);
+    public static val SynthesisOption HIDE_EDGES = SynthesisOption::createCheckOption("Selective mapping edges", false);
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SHADOW, SHOW_MODELS, SHOW_ATTRIBUTES, HIDE_EDGES);
@@ -115,63 +116,40 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
     override KNode transform(ModelWrapper model) {
         val rootNode = createNode();
 
-        //special synthesis for ModelWrapper which contained EObjectWrapper should be generated
-        if (model instanceof EObjectSynthesisModelWrapperWrapper) {
+        // add invisible surrounding rectangle
+        rootNode.addInvisibleContainerRendering.addSingleClickAction(selectActionID);
 
-            //add EObjecWrapper diagrams
-            rootNode.children += (model as EObjectSynthesisModelWrapperWrapper).modelWrapper.modelObjects.map [
-                it.translateObject;
-            ];
+        //create knode with all succeeding node from model-root-node
+        rootNode.children += model.createNode() => [ treeNode |
+            treeNode.addInvisibleContainerRendering.addSingleClickAction(selectActionID);
+            if (model.targetTransformations.empty) {
 
-            //add surrounding rectangle
-            rootNode.addRoundedRectangle(8, 8, 1) => [
-                it.lineWidth = 2;
-                it.foreground = "gray".color;
-                if (SHOW_SHADOW.booleanValue) {
-                    it.shadow = "black".color;
-                    it.shadow.XOffset = 4;
-                    it.shadow.YOffset = 4;
-                }
-                it.addChildArea;
-            ];
+                //if no succeeding transformations exists transform only root-node
+                model.transformModelWrapperAsChildNode(treeNode);
+            } else {
 
-        //synthesis for TransformationTree with given ModelWrapper as root node
-        } else {
+                //iterate over all transformations and create nodes and edges
+                model.succeedingTransformations.forEach [ trans |
+                    trans.createEdge() => [
+                        it.source = trans.source.transformModelWrapperAsChildNode(treeNode);
+                        it.target = trans.target.transformModelWrapperAsChildNode(treeNode);
+                        it.addPolyline.addArrowDecorator;
+                        it.createLabel.configureCenteralEdgeLabel(trans.transformationID,
+                            KlighdConstants::DEFAULT_FONT_SIZE,
+                            KlighdConstants::DEFAULT_FONT_NAME);
+                    ]
+                ];
+            }
+        ];
 
-            //add invisible surrounding rectangle
-            rootNode.addInvisibleContainerRendering.addSingleClickAction(selectActionID);
-
-            //create knode with all succeeding node from model-root-node
-            rootNode.children += model.createNode() => [ treeNode |
-                treeNode.addInvisibleContainerRendering.addSingleClickAction(selectActionID);
-                if (model.targetTransformations.empty) {
-
-                    //if no succeeding transformations exists transform only root-node
-                    model.transformModelAsChildNode(treeNode);
-                } else {
-
-                    //iterate over all transformations and create nodes and edges
-                    model.succeedingTransformations.forEach [ trans |
-                        trans.createEdge() => [
-                            it.source = trans.source.transformModelAsChildNode(treeNode);
-                            it.target = trans.target.transformModelAsChildNode(treeNode);
-                            it.addPolyline.addArrowDecorator;
-                            it.createLabel.configureCenteralEdgeLabel(trans.transformationID,
-                                KlighdConstants::DEFAULT_FONT_SIZE,
-                                KlighdConstants::DEFAULT_FONT_NAME);
-                        ]
-                    ];
-                }
-            ];
-        }
-
+        //        }
         return rootNode;
     }
 
     /**
 	 * Creates a Node for given ModelWRapper (once) and add it to given root node.
 	 */
-    private def KNode create node : createNode() transformModelAsChildNode(ModelWrapper model, KNode root) {
+    private def KNode create node : createNode() transformModelWrapperAsChildNode(ModelWrapper model, KNode root) {
         node.putToLookUpWith(model);
 
         //create and add colored rectangle for this node
@@ -182,19 +160,87 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
             it.fontSize = 11;
             it.setFontItalic(model.transient);
             it.setFontBold(!model.transient);
-            it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+            it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
             it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
         ];
 
         //Add selection actions for node in tree
-        //TODO this should be an event on not pressed CTRL. chsch might fix this?
-        figure.addSingleClickAction(selectActionID, false, true, false);
+        figure.addMappingSelectionActions;
 
-        //TODO this should be an event on pressed CTRL. chsch might fix this?
-        figure.addSingleClickAction(resolveActionID, false, false, true);
+        //Add regions for expanded/collapsed child area
+        figure.setGridPlacement(1);
+        figure.addChildArea();
+
+        //node.setLayoutOption(LayoutOptions::EXPAND_NODES, false);
+        node.children += createNode() => [
+            it.setLayoutOption(KlighdProperties::EXPAND, false);
+            figure.setGridPlacement(1);
+            //Collaps Rectangle
+            it.addRectangle() => [
+                it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
+                it.invisible = true;
+                //This text is only for correct size estimation
+                it.addText(model.modelTypeID) => [
+                    it.fontSize = 11
+                    it.setFontItalic(model.transient);
+                    it.setFontBold(!model.transient);
+                    it.invisible = true;
+                    it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                ];
+                it.addText("[Show Model]") => [
+                    it.foreground = "blue".color
+                    it.fontSize = 9
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                ];
+                it.addMappingSelectionActions;
+            ]
+            //Expanded Rectangle
+            it.addRectangle() => [
+                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
+                it.setBackground = "white".color;
+                it.setSurroundingSpace(2, 0);
+                it.invisible = false;
+                it.foreground = "gray".color
+                it.lineWidth = 1;
+                it.addText("[Hide]") => [
+                    it.foreground = "blue".color
+                    it.fontSize = 9
+                    //center
+                    it.setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 4, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                ];
+                it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0);
+                it.addMappingSelectionActions;
+            ];
+            //Create subdiagram from referenced model synthesis or fallback to component synthesis
+            var KNode subDiagramNode = null;
+            if (!model.transient && SHOW_MODELS.booleanValue) {
+                subDiagramNode = LightDiagramServices::translateModel(model.rootObject.EObject, usedContext);
+            }
+            if (subDiagramNode == null) { //component synthesis
+                subDiagramNode = createNode();
+                subDiagramNode.children += model.modelObjects.map [
+                    it.translateObject;
+                ];
+            }
+            // prevent adding of rectangle by adding an invisible own one.
+            subDiagramNode.addRectangle.invisible = true;
+            //Add subdiagram to collapsable child area
+            it.children += subDiagramNode;
+        ]
 
         //add child to root once 
         root.children += node;
+    }
+
+    /**
+     * Add selection and resolve actions to given container
+     */
+    def addMappingSelectionActions(KContainerRendering clickableContainer) {
+
+        //(ALT,CTRL,SHIFT)
+        clickableContainer.addSingleClickAction(selectActionID, false, true, false);
+        clickableContainer.addSingleClickAction(resolveActionID, false, false, true);
     }
 
     /**

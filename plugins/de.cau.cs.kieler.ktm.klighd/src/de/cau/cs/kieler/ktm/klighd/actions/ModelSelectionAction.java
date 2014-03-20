@@ -20,25 +20,17 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import de.cau.cs.kieler.core.kgraph.KGraphData;
-import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.KColor;
-import de.cau.cs.kieler.core.krendering.KColoring;
 import de.cau.cs.kieler.core.krendering.KForeground;
 import de.cau.cs.kieler.core.krendering.KInvisibility;
 import de.cau.cs.kieler.core.krendering.KRectangle;
 import de.cau.cs.kieler.core.krendering.KRendering;
 import de.cau.cs.kieler.core.krendering.KRenderingFactory;
 import de.cau.cs.kieler.core.krendering.KStyle;
-import de.cau.cs.kieler.core.properties.IProperty;
-import de.cau.cs.kieler.core.properties.MapPropertyHolder;
-import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.klighd.IAction;
-import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
-import de.cau.cs.kieler.ktm.klighd.TransformationTreeDiagramSynthesis;
-import de.cau.cs.kieler.ktm.klighd.resolve.EObjectSynthesisModelWrapperWrapper;
+import de.cau.cs.kieler.ktm.klighd.util.MappingProperties;
 import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 
 /**
@@ -63,10 +55,6 @@ public class ModelSelectionAction implements IAction {
     /** Root node of currently displayed model visualization added as submodel. */
     protected static final WeakHashMap<ViewContext, WeakReference<KNode>> displayedSubDiagram =
             new WeakHashMap<ViewContext, WeakReference<KNode>>();
-
-    private static final IProperty<ModelSelectionAction> ADDED_HIGHLIGHTING =
-            new Property<ModelSelectionAction>("de.cau.cs.kieler.ktm.klighd.ModelSelectionAction",
-                    null);
 
     // Highlighting colors constants
     /** Color to highlight selected source nodes. */
@@ -101,52 +89,18 @@ public class ModelSelectionAction implements IAction {
                 // if clicked an unselected node or switch from resolve to single display of models
                 if (!selectedSourceNode.containsKey(vc) || selectedSourceNode.get(vc).get() != node
                         || selectedTargetNode.containsKey(vc)) {
-                    ModelWrapper sourceMW = (ModelWrapper) sourceObject;
+                    //ModelWrapper sourceMW = (ModelWrapper) sourceObject;
 
                     // clear current selection
                     clearSelectionAndSubmodel(rootNode, vc);
 
-                    KNode subDiagram = null;
-                    boolean showModel = true; // flag indicates if show_model systhesis option is
-                                              // set or
-                                              // true on default
-                    // read out DiagramSynthesis if possible
-                    if (vc.getOptionValue(TransformationTreeDiagramSynthesis.SHOW_MODELS) != null) {
-                        showModel =
-                                ((Boolean) (vc
-                                        .getOptionValue(TransformationTreeDiagramSynthesis.SHOW_MODELS)))
-                                        .booleanValue();
-                    }
-                    // if model is transient or should not be displayed with its own synthesis.
-                    if (sourceMW.isTransient() || !showModel) {
-                        subDiagram = translateEObjectWrapperColletionDiagram(sourceMW, vc);
-                    } else { // show model with its own synthesis.
-                        subDiagram =
-                                LightDiagramServices.translateModel(sourceMW.getRootObject()
-                                        .getEObject(), vc);
-                        // if no synthesis is available fall back to EObjectWrapperColletionDiagram
-                        if (subDiagram != null && subDiagram.getChildren().isEmpty()) {
-                            subDiagram = translateEObjectWrapperColletionDiagram(sourceMW, vc);
-                        }
-                    }
-                    // add generated submodel to rootNode if possible
-                    if (subDiagram != null) {
-                        // if a translated submodel has no KRendering on rootNode KLighD will add a
-                        // black rectangle which is prevented here
-                        hideSurroundingRectangle(subDiagram);
+                    // highlight selected node
+                    selectedSourceNode.put(vc, new WeakReference<KNode>(node));
+                    highlightNode(node, sourceNodeHighlightingColor);
 
-                        // add diagram
-                        rootNode.getChildren().add(subDiagram);
-                        displayedSubDiagram.put(vc, new WeakReference<KNode>(subDiagram));
-
-                        // highlight selected node
-                        selectedSourceNode.put(vc, new WeakReference<KNode>(node));
-                        highlightNode(node, sourceNodeHighlightingColor);
-
-                        return ActionResult.createResult(true);
-                    }
+                    return ActionResult.createResult(true);
                 }
-            } else {// else deselect and remove submodel
+            } else {// else deselect all
                 clearSelectionAndSubmodel(rootNode, vc);
                 return ActionResult.createResult(true);
             }
@@ -193,26 +147,6 @@ public class ModelSelectionAction implements IAction {
         }
     }
 
-    /**
-     * Creates a diagram for a ModelWrapper in form a a collection of all contained EObjectWrappers.
-     * 
-     * @param model
-     *            ModelWrapper to show
-     * @param vc
-     *            ViewContext
-     * @return diagram as KNode or null
-     */
-    private KNode translateEObjectWrapperColletionDiagram(final ModelWrapper model,
-            final ViewContext vc) {
-        MapPropertyHolder systhesisProperty = new MapPropertyHolder();
-        systhesisProperty.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-                "de.cau.cs.kieler.ktm.klighd.TransformationTreeDiagramSynthesis");
-        // create a diagram with ModelWrapperSysthesis to show all contained EObject
-        // in a abstract way with or without their attributes
-        // (reusage of ModelWrapperSysthesis not displaying a tree)
-        return LightDiagramServices.translateModel(new EObjectSynthesisModelWrapperWrapper(model),
-                vc, systhesisProperty);
-    }
 
     /**
      * Adds highlighting color to a node.
@@ -226,7 +160,7 @@ public class ModelSelectionAction implements IAction {
         KForeground fg = KRenderingFactory.eINSTANCE.createKForeground();
         // fg.setPropagateToChildren(true);
         fg.setColor(EcoreUtil.copy(color));
-        fg.setProperty(ADDED_HIGHLIGHTING, this);
+        fg.setProperty(MappingProperties.SELECTED_NODE_HIGHLIGHTING, true);
         node.getData(KRendering.class).getStyles().add(fg);
     }
 
@@ -243,7 +177,7 @@ public class ModelSelectionAction implements IAction {
                 KStyle removeStyle = null;
                 for (KStyle style : styles) {
                     // Check if this style is added by this action
-                    if (style.getProperty(ADDED_HIGHLIGHTING) == this) {
+                    if (style.getProperty(MappingProperties.SELECTED_NODE_HIGHLIGHTING)) {
                         removeStyle = style;
                         break;
                     }

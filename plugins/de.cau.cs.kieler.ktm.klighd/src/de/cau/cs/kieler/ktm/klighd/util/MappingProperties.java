@@ -17,17 +17,17 @@ import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 
 /**
- * Contains Property to mark mapping edges.
+ * Contains Properties for marking diagram elements.
  * 
  * @author als
  * 
  */
-public final class MappingEdgeProperties {
+public final class MappingProperties {
 
     /**
      * Privates constructor to prevent instantiation.
      */
-    private MappingEdgeProperties() {
+    private MappingProperties() {
     }
 
     /**
@@ -35,4 +35,11 @@ public final class MappingEdgeProperties {
      */
     public static final IProperty<Boolean> IS_MAPPING_EDGE = new Property<Boolean>(
             "de.cau.cs.kieler.ktm.mappingedge", false);
+    
+
+    /**
+     * Marks a style as highlighting.
+     */
+    public static final IProperty<Boolean> SELECTED_NODE_HIGHLIGHTING = new Property<Boolean>(
+            "de.cau.cs.kieler.ktm.klighd.SelectionHighlighting", false);
 }

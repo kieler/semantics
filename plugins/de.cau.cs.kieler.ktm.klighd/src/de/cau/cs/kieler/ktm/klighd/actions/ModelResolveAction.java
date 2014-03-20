@@ -62,9 +62,11 @@ public class ModelResolveAction extends ModelSelectionAction implements IAction 
                         // when
                         // already a resolved diagram is displayed source diagram will contain
                         // mapping
-                        // edges)
-                        rootNode.getChildren().remove(displayedSubDiagram.get(vc).get());
-                        displayedSubDiagram.remove(vc);
+                        // edges)                        
+                        if (displayedSubDiagram.containsKey(vc)) {
+                            rootNode.getChildren().remove(displayedSubDiagram.get(vc).get());
+                            displayedSubDiagram.remove(vc);
+                        }
 
                         // Deselect old target-node if any
                         if (selectedTargetNode.containsKey(vc)) {

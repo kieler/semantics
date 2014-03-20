@@ -43,9 +43,9 @@ import org.eclipse.emf.ecore.EObject
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.ktm.klighd.util.NearestNodeUtil
-import de.cau.cs.kieler.ktm.klighd.util.MappingEdgeProperties
 import de.cau.cs.kieler.core.krendering.KRendering
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.ktm.klighd.util.MappingProperties
 
 /**
  * KLighD visualization for mappings between two ModelWrappers.
@@ -261,7 +261,7 @@ class InternalResolveModelDiagramSynthesis extends AbstractDiagramSynthesis<Reso
                         edge.setLayoutOption(LayoutOptions.NO_LAYOUT, true);
 
                         //Set IS_MAPPING_EDGE to mark this edge as an mapping edge
-                        edge.setLayoutOption(MappingEdgeProperties.IS_MAPPING_EDGE, true);
+                        edge.setLayoutOption(MappingProperties.IS_MAPPING_EDGE, true);
 
                         // if source is a node attach edge to this node else calculate the nearest KNode 
                         // to source-KGraphElement and attach edge to this node while setting a property 
