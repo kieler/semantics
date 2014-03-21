@@ -122,6 +122,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     // -------------------------------------------------------------------------
     // Transformation options   
     // CORE TRANSFORMATIONS
+    private static val SynthesisOption TRANSFORM_ADVANED = SynthesisOption::createCheckOption("Advanced Auto Requirements", false);
+
     private static val SynthesisOption TRANSFORM_HISTORY = SynthesisOption::createCheckOption("Transform History", false);
     private static val SynthesisOption TRANSFORM_WEAKSUSPEND = SynthesisOption::createCheckOption(
         "Transform Weak Suspend", false);
@@ -172,7 +174,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_SHADOW, TRANSFORM_HISTORY, TRANSFORM_WEAKSUSPEND, TRANSFORM_DEFERRED, TRANSFORM_STATIC,
+            SHOW_SHADOW, TRANSFORM_ADVANED, TRANSFORM_HISTORY, TRANSFORM_WEAKSUSPEND, TRANSFORM_DEFERRED, TRANSFORM_STATIC,
             TRANSFORM_SIGNAL, TRANSFORM_COUNTDELAY, TRANSFORM_PRE, TRANSFORM_SUSPEND, TRANSFORM_COMPLEXFINALSTATE,
             TRANSFORM_ABORTALTERNATIVE, TRANSFORM_ABORT, TRANSFORM_DURING, TRANSFORM_INITIALIZATION, TRANSFORM_ENTRY,
             TRANSFORM_EXIT, TRANSFORM_CONNECTOR, TRANSFORM_NORMALIZE, TRANSFORM_CORE, TRANSFORM_CORENORMALIZE);
@@ -272,7 +274,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             // ---------
             // Just one final compiler call of KielerCompiler
             transformations = transformations.replaceFirst(",", "")
-            transformed = KielerCompiler.compile(transformations, transformed) as Region
+            transformed = KielerCompiler.compile(transformations, transformed, TRANSFORM_ADVANED.booleanValue) as Region
             // ---------
         }
 

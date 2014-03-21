@@ -395,6 +395,24 @@ public class KielerCompiler {
      * @return the object
      */
     public static EObject compile(final String transformationIDs, final EObject eObject) {
+        return compile(transformationIDs, eObject);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Central KIELER Compiler compile method. It can be called in order to call several consecutive
+     * transformations. Specify desired transformations or transformation groups with comma
+     * separated IDs.
+     * 
+     * @param transformationIDs
+     *            the transformation i ds
+     * @param eObject
+     *            the e object
+     * @return the object
+     */
+    public static EObject compile(final String transformationIDs, final EObject eObject,
+            final boolean prerequirements) {
         String trimmed = transformationIDs.replace(" ", "");
         if (trimmed.length() == 0) {
             return eObject;
@@ -403,7 +421,7 @@ public class KielerCompiler {
         if (transformationIDArray == null) {
             return null;
         }
-        return compile(Arrays.asList(transformationIDArray), eObject);
+        return compile(Arrays.asList(transformationIDArray), eObject, prerequirements);
     }
 
     // -------------------------------------------------------------------------
@@ -439,37 +457,37 @@ public class KielerCompiler {
      * @return the object
      */
     public static EObject compile(final List<String> transformationIDs, final EObject eObject,
-            final boolean autoexpand) {
+            final boolean prerequirements) {
         updateMapping(DEBUG);
 
         EObject transformedObject = eObject;
 
         // Auto expansion will resolve dependencies and expand transformation groups
         List<String> processedTransformationIDs = transformationIDs;
-        if (autoexpand) {
 
-            // 1. build graph (with initially requested transformation IDs as a tie
-            // braker for alternative groups)
-            List<TransformationDummy> graph = buildGraph(transformationIDs);
+        // 1. build graph (with initially requested transformation IDs as a tie
+        // braker for alternative groups)
+        List<TransformationDummy> graph = buildGraph(transformationIDs);
 
-            // 2. clean up unused alternative paths
-            cleanupUnusedAlternatives(graph);
+        // 2. eliminate unused alternative paths
+        cleanupUnusedAlternatives(graph);
 
-            // 3. mark nodes
-            markNodes(graph, processedTransformationIDs);
+        // 3. mark nodes
+        markNodes(graph, processedTransformationIDs);
 
+        if (prerequirements) {
             // 4. mark reverse dependencies
             markReverseDependencies(graph);
-
-            // 5. eliminate unmarked nodes
-            eliminatedUnmarkedNodes(graph);
-
-            // 6. topological sort
-            processedTransformationIDs = topologicalSort(graph);
-
-            // 7. final cleanup, eliminate any groups
-            processedTransformationIDs = eliminateGroupIds(processedTransformationIDs);
         }
+
+        // 5. eliminate unmarked nodes
+        eliminatedUnmarkedNodes(graph);
+
+        // 6. topological sort
+        processedTransformationIDs = topologicalSort(graph);
+
+        // 7. final cleanup, eliminate any groups
+        processedTransformationIDs = eliminateGroupIds(processedTransformationIDs);
 
         System.out.println("=== ");
         for (String processedTransformationID : processedTransformationIDs) {
