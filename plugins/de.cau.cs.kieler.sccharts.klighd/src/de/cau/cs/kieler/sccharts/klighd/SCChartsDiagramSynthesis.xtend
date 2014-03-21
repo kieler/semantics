@@ -215,94 +215,65 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             } else if (TRANSFORM_NORMALIZE.booleanValue) {
                 transformed = KielerCompiler.compile("NORMALIZE", transformed) as Region
             }
-//            transformed = transformed.transformHistory;
-//            transformed = transformed.transformWeakSuspend
-//            transformed = transformed.transformDeferred
-//            transformed = transformed.transformStatic
-//            transformed = transformed.transformSignal
-//            transformed = transformed.transformCountDelay
-//            transformed = transformed.transformPre
-//            transformed = transformed.transformSuspend
-//            transformed = transformed.transformComplexFinalState
-//            transformed = transformed.transformAbort
-//            transformed = transformed.transformDuring
-//            transformed = transformed.transformInitialization
-//            transformed = transformed.transformEntry
-//            transformed = transformed.transformExit
-//            transformed = transformed.transformConnector
-//            transformed = transformed.transformTriggerEffect
-//            if (TRANSFORM_CORENORMALIZE.booleanValue) {
-//                transformed = transformed.transformSurfaceDepth
-//            }
         } else {
+            var transformations = ""
             if (TRANSFORM_HISTORY.booleanValue) {
-                transformed = KielerCompiler.compile("HISTORY", transformed) as Region
-//                transformed = transformed.transformHistory;
+                transformations = transformations + ", HISTORY"
             }
             if (TRANSFORM_WEAKSUSPEND.booleanValue) {
-                transformed = KielerCompiler.compile("WEAKSUSPEND", transformed) as Region
-//                transformed = transformed.transformWeakSuspend
+                transformations = transformations + ", DEFERRED"
             }
             if (TRANSFORM_DEFERRED.booleanValue) {
-                transformed = KielerCompiler.compile("DEFERRED", transformed) as Region
-//                transformed = transformed.transformDeferred
+                transformations = transformations + ", DEFERRED"
             }
             if (TRANSFORM_STATIC.booleanValue) {
-                transformed = KielerCompiler.compile("STATIC", transformed) as Region
-//                transformed = transformed.transformStatic
+                transformations = transformations + ", STATIC"
             }
             if (TRANSFORM_SIGNAL.booleanValue) {
-                transformed = KielerCompiler.compile("SIGNAL", transformed) as Region
-//                transformed = transformed.transformSignal
+                transformations = transformations + ", SIGNAL"
             }
             if (TRANSFORM_COUNTDELAY.booleanValue) {
-                transformed = KielerCompiler.compile("COUNTDELAY", transformed) as Region
-//                transformed = transformed.transformCountDelay
+                transformations = transformations + ", COUNTDELAY"
             }
             if (TRANSFORM_PRE.booleanValue) {
-                transformed = KielerCompiler.compile("PRE", transformed) as Region
-//                transformed = transformed.transformPre
+                transformations = transformations + ", PRE"
             }
             if (TRANSFORM_SUSPEND.booleanValue) {
-                transformed = KielerCompiler.compile("SUSPEND", transformed) as Region
-//                transformed = transformed.transformSuspend
+                transformations = transformations + ", SUSPEND"
             }
             if (TRANSFORM_COMPLEXFINALSTATE.booleanValue) {
-                transformed = KielerCompiler.compile("COMPLEXFINALSTATE", transformed) as Region
-//                transformed = transformed.transformComplexFinalState
+                transformations = transformations + ", ABORTALTERNATIVE"
             }
             if (TRANSFORM_ABORTALTERNATIVE.booleanValue) {
                 // There are TWO options for the Aborts transformation
                 // 1. transformAborts1() and 2. transformAborts2()
-                transformed = KielerCompiler.compile("ABORTALTERNATIVE", transformed) as Region
-//                transformed = transformed.transformAbortAlternative
+                transformations = transformations + ", ABORTALTERNATIVE"
             }
             if (TRANSFORM_ABORT.booleanValue) {
                 // There are TWO options for the Aborts transformation
                 // 1. transformAborts1() and 2. transformAborts2()
-                transformed = KielerCompiler.compile("ABORT", transformed) as Region
-//                transformed = transformed.transformAbort
+                transformations = transformations + ", ABORT"
             }
             if (TRANSFORM_DURING.booleanValue) {
-                transformed = KielerCompiler.compile("DURING", transformed) as Region
-//                transformed = transformed.transformDuring
+                transformations = transformations + ", DURING"
             }
             if (TRANSFORM_INITIALIZATION.booleanValue) {
-                transformed = KielerCompiler.compile("INITIALIZATION", transformed) as Region
-//                transformed = transformed.transformInitialization
+                transformations = transformations + ", INITIALIZATION"
             }
             if (TRANSFORM_ENTRY.booleanValue) {
-                transformed = KielerCompiler.compile("ENTRY", transformed) as Region
-//                transformed = transformed.transformEntry
+                transformations = transformations + ", EXIT"
             }
             if (TRANSFORM_EXIT.booleanValue) {
-                transformed = KielerCompiler.compile("EXIT", transformed) as Region
-//                transformed = transformed.transformExit
+                transformations = transformations + ", EXIT"
             }
             if (TRANSFORM_CONNECTOR.booleanValue) {
-                transformed = KielerCompiler.compile("CONNECTOR", transformed) as Region
-//                transformed = transformed.transformConnector
+                transformations = transformations + ", CONNECTOR"
             }
+            // ---------
+            // Just one final compiler call of KielerCompiler
+            transformations = transformations.replaceFirst(",", "")
+            transformed = KielerCompiler.compile(transformations, transformed) as Region
+            // ---------
         }
 
         return transformed.translate();

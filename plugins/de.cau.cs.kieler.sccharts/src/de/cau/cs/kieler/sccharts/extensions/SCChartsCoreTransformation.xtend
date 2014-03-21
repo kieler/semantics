@@ -891,15 +891,15 @@ class SCChartsCoreTransformation {
     }
 
     //-------------------------------------------------------------------------
-    //--               A B O R T       T R A N S F O R M A T I O N           --
+    //--     A B O R T     D E F A U L T      T R A N S F O R M A T I O N    --
     //-------------------------------------------------------------------------
     // Transforming Aborts.
-    def Region transformAbort(Region rootRegion) {
+    def Region transformAbortDefault(Region rootRegion) {
         val targetRootRegion = rootRegion.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformAbort(targetRootRegion);
+            targetState.transformAbortDefault(targetRootRegion);
         }
         targetRootRegion.fixAllTextualOrdersByPriorities;
     }
@@ -909,7 +909,7 @@ class SCChartsCoreTransformation {
     //        // For all normal hierarchical states, add a single connector
     //        // add
     //    }
-    def void transformAbort(State state, Region targetRootRegion) {
+    def void transformAbortDefault(State state, Region targetRootRegion) {
 
         val stateHasUntransformedTransitions = (!(state.outgoingTransitions.size == 0) || ((state.outgoingTransitions.
             size == 1) &&

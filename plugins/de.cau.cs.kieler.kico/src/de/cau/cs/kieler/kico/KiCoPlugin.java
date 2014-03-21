@@ -54,9 +54,6 @@ public class KiCoPlugin extends AbstractUIPlugin {
     /** The shared instance. */
     private static KiCoPlugin plugin;
 
-    /** The currently registered list of transformations. */
-    private HashMap<String, Transformation> transformationMap;
-
     /**
      * The parent shell iff a GUI is used. This shell may be used to prompt a save-dialog to save
      * execution files. UI's should listen to the KiemEvent CALL_FOR_SHELL and then call the method
@@ -171,33 +168,29 @@ public class KiCoPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * This initializes the TransformationMap with all registered and loaded plug-ins that extend
+     * This returns a new the TransformationMap with all registered and loaded plug-ins that extend
      * the KiCo extension point
      * 
      * @return the TransformationList
      */
-    public HashMap<String, Transformation> getRegisteredTransformations(boolean forceUpdate) {
-        if (transformationMap != null && !forceUpdate) {
-            // return a cached version of the list
-            // it is only built the first time
-            return transformationMap;
-        }
-        // suggest calling the garbage collector: this may
-        // remove any DataComponent threads still running (but not
-        // linked==needed any more)
-        System.gc();
+    public HashMap<String, Transformation> getRegisteredTransformations() {
+//        if (transformationMap != null && !forceUpdate) {
+//            // return a cached version of the list
+//            // it is only built the first time
+//            return transformationMap;
+//        }
+//        // suggest calling the garbage collector: this may
+//        // remove any DataComponent threads still running (but not
+//        // linked==needed any more)
+//        System.gc();
         // get the available interfaces and initialize them
         IConfigurationElement[] transformations =
                 Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_ID);
 
-        transformationMap = new HashMap<String, Transformation>(transformations.length);
+        HashMap<String, Transformation> transformationMap = new HashMap<String, Transformation>(transformations.length);
 
         for (int i = 0; i < transformations.length; i++) {
             try {
-                if (DEBUG) {
-                    System.out.println("KiCo loading component: "
-                            + transformations[i].getContributor().getName());
-                }
 
                 String transformationClass = transformations[i].getAttribute("class");
                 Object transformationInstance = null;
@@ -209,11 +202,33 @@ public class KiCoPlugin extends AbstractUIPlugin {
                 String name = transformations[i].getAttribute("name");
                 String method = transformations[i].getAttribute("method");
                 String dependenciesString = transformations[i].getAttribute("dependencies");
+                String transformationsString = transformations[i].getAttribute("transformations");
+                String alternativesString = transformations[i].getAttribute("alternatives");
+
+                if (DEBUG) {
+                    System.out.println("KiCo loading component: "
+                            + transformations[i].getContributor().getName() + "::" + id);
+                }
                 
                 Transformation transformation;
                 if (transformationInstance == null) {
                     // The Transformation is defined as a GROUP by its dependencies
                     transformation = new TransformationGroup();
+                    
+                    // Internally transformations of groups are represented as dependencies!
+                    if (transformationsString != null) {
+                        String[] dependenciesArray = transformationsString.split(",");
+                        for (String dependency : dependenciesArray) {
+                            transformation.getDependencies().add(dependency.trim());
+                        }
+                    }
+                    
+                    if (alternativesString != null) {
+                        if (alternativesString.equals("true")) {
+                            ((TransformationGroup) transformation).setAlternatives(true);
+                        }
+                    }
+                    
                 }
                 else if (transformationInstance instanceof Transformation) {
                     // The specified class is a Transformation, use it directly
@@ -236,7 +251,15 @@ public class KiCoPlugin extends AbstractUIPlugin {
 
                 if (id != null) {
                     transformation.setId(id);
-                    transformationMap.put(id, transformation);
+                    // Check if ID is alrady taken
+                    if (transformationMap.containsKey(id)) {
+                        showWarning("Extension '"+id+"' from component: "
+                                + transformations[i].getContributor().getName() + " cannot be loaded becaus this ID is already taken.", KiCoPlugin.PLUGIN_ID,
+                                null, true);
+                    }
+                    else {
+                        transformationMap.put(id, transformation);
+                    }
                 } else {
                     showWarning("Extension id not configured for component: "
                             + transformations[i].getContributor().getName(), KiCoPlugin.PLUGIN_ID,
@@ -256,7 +279,6 @@ public class KiCoPlugin extends AbstractUIPlugin {
                     for (String dependency : dependenciesArray) {
                         transformation.getDependencies().add(dependency.trim());
                     }
-                    transformation.setId(id);
                 }
 
             } catch (Exception e) {

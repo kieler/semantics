@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -34,16 +35,292 @@ public class KielerCompiler {
     /** The Constant DEBUG. */
     public static final boolean DEBUG = !System.getProperty("java.vm.info", "").contains("sharing");
 
-    /** The cached transformations. */
-    private static HashMap<String, Transformation> transformations = null;
+    /** The cached map id to transformations. */
+    private static HashMap<String, Transformation> id2transformations = null;
+
+    /** The cached list of transformations. */
+    private static ArrayList<Transformation> transformations = null;
+
+    /** The cached transformations to graph elements. */
+    private static HashMap<Transformation, TransformationDummy> transformation2graph =
+            new HashMap<Transformation, TransformationDummy>();;
 
     // -------------------------------------------------------------------------
 
-    private static HashMap<String, Transformation> getTransformations() {
-        if (transformations == null) {
-            transformations = KiCoPlugin.getDefault().getRegisteredTransformations(false);
+    private static List<TransformationDummy> buildGraph(List<String> prioritizedTransformationIDs) {
+        ArrayList<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
+
+        transformation2graph.clear();
+
+        // Build all nodes first
+        for (Transformation transformation : transformations) {
+            TransformationDummy transformationDummy = new TransformationDummy(transformation);
+
+            returnList.add(transformationDummy);
+            transformation2graph.put(transformation, transformationDummy);
+            System.out.println("Adding Dummy node for " + transformation.getId() + ", "
+                    + transformation.toString());
         }
-        return transformations;
+
+        // Calculate dependencies
+        for (Transformation transformation : transformations) {
+            TransformationDummy transformationDummy = transformation2graph.get(transformation);
+
+            List<String> dependencies = transformation.getDependencies();
+            if (transformationDummy.isAlternative()) {
+                // If this is an alternative group, then ONLY add the SELECTED alternative
+                // according to the prioritizedTransformationIDs (input)
+                dependencies = new ArrayList<String>();
+                String selectedAlternative =
+                        ((TransformationGroup) transformationDummy.transformation)
+                                .getSelectedDependency(prioritizedTransformationIDs);
+                dependencies.add(selectedAlternative);
+            }
+
+            for (String dependencyId : dependencies) {
+                Transformation otherTransformationOrGroup = getTransformation(dependencyId);
+                System.out.println("Dependencies for " + transformation.getId());
+                System.out.println("  " + otherTransformationOrGroup.getId());
+                TransformationDummy otherTransformationDummy =
+                        transformation2graph.get(otherTransformationOrGroup);
+
+                // Insert dependency in dummy
+                transformationDummy.dependencies.add(otherTransformationDummy);
+                // Insert reverse dependency in other dummy
+                otherTransformationDummy.reverseDependencies.add(transformationDummy);
+
+            }
+        }
+        return returnList;
+    }
+
+    // -------------------------------------------------------------------------
+
+    private static boolean isDependencyReferenced(TransformationDummy transformationDummy,
+            List<TransformationDummy> graph) {
+        for (TransformationDummy otherTransformationDummy : graph) {
+            if (!otherTransformationDummy.isGroup()) {
+                for (TransformationDummy groupTransformationDummy : otherTransformationDummy.dependencies) {
+                    if (groupTransformationDummy == transformationDummy) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean isAlternative(TransformationDummy transformationDummy,
+            List<TransformationDummy> graph) {
+        for (TransformationDummy otherTransformationDummy : graph) {
+            if (otherTransformationDummy.isAlternative()) {
+                for (String alternative : otherTransformationDummy.transformation.getDependencies()) {
+                    if (transformationDummy.id.equals(alternative)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean isGroupReferenced(TransformationDummy transformationDummy,
+            List<TransformationDummy> graph) {
+        for (TransformationDummy otherTransformationDummy : graph) {
+            if (otherTransformationDummy.isGroup() && !otherTransformationDummy.isAlternative()) {
+                for (TransformationDummy groupTransformationDummy : otherTransformationDummy.dependencies) {
+                    if (groupTransformationDummy == transformationDummy) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
+
+    private static void cleanupUnusedAlternatives(List<TransformationDummy> graph) {
+        boolean found = true;
+        TransformationDummy toBeDeleted = null;
+        while (found) {
+            found = false;
+            for (TransformationDummy transformationDummy : graph) {
+                boolean dependencyReferenced = isDependencyReferenced(transformationDummy, graph);
+                boolean alternative = isAlternative(transformationDummy, graph);
+                boolean groupReferenced = isGroupReferenced(transformationDummy, graph);
+
+                if (alternative && !dependencyReferenced && !groupReferenced) {
+                    if (transformationDummy.reverseDependencies.size() == 0) {
+                        toBeDeleted = transformationDummy;
+                        System.out.println("REMOVE " + transformationDummy.id);
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (found) {
+                graph.remove(toBeDeleted);
+                for (TransformationDummy transformationDummy : graph) {
+                    if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
+                        System.out.println("REMOVE " + toBeDeleted.id + " from "
+                                + transformationDummy.id);
+                        transformationDummy.reverseDependencies.remove(toBeDeleted);
+                    }
+                }
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    private static void markNodes(List<TransformationDummy> graph, List<String> transformationIDs) {
+        for (String transformationID : transformationIDs) {
+            Transformation transformation = getTransformation(transformationID);
+            TransformationDummy transformationDummy = transformation2graph.get(transformation);
+            transformationDummy.marked = true;
+            System.out.println("Marking " + transformationDummy.id);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    private static void markReverseDependencies(TransformationDummy transformationDummy) {
+        if (transformationDummy != null && !transformationDummy.marked) {
+            transformationDummy.marked = true;
+            System.out.println("Marking " + transformationDummy.id);
+            for (TransformationDummy otherTransformationDummy : transformationDummy.reverseDependencies) {
+                markReverseDependencies(otherTransformationDummy);
+            }
+        }
+    }
+
+    private static void markReverseDependencies(List<TransformationDummy> graph) {
+        List<TransformationDummy> startNodes = new ArrayList<TransformationDummy>();
+        for (TransformationDummy transformationDummy : graph) {
+            if (transformationDummy.marked) {
+                transformationDummy.marked = false; // Reset recursion stop indicator before calling
+                // recursive function
+                startNodes.add(transformationDummy);
+            }
+        }
+
+        // Start recursion from the start nodes
+        for (TransformationDummy transformationDummy : startNodes) {
+            markReverseDependencies(transformationDummy);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    private static void eliminatedUnmarkedNodes(List<TransformationDummy> graph) {
+        boolean found = true;
+        TransformationDummy toBeDeleted = null;
+        while (found) {
+            found = false;
+            for (TransformationDummy transformationDummy : graph) {
+                if (!transformationDummy.marked) {
+                    toBeDeleted = transformationDummy;
+                    System.out.println("REMOVE " + transformationDummy.id);
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                graph.remove(toBeDeleted);
+                for (TransformationDummy transformationDummy : graph) {
+                    if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
+                        System.out.println("REMOVE " + toBeDeleted.id
+                                + " from reverse-dependencies of " + transformationDummy.id);
+                        transformationDummy.reverseDependencies.remove(toBeDeleted);
+                    }
+                    if (transformationDummy.dependencies.contains(toBeDeleted)) {
+                        System.out.println("REMOVE " + toBeDeleted.id + " from dependencies of "
+                                + transformationDummy.id);
+                        transformationDummy.dependencies.remove(toBeDeleted);
+                    }
+                }
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // -- T O P O L O G I C A L S O R T --
+    // -------------------------------------------------------------------------
+
+    // L <- Empty list that will contain the sorted nodes
+    // S <- Set of all nodes with no outgoing edges
+    // for each node n in S do
+    // visit(n)
+    // function visit(node n)
+    // if n has not been visited yet then
+    // mark n as visited
+    // for each node m with an edge from m to n do
+    // visit(m)
+    // add n to L
+
+    private static List<TransformationDummy> getTransformationDummyWithNoDependencies(
+            List<TransformationDummy> graph) {
+        List<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
+        for (TransformationDummy transformationDummy : graph) {
+            if (transformationDummy.dependencies.size() == 0) {
+                returnList.add(transformationDummy);
+            }
+        }
+        return returnList;
+    }
+
+    // ------------------------------------------
+
+    private static int visit(TransformationDummy transformationDummy, int order) {
+        if (transformationDummy.order == -1) {
+            // This transformationDummy has not been seen yet
+            transformationDummy.order = -2;
+            int tmpOrder = order;
+            for (TransformationDummy nextTransformationDummy : transformationDummy.reverseDependencies) {
+                if (nextTransformationDummy != transformationDummy) {
+                    tmpOrder = visit(nextTransformationDummy, tmpOrder);
+                }
+            }
+            transformationDummy.order = tmpOrder + 1;
+            return tmpOrder + 1;
+        } else {
+            return order;
+        }
+    }
+
+    // ------------------------------------------
+
+    private static List<String> topologicalSort(List<TransformationDummy> graph) {
+        List<TransformationDummy> initialTransformationDummys =
+                getTransformationDummyWithNoDependencies(graph);
+        int tmpOrder = 0;
+        for (TransformationDummy initialTransformationDummy : initialTransformationDummys) {
+            tmpOrder = visit(initialTransformationDummy, tmpOrder);
+        }
+
+        // Now insert into return list by order
+        String[] returnArray = new String[graph.size()];
+        for (TransformationDummy transformationDummy : graph) {
+            returnArray[transformationDummy.order - 1] = transformationDummy.id;
+        }
+        return Arrays.asList(returnArray);
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Update mapping.
+     */
+    private static void updateMapping(boolean force) {
+        if (id2transformations == null || force) {
+            id2transformations = KiCoPlugin.getDefault().getRegisteredTransformations();
+            transformations = new ArrayList<Transformation>();
+            for (Entry<String, Transformation> localTransformation : id2transformations.entrySet()) {
+                transformations.add(localTransformation.getValue());
+            }
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -56,10 +333,17 @@ public class KielerCompiler {
      * @return the dependencies
      */
     private static Transformation getTransformation(String transformationID) {
-        Transformation transformation = transformations.get(transformationID);
+        if (transformations == null) {
+            updateMapping(false);
+        }
+        Transformation transformation = id2transformations.get(transformationID);
         if (transformation == null) {
-            new RuntimeException("Cannot find a transformation with the ID '" + transformationID
-                    + "'");
+            throw new RuntimeException("Cannot find a transformation with the ID '"
+                    + transformationID
+                    + "'. Make sure that the transformation with this ID is registered and its"
+                    + " declaring plugin is loaded. Make sure that the ID does exactly match"
+                    + " (case sensitive). Maybe you forgot to separate multiple ID's by a"
+                    + " comma.");
         }
         return transformation;
     }
@@ -67,133 +351,31 @@ public class KielerCompiler {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the dependencies for a transformationID.
+     * Gets the transformation id.
      * 
-     * @param transformationId
-     *            the transformation id
-     * @return the dependencies
+     * @param transformation
+     *            the transformation
+     * @return the transformation id
      */
-    private static List<String> getDependencies(String transformationID) {
-        Transformation transformation = getTransformation(transformationID);
-        if (transformation == null) {
-            new RuntimeException("Cannot find a transformation with the ID '" + transformationID
-                    + "'");
-            return new ArrayList<String>();
-        }
-        return transformation.getDependencies();
+    private static String getTransformationID(Transformation transformation) {
+        return transformation.getId();
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Checks if transformationID depending on possiblyDependOnTransformationId (directly or
-     * transitively).
-     * 
-     * Go thru all dependencies and recursively check if transformationID is part of them.
-     * 
-     * @param transformationID
-     *            the transformation id
-     * @param possiblyDependOnTransformationId
-     *            the possibly depend on transformation id
-     * @return true, if is depending on
-     */
-    private static boolean isDependingOn(String transformationID,
-            String possiblyDependOnTransformationId) {
-        List<String> dependencies = getDependencies(transformationID);
-        for (String dependency : dependencies) {
-            if (dependency.equals(possiblyDependOnTransformationId)) {
-                return true;
-            }
-            if (isDependingOn(dependency, possiblyDependOnTransformationId)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Insert transformationID in the correct order into list of transformationIDs.
-     * 
-     * @param transformationIDs
-     *            the transformation i ds
-     * @param dependencyID
-     *            the dependency id
-     * @return the list
-     */
-    private static List<String> insertTransformationID(List<String> transformationIDs,
-            String insertTransformationID) {
-        // Do not insert if already part
-        for (String checkTransformationID : transformationIDs) {
-            if (checkTransformationID.equals(insertTransformationID)) {
-                return transformationIDs;
-            }
-        }
-        int insertPosition = 0;
-        for (int i = transformationIDs.size() - 1; i >= 0; i--) {
-            String checkTransformationID = transformationIDs.get(i);
-            if (isDependingOn(insertTransformationID, checkTransformationID)) {
-                // We have found a checkTransformationID that the instertTransformationID is
-                // depended
-                // on so we have to ensure checkTransformationID is done BEFORE
-                // instertTransformationID
-                // => order insterTransformationID AFTER checkTransformationID (=pos + 1)
-                insertPosition = i + 1;
-                break;
-            }
-        }
-        transformationIDs.add(insertPosition, insertTransformationID);
-        return transformationIDs;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Expanding dependencies will insert dependend transformation IDs into the transformationIDs
-     * list and return this updated list.
-     * 
-     * @param transformationIDs
-     *            the transformation IDs
-     * @return the list
-     */
-    private static List<String> expandDependencies(String transformationID,
-            List<String> transformationIDs) {
-        List<String> dependencies = getDependencies(transformationID);
-        for (String dependency : dependencies) {
-            insertTransformationID(transformationIDs, dependency);
-        }
-        return dependencies;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Expand dependencies of all transformationIDs. If the transformationID is a GROUP then only
-     * consider its dependencies and remove the GROUP transformationID.
+     * Eliminate group ids.
      * 
      * @param transformationIDs
      *            the transformation i ds
      * @return the list
      */
-    private static List<String> expandDependencies(List<String> transformationIDs) {
+    private static List<String> eliminateGroupIds(List<String> transformationIDs) {
         List<String> returnList = new ArrayList<String>();
         for (String transformationID : transformationIDs) {
             Transformation transformation = getTransformation(transformationID);
             if (!(transformation instanceof TransformationGroup)) {
-                // Only add if no group
                 returnList.add(transformationID);
-            }
-            // Now add all dependencies
-            returnList = expandDependencies(transformationID, returnList);
-        }
-        // Finally check if there is any left GROUP (that may be freshly inserted as a dependency)
-        // If this is the case => recursive closure
-        for (String transformationID : returnList) {
-            Transformation transformation = getTransformation(transformationID);
-            if (transformation instanceof TransformationGroup) {
-                // We need to run this method again until ALL groups are gone!
-                return expandDependencies(returnList);
             }
         }
         return returnList;
@@ -213,7 +395,11 @@ public class KielerCompiler {
      * @return the object
      */
     public static EObject compile(final String transformationIDs, final EObject eObject) {
-        String[] transformationIDArray = transformationIDs.split(",");
+        String trimmed = transformationIDs.replace(" ", "");
+        if (trimmed.length() == 0) {
+            return eObject;
+        }
+        String[] transformationIDArray = trimmed.split(",");
         if (transformationIDArray == null) {
             return null;
         }
@@ -254,26 +440,46 @@ public class KielerCompiler {
      */
     public static EObject compile(final List<String> transformationIDs, final EObject eObject,
             final boolean autoexpand) {
+        updateMapping(DEBUG);
 
         EObject transformedObject = eObject;
-
-        // For debugging ALWAYS update the registered transformations
-        transformations = KiCoPlugin.getDefault().getRegisteredTransformations(DEBUG);
 
         // Auto expansion will resolve dependencies and expand transformation groups
         List<String> processedTransformationIDs = transformationIDs;
         if (autoexpand) {
-           processedTransformationIDs = expandDependencies(transformationIDs);
+
+            // 1. build graph (with initially requested transformation IDs as a tie
+            // braker for alternative groups)
+            List<TransformationDummy> graph = buildGraph(transformationIDs);
+
+            // 2. clean up unused alternative paths
+            cleanupUnusedAlternatives(graph);
+
+            // 3. mark nodes
+            markNodes(graph, processedTransformationIDs);
+
+            // 4. mark reverse dependencies
+            markReverseDependencies(graph);
+
+            // 5. eliminate unmarked nodes
+            eliminatedUnmarkedNodes(graph);
+
+            // 6. topological sort
+            processedTransformationIDs = topologicalSort(graph);
+
+            // 7. final cleanup, eliminate any groups
+            processedTransformationIDs = eliminateGroupIds(processedTransformationIDs);
         }
 
+        System.out.println("=== ");
         for (String processedTransformationID : processedTransformationIDs) {
-
             Transformation transformation = getTransformation(processedTransformationID);
 
             if (transformation != null)
                 // If the requested TransformationID
                 if (transformation.getId().equals(processedTransformationID)) {
                     // If this is an individual
+                    System.out.println("PERFORM TRANSFORMATION: " + processedTransformationID);
                     transformedObject = transformation.doTransform(transformedObject);
                 }
         }
