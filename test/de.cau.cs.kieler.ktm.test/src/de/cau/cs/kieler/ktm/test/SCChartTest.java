@@ -70,7 +70,7 @@ public class SCChartTest extends TestCase {
     private final String pathABO_TE = "artifacts/ABO.split.scc";
     private final String pathABO_Norm = "artifacts/ABO.normalized.scc";
     private final String pathABO_SCG = "artifacts/ABO.scg";
-    private final String pathKTMT = "artifacts/ABO.ktmt";
+    private final String pathKTMT = "artifacts/ABO.ktt";
 
     /**
      * {@inheritDoc}

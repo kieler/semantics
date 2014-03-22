@@ -56,7 +56,7 @@
                      <test
                            forcePluginActivation="true"
                            property="org.eclipse.core.resources.extension"
-                           value="ktmt">
+                           value="ktt">
                      </test>
                   </adapt>
                </iterate>

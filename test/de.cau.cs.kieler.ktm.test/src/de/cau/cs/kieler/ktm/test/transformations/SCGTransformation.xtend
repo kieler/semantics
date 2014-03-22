@@ -387,7 +387,6 @@ class SCGTransformation {
     // -------------------------------------------------------------------------   
     // Traverse all states and transform possible local valuedObjects.
     def void transformSCGGenerateNodes(State state, SCGraph sCGraph) {
-        System.out.println("Generate Node for State " + state.id)
         if (state.pause) {
             val surface = sCGraph.addSurface
             state.mapChild(surface); //NEW - transformation mapping information
@@ -470,7 +469,6 @@ class SCGTransformation {
     // -------------------------------------------------------------------------   
     // Traverse all states and transform possible local valuedObjects.
     def void transformSCGConnectNodes(State state, SCGraph sCGraph) {
-        System.out.println("Connect Node for State " + state.id)
         if (state.pause) {
 
             // Connect the depth with the node that belongs to the target of
