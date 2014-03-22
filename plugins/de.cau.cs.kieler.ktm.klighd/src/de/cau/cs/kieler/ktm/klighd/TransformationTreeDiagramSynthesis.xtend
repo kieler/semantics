@@ -15,6 +15,7 @@ package de.cau.cs.kieler.ktm.klighd
 
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KColor
+import de.cau.cs.kieler.core.krendering.KContainerRendering
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
@@ -30,7 +31,6 @@ import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions
@@ -40,7 +40,7 @@ import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.krendering.KContainerRendering
+import de.cau.cs.kieler.ktm.klighd.mapping.MappingVisualizer
 
 /**
  * KLighD visualization for TransformationTrees and EObjectsCollections in ModelWrappers.
@@ -105,8 +105,8 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
 
     // -------------------------------------------------------------------------
     // Constants    
-    private static val selectActionID = "de.cau.cs.kieler.ktm.klighd.actions.ModelSelectionAction";
-    private static val resolveActionID = "de.cau.cs.kieler.ktm.klighd.actions.ModelResolveAction";
+    private static val selectSourceActionID = "de.cau.cs.kieler.ktm.klighd.actions.MappingSourceSelectionAction";
+    private static val selectTargetActionID = "de.cau.cs.kieler.ktm.klighd.actions.MappingTargetSelectionAction";
 
     // -------------------------------------------------------------------------
     // The Main entry transform function
@@ -117,11 +117,13 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
         val rootNode = createNode();
 
         // add invisible surrounding rectangle
-        rootNode.addInvisibleContainerRendering.addSingleClickAction(selectActionID);
+        // add selectSourceAction which also handles deselection
+        rootNode.addInvisibleContainerRendering.addSingleClickAction(selectSourceActionID);
 
         //create knode with all succeeding node from model-root-node
         rootNode.children += model.createNode() => [ treeNode |
-            treeNode.addInvisibleContainerRendering.addSingleClickAction(selectActionID);
+            // add selectSourceAction which also handles deselection
+            treeNode.addInvisibleContainerRendering.addSingleClickAction(selectSourceActionID);
             if (model.targetTransformations.empty) {
 
                 //if no succeeding transformations exists transform only root-node
@@ -142,7 +144,10 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
             }
         ];
 
-        //        }
+        //removes all mapping edges and selection if diagram is replaced
+        //TODO for incremental update try to keep selection and correct references in MappingVisualizer
+        MappingVisualizer.getMappingVisualizer(usedContext).clearSelectedNodes;
+
         return rootNode;
     }
 
@@ -150,13 +155,13 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
 	 * Creates a Node for given ModelWRapper (once) and add it to given root node.
 	 */
     private def KNode create node : createNode() transformModelWrapperAsChildNode(ModelWrapper model, KNode root) {
-        node.putToLookUpWith(model);
+        node.associateWith(model);
 
         //create and add colored rectangle for this node
         val figure = node.createFigure;
 
         //add textual name of model type, transient models will be shown italic
-        figure.addText(model.modelTypeID).putToLookUpWith(model) => [
+        figure.addText(model.modelTypeID).associateWith(model) => [
             it.fontSize = 11;
             it.setFontItalic(model.transient);
             it.setFontBold(!model.transient);
@@ -173,9 +178,10 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
 
         //node.setLayoutOption(LayoutOptions::EXPAND_NODES, false);
         node.children += createNode() => [
+            it.associateWith(model);
             it.setLayoutOption(KlighdProperties::EXPAND, false);
             figure.setGridPlacement(1);
-            //Collaps Rectangle
+            //Collapse Rectangle
             it.addRectangle() => [
                 it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
                 it.invisible = true;
@@ -210,22 +216,25 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
                 it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0);
-                it.addMappingSelectionActions;
             ];
             //Create subdiagram from referenced model synthesis or fallback to component synthesis
             var KNode subDiagramNode = null;
             if (!model.transient && SHOW_MODELS.booleanValue) {
-                subDiagramNode = LightDiagramServices::translateModel(model.rootObject.EObject, usedContext);
+                try {
+                    subDiagramNode = LightDiagramServices::translateModel(model.rootObject.EObject, usedContext);
+                } catch (Exception e) {
+                    //fallback
+                }
             }
             if (subDiagramNode == null) { //component synthesis
                 subDiagramNode = createNode();
                 subDiagramNode.children += model.modelObjects.map [
-                    it.translateObject;
+                    it.translateEObjectWrapper;
                 ];
             }
             // prevent adding of rectangle by adding an invisible own one.
             subDiagramNode.addRectangle.invisible = true;
-            //Add subdiagram to collapsable child area
+            //Add subdiagram to collapseable child area
             it.children += subDiagramNode;
         ]
 
@@ -239,25 +248,15 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
     def addMappingSelectionActions(KContainerRendering clickableContainer) {
 
         //(ALT,CTRL,SHIFT)
-        clickableContainer.addSingleClickAction(selectActionID, false, true, false);
-        clickableContainer.addSingleClickAction(resolveActionID, false, false, true);
-    }
-
-    /**
-     * When calling translateObject outside of a ModelWrapper synthesis no ViewContext is set.
-     * This method allows to call translateObject with a given ViewContext which enables access to
-     *  SynthesisOption to maintain a consistent L&F.
-     */
-    def KNode translateObject(EObjectWrapper object, ViewContext vc) {
-        this.use(vc);
-        translateObject(object);
+        clickableContainer.addSingleClickAction(selectSourceActionID, false, true, false);
+        clickableContainer.addSingleClickAction(selectTargetActionID, false, false, true);
     }
 
     /**
      * Creates a Node for given EObjectWrapper.
      */
-    private def KNode translateObject(EObjectWrapper object) {
-        val node = object.createNode.putToLookUpWith(object);
+    private def KNode translateEObjectWrapper(EObjectWrapper object) {
+        val node = object.createNode.associateWith(object);
 
         //create and add colored rectangle for this node
         val figure = node.createFigure;

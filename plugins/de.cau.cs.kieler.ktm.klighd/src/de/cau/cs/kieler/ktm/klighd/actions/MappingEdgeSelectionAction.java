@@ -31,19 +31,20 @@ import de.cau.cs.kieler.klighd.IAction;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.util.KlighdProperties;
 import de.cau.cs.kieler.ktm.klighd.TransformationTreeDiagramSynthesis;
-import de.cau.cs.kieler.ktm.klighd.util.MappingProperties;
+import de.cau.cs.kieler.ktm.klighd.mapping.MappingProperties;
 import de.cau.cs.kieler.ktm.klighd.util.NearestNodeUtil;
 
 /**
- * Action for displaying hided edges in a resolved diagram.
+ * Action for displaying hided mapping edges in a diagram .
  * 
  * @author als
  * 
  */
-public class EdgeSelectionAction implements IAction {
+public class MappingEdgeSelectionAction implements IAction {
 
     /** Action ID. */
-    public static final String ID = "de.cau.cs.kieler.ktm.klighd.actions.EdgeSelectionAction";
+    public static final String ID =
+            "de.cau.cs.kieler.ktm.klighd.actions.MappingEdgeSelectionAction";
 
     /**
      * {@inheritDoc}
@@ -71,7 +72,7 @@ public class EdgeSelectionAction implements IAction {
             if (clickedMappingEdge) {
                 // hide selected mapping edge
                 setInvisible((KEdge) element, true);
-            } else { // else clicked on element in a resolved model
+            } else { // else clicked on element in a diagram wit
 
                 // List of all elements which edges should be highlighted
                 final LinkedList<KGraphElement> selectedElements = new LinkedList<KGraphElement>();
@@ -120,7 +121,6 @@ public class EdgeSelectionAction implements IAction {
                 }
                 return ActionResult.createResult(true);
             }
-            // context.getKGraphElement().getData(type)
         }
 
         return ActionResult.createResult(false);

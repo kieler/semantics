@@ -7,24 +7,20 @@
          class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.ktm.klighd.TransformationTreeDiagramSynthesis"
          id="de.cau.cs.kieler.ktm.klighd.TransformationTreeDiagramSynthesis">
    </diagramSynthesis>
-   <diagramSynthesis
-         class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.ktm.klighd.InternalResolveModelDiagramSynthesis"
-         id="de.cau.cs.kieler.ktm.klighd.InternalResolveModelDiagramSynthesis">
-   </diagramSynthesis>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <action
-            class="de.cau.cs.kieler.ktm.klighd.actions.ModelSelectionAction"
-            id="de.cau.cs.kieler.ktm.klighd.actions.ModelSelectionAction">
+            class="de.cau.cs.kieler.ktm.klighd.actions.MappingSourceSelectionAction"
+            id="de.cau.cs.kieler.ktm.klighd.actions.MappingSourceSelectionAction">
       </action>
       <action
-            class="de.cau.cs.kieler.ktm.klighd.actions.ModelResolveAction"
-            id="de.cau.cs.kieler.ktm.klighd.actions.ModelResolveAction">
+            class="de.cau.cs.kieler.ktm.klighd.actions.MappingTargetSelectionAction"
+            id="de.cau.cs.kieler.ktm.klighd.actions.MappingTargetSelectionAction">
       </action>
       <action
-            class="de.cau.cs.kieler.ktm.klighd.actions.EdgeSelectionAction"
-            id="de.cau.cs.kieler.ktm.klighd.actions.EdgeSelectionAction">
+            class="de.cau.cs.kieler.ktm.klighd.actions.MappingEdgeSelectionAction"
+            id="de.cau.cs.kieler.ktm.klighd.actions.MappingEdgeSelectionAction">
       </action>
    </extension>
    <extension
