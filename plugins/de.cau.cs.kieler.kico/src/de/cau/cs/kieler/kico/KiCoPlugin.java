@@ -206,8 +206,8 @@ public class KiCoPlugin extends AbstractUIPlugin {
                 String alternativesString = transformations[i].getAttribute("alternatives");
 
                 if (DEBUG) {
-                    System.out.println("KiCo loading component: "
-                            + transformations[i].getContributor().getName() + "::" + id);
+//                    System.out.println("KiCo loading component: "
+//                            + transformations[i].getContributor().getName() + "::" + id);
                 }
                 
                 Transformation transformation;

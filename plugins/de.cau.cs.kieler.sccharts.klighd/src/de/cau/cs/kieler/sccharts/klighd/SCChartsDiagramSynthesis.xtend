@@ -146,6 +146,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     private static val SynthesisOption TRANSFORM_EXIT = SynthesisOption::createCheckOption("Transform Exit", false);
     private static val SynthesisOption TRANSFORM_CONNECTOR = SynthesisOption::createCheckOption("Transform Connector",
         false);
+    private static val SynthesisOption TRANSFORM_TRIGGEREFFECT = SynthesisOption::createCheckOption("Transform Trigger&&Effect",
+        false);
+    private static val SynthesisOption TRANSFORM_SURFACEDEPTH = SynthesisOption::createCheckOption("Transform Surface&&Depth",
+        false);
     private static val SynthesisOption TRANSFORM_NORMALIZE = SynthesisOption::createCheckOption("Transform Normalize",
         false);
     private static val SynthesisOption TRANSFORM_CORE = SynthesisOption::createCheckOption("Transform All Core",
@@ -177,7 +181,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             SHOW_SHADOW, TRANSFORM_ADVANED, TRANSFORM_HISTORY, TRANSFORM_WEAKSUSPEND, TRANSFORM_DEFERRED, TRANSFORM_STATIC,
             TRANSFORM_SIGNAL, TRANSFORM_COUNTDELAY, TRANSFORM_PRE, TRANSFORM_SUSPEND, TRANSFORM_COMPLEXFINALSTATE,
             TRANSFORM_ABORTALTERNATIVE, TRANSFORM_ABORT, TRANSFORM_DURING, TRANSFORM_INITIALIZATION, TRANSFORM_ENTRY,
-            TRANSFORM_EXIT, TRANSFORM_CONNECTOR, TRANSFORM_NORMALIZE, TRANSFORM_CORE, TRANSFORM_CORENORMALIZE);
+            TRANSFORM_EXIT, TRANSFORM_CONNECTOR,  TRANSFORM_TRIGGEREFFECT, TRANSFORM_SURFACEDEPTH ,TRANSFORM_NORMALIZE, TRANSFORM_CORE, TRANSFORM_CORENORMALIZE);
     }
 
     override public getDisplayedLayoutOptions() {
@@ -271,6 +275,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             if (TRANSFORM_CONNECTOR.booleanValue) {
                 transformations = transformations + ", CONNECTOR"
             }
+            if (TRANSFORM_TRIGGEREFFECT.booleanValue) {
+                transformations = transformations + ", TRIGGEREFFECT"
+            }
+            
+            if (TRANSFORM_SURFACEDEPTH.booleanValue) {
+                transformations = transformations + ", SURFACEDEPTH"
+            }
+            
             // ---------
             // Just one final compiler call of KielerCompiler
             transformations = transformations.replaceFirst(",", "")
