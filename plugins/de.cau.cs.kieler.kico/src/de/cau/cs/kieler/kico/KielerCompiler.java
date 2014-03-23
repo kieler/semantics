@@ -173,13 +173,47 @@ public class KielerCompiler {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Recursively mark group nodes.
+     *
+     * @param graph the graph
+     * @param transformationGroup the transformation group
+     */
+    private static void markGroupNodes(List<TransformationDummy> graph, TransformationGroup transformationGroup) {
+        for (String groupTransformationID : transformationGroup.getDependencies()) {
+            Transformation groupTransformation = getTransformation(groupTransformationID);
+            TransformationDummy groupTransformationDummy = transformation2graph.get(groupTransformation);
+            groupTransformationDummy.marked = true;
+            System.out.println("Marking " + groupTransformationDummy.id);
+            if (groupTransformation instanceof TransformationGroup) {
+                // groupTransformation is a TransformationGroup itself, so close recursion here
+                markGroupNodes(graph, (TransformationGroup)groupTransformation);
+            }
+        }
+    }
 
-    private static void markNodes(List<TransformationDummy> graph, List<String> transformationIDs) {
+    // -------------------------------------------------------------------------
+
+    
+    /**
+     * Mark nodes including expand of groups.
+     *
+     * @param graph the graph
+     * @param transformationIDs the transformation i ds
+     */
+    private static void markNodes(List<TransformationDummy> graph, List<String> transformationIDs, boolean expandGroupNodes) {
         for (String transformationID : transformationIDs) {
             Transformation transformation = getTransformation(transformationID);
+
             TransformationDummy transformationDummy = transformation2graph.get(transformation);
             transformationDummy.marked = true;
             System.out.println("Marking " + transformationDummy.id);
+            
+            if (expandGroupNodes && (transformation instanceof TransformationGroup)) {
+                TransformationGroup transformationGroup = (TransformationGroup) transformation;
+                markGroupNodes(graph, transformationGroup);
+            }
         }
     }
 
@@ -395,7 +429,7 @@ public class KielerCompiler {
      * @return the object
      */
     public static EObject compile(final String transformationIDs, final EObject eObject) {
-        return compile(transformationIDs, eObject);
+        return compile(transformationIDs, eObject, false);
     }
 
     // -------------------------------------------------------------------------
@@ -472,9 +506,9 @@ public class KielerCompiler {
         // 2. eliminate unused alternative paths
         cleanupUnusedAlternatives(graph);
 
-        // 3. mark nodes
-        markNodes(graph, processedTransformationIDs);
-
+        // 3. mark nodes, including groups
+        markNodes(graph, processedTransformationIDs, true);
+        
         if (prerequirements) {
             // 4. mark reverse dependencies
             markReverseDependencies(graph);
