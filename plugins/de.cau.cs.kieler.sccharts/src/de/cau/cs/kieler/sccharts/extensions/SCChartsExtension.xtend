@@ -432,6 +432,10 @@ class SCChartsExtension {
         val transition = createTransition()
         transition.setTargetState(targetState)
         sourceState.outgoingTransitions.add(transition)
+//        targetState.incomingTransitions.add(transition)
+        //val dummyTransition = createTransition()
+        //sourceState.outgoingTransitions.add(dummyTransition)
+        //sourceState.outgoingTransitions.remove(dummyTransition)
         transition.trimPriorities
     }
     
@@ -439,15 +443,19 @@ class SCChartsExtension {
         val transition = createTransition()
         transition.setTargetState(targetState)
         sourceState.outgoingTransitions.add(index, transition)
+//        targetState.incomingTransitions.add(transition)
         transition.trimPriorities
     }    
 
     def Transition setTargetState2(Transition transition, State targetState) {
+//        transition.targetState.incomingTransitions.remove(transition)
         transition.setTargetState(targetState)
+//        targetState.incomingTransitions.add(transition)
         transition
     }
 
     def Transition setSourceState(Transition transition, State sourceState) {
+//        transition.sourceState.outgoingTransitions.remove(transition)
         sourceState.outgoingTransitions.add(transition)
         transition.trimPriorities
     }

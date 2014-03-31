@@ -146,11 +146,11 @@ public class KiemPlugin extends AbstractUIPlugin {
     /** The initialize execution task. */
     private InitializeExecution initializeExecution;
 
+    /** Requested re-run. */
+    private boolean requestedReRun = false;    
     /** The no error output. */
     private boolean forceNoErrorOutput = false;
     
-    /** Requested re-run. */
-    private boolean requestedReRun = false;    
     
     /** The last error. */
     private static String lastError = null;
@@ -196,7 +196,7 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the parent shell that KIEM shoudl use to display user dialogs.
+     * Sets the parent shell that KIEM should use to display user dialogs.
      * 
      * @param parentShellParam
      *            the new shell

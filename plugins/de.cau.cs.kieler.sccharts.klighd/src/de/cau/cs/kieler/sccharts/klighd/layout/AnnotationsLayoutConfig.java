@@ -55,7 +55,8 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
     @Override
     protected IProperty<?>[] getAffectedOptions(final Object semanticElem) {
         if (semanticElem instanceof Annotatable) {
-//            LayoutDataService dataService = LayoutDataService.getInstance();
+
+
             LayoutMetaDataService dataService = LayoutMetaDataService.getInstance();
             List<LayoutOptionData> data = new LinkedList<LayoutOptionData>();
             for (Annotation annotation : ((Annotatable) semanticElem).getAnnotations()) {
@@ -103,8 +104,10 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
         if (annotation instanceof StringAnnotation) {
             String value = ((StringAnnotation) annotation).getValue();
             if (optionData.equals(LayoutOptions.ALGORITHM)) {
-                  LayoutMetaDataService dataService = LayoutMetaDataService.getInstance();
-                  ILayoutMetaData layoutData = dataService.getAlgorithmDataBySuffix(value);
+
+                LayoutMetaDataService dataService = LayoutMetaDataService.getInstance();
+                ILayoutMetaData layoutData = dataService.getAlgorithmDataBySuffix(value);
+
                 if (layoutData != null) {
                     return layoutData.getId();
                 }
