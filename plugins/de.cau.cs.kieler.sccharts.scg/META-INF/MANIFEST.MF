@@ -19,8 +19,7 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.sccharts.text.ui,
  de.cau.cs.kieler.scg,
  org.eclipse.xtext;bundle-version="2.3.0",
- org.eclipse.core.resources;bundle-version="3.8.1",
- de.cau.cs.kieler.ktm;bundle-version="0.1.0"
+ org.eclipse.core.resources;bundle-version="3.8.1"
 Export-Package: de.cau.cs.kieler.sccharts.scg
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 

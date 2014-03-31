@@ -37,8 +37,6 @@ import java.util.HashMap
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
-import de.cau.cs.kieler.ktm.extensions.TransformationMapping // KTM
-
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
@@ -69,20 +67,9 @@ class SCGTransformation {
     @Inject
     extension SCChartsExtension
     
-    @Inject
-    extension TransformationMapping // KTM
-    
     private static val Injector i = ActionsStandaloneSetup::doSetup();
     private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
     private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
-    
-    //-------------------------------------------------------------------------
-    //--               KTM Mapping access delegation                         --
-    //-------------------------------------------------------------------------
-    
-    def extractMapping() {
-        extractMappingData;
-    }
     
     //-------------------------------------------------------------------------
     //--                         U T I L I T Y                               --
@@ -156,11 +143,6 @@ class SCGTransformation {
 
     // Transforming Local ValuedObjects.
     def SCGraph transformSCG(Region rootRegion) {
-        // KTM - clear previous mapping information to assure a single consistent mapping. Create a new 
-        // mapping for each transformation, mappings have to be saved with extractMapping between the 
-        // transformations or they will be lost.
-        clearMapping;    
-        
         // Fix termination transitions that have effects
         var rootRegion2 = rootRegion.fixTerminationWithEffects
         // Fix possible halt states
@@ -171,14 +153,11 @@ class SCGTransformation {
         resetMapping
         // Create a new SCGraph
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph
-        rootRegion.mapChild(sCGraph); // KTM - transformation mapping information
-        rootRegion.rootState.mapChild(sCGraph); // KTM - transformation mapping information
         // Handle declarations
         for (valuedObject : rootRegion2.rootState.valuedObjects) {
             val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
             valuedObjectSCG.applyAttributes(valuedObject)
             valuedObjectSCG.map(valuedObject)
-            valuedObjectSCG.mapParent(valuedObject); // KTM - transformation mapping information
         }
         // Include top most level of hierarchy 
         // if the root state itself already contains multiple regions.
@@ -199,9 +178,6 @@ class SCGTransformation {
         }
         // Fix superfluous exit nodes
         sCGraph.trimExitNodes.trimConditioanlNodes
-        
-        val completeness = checkMappingCompleteness(rootRegion, sCGraph); // KTM - DEBUG
-        return sCGraph;
     }
            
    // -------------------------------------------------------------------------   
@@ -315,21 +291,14 @@ class SCGTransformation {
                                           .filter( e | e.target == exitNode).toList
           for (link : links) {
               link.setTarget(exitNode.next.target)
-          }   
-          
-          exitNode.next.target.mapParents(exitNode.mappedParents); // KTM - redirect transformation mapping information                          
+          }                             
           
           if (exitNode.next != null) {
               val link = exitNode.next
               // The removal of the EOpposite relation is necessary
               link.target.incoming.remove(link)
-              
-              exitNode.next.mapParents(link.mappedParents); // KTM - redirect transformation mapping information
-              link.unmapAll; // KTM - remove transformation mapping information
           }
           sCGraph.nodes.remove(exitNode)
-          
-          exitNode.unmapAll; // KTM - remove transformation mapping information
        }                    
        sCGraph
    }   
@@ -357,19 +326,8 @@ class SCGTransformation {
               // The removal of the EOpposite relation is necessary
               linkThen.target.incoming.remove(linkThen)
               linkElse.target.incoming.remove(linkElse)
-              
-              // KTM - redirect transformation mapping information
-              (conditionalNode.getElse.target as Conditional).getThen.mapParents(linkThen.mappedParents);
-              // KTM - redirect transformation mapping information
-              (conditionalNode.getElse.target as Conditional).getElse.mapParents(linkElse.mappedParents);
-              
-              linkThen.unmapAll; // KTM - remove transformation mapping information
-              linkElse.unmapAll; // KTM - remove transformation mapping information
           }
           sCGraph.nodes.remove(conditionalNode)
-          
-          conditionalNode.getElse.target.mapParents(conditionalNode.mappedParents); // KTM - redirect mapping information
-          conditionalNode.unmapAll; // KTM - remove transformation mapping information
        }                    
        sCGraph
    }   
@@ -380,17 +338,12 @@ class SCGTransformation {
 
    def void transformSCGGenerateNodes(Region region, SCGraph sCGraph) {
        val entry = sCGraph.addEntry
-       region.mapChild(entry); // KTM - transformation mapping information
        val exit = sCGraph.addExit
-       region.mapChild(exit); // KTM - transformation mapping information
        region.map(entry)
        entry.setExit(exit)
        exit.map(region)
        for (state : region.states) {
            state.transformSCGGenerateNodes(sCGraph)
-           if(state.initial){// KTM - not handled in transformSCGGenerateNodes
-             state.mapChild(entry); // KTM - transformation mapping information
-           }
        }
    }
            
@@ -401,16 +354,13 @@ class SCGTransformation {
         System.out.println("Generate Node for State " + state.id)
         if (state.pause) {
             val surface = sCGraph.addSurface
-            state.mapChild(surface); // KTM - transformation mapping information
             val depth = sCGraph.addDepth
-            state.mapChild(depth); // KTM - transformation mapping information
             surface.setDepth(depth)
             surface.map(state)
             state.map(surface)
         }
         else if (state.assignment) {
             val assignment = sCGraph.addAssignment
-            state.mapChild(assignment); // KTM - transformation mapping information
             state.map(assignment)
             val transition = state.outgoingTransitions.get(0)
             scopeProvider.parent = transition.sourceState
@@ -421,26 +371,18 @@ class SCGTransformation {
             if (effect instanceof de.cau.cs.kieler.sccharts.Assignment) {
                 // For hostcode e.g. there is no need for a valued object - it is allowed to be null
                 val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
-                transition.effects.get(0).mapChild(assignment); // KTM - transformation mapping information
                 if (sCChartAssignment.valuedObject != null) {
                     assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
                 }
                 // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
                 assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
-                (transition.effects.get(0) as de.cau.cs.kieler.sccharts.Assignment)
-                   .expression.mapChild(assignment.assignment); // KTM - transformation mapping information
             }
             else if (effect instanceof de.cau.cs.kieler.sccharts.TextEffect) {
                 assignment.setAssignment((effect as de.cau.cs.kieler.sccharts.TextEffect).convertToSCGExpression)
-                // KTM TODO: Check
-                (transition.effects.get(0) as de.cau.cs.kieler.sccharts.Assignment)
-                   .expression.mapChild(assignment.assignment); // KTM - transformation mapping information
             }
         }
         else if (state.conditional) {
             val conditional = sCGraph.addConditional
-            state.mapChild(conditional); // KTM - transformation mapping information
-            state.outgoingTransitions.forEach[it.mapChild(conditional)]; // KTM - transformation mapping information
             state.map(conditional)
             scopeProvider.parent = state
             val transition = state.outgoingTransitions.get(0)
@@ -449,13 +391,10 @@ class SCGTransformation {
             transitionCopy.setImmediate(false)
             // TODO  Test if this works correct? Was before:  conditional.setCondition(serializer.serialize(transitionCopy))
             conditional.setCondition(transitionCopy.trigger.convertToSCGExpression)
-            transition.trigger.mapChild(conditional.condition); // KTM - transformation mapping information
         }
         else if (state.fork) {
             val fork = sCGraph.addFork
-            state.mapChild(fork); // KTM - transformation mapping information
             val join = sCGraph.addJoin
-            state.mapChild(join); // KTM - transformation mapping information
             fork.setJoin(join)
             state.map(fork)
             join.map(state)
@@ -466,7 +405,6 @@ class SCGTransformation {
         }
         else if (state.exit) {
             val exit = sCGraph.addExit
-            state.mapChild(exit); // KTM - transformation mapping information
             state.map(exit)
         }
     }
@@ -483,7 +421,6 @@ class SCGTransformation {
        val initialState = region.states.filter(e | e.isInitial || e.eContainer.eContainer == null).get(0)
        val initialNode = initialState.mappedNode
        val controlFlowInitial = initialNode.createControlFlow
-       initialState.outgoingTransitions.get(0).mapChild(controlFlowInitial); // KTM - transformation mapping information
        entry.setNext(controlFlowInitial)
         
        for (state : region.states) {
@@ -506,7 +443,6 @@ class SCGTransformation {
             val otherNode = targetState.mappedNode   
             if (otherNode != null) {
                 val controlFlow = otherNode.createControlFlow
-                state.outgoingTransitions.get(0).mapChild(controlFlow); // KTM - transformation mapping information
                 depth.setNext(controlFlow)    
             }   
         }
@@ -520,7 +456,6 @@ class SCGTransformation {
             val otherNode = targetState.mappedNode   
             if (otherNode != null) {
                 val controlFlow = otherNode.createControlFlow
-                state.outgoingTransitions.get(0).mapChild(controlFlow); // KTM - transformation mapping information
                 assignment.setNext(controlFlow)
             }
         }
@@ -538,12 +473,10 @@ class SCGTransformation {
             val otherNodeElse = transitionElse.targetState.mappedNode
             if (otherNodeThen != null) {
                 val controlFlowThen = otherNodeThen.createControlFlow
-                transitionThen.mapChild(controlFlowThen); // KTM - transformation mapping information
                 conditional.setThen(controlFlowThen)
             }
             if (otherNodeElse != null) {
                 val controlFlowElse = otherNodeElse.createControlFlow
-                transitionElse.mapChild(controlFlowElse); // KTM - transformation mapping information
                 conditional.setElse(controlFlowElse)
             }
         }
@@ -558,53 +491,44 @@ class SCGTransformation {
                 val otherNodeEntry = region.mappedEntry
                 if (otherNodeEntry != null) {
                     val controlFlowEntry = otherNodeEntry.createControlFlow
-                    state.mapChild(controlFlowEntry); // KTM - transformation mapping information
                     fork.next.add(controlFlowEntry)
                 }   
                 val otherNodeExit = region.mappedEntry.exit   
                 if (otherNodeExit != null) {
                     val controlFlowFinal = join.createControlFlow
-                    state.mapChild(controlFlowFinal); // KTM - transformation mapping information
                     otherNodeExit.setNext(controlFlowFinal)
                 }   
                 region.transformSCGConnectNodes(sCGraph)
             }
             if (state.outgoingTransitions.size>0) {
-            	val termination = state.outgoingTransitions.get(0)
+                val termination = state.outgoingTransitions.get(0)
                 val terminationTargetState = termination.targetState
                 val otherNodeTermination = terminationTargetState.mappedNode   
                 if (otherNodeTermination != null) {
 
                     val controlFlowTermination = otherNodeTermination.createControlFlow
-                    termination.mapChild(controlFlowTermination); // KTM - transformation mapping information
   
-// STEVEN'S HOTHOTFIX                	
-//                	// Add another assignment if the termination has an effect.
-//                	if (!termination.effects.nullOrEmpty) {
-//	    		   		val assignment = sCGraph.addAssignment
-//                      termination.mapChild(assignment); // KTM - transformation mapping information
-//                      termination.effects.get(0).mapchild(assignment); // KTM - transformation mapping information
-//						val transitionCopy = termination.copy
-//            			transitionCopy.setImmediate(false)
-//						val effect = transitionCopy.effects.get(0)
-//						val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
-//						assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
-//				        assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
-//                      // Next line KTM - transformation mapping information
-//                      (termination.effects.get(0) as de.cau.cs.kieler.sccharts.Assignment).expression.mapChild(assignment.assignment);
-//				        assignment.setNext(controlFlowTermination)
-//				        join.setNext(assignment.createControlFlow)
-//                      termination.mapChild(join.next); // KTM - transformation mapping information                	
-//            		} else {
-	                    join.setNext(controlFlowTermination)
+// STEVEN'S HOTHOTFIX                   
+//                  // Add another assignment if the termination has an effect.
+//                  if (!termination.effects.nullOrEmpty) {
+//                      val assignment = sCGraph.addAssignment
+//                      val transitionCopy = termination.copy
+//                      transitionCopy.setImmediate(false)
+//                      val effect = transitionCopy.effects.get(0)
+//                      val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
+//                      assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
+//                      assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
+//                      assignment.setNext(controlFlowTermination)
+//                      join.setNext(assignment.createControlFlow)                  
+//                  } else {
+                        join.setNext(controlFlowTermination)
 //                    }
                     
                 }   
             } else {
                 // The root state does not have a normal termination.
                 // Use the corresponding exit node of the root region in this case. 
-                val controlFlow = (state.eContainer as Region).getMappedEntry.exit.createControlFlow
-                state.mapChild(controlFlow); // KTM - transformation mapping information 
+                val controlFlow = (state.eContainer as Region).getMappedEntry.exit.createControlFlow 
                 join.setNext(controlFlow)
             }
         }
@@ -614,7 +538,6 @@ class SCGTransformation {
             val nodeExit = state.mappedExit
             val regionExit = state.parentRegion.mappedEntry.exit
             val controlFlowFinal = regionExit.createControlFlow
-            state.mapChild(controlFlowFinal); // KTM - transformation mapping information
             nodeExit.setNext(controlFlowFinal)
         }
     }
