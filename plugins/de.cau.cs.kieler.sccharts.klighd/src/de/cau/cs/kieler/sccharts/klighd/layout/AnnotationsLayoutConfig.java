@@ -24,8 +24,8 @@ import de.cau.cs.kieler.core.annotations.FloatAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.properties.IProperty;
-import de.cau.cs.kieler.kiml.ILayoutData;
-import de.cau.cs.kieler.kiml.LayoutDataService;
+import de.cau.cs.kieler.kiml.ILayoutMetaData;
+import de.cau.cs.kieler.kiml.LayoutMetaDataService;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
 import de.cau.cs.kieler.kiml.config.SemanticLayoutConfig;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
@@ -55,7 +55,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
     @Override
     protected IProperty<?>[] getAffectedOptions(final Object semanticElem) {
         if (semanticElem instanceof Annotatable) {
-            LayoutDataService dataService = LayoutDataService.getInstance();
+            LayoutMetaDataService dataService = LayoutMetaDataService.getInstance();
             List<LayoutOptionData> data = new LinkedList<LayoutOptionData>();
             for (Annotation annotation : ((Annotatable) semanticElem).getAnnotations()) {
                 // bugfix by alb
@@ -102,8 +102,8 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
         if (annotation instanceof StringAnnotation) {
             String value = ((StringAnnotation) annotation).getValue();
             if (optionData.equals(LayoutOptions.ALGORITHM)) {
-                LayoutDataService dataService = LayoutDataService.getInstance();
-                ILayoutData layoutData = dataService.getAlgorithmDataBySuffix(value);
+                LayoutMetaDataService dataService = LayoutMetaDataService.getInstance();
+                ILayoutMetaData layoutData = dataService.getAlgorithmDataBySuffix(value);
                 if (layoutData != null) {
                     return layoutData.getId();
                 }

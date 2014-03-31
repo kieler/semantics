@@ -21,7 +21,7 @@ import de.cau.cs.kieler.core.annotations.IntAnnotation
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.core.kgraph.KNode
 
-import de.cau.cs.kieler.kiml.LayoutDataService
+import de.cau.cs.kieler.kiml.LayoutMetaDataService
 import de.cau.cs.kieler.kiml.LayoutOptionData
 import de.cau.cs.kieler.kiml.LayoutOptionData$Type
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
@@ -39,7 +39,7 @@ class AnnotationsExtensions {
      * @author chsch
      */
     def void transferAnnotationsOf(KNode node, Annotatable a) {
-        val service = LayoutDataService::instance;
+        val service = LayoutMetaDataService::instance;
         a.annotations.filter[!it.name.nullOrEmpty].forEach[
             val LayoutOptionData data =
                 (service.getOptionData(it.name)?:
