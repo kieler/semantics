@@ -164,34 +164,34 @@ public class TimingAnalysisHandler extends AbstractHandler {
 ///////////////Transformations to S and building of Transformation Tree/////////////////////////////////
 ///////////////Momentarily restricted to transformations form core SCChart downwards////////////////////
                 
-                Region modelSplitTE = SCCtransformation.transformTriggerEffect(rootRegion);
-                
-                ModelWrapper modelSplitTEModelWrapper = transformationTree.initializeTransformationTree
-                        (SCCtransformation.extractMapping(), "TriggerEffect", rootRegion, 
-                                "coreSCChart", modelSplitTE, "coreSCChart-splitTriggerEffect");
-                
-                Region modelNormalized = SCCtransformation.transformSurfaceDepth(modelSplitTE);
-                
-                ModelWrapper modelNormalizedModelWrapper = transformationTree.
-                        addTransformationToTree(SCCtransformation.extractMapping(), 
-                                modelSplitTEModelWrapper, "SurfaceDepth", modelSplitTE, 
-                                modelNormalized, "NormalizedChoreSCChart");
-                
-                SCGraph modelSCG = SCGtransformation.transformSCG(modelNormalized);
-                
-                ModelWrapper modelSCGModelWrapper = transformationTree.
-                        addTransformationToTree(SCGtransformation.extractMapping(), 
-                                modelNormalizedModelWrapper, "SCC2SCG",
-                                modelNormalized, modelSCG, "SCG");
-                
-                de.cau.cs.kieler.s.s.Program modelS = Stransformation.transformSCGToS(modelSCG);
-                
-                ModelWrapper modelSModelWrapper = transformationTree.
-                        addTransformationToTree(Stransformation.extractMapping(), modelSCGModelWrapper,
-                                "SCG2S", 
-                                modelSCG, modelS, "S");
-                
-                ModelWrapper KTM = transformationTree.root(modelSModelWrapper);
+//                Region modelSplitTE = SCCtransformation.transformTriggerEffect(rootRegion);
+//                
+//                ModelWrapper modelSplitTEModelWrapper = transformationTree.initializeTransformationTree
+//                        (SCCtransformation.extractMapping(), "TriggerEffect", rootRegion, 
+//                                "coreSCChart", modelSplitTE, "coreSCChart-splitTriggerEffect");
+//                
+//                Region modelNormalized = SCCtransformation.transformSurfaceDepth(modelSplitTE);
+//                
+//                ModelWrapper modelNormalizedModelWrapper = transformationTree.
+//                        addTransformationToTree(SCCtransformation.extractMapping(), 
+//                                modelSplitTEModelWrapper, "SurfaceDepth", modelSplitTE, 
+//                                modelNormalized, "NormalizedChoreSCChart");
+//                
+//                SCGraph modelSCG = SCGtransformation.transformSCG(modelNormalized);
+//                
+//                ModelWrapper modelSCGModelWrapper = transformationTree.
+//                        addTransformationToTree(SCGtransformation.extractMapping(), 
+//                                modelNormalizedModelWrapper, "SCC2SCG",
+//                                modelNormalized, modelSCG, "SCG");
+//                
+//                de.cau.cs.kieler.s.s.Program modelS = Stransformation.transformSCGToS(modelSCG);
+//                
+//                ModelWrapper modelSModelWrapper = transformationTree.
+//                        addTransformationToTree(Stransformation.extractMapping(), modelSCGModelWrapper,
+//                                "SCG2S", 
+//                                modelSCG, modelS, "S");
+//                
+//                ModelWrapper KTM = transformationTree.root(modelSModelWrapper);
                 
 /////////////////Setting of timing domains in both SCChart and S code with the help of the KTM tree.////
 /////////////////Get thread tree on the fly.////////////////////////////////////////////////////////////
@@ -199,13 +199,16 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 HashMap<Integer, LinkedList<Integer>> threadTree = 
                         new HashMap<Integer, LinkedList<Integer>>();
                 
+                // get main region
+                Region main = rootRegion.getStates().get(0).getRegions().get(0);
+                
                 Integer domainNumber = annotationProvider.
-                        setTimingDomainsWithS(rootRegion, 0, threadTree, null);
+                        setTimingDomainsWithS(main, 0, threadTree, null);
                 
                 
                 
                 
-                //annotationProvider.setTimingDomainsSimple(rootRegion, 0);
+//                annotationProvider.setTimingDomainsSimple(rootRegion, 0);
                 
                 
                 EList<State> rootRegionStates = rootRegion.getStates();
