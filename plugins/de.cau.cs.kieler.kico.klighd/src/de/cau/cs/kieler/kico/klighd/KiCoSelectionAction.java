@@ -45,7 +45,7 @@ public class KiCoSelectionAction implements IAction {
     public ActionResult execute(final ActionContext context) {
 
         //context.getActiveViewer().toggleExpansion(context.getKNode());
-        context.getKNode()
+        context.getKNode();
 
         return ActionResult.createResult(true);
     }
