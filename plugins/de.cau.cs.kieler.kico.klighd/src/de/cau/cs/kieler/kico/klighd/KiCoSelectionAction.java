@@ -206,7 +206,7 @@ public class KiCoSelectionAction implements IAction {
                 if (kText != null) {
                     kRenderingExtensions.setForeground(kText, KiCoDiagramSynthesis.DARKGRAY);
                     kRenderingExtensions.setSelectionBackground(kText,
-                            copy(KiCoDiagramSynthesis.WHITE));
+                            copy(KiCoDiagramSynthesis.BLUE1));
                 }
                 KiCoSelectionView.removeSelectedTransformation(id, KiCoSelectionView.getActiveEditorID());
             }

@@ -281,7 +281,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                                 it.addSingleClickAction(KiCoSelectionAction::ID);
                                 if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id, KiCoSelectionView.activeEditorID)) {
                                     it.setForeground("white".color)
-                                    it.setSelectionBackground("white".color)
+                                    it.setSelectionBackground(BLUE1.copy)
                                 } else {
                                     it.setForeground(DARKGRAY.copy)
                                     it.setSelectionBackground(BLUE3.copy)
@@ -301,7 +301,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                         it.fontSize = 11;
                         if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id, KiCoSelectionView.activeEditorID)) {
                             it.setForeground("white".color)
-                            it.setSelectionBackground("white".color)
+                            it.setSelectionBackground(BLUE1.copy)
                         } else {
                             it.setForeground(DARKGRAY.copy)
                             it.setSelectionBackground(BLUE3.copy)
