@@ -32,7 +32,7 @@ SingleRegion returns sccharts::Region:
     (
       (annotations += Annotation)*
       'region' (id=ID)? (label=STRING)? ':'
-      (typeGroups+=TypeGroup)*
+      (declarations+=Declaration)*
      )?
     (states+=State)*;
 
@@ -42,7 +42,7 @@ Region returns sccharts::Region:
 	{sccharts::Region}
     (annotations += Annotation)*
     'region' (id=ID)? (label=STRING)? ':'
-      (typeGroups+=TypeGroup)*
+      (declarations+=Declaration)*
     (states+=State)+;
 
 // ---------------------------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ SCChart:
      | 
       ('{'
           (
-            (typeGroups+=TypeGroup |
+            (declaration+=Declaration |
              localActions+=LocalAction)*
             (
              (regions+=SingleRegion)(regions+=Region)*
@@ -102,7 +102,7 @@ State returns sccharts::State:
      | 
       ('{'
           (
-            (typeGroups+=TypeGroup |
+            (declarations+=Declaration |
              localActions+=LocalAction)*
             (
              (regions+=SingleRegion)(regions+=Region)*
@@ -136,9 +136,9 @@ Transition returns sccharts::Transition:
 
 // ---------------------------------------------------------------------------------------------------
 
-TypeGroup returns kexpressions::TypeGroup:
+Declaration returns kexpressions::Declaration:
     (annotations+=Annotation)*
-	(constant?='const')?
+	(const?='const')?
     (input?='input')?
     (output?='output')?
     (static?='static')?
@@ -192,6 +192,5 @@ enum StateType returns sccharts::StateType:
 
 enum TransitionType returns sccharts::TransitionType:
 	WEAKABORT = '-->' | STRONGABORT = 'o->' | TERMINATION = '>->';
-
-
+	
 	

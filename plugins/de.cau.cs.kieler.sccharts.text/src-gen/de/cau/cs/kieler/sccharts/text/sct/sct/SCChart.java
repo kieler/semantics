@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.sct;
 
+import de.cau.cs.kieler.core.kexpressions.Declaration;
+
 import de.cau.cs.kieler.sccharts.State;
 
 import org.eclipse.emf.common.util.EList;
@@ -16,6 +18,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getImports <em>Imports</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getDeclaration <em>Declaration</em>}</li>
  * </ul>
  * </p>
  *
@@ -66,5 +69,21 @@ public interface SCChart extends State
    * @generated
    */
   EList<ImportDecl> getImports();
+
+  /**
+   * Returns the value of the '<em><b>Declaration</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Declaration</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Declaration</em>' containment reference list.
+   * @see de.cau.cs.kieler.sccharts.text.sct.sct.SctPackage#getSCChart_Declaration()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Declaration> getDeclaration();
 
 } // SCChart

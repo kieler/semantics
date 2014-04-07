@@ -41,13 +41,13 @@ public class SCChartsSimSPlugin extends AbstractUIPlugin {
      * The Constant AUXILIARY_VARIABLE_TAG for a Transition.
      */
     public static final String AUXILIARY_VARIABLE_TAG_TRANSITION
-                           = "oSYNCCHARTSoAUXTRANSo";
+                           = "oSCCHARTSoAUXTRANSo";
 
     /**
      * The Constant AUXILIARY_VARIABLE_TAG for a State.
      */
     public static final String AUXILIARY_VARIABLE_TAG_STATE
-                           = "oSYNCCHARTSoAUXSTATEo";
+                           = "oSCCHARTSoAUXSTATEo";
 
     // -------------------------------------------------------------------------
 

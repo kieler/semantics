@@ -623,7 +623,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getScope_TypeGroups() {
+    public EReference getScope_Declarations() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(5);
     }
 
@@ -802,7 +802,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEReference(scopeEClass, SCOPE__LOCAL_ACTIONS);
         createEReference(scopeEClass, SCOPE__REFERENCED_SCOPE);
         createEReference(scopeEClass, SCOPE__BINDINGS);
-        createEReference(scopeEClass, SCOPE__TYPE_GROUPS);
+        createEReference(scopeEClass, SCOPE__DECLARATIONS);
 
         textEffectEClass = createEClass(TEXT_EFFECT);
 
@@ -922,7 +922,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getScope_LocalActions(), this.getLocalAction(), null, "localActions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_ReferencedScope(), this.getScope(), null, "referencedScope", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_Bindings(), this.getBinding(), null, "bindings", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_TypeGroups(), theKExpressionsPackage.getTypeGroup(), null, "typeGroups", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getScope_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(textEffectEClass, TextEffect.class, "TextEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

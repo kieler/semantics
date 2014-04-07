@@ -13,23 +13,29 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
 import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
-import de.cau.cs.kieler.core.kexpressions.TypeGroup;
+
+import de.cau.cs.kieler.core.kexpressions.Declaration;
+
 import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
+
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -43,7 +49,7 @@ import de.cau.cs.kieler.sccharts.Scope;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLocalActions <em>Local Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getReferencedScope <em>Referenced Scope</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBindings <em>Bindings</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getTypeGroups <em>Type Groups</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  * </p>
  *
@@ -128,14 +134,14 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     protected EList<Binding> bindings;
 
     /**
-     * The cached value of the '{@link #getTypeGroups() <em>Type Groups</em>}' containment reference list.
+     * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTypeGroups()
+     * @see #getDeclarations()
      * @generated
      * @ordered
      */
-    protected EList<TypeGroup> typeGroups;
+    protected EList<Declaration> declarations;
 
     /**
      * <!-- begin-user-doc -->
@@ -265,11 +271,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<TypeGroup> getTypeGroups() {
-        if (typeGroups == null) {
-            typeGroups = new EObjectContainmentEList<TypeGroup>(TypeGroup.class, this, SCChartsPackage.SCOPE__TYPE_GROUPS);
+    public EList<Declaration> getDeclarations() {
+        if (declarations == null) {
+            declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SCChartsPackage.SCOPE__DECLARATIONS);
         }
-        return typeGroups;
+        return declarations;
     }
 
     /**
@@ -284,8 +290,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return ((InternalEList<?>)getLocalActions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__BINDINGS:
                 return ((InternalEList<?>)getBindings()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                return ((InternalEList<?>)getTypeGroups()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.SCOPE__DECLARATIONS:
+                return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -309,8 +315,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return basicGetReferencedScope();
             case SCChartsPackage.SCOPE__BINDINGS:
                 return getBindings();
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                return getTypeGroups();
+            case SCChartsPackage.SCOPE__DECLARATIONS:
+                return getDeclarations();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -341,9 +347,9 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 getBindings().clear();
                 getBindings().addAll((Collection<? extends Binding>)newValue);
                 return;
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                getTypeGroups().clear();
-                getTypeGroups().addAll((Collection<? extends TypeGroup>)newValue);
+            case SCChartsPackage.SCOPE__DECLARATIONS:
+                getDeclarations().clear();
+                getDeclarations().addAll((Collection<? extends Declaration>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -372,8 +378,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SCChartsPackage.SCOPE__BINDINGS:
                 getBindings().clear();
                 return;
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                getTypeGroups().clear();
+            case SCChartsPackage.SCOPE__DECLARATIONS:
+                getDeclarations().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -397,8 +403,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return referencedScope != null;
             case SCChartsPackage.SCOPE__BINDINGS:
                 return bindings != null && !bindings.isEmpty();
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
-                return typeGroups != null && !typeGroups.isEmpty();
+            case SCChartsPackage.SCOPE__DECLARATIONS:
+                return declarations != null && !declarations.isEmpty();
         }
         return super.eIsSet(featureID);
     }

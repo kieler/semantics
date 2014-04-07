@@ -52,8 +52,8 @@ public enum StateType implements Enumerator {
      * @generated
      * @ordered
      */
-    CONNECTOR(1, "CONNECTOR", "CONNECTOR"),
-
+    CONNECTOR(1, "CONNECTOR", "CONNECTOR"), 
+    
     /**
      * The '<em><b>REFERENCE</b></em>' literal object.
      * <!-- begin-user-doc -->

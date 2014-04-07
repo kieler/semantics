@@ -154,21 +154,11 @@ class SCGTransformation {
         // Create a new SCGraph
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph
         // Handle declarations
-//        for (valuedObject : rootRegion2.rootState.valuedObjects) {
-//            val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
-//            valuedObjectSCG.applyAttributes(valuedObject)
-//            valuedObjectSCG.map(valuedObject)
-//        }
-        for(typeGroup : rootRegion2.rootState.typeGroups) {
-            val newTypeGroup = createTypeGroupWOValuedObjects(typeGroup)
-            for (valuedObject : typeGroup.valuedObjects) {
-            	val newValuedObject = createValuedObject(newTypeGroup, valuedObject.name)
-//	            valuedObjectMapping.put(valuedObject, newValuedObject)
-				newValuedObject.map(valuedObject)
-            }
-            sCGraph.typeGroups += newTypeGroup 
-        }        
-        
+        for (valuedObject : rootRegion2.rootState.valuedObjects) {
+            val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
+            valuedObjectSCG.applyAttributes(valuedObject)
+            valuedObjectSCG.map(valuedObject)
+        }
         // Include top most level of hierarchy 
         // if the root state itself already contains multiple regions.
         // Otherwise skip the first layer of hierarchy.
@@ -587,7 +577,9 @@ class SCGTransformation {
 
     // Apply conversion to textual host code 
     def dispatch Expression convertToSCGExpression(TextExpression expression) {
-        createTextExpression(expression.text)
+        val textExpression = createTextExpression
+        textExpression.setText(expression.text.removeEnclosingQuotes)
+        textExpression
     }    
     
     // Apply conversion to the default case

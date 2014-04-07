@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
- package de.cau.cs.kieler.core.kexpressions.extensions
+package de.cau.cs.kieler.core.kexpressions.extensions
 
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.Expression
@@ -21,14 +21,14 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.TypeGroup
-import java.util.List
 
 /**
  * KExpressions Extensions. 
@@ -37,158 +37,386 @@ import java.util.List
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class KExpressionsExtension { 
-
-//    public val Injector i = ActionsStandaloneSetup::doSetup();
-//    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
-//    public val ISerializer serializer = i.getInstance(typeof(ISerializer));
+class KExpressionsExtension {
     
+    //    public val Injector i = ActionsStandaloneSetup::doSetup();
+    //    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
+    //    public val ISerializer serializer = i.getInstance(typeof(ISerializer));
+    // -------------------------------------------------------------------------   
+
+
+
+    //=======  SYNC MEETING DEMO  ======
+
+    // Return the type of the ValuedObject.
+    def public ValueType getType(ValuedObject valuedObject) {
+        valuedObject.declaration.type
+    }
+
+
+    // Set the type of a ValuedObject. 
+    def public ValuedObject setType(ValuedObject valuedObject, ValueType type) {
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setType(type)
+        valuedObject;
+    }
+    
+    
+    // Helper method for Setter-Wrapper. It returns the direct Declaration of a ValuedObject
+    // if there are no other ValuedObjects in this group. Otherwise it creates and returns
+    // a new Declaration and removes the ValuedObject from the old one, adding it to the 
+    // new one.
+    def public Declaration getUniqueDeclaration(ValuedObject valuedObject) {
+        val declaration = valuedObject.declaration
+        if (declaration._containsOnly(valuedObject)) {
+            // We don't have to care about other valuedObjects
+            return declaration
+        } else {
+            // Make a new Declaration
+            val newDeclaration = createDeclaration(declaration)
+            // Remove the valuedObject from the old group and add it to the new group
+            declaration._removeValuedObject(valuedObject)
+            if (declaration.valuedObjects.size == 0) {
+                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN CASE ONE!
+            }
+            newDeclaration._addValuedObject(valuedObject)
+            newDeclaration
+        }
+    } 
+         
+         
+//    // Return the list of all contained ValuedObjects.
+//    def private List<ValuedObject> getValuedObjects(List<Declaration> declarations) {
+//        <ValuedObject>newArrayList => [list|declarations.forEach[list += valuedObjects]]
+//    }
+            
+    
+    // Return the list of all contained ValuedObjects. 
+    // ATTENTION: This method returns a specific list. If you add ValuedObjects to this
+    // list they will be added to  the container of a Declaration.
+    def public ValuedObjectList getValuedObjects(EObject eObject) {
+        val declarations = eObject.eContents.filter(typeof(Declaration)).toList
+        val returnList = new ValuedObjectList()
+        // This is necessary for adding ValuedObjects later
+        returnList.setContainer(eObject)
+        for (declaration : declarations) {
+            returnList.addAll(declaration.valuedObjects)
+        }
+        returnList
+    }
+
+    
+    
+    
+    //=======  DECLARATION WRAPPINGS  ======
+    
+    // Add a valuedObject to an eObject
+    def public void addValuedObject(EObject eObject, ValuedObject valuedObject) {
+        val declaration = valuedObject.uniqueDeclaration
+        //val declarationFeature = eObject.eClass().getEStructuralFeature(KExpressionsPackage.TYPE_GROUP__VALUED_OBJECTS)
+        val getDeclarations =  eObject.class.getMethod("getDeclarations")
+        val possibleList = getDeclarations.invoke(eObject);
+        val list = possibleList as EList<Object>
+        list.add(declaration);        
+    }
+    
+    
+    // Remove a valuedObject from an eObject
+    def public void removeValuedObject(EObject eObject, ValuedObject valuedObject) {
+        val getDeclarations =  eObject.class.getMethod("getDeclarations")
+        val possibleList = getDeclarations.invoke(eObject);
+        val declarations = possibleList as EList<Declaration>
+        for (declaration : declarations) {
+            declaration._removeValuedObject(valuedObject)
+        }
+    }   
+    
+        
+    
+
+    //=======  GENERAL  ======
+
+    // added by cmot (9.3.14)
+    public def String removeEnclosingQuotes(String text) {
+            var returnText = text
+            if (returnText.startsWith("'") && returnText.endsWith("'")) {
+                returnText = returnText.replaceFirst("'", "")
+                returnText = returnText.substring(0, returnText.length - 1)
+                return returnText.removeEnclosingQuotes
+            }
+            if (returnText.startsWith("\"") && returnText.endsWith("\"")) {
+                returnText = returnText.substring(0, returnText.length - 1)
+                returnText = returnText.replaceFirst("'", "")
+                return returnText.removeEnclosingQuotes
+            }
+            return text
+    }
+
+
+
+        
+    
+//    // Return the list of all contained ValuedObjects. 
+//    // ATTENTION: This method returns a specific list. If you add ValuedObjects to this
+//    // list they will be added to  the container of a Declaration.
+//    def public ValuedObjectList getValuedObjects(EObject eObject) {
+//        val declarations = eObject.eContents.filter(typeof(Declaration)).toList
+//        val returnList = new ValuedObjectList()
+//        // This is necessary for adding ValuedObjects later
+//        returnList.setContainer(eObject)
+//        for (declaration : declarations) {
+//            returnList.addAll(declaration.valuedObjects)
+//        }
+//        returnList
+//    }
+
+    // Get the real container of a ValuedObject (not the Declaration).
+    def public EObject getEContainer(ValuedObject valuedObject) {
+        valuedObject.eContainer.eContainer
+    }
+
+//    // Return the list of all contained ValuedObjects.
+//    def private List<ValuedObject> getValuedObjects(List<Declaration> declarations) {
+//        <ValuedObject>newArrayList => [list|declarations.forEach[list += valuedObjects]]
+//    }
+//
+//    // Remove a specific ValuedObject.
+//    def private removeValuedObject(List<Declaration> declarations, ValuedObject valuedObject) {
+//        for (declaration : declarations) {
+//            declaration._removeValuedObject(valuedObject)
+//        }
+//    }
+
+//    // Return the type of the ValuedObject.
+//    def public ValueType getType(ValuedObject valuedObject) {
+//        valuedObject.declaration.type
+//    }
+
+    // Return whether the ValuedObject is an input.
+    def public boolean getInput(ValuedObject valuedObject) {
+        valuedObject.declaration.input
+    }
+
+    // Return whether the ValuedObject is an input.
+    def public boolean isInput(ValuedObject valuedObject) {
+        valuedObject.getInput()
+    }
+
+    // Return whether the ValuedObject is an output.
+    def public boolean getOutput(ValuedObject valuedObject) {
+        valuedObject.declaration.output
+    }
+
+    // Return whether the ValuedObject is an output.
+    def public boolean isOutput(ValuedObject valuedObject) {
+        valuedObject.getOutput()
+    }
+    
+    // Return whether the ValuedObject is static.
+    def public boolean getStatic(ValuedObject valuedObject) {
+        valuedObject.declaration.static
+    }
+
+    // Return whether the ValuedObject is static.
+    def public boolean isStatic(ValuedObject valuedObject) {
+        valuedObject.getStatic()
+    }
+    
+    // Return whether the ValuedObject is a const.
+    def public boolean getConst(ValuedObject valuedObject) {
+        valuedObject.declaration.const
+    }
+
+    // Return whether the ValuedObject is a const.
+    def public boolean isConst(ValuedObject valuedObject) {
+        valuedObject.getConst()
+    }
+
+    // Return whether the ValuedObject is a signal.
+    def public boolean getSignal(ValuedObject valuedObject) {
+        valuedObject.declaration.signal
+    }
+
+    // Return whether the ValuedObject is a signal.
+    def public boolean isSignal(ValuedObject valuedObject) {
+        valuedObject.getSignal()
+    }
+    
+//    // Set the type of a ValuedObject. 
+//    def public ValuedObject setType(ValuedObject valuedObject, ValueType type) {
+//        val uniqueDeclaration = valuedObject.uniqueDeclaration
+//        uniqueDeclaration.setType(type)
+//        valuedObject;
+//    }
+
+    // Set the ValuedObject to be or not be an input.
+    def public ValuedObject setInput(ValuedObject valuedObject, boolean isInput) {
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setInput(isInput)
+        valuedObject;
+    }
+    def public ValuedObject setIsInput(ValuedObject valuedObject) {
+        valuedObject.setInput(true)
+    } 
+    def public ValuedObject setIsNotInput(ValuedObject valuedObject) {
+        valuedObject.setInput(false)
+    } 
+    
+    // Set the ValuedObject to be or not be an output.
+    def public ValuedObject setOutput(ValuedObject valuedObject, boolean isOutput) {
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setOutput(isOutput)
+        valuedObject;
+    }
+    def public ValuedObject setIsOutput(ValuedObject valuedObject) {
+        valuedObject.setOutput(true)
+    } 
+    def public ValuedObject setIsNotOutput(ValuedObject valuedObject) {
+        valuedObject.setOutput(false)
+    } 
+
+    // Set the ValuedObject to be or not be static.
+    def public ValuedObject setStatic(ValuedObject valuedObject, boolean isStatic) {
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setInput(isStatic)
+        valuedObject;
+    }
+    def public ValuedObject setIsStatic(ValuedObject valuedObject) {
+        valuedObject.setConst(true)
+    } 
+    def public ValuedObject setIsNotStatic(ValuedObject valuedObject) {
+        valuedObject.setConst(false)
+    } 
+    
+   // Set the ValuedObject to be or not be a Const.
+   def public ValuedObject setConst(ValuedObject valuedObject, boolean isConst) {
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setConst(isConst)
+        valuedObject;
+    }
+    def public ValuedObject setIsConst(ValuedObject valuedObject) {
+        valuedObject.setConst(true)
+    } 
+    def public ValuedObject setIsNotConst(ValuedObject valuedObject) {
+        valuedObject.setConst(false)
+    } 
+
+    // Set the ValuedObject to be or not be a sinal.
+    def public ValuedObject setSignal(ValuedObject valuedObject, boolean isSignal) {
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setSignal(isSignal)
+        valuedObject;
+    }
+    def public ValuedObject setIsSignal(ValuedObject valuedObject) {
+        valuedObject.setSignal(true)
+    } 
+    def public ValuedObject setIsNotSignal(ValuedObject valuedObject) {
+        valuedObject.setSignal(false)
+    } 
+
+
+    //=======  DECLARATIONS  ======
+
+    // Creates a new Declaration.
+    def public Declaration createDeclaration() {
+        KExpressionsFactory::eINSTANCE.createDeclaration
+    }
+
+    // Creates a new Declaration as a copy of another Declaration.
+    def public Declaration createDeclaration(Declaration declaration) {
+        createDeclaration => [
+            type = declaration.type
+            input = declaration.input
+            output = declaration.output
+            signal = declaration.signal
+            static = declaration.static
+            const = declaration.const
+        ]
+    }
+
+//    // Set the Declaration to a specific type.
+//    def private Declaration setType(Declaration declaration, ValueType type) {
+//        declaration.type = type
+//        declaration
+//    }
+
+
+    //=======  DECLARATIONS AND VALUED OBJECTS  ======
+    
+    // Get the surrounding Declaration of a ValuedObject that contains the ValuedObject. 
+    // This Declaration may also contain other ValuedObjects, see containsOnly().
+    // If the valuedObject does not have any Declaration yet, then create a new one.
+    def private Declaration getDeclaration(ValuedObject valuedObject) {
+        if (valuedObject.eContainer instanceof Declaration) {
+            return valuedObject.eContainer as Declaration
+        } else {
+            val newDeclaration = createDeclaration;
+            newDeclaration._addValuedObject(valuedObject)
+            newDeclaration
+        }
+    }
+    
+//    // Helper method for Setter-Wrapper. It returns the direct Declaration of a ValuedObject
+//    // if there are no other ValuedObjects in this group. Otherwise it creates and returns
+//    // a new Declaration and removes the ValuedObject from the old one, adding it to the 
+//    // new one.
+//    def public Declaration getUniqueDeclaration(ValuedObject valuedObject) {
+//        val declaration = valuedObject.declaration
+//        if (declaration._containsOnly(valuedObject)) {
+//            // We don't have to care about other valuedObjects
+//            return declaration
+//        } else {
+//            // Make a new Declaration
+//            val newDeclaration = createDeclaration(declaration)
+//            // Remove the valuedObject from the old group and add it to the new group
+//            declaration._removeValuedObject(valuedObject)
+//            if (declaration.valuedObjects.size == 0) {
+//                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN CASE ONE!
+//            }
+//            newDeclaration._addValuedObject(valuedObject)
+//            newDeclaration
+//        }
+//    }    
+
+    // Check if a Declaration only contains a single ValuedObject.
+    def private boolean _containsOnly(Declaration declaration, ValuedObject valuedObject) {
+        (declaration.valuedObjects.contains(valuedObject))&&(declaration.valuedObjects.size == 1)
+    }
+
+    // Remove a specific ValuedObject.
+    def private _removeValuedObject(Declaration declaration, ValuedObject valuedObject) {
+         if (declaration.valuedObjects.contains(valuedObject)) {
+           declaration.valuedObjects -= valuedObject  
+         } 
+    }
+    
+    // Add a ValuedObject.
+    def private Declaration _addValuedObject(Declaration declaration, ValuedObject valuedObject) {
+        declaration.valuedObjects.add(valuedObject)
+        declaration
+    }
 
     // -------------------------------------------------------------------------   
     
-    //=======  TYPE GROUP WRAPPINGS  ======
-    
-    /**
-     * Since the xtend editor does not support highlighting for deprecated methods,
-     * this runtime method prints such usages on the console.
-     * TODO: Remove at some later stage.
-     */
-    def private deprecatedValuedObjectAccess() {
-    	System::out.println("USED DEPRECATED VALUED OBJECT ACCESSOR! REMOVE THIS CALL SOON!")
-    }
-
-    def public TypeGroup getTypeGroup(ValuedObject valuedObject) {
-    	// TODO: Safeguard check for the time of transition. Remove at some later stage. 
-    	if (valuedObject.eContainer instanceof TypeGroup) {
-    		return valuedObject.eContainer as TypeGroup
-    	} else {
-    		throw new NullPointerException("Valued object is not contained in a type group!")
-    	}
-    }
-    
-    def public ValueType getType(ValuedObject valuedObject) {
-    	valuedObject.typeGroup.type
-    }
-    
-    def public ValuedObject setType(ValuedObject valuedObject, ValueType type) {
-    	valuedObject => [ typeGroup.type = type ]
-    }
-    
-    def public boolean getInput(ValuedObject valuedObject) {
-    	valuedObject.typeGroup.input
-    }
-
-    def public boolean isInput(ValuedObject valuedObject) {
-    	valuedObject.input
-    }
-    
-    /**
-     * @deprecated Use type groups instead.
-     */
-    def public ValuedObject setInput(ValuedObject valuedObject, boolean input) {
-    	deprecatedValuedObjectAccess
-    	valuedObject => [ typeGroup.input = input ]
-    }
-
-    def public boolean getOutput(ValuedObject valuedObject) {
-    	valuedObject.typeGroup.output
-    }
-
-    def public boolean isOutput(ValuedObject valuedObject) {
-    	valuedObject.output
-    }
-    
-    /**
-     * @deprecated Use type groups instead.
-     */
-    def public ValuedObject setOutput(ValuedObject valuedObject, boolean output) {
-    	deprecatedValuedObjectAccess
-    	valuedObject => [ typeGroup.output = output ]
-    }
-
-    def public boolean getStatic(ValuedObject valuedObject) {
-    	valuedObject.typeGroup.static
-    }
-
-    def public boolean isStatic(ValuedObject valuedObject) {
-    	valuedObject.static
-    }
-    
-    /**
-     * @deprecated Use type groups instead.
-     */
-    def public ValuedObject setStatic(ValuedObject valuedObject, boolean statik) {
-    	deprecatedValuedObjectAccess
-    	valuedObject => [ typeGroup.static = statik ]
-    }
-    
-    def public boolean getConstant(ValuedObject valuedObject) {
-    	valuedObject.typeGroup.constant
-    }
-
-    def public boolean isConstant(ValuedObject valuedObject) {
-    	valuedObject.constant
-    }
-
-    /**
-     * @deprecated Use type groups instead.
-     */
-    def public ValuedObject setSignal(ValuedObject valuedObject, boolean signal) {
-    	deprecatedValuedObjectAccess
-    	valuedObject => [ typeGroup.signal = signal ]
-    }
-    
-    def public boolean getSignal(ValuedObject valuedObject) {
-    	valuedObject.typeGroup.signal
-    }
-
-    def public boolean isSignal(ValuedObject valuedObject) {
-    	valuedObject.signal
-    }
-    
-    /**
-     * @deprecated Use type groups instead.
-     */
-    def public ValuedObject setConstant(ValuedObject valuedObject, boolean constant) {
-    	deprecatedValuedObjectAccess
-    	valuedObject => [ typeGroup.constant = constant ]
-    }
-    
-    
     //=======  STATIC EXPRESSIONS  ======
     
-    def public BoolValue TRUE() {
-        createBooleanValue(true)
-    }
-
-    def public BoolValue FALSE() {
-        createBooleanValue(false)
-    }
-
-    def public BoolValue createBooleanValue(boolean value) {
-        val booleanValue = KExpressionsFactory::eINSTANCE.createBoolValue
-        booleanValue.setValue(value)
-        booleanValue
-    }
-
-
     // In an EObject replace one expression by another
-//    def dispatch equals2(Object expression1, Object expression2) {
-//        if (expression1 == null && expression2 == null) {
-//            return true
-//        }
-//    }
+    //    def dispatch equals2(Object expression1, Object expression2) {
+    //        if (expression1 == null && expression2 == null) {
+    //            return true
+    //        }
+    //    }
     def dispatch equals2(OperatorExpression expression1, OperatorExpression expression2) {
         var c = 0
         for (Expression subExpression1 : expression1.subExpressions) {
             val subExpression2 = expression2.subExpressions.get(c)
             c = c + 1
-           if (expression1.operator != expression2.operator) {
-               return false
-           }
-           if (!subExpression1.equals(subExpression2)) {
-               return false
-           }  
+            if (expression1.operator != expression2.operator) {
+                return false
+            }
+            if (!subExpression1.equals(subExpression2)) {
+                return false
+            }
         }
         return true
     }
@@ -196,11 +424,9 @@ class KExpressionsExtension {
     def dispatch equals2(ValuedObjectReference expression1, ValuedObjectReference expression2) {
         if (expression1 == null && expression2 == null) {
             return true
-        }
-        else if (expression1 != null && expression2 == null) {
+        } else if (expression1 != null && expression2 == null) {
             return false
-        }
-        else if (expression1 == null && expression2 != null) {
+        } else if (expression1 == null && expression2 != null) {
             return false
         }
         return expression1.valuedObject == expression2.valuedObject
@@ -209,11 +435,9 @@ class KExpressionsExtension {
     def dispatch equals2(TextExpression expression1, TextExpression expression2) {
         if (expression1 == null && expression2 == null) {
             return true
-        }
-        else if (expression1 != null && expression2 == null) {
+        } else if (expression1 != null && expression2 == null) {
             return false
-        }
-        else if (expression1 == null && expression2 != null) {
+        } else if (expression1 == null && expression2 != null) {
             return false
         }
         return expression1.text.equals(expression2.text)
@@ -226,9 +450,7 @@ class KExpressionsExtension {
         return false
     }
 
-
     //==  EXPRESSION MODIFICATIONS  ==
-
     // In an EObject replace one expression by another
     def void replace(EObject eObject, Expression searchExpression, Expression replaceExpression) {
         for (Expression expression : eObject.eAllContents.filter(typeof(Expression)).toList) {
@@ -240,45 +462,43 @@ class KExpressionsExtension {
     def Expression replace(Expression expression, Expression searchExpression, Expression replaceExpression) {
         if (expression == searchExpression) {
             return replaceExpression
-        }
-        else if (searchExpression instanceof OperatorExpression) {
+        } else if (searchExpression instanceof OperatorExpression) {
             val operatorExpression = searchExpression as OperatorExpression
-            for (Expression subExpression : operatorExpression.subExpressions) { 
+            for (Expression subExpression : operatorExpression.subExpressions) {
                 subExpression.replace(searchExpression, replaceExpression)
             }
         }
         expression
     }
-    
+
     // Trim all AND/OR Expressions if it contains only a single sub expression
     def dispatch Expression trim(Expression expression) {
         expression
     }
-    
+
     // Trim an AND/OR Expression if it contains only a single sub expression.
     def dispatch Expression trim(OperatorExpression operatorExpression) {
         if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty) {
             return operatorExpression
         }
-        if (operatorExpression.subExpressions.size == 1 && 
-            ((operatorExpression.operator == OperatorType::AND) || (operatorExpression.operator == OperatorType::OR))
-        ) {
-               // if there is just one sub expression, we do not need an AND/OR!
-               val innerExpression = operatorExpression.subExpressions.get(0);
-               if (innerExpression != null) {
-                   return innerExpression.trim
-               }
-               return innerExpression
-        }
-        else if (operatorExpression.subExpressions.size > 1 ) {
-               for (Expression subExpression : operatorExpression.subExpressions.immutableCopy) {
-                   operatorExpression.add(subExpression.trim.copy)
-                   operatorExpression.subExpressions.remove(subExpression)
-               }
+        if (operatorExpression.subExpressions.size == 1 &&
+            ((operatorExpression.operator == OperatorType::AND) || (operatorExpression.operator == OperatorType::OR))) {
+
+            // if there is just one sub expression, we do not need an AND/OR!
+            val innerExpression = operatorExpression.subExpressions.get(0);
+            if (innerExpression != null) {
+                return innerExpression.trim
+            }
+            return innerExpression
+        } else if (operatorExpression.subExpressions.size > 1) {
+            for (Expression subExpression : operatorExpression.subExpressions.immutableCopy) {
+                operatorExpression.add(subExpression.trim.copy)
+                operatorExpression.subExpressions.remove(subExpression)
+            }
         }
         operatorExpression;
     }
-    
+
     //-------------------------------------------------------------------------
     //--             H O T F I X   F O R   O P E R A T O R S                 --
     //-------------------------------------------------------------------------
@@ -288,24 +508,24 @@ class KExpressionsExtension {
     // Test 14
     def Expression fix(Expression expression) {
         if (expression instanceof OperatorExpression) {
-            (expression as OperatorExpression).fixForOperatorExpressionLists     
+            (expression as OperatorExpression).fixForOperatorExpressionLists
         } else {
             expression
-        }        
+        }
     }
-    
+
     def OperatorExpression fixForOperatorExpressionLists(OperatorExpression operatorExpression) {
         if (operatorExpression == null || operatorExpression.subExpressions.nullOrEmpty ||
             operatorExpression.subExpressions.size <= 2) {
 
             // In this case we do not need the fix
-//            return operatorExpression;
-              val oeCopy = operatorExpression.copy
-              oeCopy.subExpressions.clear
-              operatorExpression.subExpressions.forEach[
-                  oeCopy.subExpressions += it.copy.fix
-              ]    
-              return oeCopy                    
+            //            return operatorExpression;
+            val oeCopy = operatorExpression.copy
+            oeCopy.subExpressions.clear
+            operatorExpression.subExpressions.forEach [
+                oeCopy.subExpressions += it.copy.fix
+            ]
+            return oeCopy
         }
 
         // Here we apply the fix recursively
@@ -318,10 +538,11 @@ class KExpressionsExtension {
         operatorExpressionCopy.subExpressions.remove(0);
         newOperatorExpression.subExpressions.add(operatorExpressionCopy.fixForOperatorExpressionLists);
         return newOperatorExpression;
-    }    
+    }
+    
 
     //==========  EXPRESSIONS  ==========
-
+    
     // Create an Expression.
     def Expression createExpression() {
         val expression = KExpressionsFactory::eINSTANCE.createExpression()
@@ -341,14 +562,14 @@ class KExpressionsExtension {
         expression.setOperator(OperatorType::EQ)
         expression
     }
-    
+
     // Create an EQ Expression as a sub expression.
     def OperatorExpression createEQExpression(OperatorExpression operatorExpression) {
         val expression = createEQExpression()
         operatorExpression.add(expression)
         expression
     }
-    
+
     // Create an EQ Expression add expressionFirst and expressionSecond as a sub expression.
     def OperatorExpression isEqual(Expression expressionFirst, Expression expressionSecond) {
         val eqExpression = createEQExpression()
@@ -363,14 +584,14 @@ class KExpressionsExtension {
         expression.setOperator(OperatorType::AND)
         expression
     }
-    
+
     // Create an AND Expression as a sub expression.
     def OperatorExpression createAndExpression(OperatorExpression operatorExpression) {
         val expression = createAndExpression()
         operatorExpression.add(expression)
         expression
     }
-    
+
     // Create an AND Expression add expressionFirst and expressionSecond as a sub expression.
     def OperatorExpression and(Expression expressionFirst, Expression expressionSecond) {
         val andExpression = createAndExpression()
@@ -397,14 +618,14 @@ class KExpressionsExtension {
         expression.setOperator(OperatorType::OR)
         expression
     }
-    
+
     // Create an OR Expression as a sub expression.
     def OperatorExpression createOrExpression(OperatorExpression operatorExpression) {
         val expression = createOrExpression()
         operatorExpression.add(expression)
         expression
     }
-    
+
     // Create an OR Expression add expressionFirst or expressionSecond as a sub expression.
     def OperatorExpression or(Expression expressionFirst, Expression expressionSecond) {
         val orExpression = createOrExpression()
@@ -424,43 +645,42 @@ class KExpressionsExtension {
         orExpression.add(expressionSecond)
         orExpression
     }
-    
+
     // Create an NOT Expression.
     def OperatorExpression createNotExpression() {
         val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
         expression.setOperator(OperatorType::NOT)
         expression
     }
-    
+
     // Create an NOT Expression as a sub expression.
     def OperatorExpression createNotExpression(OperatorExpression operatorExpression) {
         val expression = createNotExpression()
         operatorExpression.add(expression)
         expression
     }
-    
+
     // Create an NOT Expression and add expression as a sub expression.
     def OperatorExpression not(Expression expression) {
         val notExpression = createNotExpression()
         notExpression.add(expression)
         notExpression
     }
-    
-    
+
     // Create an ADD Expression.
     def OperatorExpression createAddExpression() {
         val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
         expression.setOperator(OperatorType::ADD)
         expression
     }
-    
+
     // Create an ADD Expression as a sub expression.
     def OperatorExpression createAddExpression(OperatorExpression operatorExpression) {
         val expression = createAddExpression()
         operatorExpression.add(expression)
         expression
     }
-    
+
     // Create an ADD Expression and add expression as a sub expression.
     def Expression add(Expression expressionFirst, Expression expressionSecond) {
         if (expressionFirst == null) {
@@ -471,21 +691,21 @@ class KExpressionsExtension {
         addExpression.add(expressionSecond)
         addExpression
     }
-    
+
     // Create an SUB Expression.
     def OperatorExpression createSubExpression() {
         val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression()
         expression.setOperator(OperatorType::SUB)
         expression
     }
-    
+
     // Create an SUB Expression as a sub expression.
     def OperatorExpression createSubExpression(OperatorExpression operatorExpression) {
         val expression = createSubExpression()
         operatorExpression.add(expression)
         expression
     }
-    
+
     // Create an SUB Expression and add expression as a sub expression.
     def Expression sub(Expression expressionFirst, Expression expressionSecond) {
         if (expressionFirst == null) {
@@ -495,200 +715,63 @@ class KExpressionsExtension {
         subExpression.add(expressionFirst)
         subExpression.add(expressionSecond)
         subExpression
-    } 
-    
+    }
+
     // Add a sub expression to an OperatorExpression.
     def OperatorExpression add(OperatorExpression operatorExpression, Expression expression) {
         operatorExpression.subExpressions.add(expression)
         operatorExpression
     }
-    
-    // Create a ValuedObjectReference to a valuedObject
-    def ValuedObjectReference reference (ValuedObject valuedObject) {
-         val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
-         valuedObjectReference.setValuedObject(valuedObject);
-         valuedObjectReference
-    }
 
+    // Create a ValuedObjectReference to a valuedObject
+    def ValuedObjectReference reference(ValuedObject valuedObject) {
+        val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
+        valuedObjectReference.setValuedObject(valuedObject);
+        valuedObjectReference
+    }
 
     //=========  VALUED OBJECT  =========
-
-    // Creates a new TypeGroup.
-    def public TypeGroup createTypeGroup() {
-         KExpressionsFactory::eINSTANCE.createTypeGroup
-    }    
-
-    def public TypeGroup createTypeGroup(ValueType valueType) {
-         KExpressionsFactory::eINSTANCE.createTypeGroup => [ type = valueType ]
-    }
-    
-    def public TypeGroup createTypeGroup(ValuedObject valuedObject) {
-    	createTypeGroup() => [ valuedObjects += valuedObject ]
-    }
-    
-    def public TypeGroup createTypeGroup(List<ValuedObject> valueObjects) {
-    	createTypeGroup() => [ it.valuedObjects += valuedObjects ] 
-    }
-    
-    def public TypeGroup createTypeGroupWOValuedObjects(TypeGroup typeGroup) {
-		createTypeGroup => [
-			type = typeGroup.type
-			input = typeGroup.input
-			output = typeGroup.output
-			signal = typeGroup.signal
-			static = typeGroup.static
-			constant = typeGroup.constant
-		]    	
-    }
-    
-    def public TypeGroup copyAttributes(TypeGroup target, TypeGroup typeGroup) {
-		target => [
-			type = typeGroup.type
-			input = typeGroup.input
-			output = typeGroup.output
-			signal = typeGroup.signal
-			static = typeGroup.static
-			constant = typeGroup.constant
-		]    	
-    }
-
-    // Set the TypeGroup to be of type PURE.
-    def TypeGroup setTypePure(TypeGroup typeGroup) {
-    	typeGroup => [ type = ValueType::PURE ]
-    }
-    
-    // Set the TypeGroup to be of type INT.
-    def TypeGroup setTypeInt(TypeGroup typeGroup) {
-    	typeGroup => [ type = ValueType::INT ]
-    }    
-
-    // Set the TypeGroup to be of type BOOL.
-    def TypeGroup setTypeBool(TypeGroup typeGroup) {
-    	typeGroup => [ type = ValueType::BOOL ]
-    }    
-
-    // Set the TypeGroup to be of type DOUBLE.
-    def TypeGroup setTypeDouble(TypeGroup typeGroup) {
-    	typeGroup => [ type = ValueType::DOUBLE ]
-    }    
-
-    // Set the TypeGroup to be of type FLOAT.
-    def TypeGroup setTypeFloat(TypeGroup typeGroup) {
-    	typeGroup => [ type = ValueType::FLOAT ]
-    }    
-            
     // Creates a new ValuedObject.
     def ValuedObject createValuedObject(String valuedObjectName) {
-         val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
-         valuedObject.setName(valuedObjectName)
-         valuedObject
-    }
-    
-    def ValuedObject createValuedObject(TypeGroup typeGroup, String valuedObjectName) {
-    	createValuedObject(valuedObjectName) => [ typeGroup.valuedObjects += it ]
-    }
-    
-    def ValuedObject createValuedObjectInTypeGroup(String valuedObjectName) {
-        val tg = createTypeGroup 
-        createValuedObject(tg, valuedObjectName)	
-    }
-    
-    def public List<ValuedObject> getValuedObjects(List<TypeGroup> typeGroups) {
-    	<ValuedObject> newArrayList => [ list | typeGroups.forEach[ list += valuedObjects]]
-    }
-        
-    def public removeValuedObject(List<TypeGroup> typeGroups, ValuedObject valuedObject) {
-    	for (tg : typeGroups) {
-    		if (tg.valuedObjects.contains(valuedObject)) tg.valuedObjects -= valuedObject
-    	}
-    }
-    
-//    // Set the ValuedObject to be a signal.
-//    def ValuedObject setSignal(ValuedObject valuedObject, boolean isSignal) {
-//        valuedObject.setSignal(isSignal)
-//        valuedObject
-//    }
-//    
-//    // Set the ValuedObject to be an input.
-//    def ValuedObject setInput(ValuedObject valuedObject) {
-//         valuedObject.setInput(true)
-//         valuedObject
-//    }    
-//    
-//    // Set the ValuedObject to be an output.
-//    def ValuedObject setOutput(ValuedObject valuedObject) {
-//         valuedObject.setOutput(true)
-//         valuedObject
-//    }    
-//    
-//    // Set the ValuedObject to be of type PURE.
-//    def ValuedObject setTypePure(ValuedObject valuedObject) {
-//         valuedObject.setType(ValueType::PURE)
-//         valuedObject
-//    }    
-//
-//    // Set the ValuedObject to be of type INT.
-//    def ValuedObject setTypeInt(ValuedObject valuedObject) {
-//         valuedObject.setType(ValueType::INT)
-//         valuedObject
-//    }   
-//    
-//    // Set the ValuedObject to be of type BOOL.
-//    def ValuedObject setTypeBool(ValuedObject valuedObject) {
-//         valuedObject.setType(ValueType::BOOL)
-//         valuedObject
-//    }    
-//    
-//    // Set the ValuedObject to be of type DOUBLE.
-//    def ValuedObject setTypeDouble(ValuedObject valuedObject) {
-//         valuedObject.setType(ValueType::DOUBLE)
-//         valuedObject
-//    }    
-//    
-//    // Set the ValuedObject to be of type FLOAT.
-//    def ValuedObject setTypeFloat(ValuedObject valuedObject) {
-//         valuedObject.setType(ValueType::FLOAT)
-//         valuedObject
-//    }    
-
-    //===========  VARIABLES  ===========
-
-    // Creates a new variable ValuedObject.
-    def ValuedObject createVariable(String variableName) {
-    	createValuedObject(variableName)
-    }
-    
-    def ValuedObject createVariable(TypeGroup typeGroup, String variableName) {
-    	createValuedObject(typeGroup, variableName)
-    }
-    
-    def ValuedObject createVariableInTypeGroup(String variableName) {
-        val tg = createTypeGroup 
-        createVariable(tg, variableName)	
-    }
-    
-    // Creates a new Int variable ValuedObject.
-    def ValuedObject createVariableInIntTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeInt ]
-        createVariable(tg, variableName)	
-    }
-    
-    // Creates a new Bool variable ValuedObject.
-    def ValuedObject createVariableInBoolTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeBool ]
-        createVariable(tg, variableName)	
+        val valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
+        valuedObject.setName(valuedObjectName)
+        valuedObject
     }
 
-    // Creates a new Double variable ValuedObject.
-    def ValuedObject createVariableInDoubleTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeDouble ]
-        createVariable(tg, variableName)	
+    // Set the ValuedObject to be of type PURE.
+    def public ValuedObject setTypePure(ValuedObject valuedObject) {
+        valuedObject.setType(ValueType::PURE);
+        valuedObject
     }
 
-    // Creates a new Float variable ValuedObject.
-    def ValuedObject createVariableInFloatTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeInt ]
-        createVariable(tg, variableName)	
+    // Set the ValuedObject to be of type INT.
+    def public ValuedObject setTypeInt(ValuedObject valuedObject) {
+        valuedObject.setType(ValueType::INT);
+        valuedObject
+    }
+
+    // Set the ValuedObject to be of type BOOL.
+    def public ValuedObject setTypeBool(ValuedObject valuedObject) {
+        valuedObject.setType(ValueType::BOOL);
+        valuedObject
+    }
+
+    // Set the ValuedObject to be of type DOUBLE.
+    def public ValuedObject setTypeDouble(ValuedObject valuedObject) {
+        valuedObject.setType(ValueType::DOUBLE);
+        valuedObject
+    }
+
+    // Set the ValuedObject to be of type FLOAT.
+    def public ValuedObject setTypeFloat(ValuedObject valuedObject) {
+        valuedObject.setType(ValueType::FLOAT);
+        valuedObject
+    }
+
+    // Set the ValuedObject to be of type HOST.
+    def public ValuedObject setTypeHost(ValuedObject valuedObject) {
+        valuedObject.setType(ValueType::HOST);
+        valuedObject
     }
 
     // Apply attributes of another ValuedObject.
@@ -701,82 +784,154 @@ class KExpressionsExtension {
         valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
         valuedObject
     }
+
+    //    def public void addValuedObject(EObject eObject, ValuedObject valuedObject) {
+    //        val declarations = eObject.eAllContents.filter(typeof(Declaration)); 
+    //    }
+    //
+    //    def public void removeValuedObject(EObject eObject, ValuedObject valuedObject) {
+    //        val declarations = eObject.eAllContents.filter(typeof(Declaration)).filter[valuedObjects.contains(valuedObject)].toList;
+    //        for (declaration : declarations.immutableCopy) {
+    //            declaration.valuedObjects.remove(valuedObject)
+    //        } 
+    //    }
+    //    
+    //    def private Declaration createDeclaration(ValuedObject valuedObject) {
+    //    	createDeclaration() => [ valuedObjects += valuedObject ]
+    //    }
+    //    
+    //    def private Declaration createDeclaration(List<ValuedObject> valueObjects) {
+    //    	createDeclaration() => [ it.valuedObjects += valuedObjects ] 
+    //    }
+    //    
+    //    
+    //    def private Declaration copyAttributes(Declaration target, Declaration declaration) {
+    //		target => [
+    //			type = declaration.type
+    //			input = declaration.input
+    //			output = declaration.output
+    //			signal = declaration.signal
+    //			static = declaration.static
+    //			Const = declaration.Const
+    //		]    	
+    //    }
+    //    def private ValuedObject createValuedObject(Declaration declaration, String valuedObjectName) {
+    //    	createValuedObject(valuedObjectName) => [ declaration.valuedObjects += it ]
+    //    }
+    //    
+    //    def private ValuedObject createValuedObjectInDeclaration(String valuedObjectName) {
+    //        val tg = createDeclaration 
+    //        createValuedObject(tg, valuedObjectName)	
+    //    }
+    //    // Set the ValuedObject to be a signal.
+    //    def ValuedObject setSignal(ValuedObject valuedObject, boolean isSignal) {
+    //        valuedObject.setSignal(isSignal)
+    //        valuedObject
+    //    }
+    //    
+    //    // Set the ValuedObject to be an input.
+    //    def ValuedObject setInput(ValuedObject valuedObject) {
+    //         valuedObject.setInput(true)
+    //         valuedObject
+    //    }    
+    //    
+    //    // Set the ValuedObject to be an output.
+    //    def ValuedObject setOutput(ValuedObject valuedObject) {
+    //         valuedObject.setOutput(true)
+    //         valuedObject
+    //    }    
+    //    
+    //    // Set the ValuedObject to be of type PURE.
+    //    def ValuedObject setTypePure(ValuedObject valuedObject) {
+    //         valuedObject.setType(ValueType::PURE)
+    //         valuedObject
+    //    }    
+    //
+    //    // Set the ValuedObject to be of type INT.
+    //    def ValuedObject setTypeInt(ValuedObject valuedObject) {
+    //         valuedObject.setType(ValueType::INT)
+    //         valuedObject
+    //    }   
+    //    
+    //    // Set the ValuedObject to be of type BOOL.
+    //    def ValuedObject setTypeBool(ValuedObject valuedObject) {
+    //         valuedObject.setType(ValueType::BOOL)
+    //         valuedObject
+    //    }    
+    //    
+    //    // Set the ValuedObject to be of type DOUBLE.
+    //    def ValuedObject setTypeDouble(ValuedObject valuedObject) {
+    //         valuedObject.setType(ValueType::DOUBLE)
+    //         valuedObject
+    //    }    
+    //    
+    //    // Set the ValuedObject to be of type FLOAT.
+    //    def ValuedObject setTypeFloat(ValuedObject valuedObject) {
+    //         valuedObject.setType(ValueType::FLOAT)
+    //         valuedObject
+    //    }    
     
+    
+    //===========  VARIABLES  ===========
+    
+    // Creates a new variable ValuedObject.
+    def ValuedObject createVariable(String variableName) {
+        createValuedObject(variableName)
+    }
+
 
     //============  SIGNALS  ============
     
     // Creates a new signal ValuedObject.
-    def ValuedObject createSignal(TypeGroup typeGroup, String signalName) {
-    	if (typeGroup.signal == false) {
-    		throw new UnsupportedOperationException("The given type group does not accept signals!")
-    	}
-		createValuedObject(typeGroup, signalName)
+    def ValuedObject createSignal(Declaration declaration, String signalName) {
+        createValuedObject(signalName).setSignal(true)
     }
 
-    // Creates a new pure signal ValuedObject.
-    def ValuedObject createSignalInPureTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypePure; signal = true ]
-        createSignal(tg, variableName)	
-    }
 
-    // Creates a new Int signal ValuedObject.
-    def ValuedObject createSignalInIntTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeInt; signal = true ]
-        createSignal(tg, variableName)	
-    }
-
-    // Creates a new Bool signal ValuedObject.
-    def ValuedObject createSignalInBoolTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeBool; signal = true ]
-        createSignal(tg, variableName)	
-    }
-
-    // Creates a new Double signal ValuedObject.
-    def ValuedObject createSignalInDoubleTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeDouble; signal = true ]
-        createSignal(tg, variableName)	
-    }
-
-    // Creates a new Float signal ValuedObject.
-    def ValuedObject createSignalInFloatTypeGroup(String variableName) {
-        val tg = createTypeGroup => [ setTypeFloat; signal = true ]
-        createSignal(tg, variableName)	
-    }
-    
     //===========  VALUES  ===========
     
+    // Create a TRUE value.
+    def public BoolValue TRUE() {
+        createBoolValue(true)
+    }
+
+    // Create a FALSE value.
+    def public BoolValue FALSE() {
+        createBoolValue(false)
+    }
+        
     // Create an int value.
     def IntValue createIntValue(int value) {
-         val expression = KExpressionsFactory::eINSTANCE.createIntValue()
-         expression.setValue(value)
-         expression
+        val expression = KExpressionsFactory::eINSTANCE.createIntValue()
+        expression.setValue(value)
+        expression
     }
-    
+
     // Create a float value.
     def FloatValue createFloatValue(float value) {
-         val expression = KExpressionsFactory::eINSTANCE.createFloatValue()
-         expression.setValue(value)
-         expression
+        val expression = KExpressionsFactory::eINSTANCE.createFloatValue()
+        expression.setValue(value)
+        expression
     }
 
     // Create a boolean value.
     def BoolValue createBoolValue(boolean value) {
-         val expression = KExpressionsFactory::eINSTANCE.createBoolValue()
-         expression.setValue(value)
-         expression
+        val expression = KExpressionsFactory::eINSTANCE.createBoolValue()
+        expression.setValue(value)
+        expression
     }
-
 
     // Create an empty text expression.
     def TextExpression createTextExpression() {
-         val expression = KExpressionsFactory::eINSTANCE.createTextExpression()
-         expression
+        val expression = KExpressionsFactory::eINSTANCE.createTextExpression()
+        expression
     }
+
     // Create a text expression.
     def TextExpression createTextExpression(String text) {
-         val expression = KExpressionsFactory::eINSTANCE.createTextExpression()
-         expression.setText("'" + text + "'")
-         expression
+        val expression = KExpressionsFactory::eINSTANCE.createTextExpression()
+        expression.setText("'" + text + "'")
+        expression
     }
-      
+
 }

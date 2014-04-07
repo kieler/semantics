@@ -13,6 +13,7 @@
  */
  package de.cau.cs.kieler.s.sc.xtend
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
@@ -35,6 +36,8 @@ import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.s.extensions.SExtension
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -43,6 +46,12 @@ import de.cau.cs.kieler.core.kexpressions.FloatValue
  * @kieler.ignore (excluded from review process, outdated)
  */
 class S2SC { 
+    
+    @Inject
+    extension KExpressionsExtension    
+
+    @Inject
+    extension SExtension    
     
     // General method to create the c simulation interface.
 	def transform (Program program, String outputFolder, String bufferSize) {
@@ -147,7 +156,7 @@ class S2SC {
 	«FOR signal : program.getValuedObjects().filter[e|e.isSignal]»
 	valSigInt[sig_«signal.name»] = 0;
 	«ENDFOR»
-	return 0;
+	return 0; 
 }
    	'''
    }

@@ -14,9 +14,6 @@
 package de.cau.cs.kieler.sccharts.provider;
 
 
-import de.cau.cs.kieler.core.annotations.AnnotationsFactory;
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-
 import de.cau.cs.kieler.core.annotations.provider.AnnotatableItemProvider;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
@@ -174,7 +171,7 @@ public class ScopeItemProvider
             super.getChildrenFeatures(object);
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS);
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__BINDINGS);
-            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__TYPE_GROUPS);
+            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__DECLARATIONS);
         }
         return childrenFeatures;
     }
@@ -224,7 +221,7 @@ public class ScopeItemProvider
                 return;
             case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
             case SCChartsPackage.SCOPE__BINDINGS:
-            case SCChartsPackage.SCOPE__TYPE_GROUPS:
+            case SCChartsPackage.SCOPE__DECLARATIONS:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -269,8 +266,8 @@ public class ScopeItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__TYPE_GROUPS,
-                 KExpressionsFactory.eINSTANCE.createTypeGroup()));
+                (SCChartsPackage.Literals.SCOPE__DECLARATIONS,
+                 KExpressionsFactory.eINSTANCE.createDeclaration()));
     }
 
     /**

@@ -86,7 +86,7 @@ public class SctFormatter extends ActionsFormatter {
          */
         // does work :-)
 //        c.setLinewrap().after(f.getValuedObjectRule());
-        c.setLinewrap().after(f.getTypeGroupRule());
+        c.setLinewrap().after(f.getDeclarationRule());
 
         /*
          * TEXTUAL CODE
@@ -101,7 +101,7 @@ public class SctFormatter extends ActionsFormatter {
          * DECLARATIONS
          */
 //        c.setNoSpace().before(f.getValuedObjectAccess().getSemicolonKeyword_9());
-        c.setNoSpace().before(f.getTypeGroupAccess().getSemicolonKeyword_9());
+        c.setNoSpace().before(f.getDeclarationAccess().getSemicolonKeyword_9());
         
 
         

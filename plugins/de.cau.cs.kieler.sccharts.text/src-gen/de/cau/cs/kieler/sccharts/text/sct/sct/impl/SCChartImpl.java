@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.sct.impl;
 
+import de.cau.cs.kieler.core.kexpressions.Declaration;
+
 import de.cau.cs.kieler.sccharts.impl.StateImpl;
 
 import de.cau.cs.kieler.sccharts.text.sct.sct.ImportDecl;
@@ -32,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.text.sct.sct.impl.SCChartImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.text.sct.sct.impl.SCChartImpl#getImports <em>Imports</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.text.sct.sct.impl.SCChartImpl#getDeclaration <em>Declaration</em>}</li>
  * </ul>
  * </p>
  *
@@ -68,6 +71,16 @@ public class SCChartImpl extends StateImpl implements SCChart
    * @ordered
    */
   protected EList<ImportDecl> imports;
+
+  /**
+   * The cached value of the '{@link #getDeclaration() <em>Declaration</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDeclaration()
+   * @generated
+   * @ordered
+   */
+  protected EList<Declaration> declaration;
 
   /**
    * <!-- begin-user-doc -->
@@ -132,6 +145,20 @@ public class SCChartImpl extends StateImpl implements SCChart
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Declaration> getDeclaration()
+  {
+    if (declaration == null)
+    {
+      declaration = new EObjectContainmentEList<Declaration>(Declaration.class, this, SctPackage.SC_CHART__DECLARATION);
+    }
+    return declaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -139,6 +166,8 @@ public class SCChartImpl extends StateImpl implements SCChart
     {
       case SctPackage.SC_CHART__IMPORTS:
         return ((InternalEList<?>)getImports()).basicRemove(otherEnd, msgs);
+      case SctPackage.SC_CHART__DECLARATION:
+        return ((InternalEList<?>)getDeclaration()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -157,6 +186,8 @@ public class SCChartImpl extends StateImpl implements SCChart
         return getName();
       case SctPackage.SC_CHART__IMPORTS:
         return getImports();
+      case SctPackage.SC_CHART__DECLARATION:
+        return getDeclaration();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -179,6 +210,10 @@ public class SCChartImpl extends StateImpl implements SCChart
         getImports().clear();
         getImports().addAll((Collection<? extends ImportDecl>)newValue);
         return;
+      case SctPackage.SC_CHART__DECLARATION:
+        getDeclaration().clear();
+        getDeclaration().addAll((Collection<? extends Declaration>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -199,6 +234,9 @@ public class SCChartImpl extends StateImpl implements SCChart
       case SctPackage.SC_CHART__IMPORTS:
         getImports().clear();
         return;
+      case SctPackage.SC_CHART__DECLARATION:
+        getDeclaration().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -217,6 +255,8 @@ public class SCChartImpl extends StateImpl implements SCChart
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SctPackage.SC_CHART__IMPORTS:
         return imports != null && !imports.isEmpty();
+      case SctPackage.SC_CHART__DECLARATION:
+        return declaration != null && !declaration.isEmpty();
     }
     return super.eIsSet(featureID);
   }

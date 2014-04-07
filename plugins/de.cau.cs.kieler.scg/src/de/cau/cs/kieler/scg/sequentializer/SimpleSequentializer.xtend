@@ -104,10 +104,12 @@ class SimpleSequentializer extends AbstractSequentializer {
          * basic blocks.
          */
         scgSched.copyDeclarations(scg)
-        val guardTypeGroup = createTypeGroup.setTypeBool => [ scg.typeGroups += it ]
+//TODO: CHECK IF CORRECT        
+//        val guardTypeGroup = createTypeGroup.setTypeBool => [ scg.typeGroups += it ]
         scgSched.basicBlocks.forEach[
         	it.guards.forEach[
-        		val newGuard = createValuedObject(guardTypeGroup, it.name)
+                val newGuard = scg.createValuedObject(it.name).setTypeBool
+//        		val newGuard = createValuedObject(guardTypeGroup, it.name)
         		it.addToValuedObjectMapping(newGuard)
         	]
         ]

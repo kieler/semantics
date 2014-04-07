@@ -32,6 +32,8 @@ import java.util.HashMap
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.s.extensions.SExtension
 
 /**
  * Transform SCG to S
@@ -48,6 +50,9 @@ class SCGToSTransformation {
     
     @Inject
     extension SCGExtensions
+
+    @Inject
+    extension SExtension
     
     private static val GOGUARDNAME = "_GO"
     
@@ -59,14 +64,15 @@ class SCGToSTransformation {
 		sProgram.priority = 1
 		sProgram.name = "S"
 		
-        for(typeGroup : scg.typeGroups) {
-            val newTypeGroup = createTypeGroupWOValuedObjects(typeGroup)
-            for (valuedObject : typeGroup.valuedObjects) {
-            	val newValuedObject = createValuedObject(newTypeGroup, valuedObject.name)
+//        for(typeGroup : scg.typeGroups) {
+//            val newTypeGroup = createTypeGroup(typeGroup)
+            for (valuedObject : scg.valuedObjects) {
+            	val newValuedObject = createValuedObject(valuedObject.name).setTypeBool
+            	sProgram.valuedObjects.add(newValuedObject)
 	            valuedObjectMapping.put(valuedObject, newValuedObject)
             }
-            sProgram.typeGroups += newTypeGroup 
-        }		
+//            sProgram.typeGroups += newTypeGroup 
+//        }		
 		
 		
         val initState = SFactory::eINSTANCE.createState => [
@@ -119,8 +125,13 @@ class SCGToSTransformation {
         if (assignment.valuedObject != null && assignment.assignment != null) {
 	    	val sAssignment = SFactory::eINSTANCE.createAssignment
 	    	sAssignment.variable = valuedObjectMapping.get(assignment.valuedObject)
-	    	sAssignment.expression = assignment.assignment.copyExpression.fix
+	    	val expression = assignment.assignment.copyExpression.fix
+            sAssignment.expression = expression
 	    	instructions += sAssignment
+    	} else if (assignment.assignment instanceof TextExpression) {
+    	     // This is the case when the valuedObject is null
+    	     val hostCode = (assignment.assignment as TextExpression).text
+    	     instructions += hostCode.createHostCode
     	}
 	    
 	    if (assignment.next != null) assignment.next.target.transform(instructions)

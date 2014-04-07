@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.sct.impl;
 
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import de.cau.cs.kieler.sccharts.text.sct.sct.ImportDecl;
@@ -139,6 +141,16 @@ public class SctPackageImpl extends EPackageImpl implements SctPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getSCChart_Declaration()
+  {
+    return (EReference)scChartEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getImportDecl()
   {
     return importDeclEClass;
@@ -197,6 +209,7 @@ public class SctPackageImpl extends EPackageImpl implements SctPackage
     scChartEClass = createEClass(SC_CHART);
     createEAttribute(scChartEClass, SC_CHART__NAME);
     createEReference(scChartEClass, SC_CHART__IMPORTS);
+    createEReference(scChartEClass, SC_CHART__DECLARATION);
 
     importDeclEClass = createEClass(IMPORT_DECL);
     createEReference(importDeclEClass, IMPORT_DECL__IMPORTED_TYPE);
@@ -229,6 +242,7 @@ public class SctPackageImpl extends EPackageImpl implements SctPackage
 
     // Obtain other dependent packages
     SCChartsPackage theSCChartsPackage = (SCChartsPackage)EPackage.Registry.INSTANCE.getEPackage(SCChartsPackage.eNS_URI);
+    KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
 
     // Create type parameters
 
@@ -241,6 +255,7 @@ public class SctPackageImpl extends EPackageImpl implements SctPackage
     initEClass(scChartEClass, SCChart.class, "SCChart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSCChart_Name(), ecorePackage.getEString(), "name", null, 0, 1, SCChart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSCChart_Imports(), this.getImportDecl(), null, "imports", null, 0, -1, SCChart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSCChart_Declaration(), theKExpressionsPackage.getDeclaration(), null, "declaration", null, 0, -1, SCChart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(importDeclEClass, ImportDecl.class, "ImportDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getImportDecl_ImportedType(), theSCChartsPackage.getState(), null, "importedType", null, 0, 1, ImportDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

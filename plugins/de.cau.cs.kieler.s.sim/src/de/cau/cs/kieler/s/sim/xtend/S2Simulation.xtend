@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.s.sim.xtend
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.s.s.Abort
@@ -38,6 +39,8 @@ import de.cau.cs.kieler.s.s.LocalSignal
 import de.cau.cs.kieler.s.s.Assignment
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.s.extensions.SExtension
 
 /**
  * Transformation of S code into S code that is
@@ -56,6 +59,12 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.rating 2012-10-08 yellow KI-28
  */
 class S2Simulation {
+    
+    @Inject
+    extension KExpressionsExtension    
+
+    @Inject
+    extension SExtension 
     
          // General method to create the enriched S simulation code.
          def Program transform2Simulation (Program program) {

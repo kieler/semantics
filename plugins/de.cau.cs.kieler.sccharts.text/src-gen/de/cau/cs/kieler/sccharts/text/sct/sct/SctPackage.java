@@ -123,13 +123,13 @@ public interface SctPackage extends EPackage
   int SC_CHART__BINDINGS = SCChartsPackage.STATE__BINDINGS;
 
   /**
-   * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SC_CHART__TYPE_GROUPS = SCChartsPackage.STATE__TYPE_GROUPS;
+  int SC_CHART__DECLARATIONS = SCChartsPackage.STATE__DECLARATIONS;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -213,13 +213,22 @@ public interface SctPackage extends EPackage
   int SC_CHART__IMPORTS = SCChartsPackage.STATE_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Declaration</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SC_CHART__DECLARATION = SCChartsPackage.STATE_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>SC Chart</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SC_CHART_FEATURE_COUNT = SCChartsPackage.STATE_FEATURE_COUNT + 2;
+  int SC_CHART_FEATURE_COUNT = SCChartsPackage.STATE_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.sccharts.text.sct.sct.impl.ImportDeclImpl <em>Import Decl</em>}' class.
@@ -290,6 +299,17 @@ public interface SctPackage extends EPackage
    * @generated
    */
   EReference getSCChart_Imports();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getDeclaration <em>Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Declaration</em>'.
+   * @see de.cau.cs.kieler.sccharts.text.sct.sct.SCChart#getDeclaration()
+   * @see #getSCChart()
+   * @generated
+   */
+  EReference getSCChart_Declaration();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.text.sct.sct.ImportDecl <em>Import Decl</em>}'.
@@ -371,6 +391,14 @@ public interface SctPackage extends EPackage
      * @generated
      */
     EReference SC_CHART__IMPORTS = eINSTANCE.getSCChart_Imports();
+
+    /**
+     * The meta object literal for the '<em><b>Declaration</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SC_CHART__DECLARATION = eINSTANCE.getSCChart_Declaration();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.text.sct.sct.impl.ImportDeclImpl <em>Import Decl</em>}' class.

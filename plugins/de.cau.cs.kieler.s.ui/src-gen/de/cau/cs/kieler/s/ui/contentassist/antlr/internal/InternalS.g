@@ -3173,9 +3173,9 @@ rule__TypeGroup__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getTypeGroupAccess().getConstantAssignment_1()); }
-(rule__TypeGroup__ConstantAssignment_1)?
-{ after(grammarAccess.getTypeGroupAccess().getConstantAssignment_1()); }
+{ before(grammarAccess.getTypeGroupAccess().getConstAssignment_1()); }
+(rule__TypeGroup__ConstAssignment_1)?
+{ after(grammarAccess.getTypeGroupAccess().getConstAssignment_1()); }
 )
 
 ;
@@ -9845,22 +9845,22 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TypeGroup__ConstantAssignment_1
+rule__TypeGroup__ConstAssignment_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getTypeGroupAccess().getConstantConstKeyword_1_0()); }
+{ before(grammarAccess.getTypeGroupAccess().getConstConstKeyword_1_0()); }
 (
-{ before(grammarAccess.getTypeGroupAccess().getConstantConstKeyword_1_0()); }
+{ before(grammarAccess.getTypeGroupAccess().getConstConstKeyword_1_0()); }
 
 	'const' 
 
-{ after(grammarAccess.getTypeGroupAccess().getConstantConstKeyword_1_0()); }
+{ after(grammarAccess.getTypeGroupAccess().getConstConstKeyword_1_0()); }
 )
 
-{ after(grammarAccess.getTypeGroupAccess().getConstantConstKeyword_1_0()); }
+{ after(grammarAccess.getTypeGroupAccess().getConstConstKeyword_1_0()); }
 )
 
 ;

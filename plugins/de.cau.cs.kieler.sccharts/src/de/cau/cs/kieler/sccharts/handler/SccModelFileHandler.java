@@ -1,22 +1,14 @@
 package de.cau.cs.kieler.sccharts.handler;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.viewers.ISelection;
 //import org.eclipse.xtext.Constants;
 //import org.eclipse.xtext.resource.SaveOptions;
 //import org.eclipse.xtext.serializer.ISerializer;
 
-import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.google.inject.name.Named;
 
-import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.SCChartsPlugin;
 
 /**

@@ -32,7 +32,7 @@ import org.eclipse.xtext.scoping.impl.SimpleScope;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 
-import de.cau.cs.kieler.core.kexpressions.TypeGroup;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.Region;
@@ -69,12 +69,12 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
             if (!isProxy(obj)) {
                 refScope = (Scope) obj;
                 
-                return Scopes.scopeFor(Iterables.concat(Iterables.transform(refScope.getTypeGroups(),
-                        new Function<TypeGroup, List<ValuedObject>>() {
+                return Scopes.scopeFor(Iterables.concat(Iterables.transform(refScope.getDeclarations(),
+                        new Function<Declaration, List<ValuedObject>>() {
                     /**
                      * {@inheritDoc}
                      */
-                    public List<ValuedObject> apply(TypeGroup input) {
+                    public List<ValuedObject> apply(Declaration input) {
                         return input.getValuedObjects();
                     }
                 })));
@@ -87,12 +87,12 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
             if (!isProxy(obj)) {
                 refScope = (Scope) obj;
                 
-                return Scopes.scopeFor(Iterables.concat(Iterables.transform(refScope.getTypeGroups(),
-                        new Function<TypeGroup, List<ValuedObject>>() {
+                return Scopes.scopeFor(Iterables.concat(Iterables.transform(refScope.getDeclarations(),
+                        new Function<Declaration, List<ValuedObject>>() {
                     /**
                      * {@inheritDoc}
                      */
-                    public List<ValuedObject> apply(TypeGroup input) {
+                    public List<ValuedObject> apply(Declaration input) {
                         return input.getValuedObjects();
                     }
                 })));

@@ -14,8 +14,8 @@
 package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
-
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 

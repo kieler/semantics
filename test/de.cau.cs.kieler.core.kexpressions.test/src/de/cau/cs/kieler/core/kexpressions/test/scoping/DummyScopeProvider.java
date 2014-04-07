@@ -38,12 +38,12 @@ public class DummyScopeProvider extends AbstractDeclarativeScopeProvider {
     public IScope getScope(EObject context, EReference reference) {
         LinkedList<EObject> eObjectList = new LinkedList<EObject>();
 
-        DummyTypeGroup typeGroup = new DummyTypeGroup(ValueType.INT);
-        
-        eObjectList.add(new DummyValuedObject(typeGroup, "A"));
-        eObjectList.add(new DummyValuedObject(typeGroup, "B"));
-        eObjectList.add(new DummyValuedObject(typeGroup, "C"));
-        eObjectList.add(new DummyValuedObject(typeGroup, "D"));
+        DummyDeclaration declaration = new DummyDeclaration(ValueType.INT);
+         
+        eObjectList.add(new DummyValuedObject(declaration, "A"));
+        eObjectList.add(new DummyValuedObject(declaration, "B"));
+        eObjectList.add(new DummyValuedObject(declaration, "C"));
+        eObjectList.add(new DummyValuedObject(declaration, "D"));
 
         return Scopes.scopeFor(eObjectList,
                 QualifiedName.wrapper(SimpleAttributeResolver.newResolver(String.class, "name")),

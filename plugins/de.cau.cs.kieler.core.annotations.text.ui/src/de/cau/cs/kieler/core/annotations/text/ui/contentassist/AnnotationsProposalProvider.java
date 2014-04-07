@@ -31,7 +31,7 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.eclipse.xtext.util.Strings;
 
 import de.cau.cs.kieler.kiml.LayoutAlgorithmData;
-import de.cau.cs.kieler.kiml.LayoutDataService;
+import de.cau.cs.kieler.kiml.LayoutMetaDataService;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
 import de.cau.cs.kieler.kiml.LayoutOptionData.Type;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
@@ -143,7 +143,7 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
             StyledString displayString;
             ICompletionProposal completeProposal;
 
-            LayoutDataService layoutServices = LayoutDataService.getInstance();
+            LayoutMetaDataService layoutServices = LayoutMetaDataService.getInstance();
             Collection<LayoutOptionData> optionDataList = layoutServices.getOptionData();
             LayoutOptionData optionData;
 
@@ -184,7 +184,7 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
                 if (!Strings.isEmpty(annotationName)) {
 
                     // get the option list
-                    LayoutDataService layoutServices = LayoutDataService.getInstance();
+                    LayoutMetaDataService layoutServices = LayoutMetaDataService.getInstance();
 
                     // find the specific option an display all possible values
                     LayoutOptionData optionData = layoutServices.getOptionData(annotationName);

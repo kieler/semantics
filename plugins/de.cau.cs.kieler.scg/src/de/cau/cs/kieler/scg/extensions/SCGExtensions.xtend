@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.scg.extensions
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.ControlFlow
@@ -39,6 +40,7 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -62,6 +64,9 @@ import de.cau.cs.kieler.scg.Conditional
  * @kieler.rating 2013-08-20 proposed yellow
  */
 class SCGExtensions { 
+    
+    @Inject
+    extension KExpressionsExtension
 
     // -------------------------------------------------------------------------
     // -- Valued object handling
@@ -89,12 +94,12 @@ class SCGExtensions {
      * 			the name of the valued object
      * @return Returns the new valued object. 
      */
-//    def ValuedObject createValuedObject(SCGraph scg, String valuedObjectName) {
-//         createValuedObject(valuedObjectName) => [
-//             scg.valuedObjects += it
-//         ]
-//    }
-//   
+    def ValuedObject createValuedObject(SCGraph scg, String valuedObjectName) {
+         createValuedObject(valuedObjectName) => [
+             scg.valuedObjects.add(it)
+         ]
+    }
+   
 	/** 
 	 * Finds and retrieves a valued object by its name. May return null.
 	 * 
@@ -105,7 +110,7 @@ class SCGExtensions {
 	 * @return Returns the (first) valued object with the given name or null.
 	 */
     def ValuedObject findValuedObjectByName(SCGraph scg, String name) {
-    	for(tg : scg.typeGroups) {
+    	for(tg : scg.declarations) {
     		for(vo : tg.valuedObjects) {
     			if (vo.name == name) return vo
     		}
@@ -378,6 +383,7 @@ class SCGExtensions {
             //   - that the flow is not already included in the flow list
             //   - the target of the flow is not already processed
             //   - and the target of the flow is not the exit node.  
+            if (nextNode != null)
             nextNode.allNext.filter[ 
             	(!returnList.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
@@ -395,6 +401,7 @@ class SCGExtensions {
                 nextNode = (nextNode as Depth).surface
                 if (!returnList.contains(nextNode)) returnList.add(nextNode)
             }
+            if (nextNode != null)
             nextNode.allPrevious.filter[ 
                 (!returnList.contains(it.eContainer)) && 
                 (!controlFlows.contains(it)) ] 

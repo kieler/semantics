@@ -334,16 +334,16 @@ ruleTypeGroup returns [EObject current=null]
 )
 )*(
 (
-		lv_constant_1_0=	'const' 
+		lv_const_1_0=	'const' 
     {
-        newLeafNode(lv_constant_1_0, grammarAccess.getTypeGroupAccess().getConstantConstKeyword_1_0());
+        newLeafNode(lv_const_1_0, grammarAccess.getTypeGroupAccess().getConstConstKeyword_1_0());
     }
  
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getTypeGroupRule());
 	        }
-       		setWithLastConsumed($current, "constant", true, "const");
+       		setWithLastConsumed($current, "const", true, "const");
 	    }
 
 )

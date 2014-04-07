@@ -43,7 +43,8 @@ import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.core.kexpressions.TypeGroup
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 /** 
  * The SCG copy extensions are used to copy SCG model data to another SCG model. 
@@ -63,6 +64,9 @@ class SCGCopyExtensions {
 	
 	@Inject
 	extension KExpressionsExtension
+	
+	@Inject
+	extension AnnotationsExtensions
      
     // -------------------------------------------------------------------------
     // -- Mapping globals 
@@ -117,6 +121,7 @@ class SCGCopyExtensions {
         // Additionally, copy all nodes and fill the mapping structures.
         for(node : source.nodes) {
             val nodeCopy = node.copySCGNode(target)
+            node.copyAnnotations(nodeCopy)
             nodeMapping.put(node, nodeCopy)
             revNodeMapping.put(nodeCopy, node)
             target.nodes.add(nodeCopy)
@@ -186,16 +191,16 @@ class SCGCopyExtensions {
      * 			the target SCG
      */
     public def void copyDeclarations(SCGraph source, SCGraph target) {
-    	for (typeGroup : source.typeGroups) {
-    		val newTypeGroup = createTypeGroupWOValuedObjects(typeGroup)
-    		typeGroup.valuedObjects.forEach[ copyValuedObject(newTypeGroup) ]
-    		target.typeGroups += newTypeGroup
+    	for (declaration : source.declarations) {
+    		val newDeclaration = createDeclaration(declaration)
+    		declaration.valuedObjects.forEach[ copyValuedObject(newDeclaration) ]
+    		target.declarations += newDeclaration
     	}
 	}     
     
-    public def void copyValuedObject(ValuedObject sourceObject, TypeGroup targetTypeGroup) {
+    public def void copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
         val newValuedObject = sourceObject.copy
-        targetTypeGroup.valuedObjects += newValuedObject
+        targetDeclaration.valuedObjects += newValuedObject
         valuedObjectMapping.put(sourceObject, newValuedObject)
     }
     
@@ -664,18 +669,18 @@ class SCGCopyExtensions {
         newExpression
     }
     
-    /**
-     * Create a new reference to a valued object.
-     * 
-     * @param valuedObject
-     * 			the valued object in question
-     * @return Returns a new reference to the given object.
-     */
-    def Expression reference(ValuedObject valuedObject) {
-        val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
-        valuedObjectReference.valuedObject = valuedObject
-        valuedObjectReference
-    }
+//    /**
+//     * Create a new reference to a valued object.
+//     * 
+//     * @param valuedObject
+//     * 			the valued object in question
+//     * @return Returns a new reference to the given object.
+//     */
+//    def Expression reference(ValuedObject valuedObject) {
+//        val valuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference
+//        valuedObjectReference.valuedObject = valuedObject
+//        valuedObjectReference
+//    }
     
 
     // -------------------------------------------------------------------------

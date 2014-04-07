@@ -14,8 +14,6 @@
 package de.cau.cs.kieler.sccharts.provider;
 
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;

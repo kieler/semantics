@@ -16,6 +16,8 @@ package de.cau.cs.kieler.sccharts.extensions
 import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
@@ -26,7 +28,6 @@ import de.cau.cs.kieler.sccharts.Effect
 import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
-import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
@@ -34,18 +35,20 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.SuspendAction
-import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.TextEffect
+import java.util.ArrayList
 
 /**
  * SCCharts Extensions.
  * 
- * @author cmot ssm
+ * @author cmot
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
@@ -112,26 +115,17 @@ class SCChartsExtension {
 
     // Return the list of pure signals of a state.
     def List<ValuedObject> getPureSignals(State state) {
-//        state.valuedObjects.filter[e|e.isSignal && e.type == ValueType::PURE].toList
-    	<ValuedObject> newArrayList => [ list |
-    		state.typeGroups.forEach[ list += valuedObjects.filter[ isSignal && type == ValueType::PURE ]]
-    	] 
+        state.valuedObjects.filter[e|e.isSignal && e.type == ValueType::PURE].toList
     }
 
     // Return the list of valued signals of a state.
     def List<ValuedObject> getValuedSignals(State state) {
-//        state.valuedObjects.filter[e|e.isSignal && e.type != ValueType::PURE].toList
-    	<ValuedObject> newArrayList => [ list |
-    		state.typeGroups.forEach[ list += valuedObjects.filter[ isSignal && type == ValueType::PURE ]]
-    	] 
+        state.valuedObjects.filter[e|e.isSignal && e.type != ValueType::PURE].toList
     }
 
     // Return the list of all signals of a state.
     def List<ValuedObject> getSignals(State state) {
-//        state.valuedObjects.filter[e|e.isSignal].toList
-    	<ValuedObject> newArrayList => [ list |
-    		state.typeGroups.forEach[ list += valuedObjects.filter[ isSignal && type == ValueType::PURE ]]
-    	] 
+        state.valuedObjects.filter[e|e.isSignal].toList
     }
 
     // Return true if the valued Object is a pure signal
@@ -232,7 +226,7 @@ class SCChartsExtension {
         if (state == null) { //seems wrong!! --> || state.valuedObjects.nullOrEmpty) {
             return true
         }
-        val notFoundOtherValuedObjectInState = state.typeGroups.valuedObjects.filter[it != valuedObject && name == newName].size == 0
+        val notFoundOtherValuedObjectInState = state.valuedObjects.filter[it != valuedObject && name == newName].size == 0
         val parentRegion = state.parentRegion
         var notFoundInParents = true
         if (parentRegion != null) {
@@ -241,7 +235,7 @@ class SCChartsExtension {
         return notFoundOtherValuedObjectInState && notFoundInParents
     }
     def private dispatch boolean uniqueNameTest(ValuedObject valuedObject, String newName) {
-        valuedObject.uniqueNameTest((valuedObject.eContainer as State), newName)
+        valuedObject.uniqueNameTest((valuedObject.getEContainer as State), newName)
     }
     def private dispatch boolean uniqueNameTest(EObject eObject, String newName) {
         false
@@ -438,6 +432,10 @@ class SCChartsExtension {
         val transition = createTransition()
         transition.setTargetState(targetState)
         sourceState.outgoingTransitions.add(transition)
+//        targetState.incomingTransitions.add(transition)
+        //val dummyTransition = createTransition()
+        //sourceState.outgoingTransitions.add(dummyTransition)
+        //sourceState.outgoingTransitions.remove(dummyTransition)
         transition.trimPriorities
     }
     
@@ -445,15 +443,19 @@ class SCChartsExtension {
         val transition = createTransition()
         transition.setTargetState(targetState)
         sourceState.outgoingTransitions.add(index, transition)
+//        targetState.incomingTransitions.add(transition)
         transition.trimPriorities
     }    
 
     def Transition setTargetState2(Transition transition, State targetState) {
+//        transition.targetState.incomingTransitions.remove(transition)
         transition.setTargetState(targetState)
+//        targetState.incomingTransitions.add(transition)
         transition
     }
 
     def Transition setSourceState(Transition transition, State sourceState) {
+//        transition.sourceState.outgoingTransitions.remove(transition)
         sourceState.outgoingTransitions.add(transition)
         transition.trimPriorities
     }
@@ -740,6 +742,7 @@ class SCChartsExtension {
     //-------------------------------------------------------------------------
     //--                     K E X P R E S S I O N S                         --
     //-------------------------------------------------------------------------
+    
     //==  EXPRESSION MODIFICATIONS  ==
     def void replace(Action action, Expression searchExpression, Expression replaceExpression) {
         action.setTrigger(action.trigger.replace(searchExpression, replaceExpression))
@@ -748,71 +751,23 @@ class SCChartsExtension {
     //=========  VALUED OBJECT  =========
     // Creates a new ValuedObject in a scope.
     def ValuedObject createValuedObject(Scope scope, String valuedObjectName) {
-        createValuedObjectInTypeGroup(valuedObjectName) => [ scope.typeGroups += it.typeGroup ]
+        val valuedObject = createValuedObject(valuedObjectName)
+        scope.valuedObjects.add(valuedObject)
+        valuedObject
     }
 
     //===========  VARIABLES  ===========
     // Creates a new variable ValuedObject in a Scope.
     def ValuedObject createVariable(Scope scope, String variableName) {
-        createVariableInTypeGroup(variableName) => [ scope.typeGroups += it.typeGroup ]
+        scope.createValuedObject(variableName)
     }
 
-    // Creates a new Int variable ValuedObject in a Scope.
-    def ValuedObject createIntVariable(Scope scope, String variableName) {
-        createVariableInIntTypeGroup(variableName) => [ scope.typeGroups += it.typeGroup ]
+    //============  SIGNALS  ============
+    // Creates a new variable ValuedObject in a Scope.
+    def ValuedObject createSignal(Scope scope, String variableName) {
+        scope.createValuedObject(variableName).setIsSignal
     }
 
-    // Creates a new Bool variable ValuedObject in a Scope.
-    def ValuedObject createBoolVariable(Scope scope, String variableName) {
-        createVariableInBoolTypeGroup(variableName) => [ scope.typeGroups += it.typeGroup ]
-    }
-//
-//    // Creates a new Double variable ValuedObject in a Scope.
-//    def ValuedObject createDoubleVariable(Scope scope, String variableName) {
-//        val valuedObject = createDoubleVariable(variableName)
-//        scope.valuedObjects.add(valuedObject)
-//        valuedObject
-//    }
-//
-//    // Creates a new Float variable ValuedObject in a Scope.
-//    def ValuedObject createFloatVariable(Scope scope, String variableName) {
-//        val valuedObject = createFloatVariable(variableName)
-//        scope.valuedObjects.add(valuedObject)
-//        valuedObject
-//    }
-//
-//    //============  SIGNALS  ============
-//    // Creates a new variable ValuedObject in a Scope.
-//    def ValuedObject createSignal(Scope scope, String variableName) {
-//        val valuedObject = variableName.createSignal
-//        scope.valuedObjects.add(valuedObject)
-//         valuedObject;
-//    }
-//
-    // Creates a new pure signal ValuedObject in a Scope.
-    def ValuedObject createPureSignal(Scope scope, String variableName) {
-        createSignalInPureTypeGroup(variableName) => [ scope.typeGroups += it.typeGroup ]
-    }
-//
-//    // Creates a new Int signal ValuedObject in a Scope.
-//    def ValuedObject createIntSignal(Scope scope, String variableName) {
-//        scope.createIntSignal(variableName)
-//    }
-//
-//    // Creates a new Bool signal ValuedObject in a Scope.
-//    def ValuedObject createBoolSignal(Scope scope, String variableName) {
-//        scope.createBoolSignal(variableName)
-//    }
-//
-//    // Creates a new Double signal ValuedObject in a Scope.
-//    def ValuedObject createDoubleSignal(Scope scope, String variableName) {
-//        scope.createDoubleSignal(variableName)
-//    }
-//
-//    // Creates a new Float signal ValuedObject in a Scope.
-//    def ValuedObject createFloatSignal(Scope scope, String variableName) {
-//        scope.createFloatSignal(variableName)
-//    }
 
     //-------------------------------------------------------------------------
     //--                           N A M I N G S                             --
@@ -921,6 +876,49 @@ class SCChartsExtension {
     }
 
 
+
+    //-------------------------------------------------------------------------
+    //--                F I X   F O R   D E A D    C O D E                   --
+    //-------------------------------------------------------------------------
+    // This fixes halt states and adds an explicit delayed self transition
+    def Region fixDeadCode(Region rootRegion) {
+        val nonReachabledStates = rootRegion.allContainedStates.filter[!isStateReachable].toList
+        
+        for (nonReachabledState : nonReachabledStates.immutableCopy) {
+            val parentRegion = (nonReachabledState.eContainer as Region)
+            parentRegion.states.remove(nonReachabledState)
+        }
+        rootRegion
+    }
+    def  boolean isStateReachable(State originalState) {
+        // Must ensure not to loop forever when having cycles in the model
+        val visited = new ArrayList<State>()
+        isStateReachable(originalState,  originalState, visited)
+    }
+    
+    def  boolean isStateReachable(State originalState, State state, List<State> visited) {
+        if (visited.contains(state) || state == null) {
+            return false
+        }
+        visited.add(state);
+        if (originalState.parentRegion.parentState == null) {
+            // Root states ARE reachable
+            return true
+        }
+        if (state.isInitial()) {
+            return true
+        }
+        else {
+            for (Transition transition : state.getIncomingTransitions()) {
+                    if (isStateReachable(originalState, transition.getSourceState(), visited)) {
+                            return true
+                    }
+            }
+        }
+        return false
+    }
+
+
     //-------------------------------------------------------------------------
     //--               L O C A L   V A L U E D O B J E C T S                 --
     //-------------------------------------------------------------------------
@@ -936,10 +934,6 @@ class SCChartsExtension {
         }
         targetRootRegion;
     }
-
-
-// TODO: Why is this in this extension? Would it not be better to put this code fragment in the transformation extensions?
-// by ssm
     
     // Traverse all states and transform possible local valuedObjects.
     def void transformExposeLocalValuedObject(State state, Region targetRootRegion, boolean expose) {
@@ -954,23 +948,19 @@ class SCChartsExtension {
         }
 
         // There are local valuedObjects, raise them
-        if (state.typeGroups.valuedObjects != null && state.typeGroups.valuedObjects.size > 0) {
+        if (state.valuedObjects != null && state.valuedObjects.size > 0) {
             val hierarchicalStateName = state.getHierarchicalName("LOCAL");
 
-            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.typeGroups.valuedObjects)) {
+            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
                 val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
-                
-                val newTypeGroup = createTypeGroupWOValuedObjects(localValuedObject.typeGroup) => [
-                	valuedObjects += localValuedObject.copy
-                ]
                 
                 // Possibly expose
                 if (expose) {
-                    newTypeGroup.output = true
+                    localValuedObject.setIsOutput
                 }
 
                 // Relocate
-                targetRootRegion.rootState.typeGroups.add(newTypeGroup)
+                targetRootRegion.rootState.valuedObjects.add(localValuedObject)
                 
                 // Rename
                 if (expose) {
