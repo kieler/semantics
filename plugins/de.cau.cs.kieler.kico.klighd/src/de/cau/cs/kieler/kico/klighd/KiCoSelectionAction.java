@@ -183,6 +183,8 @@ public class KiCoSelectionAction implements IAction {
                 if (rect != null) {
                     kRenderingExtensions.setBackgroundGradient(rect,
                             copy(KiCoDiagramSynthesis.BLUE1), copy(KiCoDiagramSynthesis.BLUE2), 90);
+                    kRenderingExtensions.setSelectionBackgroundGradient(rect,
+                            copy(KiCoDiagramSynthesis.BLUE1), copy(KiCoDiagramSynthesis.BLUE2), 90);
                 }
                 if (kText != null) {
                     kRenderingExtensions.setForeground(kText, KiCoDiagramSynthesis.BLACK);
@@ -192,6 +194,8 @@ public class KiCoSelectionAction implements IAction {
                 // Un select
                 if (rect != null) {
                     kRenderingExtensions.setBackgroundGradient(rect,
+                            copy(KiCoDiagramSynthesis.GRAY1), copy(KiCoDiagramSynthesis.GRAY2), 90);
+                    kRenderingExtensions.setSelectionBackgroundGradient(rect,
                             copy(KiCoDiagramSynthesis.GRAY1), copy(KiCoDiagramSynthesis.GRAY2), 90);
                 }
                 if (kText != null) {

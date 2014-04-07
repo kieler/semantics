@@ -248,8 +248,10 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                figure => [
                 if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id)) {
                     it.setBackgroundGradient(BLUE1.copy, BLUE2.copy, 90);
+                    it.setSelectionBackgroundGradient(BLUE1.copy, BLUE2.copy, 90);
                 } else {
                     it.setBackgroundGradient(GRAY1.copy, GRAY2.copy, 90);
+                    it.setSelectionBackgroundGradient(GRAY1.copy, GRAY2.copy, 90);
                 }
             ]
              ) => [
