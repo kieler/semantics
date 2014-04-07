@@ -68,6 +68,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformationimport de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import static de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramSynthesis.*
 import de.cau.cs.kieler.kico.KielerCompiler
+import de.cau.cs.kieler.kico.klighd.KiCoSelectionView
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -124,38 +125,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     // CORE TRANSFORMATIONS
     private static val SynthesisOption TRANSFORM_ADVANED = SynthesisOption::createCheckOption("Advanced Auto Requirements", false);
 
-    private static val SynthesisOption TRANSFORM_HISTORY = SynthesisOption::createCheckOption("Transform History", false);
-    private static val SynthesisOption TRANSFORM_WEAKSUSPEND = SynthesisOption::createCheckOption(
-        "Transform Weak Suspend", false);
-    private static val SynthesisOption TRANSFORM_DEFERRED = SynthesisOption::createCheckOption("Transform Deferred",
-        false);
-    private static val SynthesisOption TRANSFORM_STATIC = SynthesisOption::createCheckOption("Transform Static", false);
-    private static val SynthesisOption TRANSFORM_SIGNAL = SynthesisOption::createCheckOption("Transform Signal", false);
-    private static val SynthesisOption TRANSFORM_COUNTDELAY = SynthesisOption::createCheckOption("Transform Count Delay",
-        false);
-    private static val SynthesisOption TRANSFORM_PRE = SynthesisOption::createCheckOption("Transform Pre", false);
-    private static val SynthesisOption TRANSFORM_SUSPEND = SynthesisOption::createCheckOption("Transform Suspend", false);
-    private static val SynthesisOption TRANSFORM_COMPLEXFINALSTATE = SynthesisOption::createCheckOption(
-        "Transform Complex Final State", false);
-    private static val SynthesisOption TRANSFORM_ABORTALTERNATIVE = SynthesisOption::createCheckOption("Transform Abort Alternative", false);
-    private static val SynthesisOption TRANSFORM_ABORT = SynthesisOption::createCheckOption("Transform Abort", false);
-    private static val SynthesisOption TRANSFORM_DURING = SynthesisOption::createCheckOption("Transform During", false);
-    private static val SynthesisOption TRANSFORM_INITIALIZATION = SynthesisOption::createCheckOption(
-        "Transform Initialization", false);
-    private static val SynthesisOption TRANSFORM_ENTRY = SynthesisOption::createCheckOption("Transform Entry", false);
-    private static val SynthesisOption TRANSFORM_EXIT = SynthesisOption::createCheckOption("Transform Exit", false);
-    private static val SynthesisOption TRANSFORM_CONNECTOR = SynthesisOption::createCheckOption("Transform Connector",
-        false);
-    private static val SynthesisOption TRANSFORM_TRIGGEREFFECT = SynthesisOption::createCheckOption("Transform Trigger&&Effect",
-        false);
-    private static val SynthesisOption TRANSFORM_SURFACEDEPTH = SynthesisOption::createCheckOption("Transform Surface&&Depth",
-        false);
-    private static val SynthesisOption TRANSFORM_NORMALIZE = SynthesisOption::createCheckOption("Transform Normalize",
-        false);
-    private static val SynthesisOption TRANSFORM_CORE = SynthesisOption::createCheckOption("Transform All Core",
-        false);
-    private static val SynthesisOption TRANSFORM_CORENORMALIZE = SynthesisOption::createCheckOption(
-        "Transform All Core && Normalize", false);
 
     private static val SynthesisOption SHOW_SIGNAL_DECLARATIONS = SynthesisOption::createCheckOption("Declarations",
         true);
@@ -178,10 +147,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_SHADOW, TRANSFORM_ADVANED, TRANSFORM_HISTORY, TRANSFORM_WEAKSUSPEND, TRANSFORM_DEFERRED, TRANSFORM_STATIC,
-            TRANSFORM_SIGNAL, TRANSFORM_COUNTDELAY, TRANSFORM_PRE, TRANSFORM_SUSPEND, TRANSFORM_COMPLEXFINALSTATE,
-            TRANSFORM_ABORTALTERNATIVE, TRANSFORM_ABORT, TRANSFORM_DURING, TRANSFORM_INITIALIZATION, TRANSFORM_ENTRY,
-            TRANSFORM_EXIT, TRANSFORM_CONNECTOR,  TRANSFORM_TRIGGEREFFECT, TRANSFORM_SURFACEDEPTH ,TRANSFORM_NORMALIZE, TRANSFORM_CORE, TRANSFORM_CORENORMALIZE);
+            SHOW_SHADOW, TRANSFORM_ADVANED);
     }
 
     override public getDisplayedLayoutOptions() {
@@ -213,82 +179,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     override transform(Region model) {
         var transformed = model;
 
-        if (TRANSFORM_CORE.booleanValue || TRANSFORM_CORENORMALIZE.booleanValue || TRANSFORM_NORMALIZE.booleanValue) {
-            if (TRANSFORM_CORENORMALIZE.booleanValue) {
-                transformed = KielerCompiler.compile("ALL", transformed) as Region
-            } else if (TRANSFORM_CORE.booleanValue) {
-                transformed = KielerCompiler.compile("CORE", transformed) as Region
-            } else if (TRANSFORM_NORMALIZE.booleanValue) {
-                transformed = KielerCompiler.compile("NORMALIZE", transformed) as Region
-            }
-        } else {
-            var transformations = ""
-            if (TRANSFORM_HISTORY.booleanValue) {
-                transformations = transformations + ", HISTORY"
-            }
-            if (TRANSFORM_WEAKSUSPEND.booleanValue) {
-                transformations = transformations + ", DEFERRED"
-            }
-            if (TRANSFORM_DEFERRED.booleanValue) {
-                transformations = transformations + ", DEFERRED"
-            }
-            if (TRANSFORM_STATIC.booleanValue) {
-                transformations = transformations + ", STATIC"
-            }
-            if (TRANSFORM_SIGNAL.booleanValue) {
-                transformations = transformations + ", SIGNAL"
-            }
-            if (TRANSFORM_COUNTDELAY.booleanValue) {
-                transformations = transformations + ", COUNTDELAY"
-            }
-            if (TRANSFORM_PRE.booleanValue) {
-                transformations = transformations + ", PRE"
-            }
-            if (TRANSFORM_SUSPEND.booleanValue) {
-                transformations = transformations + ", SUSPEND"
-            }
-            if (TRANSFORM_COMPLEXFINALSTATE.booleanValue) {
-                transformations = transformations + ", ABORTALTERNATIVE"
-            }
-            if (TRANSFORM_ABORTALTERNATIVE.booleanValue) {
-                // There are TWO options for the Aborts transformation
-                // 1. transformAborts1() and 2. transformAborts2()
-                transformations = transformations + ", ABORTALTERNATIVE"
-            }
-            if (TRANSFORM_ABORT.booleanValue) {
-                // There are TWO options for the Aborts transformation
-                // 1. transformAborts1() and 2. transformAborts2()
-                transformations = transformations + ", ABORT"
-            }
-            if (TRANSFORM_DURING.booleanValue) {
-                transformations = transformations + ", DURING"
-            }
-            if (TRANSFORM_INITIALIZATION.booleanValue) {
-                transformations = transformations + ", INITIALIZATION"
-            }
-            if (TRANSFORM_ENTRY.booleanValue) {
-                transformations = transformations + ", EXIT"
-            }
-            if (TRANSFORM_EXIT.booleanValue) {
-                transformations = transformations + ", EXIT"
-            }
-            if (TRANSFORM_CONNECTOR.booleanValue) {
-                transformations = transformations + ", CONNECTOR"
-            }
-            if (TRANSFORM_TRIGGEREFFECT.booleanValue) {
-                transformations = transformations + ", TRIGGEREFFECT"
-            }
-            
-            if (TRANSFORM_SURFACEDEPTH.booleanValue) {
-                transformations = transformations + ", SURFACEDEPTH"
-            }
-            
-            // ---------
-            // Just one final compiler call of KielerCompiler
-            transformations = transformations.replaceFirst(",", "")
-            transformed = KielerCompiler.compile(transformations, transformed, TRANSFORM_ADVANED.booleanValue) as Region
-            // ---------
-        }
+        val transformations = KiCoSelectionView.getSelectedTransformations();
+        // ---------
+        // Just one final compiler call of KielerCompiler
+        transformed = KielerCompiler.compile(transformations, transformed, TRANSFORM_ADVANED.booleanValue) as Region
+        // ---------
 
         return transformed.translate();
     }

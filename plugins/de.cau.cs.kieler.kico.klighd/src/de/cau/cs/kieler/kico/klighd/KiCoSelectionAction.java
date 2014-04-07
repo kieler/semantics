@@ -16,6 +16,7 @@ package de.cau.cs.kieler.kico.klighd;
 import java.util.Arrays;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.EcoreUtil2;
 
 import de.cau.cs.kieler.core.kgraph.KGraphData;
@@ -203,6 +204,8 @@ public class KiCoSelectionAction implements IAction {
                     .toArray()));
         }
 
+        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().setFocus();
+        
         return ActionResult.createResult(true).dontAnimateLayout();
     }
 
