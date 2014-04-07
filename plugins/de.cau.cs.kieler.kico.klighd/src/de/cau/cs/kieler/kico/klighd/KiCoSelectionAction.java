@@ -44,12 +44,21 @@ public class KiCoSelectionAction implements IAction {
      */
     public static final String ID = "de.cau.cs.kieler.kico.klighd.KiCoSelectionAction";
 
+    /** The instance of k rendering extensions for reuse Xtend code here (coloring). */
     public static KRenderingExtensions kRenderingExtensions = new KRenderingExtensions();
 
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Helper method to get the rectangle for coloring.
+     *
+     * @param data the data
+     * @return the rectangle
+     */
     KRoundedRectangle getRectangle(KGraphData data) {
         if (data instanceof KRoundedRectangle) {
             return (KRoundedRectangle) data;
-        } 
+        }
         if (data instanceof KContainerRendering) {
             KContainerRendering container = (KContainerRendering) data;
             for (KRendering child : container.getChildren()) {
@@ -62,24 +71,39 @@ public class KiCoSelectionAction implements IAction {
         return null;
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Helper method to get the rectangle for coloring.
+     *
+     * @param kNode the k node
+     * @return the rectangle
+     */
     KRoundedRectangle getRectangle(KNode kNode) {
         for (KGraphData data : kNode.getData()) {
             if (data instanceof KRoundedRectangle) {
                 return (KRoundedRectangle) data;
-            } 
+            }
             KRoundedRectangle returnValue = getRectangle(data);
             if (returnValue != null) {
                 return returnValue;
-            }            
+            }
         }
         return null;
     }
     
+    // -------------------------------------------------------------------------
 
+    /**
+     * Helper method to get the label for coloring.
+     *
+     * @param data the data
+     * @return the label
+     */
     KText getLabel(KGraphData data) {
         if (data instanceof KText) {
             return (KText) data;
-        } 
+        }
         if (data instanceof KContainerRendering) {
             KContainerRendering container = (KContainerRendering) data;
             for (KRendering child : container.getChildren()) {
@@ -91,24 +115,41 @@ public class KiCoSelectionAction implements IAction {
         }
         return null;
     }
+    
+    // -------------------------------------------------------------------------
 
+    /**
+     * Helper method to get the label for coloring.
+     *
+     * @param kNode the k node
+     * @return the label
+     */
     KText getLabel(KNode kNode) {
         for (KGraphData data : kNode.getData()) {
             if (data instanceof KText) {
                 return (KText) data;
-            } 
+            }
             KText returnValue = getLabel(data);
             if (returnValue != null) {
                 return returnValue;
-            }            
+            }
         }
         return null;
     }
 
+    // -------------------------------------------------------------------------
     
+    /**
+     * Helper method to copy a color when coloring a selection.
+     *
+     * @param color the color
+     * @return the k color
+     */
     KColor copy(KColor color) {
         return EcoreUtil2.copy(color);
     }
+
+    // -------------------------------------------------------------------------
     
     /**
      * {@inheritDoc}.<br>
@@ -125,25 +166,36 @@ public class KiCoSelectionAction implements IAction {
      */
     public ActionResult execute(final ActionContext context) {
 
-        // context.getActiveViewer().toggleExpansion(context.getKNode());
         KNode kNode = context.getKNode();
 
         TransformationDummy transformationDummy =
                 KiCoSelectionView.knode2transformationDummy.get(kNode);
         if (transformationDummy != null) {
             String id = transformationDummy.id;
+
+            // Find the right rectangle and ktext label to color
             KRoundedRectangle rect = getRectangle(kNode);
             KText kText = getLabel(kNode);
 
             if (!KiCoSelectionView.isSelectedTransformation(id)) {
-                kRenderingExtensions.setBackgroundGradient(rect, copy(KiCoDiagramSynthesis.BLUE1),
-                        copy(KiCoDiagramSynthesis.BLUE2), 90);
-                kRenderingExtensions.setForeground(kText, KiCoDiagramSynthesis.BLACK);
+                // Select
+                if (rect != null) {
+                    kRenderingExtensions.setBackgroundGradient(rect,
+                            copy(KiCoDiagramSynthesis.BLUE1), copy(KiCoDiagramSynthesis.BLUE2), 90);
+                }
+                if (kText != null) {
+                    kRenderingExtensions.setForeground(kText, KiCoDiagramSynthesis.BLACK);
+                }
                 KiCoSelectionView.addSelectedTransformation(id);
             } else {
-                kRenderingExtensions.setBackgroundGradient(rect, copy(KiCoDiagramSynthesis.GRAY1),
-                        copy(KiCoDiagramSynthesis.GRAY2), 90);
-                kRenderingExtensions.setForeground(kText, KiCoDiagramSynthesis.DARKGRAY);
+                // Un select
+                if (rect != null) {
+                    kRenderingExtensions.setBackgroundGradient(rect,
+                            copy(KiCoDiagramSynthesis.GRAY1), copy(KiCoDiagramSynthesis.GRAY2), 90);
+                }
+                if (kText != null) {
+                    kRenderingExtensions.setForeground(kText, KiCoDiagramSynthesis.DARKGRAY);
+                }
                 KiCoSelectionView.removeSelectedTransformation(id);
             }
 
@@ -153,4 +205,6 @@ public class KiCoSelectionAction implements IAction {
 
         return ActionResult.createResult(true).dontAnimateLayout();
     }
+
+    // -------------------------------------------------------------------------
 }
