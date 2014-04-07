@@ -84,8 +84,8 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
 
     @Inject
     extension KColorExtensions
-
-    // -------------------------------------------------------------------------
+ 
+    // --------------------------------------------------------------------------
     // Some color and pattern constants
     private static val float TRANSITION_DASH_BLACK = 7;
     private static val float TRANSITION_DASH_WHITE = 3;
@@ -93,17 +93,18 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     private static val KColor GRAY = RENDERING_FACTORY.createKColor() =>
         [it.red = 240; it.green = 240; it.blue = 240];
     private static val KColor KEYWORD = RENDERING_FACTORY.createKColor() => [it.red = 115; it.green = 0; it.blue = 65];
-    private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() => [it.red = 80; it.green = 80; it.blue = 80];
+    public static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() => [it.red = 140; it.green = 140; it.blue = 140];
+    public static val KColor BLACK = RENDERING_FACTORY.createKColor() => [it.red = 0; it.green = 0; it.blue = 0];
 
-    // Some self-defined colors
-    private static val KColor BLUE1 = RENDERING_FACTORY.createKColor() =>
+    // Some self-defined colors 
+    public static val KColor BLUE1 = RENDERING_FACTORY.createKColor() =>
         [it.red = 248; it.green = 249; it.blue = 253];
-    private static val KColor BLUE2 = RENDERING_FACTORY.createKColor() =>
+    public static val KColor BLUE2 = RENDERING_FACTORY.createKColor() =>
         [it.red = 205; it.green = 220; it.blue = 243];
 
-    private static val KColor GRAY1 = RENDERING_FACTORY.createKColor() =>
+    public static val KColor GRAY1 = RENDERING_FACTORY.createKColor() =>
         [it.red = 248; it.green = 248; it.blue = 248];
-    private static val KColor GRAY2 = RENDERING_FACTORY.createKColor() =>
+    public static val KColor GRAY2 = RENDERING_FACTORY.createKColor() =>
         [it.red = 210; it.green = 210; it.blue = 210];
 
     private static val String ANNOTATION_LABELBREAK = "break"
@@ -130,7 +131,6 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     }
 
     // -------------------------------------------------------------------------
-
     def TransformationDummy getHierarchicalSource(TransformationDummy source, TransformationDummy dest) {
         var returnPair = getHierarchicalSource(source, dest, 0)
         if (returnPair.first == -1) {
@@ -145,16 +145,16 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             return new Pair(-1, null)
         }
         if (dest.container == source.container) {
+
             // if this is a group-internal transition
             return new Pair(cnt, source)
         } else {
-            val left = getHierarchicalSource(source.container, dest, cnt+1)
-            val right = getHierarchicalSource(source, dest.container, cnt+1)
+            val left = getHierarchicalSource(source.container, dest, cnt + 1)
+            val right = getHierarchicalSource(source, dest.container, cnt + 1)
             if (left.first != -1 && right.first != -1) {
                 if (left.first < right.first) {
                     return left
-                }
-                else {
+                } else {
                     return right
                 }
             } else if (left.first != -1) {
@@ -181,16 +181,16 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             return new Pair(-1, null)
         }
         if (dest.container == source.container) {
+
             // if this is a group-internal transition
             return new Pair(cnt, dest)
         } else {
-            val left = getHierarchicalDest(source.container, dest, cnt+1)
-            val right = getHierarchicalDest(source, dest.container, cnt+1)
+            val left = getHierarchicalDest(source.container, dest, cnt + 1)
+            val right = getHierarchicalDest(source, dest.container, cnt + 1)
             if (left.first != -1 && right.first != -1) {
                 if (left.first < right.first) {
                     return left
-                }
-                else {
+                } else {
                     return right
                 }
             } else if (left.first != -1) {
@@ -203,22 +203,19 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     }
 
     // -------------------------------------------------------------------------
-    private HashMap<TransformationDummy, KNode> transformed = new HashMap<TransformationDummy, KNode>();
-
     // Remember which super states already are connected (render just a single connection)
     private HashMap<TransformationDummy, TransformationDummy> connected = new HashMap<TransformationDummy, TransformationDummy>();
 
     // The Main entry transform function   
     override transform(List<TransformationDummy> model) {
-        transformed.clear
         connected.clear
+        KiCoSelectionView.knode2transformationDummy.clear
 
         val knode = model.createNode();
 
         for (elem : model) {
             if (elem.container == null) {
                 val kNode = elem.translate;
-                transformed.put(elem, kNode)
                 knode.children.add(kNode);
             }
         }
@@ -232,15 +229,15 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
 
     // -------------------------------------------------------------------------
     // Transform a state    
-    def dispatch KNode translate(TransformationDummy s) {
+    def dispatch KNode translate(TransformationDummy transformationDummy) {
 
-        val root = s.createNode().putToLookUpWith(s) => [ node |
+        val root = transformationDummy.createNode().putToLookUpWith(transformationDummy) => [ node |
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
-            val cornerRadius = if(!s.isGroup) 17 else 8;
+            val cornerRadius = if(!transformationDummy.isGroup) 17 else 8;
             val lineWidth = 1;
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
             //            figure.setProperty(KlighdProperties::, true);
-            figure.addSingleClickAction("de.cau.cs.kieler.kiko.mark");
+            figure.addSingleClickAction(KiCoSelectionAction::ID);
             figure.lineWidth = lineWidth;
             figure.foreground = "gray".color;
             // shaddow
@@ -249,18 +246,22 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             figure.shadow.YOffset = 4;
             (
                figure => [
-                it.setBackgroundGradient(GRAY1.copy, GRAY2.copy, 90);
+                if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id)) {
+                    it.setBackgroundGradient(BLUE1.copy, BLUE2.copy, 90);
+                } else {
+                    it.setBackgroundGradient(GRAY1.copy, GRAY2.copy, 90);
+                }
             ]
              ) => [
                 node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
                 it.invisible = false;
-                if (s.group) {
+                if (transformationDummy.group) {
                     it.setGridPlacement(1);
                 }
-                if (s.isGroup) {
+                if (transformationDummy.isGroup) {
 
                     // Get a smaller window-title-bare if this a macro state 
-                    if (!s.label.empty)
+                    if (!transformationDummy.label.empty)
                         it.addRectangle => [
                             it.invisible = true
                             it.fontSize = 11;
@@ -268,10 +269,17 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                             it.setForeground(DARKGRAY.copy)
                             it.setFontBold(true);
                             it.setGridPlacementData().from(LEFT, 0, 0, TOP, 8f, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
-                            val ktext = it.addText("   " + s.label + " ").putToLookUpWith(s) => [
-                                it.setForeground(DARKGRAY.copy)
-//                                it.setCursorSelectable(false)
-//                                it.setSelectionInvisible(true)
+                            val ktext = it.addText("   " + transformationDummy.label + " ").
+                                putToLookUpWith(transformationDummy) => [
+                                // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
+                                it.addSingleClickAction(KiCoSelectionAction::ID);
+                                if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id)) {
+                                    it.setForeground("black".color)
+                                } else {
+                                    it.setForeground(DARKGRAY.copy)
+                                }
+                                //                                it.setCursorSelectable(false)
+                                //                                it.setSelectionInvisible(true)
                                 it.setFontBold(true);
                                 it.fontSize = 11;
                             ];
@@ -279,16 +287,22 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 } else {
 
                     // For simple states we want a larger area 
-                    val ktext = it.addText(" " + s.label).putToLookUpWith(s) => [
+                    val ktext = it.addText(" " + transformationDummy.label).putToLookUpWith(transformationDummy) => [
+                        // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
+                        it.addSingleClickAction(KiCoSelectionAction::ID);
                         it.fontSize = 11;
-                        it.setForeground(DARKGRAY.copy)
-//                        it.setCursorSelectable(false)
-//                        it.setSelectionInvisible(true)
+                        if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id)) {
+                            it.setForeground("black".color)
+                        } else {
+                            it.setForeground(DARKGRAY.copy)
+                        }
+                        //                        it.setCursorSelectable(false)
+                        //                        it.setSelectionInvisible(true)
                         it.setFontBold(true);
                         it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
                     ];
                 }
-                if (s.isGroup) {
+                if (transformationDummy.isGroup) {
                     it.addChildArea().setGridPlacementData() => [
                         from(LEFT, 3, 0, TOP, 3, 0).to(RIGHT, 3, 0, BOTTOM, 3, 0)
                         minCellHeight = 5;
@@ -297,18 +311,19 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 } else {
 
                     //                    System.out.println("FROM "+source.id+" TO "+dest.id)
-                    for (dest : s.dependencies) {
-//                        System.out.println("FROM " + s.id + " TO " + dest.id)
+                    for (dest : transformationDummy.dependencies) {
 
-                        var transSource = s
+                        //                        System.out.println("FROM " + s.id + " TO " + dest.id)
+                        var transSource = transformationDummy
                         var transDest = dest
-                        
+
                         //Calculate hierarchical source + destination (prevents inter level transitions)
-                        transSource = s.getHierarchicalSource(dest)
-                        transDest = s.getHierarchicalDest(dest)
+                        transSource = transformationDummy.getHierarchicalSource(dest)
+                        transDest = transformationDummy.getHierarchicalDest(dest)
 
                         if (transSource != null && transDest != null) {
-//                            System.out.println(" CONT " + transSource.id + " TO " + transDest.id)
+
+                            //                            System.out.println(" CONT " + transSource.id + " TO " + transDest.id)
                             if (connected.get(transSource) != transDest) {
                                 connected.put(transSource, transDest)
                                 transSource.translateTransition(transDest)
@@ -318,10 +333,13 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                     }
                 }
             ];
-            if (s.isGroup) {
-                node.children += s.translateGroup
+            if (transformationDummy.isGroup) {
+                node.children += transformationDummy.translateGroup
             }
         ]
+
+        KiCoSelectionView.knode2transformationDummy.put(root, transformationDummy)
+        System.out.println(root + ", " + transformationDummy.id);
         return root
     }
 
@@ -331,7 +349,8 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 //node.setLayoutOption(KlighdConstants::EXPAND, false);
             }
             for (child : transformationDummy.dependencies) {
-                node.children += child.translate;
+                val childKNode = child.translate;
+                node.children += childKNode;
             }
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);

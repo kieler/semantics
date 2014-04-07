@@ -13,6 +13,21 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
+import java.util.Arrays;
+
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.EcoreUtil2;
+
+import de.cau.cs.kieler.core.kgraph.KGraphData;
+import de.cau.cs.kieler.core.kgraph.KLabel;
+import de.cau.cs.kieler.core.kgraph.KNode;
+import de.cau.cs.kieler.core.krendering.KColor;
+import de.cau.cs.kieler.core.krendering.KContainerRendering;
+import de.cau.cs.kieler.core.krendering.KRendering;
+import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
+import de.cau.cs.kieler.core.krendering.KText;
+import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
+import de.cau.cs.kieler.kico.TransformationDummy;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**
@@ -29,6 +44,72 @@ public class KiCoSelectionAction implements IAction {
      */
     public static final String ID = "de.cau.cs.kieler.kico.klighd.KiCoSelectionAction";
 
+    public static KRenderingExtensions kRenderingExtensions = new KRenderingExtensions();
+
+    KRoundedRectangle getRectangle(KGraphData data) {
+        if (data instanceof KRoundedRectangle) {
+            return (KRoundedRectangle) data;
+        } 
+        if (data instanceof KContainerRendering) {
+            KContainerRendering container = (KContainerRendering) data;
+            for (KRendering child : container.getChildren()) {
+                KRoundedRectangle returnValue = getRectangle(child);
+                if (returnValue != null) {
+                    return returnValue;
+                }
+            }
+        }
+        return null;
+    }
+
+    KRoundedRectangle getRectangle(KNode kNode) {
+        for (KGraphData data : kNode.getData()) {
+            if (data instanceof KRoundedRectangle) {
+                return (KRoundedRectangle) data;
+            } 
+            KRoundedRectangle returnValue = getRectangle(data);
+            if (returnValue != null) {
+                return returnValue;
+            }            
+        }
+        return null;
+    }
+    
+
+    KText getLabel(KGraphData data) {
+        if (data instanceof KText) {
+            return (KText) data;
+        } 
+        if (data instanceof KContainerRendering) {
+            KContainerRendering container = (KContainerRendering) data;
+            for (KRendering child : container.getChildren()) {
+                KText returnValue = getLabel(child);
+                if (returnValue != null) {
+                    return returnValue;
+                }
+            }
+        }
+        return null;
+    }
+
+    KText getLabel(KNode kNode) {
+        for (KGraphData data : kNode.getData()) {
+            if (data instanceof KText) {
+                return (KText) data;
+            } 
+            KText returnValue = getLabel(data);
+            if (returnValue != null) {
+                return returnValue;
+            }            
+        }
+        return null;
+    }
+
+    
+    KColor copy(KColor color) {
+        return EcoreUtil2.copy(color);
+    }
+    
     /**
      * {@inheritDoc}.<br>
      * <br>
@@ -44,9 +125,32 @@ public class KiCoSelectionAction implements IAction {
      */
     public ActionResult execute(final ActionContext context) {
 
-        //context.getActiveViewer().toggleExpansion(context.getKNode());
-        context.getKNode();
+        // context.getActiveViewer().toggleExpansion(context.getKNode());
+        KNode kNode = context.getKNode();
 
-        return ActionResult.createResult(true);
+        TransformationDummy transformationDummy =
+                KiCoSelectionView.knode2transformationDummy.get(kNode);
+        if (transformationDummy != null) {
+            String id = transformationDummy.id;
+            KRoundedRectangle rect = getRectangle(kNode);
+            KText kText = getLabel(kNode);
+
+            if (!KiCoSelectionView.isSelectedTransformation(id)) {
+                kRenderingExtensions.setBackgroundGradient(rect, copy(KiCoDiagramSynthesis.BLUE1),
+                        copy(KiCoDiagramSynthesis.BLUE2), 90);
+                kRenderingExtensions.setForeground(kText, KiCoDiagramSynthesis.BLACK);
+                KiCoSelectionView.addSelectedTransformation(id);
+            } else {
+                kRenderingExtensions.setBackgroundGradient(rect, copy(KiCoDiagramSynthesis.GRAY1),
+                        copy(KiCoDiagramSynthesis.GRAY2), 90);
+                kRenderingExtensions.setForeground(kText, KiCoDiagramSynthesis.DARKGRAY);
+                KiCoSelectionView.removeSelectedTransformation(id);
+            }
+
+            System.out.println(Arrays.toString(KiCoSelectionView.getSelectedTransformations()
+                    .toArray()));
+        }
+
+        return ActionResult.createResult(true).dontAnimateLayout();
     }
 }

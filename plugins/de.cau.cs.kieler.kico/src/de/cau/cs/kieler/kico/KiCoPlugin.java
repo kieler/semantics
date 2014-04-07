@@ -251,10 +251,10 @@ public class KiCoPlugin extends AbstractUIPlugin {
 
                 if (id != null) {
                     transformation.setId(id);
-                    // Check if ID is alrady taken
+                    // Check if ID is already taken
                     if (transformationMap.containsKey(id)) {
                         showWarning("Extension '"+id+"' from component: "
-                                + transformations[i].getContributor().getName() + " cannot be loaded becaus this ID is already taken.", KiCoPlugin.PLUGIN_ID,
+                                + transformations[i].getContributor().getName() + " cannot be loaded because this ID is already taken.", KiCoPlugin.PLUGIN_ID,
                                 null, true);
                     }
                     else {

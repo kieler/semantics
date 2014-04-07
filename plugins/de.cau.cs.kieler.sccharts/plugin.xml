@@ -879,13 +879,6 @@
             name="Complex Final State">
       </transformationMethod>
 
-      <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
-            dependencies="ABORT"
-            id="STATIC"
-            method="transformStatic"
-            name="Static">
-      </transformationMethod>
 
       <transformationGroup
             alternatives="true"
