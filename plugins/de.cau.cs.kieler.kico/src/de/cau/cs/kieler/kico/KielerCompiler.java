@@ -57,6 +57,8 @@ public class KielerCompiler {
         return buildGraph(prioritizedTransformationIDs, true);
     }
 
+    // -------------------------------------------------------------------------
+    
     /**
      * Builds the full graph with all alternatives.
      *
@@ -66,7 +68,15 @@ public class KielerCompiler {
         return buildGraph(new ArrayList<String>(), false);  
     }
     
+    // -------------------------------------------------------------------------
     
+    /**
+     * Builds the graph with filtering optional transformation IDs of alternative groups
+     *
+     * @param prioritizedTransformationIDs the prioritized transformation i ds
+     * @param preselectAlternatives the preselect alternatives
+     * @return the list
+     */
     public static List<TransformationDummy> buildGraph(List<String> prioritizedTransformationIDs, boolean preselectAlternatives) {
         ArrayList<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
 
