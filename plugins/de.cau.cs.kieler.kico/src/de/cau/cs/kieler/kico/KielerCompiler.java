@@ -46,11 +46,12 @@ public class KielerCompiler {
             new HashMap<Transformation, TransformationDummy>();;
 
     // -------------------------------------------------------------------------
-            
+
     /**
      * Builds the graph adding only defaults for alternatives iff not prioritized.
-     *
-     * @param prioritizedTransformationIDs the prioritized transformation i ds
+     * 
+     * @param prioritizedTransformationIDs
+     *            the prioritized transformation i ds
      * @return the list
      */
     public static List<TransformationDummy> buildGraph(List<String> prioritizedTransformationIDs) {
@@ -58,42 +59,43 @@ public class KielerCompiler {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Builds the full graph with all alternatives.
-     *
+     * 
      * @return the list
      */
     public static List<TransformationDummy> buildGraph() {
-        return buildGraph(new ArrayList<String>(), false);  
+        return buildGraph(new ArrayList<String>(), false);
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
     /**
-     * Builds the graph with filtering optional transformation IDs of alternative groups
-     *
-     * @param prioritizedTransformationIDs the prioritized transformation i ds
-     * @param preselectAlternatives the preselect alternatives
+     * Builds the graph with filtering optional transformation IDs of alternative groups.
+     * 
+     * @param prioritizedTransformationIDs
+     *            the prioritized transformation i ds
+     * @param preselectAlternatives
+     *            the preselect alternatives
      * @return the list
      */
-    public static List<TransformationDummy> buildGraph(List<String> prioritizedTransformationIDs, boolean preselectAlternatives) {
+    public static List<TransformationDummy> buildGraph(List<String> prioritizedTransformationIDs,
+            boolean preselectAlternatives) {
         ArrayList<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
 
         transformation2graph.clear();
 
-        if (transformations == null) {
-            updateMapping(false);
-        }
-        
+        updateMapping(false);
+
         // Build all nodes first
         for (Transformation transformation : transformations) {
             TransformationDummy transformationDummy = new TransformationDummy(transformation);
 
             returnList.add(transformationDummy);
             transformation2graph.put(transformation, transformationDummy);
-//            System.out.println("Adding Dummy node for " + transformation.getId() + ", "
-//                    + transformation.toString());
+            // System.out.println("Adding Dummy node for " + transformation.getId() + ", "
+            // + transformation.toString());
         }
 
         // Calculate dependencies
@@ -122,8 +124,8 @@ public class KielerCompiler {
 
             for (String dependencyId : dependencies) {
                 Transformation otherTransformationOrGroup = getTransformation(dependencyId);
-//                System.out.println("Dependencies for " + transformation.getId());
-//                System.out.println("  " + otherTransformationOrGroup.getId());
+                // System.out.println("Dependencies for " + transformation.getId());
+                // System.out.println("  " + otherTransformationOrGroup.getId());
                 TransformationDummy otherTransformationDummy =
                         transformation2graph.get(otherTransformationOrGroup);
 
@@ -139,6 +141,13 @@ public class KielerCompiler {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Checks if dependency referenced.
+     *
+     * @param transformationDummy the transformation dummy
+     * @param graph the graph
+     * @return true, if is dependency referenced
+     */
     private static boolean isDependencyReferenced(TransformationDummy transformationDummy,
             List<TransformationDummy> graph) {
         for (TransformationDummy otherTransformationDummy : graph) {
@@ -153,6 +162,15 @@ public class KielerCompiler {
         return false;
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if group is alternative.
+     *
+     * @param transformationDummy the transformation dummy
+     * @param graph the graph
+     * @return true, if is alternative
+     */
     private static boolean isAlternative(TransformationDummy transformationDummy,
             List<TransformationDummy> graph) {
         for (TransformationDummy otherTransformationDummy : graph) {
@@ -167,6 +185,15 @@ public class KielerCompiler {
         return false;
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if group referenced.
+     *
+     * @param transformationDummy the transformation dummy
+     * @param graph the graph
+     * @return true, if is group referenced
+     */
     private static boolean isGroupReferenced(TransformationDummy transformationDummy,
             List<TransformationDummy> graph) {
         for (TransformationDummy otherTransformationDummy : graph) {
@@ -183,6 +210,11 @@ public class KielerCompiler {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Cleanup unused alternatives groups.
+     *
+     * @param graph the graph
+     */
     private static void cleanupUnusedAlternatives(List<TransformationDummy> graph) {
         boolean found = true;
         TransformationDummy toBeDeleted = null;
@@ -196,7 +228,7 @@ public class KielerCompiler {
                 if (alternative && !dependencyReferenced && !groupReferenced) {
                     if (transformationDummy.reverseDependencies.size() == 0) {
                         toBeDeleted = transformationDummy;
-//                        System.out.println("REMOVE " + transformationDummy.id);
+                        // System.out.println("REMOVE " + transformationDummy.id);
                         found = true;
                         break;
                     }
@@ -206,8 +238,8 @@ public class KielerCompiler {
                 graph.remove(toBeDeleted);
                 for (TransformationDummy transformationDummy : graph) {
                     if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
-//                        System.out.println("REMOVE " + toBeDeleted.id + " from "
-//                                + transformationDummy.id);
+                        // System.out.println("REMOVE " + toBeDeleted.id + " from "
+                        // + transformationDummy.id);
                         transformationDummy.reverseDependencies.remove(toBeDeleted);
                     }
                 }
@@ -216,43 +248,49 @@ public class KielerCompiler {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
-     * Recursively mark group nodes.
-     *
-     * @param graph the graph
-     * @param transformationGroup the transformation group
+     * Recursively mark group nodes (belongs to phase 3).
+     * 
+     * @param graph
+     *            the graph
+     * @param transformationGroup
+     *            the transformation group
      */
-    private static void markGroupNodes(List<TransformationDummy> graph, TransformationGroup transformationGroup) {
+    private static void markGroupNodes(List<TransformationDummy> graph,
+            TransformationGroup transformationGroup) {
         for (String groupTransformationID : transformationGroup.getDependencies()) {
             Transformation groupTransformation = getTransformation(groupTransformationID);
-            TransformationDummy groupTransformationDummy = transformation2graph.get(groupTransformation);
+            TransformationDummy groupTransformationDummy =
+                    transformation2graph.get(groupTransformation);
             groupTransformationDummy.marked = true;
-//            System.out.println("Marking " + groupTransformationDummy.id);
+            // System.out.println("Marking " + groupTransformationDummy.id);
             if (groupTransformation instanceof TransformationGroup) {
                 // groupTransformation is a TransformationGroup itself, so close recursion here
-                markGroupNodes(graph, (TransformationGroup)groupTransformation);
+                markGroupNodes(graph, (TransformationGroup) groupTransformation);
             }
         }
     }
 
     // -------------------------------------------------------------------------
 
-    
     /**
-     * Mark nodes including expand of groups.
-     *
-     * @param graph the graph
-     * @param transformationIDs the transformation i ds
+     * Mark nodes including expand of groups (phase 3).
+     * 
+     * @param graph
+     *            the graph
+     * @param transformationIDs
+     *            the transformation i ds
      */
-    private static void markNodes(List<TransformationDummy> graph, List<String> transformationIDs, boolean expandGroupNodes) {
+    private static void markNodes(List<TransformationDummy> graph, List<String> transformationIDs,
+            boolean expandGroupNodes) {
         for (String transformationID : transformationIDs) {
             Transformation transformation = getTransformation(transformationID);
 
             TransformationDummy transformationDummy = transformation2graph.get(transformation);
             transformationDummy.marked = true;
-//            System.out.println("Marking " + transformationDummy.id);
-            
+            // System.out.println("Marking " + transformationDummy.id);
+
             if (expandGroupNodes && (transformation instanceof TransformationGroup)) {
                 TransformationGroup transformationGroup = (TransformationGroup) transformation;
                 markGroupNodes(graph, transformationGroup);
@@ -262,16 +300,28 @@ public class KielerCompiler {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Mark reverse dependencies (phase 4).
+     *
+     * @param transformationDummy the transformation dummy
+     */
     private static void markReverseDependencies(TransformationDummy transformationDummy) {
         if (transformationDummy != null && !transformationDummy.marked) {
             transformationDummy.marked = true;
-//            System.out.println("Marking " + transformationDummy.id);
+            // System.out.println("Marking " + transformationDummy.id);
             for (TransformationDummy otherTransformationDummy : transformationDummy.reverseDependencies) {
                 markReverseDependencies(otherTransformationDummy);
             }
         }
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Mark reverse dependencies (phase 4).
+     *
+     * @param graph the graph
+     */
     private static void markReverseDependencies(List<TransformationDummy> graph) {
         List<TransformationDummy> startNodes = new ArrayList<TransformationDummy>();
         for (TransformationDummy transformationDummy : graph) {
@@ -290,6 +340,11 @@ public class KielerCompiler {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Eliminated unmarked nodes (phase 5).
+     *
+     * @param graph the graph
+     */
     private static void eliminatedUnmarkedNodes(List<TransformationDummy> graph) {
         boolean found = true;
         TransformationDummy toBeDeleted = null;
@@ -298,7 +353,7 @@ public class KielerCompiler {
             for (TransformationDummy transformationDummy : graph) {
                 if (!transformationDummy.marked) {
                     toBeDeleted = transformationDummy;
-//                    System.out.println("REMOVE " + transformationDummy.id);
+                    // System.out.println("REMOVE " + transformationDummy.id);
                     found = true;
                     break;
                 }
@@ -307,13 +362,13 @@ public class KielerCompiler {
                 graph.remove(toBeDeleted);
                 for (TransformationDummy transformationDummy : graph) {
                     if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
-//                        System.out.println("REMOVE " + toBeDeleted.id
-//                                + " from reverse-dependencies of " + transformationDummy.id);
+                        // System.out.println("REMOVE " + toBeDeleted.id
+                        // + " from reverse-dependencies of " + transformationDummy.id);
                         transformationDummy.reverseDependencies.remove(toBeDeleted);
                     }
                     if (transformationDummy.dependencies.contains(toBeDeleted)) {
-//                        System.out.println("REMOVE " + toBeDeleted.id + " from dependencies of "
-//                                + transformationDummy.id);
+                        // System.out.println("REMOVE " + toBeDeleted.id + " from dependencies of "
+                        // + transformationDummy.id);
                         transformationDummy.dependencies.remove(toBeDeleted);
                     }
                 }
@@ -388,10 +443,10 @@ public class KielerCompiler {
     // -------------------------------------------------------------------------
 
     /**
-     * Update mapping.
+     * Update mapping between transformation IDs and transformations.
      */
     private static void updateMapping(boolean force) {
-        if (id2transformations == null || force) {
+        if (transformations == null || id2transformations == null || force) {
             id2transformations = KiCoPlugin.getDefault().getRegisteredTransformations();
             transformations = new ArrayList<Transformation>();
             for (Entry<String, Transformation> localTransformation : id2transformations.entrySet()) {
@@ -403,16 +458,15 @@ public class KielerCompiler {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the transformation for a transformationID.
+     * Gets the transformation for a transformation ID. If no registered transformation is found for
+     * an ID then a runtime exception is raised.
      * 
-     * @param transformationId
+     * @param transformationID
      *            the transformation id
-     * @return the dependencies
+     * @return the transformation
      */
     private static Transformation getTransformation(String transformationID) {
-        if (transformations == null) {
-            updateMapping(false);
-        }
+        updateMapping(false);
         Transformation transformation = id2transformations.get(transformationID);
         if (transformation == null) {
             throw new RuntimeException("Cannot find a transformation with the ID '"
@@ -428,20 +482,7 @@ public class KielerCompiler {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the transformation id.
-     * 
-     * @param transformation
-     *            the transformation
-     * @return the transformation id
-     */
-    private static String getTransformationID(Transformation transformation) {
-        return transformation.getId();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Eliminate group ids.
+     * Eliminate group ids (phase 7).
      * 
      * @param transformationIDs
      *            the transformation i ds
@@ -551,7 +592,7 @@ public class KielerCompiler {
 
         // 3. mark nodes, including groups
         markNodes(graph, processedTransformationIDs, true);
-        
+
         if (prerequirements) {
             // 4. mark reverse dependencies
             markReverseDependencies(graph);
@@ -566,7 +607,7 @@ public class KielerCompiler {
         // 7. final cleanup, eliminate any groups
         processedTransformationIDs = eliminateGroupIds(processedTransformationIDs);
 
-//        System.out.println("=== ");
+        // System.out.println("=== ");
         for (String processedTransformationID : processedTransformationIDs) {
             Transformation transformation = getTransformation(processedTransformationID);
 
@@ -574,7 +615,7 @@ public class KielerCompiler {
                 // If the requested TransformationID
                 if (transformation.getId().equals(processedTransformationID)) {
                     // If this is an individual
-//                    System.out.println("PERFORM TRANSFORMATION: " + processedTransformationID);
+                    // System.out.println("PERFORM TRANSFORMATION: " + processedTransformationID);
                     transformedObject = transformation.doTransform(transformedObject);
                 }
         }
