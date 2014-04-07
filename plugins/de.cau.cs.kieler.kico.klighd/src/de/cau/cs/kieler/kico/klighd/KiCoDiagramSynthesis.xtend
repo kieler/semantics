@@ -95,17 +95,22 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     private static val KColor KEYWORD = RENDERING_FACTORY.createKColor() => [it.red = 115; it.green = 0; it.blue = 65];
     public static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() => [it.red = 140; it.green = 140; it.blue = 140];
     public static val KColor BLACK = RENDERING_FACTORY.createKColor() => [it.red = 0; it.green = 0; it.blue = 0];
+    public static val KColor WHITE = RENDERING_FACTORY.createKColor() => [it.red = 255; it.green = 255; it.blue = 255];
 
     // Some self-defined colors 
     public static val KColor BLUE1 = RENDERING_FACTORY.createKColor() =>
         [it.red = 248; it.green = 249; it.blue = 253];
     public static val KColor BLUE2 = RENDERING_FACTORY.createKColor() =>
         [it.red = 205; it.green = 220; it.blue = 243];
+    public static val KColor BLUE3 = RENDERING_FACTORY.createKColor() =>
+        [it.red = 0; it.green = 0; it.blue = 255];
+    public static val KColor BLUE4 = RENDERING_FACTORY.createKColor() =>
+        [it.red = 00; it.green = 00; it.blue = 180];
 
     public static val KColor GRAY1 = RENDERING_FACTORY.createKColor() =>
         [it.red = 248; it.green = 248; it.blue = 248];
     public static val KColor GRAY2 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 210; it.green = 210; it.blue = 210];
+        [it.red = 210; it.green = 230; it.blue = 230];
 
     private static val String ANNOTATION_LABELBREAK = "break"
 
@@ -247,11 +252,11 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             (
                figure => [
                 if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id)) {
+                    it.setBackgroundGradient(BLUE3.copy, BLUE3.copy, 90);
+                    it.setSelectionBackgroundGradient(BLUE3.copy, BLUE3.copy, 90);
+                } else {
                     it.setBackgroundGradient(BLUE1.copy, BLUE2.copy, 90);
                     it.setSelectionBackgroundGradient(BLUE1.copy, BLUE2.copy, 90);
-                } else {
-                    it.setBackgroundGradient(GRAY1.copy, GRAY2.copy, 90);
-                    it.setSelectionBackgroundGradient(GRAY1.copy, GRAY2.copy, 90);
                 }
             ]
              ) => [
