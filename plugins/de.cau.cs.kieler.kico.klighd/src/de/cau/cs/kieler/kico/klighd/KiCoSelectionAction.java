@@ -169,8 +169,11 @@ public class KiCoSelectionAction implements IAction {
 
         KNode kNode = context.getKNode();
 
-        TransformationDummy transformationDummy =
-                KiCoSelectionView.knode2transformationDummy.get(kNode);
+//        TransformationDummy transformationDummy =
+//                KiCoSelectionView.knode2transformationDummy.get(kNode);
+        
+        TransformationDummy transformationDummy = (TransformationDummy) context.getDomainElement(kNode);
+        
         if (transformationDummy != null) {
             String id = transformationDummy.id;
 
@@ -188,6 +191,8 @@ public class KiCoSelectionAction implements IAction {
                 }
                 if (kText != null) {
                     kRenderingExtensions.setForeground(kText, KiCoDiagramSynthesis.WHITE);
+                    kRenderingExtensions.setSelectionBackground(kText,
+                            copy(KiCoDiagramSynthesis.BLUE3));
                 }
                 KiCoSelectionView.addSelectedTransformation(id);
             } else {
@@ -200,6 +205,8 @@ public class KiCoSelectionAction implements IAction {
                 }
                 if (kText != null) {
                     kRenderingExtensions.setForeground(kText, KiCoDiagramSynthesis.DARKGRAY);
+                    kRenderingExtensions.setSelectionBackground(kText,
+                            copy(KiCoDiagramSynthesis.WHITE));
                 }
                 KiCoSelectionView.removeSelectedTransformation(id);
             }

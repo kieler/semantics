@@ -281,9 +281,11 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                                 // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
                                 it.addSingleClickAction(KiCoSelectionAction::ID);
                                 if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id)) {
-                                    it.setForeground("black".color)
+                                    it.setForeground("white".color)
+                                    it.setSelectionBackground("white".color)
                                 } else {
                                     it.setForeground(DARKGRAY.copy)
+                                    it.setSelectionBackground(BLUE3.copy)
                                 }
                                 //                                it.setCursorSelectable(false)
                                 //                                it.setSelectionInvisible(true)
@@ -299,9 +301,11 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                         it.addSingleClickAction(KiCoSelectionAction::ID);
                         it.fontSize = 11;
                         if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id)) {
-                            it.setForeground("black".color)
+                            it.setForeground("white".color)
+                            it.setSelectionBackground("white".color)
                         } else {
                             it.setForeground(DARKGRAY.copy)
+                            it.setSelectionBackground(BLUE3.copy)
                         }
                         //                        it.setCursorSelectable(false)
                         //                        it.setSelectionInvisible(true)
@@ -362,6 +366,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
                 it.setBackgroundGradient("white".color, GRAY, 90);
+                it.setSelectionBackgroundGradient("white".color, GRAY, 90); // Selection KLighD trick
                 it.setSurroundingSpace(2, 0);
                 it.invisible = false;
                 it.foreground = "gray".color
@@ -379,6 +384,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
                 it.setBackgroundGradient("white".color, GRAY, 90);
+                it.setSelectionBackgroundGradient("white".color, GRAY, 90); // Selection KLighD trick
                 it.setSurroundingSpace(4, 0);
                 it.invisible = false;
                 it.foreground = "gray".color
