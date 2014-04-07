@@ -4,7 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.EditorPart;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kico.KielerCompiler;
@@ -20,10 +29,8 @@ public class KiCoSelectionView extends DiagramViewPart {
     Composite parent;
     static final String ID = "de.cau.cs.kieler.kico.selection";
 
-    static List<String> selectedTransformations = new ArrayList<String>();
-
-    static HashMap<KNode, TransformationDummy> knode2transformationDummy =
-            new HashMap<KNode, TransformationDummy>();
+    static HashMap<Integer, List<String>> selectedTransformations =
+            new HashMap<Integer, List<String>>();
 
     // -------------------------------------------------------------------------
 
@@ -54,8 +61,27 @@ public class KiCoSelectionView extends DiagramViewPart {
      * 
      * @return the selected transformations
      */
-    public static List<String> getSelectedTransformations() {
-        return KiCoSelectionView.selectedTransformations;
+    public static List<String> getSelectedTransformations(int editorID) {
+        if (!KiCoSelectionView.selectedTransformations.containsKey(editorID)) {
+            List<String> selectedList = new ArrayList<String>();
+            KiCoSelectionView.selectedTransformations.put(editorID, selectedList);
+        }
+        return KiCoSelectionView.selectedTransformations.get(editorID);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if a transformation is selected.
+     * 
+     * @param transformationDummyID
+     *            the transformation dummy id
+     * @param editorID
+     *            the editor id
+     * @return true, if is selected transformation
+     */
+    public static boolean isSelectedTransformation(String transformationDummyID, int editorID) {
+        return isSelectedTransformation(transformationDummyID, getSelectedTransformations(editorID));
     }
 
     // -------------------------------------------------------------------------
@@ -67,8 +93,9 @@ public class KiCoSelectionView extends DiagramViewPart {
      *            the transformation dummy
      * @return true, if is selected transformation
      */
-    public static boolean isSelectedTransformation(String transformationDummyID) {
-        for (String transformationID : selectedTransformations) {
+    public static boolean isSelectedTransformation(String transformationDummyID,
+            List<String> selectedList) {
+        for (String transformationID : selectedList) {
             if (transformationID.equals(transformationDummyID)) {
                 return true;
             }
@@ -83,10 +110,25 @@ public class KiCoSelectionView extends DiagramViewPart {
      * 
      * @param transformationDummyID
      *            the transformation dummy id
+     * @param editorID
+     *            the editor id
      */
-    public static void addSelectedTransformation(String transformationDummyID) {
-        if (!isSelectedTransformation(transformationDummyID)) {
-            selectedTransformations.add(transformationDummyID);
+    public static void addSelectedTransformation(String transformationDummyID, int editorID) {
+        addSelectedTransformation(transformationDummyID, getSelectedTransformations(editorID));
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Adds the transformation to be selected.
+     * 
+     * @param transformationDummyID
+     *            the transformation dummy id
+     */
+    public static void addSelectedTransformation(String transformationDummyID,
+            List<String> selectedList) {
+        if (!isSelectedTransformation(transformationDummyID, selectedList)) {
+            selectedList.add(transformationDummyID);
         }
     }
 
@@ -97,17 +139,32 @@ public class KiCoSelectionView extends DiagramViewPart {
      * 
      * @param transformationDummyID
      *            the transformation dummy id
+     * @param editorID
+     *            the editor id
      */
-    public static void removeSelectedTransformation(String transformationDummyID) {
+    public static void removeSelectedTransformation(String transformationDummyID, int editorID) {
+        removeSelectedTransformation(transformationDummyID, getSelectedTransformations(editorID));
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Removes the transformation from the list of selected transformations.
+     * 
+     * @param transformationDummyID
+     *            the transformation dummy id
+     */
+    public static void removeSelectedTransformation(String transformationDummyID,
+            List<String> selectedList) {
         int found = -1;
-        for (String transformationID : selectedTransformations) {
+        for (String transformationID : selectedList) {
             if (transformationID.equals(transformationDummyID)) {
-                found = selectedTransformations.indexOf(transformationID);
+                found = selectedList.indexOf(transformationID);
                 break;
             }
         }
         if (found > -1) {
-            selectedTransformations.remove(found);
+            selectedList.remove(found);
         }
     }
 
@@ -122,6 +179,64 @@ public class KiCoSelectionView extends DiagramViewPart {
         DiagramViewManager.getInstance().registerView(this);
         DiagramViewManager.getInstance().createView(getPartId(), null, model,
                 KlighdSynthesisProperties.newInstance(null));
+
+        // Create an IPartListener2
+        IPartListener2 pl = new IPartListener2() {
+
+            String lastEditor = null;
+
+            public void partVisible(IWorkbenchPartReference partRef) {
+                // TODO Auto-generated method stub
+
+            }
+
+            public void partOpened(IWorkbenchPartReference partRef) {
+                // TODO Auto-generated method stub
+
+            }
+
+            public void partInputChanged(IWorkbenchPartReference partRef) {
+                // TODO Auto-generated method stub
+
+            }
+
+            public void partHidden(IWorkbenchPartReference partRef) {
+                // TODO Auto-generated method stub
+
+            }
+
+            public void partDeactivated(IWorkbenchPartReference partRef) {
+                // TODO Auto-generated method stub
+
+            }
+
+            public void partClosed(IWorkbenchPartReference partRef) {
+                // TODO Auto-generated method stub
+
+            }
+
+            public void partBroughtToTop(IWorkbenchPartReference partRef) {
+                // TODO Auto-generated method stub
+
+            }
+
+            public void partActivated(IWorkbenchPartReference ref) {
+                IWorkbenchPart part = ref.getPart(true);
+                if (part instanceof EditorPart) {
+                    String partName = ((EditorPart)part).getPartName();
+                    if (!partName.equals(lastEditor)) {
+                        lastEditor = partName;
+                        Object model = KielerCompiler.buildGraph();
+                        DiagramViewManager.getInstance().createView(getPartId(), null, model,
+                                KlighdSynthesisProperties.newInstance(null));
+                    }
+                }
+            }
+        };
+
+        // Add the IPartListener2 to the page
+        IWorkbenchPage page = this.getSite().getPage();
+        page.addPartListener(pl);
     }
 
     // -------------------------------------------------------------------------
@@ -144,6 +259,36 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static KiCoSelectionView getInstance() {
         return instance;
     }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the active editor.
+     * 
+     * @return the active editor
+     */
+    public static IEditorPart getActiveEditor() {
+        return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                .getActiveEditor();
+    }
+
+    // -------------------------------------------------------------------------
+
+    // // Force to reload and adapt to currently selected editor
+    // Object model = KielerCompiler.buildGraph();
+    // DiagramViewManager.getInstance().createView(getPartId(), null, model,
+    // KlighdSynthesisProperties.newInstance(null));
+
+    /**
+     * Gets the active editor id.
+     * 
+     * @return the active editor id
+     */
+    public static int getActiveEditorID() {
+        return getActiveEditor().hashCode();
+    }
+
+    // -------------------------------------------------------------------------
 
     // -------------------------------------------------------------------------
 }

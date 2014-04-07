@@ -214,7 +214,6 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     // The Main entry transform function   
     override transform(List<TransformationDummy> model) {
         connected.clear
-        KiCoSelectionView.knode2transformationDummy.clear
 
         val knode = model.createNode();
 
@@ -251,7 +250,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             figure.shadow.YOffset = 4;
             (
                figure => [
-                if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id)) {
+                if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id, KiCoSelectionView.activeEditorID)) {
                     it.setBackgroundGradient(BLUE3.copy, BLUE3.copy, 90);
                     it.setSelectionBackgroundGradient(BLUE3.copy, BLUE3.copy, 90);
                 } else {
@@ -280,7 +279,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                                 putToLookUpWith(transformationDummy) => [
                                 // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
                                 it.addSingleClickAction(KiCoSelectionAction::ID);
-                                if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id)) {
+                                if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id, KiCoSelectionView.activeEditorID)) {
                                     it.setForeground("white".color)
                                     it.setSelectionBackground("white".color)
                                 } else {
@@ -300,7 +299,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                         // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
                         it.addSingleClickAction(KiCoSelectionAction::ID);
                         it.fontSize = 11;
-                        if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id)) {
+                        if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id, KiCoSelectionView.activeEditorID)) {
                             it.setForeground("white".color)
                             it.setSelectionBackground("white".color)
                         } else {
@@ -349,8 +348,6 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             }
         ]
 
-        KiCoSelectionView.knode2transformationDummy.put(root, transformationDummy)
-        System.out.println(root + ", " + transformationDummy.id);
         return root
     }
 

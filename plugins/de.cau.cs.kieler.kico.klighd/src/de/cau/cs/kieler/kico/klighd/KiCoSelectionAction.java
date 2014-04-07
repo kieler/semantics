@@ -181,7 +181,7 @@ public class KiCoSelectionAction implements IAction {
             KRoundedRectangle rect = getRectangle(kNode);
             KText kText = getLabel(kNode);
 
-            if (!KiCoSelectionView.isSelectedTransformation(id)) {
+            if (!KiCoSelectionView.isSelectedTransformation(id, KiCoSelectionView.getActiveEditorID())) {
                 // Select
                 if (rect != null) {
                     kRenderingExtensions.setBackgroundGradient(rect,
@@ -194,7 +194,7 @@ public class KiCoSelectionAction implements IAction {
                     kRenderingExtensions.setSelectionBackground(kText,
                             copy(KiCoDiagramSynthesis.BLUE3));
                 }
-                KiCoSelectionView.addSelectedTransformation(id);
+                KiCoSelectionView.addSelectedTransformation(id, KiCoSelectionView.getActiveEditorID());
             } else {
                 // Un select
                 if (rect != null) {
@@ -208,14 +208,15 @@ public class KiCoSelectionAction implements IAction {
                     kRenderingExtensions.setSelectionBackground(kText,
                             copy(KiCoDiagramSynthesis.WHITE));
                 }
-                KiCoSelectionView.removeSelectedTransformation(id);
+                KiCoSelectionView.removeSelectedTransformation(id, KiCoSelectionView.getActiveEditorID());
             }
 
-            System.out.println(Arrays.toString(KiCoSelectionView.getSelectedTransformations()
+            System.out.println(Arrays.toString(KiCoSelectionView.getSelectedTransformations(KiCoSelectionView.getActiveEditorID())
                     .toArray()));
         }
 
-        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().setFocus();
+        // Ensures that the KLighD view redraws the diagram of the curretly selected editor
+        KiCoSelectionView.getActiveEditor().setFocus();
         
         return ActionResult.createResult(true).dontAnimateLayout();
     }

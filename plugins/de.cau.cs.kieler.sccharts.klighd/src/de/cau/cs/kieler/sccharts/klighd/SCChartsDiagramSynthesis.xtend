@@ -179,7 +179,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     override transform(Region model) {
         var transformed = model;
 
-        val transformations = KiCoSelectionView.getSelectedTransformations();
+        val transformations = KiCoSelectionView.getSelectedTransformations(KiCoSelectionView.activeEditorID);
         // ---------
         // Just one final compiler call of KielerCompiler
         transformed = KielerCompiler.compile(transformations, transformed, TRANSFORM_ADVANED.booleanValue) as Region
