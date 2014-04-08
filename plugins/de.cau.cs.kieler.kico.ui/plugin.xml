@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="de.cau.cs.kieler.kico.transformation.ui" name="KIELER Compiler Transformation UI" schema="schema/de.cau.cs.kieler.kico.transformation.ui.exsd"/>
+   <extension
+         point="de.cau.cs.kieler.klighd.diagramSyntheses">
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.KiCoDiagramSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.diagramSynthesis">
+      </diagramSynthesis>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            category="de.cau.cs.kieler.sim"
+            class="de.cau.cs.kieler.kico.klighd.KiCoSelectionView"
+            icon="icons/KiCoKlighViewIcon2.png"
+            id="de.cau.cs.kieler.kico.selection"
+            name="KIELER Compiler Selection"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kiml.layoutConfigs">
+      <staticConfig
+            class="java.lang.Object"
+            option="de.cau.cs.kieler.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.boxes">
+      </staticConfig>
+      <staticConfig
+            class="de.cau.cs.kieler.kico.TransformationDummy"
+            option="de.cau.cs.kieler.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.stateMachine">
+      </staticConfig>
+      <staticConfig
+            class="de.cau.cs.kieler.kico.TransformationDummy"
+            option="de.cau.cs.kieler.spacing"
+            value="1.0">
+      </staticConfig>
+      <staticConfig
+            class="de.cau.cs.kieler.kico.TransformationDummy"
+            option="de.cau.cs.kieler.borderSpacing"
+            value="2.0">
+      </staticConfig>
+      <staticConfig
+            class="de.cau.cs.kieler.kico.TransformationDummy"
+            option="de.cau.cs.kieler.sizeConstraint"
+            value="[MINIMUM_SIZE, DEFAULT_MINIMUM_SIZE]">
+      </staticConfig>
+      <staticConfig
+            class="de.cau.cs.kieler.kico.TransformationDummy"
+            option="de.cau.cs.kieler.expandNodes"
+            value="true">
+      </staticConfig>
+      <staticConfig
+            class="de.cau.cs.kieler.kico.TransformationDummy"
+            option="de.cau.cs.kieler.interactive"
+            value="true">
+      </staticConfig>
+      <staticConfig
+            class="java.lang.Object"
+            option="de.cau.cs.kieler.spacing"
+            value="40.0">
+      </staticConfig>
+      <staticConfig
+            class="java.lang.Object"
+            option="de.cau.cs.kieler.direction"
+            value="RIGHT">
+      </staticConfig>
+      <semanticConfig
+            class="de.cau.cs.kieler.kico.TransformationDummy"
+            config="de.cau.cs.kieler.kico.klight.layout.TransformationDummyLayoutConfig">
+      </semanticConfig>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.extensions">
+      <action
+            class="de.cau.cs.kieler.kico.klighd.KiCoSelectionAction"
+            id="de.cau.cs.kieler.kico.klighd.KiCoSelectionAction">
+      </action>
+   </extension>
+
+</plugin>
