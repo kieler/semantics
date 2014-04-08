@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Compiler KLighD Visualization
 Bundle-SymbolicName: de.cau.cs.kieler.kico.ui;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.kico.klighd.KiCoUIPlugin
+Bundle-Activator: de.cau.cs.kieler.kico.ui.KiCoUIPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.kico;bundle-version="0.1.0",
@@ -27,4 +27,4 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.klighd.ui;bundle-version="0.3.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: de.cau.cs.kieler.kico.klighd
+Export-Package: de.cau.cs.kieler.kico.ui

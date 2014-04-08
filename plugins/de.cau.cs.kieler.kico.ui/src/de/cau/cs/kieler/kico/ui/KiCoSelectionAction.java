@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd;
+package de.cau.cs.kieler.kico.ui;
 
 import java.util.Arrays;
 
@@ -29,6 +29,7 @@ import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.kico.TransformationDummy;
+import de.cau.cs.kieler.kico.klighd.KiCoDiagramSynthesis;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**
@@ -171,9 +172,6 @@ public class KiCoSelectionAction implements IAction {
 
         KNode kNode = context.getKNode();
 
-//        TransformationDummy transformationDummy =
-//                KiCoSelectionView.knode2transformationDummy.get(kNode);
-        
         TransformationDummy transformationDummy = (TransformationDummy) context.getDomainElement(kNode);
         
         if (transformationDummy != null) {

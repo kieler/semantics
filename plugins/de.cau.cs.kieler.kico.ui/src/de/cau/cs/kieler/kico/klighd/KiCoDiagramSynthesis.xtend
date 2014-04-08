@@ -52,6 +52,8 @@ import static de.cau.cs.kieler.kico.klighd.KiCoDiagramSynthesis.*
 import de.cau.cs.kieler.kico.TransformationDummy
 import java.util.LinkedList
 import java.util.HashMap
+import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
+import de.cau.cs.kieler.kico.ui.KiCoSelectionView
 
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).

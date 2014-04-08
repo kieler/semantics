@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.kico.klighd;
+package de.cau.cs.kieler.kico.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;

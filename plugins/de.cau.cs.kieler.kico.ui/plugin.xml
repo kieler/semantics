@@ -14,7 +14,7 @@
       <view
             allowMultiple="true"
             category="de.cau.cs.kieler.sim"
-            class="de.cau.cs.kieler.kico.klighd.KiCoSelectionView"
+            class="de.cau.cs.kieler.kico.ui.KiCoSelectionView"
             icon="icons/KiCoKlighViewIcon2.png"
             id="de.cau.cs.kieler.kico.selection"
             name="KIELER Compiler Selection"
@@ -76,7 +76,7 @@
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <action
-            class="de.cau.cs.kieler.kico.klighd.KiCoSelectionAction"
+            class="de.cau.cs.kieler.kico.ui.KiCoSelectionAction"
             id="de.cau.cs.kieler.kico.klighd.KiCoSelectionAction">
       </action>
    </extension>
