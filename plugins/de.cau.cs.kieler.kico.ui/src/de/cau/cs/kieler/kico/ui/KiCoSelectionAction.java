@@ -40,7 +40,7 @@ import de.cau.cs.kieler.klighd.IAction;
  * @kieler.design 2014-04-08 proposed
  * @kieler.rating 2014-04-08 proposed yellow
  */
-public class KiCoSelectionAction implements IAction {
+public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
 
     /**
      * The extension id of this actions. This id is to be mentioned in instances of
@@ -48,110 +48,6 @@ public class KiCoSelectionAction implements IAction {
      */
     public static final String ID = "de.cau.cs.kieler.kico.klighd.KiCoSelectionAction";
 
-    /** The instance of k rendering extensions for reuse Xtend code here (coloring). */
-    public static KRenderingExtensions kRenderingExtensions = new KRenderingExtensions();
-
-    // -------------------------------------------------------------------------
-    
-    /**
-     * Helper method to get the rectangle for coloring.
-     *
-     * @param data the data
-     * @return the rectangle
-     */
-    KRoundedRectangle getRectangle(KGraphData data) {
-        if (data instanceof KRoundedRectangle) {
-            return (KRoundedRectangle) data;
-        }
-        if (data instanceof KContainerRendering) {
-            KContainerRendering container = (KContainerRendering) data;
-            for (KRendering child : container.getChildren()) {
-                KRoundedRectangle returnValue = getRectangle(child);
-                if (returnValue != null) {
-                    return returnValue;
-                }
-            }
-        }
-        return null;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Helper method to get the rectangle for coloring.
-     *
-     * @param kNode the k node
-     * @return the rectangle
-     */
-    KRoundedRectangle getRectangle(KNode kNode) {
-        for (KGraphData data : kNode.getData()) {
-            if (data instanceof KRoundedRectangle) {
-                return (KRoundedRectangle) data;
-            }
-            KRoundedRectangle returnValue = getRectangle(data);
-            if (returnValue != null) {
-                return returnValue;
-            }
-        }
-        return null;
-    }
-    
-    // -------------------------------------------------------------------------
-
-    /**
-     * Helper method to get the label for coloring.
-     *
-     * @param data the data
-     * @return the label
-     */
-    KText getLabel(KGraphData data) {
-        if (data instanceof KText) {
-            return (KText) data;
-        }
-        if (data instanceof KContainerRendering) {
-            KContainerRendering container = (KContainerRendering) data;
-            for (KRendering child : container.getChildren()) {
-                KText returnValue = getLabel(child);
-                if (returnValue != null) {
-                    return returnValue;
-                }
-            }
-        }
-        return null;
-    }
-    
-    // -------------------------------------------------------------------------
-
-    /**
-     * Helper method to get the label for coloring.
-     *
-     * @param kNode the k node
-     * @return the label
-     */
-    KText getLabel(KNode kNode) {
-        for (KGraphData data : kNode.getData()) {
-            if (data instanceof KText) {
-                return (KText) data;
-            }
-            KText returnValue = getLabel(data);
-            if (returnValue != null) {
-                return returnValue;
-            }
-        }
-        return null;
-    }
-
-    // -------------------------------------------------------------------------
-    
-    /**
-     * Helper method to copy a color when coloring a selection.
-     *
-     * @param color the color
-     * @return the k color
-     */
-    KColor copy(KColor color) {
-        return EcoreUtil2.copy(color);
-    }
 
     // -------------------------------------------------------------------------
     
@@ -171,43 +67,21 @@ public class KiCoSelectionAction implements IAction {
     public ActionResult execute(final ActionContext context) {
 
         KNode kNode = context.getKNode();
-
+        
         TransformationDummy transformationDummy = (TransformationDummy) context.getDomainElement(kNode);
         
         if (transformationDummy != null) {
             String id = transformationDummy.id;
 
-            // Find the right rectangle and ktext label to color
-            KRoundedRectangle rect = getRectangle(kNode);
-            KText kText = getLabel(kNode);
-
             if (!KiCoSelectionView.isSelectedTransformation(id, KiCoSelectionView.getActiveEditorID())) {
                 // Select
-                if (rect != null) {
-                    kRenderingExtensions.setBackgroundGradient(rect,
-                            copy(KiCoDiagramSynthesis.BLUE3), copy(KiCoDiagramSynthesis.BLUE4), 90);
-                    kRenderingExtensions.setSelectionBackgroundGradient(rect,
-                            copy(KiCoDiagramSynthesis.BLUE3), copy(KiCoDiagramSynthesis.BLUE4), 90);
-                }
-                if (kText != null) {
-                    kRenderingExtensions.setForeground(kText, KiCoDiagramSynthesis.WHITE);
-                    kRenderingExtensions.setSelectionBackground(kText,
-                            copy(KiCoDiagramSynthesis.BLUE3));
-                }
+                setLabelColor(transformationDummy, context, KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3);
+                setStateColor(transformationDummy, context, KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
                 KiCoSelectionView.addSelectedTransformation(id, KiCoSelectionView.getActiveEditorID());
             } else {
                 // Un select
-                if (rect != null) {
-                    kRenderingExtensions.setBackgroundGradient(rect,
-                            copy(KiCoDiagramSynthesis.BLUE1), copy(KiCoDiagramSynthesis.BLUE2), 90);
-                    kRenderingExtensions.setSelectionBackgroundGradient(rect,
-                            copy(KiCoDiagramSynthesis.BLUE1), copy(KiCoDiagramSynthesis.BLUE2), 90);
-                }
-                if (kText != null) {
-                    kRenderingExtensions.setForeground(kText, KiCoDiagramSynthesis.DARKGRAY);
-                    kRenderingExtensions.setSelectionBackground(kText,
-                            copy(KiCoDiagramSynthesis.BLUE1));
-                }
+                setLabelColor(transformationDummy, context, KiCoDiagramSynthesis.DARKGRAY, KiCoDiagramSynthesis.BLUE1);
+                setStateColor(transformationDummy, context, KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
                 KiCoSelectionView.removeSelectedTransformation(id, KiCoSelectionView.getActiveEditorID());
             }
 

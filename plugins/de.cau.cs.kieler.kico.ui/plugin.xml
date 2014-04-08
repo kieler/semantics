@@ -15,7 +15,7 @@
             allowMultiple="true"
             category="de.cau.cs.kieler.sim"
             class="de.cau.cs.kieler.kico.ui.KiCoSelectionView"
-            icon="icons/KiCoKlighViewIcon2.png"
+            icon="icons/KiCoViewIcon.png"
             id="de.cau.cs.kieler.kico.selection"
             name="KIELER Compiler Selection"
             restorable="true">
