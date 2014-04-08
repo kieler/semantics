@@ -6,18 +6,18 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class KiCoKlighdPlugin extends AbstractUIPlugin {
+public class KiCoUIPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.kico.klighd"; //$NON-NLS-1$
 
 	// The shared instance
-	private static KiCoKlighdPlugin plugin;
+	private static KiCoUIPlugin plugin;
 	
 	/**
 	 * The constructor
 	 */
-	public KiCoKlighdPlugin() {
+	public KiCoUIPlugin() {
 	}
 
 	/*
@@ -43,7 +43,7 @@ public class KiCoKlighdPlugin extends AbstractUIPlugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static KiCoKlighdPlugin getDefault() {
+	public static KiCoUIPlugin getDefault() {
 		return plugin;
 	}
 
