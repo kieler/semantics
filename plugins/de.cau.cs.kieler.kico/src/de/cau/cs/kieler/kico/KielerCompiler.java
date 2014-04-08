@@ -217,12 +217,42 @@ public class KielerCompiler {
     // -------------------------------------------------------------------------
 
     /**
-     * Reduces the graph to the transformation selected as transformationIDs.
+     * Reduces the graph to the transformations selected as transformationIDs.
      * 
      * @param graph
      *            the graph
      */
     public static void reduceGraph(List<TransformationDummy> graph, List<String> transformationIDs) {
+        // not remove the selected but ALL UNselected
+        boolean removeSelected = false;
+        removeFromGraph(graph, transformationIDs, removeSelected);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Removes all transformations selected as transformationIDs from the graph.
+     * 
+     * @param graph
+     *            the graph
+     */
+    public static void removeFromGraph(List<TransformationDummy> graph,
+            List<String> transformationIDs) {
+        // remove ONLY the selected
+        boolean removeSelected = false;
+        removeFromGraph(graph, transformationIDs, removeSelected);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Removes all transformations selected OR not-selected as transformationIDs from the graph.
+     * 
+     * @param graph
+     *            the graph
+     */
+    public static void removeFromGraph(List<TransformationDummy> graph,
+            List<String> transformationIDs, boolean removeSelected) {
         TransformationDummy toBeDeleted = null;
         do {
             toBeDeleted = null;
@@ -234,7 +264,7 @@ public class KielerCompiler {
                         break;
                     }
                 }
-                if (!found) {
+                if (found) {
                     toBeDeleted = transformationDummy;
                     break;
                 }
