@@ -207,20 +207,32 @@ public class KiCoSelectionView extends DiagramViewPart {
      *            the ref
      */
     public void updateView(IWorkbenchPartReference ref) {
-        IWorkbenchPart part = ref.getPart(true);
-        String editorID = ref.getId();
-        if (registeredEditors.containsKey(editorID)) {
-            List<String> visibleTransformations = registeredEditors.get(editorID);
-            if (part instanceof EditorPart) {
-                EditorPart editorPart = (EditorPart) part;
-                String partName = (editorPart).getPartName();
-                if (!partName.equals(lastEditor)) {
-                    lastEditor = partName;
-                    List<TransformationDummy> model = KielerCompiler.buildGraph();
-                    KielerCompiler.reduceGraph(model, visibleTransformations);
-                    DiagramViewManager.getInstance().createView(getPartId(), null, model,
-                            KlighdSynthesisProperties.newInstance(null));
+        if (ref != null) {
+            IWorkbenchPart part = ref.getPart(true);
+            String editorID = ref.getId();
+            if (registeredEditors.containsKey(editorID)) {
+                List<String> visibleTransformations = registeredEditors.get(editorID);
+                if (part instanceof EditorPart) {
+                    EditorPart editorPart = (EditorPart) part;
+                    String partName = (editorPart).getPartName();
+                    if (!partName.equals(lastEditor)) {
+                        lastEditor = partName;
+                        List<TransformationDummy> model = KielerCompiler.buildGraph();
+                        KielerCompiler.reduceGraph(model, visibleTransformations);
+                        DiagramViewManager.getInstance().createView(getPartId(), null, model,
+                                KlighdSynthesisProperties.newInstance(null));
+                    }
                 }
+            } else {
+                // if (part instanceof EditorPart) {
+                // DiagramViewManager
+                // .getInstance()
+                // .createView(
+                // getPartId(),
+                // null,
+                // "Not supported model editor.\n\nThe currently selected editor is not registered for any KIELER Compiler transformations. The editor must use the extension point de.cau.cs.kieler.kico.ui to declare transformations that should bis visible when such an editor instance is active.",
+                // KlighdSynthesisProperties.newInstance(null));
+                // }
             }
         }
     }
