@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="de.cau.cs.kieler.kico.transformation.ui" name="KIELER Compiler Transformation UI" schema="schema/de.cau.cs.kieler.kico.transformation.ui.exsd"/>
+   <extension-point id="de.cau.cs.kieler.kico.ui.transformation" name="KIELER Compiler UI Transformation" schema="schema/de.cau.cs.kieler.kico.ui.transformation.exsd"/>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
