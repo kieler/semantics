@@ -16,6 +16,7 @@ package de.cau.cs.kieler.kico.ui;
 import java.util.Arrays;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.EcoreUtil2;
 
@@ -90,7 +91,12 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
         }
 
         // Ensures that the KLighD view redraws the diagram of the curretly selected editor
-        KiCoSelectionView.getActiveEditor().setFocus();
+        IEditorPart editor = KiCoSelectionView.getActiveEditor();
+        if (editor != null) {
+            //TODO: This is a current workaround to force the klight view to repaint
+            editor.setFocus();
+        }
+        
         
         return ActionResult.createResult(true).dontAnimateLayout();
     }

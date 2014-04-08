@@ -264,7 +264,7 @@ public class KielerCompiler {
                         break;
                     }
                 }
-                if (found) {
+                if (found && removeSelected) {
                     toBeDeleted = transformationDummy;
                     break;
                 }

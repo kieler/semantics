@@ -86,7 +86,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
 
     @Inject
     extension KColorExtensions
- 
+
     // --------------------------------------------------------------------------
     // Some color and pattern constants
     private static val float TRANSITION_DASH_BLACK = 7;
@@ -95,7 +95,8 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     private static val KColor GRAY = RENDERING_FACTORY.createKColor() =>
         [it.red = 240; it.green = 240; it.blue = 240];
     private static val KColor KEYWORD = RENDERING_FACTORY.createKColor() => [it.red = 115; it.green = 0; it.blue = 65];
-    public static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() => [it.red = 140; it.green = 140; it.blue = 140];
+    public static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() =>
+        [it.red = 140; it.green = 140; it.blue = 140];
     public static val KColor BLACK = RENDERING_FACTORY.createKColor() => [it.red = 0; it.green = 0; it.blue = 0];
     public static val KColor WHITE = RENDERING_FACTORY.createKColor() => [it.red = 255; it.green = 255; it.blue = 255];
 
@@ -250,8 +251,8 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             figure.shadow = "black".color;
             figure.shadow.XOffset = 4;
             figure.shadow.YOffset = 4;
-            (
-               figure => [
+            figure => [
+                it.putToLookUpWith(transformationDummy)
                 if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id, KiCoSelectionView.activeEditorID)) {
                     it.setBackgroundGradient(BLUE3.copy, BLUE3.copy, 90);
                     it.setSelectionBackgroundGradient(BLUE3.copy, BLUE3.copy, 90);
@@ -259,8 +260,6 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                     it.setBackgroundGradient(BLUE1.copy, BLUE2.copy, 90);
                     it.setSelectionBackgroundGradient(BLUE1.copy, BLUE2.copy, 90);
                 }
-            ]
-             ) => [
                 node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
                 it.invisible = false;
                 if (transformationDummy.group) {
@@ -281,7 +280,8 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                                 putToLookUpWith(transformationDummy) => [
                                 // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
                                 it.addSingleClickAction(KiCoSelectionAction::ID);
-                                if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id, KiCoSelectionView.activeEditorID)) {
+                                if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id,
+                                    KiCoSelectionView.activeEditorID)) {
                                     it.setForeground("white".color)
                                     it.setSelectionBackground(BLUE1.copy)
                                 } else {
@@ -301,7 +301,8 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                         // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
                         it.addSingleClickAction(KiCoSelectionAction::ID);
                         it.fontSize = 11;
-                        if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id, KiCoSelectionView.activeEditorID)) {
+                        if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id,
+                            KiCoSelectionView.activeEditorID)) {
                             it.setForeground("white".color)
                             it.setSelectionBackground(BLUE1.copy)
                         } else {

@@ -340,7 +340,11 @@ public class KiCoSelectionView extends DiagramViewPart {
      * @return the active editor id
      */
     public static int getActiveEditorID() {
-        return getActiveEditor().hashCode();
+        Object editor = getActiveEditor();
+        if (editor != null) {
+            return editor.hashCode();
+        }
+        return -1;
     }
 
     // -------------------------------------------------------------------------

@@ -49,48 +49,48 @@ public abstract class KiCoKlighdAction {
 
     // -------------------------------------------------------------------------
     
-//    /**
-//     * Helper method to get the rectangle for coloring.
-//     *
-//     * @param data the data
-//     * @return the rectangle
-//     */
-//    KRoundedRectangle getRectangle(KGraphData data) {
-//        if (data instanceof KRoundedRectangle) {
-//            return (KRoundedRectangle) data;
-//        }
-//        if (data instanceof KContainerRendering) {
-//            KContainerRendering container = (KContainerRendering) data;
-//            for (KRendering child : container.getChildren()) {
-//                KRoundedRectangle returnValue = getRectangle(child);
-//                if (returnValue != null) {
-//                    return returnValue;
-//                }
-//            }
-//        }
-//        return null;
-//    }
-//
-//    // -------------------------------------------------------------------------
-//
-//    /**
-//     * Helper method to get the rectangle for coloring.
-//     *
-//     * @param kNode the k node
-//     * @return the rectangle
-//     */
-//    KRoundedRectangle getRectangle(KNode kNode) {
-//        for (KGraphData data : kNode.getData()) {
-//            if (data instanceof KRoundedRectangle) {
-//                return (KRoundedRectangle) data;
-//            }
-//            KRoundedRectangle returnValue = getRectangle(data);
-//            if (returnValue != null) {
-//                return returnValue;
-//            }
-//        }
-//        return null;
-//    }
+    /**
+     * Helper method to get the rectangle for coloring.
+     *
+     * @param data the data
+     * @return the rectangle
+     */
+    KRoundedRectangle getRectangle(KGraphData data) {
+        if (data instanceof KRoundedRectangle) {
+            return (KRoundedRectangle) data;
+        }
+        if (data instanceof KContainerRendering) {
+            KContainerRendering container = (KContainerRendering) data;
+            for (KRendering child : container.getChildren()) {
+                KRoundedRectangle returnValue = getRectangle(child);
+                if (returnValue != null) {
+                    return returnValue;
+                }
+            }
+        }
+        return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Helper method to get the rectangle for coloring.
+     *
+     * @param kNode the k node
+     * @return the rectangle
+     */
+    KRoundedRectangle getRectangle(KNode kNode) {
+        for (KGraphData data : kNode.getData()) {
+            if (data instanceof KRoundedRectangle) {
+                return (KRoundedRectangle) data;
+            }
+            KRoundedRectangle returnValue = getRectangle(data);
+            if (returnValue != null) {
+                return returnValue;
+            }
+        }
+        return null;
+    }
 //    
 //    // -------------------------------------------------------------------------
 //
@@ -166,8 +166,10 @@ public abstract class KiCoKlighdAction {
      * @return the k rounded rectangle
      */
     KRoundedRectangle getKRoundedRectangle(final TransformationDummy transformationDummy, final ActionContext context) {
-        if (!transformationDummy2KText.containsKey(transformationDummy)) {
+        if (!transformationDummy2KRoundedRectangle.containsKey(transformationDummy)) {
+            //KNode kNode = context.getViewContext().getTargetElement(transformationDummy, KNode.class);
             KRoundedRectangle kRoundedRectangle = context.getViewContext().getTargetElement(transformationDummy, KRoundedRectangle.class);
+            //KRoundedRectangle kRoundedRectangle = getRectangle(kNode);
             transformationDummy2KRoundedRectangle.put(transformationDummy,  kRoundedRectangle);
         }
         return transformationDummy2KRoundedRectangle.get(transformationDummy);
@@ -202,7 +204,7 @@ public abstract class KiCoKlighdAction {
      * @param color2 the color2
      */
     void setStateColor(final TransformationDummy transformationDummy, final ActionContext context, KColor color1, KColor color2) {
-        KRoundedRectangle rect = getKRoundedRectangle( transformationDummy,  context);
+        KRoundedRectangle rect = getKRoundedRectangle(transformationDummy,  context);
         kRenderingExtensions.setBackgroundGradient(rect,
                 copy(color1), copy(color2), 90);
         kRenderingExtensions.setSelectionBackgroundGradient(rect,
