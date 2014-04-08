@@ -14,7 +14,6 @@ FOR AN UPDATED VERSION OF THIS DESCRIPTION AND ADDITIONAL INFORMATION PLEASE SEE
 &lt;BR&gt;&lt;BR&gt;
 
 This extension point allowes to define which KiCo transformations should be visible for a specific editor.
-
       </documentation>
    </annotation>
 
@@ -45,14 +44,16 @@ This extension point allowes to define which KiCo transformations should be visi
          </documentation>
       </annotation>
       <complexType>
-         <attribute name="editorid" type="string">
+         <attribute name="editor" type="string">
             <annotation>
                <documentation>
-                  The editor ID for which the defined transformation IDs should be visible within the KiCo.Ui (KIELER Compiler Selection) View.
+                  The editor ID for which the defined transformation IDs should be visible within the KiCo.Ui (KIELER Compiler Selection) View. 
+
+Leaving the editor ID empty means that the registered transformations will be visible for ANY editor.
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="transformationIDs" type="string">
+         <attribute name="transformations" type="string">
             <annotation>
                <documentation>
                   A comma separated list of transformation IDs that should be visible within the KiCo.Ui (KIELER Compiler Selection) View when the defined editor is active.

@@ -7,6 +7,7 @@ import java.util.List;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPage;
@@ -23,14 +24,35 @@ import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class KiCoSelectionView.
+ * 
+ * @author cmot
+ * @kieler.design 2014-04-08 proposed
+ * @kieler.rating 2014-04-08 proposed yellow
+ */
 public class KiCoSelectionView extends DiagramViewPart {
 
+    /** The instance. */
     static KiCoSelectionView instance;
+
+    /** The parent. */
     Composite parent;
+
+    /** The Constant ID. */
     static final String ID = "de.cau.cs.kieler.kico.selection";
 
+    /** The selected transformations per editor instance. */
     static HashMap<Integer, List<String>> selectedTransformations =
             new HashMap<Integer, List<String>>();
+
+    /** The last editor. */
+    String lastEditor = null;
+
+    /** The registered editors. */
+    static HashMap<String, List<String>> registeredEditors = KiCoUIPlugin.getInstance()
+            .getRegisteredEditors();
 
     // -------------------------------------------------------------------------
 
@@ -59,6 +81,8 @@ public class KiCoSelectionView extends DiagramViewPart {
     /**
      * Gets the selected transformations as a list of Strings of their IDs.
      * 
+     * @param editorID
+     *            the editor id
      * @return the selected transformations
      */
     public static List<String> getSelectedTransformations(int editorID) {
@@ -89,8 +113,10 @@ public class KiCoSelectionView extends DiagramViewPart {
     /**
      * Checks if a transformation is selected.
      * 
-     * @param transformationDummy
-     *            the transformation dummy
+     * @param transformationDummyID
+     *            the transformation dummy id
+     * @param selectedList
+     *            the selected list
      * @return true, if is selected transformation
      */
     public static boolean isSelectedTransformation(String transformationDummyID,
@@ -124,6 +150,8 @@ public class KiCoSelectionView extends DiagramViewPart {
      * 
      * @param transformationDummyID
      *            the transformation dummy id
+     * @param selectedList
+     *            the selected list
      */
     public static void addSelectedTransformation(String transformationDummyID,
             List<String> selectedList) {
@@ -153,6 +181,8 @@ public class KiCoSelectionView extends DiagramViewPart {
      * 
      * @param transformationDummyID
      *            the transformation dummy id
+     * @param selectedList
+     *            the selected list
      */
     public static void removeSelectedTransformation(String transformationDummyID,
             List<String> selectedList) {
@@ -171,19 +201,41 @@ public class KiCoSelectionView extends DiagramViewPart {
     // -------------------------------------------------------------------------
 
     /**
+     * Update view.
+     * 
+     * @param ref
+     *            the ref
+     */
+    public void updateView(IWorkbenchPartReference ref) {
+        IWorkbenchPart part = ref.getPart(true);
+        String editorID = ref.getId();
+        if (registeredEditors.containsKey(editorID)) {
+            List<String> visibleTransformations = registeredEditors.get(editorID);
+            if (part instanceof EditorPart) {
+                EditorPart editorPart = (EditorPart) part;
+                String partName = (editorPart).getPartName();
+                if (!partName.equals(lastEditor)) {
+                    lastEditor = partName;
+                    List<TransformationDummy> model = KielerCompiler.buildGraph();
+                    KielerCompiler.reduceGraph(model, visibleTransformations);
+                    DiagramViewManager.getInstance().createView(getPartId(), null, model,
+                            KlighdSynthesisProperties.newInstance(null));
+                }
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * {@inheritDoc}
      */
     public void createPartControl(final Composite parent) {
-        Object model = KielerCompiler.buildGraph();
         super.createPartControl(parent);
         DiagramViewManager.getInstance().registerView(this);
-        DiagramViewManager.getInstance().createView(getPartId(), null, model,
-                KlighdSynthesisProperties.newInstance(null));
 
         // Create an IPartListener2
         IPartListener2 pl = new IPartListener2() {
-
-            String lastEditor = null;
 
             public void partVisible(IWorkbenchPartReference partRef) {
                 // TODO Auto-generated method stub
@@ -221,16 +273,7 @@ public class KiCoSelectionView extends DiagramViewPart {
             }
 
             public void partActivated(IWorkbenchPartReference ref) {
-                IWorkbenchPart part = ref.getPart(true);
-                if (part instanceof EditorPart) {
-                    String partName = ((EditorPart)part).getPartName();
-                    if (!partName.equals(lastEditor)) {
-                        lastEditor = partName;
-                        Object model = KielerCompiler.buildGraph();
-                        DiagramViewManager.getInstance().createView(getPartId(), null, model,
-                                KlighdSynthesisProperties.newInstance(null));
-                    }
-                }
+                updateView(ref);
             }
         };
 

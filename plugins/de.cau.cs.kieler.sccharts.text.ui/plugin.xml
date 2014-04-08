@@ -1193,8 +1193,8 @@
    <extension
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor
-            editorid="de.cau.cs.kieler.sccharts.text.sct.Sct"
-            transformationIDs="ABORT, ABORTALTERNATIVE"></editor>
+            editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
+            transformations="ABORT, ABORTALTERNATIVE"></editor>
    </extension>
        
     

@@ -36,6 +36,8 @@ import de.cau.cs.kieler.klighd.IAction;
  * {@link de.cau.cs.kieler.core.kgraph.KNode KNodes}.
  * 
  * @author cmot
+ * @kieler.design 2014-04-08 proposed
+ * @kieler.rating 2014-04-08 proposed yellow
  */
 public class KiCoSelectionAction implements IAction {
 

@@ -54,11 +54,11 @@ import java.util.LinkedList
 import java.util.HashMap
 
 /**
- * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
+ * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
  * 
- * @author cmot ssm
- * @kieler.design 2012-10-08 proposed cmot
- * @kieler.rating 2012-10-08 proposed yellow
+ * @author cmot
+ * @kieler.design 2014-04-08 proposed cmot
+ * @kieler.rating 2014-04-08 proposed yellow
  */
 class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationDummy>> {
 

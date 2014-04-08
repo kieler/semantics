@@ -18,14 +18,21 @@ import de.cau.cs.kieler.kiml.LayoutOptionData;
 import de.cau.cs.kieler.kiml.config.SemanticLayoutConfig;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kico.TransformationDummy;
+
 /**
+ * TransformationDummy layout configuration class.
+ * 
  * @author cmot
- *
+ * @kieler.design 2014-04-08 proposed
+ * @kieler.rating 2014-04-08 proposed yellow
+ * 
  */
-public class TransformationDummyLayoutConfig extends SemanticLayoutConfig{
-    
+public class TransformationDummyLayoutConfig extends SemanticLayoutConfig {
+
     /** the priority for this semantic layout configuration. */
     public static final int PRIORITY = 100;
+
+    // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -34,6 +41,8 @@ public class TransformationDummyLayoutConfig extends SemanticLayoutConfig{
     public int getPriority() {
         return PRIORITY;
     }
+
+    // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -46,12 +55,13 @@ public class TransformationDummyLayoutConfig extends SemanticLayoutConfig{
         return null;
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
     @Override
-    protected Object getSemanticValue(final Object semanticElem,
-            final LayoutOptionData layoutOption) {
+    protected Object getSemanticValue(final Object semanticElem, final LayoutOptionData layoutOption) {
         if (semanticElem instanceof TransformationDummy) {
             if (layoutOption.equals(LayoutOptions.SPACING)) {
                 return 1f;
@@ -63,11 +73,14 @@ public class TransformationDummyLayoutConfig extends SemanticLayoutConfig{
         return null;
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void setSemanticValue(final Object semanticElem,
-            final LayoutOptionData layoutOption, final Object value) {
+    protected void setSemanticValue(final Object semanticElem, final LayoutOptionData layoutOption,
+            final Object value) {
         // not supported by this layout configuration
-    }}
+    }
+}

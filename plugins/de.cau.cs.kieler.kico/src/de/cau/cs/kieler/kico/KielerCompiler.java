@@ -143,9 +143,11 @@ public class KielerCompiler {
 
     /**
      * Checks if dependency referenced.
-     *
-     * @param transformationDummy the transformation dummy
-     * @param graph the graph
+     * 
+     * @param transformationDummy
+     *            the transformation dummy
+     * @param graph
+     *            the graph
      * @return true, if is dependency referenced
      */
     private static boolean isDependencyReferenced(TransformationDummy transformationDummy,
@@ -166,9 +168,11 @@ public class KielerCompiler {
 
     /**
      * Checks if group is alternative.
-     *
-     * @param transformationDummy the transformation dummy
-     * @param graph the graph
+     * 
+     * @param transformationDummy
+     *            the transformation dummy
+     * @param graph
+     *            the graph
      * @return true, if is alternative
      */
     private static boolean isAlternative(TransformationDummy transformationDummy,
@@ -189,9 +193,11 @@ public class KielerCompiler {
 
     /**
      * Checks if group referenced.
-     *
-     * @param transformationDummy the transformation dummy
-     * @param graph the graph
+     * 
+     * @param transformationDummy
+     *            the transformation dummy
+     * @param graph
+     *            the graph
      * @return true, if is group referenced
      */
     private static boolean isGroupReferenced(TransformationDummy transformationDummy,
@@ -211,9 +217,53 @@ public class KielerCompiler {
     // -------------------------------------------------------------------------
 
     /**
+     * Reduces the graph to the transformation selected as transformationIDs.
+     * 
+     * @param graph
+     *            the graph
+     */
+    public static void reduceGraph(List<TransformationDummy> graph, List<String> transformationIDs) {
+        TransformationDummy toBeDeleted = null;
+        do {
+            toBeDeleted = null;
+            for (TransformationDummy transformationDummy : graph) {
+                boolean found = false;
+                for (String transformationID : transformationIDs) {
+                    if (transformationID.equals(transformationDummy.id)) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    toBeDeleted = transformationDummy;
+                    break;
+                }
+            }
+            if (toBeDeleted != null) {
+                graph.remove(toBeDeleted);
+                for (TransformationDummy transformationDummy : graph) {
+                    if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
+                        // System.out.println("REMOVE " + toBeDeleted.id
+                        // + " from reverse-dependencies of " + transformationDummy.id);
+                        transformationDummy.reverseDependencies.remove(toBeDeleted);
+                    }
+                    if (transformationDummy.dependencies.contains(toBeDeleted)) {
+                        // System.out.println("REMOVE " + toBeDeleted.id + " from dependencies of "
+                        // + transformationDummy.id);
+                        transformationDummy.dependencies.remove(toBeDeleted);
+                    }
+                }
+            }
+        } while (toBeDeleted != null);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Cleanup unused alternatives groups.
-     *
-     * @param graph the graph
+     * 
+     * @param graph
+     *            the graph
      */
     private static void cleanupUnusedAlternatives(List<TransformationDummy> graph) {
         boolean found = true;
@@ -302,8 +352,9 @@ public class KielerCompiler {
 
     /**
      * Mark reverse dependencies (phase 4).
-     *
-     * @param transformationDummy the transformation dummy
+     * 
+     * @param transformationDummy
+     *            the transformation dummy
      */
     private static void markReverseDependencies(TransformationDummy transformationDummy) {
         if (transformationDummy != null && !transformationDummy.marked) {
@@ -319,8 +370,9 @@ public class KielerCompiler {
 
     /**
      * Mark reverse dependencies (phase 4).
-     *
-     * @param graph the graph
+     * 
+     * @param graph
+     *            the graph
      */
     private static void markReverseDependencies(List<TransformationDummy> graph) {
         List<TransformationDummy> startNodes = new ArrayList<TransformationDummy>();
@@ -342,8 +394,9 @@ public class KielerCompiler {
 
     /**
      * Eliminated unmarked nodes (phase 5).
-     *
-     * @param graph the graph
+     * 
+     * @param graph
+     *            the graph
      */
     private static void eliminatedUnmarkedNodes(List<TransformationDummy> graph) {
         boolean found = true;
@@ -447,7 +500,7 @@ public class KielerCompiler {
      */
     private static void updateMapping(boolean force) {
         if (transformations == null || id2transformations == null || force) {
-            id2transformations = KiCoPlugin.getDefault().getRegisteredTransformations();
+            id2transformations = KiCoPlugin.getInstance().getRegisteredTransformations();
             transformations = new ArrayList<Transformation>();
             for (Entry<String, Transformation> localTransformation : id2transformations.entrySet()) {
                 transformations.add(localTransformation.getValue());

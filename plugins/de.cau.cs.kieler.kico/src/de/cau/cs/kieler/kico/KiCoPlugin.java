@@ -107,7 +107,7 @@ public class KiCoPlugin extends AbstractUIPlugin {
      * 
      * @return the shared instance
      */
-    public static KiCoPlugin getDefault() {
+    public static KiCoPlugin getInstance() {
         return plugin;
     }
 
