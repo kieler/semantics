@@ -627,8 +627,7 @@ public class KielerCompiler {
         for (String transformation : Arrays.asList(transformationIDArray)) {
             if (transformation.startsWith("!")) {
                 excludedTransformations.add(transformation.substring(1));
-            }
-            else {
+            } else {
                 transformations.add(transformation);
             }
         }
@@ -714,6 +713,11 @@ public class KielerCompiler {
 
         // 5. eliminate unmarked nodes
         eliminatedUnmarkedNodes(graph);
+
+        // 5b remove excluded transformations
+        if (excludedTransformationIDs != null && excludedTransformationIDs.size() > 0) {
+            removeFromGraph(graph, excludedTransformationIDs);
+        }
 
         // 6. topological sort
         processedTransformationIDs = topologicalSort(graph);
