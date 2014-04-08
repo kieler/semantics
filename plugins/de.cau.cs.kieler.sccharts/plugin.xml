@@ -892,7 +892,7 @@
             dependencies="CONNECTOR"
             id="ABORTDEFAULT"
             method="transformAbortDefault"
-            name="Abort">
+            name="Abort Default">
       </transformationMethod>
 
       <transformationMethod

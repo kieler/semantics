@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Compiler KLighD Visualization
-Bundle-SymbolicName: de.cau.cs.kieler.kico.klighd;singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.kico.ui;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kico.klighd.KiCoKlighdPlugin
 Require-Bundle: org.eclipse.ui,
