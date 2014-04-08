@@ -162,7 +162,7 @@ dep1, dep2, dep3
          <meta.section type="apiinfo"/>
       </appinfo>
       <documentation>
-         Please see the extension point description.
+         See KIELER website (Description).
       </documentation>
    </annotation>
 
@@ -185,7 +185,7 @@ dep1, dep2, dep3
 &lt;BR&gt;
  http://www.informatik.uni-kiel.de/rtsys/kieler/&lt;BR&gt;
 &lt;BR&gt; 
- Copyright 2009 by&lt;BR&gt;
+ Copyright 2014 by&lt;BR&gt;
  + Christian-Albrechts-University of Kiel&lt;BR&gt;
    + Department of Computer Science&lt;BR&gt;
      + Real-Time and Embedded Systems Group&lt;BR&gt;

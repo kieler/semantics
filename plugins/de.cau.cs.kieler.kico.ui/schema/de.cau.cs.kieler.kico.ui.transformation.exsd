@@ -6,7 +6,15 @@
          <meta.schema plugin="de.cau.cs.kieler.kico.ui" id="de.cau.cs.kieler.kico.ui.transformation" name="KIELER Compiler UI Transformation"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         &lt;BR&gt;&lt;BR&gt;
+&lt;B&gt;
+FOR AN UPDATED VERSION OF THIS DESCRIPTION AND ADDITIONAL INFORMATION PLEASE SEE:
+&lt;a href=&quot;http://www.informatik.uni-kiel.de/rtsys/kieler/&quot;&gt;http://www.informatik.uni-kiel.de/rtsys/kieler/&lt;/a&gt;
+&lt;/B&gt;
+&lt;BR&gt;&lt;BR&gt;
+
+This extension point allowes to define which KiCo transformations should be visible for a specific editor.
+
       </documentation>
    </annotation>
 
@@ -17,6 +25,9 @@
          </appinfo>
       </annotation>
       <complexType>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="editor"/>
+         </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
@@ -24,17 +35,27 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="id" type="string">
+      </complexType>
+   </element>
+
+   <element name="editor">
+      <annotation>
+         <documentation>
+            Defines an editor with a specific ID for which registered KIELER Compiler transformations should be visible within the KiCo.Ui (KIELER Compiler Selection) View.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="editorid" type="string">
             <annotation>
                <documentation>
-                  
+                  The editor ID for which the defined transformation IDs should be visible within the KiCo.Ui (KIELER Compiler Selection) View.
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="name" type="string">
+         <attribute name="transformationIDs" type="string">
             <annotation>
                <documentation>
-                  
+                  A comma separated list of transformation IDs that should be visible within the KiCo.Ui (KIELER Compiler Selection) View when the defined editor is active.
                </documentation>
                <appinfo>
                   <meta.attribute translatable="true"/>
@@ -49,7 +70,7 @@
          <meta.section type="since"/>
       </appinfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         0.9.0
       </documentation>
    </annotation>
 
@@ -58,7 +79,7 @@
          <meta.section type="examples"/>
       </appinfo>
       <documentation>
-         [Enter extension point usage example here.]
+         No examples yet.
       </documentation>
    </annotation>
 
@@ -67,7 +88,7 @@
          <meta.section type="apiinfo"/>
       </appinfo>
       <documentation>
-         [Enter API information here.]
+         See KIELER website (Description).
       </documentation>
    </annotation>
 
@@ -76,9 +97,30 @@
          <meta.section type="implementation"/>
       </appinfo>
       <documentation>
-         [Enter information about supplied implementation of this extension point.]
+         n/a
       </documentation>
    </annotation>
 
+   <annotation>
+      <appinfo>
+         <meta.section type="copyright"/>
+      </appinfo>
+      <documentation>
+         &lt;BR&gt;
+ KIELER - Kiel Integrated Environment for Layout Eclipse RichClient&lt;BR&gt;
+&lt;BR&gt;
+ http://www.informatik.uni-kiel.de/rtsys/kieler/&lt;BR&gt;
+&lt;BR&gt; 
+ Copyright 2014 by&lt;BR&gt;
+ + Christian-Albrechts-University of Kiel&lt;BR&gt;
+   + Department of Computer Science&lt;BR&gt;
+     + Real-Time and Embedded Systems Group&lt;BR&gt;
+&lt;BR&gt; 
+This code is provided under the terms of the Eclipse Public License (EPL).&lt;BR&gt;
+See the file epl-v10.html for the license text.&lt;BR&gt;
+&lt;BR&gt;
+&lt;BR&gt;
+      </documentation>
+   </annotation>
 
 </schema>
