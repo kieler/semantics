@@ -68,7 +68,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformationimport de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import static de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramSynthesis.*
 import de.cau.cs.kieler.kico.KielerCompiler
-import de.cau.cs.kieler.kico.klighd.KiCoSelectionView
+import de.cau.cs.kieler.kico.ui.KiCoSelectionView
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -182,7 +182,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         val transformations = KiCoSelectionView.getSelectedTransformations(KiCoSelectionView.activeEditorID);
         // ---------
         // Just one final compiler call of KielerCompiler
-        transformed = KielerCompiler.compile(transformations, transformed, TRANSFORM_ADVANED.booleanValue) as Region
+        transformed = KielerCompiler.compile(transformations, null, transformed, TRANSFORM_ADVANED.booleanValue) as Region
         // ---------
 
         return transformed.translate();
