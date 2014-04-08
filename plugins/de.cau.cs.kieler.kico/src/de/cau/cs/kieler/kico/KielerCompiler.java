@@ -622,7 +622,17 @@ public class KielerCompiler {
         if (transformationIDArray == null) {
             return null;
         }
-        return compile(Arrays.asList(transformationIDArray), eObject, prerequirements);
+        List<String> excludedTransformations = new ArrayList<String>();
+        List<String> transformations = new ArrayList<String>();
+        for (String transformation : Arrays.asList(transformationIDArray)) {
+            if (transformation.startsWith("!")) {
+                excludedTransformations.add(transformation.substring(1));
+            }
+            else {
+                transformations.add(transformation);
+            }
+        }
+        return compile(transformations, excludedTransformations, eObject, prerequirements);
     }
 
     // -------------------------------------------------------------------------
@@ -639,7 +649,27 @@ public class KielerCompiler {
      * @return the object
      */
     public static EObject compile(final List<String> transformationIDs, final EObject eObject) {
-        return compile(transformationIDs, eObject, true);
+        return compile(transformationIDs, new ArrayList<String>(), eObject, true);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Central KIELER Compiler compile method. It can be called in order to call several consecutive
+     * transformations. Specify desired transformations or transformation groups as a String List of
+     * their IDs.
+     * 
+     * @param transformationIDs
+     *            the transformation i ds
+     * @param excludedTransformationIDs
+     *            the excluded transformation i ds
+     * @param eObject
+     *            the e object
+     * @return the e object
+     */
+    public static EObject compile(final List<String> transformationIDs,
+            final List<String> excludedTransformationIDs, final EObject eObject) {
+        return compile(transformationIDs, excludedTransformationIDs, eObject, true);
     }
 
     // -------------------------------------------------------------------------
@@ -657,7 +687,8 @@ public class KielerCompiler {
      *            the e object
      * @return the object
      */
-    public static EObject compile(final List<String> transformationIDs, final EObject eObject,
+    public static EObject compile(final List<String> transformationIDs,
+            final List<String> excludedTransformationIDs, final EObject eObject,
             final boolean prerequirements) {
         updateMapping(DEBUG);
 
