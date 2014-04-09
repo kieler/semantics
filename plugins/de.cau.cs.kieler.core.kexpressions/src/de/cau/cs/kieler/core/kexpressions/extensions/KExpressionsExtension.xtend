@@ -77,7 +77,7 @@ class KExpressionsExtension {
             // Remove the valuedObject from the old group and add it to the new group
             declaration._removeValuedObject(valuedObject)
             if (declaration.valuedObjects.size == 0) {
-                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN CASE ONE!
+                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN IF CASE!
             }
             newDeclaration._addValuedObject(valuedObject)
             newDeclaration
