@@ -46,12 +46,36 @@ public class KielerCompiler {
             new HashMap<Transformation, TransformationDummy>();;
 
     // -------------------------------------------------------------------------
+            
+    /**
+     * Builds the graph adding only defaults for alternatives iff not prioritized.
+     *
+     * @param prioritizedTransformationIDs the prioritized transformation i ds
+     * @return the list
+     */
+    public static List<TransformationDummy> buildGraph(List<String> prioritizedTransformationIDs) {
+        return buildGraph(prioritizedTransformationIDs, true);
+    }
 
-    private static List<TransformationDummy> buildGraph(List<String> prioritizedTransformationIDs) {
+    /**
+     * Builds the full graph with all alternatives.
+     *
+     * @return the list
+     */
+    public static List<TransformationDummy> buildGraph() {
+        return buildGraph(new ArrayList<String>(), false);  
+    }
+    
+    
+    public static List<TransformationDummy> buildGraph(List<String> prioritizedTransformationIDs, boolean preselectAlternatives) {
         ArrayList<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
 
         transformation2graph.clear();
 
+        if (transformations == null) {
+            updateMapping(false);
+        }
+        
         // Build all nodes first
         for (Transformation transformation : transformations) {
             TransformationDummy transformationDummy = new TransformationDummy(transformation);
@@ -68,13 +92,22 @@ public class KielerCompiler {
 
             List<String> dependencies = transformation.getDependencies();
             if (transformationDummy.isAlternative()) {
-                // If this is an alternative group, then ONLY add the SELECTED alternative
-                // according to the prioritizedTransformationIDs (input)
                 dependencies = new ArrayList<String>();
-                String selectedAlternative =
-                        ((TransformationGroup) transformationDummy.transformation)
-                                .getSelectedDependency(prioritizedTransformationIDs);
-                dependencies.add(selectedAlternative);
+                if (preselectAlternatives) {
+                    // If this is an alternative group, then ONLY add the SELECTED alternative
+                    // according to the prioritizedTransformationIDs (input)
+                    String selectedAlternative =
+                            ((TransformationGroup) transformationDummy.transformation)
+                                    .getSelectedDependency(prioritizedTransformationIDs);
+                    dependencies.add(selectedAlternative);
+                } else {
+                    List<String> allAlternative =
+                            ((TransformationGroup) transformationDummy.transformation)
+                                    .getDependencies();
+                    for (String alternative : allAlternative) {
+                        dependencies.add(alternative);
+                    }
+                }
             }
 
             for (String dependencyId : dependencies) {
