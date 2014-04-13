@@ -232,6 +232,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             }
         }
 
+
         return knode;
     }
 
@@ -259,18 +260,8 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
             figure.shadow.YOffset = 4;
             figure => [
                 it.putToLookUpWith(transformationDummy)
-                if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id, KiCoSelectionView.activeEditorID)) {
-                    if (KiCoSelectionView.isSelectedTransformationEnabled(transformationDummy.id, KiCoSelectionView.activeEditorID)) {
-                        it.setBackgroundGradient(BLUE3.copy, BLUE3.copy, 90);
-                        it.setSelectionBackgroundGradient(BLUE3.copy, BLUE3.copy, 90);
-                    } else {
-                        it.setBackgroundGradient(GRAY1.copy, GRAY2.copy, 90);
-                        it.setSelectionBackgroundGradient(GRAY1.copy, GRAY2.copy, 90);
-                    }
-                } else {
                     it.setBackgroundGradient(BLUE1.copy, BLUE2.copy, 90);
                     it.setSelectionBackgroundGradient(BLUE1.copy, BLUE2.copy, 90);
-                }
                 node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
                 it.invisible = false;
                 if (transformationDummy.group) {
@@ -292,19 +283,8 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                                 // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
                                 it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
                                 it.addSingleClickAction(KiCoSelectionAction::ID);
-                                if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id,
-                                    KiCoSelectionView.activeEditorID)) {
-                                    if (KiCoSelectionView.isSelectedTransformationEnabled(transformationDummy.id, KiCoSelectionView.activeEditorID)) {
-                                            it.setForeground("white".color)
-                                            it.setSelectionBackground(BLUE1.copy)
-                                    } else {
-                                            it.setForeground(DARKGRAY.copy)
-                                            it.setSelectionBackground(GRAY1.copy)
-                                    }
-                                } else {
-                                    it.setForeground(BLACK.copy)
-                                    it.setSelectionBackground(BLUE3.copy)
-                                }
+                                it.setForeground(BLACK.copy)
+                                it.setSelectionBackground(BLUE3.copy)
                                 //                                it.setCursorSelectable(false)
                                 //                                it.setSelectionInvisible(true)
                                 it.setFontBold(true);
@@ -319,19 +299,8 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                         it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
                         it.addSingleClickAction(KiCoSelectionAction::ID);
                         it.fontSize = 11;
-                        if (KiCoSelectionView.isSelectedTransformation(transformationDummy.id,
-                            KiCoSelectionView.activeEditorID)) {
-                                    if (KiCoSelectionView.isSelectedTransformationEnabled(transformationDummy.id, KiCoSelectionView.activeEditorID)) {
-                                            it.setForeground("white".color)
-                                            it.setSelectionBackground(BLUE1.copy)
-                                    } else {
-                                            it.setForeground(DARKGRAY.copy)
-                                            it.setSelectionBackground(GRAY1.copy)
-                                    }
-                        } else {
-                            it.setForeground(BLACK.copy)
-                            it.setSelectionBackground(BLUE3.copy)
-                        }
+                        it.setForeground(BLACK.copy)
+                        it.setSelectionBackground(BLUE3.copy)
                         //                        it.setCursorSelectable(false)
                         //                        it.setSelectionInvisible(true)
                         it.setFontBold(true);

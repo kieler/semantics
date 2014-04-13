@@ -52,28 +52,6 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets a specific transformation dummy from a list of any other transformation dummy.
-     * 
-     * @param transformationID
-     *            the transformation id
-     * @param anyOtherTransformationDummy
-     *            the any other transformation dummy
-     * @return the transformation dummy
-     */
-    TransformationDummy getTransformationDummy(String transformationID,
-            TransformationDummy anyOtherTransformationDummy) {
-        List<TransformationDummy> parent = anyOtherTransformationDummy.parent;
-        for (TransformationDummy transformationDummy : parent) {
-            if (transformationDummy.id.equals(transformationID)) {
-                return transformationDummy;
-            }
-        }
-        return null;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * {@inheritDoc}.<br>
      * <br>
      * This ones expands the KNode provided in 'context'.<br>
@@ -94,55 +72,32 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
                 (TransformationDummy) context.getDomainElement(kNode);
 
         if (transformationDummy != null) {
+            int activeEditorID = KiCoSelectionView.getActiveEditorID();
             String id = transformationDummy.id;
 
-            List<String> oldRequiredTransformations =
-                    KiCoSelectionView.getRequiredTransformations(
-                            KiCoSelectionView.getActiveEditorID(), true);
-            for (String requiredTransformationID : oldRequiredTransformations) {
-                TransformationDummy requiredTransformationDummy =
-                        getTransformationDummy(requiredTransformationID, transformationDummy);
-                if (requiredTransformationDummy != null) {
-                    setLabelColor(requiredTransformationDummy, context, KiCoDiagramSynthesis.BLACK,
-                            KiCoDiagramSynthesis.BLUE1);
-                    setStateColor(requiredTransformationDummy, context, KiCoDiagramSynthesis.BLUE1,
-                            KiCoDiagramSynthesis.BLUE2);
-                }
-            }
-
+            KiCoSelectionView.removeRequiredTransformationVisualization(activeEditorID);
+            
             if (!KiCoSelectionView.isSelectedTransformation(id,
-                    KiCoSelectionView.getActiveEditorID())) {
+                    activeEditorID)) {
                 // Select
-                setLabelColor(transformationDummy, context, KiCoDiagramSynthesis.WHITE,
+                setLabelColor(transformationDummy, context.getViewContext(), KiCoDiagramSynthesis.WHITE,
                         KiCoDiagramSynthesis.BLUE3);
-                setStateColor(transformationDummy, context, KiCoDiagramSynthesis.BLUE3,
+                setStateColor(transformationDummy, context.getViewContext(), KiCoDiagramSynthesis.BLUE3,
                         KiCoDiagramSynthesis.BLUE4);
                 KiCoSelectionView.addSelectedTransformation(id,
                         KiCoSelectionView.getActiveEditorID(), true);
             } else {
                 // Un select
-                setLabelColor(transformationDummy, context, KiCoDiagramSynthesis.BLACK,
+                setLabelColor(transformationDummy, context.getViewContext(), KiCoDiagramSynthesis.BLACK,
                         KiCoDiagramSynthesis.BLUE1);
-                setStateColor(transformationDummy, context, KiCoDiagramSynthesis.BLUE1,
+                setStateColor(transformationDummy, context.getViewContext(), KiCoDiagramSynthesis.BLUE1,
                         KiCoDiagramSynthesis.BLUE2);
                 KiCoSelectionView.removeSelectedTransformation(id,
                         KiCoSelectionView.getActiveEditorID());
             }
 
-            List<String> newRequiredTransformations =
-                    KiCoSelectionView.getRequiredTransformations(
-                            KiCoSelectionView.getActiveEditorID(), true);
-            for (String requiredTransformationID : newRequiredTransformations) {
-                TransformationDummy requiredTransformationDummy =
-                        getTransformationDummy(requiredTransformationID, transformationDummy);
-                if (requiredTransformationDummy != null) {
-                    setLabelColor(requiredTransformationDummy, context, KiCoDiagramSynthesis.WHITE,
-                            KiCoDiagramSynthesis.BLUE2);
-                    setStateColor(requiredTransformationDummy, context, KiCoDiagramSynthesis.BLUE3b,
-                            KiCoDiagramSynthesis.BLUE3b);
-                }
-            }
-
+            KiCoSelectionView.addRequiredTransformationVisualization(activeEditorID);
+            
             System.out.println(Arrays.toString(KiCoSelectionView.getSelectedTransformations(
                     KiCoSelectionView.getActiveEditorID()).toArray()));
         }

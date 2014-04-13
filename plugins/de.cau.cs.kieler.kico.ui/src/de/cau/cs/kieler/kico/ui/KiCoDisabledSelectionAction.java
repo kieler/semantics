@@ -75,13 +75,13 @@ public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAc
 
             if (!KiCoSelectionView.isSelectedTransformation(id, KiCoSelectionView.getActiveEditorID())) {
                 // Disabled Select
-                setLabelColor(transformationDummy, context, KiCoDiagramSynthesis.DARKGRAY, KiCoDiagramSynthesis.GRAY1);
-                setStateColor(transformationDummy, context, KiCoDiagramSynthesis.GRAY1, KiCoDiagramSynthesis.GRAY2);
+                setLabelColor(transformationDummy, context.getViewContext(), KiCoDiagramSynthesis.DARKGRAY, KiCoDiagramSynthesis.GRAY1);
+                setStateColor(transformationDummy, context.getViewContext(), KiCoDiagramSynthesis.GRAY1, KiCoDiagramSynthesis.GRAY2);
                 KiCoSelectionView.addSelectedTransformation(id, KiCoSelectionView.getActiveEditorID(), false);
             } else {
                 // Un select
-                setLabelColor(transformationDummy, context, KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
-                setStateColor(transformationDummy, context, KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
+                setLabelColor(transformationDummy, context.getViewContext(), KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
+                setStateColor(transformationDummy, context.getViewContext(), KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
                 KiCoSelectionView.removeSelectedTransformation(id, KiCoSelectionView.getActiveEditorID());
             }
 

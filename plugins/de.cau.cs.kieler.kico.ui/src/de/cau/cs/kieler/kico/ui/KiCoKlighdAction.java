@@ -29,6 +29,7 @@ import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.kico.TransformationDummy;
 import de.cau.cs.kieler.kico.klighd.KiCoDiagramSynthesis;
 import de.cau.cs.kieler.klighd.IAction.ActionContext;
+import de.cau.cs.kieler.klighd.ViewContext;
 
 /**
  * This is the base abstract class for a KiCo KLighD action for selecting, unselecting
@@ -60,7 +61,7 @@ public abstract class KiCoKlighdAction {
      *            the data
      * @return the rectangle
      */
-    KRoundedRectangle getRectangle(KGraphData data) {
+    public static KRoundedRectangle getRectangle(KGraphData data) {
         if (data instanceof KRoundedRectangle) {
             return (KRoundedRectangle) data;
         }
@@ -85,7 +86,7 @@ public abstract class KiCoKlighdAction {
      *            the k node
      * @return the rectangle
      */
-    KRoundedRectangle getRectangle(KNode kNode) {
+    public static KRoundedRectangle getRectangle(KNode kNode) {
         for (KGraphData data : kNode.getData()) {
             if (data instanceof KRoundedRectangle) {
                 return (KRoundedRectangle) data;
@@ -98,52 +99,6 @@ public abstract class KiCoKlighdAction {
         return null;
     }
 
-    //
-    // // -------------------------------------------------------------------------
-    //
-    // /**
-    // * Helper method to get the label for coloring.
-    // *
-    // * @param data the data
-    // * @return the label
-    // */
-    // KText getLabel(KGraphData data) {
-    // if (data instanceof KText) {
-    // return (KText) data;
-    // }
-    // if (data instanceof KContainerRendering) {
-    // KContainerRendering container = (KContainerRendering) data;
-    // for (KRendering child : container.getChildren()) {
-    // KText returnValue = getLabel(child);
-    // if (returnValue != null) {
-    // return returnValue;
-    // }
-    // }
-    // }
-    // return null;
-    // }
-    //
-    // // -------------------------------------------------------------------------
-    //
-    // /**
-    // * Helper method to get the label for coloring.
-    // *
-    // * @param kNode the k node
-    // * @return the label
-    // */
-    // KText getLabel(KNode kNode) {
-    // for (KGraphData data : kNode.getData()) {
-    // if (data instanceof KText) {
-    // return (KText) data;
-    // }
-    // KText returnValue = getLabel(data);
-    // if (returnValue != null) {
-    // return returnValue;
-    // }
-    // }
-    // return null;
-    // }
-
     // -------------------------------------------------------------------------
 
     /**
@@ -155,10 +110,10 @@ public abstract class KiCoKlighdAction {
      *            the context
      * @return the k text
      */
-    KText getKText(final TransformationDummy transformationDummy, final ActionContext context) {
+    public static KText getKText(final TransformationDummy transformationDummy, final ViewContext context) {
         if (!transformationDummy2KText.containsKey(transformationDummy)) {
             KText kText =
-                    context.getViewContext().getTargetElement(transformationDummy, KText.class);
+                    context.getTargetElement(transformationDummy, KText.class);
             transformationDummy2KText.put(transformationDummy, kText);
         }
 
@@ -176,13 +131,13 @@ public abstract class KiCoKlighdAction {
      *            the context
      * @return the k rounded rectangle
      */
-    KRoundedRectangle getKRoundedRectangle(final TransformationDummy transformationDummy,
-            final ActionContext context) {
+    public static KRoundedRectangle getKRoundedRectangle(final TransformationDummy transformationDummy,
+            final ViewContext context) {
         if (!transformationDummyKRoundedRectangle.containsKey(transformationDummy)) {
             // KNode kNode = context.getViewContext().getTargetElement(transformationDummy,
             // KNode.class);
             KRoundedRectangle kRoundedRectangle =
-                    context.getViewContext().getTargetElement(transformationDummy,
+                    context.getTargetElement(transformationDummy,
                             KRoundedRectangle.class);
             // KRoundedRectangle kRoundedRectangle = getRectangle(kNode);
             transformationDummyKRoundedRectangle.put(transformationDummy, kRoundedRectangle);
@@ -204,7 +159,7 @@ public abstract class KiCoKlighdAction {
      * @param backgroundColor
      *            the background color
      */
-    void setLabelColor(final TransformationDummy transformationDummy, final ActionContext context,
+    public static void setLabelColor(final TransformationDummy transformationDummy, final ViewContext context,
             KColor foregroundColor, KColor backgroundColor) {
         KText kText = getKText(transformationDummy, context);
         kRenderingExtensions.setForeground(kText, copy(foregroundColor));
@@ -226,7 +181,7 @@ public abstract class KiCoKlighdAction {
      * @param color2
      *            the color2
      */
-    void setStateColor(final TransformationDummy transformationDummy, final ActionContext context,
+    public static void setStateColor(final TransformationDummy transformationDummy, final ViewContext context,
             KColor color1, KColor color2) {
         KRoundedRectangle rect = getKRoundedRectangle(transformationDummy, context);
         kRenderingExtensions.setBackgroundGradient(rect, copy(color1), copy(color2), 90);
@@ -242,7 +197,7 @@ public abstract class KiCoKlighdAction {
      *            the color
      * @return the k color
      */
-    KColor copy(KColor color) {
+    public static KColor copy(KColor color) {
         return EcoreUtil2.copy(color);
     }
 
