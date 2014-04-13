@@ -436,7 +436,7 @@ class SCChartsCoreTransformation {
 
             var State previousState = surfaceState
             var State currentState = surfaceState
-            System.out.println("Set currentState := " + surfaceState.id)
+            //System.out.println("Set currentState := " + surfaceState.id)
 
             for (transition : orderedTransitionList) {
 
@@ -449,7 +449,7 @@ class SCChartsCoreTransformation {
 
                     depthState = parentRegion.createState(GENERATED_PREFIX + "Pause").uniqueName
                     previousState.createImmediateTransitionTo(depthState)
-                    System.out.println("Connect pause 1:" + previousState.id + " -> " + depthState.id);
+                    //System.out.println("Connect pause 1:" + previousState.id + " -> " + depthState.id);
 
                     val pauseState = parentRegion.createState(GENERATED_PREFIX + "Depth").uniqueName
                     depthState.createTransitionTo(pauseState)
@@ -458,22 +458,22 @@ class SCChartsCoreTransformation {
                     previousState = pauseState
                     currentState = null
 
-                    System.out.println("Connect pause 2:" + depthState.id + " -> " + pauseState.id);
+                    //System.out.println("Connect pause 2:" + depthState.id + " -> " + pauseState.id);
                 }
 
                 if (currentState == null) {
 
                     // Create a new state
                     currentState = parentRegion.createState(GENERATED_PREFIX + "S").uniqueName
-                    System.out.println("New currentState := " + currentState.id)
+                    //System.out.println("New currentState := " + currentState.id)
 
                     // Connect
                     val connect = previousState.createImmediateTransitionTo(currentState)
-                    System.out.println("Connect:" + previousState.id + " -> " + currentState.id);
+                    //System.out.println("Connect:" + previousState.id + " -> " + currentState.id);
                     connect.setPriority(2)
 
                     // Move transition to this state
-                    System.out.println("Move transition from " + transition.sourceState.id + " to " + currentState.id)
+                    //System.out.println("Move transition from " + transition.sourceState.id + " to " + currentState.id)
                     currentState.outgoingTransitions.add(transition)
                 }
 
@@ -484,14 +484,14 @@ class SCChartsCoreTransformation {
                 transition.setPriority(1)
 
                 // Next cycle
-                System.out.println("Set previousState := " + currentState.id)
+                //System.out.println("Set previousState := " + currentState.id)
                 previousState = currentState
                 currentState = null
             }
 
             // Connect back depth with surface state
             var T2tmp = previousState.createImmediateTransitionTo(depthState)
-            System.out.println("Connect BACK:" + previousState.id + " -> " + depthState.id);
+            //System.out.println("Connect BACK:" + previousState.id + " -> " + depthState.id);
 
             // Afterwards do the DTO transformation
             /* Der Knoten _Pause ist besonders ausgezeichnet. Er hat meistens zwei
@@ -512,7 +512,7 @@ class SCChartsCoreTransformation {
             bis TK1 und TK2 ungleich sind.*/
             var stateAfterDepth = depthState
 
-            System.out.println("stateAfterDepth:" + stateAfterDepth.id);
+            //System.out.println("stateAfterDepth:" + stateAfterDepth.id);
 
             var doDTO = false;
 
@@ -543,7 +543,7 @@ class SCChartsCoreTransformation {
                                 if ((TK1.targetState == TK2.targetState) &&
                                     ((TK1.trigger == TK2.trigger) || (TK1.trigger.equals2(TK2.trigger)))) {
                                     stateAfterDepth = K1
-                                    System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
+                                    //System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
                                     val t = K2.incomingTransitions.get(0)
                                     t.setTargetState(stateAfterDepth)
                                     for (transition : K2.outgoingTransitions) {

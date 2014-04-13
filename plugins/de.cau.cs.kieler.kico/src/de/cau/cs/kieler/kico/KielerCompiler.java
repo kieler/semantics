@@ -761,7 +761,7 @@ public class KielerCompiler {
                 // If the requested TransformationID
                 if (transformation.getId().equals(processedTransformationID)) {
                     // If this is an individual
-                    // System.out.println("PERFORM TRANSFORMATION: " + processedTransformationID);
+                    System.out.println("PERFORM TRANSFORMATION: " + processedTransformationID);
                     transformedObject = transformation.doTransform(transformedObject);
                 }
         }
