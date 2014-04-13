@@ -866,6 +866,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+            dependencies="INITIALIZATION"
             id="SUSPEND"
             method="transformSuspend"
             name="Suspend">
