@@ -182,11 +182,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         val transformations = KiCoSelectionView.getSelectedTransformations(KiCoSelectionView.activeEditorID);
         // ---------
         // Just one final compiler call of KielerCompiler
-        transformed = KielerCompiler.compile(transformations, null, transformed, TRANSFORM_ADVANED.booleanValue) as Region
+        transformed = KielerCompiler.compile(transformations, transformed, TRANSFORM_ADVANED.booleanValue) as Region
         // ---------
 
         return transformed.translate();
-    }
+    } 
 
     // -------------------------------------------------------------------------
     // Transform a region

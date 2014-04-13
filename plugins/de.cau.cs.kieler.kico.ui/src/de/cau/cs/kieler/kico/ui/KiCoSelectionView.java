@@ -47,6 +47,10 @@ public class KiCoSelectionView extends DiagramViewPart {
     static HashMap<Integer, List<String>> selectedTransformations =
             new HashMap<Integer, List<String>>();
 
+    /** The disabled transformations per editor instance. */
+    static HashMap<Integer, List<String>> disabledTransformations =
+            new HashMap<Integer, List<String>>();
+
     /** The last editor. */
     String lastEditor = null;
 
@@ -122,6 +126,9 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static boolean isSelectedTransformation(String transformationDummyID,
             List<String> selectedList) {
         for (String transformationID : selectedList) {
+            if (transformationID.startsWith("!")) {
+                transformationID = transformationID.substring(1);
+            }
             if (transformationID.equals(transformationDummyID)) {
                 return true;
             }
@@ -132,15 +139,55 @@ public class KiCoSelectionView extends DiagramViewPart {
     // -------------------------------------------------------------------------
 
     /**
-     * Adds the transformation to be selected.
+     * Checks if a selected transformation is enabled.
      * 
      * @param transformationDummyID
      *            the transformation dummy id
      * @param editorID
      *            the editor id
+     * @return true, if is selected transformation
      */
-    public static void addSelectedTransformation(String transformationDummyID, int editorID) {
-        addSelectedTransformation(transformationDummyID, getSelectedTransformations(editorID));
+    public static boolean isSelectedTransformationEnabled(String transformationDummyID, int editorID) {
+        return isSelectedTransformationEnabled(transformationDummyID,
+                getSelectedTransformations(editorID));
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if a selected transformation is enabled.
+     * 
+     * @param transformationDummyID
+     *            the transformation dummy id
+     * @param selectedList
+     *            the selected list
+     * @return true, if is selected transformation
+     */
+    public static boolean isSelectedTransformationEnabled(String transformationDummyID,
+            List<String> selectedList) {
+        for (String transformationID : selectedList) {
+            if (transformationID.startsWith("!")) {
+                transformationID = transformationID.substring(1);
+                if (transformationID.equals(transformationDummyID)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Adds the transformation to be selected.
+     *
+     * @param transformationDummyID the transformation dummy id
+     * @param editorID the editor id
+     * @param enabled the enabled
+     */
+    public static void addSelectedTransformation(String transformationDummyID, int editorID,
+            boolean enabled) {
+        addSelectedTransformation(transformationDummyID, getSelectedTransformations(editorID), enabled);
     }
 
     // -------------------------------------------------------------------------
@@ -154,10 +201,12 @@ public class KiCoSelectionView extends DiagramViewPart {
      *            the selected list
      */
     public static void addSelectedTransformation(String transformationDummyID,
-            List<String> selectedList) {
-        if (!isSelectedTransformation(transformationDummyID, selectedList)) {
-            selectedList.add(transformationDummyID);
+            List<String> selectedList, boolean enabled) {
+        removeSelectedTransformation(transformationDummyID, selectedList);
+        if (!enabled) {
+            transformationDummyID = "!" + transformationDummyID;
         }
+        selectedList.add(transformationDummyID);
     }
 
     // -------------------------------------------------------------------------
@@ -188,7 +237,11 @@ public class KiCoSelectionView extends DiagramViewPart {
             List<String> selectedList) {
         int found = -1;
         for (String transformationID : selectedList) {
-            if (transformationID.equals(transformationDummyID)) {
+            String enabledTransformationID = transformationID;
+            if (enabledTransformationID.startsWith("!")) {
+                enabledTransformationID = enabledTransformationID.substring(1);
+            }
+            if (enabledTransformationID.equals(transformationDummyID)) {
                 found = selectedList.indexOf(transformationID);
                 break;
             }

@@ -34,19 +34,19 @@ import de.cau.cs.kieler.kico.klighd.KiCoDiagramSynthesis;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**
- * This action realizes the enabled selection if transformation IDs.
+ * This action realizes the disabled selection if transformation IDs.
  * 
  * @author cmot
  * @kieler.design 2014-04-08 proposed
  * @kieler.rating 2014-04-08 proposed yellow
  */
-public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
+public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAction {
 
     /**
      * The extension id of this actions. This id is to be mentioned in instances of
      * {@link de.cau.cs.kieler.core.krendering.KAction KAction}.
      */
-    public static final String ID = "de.cau.cs.kieler.kico.klighd.KiCoSelectionAction";
+    public static final String ID = "de.cau.cs.kieler.kico.klighd.KiCoDisabledSelectionAction";
 
 
     // -------------------------------------------------------------------------
@@ -74,10 +74,10 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
             String id = transformationDummy.id;
 
             if (!KiCoSelectionView.isSelectedTransformation(id, KiCoSelectionView.getActiveEditorID())) {
-                // Select
-                setLabelColor(transformationDummy, context, KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3);
-                setStateColor(transformationDummy, context, KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
-                KiCoSelectionView.addSelectedTransformation(id, KiCoSelectionView.getActiveEditorID(), true);
+                // Disabled Select
+                setLabelColor(transformationDummy, context, KiCoDiagramSynthesis.DARKGRAY, KiCoDiagramSynthesis.GRAY1);
+                setStateColor(transformationDummy, context, KiCoDiagramSynthesis.GRAY1, KiCoDiagramSynthesis.GRAY2);
+                KiCoSelectionView.addSelectedTransformation(id, KiCoSelectionView.getActiveEditorID(), false);
             } else {
                 // Un select
                 setLabelColor(transformationDummy, context, KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);

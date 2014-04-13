@@ -79,6 +79,10 @@
             class="de.cau.cs.kieler.kico.ui.KiCoSelectionAction"
             id="de.cau.cs.kieler.kico.klighd.KiCoSelectionAction">
       </action>
+      <action
+            class="de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction"
+            id="de.cau.cs.kieler.kico.klighd.KiCoDisabledSelectionAction">
+      </action>
    </extension>
 
 </plugin>

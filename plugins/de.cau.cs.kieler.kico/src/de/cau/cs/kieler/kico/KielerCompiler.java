@@ -612,9 +612,9 @@ public class KielerCompiler {
      *            the e object
      * @return the object
      */
-    public static EObject compile(final String transformationIDs, final EObject eObject,
+    public static EObject compile(final String enabledAndDisabledTransformationIDs, final EObject eObject,
             final boolean prerequirements) {
-        String trimmed = transformationIDs.replace(" ", "");
+        String trimmed = enabledAndDisabledTransformationIDs.replace(" ", "");
         if (trimmed.length() == 0) {
             return eObject;
         }
@@ -669,6 +669,34 @@ public class KielerCompiler {
     public static EObject compile(final List<String> transformationIDs,
             final List<String> excludedTransformationIDs, final EObject eObject) {
         return compile(transformationIDs, excludedTransformationIDs, eObject, true);
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Advanced KIELER Compiler compile method. It can be called in order to call several
+     * consecutive transformations. Specify desired transformations as a String List of IDs. Use
+     * this with care! Note that if switching autoexpand off you cannot use transformation group IDs
+     * any more. Also no dependencies will be considered. The transformations will be applied
+     * straight forward in the order defined by the transformationIDs list.
+     *
+     * @param enabledAndDisabledTransformationIDs the enabled and disabled transformation i ds
+     * @param eObject the e object
+     * @param prerequirements the prerequirements
+     * @return the e object
+     */
+    public static EObject compile(final List<String> enabledAndDisabledTransformationIDs, final EObject eObject,
+            final boolean prerequirements) {
+        List<String> excludedTransformations = new ArrayList<String>();
+        List<String> transformations = new ArrayList<String>();
+        for (String transformation : enabledAndDisabledTransformationIDs) {
+            if (transformation.startsWith("!")) {
+                excludedTransformations.add(transformation.substring(1));
+            } else {
+                transformations.add(transformation);
+            }
+        }
+        return compile(transformations, excludedTransformations, eObject, prerequirements);
     }
 
     // -------------------------------------------------------------------------
