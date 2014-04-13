@@ -722,6 +722,9 @@ class SCChartsCoreTransformation {
     //             transition.setDeferred(false)
     //         }
     //     }
+    
+    
+    
     //-------------------------------------------------------------------------
     //--   A B O R T   A L T E R N A T I V E  T R A N S F O R M A T I O N    --
     //-------------------------------------------------------------------------
