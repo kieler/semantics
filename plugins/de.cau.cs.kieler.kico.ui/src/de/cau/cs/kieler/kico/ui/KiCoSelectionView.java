@@ -441,7 +441,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                         resolveTransformationDummy(requiredTransformationID, editorID);
                 if (requiredTransformationDummy != null) {
                     KiCoKlighdAction.setLabelColor(requiredTransformationDummy, context,
-                            KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE2);
+                            KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3b);
                     KiCoKlighdAction.setStateColor(requiredTransformationDummy, context,
                             KiCoDiagramSynthesis.BLUE3b, KiCoDiagramSynthesis.BLUE3b);
                 }
