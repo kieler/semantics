@@ -46,7 +46,7 @@ public abstract class KiCoKlighdAction {
     public static KRenderingExtensions kRenderingExtensions = new KRenderingExtensions();
 
     /** The transformation dummy2 k node. */
-    private static HashMap<TransformationDummy, KRoundedRectangle> transformationDummy2KRoundedRectangle =
+    private static HashMap<TransformationDummy, KRoundedRectangle> transformationDummyKRoundedRectangle =
             new HashMap<TransformationDummy, KRoundedRectangle>();
     private static HashMap<TransformationDummy, KText> transformationDummy2KText =
             new HashMap<TransformationDummy, KText>();
@@ -178,16 +178,16 @@ public abstract class KiCoKlighdAction {
      */
     KRoundedRectangle getKRoundedRectangle(final TransformationDummy transformationDummy,
             final ActionContext context) {
-        if (!transformationDummy2KRoundedRectangle.containsKey(transformationDummy)) {
+        if (!transformationDummyKRoundedRectangle.containsKey(transformationDummy)) {
             // KNode kNode = context.getViewContext().getTargetElement(transformationDummy,
             // KNode.class);
             KRoundedRectangle kRoundedRectangle =
                     context.getViewContext().getTargetElement(transformationDummy,
                             KRoundedRectangle.class);
             // KRoundedRectangle kRoundedRectangle = getRectangle(kNode);
-            transformationDummy2KRoundedRectangle.put(transformationDummy, kRoundedRectangle);
+            transformationDummyKRoundedRectangle.put(transformationDummy, kRoundedRectangle);
         }
-        return transformationDummy2KRoundedRectangle.get(transformationDummy);
+        return transformationDummyKRoundedRectangle.get(transformationDummy);
     }
 
     // -------------------------------------------------------------------------

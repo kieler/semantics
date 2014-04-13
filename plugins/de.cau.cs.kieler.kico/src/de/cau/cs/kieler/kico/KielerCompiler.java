@@ -93,6 +93,7 @@ public class KielerCompiler {
             TransformationDummy transformationDummy = new TransformationDummy(transformation);
 
             returnList.add(transformationDummy);
+            transformationDummy.parent = returnList;
             transformation2graph.put(transformation, transformationDummy);
             // System.out.println("Adding Dummy node for " + transformation.getId() + ", "
             // + transformation.toString());
@@ -697,6 +698,45 @@ public class KielerCompiler {
             }
         }
         return compile(transformations, excludedTransformations, eObject, prerequirements);
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Calculate pre requirements.
+     *
+     * @param transformationIDs the transformation i ds
+     * @return the list
+     */
+    public static List<String> calculatePreRequirements(List<String> transformationIDs, boolean noGroups) {
+        // Auto expansion will resolve dependencies and expand transformation groups
+        List<String> processedTransformationIDs = transformationIDs;        
+        
+        // 1. build graph (with initially requested transformation IDs as a tie
+        // braker for alternative groups)
+        List<TransformationDummy> graph = buildGraph(transformationIDs);
+
+        // 2. eliminate unused alternative paths
+        cleanupUnusedAlternatives(graph);
+
+        // 3. mark nodes, including groups
+        markNodes(graph, processedTransformationIDs, true);
+
+        // 4. mark reverse dependencies
+        markReverseDependencies(graph);
+
+        // 5. eliminate unmarked nodes
+        eliminatedUnmarkedNodes(graph);
+
+        // 6. topological sort
+        processedTransformationIDs = topologicalSort(graph);
+
+        if (noGroups) {
+            // 7. final cleanup, eliminate any groups
+            processedTransformationIDs = eliminateGroupIds(processedTransformationIDs);
+        }
+        
+        return processedTransformationIDs;
     }
 
     // -------------------------------------------------------------------------

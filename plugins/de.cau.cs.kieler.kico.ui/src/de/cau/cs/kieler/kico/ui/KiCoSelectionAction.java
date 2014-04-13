@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.kico.ui;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.ui.IEditorPart;
@@ -48,9 +49,30 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
      */
     public static final String ID = "de.cau.cs.kieler.kico.klighd.KiCoSelectionAction";
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets a specific transformation dummy from a list of any other transformation dummy.
+     * 
+     * @param transformationID
+     *            the transformation id
+     * @param anyOtherTransformationDummy
+     *            the any other transformation dummy
+     * @return the transformation dummy
+     */
+    TransformationDummy getTransformationDummy(String transformationID,
+            TransformationDummy anyOtherTransformationDummy) {
+        List<TransformationDummy> parent = anyOtherTransformationDummy.parent;
+        for (TransformationDummy transformationDummy : parent) {
+            if (transformationDummy.id.equals(transformationID)) {
+                return transformationDummy;
+            }
+        }
+        return null;
+    }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * {@inheritDoc}.<br>
      * <br>
@@ -67,32 +89,67 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
     public ActionResult execute(final ActionContext context) {
 
         KNode kNode = context.getKNode();
-        
-        TransformationDummy transformationDummy = (TransformationDummy) context.getDomainElement(kNode);
-        
+
+        TransformationDummy transformationDummy =
+                (TransformationDummy) context.getDomainElement(kNode);
+
         if (transformationDummy != null) {
             String id = transformationDummy.id;
 
-            if (!KiCoSelectionView.isSelectedTransformation(id, KiCoSelectionView.getActiveEditorID())) {
-                // Select
-                setLabelColor(transformationDummy, context, KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3);
-                setStateColor(transformationDummy, context, KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
-                KiCoSelectionView.addSelectedTransformation(id, KiCoSelectionView.getActiveEditorID(), true);
-            } else {
-                // Un select
-                setLabelColor(transformationDummy, context, KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
-                setStateColor(transformationDummy, context, KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
-                KiCoSelectionView.removeSelectedTransformation(id, KiCoSelectionView.getActiveEditorID());
+            List<String> oldRequiredTransformations =
+                    KiCoSelectionView.getRequiredTransformations(
+                            KiCoSelectionView.getActiveEditorID(), true);
+            for (String requiredTransformationID : oldRequiredTransformations) {
+                TransformationDummy requiredTransformationDummy =
+                        getTransformationDummy(requiredTransformationID, transformationDummy);
+                if (requiredTransformationDummy != null) {
+                    setLabelColor(requiredTransformationDummy, context, KiCoDiagramSynthesis.BLACK,
+                            KiCoDiagramSynthesis.BLUE1);
+                    setStateColor(requiredTransformationDummy, context, KiCoDiagramSynthesis.BLUE1,
+                            KiCoDiagramSynthesis.BLUE2);
+                }
             }
 
-            System.out.println(Arrays.toString(KiCoSelectionView.getSelectedTransformations(KiCoSelectionView.getActiveEditorID())
-                    .toArray()));
+            if (!KiCoSelectionView.isSelectedTransformation(id,
+                    KiCoSelectionView.getActiveEditorID())) {
+                // Select
+                setLabelColor(transformationDummy, context, KiCoDiagramSynthesis.WHITE,
+                        KiCoDiagramSynthesis.BLUE3);
+                setStateColor(transformationDummy, context, KiCoDiagramSynthesis.BLUE3,
+                        KiCoDiagramSynthesis.BLUE4);
+                KiCoSelectionView.addSelectedTransformation(id,
+                        KiCoSelectionView.getActiveEditorID(), true);
+            } else {
+                // Un select
+                setLabelColor(transformationDummy, context, KiCoDiagramSynthesis.BLACK,
+                        KiCoDiagramSynthesis.BLUE1);
+                setStateColor(transformationDummy, context, KiCoDiagramSynthesis.BLUE1,
+                        KiCoDiagramSynthesis.BLUE2);
+                KiCoSelectionView.removeSelectedTransformation(id,
+                        KiCoSelectionView.getActiveEditorID());
+            }
+
+            List<String> newRequiredTransformations =
+                    KiCoSelectionView.getRequiredTransformations(
+                            KiCoSelectionView.getActiveEditorID(), true);
+            for (String requiredTransformationID : newRequiredTransformations) {
+                TransformationDummy requiredTransformationDummy =
+                        getTransformationDummy(requiredTransformationID, transformationDummy);
+                if (requiredTransformationDummy != null) {
+                    setLabelColor(requiredTransformationDummy, context, KiCoDiagramSynthesis.WHITE,
+                            KiCoDiagramSynthesis.BLUE2);
+                    setStateColor(requiredTransformationDummy, context, KiCoDiagramSynthesis.BLUE3b,
+                            KiCoDiagramSynthesis.BLUE3b);
+                }
+            }
+
+            System.out.println(Arrays.toString(KiCoSelectionView.getSelectedTransformations(
+                    KiCoSelectionView.getActiveEditorID()).toArray()));
         }
 
         refreshEditor();
-        
+
         return ActionResult.createResult(true).dontAnimateLayout();
     }
-
     // -------------------------------------------------------------------------
 }

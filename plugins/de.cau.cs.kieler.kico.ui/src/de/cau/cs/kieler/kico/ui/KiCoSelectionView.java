@@ -47,18 +47,22 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     /** The parent. */
     Composite parent;
-    
+
     public static final ImageDescriptor ADVANCED = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconAuto.png");   
-    
+            "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconAuto.png");
+
     /** The action for toggling the advanced mode. */
-    private Action actionAdvancedToggle;    
+    private Action actionAdvancedToggle;
 
     /** The Constant ID. */
     static final String ID = "de.cau.cs.kieler.kico.selection";
 
     /** The selected transformations per editor instance. */
     static HashMap<Integer, List<String>> selectedTransformations =
+            new HashMap<Integer, List<String>>();
+
+    /** The auto-calculated required transformations per editor instance. */
+    static HashMap<Integer, List<String>> requiredTransformations =
             new HashMap<Integer, List<String>>();
 
     /** The advaned mode auto selects required transformations. */
@@ -193,14 +197,18 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     /**
      * Adds the transformation to be selected.
-     *
-     * @param transformationDummyID the transformation dummy id
-     * @param editorID the editor id
-     * @param enabled the enabled
+     * 
+     * @param transformationDummyID
+     *            the transformation dummy id
+     * @param editorID
+     *            the editor id
+     * @param enabled
+     *            the enabled
      */
     public static void addSelectedTransformation(String transformationDummyID, int editorID,
             boolean enabled) {
-        addSelectedTransformation(transformationDummyID, getSelectedTransformations(editorID), enabled);
+        addSelectedTransformation(transformationDummyID, getSelectedTransformations(editorID),
+                enabled);
     }
 
     // -------------------------------------------------------------------------
@@ -267,6 +275,61 @@ public class KiCoSelectionView extends DiagramViewPart {
     // -------------------------------------------------------------------------
 
     /**
+     * Gets and possibly recalculated the additionally required transformations as a list of Strings
+     * of their IDs.
+     * 
+     * @param editorID
+     *            the editor id
+     * @return the selected transformations
+     */
+    public static List<String> getRequiredTransformations(int editorID) {
+        return getRequiredTransformations(editorID, false);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets and possibly recalculated the additionally required transformations as a list of Strings
+     * of their IDs.
+     *
+     * @param editorID the editor id
+     * @param recalculate the recalculate
+     * @return the selected transformations
+     */
+    public static List<String> getRequiredTransformations(int editorID, boolean recalculate) {
+        if (!KiCoSelectionView.requiredTransformations.containsKey(editorID)) {
+            List<String> requiredList = new ArrayList<String>();
+            KiCoSelectionView.requiredTransformations.put(editorID, requiredList);
+        }
+        List<String> requiredList = KiCoSelectionView.requiredTransformations.get(editorID);
+
+        if (recalculate) {
+            requiredList.clear();
+            List<String> selectedTransformations = getSelectedTransformations(editorID);
+            List<String> allRequiredTransformations =
+                    KielerCompiler.calculatePreRequirements(selectedTransformations, true);
+            for (String requiredTransformation : allRequiredTransformations) {
+                boolean found = false;
+                for (String selectedTransformation : selectedTransformations) {
+                    if (selectedTransformation.equals(requiredTransformation)) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    // if this is a required transformation ONLY (which is not selected) then add it
+                    requiredList.add(requiredTransformation);
+                }
+            }
+        }
+
+        return requiredList;
+
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Update view.
      * 
      * @param ref
@@ -310,12 +373,11 @@ public class KiCoSelectionView extends DiagramViewPart {
      */
     public void createPartControl(final Composite parent) {
         super.createPartControl(parent);
-        
+
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
         toolBarManager.add(getActionAdvancedToggle());
 
-        
         DiagramViewManager.getInstance().registerView(this);
 
         // Create an IPartListener2
@@ -365,9 +427,9 @@ public class KiCoSelectionView extends DiagramViewPart {
         IWorkbenchPage page = this.getSite().getPage();
         page.addPartListener(pl);
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the action to toggle presence of signals.
      * 
@@ -391,7 +453,6 @@ public class KiCoSelectionView extends DiagramViewPart {
         actionAdvancedToggle.setChecked(advancedMode);
         return actionAdvancedToggle;
     }
-
 
     // -------------------------------------------------------------------------
 

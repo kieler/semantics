@@ -108,8 +108,12 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
         [it.red = 205; it.green = 220; it.blue = 243];
     public static val KColor BLUE3 = RENDERING_FACTORY.createKColor() =>
         [it.red = 0; it.green = 0; it.blue = 255];
+    public static val KColor BLUE3b = RENDERING_FACTORY.createKColor() =>
+        [it.red = 150; it.green = 150; it.blue = 255];
     public static val KColor BLUE4 = RENDERING_FACTORY.createKColor() =>
         [it.red = 00; it.green = 00; it.blue = 180];
+    public static val KColor BLUE4b = RENDERING_FACTORY.createKColor() =>
+        [it.red = 150 it.green = 150; it.blue = 180];
 
     public static val KColor GRAY1 = RENDERING_FACTORY.createKColor() =>
         [it.red = 248; it.green = 248; it.blue = 248];

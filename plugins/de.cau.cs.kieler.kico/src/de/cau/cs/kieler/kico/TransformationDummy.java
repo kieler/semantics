@@ -37,6 +37,9 @@ public class TransformationDummy {
 
     /** The id. */
     public String id;
+    
+    /** The parent graph/list if any */
+    public List<TransformationDummy> parent = null;
 
     /** The marked. */
     public boolean marked = false;
