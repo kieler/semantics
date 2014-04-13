@@ -123,8 +123,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     // -------------------------------------------------------------------------
     // Transformation options   
     // CORE TRANSFORMATIONS
-    private static val SynthesisOption TRANSFORM_ADVANED = SynthesisOption::createCheckOption("Advanced Auto Requirements", false);
-
 
     private static val SynthesisOption SHOW_SIGNAL_DECLARATIONS = SynthesisOption::createCheckOption("Declarations",
         true);
@@ -147,7 +145,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_SHADOW, TRANSFORM_ADVANED);
+            SHOW_SHADOW);
     }
 
     override public getDisplayedLayoutOptions() {
@@ -182,7 +180,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         val transformations = KiCoSelectionView.getSelectedTransformations(KiCoSelectionView.activeEditorID);
         // ---------
         // Just one final compiler call of KielerCompiler
-        transformed = KielerCompiler.compile(transformations, transformed, TRANSFORM_ADVANED.booleanValue) as Region
+        transformed = KielerCompiler.compile(transformations, transformed, KiCoSelectionView.advancedMode) as Region
         // ---------
 
         return transformed.translate();

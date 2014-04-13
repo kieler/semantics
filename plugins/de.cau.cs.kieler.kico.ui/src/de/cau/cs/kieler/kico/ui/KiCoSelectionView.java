@@ -4,9 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
@@ -15,6 +22,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kico.KielerCompiler;
@@ -39,6 +47,12 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     /** The parent. */
     Composite parent;
+    
+    public static final ImageDescriptor ADVANCED = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconAuto.png");   
+    
+    /** The action for toggling the advanced mode. */
+    private Action actionAdvancedToggle;    
 
     /** The Constant ID. */
     static final String ID = "de.cau.cs.kieler.kico.selection";
@@ -47,9 +61,8 @@ public class KiCoSelectionView extends DiagramViewPart {
     static HashMap<Integer, List<String>> selectedTransformations =
             new HashMap<Integer, List<String>>();
 
-    /** The disabled transformations per editor instance. */
-    static HashMap<Integer, List<String>> disabledTransformations =
-            new HashMap<Integer, List<String>>();
+    /** The advaned mode auto selects required transformations. */
+    public static boolean advancedMode = true;
 
     /** The last editor. */
     String lastEditor = null;
@@ -297,6 +310,12 @@ public class KiCoSelectionView extends DiagramViewPart {
      */
     public void createPartControl(final Composite parent) {
         super.createPartControl(parent);
+        
+        IActionBars bars = getViewSite().getActionBars();
+        IToolBarManager toolBarManager = bars.getToolBarManager();
+        toolBarManager.add(getActionAdvancedToggle());
+
+        
         DiagramViewManager.getInstance().registerView(this);
 
         // Create an IPartListener2
@@ -346,6 +365,33 @@ public class KiCoSelectionView extends DiagramViewPart {
         IWorkbenchPage page = this.getSite().getPage();
         page.addPartListener(pl);
     }
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the action to toggle presence of signals.
+     * 
+     * @return the action delete
+     */
+    private Action getActionAdvancedToggle() {
+        if (actionAdvancedToggle != null) {
+            return actionAdvancedToggle;
+        }
+        actionAdvancedToggle = new Action("", IAction.AS_CHECK_BOX) {
+            public void run() {
+                // TOGGLE
+                advancedMode = !advancedMode;
+                actionAdvancedToggle.setChecked(advancedMode);
+                KiCoKlighdAction.refreshEditor();
+            }
+        };
+        actionAdvancedToggle.setText("Autoselect Required Transformations");
+        actionAdvancedToggle.setToolTipText("Autoselects additionally required transformations");
+        actionAdvancedToggle.setImageDescriptor(ADVANCED);
+        actionAdvancedToggle.setChecked(advancedMode);
+        return actionAdvancedToggle;
+    }
+
 
     // -------------------------------------------------------------------------
 

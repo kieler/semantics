@@ -89,13 +89,7 @@ public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAc
                     .toArray()));
         }
 
-        // Ensures that the KLighD view redraws the diagram of the curretly selected editor
-        IEditorPart editor = KiCoSelectionView.getActiveEditor();
-        if (editor != null) {
-            //TODO: This is a current workaround to force the klight view to repaint
-            editor.setFocus();
-        }
-        
+        refreshEditor();
         
         return ActionResult.createResult(true).dontAnimateLayout();
     }
