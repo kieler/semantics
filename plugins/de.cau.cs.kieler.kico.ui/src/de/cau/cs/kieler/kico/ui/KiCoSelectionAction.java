@@ -31,7 +31,7 @@ import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.kico.TransformationDummy;
-import de.cau.cs.kieler.kico.klighd.KiCoDiagramSynthesis;
+import de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**

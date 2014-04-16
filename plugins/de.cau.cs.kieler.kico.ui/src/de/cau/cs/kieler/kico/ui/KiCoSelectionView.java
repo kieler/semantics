@@ -27,7 +27,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.TransformationDummy;
-import de.cau.cs.kieler.kico.klighd.KiCoDiagramSynthesis;
+import de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;

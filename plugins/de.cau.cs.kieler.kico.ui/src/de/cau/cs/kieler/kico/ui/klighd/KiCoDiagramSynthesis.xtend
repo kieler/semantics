@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd
+package de.cau.cs.kieler.kico.ui.klighd
 
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.kgraph.KEdge
@@ -48,7 +48,7 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kico.KielerCompiler
-import static de.cau.cs.kieler.kico.klighd.KiCoDiagramSynthesis.*
+import static de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis.*
 import de.cau.cs.kieler.kico.TransformationDummy
 import java.util.LinkedList
 import java.util.HashMap
@@ -283,7 +283,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                                 // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
                                 it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
                                 it.addSingleClickAction(KiCoSelectionAction::ID);
-                                it.setForeground(BLACK.copy)
+                                it.setForeground(BLACK.copy);
                                 it.setSelectionBackground(BLUE3.copy)
                                 //                                it.setCursorSelectable(false)
                                 //                                it.setSelectionInvisible(true)
