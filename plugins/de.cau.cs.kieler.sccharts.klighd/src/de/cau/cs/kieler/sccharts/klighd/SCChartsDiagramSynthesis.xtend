@@ -707,7 +707,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     label = t.sourceState.outgoingTransitions.indexOf(t) + 1 + ": " + label.trim.replace("'", "");
                 }
                 if (!label.nullOrEmpty) {
-                    t.createLabel(edge).putToLookUpWith(t).configureCenteralLabel(
+                    t.createLabel(edge).putToLookUpWith(t).configureCenterEdgeLabel(
                         " " + label,
                         11,
                         KlighdConstants::DEFAULT_FONT_NAME

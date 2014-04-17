@@ -915,7 +915,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             // If the outgoing identifier indicates a 'then branch', add a 'then label'.
             if (outgoingPortId == SCGPORTID_OUTGOING_THEN) {
-                edge.createLabel.configureTailLabel('true', 9, KlighdConstants::DEFAULT_FONT_NAME)
+                edge.createLabel.configureTailEdgeLabel('true', 9, KlighdConstants::DEFAULT_FONT_NAME)
             }
         ]
     }
