@@ -454,6 +454,69 @@
          </command>
       </menuContribution>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.transformations.DependencyTransformation"
+            dependencies="SCGBBGroup"
+            id="SCGDEP"
+            method="transform"
+            name="Dependencies">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformation"
+            dependencies="SCGSCHEDGroup"
+            id="SCGBB"
+            method="transform"
+            name="BasicBlocks">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformationSCplus"
+            dependencies="SCGSCHEDGroup"
+            id="SCGBBSCplus"
+            method="transform"
+            name="BasicBlocksSC+">
+      </transformationMethod>
+      <transformationGroup
+            alternatives="true"
+            id="SCGBBGroup"
+            name="Basic Blocks"
+            transformations="SCGBB, SCGBBSCplus">
+      </transformationGroup>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.schedulers.SimpleScheduler"
+            dependencies="SCGSEQ"
+            id="SCGSCHEDSimple"
+            method="build"
+            name="Simple Scheduler">
+      </transformationMethod>
+      <transformationGroup
+            alternatives="true"
+            id="SCGSCHEDGroup"
+            name="Scheduler"
+            transformations="SCGSCHEDSimple, SCGSCHEDCluster, SCGSCHEDHybrid">
+      </transformationGroup>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.schedulers.ClusterScheduler"
+            dependencies="SCGSEQ"
+            id="SCGSCHEDCluster"
+            method="build"
+            name="Cluster Scheduler">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.schedulers.HybridScheduler"
+            dependencies="SCGSEQ"
+            id="SCGSCHEDHybrid"
+            method="build"
+            name="Hybrid Scheduler">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer"
+            id="SCGSEQ"
+            method="sequentialize"
+            name="Sequentializer">
+      </transformationMethod>
+   </extension>
 
 
 </plugin>

@@ -987,6 +987,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+            dependencies="SCG"
             id="SURFACEDEPTH"
             method="transformSurfaceDepth"
             name="Surface Depth">
