@@ -5,8 +5,8 @@
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.KiCoDiagramSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.diagramSynthesis">
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis"
+            id="de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis">
       </diagramSynthesis>
    </extension>
    <extension
