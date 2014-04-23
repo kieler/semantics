@@ -661,12 +661,12 @@ class SCChartsCoreTransformation {
 
         // Traverse all states
         for (targetTransition : targetRootRegion.allContainedStates) {
-            targetTransition.transformDeferred;
+            targetTransition.transformDeferredState;
         }
         targetRootRegion.fixAllTextualOrdersByPriorities;
     }
 
-    def void transformDeferred(State state) {
+    def void transformDeferredState(State state) {
         val incomingDeferredTransitions = state.incomingTransitions.filter[deferred];
 
         // If there are any such transitions 
