@@ -30,6 +30,10 @@ public class TransformationGroup extends Transformation {
 
     /** The alternative flag, initially it is false. */
     private boolean alternatives = false;
+    
+    private boolean isCategory = false;
+    
+    private boolean isFeatureGroup = false;
 
     // -------------------------------------------------------------------------
 
@@ -49,6 +53,14 @@ public class TransformationGroup extends Transformation {
      */
     public boolean isAlternatives() {
         return alternatives;
+    }
+    
+    public boolean isCategory() {
+        return isCategory;
+    }
+    
+    public boolean isFeatureGroup() {
+        return isFeatureGroup;
     }
 
     // -------------------------------------------------------------------------
@@ -114,5 +126,12 @@ public class TransformationGroup extends Transformation {
         this.alternatives = alternatives;
     }
 
+    public void setIsCategory(boolean isCategory) {
+        this.isCategory = isCategory;
+    }
+    
+    public void setIsFeatureGroup(boolean isFeatureGroup) {
+        this.isFeatureGroup = isFeatureGroup;
+    }
     // -------------------------------------------------------------------------
 }

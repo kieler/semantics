@@ -80,6 +80,7 @@
       </transformationMethod>
       <transformationGroup
             id="SCGraph"
+            isCategory="true"
             name="SCGraph"
             transformations="SCG, SCGDEP, SCGBBGroup, SCGSCHEDGroup, SCGSEQ">
       </transformationGroup>

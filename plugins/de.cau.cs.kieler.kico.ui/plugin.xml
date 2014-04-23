@@ -5,7 +5,7 @@
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis"
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesisSSM"
             id="de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis">
       </diagramSynthesis>
    </extension>
@@ -24,24 +24,14 @@
    <extension
          point="de.cau.cs.kieler.kiml.layoutConfigs">
       <staticConfig
-            class="java.lang.Object"
-            option="de.cau.cs.kieler.diagramType"
-            value="de.cau.cs.kieler.layout.diagrams.boxes">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.kico.TransformationDummy"
-            option="de.cau.cs.kieler.diagramType"
-            value="de.cau.cs.kieler.layout.diagrams.stateMachine">
-      </staticConfig>
-      <staticConfig
             class="de.cau.cs.kieler.kico.TransformationDummy"
             option="de.cau.cs.kieler.spacing"
-            value="1.0">
+            value="0.0">
       </staticConfig>
       <staticConfig
             class="de.cau.cs.kieler.kico.TransformationDummy"
             option="de.cau.cs.kieler.borderSpacing"
-            value="2.0">
+            value="0.0">
       </staticConfig>
       <staticConfig
             class="de.cau.cs.kieler.kico.TransformationDummy"
@@ -61,7 +51,7 @@
       <staticConfig
             class="java.lang.Object"
             option="de.cau.cs.kieler.spacing"
-            value="40.0">
+            value="20.0">
       </staticConfig>
       <staticConfig
             class="java.lang.Object"

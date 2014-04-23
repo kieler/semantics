@@ -947,34 +947,39 @@
 
       <transformationGroup
             id="SCADEQUARTZESTEREL"
-            transformations="HISTORY, STATIC, WEAKSUSPEND, DEFERRED"
-            name="SCADE / QUARTZ / Esterel v7">
+            isFeatureGroup="true"
+            name="SCADE / QUARTZ / Esterel v7"
+            transformations="HISTORY, STATIC, WEAKSUSPEND, DEFERRED">
       </transformationGroup>
 
       <transformationGroup
             id="STATECHARTS"
-            transformations="COMPLEXFINALSTATE, ABORT, DURING, EXIT, INITIALIZATION, ENTRY, CONNECTOR"
-            name="Statecharts">
+            isFeatureGroup="true"
+            name="Statecharts"
+            transformations="COMPLEXFINALSTATE, ABORT, DURING, EXIT, INITIALIZATION, ENTRY, CONNECTOR">
       </transformationGroup>
 
 
       <transformationGroup
             id="SYNCCHARTS"
-            transformations="SUSPEND, SIGNAL, COUNTDELAY, PRE"
-            name="SyncCharts">
+            isFeatureGroup="true"
+            name="SyncCharts"
+            transformations="SUSPEND, SIGNAL, COUNTDELAY, PRE">
       </transformationGroup>
 
+
+      <transformationGroup
+            id="EXTENDED"
+            isCategory="true"
+            name="Extended SCCharts"
+            transformations="SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS">
+      </transformationGroup>
 
       <transformationGroup
             id="CORE"
-            transformations="SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS"
-            name="All Core">
-      </transformationGroup>
-
-      <transformationGroup
-            id="NORMALIZE"
-            transformations="TRIGGEREFFECT, SURFACEDEPTH"
-            name="All Normalize">
+            isCategory="true"
+            name="Core SCCharts"
+            transformations="TRIGGEREFFECT, SURFACEDEPTH">
       </transformationGroup>
 
       <transformationMethod
@@ -993,11 +998,6 @@
             name="Surface Depth">
       </transformationMethod>
 
-      <transformationGroup
-            id="ALL"
-            transformations="CORE, NORMALIZE"
-            name="All">
-      </transformationGroup>
       
    </extension>   
 

@@ -204,6 +204,8 @@ public class KiCoPlugin extends AbstractUIPlugin {
                 String dependenciesString = transformations[i].getAttribute("dependencies");
                 String transformationsString = transformations[i].getAttribute("transformations");
                 String alternativesString = transformations[i].getAttribute("alternatives");
+                String isCategoryString = transformations[i].getAttribute("isCategory");
+                String isFeatureGroupString = transformations[i].getAttribute("isFeatureGroup");
 
                 if (DEBUG) {
 //                    System.out.println("KiCo loading component: "
@@ -229,6 +231,14 @@ public class KiCoPlugin extends AbstractUIPlugin {
                         }
                     }
                     
+                    if (isCategoryString != null && isCategoryString.equals("true")) {
+                        ((TransformationGroup) transformation).setIsCategory(true);
+                    }
+
+                    if (isFeatureGroupString != null && isFeatureGroupString.equals("true")) {
+                        ((TransformationGroup) transformation).setIsFeatureGroup(true);
+                    }
+
                 }
                 else if (transformationInstance instanceof Transformation) {
                     // The specified class is a Transformation, use it directly

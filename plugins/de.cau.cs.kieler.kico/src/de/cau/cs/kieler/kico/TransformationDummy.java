@@ -62,7 +62,22 @@ public class TransformationDummy {
         }
         return false;
     }
+    
+    public boolean isCategory() {
+        if (isGroup() && ((TransformationGroup) transformation).isCategory()) {
+            return true;
+        }
+        return false;
+    }
 
+    public boolean isFeatureGroup() {
+        if (isGroup() && ((TransformationGroup) transformation).isFeatureGroup()) {
+            return true;
+        }
+        return false;
+    }
+    
+    
     public TransformationDummy(Transformation transformation) {
         this.id = transformation.getId();
         this.transformation = transformation;
