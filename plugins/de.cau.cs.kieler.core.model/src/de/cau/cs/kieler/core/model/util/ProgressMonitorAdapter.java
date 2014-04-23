@@ -107,7 +107,8 @@ public class ProgressMonitorAdapter extends BasicProgressMonitor {
      * @return a new progress monitor instance
      */
     @Override
-    public BasicProgressMonitor doSubTask(final float work, final int maxHierarchyLevels) {
+    public BasicProgressMonitor doSubTask(final float work, final int maxHierarchyLevels,
+            final boolean measureExecTime) {
         if (maxHierarchyLevels > 0) {
             return new ProgressMonitorAdapter(progressMonitor, maxHierarchyLevels - 1);
         } else {

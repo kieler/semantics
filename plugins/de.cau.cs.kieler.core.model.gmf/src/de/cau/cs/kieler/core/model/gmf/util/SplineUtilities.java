@@ -74,9 +74,11 @@ public final class SplineUtilities {
             spline.add(new KVector(control.getPoint(i).x, control.getPoint(i).y));
             spline.add(new KVector(control.getPoint(i + 1).x, control.getPoint(i + 1).y));
             spline.add(new KVector(control.getPoint(i + 2).x, control.getPoint(i + 2).y));
-            for (KVector p : KielerMath.calcBezierPoints(spline, approxCount(spline))) {
-                points.addPoint(new PrecisionPoint(p.x, p.y));
-            }
+            
+// FIXME: deactivated due to pragmatics api changes (kieler.core)
+//            for (KVector p : KielerMath.calcBezierPoints(spline, approxCount(spline))) {
+//                points.addPoint(new PrecisionPoint(p.x, p.y));
+//            }
         }
         switch (control.size() - i) {
         case 1:
@@ -87,9 +89,11 @@ public final class SplineUtilities {
             spline.add(new KVector(control.getPoint(i - 1).x, control.getPoint(i - 1).y));
             spline.add(new KVector(control.getPoint(i).x, control.getPoint(i).y));
             spline.add(new KVector(control.getPoint(i + 1).x, control.getPoint(i + 1).y));
-            for (KVector p : KielerMath.calcBezierPoints(spline, approxCount(spline))) {
-                points.addPoint(new PrecisionPoint(p.x, p.y));
-            }
+
+// FIXME: deactivated due to pragmatics api changes (kieler.core)            
+//            for (KVector p : KielerMath.calcBezierPoints(spline, approxCount(spline))) {
+//                points.addPoint(new PrecisionPoint(p.x, p.y));
+//            }
             break;
         default: // nothing
         }
