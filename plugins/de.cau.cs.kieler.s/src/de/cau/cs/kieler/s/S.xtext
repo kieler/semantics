@@ -21,7 +21,7 @@ Program :
 //	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 //	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
     
-    (delcarations += Declaration)*
+    (declarations += Declaration)*
 //    (((valuedObjects+=ValuedObject)+ ';')*)? 
 	('\'' globalHostCodeInstruction = HOSTCODE '\'')?
 	(states += State)+
