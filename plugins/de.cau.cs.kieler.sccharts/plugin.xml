@@ -968,13 +968,13 @@
       <transformationGroup
             id="CORE"
             transformations="SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS"
-            name="All Core">
+            name="Core">
       </transformationGroup>
 
       <transformationGroup
             id="NORMALIZE"
             transformations="TRIGGEREFFECT, SURFACEDEPTH"
-            name="All Normalize">
+            name="Normalize">
       </transformationGroup>
 
       <transformationMethod
