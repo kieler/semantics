@@ -29,8 +29,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPriorityAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cPriorityINTTerminalRuleCall_3_0 = (RuleCall)cPriorityAssignment_3.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cTypeGroupsAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cTypeGroupsTypeGroupParserRuleCall_5_0 = (RuleCall)cTypeGroupsAssignment_5.eContents().get(0);
+		private final Assignment cDelcarationsAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cDelcarationsDeclarationParserRuleCall_5_0 = (RuleCall)cDelcarationsAssignment_5.eContents().get(0);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
 		private final Keyword cApostropheKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
 		private final Assignment cGlobalHostCodeInstructionAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
@@ -43,14 +43,14 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//	"synchronous program" name=ID "(" priority=INT ")" //	((signals += Signal) (signals += Signal)*)?
 		//	//	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 		//	//	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
-		//	typeGroups+=TypeGroup* //    (((valuedObjects+=ValuedObject)+ ';')*)? 
+		//	delcarations+=Declaration* //    (((valuedObjects+=ValuedObject)+ ';')*)? 
 		//	("\'" globalHostCodeInstruction=HOSTCODE "\'")? states+=State+;
 		public ParserRule getRule() { return rule; }
 
 		//"synchronous program" name=ID "(" priority=INT ")" //	((signals += Signal) (signals += Signal)*)?
 		////	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 		////	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
-		//typeGroups+=TypeGroup* //    (((valuedObjects+=ValuedObject)+ ';')*)? 
+		//delcarations+=Declaration* //    (((valuedObjects+=ValuedObject)+ ';')*)? 
 		//("\'" globalHostCodeInstruction=HOSTCODE "\'")? states+=State+
 		public Group getGroup() { return cGroup; }
 
@@ -75,11 +75,11 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 
-		//typeGroups+=TypeGroup*
-		public Assignment getTypeGroupsAssignment_5() { return cTypeGroupsAssignment_5; }
+		//delcarations+=Declaration*
+		public Assignment getDelcarationsAssignment_5() { return cDelcarationsAssignment_5; }
 
-		//TypeGroup
-		public RuleCall getTypeGroupsTypeGroupParserRuleCall_5_0() { return cTypeGroupsTypeGroupParserRuleCall_5_0; }
+		//Declaration
+		public RuleCall getDelcarationsDeclarationParserRuleCall_5_0() { return cDelcarationsDeclarationParserRuleCall_5_0; }
 
 		//("\'" globalHostCodeInstruction=HOSTCODE "\'")?
 		public Group getGroup_6() { return cGroup_6; }
@@ -112,8 +112,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Keyword cLeftCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cTypeGroupsAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cTypeGroupsTypeGroupParserRuleCall_5_0 = (RuleCall)cTypeGroupsAssignment_5.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_5_0 = (RuleCall)cDeclarationsAssignment_5.eContents().get(0);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
 		private final Assignment cInstructionsAssignment_6_0 = (Assignment)cGroup_6.eContents().get(0);
 		private final RuleCall cInstructionsInstructionParserRuleCall_6_0_0 = (RuleCall)cInstructionsAssignment_6_0.eContents().get(0);
@@ -128,10 +128,10 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		////Annotatable returns annotations::Annotatable:
 		//// 	State | Instruction;
 		//State:
-		//	"state" "(" name=ID ")" "{" typeGroups+=TypeGroup* (instructions+=Instruction ";")* "}";
+		//	"state" "(" name=ID ")" "{" declarations+=Declaration* (instructions+=Instruction ";")* "}";
 		public ParserRule getRule() { return rule; }
 
-		//"state" "(" name=ID ")" "{" typeGroups+=TypeGroup* (instructions+=Instruction ";")* "}"
+		//"state" "(" name=ID ")" "{" declarations+=Declaration* (instructions+=Instruction ";")* "}"
 		public Group getGroup() { return cGroup; }
 
 		//"state"
@@ -152,11 +152,11 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_4() { return cLeftCurlyBracketKeyword_4; }
 
-		//typeGroups+=TypeGroup*
-		public Assignment getTypeGroupsAssignment_5() { return cTypeGroupsAssignment_5; }
+		//declarations+=Declaration*
+		public Assignment getDeclarationsAssignment_5() { return cDeclarationsAssignment_5; }
 
-		//TypeGroup
-		public RuleCall getTypeGroupsTypeGroupParserRuleCall_5_0() { return cTypeGroupsTypeGroupParserRuleCall_5_0; }
+		//Declaration
+		public RuleCall getDeclarationsDeclarationParserRuleCall_5_0() { return cDeclarationsDeclarationParserRuleCall_5_0; }
 
 		//(instructions+=Instruction ";")*
 		public Group getGroup_6() { return cGroup_6; }
@@ -174,8 +174,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightCurlyBracketKeyword_7() { return cRightCurlyBracketKeyword_7; }
 	}
 
-	public class TypeGroupElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypeGroup");
+	public class DeclarationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Declaration");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
@@ -200,13 +200,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_9 = (Keyword)cGroup.eContents().get(9);
 		
 		//// TODO: ensure signal AND variable declaration in top level....
-		//TypeGroup returns kexpressions::Declaration:
+		//Declaration returns kexpressions::Declaration:
 		//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
-		//	type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
+		//	type=ValueType? valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
-		//type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";"
+		//type=ValueType? valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";"
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -245,7 +245,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//"signal"
 		public Keyword getSignalSignalKeyword_5_0() { return cSignalSignalKeyword_5_0; }
 
-		//type=ValueType
+		//type=ValueType?
 		public Assignment getTypeAssignment_6() { return cTypeAssignment_6; }
 
 		//ValueType
@@ -1087,7 +1087,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private ProgramElements pProgram;
 	private StateElements pState;
-	private TypeGroupElements pTypeGroup;
+	private DeclarationElements pDeclaration;
 	private ValuedObjectElements pValuedObject;
 	private HostCodeInstructionElements pHostCodeInstruction;
 	private TerminalRule tHOSTCODESTRINGTERMINAL;
@@ -1149,7 +1149,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//	"synchronous program" name=ID "(" priority=INT ")" //	((signals += Signal) (signals += Signal)*)?
 	//	//	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 	//	//	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
-	//	typeGroups+=TypeGroup* //    (((valuedObjects+=ValuedObject)+ ';')*)? 
+	//	delcarations+=Declaration* //    (((valuedObjects+=ValuedObject)+ ';')*)? 
 	//	("\'" globalHostCodeInstruction=HOSTCODE "\'")? states+=State+;
 	public ProgramElements getProgramAccess() {
 		return (pProgram != null) ? pProgram : (pProgram = new ProgramElements());
@@ -1167,7 +1167,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	////Annotatable returns annotations::Annotatable:
 	//// 	State | Instruction;
 	//State:
-	//	"state" "(" name=ID ")" "{" typeGroups+=TypeGroup* (instructions+=Instruction ";")* "}";
+	//	"state" "(" name=ID ")" "{" declarations+=Declaration* (instructions+=Instruction ";")* "}";
 	public StateElements getStateAccess() {
 		return (pState != null) ? pState : (pState = new StateElements());
 	}
@@ -1177,15 +1177,15 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// TODO: ensure signal AND variable declaration in top level....
-	//TypeGroup returns kexpressions::Declaration:
+	//Declaration returns kexpressions::Declaration:
 	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
-	//	type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
-	public TypeGroupElements getTypeGroupAccess() {
-		return (pTypeGroup != null) ? pTypeGroup : (pTypeGroup = new TypeGroupElements());
+	//	type=ValueType? valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
+	public DeclarationElements getDeclarationAccess() {
+		return (pDeclaration != null) ? pDeclaration : (pDeclaration = new DeclarationElements());
 	}
 	
-	public ParserRule getTypeGroupRule() {
-		return getTypeGroupAccess().getRule();
+	public ParserRule getDeclarationRule() {
+		return getDeclarationAccess().getRule();
 	}
 
 	//ValuedObject returns kexpressions::ValuedObject:

@@ -306,25 +306,25 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "ruleState"
 
 
-    // $ANTLR start "entryRuleTypeGroup"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:117:1: entryRuleTypeGroup : ruleTypeGroup EOF ;
-    public final void entryRuleTypeGroup() throws RecognitionException {
+    // $ANTLR start "entryRuleDeclaration"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:117:1: entryRuleDeclaration : ruleDeclaration EOF ;
+    public final void entryRuleDeclaration() throws RecognitionException {
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:118:1: ( ruleTypeGroup EOF )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:119:1: ruleTypeGroup EOF
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:118:1: ( ruleDeclaration EOF )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:119:1: ruleDeclaration EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupRule()); 
+               before(grammarAccess.getDeclarationRule()); 
             }
-            pushFollow(FOLLOW_ruleTypeGroup_in_entryRuleTypeGroup187);
-            ruleTypeGroup();
+            pushFollow(FOLLOW_ruleDeclaration_in_entryRuleDeclaration187);
+            ruleDeclaration();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupRule()); 
+               after(grammarAccess.getDeclarationRule()); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTypeGroup194); if (state.failed) return ;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDeclaration194); if (state.failed) return ;
 
             }
 
@@ -337,30 +337,30 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "entryRuleTypeGroup"
+    // $ANTLR end "entryRuleDeclaration"
 
 
-    // $ANTLR start "ruleTypeGroup"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:126:1: ruleTypeGroup : ( ( rule__TypeGroup__Group__0 ) ) ;
-    public final void ruleTypeGroup() throws RecognitionException {
+    // $ANTLR start "ruleDeclaration"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:126:1: ruleDeclaration : ( ( rule__Declaration__Group__0 ) ) ;
+    public final void ruleDeclaration() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:130:2: ( ( ( rule__TypeGroup__Group__0 ) ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:131:1: ( ( rule__TypeGroup__Group__0 ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:130:2: ( ( ( rule__Declaration__Group__0 ) ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:131:1: ( ( rule__Declaration__Group__0 ) )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:131:1: ( ( rule__TypeGroup__Group__0 ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:132:1: ( rule__TypeGroup__Group__0 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:131:1: ( ( rule__Declaration__Group__0 ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:132:1: ( rule__Declaration__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getGroup()); 
+               before(grammarAccess.getDeclarationAccess().getGroup()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:133:1: ( rule__TypeGroup__Group__0 )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:133:2: rule__TypeGroup__Group__0
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:133:1: ( rule__Declaration__Group__0 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:133:2: rule__Declaration__Group__0
             {
-            pushFollow(FOLLOW_rule__TypeGroup__Group__0_in_ruleTypeGroup220);
-            rule__TypeGroup__Group__0();
+            pushFollow(FOLLOW_rule__Declaration__Group__0_in_ruleDeclaration220);
+            rule__Declaration__Group__0();
 
             state._fsp--;
             if (state.failed) return ;
@@ -368,7 +368,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getGroup()); 
+               after(grammarAccess.getDeclarationAccess().getGroup()); 
             }
 
             }
@@ -388,7 +388,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "ruleTypeGroup"
+    // $ANTLR end "ruleDeclaration"
 
 
     // $ANTLR start "entryRuleValuedObject"
@@ -8475,38 +8475,38 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Program__Group__5__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2616:1: rule__Program__Group__5__Impl : ( ( rule__Program__TypeGroupsAssignment_5 )* ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2616:1: rule__Program__Group__5__Impl : ( ( rule__Program__DelcarationsAssignment_5 )* ) ;
     public final void rule__Program__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2620:1: ( ( ( rule__Program__TypeGroupsAssignment_5 )* ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2621:1: ( ( rule__Program__TypeGroupsAssignment_5 )* )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2620:1: ( ( ( rule__Program__DelcarationsAssignment_5 )* ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2621:1: ( ( rule__Program__DelcarationsAssignment_5 )* )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2621:1: ( ( rule__Program__TypeGroupsAssignment_5 )* )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2622:1: ( rule__Program__TypeGroupsAssignment_5 )*
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2621:1: ( ( rule__Program__DelcarationsAssignment_5 )* )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2622:1: ( rule__Program__DelcarationsAssignment_5 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getTypeGroupsAssignment_5()); 
+               before(grammarAccess.getProgramAccess().getDelcarationsAssignment_5()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2623:1: ( rule__Program__TypeGroupsAssignment_5 )*
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2623:1: ( rule__Program__DelcarationsAssignment_5 )*
             loop22:
             do {
                 int alt22=2;
                 int LA22_0 = input.LA(1);
 
-                if ( (LA22_0==RULE_COMMENT_ANNOTATION||(LA22_0>=35 && LA22_0<=41)||LA22_0==63||LA22_0==70||(LA22_0>=72 && LA22_0<=75)) ) {
+                if ( (LA22_0==RULE_ID||LA22_0==RULE_COMMENT_ANNOTATION||(LA22_0>=35 && LA22_0<=41)||LA22_0==63||LA22_0==70||(LA22_0>=72 && LA22_0<=75)) ) {
                     alt22=1;
                 }
 
 
                 switch (alt22) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2623:2: rule__Program__TypeGroupsAssignment_5
+            	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2623:2: rule__Program__DelcarationsAssignment_5
             	    {
-            	    pushFollow(FOLLOW_rule__Program__TypeGroupsAssignment_5_in_rule__Program__Group__5__Impl5691);
-            	    rule__Program__TypeGroupsAssignment_5();
+            	    pushFollow(FOLLOW_rule__Program__DelcarationsAssignment_5_in_rule__Program__Group__5__Impl5691);
+            	    rule__Program__DelcarationsAssignment_5();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -8520,7 +8520,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getTypeGroupsAssignment_5()); 
+               after(grammarAccess.getProgramAccess().getDelcarationsAssignment_5()); 
             }
 
             }
@@ -9460,47 +9460,32 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__State__Group__5__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2974:1: rule__State__Group__5__Impl : ( ( rule__State__TypeGroupsAssignment_5 )* ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2974:1: rule__State__Group__5__Impl : ( ( rule__State__DeclarationsAssignment_5 )* ) ;
     public final void rule__State__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2978:1: ( ( ( rule__State__TypeGroupsAssignment_5 )* ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2979:1: ( ( rule__State__TypeGroupsAssignment_5 )* )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2978:1: ( ( ( rule__State__DeclarationsAssignment_5 )* ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2979:1: ( ( rule__State__DeclarationsAssignment_5 )* )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2979:1: ( ( rule__State__TypeGroupsAssignment_5 )* )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2980:1: ( rule__State__TypeGroupsAssignment_5 )*
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2979:1: ( ( rule__State__DeclarationsAssignment_5 )* )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2980:1: ( rule__State__DeclarationsAssignment_5 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getStateAccess().getTypeGroupsAssignment_5()); 
+               before(grammarAccess.getStateAccess().getDeclarationsAssignment_5()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2981:1: ( rule__State__TypeGroupsAssignment_5 )*
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2981:1: ( rule__State__DeclarationsAssignment_5 )*
             loop25:
             do {
                 int alt25=2;
-                int LA25_0 = input.LA(1);
-
-                if ( (LA25_0==63) ) {
-                    int LA25_2 = input.LA(2);
-
-                    if ( ((LA25_2>=35 && LA25_2<=41)) ) {
-                        alt25=1;
-                    }
-
-
-                }
-                else if ( (LA25_0==RULE_COMMENT_ANNOTATION||(LA25_0>=35 && LA25_0<=41)||LA25_0==70||(LA25_0>=72 && LA25_0<=75)) ) {
-                    alt25=1;
-                }
-
-
+                alt25 = dfa25.predict(input);
                 switch (alt25) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2981:2: rule__State__TypeGroupsAssignment_5
+            	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2981:2: rule__State__DeclarationsAssignment_5
             	    {
-            	    pushFollow(FOLLOW_rule__State__TypeGroupsAssignment_5_in_rule__State__Group__5__Impl6398);
-            	    rule__State__TypeGroupsAssignment_5();
+            	    pushFollow(FOLLOW_rule__State__DeclarationsAssignment_5_in_rule__State__Group__5__Impl6398);
+            	    rule__State__DeclarationsAssignment_5();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -9514,7 +9499,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getStateAccess().getTypeGroupsAssignment_5()); 
+               after(grammarAccess.getStateAccess().getDeclarationsAssignment_5()); 
             }
 
             }
@@ -9881,23 +9866,23 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__State__Group_6__1__Impl"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__0"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3129:1: rule__TypeGroup__Group__0 : rule__TypeGroup__Group__0__Impl rule__TypeGroup__Group__1 ;
-    public final void rule__TypeGroup__Group__0() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__0"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3129:1: rule__Declaration__Group__0 : rule__Declaration__Group__0__Impl rule__Declaration__Group__1 ;
+    public final void rule__Declaration__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3133:1: ( rule__TypeGroup__Group__0__Impl rule__TypeGroup__Group__1 )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3134:2: rule__TypeGroup__Group__0__Impl rule__TypeGroup__Group__1
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3133:1: ( rule__Declaration__Group__0__Impl rule__Declaration__Group__1 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3134:2: rule__Declaration__Group__0__Impl rule__Declaration__Group__1
             {
-            pushFollow(FOLLOW_rule__TypeGroup__Group__0__Impl_in_rule__TypeGroup__Group__06688);
-            rule__TypeGroup__Group__0__Impl();
+            pushFollow(FOLLOW_rule__Declaration__Group__0__Impl_in_rule__Declaration__Group__06688);
+            rule__Declaration__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypeGroup__Group__1_in_rule__TypeGroup__Group__06691);
-            rule__TypeGroup__Group__1();
+            pushFollow(FOLLOW_rule__Declaration__Group__1_in_rule__Declaration__Group__06691);
+            rule__Declaration__Group__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -9916,42 +9901,63 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__0"
+    // $ANTLR end "rule__Declaration__Group__0"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__0__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3141:1: rule__TypeGroup__Group__0__Impl : ( ( rule__TypeGroup__AnnotationsAssignment_0 )* ) ;
-    public final void rule__TypeGroup__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__0__Impl"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3141:1: rule__Declaration__Group__0__Impl : ( ( rule__Declaration__AnnotationsAssignment_0 )* ) ;
+    public final void rule__Declaration__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3145:1: ( ( ( rule__TypeGroup__AnnotationsAssignment_0 )* ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3146:1: ( ( rule__TypeGroup__AnnotationsAssignment_0 )* )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3145:1: ( ( ( rule__Declaration__AnnotationsAssignment_0 )* ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3146:1: ( ( rule__Declaration__AnnotationsAssignment_0 )* )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3146:1: ( ( rule__TypeGroup__AnnotationsAssignment_0 )* )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3147:1: ( rule__TypeGroup__AnnotationsAssignment_0 )*
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3146:1: ( ( rule__Declaration__AnnotationsAssignment_0 )* )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3147:1: ( rule__Declaration__AnnotationsAssignment_0 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getAnnotationsAssignment_0()); 
+               before(grammarAccess.getDeclarationAccess().getAnnotationsAssignment_0()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3148:1: ( rule__TypeGroup__AnnotationsAssignment_0 )*
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3148:1: ( rule__Declaration__AnnotationsAssignment_0 )*
             loop27:
             do {
                 int alt27=2;
                 int LA27_0 = input.LA(1);
 
-                if ( (LA27_0==RULE_COMMENT_ANNOTATION||LA27_0==70) ) {
-                    alt27=1;
+                if ( (LA27_0==RULE_COMMENT_ANNOTATION) ) {
+                    int LA27_2 = input.LA(2);
+
+                    if ( (synpred63_InternalS()) ) {
+                        alt27=1;
+                    }
+
+
+                }
+                else if ( (LA27_0==70) ) {
+                    int LA27_3 = input.LA(2);
+
+                    if ( (LA27_3==RULE_ID) ) {
+                        int LA27_5 = input.LA(3);
+
+                        if ( (synpred63_InternalS()) ) {
+                            alt27=1;
+                        }
+
+
+                    }
+
+
                 }
 
 
                 switch (alt27) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3148:2: rule__TypeGroup__AnnotationsAssignment_0
+            	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3148:2: rule__Declaration__AnnotationsAssignment_0
             	    {
-            	    pushFollow(FOLLOW_rule__TypeGroup__AnnotationsAssignment_0_in_rule__TypeGroup__Group__0__Impl6718);
-            	    rule__TypeGroup__AnnotationsAssignment_0();
+            	    pushFollow(FOLLOW_rule__Declaration__AnnotationsAssignment_0_in_rule__Declaration__Group__0__Impl6718);
+            	    rule__Declaration__AnnotationsAssignment_0();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -9965,7 +9971,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getAnnotationsAssignment_0()); 
+               after(grammarAccess.getDeclarationAccess().getAnnotationsAssignment_0()); 
             }
 
             }
@@ -9985,26 +9991,26 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__0__Impl"
+    // $ANTLR end "rule__Declaration__Group__0__Impl"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__1"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3158:1: rule__TypeGroup__Group__1 : rule__TypeGroup__Group__1__Impl rule__TypeGroup__Group__2 ;
-    public final void rule__TypeGroup__Group__1() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__1"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3158:1: rule__Declaration__Group__1 : rule__Declaration__Group__1__Impl rule__Declaration__Group__2 ;
+    public final void rule__Declaration__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3162:1: ( rule__TypeGroup__Group__1__Impl rule__TypeGroup__Group__2 )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3163:2: rule__TypeGroup__Group__1__Impl rule__TypeGroup__Group__2
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3162:1: ( rule__Declaration__Group__1__Impl rule__Declaration__Group__2 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3163:2: rule__Declaration__Group__1__Impl rule__Declaration__Group__2
             {
-            pushFollow(FOLLOW_rule__TypeGroup__Group__1__Impl_in_rule__TypeGroup__Group__16749);
-            rule__TypeGroup__Group__1__Impl();
+            pushFollow(FOLLOW_rule__Declaration__Group__1__Impl_in_rule__Declaration__Group__16749);
+            rule__Declaration__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypeGroup__Group__2_in_rule__TypeGroup__Group__16752);
-            rule__TypeGroup__Group__2();
+            pushFollow(FOLLOW_rule__Declaration__Group__2_in_rule__Declaration__Group__16752);
+            rule__Declaration__Group__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10023,26 +10029,26 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__1"
+    // $ANTLR end "rule__Declaration__Group__1"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__1__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3170:1: rule__TypeGroup__Group__1__Impl : ( ( rule__TypeGroup__ConstAssignment_1 )? ) ;
-    public final void rule__TypeGroup__Group__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__1__Impl"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3170:1: rule__Declaration__Group__1__Impl : ( ( rule__Declaration__ConstAssignment_1 )? ) ;
+    public final void rule__Declaration__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3174:1: ( ( ( rule__TypeGroup__ConstAssignment_1 )? ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3175:1: ( ( rule__TypeGroup__ConstAssignment_1 )? )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3174:1: ( ( ( rule__Declaration__ConstAssignment_1 )? ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3175:1: ( ( rule__Declaration__ConstAssignment_1 )? )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3175:1: ( ( rule__TypeGroup__ConstAssignment_1 )? )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3176:1: ( rule__TypeGroup__ConstAssignment_1 )?
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3175:1: ( ( rule__Declaration__ConstAssignment_1 )? )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3176:1: ( rule__Declaration__ConstAssignment_1 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getConstAssignment_1()); 
+               before(grammarAccess.getDeclarationAccess().getConstAssignment_1()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3177:1: ( rule__TypeGroup__ConstAssignment_1 )?
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3177:1: ( rule__Declaration__ConstAssignment_1 )?
             int alt28=2;
             int LA28_0 = input.LA(1);
 
@@ -10051,10 +10057,10 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
             switch (alt28) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3177:2: rule__TypeGroup__ConstAssignment_1
+                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3177:2: rule__Declaration__ConstAssignment_1
                     {
-                    pushFollow(FOLLOW_rule__TypeGroup__ConstAssignment_1_in_rule__TypeGroup__Group__1__Impl6779);
-                    rule__TypeGroup__ConstAssignment_1();
+                    pushFollow(FOLLOW_rule__Declaration__ConstAssignment_1_in_rule__Declaration__Group__1__Impl6779);
+                    rule__Declaration__ConstAssignment_1();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -10065,7 +10071,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getConstAssignment_1()); 
+               after(grammarAccess.getDeclarationAccess().getConstAssignment_1()); 
             }
 
             }
@@ -10085,26 +10091,26 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__1__Impl"
+    // $ANTLR end "rule__Declaration__Group__1__Impl"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__2"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3187:1: rule__TypeGroup__Group__2 : rule__TypeGroup__Group__2__Impl rule__TypeGroup__Group__3 ;
-    public final void rule__TypeGroup__Group__2() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__2"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3187:1: rule__Declaration__Group__2 : rule__Declaration__Group__2__Impl rule__Declaration__Group__3 ;
+    public final void rule__Declaration__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3191:1: ( rule__TypeGroup__Group__2__Impl rule__TypeGroup__Group__3 )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3192:2: rule__TypeGroup__Group__2__Impl rule__TypeGroup__Group__3
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3191:1: ( rule__Declaration__Group__2__Impl rule__Declaration__Group__3 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3192:2: rule__Declaration__Group__2__Impl rule__Declaration__Group__3
             {
-            pushFollow(FOLLOW_rule__TypeGroup__Group__2__Impl_in_rule__TypeGroup__Group__26810);
-            rule__TypeGroup__Group__2__Impl();
+            pushFollow(FOLLOW_rule__Declaration__Group__2__Impl_in_rule__Declaration__Group__26810);
+            rule__Declaration__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypeGroup__Group__3_in_rule__TypeGroup__Group__26813);
-            rule__TypeGroup__Group__3();
+            pushFollow(FOLLOW_rule__Declaration__Group__3_in_rule__Declaration__Group__26813);
+            rule__Declaration__Group__3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10123,26 +10129,26 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__2"
+    // $ANTLR end "rule__Declaration__Group__2"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__2__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3199:1: rule__TypeGroup__Group__2__Impl : ( ( rule__TypeGroup__InputAssignment_2 )? ) ;
-    public final void rule__TypeGroup__Group__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__2__Impl"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3199:1: rule__Declaration__Group__2__Impl : ( ( rule__Declaration__InputAssignment_2 )? ) ;
+    public final void rule__Declaration__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3203:1: ( ( ( rule__TypeGroup__InputAssignment_2 )? ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3204:1: ( ( rule__TypeGroup__InputAssignment_2 )? )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3203:1: ( ( ( rule__Declaration__InputAssignment_2 )? ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3204:1: ( ( rule__Declaration__InputAssignment_2 )? )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3204:1: ( ( rule__TypeGroup__InputAssignment_2 )? )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3205:1: ( rule__TypeGroup__InputAssignment_2 )?
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3204:1: ( ( rule__Declaration__InputAssignment_2 )? )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3205:1: ( rule__Declaration__InputAssignment_2 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getInputAssignment_2()); 
+               before(grammarAccess.getDeclarationAccess().getInputAssignment_2()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3206:1: ( rule__TypeGroup__InputAssignment_2 )?
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3206:1: ( rule__Declaration__InputAssignment_2 )?
             int alt29=2;
             int LA29_0 = input.LA(1);
 
@@ -10151,10 +10157,10 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
             switch (alt29) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3206:2: rule__TypeGroup__InputAssignment_2
+                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3206:2: rule__Declaration__InputAssignment_2
                     {
-                    pushFollow(FOLLOW_rule__TypeGroup__InputAssignment_2_in_rule__TypeGroup__Group__2__Impl6840);
-                    rule__TypeGroup__InputAssignment_2();
+                    pushFollow(FOLLOW_rule__Declaration__InputAssignment_2_in_rule__Declaration__Group__2__Impl6840);
+                    rule__Declaration__InputAssignment_2();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -10165,7 +10171,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getInputAssignment_2()); 
+               after(grammarAccess.getDeclarationAccess().getInputAssignment_2()); 
             }
 
             }
@@ -10185,26 +10191,26 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__2__Impl"
+    // $ANTLR end "rule__Declaration__Group__2__Impl"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__3"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3216:1: rule__TypeGroup__Group__3 : rule__TypeGroup__Group__3__Impl rule__TypeGroup__Group__4 ;
-    public final void rule__TypeGroup__Group__3() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__3"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3216:1: rule__Declaration__Group__3 : rule__Declaration__Group__3__Impl rule__Declaration__Group__4 ;
+    public final void rule__Declaration__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3220:1: ( rule__TypeGroup__Group__3__Impl rule__TypeGroup__Group__4 )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3221:2: rule__TypeGroup__Group__3__Impl rule__TypeGroup__Group__4
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3220:1: ( rule__Declaration__Group__3__Impl rule__Declaration__Group__4 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3221:2: rule__Declaration__Group__3__Impl rule__Declaration__Group__4
             {
-            pushFollow(FOLLOW_rule__TypeGroup__Group__3__Impl_in_rule__TypeGroup__Group__36871);
-            rule__TypeGroup__Group__3__Impl();
+            pushFollow(FOLLOW_rule__Declaration__Group__3__Impl_in_rule__Declaration__Group__36871);
+            rule__Declaration__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypeGroup__Group__4_in_rule__TypeGroup__Group__36874);
-            rule__TypeGroup__Group__4();
+            pushFollow(FOLLOW_rule__Declaration__Group__4_in_rule__Declaration__Group__36874);
+            rule__Declaration__Group__4();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10223,26 +10229,26 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__3"
+    // $ANTLR end "rule__Declaration__Group__3"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__3__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3228:1: rule__TypeGroup__Group__3__Impl : ( ( rule__TypeGroup__OutputAssignment_3 )? ) ;
-    public final void rule__TypeGroup__Group__3__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__3__Impl"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3228:1: rule__Declaration__Group__3__Impl : ( ( rule__Declaration__OutputAssignment_3 )? ) ;
+    public final void rule__Declaration__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3232:1: ( ( ( rule__TypeGroup__OutputAssignment_3 )? ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3233:1: ( ( rule__TypeGroup__OutputAssignment_3 )? )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3232:1: ( ( ( rule__Declaration__OutputAssignment_3 )? ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3233:1: ( ( rule__Declaration__OutputAssignment_3 )? )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3233:1: ( ( rule__TypeGroup__OutputAssignment_3 )? )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3234:1: ( rule__TypeGroup__OutputAssignment_3 )?
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3233:1: ( ( rule__Declaration__OutputAssignment_3 )? )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3234:1: ( rule__Declaration__OutputAssignment_3 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getOutputAssignment_3()); 
+               before(grammarAccess.getDeclarationAccess().getOutputAssignment_3()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3235:1: ( rule__TypeGroup__OutputAssignment_3 )?
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3235:1: ( rule__Declaration__OutputAssignment_3 )?
             int alt30=2;
             int LA30_0 = input.LA(1);
 
@@ -10251,10 +10257,10 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
             switch (alt30) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3235:2: rule__TypeGroup__OutputAssignment_3
+                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3235:2: rule__Declaration__OutputAssignment_3
                     {
-                    pushFollow(FOLLOW_rule__TypeGroup__OutputAssignment_3_in_rule__TypeGroup__Group__3__Impl6901);
-                    rule__TypeGroup__OutputAssignment_3();
+                    pushFollow(FOLLOW_rule__Declaration__OutputAssignment_3_in_rule__Declaration__Group__3__Impl6901);
+                    rule__Declaration__OutputAssignment_3();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -10265,7 +10271,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getOutputAssignment_3()); 
+               after(grammarAccess.getDeclarationAccess().getOutputAssignment_3()); 
             }
 
             }
@@ -10285,26 +10291,26 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__3__Impl"
+    // $ANTLR end "rule__Declaration__Group__3__Impl"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__4"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3245:1: rule__TypeGroup__Group__4 : rule__TypeGroup__Group__4__Impl rule__TypeGroup__Group__5 ;
-    public final void rule__TypeGroup__Group__4() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__4"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3245:1: rule__Declaration__Group__4 : rule__Declaration__Group__4__Impl rule__Declaration__Group__5 ;
+    public final void rule__Declaration__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3249:1: ( rule__TypeGroup__Group__4__Impl rule__TypeGroup__Group__5 )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3250:2: rule__TypeGroup__Group__4__Impl rule__TypeGroup__Group__5
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3249:1: ( rule__Declaration__Group__4__Impl rule__Declaration__Group__5 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3250:2: rule__Declaration__Group__4__Impl rule__Declaration__Group__5
             {
-            pushFollow(FOLLOW_rule__TypeGroup__Group__4__Impl_in_rule__TypeGroup__Group__46932);
-            rule__TypeGroup__Group__4__Impl();
+            pushFollow(FOLLOW_rule__Declaration__Group__4__Impl_in_rule__Declaration__Group__46932);
+            rule__Declaration__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypeGroup__Group__5_in_rule__TypeGroup__Group__46935);
-            rule__TypeGroup__Group__5();
+            pushFollow(FOLLOW_rule__Declaration__Group__5_in_rule__Declaration__Group__46935);
+            rule__Declaration__Group__5();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10323,26 +10329,26 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__4"
+    // $ANTLR end "rule__Declaration__Group__4"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__4__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3257:1: rule__TypeGroup__Group__4__Impl : ( ( rule__TypeGroup__StaticAssignment_4 )? ) ;
-    public final void rule__TypeGroup__Group__4__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__4__Impl"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3257:1: rule__Declaration__Group__4__Impl : ( ( rule__Declaration__StaticAssignment_4 )? ) ;
+    public final void rule__Declaration__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3261:1: ( ( ( rule__TypeGroup__StaticAssignment_4 )? ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3262:1: ( ( rule__TypeGroup__StaticAssignment_4 )? )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3261:1: ( ( ( rule__Declaration__StaticAssignment_4 )? ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3262:1: ( ( rule__Declaration__StaticAssignment_4 )? )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3262:1: ( ( rule__TypeGroup__StaticAssignment_4 )? )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3263:1: ( rule__TypeGroup__StaticAssignment_4 )?
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3262:1: ( ( rule__Declaration__StaticAssignment_4 )? )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3263:1: ( rule__Declaration__StaticAssignment_4 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getStaticAssignment_4()); 
+               before(grammarAccess.getDeclarationAccess().getStaticAssignment_4()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3264:1: ( rule__TypeGroup__StaticAssignment_4 )?
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3264:1: ( rule__Declaration__StaticAssignment_4 )?
             int alt31=2;
             int LA31_0 = input.LA(1);
 
@@ -10351,10 +10357,10 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
             switch (alt31) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3264:2: rule__TypeGroup__StaticAssignment_4
+                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3264:2: rule__Declaration__StaticAssignment_4
                     {
-                    pushFollow(FOLLOW_rule__TypeGroup__StaticAssignment_4_in_rule__TypeGroup__Group__4__Impl6962);
-                    rule__TypeGroup__StaticAssignment_4();
+                    pushFollow(FOLLOW_rule__Declaration__StaticAssignment_4_in_rule__Declaration__Group__4__Impl6962);
+                    rule__Declaration__StaticAssignment_4();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -10365,7 +10371,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getStaticAssignment_4()); 
+               after(grammarAccess.getDeclarationAccess().getStaticAssignment_4()); 
             }
 
             }
@@ -10385,26 +10391,26 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__4__Impl"
+    // $ANTLR end "rule__Declaration__Group__4__Impl"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__5"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3274:1: rule__TypeGroup__Group__5 : rule__TypeGroup__Group__5__Impl rule__TypeGroup__Group__6 ;
-    public final void rule__TypeGroup__Group__5() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__5"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3274:1: rule__Declaration__Group__5 : rule__Declaration__Group__5__Impl rule__Declaration__Group__6 ;
+    public final void rule__Declaration__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3278:1: ( rule__TypeGroup__Group__5__Impl rule__TypeGroup__Group__6 )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3279:2: rule__TypeGroup__Group__5__Impl rule__TypeGroup__Group__6
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3278:1: ( rule__Declaration__Group__5__Impl rule__Declaration__Group__6 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3279:2: rule__Declaration__Group__5__Impl rule__Declaration__Group__6
             {
-            pushFollow(FOLLOW_rule__TypeGroup__Group__5__Impl_in_rule__TypeGroup__Group__56993);
-            rule__TypeGroup__Group__5__Impl();
+            pushFollow(FOLLOW_rule__Declaration__Group__5__Impl_in_rule__Declaration__Group__56993);
+            rule__Declaration__Group__5__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypeGroup__Group__6_in_rule__TypeGroup__Group__56996);
-            rule__TypeGroup__Group__6();
+            pushFollow(FOLLOW_rule__Declaration__Group__6_in_rule__Declaration__Group__56996);
+            rule__Declaration__Group__6();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10423,26 +10429,26 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__5"
+    // $ANTLR end "rule__Declaration__Group__5"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__5__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3286:1: rule__TypeGroup__Group__5__Impl : ( ( rule__TypeGroup__SignalAssignment_5 )? ) ;
-    public final void rule__TypeGroup__Group__5__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__5__Impl"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3286:1: rule__Declaration__Group__5__Impl : ( ( rule__Declaration__SignalAssignment_5 )? ) ;
+    public final void rule__Declaration__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3290:1: ( ( ( rule__TypeGroup__SignalAssignment_5 )? ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3291:1: ( ( rule__TypeGroup__SignalAssignment_5 )? )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3290:1: ( ( ( rule__Declaration__SignalAssignment_5 )? ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3291:1: ( ( rule__Declaration__SignalAssignment_5 )? )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3291:1: ( ( rule__TypeGroup__SignalAssignment_5 )? )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3292:1: ( rule__TypeGroup__SignalAssignment_5 )?
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3291:1: ( ( rule__Declaration__SignalAssignment_5 )? )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3292:1: ( rule__Declaration__SignalAssignment_5 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getSignalAssignment_5()); 
+               before(grammarAccess.getDeclarationAccess().getSignalAssignment_5()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3293:1: ( rule__TypeGroup__SignalAssignment_5 )?
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3293:1: ( rule__Declaration__SignalAssignment_5 )?
             int alt32=2;
             int LA32_0 = input.LA(1);
 
@@ -10451,10 +10457,10 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
             switch (alt32) {
                 case 1 :
-                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3293:2: rule__TypeGroup__SignalAssignment_5
+                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3293:2: rule__Declaration__SignalAssignment_5
                     {
-                    pushFollow(FOLLOW_rule__TypeGroup__SignalAssignment_5_in_rule__TypeGroup__Group__5__Impl7023);
-                    rule__TypeGroup__SignalAssignment_5();
+                    pushFollow(FOLLOW_rule__Declaration__SignalAssignment_5_in_rule__Declaration__Group__5__Impl7023);
+                    rule__Declaration__SignalAssignment_5();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -10465,7 +10471,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getSignalAssignment_5()); 
+               after(grammarAccess.getDeclarationAccess().getSignalAssignment_5()); 
             }
 
             }
@@ -10485,26 +10491,26 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__5__Impl"
+    // $ANTLR end "rule__Declaration__Group__5__Impl"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__6"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3303:1: rule__TypeGroup__Group__6 : rule__TypeGroup__Group__6__Impl rule__TypeGroup__Group__7 ;
-    public final void rule__TypeGroup__Group__6() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__6"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3303:1: rule__Declaration__Group__6 : rule__Declaration__Group__6__Impl rule__Declaration__Group__7 ;
+    public final void rule__Declaration__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3307:1: ( rule__TypeGroup__Group__6__Impl rule__TypeGroup__Group__7 )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3308:2: rule__TypeGroup__Group__6__Impl rule__TypeGroup__Group__7
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3307:1: ( rule__Declaration__Group__6__Impl rule__Declaration__Group__7 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3308:2: rule__Declaration__Group__6__Impl rule__Declaration__Group__7
             {
-            pushFollow(FOLLOW_rule__TypeGroup__Group__6__Impl_in_rule__TypeGroup__Group__67054);
-            rule__TypeGroup__Group__6__Impl();
+            pushFollow(FOLLOW_rule__Declaration__Group__6__Impl_in_rule__Declaration__Group__67054);
+            rule__Declaration__Group__6__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypeGroup__Group__7_in_rule__TypeGroup__Group__67057);
-            rule__TypeGroup__Group__7();
+            pushFollow(FOLLOW_rule__Declaration__Group__7_in_rule__Declaration__Group__67057);
+            rule__Declaration__Group__7();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10523,127 +10529,49 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__6"
+    // $ANTLR end "rule__Declaration__Group__6"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__6__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3315:1: rule__TypeGroup__Group__6__Impl : ( ( rule__TypeGroup__TypeAssignment_6 ) ) ;
-    public final void rule__TypeGroup__Group__6__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__6__Impl"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3315:1: rule__Declaration__Group__6__Impl : ( ( rule__Declaration__TypeAssignment_6 )? ) ;
+    public final void rule__Declaration__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3319:1: ( ( ( rule__TypeGroup__TypeAssignment_6 ) ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3320:1: ( ( rule__TypeGroup__TypeAssignment_6 ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3319:1: ( ( ( rule__Declaration__TypeAssignment_6 )? ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3320:1: ( ( rule__Declaration__TypeAssignment_6 )? )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3320:1: ( ( rule__TypeGroup__TypeAssignment_6 ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3321:1: ( rule__TypeGroup__TypeAssignment_6 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3320:1: ( ( rule__Declaration__TypeAssignment_6 )? )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3321:1: ( rule__Declaration__TypeAssignment_6 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getTypeAssignment_6()); 
+               before(grammarAccess.getDeclarationAccess().getTypeAssignment_6()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3322:1: ( rule__TypeGroup__TypeAssignment_6 )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3322:2: rule__TypeGroup__TypeAssignment_6
-            {
-            pushFollow(FOLLOW_rule__TypeGroup__TypeAssignment_6_in_rule__TypeGroup__Group__6__Impl7084);
-            rule__TypeGroup__TypeAssignment_6();
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3322:1: ( rule__Declaration__TypeAssignment_6 )?
+            int alt33=2;
+            int LA33_0 = input.LA(1);
 
-            state._fsp--;
-            if (state.failed) return ;
-
+            if ( ((LA33_0>=35 && LA33_0<=41)) ) {
+                alt33=1;
             }
+            switch (alt33) {
+                case 1 :
+                    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3322:2: rule__Declaration__TypeAssignment_6
+                    {
+                    pushFollow(FOLLOW_rule__Declaration__TypeAssignment_6_in_rule__Declaration__Group__6__Impl7084);
+                    rule__Declaration__TypeAssignment_6();
 
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getTypeAssignment_6()); 
-            }
+                    state._fsp--;
+                    if (state.failed) return ;
 
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeGroup__Group__6__Impl"
-
-
-    // $ANTLR start "rule__TypeGroup__Group__7"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3332:1: rule__TypeGroup__Group__7 : rule__TypeGroup__Group__7__Impl rule__TypeGroup__Group__8 ;
-    public final void rule__TypeGroup__Group__7() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3336:1: ( rule__TypeGroup__Group__7__Impl rule__TypeGroup__Group__8 )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3337:2: rule__TypeGroup__Group__7__Impl rule__TypeGroup__Group__8
-            {
-            pushFollow(FOLLOW_rule__TypeGroup__Group__7__Impl_in_rule__TypeGroup__Group__77114);
-            rule__TypeGroup__Group__7__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypeGroup__Group__8_in_rule__TypeGroup__Group__77117);
-            rule__TypeGroup__Group__8();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__TypeGroup__Group__7"
-
-
-    // $ANTLR start "rule__TypeGroup__Group__7__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3344:1: rule__TypeGroup__Group__7__Impl : ( ( rule__TypeGroup__ValuedObjectsAssignment_7 ) ) ;
-    public final void rule__TypeGroup__Group__7__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3348:1: ( ( ( rule__TypeGroup__ValuedObjectsAssignment_7 ) ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3349:1: ( ( rule__TypeGroup__ValuedObjectsAssignment_7 ) )
-            {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3349:1: ( ( rule__TypeGroup__ValuedObjectsAssignment_7 ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3350:1: ( rule__TypeGroup__ValuedObjectsAssignment_7 )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getValuedObjectsAssignment_7()); 
-            }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3351:1: ( rule__TypeGroup__ValuedObjectsAssignment_7 )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3351:2: rule__TypeGroup__ValuedObjectsAssignment_7
-            {
-            pushFollow(FOLLOW_rule__TypeGroup__ValuedObjectsAssignment_7_in_rule__TypeGroup__Group__7__Impl7144);
-            rule__TypeGroup__ValuedObjectsAssignment_7();
-
-            state._fsp--;
-            if (state.failed) return ;
+                    }
+                    break;
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getValuedObjectsAssignment_7()); 
+               after(grammarAccess.getDeclarationAccess().getTypeAssignment_6()); 
             }
 
             }
@@ -10663,26 +10591,26 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__7__Impl"
+    // $ANTLR end "rule__Declaration__Group__6__Impl"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__8"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3361:1: rule__TypeGroup__Group__8 : rule__TypeGroup__Group__8__Impl rule__TypeGroup__Group__9 ;
-    public final void rule__TypeGroup__Group__8() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__7"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3332:1: rule__Declaration__Group__7 : rule__Declaration__Group__7__Impl rule__Declaration__Group__8 ;
+    public final void rule__Declaration__Group__7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3365:1: ( rule__TypeGroup__Group__8__Impl rule__TypeGroup__Group__9 )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3366:2: rule__TypeGroup__Group__8__Impl rule__TypeGroup__Group__9
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3336:1: ( rule__Declaration__Group__7__Impl rule__Declaration__Group__8 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3337:2: rule__Declaration__Group__7__Impl rule__Declaration__Group__8
             {
-            pushFollow(FOLLOW_rule__TypeGroup__Group__8__Impl_in_rule__TypeGroup__Group__87174);
-            rule__TypeGroup__Group__8__Impl();
+            pushFollow(FOLLOW_rule__Declaration__Group__7__Impl_in_rule__Declaration__Group__77115);
+            rule__Declaration__Group__7__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypeGroup__Group__9_in_rule__TypeGroup__Group__87177);
-            rule__TypeGroup__Group__9();
+            pushFollow(FOLLOW_rule__Declaration__Group__8_in_rule__Declaration__Group__77118);
+            rule__Declaration__Group__8();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10701,42 +10629,131 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__8"
+    // $ANTLR end "rule__Declaration__Group__7"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__8__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3373:1: rule__TypeGroup__Group__8__Impl : ( ( rule__TypeGroup__Group_8__0 )* ) ;
-    public final void rule__TypeGroup__Group__8__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__7__Impl"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3344:1: rule__Declaration__Group__7__Impl : ( ( rule__Declaration__ValuedObjectsAssignment_7 ) ) ;
+    public final void rule__Declaration__Group__7__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3377:1: ( ( ( rule__TypeGroup__Group_8__0 )* ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3378:1: ( ( rule__TypeGroup__Group_8__0 )* )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3348:1: ( ( ( rule__Declaration__ValuedObjectsAssignment_7 ) ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3349:1: ( ( rule__Declaration__ValuedObjectsAssignment_7 ) )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3378:1: ( ( rule__TypeGroup__Group_8__0 )* )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3379:1: ( rule__TypeGroup__Group_8__0 )*
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3349:1: ( ( rule__Declaration__ValuedObjectsAssignment_7 ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3350:1: ( rule__Declaration__ValuedObjectsAssignment_7 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getGroup_8()); 
+               before(grammarAccess.getDeclarationAccess().getValuedObjectsAssignment_7()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3380:1: ( rule__TypeGroup__Group_8__0 )*
-            loop33:
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3351:1: ( rule__Declaration__ValuedObjectsAssignment_7 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3351:2: rule__Declaration__ValuedObjectsAssignment_7
+            {
+            pushFollow(FOLLOW_rule__Declaration__ValuedObjectsAssignment_7_in_rule__Declaration__Group__7__Impl7145);
+            rule__Declaration__ValuedObjectsAssignment_7();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getDeclarationAccess().getValuedObjectsAssignment_7()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Declaration__Group__7__Impl"
+
+
+    // $ANTLR start "rule__Declaration__Group__8"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3361:1: rule__Declaration__Group__8 : rule__Declaration__Group__8__Impl rule__Declaration__Group__9 ;
+    public final void rule__Declaration__Group__8() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3365:1: ( rule__Declaration__Group__8__Impl rule__Declaration__Group__9 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3366:2: rule__Declaration__Group__8__Impl rule__Declaration__Group__9
+            {
+            pushFollow(FOLLOW_rule__Declaration__Group__8__Impl_in_rule__Declaration__Group__87175);
+            rule__Declaration__Group__8__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FOLLOW_rule__Declaration__Group__9_in_rule__Declaration__Group__87178);
+            rule__Declaration__Group__9();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__Declaration__Group__8"
+
+
+    // $ANTLR start "rule__Declaration__Group__8__Impl"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3373:1: rule__Declaration__Group__8__Impl : ( ( rule__Declaration__Group_8__0 )* ) ;
+    public final void rule__Declaration__Group__8__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3377:1: ( ( ( rule__Declaration__Group_8__0 )* ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3378:1: ( ( rule__Declaration__Group_8__0 )* )
+            {
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3378:1: ( ( rule__Declaration__Group_8__0 )* )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3379:1: ( rule__Declaration__Group_8__0 )*
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getDeclarationAccess().getGroup_8()); 
+            }
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3380:1: ( rule__Declaration__Group_8__0 )*
+            loop34:
             do {
-                int alt33=2;
-                int LA33_0 = input.LA(1);
+                int alt34=2;
+                int LA34_0 = input.LA(1);
 
-                if ( (LA33_0==53) ) {
-                    alt33=1;
+                if ( (LA34_0==53) ) {
+                    alt34=1;
                 }
 
 
-                switch (alt33) {
+                switch (alt34) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3380:2: rule__TypeGroup__Group_8__0
+            	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3380:2: rule__Declaration__Group_8__0
             	    {
-            	    pushFollow(FOLLOW_rule__TypeGroup__Group_8__0_in_rule__TypeGroup__Group__8__Impl7204);
-            	    rule__TypeGroup__Group_8__0();
+            	    pushFollow(FOLLOW_rule__Declaration__Group_8__0_in_rule__Declaration__Group__8__Impl7205);
+            	    rule__Declaration__Group_8__0();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -10745,12 +10762,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop33;
+            	    break loop34;
                 }
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getGroup_8()); 
+               after(grammarAccess.getDeclarationAccess().getGroup_8()); 
             }
 
             }
@@ -10770,21 +10787,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__8__Impl"
+    // $ANTLR end "rule__Declaration__Group__8__Impl"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__9"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3390:1: rule__TypeGroup__Group__9 : rule__TypeGroup__Group__9__Impl ;
-    public final void rule__TypeGroup__Group__9() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__9"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3390:1: rule__Declaration__Group__9 : rule__Declaration__Group__9__Impl ;
+    public final void rule__Declaration__Group__9() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3394:1: ( rule__TypeGroup__Group__9__Impl )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3395:2: rule__TypeGroup__Group__9__Impl
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3394:1: ( rule__Declaration__Group__9__Impl )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3395:2: rule__Declaration__Group__9__Impl
             {
-            pushFollow(FOLLOW_rule__TypeGroup__Group__9__Impl_in_rule__TypeGroup__Group__97235);
-            rule__TypeGroup__Group__9__Impl();
+            pushFollow(FOLLOW_rule__Declaration__Group__9__Impl_in_rule__Declaration__Group__97236);
+            rule__Declaration__Group__9__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10803,12 +10820,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__9"
+    // $ANTLR end "rule__Declaration__Group__9"
 
 
-    // $ANTLR start "rule__TypeGroup__Group__9__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3401:1: rule__TypeGroup__Group__9__Impl : ( ';' ) ;
-    public final void rule__TypeGroup__Group__9__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group__9__Impl"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3401:1: rule__Declaration__Group__9__Impl : ( ';' ) ;
+    public final void rule__Declaration__Group__9__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -10820,11 +10837,11 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3407:1: ';'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getSemicolonKeyword_9()); 
+               before(grammarAccess.getDeclarationAccess().getSemicolonKeyword_9()); 
             }
-            match(input,52,FOLLOW_52_in_rule__TypeGroup__Group__9__Impl7263); if (state.failed) return ;
+            match(input,52,FOLLOW_52_in_rule__Declaration__Group__9__Impl7264); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getSemicolonKeyword_9()); 
+               after(grammarAccess.getDeclarationAccess().getSemicolonKeyword_9()); 
             }
 
             }
@@ -10844,26 +10861,26 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group__9__Impl"
+    // $ANTLR end "rule__Declaration__Group__9__Impl"
 
 
-    // $ANTLR start "rule__TypeGroup__Group_8__0"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3440:1: rule__TypeGroup__Group_8__0 : rule__TypeGroup__Group_8__0__Impl rule__TypeGroup__Group_8__1 ;
-    public final void rule__TypeGroup__Group_8__0() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group_8__0"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3440:1: rule__Declaration__Group_8__0 : rule__Declaration__Group_8__0__Impl rule__Declaration__Group_8__1 ;
+    public final void rule__Declaration__Group_8__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3444:1: ( rule__TypeGroup__Group_8__0__Impl rule__TypeGroup__Group_8__1 )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3445:2: rule__TypeGroup__Group_8__0__Impl rule__TypeGroup__Group_8__1
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3444:1: ( rule__Declaration__Group_8__0__Impl rule__Declaration__Group_8__1 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3445:2: rule__Declaration__Group_8__0__Impl rule__Declaration__Group_8__1
             {
-            pushFollow(FOLLOW_rule__TypeGroup__Group_8__0__Impl_in_rule__TypeGroup__Group_8__07314);
-            rule__TypeGroup__Group_8__0__Impl();
+            pushFollow(FOLLOW_rule__Declaration__Group_8__0__Impl_in_rule__Declaration__Group_8__07315);
+            rule__Declaration__Group_8__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypeGroup__Group_8__1_in_rule__TypeGroup__Group_8__07317);
-            rule__TypeGroup__Group_8__1();
+            pushFollow(FOLLOW_rule__Declaration__Group_8__1_in_rule__Declaration__Group_8__07318);
+            rule__Declaration__Group_8__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10882,12 +10899,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group_8__0"
+    // $ANTLR end "rule__Declaration__Group_8__0"
 
 
-    // $ANTLR start "rule__TypeGroup__Group_8__0__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3452:1: rule__TypeGroup__Group_8__0__Impl : ( ',' ) ;
-    public final void rule__TypeGroup__Group_8__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group_8__0__Impl"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3452:1: rule__Declaration__Group_8__0__Impl : ( ',' ) ;
+    public final void rule__Declaration__Group_8__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -10899,11 +10916,11 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3458:1: ','
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getCommaKeyword_8_0()); 
+               before(grammarAccess.getDeclarationAccess().getCommaKeyword_8_0()); 
             }
-            match(input,53,FOLLOW_53_in_rule__TypeGroup__Group_8__0__Impl7345); if (state.failed) return ;
+            match(input,53,FOLLOW_53_in_rule__Declaration__Group_8__0__Impl7346); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getCommaKeyword_8_0()); 
+               after(grammarAccess.getDeclarationAccess().getCommaKeyword_8_0()); 
             }
 
             }
@@ -10923,21 +10940,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group_8__0__Impl"
+    // $ANTLR end "rule__Declaration__Group_8__0__Impl"
 
 
-    // $ANTLR start "rule__TypeGroup__Group_8__1"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3471:1: rule__TypeGroup__Group_8__1 : rule__TypeGroup__Group_8__1__Impl ;
-    public final void rule__TypeGroup__Group_8__1() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group_8__1"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3471:1: rule__Declaration__Group_8__1 : rule__Declaration__Group_8__1__Impl ;
+    public final void rule__Declaration__Group_8__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3475:1: ( rule__TypeGroup__Group_8__1__Impl )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3476:2: rule__TypeGroup__Group_8__1__Impl
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3475:1: ( rule__Declaration__Group_8__1__Impl )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3476:2: rule__Declaration__Group_8__1__Impl
             {
-            pushFollow(FOLLOW_rule__TypeGroup__Group_8__1__Impl_in_rule__TypeGroup__Group_8__17376);
-            rule__TypeGroup__Group_8__1__Impl();
+            pushFollow(FOLLOW_rule__Declaration__Group_8__1__Impl_in_rule__Declaration__Group_8__17377);
+            rule__Declaration__Group_8__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10956,30 +10973,30 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group_8__1"
+    // $ANTLR end "rule__Declaration__Group_8__1"
 
 
-    // $ANTLR start "rule__TypeGroup__Group_8__1__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3482:1: rule__TypeGroup__Group_8__1__Impl : ( ( rule__TypeGroup__ValuedObjectsAssignment_8_1 ) ) ;
-    public final void rule__TypeGroup__Group_8__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__Group_8__1__Impl"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3482:1: rule__Declaration__Group_8__1__Impl : ( ( rule__Declaration__ValuedObjectsAssignment_8_1 ) ) ;
+    public final void rule__Declaration__Group_8__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3486:1: ( ( ( rule__TypeGroup__ValuedObjectsAssignment_8_1 ) ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3487:1: ( ( rule__TypeGroup__ValuedObjectsAssignment_8_1 ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3486:1: ( ( ( rule__Declaration__ValuedObjectsAssignment_8_1 ) ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3487:1: ( ( rule__Declaration__ValuedObjectsAssignment_8_1 ) )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3487:1: ( ( rule__TypeGroup__ValuedObjectsAssignment_8_1 ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3488:1: ( rule__TypeGroup__ValuedObjectsAssignment_8_1 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3487:1: ( ( rule__Declaration__ValuedObjectsAssignment_8_1 ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3488:1: ( rule__Declaration__ValuedObjectsAssignment_8_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getValuedObjectsAssignment_8_1()); 
+               before(grammarAccess.getDeclarationAccess().getValuedObjectsAssignment_8_1()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3489:1: ( rule__TypeGroup__ValuedObjectsAssignment_8_1 )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3489:2: rule__TypeGroup__ValuedObjectsAssignment_8_1
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3489:1: ( rule__Declaration__ValuedObjectsAssignment_8_1 )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3489:2: rule__Declaration__ValuedObjectsAssignment_8_1
             {
-            pushFollow(FOLLOW_rule__TypeGroup__ValuedObjectsAssignment_8_1_in_rule__TypeGroup__Group_8__1__Impl7403);
-            rule__TypeGroup__ValuedObjectsAssignment_8_1();
+            pushFollow(FOLLOW_rule__Declaration__ValuedObjectsAssignment_8_1_in_rule__Declaration__Group_8__1__Impl7404);
+            rule__Declaration__ValuedObjectsAssignment_8_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10987,7 +11004,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getValuedObjectsAssignment_8_1()); 
+               after(grammarAccess.getDeclarationAccess().getValuedObjectsAssignment_8_1()); 
             }
 
             }
@@ -11007,7 +11024,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__Group_8__1__Impl"
+    // $ANTLR end "rule__Declaration__Group_8__1__Impl"
 
 
     // $ANTLR start "rule__ValuedObject__Group__0"
@@ -11020,12 +11037,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3507:1: ( rule__ValuedObject__Group__0__Impl rule__ValuedObject__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3508:2: rule__ValuedObject__Group__0__Impl rule__ValuedObject__Group__1
             {
-            pushFollow(FOLLOW_rule__ValuedObject__Group__0__Impl_in_rule__ValuedObject__Group__07437);
+            pushFollow(FOLLOW_rule__ValuedObject__Group__0__Impl_in_rule__ValuedObject__Group__07438);
             rule__ValuedObject__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ValuedObject__Group__1_in_rule__ValuedObject__Group__07440);
+            pushFollow(FOLLOW_rule__ValuedObject__Group__1_in_rule__ValuedObject__Group__07441);
             rule__ValuedObject__Group__1();
 
             state._fsp--;
@@ -11065,21 +11082,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getValuedObjectAccess().getAnnotationsAssignment_0()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3522:1: ( rule__ValuedObject__AnnotationsAssignment_0 )*
-            loop34:
+            loop35:
             do {
-                int alt34=2;
-                int LA34_0 = input.LA(1);
+                int alt35=2;
+                int LA35_0 = input.LA(1);
 
-                if ( (LA34_0==RULE_COMMENT_ANNOTATION||LA34_0==70) ) {
-                    alt34=1;
+                if ( (LA35_0==RULE_COMMENT_ANNOTATION||LA35_0==70) ) {
+                    alt35=1;
                 }
 
 
-                switch (alt34) {
+                switch (alt35) {
             	case 1 :
             	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3522:2: rule__ValuedObject__AnnotationsAssignment_0
             	    {
-            	    pushFollow(FOLLOW_rule__ValuedObject__AnnotationsAssignment_0_in_rule__ValuedObject__Group__0__Impl7467);
+            	    pushFollow(FOLLOW_rule__ValuedObject__AnnotationsAssignment_0_in_rule__ValuedObject__Group__0__Impl7468);
             	    rule__ValuedObject__AnnotationsAssignment_0();
 
             	    state._fsp--;
@@ -11089,7 +11106,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop34;
+            	    break loop35;
                 }
             } while (true);
 
@@ -11127,12 +11144,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3536:1: ( rule__ValuedObject__Group__1__Impl rule__ValuedObject__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3537:2: rule__ValuedObject__Group__1__Impl rule__ValuedObject__Group__2
             {
-            pushFollow(FOLLOW_rule__ValuedObject__Group__1__Impl_in_rule__ValuedObject__Group__17498);
+            pushFollow(FOLLOW_rule__ValuedObject__Group__1__Impl_in_rule__ValuedObject__Group__17499);
             rule__ValuedObject__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ValuedObject__Group__2_in_rule__ValuedObject__Group__17501);
+            pushFollow(FOLLOW_rule__ValuedObject__Group__2_in_rule__ValuedObject__Group__17502);
             rule__ValuedObject__Group__2();
 
             state._fsp--;
@@ -11174,7 +11191,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3551:1: ( rule__ValuedObject__NameAssignment_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3551:2: rule__ValuedObject__NameAssignment_1
             {
-            pushFollow(FOLLOW_rule__ValuedObject__NameAssignment_1_in_rule__ValuedObject__Group__1__Impl7528);
+            pushFollow(FOLLOW_rule__ValuedObject__NameAssignment_1_in_rule__ValuedObject__Group__1__Impl7529);
             rule__ValuedObject__NameAssignment_1();
 
             state._fsp--;
@@ -11216,12 +11233,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3565:1: ( rule__ValuedObject__Group__2__Impl rule__ValuedObject__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3566:2: rule__ValuedObject__Group__2__Impl rule__ValuedObject__Group__3
             {
-            pushFollow(FOLLOW_rule__ValuedObject__Group__2__Impl_in_rule__ValuedObject__Group__27558);
+            pushFollow(FOLLOW_rule__ValuedObject__Group__2__Impl_in_rule__ValuedObject__Group__27559);
             rule__ValuedObject__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ValuedObject__Group__3_in_rule__ValuedObject__Group__27561);
+            pushFollow(FOLLOW_rule__ValuedObject__Group__3_in_rule__ValuedObject__Group__27562);
             rule__ValuedObject__Group__3();
 
             state._fsp--;
@@ -11261,17 +11278,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getValuedObjectAccess().getGroup_2()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3580:1: ( rule__ValuedObject__Group_2__0 )?
-            int alt35=2;
-            int LA35_0 = input.LA(1);
+            int alt36=2;
+            int LA36_0 = input.LA(1);
 
-            if ( (LA35_0==54) ) {
-                alt35=1;
+            if ( (LA36_0==54) ) {
+                alt36=1;
             }
-            switch (alt35) {
+            switch (alt36) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3580:2: rule__ValuedObject__Group_2__0
                     {
-                    pushFollow(FOLLOW_rule__ValuedObject__Group_2__0_in_rule__ValuedObject__Group__2__Impl7588);
+                    pushFollow(FOLLOW_rule__ValuedObject__Group_2__0_in_rule__ValuedObject__Group__2__Impl7589);
                     rule__ValuedObject__Group_2__0();
 
                     state._fsp--;
@@ -11316,12 +11333,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3594:1: ( rule__ValuedObject__Group__3__Impl rule__ValuedObject__Group__4 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3595:2: rule__ValuedObject__Group__3__Impl rule__ValuedObject__Group__4
             {
-            pushFollow(FOLLOW_rule__ValuedObject__Group__3__Impl_in_rule__ValuedObject__Group__37619);
+            pushFollow(FOLLOW_rule__ValuedObject__Group__3__Impl_in_rule__ValuedObject__Group__37620);
             rule__ValuedObject__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ValuedObject__Group__4_in_rule__ValuedObject__Group__37622);
+            pushFollow(FOLLOW_rule__ValuedObject__Group__4_in_rule__ValuedObject__Group__37623);
             rule__ValuedObject__Group__4();
 
             state._fsp--;
@@ -11361,17 +11378,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getValuedObjectAccess().getGroup_3()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3609:1: ( rule__ValuedObject__Group_3__0 )?
-            int alt36=2;
-            int LA36_0 = input.LA(1);
+            int alt37=2;
+            int LA37_0 = input.LA(1);
 
-            if ( (LA36_0==55) ) {
-                alt36=1;
+            if ( (LA37_0==55) ) {
+                alt37=1;
             }
-            switch (alt36) {
+            switch (alt37) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3609:2: rule__ValuedObject__Group_3__0
                     {
-                    pushFollow(FOLLOW_rule__ValuedObject__Group_3__0_in_rule__ValuedObject__Group__3__Impl7649);
+                    pushFollow(FOLLOW_rule__ValuedObject__Group_3__0_in_rule__ValuedObject__Group__3__Impl7650);
                     rule__ValuedObject__Group_3__0();
 
                     state._fsp--;
@@ -11416,7 +11433,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3623:1: ( rule__ValuedObject__Group__4__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3624:2: rule__ValuedObject__Group__4__Impl
             {
-            pushFollow(FOLLOW_rule__ValuedObject__Group__4__Impl_in_rule__ValuedObject__Group__47680);
+            pushFollow(FOLLOW_rule__ValuedObject__Group__4__Impl_in_rule__ValuedObject__Group__47681);
             rule__ValuedObject__Group__4__Impl();
 
             state._fsp--;
@@ -11455,7 +11472,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getSemicolonKeyword_4()); 
             }
-            match(input,52,FOLLOW_52_in_rule__ValuedObject__Group__4__Impl7708); if (state.failed) return ;
+            match(input,52,FOLLOW_52_in_rule__ValuedObject__Group__4__Impl7709); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectAccess().getSemicolonKeyword_4()); 
             }
@@ -11490,12 +11507,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3663:1: ( rule__ValuedObject__Group_2__0__Impl rule__ValuedObject__Group_2__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3664:2: rule__ValuedObject__Group_2__0__Impl rule__ValuedObject__Group_2__1
             {
-            pushFollow(FOLLOW_rule__ValuedObject__Group_2__0__Impl_in_rule__ValuedObject__Group_2__07749);
+            pushFollow(FOLLOW_rule__ValuedObject__Group_2__0__Impl_in_rule__ValuedObject__Group_2__07750);
             rule__ValuedObject__Group_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ValuedObject__Group_2__1_in_rule__ValuedObject__Group_2__07752);
+            pushFollow(FOLLOW_rule__ValuedObject__Group_2__1_in_rule__ValuedObject__Group_2__07753);
             rule__ValuedObject__Group_2__1();
 
             state._fsp--;
@@ -11534,7 +11551,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getEqualsSignKeyword_2_0()); 
             }
-            match(input,54,FOLLOW_54_in_rule__ValuedObject__Group_2__0__Impl7780); if (state.failed) return ;
+            match(input,54,FOLLOW_54_in_rule__ValuedObject__Group_2__0__Impl7781); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectAccess().getEqualsSignKeyword_2_0()); 
             }
@@ -11569,7 +11586,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3694:1: ( rule__ValuedObject__Group_2__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3695:2: rule__ValuedObject__Group_2__1__Impl
             {
-            pushFollow(FOLLOW_rule__ValuedObject__Group_2__1__Impl_in_rule__ValuedObject__Group_2__17811);
+            pushFollow(FOLLOW_rule__ValuedObject__Group_2__1__Impl_in_rule__ValuedObject__Group_2__17812);
             rule__ValuedObject__Group_2__1__Impl();
 
             state._fsp--;
@@ -11611,7 +11628,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3708:1: ( rule__ValuedObject__InitialValueAssignment_2_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3708:2: rule__ValuedObject__InitialValueAssignment_2_1
             {
-            pushFollow(FOLLOW_rule__ValuedObject__InitialValueAssignment_2_1_in_rule__ValuedObject__Group_2__1__Impl7838);
+            pushFollow(FOLLOW_rule__ValuedObject__InitialValueAssignment_2_1_in_rule__ValuedObject__Group_2__1__Impl7839);
             rule__ValuedObject__InitialValueAssignment_2_1();
 
             state._fsp--;
@@ -11653,12 +11670,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3726:1: ( rule__ValuedObject__Group_3__0__Impl rule__ValuedObject__Group_3__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3727:2: rule__ValuedObject__Group_3__0__Impl rule__ValuedObject__Group_3__1
             {
-            pushFollow(FOLLOW_rule__ValuedObject__Group_3__0__Impl_in_rule__ValuedObject__Group_3__07872);
+            pushFollow(FOLLOW_rule__ValuedObject__Group_3__0__Impl_in_rule__ValuedObject__Group_3__07873);
             rule__ValuedObject__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ValuedObject__Group_3__1_in_rule__ValuedObject__Group_3__07875);
+            pushFollow(FOLLOW_rule__ValuedObject__Group_3__1_in_rule__ValuedObject__Group_3__07876);
             rule__ValuedObject__Group_3__1();
 
             state._fsp--;
@@ -11697,7 +11714,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getCombineKeyword_3_0()); 
             }
-            match(input,55,FOLLOW_55_in_rule__ValuedObject__Group_3__0__Impl7903); if (state.failed) return ;
+            match(input,55,FOLLOW_55_in_rule__ValuedObject__Group_3__0__Impl7904); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectAccess().getCombineKeyword_3_0()); 
             }
@@ -11732,7 +11749,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3757:1: ( rule__ValuedObject__Group_3__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3758:2: rule__ValuedObject__Group_3__1__Impl
             {
-            pushFollow(FOLLOW_rule__ValuedObject__Group_3__1__Impl_in_rule__ValuedObject__Group_3__17934);
+            pushFollow(FOLLOW_rule__ValuedObject__Group_3__1__Impl_in_rule__ValuedObject__Group_3__17935);
             rule__ValuedObject__Group_3__1__Impl();
 
             state._fsp--;
@@ -11774,7 +11791,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3771:1: ( rule__ValuedObject__CombineOperatorAssignment_3_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3771:2: rule__ValuedObject__CombineOperatorAssignment_3_1
             {
-            pushFollow(FOLLOW_rule__ValuedObject__CombineOperatorAssignment_3_1_in_rule__ValuedObject__Group_3__1__Impl7961);
+            pushFollow(FOLLOW_rule__ValuedObject__CombineOperatorAssignment_3_1_in_rule__ValuedObject__Group_3__1__Impl7962);
             rule__ValuedObject__CombineOperatorAssignment_3_1();
 
             state._fsp--;
@@ -11816,12 +11833,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3789:1: ( rule__Assignment__Group__0__Impl rule__Assignment__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3790:2: rule__Assignment__Group__0__Impl rule__Assignment__Group__1
             {
-            pushFollow(FOLLOW_rule__Assignment__Group__0__Impl_in_rule__Assignment__Group__07995);
+            pushFollow(FOLLOW_rule__Assignment__Group__0__Impl_in_rule__Assignment__Group__07996);
             rule__Assignment__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Assignment__Group__1_in_rule__Assignment__Group__07998);
+            pushFollow(FOLLOW_rule__Assignment__Group__1_in_rule__Assignment__Group__07999);
             rule__Assignment__Group__1();
 
             state._fsp--;
@@ -11863,7 +11880,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3804:1: ( rule__Assignment__VariableAssignment_0 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3804:2: rule__Assignment__VariableAssignment_0
             {
-            pushFollow(FOLLOW_rule__Assignment__VariableAssignment_0_in_rule__Assignment__Group__0__Impl8025);
+            pushFollow(FOLLOW_rule__Assignment__VariableAssignment_0_in_rule__Assignment__Group__0__Impl8026);
             rule__Assignment__VariableAssignment_0();
 
             state._fsp--;
@@ -11905,12 +11922,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3818:1: ( rule__Assignment__Group__1__Impl rule__Assignment__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3819:2: rule__Assignment__Group__1__Impl rule__Assignment__Group__2
             {
-            pushFollow(FOLLOW_rule__Assignment__Group__1__Impl_in_rule__Assignment__Group__18055);
+            pushFollow(FOLLOW_rule__Assignment__Group__1__Impl_in_rule__Assignment__Group__18056);
             rule__Assignment__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Assignment__Group__2_in_rule__Assignment__Group__18058);
+            pushFollow(FOLLOW_rule__Assignment__Group__2_in_rule__Assignment__Group__18059);
             rule__Assignment__Group__2();
 
             state._fsp--;
@@ -11949,7 +11966,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getEqualsSignKeyword_1()); 
             }
-            match(input,54,FOLLOW_54_in_rule__Assignment__Group__1__Impl8086); if (state.failed) return ;
+            match(input,54,FOLLOW_54_in_rule__Assignment__Group__1__Impl8087); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAssignmentAccess().getEqualsSignKeyword_1()); 
             }
@@ -11984,7 +12001,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3849:1: ( rule__Assignment__Group__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3850:2: rule__Assignment__Group__2__Impl
             {
-            pushFollow(FOLLOW_rule__Assignment__Group__2__Impl_in_rule__Assignment__Group__28117);
+            pushFollow(FOLLOW_rule__Assignment__Group__2__Impl_in_rule__Assignment__Group__28118);
             rule__Assignment__Group__2__Impl();
 
             state._fsp--;
@@ -12026,7 +12043,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3863:1: ( rule__Assignment__ExpressionAssignment_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3863:2: rule__Assignment__ExpressionAssignment_2
             {
-            pushFollow(FOLLOW_rule__Assignment__ExpressionAssignment_2_in_rule__Assignment__Group__2__Impl8144);
+            pushFollow(FOLLOW_rule__Assignment__ExpressionAssignment_2_in_rule__Assignment__Group__2__Impl8145);
             rule__Assignment__ExpressionAssignment_2();
 
             state._fsp--;
@@ -12068,12 +12085,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3883:1: ( rule__Prio__Group__0__Impl rule__Prio__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3884:2: rule__Prio__Group__0__Impl rule__Prio__Group__1
             {
-            pushFollow(FOLLOW_rule__Prio__Group__0__Impl_in_rule__Prio__Group__08180);
+            pushFollow(FOLLOW_rule__Prio__Group__0__Impl_in_rule__Prio__Group__08181);
             rule__Prio__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Prio__Group__1_in_rule__Prio__Group__08183);
+            pushFollow(FOLLOW_rule__Prio__Group__1_in_rule__Prio__Group__08184);
             rule__Prio__Group__1();
 
             state._fsp--;
@@ -12112,7 +12129,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrioAccess().getPrioKeyword_0()); 
             }
-            match(input,56,FOLLOW_56_in_rule__Prio__Group__0__Impl8211); if (state.failed) return ;
+            match(input,56,FOLLOW_56_in_rule__Prio__Group__0__Impl8212); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPrioAccess().getPrioKeyword_0()); 
             }
@@ -12147,12 +12164,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3914:1: ( rule__Prio__Group__1__Impl rule__Prio__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3915:2: rule__Prio__Group__1__Impl rule__Prio__Group__2
             {
-            pushFollow(FOLLOW_rule__Prio__Group__1__Impl_in_rule__Prio__Group__18242);
+            pushFollow(FOLLOW_rule__Prio__Group__1__Impl_in_rule__Prio__Group__18243);
             rule__Prio__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Prio__Group__2_in_rule__Prio__Group__18245);
+            pushFollow(FOLLOW_rule__Prio__Group__2_in_rule__Prio__Group__18246);
             rule__Prio__Group__2();
 
             state._fsp--;
@@ -12191,7 +12208,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrioAccess().getLeftParenthesisKeyword_1()); 
             }
-            match(input,46,FOLLOW_46_in_rule__Prio__Group__1__Impl8273); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__Prio__Group__1__Impl8274); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPrioAccess().getLeftParenthesisKeyword_1()); 
             }
@@ -12226,12 +12243,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3945:1: ( rule__Prio__Group__2__Impl rule__Prio__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3946:2: rule__Prio__Group__2__Impl rule__Prio__Group__3
             {
-            pushFollow(FOLLOW_rule__Prio__Group__2__Impl_in_rule__Prio__Group__28304);
+            pushFollow(FOLLOW_rule__Prio__Group__2__Impl_in_rule__Prio__Group__28305);
             rule__Prio__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Prio__Group__3_in_rule__Prio__Group__28307);
+            pushFollow(FOLLOW_rule__Prio__Group__3_in_rule__Prio__Group__28308);
             rule__Prio__Group__3();
 
             state._fsp--;
@@ -12273,7 +12290,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3960:1: ( rule__Prio__PriorityAssignment_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3960:2: rule__Prio__PriorityAssignment_2
             {
-            pushFollow(FOLLOW_rule__Prio__PriorityAssignment_2_in_rule__Prio__Group__2__Impl8334);
+            pushFollow(FOLLOW_rule__Prio__PriorityAssignment_2_in_rule__Prio__Group__2__Impl8335);
             rule__Prio__PriorityAssignment_2();
 
             state._fsp--;
@@ -12315,12 +12332,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3974:1: ( rule__Prio__Group__3__Impl rule__Prio__Group__4 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3975:2: rule__Prio__Group__3__Impl rule__Prio__Group__4
             {
-            pushFollow(FOLLOW_rule__Prio__Group__3__Impl_in_rule__Prio__Group__38364);
+            pushFollow(FOLLOW_rule__Prio__Group__3__Impl_in_rule__Prio__Group__38365);
             rule__Prio__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Prio__Group__4_in_rule__Prio__Group__38367);
+            pushFollow(FOLLOW_rule__Prio__Group__4_in_rule__Prio__Group__38368);
             rule__Prio__Group__4();
 
             state._fsp--;
@@ -12360,17 +12377,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getPrioAccess().getGroup_3()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3989:1: ( rule__Prio__Group_3__0 )?
-            int alt37=2;
-            int LA37_0 = input.LA(1);
+            int alt38=2;
+            int LA38_0 = input.LA(1);
 
-            if ( (LA37_0==53) ) {
-                alt37=1;
+            if ( (LA38_0==53) ) {
+                alt38=1;
             }
-            switch (alt37) {
+            switch (alt38) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3989:2: rule__Prio__Group_3__0
                     {
-                    pushFollow(FOLLOW_rule__Prio__Group_3__0_in_rule__Prio__Group__3__Impl8394);
+                    pushFollow(FOLLOW_rule__Prio__Group_3__0_in_rule__Prio__Group__3__Impl8395);
                     rule__Prio__Group_3__0();
 
                     state._fsp--;
@@ -12415,7 +12432,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4003:1: ( rule__Prio__Group__4__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4004:2: rule__Prio__Group__4__Impl
             {
-            pushFollow(FOLLOW_rule__Prio__Group__4__Impl_in_rule__Prio__Group__48425);
+            pushFollow(FOLLOW_rule__Prio__Group__4__Impl_in_rule__Prio__Group__48426);
             rule__Prio__Group__4__Impl();
 
             state._fsp--;
@@ -12454,7 +12471,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrioAccess().getRightParenthesisKeyword_4()); 
             }
-            match(input,47,FOLLOW_47_in_rule__Prio__Group__4__Impl8453); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__Prio__Group__4__Impl8454); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPrioAccess().getRightParenthesisKeyword_4()); 
             }
@@ -12489,12 +12506,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4043:1: ( rule__Prio__Group_3__0__Impl rule__Prio__Group_3__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4044:2: rule__Prio__Group_3__0__Impl rule__Prio__Group_3__1
             {
-            pushFollow(FOLLOW_rule__Prio__Group_3__0__Impl_in_rule__Prio__Group_3__08494);
+            pushFollow(FOLLOW_rule__Prio__Group_3__0__Impl_in_rule__Prio__Group_3__08495);
             rule__Prio__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Prio__Group_3__1_in_rule__Prio__Group_3__08497);
+            pushFollow(FOLLOW_rule__Prio__Group_3__1_in_rule__Prio__Group_3__08498);
             rule__Prio__Group_3__1();
 
             state._fsp--;
@@ -12533,7 +12550,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrioAccess().getCommaKeyword_3_0()); 
             }
-            match(input,53,FOLLOW_53_in_rule__Prio__Group_3__0__Impl8525); if (state.failed) return ;
+            match(input,53,FOLLOW_53_in_rule__Prio__Group_3__0__Impl8526); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPrioAccess().getCommaKeyword_3_0()); 
             }
@@ -12568,7 +12585,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4074:1: ( rule__Prio__Group_3__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4075:2: rule__Prio__Group_3__1__Impl
             {
-            pushFollow(FOLLOW_rule__Prio__Group_3__1__Impl_in_rule__Prio__Group_3__18556);
+            pushFollow(FOLLOW_rule__Prio__Group_3__1__Impl_in_rule__Prio__Group_3__18557);
             rule__Prio__Group_3__1__Impl();
 
             state._fsp--;
@@ -12610,7 +12627,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4088:1: ( rule__Prio__ContinuationAssignment_3_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4088:2: rule__Prio__ContinuationAssignment_3_1
             {
-            pushFollow(FOLLOW_rule__Prio__ContinuationAssignment_3_1_in_rule__Prio__Group_3__1__Impl8583);
+            pushFollow(FOLLOW_rule__Prio__ContinuationAssignment_3_1_in_rule__Prio__Group_3__1__Impl8584);
             rule__Prio__ContinuationAssignment_3_1();
 
             state._fsp--;
@@ -12652,12 +12669,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4106:1: ( rule__Trans__Group__0__Impl rule__Trans__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4107:2: rule__Trans__Group__0__Impl rule__Trans__Group__1
             {
-            pushFollow(FOLLOW_rule__Trans__Group__0__Impl_in_rule__Trans__Group__08617);
+            pushFollow(FOLLOW_rule__Trans__Group__0__Impl_in_rule__Trans__Group__08618);
             rule__Trans__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Trans__Group__1_in_rule__Trans__Group__08620);
+            pushFollow(FOLLOW_rule__Trans__Group__1_in_rule__Trans__Group__08621);
             rule__Trans__Group__1();
 
             state._fsp--;
@@ -12696,7 +12713,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransAccess().getTransKeyword_0()); 
             }
-            match(input,57,FOLLOW_57_in_rule__Trans__Group__0__Impl8648); if (state.failed) return ;
+            match(input,57,FOLLOW_57_in_rule__Trans__Group__0__Impl8649); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTransAccess().getTransKeyword_0()); 
             }
@@ -12731,12 +12748,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4137:1: ( rule__Trans__Group__1__Impl rule__Trans__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4138:2: rule__Trans__Group__1__Impl rule__Trans__Group__2
             {
-            pushFollow(FOLLOW_rule__Trans__Group__1__Impl_in_rule__Trans__Group__18679);
+            pushFollow(FOLLOW_rule__Trans__Group__1__Impl_in_rule__Trans__Group__18680);
             rule__Trans__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Trans__Group__2_in_rule__Trans__Group__18682);
+            pushFollow(FOLLOW_rule__Trans__Group__2_in_rule__Trans__Group__18683);
             rule__Trans__Group__2();
 
             state._fsp--;
@@ -12775,7 +12792,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransAccess().getLeftParenthesisKeyword_1()); 
             }
-            match(input,46,FOLLOW_46_in_rule__Trans__Group__1__Impl8710); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__Trans__Group__1__Impl8711); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTransAccess().getLeftParenthesisKeyword_1()); 
             }
@@ -12810,12 +12827,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4168:1: ( rule__Trans__Group__2__Impl rule__Trans__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4169:2: rule__Trans__Group__2__Impl rule__Trans__Group__3
             {
-            pushFollow(FOLLOW_rule__Trans__Group__2__Impl_in_rule__Trans__Group__28741);
+            pushFollow(FOLLOW_rule__Trans__Group__2__Impl_in_rule__Trans__Group__28742);
             rule__Trans__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Trans__Group__3_in_rule__Trans__Group__28744);
+            pushFollow(FOLLOW_rule__Trans__Group__3_in_rule__Trans__Group__28745);
             rule__Trans__Group__3();
 
             state._fsp--;
@@ -12857,7 +12874,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4183:1: ( rule__Trans__ContinuationAssignment_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4183:2: rule__Trans__ContinuationAssignment_2
             {
-            pushFollow(FOLLOW_rule__Trans__ContinuationAssignment_2_in_rule__Trans__Group__2__Impl8771);
+            pushFollow(FOLLOW_rule__Trans__ContinuationAssignment_2_in_rule__Trans__Group__2__Impl8772);
             rule__Trans__ContinuationAssignment_2();
 
             state._fsp--;
@@ -12899,7 +12916,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4197:1: ( rule__Trans__Group__3__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4198:2: rule__Trans__Group__3__Impl
             {
-            pushFollow(FOLLOW_rule__Trans__Group__3__Impl_in_rule__Trans__Group__38801);
+            pushFollow(FOLLOW_rule__Trans__Group__3__Impl_in_rule__Trans__Group__38802);
             rule__Trans__Group__3__Impl();
 
             state._fsp--;
@@ -12938,7 +12955,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransAccess().getRightParenthesisKeyword_3()); 
             }
-            match(input,47,FOLLOW_47_in_rule__Trans__Group__3__Impl8829); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__Trans__Group__3__Impl8830); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTransAccess().getRightParenthesisKeyword_3()); 
             }
@@ -12973,12 +12990,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4235:1: ( rule__Fork__Group__0__Impl rule__Fork__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4236:2: rule__Fork__Group__0__Impl rule__Fork__Group__1
             {
-            pushFollow(FOLLOW_rule__Fork__Group__0__Impl_in_rule__Fork__Group__08868);
+            pushFollow(FOLLOW_rule__Fork__Group__0__Impl_in_rule__Fork__Group__08869);
             rule__Fork__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Fork__Group__1_in_rule__Fork__Group__08871);
+            pushFollow(FOLLOW_rule__Fork__Group__1_in_rule__Fork__Group__08872);
             rule__Fork__Group__1();
 
             state._fsp--;
@@ -13017,7 +13034,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getForkAccess().getForkKeyword_0()); 
             }
-            match(input,58,FOLLOW_58_in_rule__Fork__Group__0__Impl8899); if (state.failed) return ;
+            match(input,58,FOLLOW_58_in_rule__Fork__Group__0__Impl8900); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getForkAccess().getForkKeyword_0()); 
             }
@@ -13052,12 +13069,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4266:1: ( rule__Fork__Group__1__Impl rule__Fork__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4267:2: rule__Fork__Group__1__Impl rule__Fork__Group__2
             {
-            pushFollow(FOLLOW_rule__Fork__Group__1__Impl_in_rule__Fork__Group__18930);
+            pushFollow(FOLLOW_rule__Fork__Group__1__Impl_in_rule__Fork__Group__18931);
             rule__Fork__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Fork__Group__2_in_rule__Fork__Group__18933);
+            pushFollow(FOLLOW_rule__Fork__Group__2_in_rule__Fork__Group__18934);
             rule__Fork__Group__2();
 
             state._fsp--;
@@ -13096,7 +13113,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getForkAccess().getLeftParenthesisKeyword_1()); 
             }
-            match(input,46,FOLLOW_46_in_rule__Fork__Group__1__Impl8961); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__Fork__Group__1__Impl8962); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getForkAccess().getLeftParenthesisKeyword_1()); 
             }
@@ -13131,12 +13148,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4297:1: ( rule__Fork__Group__2__Impl rule__Fork__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4298:2: rule__Fork__Group__2__Impl rule__Fork__Group__3
             {
-            pushFollow(FOLLOW_rule__Fork__Group__2__Impl_in_rule__Fork__Group__28992);
+            pushFollow(FOLLOW_rule__Fork__Group__2__Impl_in_rule__Fork__Group__28993);
             rule__Fork__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Fork__Group__3_in_rule__Fork__Group__28995);
+            pushFollow(FOLLOW_rule__Fork__Group__3_in_rule__Fork__Group__28996);
             rule__Fork__Group__3();
 
             state._fsp--;
@@ -13178,7 +13195,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4312:1: ( rule__Fork__ContinuationAssignment_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4312:2: rule__Fork__ContinuationAssignment_2
             {
-            pushFollow(FOLLOW_rule__Fork__ContinuationAssignment_2_in_rule__Fork__Group__2__Impl9022);
+            pushFollow(FOLLOW_rule__Fork__ContinuationAssignment_2_in_rule__Fork__Group__2__Impl9023);
             rule__Fork__ContinuationAssignment_2();
 
             state._fsp--;
@@ -13220,12 +13237,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4326:1: ( rule__Fork__Group__3__Impl rule__Fork__Group__4 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4327:2: rule__Fork__Group__3__Impl rule__Fork__Group__4
             {
-            pushFollow(FOLLOW_rule__Fork__Group__3__Impl_in_rule__Fork__Group__39052);
+            pushFollow(FOLLOW_rule__Fork__Group__3__Impl_in_rule__Fork__Group__39053);
             rule__Fork__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Fork__Group__4_in_rule__Fork__Group__39055);
+            pushFollow(FOLLOW_rule__Fork__Group__4_in_rule__Fork__Group__39056);
             rule__Fork__Group__4();
 
             state._fsp--;
@@ -13264,7 +13281,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getForkAccess().getCommaKeyword_3()); 
             }
-            match(input,53,FOLLOW_53_in_rule__Fork__Group__3__Impl9083); if (state.failed) return ;
+            match(input,53,FOLLOW_53_in_rule__Fork__Group__3__Impl9084); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getForkAccess().getCommaKeyword_3()); 
             }
@@ -13299,12 +13316,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4357:1: ( rule__Fork__Group__4__Impl rule__Fork__Group__5 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4358:2: rule__Fork__Group__4__Impl rule__Fork__Group__5
             {
-            pushFollow(FOLLOW_rule__Fork__Group__4__Impl_in_rule__Fork__Group__49114);
+            pushFollow(FOLLOW_rule__Fork__Group__4__Impl_in_rule__Fork__Group__49115);
             rule__Fork__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Fork__Group__5_in_rule__Fork__Group__49117);
+            pushFollow(FOLLOW_rule__Fork__Group__5_in_rule__Fork__Group__49118);
             rule__Fork__Group__5();
 
             state._fsp--;
@@ -13346,7 +13363,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4372:1: ( rule__Fork__PriorityAssignment_4 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4372:2: rule__Fork__PriorityAssignment_4
             {
-            pushFollow(FOLLOW_rule__Fork__PriorityAssignment_4_in_rule__Fork__Group__4__Impl9144);
+            pushFollow(FOLLOW_rule__Fork__PriorityAssignment_4_in_rule__Fork__Group__4__Impl9145);
             rule__Fork__PriorityAssignment_4();
 
             state._fsp--;
@@ -13388,7 +13405,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4386:1: ( rule__Fork__Group__5__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4387:2: rule__Fork__Group__5__Impl
             {
-            pushFollow(FOLLOW_rule__Fork__Group__5__Impl_in_rule__Fork__Group__59174);
+            pushFollow(FOLLOW_rule__Fork__Group__5__Impl_in_rule__Fork__Group__59175);
             rule__Fork__Group__5__Impl();
 
             state._fsp--;
@@ -13427,7 +13444,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getForkAccess().getRightParenthesisKeyword_5()); 
             }
-            match(input,47,FOLLOW_47_in_rule__Fork__Group__5__Impl9202); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__Fork__Group__5__Impl9203); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getForkAccess().getRightParenthesisKeyword_5()); 
             }
@@ -13462,12 +13479,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4428:1: ( rule__Join__Group__0__Impl rule__Join__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4429:2: rule__Join__Group__0__Impl rule__Join__Group__1
             {
-            pushFollow(FOLLOW_rule__Join__Group__0__Impl_in_rule__Join__Group__09245);
+            pushFollow(FOLLOW_rule__Join__Group__0__Impl_in_rule__Join__Group__09246);
             rule__Join__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Join__Group__1_in_rule__Join__Group__09248);
+            pushFollow(FOLLOW_rule__Join__Group__1_in_rule__Join__Group__09249);
             rule__Join__Group__1();
 
             state._fsp--;
@@ -13541,12 +13558,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4459:1: ( rule__Join__Group__1__Impl rule__Join__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4460:2: rule__Join__Group__1__Impl rule__Join__Group__2
             {
-            pushFollow(FOLLOW_rule__Join__Group__1__Impl_in_rule__Join__Group__19306);
+            pushFollow(FOLLOW_rule__Join__Group__1__Impl_in_rule__Join__Group__19307);
             rule__Join__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Join__Group__2_in_rule__Join__Group__19309);
+            pushFollow(FOLLOW_rule__Join__Group__2_in_rule__Join__Group__19310);
             rule__Join__Group__2();
 
             state._fsp--;
@@ -13585,7 +13602,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJoinAccess().getJoinKeyword_1()); 
             }
-            match(input,59,FOLLOW_59_in_rule__Join__Group__1__Impl9337); if (state.failed) return ;
+            match(input,59,FOLLOW_59_in_rule__Join__Group__1__Impl9338); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getJoinAccess().getJoinKeyword_1()); 
             }
@@ -13620,12 +13637,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4490:1: ( rule__Join__Group__2__Impl rule__Join__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4491:2: rule__Join__Group__2__Impl rule__Join__Group__3
             {
-            pushFollow(FOLLOW_rule__Join__Group__2__Impl_in_rule__Join__Group__29368);
+            pushFollow(FOLLOW_rule__Join__Group__2__Impl_in_rule__Join__Group__29369);
             rule__Join__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Join__Group__3_in_rule__Join__Group__29371);
+            pushFollow(FOLLOW_rule__Join__Group__3_in_rule__Join__Group__29372);
             rule__Join__Group__3();
 
             state._fsp--;
@@ -13664,7 +13681,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJoinAccess().getLeftParenthesisKeyword_2()); 
             }
-            match(input,46,FOLLOW_46_in_rule__Join__Group__2__Impl9399); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__Join__Group__2__Impl9400); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getJoinAccess().getLeftParenthesisKeyword_2()); 
             }
@@ -13699,12 +13716,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4521:1: ( rule__Join__Group__3__Impl rule__Join__Group__4 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4522:2: rule__Join__Group__3__Impl rule__Join__Group__4
             {
-            pushFollow(FOLLOW_rule__Join__Group__3__Impl_in_rule__Join__Group__39430);
+            pushFollow(FOLLOW_rule__Join__Group__3__Impl_in_rule__Join__Group__39431);
             rule__Join__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Join__Group__4_in_rule__Join__Group__39433);
+            pushFollow(FOLLOW_rule__Join__Group__4_in_rule__Join__Group__39434);
             rule__Join__Group__4();
 
             state._fsp--;
@@ -13744,17 +13761,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getJoinAccess().getContinuationAssignment_3()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4536:1: ( rule__Join__ContinuationAssignment_3 )?
-            int alt38=2;
-            int LA38_0 = input.LA(1);
+            int alt39=2;
+            int LA39_0 = input.LA(1);
 
-            if ( (LA38_0==RULE_ID) ) {
-                alt38=1;
+            if ( (LA39_0==RULE_ID) ) {
+                alt39=1;
             }
-            switch (alt38) {
+            switch (alt39) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4536:2: rule__Join__ContinuationAssignment_3
                     {
-                    pushFollow(FOLLOW_rule__Join__ContinuationAssignment_3_in_rule__Join__Group__3__Impl9460);
+                    pushFollow(FOLLOW_rule__Join__ContinuationAssignment_3_in_rule__Join__Group__3__Impl9461);
                     rule__Join__ContinuationAssignment_3();
 
                     state._fsp--;
@@ -13799,7 +13816,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4550:1: ( rule__Join__Group__4__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4551:2: rule__Join__Group__4__Impl
             {
-            pushFollow(FOLLOW_rule__Join__Group__4__Impl_in_rule__Join__Group__49491);
+            pushFollow(FOLLOW_rule__Join__Group__4__Impl_in_rule__Join__Group__49492);
             rule__Join__Group__4__Impl();
 
             state._fsp--;
@@ -13838,7 +13855,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJoinAccess().getRightParenthesisKeyword_4()); 
             }
-            match(input,47,FOLLOW_47_in_rule__Join__Group__4__Impl9519); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__Join__Group__4__Impl9520); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getJoinAccess().getRightParenthesisKeyword_4()); 
             }
@@ -13873,12 +13890,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4590:1: ( rule__Pause__Group__0__Impl rule__Pause__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4591:2: rule__Pause__Group__0__Impl rule__Pause__Group__1
             {
-            pushFollow(FOLLOW_rule__Pause__Group__0__Impl_in_rule__Pause__Group__09560);
+            pushFollow(FOLLOW_rule__Pause__Group__0__Impl_in_rule__Pause__Group__09561);
             rule__Pause__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Pause__Group__1_in_rule__Pause__Group__09563);
+            pushFollow(FOLLOW_rule__Pause__Group__1_in_rule__Pause__Group__09564);
             rule__Pause__Group__1();
 
             state._fsp--;
@@ -13952,12 +13969,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4621:1: ( rule__Pause__Group__1__Impl rule__Pause__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4622:2: rule__Pause__Group__1__Impl rule__Pause__Group__2
             {
-            pushFollow(FOLLOW_rule__Pause__Group__1__Impl_in_rule__Pause__Group__19621);
+            pushFollow(FOLLOW_rule__Pause__Group__1__Impl_in_rule__Pause__Group__19622);
             rule__Pause__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Pause__Group__2_in_rule__Pause__Group__19624);
+            pushFollow(FOLLOW_rule__Pause__Group__2_in_rule__Pause__Group__19625);
             rule__Pause__Group__2();
 
             state._fsp--;
@@ -13996,7 +14013,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPauseAccess().getPauseKeyword_1()); 
             }
-            match(input,60,FOLLOW_60_in_rule__Pause__Group__1__Impl9652); if (state.failed) return ;
+            match(input,60,FOLLOW_60_in_rule__Pause__Group__1__Impl9653); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPauseAccess().getPauseKeyword_1()); 
             }
@@ -14031,12 +14048,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4652:1: ( rule__Pause__Group__2__Impl rule__Pause__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4653:2: rule__Pause__Group__2__Impl rule__Pause__Group__3
             {
-            pushFollow(FOLLOW_rule__Pause__Group__2__Impl_in_rule__Pause__Group__29683);
+            pushFollow(FOLLOW_rule__Pause__Group__2__Impl_in_rule__Pause__Group__29684);
             rule__Pause__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Pause__Group__3_in_rule__Pause__Group__29686);
+            pushFollow(FOLLOW_rule__Pause__Group__3_in_rule__Pause__Group__29687);
             rule__Pause__Group__3();
 
             state._fsp--;
@@ -14075,7 +14092,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPauseAccess().getLeftParenthesisKeyword_2()); 
             }
-            match(input,46,FOLLOW_46_in_rule__Pause__Group__2__Impl9714); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__Pause__Group__2__Impl9715); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPauseAccess().getLeftParenthesisKeyword_2()); 
             }
@@ -14110,12 +14127,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4683:1: ( rule__Pause__Group__3__Impl rule__Pause__Group__4 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4684:2: rule__Pause__Group__3__Impl rule__Pause__Group__4
             {
-            pushFollow(FOLLOW_rule__Pause__Group__3__Impl_in_rule__Pause__Group__39745);
+            pushFollow(FOLLOW_rule__Pause__Group__3__Impl_in_rule__Pause__Group__39746);
             rule__Pause__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Pause__Group__4_in_rule__Pause__Group__39748);
+            pushFollow(FOLLOW_rule__Pause__Group__4_in_rule__Pause__Group__39749);
             rule__Pause__Group__4();
 
             state._fsp--;
@@ -14155,17 +14172,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getPauseAccess().getContinuationAssignment_3()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4698:1: ( rule__Pause__ContinuationAssignment_3 )?
-            int alt39=2;
-            int LA39_0 = input.LA(1);
+            int alt40=2;
+            int LA40_0 = input.LA(1);
 
-            if ( (LA39_0==RULE_ID) ) {
-                alt39=1;
+            if ( (LA40_0==RULE_ID) ) {
+                alt40=1;
             }
-            switch (alt39) {
+            switch (alt40) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4698:2: rule__Pause__ContinuationAssignment_3
                     {
-                    pushFollow(FOLLOW_rule__Pause__ContinuationAssignment_3_in_rule__Pause__Group__3__Impl9775);
+                    pushFollow(FOLLOW_rule__Pause__ContinuationAssignment_3_in_rule__Pause__Group__3__Impl9776);
                     rule__Pause__ContinuationAssignment_3();
 
                     state._fsp--;
@@ -14210,7 +14227,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4712:1: ( rule__Pause__Group__4__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4713:2: rule__Pause__Group__4__Impl
             {
-            pushFollow(FOLLOW_rule__Pause__Group__4__Impl_in_rule__Pause__Group__49806);
+            pushFollow(FOLLOW_rule__Pause__Group__4__Impl_in_rule__Pause__Group__49807);
             rule__Pause__Group__4__Impl();
 
             state._fsp--;
@@ -14249,7 +14266,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPauseAccess().getRightParenthesisKeyword_4()); 
             }
-            match(input,47,FOLLOW_47_in_rule__Pause__Group__4__Impl9834); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__Pause__Group__4__Impl9835); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPauseAccess().getRightParenthesisKeyword_4()); 
             }
@@ -14284,12 +14301,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4752:1: ( rule__Term__Group__0__Impl rule__Term__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4753:2: rule__Term__Group__0__Impl rule__Term__Group__1
             {
-            pushFollow(FOLLOW_rule__Term__Group__0__Impl_in_rule__Term__Group__09875);
+            pushFollow(FOLLOW_rule__Term__Group__0__Impl_in_rule__Term__Group__09876);
             rule__Term__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Term__Group__1_in_rule__Term__Group__09878);
+            pushFollow(FOLLOW_rule__Term__Group__1_in_rule__Term__Group__09879);
             rule__Term__Group__1();
 
             state._fsp--;
@@ -14363,12 +14380,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4783:1: ( rule__Term__Group__1__Impl rule__Term__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4784:2: rule__Term__Group__1__Impl rule__Term__Group__2
             {
-            pushFollow(FOLLOW_rule__Term__Group__1__Impl_in_rule__Term__Group__19936);
+            pushFollow(FOLLOW_rule__Term__Group__1__Impl_in_rule__Term__Group__19937);
             rule__Term__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Term__Group__2_in_rule__Term__Group__19939);
+            pushFollow(FOLLOW_rule__Term__Group__2_in_rule__Term__Group__19940);
             rule__Term__Group__2();
 
             state._fsp--;
@@ -14407,7 +14424,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTermAccess().getTermKeyword_1()); 
             }
-            match(input,61,FOLLOW_61_in_rule__Term__Group__1__Impl9967); if (state.failed) return ;
+            match(input,61,FOLLOW_61_in_rule__Term__Group__1__Impl9968); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTermAccess().getTermKeyword_1()); 
             }
@@ -14442,12 +14459,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4814:1: ( rule__Term__Group__2__Impl rule__Term__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4815:2: rule__Term__Group__2__Impl rule__Term__Group__3
             {
-            pushFollow(FOLLOW_rule__Term__Group__2__Impl_in_rule__Term__Group__29998);
+            pushFollow(FOLLOW_rule__Term__Group__2__Impl_in_rule__Term__Group__29999);
             rule__Term__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Term__Group__3_in_rule__Term__Group__210001);
+            pushFollow(FOLLOW_rule__Term__Group__3_in_rule__Term__Group__210002);
             rule__Term__Group__3();
 
             state._fsp--;
@@ -14486,7 +14503,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTermAccess().getLeftParenthesisKeyword_2()); 
             }
-            match(input,46,FOLLOW_46_in_rule__Term__Group__2__Impl10029); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__Term__Group__2__Impl10030); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTermAccess().getLeftParenthesisKeyword_2()); 
             }
@@ -14521,12 +14538,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4845:1: ( rule__Term__Group__3__Impl rule__Term__Group__4 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4846:2: rule__Term__Group__3__Impl rule__Term__Group__4
             {
-            pushFollow(FOLLOW_rule__Term__Group__3__Impl_in_rule__Term__Group__310060);
+            pushFollow(FOLLOW_rule__Term__Group__3__Impl_in_rule__Term__Group__310061);
             rule__Term__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Term__Group__4_in_rule__Term__Group__310063);
+            pushFollow(FOLLOW_rule__Term__Group__4_in_rule__Term__Group__310064);
             rule__Term__Group__4();
 
             state._fsp--;
@@ -14566,17 +14583,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getTermAccess().getContinuationAssignment_3()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4860:1: ( rule__Term__ContinuationAssignment_3 )?
-            int alt40=2;
-            int LA40_0 = input.LA(1);
+            int alt41=2;
+            int LA41_0 = input.LA(1);
 
-            if ( (LA40_0==RULE_ID) ) {
-                alt40=1;
+            if ( (LA41_0==RULE_ID) ) {
+                alt41=1;
             }
-            switch (alt40) {
+            switch (alt41) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4860:2: rule__Term__ContinuationAssignment_3
                     {
-                    pushFollow(FOLLOW_rule__Term__ContinuationAssignment_3_in_rule__Term__Group__3__Impl10090);
+                    pushFollow(FOLLOW_rule__Term__ContinuationAssignment_3_in_rule__Term__Group__3__Impl10091);
                     rule__Term__ContinuationAssignment_3();
 
                     state._fsp--;
@@ -14621,7 +14638,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4874:1: ( rule__Term__Group__4__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4875:2: rule__Term__Group__4__Impl
             {
-            pushFollow(FOLLOW_rule__Term__Group__4__Impl_in_rule__Term__Group__410121);
+            pushFollow(FOLLOW_rule__Term__Group__4__Impl_in_rule__Term__Group__410122);
             rule__Term__Group__4__Impl();
 
             state._fsp--;
@@ -14660,7 +14677,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTermAccess().getRightParenthesisKeyword_4()); 
             }
-            match(input,47,FOLLOW_47_in_rule__Term__Group__4__Impl10149); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__Term__Group__4__Impl10150); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTermAccess().getRightParenthesisKeyword_4()); 
             }
@@ -14695,12 +14712,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4914:1: ( rule__Halt__Group__0__Impl rule__Halt__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4915:2: rule__Halt__Group__0__Impl rule__Halt__Group__1
             {
-            pushFollow(FOLLOW_rule__Halt__Group__0__Impl_in_rule__Halt__Group__010190);
+            pushFollow(FOLLOW_rule__Halt__Group__0__Impl_in_rule__Halt__Group__010191);
             rule__Halt__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Halt__Group__1_in_rule__Halt__Group__010193);
+            pushFollow(FOLLOW_rule__Halt__Group__1_in_rule__Halt__Group__010194);
             rule__Halt__Group__1();
 
             state._fsp--;
@@ -14774,12 +14791,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4945:1: ( rule__Halt__Group__1__Impl rule__Halt__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4946:2: rule__Halt__Group__1__Impl rule__Halt__Group__2
             {
-            pushFollow(FOLLOW_rule__Halt__Group__1__Impl_in_rule__Halt__Group__110251);
+            pushFollow(FOLLOW_rule__Halt__Group__1__Impl_in_rule__Halt__Group__110252);
             rule__Halt__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Halt__Group__2_in_rule__Halt__Group__110254);
+            pushFollow(FOLLOW_rule__Halt__Group__2_in_rule__Halt__Group__110255);
             rule__Halt__Group__2();
 
             state._fsp--;
@@ -14818,7 +14835,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getHaltAccess().getHaltKeyword_1()); 
             }
-            match(input,62,FOLLOW_62_in_rule__Halt__Group__1__Impl10282); if (state.failed) return ;
+            match(input,62,FOLLOW_62_in_rule__Halt__Group__1__Impl10283); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getHaltAccess().getHaltKeyword_1()); 
             }
@@ -14853,12 +14870,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4976:1: ( rule__Halt__Group__2__Impl rule__Halt__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:4977:2: rule__Halt__Group__2__Impl rule__Halt__Group__3
             {
-            pushFollow(FOLLOW_rule__Halt__Group__2__Impl_in_rule__Halt__Group__210313);
+            pushFollow(FOLLOW_rule__Halt__Group__2__Impl_in_rule__Halt__Group__210314);
             rule__Halt__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Halt__Group__3_in_rule__Halt__Group__210316);
+            pushFollow(FOLLOW_rule__Halt__Group__3_in_rule__Halt__Group__210317);
             rule__Halt__Group__3();
 
             state._fsp--;
@@ -14897,7 +14914,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getHaltAccess().getLeftParenthesisKeyword_2()); 
             }
-            match(input,46,FOLLOW_46_in_rule__Halt__Group__2__Impl10344); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__Halt__Group__2__Impl10345); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getHaltAccess().getLeftParenthesisKeyword_2()); 
             }
@@ -14932,12 +14949,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5007:1: ( rule__Halt__Group__3__Impl rule__Halt__Group__4 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5008:2: rule__Halt__Group__3__Impl rule__Halt__Group__4
             {
-            pushFollow(FOLLOW_rule__Halt__Group__3__Impl_in_rule__Halt__Group__310375);
+            pushFollow(FOLLOW_rule__Halt__Group__3__Impl_in_rule__Halt__Group__310376);
             rule__Halt__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Halt__Group__4_in_rule__Halt__Group__310378);
+            pushFollow(FOLLOW_rule__Halt__Group__4_in_rule__Halt__Group__310379);
             rule__Halt__Group__4();
 
             state._fsp--;
@@ -14977,17 +14994,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getHaltAccess().getContinuationAssignment_3()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5022:1: ( rule__Halt__ContinuationAssignment_3 )?
-            int alt41=2;
-            int LA41_0 = input.LA(1);
+            int alt42=2;
+            int LA42_0 = input.LA(1);
 
-            if ( (LA41_0==RULE_ID) ) {
-                alt41=1;
+            if ( (LA42_0==RULE_ID) ) {
+                alt42=1;
             }
-            switch (alt41) {
+            switch (alt42) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5022:2: rule__Halt__ContinuationAssignment_3
                     {
-                    pushFollow(FOLLOW_rule__Halt__ContinuationAssignment_3_in_rule__Halt__Group__3__Impl10405);
+                    pushFollow(FOLLOW_rule__Halt__ContinuationAssignment_3_in_rule__Halt__Group__3__Impl10406);
                     rule__Halt__ContinuationAssignment_3();
 
                     state._fsp--;
@@ -15032,7 +15049,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5036:1: ( rule__Halt__Group__4__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5037:2: rule__Halt__Group__4__Impl
             {
-            pushFollow(FOLLOW_rule__Halt__Group__4__Impl_in_rule__Halt__Group__410436);
+            pushFollow(FOLLOW_rule__Halt__Group__4__Impl_in_rule__Halt__Group__410437);
             rule__Halt__Group__4__Impl();
 
             state._fsp--;
@@ -15071,7 +15088,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getHaltAccess().getRightParenthesisKeyword_4()); 
             }
-            match(input,47,FOLLOW_47_in_rule__Halt__Group__4__Impl10464); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__Halt__Group__4__Impl10465); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getHaltAccess().getRightParenthesisKeyword_4()); 
             }
@@ -15106,12 +15123,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5076:1: ( rule__LocalSignal__Group__0__Impl rule__LocalSignal__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5077:2: rule__LocalSignal__Group__0__Impl rule__LocalSignal__Group__1
             {
-            pushFollow(FOLLOW_rule__LocalSignal__Group__0__Impl_in_rule__LocalSignal__Group__010505);
+            pushFollow(FOLLOW_rule__LocalSignal__Group__0__Impl_in_rule__LocalSignal__Group__010506);
             rule__LocalSignal__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__LocalSignal__Group__1_in_rule__LocalSignal__Group__010508);
+            pushFollow(FOLLOW_rule__LocalSignal__Group__1_in_rule__LocalSignal__Group__010509);
             rule__LocalSignal__Group__1();
 
             state._fsp--;
@@ -15150,7 +15167,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLocalSignalAccess().getSignalKeyword_0()); 
             }
-            match(input,63,FOLLOW_63_in_rule__LocalSignal__Group__0__Impl10536); if (state.failed) return ;
+            match(input,63,FOLLOW_63_in_rule__LocalSignal__Group__0__Impl10537); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLocalSignalAccess().getSignalKeyword_0()); 
             }
@@ -15185,12 +15202,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5107:1: ( rule__LocalSignal__Group__1__Impl rule__LocalSignal__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5108:2: rule__LocalSignal__Group__1__Impl rule__LocalSignal__Group__2
             {
-            pushFollow(FOLLOW_rule__LocalSignal__Group__1__Impl_in_rule__LocalSignal__Group__110567);
+            pushFollow(FOLLOW_rule__LocalSignal__Group__1__Impl_in_rule__LocalSignal__Group__110568);
             rule__LocalSignal__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__LocalSignal__Group__2_in_rule__LocalSignal__Group__110570);
+            pushFollow(FOLLOW_rule__LocalSignal__Group__2_in_rule__LocalSignal__Group__110571);
             rule__LocalSignal__Group__2();
 
             state._fsp--;
@@ -15229,7 +15246,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLocalSignalAccess().getLeftParenthesisKeyword_1()); 
             }
-            match(input,46,FOLLOW_46_in_rule__LocalSignal__Group__1__Impl10598); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__LocalSignal__Group__1__Impl10599); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLocalSignalAccess().getLeftParenthesisKeyword_1()); 
             }
@@ -15264,12 +15281,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5138:1: ( rule__LocalSignal__Group__2__Impl rule__LocalSignal__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5139:2: rule__LocalSignal__Group__2__Impl rule__LocalSignal__Group__3
             {
-            pushFollow(FOLLOW_rule__LocalSignal__Group__2__Impl_in_rule__LocalSignal__Group__210629);
+            pushFollow(FOLLOW_rule__LocalSignal__Group__2__Impl_in_rule__LocalSignal__Group__210630);
             rule__LocalSignal__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__LocalSignal__Group__3_in_rule__LocalSignal__Group__210632);
+            pushFollow(FOLLOW_rule__LocalSignal__Group__3_in_rule__LocalSignal__Group__210633);
             rule__LocalSignal__Group__3();
 
             state._fsp--;
@@ -15311,7 +15328,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5153:1: ( rule__LocalSignal__SignalAssignment_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5153:2: rule__LocalSignal__SignalAssignment_2
             {
-            pushFollow(FOLLOW_rule__LocalSignal__SignalAssignment_2_in_rule__LocalSignal__Group__2__Impl10659);
+            pushFollow(FOLLOW_rule__LocalSignal__SignalAssignment_2_in_rule__LocalSignal__Group__2__Impl10660);
             rule__LocalSignal__SignalAssignment_2();
 
             state._fsp--;
@@ -15353,7 +15370,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5167:1: ( rule__LocalSignal__Group__3__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5168:2: rule__LocalSignal__Group__3__Impl
             {
-            pushFollow(FOLLOW_rule__LocalSignal__Group__3__Impl_in_rule__LocalSignal__Group__310689);
+            pushFollow(FOLLOW_rule__LocalSignal__Group__3__Impl_in_rule__LocalSignal__Group__310690);
             rule__LocalSignal__Group__3__Impl();
 
             state._fsp--;
@@ -15392,7 +15409,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLocalSignalAccess().getRightParenthesisKeyword_3()); 
             }
-            match(input,47,FOLLOW_47_in_rule__LocalSignal__Group__3__Impl10717); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__LocalSignal__Group__3__Impl10718); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLocalSignalAccess().getRightParenthesisKeyword_3()); 
             }
@@ -15427,12 +15444,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5205:1: ( rule__Emit__Group__0__Impl rule__Emit__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5206:2: rule__Emit__Group__0__Impl rule__Emit__Group__1
             {
-            pushFollow(FOLLOW_rule__Emit__Group__0__Impl_in_rule__Emit__Group__010756);
+            pushFollow(FOLLOW_rule__Emit__Group__0__Impl_in_rule__Emit__Group__010757);
             rule__Emit__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Emit__Group__1_in_rule__Emit__Group__010759);
+            pushFollow(FOLLOW_rule__Emit__Group__1_in_rule__Emit__Group__010760);
             rule__Emit__Group__1();
 
             state._fsp--;
@@ -15471,7 +15488,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmitAccess().getEmitKeyword_0()); 
             }
-            match(input,64,FOLLOW_64_in_rule__Emit__Group__0__Impl10787); if (state.failed) return ;
+            match(input,64,FOLLOW_64_in_rule__Emit__Group__0__Impl10788); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEmitAccess().getEmitKeyword_0()); 
             }
@@ -15506,12 +15523,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5236:1: ( rule__Emit__Group__1__Impl rule__Emit__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5237:2: rule__Emit__Group__1__Impl rule__Emit__Group__2
             {
-            pushFollow(FOLLOW_rule__Emit__Group__1__Impl_in_rule__Emit__Group__110818);
+            pushFollow(FOLLOW_rule__Emit__Group__1__Impl_in_rule__Emit__Group__110819);
             rule__Emit__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Emit__Group__2_in_rule__Emit__Group__110821);
+            pushFollow(FOLLOW_rule__Emit__Group__2_in_rule__Emit__Group__110822);
             rule__Emit__Group__2();
 
             state._fsp--;
@@ -15550,7 +15567,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmitAccess().getLeftParenthesisKeyword_1()); 
             }
-            match(input,46,FOLLOW_46_in_rule__Emit__Group__1__Impl10849); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__Emit__Group__1__Impl10850); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEmitAccess().getLeftParenthesisKeyword_1()); 
             }
@@ -15585,12 +15602,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5267:1: ( rule__Emit__Group__2__Impl rule__Emit__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5268:2: rule__Emit__Group__2__Impl rule__Emit__Group__3
             {
-            pushFollow(FOLLOW_rule__Emit__Group__2__Impl_in_rule__Emit__Group__210880);
+            pushFollow(FOLLOW_rule__Emit__Group__2__Impl_in_rule__Emit__Group__210881);
             rule__Emit__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Emit__Group__3_in_rule__Emit__Group__210883);
+            pushFollow(FOLLOW_rule__Emit__Group__3_in_rule__Emit__Group__210884);
             rule__Emit__Group__3();
 
             state._fsp--;
@@ -15632,7 +15649,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5282:1: ( rule__Emit__SignalAssignment_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5282:2: rule__Emit__SignalAssignment_2
             {
-            pushFollow(FOLLOW_rule__Emit__SignalAssignment_2_in_rule__Emit__Group__2__Impl10910);
+            pushFollow(FOLLOW_rule__Emit__SignalAssignment_2_in_rule__Emit__Group__2__Impl10911);
             rule__Emit__SignalAssignment_2();
 
             state._fsp--;
@@ -15674,12 +15691,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5296:1: ( rule__Emit__Group__3__Impl rule__Emit__Group__4 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5297:2: rule__Emit__Group__3__Impl rule__Emit__Group__4
             {
-            pushFollow(FOLLOW_rule__Emit__Group__3__Impl_in_rule__Emit__Group__310940);
+            pushFollow(FOLLOW_rule__Emit__Group__3__Impl_in_rule__Emit__Group__310941);
             rule__Emit__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Emit__Group__4_in_rule__Emit__Group__310943);
+            pushFollow(FOLLOW_rule__Emit__Group__4_in_rule__Emit__Group__310944);
             rule__Emit__Group__4();
 
             state._fsp--;
@@ -15719,17 +15736,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getEmitAccess().getGroup_3()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5311:1: ( rule__Emit__Group_3__0 )?
-            int alt42=2;
-            int LA42_0 = input.LA(1);
+            int alt43=2;
+            int LA43_0 = input.LA(1);
 
-            if ( (LA42_0==46) ) {
-                alt42=1;
+            if ( (LA43_0==46) ) {
+                alt43=1;
             }
-            switch (alt42) {
+            switch (alt43) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5311:2: rule__Emit__Group_3__0
                     {
-                    pushFollow(FOLLOW_rule__Emit__Group_3__0_in_rule__Emit__Group__3__Impl10970);
+                    pushFollow(FOLLOW_rule__Emit__Group_3__0_in_rule__Emit__Group__3__Impl10971);
                     rule__Emit__Group_3__0();
 
                     state._fsp--;
@@ -15774,12 +15791,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5325:1: ( rule__Emit__Group__4__Impl rule__Emit__Group__5 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5326:2: rule__Emit__Group__4__Impl rule__Emit__Group__5
             {
-            pushFollow(FOLLOW_rule__Emit__Group__4__Impl_in_rule__Emit__Group__411001);
+            pushFollow(FOLLOW_rule__Emit__Group__4__Impl_in_rule__Emit__Group__411002);
             rule__Emit__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Emit__Group__5_in_rule__Emit__Group__411004);
+            pushFollow(FOLLOW_rule__Emit__Group__5_in_rule__Emit__Group__411005);
             rule__Emit__Group__5();
 
             state._fsp--;
@@ -15819,17 +15836,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getEmitAccess().getGroup_4()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5340:1: ( rule__Emit__Group_4__0 )?
-            int alt43=2;
-            int LA43_0 = input.LA(1);
+            int alt44=2;
+            int LA44_0 = input.LA(1);
 
-            if ( (LA43_0==53) ) {
-                alt43=1;
+            if ( (LA44_0==53) ) {
+                alt44=1;
             }
-            switch (alt43) {
+            switch (alt44) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5340:2: rule__Emit__Group_4__0
                     {
-                    pushFollow(FOLLOW_rule__Emit__Group_4__0_in_rule__Emit__Group__4__Impl11031);
+                    pushFollow(FOLLOW_rule__Emit__Group_4__0_in_rule__Emit__Group__4__Impl11032);
                     rule__Emit__Group_4__0();
 
                     state._fsp--;
@@ -15874,7 +15891,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5354:1: ( rule__Emit__Group__5__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5355:2: rule__Emit__Group__5__Impl
             {
-            pushFollow(FOLLOW_rule__Emit__Group__5__Impl_in_rule__Emit__Group__511062);
+            pushFollow(FOLLOW_rule__Emit__Group__5__Impl_in_rule__Emit__Group__511063);
             rule__Emit__Group__5__Impl();
 
             state._fsp--;
@@ -15913,7 +15930,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmitAccess().getRightParenthesisKeyword_5()); 
             }
-            match(input,47,FOLLOW_47_in_rule__Emit__Group__5__Impl11090); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__Emit__Group__5__Impl11091); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEmitAccess().getRightParenthesisKeyword_5()); 
             }
@@ -15948,12 +15965,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5396:1: ( rule__Emit__Group_3__0__Impl rule__Emit__Group_3__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5397:2: rule__Emit__Group_3__0__Impl rule__Emit__Group_3__1
             {
-            pushFollow(FOLLOW_rule__Emit__Group_3__0__Impl_in_rule__Emit__Group_3__011133);
+            pushFollow(FOLLOW_rule__Emit__Group_3__0__Impl_in_rule__Emit__Group_3__011134);
             rule__Emit__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Emit__Group_3__1_in_rule__Emit__Group_3__011136);
+            pushFollow(FOLLOW_rule__Emit__Group_3__1_in_rule__Emit__Group_3__011137);
             rule__Emit__Group_3__1();
 
             state._fsp--;
@@ -15992,7 +16009,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmitAccess().getLeftParenthesisKeyword_3_0()); 
             }
-            match(input,46,FOLLOW_46_in_rule__Emit__Group_3__0__Impl11164); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__Emit__Group_3__0__Impl11165); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEmitAccess().getLeftParenthesisKeyword_3_0()); 
             }
@@ -16027,12 +16044,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5427:1: ( rule__Emit__Group_3__1__Impl rule__Emit__Group_3__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5428:2: rule__Emit__Group_3__1__Impl rule__Emit__Group_3__2
             {
-            pushFollow(FOLLOW_rule__Emit__Group_3__1__Impl_in_rule__Emit__Group_3__111195);
+            pushFollow(FOLLOW_rule__Emit__Group_3__1__Impl_in_rule__Emit__Group_3__111196);
             rule__Emit__Group_3__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Emit__Group_3__2_in_rule__Emit__Group_3__111198);
+            pushFollow(FOLLOW_rule__Emit__Group_3__2_in_rule__Emit__Group_3__111199);
             rule__Emit__Group_3__2();
 
             state._fsp--;
@@ -16074,7 +16091,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5442:1: ( rule__Emit__ValueAssignment_3_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5442:2: rule__Emit__ValueAssignment_3_1
             {
-            pushFollow(FOLLOW_rule__Emit__ValueAssignment_3_1_in_rule__Emit__Group_3__1__Impl11225);
+            pushFollow(FOLLOW_rule__Emit__ValueAssignment_3_1_in_rule__Emit__Group_3__1__Impl11226);
             rule__Emit__ValueAssignment_3_1();
 
             state._fsp--;
@@ -16116,7 +16133,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5456:1: ( rule__Emit__Group_3__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5457:2: rule__Emit__Group_3__2__Impl
             {
-            pushFollow(FOLLOW_rule__Emit__Group_3__2__Impl_in_rule__Emit__Group_3__211255);
+            pushFollow(FOLLOW_rule__Emit__Group_3__2__Impl_in_rule__Emit__Group_3__211256);
             rule__Emit__Group_3__2__Impl();
 
             state._fsp--;
@@ -16155,7 +16172,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmitAccess().getRightParenthesisKeyword_3_2()); 
             }
-            match(input,47,FOLLOW_47_in_rule__Emit__Group_3__2__Impl11283); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__Emit__Group_3__2__Impl11284); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEmitAccess().getRightParenthesisKeyword_3_2()); 
             }
@@ -16190,12 +16207,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5492:1: ( rule__Emit__Group_4__0__Impl rule__Emit__Group_4__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5493:2: rule__Emit__Group_4__0__Impl rule__Emit__Group_4__1
             {
-            pushFollow(FOLLOW_rule__Emit__Group_4__0__Impl_in_rule__Emit__Group_4__011320);
+            pushFollow(FOLLOW_rule__Emit__Group_4__0__Impl_in_rule__Emit__Group_4__011321);
             rule__Emit__Group_4__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Emit__Group_4__1_in_rule__Emit__Group_4__011323);
+            pushFollow(FOLLOW_rule__Emit__Group_4__1_in_rule__Emit__Group_4__011324);
             rule__Emit__Group_4__1();
 
             state._fsp--;
@@ -16234,7 +16251,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmitAccess().getCommaKeyword_4_0()); 
             }
-            match(input,53,FOLLOW_53_in_rule__Emit__Group_4__0__Impl11351); if (state.failed) return ;
+            match(input,53,FOLLOW_53_in_rule__Emit__Group_4__0__Impl11352); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEmitAccess().getCommaKeyword_4_0()); 
             }
@@ -16269,7 +16286,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5523:1: ( rule__Emit__Group_4__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5524:2: rule__Emit__Group_4__1__Impl
             {
-            pushFollow(FOLLOW_rule__Emit__Group_4__1__Impl_in_rule__Emit__Group_4__111382);
+            pushFollow(FOLLOW_rule__Emit__Group_4__1__Impl_in_rule__Emit__Group_4__111383);
             rule__Emit__Group_4__1__Impl();
 
             state._fsp--;
@@ -16311,7 +16328,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5537:1: ( rule__Emit__ContinuationAssignment_4_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5537:2: rule__Emit__ContinuationAssignment_4_1
             {
-            pushFollow(FOLLOW_rule__Emit__ContinuationAssignment_4_1_in_rule__Emit__Group_4__1__Impl11409);
+            pushFollow(FOLLOW_rule__Emit__ContinuationAssignment_4_1_in_rule__Emit__Group_4__1__Impl11410);
             rule__Emit__ContinuationAssignment_4_1();
 
             state._fsp--;
@@ -16353,12 +16370,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5555:1: ( rule__Abort__Group__0__Impl rule__Abort__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5556:2: rule__Abort__Group__0__Impl rule__Abort__Group__1
             {
-            pushFollow(FOLLOW_rule__Abort__Group__0__Impl_in_rule__Abort__Group__011443);
+            pushFollow(FOLLOW_rule__Abort__Group__0__Impl_in_rule__Abort__Group__011444);
             rule__Abort__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Abort__Group__1_in_rule__Abort__Group__011446);
+            pushFollow(FOLLOW_rule__Abort__Group__1_in_rule__Abort__Group__011447);
             rule__Abort__Group__1();
 
             state._fsp--;
@@ -16432,12 +16449,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5586:1: ( rule__Abort__Group__1__Impl rule__Abort__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5587:2: rule__Abort__Group__1__Impl rule__Abort__Group__2
             {
-            pushFollow(FOLLOW_rule__Abort__Group__1__Impl_in_rule__Abort__Group__111504);
+            pushFollow(FOLLOW_rule__Abort__Group__1__Impl_in_rule__Abort__Group__111505);
             rule__Abort__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Abort__Group__2_in_rule__Abort__Group__111507);
+            pushFollow(FOLLOW_rule__Abort__Group__2_in_rule__Abort__Group__111508);
             rule__Abort__Group__2();
 
             state._fsp--;
@@ -16476,7 +16493,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAbortAccess().getAbortKeyword_1()); 
             }
-            match(input,65,FOLLOW_65_in_rule__Abort__Group__1__Impl11535); if (state.failed) return ;
+            match(input,65,FOLLOW_65_in_rule__Abort__Group__1__Impl11536); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAbortAccess().getAbortKeyword_1()); 
             }
@@ -16511,12 +16528,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5617:1: ( rule__Abort__Group__2__Impl rule__Abort__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5618:2: rule__Abort__Group__2__Impl rule__Abort__Group__3
             {
-            pushFollow(FOLLOW_rule__Abort__Group__2__Impl_in_rule__Abort__Group__211566);
+            pushFollow(FOLLOW_rule__Abort__Group__2__Impl_in_rule__Abort__Group__211567);
             rule__Abort__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Abort__Group__3_in_rule__Abort__Group__211569);
+            pushFollow(FOLLOW_rule__Abort__Group__3_in_rule__Abort__Group__211570);
             rule__Abort__Group__3();
 
             state._fsp--;
@@ -16555,7 +16572,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAbortAccess().getLeftParenthesisKeyword_2()); 
             }
-            match(input,46,FOLLOW_46_in_rule__Abort__Group__2__Impl11597); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__Abort__Group__2__Impl11598); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAbortAccess().getLeftParenthesisKeyword_2()); 
             }
@@ -16590,12 +16607,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5648:1: ( rule__Abort__Group__3__Impl rule__Abort__Group__4 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5649:2: rule__Abort__Group__3__Impl rule__Abort__Group__4
             {
-            pushFollow(FOLLOW_rule__Abort__Group__3__Impl_in_rule__Abort__Group__311628);
+            pushFollow(FOLLOW_rule__Abort__Group__3__Impl_in_rule__Abort__Group__311629);
             rule__Abort__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Abort__Group__4_in_rule__Abort__Group__311631);
+            pushFollow(FOLLOW_rule__Abort__Group__4_in_rule__Abort__Group__311632);
             rule__Abort__Group__4();
 
             state._fsp--;
@@ -16635,17 +16652,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getAbortAccess().getContinuationAssignment_3()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5663:1: ( rule__Abort__ContinuationAssignment_3 )?
-            int alt44=2;
-            int LA44_0 = input.LA(1);
+            int alt45=2;
+            int LA45_0 = input.LA(1);
 
-            if ( (LA44_0==RULE_ID) ) {
-                alt44=1;
+            if ( (LA45_0==RULE_ID) ) {
+                alt45=1;
             }
-            switch (alt44) {
+            switch (alt45) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5663:2: rule__Abort__ContinuationAssignment_3
                     {
-                    pushFollow(FOLLOW_rule__Abort__ContinuationAssignment_3_in_rule__Abort__Group__3__Impl11658);
+                    pushFollow(FOLLOW_rule__Abort__ContinuationAssignment_3_in_rule__Abort__Group__3__Impl11659);
                     rule__Abort__ContinuationAssignment_3();
 
                     state._fsp--;
@@ -16690,7 +16707,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5677:1: ( rule__Abort__Group__4__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5678:2: rule__Abort__Group__4__Impl
             {
-            pushFollow(FOLLOW_rule__Abort__Group__4__Impl_in_rule__Abort__Group__411689);
+            pushFollow(FOLLOW_rule__Abort__Group__4__Impl_in_rule__Abort__Group__411690);
             rule__Abort__Group__4__Impl();
 
             state._fsp--;
@@ -16729,7 +16746,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAbortAccess().getRightParenthesisKeyword_4()); 
             }
-            match(input,47,FOLLOW_47_in_rule__Abort__Group__4__Impl11717); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__Abort__Group__4__Impl11718); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAbortAccess().getRightParenthesisKeyword_4()); 
             }
@@ -16764,12 +16781,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5717:1: ( rule__If__Group__0__Impl rule__If__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5718:2: rule__If__Group__0__Impl rule__If__Group__1
             {
-            pushFollow(FOLLOW_rule__If__Group__0__Impl_in_rule__If__Group__011758);
+            pushFollow(FOLLOW_rule__If__Group__0__Impl_in_rule__If__Group__011759);
             rule__If__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__If__Group__1_in_rule__If__Group__011761);
+            pushFollow(FOLLOW_rule__If__Group__1_in_rule__If__Group__011762);
             rule__If__Group__1();
 
             state._fsp--;
@@ -16808,7 +16825,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfAccess().getIfKeyword_0()); 
             }
-            match(input,66,FOLLOW_66_in_rule__If__Group__0__Impl11789); if (state.failed) return ;
+            match(input,66,FOLLOW_66_in_rule__If__Group__0__Impl11790); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIfAccess().getIfKeyword_0()); 
             }
@@ -16843,12 +16860,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5748:1: ( rule__If__Group__1__Impl rule__If__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5749:2: rule__If__Group__1__Impl rule__If__Group__2
             {
-            pushFollow(FOLLOW_rule__If__Group__1__Impl_in_rule__If__Group__111820);
+            pushFollow(FOLLOW_rule__If__Group__1__Impl_in_rule__If__Group__111821);
             rule__If__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__If__Group__2_in_rule__If__Group__111823);
+            pushFollow(FOLLOW_rule__If__Group__2_in_rule__If__Group__111824);
             rule__If__Group__2();
 
             state._fsp--;
@@ -16887,7 +16904,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfAccess().getLeftParenthesisKeyword_1()); 
             }
-            match(input,46,FOLLOW_46_in_rule__If__Group__1__Impl11851); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__If__Group__1__Impl11852); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIfAccess().getLeftParenthesisKeyword_1()); 
             }
@@ -16922,12 +16939,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5779:1: ( rule__If__Group__2__Impl rule__If__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5780:2: rule__If__Group__2__Impl rule__If__Group__3
             {
-            pushFollow(FOLLOW_rule__If__Group__2__Impl_in_rule__If__Group__211882);
+            pushFollow(FOLLOW_rule__If__Group__2__Impl_in_rule__If__Group__211883);
             rule__If__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__If__Group__3_in_rule__If__Group__211885);
+            pushFollow(FOLLOW_rule__If__Group__3_in_rule__If__Group__211886);
             rule__If__Group__3();
 
             state._fsp--;
@@ -16969,7 +16986,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5794:1: ( rule__If__ExpressionAssignment_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5794:2: rule__If__ExpressionAssignment_2
             {
-            pushFollow(FOLLOW_rule__If__ExpressionAssignment_2_in_rule__If__Group__2__Impl11912);
+            pushFollow(FOLLOW_rule__If__ExpressionAssignment_2_in_rule__If__Group__2__Impl11913);
             rule__If__ExpressionAssignment_2();
 
             state._fsp--;
@@ -17011,12 +17028,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5808:1: ( rule__If__Group__3__Impl rule__If__Group__4 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5809:2: rule__If__Group__3__Impl rule__If__Group__4
             {
-            pushFollow(FOLLOW_rule__If__Group__3__Impl_in_rule__If__Group__311942);
+            pushFollow(FOLLOW_rule__If__Group__3__Impl_in_rule__If__Group__311943);
             rule__If__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__If__Group__4_in_rule__If__Group__311945);
+            pushFollow(FOLLOW_rule__If__Group__4_in_rule__If__Group__311946);
             rule__If__Group__4();
 
             state._fsp--;
@@ -17056,17 +17073,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getIfAccess().getGroup_3()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5823:1: ( rule__If__Group_3__0 )?
-            int alt45=2;
-            int LA45_0 = input.LA(1);
+            int alt46=2;
+            int LA46_0 = input.LA(1);
 
-            if ( (LA45_0==53) ) {
-                alt45=1;
+            if ( (LA46_0==53) ) {
+                alt46=1;
             }
-            switch (alt45) {
+            switch (alt46) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5823:2: rule__If__Group_3__0
                     {
-                    pushFollow(FOLLOW_rule__If__Group_3__0_in_rule__If__Group__3__Impl11972);
+                    pushFollow(FOLLOW_rule__If__Group_3__0_in_rule__If__Group__3__Impl11973);
                     rule__If__Group_3__0();
 
                     state._fsp--;
@@ -17111,12 +17128,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5837:1: ( rule__If__Group__4__Impl rule__If__Group__5 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5838:2: rule__If__Group__4__Impl rule__If__Group__5
             {
-            pushFollow(FOLLOW_rule__If__Group__4__Impl_in_rule__If__Group__412003);
+            pushFollow(FOLLOW_rule__If__Group__4__Impl_in_rule__If__Group__412004);
             rule__If__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__If__Group__5_in_rule__If__Group__412006);
+            pushFollow(FOLLOW_rule__If__Group__5_in_rule__If__Group__412007);
             rule__If__Group__5();
 
             state._fsp--;
@@ -17155,7 +17172,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfAccess().getRightParenthesisKeyword_4()); 
             }
-            match(input,47,FOLLOW_47_in_rule__If__Group__4__Impl12034); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__If__Group__4__Impl12035); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIfAccess().getRightParenthesisKeyword_4()); 
             }
@@ -17190,12 +17207,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5868:1: ( rule__If__Group__5__Impl rule__If__Group__6 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5869:2: rule__If__Group__5__Impl rule__If__Group__6
             {
-            pushFollow(FOLLOW_rule__If__Group__5__Impl_in_rule__If__Group__512065);
+            pushFollow(FOLLOW_rule__If__Group__5__Impl_in_rule__If__Group__512066);
             rule__If__Group__5__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__If__Group__6_in_rule__If__Group__512068);
+            pushFollow(FOLLOW_rule__If__Group__6_in_rule__If__Group__512069);
             rule__If__Group__6();
 
             state._fsp--;
@@ -17234,7 +17251,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfAccess().getLeftCurlyBracketKeyword_5()); 
             }
-            match(input,50,FOLLOW_50_in_rule__If__Group__5__Impl12096); if (state.failed) return ;
+            match(input,50,FOLLOW_50_in_rule__If__Group__5__Impl12097); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIfAccess().getLeftCurlyBracketKeyword_5()); 
             }
@@ -17269,12 +17286,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5899:1: ( rule__If__Group__6__Impl rule__If__Group__7 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5900:2: rule__If__Group__6__Impl rule__If__Group__7
             {
-            pushFollow(FOLLOW_rule__If__Group__6__Impl_in_rule__If__Group__612127);
+            pushFollow(FOLLOW_rule__If__Group__6__Impl_in_rule__If__Group__612128);
             rule__If__Group__6__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__If__Group__7_in_rule__If__Group__612130);
+            pushFollow(FOLLOW_rule__If__Group__7_in_rule__If__Group__612131);
             rule__If__Group__7();
 
             state._fsp--;
@@ -17314,21 +17331,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getIfAccess().getGroup_6()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5914:1: ( rule__If__Group_6__0 )*
-            loop46:
+            loop47:
             do {
-                int alt46=2;
-                int LA46_0 = input.LA(1);
+                int alt47=2;
+                int LA47_0 = input.LA(1);
 
-                if ( (LA46_0==RULE_HOSTCODE||LA46_0==RULE_ID||(LA46_0>=56 && LA46_0<=67)) ) {
-                    alt46=1;
+                if ( (LA47_0==RULE_HOSTCODE||LA47_0==RULE_ID||(LA47_0>=56 && LA47_0<=67)) ) {
+                    alt47=1;
                 }
 
 
-                switch (alt46) {
+                switch (alt47) {
             	case 1 :
             	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5914:2: rule__If__Group_6__0
             	    {
-            	    pushFollow(FOLLOW_rule__If__Group_6__0_in_rule__If__Group__6__Impl12157);
+            	    pushFollow(FOLLOW_rule__If__Group_6__0_in_rule__If__Group__6__Impl12158);
             	    rule__If__Group_6__0();
 
             	    state._fsp--;
@@ -17338,7 +17355,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop46;
+            	    break loop47;
                 }
             } while (true);
 
@@ -17376,7 +17393,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5928:1: ( rule__If__Group__7__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5929:2: rule__If__Group__7__Impl
             {
-            pushFollow(FOLLOW_rule__If__Group__7__Impl_in_rule__If__Group__712188);
+            pushFollow(FOLLOW_rule__If__Group__7__Impl_in_rule__If__Group__712189);
             rule__If__Group__7__Impl();
 
             state._fsp--;
@@ -17415,7 +17432,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfAccess().getRightCurlyBracketKeyword_7()); 
             }
-            match(input,51,FOLLOW_51_in_rule__If__Group__7__Impl12216); if (state.failed) return ;
+            match(input,51,FOLLOW_51_in_rule__If__Group__7__Impl12217); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIfAccess().getRightCurlyBracketKeyword_7()); 
             }
@@ -17450,12 +17467,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5974:1: ( rule__If__Group_3__0__Impl rule__If__Group_3__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:5975:2: rule__If__Group_3__0__Impl rule__If__Group_3__1
             {
-            pushFollow(FOLLOW_rule__If__Group_3__0__Impl_in_rule__If__Group_3__012263);
+            pushFollow(FOLLOW_rule__If__Group_3__0__Impl_in_rule__If__Group_3__012264);
             rule__If__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__If__Group_3__1_in_rule__If__Group_3__012266);
+            pushFollow(FOLLOW_rule__If__Group_3__1_in_rule__If__Group_3__012267);
             rule__If__Group_3__1();
 
             state._fsp--;
@@ -17494,7 +17511,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfAccess().getCommaKeyword_3_0()); 
             }
-            match(input,53,FOLLOW_53_in_rule__If__Group_3__0__Impl12294); if (state.failed) return ;
+            match(input,53,FOLLOW_53_in_rule__If__Group_3__0__Impl12295); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIfAccess().getCommaKeyword_3_0()); 
             }
@@ -17529,7 +17546,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6005:1: ( rule__If__Group_3__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6006:2: rule__If__Group_3__1__Impl
             {
-            pushFollow(FOLLOW_rule__If__Group_3__1__Impl_in_rule__If__Group_3__112325);
+            pushFollow(FOLLOW_rule__If__Group_3__1__Impl_in_rule__If__Group_3__112326);
             rule__If__Group_3__1__Impl();
 
             state._fsp--;
@@ -17571,7 +17588,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6019:1: ( rule__If__ContinuationAssignment_3_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6019:2: rule__If__ContinuationAssignment_3_1
             {
-            pushFollow(FOLLOW_rule__If__ContinuationAssignment_3_1_in_rule__If__Group_3__1__Impl12352);
+            pushFollow(FOLLOW_rule__If__ContinuationAssignment_3_1_in_rule__If__Group_3__1__Impl12353);
             rule__If__ContinuationAssignment_3_1();
 
             state._fsp--;
@@ -17613,12 +17630,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6037:1: ( rule__If__Group_6__0__Impl rule__If__Group_6__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6038:2: rule__If__Group_6__0__Impl rule__If__Group_6__1
             {
-            pushFollow(FOLLOW_rule__If__Group_6__0__Impl_in_rule__If__Group_6__012386);
+            pushFollow(FOLLOW_rule__If__Group_6__0__Impl_in_rule__If__Group_6__012387);
             rule__If__Group_6__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__If__Group_6__1_in_rule__If__Group_6__012389);
+            pushFollow(FOLLOW_rule__If__Group_6__1_in_rule__If__Group_6__012390);
             rule__If__Group_6__1();
 
             state._fsp--;
@@ -17660,7 +17677,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6052:1: ( rule__If__InstructionsAssignment_6_0 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6052:2: rule__If__InstructionsAssignment_6_0
             {
-            pushFollow(FOLLOW_rule__If__InstructionsAssignment_6_0_in_rule__If__Group_6__0__Impl12416);
+            pushFollow(FOLLOW_rule__If__InstructionsAssignment_6_0_in_rule__If__Group_6__0__Impl12417);
             rule__If__InstructionsAssignment_6_0();
 
             state._fsp--;
@@ -17702,7 +17719,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6066:1: ( rule__If__Group_6__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6067:2: rule__If__Group_6__1__Impl
             {
-            pushFollow(FOLLOW_rule__If__Group_6__1__Impl_in_rule__If__Group_6__112446);
+            pushFollow(FOLLOW_rule__If__Group_6__1__Impl_in_rule__If__Group_6__112447);
             rule__If__Group_6__1__Impl();
 
             state._fsp--;
@@ -17741,7 +17758,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfAccess().getSemicolonKeyword_6_1()); 
             }
-            match(input,52,FOLLOW_52_in_rule__If__Group_6__1__Impl12474); if (state.failed) return ;
+            match(input,52,FOLLOW_52_in_rule__If__Group_6__1__Impl12475); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIfAccess().getSemicolonKeyword_6_1()); 
             }
@@ -17776,12 +17793,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6100:1: ( rule__Await__Group__0__Impl rule__Await__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6101:2: rule__Await__Group__0__Impl rule__Await__Group__1
             {
-            pushFollow(FOLLOW_rule__Await__Group__0__Impl_in_rule__Await__Group__012509);
+            pushFollow(FOLLOW_rule__Await__Group__0__Impl_in_rule__Await__Group__012510);
             rule__Await__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Await__Group__1_in_rule__Await__Group__012512);
+            pushFollow(FOLLOW_rule__Await__Group__1_in_rule__Await__Group__012513);
             rule__Await__Group__1();
 
             state._fsp--;
@@ -17820,7 +17837,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAwaitAccess().getAwaitKeyword_0()); 
             }
-            match(input,67,FOLLOW_67_in_rule__Await__Group__0__Impl12540); if (state.failed) return ;
+            match(input,67,FOLLOW_67_in_rule__Await__Group__0__Impl12541); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAwaitAccess().getAwaitKeyword_0()); 
             }
@@ -17855,12 +17872,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6131:1: ( rule__Await__Group__1__Impl rule__Await__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6132:2: rule__Await__Group__1__Impl rule__Await__Group__2
             {
-            pushFollow(FOLLOW_rule__Await__Group__1__Impl_in_rule__Await__Group__112571);
+            pushFollow(FOLLOW_rule__Await__Group__1__Impl_in_rule__Await__Group__112572);
             rule__Await__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Await__Group__2_in_rule__Await__Group__112574);
+            pushFollow(FOLLOW_rule__Await__Group__2_in_rule__Await__Group__112575);
             rule__Await__Group__2();
 
             state._fsp--;
@@ -17899,7 +17916,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAwaitAccess().getLeftParenthesisKeyword_1()); 
             }
-            match(input,46,FOLLOW_46_in_rule__Await__Group__1__Impl12602); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__Await__Group__1__Impl12603); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAwaitAccess().getLeftParenthesisKeyword_1()); 
             }
@@ -17934,12 +17951,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6162:1: ( rule__Await__Group__2__Impl rule__Await__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6163:2: rule__Await__Group__2__Impl rule__Await__Group__3
             {
-            pushFollow(FOLLOW_rule__Await__Group__2__Impl_in_rule__Await__Group__212633);
+            pushFollow(FOLLOW_rule__Await__Group__2__Impl_in_rule__Await__Group__212634);
             rule__Await__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Await__Group__3_in_rule__Await__Group__212636);
+            pushFollow(FOLLOW_rule__Await__Group__3_in_rule__Await__Group__212637);
             rule__Await__Group__3();
 
             state._fsp--;
@@ -17981,7 +17998,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6177:1: ( rule__Await__SignalAssignment_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6177:2: rule__Await__SignalAssignment_2
             {
-            pushFollow(FOLLOW_rule__Await__SignalAssignment_2_in_rule__Await__Group__2__Impl12663);
+            pushFollow(FOLLOW_rule__Await__SignalAssignment_2_in_rule__Await__Group__2__Impl12664);
             rule__Await__SignalAssignment_2();
 
             state._fsp--;
@@ -18023,12 +18040,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6191:1: ( rule__Await__Group__3__Impl rule__Await__Group__4 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6192:2: rule__Await__Group__3__Impl rule__Await__Group__4
             {
-            pushFollow(FOLLOW_rule__Await__Group__3__Impl_in_rule__Await__Group__312693);
+            pushFollow(FOLLOW_rule__Await__Group__3__Impl_in_rule__Await__Group__312694);
             rule__Await__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Await__Group__4_in_rule__Await__Group__312696);
+            pushFollow(FOLLOW_rule__Await__Group__4_in_rule__Await__Group__312697);
             rule__Await__Group__4();
 
             state._fsp--;
@@ -18068,17 +18085,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getAwaitAccess().getGroup_3()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6206:1: ( rule__Await__Group_3__0 )?
-            int alt47=2;
-            int LA47_0 = input.LA(1);
+            int alt48=2;
+            int LA48_0 = input.LA(1);
 
-            if ( (LA47_0==53) ) {
-                alt47=1;
+            if ( (LA48_0==53) ) {
+                alt48=1;
             }
-            switch (alt47) {
+            switch (alt48) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6206:2: rule__Await__Group_3__0
                     {
-                    pushFollow(FOLLOW_rule__Await__Group_3__0_in_rule__Await__Group__3__Impl12723);
+                    pushFollow(FOLLOW_rule__Await__Group_3__0_in_rule__Await__Group__3__Impl12724);
                     rule__Await__Group_3__0();
 
                     state._fsp--;
@@ -18123,7 +18140,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6220:1: ( rule__Await__Group__4__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6221:2: rule__Await__Group__4__Impl
             {
-            pushFollow(FOLLOW_rule__Await__Group__4__Impl_in_rule__Await__Group__412754);
+            pushFollow(FOLLOW_rule__Await__Group__4__Impl_in_rule__Await__Group__412755);
             rule__Await__Group__4__Impl();
 
             state._fsp--;
@@ -18162,7 +18179,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAwaitAccess().getRightParenthesisKeyword_4()); 
             }
-            match(input,47,FOLLOW_47_in_rule__Await__Group__4__Impl12782); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__Await__Group__4__Impl12783); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAwaitAccess().getRightParenthesisKeyword_4()); 
             }
@@ -18197,12 +18214,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6260:1: ( rule__Await__Group_3__0__Impl rule__Await__Group_3__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6261:2: rule__Await__Group_3__0__Impl rule__Await__Group_3__1
             {
-            pushFollow(FOLLOW_rule__Await__Group_3__0__Impl_in_rule__Await__Group_3__012823);
+            pushFollow(FOLLOW_rule__Await__Group_3__0__Impl_in_rule__Await__Group_3__012824);
             rule__Await__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__Await__Group_3__1_in_rule__Await__Group_3__012826);
+            pushFollow(FOLLOW_rule__Await__Group_3__1_in_rule__Await__Group_3__012827);
             rule__Await__Group_3__1();
 
             state._fsp--;
@@ -18241,7 +18258,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAwaitAccess().getCommaKeyword_3_0()); 
             }
-            match(input,53,FOLLOW_53_in_rule__Await__Group_3__0__Impl12854); if (state.failed) return ;
+            match(input,53,FOLLOW_53_in_rule__Await__Group_3__0__Impl12855); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAwaitAccess().getCommaKeyword_3_0()); 
             }
@@ -18276,7 +18293,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6291:1: ( rule__Await__Group_3__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6292:2: rule__Await__Group_3__1__Impl
             {
-            pushFollow(FOLLOW_rule__Await__Group_3__1__Impl_in_rule__Await__Group_3__112885);
+            pushFollow(FOLLOW_rule__Await__Group_3__1__Impl_in_rule__Await__Group_3__112886);
             rule__Await__Group_3__1__Impl();
 
             state._fsp--;
@@ -18318,7 +18335,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6305:1: ( rule__Await__ContinuationAssignment_3_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6305:2: rule__Await__ContinuationAssignment_3_1
             {
-            pushFollow(FOLLOW_rule__Await__ContinuationAssignment_3_1_in_rule__Await__Group_3__1__Impl12912);
+            pushFollow(FOLLOW_rule__Await__ContinuationAssignment_3_1_in_rule__Await__Group_3__1__Impl12913);
             rule__Await__ContinuationAssignment_3_1();
 
             state._fsp--;
@@ -18360,12 +18377,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6323:1: ( rule__OrAndExpression__Group__0__Impl rule__OrAndExpression__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6324:2: rule__OrAndExpression__Group__0__Impl rule__OrAndExpression__Group__1
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__Group__0__Impl_in_rule__OrAndExpression__Group__012946);
+            pushFollow(FOLLOW_rule__OrAndExpression__Group__0__Impl_in_rule__OrAndExpression__Group__012947);
             rule__OrAndExpression__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__OrAndExpression__Group__1_in_rule__OrAndExpression__Group__012949);
+            pushFollow(FOLLOW_rule__OrAndExpression__Group__1_in_rule__OrAndExpression__Group__012950);
             rule__OrAndExpression__Group__1();
 
             state._fsp--;
@@ -18404,7 +18421,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getOrAndExpressionAccess().getCompareOperationParserRuleCall_0()); 
             }
-            pushFollow(FOLLOW_ruleCompareOperation_in_rule__OrAndExpression__Group__0__Impl12976);
+            pushFollow(FOLLOW_ruleCompareOperation_in_rule__OrAndExpression__Group__0__Impl12977);
             ruleCompareOperation();
 
             state._fsp--;
@@ -18443,7 +18460,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6352:1: ( rule__OrAndExpression__Group__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6353:2: rule__OrAndExpression__Group__1__Impl
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__Group__1__Impl_in_rule__OrAndExpression__Group__113005);
+            pushFollow(FOLLOW_rule__OrAndExpression__Group__1__Impl_in_rule__OrAndExpression__Group__113006);
             rule__OrAndExpression__Group__1__Impl();
 
             state._fsp--;
@@ -18485,7 +18502,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6366:1: ( rule__OrAndExpression__Alternatives_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6366:2: rule__OrAndExpression__Alternatives_1
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__Alternatives_1_in_rule__OrAndExpression__Group__1__Impl13032);
+            pushFollow(FOLLOW_rule__OrAndExpression__Alternatives_1_in_rule__OrAndExpression__Group__1__Impl13033);
             rule__OrAndExpression__Alternatives_1();
 
             state._fsp--;
@@ -18527,12 +18544,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6384:1: ( rule__OrAndExpression__Group_1_0__0__Impl rule__OrAndExpression__Group_1_0__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6385:2: rule__OrAndExpression__Group_1_0__0__Impl rule__OrAndExpression__Group_1_0__1
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_0__0__Impl_in_rule__OrAndExpression__Group_1_0__013066);
+            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_0__0__Impl_in_rule__OrAndExpression__Group_1_0__013067);
             rule__OrAndExpression__Group_1_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_0__1_in_rule__OrAndExpression__Group_1_0__013069);
+            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_0__1_in_rule__OrAndExpression__Group_1_0__013070);
             rule__OrAndExpression__Group_1_0__1();
 
             state._fsp--;
@@ -18606,12 +18623,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6415:1: ( rule__OrAndExpression__Group_1_0__1__Impl rule__OrAndExpression__Group_1_0__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6416:2: rule__OrAndExpression__Group_1_0__1__Impl rule__OrAndExpression__Group_1_0__2
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_0__1__Impl_in_rule__OrAndExpression__Group_1_0__113127);
+            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_0__1__Impl_in_rule__OrAndExpression__Group_1_0__113128);
             rule__OrAndExpression__Group_1_0__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_0__2_in_rule__OrAndExpression__Group_1_0__113130);
+            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_0__2_in_rule__OrAndExpression__Group_1_0__113131);
             rule__OrAndExpression__Group_1_0__2();
 
             state._fsp--;
@@ -18653,7 +18670,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6430:1: ( rule__OrAndExpression__OperatorAssignment_1_0_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6430:2: rule__OrAndExpression__OperatorAssignment_1_0_1
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__OperatorAssignment_1_0_1_in_rule__OrAndExpression__Group_1_0__1__Impl13157);
+            pushFollow(FOLLOW_rule__OrAndExpression__OperatorAssignment_1_0_1_in_rule__OrAndExpression__Group_1_0__1__Impl13158);
             rule__OrAndExpression__OperatorAssignment_1_0_1();
 
             state._fsp--;
@@ -18695,7 +18712,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6444:1: ( rule__OrAndExpression__Group_1_0__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6445:2: rule__OrAndExpression__Group_1_0__2__Impl
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_0__2__Impl_in_rule__OrAndExpression__Group_1_0__213187);
+            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_0__2__Impl_in_rule__OrAndExpression__Group_1_0__213188);
             rule__OrAndExpression__Group_1_0__2__Impl();
 
             state._fsp--;
@@ -18737,7 +18754,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6458:1: ( rule__OrAndExpression__SubExpressionsAssignment_1_0_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6458:2: rule__OrAndExpression__SubExpressionsAssignment_1_0_2
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__SubExpressionsAssignment_1_0_2_in_rule__OrAndExpression__Group_1_0__2__Impl13214);
+            pushFollow(FOLLOW_rule__OrAndExpression__SubExpressionsAssignment_1_0_2_in_rule__OrAndExpression__Group_1_0__2__Impl13215);
             rule__OrAndExpression__SubExpressionsAssignment_1_0_2();
 
             state._fsp--;
@@ -18779,12 +18796,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6478:1: ( rule__OrAndExpression__Group_1_1__0__Impl rule__OrAndExpression__Group_1_1__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6479:2: rule__OrAndExpression__Group_1_1__0__Impl rule__OrAndExpression__Group_1_1__1
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_1__0__Impl_in_rule__OrAndExpression__Group_1_1__013250);
+            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_1__0__Impl_in_rule__OrAndExpression__Group_1_1__013251);
             rule__OrAndExpression__Group_1_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_1__1_in_rule__OrAndExpression__Group_1_1__013253);
+            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_1__1_in_rule__OrAndExpression__Group_1_1__013254);
             rule__OrAndExpression__Group_1_1__1();
 
             state._fsp--;
@@ -18858,12 +18875,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6509:1: ( rule__OrAndExpression__Group_1_1__1__Impl rule__OrAndExpression__Group_1_1__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6510:2: rule__OrAndExpression__Group_1_1__1__Impl rule__OrAndExpression__Group_1_1__2
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_1__1__Impl_in_rule__OrAndExpression__Group_1_1__113311);
+            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_1__1__Impl_in_rule__OrAndExpression__Group_1_1__113312);
             rule__OrAndExpression__Group_1_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_1__2_in_rule__OrAndExpression__Group_1_1__113314);
+            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_1__2_in_rule__OrAndExpression__Group_1_1__113315);
             rule__OrAndExpression__Group_1_1__2();
 
             state._fsp--;
@@ -18905,7 +18922,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6524:1: ( rule__OrAndExpression__OperatorAssignment_1_1_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6524:2: rule__OrAndExpression__OperatorAssignment_1_1_1
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__OperatorAssignment_1_1_1_in_rule__OrAndExpression__Group_1_1__1__Impl13341);
+            pushFollow(FOLLOW_rule__OrAndExpression__OperatorAssignment_1_1_1_in_rule__OrAndExpression__Group_1_1__1__Impl13342);
             rule__OrAndExpression__OperatorAssignment_1_1_1();
 
             state._fsp--;
@@ -18947,7 +18964,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6538:1: ( rule__OrAndExpression__Group_1_1__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6539:2: rule__OrAndExpression__Group_1_1__2__Impl
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_1__2__Impl_in_rule__OrAndExpression__Group_1_1__213371);
+            pushFollow(FOLLOW_rule__OrAndExpression__Group_1_1__2__Impl_in_rule__OrAndExpression__Group_1_1__213372);
             rule__OrAndExpression__Group_1_1__2__Impl();
 
             state._fsp--;
@@ -18989,7 +19006,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6552:1: ( rule__OrAndExpression__SubExpressionsAssignment_1_1_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6552:2: rule__OrAndExpression__SubExpressionsAssignment_1_1_2
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__SubExpressionsAssignment_1_1_2_in_rule__OrAndExpression__Group_1_1__2__Impl13398);
+            pushFollow(FOLLOW_rule__OrAndExpression__SubExpressionsAssignment_1_1_2_in_rule__OrAndExpression__Group_1_1__2__Impl13399);
             rule__OrAndExpression__SubExpressionsAssignment_1_1_2();
 
             state._fsp--;
@@ -19031,12 +19048,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6572:1: ( rule__CompareOperation__Group_0__0__Impl rule__CompareOperation__Group_0__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6573:2: rule__CompareOperation__Group_0__0__Impl rule__CompareOperation__Group_0__1
             {
-            pushFollow(FOLLOW_rule__CompareOperation__Group_0__0__Impl_in_rule__CompareOperation__Group_0__013434);
+            pushFollow(FOLLOW_rule__CompareOperation__Group_0__0__Impl_in_rule__CompareOperation__Group_0__013435);
             rule__CompareOperation__Group_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__CompareOperation__Group_0__1_in_rule__CompareOperation__Group_0__013437);
+            pushFollow(FOLLOW_rule__CompareOperation__Group_0__1_in_rule__CompareOperation__Group_0__013438);
             rule__CompareOperation__Group_0__1();
 
             state._fsp--;
@@ -19075,7 +19092,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getNotOrValuedExpressionParserRuleCall_0_0()); 
             }
-            pushFollow(FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__Group_0__0__Impl13464);
+            pushFollow(FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__Group_0__0__Impl13465);
             ruleNotOrValuedExpression();
 
             state._fsp--;
@@ -19114,7 +19131,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6601:1: ( rule__CompareOperation__Group_0__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6602:2: rule__CompareOperation__Group_0__1__Impl
             {
-            pushFollow(FOLLOW_rule__CompareOperation__Group_0__1__Impl_in_rule__CompareOperation__Group_0__113493);
+            pushFollow(FOLLOW_rule__CompareOperation__Group_0__1__Impl_in_rule__CompareOperation__Group_0__113494);
             rule__CompareOperation__Group_0__1__Impl();
 
             state._fsp--;
@@ -19156,7 +19173,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6615:1: ( rule__CompareOperation__Group_0_1__0 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6615:2: rule__CompareOperation__Group_0_1__0
             {
-            pushFollow(FOLLOW_rule__CompareOperation__Group_0_1__0_in_rule__CompareOperation__Group_0__1__Impl13520);
+            pushFollow(FOLLOW_rule__CompareOperation__Group_0_1__0_in_rule__CompareOperation__Group_0__1__Impl13521);
             rule__CompareOperation__Group_0_1__0();
 
             state._fsp--;
@@ -19198,12 +19215,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6633:1: ( rule__CompareOperation__Group_0_1__0__Impl rule__CompareOperation__Group_0_1__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6634:2: rule__CompareOperation__Group_0_1__0__Impl rule__CompareOperation__Group_0_1__1
             {
-            pushFollow(FOLLOW_rule__CompareOperation__Group_0_1__0__Impl_in_rule__CompareOperation__Group_0_1__013554);
+            pushFollow(FOLLOW_rule__CompareOperation__Group_0_1__0__Impl_in_rule__CompareOperation__Group_0_1__013555);
             rule__CompareOperation__Group_0_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__CompareOperation__Group_0_1__1_in_rule__CompareOperation__Group_0_1__013557);
+            pushFollow(FOLLOW_rule__CompareOperation__Group_0_1__1_in_rule__CompareOperation__Group_0_1__013558);
             rule__CompareOperation__Group_0_1__1();
 
             state._fsp--;
@@ -19277,12 +19294,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6664:1: ( rule__CompareOperation__Group_0_1__1__Impl rule__CompareOperation__Group_0_1__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6665:2: rule__CompareOperation__Group_0_1__1__Impl rule__CompareOperation__Group_0_1__2
             {
-            pushFollow(FOLLOW_rule__CompareOperation__Group_0_1__1__Impl_in_rule__CompareOperation__Group_0_1__113615);
+            pushFollow(FOLLOW_rule__CompareOperation__Group_0_1__1__Impl_in_rule__CompareOperation__Group_0_1__113616);
             rule__CompareOperation__Group_0_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__CompareOperation__Group_0_1__2_in_rule__CompareOperation__Group_0_1__113618);
+            pushFollow(FOLLOW_rule__CompareOperation__Group_0_1__2_in_rule__CompareOperation__Group_0_1__113619);
             rule__CompareOperation__Group_0_1__2();
 
             state._fsp--;
@@ -19324,7 +19341,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6679:1: ( rule__CompareOperation__OperatorAssignment_0_1_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6679:2: rule__CompareOperation__OperatorAssignment_0_1_1
             {
-            pushFollow(FOLLOW_rule__CompareOperation__OperatorAssignment_0_1_1_in_rule__CompareOperation__Group_0_1__1__Impl13645);
+            pushFollow(FOLLOW_rule__CompareOperation__OperatorAssignment_0_1_1_in_rule__CompareOperation__Group_0_1__1__Impl13646);
             rule__CompareOperation__OperatorAssignment_0_1_1();
 
             state._fsp--;
@@ -19366,7 +19383,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6693:1: ( rule__CompareOperation__Group_0_1__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6694:2: rule__CompareOperation__Group_0_1__2__Impl
             {
-            pushFollow(FOLLOW_rule__CompareOperation__Group_0_1__2__Impl_in_rule__CompareOperation__Group_0_1__213675);
+            pushFollow(FOLLOW_rule__CompareOperation__Group_0_1__2__Impl_in_rule__CompareOperation__Group_0_1__213676);
             rule__CompareOperation__Group_0_1__2__Impl();
 
             state._fsp--;
@@ -19408,7 +19425,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6707:1: ( rule__CompareOperation__SubExpressionsAssignment_0_1_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6707:2: rule__CompareOperation__SubExpressionsAssignment_0_1_2
             {
-            pushFollow(FOLLOW_rule__CompareOperation__SubExpressionsAssignment_0_1_2_in_rule__CompareOperation__Group_0_1__2__Impl13702);
+            pushFollow(FOLLOW_rule__CompareOperation__SubExpressionsAssignment_0_1_2_in_rule__CompareOperation__Group_0_1__2__Impl13703);
             rule__CompareOperation__SubExpressionsAssignment_0_1_2();
 
             state._fsp--;
@@ -19450,12 +19467,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6727:1: ( rule__NotExpression__Group_0__0__Impl rule__NotExpression__Group_0__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6728:2: rule__NotExpression__Group_0__0__Impl rule__NotExpression__Group_0__1
             {
-            pushFollow(FOLLOW_rule__NotExpression__Group_0__0__Impl_in_rule__NotExpression__Group_0__013738);
+            pushFollow(FOLLOW_rule__NotExpression__Group_0__0__Impl_in_rule__NotExpression__Group_0__013739);
             rule__NotExpression__Group_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__NotExpression__Group_0__1_in_rule__NotExpression__Group_0__013741);
+            pushFollow(FOLLOW_rule__NotExpression__Group_0__1_in_rule__NotExpression__Group_0__013742);
             rule__NotExpression__Group_0__1();
 
             state._fsp--;
@@ -19529,12 +19546,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6758:1: ( rule__NotExpression__Group_0__1__Impl rule__NotExpression__Group_0__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6759:2: rule__NotExpression__Group_0__1__Impl rule__NotExpression__Group_0__2
             {
-            pushFollow(FOLLOW_rule__NotExpression__Group_0__1__Impl_in_rule__NotExpression__Group_0__113799);
+            pushFollow(FOLLOW_rule__NotExpression__Group_0__1__Impl_in_rule__NotExpression__Group_0__113800);
             rule__NotExpression__Group_0__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__NotExpression__Group_0__2_in_rule__NotExpression__Group_0__113802);
+            pushFollow(FOLLOW_rule__NotExpression__Group_0__2_in_rule__NotExpression__Group_0__113803);
             rule__NotExpression__Group_0__2();
 
             state._fsp--;
@@ -19576,7 +19593,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6773:1: ( rule__NotExpression__OperatorAssignment_0_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6773:2: rule__NotExpression__OperatorAssignment_0_1
             {
-            pushFollow(FOLLOW_rule__NotExpression__OperatorAssignment_0_1_in_rule__NotExpression__Group_0__1__Impl13829);
+            pushFollow(FOLLOW_rule__NotExpression__OperatorAssignment_0_1_in_rule__NotExpression__Group_0__1__Impl13830);
             rule__NotExpression__OperatorAssignment_0_1();
 
             state._fsp--;
@@ -19618,7 +19635,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6787:1: ( rule__NotExpression__Group_0__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6788:2: rule__NotExpression__Group_0__2__Impl
             {
-            pushFollow(FOLLOW_rule__NotExpression__Group_0__2__Impl_in_rule__NotExpression__Group_0__213859);
+            pushFollow(FOLLOW_rule__NotExpression__Group_0__2__Impl_in_rule__NotExpression__Group_0__213860);
             rule__NotExpression__Group_0__2__Impl();
 
             state._fsp--;
@@ -19660,7 +19677,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6801:1: ( rule__NotExpression__SubExpressionsAssignment_0_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6801:2: rule__NotExpression__SubExpressionsAssignment_0_2
             {
-            pushFollow(FOLLOW_rule__NotExpression__SubExpressionsAssignment_0_2_in_rule__NotExpression__Group_0__2__Impl13886);
+            pushFollow(FOLLOW_rule__NotExpression__SubExpressionsAssignment_0_2_in_rule__NotExpression__Group_0__2__Impl13887);
             rule__NotExpression__SubExpressionsAssignment_0_2();
 
             state._fsp--;
@@ -19702,12 +19719,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6821:1: ( rule__AddExpression__Group__0__Impl rule__AddExpression__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6822:2: rule__AddExpression__Group__0__Impl rule__AddExpression__Group__1
             {
-            pushFollow(FOLLOW_rule__AddExpression__Group__0__Impl_in_rule__AddExpression__Group__013922);
+            pushFollow(FOLLOW_rule__AddExpression__Group__0__Impl_in_rule__AddExpression__Group__013923);
             rule__AddExpression__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__AddExpression__Group__1_in_rule__AddExpression__Group__013925);
+            pushFollow(FOLLOW_rule__AddExpression__Group__1_in_rule__AddExpression__Group__013926);
             rule__AddExpression__Group__1();
 
             state._fsp--;
@@ -19746,7 +19763,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getSubExpressionParserRuleCall_0()); 
             }
-            pushFollow(FOLLOW_ruleSubExpression_in_rule__AddExpression__Group__0__Impl13952);
+            pushFollow(FOLLOW_ruleSubExpression_in_rule__AddExpression__Group__0__Impl13953);
             ruleSubExpression();
 
             state._fsp--;
@@ -19785,7 +19802,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6850:1: ( rule__AddExpression__Group__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6851:2: rule__AddExpression__Group__1__Impl
             {
-            pushFollow(FOLLOW_rule__AddExpression__Group__1__Impl_in_rule__AddExpression__Group__113981);
+            pushFollow(FOLLOW_rule__AddExpression__Group__1__Impl_in_rule__AddExpression__Group__113982);
             rule__AddExpression__Group__1__Impl();
 
             state._fsp--;
@@ -19825,21 +19842,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getAddExpressionAccess().getGroup_1()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6864:1: ( rule__AddExpression__Group_1__0 )*
-            loop48:
+            loop49:
             do {
-                int alt48=2;
-                int LA48_0 = input.LA(1);
+                int alt49=2;
+                int LA49_0 = input.LA(1);
 
-                if ( (LA48_0==21) ) {
-                    alt48=1;
+                if ( (LA49_0==21) ) {
+                    alt49=1;
                 }
 
 
-                switch (alt48) {
+                switch (alt49) {
             	case 1 :
             	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6864:2: rule__AddExpression__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__AddExpression__Group_1__0_in_rule__AddExpression__Group__1__Impl14008);
+            	    pushFollow(FOLLOW_rule__AddExpression__Group_1__0_in_rule__AddExpression__Group__1__Impl14009);
             	    rule__AddExpression__Group_1__0();
 
             	    state._fsp--;
@@ -19849,7 +19866,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop48;
+            	    break loop49;
                 }
             } while (true);
 
@@ -19887,12 +19904,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6882:1: ( rule__AddExpression__Group_1__0__Impl rule__AddExpression__Group_1__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6883:2: rule__AddExpression__Group_1__0__Impl rule__AddExpression__Group_1__1
             {
-            pushFollow(FOLLOW_rule__AddExpression__Group_1__0__Impl_in_rule__AddExpression__Group_1__014043);
+            pushFollow(FOLLOW_rule__AddExpression__Group_1__0__Impl_in_rule__AddExpression__Group_1__014044);
             rule__AddExpression__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__AddExpression__Group_1__1_in_rule__AddExpression__Group_1__014046);
+            pushFollow(FOLLOW_rule__AddExpression__Group_1__1_in_rule__AddExpression__Group_1__014047);
             rule__AddExpression__Group_1__1();
 
             state._fsp--;
@@ -19966,12 +19983,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6913:1: ( rule__AddExpression__Group_1__1__Impl rule__AddExpression__Group_1__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6914:2: rule__AddExpression__Group_1__1__Impl rule__AddExpression__Group_1__2
             {
-            pushFollow(FOLLOW_rule__AddExpression__Group_1__1__Impl_in_rule__AddExpression__Group_1__114104);
+            pushFollow(FOLLOW_rule__AddExpression__Group_1__1__Impl_in_rule__AddExpression__Group_1__114105);
             rule__AddExpression__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__AddExpression__Group_1__2_in_rule__AddExpression__Group_1__114107);
+            pushFollow(FOLLOW_rule__AddExpression__Group_1__2_in_rule__AddExpression__Group_1__114108);
             rule__AddExpression__Group_1__2();
 
             state._fsp--;
@@ -20013,7 +20030,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6928:1: ( rule__AddExpression__OperatorAssignment_1_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6928:2: rule__AddExpression__OperatorAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__AddExpression__OperatorAssignment_1_1_in_rule__AddExpression__Group_1__1__Impl14134);
+            pushFollow(FOLLOW_rule__AddExpression__OperatorAssignment_1_1_in_rule__AddExpression__Group_1__1__Impl14135);
             rule__AddExpression__OperatorAssignment_1_1();
 
             state._fsp--;
@@ -20055,7 +20072,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6942:1: ( rule__AddExpression__Group_1__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6943:2: rule__AddExpression__Group_1__2__Impl
             {
-            pushFollow(FOLLOW_rule__AddExpression__Group_1__2__Impl_in_rule__AddExpression__Group_1__214164);
+            pushFollow(FOLLOW_rule__AddExpression__Group_1__2__Impl_in_rule__AddExpression__Group_1__214165);
             rule__AddExpression__Group_1__2__Impl();
 
             state._fsp--;
@@ -20097,7 +20114,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6956:1: ( rule__AddExpression__SubExpressionsAssignment_1_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6956:2: rule__AddExpression__SubExpressionsAssignment_1_2
             {
-            pushFollow(FOLLOW_rule__AddExpression__SubExpressionsAssignment_1_2_in_rule__AddExpression__Group_1__2__Impl14191);
+            pushFollow(FOLLOW_rule__AddExpression__SubExpressionsAssignment_1_2_in_rule__AddExpression__Group_1__2__Impl14192);
             rule__AddExpression__SubExpressionsAssignment_1_2();
 
             state._fsp--;
@@ -20139,12 +20156,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6976:1: ( rule__SubExpression__Group__0__Impl rule__SubExpression__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:6977:2: rule__SubExpression__Group__0__Impl rule__SubExpression__Group__1
             {
-            pushFollow(FOLLOW_rule__SubExpression__Group__0__Impl_in_rule__SubExpression__Group__014227);
+            pushFollow(FOLLOW_rule__SubExpression__Group__0__Impl_in_rule__SubExpression__Group__014228);
             rule__SubExpression__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__SubExpression__Group__1_in_rule__SubExpression__Group__014230);
+            pushFollow(FOLLOW_rule__SubExpression__Group__1_in_rule__SubExpression__Group__014231);
             rule__SubExpression__Group__1();
 
             state._fsp--;
@@ -20183,7 +20200,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getMultExpressionParserRuleCall_0()); 
             }
-            pushFollow(FOLLOW_ruleMultExpression_in_rule__SubExpression__Group__0__Impl14257);
+            pushFollow(FOLLOW_ruleMultExpression_in_rule__SubExpression__Group__0__Impl14258);
             ruleMultExpression();
 
             state._fsp--;
@@ -20222,7 +20239,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7005:1: ( rule__SubExpression__Group__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7006:2: rule__SubExpression__Group__1__Impl
             {
-            pushFollow(FOLLOW_rule__SubExpression__Group__1__Impl_in_rule__SubExpression__Group__114286);
+            pushFollow(FOLLOW_rule__SubExpression__Group__1__Impl_in_rule__SubExpression__Group__114287);
             rule__SubExpression__Group__1__Impl();
 
             state._fsp--;
@@ -20262,21 +20279,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getSubExpressionAccess().getGroup_1()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7019:1: ( rule__SubExpression__Group_1__0 )*
-            loop49:
+            loop50:
             do {
-                int alt49=2;
-                int LA49_0 = input.LA(1);
+                int alt50=2;
+                int LA50_0 = input.LA(1);
 
-                if ( (LA49_0==22) ) {
-                    alt49=1;
+                if ( (LA50_0==22) ) {
+                    alt50=1;
                 }
 
 
-                switch (alt49) {
+                switch (alt50) {
             	case 1 :
             	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7019:2: rule__SubExpression__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__SubExpression__Group_1__0_in_rule__SubExpression__Group__1__Impl14313);
+            	    pushFollow(FOLLOW_rule__SubExpression__Group_1__0_in_rule__SubExpression__Group__1__Impl14314);
             	    rule__SubExpression__Group_1__0();
 
             	    state._fsp--;
@@ -20286,7 +20303,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop49;
+            	    break loop50;
                 }
             } while (true);
 
@@ -20324,12 +20341,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7037:1: ( rule__SubExpression__Group_1__0__Impl rule__SubExpression__Group_1__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7038:2: rule__SubExpression__Group_1__0__Impl rule__SubExpression__Group_1__1
             {
-            pushFollow(FOLLOW_rule__SubExpression__Group_1__0__Impl_in_rule__SubExpression__Group_1__014348);
+            pushFollow(FOLLOW_rule__SubExpression__Group_1__0__Impl_in_rule__SubExpression__Group_1__014349);
             rule__SubExpression__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__SubExpression__Group_1__1_in_rule__SubExpression__Group_1__014351);
+            pushFollow(FOLLOW_rule__SubExpression__Group_1__1_in_rule__SubExpression__Group_1__014352);
             rule__SubExpression__Group_1__1();
 
             state._fsp--;
@@ -20403,12 +20420,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7068:1: ( rule__SubExpression__Group_1__1__Impl rule__SubExpression__Group_1__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7069:2: rule__SubExpression__Group_1__1__Impl rule__SubExpression__Group_1__2
             {
-            pushFollow(FOLLOW_rule__SubExpression__Group_1__1__Impl_in_rule__SubExpression__Group_1__114409);
+            pushFollow(FOLLOW_rule__SubExpression__Group_1__1__Impl_in_rule__SubExpression__Group_1__114410);
             rule__SubExpression__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__SubExpression__Group_1__2_in_rule__SubExpression__Group_1__114412);
+            pushFollow(FOLLOW_rule__SubExpression__Group_1__2_in_rule__SubExpression__Group_1__114413);
             rule__SubExpression__Group_1__2();
 
             state._fsp--;
@@ -20450,7 +20467,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7083:1: ( rule__SubExpression__OperatorAssignment_1_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7083:2: rule__SubExpression__OperatorAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__SubExpression__OperatorAssignment_1_1_in_rule__SubExpression__Group_1__1__Impl14439);
+            pushFollow(FOLLOW_rule__SubExpression__OperatorAssignment_1_1_in_rule__SubExpression__Group_1__1__Impl14440);
             rule__SubExpression__OperatorAssignment_1_1();
 
             state._fsp--;
@@ -20492,7 +20509,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7097:1: ( rule__SubExpression__Group_1__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7098:2: rule__SubExpression__Group_1__2__Impl
             {
-            pushFollow(FOLLOW_rule__SubExpression__Group_1__2__Impl_in_rule__SubExpression__Group_1__214469);
+            pushFollow(FOLLOW_rule__SubExpression__Group_1__2__Impl_in_rule__SubExpression__Group_1__214470);
             rule__SubExpression__Group_1__2__Impl();
 
             state._fsp--;
@@ -20534,7 +20551,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7111:1: ( rule__SubExpression__SubExpressionsAssignment_1_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7111:2: rule__SubExpression__SubExpressionsAssignment_1_2
             {
-            pushFollow(FOLLOW_rule__SubExpression__SubExpressionsAssignment_1_2_in_rule__SubExpression__Group_1__2__Impl14496);
+            pushFollow(FOLLOW_rule__SubExpression__SubExpressionsAssignment_1_2_in_rule__SubExpression__Group_1__2__Impl14497);
             rule__SubExpression__SubExpressionsAssignment_1_2();
 
             state._fsp--;
@@ -20576,12 +20593,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7131:1: ( rule__MultExpression__Group__0__Impl rule__MultExpression__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7132:2: rule__MultExpression__Group__0__Impl rule__MultExpression__Group__1
             {
-            pushFollow(FOLLOW_rule__MultExpression__Group__0__Impl_in_rule__MultExpression__Group__014532);
+            pushFollow(FOLLOW_rule__MultExpression__Group__0__Impl_in_rule__MultExpression__Group__014533);
             rule__MultExpression__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__MultExpression__Group__1_in_rule__MultExpression__Group__014535);
+            pushFollow(FOLLOW_rule__MultExpression__Group__1_in_rule__MultExpression__Group__014536);
             rule__MultExpression__Group__1();
 
             state._fsp--;
@@ -20620,7 +20637,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getDivExpressionParserRuleCall_0()); 
             }
-            pushFollow(FOLLOW_ruleDivExpression_in_rule__MultExpression__Group__0__Impl14562);
+            pushFollow(FOLLOW_ruleDivExpression_in_rule__MultExpression__Group__0__Impl14563);
             ruleDivExpression();
 
             state._fsp--;
@@ -20659,7 +20676,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7160:1: ( rule__MultExpression__Group__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7161:2: rule__MultExpression__Group__1__Impl
             {
-            pushFollow(FOLLOW_rule__MultExpression__Group__1__Impl_in_rule__MultExpression__Group__114591);
+            pushFollow(FOLLOW_rule__MultExpression__Group__1__Impl_in_rule__MultExpression__Group__114592);
             rule__MultExpression__Group__1__Impl();
 
             state._fsp--;
@@ -20699,21 +20716,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getMultExpressionAccess().getGroup_1()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7174:1: ( rule__MultExpression__Group_1__0 )*
-            loop50:
+            loop51:
             do {
-                int alt50=2;
-                int LA50_0 = input.LA(1);
+                int alt51=2;
+                int LA51_0 = input.LA(1);
 
-                if ( (LA50_0==23) ) {
-                    alt50=1;
+                if ( (LA51_0==23) ) {
+                    alt51=1;
                 }
 
 
-                switch (alt50) {
+                switch (alt51) {
             	case 1 :
             	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7174:2: rule__MultExpression__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__MultExpression__Group_1__0_in_rule__MultExpression__Group__1__Impl14618);
+            	    pushFollow(FOLLOW_rule__MultExpression__Group_1__0_in_rule__MultExpression__Group__1__Impl14619);
             	    rule__MultExpression__Group_1__0();
 
             	    state._fsp--;
@@ -20723,7 +20740,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop50;
+            	    break loop51;
                 }
             } while (true);
 
@@ -20761,12 +20778,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7192:1: ( rule__MultExpression__Group_1__0__Impl rule__MultExpression__Group_1__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7193:2: rule__MultExpression__Group_1__0__Impl rule__MultExpression__Group_1__1
             {
-            pushFollow(FOLLOW_rule__MultExpression__Group_1__0__Impl_in_rule__MultExpression__Group_1__014653);
+            pushFollow(FOLLOW_rule__MultExpression__Group_1__0__Impl_in_rule__MultExpression__Group_1__014654);
             rule__MultExpression__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__MultExpression__Group_1__1_in_rule__MultExpression__Group_1__014656);
+            pushFollow(FOLLOW_rule__MultExpression__Group_1__1_in_rule__MultExpression__Group_1__014657);
             rule__MultExpression__Group_1__1();
 
             state._fsp--;
@@ -20840,12 +20857,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7223:1: ( rule__MultExpression__Group_1__1__Impl rule__MultExpression__Group_1__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7224:2: rule__MultExpression__Group_1__1__Impl rule__MultExpression__Group_1__2
             {
-            pushFollow(FOLLOW_rule__MultExpression__Group_1__1__Impl_in_rule__MultExpression__Group_1__114714);
+            pushFollow(FOLLOW_rule__MultExpression__Group_1__1__Impl_in_rule__MultExpression__Group_1__114715);
             rule__MultExpression__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__MultExpression__Group_1__2_in_rule__MultExpression__Group_1__114717);
+            pushFollow(FOLLOW_rule__MultExpression__Group_1__2_in_rule__MultExpression__Group_1__114718);
             rule__MultExpression__Group_1__2();
 
             state._fsp--;
@@ -20887,7 +20904,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7238:1: ( rule__MultExpression__OperatorAssignment_1_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7238:2: rule__MultExpression__OperatorAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__MultExpression__OperatorAssignment_1_1_in_rule__MultExpression__Group_1__1__Impl14744);
+            pushFollow(FOLLOW_rule__MultExpression__OperatorAssignment_1_1_in_rule__MultExpression__Group_1__1__Impl14745);
             rule__MultExpression__OperatorAssignment_1_1();
 
             state._fsp--;
@@ -20929,7 +20946,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7252:1: ( rule__MultExpression__Group_1__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7253:2: rule__MultExpression__Group_1__2__Impl
             {
-            pushFollow(FOLLOW_rule__MultExpression__Group_1__2__Impl_in_rule__MultExpression__Group_1__214774);
+            pushFollow(FOLLOW_rule__MultExpression__Group_1__2__Impl_in_rule__MultExpression__Group_1__214775);
             rule__MultExpression__Group_1__2__Impl();
 
             state._fsp--;
@@ -20971,7 +20988,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7266:1: ( rule__MultExpression__SubExpressionsAssignment_1_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7266:2: rule__MultExpression__SubExpressionsAssignment_1_2
             {
-            pushFollow(FOLLOW_rule__MultExpression__SubExpressionsAssignment_1_2_in_rule__MultExpression__Group_1__2__Impl14801);
+            pushFollow(FOLLOW_rule__MultExpression__SubExpressionsAssignment_1_2_in_rule__MultExpression__Group_1__2__Impl14802);
             rule__MultExpression__SubExpressionsAssignment_1_2();
 
             state._fsp--;
@@ -21013,12 +21030,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7286:1: ( rule__DivExpression__Group__0__Impl rule__DivExpression__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7287:2: rule__DivExpression__Group__0__Impl rule__DivExpression__Group__1
             {
-            pushFollow(FOLLOW_rule__DivExpression__Group__0__Impl_in_rule__DivExpression__Group__014837);
+            pushFollow(FOLLOW_rule__DivExpression__Group__0__Impl_in_rule__DivExpression__Group__014838);
             rule__DivExpression__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__DivExpression__Group__1_in_rule__DivExpression__Group__014840);
+            pushFollow(FOLLOW_rule__DivExpression__Group__1_in_rule__DivExpression__Group__014841);
             rule__DivExpression__Group__1();
 
             state._fsp--;
@@ -21057,7 +21074,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getModExpressionParserRuleCall_0()); 
             }
-            pushFollow(FOLLOW_ruleModExpression_in_rule__DivExpression__Group__0__Impl14867);
+            pushFollow(FOLLOW_ruleModExpression_in_rule__DivExpression__Group__0__Impl14868);
             ruleModExpression();
 
             state._fsp--;
@@ -21096,7 +21113,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7315:1: ( rule__DivExpression__Group__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7316:2: rule__DivExpression__Group__1__Impl
             {
-            pushFollow(FOLLOW_rule__DivExpression__Group__1__Impl_in_rule__DivExpression__Group__114896);
+            pushFollow(FOLLOW_rule__DivExpression__Group__1__Impl_in_rule__DivExpression__Group__114897);
             rule__DivExpression__Group__1__Impl();
 
             state._fsp--;
@@ -21136,17 +21153,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getDivExpressionAccess().getGroup_1()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7329:1: ( rule__DivExpression__Group_1__0 )?
-            int alt51=2;
-            int LA51_0 = input.LA(1);
+            int alt52=2;
+            int LA52_0 = input.LA(1);
 
-            if ( (LA51_0==25) ) {
-                alt51=1;
+            if ( (LA52_0==25) ) {
+                alt52=1;
             }
-            switch (alt51) {
+            switch (alt52) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7329:2: rule__DivExpression__Group_1__0
                     {
-                    pushFollow(FOLLOW_rule__DivExpression__Group_1__0_in_rule__DivExpression__Group__1__Impl14923);
+                    pushFollow(FOLLOW_rule__DivExpression__Group_1__0_in_rule__DivExpression__Group__1__Impl14924);
                     rule__DivExpression__Group_1__0();
 
                     state._fsp--;
@@ -21191,12 +21208,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7347:1: ( rule__DivExpression__Group_1__0__Impl rule__DivExpression__Group_1__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7348:2: rule__DivExpression__Group_1__0__Impl rule__DivExpression__Group_1__1
             {
-            pushFollow(FOLLOW_rule__DivExpression__Group_1__0__Impl_in_rule__DivExpression__Group_1__014958);
+            pushFollow(FOLLOW_rule__DivExpression__Group_1__0__Impl_in_rule__DivExpression__Group_1__014959);
             rule__DivExpression__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__DivExpression__Group_1__1_in_rule__DivExpression__Group_1__014961);
+            pushFollow(FOLLOW_rule__DivExpression__Group_1__1_in_rule__DivExpression__Group_1__014962);
             rule__DivExpression__Group_1__1();
 
             state._fsp--;
@@ -21270,12 +21287,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7378:1: ( rule__DivExpression__Group_1__1__Impl rule__DivExpression__Group_1__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7379:2: rule__DivExpression__Group_1__1__Impl rule__DivExpression__Group_1__2
             {
-            pushFollow(FOLLOW_rule__DivExpression__Group_1__1__Impl_in_rule__DivExpression__Group_1__115019);
+            pushFollow(FOLLOW_rule__DivExpression__Group_1__1__Impl_in_rule__DivExpression__Group_1__115020);
             rule__DivExpression__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__DivExpression__Group_1__2_in_rule__DivExpression__Group_1__115022);
+            pushFollow(FOLLOW_rule__DivExpression__Group_1__2_in_rule__DivExpression__Group_1__115023);
             rule__DivExpression__Group_1__2();
 
             state._fsp--;
@@ -21317,7 +21334,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7393:1: ( rule__DivExpression__OperatorAssignment_1_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7393:2: rule__DivExpression__OperatorAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__DivExpression__OperatorAssignment_1_1_in_rule__DivExpression__Group_1__1__Impl15049);
+            pushFollow(FOLLOW_rule__DivExpression__OperatorAssignment_1_1_in_rule__DivExpression__Group_1__1__Impl15050);
             rule__DivExpression__OperatorAssignment_1_1();
 
             state._fsp--;
@@ -21359,7 +21376,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7407:1: ( rule__DivExpression__Group_1__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7408:2: rule__DivExpression__Group_1__2__Impl
             {
-            pushFollow(FOLLOW_rule__DivExpression__Group_1__2__Impl_in_rule__DivExpression__Group_1__215079);
+            pushFollow(FOLLOW_rule__DivExpression__Group_1__2__Impl_in_rule__DivExpression__Group_1__215080);
             rule__DivExpression__Group_1__2__Impl();
 
             state._fsp--;
@@ -21401,7 +21418,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7421:1: ( rule__DivExpression__SubExpressionsAssignment_1_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7421:2: rule__DivExpression__SubExpressionsAssignment_1_2
             {
-            pushFollow(FOLLOW_rule__DivExpression__SubExpressionsAssignment_1_2_in_rule__DivExpression__Group_1__2__Impl15106);
+            pushFollow(FOLLOW_rule__DivExpression__SubExpressionsAssignment_1_2_in_rule__DivExpression__Group_1__2__Impl15107);
             rule__DivExpression__SubExpressionsAssignment_1_2();
 
             state._fsp--;
@@ -21443,12 +21460,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7441:1: ( rule__ModExpression__Group__0__Impl rule__ModExpression__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7442:2: rule__ModExpression__Group__0__Impl rule__ModExpression__Group__1
             {
-            pushFollow(FOLLOW_rule__ModExpression__Group__0__Impl_in_rule__ModExpression__Group__015142);
+            pushFollow(FOLLOW_rule__ModExpression__Group__0__Impl_in_rule__ModExpression__Group__015143);
             rule__ModExpression__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ModExpression__Group__1_in_rule__ModExpression__Group__015145);
+            pushFollow(FOLLOW_rule__ModExpression__Group__1_in_rule__ModExpression__Group__015146);
             rule__ModExpression__Group__1();
 
             state._fsp--;
@@ -21487,7 +21504,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getNegExpressionParserRuleCall_0()); 
             }
-            pushFollow(FOLLOW_ruleNegExpression_in_rule__ModExpression__Group__0__Impl15172);
+            pushFollow(FOLLOW_ruleNegExpression_in_rule__ModExpression__Group__0__Impl15173);
             ruleNegExpression();
 
             state._fsp--;
@@ -21526,7 +21543,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7470:1: ( rule__ModExpression__Group__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7471:2: rule__ModExpression__Group__1__Impl
             {
-            pushFollow(FOLLOW_rule__ModExpression__Group__1__Impl_in_rule__ModExpression__Group__115201);
+            pushFollow(FOLLOW_rule__ModExpression__Group__1__Impl_in_rule__ModExpression__Group__115202);
             rule__ModExpression__Group__1__Impl();
 
             state._fsp--;
@@ -21566,17 +21583,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getModExpressionAccess().getGroup_1()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7484:1: ( rule__ModExpression__Group_1__0 )?
-            int alt52=2;
-            int LA52_0 = input.LA(1);
+            int alt53=2;
+            int LA53_0 = input.LA(1);
 
-            if ( (LA52_0==24) ) {
-                alt52=1;
+            if ( (LA53_0==24) ) {
+                alt53=1;
             }
-            switch (alt52) {
+            switch (alt53) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7484:2: rule__ModExpression__Group_1__0
                     {
-                    pushFollow(FOLLOW_rule__ModExpression__Group_1__0_in_rule__ModExpression__Group__1__Impl15228);
+                    pushFollow(FOLLOW_rule__ModExpression__Group_1__0_in_rule__ModExpression__Group__1__Impl15229);
                     rule__ModExpression__Group_1__0();
 
                     state._fsp--;
@@ -21621,12 +21638,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7502:1: ( rule__ModExpression__Group_1__0__Impl rule__ModExpression__Group_1__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7503:2: rule__ModExpression__Group_1__0__Impl rule__ModExpression__Group_1__1
             {
-            pushFollow(FOLLOW_rule__ModExpression__Group_1__0__Impl_in_rule__ModExpression__Group_1__015263);
+            pushFollow(FOLLOW_rule__ModExpression__Group_1__0__Impl_in_rule__ModExpression__Group_1__015264);
             rule__ModExpression__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ModExpression__Group_1__1_in_rule__ModExpression__Group_1__015266);
+            pushFollow(FOLLOW_rule__ModExpression__Group_1__1_in_rule__ModExpression__Group_1__015267);
             rule__ModExpression__Group_1__1();
 
             state._fsp--;
@@ -21700,12 +21717,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7533:1: ( rule__ModExpression__Group_1__1__Impl rule__ModExpression__Group_1__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7534:2: rule__ModExpression__Group_1__1__Impl rule__ModExpression__Group_1__2
             {
-            pushFollow(FOLLOW_rule__ModExpression__Group_1__1__Impl_in_rule__ModExpression__Group_1__115324);
+            pushFollow(FOLLOW_rule__ModExpression__Group_1__1__Impl_in_rule__ModExpression__Group_1__115325);
             rule__ModExpression__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ModExpression__Group_1__2_in_rule__ModExpression__Group_1__115327);
+            pushFollow(FOLLOW_rule__ModExpression__Group_1__2_in_rule__ModExpression__Group_1__115328);
             rule__ModExpression__Group_1__2();
 
             state._fsp--;
@@ -21747,7 +21764,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7548:1: ( rule__ModExpression__OperatorAssignment_1_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7548:2: rule__ModExpression__OperatorAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__ModExpression__OperatorAssignment_1_1_in_rule__ModExpression__Group_1__1__Impl15354);
+            pushFollow(FOLLOW_rule__ModExpression__OperatorAssignment_1_1_in_rule__ModExpression__Group_1__1__Impl15355);
             rule__ModExpression__OperatorAssignment_1_1();
 
             state._fsp--;
@@ -21789,7 +21806,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7562:1: ( rule__ModExpression__Group_1__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7563:2: rule__ModExpression__Group_1__2__Impl
             {
-            pushFollow(FOLLOW_rule__ModExpression__Group_1__2__Impl_in_rule__ModExpression__Group_1__215384);
+            pushFollow(FOLLOW_rule__ModExpression__Group_1__2__Impl_in_rule__ModExpression__Group_1__215385);
             rule__ModExpression__Group_1__2__Impl();
 
             state._fsp--;
@@ -21831,7 +21848,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7576:1: ( rule__ModExpression__SubExpressionsAssignment_1_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7576:2: rule__ModExpression__SubExpressionsAssignment_1_2
             {
-            pushFollow(FOLLOW_rule__ModExpression__SubExpressionsAssignment_1_2_in_rule__ModExpression__Group_1__2__Impl15411);
+            pushFollow(FOLLOW_rule__ModExpression__SubExpressionsAssignment_1_2_in_rule__ModExpression__Group_1__2__Impl15412);
             rule__ModExpression__SubExpressionsAssignment_1_2();
 
             state._fsp--;
@@ -21873,12 +21890,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7596:1: ( rule__NegExpression__Group_0__0__Impl rule__NegExpression__Group_0__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7597:2: rule__NegExpression__Group_0__0__Impl rule__NegExpression__Group_0__1
             {
-            pushFollow(FOLLOW_rule__NegExpression__Group_0__0__Impl_in_rule__NegExpression__Group_0__015447);
+            pushFollow(FOLLOW_rule__NegExpression__Group_0__0__Impl_in_rule__NegExpression__Group_0__015448);
             rule__NegExpression__Group_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__NegExpression__Group_0__1_in_rule__NegExpression__Group_0__015450);
+            pushFollow(FOLLOW_rule__NegExpression__Group_0__1_in_rule__NegExpression__Group_0__015451);
             rule__NegExpression__Group_0__1();
 
             state._fsp--;
@@ -21952,12 +21969,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7627:1: ( rule__NegExpression__Group_0__1__Impl rule__NegExpression__Group_0__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7628:2: rule__NegExpression__Group_0__1__Impl rule__NegExpression__Group_0__2
             {
-            pushFollow(FOLLOW_rule__NegExpression__Group_0__1__Impl_in_rule__NegExpression__Group_0__115508);
+            pushFollow(FOLLOW_rule__NegExpression__Group_0__1__Impl_in_rule__NegExpression__Group_0__115509);
             rule__NegExpression__Group_0__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__NegExpression__Group_0__2_in_rule__NegExpression__Group_0__115511);
+            pushFollow(FOLLOW_rule__NegExpression__Group_0__2_in_rule__NegExpression__Group_0__115512);
             rule__NegExpression__Group_0__2();
 
             state._fsp--;
@@ -21999,7 +22016,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7642:1: ( rule__NegExpression__OperatorAssignment_0_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7642:2: rule__NegExpression__OperatorAssignment_0_1
             {
-            pushFollow(FOLLOW_rule__NegExpression__OperatorAssignment_0_1_in_rule__NegExpression__Group_0__1__Impl15538);
+            pushFollow(FOLLOW_rule__NegExpression__OperatorAssignment_0_1_in_rule__NegExpression__Group_0__1__Impl15539);
             rule__NegExpression__OperatorAssignment_0_1();
 
             state._fsp--;
@@ -22041,7 +22058,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7656:1: ( rule__NegExpression__Group_0__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7657:2: rule__NegExpression__Group_0__2__Impl
             {
-            pushFollow(FOLLOW_rule__NegExpression__Group_0__2__Impl_in_rule__NegExpression__Group_0__215568);
+            pushFollow(FOLLOW_rule__NegExpression__Group_0__2__Impl_in_rule__NegExpression__Group_0__215569);
             rule__NegExpression__Group_0__2__Impl();
 
             state._fsp--;
@@ -22083,7 +22100,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7670:1: ( rule__NegExpression__SubExpressionsAssignment_0_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7670:2: rule__NegExpression__SubExpressionsAssignment_0_2
             {
-            pushFollow(FOLLOW_rule__NegExpression__SubExpressionsAssignment_0_2_in_rule__NegExpression__Group_0__2__Impl15595);
+            pushFollow(FOLLOW_rule__NegExpression__SubExpressionsAssignment_0_2_in_rule__NegExpression__Group_0__2__Impl15596);
             rule__NegExpression__SubExpressionsAssignment_0_2();
 
             state._fsp--;
@@ -22125,12 +22142,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7690:1: ( rule__AtomicExpression__Group_2__0__Impl rule__AtomicExpression__Group_2__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7691:2: rule__AtomicExpression__Group_2__0__Impl rule__AtomicExpression__Group_2__1
             {
-            pushFollow(FOLLOW_rule__AtomicExpression__Group_2__0__Impl_in_rule__AtomicExpression__Group_2__015631);
+            pushFollow(FOLLOW_rule__AtomicExpression__Group_2__0__Impl_in_rule__AtomicExpression__Group_2__015632);
             rule__AtomicExpression__Group_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__AtomicExpression__Group_2__1_in_rule__AtomicExpression__Group_2__015634);
+            pushFollow(FOLLOW_rule__AtomicExpression__Group_2__1_in_rule__AtomicExpression__Group_2__015635);
             rule__AtomicExpression__Group_2__1();
 
             state._fsp--;
@@ -22169,7 +22186,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()); 
             }
-            match(input,46,FOLLOW_46_in_rule__AtomicExpression__Group_2__0__Impl15662); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__AtomicExpression__Group_2__0__Impl15663); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()); 
             }
@@ -22204,12 +22221,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7721:1: ( rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7722:2: rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2
             {
-            pushFollow(FOLLOW_rule__AtomicExpression__Group_2__1__Impl_in_rule__AtomicExpression__Group_2__115693);
+            pushFollow(FOLLOW_rule__AtomicExpression__Group_2__1__Impl_in_rule__AtomicExpression__Group_2__115694);
             rule__AtomicExpression__Group_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__AtomicExpression__Group_2__2_in_rule__AtomicExpression__Group_2__115696);
+            pushFollow(FOLLOW_rule__AtomicExpression__Group_2__2_in_rule__AtomicExpression__Group_2__115697);
             rule__AtomicExpression__Group_2__2();
 
             state._fsp--;
@@ -22248,7 +22265,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicExpressionAccess().getBoolExpressionParserRuleCall_2_1()); 
             }
-            pushFollow(FOLLOW_ruleBoolExpression_in_rule__AtomicExpression__Group_2__1__Impl15723);
+            pushFollow(FOLLOW_ruleBoolExpression_in_rule__AtomicExpression__Group_2__1__Impl15724);
             ruleBoolExpression();
 
             state._fsp--;
@@ -22287,7 +22304,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7750:1: ( rule__AtomicExpression__Group_2__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7751:2: rule__AtomicExpression__Group_2__2__Impl
             {
-            pushFollow(FOLLOW_rule__AtomicExpression__Group_2__2__Impl_in_rule__AtomicExpression__Group_2__215752);
+            pushFollow(FOLLOW_rule__AtomicExpression__Group_2__2__Impl_in_rule__AtomicExpression__Group_2__215753);
             rule__AtomicExpression__Group_2__2__Impl();
 
             state._fsp--;
@@ -22326,7 +22343,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicExpressionAccess().getRightParenthesisKeyword_2_2()); 
             }
-            match(input,47,FOLLOW_47_in_rule__AtomicExpression__Group_2__2__Impl15780); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__AtomicExpression__Group_2__2__Impl15781); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAtomicExpressionAccess().getRightParenthesisKeyword_2_2()); 
             }
@@ -22361,12 +22378,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7786:1: ( rule__AtomicValuedExpression__Group_2__0__Impl rule__AtomicValuedExpression__Group_2__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7787:2: rule__AtomicValuedExpression__Group_2__0__Impl rule__AtomicValuedExpression__Group_2__1
             {
-            pushFollow(FOLLOW_rule__AtomicValuedExpression__Group_2__0__Impl_in_rule__AtomicValuedExpression__Group_2__015817);
+            pushFollow(FOLLOW_rule__AtomicValuedExpression__Group_2__0__Impl_in_rule__AtomicValuedExpression__Group_2__015818);
             rule__AtomicValuedExpression__Group_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__AtomicValuedExpression__Group_2__1_in_rule__AtomicValuedExpression__Group_2__015820);
+            pushFollow(FOLLOW_rule__AtomicValuedExpression__Group_2__1_in_rule__AtomicValuedExpression__Group_2__015821);
             rule__AtomicValuedExpression__Group_2__1();
 
             state._fsp--;
@@ -22405,7 +22422,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0()); 
             }
-            match(input,46,FOLLOW_46_in_rule__AtomicValuedExpression__Group_2__0__Impl15848); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__AtomicValuedExpression__Group_2__0__Impl15849); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0()); 
             }
@@ -22440,12 +22457,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7817:1: ( rule__AtomicValuedExpression__Group_2__1__Impl rule__AtomicValuedExpression__Group_2__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7818:2: rule__AtomicValuedExpression__Group_2__1__Impl rule__AtomicValuedExpression__Group_2__2
             {
-            pushFollow(FOLLOW_rule__AtomicValuedExpression__Group_2__1__Impl_in_rule__AtomicValuedExpression__Group_2__115879);
+            pushFollow(FOLLOW_rule__AtomicValuedExpression__Group_2__1__Impl_in_rule__AtomicValuedExpression__Group_2__115880);
             rule__AtomicValuedExpression__Group_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__AtomicValuedExpression__Group_2__2_in_rule__AtomicValuedExpression__Group_2__115882);
+            pushFollow(FOLLOW_rule__AtomicValuedExpression__Group_2__2_in_rule__AtomicValuedExpression__Group_2__115883);
             rule__AtomicValuedExpression__Group_2__2();
 
             state._fsp--;
@@ -22484,7 +22501,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicValuedExpressionAccess().getValuedExpressionParserRuleCall_2_1()); 
             }
-            pushFollow(FOLLOW_ruleValuedExpression_in_rule__AtomicValuedExpression__Group_2__1__Impl15909);
+            pushFollow(FOLLOW_ruleValuedExpression_in_rule__AtomicValuedExpression__Group_2__1__Impl15910);
             ruleValuedExpression();
 
             state._fsp--;
@@ -22523,7 +22540,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7846:1: ( rule__AtomicValuedExpression__Group_2__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7847:2: rule__AtomicValuedExpression__Group_2__2__Impl
             {
-            pushFollow(FOLLOW_rule__AtomicValuedExpression__Group_2__2__Impl_in_rule__AtomicValuedExpression__Group_2__215938);
+            pushFollow(FOLLOW_rule__AtomicValuedExpression__Group_2__2__Impl_in_rule__AtomicValuedExpression__Group_2__215939);
             rule__AtomicValuedExpression__Group_2__2__Impl();
 
             state._fsp--;
@@ -22562,7 +22579,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAtomicValuedExpressionAccess().getRightParenthesisKeyword_2_2()); 
             }
-            match(input,47,FOLLOW_47_in_rule__AtomicValuedExpression__Group_2__2__Impl15966); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__AtomicValuedExpression__Group_2__2__Impl15967); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAtomicValuedExpressionAccess().getRightParenthesisKeyword_2_2()); 
             }
@@ -22597,12 +22614,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7882:1: ( rule__ValuedObjectTestExpression__Group_0__0__Impl rule__ValuedObjectTestExpression__Group_0__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7883:2: rule__ValuedObjectTestExpression__Group_0__0__Impl rule__ValuedObjectTestExpression__Group_0__1
             {
-            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__0__Impl_in_rule__ValuedObjectTestExpression__Group_0__016003);
+            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__0__Impl_in_rule__ValuedObjectTestExpression__Group_0__016004);
             rule__ValuedObjectTestExpression__Group_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__1_in_rule__ValuedObjectTestExpression__Group_0__016006);
+            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__1_in_rule__ValuedObjectTestExpression__Group_0__016007);
             rule__ValuedObjectTestExpression__Group_0__1();
 
             state._fsp--;
@@ -22676,12 +22693,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7913:1: ( rule__ValuedObjectTestExpression__Group_0__1__Impl rule__ValuedObjectTestExpression__Group_0__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7914:2: rule__ValuedObjectTestExpression__Group_0__1__Impl rule__ValuedObjectTestExpression__Group_0__2
             {
-            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__1__Impl_in_rule__ValuedObjectTestExpression__Group_0__116064);
+            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__1__Impl_in_rule__ValuedObjectTestExpression__Group_0__116065);
             rule__ValuedObjectTestExpression__Group_0__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__2_in_rule__ValuedObjectTestExpression__Group_0__116067);
+            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__2_in_rule__ValuedObjectTestExpression__Group_0__116068);
             rule__ValuedObjectTestExpression__Group_0__2();
 
             state._fsp--;
@@ -22723,7 +22740,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7928:1: ( rule__ValuedObjectTestExpression__OperatorAssignment_0_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7928:2: rule__ValuedObjectTestExpression__OperatorAssignment_0_1
             {
-            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__OperatorAssignment_0_1_in_rule__ValuedObjectTestExpression__Group_0__1__Impl16094);
+            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__OperatorAssignment_0_1_in_rule__ValuedObjectTestExpression__Group_0__1__Impl16095);
             rule__ValuedObjectTestExpression__OperatorAssignment_0_1();
 
             state._fsp--;
@@ -22765,12 +22782,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7942:1: ( rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7943:2: rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3
             {
-            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__2__Impl_in_rule__ValuedObjectTestExpression__Group_0__216124);
+            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__2__Impl_in_rule__ValuedObjectTestExpression__Group_0__216125);
             rule__ValuedObjectTestExpression__Group_0__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__3_in_rule__ValuedObjectTestExpression__Group_0__216127);
+            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__3_in_rule__ValuedObjectTestExpression__Group_0__216128);
             rule__ValuedObjectTestExpression__Group_0__3();
 
             state._fsp--;
@@ -22809,7 +22826,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getLeftParenthesisKeyword_0_2()); 
             }
-            match(input,46,FOLLOW_46_in_rule__ValuedObjectTestExpression__Group_0__2__Impl16155); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__ValuedObjectTestExpression__Group_0__2__Impl16156); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectTestExpressionAccess().getLeftParenthesisKeyword_0_2()); 
             }
@@ -22844,12 +22861,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7973:1: ( rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7974:2: rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4
             {
-            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__3__Impl_in_rule__ValuedObjectTestExpression__Group_0__316186);
+            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__3__Impl_in_rule__ValuedObjectTestExpression__Group_0__316187);
             rule__ValuedObjectTestExpression__Group_0__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__4_in_rule__ValuedObjectTestExpression__Group_0__316189);
+            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__4_in_rule__ValuedObjectTestExpression__Group_0__316190);
             rule__ValuedObjectTestExpression__Group_0__4();
 
             state._fsp--;
@@ -22891,7 +22908,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7988:1: ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:7988:2: rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3
             {
-            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3_in_rule__ValuedObjectTestExpression__Group_0__3__Impl16216);
+            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3_in_rule__ValuedObjectTestExpression__Group_0__3__Impl16217);
             rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3();
 
             state._fsp--;
@@ -22933,7 +22950,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8002:1: ( rule__ValuedObjectTestExpression__Group_0__4__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8003:2: rule__ValuedObjectTestExpression__Group_0__4__Impl
             {
-            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__4__Impl_in_rule__ValuedObjectTestExpression__Group_0__416246);
+            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__Group_0__4__Impl_in_rule__ValuedObjectTestExpression__Group_0__416247);
             rule__ValuedObjectTestExpression__Group_0__4__Impl();
 
             state._fsp--;
@@ -22972,7 +22989,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_4()); 
             }
-            match(input,47,FOLLOW_47_in_rule__ValuedObjectTestExpression__Group_0__4__Impl16274); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__ValuedObjectTestExpression__Group_0__4__Impl16275); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_4()); 
             }
@@ -23007,12 +23024,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8042:1: ( rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8043:2: rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1
             {
-            pushFollow(FOLLOW_rule__ValuedObjectReference__Group__0__Impl_in_rule__ValuedObjectReference__Group__016315);
+            pushFollow(FOLLOW_rule__ValuedObjectReference__Group__0__Impl_in_rule__ValuedObjectReference__Group__016316);
             rule__ValuedObjectReference__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ValuedObjectReference__Group__1_in_rule__ValuedObjectReference__Group__016318);
+            pushFollow(FOLLOW_rule__ValuedObjectReference__Group__1_in_rule__ValuedObjectReference__Group__016319);
             rule__ValuedObjectReference__Group__1();
 
             state._fsp--;
@@ -23054,7 +23071,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8057:1: ( rule__ValuedObjectReference__ValuedObjectAssignment_0 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8057:2: rule__ValuedObjectReference__ValuedObjectAssignment_0
             {
-            pushFollow(FOLLOW_rule__ValuedObjectReference__ValuedObjectAssignment_0_in_rule__ValuedObjectReference__Group__0__Impl16345);
+            pushFollow(FOLLOW_rule__ValuedObjectReference__ValuedObjectAssignment_0_in_rule__ValuedObjectReference__Group__0__Impl16346);
             rule__ValuedObjectReference__ValuedObjectAssignment_0();
 
             state._fsp--;
@@ -23096,7 +23113,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8071:1: ( rule__ValuedObjectReference__Group__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8072:2: rule__ValuedObjectReference__Group__1__Impl
             {
-            pushFollow(FOLLOW_rule__ValuedObjectReference__Group__1__Impl_in_rule__ValuedObjectReference__Group__116375);
+            pushFollow(FOLLOW_rule__ValuedObjectReference__Group__1__Impl_in_rule__ValuedObjectReference__Group__116376);
             rule__ValuedObjectReference__Group__1__Impl();
 
             state._fsp--;
@@ -23136,21 +23153,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getValuedObjectReferenceAccess().getGroup_1()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8085:1: ( rule__ValuedObjectReference__Group_1__0 )*
-            loop53:
+            loop54:
             do {
-                int alt53=2;
-                int LA53_0 = input.LA(1);
+                int alt54=2;
+                int LA54_0 = input.LA(1);
 
-                if ( (LA53_0==68) ) {
-                    alt53=1;
+                if ( (LA54_0==68) ) {
+                    alt54=1;
                 }
 
 
-                switch (alt53) {
+                switch (alt54) {
             	case 1 :
             	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8085:2: rule__ValuedObjectReference__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__ValuedObjectReference__Group_1__0_in_rule__ValuedObjectReference__Group__1__Impl16402);
+            	    pushFollow(FOLLOW_rule__ValuedObjectReference__Group_1__0_in_rule__ValuedObjectReference__Group__1__Impl16403);
             	    rule__ValuedObjectReference__Group_1__0();
 
             	    state._fsp--;
@@ -23160,7 +23177,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop53;
+            	    break loop54;
                 }
             } while (true);
 
@@ -23198,12 +23215,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8103:1: ( rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8104:2: rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1
             {
-            pushFollow(FOLLOW_rule__ValuedObjectReference__Group_1__0__Impl_in_rule__ValuedObjectReference__Group_1__016437);
+            pushFollow(FOLLOW_rule__ValuedObjectReference__Group_1__0__Impl_in_rule__ValuedObjectReference__Group_1__016438);
             rule__ValuedObjectReference__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ValuedObjectReference__Group_1__1_in_rule__ValuedObjectReference__Group_1__016440);
+            pushFollow(FOLLOW_rule__ValuedObjectReference__Group_1__1_in_rule__ValuedObjectReference__Group_1__016441);
             rule__ValuedObjectReference__Group_1__1();
 
             state._fsp--;
@@ -23242,7 +23259,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0()); 
             }
-            match(input,68,FOLLOW_68_in_rule__ValuedObjectReference__Group_1__0__Impl16468); if (state.failed) return ;
+            match(input,68,FOLLOW_68_in_rule__ValuedObjectReference__Group_1__0__Impl16469); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0()); 
             }
@@ -23277,12 +23294,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8134:1: ( rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8135:2: rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2
             {
-            pushFollow(FOLLOW_rule__ValuedObjectReference__Group_1__1__Impl_in_rule__ValuedObjectReference__Group_1__116499);
+            pushFollow(FOLLOW_rule__ValuedObjectReference__Group_1__1__Impl_in_rule__ValuedObjectReference__Group_1__116500);
             rule__ValuedObjectReference__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ValuedObjectReference__Group_1__2_in_rule__ValuedObjectReference__Group_1__116502);
+            pushFollow(FOLLOW_rule__ValuedObjectReference__Group_1__2_in_rule__ValuedObjectReference__Group_1__116503);
             rule__ValuedObjectReference__Group_1__2();
 
             state._fsp--;
@@ -23324,7 +23341,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8149:1: ( rule__ValuedObjectReference__CardinalitiesAssignment_1_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8149:2: rule__ValuedObjectReference__CardinalitiesAssignment_1_1
             {
-            pushFollow(FOLLOW_rule__ValuedObjectReference__CardinalitiesAssignment_1_1_in_rule__ValuedObjectReference__Group_1__1__Impl16529);
+            pushFollow(FOLLOW_rule__ValuedObjectReference__CardinalitiesAssignment_1_1_in_rule__ValuedObjectReference__Group_1__1__Impl16530);
             rule__ValuedObjectReference__CardinalitiesAssignment_1_1();
 
             state._fsp--;
@@ -23366,7 +23383,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8163:1: ( rule__ValuedObjectReference__Group_1__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8164:2: rule__ValuedObjectReference__Group_1__2__Impl
             {
-            pushFollow(FOLLOW_rule__ValuedObjectReference__Group_1__2__Impl_in_rule__ValuedObjectReference__Group_1__216559);
+            pushFollow(FOLLOW_rule__ValuedObjectReference__Group_1__2__Impl_in_rule__ValuedObjectReference__Group_1__216560);
             rule__ValuedObjectReference__Group_1__2__Impl();
 
             state._fsp--;
@@ -23405,7 +23422,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2()); 
             }
-            match(input,69,FOLLOW_69_in_rule__ValuedObjectReference__Group_1__2__Impl16587); if (state.failed) return ;
+            match(input,69,FOLLOW_69_in_rule__ValuedObjectReference__Group_1__2__Impl16588); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2()); 
             }
@@ -23440,12 +23457,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8199:1: ( rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8200:2: rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1
             {
-            pushFollow(FOLLOW_rule__TagAnnotation__Group__0__Impl_in_rule__TagAnnotation__Group__016624);
+            pushFollow(FOLLOW_rule__TagAnnotation__Group__0__Impl_in_rule__TagAnnotation__Group__016625);
             rule__TagAnnotation__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TagAnnotation__Group__1_in_rule__TagAnnotation__Group__016627);
+            pushFollow(FOLLOW_rule__TagAnnotation__Group__1_in_rule__TagAnnotation__Group__016628);
             rule__TagAnnotation__Group__1();
 
             state._fsp--;
@@ -23484,7 +23501,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,70,FOLLOW_70_in_rule__TagAnnotation__Group__0__Impl16655); if (state.failed) return ;
+            match(input,70,FOLLOW_70_in_rule__TagAnnotation__Group__0__Impl16656); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -23519,12 +23536,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8230:1: ( rule__TagAnnotation__Group__1__Impl rule__TagAnnotation__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8231:2: rule__TagAnnotation__Group__1__Impl rule__TagAnnotation__Group__2
             {
-            pushFollow(FOLLOW_rule__TagAnnotation__Group__1__Impl_in_rule__TagAnnotation__Group__116686);
+            pushFollow(FOLLOW_rule__TagAnnotation__Group__1__Impl_in_rule__TagAnnotation__Group__116687);
             rule__TagAnnotation__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TagAnnotation__Group__2_in_rule__TagAnnotation__Group__116689);
+            pushFollow(FOLLOW_rule__TagAnnotation__Group__2_in_rule__TagAnnotation__Group__116690);
             rule__TagAnnotation__Group__2();
 
             state._fsp--;
@@ -23566,7 +23583,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8245:1: ( rule__TagAnnotation__NameAssignment_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8245:2: rule__TagAnnotation__NameAssignment_1
             {
-            pushFollow(FOLLOW_rule__TagAnnotation__NameAssignment_1_in_rule__TagAnnotation__Group__1__Impl16716);
+            pushFollow(FOLLOW_rule__TagAnnotation__NameAssignment_1_in_rule__TagAnnotation__Group__1__Impl16717);
             rule__TagAnnotation__NameAssignment_1();
 
             state._fsp--;
@@ -23608,7 +23625,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8259:1: ( rule__TagAnnotation__Group__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8260:2: rule__TagAnnotation__Group__2__Impl
             {
-            pushFollow(FOLLOW_rule__TagAnnotation__Group__2__Impl_in_rule__TagAnnotation__Group__216746);
+            pushFollow(FOLLOW_rule__TagAnnotation__Group__2__Impl_in_rule__TagAnnotation__Group__216747);
             rule__TagAnnotation__Group__2__Impl();
 
             state._fsp--;
@@ -23648,17 +23665,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getTagAnnotationAccess().getGroup_2()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8273:1: ( rule__TagAnnotation__Group_2__0 )?
-            int alt54=2;
-            int LA54_0 = input.LA(1);
+            int alt55=2;
+            int LA55_0 = input.LA(1);
 
-            if ( (LA54_0==46) ) {
-                alt54=1;
+            if ( (LA55_0==46) ) {
+                alt55=1;
             }
-            switch (alt54) {
+            switch (alt55) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8273:2: rule__TagAnnotation__Group_2__0
                     {
-                    pushFollow(FOLLOW_rule__TagAnnotation__Group_2__0_in_rule__TagAnnotation__Group__2__Impl16773);
+                    pushFollow(FOLLOW_rule__TagAnnotation__Group_2__0_in_rule__TagAnnotation__Group__2__Impl16774);
                     rule__TagAnnotation__Group_2__0();
 
                     state._fsp--;
@@ -23703,12 +23720,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8293:1: ( rule__TagAnnotation__Group_2__0__Impl rule__TagAnnotation__Group_2__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8294:2: rule__TagAnnotation__Group_2__0__Impl rule__TagAnnotation__Group_2__1
             {
-            pushFollow(FOLLOW_rule__TagAnnotation__Group_2__0__Impl_in_rule__TagAnnotation__Group_2__016810);
+            pushFollow(FOLLOW_rule__TagAnnotation__Group_2__0__Impl_in_rule__TagAnnotation__Group_2__016811);
             rule__TagAnnotation__Group_2__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TagAnnotation__Group_2__1_in_rule__TagAnnotation__Group_2__016813);
+            pushFollow(FOLLOW_rule__TagAnnotation__Group_2__1_in_rule__TagAnnotation__Group_2__016814);
             rule__TagAnnotation__Group_2__1();
 
             state._fsp--;
@@ -23747,7 +23764,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getLeftParenthesisKeyword_2_0()); 
             }
-            match(input,46,FOLLOW_46_in_rule__TagAnnotation__Group_2__0__Impl16841); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__TagAnnotation__Group_2__0__Impl16842); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTagAnnotationAccess().getLeftParenthesisKeyword_2_0()); 
             }
@@ -23782,12 +23799,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8324:1: ( rule__TagAnnotation__Group_2__1__Impl rule__TagAnnotation__Group_2__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8325:2: rule__TagAnnotation__Group_2__1__Impl rule__TagAnnotation__Group_2__2
             {
-            pushFollow(FOLLOW_rule__TagAnnotation__Group_2__1__Impl_in_rule__TagAnnotation__Group_2__116872);
+            pushFollow(FOLLOW_rule__TagAnnotation__Group_2__1__Impl_in_rule__TagAnnotation__Group_2__116873);
             rule__TagAnnotation__Group_2__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TagAnnotation__Group_2__2_in_rule__TagAnnotation__Group_2__116875);
+            pushFollow(FOLLOW_rule__TagAnnotation__Group_2__2_in_rule__TagAnnotation__Group_2__116876);
             rule__TagAnnotation__Group_2__2();
 
             state._fsp--;
@@ -23827,21 +23844,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getTagAnnotationAccess().getAnnotationsAssignment_2_1()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8339:1: ( rule__TagAnnotation__AnnotationsAssignment_2_1 )*
-            loop55:
+            loop56:
             do {
-                int alt55=2;
-                int LA55_0 = input.LA(1);
+                int alt56=2;
+                int LA56_0 = input.LA(1);
 
-                if ( (LA55_0==RULE_COMMENT_ANNOTATION||LA55_0==70) ) {
-                    alt55=1;
+                if ( (LA56_0==RULE_COMMENT_ANNOTATION||LA56_0==70) ) {
+                    alt56=1;
                 }
 
 
-                switch (alt55) {
+                switch (alt56) {
             	case 1 :
             	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8339:2: rule__TagAnnotation__AnnotationsAssignment_2_1
             	    {
-            	    pushFollow(FOLLOW_rule__TagAnnotation__AnnotationsAssignment_2_1_in_rule__TagAnnotation__Group_2__1__Impl16902);
+            	    pushFollow(FOLLOW_rule__TagAnnotation__AnnotationsAssignment_2_1_in_rule__TagAnnotation__Group_2__1__Impl16903);
             	    rule__TagAnnotation__AnnotationsAssignment_2_1();
 
             	    state._fsp--;
@@ -23851,7 +23868,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop55;
+            	    break loop56;
                 }
             } while (true);
 
@@ -23889,7 +23906,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8353:1: ( rule__TagAnnotation__Group_2__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8354:2: rule__TagAnnotation__Group_2__2__Impl
             {
-            pushFollow(FOLLOW_rule__TagAnnotation__Group_2__2__Impl_in_rule__TagAnnotation__Group_2__216933);
+            pushFollow(FOLLOW_rule__TagAnnotation__Group_2__2__Impl_in_rule__TagAnnotation__Group_2__216934);
             rule__TagAnnotation__Group_2__2__Impl();
 
             state._fsp--;
@@ -23928,7 +23945,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getRightParenthesisKeyword_2_2()); 
             }
-            match(input,47,FOLLOW_47_in_rule__TagAnnotation__Group_2__2__Impl16961); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__TagAnnotation__Group_2__2__Impl16962); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTagAnnotationAccess().getRightParenthesisKeyword_2_2()); 
             }
@@ -23963,12 +23980,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8389:1: ( rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8390:2: rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1
             {
-            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group__0__Impl_in_rule__KeyStringValueAnnotation__Group__016998);
+            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group__0__Impl_in_rule__KeyStringValueAnnotation__Group__016999);
             rule__KeyStringValueAnnotation__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group__1_in_rule__KeyStringValueAnnotation__Group__017001);
+            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group__1_in_rule__KeyStringValueAnnotation__Group__017002);
             rule__KeyStringValueAnnotation__Group__1();
 
             state._fsp--;
@@ -24007,7 +24024,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,70,FOLLOW_70_in_rule__KeyStringValueAnnotation__Group__0__Impl17029); if (state.failed) return ;
+            match(input,70,FOLLOW_70_in_rule__KeyStringValueAnnotation__Group__0__Impl17030); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -24042,12 +24059,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8420:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8421:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
             {
-            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group__1__Impl_in_rule__KeyStringValueAnnotation__Group__117060);
+            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group__1__Impl_in_rule__KeyStringValueAnnotation__Group__117061);
             rule__KeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group__2_in_rule__KeyStringValueAnnotation__Group__117063);
+            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group__2_in_rule__KeyStringValueAnnotation__Group__117064);
             rule__KeyStringValueAnnotation__Group__2();
 
             state._fsp--;
@@ -24089,7 +24106,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8435:1: ( rule__KeyStringValueAnnotation__NameAssignment_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8435:2: rule__KeyStringValueAnnotation__NameAssignment_1
             {
-            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__NameAssignment_1_in_rule__KeyStringValueAnnotation__Group__1__Impl17090);
+            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__NameAssignment_1_in_rule__KeyStringValueAnnotation__Group__1__Impl17091);
             rule__KeyStringValueAnnotation__NameAssignment_1();
 
             state._fsp--;
@@ -24131,12 +24148,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8449:1: ( rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8450:2: rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3
             {
-            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group__2__Impl_in_rule__KeyStringValueAnnotation__Group__217120);
+            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group__2__Impl_in_rule__KeyStringValueAnnotation__Group__217121);
             rule__KeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group__3_in_rule__KeyStringValueAnnotation__Group__217123);
+            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group__3_in_rule__KeyStringValueAnnotation__Group__217124);
             rule__KeyStringValueAnnotation__Group__3();
 
             state._fsp--;
@@ -24178,7 +24195,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8464:1: ( rule__KeyStringValueAnnotation__ValueAssignment_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8464:2: rule__KeyStringValueAnnotation__ValueAssignment_2
             {
-            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__ValueAssignment_2_in_rule__KeyStringValueAnnotation__Group__2__Impl17150);
+            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__ValueAssignment_2_in_rule__KeyStringValueAnnotation__Group__2__Impl17151);
             rule__KeyStringValueAnnotation__ValueAssignment_2();
 
             state._fsp--;
@@ -24220,7 +24237,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8478:1: ( rule__KeyStringValueAnnotation__Group__3__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8479:2: rule__KeyStringValueAnnotation__Group__3__Impl
             {
-            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group__3__Impl_in_rule__KeyStringValueAnnotation__Group__317180);
+            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group__3__Impl_in_rule__KeyStringValueAnnotation__Group__317181);
             rule__KeyStringValueAnnotation__Group__3__Impl();
 
             state._fsp--;
@@ -24260,17 +24277,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getGroup_3()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8492:1: ( rule__KeyStringValueAnnotation__Group_3__0 )?
-            int alt56=2;
-            int LA56_0 = input.LA(1);
+            int alt57=2;
+            int LA57_0 = input.LA(1);
 
-            if ( (LA56_0==46) ) {
-                alt56=1;
+            if ( (LA57_0==46) ) {
+                alt57=1;
             }
-            switch (alt56) {
+            switch (alt57) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8492:2: rule__KeyStringValueAnnotation__Group_3__0
                     {
-                    pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group_3__0_in_rule__KeyStringValueAnnotation__Group__3__Impl17207);
+                    pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group_3__0_in_rule__KeyStringValueAnnotation__Group__3__Impl17208);
                     rule__KeyStringValueAnnotation__Group_3__0();
 
                     state._fsp--;
@@ -24315,12 +24332,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8514:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8515:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
             {
-            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group_3__0__Impl_in_rule__KeyStringValueAnnotation__Group_3__017246);
+            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group_3__0__Impl_in_rule__KeyStringValueAnnotation__Group_3__017247);
             rule__KeyStringValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group_3__1_in_rule__KeyStringValueAnnotation__Group_3__017249);
+            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group_3__1_in_rule__KeyStringValueAnnotation__Group_3__017250);
             rule__KeyStringValueAnnotation__Group_3__1();
 
             state._fsp--;
@@ -24359,7 +24376,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
-            match(input,46,FOLLOW_46_in_rule__KeyStringValueAnnotation__Group_3__0__Impl17277); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__KeyStringValueAnnotation__Group_3__0__Impl17278); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
@@ -24394,12 +24411,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8545:1: ( rule__KeyStringValueAnnotation__Group_3__1__Impl rule__KeyStringValueAnnotation__Group_3__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8546:2: rule__KeyStringValueAnnotation__Group_3__1__Impl rule__KeyStringValueAnnotation__Group_3__2
             {
-            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group_3__1__Impl_in_rule__KeyStringValueAnnotation__Group_3__117308);
+            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group_3__1__Impl_in_rule__KeyStringValueAnnotation__Group_3__117309);
             rule__KeyStringValueAnnotation__Group_3__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group_3__2_in_rule__KeyStringValueAnnotation__Group_3__117311);
+            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group_3__2_in_rule__KeyStringValueAnnotation__Group_3__117312);
             rule__KeyStringValueAnnotation__Group_3__2();
 
             state._fsp--;
@@ -24439,21 +24456,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getAnnotationsAssignment_3_1()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8560:1: ( rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1 )*
-            loop57:
+            loop58:
             do {
-                int alt57=2;
-                int LA57_0 = input.LA(1);
+                int alt58=2;
+                int LA58_0 = input.LA(1);
 
-                if ( (LA57_0==RULE_COMMENT_ANNOTATION||LA57_0==70) ) {
-                    alt57=1;
+                if ( (LA58_0==RULE_COMMENT_ANNOTATION||LA58_0==70) ) {
+                    alt58=1;
                 }
 
 
-                switch (alt57) {
+                switch (alt58) {
             	case 1 :
             	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8560:2: rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1
             	    {
-            	    pushFollow(FOLLOW_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyStringValueAnnotation__Group_3__1__Impl17338);
+            	    pushFollow(FOLLOW_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyStringValueAnnotation__Group_3__1__Impl17339);
             	    rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1();
 
             	    state._fsp--;
@@ -24463,7 +24480,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop57;
+            	    break loop58;
                 }
             } while (true);
 
@@ -24501,7 +24518,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8574:1: ( rule__KeyStringValueAnnotation__Group_3__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8575:2: rule__KeyStringValueAnnotation__Group_3__2__Impl
             {
-            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group_3__2__Impl_in_rule__KeyStringValueAnnotation__Group_3__217369);
+            pushFollow(FOLLOW_rule__KeyStringValueAnnotation__Group_3__2__Impl_in_rule__KeyStringValueAnnotation__Group_3__217370);
             rule__KeyStringValueAnnotation__Group_3__2__Impl();
 
             state._fsp--;
@@ -24540,7 +24557,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
-            match(input,47,FOLLOW_47_in_rule__KeyStringValueAnnotation__Group_3__2__Impl17397); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__KeyStringValueAnnotation__Group_3__2__Impl17398); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyStringValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
@@ -24575,12 +24592,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8610:1: ( rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8611:2: rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1
             {
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group__017434);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group__017435);
             rule__TypedKeyStringValueAnnotation__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1_in_rule__TypedKeyStringValueAnnotation__Group__017437);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1_in_rule__TypedKeyStringValueAnnotation__Group__017438);
             rule__TypedKeyStringValueAnnotation__Group__1();
 
             state._fsp--;
@@ -24619,7 +24636,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,70,FOLLOW_70_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl17465); if (state.failed) return ;
+            match(input,70,FOLLOW_70_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl17466); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -24654,12 +24671,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8641:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8642:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group__117496);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group__117497);
             rule__TypedKeyStringValueAnnotation__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2_in_rule__TypedKeyStringValueAnnotation__Group__117499);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2_in_rule__TypedKeyStringValueAnnotation__Group__117500);
             rule__TypedKeyStringValueAnnotation__Group__2();
 
             state._fsp--;
@@ -24701,7 +24718,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8656:1: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8656:2: rule__TypedKeyStringValueAnnotation__NameAssignment_1
             {
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__NameAssignment_1_in_rule__TypedKeyStringValueAnnotation__Group__1__Impl17526);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__NameAssignment_1_in_rule__TypedKeyStringValueAnnotation__Group__1__Impl17527);
             rule__TypedKeyStringValueAnnotation__NameAssignment_1();
 
             state._fsp--;
@@ -24743,12 +24760,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8670:1: ( rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8671:2: rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3
             {
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group__217556);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group__217557);
             rule__TypedKeyStringValueAnnotation__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3_in_rule__TypedKeyStringValueAnnotation__Group__217559);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3_in_rule__TypedKeyStringValueAnnotation__Group__217560);
             rule__TypedKeyStringValueAnnotation__Group__3();
 
             state._fsp--;
@@ -24787,7 +24804,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
             }
-            match(input,68,FOLLOW_68_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl17587); if (state.failed) return ;
+            match(input,68,FOLLOW_68_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl17588); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
             }
@@ -24822,12 +24839,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8701:1: ( rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8702:2: rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4
             {
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3__Impl_in_rule__TypedKeyStringValueAnnotation__Group__317618);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3__Impl_in_rule__TypedKeyStringValueAnnotation__Group__317619);
             rule__TypedKeyStringValueAnnotation__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4_in_rule__TypedKeyStringValueAnnotation__Group__317621);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4_in_rule__TypedKeyStringValueAnnotation__Group__317622);
             rule__TypedKeyStringValueAnnotation__Group__4();
 
             state._fsp--;
@@ -24869,7 +24886,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8716:1: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8716:2: rule__TypedKeyStringValueAnnotation__TypeAssignment_3
             {
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__TypeAssignment_3_in_rule__TypedKeyStringValueAnnotation__Group__3__Impl17648);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__TypeAssignment_3_in_rule__TypedKeyStringValueAnnotation__Group__3__Impl17649);
             rule__TypedKeyStringValueAnnotation__TypeAssignment_3();
 
             state._fsp--;
@@ -24911,12 +24928,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8730:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8731:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
             {
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4__Impl_in_rule__TypedKeyStringValueAnnotation__Group__417678);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4__Impl_in_rule__TypedKeyStringValueAnnotation__Group__417679);
             rule__TypedKeyStringValueAnnotation__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5_in_rule__TypedKeyStringValueAnnotation__Group__417681);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5_in_rule__TypedKeyStringValueAnnotation__Group__417682);
             rule__TypedKeyStringValueAnnotation__Group__5();
 
             state._fsp--;
@@ -24955,7 +24972,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
             }
-            match(input,69,FOLLOW_69_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl17709); if (state.failed) return ;
+            match(input,69,FOLLOW_69_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl17710); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
             }
@@ -24990,12 +25007,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8761:1: ( rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8762:2: rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6
             {
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5__Impl_in_rule__TypedKeyStringValueAnnotation__Group__517740);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5__Impl_in_rule__TypedKeyStringValueAnnotation__Group__517741);
             rule__TypedKeyStringValueAnnotation__Group__5__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6_in_rule__TypedKeyStringValueAnnotation__Group__517743);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6_in_rule__TypedKeyStringValueAnnotation__Group__517744);
             rule__TypedKeyStringValueAnnotation__Group__6();
 
             state._fsp--;
@@ -25037,7 +25054,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8776:1: ( rule__TypedKeyStringValueAnnotation__ValueAssignment_5 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8776:2: rule__TypedKeyStringValueAnnotation__ValueAssignment_5
             {
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__ValueAssignment_5_in_rule__TypedKeyStringValueAnnotation__Group__5__Impl17770);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__ValueAssignment_5_in_rule__TypedKeyStringValueAnnotation__Group__5__Impl17771);
             rule__TypedKeyStringValueAnnotation__ValueAssignment_5();
 
             state._fsp--;
@@ -25079,7 +25096,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8790:1: ( rule__TypedKeyStringValueAnnotation__Group__6__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8791:2: rule__TypedKeyStringValueAnnotation__Group__6__Impl
             {
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6__Impl_in_rule__TypedKeyStringValueAnnotation__Group__617800);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6__Impl_in_rule__TypedKeyStringValueAnnotation__Group__617801);
             rule__TypedKeyStringValueAnnotation__Group__6__Impl();
 
             state._fsp--;
@@ -25119,17 +25136,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8804:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )?
-            int alt58=2;
-            int LA58_0 = input.LA(1);
+            int alt59=2;
+            int LA59_0 = input.LA(1);
 
-            if ( (LA58_0==46) ) {
-                alt58=1;
+            if ( (LA59_0==46) ) {
+                alt59=1;
             }
-            switch (alt58) {
+            switch (alt59) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8804:2: rule__TypedKeyStringValueAnnotation__Group_6__0
                     {
-                    pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0_in_rule__TypedKeyStringValueAnnotation__Group__6__Impl17827);
+                    pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0_in_rule__TypedKeyStringValueAnnotation__Group__6__Impl17828);
                     rule__TypedKeyStringValueAnnotation__Group_6__0();
 
                     state._fsp--;
@@ -25174,12 +25191,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8832:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8833:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
             {
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__017872);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__017873);
             rule__TypedKeyStringValueAnnotation__Group_6__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1_in_rule__TypedKeyStringValueAnnotation__Group_6__017875);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1_in_rule__TypedKeyStringValueAnnotation__Group_6__017876);
             rule__TypedKeyStringValueAnnotation__Group_6__1();
 
             state._fsp--;
@@ -25218,7 +25235,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_6_0()); 
             }
-            match(input,46,FOLLOW_46_in_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl17903); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl17904); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_6_0()); 
             }
@@ -25253,12 +25270,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8863:1: ( rule__TypedKeyStringValueAnnotation__Group_6__1__Impl rule__TypedKeyStringValueAnnotation__Group_6__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8864:2: rule__TypedKeyStringValueAnnotation__Group_6__1__Impl rule__TypedKeyStringValueAnnotation__Group_6__2
             {
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__117934);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__117935);
             rule__TypedKeyStringValueAnnotation__Group_6__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2_in_rule__TypedKeyStringValueAnnotation__Group_6__117937);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2_in_rule__TypedKeyStringValueAnnotation__Group_6__117938);
             rule__TypedKeyStringValueAnnotation__Group_6__2();
 
             state._fsp--;
@@ -25298,21 +25315,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getAnnotationsAssignment_6_1()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8878:1: ( rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1 )*
-            loop59:
+            loop60:
             do {
-                int alt59=2;
-                int LA59_0 = input.LA(1);
+                int alt60=2;
+                int LA60_0 = input.LA(1);
 
-                if ( (LA59_0==RULE_COMMENT_ANNOTATION||LA59_0==70) ) {
-                    alt59=1;
+                if ( (LA60_0==RULE_COMMENT_ANNOTATION||LA60_0==70) ) {
+                    alt60=1;
                 }
 
 
-                switch (alt59) {
+                switch (alt60) {
             	case 1 :
             	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8878:2: rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1
             	    {
-            	    pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1_in_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl17964);
+            	    pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1_in_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl17965);
             	    rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1();
 
             	    state._fsp--;
@@ -25322,7 +25339,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop59;
+            	    break loop60;
                 }
             } while (true);
 
@@ -25360,7 +25377,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8892:1: ( rule__TypedKeyStringValueAnnotation__Group_6__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8893:2: rule__TypedKeyStringValueAnnotation__Group_6__2__Impl
             {
-            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__217995);
+            pushFollow(FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__217996);
             rule__TypedKeyStringValueAnnotation__Group_6__2__Impl();
 
             state._fsp--;
@@ -25399,7 +25416,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_6_2()); 
             }
-            match(input,47,FOLLOW_47_in_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl18023); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl18024); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_6_2()); 
             }
@@ -25434,12 +25451,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8928:1: ( rule__KeyBooleanValueAnnotation__Group__0__Impl rule__KeyBooleanValueAnnotation__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8929:2: rule__KeyBooleanValueAnnotation__Group__0__Impl rule__KeyBooleanValueAnnotation__Group__1
             {
-            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group__0__Impl_in_rule__KeyBooleanValueAnnotation__Group__018060);
+            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group__0__Impl_in_rule__KeyBooleanValueAnnotation__Group__018061);
             rule__KeyBooleanValueAnnotation__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group__1_in_rule__KeyBooleanValueAnnotation__Group__018063);
+            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group__1_in_rule__KeyBooleanValueAnnotation__Group__018064);
             rule__KeyBooleanValueAnnotation__Group__1();
 
             state._fsp--;
@@ -25478,7 +25495,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,70,FOLLOW_70_in_rule__KeyBooleanValueAnnotation__Group__0__Impl18091); if (state.failed) return ;
+            match(input,70,FOLLOW_70_in_rule__KeyBooleanValueAnnotation__Group__0__Impl18092); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -25513,12 +25530,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8959:1: ( rule__KeyBooleanValueAnnotation__Group__1__Impl rule__KeyBooleanValueAnnotation__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8960:2: rule__KeyBooleanValueAnnotation__Group__1__Impl rule__KeyBooleanValueAnnotation__Group__2
             {
-            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group__1__Impl_in_rule__KeyBooleanValueAnnotation__Group__118122);
+            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group__1__Impl_in_rule__KeyBooleanValueAnnotation__Group__118123);
             rule__KeyBooleanValueAnnotation__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group__2_in_rule__KeyBooleanValueAnnotation__Group__118125);
+            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group__2_in_rule__KeyBooleanValueAnnotation__Group__118126);
             rule__KeyBooleanValueAnnotation__Group__2();
 
             state._fsp--;
@@ -25560,7 +25577,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8974:1: ( rule__KeyBooleanValueAnnotation__NameAssignment_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8974:2: rule__KeyBooleanValueAnnotation__NameAssignment_1
             {
-            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__NameAssignment_1_in_rule__KeyBooleanValueAnnotation__Group__1__Impl18152);
+            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__NameAssignment_1_in_rule__KeyBooleanValueAnnotation__Group__1__Impl18153);
             rule__KeyBooleanValueAnnotation__NameAssignment_1();
 
             state._fsp--;
@@ -25602,12 +25619,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8988:1: ( rule__KeyBooleanValueAnnotation__Group__2__Impl rule__KeyBooleanValueAnnotation__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:8989:2: rule__KeyBooleanValueAnnotation__Group__2__Impl rule__KeyBooleanValueAnnotation__Group__3
             {
-            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group__2__Impl_in_rule__KeyBooleanValueAnnotation__Group__218182);
+            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group__2__Impl_in_rule__KeyBooleanValueAnnotation__Group__218183);
             rule__KeyBooleanValueAnnotation__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group__3_in_rule__KeyBooleanValueAnnotation__Group__218185);
+            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group__3_in_rule__KeyBooleanValueAnnotation__Group__218186);
             rule__KeyBooleanValueAnnotation__Group__3();
 
             state._fsp--;
@@ -25649,7 +25666,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9003:1: ( rule__KeyBooleanValueAnnotation__ValueAssignment_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9003:2: rule__KeyBooleanValueAnnotation__ValueAssignment_2
             {
-            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__ValueAssignment_2_in_rule__KeyBooleanValueAnnotation__Group__2__Impl18212);
+            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__ValueAssignment_2_in_rule__KeyBooleanValueAnnotation__Group__2__Impl18213);
             rule__KeyBooleanValueAnnotation__ValueAssignment_2();
 
             state._fsp--;
@@ -25691,7 +25708,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9017:1: ( rule__KeyBooleanValueAnnotation__Group__3__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9018:2: rule__KeyBooleanValueAnnotation__Group__3__Impl
             {
-            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group__3__Impl_in_rule__KeyBooleanValueAnnotation__Group__318242);
+            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group__3__Impl_in_rule__KeyBooleanValueAnnotation__Group__318243);
             rule__KeyBooleanValueAnnotation__Group__3__Impl();
 
             state._fsp--;
@@ -25731,17 +25748,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getGroup_3()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9031:1: ( rule__KeyBooleanValueAnnotation__Group_3__0 )?
-            int alt60=2;
-            int LA60_0 = input.LA(1);
+            int alt61=2;
+            int LA61_0 = input.LA(1);
 
-            if ( (LA60_0==46) ) {
-                alt60=1;
+            if ( (LA61_0==46) ) {
+                alt61=1;
             }
-            switch (alt60) {
+            switch (alt61) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9031:2: rule__KeyBooleanValueAnnotation__Group_3__0
                     {
-                    pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0_in_rule__KeyBooleanValueAnnotation__Group__3__Impl18269);
+                    pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0_in_rule__KeyBooleanValueAnnotation__Group__3__Impl18270);
                     rule__KeyBooleanValueAnnotation__Group_3__0();
 
                     state._fsp--;
@@ -25786,12 +25803,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9053:1: ( rule__KeyBooleanValueAnnotation__Group_3__0__Impl rule__KeyBooleanValueAnnotation__Group_3__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9054:2: rule__KeyBooleanValueAnnotation__Group_3__0__Impl rule__KeyBooleanValueAnnotation__Group_3__1
             {
-            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__018308);
+            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__018309);
             rule__KeyBooleanValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1_in_rule__KeyBooleanValueAnnotation__Group_3__018311);
+            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1_in_rule__KeyBooleanValueAnnotation__Group_3__018312);
             rule__KeyBooleanValueAnnotation__Group_3__1();
 
             state._fsp--;
@@ -25830,7 +25847,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
-            match(input,46,FOLLOW_46_in_rule__KeyBooleanValueAnnotation__Group_3__0__Impl18339); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__KeyBooleanValueAnnotation__Group_3__0__Impl18340); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyBooleanValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
@@ -25865,12 +25882,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9084:1: ( rule__KeyBooleanValueAnnotation__Group_3__1__Impl rule__KeyBooleanValueAnnotation__Group_3__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9085:2: rule__KeyBooleanValueAnnotation__Group_3__1__Impl rule__KeyBooleanValueAnnotation__Group_3__2
             {
-            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__118370);
+            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__118371);
             rule__KeyBooleanValueAnnotation__Group_3__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2_in_rule__KeyBooleanValueAnnotation__Group_3__118373);
+            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2_in_rule__KeyBooleanValueAnnotation__Group_3__118374);
             rule__KeyBooleanValueAnnotation__Group_3__2();
 
             state._fsp--;
@@ -25910,21 +25927,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getAnnotationsAssignment_3_1()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9099:1: ( rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1 )*
-            loop61:
+            loop62:
             do {
-                int alt61=2;
-                int LA61_0 = input.LA(1);
+                int alt62=2;
+                int LA62_0 = input.LA(1);
 
-                if ( (LA61_0==RULE_COMMENT_ANNOTATION||LA61_0==70) ) {
-                    alt61=1;
+                if ( (LA62_0==RULE_COMMENT_ANNOTATION||LA62_0==70) ) {
+                    alt62=1;
                 }
 
 
-                switch (alt61) {
+                switch (alt62) {
             	case 1 :
             	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9099:2: rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1
             	    {
-            	    pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyBooleanValueAnnotation__Group_3__1__Impl18400);
+            	    pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyBooleanValueAnnotation__Group_3__1__Impl18401);
             	    rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1();
 
             	    state._fsp--;
@@ -25934,7 +25951,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop61;
+            	    break loop62;
                 }
             } while (true);
 
@@ -25972,7 +25989,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9113:1: ( rule__KeyBooleanValueAnnotation__Group_3__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9114:2: rule__KeyBooleanValueAnnotation__Group_3__2__Impl
             {
-            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__218431);
+            pushFollow(FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__218432);
             rule__KeyBooleanValueAnnotation__Group_3__2__Impl();
 
             state._fsp--;
@@ -26011,7 +26028,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
-            match(input,47,FOLLOW_47_in_rule__KeyBooleanValueAnnotation__Group_3__2__Impl18459); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__KeyBooleanValueAnnotation__Group_3__2__Impl18460); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyBooleanValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
@@ -26046,12 +26063,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9149:1: ( rule__KeyIntValueAnnotation__Group__0__Impl rule__KeyIntValueAnnotation__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9150:2: rule__KeyIntValueAnnotation__Group__0__Impl rule__KeyIntValueAnnotation__Group__1
             {
-            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group__0__Impl_in_rule__KeyIntValueAnnotation__Group__018496);
+            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group__0__Impl_in_rule__KeyIntValueAnnotation__Group__018497);
             rule__KeyIntValueAnnotation__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group__1_in_rule__KeyIntValueAnnotation__Group__018499);
+            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group__1_in_rule__KeyIntValueAnnotation__Group__018500);
             rule__KeyIntValueAnnotation__Group__1();
 
             state._fsp--;
@@ -26090,7 +26107,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,70,FOLLOW_70_in_rule__KeyIntValueAnnotation__Group__0__Impl18527); if (state.failed) return ;
+            match(input,70,FOLLOW_70_in_rule__KeyIntValueAnnotation__Group__0__Impl18528); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -26125,12 +26142,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9180:1: ( rule__KeyIntValueAnnotation__Group__1__Impl rule__KeyIntValueAnnotation__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9181:2: rule__KeyIntValueAnnotation__Group__1__Impl rule__KeyIntValueAnnotation__Group__2
             {
-            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group__1__Impl_in_rule__KeyIntValueAnnotation__Group__118558);
+            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group__1__Impl_in_rule__KeyIntValueAnnotation__Group__118559);
             rule__KeyIntValueAnnotation__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group__2_in_rule__KeyIntValueAnnotation__Group__118561);
+            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group__2_in_rule__KeyIntValueAnnotation__Group__118562);
             rule__KeyIntValueAnnotation__Group__2();
 
             state._fsp--;
@@ -26172,7 +26189,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9195:1: ( rule__KeyIntValueAnnotation__NameAssignment_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9195:2: rule__KeyIntValueAnnotation__NameAssignment_1
             {
-            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__NameAssignment_1_in_rule__KeyIntValueAnnotation__Group__1__Impl18588);
+            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__NameAssignment_1_in_rule__KeyIntValueAnnotation__Group__1__Impl18589);
             rule__KeyIntValueAnnotation__NameAssignment_1();
 
             state._fsp--;
@@ -26214,12 +26231,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9209:1: ( rule__KeyIntValueAnnotation__Group__2__Impl rule__KeyIntValueAnnotation__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9210:2: rule__KeyIntValueAnnotation__Group__2__Impl rule__KeyIntValueAnnotation__Group__3
             {
-            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group__2__Impl_in_rule__KeyIntValueAnnotation__Group__218618);
+            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group__2__Impl_in_rule__KeyIntValueAnnotation__Group__218619);
             rule__KeyIntValueAnnotation__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group__3_in_rule__KeyIntValueAnnotation__Group__218621);
+            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group__3_in_rule__KeyIntValueAnnotation__Group__218622);
             rule__KeyIntValueAnnotation__Group__3();
 
             state._fsp--;
@@ -26261,7 +26278,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9224:1: ( rule__KeyIntValueAnnotation__ValueAssignment_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9224:2: rule__KeyIntValueAnnotation__ValueAssignment_2
             {
-            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__ValueAssignment_2_in_rule__KeyIntValueAnnotation__Group__2__Impl18648);
+            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__ValueAssignment_2_in_rule__KeyIntValueAnnotation__Group__2__Impl18649);
             rule__KeyIntValueAnnotation__ValueAssignment_2();
 
             state._fsp--;
@@ -26303,7 +26320,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9238:1: ( rule__KeyIntValueAnnotation__Group__3__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9239:2: rule__KeyIntValueAnnotation__Group__3__Impl
             {
-            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group__3__Impl_in_rule__KeyIntValueAnnotation__Group__318678);
+            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group__3__Impl_in_rule__KeyIntValueAnnotation__Group__318679);
             rule__KeyIntValueAnnotation__Group__3__Impl();
 
             state._fsp--;
@@ -26343,17 +26360,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getGroup_3()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9252:1: ( rule__KeyIntValueAnnotation__Group_3__0 )?
-            int alt62=2;
-            int LA62_0 = input.LA(1);
+            int alt63=2;
+            int LA63_0 = input.LA(1);
 
-            if ( (LA62_0==46) ) {
-                alt62=1;
+            if ( (LA63_0==46) ) {
+                alt63=1;
             }
-            switch (alt62) {
+            switch (alt63) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9252:2: rule__KeyIntValueAnnotation__Group_3__0
                     {
-                    pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group_3__0_in_rule__KeyIntValueAnnotation__Group__3__Impl18705);
+                    pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group_3__0_in_rule__KeyIntValueAnnotation__Group__3__Impl18706);
                     rule__KeyIntValueAnnotation__Group_3__0();
 
                     state._fsp--;
@@ -26398,12 +26415,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9274:1: ( rule__KeyIntValueAnnotation__Group_3__0__Impl rule__KeyIntValueAnnotation__Group_3__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9275:2: rule__KeyIntValueAnnotation__Group_3__0__Impl rule__KeyIntValueAnnotation__Group_3__1
             {
-            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group_3__0__Impl_in_rule__KeyIntValueAnnotation__Group_3__018744);
+            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group_3__0__Impl_in_rule__KeyIntValueAnnotation__Group_3__018745);
             rule__KeyIntValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group_3__1_in_rule__KeyIntValueAnnotation__Group_3__018747);
+            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group_3__1_in_rule__KeyIntValueAnnotation__Group_3__018748);
             rule__KeyIntValueAnnotation__Group_3__1();
 
             state._fsp--;
@@ -26442,7 +26459,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
-            match(input,46,FOLLOW_46_in_rule__KeyIntValueAnnotation__Group_3__0__Impl18775); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__KeyIntValueAnnotation__Group_3__0__Impl18776); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyIntValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
@@ -26477,12 +26494,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9305:1: ( rule__KeyIntValueAnnotation__Group_3__1__Impl rule__KeyIntValueAnnotation__Group_3__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9306:2: rule__KeyIntValueAnnotation__Group_3__1__Impl rule__KeyIntValueAnnotation__Group_3__2
             {
-            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group_3__1__Impl_in_rule__KeyIntValueAnnotation__Group_3__118806);
+            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group_3__1__Impl_in_rule__KeyIntValueAnnotation__Group_3__118807);
             rule__KeyIntValueAnnotation__Group_3__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group_3__2_in_rule__KeyIntValueAnnotation__Group_3__118809);
+            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group_3__2_in_rule__KeyIntValueAnnotation__Group_3__118810);
             rule__KeyIntValueAnnotation__Group_3__2();
 
             state._fsp--;
@@ -26522,21 +26539,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getAnnotationsAssignment_3_1()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9320:1: ( rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1 )*
-            loop63:
+            loop64:
             do {
-                int alt63=2;
-                int LA63_0 = input.LA(1);
+                int alt64=2;
+                int LA64_0 = input.LA(1);
 
-                if ( (LA63_0==RULE_COMMENT_ANNOTATION||LA63_0==70) ) {
-                    alt63=1;
+                if ( (LA64_0==RULE_COMMENT_ANNOTATION||LA64_0==70) ) {
+                    alt64=1;
                 }
 
 
-                switch (alt63) {
+                switch (alt64) {
             	case 1 :
             	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9320:2: rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1
             	    {
-            	    pushFollow(FOLLOW_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyIntValueAnnotation__Group_3__1__Impl18836);
+            	    pushFollow(FOLLOW_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyIntValueAnnotation__Group_3__1__Impl18837);
             	    rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1();
 
             	    state._fsp--;
@@ -26546,7 +26563,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop63;
+            	    break loop64;
                 }
             } while (true);
 
@@ -26584,7 +26601,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9334:1: ( rule__KeyIntValueAnnotation__Group_3__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9335:2: rule__KeyIntValueAnnotation__Group_3__2__Impl
             {
-            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group_3__2__Impl_in_rule__KeyIntValueAnnotation__Group_3__218867);
+            pushFollow(FOLLOW_rule__KeyIntValueAnnotation__Group_3__2__Impl_in_rule__KeyIntValueAnnotation__Group_3__218868);
             rule__KeyIntValueAnnotation__Group_3__2__Impl();
 
             state._fsp--;
@@ -26623,7 +26640,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
-            match(input,47,FOLLOW_47_in_rule__KeyIntValueAnnotation__Group_3__2__Impl18895); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__KeyIntValueAnnotation__Group_3__2__Impl18896); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyIntValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
@@ -26658,12 +26675,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9370:1: ( rule__KeyFloatValueAnnotation__Group__0__Impl rule__KeyFloatValueAnnotation__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9371:2: rule__KeyFloatValueAnnotation__Group__0__Impl rule__KeyFloatValueAnnotation__Group__1
             {
-            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group__0__Impl_in_rule__KeyFloatValueAnnotation__Group__018932);
+            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group__0__Impl_in_rule__KeyFloatValueAnnotation__Group__018933);
             rule__KeyFloatValueAnnotation__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group__1_in_rule__KeyFloatValueAnnotation__Group__018935);
+            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group__1_in_rule__KeyFloatValueAnnotation__Group__018936);
             rule__KeyFloatValueAnnotation__Group__1();
 
             state._fsp--;
@@ -26702,7 +26719,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,70,FOLLOW_70_in_rule__KeyFloatValueAnnotation__Group__0__Impl18963); if (state.failed) return ;
+            match(input,70,FOLLOW_70_in_rule__KeyFloatValueAnnotation__Group__0__Impl18964); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
@@ -26737,12 +26754,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9401:1: ( rule__KeyFloatValueAnnotation__Group__1__Impl rule__KeyFloatValueAnnotation__Group__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9402:2: rule__KeyFloatValueAnnotation__Group__1__Impl rule__KeyFloatValueAnnotation__Group__2
             {
-            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group__1__Impl_in_rule__KeyFloatValueAnnotation__Group__118994);
+            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group__1__Impl_in_rule__KeyFloatValueAnnotation__Group__118995);
             rule__KeyFloatValueAnnotation__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group__2_in_rule__KeyFloatValueAnnotation__Group__118997);
+            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group__2_in_rule__KeyFloatValueAnnotation__Group__118998);
             rule__KeyFloatValueAnnotation__Group__2();
 
             state._fsp--;
@@ -26784,7 +26801,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9416:1: ( rule__KeyFloatValueAnnotation__NameAssignment_1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9416:2: rule__KeyFloatValueAnnotation__NameAssignment_1
             {
-            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__NameAssignment_1_in_rule__KeyFloatValueAnnotation__Group__1__Impl19024);
+            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__NameAssignment_1_in_rule__KeyFloatValueAnnotation__Group__1__Impl19025);
             rule__KeyFloatValueAnnotation__NameAssignment_1();
 
             state._fsp--;
@@ -26826,12 +26843,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9430:1: ( rule__KeyFloatValueAnnotation__Group__2__Impl rule__KeyFloatValueAnnotation__Group__3 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9431:2: rule__KeyFloatValueAnnotation__Group__2__Impl rule__KeyFloatValueAnnotation__Group__3
             {
-            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group__2__Impl_in_rule__KeyFloatValueAnnotation__Group__219054);
+            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group__2__Impl_in_rule__KeyFloatValueAnnotation__Group__219055);
             rule__KeyFloatValueAnnotation__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group__3_in_rule__KeyFloatValueAnnotation__Group__219057);
+            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group__3_in_rule__KeyFloatValueAnnotation__Group__219058);
             rule__KeyFloatValueAnnotation__Group__3();
 
             state._fsp--;
@@ -26873,7 +26890,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9445:1: ( rule__KeyFloatValueAnnotation__ValueAssignment_2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9445:2: rule__KeyFloatValueAnnotation__ValueAssignment_2
             {
-            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__ValueAssignment_2_in_rule__KeyFloatValueAnnotation__Group__2__Impl19084);
+            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__ValueAssignment_2_in_rule__KeyFloatValueAnnotation__Group__2__Impl19085);
             rule__KeyFloatValueAnnotation__ValueAssignment_2();
 
             state._fsp--;
@@ -26915,7 +26932,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9459:1: ( rule__KeyFloatValueAnnotation__Group__3__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9460:2: rule__KeyFloatValueAnnotation__Group__3__Impl
             {
-            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group__3__Impl_in_rule__KeyFloatValueAnnotation__Group__319114);
+            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group__3__Impl_in_rule__KeyFloatValueAnnotation__Group__319115);
             rule__KeyFloatValueAnnotation__Group__3__Impl();
 
             state._fsp--;
@@ -26955,17 +26972,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getGroup_3()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9473:1: ( rule__KeyFloatValueAnnotation__Group_3__0 )?
-            int alt64=2;
-            int LA64_0 = input.LA(1);
+            int alt65=2;
+            int LA65_0 = input.LA(1);
 
-            if ( (LA64_0==46) ) {
-                alt64=1;
+            if ( (LA65_0==46) ) {
+                alt65=1;
             }
-            switch (alt64) {
+            switch (alt65) {
                 case 1 :
                     // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9473:2: rule__KeyFloatValueAnnotation__Group_3__0
                     {
-                    pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0_in_rule__KeyFloatValueAnnotation__Group__3__Impl19141);
+                    pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0_in_rule__KeyFloatValueAnnotation__Group__3__Impl19142);
                     rule__KeyFloatValueAnnotation__Group_3__0();
 
                     state._fsp--;
@@ -27010,12 +27027,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9495:1: ( rule__KeyFloatValueAnnotation__Group_3__0__Impl rule__KeyFloatValueAnnotation__Group_3__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9496:2: rule__KeyFloatValueAnnotation__Group_3__0__Impl rule__KeyFloatValueAnnotation__Group_3__1
             {
-            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0__Impl_in_rule__KeyFloatValueAnnotation__Group_3__019180);
+            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0__Impl_in_rule__KeyFloatValueAnnotation__Group_3__019181);
             rule__KeyFloatValueAnnotation__Group_3__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1_in_rule__KeyFloatValueAnnotation__Group_3__019183);
+            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1_in_rule__KeyFloatValueAnnotation__Group_3__019184);
             rule__KeyFloatValueAnnotation__Group_3__1();
 
             state._fsp--;
@@ -27054,7 +27071,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
-            match(input,46,FOLLOW_46_in_rule__KeyFloatValueAnnotation__Group_3__0__Impl19211); if (state.failed) return ;
+            match(input,46,FOLLOW_46_in_rule__KeyFloatValueAnnotation__Group_3__0__Impl19212); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyFloatValueAnnotationAccess().getLeftParenthesisKeyword_3_0()); 
             }
@@ -27089,12 +27106,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9526:1: ( rule__KeyFloatValueAnnotation__Group_3__1__Impl rule__KeyFloatValueAnnotation__Group_3__2 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9527:2: rule__KeyFloatValueAnnotation__Group_3__1__Impl rule__KeyFloatValueAnnotation__Group_3__2
             {
-            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1__Impl_in_rule__KeyFloatValueAnnotation__Group_3__119242);
+            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1__Impl_in_rule__KeyFloatValueAnnotation__Group_3__119243);
             rule__KeyFloatValueAnnotation__Group_3__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2_in_rule__KeyFloatValueAnnotation__Group_3__119245);
+            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2_in_rule__KeyFloatValueAnnotation__Group_3__119246);
             rule__KeyFloatValueAnnotation__Group_3__2();
 
             state._fsp--;
@@ -27134,21 +27151,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getAnnotationsAssignment_3_1()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9541:1: ( rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1 )*
-            loop65:
+            loop66:
             do {
-                int alt65=2;
-                int LA65_0 = input.LA(1);
+                int alt66=2;
+                int LA66_0 = input.LA(1);
 
-                if ( (LA65_0==RULE_COMMENT_ANNOTATION||LA65_0==70) ) {
-                    alt65=1;
+                if ( (LA66_0==RULE_COMMENT_ANNOTATION||LA66_0==70) ) {
+                    alt66=1;
                 }
 
 
-                switch (alt65) {
+                switch (alt66) {
             	case 1 :
             	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9541:2: rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1
             	    {
-            	    pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyFloatValueAnnotation__Group_3__1__Impl19272);
+            	    pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyFloatValueAnnotation__Group_3__1__Impl19273);
             	    rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1();
 
             	    state._fsp--;
@@ -27158,7 +27175,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop65;
+            	    break loop66;
                 }
             } while (true);
 
@@ -27196,7 +27213,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9555:1: ( rule__KeyFloatValueAnnotation__Group_3__2__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9556:2: rule__KeyFloatValueAnnotation__Group_3__2__Impl
             {
-            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2__Impl_in_rule__KeyFloatValueAnnotation__Group_3__219303);
+            pushFollow(FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2__Impl_in_rule__KeyFloatValueAnnotation__Group_3__219304);
             rule__KeyFloatValueAnnotation__Group_3__2__Impl();
 
             state._fsp--;
@@ -27235,7 +27252,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
-            match(input,47,FOLLOW_47_in_rule__KeyFloatValueAnnotation__Group_3__2__Impl19331); if (state.failed) return ;
+            match(input,47,FOLLOW_47_in_rule__KeyFloatValueAnnotation__Group_3__2__Impl19332); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyFloatValueAnnotationAccess().getRightParenthesisKeyword_3_2()); 
             }
@@ -27270,12 +27287,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9592:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9593:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
             {
-            pushFollow(FOLLOW_rule__ExtendedID__Group__0__Impl_in_rule__ExtendedID__Group__019369);
+            pushFollow(FOLLOW_rule__ExtendedID__Group__0__Impl_in_rule__ExtendedID__Group__019370);
             rule__ExtendedID__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ExtendedID__Group__1_in_rule__ExtendedID__Group__019372);
+            pushFollow(FOLLOW_rule__ExtendedID__Group__1_in_rule__ExtendedID__Group__019373);
             rule__ExtendedID__Group__1();
 
             state._fsp--;
@@ -27314,7 +27331,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__ExtendedID__Group__0__Impl19399); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__ExtendedID__Group__0__Impl19400); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
             }
@@ -27349,7 +27366,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9621:1: ( rule__ExtendedID__Group__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9622:2: rule__ExtendedID__Group__1__Impl
             {
-            pushFollow(FOLLOW_rule__ExtendedID__Group__1__Impl_in_rule__ExtendedID__Group__119428);
+            pushFollow(FOLLOW_rule__ExtendedID__Group__1__Impl_in_rule__ExtendedID__Group__119429);
             rule__ExtendedID__Group__1__Impl();
 
             state._fsp--;
@@ -27389,21 +27406,21 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
                before(grammarAccess.getExtendedIDAccess().getGroup_1()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9635:1: ( rule__ExtendedID__Group_1__0 )*
-            loop66:
+            loop67:
             do {
-                int alt66=2;
-                int LA66_0 = input.LA(1);
+                int alt67=2;
+                int LA67_0 = input.LA(1);
 
-                if ( (LA66_0==71) ) {
-                    alt66=1;
+                if ( (LA67_0==71) ) {
+                    alt67=1;
                 }
 
 
-                switch (alt66) {
+                switch (alt67) {
             	case 1 :
             	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9635:2: rule__ExtendedID__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__ExtendedID__Group_1__0_in_rule__ExtendedID__Group__1__Impl19455);
+            	    pushFollow(FOLLOW_rule__ExtendedID__Group_1__0_in_rule__ExtendedID__Group__1__Impl19456);
             	    rule__ExtendedID__Group_1__0();
 
             	    state._fsp--;
@@ -27413,7 +27430,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop66;
+            	    break loop67;
                 }
             } while (true);
 
@@ -27451,12 +27468,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9653:1: ( rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9654:2: rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1
             {
-            pushFollow(FOLLOW_rule__ExtendedID__Group_1__0__Impl_in_rule__ExtendedID__Group_1__019490);
+            pushFollow(FOLLOW_rule__ExtendedID__Group_1__0__Impl_in_rule__ExtendedID__Group_1__019491);
             rule__ExtendedID__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FOLLOW_rule__ExtendedID__Group_1__1_in_rule__ExtendedID__Group_1__019493);
+            pushFollow(FOLLOW_rule__ExtendedID__Group_1__1_in_rule__ExtendedID__Group_1__019494);
             rule__ExtendedID__Group_1__1();
 
             state._fsp--;
@@ -27495,7 +27512,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
             }
-            match(input,71,FOLLOW_71_in_rule__ExtendedID__Group_1__0__Impl19521); if (state.failed) return ;
+            match(input,71,FOLLOW_71_in_rule__ExtendedID__Group_1__0__Impl19522); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExtendedIDAccess().getFullStopKeyword_1_0()); 
             }
@@ -27530,7 +27547,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9684:1: ( rule__ExtendedID__Group_1__1__Impl )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9685:2: rule__ExtendedID__Group_1__1__Impl
             {
-            pushFollow(FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__119552);
+            pushFollow(FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__119553);
             rule__ExtendedID__Group_1__1__Impl();
 
             state._fsp--;
@@ -27569,7 +27586,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl19579); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl19580); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
             }
@@ -27610,7 +27627,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProgramAccess().getNameIDTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Program__NameAssignment_119617); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Program__NameAssignment_119618); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getProgramAccess().getNameIDTerminalRuleCall_1_0()); 
             }
@@ -27651,7 +27668,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProgramAccess().getPriorityINTTerminalRuleCall_3_0()); 
             }
-            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Program__PriorityAssignment_319648); if (state.failed) return ;
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Program__PriorityAssignment_319649); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getProgramAccess().getPriorityINTTerminalRuleCall_3_0()); 
             }
@@ -27676,29 +27693,29 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Program__PriorityAssignment_3"
 
 
-    // $ANTLR start "rule__Program__TypeGroupsAssignment_5"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9743:1: rule__Program__TypeGroupsAssignment_5 : ( ruleTypeGroup ) ;
-    public final void rule__Program__TypeGroupsAssignment_5() throws RecognitionException {
+    // $ANTLR start "rule__Program__DelcarationsAssignment_5"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9743:1: rule__Program__DelcarationsAssignment_5 : ( ruleDeclaration ) ;
+    public final void rule__Program__DelcarationsAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9747:1: ( ( ruleTypeGroup ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9748:1: ( ruleTypeGroup )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9747:1: ( ( ruleDeclaration ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9748:1: ( ruleDeclaration )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9748:1: ( ruleTypeGroup )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9749:1: ruleTypeGroup
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9748:1: ( ruleDeclaration )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9749:1: ruleDeclaration
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getTypeGroupsTypeGroupParserRuleCall_5_0()); 
+               before(grammarAccess.getProgramAccess().getDelcarationsDeclarationParserRuleCall_5_0()); 
             }
-            pushFollow(FOLLOW_ruleTypeGroup_in_rule__Program__TypeGroupsAssignment_519679);
-            ruleTypeGroup();
+            pushFollow(FOLLOW_ruleDeclaration_in_rule__Program__DelcarationsAssignment_519680);
+            ruleDeclaration();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getTypeGroupsTypeGroupParserRuleCall_5_0()); 
+               after(grammarAccess.getProgramAccess().getDelcarationsDeclarationParserRuleCall_5_0()); 
             }
 
             }
@@ -27718,7 +27735,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__TypeGroupsAssignment_5"
+    // $ANTLR end "rule__Program__DelcarationsAssignment_5"
 
 
     // $ANTLR start "rule__Program__GlobalHostCodeInstructionAssignment_6_1"
@@ -27737,7 +27754,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_1_0()); 
             }
-            match(input,RULE_HOSTCODE,FOLLOW_RULE_HOSTCODE_in_rule__Program__GlobalHostCodeInstructionAssignment_6_119710); if (state.failed) return ;
+            match(input,RULE_HOSTCODE,FOLLOW_RULE_HOSTCODE_in_rule__Program__GlobalHostCodeInstructionAssignment_6_119711); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_1_0()); 
             }
@@ -27778,7 +27795,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProgramAccess().getStatesStateParserRuleCall_7_0()); 
             }
-            pushFollow(FOLLOW_ruleState_in_rule__Program__StatesAssignment_719741);
+            pushFollow(FOLLOW_ruleState_in_rule__Program__StatesAssignment_719742);
             ruleState();
 
             state._fsp--;
@@ -27823,7 +27840,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getNameIDTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__State__NameAssignment_219772); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__State__NameAssignment_219773); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getStateAccess().getNameIDTerminalRuleCall_2_0()); 
             }
@@ -27848,29 +27865,29 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__State__NameAssignment_2"
 
 
-    // $ANTLR start "rule__State__TypeGroupsAssignment_5"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9803:1: rule__State__TypeGroupsAssignment_5 : ( ruleTypeGroup ) ;
-    public final void rule__State__TypeGroupsAssignment_5() throws RecognitionException {
+    // $ANTLR start "rule__State__DeclarationsAssignment_5"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9803:1: rule__State__DeclarationsAssignment_5 : ( ruleDeclaration ) ;
+    public final void rule__State__DeclarationsAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9807:1: ( ( ruleTypeGroup ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9808:1: ( ruleTypeGroup )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9807:1: ( ( ruleDeclaration ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9808:1: ( ruleDeclaration )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9808:1: ( ruleTypeGroup )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9809:1: ruleTypeGroup
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9808:1: ( ruleDeclaration )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9809:1: ruleDeclaration
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getStateAccess().getTypeGroupsTypeGroupParserRuleCall_5_0()); 
+               before(grammarAccess.getStateAccess().getDeclarationsDeclarationParserRuleCall_5_0()); 
             }
-            pushFollow(FOLLOW_ruleTypeGroup_in_rule__State__TypeGroupsAssignment_519803);
-            ruleTypeGroup();
+            pushFollow(FOLLOW_ruleDeclaration_in_rule__State__DeclarationsAssignment_519804);
+            ruleDeclaration();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getStateAccess().getTypeGroupsTypeGroupParserRuleCall_5_0()); 
+               after(grammarAccess.getStateAccess().getDeclarationsDeclarationParserRuleCall_5_0()); 
             }
 
             }
@@ -27890,7 +27907,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__State__TypeGroupsAssignment_5"
+    // $ANTLR end "rule__State__DeclarationsAssignment_5"
 
 
     // $ANTLR start "rule__State__InstructionsAssignment_6_0"
@@ -27909,7 +27926,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStateAccess().getInstructionsInstructionParserRuleCall_6_0_0()); 
             }
-            pushFollow(FOLLOW_ruleInstruction_in_rule__State__InstructionsAssignment_6_019834);
+            pushFollow(FOLLOW_ruleInstruction_in_rule__State__InstructionsAssignment_6_019835);
             ruleInstruction();
 
             state._fsp--;
@@ -27938,9 +27955,9 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__State__InstructionsAssignment_6_0"
 
 
-    // $ANTLR start "rule__TypeGroup__AnnotationsAssignment_0"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9833:1: rule__TypeGroup__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
-    public final void rule__TypeGroup__AnnotationsAssignment_0() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__AnnotationsAssignment_0"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9833:1: rule__Declaration__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    public final void rule__Declaration__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -27952,15 +27969,15 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9839:1: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
+               before(grammarAccess.getDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
             }
-            pushFollow(FOLLOW_ruleAnnotation_in_rule__TypeGroup__AnnotationsAssignment_019865);
+            pushFollow(FOLLOW_ruleAnnotation_in_rule__Declaration__AnnotationsAssignment_019866);
             ruleAnnotation();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
+               after(grammarAccess.getDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
             }
 
             }
@@ -27980,12 +27997,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__AnnotationsAssignment_0"
+    // $ANTLR end "rule__Declaration__AnnotationsAssignment_0"
 
 
-    // $ANTLR start "rule__TypeGroup__ConstAssignment_1"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9848:1: rule__TypeGroup__ConstAssignment_1 : ( ( 'const' ) ) ;
-    public final void rule__TypeGroup__ConstAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__ConstAssignment_1"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9848:1: rule__Declaration__ConstAssignment_1 : ( ( 'const' ) ) ;
+    public final void rule__Declaration__ConstAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -27997,23 +28014,23 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9854:1: ( 'const' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getConstConstKeyword_1_0()); 
+               before(grammarAccess.getDeclarationAccess().getConstConstKeyword_1_0()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9855:1: ( 'const' )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9856:1: 'const'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getConstConstKeyword_1_0()); 
+               before(grammarAccess.getDeclarationAccess().getConstConstKeyword_1_0()); 
             }
-            match(input,72,FOLLOW_72_in_rule__TypeGroup__ConstAssignment_119901); if (state.failed) return ;
+            match(input,72,FOLLOW_72_in_rule__Declaration__ConstAssignment_119902); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getConstConstKeyword_1_0()); 
+               after(grammarAccess.getDeclarationAccess().getConstConstKeyword_1_0()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getConstConstKeyword_1_0()); 
+               after(grammarAccess.getDeclarationAccess().getConstConstKeyword_1_0()); 
             }
 
             }
@@ -28033,12 +28050,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__ConstAssignment_1"
+    // $ANTLR end "rule__Declaration__ConstAssignment_1"
 
 
-    // $ANTLR start "rule__TypeGroup__InputAssignment_2"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9871:1: rule__TypeGroup__InputAssignment_2 : ( ( 'input' ) ) ;
-    public final void rule__TypeGroup__InputAssignment_2() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__InputAssignment_2"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9871:1: rule__Declaration__InputAssignment_2 : ( ( 'input' ) ) ;
+    public final void rule__Declaration__InputAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -28050,23 +28067,23 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9877:1: ( 'input' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getInputInputKeyword_2_0()); 
+               before(grammarAccess.getDeclarationAccess().getInputInputKeyword_2_0()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9878:1: ( 'input' )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9879:1: 'input'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getInputInputKeyword_2_0()); 
+               before(grammarAccess.getDeclarationAccess().getInputInputKeyword_2_0()); 
             }
-            match(input,73,FOLLOW_73_in_rule__TypeGroup__InputAssignment_219945); if (state.failed) return ;
+            match(input,73,FOLLOW_73_in_rule__Declaration__InputAssignment_219946); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getInputInputKeyword_2_0()); 
+               after(grammarAccess.getDeclarationAccess().getInputInputKeyword_2_0()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getInputInputKeyword_2_0()); 
+               after(grammarAccess.getDeclarationAccess().getInputInputKeyword_2_0()); 
             }
 
             }
@@ -28086,12 +28103,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__InputAssignment_2"
+    // $ANTLR end "rule__Declaration__InputAssignment_2"
 
 
-    // $ANTLR start "rule__TypeGroup__OutputAssignment_3"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9894:1: rule__TypeGroup__OutputAssignment_3 : ( ( 'output' ) ) ;
-    public final void rule__TypeGroup__OutputAssignment_3() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__OutputAssignment_3"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9894:1: rule__Declaration__OutputAssignment_3 : ( ( 'output' ) ) ;
+    public final void rule__Declaration__OutputAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -28103,23 +28120,23 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9900:1: ( 'output' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getOutputOutputKeyword_3_0()); 
+               before(grammarAccess.getDeclarationAccess().getOutputOutputKeyword_3_0()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9901:1: ( 'output' )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9902:1: 'output'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getOutputOutputKeyword_3_0()); 
+               before(grammarAccess.getDeclarationAccess().getOutputOutputKeyword_3_0()); 
             }
-            match(input,74,FOLLOW_74_in_rule__TypeGroup__OutputAssignment_319989); if (state.failed) return ;
+            match(input,74,FOLLOW_74_in_rule__Declaration__OutputAssignment_319990); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getOutputOutputKeyword_3_0()); 
+               after(grammarAccess.getDeclarationAccess().getOutputOutputKeyword_3_0()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getOutputOutputKeyword_3_0()); 
+               after(grammarAccess.getDeclarationAccess().getOutputOutputKeyword_3_0()); 
             }
 
             }
@@ -28139,12 +28156,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__OutputAssignment_3"
+    // $ANTLR end "rule__Declaration__OutputAssignment_3"
 
 
-    // $ANTLR start "rule__TypeGroup__StaticAssignment_4"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9917:1: rule__TypeGroup__StaticAssignment_4 : ( ( 'static' ) ) ;
-    public final void rule__TypeGroup__StaticAssignment_4() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__StaticAssignment_4"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9917:1: rule__Declaration__StaticAssignment_4 : ( ( 'static' ) ) ;
+    public final void rule__Declaration__StaticAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -28156,23 +28173,23 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9923:1: ( 'static' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getStaticStaticKeyword_4_0()); 
+               before(grammarAccess.getDeclarationAccess().getStaticStaticKeyword_4_0()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9924:1: ( 'static' )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9925:1: 'static'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getStaticStaticKeyword_4_0()); 
+               before(grammarAccess.getDeclarationAccess().getStaticStaticKeyword_4_0()); 
             }
-            match(input,75,FOLLOW_75_in_rule__TypeGroup__StaticAssignment_420033); if (state.failed) return ;
+            match(input,75,FOLLOW_75_in_rule__Declaration__StaticAssignment_420034); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getStaticStaticKeyword_4_0()); 
+               after(grammarAccess.getDeclarationAccess().getStaticStaticKeyword_4_0()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getStaticStaticKeyword_4_0()); 
+               after(grammarAccess.getDeclarationAccess().getStaticStaticKeyword_4_0()); 
             }
 
             }
@@ -28192,12 +28209,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__StaticAssignment_4"
+    // $ANTLR end "rule__Declaration__StaticAssignment_4"
 
 
-    // $ANTLR start "rule__TypeGroup__SignalAssignment_5"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9940:1: rule__TypeGroup__SignalAssignment_5 : ( ( 'signal' ) ) ;
-    public final void rule__TypeGroup__SignalAssignment_5() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__SignalAssignment_5"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9940:1: rule__Declaration__SignalAssignment_5 : ( ( 'signal' ) ) ;
+    public final void rule__Declaration__SignalAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -28209,23 +28226,23 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9946:1: ( 'signal' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getSignalSignalKeyword_5_0()); 
+               before(grammarAccess.getDeclarationAccess().getSignalSignalKeyword_5_0()); 
             }
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9947:1: ( 'signal' )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9948:1: 'signal'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getSignalSignalKeyword_5_0()); 
+               before(grammarAccess.getDeclarationAccess().getSignalSignalKeyword_5_0()); 
             }
-            match(input,63,FOLLOW_63_in_rule__TypeGroup__SignalAssignment_520077); if (state.failed) return ;
+            match(input,63,FOLLOW_63_in_rule__Declaration__SignalAssignment_520078); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getSignalSignalKeyword_5_0()); 
+               after(grammarAccess.getDeclarationAccess().getSignalSignalKeyword_5_0()); 
             }
 
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getSignalSignalKeyword_5_0()); 
+               after(grammarAccess.getDeclarationAccess().getSignalSignalKeyword_5_0()); 
             }
 
             }
@@ -28245,12 +28262,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__SignalAssignment_5"
+    // $ANTLR end "rule__Declaration__SignalAssignment_5"
 
 
-    // $ANTLR start "rule__TypeGroup__TypeAssignment_6"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9963:1: rule__TypeGroup__TypeAssignment_6 : ( ruleValueType ) ;
-    public final void rule__TypeGroup__TypeAssignment_6() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__TypeAssignment_6"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9963:1: rule__Declaration__TypeAssignment_6 : ( ruleValueType ) ;
+    public final void rule__Declaration__TypeAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -28262,15 +28279,15 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9969:1: ruleValueType
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getTypeValueTypeEnumRuleCall_6_0()); 
+               before(grammarAccess.getDeclarationAccess().getTypeValueTypeEnumRuleCall_6_0()); 
             }
-            pushFollow(FOLLOW_ruleValueType_in_rule__TypeGroup__TypeAssignment_620116);
+            pushFollow(FOLLOW_ruleValueType_in_rule__Declaration__TypeAssignment_620117);
             ruleValueType();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getTypeValueTypeEnumRuleCall_6_0()); 
+               after(grammarAccess.getDeclarationAccess().getTypeValueTypeEnumRuleCall_6_0()); 
             }
 
             }
@@ -28290,12 +28307,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__TypeAssignment_6"
+    // $ANTLR end "rule__Declaration__TypeAssignment_6"
 
 
-    // $ANTLR start "rule__TypeGroup__ValuedObjectsAssignment_7"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9978:1: rule__TypeGroup__ValuedObjectsAssignment_7 : ( ruleValuedObject ) ;
-    public final void rule__TypeGroup__ValuedObjectsAssignment_7() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__ValuedObjectsAssignment_7"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9978:1: rule__Declaration__ValuedObjectsAssignment_7 : ( ruleValuedObject ) ;
+    public final void rule__Declaration__ValuedObjectsAssignment_7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -28307,15 +28324,15 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9984:1: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getValuedObjectsValuedObjectParserRuleCall_7_0()); 
+               before(grammarAccess.getDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_7_0()); 
             }
-            pushFollow(FOLLOW_ruleValuedObject_in_rule__TypeGroup__ValuedObjectsAssignment_720147);
+            pushFollow(FOLLOW_ruleValuedObject_in_rule__Declaration__ValuedObjectsAssignment_720148);
             ruleValuedObject();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getValuedObjectsValuedObjectParserRuleCall_7_0()); 
+               after(grammarAccess.getDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_7_0()); 
             }
 
             }
@@ -28335,12 +28352,12 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__ValuedObjectsAssignment_7"
+    // $ANTLR end "rule__Declaration__ValuedObjectsAssignment_7"
 
 
-    // $ANTLR start "rule__TypeGroup__ValuedObjectsAssignment_8_1"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9993:1: rule__TypeGroup__ValuedObjectsAssignment_8_1 : ( ruleValuedObject ) ;
-    public final void rule__TypeGroup__ValuedObjectsAssignment_8_1() throws RecognitionException {
+    // $ANTLR start "rule__Declaration__ValuedObjectsAssignment_8_1"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9993:1: rule__Declaration__ValuedObjectsAssignment_8_1 : ( ruleValuedObject ) ;
+    public final void rule__Declaration__ValuedObjectsAssignment_8_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -28352,15 +28369,15 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9999:1: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getTypeGroupAccess().getValuedObjectsValuedObjectParserRuleCall_8_1_0()); 
+               before(grammarAccess.getDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_8_1_0()); 
             }
-            pushFollow(FOLLOW_ruleValuedObject_in_rule__TypeGroup__ValuedObjectsAssignment_8_120178);
+            pushFollow(FOLLOW_ruleValuedObject_in_rule__Declaration__ValuedObjectsAssignment_8_120179);
             ruleValuedObject();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getTypeGroupAccess().getValuedObjectsValuedObjectParserRuleCall_8_1_0()); 
+               after(grammarAccess.getDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_8_1_0()); 
             }
 
             }
@@ -28380,7 +28397,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__TypeGroup__ValuedObjectsAssignment_8_1"
+    // $ANTLR end "rule__Declaration__ValuedObjectsAssignment_8_1"
 
 
     // $ANTLR start "rule__ValuedObject__AnnotationsAssignment_0"
@@ -28399,7 +28416,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
             }
-            pushFollow(FOLLOW_ruleAnnotation_in_rule__ValuedObject__AnnotationsAssignment_020209);
+            pushFollow(FOLLOW_ruleAnnotation_in_rule__ValuedObject__AnnotationsAssignment_020210);
             ruleAnnotation();
 
             state._fsp--;
@@ -28444,7 +28461,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getNameIDTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__ValuedObject__NameAssignment_120240); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__ValuedObject__NameAssignment_120241); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectAccess().getNameIDTerminalRuleCall_1_0()); 
             }
@@ -28485,7 +28502,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getInitialValueExpressionParserRuleCall_2_1_0()); 
             }
-            pushFollow(FOLLOW_ruleExpression_in_rule__ValuedObject__InitialValueAssignment_2_120271);
+            pushFollow(FOLLOW_ruleExpression_in_rule__ValuedObject__InitialValueAssignment_2_120272);
             ruleExpression();
 
             state._fsp--;
@@ -28530,7 +28547,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getCombineOperatorCombineOperatorEnumRuleCall_3_1_0()); 
             }
-            pushFollow(FOLLOW_ruleCombineOperator_in_rule__ValuedObject__CombineOperatorAssignment_3_120302);
+            pushFollow(FOLLOW_ruleCombineOperator_in_rule__ValuedObject__CombineOperatorAssignment_3_120303);
             ruleCombineOperator();
 
             state._fsp--;
@@ -28575,7 +28592,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getHostCodeInstructionAccess().getHostCodeHOSTCODETerminalRuleCall_0()); 
             }
-            match(input,RULE_HOSTCODE,FOLLOW_RULE_HOSTCODE_in_rule__HostCodeInstruction__HostCodeAssignment20333); if (state.failed) return ;
+            match(input,RULE_HOSTCODE,FOLLOW_RULE_HOSTCODE_in_rule__HostCodeInstruction__HostCodeAssignment20334); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getHostCodeInstructionAccess().getHostCodeHOSTCODETerminalRuleCall_0()); 
             }
@@ -28622,7 +28639,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getVariableValuedObjectIDTerminalRuleCall_0_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Assignment__VariableAssignment_020368); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Assignment__VariableAssignment_020369); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAssignmentAccess().getVariableValuedObjectIDTerminalRuleCall_0_0_1()); 
             }
@@ -28669,7 +28686,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_ruleExpression_in_rule__Assignment__ExpressionAssignment_220403);
+            pushFollow(FOLLOW_ruleExpression_in_rule__Assignment__ExpressionAssignment_220404);
             ruleExpression();
 
             state._fsp--;
@@ -28714,7 +28731,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrioAccess().getPriorityINTTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Prio__PriorityAssignment_220434); if (state.failed) return ;
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Prio__PriorityAssignment_220435); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPrioAccess().getPriorityINTTerminalRuleCall_2_0()); 
             }
@@ -28761,7 +28778,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrioAccess().getContinuationStateIDTerminalRuleCall_3_1_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Prio__ContinuationAssignment_3_120469); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Prio__ContinuationAssignment_3_120470); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPrioAccess().getContinuationStateIDTerminalRuleCall_3_1_0_1()); 
             }
@@ -28814,7 +28831,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTransAccess().getContinuationStateIDTerminalRuleCall_2_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Trans__ContinuationAssignment_220508); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Trans__ContinuationAssignment_220509); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTransAccess().getContinuationStateIDTerminalRuleCall_2_0_1()); 
             }
@@ -28867,7 +28884,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getForkAccess().getContinuationStateIDTerminalRuleCall_2_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Fork__ContinuationAssignment_220547); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Fork__ContinuationAssignment_220548); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getForkAccess().getContinuationStateIDTerminalRuleCall_2_0_1()); 
             }
@@ -28914,7 +28931,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getForkAccess().getPriorityINTTerminalRuleCall_4_0()); 
             }
-            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Fork__PriorityAssignment_420582); if (state.failed) return ;
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__Fork__PriorityAssignment_420583); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getForkAccess().getPriorityINTTerminalRuleCall_4_0()); 
             }
@@ -28961,7 +28978,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJoinAccess().getContinuationStateIDTerminalRuleCall_3_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Join__ContinuationAssignment_320617); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Join__ContinuationAssignment_320618); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getJoinAccess().getContinuationStateIDTerminalRuleCall_3_0_1()); 
             }
@@ -29014,7 +29031,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPauseAccess().getContinuationStateIDTerminalRuleCall_3_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Pause__ContinuationAssignment_320656); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Pause__ContinuationAssignment_320657); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getPauseAccess().getContinuationStateIDTerminalRuleCall_3_0_1()); 
             }
@@ -29067,7 +29084,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTermAccess().getContinuationStateIDTerminalRuleCall_3_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Term__ContinuationAssignment_320695); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Term__ContinuationAssignment_320696); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTermAccess().getContinuationStateIDTerminalRuleCall_3_0_1()); 
             }
@@ -29120,7 +29137,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getHaltAccess().getContinuationStateIDTerminalRuleCall_3_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Halt__ContinuationAssignment_320734); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Halt__ContinuationAssignment_320735); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getHaltAccess().getContinuationStateIDTerminalRuleCall_3_0_1()); 
             }
@@ -29173,7 +29190,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLocalSignalAccess().getSignalValuedObjectIDTerminalRuleCall_2_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__LocalSignal__SignalAssignment_220773); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__LocalSignal__SignalAssignment_220774); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLocalSignalAccess().getSignalValuedObjectIDTerminalRuleCall_2_0_1()); 
             }
@@ -29226,7 +29243,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmitAccess().getSignalValuedObjectIDTerminalRuleCall_2_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Emit__SignalAssignment_220812); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Emit__SignalAssignment_220813); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEmitAccess().getSignalValuedObjectIDTerminalRuleCall_2_0_1()); 
             }
@@ -29273,7 +29290,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmitAccess().getValueSExpressionParserRuleCall_3_1_0()); 
             }
-            pushFollow(FOLLOW_ruleSExpression_in_rule__Emit__ValueAssignment_3_120847);
+            pushFollow(FOLLOW_ruleSExpression_in_rule__Emit__ValueAssignment_3_120848);
             ruleSExpression();
 
             state._fsp--;
@@ -29324,7 +29341,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getEmitAccess().getContinuationStateIDTerminalRuleCall_4_1_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Emit__ContinuationAssignment_4_120882); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Emit__ContinuationAssignment_4_120883); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getEmitAccess().getContinuationStateIDTerminalRuleCall_4_1_0_1()); 
             }
@@ -29377,7 +29394,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAbortAccess().getContinuationStateIDTerminalRuleCall_3_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Abort__ContinuationAssignment_320921); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Abort__ContinuationAssignment_320922); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAbortAccess().getContinuationStateIDTerminalRuleCall_3_0_1()); 
             }
@@ -29424,7 +29441,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfAccess().getExpressionSExpressionParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_ruleSExpression_in_rule__If__ExpressionAssignment_220956);
+            pushFollow(FOLLOW_ruleSExpression_in_rule__If__ExpressionAssignment_220957);
             ruleSExpression();
 
             state._fsp--;
@@ -29475,7 +29492,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfAccess().getContinuationStateIDTerminalRuleCall_3_1_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__If__ContinuationAssignment_3_120991); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__If__ContinuationAssignment_3_120992); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIfAccess().getContinuationStateIDTerminalRuleCall_3_1_0_1()); 
             }
@@ -29522,7 +29539,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIfAccess().getInstructionsInstructionParserRuleCall_6_0_0()); 
             }
-            pushFollow(FOLLOW_ruleInstruction_in_rule__If__InstructionsAssignment_6_021026);
+            pushFollow(FOLLOW_ruleInstruction_in_rule__If__InstructionsAssignment_6_021027);
             ruleInstruction();
 
             state._fsp--;
@@ -29573,7 +29590,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAwaitAccess().getSignalValuedObjectIDTerminalRuleCall_2_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Await__SignalAssignment_221061); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Await__SignalAssignment_221062); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAwaitAccess().getSignalValuedObjectIDTerminalRuleCall_2_0_1()); 
             }
@@ -29626,7 +29643,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAwaitAccess().getContinuationStateIDTerminalRuleCall_3_1_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Await__ContinuationAssignment_3_121100); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Await__ContinuationAssignment_3_121101); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getAwaitAccess().getContinuationStateIDTerminalRuleCall_3_1_0_1()); 
             }
@@ -29676,7 +29693,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:10465:1: ( rule__OrAndExpression__OperatorAlternatives_1_0_1_0 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:10465:2: rule__OrAndExpression__OperatorAlternatives_1_0_1_0
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__OperatorAlternatives_1_0_1_0_in_rule__OrAndExpression__OperatorAssignment_1_0_121135);
+            pushFollow(FOLLOW_rule__OrAndExpression__OperatorAlternatives_1_0_1_0_in_rule__OrAndExpression__OperatorAssignment_1_0_121136);
             rule__OrAndExpression__OperatorAlternatives_1_0_1_0();
 
             state._fsp--;
@@ -29724,7 +29741,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getOrAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_0_2_0()); 
             }
-            pushFollow(FOLLOW_ruleCompareOperation_in_rule__OrAndExpression__SubExpressionsAssignment_1_0_221168);
+            pushFollow(FOLLOW_ruleCompareOperation_in_rule__OrAndExpression__SubExpressionsAssignment_1_0_221169);
             ruleCompareOperation();
 
             state._fsp--;
@@ -29772,7 +29789,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:10496:1: ( rule__OrAndExpression__OperatorAlternatives_1_1_1_0 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:10496:2: rule__OrAndExpression__OperatorAlternatives_1_1_1_0
             {
-            pushFollow(FOLLOW_rule__OrAndExpression__OperatorAlternatives_1_1_1_0_in_rule__OrAndExpression__OperatorAssignment_1_1_121199);
+            pushFollow(FOLLOW_rule__OrAndExpression__OperatorAlternatives_1_1_1_0_in_rule__OrAndExpression__OperatorAssignment_1_1_121200);
             rule__OrAndExpression__OperatorAlternatives_1_1_1_0();
 
             state._fsp--;
@@ -29820,7 +29837,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getOrAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_1_2_0()); 
             }
-            pushFollow(FOLLOW_ruleCompareOperation_in_rule__OrAndExpression__SubExpressionsAssignment_1_1_221232);
+            pushFollow(FOLLOW_ruleCompareOperation_in_rule__OrAndExpression__SubExpressionsAssignment_1_1_221233);
             ruleCompareOperation();
 
             state._fsp--;
@@ -29865,7 +29882,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getOperatorCompareOperatorEnumRuleCall_0_1_1_0()); 
             }
-            pushFollow(FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_0_1_121263);
+            pushFollow(FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_0_1_121264);
             ruleCompareOperator();
 
             state._fsp--;
@@ -29910,7 +29927,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getSubExpressionsNotOrValuedExpressionParserRuleCall_0_1_2_0()); 
             }
-            pushFollow(FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__SubExpressionsAssignment_0_1_221294);
+            pushFollow(FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__SubExpressionsAssignment_0_1_221295);
             ruleNotOrValuedExpression();
 
             state._fsp--;
@@ -29955,7 +29972,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNotExpressionAccess().getOperatorNotOperatorEnumRuleCall_0_1_0()); 
             }
-            pushFollow(FOLLOW_ruleNotOperator_in_rule__NotExpression__OperatorAssignment_0_121325);
+            pushFollow(FOLLOW_ruleNotOperator_in_rule__NotExpression__OperatorAssignment_0_121326);
             ruleNotOperator();
 
             state._fsp--;
@@ -30000,7 +30017,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNotExpressionAccess().getSubExpressionsNotExpressionParserRuleCall_0_2_0()); 
             }
-            pushFollow(FOLLOW_ruleNotExpression_in_rule__NotExpression__SubExpressionsAssignment_0_221356);
+            pushFollow(FOLLOW_ruleNotExpression_in_rule__NotExpression__SubExpressionsAssignment_0_221357);
             ruleNotExpression();
 
             state._fsp--;
@@ -30045,7 +30062,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getOperatorAddOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FOLLOW_ruleAddOperator_in_rule__AddExpression__OperatorAssignment_1_121387);
+            pushFollow(FOLLOW_ruleAddOperator_in_rule__AddExpression__OperatorAssignment_1_121388);
             ruleAddOperator();
 
             state._fsp--;
@@ -30090,7 +30107,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getSubExpressionsSubExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FOLLOW_ruleSubExpression_in_rule__AddExpression__SubExpressionsAssignment_1_221418);
+            pushFollow(FOLLOW_ruleSubExpression_in_rule__AddExpression__SubExpressionsAssignment_1_221419);
             ruleSubExpression();
 
             state._fsp--;
@@ -30135,7 +30152,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getOperatorSubOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FOLLOW_ruleSubOperator_in_rule__SubExpression__OperatorAssignment_1_121449);
+            pushFollow(FOLLOW_ruleSubOperator_in_rule__SubExpression__OperatorAssignment_1_121450);
             ruleSubOperator();
 
             state._fsp--;
@@ -30180,7 +30197,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getSubExpressionsMultExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FOLLOW_ruleMultExpression_in_rule__SubExpression__SubExpressionsAssignment_1_221480);
+            pushFollow(FOLLOW_ruleMultExpression_in_rule__SubExpression__SubExpressionsAssignment_1_221481);
             ruleMultExpression();
 
             state._fsp--;
@@ -30225,7 +30242,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getOperatorMultOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FOLLOW_ruleMultOperator_in_rule__MultExpression__OperatorAssignment_1_121511);
+            pushFollow(FOLLOW_ruleMultOperator_in_rule__MultExpression__OperatorAssignment_1_121512);
             ruleMultOperator();
 
             state._fsp--;
@@ -30270,7 +30287,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultExpressionAccess().getSubExpressionsDivExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FOLLOW_ruleDivExpression_in_rule__MultExpression__SubExpressionsAssignment_1_221542);
+            pushFollow(FOLLOW_ruleDivExpression_in_rule__MultExpression__SubExpressionsAssignment_1_221543);
             ruleDivExpression();
 
             state._fsp--;
@@ -30315,7 +30332,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getOperatorDivOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FOLLOW_ruleDivOperator_in_rule__DivExpression__OperatorAssignment_1_121573);
+            pushFollow(FOLLOW_ruleDivOperator_in_rule__DivExpression__OperatorAssignment_1_121574);
             ruleDivOperator();
 
             state._fsp--;
@@ -30360,7 +30377,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivExpressionAccess().getSubExpressionsModExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FOLLOW_ruleModExpression_in_rule__DivExpression__SubExpressionsAssignment_1_221604);
+            pushFollow(FOLLOW_ruleModExpression_in_rule__DivExpression__SubExpressionsAssignment_1_221605);
             ruleModExpression();
 
             state._fsp--;
@@ -30405,7 +30422,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getOperatorModOperatorEnumRuleCall_1_1_0()); 
             }
-            pushFollow(FOLLOW_ruleModOperator_in_rule__ModExpression__OperatorAssignment_1_121635);
+            pushFollow(FOLLOW_ruleModOperator_in_rule__ModExpression__OperatorAssignment_1_121636);
             ruleModOperator();
 
             state._fsp--;
@@ -30450,7 +30467,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getModExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_0()); 
             }
-            pushFollow(FOLLOW_ruleAtomicValuedExpression_in_rule__ModExpression__SubExpressionsAssignment_1_221666);
+            pushFollow(FOLLOW_ruleAtomicValuedExpression_in_rule__ModExpression__SubExpressionsAssignment_1_221667);
             ruleAtomicValuedExpression();
 
             state._fsp--;
@@ -30495,7 +30512,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNegExpressionAccess().getOperatorSubOperatorEnumRuleCall_0_1_0()); 
             }
-            pushFollow(FOLLOW_ruleSubOperator_in_rule__NegExpression__OperatorAssignment_0_121697);
+            pushFollow(FOLLOW_ruleSubOperator_in_rule__NegExpression__OperatorAssignment_0_121698);
             ruleSubOperator();
 
             state._fsp--;
@@ -30540,7 +30557,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNegExpressionAccess().getSubExpressionsNegExpressionParserRuleCall_0_2_0()); 
             }
-            pushFollow(FOLLOW_ruleNegExpression_in_rule__NegExpression__SubExpressionsAssignment_0_221728);
+            pushFollow(FOLLOW_ruleNegExpression_in_rule__NegExpression__SubExpressionsAssignment_0_221729);
             ruleNegExpression();
 
             state._fsp--;
@@ -30588,7 +30605,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:10767:1: ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 )
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:10767:2: rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0
             {
-            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0_in_rule__ValuedObjectTestExpression__OperatorAssignment_0_121759);
+            pushFollow(FOLLOW_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0_in_rule__ValuedObjectTestExpression__OperatorAssignment_0_121760);
             rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0();
 
             state._fsp--;
@@ -30636,7 +30653,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0()); 
             }
-            pushFollow(FOLLOW_ruleValuedObjectTestExpression_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_321792);
+            pushFollow(FOLLOW_ruleValuedObjectTestExpression_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_321793);
             ruleValuedObjectTestExpression();
 
             state._fsp--;
@@ -30687,7 +30704,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1()); 
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__ValuedObjectReference__ValuedObjectAssignment_021827); if (state.failed) return ;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__ValuedObjectReference__ValuedObjectAssignment_021828); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1()); 
             }
@@ -30734,7 +30751,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getCardinalitiesExpressionParserRuleCall_1_1_0()); 
             }
-            pushFollow(FOLLOW_ruleExpression_in_rule__ValuedObjectReference__CardinalitiesAssignment_1_121862);
+            pushFollow(FOLLOW_ruleExpression_in_rule__ValuedObjectReference__CardinalitiesAssignment_1_121863);
             ruleExpression();
 
             state._fsp--;
@@ -30779,7 +30796,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_0()); 
             }
-            match(input,RULE_HOSTCODE,FOLLOW_RULE_HOSTCODE_in_rule__TextExpression__TextAssignment21893); if (state.failed) return ;
+            match(input,RULE_HOSTCODE,FOLLOW_RULE_HOSTCODE_in_rule__TextExpression__TextAssignment21894); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_0()); 
             }
@@ -30820,7 +30837,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntValueAccess().getValueINTTerminalRuleCall_0()); 
             }
-            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment21924); if (state.failed) return ;
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment21925); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getIntValueAccess().getValueINTTerminalRuleCall_0()); 
             }
@@ -30861,7 +30878,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); 
             }
-            match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment21955); if (state.failed) return ;
+            match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment21956); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); 
             }
@@ -30902,7 +30919,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBoolValueAccess().getValueBOOLEANTerminalRuleCall_0()); 
             }
-            match(input,RULE_BOOLEAN,FOLLOW_RULE_BOOLEAN_in_rule__BoolValue__ValueAssignment21986); if (state.failed) return ;
+            match(input,RULE_BOOLEAN,FOLLOW_RULE_BOOLEAN_in_rule__BoolValue__ValueAssignment21987); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getBoolValueAccess().getValueBOOLEANTerminalRuleCall_0()); 
             }
@@ -30943,7 +30960,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCommentAnnotationAccess().getValueCOMMENT_ANNOTATIONTerminalRuleCall_0()); 
             }
-            match(input,RULE_COMMENT_ANNOTATION,FOLLOW_RULE_COMMENT_ANNOTATION_in_rule__CommentAnnotation__ValueAssignment22017); if (state.failed) return ;
+            match(input,RULE_COMMENT_ANNOTATION,FOLLOW_RULE_COMMENT_ANNOTATION_in_rule__CommentAnnotation__ValueAssignment22018); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getCommentAnnotationAccess().getValueCOMMENT_ANNOTATIONTerminalRuleCall_0()); 
             }
@@ -30984,7 +31001,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FOLLOW_ruleExtendedID_in_rule__TagAnnotation__NameAssignment_122048);
+            pushFollow(FOLLOW_ruleExtendedID_in_rule__TagAnnotation__NameAssignment_122049);
             ruleExtendedID();
 
             state._fsp--;
@@ -31029,7 +31046,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getAnnotationsAnnotationParserRuleCall_2_1_0()); 
             }
-            pushFollow(FOLLOW_ruleAnnotation_in_rule__TagAnnotation__AnnotationsAssignment_2_122079);
+            pushFollow(FOLLOW_ruleAnnotation_in_rule__TagAnnotation__AnnotationsAssignment_2_122080);
             ruleAnnotation();
 
             state._fsp--;
@@ -31074,7 +31091,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FOLLOW_ruleExtendedID_in_rule__KeyStringValueAnnotation__NameAssignment_122110);
+            pushFollow(FOLLOW_ruleExtendedID_in_rule__KeyStringValueAnnotation__NameAssignment_122111);
             ruleExtendedID();
 
             state._fsp--;
@@ -31119,7 +31136,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0()); 
             }
-            pushFollow(FOLLOW_ruleEString_in_rule__KeyStringValueAnnotation__ValueAssignment_222141);
+            pushFollow(FOLLOW_ruleEString_in_rule__KeyStringValueAnnotation__ValueAssignment_222142);
             ruleEString();
 
             state._fsp--;
@@ -31164,7 +31181,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_3_1_0()); 
             }
-            pushFollow(FOLLOW_ruleAnnotation_in_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_122172);
+            pushFollow(FOLLOW_ruleAnnotation_in_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_122173);
             ruleAnnotation();
 
             state._fsp--;
@@ -31209,7 +31226,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_122203);
+            pushFollow(FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_122204);
             ruleExtendedID();
 
             state._fsp--;
@@ -31254,7 +31271,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
             }
-            pushFollow(FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_322234);
+            pushFollow(FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_322235);
             ruleExtendedID();
 
             state._fsp--;
@@ -31299,7 +31316,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_5_0()); 
             }
-            pushFollow(FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValueAssignment_522265);
+            pushFollow(FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValueAssignment_522266);
             ruleEString();
 
             state._fsp--;
@@ -31344,7 +31361,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_6_1_0()); 
             }
-            pushFollow(FOLLOW_ruleAnnotation_in_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_122296);
+            pushFollow(FOLLOW_ruleAnnotation_in_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_122297);
             ruleAnnotation();
 
             state._fsp--;
@@ -31389,7 +31406,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FOLLOW_ruleExtendedID_in_rule__KeyBooleanValueAnnotation__NameAssignment_122327);
+            pushFollow(FOLLOW_ruleExtendedID_in_rule__KeyBooleanValueAnnotation__NameAssignment_122328);
             ruleExtendedID();
 
             state._fsp--;
@@ -31434,7 +31451,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_BOOLEAN,FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_222358); if (state.failed) return ;
+            match(input,RULE_BOOLEAN,FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_222359); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
             }
@@ -31475,7 +31492,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyBooleanValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_3_1_0()); 
             }
-            pushFollow(FOLLOW_ruleAnnotation_in_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_122389);
+            pushFollow(FOLLOW_ruleAnnotation_in_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_122390);
             ruleAnnotation();
 
             state._fsp--;
@@ -31520,7 +31537,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FOLLOW_ruleExtendedID_in_rule__KeyIntValueAnnotation__NameAssignment_122420);
+            pushFollow(FOLLOW_ruleExtendedID_in_rule__KeyIntValueAnnotation__NameAssignment_122421);
             ruleExtendedID();
 
             state._fsp--;
@@ -31565,7 +31582,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__KeyIntValueAnnotation__ValueAssignment_222451); if (state.failed) return ;
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_rule__KeyIntValueAnnotation__ValueAssignment_222452); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0()); 
             }
@@ -31606,7 +31623,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyIntValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_3_1_0()); 
             }
-            pushFollow(FOLLOW_ruleAnnotation_in_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_122482);
+            pushFollow(FOLLOW_ruleAnnotation_in_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_122483);
             ruleAnnotation();
 
             state._fsp--;
@@ -31651,7 +31668,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
             }
-            pushFollow(FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_122513);
+            pushFollow(FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_122514);
             ruleExtendedID();
 
             state._fsp--;
@@ -31696,7 +31713,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_rule__KeyFloatValueAnnotation__ValueAssignment_222544); if (state.failed) return ;
+            match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_rule__KeyFloatValueAnnotation__ValueAssignment_222545); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()); 
             }
@@ -31737,7 +31754,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyFloatValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_3_1_0()); 
             }
-            pushFollow(FOLLOW_ruleAnnotation_in_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_122575);
+            pushFollow(FOLLOW_ruleAnnotation_in_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_122576);
             ruleAnnotation();
 
             state._fsp--;
@@ -31825,17 +31842,17 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
            before(grammarAccess.getOrAndExpressionAccess().getGroup_1_0()); 
         }
         // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1939:1: ( rule__OrAndExpression__Group_1_0__0 )*
-        loop67:
+        loop68:
         do {
-            int alt67=2;
-            int LA67_0 = input.LA(1);
+            int alt68=2;
+            int LA68_0 = input.LA(1);
 
-            if ( (LA67_0==18||LA67_0==27) ) {
-                alt67=1;
+            if ( (LA68_0==18||LA68_0==27) ) {
+                alt68=1;
             }
 
 
-            switch (alt67) {
+            switch (alt68) {
         	case 1 :
         	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:1939:2: rule__OrAndExpression__Group_1_0__0
         	    {
@@ -31849,7 +31866,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         	    break;
 
         	default :
-        	    break loop67;
+        	    break loop68;
             }
         } while (true);
 
@@ -31945,6 +31962,36 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     }
     // $ANTLR end synpred30_InternalS
 
+    // $ANTLR start synpred61_InternalS
+    public final void synpred61_InternalS_fragment() throws RecognitionException {   
+        // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2981:2: ( rule__State__DeclarationsAssignment_5 )
+        // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2981:2: rule__State__DeclarationsAssignment_5
+        {
+        pushFollow(FOLLOW_rule__State__DeclarationsAssignment_5_in_synpred61_InternalS6398);
+        rule__State__DeclarationsAssignment_5();
+
+        state._fsp--;
+        if (state.failed) return ;
+
+        }
+    }
+    // $ANTLR end synpred61_InternalS
+
+    // $ANTLR start synpred63_InternalS
+    public final void synpred63_InternalS_fragment() throws RecognitionException {   
+        // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3148:2: ( rule__Declaration__AnnotationsAssignment_0 )
+        // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:3148:2: rule__Declaration__AnnotationsAssignment_0
+        {
+        pushFollow(FOLLOW_rule__Declaration__AnnotationsAssignment_0_in_synpred63_InternalS6718);
+        rule__Declaration__AnnotationsAssignment_0();
+
+        state._fsp--;
+        if (state.failed) return ;
+
+        }
+    }
+    // $ANTLR end synpred63_InternalS
+
     // Delegated rules
 
     public final boolean synpred17_InternalS() {
@@ -32003,6 +32050,34 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         state.failed=false;
         return success;
     }
+    public final boolean synpred61_InternalS() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred61_InternalS_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
+    public final boolean synpred63_InternalS() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred63_InternalS_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
     public final boolean synpred22_InternalS() {
         state.backtracking++;
         int start = input.mark();
@@ -32038,6 +32113,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     protected DFA10 dfa10 = new DFA10(this);
     protected DFA14 dfa14 = new DFA14(this);
     protected DFA17 dfa17 = new DFA17(this);
+    protected DFA25 dfa25 = new DFA25(this);
     static final String DFA3_eotS =
         "\14\uffff";
     static final String DFA3_eofS =
@@ -32671,32 +32747,32 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     static final String DFA17_eotS =
         "\15\uffff";
     static final String DFA17_eofS =
-        "\3\uffff\1\7\4\uffff\1\13\3\uffff\1\7";
+        "\3\uffff\1\11\4\uffff\1\7\3\uffff\1\11";
     static final String DFA17_minS =
         "\1\12\1\uffff\1\6\1\5\1\6\3\uffff\1\6\3\uffff\1\5";
     static final String DFA17_maxS =
         "\1\106\1\uffff\1\6\1\113\1\6\3\uffff\1\113\3\uffff\1\113";
     static final String DFA17_acceptS =
-        "\1\uffff\1\1\3\uffff\1\5\1\4\1\2\1\uffff\1\6\1\7\1\3\1\uffff";
+        "\1\uffff\1\1\3\uffff\1\6\1\7\1\3\1\uffff\1\2\1\4\1\5\1\uffff";
     static final String DFA17_specialS =
         "\15\uffff}>";
     static final String[] DFA17_transitionS = {
             "\1\1\73\uffff\1\2",
             "",
             "\1\3",
-            "\1\13\1\10\1\11\1\12\1\5\1\7\30\uffff\7\7\4\uffff\2\7\17\uffff"+
-            "\1\7\4\uffff\1\6\1\uffff\1\7\1\4\4\7",
+            "\1\7\1\10\1\5\1\6\1\13\1\11\30\uffff\7\11\4\uffff\2\11\17"+
+            "\uffff\1\11\4\uffff\1\12\1\uffff\1\11\1\4\4\11",
             "\1\14",
             "",
             "",
             "",
-            "\1\13\3\uffff\1\13\30\uffff\7\13\4\uffff\2\13\4\uffff\1\7"+
-            "\1\uffff\2\7\7\uffff\1\13\6\uffff\1\13\1\uffff\4\13",
+            "\1\7\3\uffff\1\7\30\uffff\7\7\4\uffff\2\7\4\uffff\1\11\1\uffff"+
+            "\2\11\7\uffff\1\7\6\uffff\1\7\1\uffff\4\7",
             "",
             "",
             "",
-            "\1\13\1\10\1\11\1\12\1\5\1\7\30\uffff\7\7\4\uffff\2\7\17\uffff"+
-            "\1\7\4\uffff\1\6\1\uffff\1\7\1\4\4\7"
+            "\1\7\1\10\1\5\1\6\1\13\1\11\30\uffff\7\11\4\uffff\2\11\17"+
+            "\uffff\1\11\4\uffff\1\12\1\uffff\1\11\1\4\4\11"
     };
 
     static final short[] DFA17_eot = DFA.unpackEncodedString(DFA17_eotS);
@@ -32732,6 +32808,125 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             return "2199:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );";
         }
     }
+    static final String DFA25_eotS =
+        "\35\uffff";
+    static final String DFA25_eofS =
+        "\35\uffff";
+    static final String DFA25_minS =
+        "\1\4\10\uffff\1\0\4\uffff\1\0\16\uffff";
+    static final String DFA25_maxS =
+        "\1\113\10\uffff\1\0\4\uffff\1\0\16\uffff";
+    static final String DFA25_acceptS =
+        "\1\uffff\1\2\16\uffff\1\1\14\uffff";
+    static final String DFA25_specialS =
+        "\11\uffff\1\0\4\uffff\1\1\16\uffff}>";
+    static final String[] DFA25_transitionS = {
+            "\1\1\1\uffff\1\16\3\uffff\1\20\30\uffff\7\20\11\uffff\1\1\4"+
+            "\uffff\7\1\1\11\4\1\2\uffff\1\20\1\uffff\4\20",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\uffff",
+            "",
+            "",
+            "",
+            "",
+            "\1\uffff",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+    };
+
+    static final short[] DFA25_eot = DFA.unpackEncodedString(DFA25_eotS);
+    static final short[] DFA25_eof = DFA.unpackEncodedString(DFA25_eofS);
+    static final char[] DFA25_min = DFA.unpackEncodedStringToUnsignedChars(DFA25_minS);
+    static final char[] DFA25_max = DFA.unpackEncodedStringToUnsignedChars(DFA25_maxS);
+    static final short[] DFA25_accept = DFA.unpackEncodedString(DFA25_acceptS);
+    static final short[] DFA25_special = DFA.unpackEncodedString(DFA25_specialS);
+    static final short[][] DFA25_transition;
+
+    static {
+        int numStates = DFA25_transitionS.length;
+        DFA25_transition = new short[numStates][];
+        for (int i=0; i<numStates; i++) {
+            DFA25_transition[i] = DFA.unpackEncodedString(DFA25_transitionS[i]);
+        }
+    }
+
+    class DFA25 extends DFA {
+
+        public DFA25(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 25;
+            this.eot = DFA25_eot;
+            this.eof = DFA25_eof;
+            this.min = DFA25_min;
+            this.max = DFA25_max;
+            this.accept = DFA25_accept;
+            this.special = DFA25_special;
+            this.transition = DFA25_transition;
+        }
+        public String getDescription() {
+            return "()* loopback of 2981:1: ( rule__State__DeclarationsAssignment_5 )*";
+        }
+        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+            TokenStream input = (TokenStream)_input;
+        	int _s = s;
+            switch ( s ) {
+                    case 0 : 
+                        int LA25_9 = input.LA(1);
+
+                         
+                        int index25_9 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred61_InternalS()) ) {s = 16;}
+
+                        else if ( (true) ) {s = 1;}
+
+                         
+                        input.seek(index25_9);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA25_14 = input.LA(1);
+
+                         
+                        int index25_14 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred61_InternalS()) ) {s = 16;}
+
+                        else if ( (true) ) {s = 1;}
+
+                         
+                        input.seek(index25_14);
+                        if ( s>=0 ) return s;
+                        break;
+            }
+            if (state.backtracking>0) {state.failed=true; return -1;}
+            NoViableAltException nvae =
+                new NoViableAltException(getDescription(), 25, _s, input);
+            error(nvae);
+            throw nvae;
+        }
+    }
  
 
     public static final BitSet FOLLOW_ruleProgram_in_entryRuleProgram67 = new BitSet(new long[]{0x0000000000000000L});
@@ -32740,9 +32935,9 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_ruleState_in_entryRuleState127 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleState134 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__State__Group__0_in_ruleState160 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTypeGroup_in_entryRuleTypeGroup187 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTypeGroup194 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__0_in_ruleTypeGroup220 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDeclaration_in_entryRuleDeclaration187 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDeclaration194 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__0_in_ruleDeclaration220 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleValuedObject_in_entryRuleValuedObject247 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleValuedObject254 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__ValuedObject__Group__0_in_ruleValuedObject280 = new BitSet(new long[]{0x0000000000000002L});
@@ -32988,18 +33183,18 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__Program__Group__3__Impl_in_rule__Program__Group__35539 = new BitSet(new long[]{0x0000800000000000L});
     public static final BitSet FOLLOW_rule__Program__Group__4_in_rule__Program__Group__35542 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Program__PriorityAssignment_3_in_rule__Program__Group__3__Impl5569 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Program__Group__4__Impl_in_rule__Program__Group__45599 = new BitSet(new long[]{0x800303F800000400L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Program__Group__4__Impl_in_rule__Program__Group__45599 = new BitSet(new long[]{0x800303F800000440L,0x0000000000000F40L});
     public static final BitSet FOLLOW_rule__Program__Group__5_in_rule__Program__Group__45602 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_47_in_rule__Program__Group__4__Impl5630 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Program__Group__5__Impl_in_rule__Program__Group__55661 = new BitSet(new long[]{0x800303F800000400L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Program__Group__5__Impl_in_rule__Program__Group__55661 = new BitSet(new long[]{0x800303F800000440L,0x0000000000000F40L});
     public static final BitSet FOLLOW_rule__Program__Group__6_in_rule__Program__Group__55664 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Program__TypeGroupsAssignment_5_in_rule__Program__Group__5__Impl5691 = new BitSet(new long[]{0x800003F800000402L,0x0000000000000F40L});
-    public static final BitSet FOLLOW_rule__Program__Group__6__Impl_in_rule__Program__Group__65722 = new BitSet(new long[]{0x800303F800000400L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Program__DelcarationsAssignment_5_in_rule__Program__Group__5__Impl5691 = new BitSet(new long[]{0x800003F800000442L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Program__Group__6__Impl_in_rule__Program__Group__65722 = new BitSet(new long[]{0x800303F800000440L,0x0000000000000F40L});
     public static final BitSet FOLLOW_rule__Program__Group__7_in_rule__Program__Group__65725 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Program__Group_6__0_in_rule__Program__Group__6__Impl5752 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Program__Group__7__Impl_in_rule__Program__Group__75783 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Program__StatesAssignment_7_in_rule__Program__Group__7__Impl5812 = new BitSet(new long[]{0x800303F800000402L,0x0000000000000F40L});
-    public static final BitSet FOLLOW_rule__Program__StatesAssignment_7_in_rule__Program__Group__7__Impl5824 = new BitSet(new long[]{0x800303F800000402L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Program__StatesAssignment_7_in_rule__Program__Group__7__Impl5812 = new BitSet(new long[]{0x800303F800000442L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Program__StatesAssignment_7_in_rule__Program__Group__7__Impl5824 = new BitSet(new long[]{0x800303F800000442L,0x0000000000000F40L});
     public static final BitSet FOLLOW_rule__Program__Group_6__0__Impl_in_rule__Program__Group_6__05873 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_rule__Program__Group_6__1_in_rule__Program__Group_6__05876 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_48_in_rule__Program__Group_6__0__Impl5904 = new BitSet(new long[]{0x0000000000000002L});
@@ -33025,7 +33220,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_50_in_rule__State__Group__4__Impl6337 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__State__Group__5__Impl_in_rule__State__Group__56368 = new BitSet(new long[]{0xFF0803F800000450L,0x0000000000000F4FL});
     public static final BitSet FOLLOW_rule__State__Group__6_in_rule__State__Group__56371 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__State__TypeGroupsAssignment_5_in_rule__State__Group__5__Impl6398 = new BitSet(new long[]{0x800003F800000402L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__State__DeclarationsAssignment_5_in_rule__State__Group__5__Impl6398 = new BitSet(new long[]{0x800003F800000442L,0x0000000000000F40L});
     public static final BitSet FOLLOW_rule__State__Group__6__Impl_in_rule__State__Group__66429 = new BitSet(new long[]{0xFF0803F800000450L,0x0000000000000F4FL});
     public static final BitSet FOLLOW_rule__State__Group__7_in_rule__State__Group__66432 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__State__Group_6__0_in_rule__State__Group__6__Impl6459 = new BitSet(new long[]{0xFF00000000000052L,0x000000000000000FL});
@@ -33036,649 +33231,651 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__State__InstructionsAssignment_6_0_in_rule__State__Group_6__0__Impl6595 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__State__Group_6__1__Impl_in_rule__State__Group_6__16625 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_52_in_rule__State__Group_6__1__Impl6653 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__0__Impl_in_rule__TypeGroup__Group__06688 = new BitSet(new long[]{0x800003F800000400L,0x0000000000000F40L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__1_in_rule__TypeGroup__Group__06691 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__AnnotationsAssignment_0_in_rule__TypeGroup__Group__0__Impl6718 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__1__Impl_in_rule__TypeGroup__Group__16749 = new BitSet(new long[]{0x800003F800000400L,0x0000000000000F40L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__2_in_rule__TypeGroup__Group__16752 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__ConstAssignment_1_in_rule__TypeGroup__Group__1__Impl6779 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__2__Impl_in_rule__TypeGroup__Group__26810 = new BitSet(new long[]{0x800003F800000400L,0x0000000000000F40L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__3_in_rule__TypeGroup__Group__26813 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__InputAssignment_2_in_rule__TypeGroup__Group__2__Impl6840 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__3__Impl_in_rule__TypeGroup__Group__36871 = new BitSet(new long[]{0x800003F800000400L,0x0000000000000F40L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__4_in_rule__TypeGroup__Group__36874 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__OutputAssignment_3_in_rule__TypeGroup__Group__3__Impl6901 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__4__Impl_in_rule__TypeGroup__Group__46932 = new BitSet(new long[]{0x800003F800000400L,0x0000000000000F40L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__5_in_rule__TypeGroup__Group__46935 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__StaticAssignment_4_in_rule__TypeGroup__Group__4__Impl6962 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__5__Impl_in_rule__TypeGroup__Group__56993 = new BitSet(new long[]{0x800003F800000400L,0x0000000000000F40L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__6_in_rule__TypeGroup__Group__56996 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__SignalAssignment_5_in_rule__TypeGroup__Group__5__Impl7023 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__6__Impl_in_rule__TypeGroup__Group__67054 = new BitSet(new long[]{0x0000000000000440L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__7_in_rule__TypeGroup__Group__67057 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__TypeAssignment_6_in_rule__TypeGroup__Group__6__Impl7084 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__7__Impl_in_rule__TypeGroup__Group__77114 = new BitSet(new long[]{0x0030000000000000L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__8_in_rule__TypeGroup__Group__77117 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__ValuedObjectsAssignment_7_in_rule__TypeGroup__Group__7__Impl7144 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__8__Impl_in_rule__TypeGroup__Group__87174 = new BitSet(new long[]{0x0030000000000000L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__9_in_rule__TypeGroup__Group__87177 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group_8__0_in_rule__TypeGroup__Group__8__Impl7204 = new BitSet(new long[]{0x0020000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group__9__Impl_in_rule__TypeGroup__Group__97235 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_52_in_rule__TypeGroup__Group__9__Impl7263 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group_8__0__Impl_in_rule__TypeGroup__Group_8__07314 = new BitSet(new long[]{0x0000000000000440L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group_8__1_in_rule__TypeGroup__Group_8__07317 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_rule__TypeGroup__Group_8__0__Impl7345 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__Group_8__1__Impl_in_rule__TypeGroup__Group_8__17376 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypeGroup__ValuedObjectsAssignment_8_1_in_rule__TypeGroup__Group_8__1__Impl7403 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group__0__Impl_in_rule__ValuedObject__Group__07437 = new BitSet(new long[]{0x0000000000000440L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group__1_in_rule__ValuedObject__Group__07440 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObject__AnnotationsAssignment_0_in_rule__ValuedObject__Group__0__Impl7467 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group__1__Impl_in_rule__ValuedObject__Group__17498 = new BitSet(new long[]{0x00D0000000000000L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group__2_in_rule__ValuedObject__Group__17501 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObject__NameAssignment_1_in_rule__ValuedObject__Group__1__Impl7528 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group__2__Impl_in_rule__ValuedObject__Group__27558 = new BitSet(new long[]{0x00D0000000000000L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group__3_in_rule__ValuedObject__Group__27561 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group_2__0_in_rule__ValuedObject__Group__2__Impl7588 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group__3__Impl_in_rule__ValuedObject__Group__37619 = new BitSet(new long[]{0x00D0000000000000L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group__4_in_rule__ValuedObject__Group__37622 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group_3__0_in_rule__ValuedObject__Group__3__Impl7649 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group__4__Impl_in_rule__ValuedObject__Group__47680 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_52_in_rule__ValuedObject__Group__4__Impl7708 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group_2__0__Impl_in_rule__ValuedObject__Group_2__07749 = new BitSet(new long[]{0x00004000045203D0L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group_2__1_in_rule__ValuedObject__Group_2__07752 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_54_in_rule__ValuedObject__Group_2__0__Impl7780 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group_2__1__Impl_in_rule__ValuedObject__Group_2__17811 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObject__InitialValueAssignment_2_1_in_rule__ValuedObject__Group_2__1__Impl7838 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group_3__0__Impl_in_rule__ValuedObject__Group_3__07872 = new BitSet(new long[]{0x00001E0000AC0000L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group_3__1_in_rule__ValuedObject__Group_3__07875 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_55_in_rule__ValuedObject__Group_3__0__Impl7903 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObject__Group_3__1__Impl_in_rule__ValuedObject__Group_3__17934 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObject__CombineOperatorAssignment_3_1_in_rule__ValuedObject__Group_3__1__Impl7961 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Assignment__Group__0__Impl_in_rule__Assignment__Group__07995 = new BitSet(new long[]{0x0040000000000000L});
-    public static final BitSet FOLLOW_rule__Assignment__Group__1_in_rule__Assignment__Group__07998 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Assignment__VariableAssignment_0_in_rule__Assignment__Group__0__Impl8025 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Assignment__Group__1__Impl_in_rule__Assignment__Group__18055 = new BitSet(new long[]{0x00004000045203D0L});
-    public static final BitSet FOLLOW_rule__Assignment__Group__2_in_rule__Assignment__Group__18058 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_54_in_rule__Assignment__Group__1__Impl8086 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Assignment__Group__2__Impl_in_rule__Assignment__Group__28117 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Assignment__ExpressionAssignment_2_in_rule__Assignment__Group__2__Impl8144 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Prio__Group__0__Impl_in_rule__Prio__Group__08180 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__Prio__Group__1_in_rule__Prio__Group__08183 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_56_in_rule__Prio__Group__0__Impl8211 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Prio__Group__1__Impl_in_rule__Prio__Group__18242 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_rule__Prio__Group__2_in_rule__Prio__Group__18245 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__Prio__Group__1__Impl8273 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Prio__Group__2__Impl_in_rule__Prio__Group__28304 = new BitSet(new long[]{0x0020800000000000L});
-    public static final BitSet FOLLOW_rule__Prio__Group__3_in_rule__Prio__Group__28307 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Prio__PriorityAssignment_2_in_rule__Prio__Group__2__Impl8334 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Prio__Group__3__Impl_in_rule__Prio__Group__38364 = new BitSet(new long[]{0x0020800000000000L});
-    public static final BitSet FOLLOW_rule__Prio__Group__4_in_rule__Prio__Group__38367 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Prio__Group_3__0_in_rule__Prio__Group__3__Impl8394 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Prio__Group__4__Impl_in_rule__Prio__Group__48425 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__Prio__Group__4__Impl8453 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Prio__Group_3__0__Impl_in_rule__Prio__Group_3__08494 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__Prio__Group_3__1_in_rule__Prio__Group_3__08497 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_rule__Prio__Group_3__0__Impl8525 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Prio__Group_3__1__Impl_in_rule__Prio__Group_3__18556 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Prio__ContinuationAssignment_3_1_in_rule__Prio__Group_3__1__Impl8583 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trans__Group__0__Impl_in_rule__Trans__Group__08617 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__Trans__Group__1_in_rule__Trans__Group__08620 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_57_in_rule__Trans__Group__0__Impl8648 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trans__Group__1__Impl_in_rule__Trans__Group__18679 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__Trans__Group__2_in_rule__Trans__Group__18682 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__Trans__Group__1__Impl8710 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trans__Group__2__Impl_in_rule__Trans__Group__28741 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_rule__Trans__Group__3_in_rule__Trans__Group__28744 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trans__ContinuationAssignment_2_in_rule__Trans__Group__2__Impl8771 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trans__Group__3__Impl_in_rule__Trans__Group__38801 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__Trans__Group__3__Impl8829 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Fork__Group__0__Impl_in_rule__Fork__Group__08868 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__Fork__Group__1_in_rule__Fork__Group__08871 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_58_in_rule__Fork__Group__0__Impl8899 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Fork__Group__1__Impl_in_rule__Fork__Group__18930 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__Fork__Group__2_in_rule__Fork__Group__18933 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__Fork__Group__1__Impl8961 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Fork__Group__2__Impl_in_rule__Fork__Group__28992 = new BitSet(new long[]{0x0020000000000000L});
-    public static final BitSet FOLLOW_rule__Fork__Group__3_in_rule__Fork__Group__28995 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Fork__ContinuationAssignment_2_in_rule__Fork__Group__2__Impl9022 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Fork__Group__3__Impl_in_rule__Fork__Group__39052 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_rule__Fork__Group__4_in_rule__Fork__Group__39055 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_rule__Fork__Group__3__Impl9083 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Fork__Group__4__Impl_in_rule__Fork__Group__49114 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_rule__Fork__Group__5_in_rule__Fork__Group__49117 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Fork__PriorityAssignment_4_in_rule__Fork__Group__4__Impl9144 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Fork__Group__5__Impl_in_rule__Fork__Group__59174 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__Fork__Group__5__Impl9202 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Join__Group__0__Impl_in_rule__Join__Group__09245 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_rule__Join__Group__1_in_rule__Join__Group__09248 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Join__Group__1__Impl_in_rule__Join__Group__19306 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__Join__Group__2_in_rule__Join__Group__19309 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_59_in_rule__Join__Group__1__Impl9337 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Join__Group__2__Impl_in_rule__Join__Group__29368 = new BitSet(new long[]{0x0000800000000040L});
-    public static final BitSet FOLLOW_rule__Join__Group__3_in_rule__Join__Group__29371 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__Join__Group__2__Impl9399 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Join__Group__3__Impl_in_rule__Join__Group__39430 = new BitSet(new long[]{0x0000800000000040L});
-    public static final BitSet FOLLOW_rule__Join__Group__4_in_rule__Join__Group__39433 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Join__ContinuationAssignment_3_in_rule__Join__Group__3__Impl9460 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Join__Group__4__Impl_in_rule__Join__Group__49491 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__Join__Group__4__Impl9519 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Pause__Group__0__Impl_in_rule__Pause__Group__09560 = new BitSet(new long[]{0x1000000000000000L});
-    public static final BitSet FOLLOW_rule__Pause__Group__1_in_rule__Pause__Group__09563 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Pause__Group__1__Impl_in_rule__Pause__Group__19621 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__Pause__Group__2_in_rule__Pause__Group__19624 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_60_in_rule__Pause__Group__1__Impl9652 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Pause__Group__2__Impl_in_rule__Pause__Group__29683 = new BitSet(new long[]{0x0000800000000040L});
-    public static final BitSet FOLLOW_rule__Pause__Group__3_in_rule__Pause__Group__29686 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__Pause__Group__2__Impl9714 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Pause__Group__3__Impl_in_rule__Pause__Group__39745 = new BitSet(new long[]{0x0000800000000040L});
-    public static final BitSet FOLLOW_rule__Pause__Group__4_in_rule__Pause__Group__39748 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Pause__ContinuationAssignment_3_in_rule__Pause__Group__3__Impl9775 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Pause__Group__4__Impl_in_rule__Pause__Group__49806 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__Pause__Group__4__Impl9834 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Term__Group__0__Impl_in_rule__Term__Group__09875 = new BitSet(new long[]{0x2000000000000000L});
-    public static final BitSet FOLLOW_rule__Term__Group__1_in_rule__Term__Group__09878 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Term__Group__1__Impl_in_rule__Term__Group__19936 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__Term__Group__2_in_rule__Term__Group__19939 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_61_in_rule__Term__Group__1__Impl9967 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Term__Group__2__Impl_in_rule__Term__Group__29998 = new BitSet(new long[]{0x0000800000000040L});
-    public static final BitSet FOLLOW_rule__Term__Group__3_in_rule__Term__Group__210001 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__Term__Group__2__Impl10029 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Term__Group__3__Impl_in_rule__Term__Group__310060 = new BitSet(new long[]{0x0000800000000040L});
-    public static final BitSet FOLLOW_rule__Term__Group__4_in_rule__Term__Group__310063 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Term__ContinuationAssignment_3_in_rule__Term__Group__3__Impl10090 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Term__Group__4__Impl_in_rule__Term__Group__410121 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__Term__Group__4__Impl10149 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Halt__Group__0__Impl_in_rule__Halt__Group__010190 = new BitSet(new long[]{0x4000000000000000L});
-    public static final BitSet FOLLOW_rule__Halt__Group__1_in_rule__Halt__Group__010193 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Halt__Group__1__Impl_in_rule__Halt__Group__110251 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__Halt__Group__2_in_rule__Halt__Group__110254 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_62_in_rule__Halt__Group__1__Impl10282 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Halt__Group__2__Impl_in_rule__Halt__Group__210313 = new BitSet(new long[]{0x0000800000000040L});
-    public static final BitSet FOLLOW_rule__Halt__Group__3_in_rule__Halt__Group__210316 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__Halt__Group__2__Impl10344 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Halt__Group__3__Impl_in_rule__Halt__Group__310375 = new BitSet(new long[]{0x0000800000000040L});
-    public static final BitSet FOLLOW_rule__Halt__Group__4_in_rule__Halt__Group__310378 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Halt__ContinuationAssignment_3_in_rule__Halt__Group__3__Impl10405 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Halt__Group__4__Impl_in_rule__Halt__Group__410436 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__Halt__Group__4__Impl10464 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LocalSignal__Group__0__Impl_in_rule__LocalSignal__Group__010505 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__LocalSignal__Group__1_in_rule__LocalSignal__Group__010508 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_63_in_rule__LocalSignal__Group__0__Impl10536 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LocalSignal__Group__1__Impl_in_rule__LocalSignal__Group__110567 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__LocalSignal__Group__2_in_rule__LocalSignal__Group__110570 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__LocalSignal__Group__1__Impl10598 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LocalSignal__Group__2__Impl_in_rule__LocalSignal__Group__210629 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_rule__LocalSignal__Group__3_in_rule__LocalSignal__Group__210632 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LocalSignal__SignalAssignment_2_in_rule__LocalSignal__Group__2__Impl10659 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__LocalSignal__Group__3__Impl_in_rule__LocalSignal__Group__310689 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__LocalSignal__Group__3__Impl10717 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__Group__0__Impl_in_rule__Emit__Group__010756 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__Emit__Group__1_in_rule__Emit__Group__010759 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_64_in_rule__Emit__Group__0__Impl10787 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__Group__1__Impl_in_rule__Emit__Group__110818 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__Emit__Group__2_in_rule__Emit__Group__110821 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__Emit__Group__1__Impl10849 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__Group__2__Impl_in_rule__Emit__Group__210880 = new BitSet(new long[]{0x0020C00000000000L});
-    public static final BitSet FOLLOW_rule__Emit__Group__3_in_rule__Emit__Group__210883 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__SignalAssignment_2_in_rule__Emit__Group__2__Impl10910 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__Group__3__Impl_in_rule__Emit__Group__310940 = new BitSet(new long[]{0x0020C00000000000L});
-    public static final BitSet FOLLOW_rule__Emit__Group__4_in_rule__Emit__Group__310943 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__Group_3__0_in_rule__Emit__Group__3__Impl10970 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__Group__4__Impl_in_rule__Emit__Group__411001 = new BitSet(new long[]{0x0020C00000000000L});
-    public static final BitSet FOLLOW_rule__Emit__Group__5_in_rule__Emit__Group__411004 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__Group_4__0_in_rule__Emit__Group__4__Impl11031 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__Group__5__Impl_in_rule__Emit__Group__511062 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__Emit__Group__5__Impl11090 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__Group_3__0__Impl_in_rule__Emit__Group_3__011133 = new BitSet(new long[]{0x00004000045203D0L});
-    public static final BitSet FOLLOW_rule__Emit__Group_3__1_in_rule__Emit__Group_3__011136 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__Emit__Group_3__0__Impl11164 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__Group_3__1__Impl_in_rule__Emit__Group_3__111195 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_rule__Emit__Group_3__2_in_rule__Emit__Group_3__111198 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__ValueAssignment_3_1_in_rule__Emit__Group_3__1__Impl11225 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__Group_3__2__Impl_in_rule__Emit__Group_3__211255 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__Emit__Group_3__2__Impl11283 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__Group_4__0__Impl_in_rule__Emit__Group_4__011320 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__Emit__Group_4__1_in_rule__Emit__Group_4__011323 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_rule__Emit__Group_4__0__Impl11351 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__Group_4__1__Impl_in_rule__Emit__Group_4__111382 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Emit__ContinuationAssignment_4_1_in_rule__Emit__Group_4__1__Impl11409 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Abort__Group__0__Impl_in_rule__Abort__Group__011443 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Abort__Group__1_in_rule__Abort__Group__011446 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Abort__Group__1__Impl_in_rule__Abort__Group__111504 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__Abort__Group__2_in_rule__Abort__Group__111507 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_65_in_rule__Abort__Group__1__Impl11535 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Abort__Group__2__Impl_in_rule__Abort__Group__211566 = new BitSet(new long[]{0x0000800000000040L});
-    public static final BitSet FOLLOW_rule__Abort__Group__3_in_rule__Abort__Group__211569 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__Abort__Group__2__Impl11597 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Abort__Group__3__Impl_in_rule__Abort__Group__311628 = new BitSet(new long[]{0x0000800000000040L});
-    public static final BitSet FOLLOW_rule__Abort__Group__4_in_rule__Abort__Group__311631 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Abort__ContinuationAssignment_3_in_rule__Abort__Group__3__Impl11658 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Abort__Group__4__Impl_in_rule__Abort__Group__411689 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__Abort__Group__4__Impl11717 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__Group__0__Impl_in_rule__If__Group__011758 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__If__Group__1_in_rule__If__Group__011761 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_66_in_rule__If__Group__0__Impl11789 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__Group__1__Impl_in_rule__If__Group__111820 = new BitSet(new long[]{0x00004000045203D0L});
-    public static final BitSet FOLLOW_rule__If__Group__2_in_rule__If__Group__111823 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__If__Group__1__Impl11851 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__Group__2__Impl_in_rule__If__Group__211882 = new BitSet(new long[]{0x0020800000000000L});
-    public static final BitSet FOLLOW_rule__If__Group__3_in_rule__If__Group__211885 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__ExpressionAssignment_2_in_rule__If__Group__2__Impl11912 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__Group__3__Impl_in_rule__If__Group__311942 = new BitSet(new long[]{0x0020800000000000L});
-    public static final BitSet FOLLOW_rule__If__Group__4_in_rule__If__Group__311945 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__Group_3__0_in_rule__If__Group__3__Impl11972 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__Group__4__Impl_in_rule__If__Group__412003 = new BitSet(new long[]{0x0004000000000000L});
-    public static final BitSet FOLLOW_rule__If__Group__5_in_rule__If__Group__412006 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__If__Group__4__Impl12034 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__Group__5__Impl_in_rule__If__Group__512065 = new BitSet(new long[]{0xFF08000000000050L,0x000000000000000FL});
-    public static final BitSet FOLLOW_rule__If__Group__6_in_rule__If__Group__512068 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_50_in_rule__If__Group__5__Impl12096 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__Group__6__Impl_in_rule__If__Group__612127 = new BitSet(new long[]{0xFF08000000000050L,0x000000000000000FL});
-    public static final BitSet FOLLOW_rule__If__Group__7_in_rule__If__Group__612130 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__Group_6__0_in_rule__If__Group__6__Impl12157 = new BitSet(new long[]{0xFF00000000000052L,0x000000000000000FL});
-    public static final BitSet FOLLOW_rule__If__Group__7__Impl_in_rule__If__Group__712188 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_51_in_rule__If__Group__7__Impl12216 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__Group_3__0__Impl_in_rule__If__Group_3__012263 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__If__Group_3__1_in_rule__If__Group_3__012266 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_rule__If__Group_3__0__Impl12294 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__Group_3__1__Impl_in_rule__If__Group_3__112325 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__ContinuationAssignment_3_1_in_rule__If__Group_3__1__Impl12352 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__Group_6__0__Impl_in_rule__If__Group_6__012386 = new BitSet(new long[]{0x0010000000000000L});
-    public static final BitSet FOLLOW_rule__If__Group_6__1_in_rule__If__Group_6__012389 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__InstructionsAssignment_6_0_in_rule__If__Group_6__0__Impl12416 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__If__Group_6__1__Impl_in_rule__If__Group_6__112446 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_52_in_rule__If__Group_6__1__Impl12474 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Await__Group__0__Impl_in_rule__Await__Group__012509 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__Await__Group__1_in_rule__Await__Group__012512 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_67_in_rule__Await__Group__0__Impl12540 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Await__Group__1__Impl_in_rule__Await__Group__112571 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__Await__Group__2_in_rule__Await__Group__112574 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__Await__Group__1__Impl12602 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Await__Group__2__Impl_in_rule__Await__Group__212633 = new BitSet(new long[]{0x0020800000000000L});
-    public static final BitSet FOLLOW_rule__Await__Group__3_in_rule__Await__Group__212636 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Await__SignalAssignment_2_in_rule__Await__Group__2__Impl12663 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Await__Group__3__Impl_in_rule__Await__Group__312693 = new BitSet(new long[]{0x0020800000000000L});
-    public static final BitSet FOLLOW_rule__Await__Group__4_in_rule__Await__Group__312696 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Await__Group_3__0_in_rule__Await__Group__3__Impl12723 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Await__Group__4__Impl_in_rule__Await__Group__412754 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__Await__Group__4__Impl12782 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Await__Group_3__0__Impl_in_rule__Await__Group_3__012823 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__Await__Group_3__1_in_rule__Await__Group_3__012826 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_rule__Await__Group_3__0__Impl12854 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Await__Group_3__1__Impl_in_rule__Await__Group_3__112885 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Await__ContinuationAssignment_3_1_in_rule__Await__Group_3__1__Impl12912 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__Group__0__Impl_in_rule__OrAndExpression__Group__012946 = new BitSet(new long[]{0x00000000180C0000L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__Group__1_in_rule__OrAndExpression__Group__012949 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCompareOperation_in_rule__OrAndExpression__Group__0__Impl12976 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__Group__1__Impl_in_rule__OrAndExpression__Group__113005 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__Alternatives_1_in_rule__OrAndExpression__Group__1__Impl13032 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_0__0__Impl_in_rule__OrAndExpression__Group_1_0__013066 = new BitSet(new long[]{0x0000000008040000L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_0__1_in_rule__OrAndExpression__Group_1_0__013069 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_0__1__Impl_in_rule__OrAndExpression__Group_1_0__113127 = new BitSet(new long[]{0x00004000045203D0L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_0__2_in_rule__OrAndExpression__Group_1_0__113130 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__OperatorAssignment_1_0_1_in_rule__OrAndExpression__Group_1_0__1__Impl13157 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_0__2__Impl_in_rule__OrAndExpression__Group_1_0__213187 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__SubExpressionsAssignment_1_0_2_in_rule__OrAndExpression__Group_1_0__2__Impl13214 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_1__0__Impl_in_rule__OrAndExpression__Group_1_1__013250 = new BitSet(new long[]{0x0000000010080000L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_1__1_in_rule__OrAndExpression__Group_1_1__013253 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_1__1__Impl_in_rule__OrAndExpression__Group_1_1__113311 = new BitSet(new long[]{0x00004000045203D0L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_1__2_in_rule__OrAndExpression__Group_1_1__113314 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__OperatorAssignment_1_1_1_in_rule__OrAndExpression__Group_1_1__1__Impl13341 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_1__2__Impl_in_rule__OrAndExpression__Group_1_1__213371 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__SubExpressionsAssignment_1_1_2_in_rule__OrAndExpression__Group_1_1__2__Impl13398 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0__Impl_in_rule__CompareOperation__Group_0__013434 = new BitSet(new long[]{0x00000007E0000000L});
-    public static final BitSet FOLLOW_rule__CompareOperation__Group_0__1_in_rule__CompareOperation__Group_0__013437 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__Group_0__0__Impl13464 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__CompareOperation__Group_0__1__Impl_in_rule__CompareOperation__Group_0__113493 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__0_in_rule__CompareOperation__Group_0__1__Impl13520 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__0__Impl_in_rule__CompareOperation__Group_0_1__013554 = new BitSet(new long[]{0x00000007E0000000L});
-    public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__1_in_rule__CompareOperation__Group_0_1__013557 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__1__Impl_in_rule__CompareOperation__Group_0_1__113615 = new BitSet(new long[]{0x00004000045203D0L});
-    public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__2_in_rule__CompareOperation__Group_0_1__113618 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__CompareOperation__OperatorAssignment_0_1_1_in_rule__CompareOperation__Group_0_1__1__Impl13645 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__2__Impl_in_rule__CompareOperation__Group_0_1__213675 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__CompareOperation__SubExpressionsAssignment_0_1_2_in_rule__CompareOperation__Group_0_1__2__Impl13702 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__NotExpression__Group_0__0__Impl_in_rule__NotExpression__Group_0__013738 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_rule__NotExpression__Group_0__1_in_rule__NotExpression__Group_0__013741 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__NotExpression__Group_0__1__Impl_in_rule__NotExpression__Group_0__113799 = new BitSet(new long[]{0x00004000045203D0L});
-    public static final BitSet FOLLOW_rule__NotExpression__Group_0__2_in_rule__NotExpression__Group_0__113802 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__NotExpression__OperatorAssignment_0_1_in_rule__NotExpression__Group_0__1__Impl13829 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__NotExpression__Group_0__2__Impl_in_rule__NotExpression__Group_0__213859 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__NotExpression__SubExpressionsAssignment_0_2_in_rule__NotExpression__Group_0__2__Impl13886 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AddExpression__Group__0__Impl_in_rule__AddExpression__Group__013922 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_rule__AddExpression__Group__1_in_rule__AddExpression__Group__013925 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSubExpression_in_rule__AddExpression__Group__0__Impl13952 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AddExpression__Group__1__Impl_in_rule__AddExpression__Group__113981 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AddExpression__Group_1__0_in_rule__AddExpression__Group__1__Impl14008 = new BitSet(new long[]{0x0000000000200002L});
-    public static final BitSet FOLLOW_rule__AddExpression__Group_1__0__Impl_in_rule__AddExpression__Group_1__014043 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_rule__AddExpression__Group_1__1_in_rule__AddExpression__Group_1__014046 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AddExpression__Group_1__1__Impl_in_rule__AddExpression__Group_1__114104 = new BitSet(new long[]{0x00004000044203D0L});
-    public static final BitSet FOLLOW_rule__AddExpression__Group_1__2_in_rule__AddExpression__Group_1__114107 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AddExpression__OperatorAssignment_1_1_in_rule__AddExpression__Group_1__1__Impl14134 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AddExpression__Group_1__2__Impl_in_rule__AddExpression__Group_1__214164 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AddExpression__SubExpressionsAssignment_1_2_in_rule__AddExpression__Group_1__2__Impl14191 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__SubExpression__Group__0__Impl_in_rule__SubExpression__Group__014227 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_rule__SubExpression__Group__1_in_rule__SubExpression__Group__014230 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMultExpression_in_rule__SubExpression__Group__0__Impl14257 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__SubExpression__Group__1__Impl_in_rule__SubExpression__Group__114286 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__SubExpression__Group_1__0_in_rule__SubExpression__Group__1__Impl14313 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_rule__SubExpression__Group_1__0__Impl_in_rule__SubExpression__Group_1__014348 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_rule__SubExpression__Group_1__1_in_rule__SubExpression__Group_1__014351 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__SubExpression__Group_1__1__Impl_in_rule__SubExpression__Group_1__114409 = new BitSet(new long[]{0x00004000044203D0L});
-    public static final BitSet FOLLOW_rule__SubExpression__Group_1__2_in_rule__SubExpression__Group_1__114412 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__SubExpression__OperatorAssignment_1_1_in_rule__SubExpression__Group_1__1__Impl14439 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__SubExpression__Group_1__2__Impl_in_rule__SubExpression__Group_1__214469 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__SubExpression__SubExpressionsAssignment_1_2_in_rule__SubExpression__Group_1__2__Impl14496 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__MultExpression__Group__0__Impl_in_rule__MultExpression__Group__014532 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_rule__MultExpression__Group__1_in_rule__MultExpression__Group__014535 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDivExpression_in_rule__MultExpression__Group__0__Impl14562 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__MultExpression__Group__1__Impl_in_rule__MultExpression__Group__114591 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__MultExpression__Group_1__0_in_rule__MultExpression__Group__1__Impl14618 = new BitSet(new long[]{0x0000000000800002L});
-    public static final BitSet FOLLOW_rule__MultExpression__Group_1__0__Impl_in_rule__MultExpression__Group_1__014653 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_rule__MultExpression__Group_1__1_in_rule__MultExpression__Group_1__014656 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__MultExpression__Group_1__1__Impl_in_rule__MultExpression__Group_1__114714 = new BitSet(new long[]{0x00004000044203D0L});
-    public static final BitSet FOLLOW_rule__MultExpression__Group_1__2_in_rule__MultExpression__Group_1__114717 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__MultExpression__OperatorAssignment_1_1_in_rule__MultExpression__Group_1__1__Impl14744 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__MultExpression__Group_1__2__Impl_in_rule__MultExpression__Group_1__214774 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__MultExpression__SubExpressionsAssignment_1_2_in_rule__MultExpression__Group_1__2__Impl14801 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__DivExpression__Group__0__Impl_in_rule__DivExpression__Group__014837 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_rule__DivExpression__Group__1_in_rule__DivExpression__Group__014840 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleModExpression_in_rule__DivExpression__Group__0__Impl14867 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__DivExpression__Group__1__Impl_in_rule__DivExpression__Group__114896 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__DivExpression__Group_1__0_in_rule__DivExpression__Group__1__Impl14923 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__DivExpression__Group_1__0__Impl_in_rule__DivExpression__Group_1__014958 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_rule__DivExpression__Group_1__1_in_rule__DivExpression__Group_1__014961 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__DivExpression__Group_1__1__Impl_in_rule__DivExpression__Group_1__115019 = new BitSet(new long[]{0x00004000044203D0L});
-    public static final BitSet FOLLOW_rule__DivExpression__Group_1__2_in_rule__DivExpression__Group_1__115022 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__DivExpression__OperatorAssignment_1_1_in_rule__DivExpression__Group_1__1__Impl15049 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__DivExpression__Group_1__2__Impl_in_rule__DivExpression__Group_1__215079 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__DivExpression__SubExpressionsAssignment_1_2_in_rule__DivExpression__Group_1__2__Impl15106 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ModExpression__Group__0__Impl_in_rule__ModExpression__Group__015142 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_rule__ModExpression__Group__1_in_rule__ModExpression__Group__015145 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNegExpression_in_rule__ModExpression__Group__0__Impl15172 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ModExpression__Group__1__Impl_in_rule__ModExpression__Group__115201 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ModExpression__Group_1__0_in_rule__ModExpression__Group__1__Impl15228 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ModExpression__Group_1__0__Impl_in_rule__ModExpression__Group_1__015263 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_rule__ModExpression__Group_1__1_in_rule__ModExpression__Group_1__015266 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ModExpression__Group_1__1__Impl_in_rule__ModExpression__Group_1__115324 = new BitSet(new long[]{0x00004000044203D0L});
-    public static final BitSet FOLLOW_rule__ModExpression__Group_1__2_in_rule__ModExpression__Group_1__115327 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ModExpression__OperatorAssignment_1_1_in_rule__ModExpression__Group_1__1__Impl15354 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ModExpression__Group_1__2__Impl_in_rule__ModExpression__Group_1__215384 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ModExpression__SubExpressionsAssignment_1_2_in_rule__ModExpression__Group_1__2__Impl15411 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__NegExpression__Group_0__0__Impl_in_rule__NegExpression__Group_0__015447 = new BitSet(new long[]{0x0000000000400000L});
-    public static final BitSet FOLLOW_rule__NegExpression__Group_0__1_in_rule__NegExpression__Group_0__015450 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__NegExpression__Group_0__1__Impl_in_rule__NegExpression__Group_0__115508 = new BitSet(new long[]{0x00004000044203D0L});
-    public static final BitSet FOLLOW_rule__NegExpression__Group_0__2_in_rule__NegExpression__Group_0__115511 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__NegExpression__OperatorAssignment_0_1_in_rule__NegExpression__Group_0__1__Impl15538 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__NegExpression__Group_0__2__Impl_in_rule__NegExpression__Group_0__215568 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__NegExpression__SubExpressionsAssignment_0_2_in_rule__NegExpression__Group_0__2__Impl15595 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__0__Impl_in_rule__AtomicExpression__Group_2__015631 = new BitSet(new long[]{0x00004000045203D0L});
-    public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__1_in_rule__AtomicExpression__Group_2__015634 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__AtomicExpression__Group_2__0__Impl15662 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__1__Impl_in_rule__AtomicExpression__Group_2__115693 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__2_in_rule__AtomicExpression__Group_2__115696 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleBoolExpression_in_rule__AtomicExpression__Group_2__1__Impl15723 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__2__Impl_in_rule__AtomicExpression__Group_2__215752 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__AtomicExpression__Group_2__2__Impl15780 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_2__0__Impl_in_rule__AtomicValuedExpression__Group_2__015817 = new BitSet(new long[]{0x00004000044203D0L});
-    public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_2__1_in_rule__AtomicValuedExpression__Group_2__015820 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__AtomicValuedExpression__Group_2__0__Impl15848 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_2__1__Impl_in_rule__AtomicValuedExpression__Group_2__115879 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_2__2_in_rule__AtomicValuedExpression__Group_2__115882 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValuedExpression_in_rule__AtomicValuedExpression__Group_2__1__Impl15909 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_2__2__Impl_in_rule__AtomicValuedExpression__Group_2__215938 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__AtomicValuedExpression__Group_2__2__Impl15966 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__0__Impl_in_rule__ValuedObjectTestExpression__Group_0__016003 = new BitSet(new long[]{0x0000000004020000L});
-    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__1_in_rule__ValuedObjectTestExpression__Group_0__016006 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__1__Impl_in_rule__ValuedObjectTestExpression__Group_0__116064 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__2_in_rule__ValuedObjectTestExpression__Group_0__116067 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__OperatorAssignment_0_1_in_rule__ValuedObjectTestExpression__Group_0__1__Impl16094 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__2__Impl_in_rule__ValuedObjectTestExpression__Group_0__216124 = new BitSet(new long[]{0x0000000004020040L});
-    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__3_in_rule__ValuedObjectTestExpression__Group_0__216127 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__ValuedObjectTestExpression__Group_0__2__Impl16155 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__3__Impl_in_rule__ValuedObjectTestExpression__Group_0__316186 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__4_in_rule__ValuedObjectTestExpression__Group_0__316189 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3_in_rule__ValuedObjectTestExpression__Group_0__3__Impl16216 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__4__Impl_in_rule__ValuedObjectTestExpression__Group_0__416246 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__ValuedObjectTestExpression__Group_0__4__Impl16274 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group__0__Impl_in_rule__ValuedObjectReference__Group__016315 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group__1_in_rule__ValuedObjectReference__Group__016318 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectReference__ValuedObjectAssignment_0_in_rule__ValuedObjectReference__Group__0__Impl16345 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group__1__Impl_in_rule__ValuedObjectReference__Group__116375 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__0_in_rule__ValuedObjectReference__Group__1__Impl16402 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__0__Impl_in_rule__ValuedObjectReference__Group_1__016437 = new BitSet(new long[]{0x00004000045203D0L});
-    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__1_in_rule__ValuedObjectReference__Group_1__016440 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_68_in_rule__ValuedObjectReference__Group_1__0__Impl16468 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__1__Impl_in_rule__ValuedObjectReference__Group_1__116499 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__2_in_rule__ValuedObjectReference__Group_1__116502 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectReference__CardinalitiesAssignment_1_1_in_rule__ValuedObjectReference__Group_1__1__Impl16529 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__2__Impl_in_rule__ValuedObjectReference__Group_1__216559 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_69_in_rule__ValuedObjectReference__Group_1__2__Impl16587 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TagAnnotation__Group__0__Impl_in_rule__TagAnnotation__Group__016624 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__TagAnnotation__Group__1_in_rule__TagAnnotation__Group__016627 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_70_in_rule__TagAnnotation__Group__0__Impl16655 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TagAnnotation__Group__1__Impl_in_rule__TagAnnotation__Group__116686 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__TagAnnotation__Group__2_in_rule__TagAnnotation__Group__116689 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TagAnnotation__NameAssignment_1_in_rule__TagAnnotation__Group__1__Impl16716 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TagAnnotation__Group__2__Impl_in_rule__TagAnnotation__Group__216746 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__0_in_rule__TagAnnotation__Group__2__Impl16773 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__0__Impl_in_rule__TagAnnotation__Group_2__016810 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__1_in_rule__TagAnnotation__Group_2__016813 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__TagAnnotation__Group_2__0__Impl16841 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__1__Impl_in_rule__TagAnnotation__Group_2__116872 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__2_in_rule__TagAnnotation__Group_2__116875 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TagAnnotation__AnnotationsAssignment_2_1_in_rule__TagAnnotation__Group_2__1__Impl16902 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__2__Impl_in_rule__TagAnnotation__Group_2__216933 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__TagAnnotation__Group_2__2__Impl16961 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__0__Impl_in_rule__KeyStringValueAnnotation__Group__016998 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__1_in_rule__KeyStringValueAnnotation__Group__017001 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_70_in_rule__KeyStringValueAnnotation__Group__0__Impl17029 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__1__Impl_in_rule__KeyStringValueAnnotation__Group__117060 = new BitSet(new long[]{0x0000000000000060L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__2_in_rule__KeyStringValueAnnotation__Group__117063 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__NameAssignment_1_in_rule__KeyStringValueAnnotation__Group__1__Impl17090 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__2__Impl_in_rule__KeyStringValueAnnotation__Group__217120 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__3_in_rule__KeyStringValueAnnotation__Group__217123 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__ValueAssignment_2_in_rule__KeyStringValueAnnotation__Group__2__Impl17150 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__3__Impl_in_rule__KeyStringValueAnnotation__Group__317180 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__0_in_rule__KeyStringValueAnnotation__Group__3__Impl17207 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__0__Impl_in_rule__KeyStringValueAnnotation__Group_3__017246 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__1_in_rule__KeyStringValueAnnotation__Group_3__017249 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__KeyStringValueAnnotation__Group_3__0__Impl17277 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__1__Impl_in_rule__KeyStringValueAnnotation__Group_3__117308 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__2_in_rule__KeyStringValueAnnotation__Group_3__117311 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyStringValueAnnotation__Group_3__1__Impl17338 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__2__Impl_in_rule__KeyStringValueAnnotation__Group_3__217369 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__KeyStringValueAnnotation__Group_3__2__Impl17397 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group__017434 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1_in_rule__TypedKeyStringValueAnnotation__Group__017437 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_70_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl17465 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group__117496 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2_in_rule__TypedKeyStringValueAnnotation__Group__117499 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__NameAssignment_1_in_rule__TypedKeyStringValueAnnotation__Group__1__Impl17526 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group__217556 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3_in_rule__TypedKeyStringValueAnnotation__Group__217559 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_68_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl17587 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3__Impl_in_rule__TypedKeyStringValueAnnotation__Group__317618 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4_in_rule__TypedKeyStringValueAnnotation__Group__317621 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__TypeAssignment_3_in_rule__TypedKeyStringValueAnnotation__Group__3__Impl17648 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4__Impl_in_rule__TypedKeyStringValueAnnotation__Group__417678 = new BitSet(new long[]{0x0000000000000060L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5_in_rule__TypedKeyStringValueAnnotation__Group__417681 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_69_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl17709 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5__Impl_in_rule__TypedKeyStringValueAnnotation__Group__517740 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6_in_rule__TypedKeyStringValueAnnotation__Group__517743 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__ValueAssignment_5_in_rule__TypedKeyStringValueAnnotation__Group__5__Impl17770 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6__Impl_in_rule__TypedKeyStringValueAnnotation__Group__617800 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0_in_rule__TypedKeyStringValueAnnotation__Group__6__Impl17827 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__017872 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1_in_rule__TypedKeyStringValueAnnotation__Group_6__017875 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl17903 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__117934 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2_in_rule__TypedKeyStringValueAnnotation__Group_6__117937 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1_in_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl17964 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__217995 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl18023 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__0__Impl_in_rule__KeyBooleanValueAnnotation__Group__018060 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__1_in_rule__KeyBooleanValueAnnotation__Group__018063 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_70_in_rule__KeyBooleanValueAnnotation__Group__0__Impl18091 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__1__Impl_in_rule__KeyBooleanValueAnnotation__Group__118122 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__2_in_rule__KeyBooleanValueAnnotation__Group__118125 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__NameAssignment_1_in_rule__KeyBooleanValueAnnotation__Group__1__Impl18152 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__2__Impl_in_rule__KeyBooleanValueAnnotation__Group__218182 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__3_in_rule__KeyBooleanValueAnnotation__Group__218185 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__ValueAssignment_2_in_rule__KeyBooleanValueAnnotation__Group__2__Impl18212 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__3__Impl_in_rule__KeyBooleanValueAnnotation__Group__318242 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0_in_rule__KeyBooleanValueAnnotation__Group__3__Impl18269 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__018308 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1_in_rule__KeyBooleanValueAnnotation__Group_3__018311 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__KeyBooleanValueAnnotation__Group_3__0__Impl18339 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__118370 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2_in_rule__KeyBooleanValueAnnotation__Group_3__118373 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyBooleanValueAnnotation__Group_3__1__Impl18400 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__218431 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__KeyBooleanValueAnnotation__Group_3__2__Impl18459 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__0__Impl_in_rule__KeyIntValueAnnotation__Group__018496 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__1_in_rule__KeyIntValueAnnotation__Group__018499 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_70_in_rule__KeyIntValueAnnotation__Group__0__Impl18527 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__1__Impl_in_rule__KeyIntValueAnnotation__Group__118558 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__2_in_rule__KeyIntValueAnnotation__Group__118561 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__NameAssignment_1_in_rule__KeyIntValueAnnotation__Group__1__Impl18588 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__2__Impl_in_rule__KeyIntValueAnnotation__Group__218618 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__3_in_rule__KeyIntValueAnnotation__Group__218621 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__ValueAssignment_2_in_rule__KeyIntValueAnnotation__Group__2__Impl18648 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__3__Impl_in_rule__KeyIntValueAnnotation__Group__318678 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__0_in_rule__KeyIntValueAnnotation__Group__3__Impl18705 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__0__Impl_in_rule__KeyIntValueAnnotation__Group_3__018744 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__1_in_rule__KeyIntValueAnnotation__Group_3__018747 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__KeyIntValueAnnotation__Group_3__0__Impl18775 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__1__Impl_in_rule__KeyIntValueAnnotation__Group_3__118806 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__2_in_rule__KeyIntValueAnnotation__Group_3__118809 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyIntValueAnnotation__Group_3__1__Impl18836 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__2__Impl_in_rule__KeyIntValueAnnotation__Group_3__218867 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__KeyIntValueAnnotation__Group_3__2__Impl18895 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__0__Impl_in_rule__KeyFloatValueAnnotation__Group__018932 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__1_in_rule__KeyFloatValueAnnotation__Group__018935 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_70_in_rule__KeyFloatValueAnnotation__Group__0__Impl18963 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__1__Impl_in_rule__KeyFloatValueAnnotation__Group__118994 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__2_in_rule__KeyFloatValueAnnotation__Group__118997 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__NameAssignment_1_in_rule__KeyFloatValueAnnotation__Group__1__Impl19024 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__2__Impl_in_rule__KeyFloatValueAnnotation__Group__219054 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__3_in_rule__KeyFloatValueAnnotation__Group__219057 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__ValueAssignment_2_in_rule__KeyFloatValueAnnotation__Group__2__Impl19084 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__3__Impl_in_rule__KeyFloatValueAnnotation__Group__319114 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0_in_rule__KeyFloatValueAnnotation__Group__3__Impl19141 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0__Impl_in_rule__KeyFloatValueAnnotation__Group_3__019180 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1_in_rule__KeyFloatValueAnnotation__Group_3__019183 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__KeyFloatValueAnnotation__Group_3__0__Impl19211 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1__Impl_in_rule__KeyFloatValueAnnotation__Group_3__119242 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2_in_rule__KeyFloatValueAnnotation__Group_3__119245 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyFloatValueAnnotation__Group_3__1__Impl19272 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2__Impl_in_rule__KeyFloatValueAnnotation__Group_3__219303 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__KeyFloatValueAnnotation__Group_3__2__Impl19331 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ExtendedID__Group__0__Impl_in_rule__ExtendedID__Group__019369 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-    public static final BitSet FOLLOW_rule__ExtendedID__Group__1_in_rule__ExtendedID__Group__019372 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group__0__Impl19399 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ExtendedID__Group__1__Impl_in_rule__ExtendedID__Group__119428 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0_in_rule__ExtendedID__Group__1__Impl19455 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000080L});
-    public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0__Impl_in_rule__ExtendedID__Group_1__019490 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1_in_rule__ExtendedID__Group_1__019493 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_71_in_rule__ExtendedID__Group_1__0__Impl19521 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__119552 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl19579 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Program__NameAssignment_119617 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_rule__Program__PriorityAssignment_319648 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTypeGroup_in_rule__Program__TypeGroupsAssignment_519679 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__Program__GlobalHostCodeInstructionAssignment_6_119710 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleState_in_rule__Program__StatesAssignment_719741 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__State__NameAssignment_219772 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTypeGroup_in_rule__State__TypeGroupsAssignment_519803 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleInstruction_in_rule__State__InstructionsAssignment_6_019834 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnnotation_in_rule__TypeGroup__AnnotationsAssignment_019865 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_72_in_rule__TypeGroup__ConstAssignment_119901 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_73_in_rule__TypeGroup__InputAssignment_219945 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_74_in_rule__TypeGroup__OutputAssignment_319989 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_75_in_rule__TypeGroup__StaticAssignment_420033 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_63_in_rule__TypeGroup__SignalAssignment_520077 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValueType_in_rule__TypeGroup__TypeAssignment_620116 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValuedObject_in_rule__TypeGroup__ValuedObjectsAssignment_720147 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValuedObject_in_rule__TypeGroup__ValuedObjectsAssignment_8_120178 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnnotation_in_rule__ValuedObject__AnnotationsAssignment_020209 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__ValuedObject__NameAssignment_120240 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExpression_in_rule__ValuedObject__InitialValueAssignment_2_120271 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCombineOperator_in_rule__ValuedObject__CombineOperatorAssignment_3_120302 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__HostCodeInstruction__HostCodeAssignment20333 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Assignment__VariableAssignment_020368 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExpression_in_rule__Assignment__ExpressionAssignment_220403 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_rule__Prio__PriorityAssignment_220434 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Prio__ContinuationAssignment_3_120469 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Trans__ContinuationAssignment_220508 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Fork__ContinuationAssignment_220547 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_rule__Fork__PriorityAssignment_420582 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Join__ContinuationAssignment_320617 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Pause__ContinuationAssignment_320656 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Term__ContinuationAssignment_320695 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Halt__ContinuationAssignment_320734 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__LocalSignal__SignalAssignment_220773 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Emit__SignalAssignment_220812 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSExpression_in_rule__Emit__ValueAssignment_3_120847 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Emit__ContinuationAssignment_4_120882 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Abort__ContinuationAssignment_320921 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSExpression_in_rule__If__ExpressionAssignment_220956 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__If__ContinuationAssignment_3_120991 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleInstruction_in_rule__If__InstructionsAssignment_6_021026 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Await__SignalAssignment_221061 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Await__ContinuationAssignment_3_121100 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__OperatorAlternatives_1_0_1_0_in_rule__OrAndExpression__OperatorAssignment_1_0_121135 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCompareOperation_in_rule__OrAndExpression__SubExpressionsAssignment_1_0_221168 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__OrAndExpression__OperatorAlternatives_1_1_1_0_in_rule__OrAndExpression__OperatorAssignment_1_1_121199 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCompareOperation_in_rule__OrAndExpression__SubExpressionsAssignment_1_1_221232 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_0_1_121263 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__SubExpressionsAssignment_0_1_221294 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNotOperator_in_rule__NotExpression__OperatorAssignment_0_121325 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNotExpression_in_rule__NotExpression__SubExpressionsAssignment_0_221356 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAddOperator_in_rule__AddExpression__OperatorAssignment_1_121387 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSubExpression_in_rule__AddExpression__SubExpressionsAssignment_1_221418 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSubOperator_in_rule__SubExpression__OperatorAssignment_1_121449 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMultExpression_in_rule__SubExpression__SubExpressionsAssignment_1_221480 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMultOperator_in_rule__MultExpression__OperatorAssignment_1_121511 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDivExpression_in_rule__MultExpression__SubExpressionsAssignment_1_221542 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDivOperator_in_rule__DivExpression__OperatorAssignment_1_121573 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleModExpression_in_rule__DivExpression__SubExpressionsAssignment_1_221604 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleModOperator_in_rule__ModExpression__OperatorAssignment_1_121635 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAtomicValuedExpression_in_rule__ModExpression__SubExpressionsAssignment_1_221666 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSubOperator_in_rule__NegExpression__OperatorAssignment_0_121697 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNegExpression_in_rule__NegExpression__SubExpressionsAssignment_0_221728 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0_in_rule__ValuedObjectTestExpression__OperatorAssignment_0_121759 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleValuedObjectTestExpression_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_321792 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__ValuedObjectReference__ValuedObjectAssignment_021827 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExpression_in_rule__ValuedObjectReference__CardinalitiesAssignment_1_121862 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__TextExpression__TextAssignment21893 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment21924 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment21955 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__BoolValue__ValueAssignment21986 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_COMMENT_ANNOTATION_in_rule__CommentAnnotation__ValueAssignment22017 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExtendedID_in_rule__TagAnnotation__NameAssignment_122048 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnnotation_in_rule__TagAnnotation__AnnotationsAssignment_2_122079 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyStringValueAnnotation__NameAssignment_122110 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleEString_in_rule__KeyStringValueAnnotation__ValueAssignment_222141 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_122172 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_122203 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_322234 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValueAssignment_522265 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnnotation_in_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_122296 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyBooleanValueAnnotation__NameAssignment_122327 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_222358 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_122389 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyIntValueAnnotation__NameAssignment_122420 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_rule__KeyIntValueAnnotation__ValueAssignment_222451 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_122482 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_122513 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_FLOAT_in_rule__KeyFloatValueAnnotation__ValueAssignment_222544 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_122575 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__0__Impl_in_rule__Declaration__Group__06688 = new BitSet(new long[]{0x800003F800000440L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__1_in_rule__Declaration__Group__06691 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__AnnotationsAssignment_0_in_rule__Declaration__Group__0__Impl6718 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__1__Impl_in_rule__Declaration__Group__16749 = new BitSet(new long[]{0x800003F800000440L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__2_in_rule__Declaration__Group__16752 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__ConstAssignment_1_in_rule__Declaration__Group__1__Impl6779 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__2__Impl_in_rule__Declaration__Group__26810 = new BitSet(new long[]{0x800003F800000440L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__3_in_rule__Declaration__Group__26813 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__InputAssignment_2_in_rule__Declaration__Group__2__Impl6840 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__3__Impl_in_rule__Declaration__Group__36871 = new BitSet(new long[]{0x800003F800000440L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__4_in_rule__Declaration__Group__36874 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__OutputAssignment_3_in_rule__Declaration__Group__3__Impl6901 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__4__Impl_in_rule__Declaration__Group__46932 = new BitSet(new long[]{0x800003F800000440L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__5_in_rule__Declaration__Group__46935 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__StaticAssignment_4_in_rule__Declaration__Group__4__Impl6962 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__5__Impl_in_rule__Declaration__Group__56993 = new BitSet(new long[]{0x800003F800000440L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__6_in_rule__Declaration__Group__56996 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__SignalAssignment_5_in_rule__Declaration__Group__5__Impl7023 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__6__Impl_in_rule__Declaration__Group__67054 = new BitSet(new long[]{0x800003F800000440L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__7_in_rule__Declaration__Group__67057 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__TypeAssignment_6_in_rule__Declaration__Group__6__Impl7084 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__7__Impl_in_rule__Declaration__Group__77115 = new BitSet(new long[]{0x0030000000000000L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__8_in_rule__Declaration__Group__77118 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__ValuedObjectsAssignment_7_in_rule__Declaration__Group__7__Impl7145 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__8__Impl_in_rule__Declaration__Group__87175 = new BitSet(new long[]{0x0030000000000000L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__9_in_rule__Declaration__Group__87178 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__Group_8__0_in_rule__Declaration__Group__8__Impl7205 = new BitSet(new long[]{0x0020000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__Group__9__Impl_in_rule__Declaration__Group__97236 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_52_in_rule__Declaration__Group__9__Impl7264 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__Group_8__0__Impl_in_rule__Declaration__Group_8__07315 = new BitSet(new long[]{0x800003F800000440L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Declaration__Group_8__1_in_rule__Declaration__Group_8__07318 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_53_in_rule__Declaration__Group_8__0__Impl7346 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__Group_8__1__Impl_in_rule__Declaration__Group_8__17377 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__ValuedObjectsAssignment_8_1_in_rule__Declaration__Group_8__1__Impl7404 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group__0__Impl_in_rule__ValuedObject__Group__07438 = new BitSet(new long[]{0x800003F800000440L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group__1_in_rule__ValuedObject__Group__07441 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObject__AnnotationsAssignment_0_in_rule__ValuedObject__Group__0__Impl7468 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group__1__Impl_in_rule__ValuedObject__Group__17499 = new BitSet(new long[]{0x00D0000000000000L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group__2_in_rule__ValuedObject__Group__17502 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObject__NameAssignment_1_in_rule__ValuedObject__Group__1__Impl7529 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group__2__Impl_in_rule__ValuedObject__Group__27559 = new BitSet(new long[]{0x00D0000000000000L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group__3_in_rule__ValuedObject__Group__27562 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group_2__0_in_rule__ValuedObject__Group__2__Impl7589 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group__3__Impl_in_rule__ValuedObject__Group__37620 = new BitSet(new long[]{0x00D0000000000000L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group__4_in_rule__ValuedObject__Group__37623 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group_3__0_in_rule__ValuedObject__Group__3__Impl7650 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group__4__Impl_in_rule__ValuedObject__Group__47681 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_52_in_rule__ValuedObject__Group__4__Impl7709 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group_2__0__Impl_in_rule__ValuedObject__Group_2__07750 = new BitSet(new long[]{0x00004000045203D0L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group_2__1_in_rule__ValuedObject__Group_2__07753 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_54_in_rule__ValuedObject__Group_2__0__Impl7781 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group_2__1__Impl_in_rule__ValuedObject__Group_2__17812 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObject__InitialValueAssignment_2_1_in_rule__ValuedObject__Group_2__1__Impl7839 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group_3__0__Impl_in_rule__ValuedObject__Group_3__07873 = new BitSet(new long[]{0x00001E0000AC0000L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group_3__1_in_rule__ValuedObject__Group_3__07876 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_55_in_rule__ValuedObject__Group_3__0__Impl7904 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObject__Group_3__1__Impl_in_rule__ValuedObject__Group_3__17935 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObject__CombineOperatorAssignment_3_1_in_rule__ValuedObject__Group_3__1__Impl7962 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Assignment__Group__0__Impl_in_rule__Assignment__Group__07996 = new BitSet(new long[]{0x0040000000000000L});
+    public static final BitSet FOLLOW_rule__Assignment__Group__1_in_rule__Assignment__Group__07999 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Assignment__VariableAssignment_0_in_rule__Assignment__Group__0__Impl8026 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Assignment__Group__1__Impl_in_rule__Assignment__Group__18056 = new BitSet(new long[]{0x00004000045203D0L});
+    public static final BitSet FOLLOW_rule__Assignment__Group__2_in_rule__Assignment__Group__18059 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_54_in_rule__Assignment__Group__1__Impl8087 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Assignment__Group__2__Impl_in_rule__Assignment__Group__28118 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Assignment__ExpressionAssignment_2_in_rule__Assignment__Group__2__Impl8145 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Prio__Group__0__Impl_in_rule__Prio__Group__08181 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__Prio__Group__1_in_rule__Prio__Group__08184 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_56_in_rule__Prio__Group__0__Impl8212 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Prio__Group__1__Impl_in_rule__Prio__Group__18243 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_rule__Prio__Group__2_in_rule__Prio__Group__18246 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__Prio__Group__1__Impl8274 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Prio__Group__2__Impl_in_rule__Prio__Group__28305 = new BitSet(new long[]{0x0020800000000000L});
+    public static final BitSet FOLLOW_rule__Prio__Group__3_in_rule__Prio__Group__28308 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Prio__PriorityAssignment_2_in_rule__Prio__Group__2__Impl8335 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Prio__Group__3__Impl_in_rule__Prio__Group__38365 = new BitSet(new long[]{0x0020800000000000L});
+    public static final BitSet FOLLOW_rule__Prio__Group__4_in_rule__Prio__Group__38368 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Prio__Group_3__0_in_rule__Prio__Group__3__Impl8395 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Prio__Group__4__Impl_in_rule__Prio__Group__48426 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__Prio__Group__4__Impl8454 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Prio__Group_3__0__Impl_in_rule__Prio__Group_3__08495 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__Prio__Group_3__1_in_rule__Prio__Group_3__08498 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_53_in_rule__Prio__Group_3__0__Impl8526 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Prio__Group_3__1__Impl_in_rule__Prio__Group_3__18557 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Prio__ContinuationAssignment_3_1_in_rule__Prio__Group_3__1__Impl8584 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Trans__Group__0__Impl_in_rule__Trans__Group__08618 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__Trans__Group__1_in_rule__Trans__Group__08621 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_57_in_rule__Trans__Group__0__Impl8649 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Trans__Group__1__Impl_in_rule__Trans__Group__18680 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__Trans__Group__2_in_rule__Trans__Group__18683 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__Trans__Group__1__Impl8711 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Trans__Group__2__Impl_in_rule__Trans__Group__28742 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_rule__Trans__Group__3_in_rule__Trans__Group__28745 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Trans__ContinuationAssignment_2_in_rule__Trans__Group__2__Impl8772 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Trans__Group__3__Impl_in_rule__Trans__Group__38802 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__Trans__Group__3__Impl8830 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Fork__Group__0__Impl_in_rule__Fork__Group__08869 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__Fork__Group__1_in_rule__Fork__Group__08872 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_58_in_rule__Fork__Group__0__Impl8900 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Fork__Group__1__Impl_in_rule__Fork__Group__18931 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__Fork__Group__2_in_rule__Fork__Group__18934 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__Fork__Group__1__Impl8962 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Fork__Group__2__Impl_in_rule__Fork__Group__28993 = new BitSet(new long[]{0x0020000000000000L});
+    public static final BitSet FOLLOW_rule__Fork__Group__3_in_rule__Fork__Group__28996 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Fork__ContinuationAssignment_2_in_rule__Fork__Group__2__Impl9023 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Fork__Group__3__Impl_in_rule__Fork__Group__39053 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_rule__Fork__Group__4_in_rule__Fork__Group__39056 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_53_in_rule__Fork__Group__3__Impl9084 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Fork__Group__4__Impl_in_rule__Fork__Group__49115 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_rule__Fork__Group__5_in_rule__Fork__Group__49118 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Fork__PriorityAssignment_4_in_rule__Fork__Group__4__Impl9145 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Fork__Group__5__Impl_in_rule__Fork__Group__59175 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__Fork__Group__5__Impl9203 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Join__Group__0__Impl_in_rule__Join__Group__09246 = new BitSet(new long[]{0x0800000000000000L});
+    public static final BitSet FOLLOW_rule__Join__Group__1_in_rule__Join__Group__09249 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Join__Group__1__Impl_in_rule__Join__Group__19307 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__Join__Group__2_in_rule__Join__Group__19310 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_59_in_rule__Join__Group__1__Impl9338 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Join__Group__2__Impl_in_rule__Join__Group__29369 = new BitSet(new long[]{0x0000800000000040L});
+    public static final BitSet FOLLOW_rule__Join__Group__3_in_rule__Join__Group__29372 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__Join__Group__2__Impl9400 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Join__Group__3__Impl_in_rule__Join__Group__39431 = new BitSet(new long[]{0x0000800000000040L});
+    public static final BitSet FOLLOW_rule__Join__Group__4_in_rule__Join__Group__39434 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Join__ContinuationAssignment_3_in_rule__Join__Group__3__Impl9461 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Join__Group__4__Impl_in_rule__Join__Group__49492 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__Join__Group__4__Impl9520 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Pause__Group__0__Impl_in_rule__Pause__Group__09561 = new BitSet(new long[]{0x1000000000000000L});
+    public static final BitSet FOLLOW_rule__Pause__Group__1_in_rule__Pause__Group__09564 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Pause__Group__1__Impl_in_rule__Pause__Group__19622 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__Pause__Group__2_in_rule__Pause__Group__19625 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_60_in_rule__Pause__Group__1__Impl9653 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Pause__Group__2__Impl_in_rule__Pause__Group__29684 = new BitSet(new long[]{0x0000800000000040L});
+    public static final BitSet FOLLOW_rule__Pause__Group__3_in_rule__Pause__Group__29687 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__Pause__Group__2__Impl9715 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Pause__Group__3__Impl_in_rule__Pause__Group__39746 = new BitSet(new long[]{0x0000800000000040L});
+    public static final BitSet FOLLOW_rule__Pause__Group__4_in_rule__Pause__Group__39749 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Pause__ContinuationAssignment_3_in_rule__Pause__Group__3__Impl9776 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Pause__Group__4__Impl_in_rule__Pause__Group__49807 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__Pause__Group__4__Impl9835 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Term__Group__0__Impl_in_rule__Term__Group__09876 = new BitSet(new long[]{0x2000000000000000L});
+    public static final BitSet FOLLOW_rule__Term__Group__1_in_rule__Term__Group__09879 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Term__Group__1__Impl_in_rule__Term__Group__19937 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__Term__Group__2_in_rule__Term__Group__19940 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_61_in_rule__Term__Group__1__Impl9968 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Term__Group__2__Impl_in_rule__Term__Group__29999 = new BitSet(new long[]{0x0000800000000040L});
+    public static final BitSet FOLLOW_rule__Term__Group__3_in_rule__Term__Group__210002 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__Term__Group__2__Impl10030 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Term__Group__3__Impl_in_rule__Term__Group__310061 = new BitSet(new long[]{0x0000800000000040L});
+    public static final BitSet FOLLOW_rule__Term__Group__4_in_rule__Term__Group__310064 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Term__ContinuationAssignment_3_in_rule__Term__Group__3__Impl10091 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Term__Group__4__Impl_in_rule__Term__Group__410122 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__Term__Group__4__Impl10150 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Halt__Group__0__Impl_in_rule__Halt__Group__010191 = new BitSet(new long[]{0x4000000000000000L});
+    public static final BitSet FOLLOW_rule__Halt__Group__1_in_rule__Halt__Group__010194 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Halt__Group__1__Impl_in_rule__Halt__Group__110252 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__Halt__Group__2_in_rule__Halt__Group__110255 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_62_in_rule__Halt__Group__1__Impl10283 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Halt__Group__2__Impl_in_rule__Halt__Group__210314 = new BitSet(new long[]{0x0000800000000040L});
+    public static final BitSet FOLLOW_rule__Halt__Group__3_in_rule__Halt__Group__210317 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__Halt__Group__2__Impl10345 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Halt__Group__3__Impl_in_rule__Halt__Group__310376 = new BitSet(new long[]{0x0000800000000040L});
+    public static final BitSet FOLLOW_rule__Halt__Group__4_in_rule__Halt__Group__310379 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Halt__ContinuationAssignment_3_in_rule__Halt__Group__3__Impl10406 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Halt__Group__4__Impl_in_rule__Halt__Group__410437 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__Halt__Group__4__Impl10465 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LocalSignal__Group__0__Impl_in_rule__LocalSignal__Group__010506 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__LocalSignal__Group__1_in_rule__LocalSignal__Group__010509 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_63_in_rule__LocalSignal__Group__0__Impl10537 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LocalSignal__Group__1__Impl_in_rule__LocalSignal__Group__110568 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__LocalSignal__Group__2_in_rule__LocalSignal__Group__110571 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__LocalSignal__Group__1__Impl10599 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LocalSignal__Group__2__Impl_in_rule__LocalSignal__Group__210630 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_rule__LocalSignal__Group__3_in_rule__LocalSignal__Group__210633 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LocalSignal__SignalAssignment_2_in_rule__LocalSignal__Group__2__Impl10660 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__LocalSignal__Group__3__Impl_in_rule__LocalSignal__Group__310690 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__LocalSignal__Group__3__Impl10718 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__Group__0__Impl_in_rule__Emit__Group__010757 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__Emit__Group__1_in_rule__Emit__Group__010760 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_64_in_rule__Emit__Group__0__Impl10788 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__Group__1__Impl_in_rule__Emit__Group__110819 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__Emit__Group__2_in_rule__Emit__Group__110822 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__Emit__Group__1__Impl10850 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__Group__2__Impl_in_rule__Emit__Group__210881 = new BitSet(new long[]{0x0020C00000000000L});
+    public static final BitSet FOLLOW_rule__Emit__Group__3_in_rule__Emit__Group__210884 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__SignalAssignment_2_in_rule__Emit__Group__2__Impl10911 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__Group__3__Impl_in_rule__Emit__Group__310941 = new BitSet(new long[]{0x0020C00000000000L});
+    public static final BitSet FOLLOW_rule__Emit__Group__4_in_rule__Emit__Group__310944 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__Group_3__0_in_rule__Emit__Group__3__Impl10971 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__Group__4__Impl_in_rule__Emit__Group__411002 = new BitSet(new long[]{0x0020C00000000000L});
+    public static final BitSet FOLLOW_rule__Emit__Group__5_in_rule__Emit__Group__411005 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__Group_4__0_in_rule__Emit__Group__4__Impl11032 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__Group__5__Impl_in_rule__Emit__Group__511063 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__Emit__Group__5__Impl11091 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__Group_3__0__Impl_in_rule__Emit__Group_3__011134 = new BitSet(new long[]{0x00004000045203D0L});
+    public static final BitSet FOLLOW_rule__Emit__Group_3__1_in_rule__Emit__Group_3__011137 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__Emit__Group_3__0__Impl11165 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__Group_3__1__Impl_in_rule__Emit__Group_3__111196 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_rule__Emit__Group_3__2_in_rule__Emit__Group_3__111199 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__ValueAssignment_3_1_in_rule__Emit__Group_3__1__Impl11226 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__Group_3__2__Impl_in_rule__Emit__Group_3__211256 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__Emit__Group_3__2__Impl11284 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__Group_4__0__Impl_in_rule__Emit__Group_4__011321 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__Emit__Group_4__1_in_rule__Emit__Group_4__011324 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_53_in_rule__Emit__Group_4__0__Impl11352 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__Group_4__1__Impl_in_rule__Emit__Group_4__111383 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Emit__ContinuationAssignment_4_1_in_rule__Emit__Group_4__1__Impl11410 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Abort__Group__0__Impl_in_rule__Abort__Group__011444 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Abort__Group__1_in_rule__Abort__Group__011447 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Abort__Group__1__Impl_in_rule__Abort__Group__111505 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__Abort__Group__2_in_rule__Abort__Group__111508 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_65_in_rule__Abort__Group__1__Impl11536 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Abort__Group__2__Impl_in_rule__Abort__Group__211567 = new BitSet(new long[]{0x0000800000000040L});
+    public static final BitSet FOLLOW_rule__Abort__Group__3_in_rule__Abort__Group__211570 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__Abort__Group__2__Impl11598 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Abort__Group__3__Impl_in_rule__Abort__Group__311629 = new BitSet(new long[]{0x0000800000000040L});
+    public static final BitSet FOLLOW_rule__Abort__Group__4_in_rule__Abort__Group__311632 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Abort__ContinuationAssignment_3_in_rule__Abort__Group__3__Impl11659 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Abort__Group__4__Impl_in_rule__Abort__Group__411690 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__Abort__Group__4__Impl11718 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__Group__0__Impl_in_rule__If__Group__011759 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__If__Group__1_in_rule__If__Group__011762 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_66_in_rule__If__Group__0__Impl11790 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__Group__1__Impl_in_rule__If__Group__111821 = new BitSet(new long[]{0x00004000045203D0L});
+    public static final BitSet FOLLOW_rule__If__Group__2_in_rule__If__Group__111824 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__If__Group__1__Impl11852 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__Group__2__Impl_in_rule__If__Group__211883 = new BitSet(new long[]{0x0020800000000000L});
+    public static final BitSet FOLLOW_rule__If__Group__3_in_rule__If__Group__211886 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__ExpressionAssignment_2_in_rule__If__Group__2__Impl11913 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__Group__3__Impl_in_rule__If__Group__311943 = new BitSet(new long[]{0x0020800000000000L});
+    public static final BitSet FOLLOW_rule__If__Group__4_in_rule__If__Group__311946 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__Group_3__0_in_rule__If__Group__3__Impl11973 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__Group__4__Impl_in_rule__If__Group__412004 = new BitSet(new long[]{0x0004000000000000L});
+    public static final BitSet FOLLOW_rule__If__Group__5_in_rule__If__Group__412007 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__If__Group__4__Impl12035 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__Group__5__Impl_in_rule__If__Group__512066 = new BitSet(new long[]{0xFF08000000000050L,0x000000000000000FL});
+    public static final BitSet FOLLOW_rule__If__Group__6_in_rule__If__Group__512069 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_50_in_rule__If__Group__5__Impl12097 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__Group__6__Impl_in_rule__If__Group__612128 = new BitSet(new long[]{0xFF08000000000050L,0x000000000000000FL});
+    public static final BitSet FOLLOW_rule__If__Group__7_in_rule__If__Group__612131 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__Group_6__0_in_rule__If__Group__6__Impl12158 = new BitSet(new long[]{0xFF00000000000052L,0x000000000000000FL});
+    public static final BitSet FOLLOW_rule__If__Group__7__Impl_in_rule__If__Group__712189 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_51_in_rule__If__Group__7__Impl12217 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__Group_3__0__Impl_in_rule__If__Group_3__012264 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__If__Group_3__1_in_rule__If__Group_3__012267 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_53_in_rule__If__Group_3__0__Impl12295 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__Group_3__1__Impl_in_rule__If__Group_3__112326 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__ContinuationAssignment_3_1_in_rule__If__Group_3__1__Impl12353 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__Group_6__0__Impl_in_rule__If__Group_6__012387 = new BitSet(new long[]{0x0010000000000000L});
+    public static final BitSet FOLLOW_rule__If__Group_6__1_in_rule__If__Group_6__012390 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__InstructionsAssignment_6_0_in_rule__If__Group_6__0__Impl12417 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__If__Group_6__1__Impl_in_rule__If__Group_6__112447 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_52_in_rule__If__Group_6__1__Impl12475 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Await__Group__0__Impl_in_rule__Await__Group__012510 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__Await__Group__1_in_rule__Await__Group__012513 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_67_in_rule__Await__Group__0__Impl12541 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Await__Group__1__Impl_in_rule__Await__Group__112572 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__Await__Group__2_in_rule__Await__Group__112575 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__Await__Group__1__Impl12603 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Await__Group__2__Impl_in_rule__Await__Group__212634 = new BitSet(new long[]{0x0020800000000000L});
+    public static final BitSet FOLLOW_rule__Await__Group__3_in_rule__Await__Group__212637 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Await__SignalAssignment_2_in_rule__Await__Group__2__Impl12664 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Await__Group__3__Impl_in_rule__Await__Group__312694 = new BitSet(new long[]{0x0020800000000000L});
+    public static final BitSet FOLLOW_rule__Await__Group__4_in_rule__Await__Group__312697 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Await__Group_3__0_in_rule__Await__Group__3__Impl12724 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Await__Group__4__Impl_in_rule__Await__Group__412755 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__Await__Group__4__Impl12783 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Await__Group_3__0__Impl_in_rule__Await__Group_3__012824 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__Await__Group_3__1_in_rule__Await__Group_3__012827 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_53_in_rule__Await__Group_3__0__Impl12855 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Await__Group_3__1__Impl_in_rule__Await__Group_3__112886 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Await__ContinuationAssignment_3_1_in_rule__Await__Group_3__1__Impl12913 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__Group__0__Impl_in_rule__OrAndExpression__Group__012947 = new BitSet(new long[]{0x00000000180C0000L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__Group__1_in_rule__OrAndExpression__Group__012950 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCompareOperation_in_rule__OrAndExpression__Group__0__Impl12977 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__Group__1__Impl_in_rule__OrAndExpression__Group__113006 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__Alternatives_1_in_rule__OrAndExpression__Group__1__Impl13033 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_0__0__Impl_in_rule__OrAndExpression__Group_1_0__013067 = new BitSet(new long[]{0x0000000008040000L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_0__1_in_rule__OrAndExpression__Group_1_0__013070 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_0__1__Impl_in_rule__OrAndExpression__Group_1_0__113128 = new BitSet(new long[]{0x00004000045203D0L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_0__2_in_rule__OrAndExpression__Group_1_0__113131 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__OperatorAssignment_1_0_1_in_rule__OrAndExpression__Group_1_0__1__Impl13158 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_0__2__Impl_in_rule__OrAndExpression__Group_1_0__213188 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__SubExpressionsAssignment_1_0_2_in_rule__OrAndExpression__Group_1_0__2__Impl13215 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_1__0__Impl_in_rule__OrAndExpression__Group_1_1__013251 = new BitSet(new long[]{0x0000000010080000L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_1__1_in_rule__OrAndExpression__Group_1_1__013254 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_1__1__Impl_in_rule__OrAndExpression__Group_1_1__113312 = new BitSet(new long[]{0x00004000045203D0L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_1__2_in_rule__OrAndExpression__Group_1_1__113315 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__OperatorAssignment_1_1_1_in_rule__OrAndExpression__Group_1_1__1__Impl13342 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_1__2__Impl_in_rule__OrAndExpression__Group_1_1__213372 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__SubExpressionsAssignment_1_1_2_in_rule__OrAndExpression__Group_1_1__2__Impl13399 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0__Impl_in_rule__CompareOperation__Group_0__013435 = new BitSet(new long[]{0x00000007E0000000L});
+    public static final BitSet FOLLOW_rule__CompareOperation__Group_0__1_in_rule__CompareOperation__Group_0__013438 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__Group_0__0__Impl13465 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__CompareOperation__Group_0__1__Impl_in_rule__CompareOperation__Group_0__113494 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__0_in_rule__CompareOperation__Group_0__1__Impl13521 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__0__Impl_in_rule__CompareOperation__Group_0_1__013555 = new BitSet(new long[]{0x00000007E0000000L});
+    public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__1_in_rule__CompareOperation__Group_0_1__013558 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__1__Impl_in_rule__CompareOperation__Group_0_1__113616 = new BitSet(new long[]{0x00004000045203D0L});
+    public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__2_in_rule__CompareOperation__Group_0_1__113619 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__CompareOperation__OperatorAssignment_0_1_1_in_rule__CompareOperation__Group_0_1__1__Impl13646 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__CompareOperation__Group_0_1__2__Impl_in_rule__CompareOperation__Group_0_1__213676 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__CompareOperation__SubExpressionsAssignment_0_1_2_in_rule__CompareOperation__Group_0_1__2__Impl13703 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__NotExpression__Group_0__0__Impl_in_rule__NotExpression__Group_0__013739 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_rule__NotExpression__Group_0__1_in_rule__NotExpression__Group_0__013742 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__NotExpression__Group_0__1__Impl_in_rule__NotExpression__Group_0__113800 = new BitSet(new long[]{0x00004000045203D0L});
+    public static final BitSet FOLLOW_rule__NotExpression__Group_0__2_in_rule__NotExpression__Group_0__113803 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__NotExpression__OperatorAssignment_0_1_in_rule__NotExpression__Group_0__1__Impl13830 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__NotExpression__Group_0__2__Impl_in_rule__NotExpression__Group_0__213860 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__NotExpression__SubExpressionsAssignment_0_2_in_rule__NotExpression__Group_0__2__Impl13887 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AddExpression__Group__0__Impl_in_rule__AddExpression__Group__013923 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_rule__AddExpression__Group__1_in_rule__AddExpression__Group__013926 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSubExpression_in_rule__AddExpression__Group__0__Impl13953 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AddExpression__Group__1__Impl_in_rule__AddExpression__Group__113982 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AddExpression__Group_1__0_in_rule__AddExpression__Group__1__Impl14009 = new BitSet(new long[]{0x0000000000200002L});
+    public static final BitSet FOLLOW_rule__AddExpression__Group_1__0__Impl_in_rule__AddExpression__Group_1__014044 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_rule__AddExpression__Group_1__1_in_rule__AddExpression__Group_1__014047 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AddExpression__Group_1__1__Impl_in_rule__AddExpression__Group_1__114105 = new BitSet(new long[]{0x00004000044203D0L});
+    public static final BitSet FOLLOW_rule__AddExpression__Group_1__2_in_rule__AddExpression__Group_1__114108 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AddExpression__OperatorAssignment_1_1_in_rule__AddExpression__Group_1__1__Impl14135 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AddExpression__Group_1__2__Impl_in_rule__AddExpression__Group_1__214165 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AddExpression__SubExpressionsAssignment_1_2_in_rule__AddExpression__Group_1__2__Impl14192 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__SubExpression__Group__0__Impl_in_rule__SubExpression__Group__014228 = new BitSet(new long[]{0x0000000000400000L});
+    public static final BitSet FOLLOW_rule__SubExpression__Group__1_in_rule__SubExpression__Group__014231 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMultExpression_in_rule__SubExpression__Group__0__Impl14258 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__SubExpression__Group__1__Impl_in_rule__SubExpression__Group__114287 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__SubExpression__Group_1__0_in_rule__SubExpression__Group__1__Impl14314 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_rule__SubExpression__Group_1__0__Impl_in_rule__SubExpression__Group_1__014349 = new BitSet(new long[]{0x0000000000400000L});
+    public static final BitSet FOLLOW_rule__SubExpression__Group_1__1_in_rule__SubExpression__Group_1__014352 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__SubExpression__Group_1__1__Impl_in_rule__SubExpression__Group_1__114410 = new BitSet(new long[]{0x00004000044203D0L});
+    public static final BitSet FOLLOW_rule__SubExpression__Group_1__2_in_rule__SubExpression__Group_1__114413 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__SubExpression__OperatorAssignment_1_1_in_rule__SubExpression__Group_1__1__Impl14440 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__SubExpression__Group_1__2__Impl_in_rule__SubExpression__Group_1__214470 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__SubExpression__SubExpressionsAssignment_1_2_in_rule__SubExpression__Group_1__2__Impl14497 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__MultExpression__Group__0__Impl_in_rule__MultExpression__Group__014533 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_rule__MultExpression__Group__1_in_rule__MultExpression__Group__014536 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDivExpression_in_rule__MultExpression__Group__0__Impl14563 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__MultExpression__Group__1__Impl_in_rule__MultExpression__Group__114592 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__MultExpression__Group_1__0_in_rule__MultExpression__Group__1__Impl14619 = new BitSet(new long[]{0x0000000000800002L});
+    public static final BitSet FOLLOW_rule__MultExpression__Group_1__0__Impl_in_rule__MultExpression__Group_1__014654 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_rule__MultExpression__Group_1__1_in_rule__MultExpression__Group_1__014657 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__MultExpression__Group_1__1__Impl_in_rule__MultExpression__Group_1__114715 = new BitSet(new long[]{0x00004000044203D0L});
+    public static final BitSet FOLLOW_rule__MultExpression__Group_1__2_in_rule__MultExpression__Group_1__114718 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__MultExpression__OperatorAssignment_1_1_in_rule__MultExpression__Group_1__1__Impl14745 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__MultExpression__Group_1__2__Impl_in_rule__MultExpression__Group_1__214775 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__MultExpression__SubExpressionsAssignment_1_2_in_rule__MultExpression__Group_1__2__Impl14802 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__DivExpression__Group__0__Impl_in_rule__DivExpression__Group__014838 = new BitSet(new long[]{0x0000000002000000L});
+    public static final BitSet FOLLOW_rule__DivExpression__Group__1_in_rule__DivExpression__Group__014841 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleModExpression_in_rule__DivExpression__Group__0__Impl14868 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__DivExpression__Group__1__Impl_in_rule__DivExpression__Group__114897 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__DivExpression__Group_1__0_in_rule__DivExpression__Group__1__Impl14924 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__DivExpression__Group_1__0__Impl_in_rule__DivExpression__Group_1__014959 = new BitSet(new long[]{0x0000000002000000L});
+    public static final BitSet FOLLOW_rule__DivExpression__Group_1__1_in_rule__DivExpression__Group_1__014962 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__DivExpression__Group_1__1__Impl_in_rule__DivExpression__Group_1__115020 = new BitSet(new long[]{0x00004000044203D0L});
+    public static final BitSet FOLLOW_rule__DivExpression__Group_1__2_in_rule__DivExpression__Group_1__115023 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__DivExpression__OperatorAssignment_1_1_in_rule__DivExpression__Group_1__1__Impl15050 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__DivExpression__Group_1__2__Impl_in_rule__DivExpression__Group_1__215080 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__DivExpression__SubExpressionsAssignment_1_2_in_rule__DivExpression__Group_1__2__Impl15107 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ModExpression__Group__0__Impl_in_rule__ModExpression__Group__015143 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_rule__ModExpression__Group__1_in_rule__ModExpression__Group__015146 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleNegExpression_in_rule__ModExpression__Group__0__Impl15173 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ModExpression__Group__1__Impl_in_rule__ModExpression__Group__115202 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ModExpression__Group_1__0_in_rule__ModExpression__Group__1__Impl15229 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ModExpression__Group_1__0__Impl_in_rule__ModExpression__Group_1__015264 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_rule__ModExpression__Group_1__1_in_rule__ModExpression__Group_1__015267 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ModExpression__Group_1__1__Impl_in_rule__ModExpression__Group_1__115325 = new BitSet(new long[]{0x00004000044203D0L});
+    public static final BitSet FOLLOW_rule__ModExpression__Group_1__2_in_rule__ModExpression__Group_1__115328 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ModExpression__OperatorAssignment_1_1_in_rule__ModExpression__Group_1__1__Impl15355 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ModExpression__Group_1__2__Impl_in_rule__ModExpression__Group_1__215385 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ModExpression__SubExpressionsAssignment_1_2_in_rule__ModExpression__Group_1__2__Impl15412 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__NegExpression__Group_0__0__Impl_in_rule__NegExpression__Group_0__015448 = new BitSet(new long[]{0x0000000000400000L});
+    public static final BitSet FOLLOW_rule__NegExpression__Group_0__1_in_rule__NegExpression__Group_0__015451 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__NegExpression__Group_0__1__Impl_in_rule__NegExpression__Group_0__115509 = new BitSet(new long[]{0x00004000044203D0L});
+    public static final BitSet FOLLOW_rule__NegExpression__Group_0__2_in_rule__NegExpression__Group_0__115512 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__NegExpression__OperatorAssignment_0_1_in_rule__NegExpression__Group_0__1__Impl15539 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__NegExpression__Group_0__2__Impl_in_rule__NegExpression__Group_0__215569 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__NegExpression__SubExpressionsAssignment_0_2_in_rule__NegExpression__Group_0__2__Impl15596 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__0__Impl_in_rule__AtomicExpression__Group_2__015632 = new BitSet(new long[]{0x00004000045203D0L});
+    public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__1_in_rule__AtomicExpression__Group_2__015635 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__AtomicExpression__Group_2__0__Impl15663 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__1__Impl_in_rule__AtomicExpression__Group_2__115694 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__2_in_rule__AtomicExpression__Group_2__115697 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleBoolExpression_in_rule__AtomicExpression__Group_2__1__Impl15724 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AtomicExpression__Group_2__2__Impl_in_rule__AtomicExpression__Group_2__215753 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__AtomicExpression__Group_2__2__Impl15781 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_2__0__Impl_in_rule__AtomicValuedExpression__Group_2__015818 = new BitSet(new long[]{0x00004000044203D0L});
+    public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_2__1_in_rule__AtomicValuedExpression__Group_2__015821 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__AtomicValuedExpression__Group_2__0__Impl15849 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_2__1__Impl_in_rule__AtomicValuedExpression__Group_2__115880 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_2__2_in_rule__AtomicValuedExpression__Group_2__115883 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValuedExpression_in_rule__AtomicValuedExpression__Group_2__1__Impl15910 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_2__2__Impl_in_rule__AtomicValuedExpression__Group_2__215939 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__AtomicValuedExpression__Group_2__2__Impl15967 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__0__Impl_in_rule__ValuedObjectTestExpression__Group_0__016004 = new BitSet(new long[]{0x0000000004020000L});
+    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__1_in_rule__ValuedObjectTestExpression__Group_0__016007 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__1__Impl_in_rule__ValuedObjectTestExpression__Group_0__116065 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__2_in_rule__ValuedObjectTestExpression__Group_0__116068 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__OperatorAssignment_0_1_in_rule__ValuedObjectTestExpression__Group_0__1__Impl16095 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__2__Impl_in_rule__ValuedObjectTestExpression__Group_0__216125 = new BitSet(new long[]{0x0000000004020040L});
+    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__3_in_rule__ValuedObjectTestExpression__Group_0__216128 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__ValuedObjectTestExpression__Group_0__2__Impl16156 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__3__Impl_in_rule__ValuedObjectTestExpression__Group_0__316187 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__4_in_rule__ValuedObjectTestExpression__Group_0__316190 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3_in_rule__ValuedObjectTestExpression__Group_0__3__Impl16217 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__Group_0__4__Impl_in_rule__ValuedObjectTestExpression__Group_0__416247 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__ValuedObjectTestExpression__Group_0__4__Impl16275 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group__0__Impl_in_rule__ValuedObjectReference__Group__016316 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group__1_in_rule__ValuedObjectReference__Group__016319 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectReference__ValuedObjectAssignment_0_in_rule__ValuedObjectReference__Group__0__Impl16346 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group__1__Impl_in_rule__ValuedObjectReference__Group__116376 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__0_in_rule__ValuedObjectReference__Group__1__Impl16403 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__0__Impl_in_rule__ValuedObjectReference__Group_1__016438 = new BitSet(new long[]{0x00004000045203D0L});
+    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__1_in_rule__ValuedObjectReference__Group_1__016441 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_68_in_rule__ValuedObjectReference__Group_1__0__Impl16469 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__1__Impl_in_rule__ValuedObjectReference__Group_1__116500 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__2_in_rule__ValuedObjectReference__Group_1__116503 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectReference__CardinalitiesAssignment_1_1_in_rule__ValuedObjectReference__Group_1__1__Impl16530 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__2__Impl_in_rule__ValuedObjectReference__Group_1__216560 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_69_in_rule__ValuedObjectReference__Group_1__2__Impl16588 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TagAnnotation__Group__0__Impl_in_rule__TagAnnotation__Group__016625 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__TagAnnotation__Group__1_in_rule__TagAnnotation__Group__016628 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_70_in_rule__TagAnnotation__Group__0__Impl16656 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TagAnnotation__Group__1__Impl_in_rule__TagAnnotation__Group__116687 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__TagAnnotation__Group__2_in_rule__TagAnnotation__Group__116690 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TagAnnotation__NameAssignment_1_in_rule__TagAnnotation__Group__1__Impl16717 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TagAnnotation__Group__2__Impl_in_rule__TagAnnotation__Group__216747 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__0_in_rule__TagAnnotation__Group__2__Impl16774 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__0__Impl_in_rule__TagAnnotation__Group_2__016811 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__1_in_rule__TagAnnotation__Group_2__016814 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__TagAnnotation__Group_2__0__Impl16842 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__1__Impl_in_rule__TagAnnotation__Group_2__116873 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__2_in_rule__TagAnnotation__Group_2__116876 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TagAnnotation__AnnotationsAssignment_2_1_in_rule__TagAnnotation__Group_2__1__Impl16903 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__TagAnnotation__Group_2__2__Impl_in_rule__TagAnnotation__Group_2__216934 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__TagAnnotation__Group_2__2__Impl16962 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__0__Impl_in_rule__KeyStringValueAnnotation__Group__016999 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__1_in_rule__KeyStringValueAnnotation__Group__017002 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_70_in_rule__KeyStringValueAnnotation__Group__0__Impl17030 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__1__Impl_in_rule__KeyStringValueAnnotation__Group__117061 = new BitSet(new long[]{0x0000000000000060L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__2_in_rule__KeyStringValueAnnotation__Group__117064 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__NameAssignment_1_in_rule__KeyStringValueAnnotation__Group__1__Impl17091 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__2__Impl_in_rule__KeyStringValueAnnotation__Group__217121 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__3_in_rule__KeyStringValueAnnotation__Group__217124 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__ValueAssignment_2_in_rule__KeyStringValueAnnotation__Group__2__Impl17151 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__3__Impl_in_rule__KeyStringValueAnnotation__Group__317181 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__0_in_rule__KeyStringValueAnnotation__Group__3__Impl17208 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__0__Impl_in_rule__KeyStringValueAnnotation__Group_3__017247 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__1_in_rule__KeyStringValueAnnotation__Group_3__017250 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__KeyStringValueAnnotation__Group_3__0__Impl17278 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__1__Impl_in_rule__KeyStringValueAnnotation__Group_3__117309 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__2_in_rule__KeyStringValueAnnotation__Group_3__117312 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyStringValueAnnotation__Group_3__1__Impl17339 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__2__Impl_in_rule__KeyStringValueAnnotation__Group_3__217370 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__KeyStringValueAnnotation__Group_3__2__Impl17398 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group__017435 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1_in_rule__TypedKeyStringValueAnnotation__Group__017438 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_70_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl17466 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group__117497 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2_in_rule__TypedKeyStringValueAnnotation__Group__117500 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__NameAssignment_1_in_rule__TypedKeyStringValueAnnotation__Group__1__Impl17527 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group__217557 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3_in_rule__TypedKeyStringValueAnnotation__Group__217560 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_68_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl17588 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3__Impl_in_rule__TypedKeyStringValueAnnotation__Group__317619 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4_in_rule__TypedKeyStringValueAnnotation__Group__317622 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__TypeAssignment_3_in_rule__TypedKeyStringValueAnnotation__Group__3__Impl17649 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4__Impl_in_rule__TypedKeyStringValueAnnotation__Group__417679 = new BitSet(new long[]{0x0000000000000060L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5_in_rule__TypedKeyStringValueAnnotation__Group__417682 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_69_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl17710 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__5__Impl_in_rule__TypedKeyStringValueAnnotation__Group__517741 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6_in_rule__TypedKeyStringValueAnnotation__Group__517744 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__ValueAssignment_5_in_rule__TypedKeyStringValueAnnotation__Group__5__Impl17771 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__6__Impl_in_rule__TypedKeyStringValueAnnotation__Group__617801 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0_in_rule__TypedKeyStringValueAnnotation__Group__6__Impl17828 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__017873 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1_in_rule__TypedKeyStringValueAnnotation__Group_6__017876 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__TypedKeyStringValueAnnotation__Group_6__0__Impl17904 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__117935 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2_in_rule__TypedKeyStringValueAnnotation__Group_6__117938 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1_in_rule__TypedKeyStringValueAnnotation__Group_6__1__Impl17965 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group_6__217996 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__TypedKeyStringValueAnnotation__Group_6__2__Impl18024 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__0__Impl_in_rule__KeyBooleanValueAnnotation__Group__018061 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__1_in_rule__KeyBooleanValueAnnotation__Group__018064 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_70_in_rule__KeyBooleanValueAnnotation__Group__0__Impl18092 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__1__Impl_in_rule__KeyBooleanValueAnnotation__Group__118123 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__2_in_rule__KeyBooleanValueAnnotation__Group__118126 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__NameAssignment_1_in_rule__KeyBooleanValueAnnotation__Group__1__Impl18153 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__2__Impl_in_rule__KeyBooleanValueAnnotation__Group__218183 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__3_in_rule__KeyBooleanValueAnnotation__Group__218186 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__ValueAssignment_2_in_rule__KeyBooleanValueAnnotation__Group__2__Impl18213 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__3__Impl_in_rule__KeyBooleanValueAnnotation__Group__318243 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0_in_rule__KeyBooleanValueAnnotation__Group__3__Impl18270 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__0__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__018309 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1_in_rule__KeyBooleanValueAnnotation__Group_3__018312 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__KeyBooleanValueAnnotation__Group_3__0__Impl18340 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__1__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__118371 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2_in_rule__KeyBooleanValueAnnotation__Group_3__118374 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyBooleanValueAnnotation__Group_3__1__Impl18401 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group_3__2__Impl_in_rule__KeyBooleanValueAnnotation__Group_3__218432 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__KeyBooleanValueAnnotation__Group_3__2__Impl18460 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__0__Impl_in_rule__KeyIntValueAnnotation__Group__018497 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__1_in_rule__KeyIntValueAnnotation__Group__018500 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_70_in_rule__KeyIntValueAnnotation__Group__0__Impl18528 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__1__Impl_in_rule__KeyIntValueAnnotation__Group__118559 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__2_in_rule__KeyIntValueAnnotation__Group__118562 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__NameAssignment_1_in_rule__KeyIntValueAnnotation__Group__1__Impl18589 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__2__Impl_in_rule__KeyIntValueAnnotation__Group__218619 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__3_in_rule__KeyIntValueAnnotation__Group__218622 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__ValueAssignment_2_in_rule__KeyIntValueAnnotation__Group__2__Impl18649 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group__3__Impl_in_rule__KeyIntValueAnnotation__Group__318679 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__0_in_rule__KeyIntValueAnnotation__Group__3__Impl18706 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__0__Impl_in_rule__KeyIntValueAnnotation__Group_3__018745 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__1_in_rule__KeyIntValueAnnotation__Group_3__018748 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__KeyIntValueAnnotation__Group_3__0__Impl18776 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__1__Impl_in_rule__KeyIntValueAnnotation__Group_3__118807 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__2_in_rule__KeyIntValueAnnotation__Group_3__118810 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyIntValueAnnotation__Group_3__1__Impl18837 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyIntValueAnnotation__Group_3__2__Impl_in_rule__KeyIntValueAnnotation__Group_3__218868 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__KeyIntValueAnnotation__Group_3__2__Impl18896 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__0__Impl_in_rule__KeyFloatValueAnnotation__Group__018933 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__1_in_rule__KeyFloatValueAnnotation__Group__018936 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_70_in_rule__KeyFloatValueAnnotation__Group__0__Impl18964 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__1__Impl_in_rule__KeyFloatValueAnnotation__Group__118995 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__2_in_rule__KeyFloatValueAnnotation__Group__118998 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__NameAssignment_1_in_rule__KeyFloatValueAnnotation__Group__1__Impl19025 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__2__Impl_in_rule__KeyFloatValueAnnotation__Group__219055 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__3_in_rule__KeyFloatValueAnnotation__Group__219058 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__ValueAssignment_2_in_rule__KeyFloatValueAnnotation__Group__2__Impl19085 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group__3__Impl_in_rule__KeyFloatValueAnnotation__Group__319115 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0_in_rule__KeyFloatValueAnnotation__Group__3__Impl19142 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__0__Impl_in_rule__KeyFloatValueAnnotation__Group_3__019181 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1_in_rule__KeyFloatValueAnnotation__Group_3__019184 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__KeyFloatValueAnnotation__Group_3__0__Impl19212 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__1__Impl_in_rule__KeyFloatValueAnnotation__Group_3__119243 = new BitSet(new long[]{0x0000800000000400L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2_in_rule__KeyFloatValueAnnotation__Group_3__119246 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyFloatValueAnnotation__Group_3__1__Impl19273 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__KeyFloatValueAnnotation__Group_3__2__Impl_in_rule__KeyFloatValueAnnotation__Group_3__219304 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__KeyFloatValueAnnotation__Group_3__2__Impl19332 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ExtendedID__Group__0__Impl_in_rule__ExtendedID__Group__019370 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+    public static final BitSet FOLLOW_rule__ExtendedID__Group__1_in_rule__ExtendedID__Group__019373 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group__0__Impl19400 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ExtendedID__Group__1__Impl_in_rule__ExtendedID__Group__119429 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0_in_rule__ExtendedID__Group__1__Impl19456 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000080L});
+    public static final BitSet FOLLOW_rule__ExtendedID__Group_1__0__Impl_in_rule__ExtendedID__Group_1__019491 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1_in_rule__ExtendedID__Group_1__019494 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_71_in_rule__ExtendedID__Group_1__0__Impl19522 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__119553 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl19580 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Program__NameAssignment_119618 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__Program__PriorityAssignment_319649 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDeclaration_in_rule__Program__DelcarationsAssignment_519680 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__Program__GlobalHostCodeInstructionAssignment_6_119711 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleState_in_rule__Program__StatesAssignment_719742 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__State__NameAssignment_219773 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDeclaration_in_rule__State__DeclarationsAssignment_519804 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleInstruction_in_rule__State__InstructionsAssignment_6_019835 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnnotation_in_rule__Declaration__AnnotationsAssignment_019866 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_72_in_rule__Declaration__ConstAssignment_119902 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_73_in_rule__Declaration__InputAssignment_219946 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_74_in_rule__Declaration__OutputAssignment_319990 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_75_in_rule__Declaration__StaticAssignment_420034 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_63_in_rule__Declaration__SignalAssignment_520078 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValueType_in_rule__Declaration__TypeAssignment_620117 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValuedObject_in_rule__Declaration__ValuedObjectsAssignment_720148 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValuedObject_in_rule__Declaration__ValuedObjectsAssignment_8_120179 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnnotation_in_rule__ValuedObject__AnnotationsAssignment_020210 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__ValuedObject__NameAssignment_120241 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExpression_in_rule__ValuedObject__InitialValueAssignment_2_120272 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCombineOperator_in_rule__ValuedObject__CombineOperatorAssignment_3_120303 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__HostCodeInstruction__HostCodeAssignment20334 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Assignment__VariableAssignment_020369 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExpression_in_rule__Assignment__ExpressionAssignment_220404 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__Prio__PriorityAssignment_220435 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Prio__ContinuationAssignment_3_120470 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Trans__ContinuationAssignment_220509 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Fork__ContinuationAssignment_220548 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__Fork__PriorityAssignment_420583 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Join__ContinuationAssignment_320618 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Pause__ContinuationAssignment_320657 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Term__ContinuationAssignment_320696 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Halt__ContinuationAssignment_320735 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__LocalSignal__SignalAssignment_220774 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Emit__SignalAssignment_220813 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSExpression_in_rule__Emit__ValueAssignment_3_120848 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Emit__ContinuationAssignment_4_120883 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Abort__ContinuationAssignment_320922 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSExpression_in_rule__If__ExpressionAssignment_220957 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__If__ContinuationAssignment_3_120992 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleInstruction_in_rule__If__InstructionsAssignment_6_021027 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Await__SignalAssignment_221062 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Await__ContinuationAssignment_3_121101 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__OperatorAlternatives_1_0_1_0_in_rule__OrAndExpression__OperatorAssignment_1_0_121136 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCompareOperation_in_rule__OrAndExpression__SubExpressionsAssignment_1_0_221169 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__OrAndExpression__OperatorAlternatives_1_1_1_0_in_rule__OrAndExpression__OperatorAssignment_1_1_121200 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCompareOperation_in_rule__OrAndExpression__SubExpressionsAssignment_1_1_221233 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCompareOperator_in_rule__CompareOperation__OperatorAssignment_0_1_121264 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_rule__CompareOperation__SubExpressionsAssignment_0_1_221295 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleNotOperator_in_rule__NotExpression__OperatorAssignment_0_121326 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleNotExpression_in_rule__NotExpression__SubExpressionsAssignment_0_221357 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAddOperator_in_rule__AddExpression__OperatorAssignment_1_121388 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSubExpression_in_rule__AddExpression__SubExpressionsAssignment_1_221419 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSubOperator_in_rule__SubExpression__OperatorAssignment_1_121450 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMultExpression_in_rule__SubExpression__SubExpressionsAssignment_1_221481 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMultOperator_in_rule__MultExpression__OperatorAssignment_1_121512 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDivExpression_in_rule__MultExpression__SubExpressionsAssignment_1_221543 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDivOperator_in_rule__DivExpression__OperatorAssignment_1_121574 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleModExpression_in_rule__DivExpression__SubExpressionsAssignment_1_221605 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleModOperator_in_rule__ModExpression__OperatorAssignment_1_121636 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAtomicValuedExpression_in_rule__ModExpression__SubExpressionsAssignment_1_221667 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSubOperator_in_rule__NegExpression__OperatorAssignment_0_121698 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleNegExpression_in_rule__NegExpression__SubExpressionsAssignment_0_221729 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0_in_rule__ValuedObjectTestExpression__OperatorAssignment_0_121760 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleValuedObjectTestExpression_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_321793 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__ValuedObjectReference__ValuedObjectAssignment_021828 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExpression_in_rule__ValuedObjectReference__CardinalitiesAssignment_1_121863 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__TextExpression__TextAssignment21894 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment21925 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment21956 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__BoolValue__ValueAssignment21987 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_COMMENT_ANNOTATION_in_rule__CommentAnnotation__ValueAssignment22018 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExtendedID_in_rule__TagAnnotation__NameAssignment_122049 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnnotation_in_rule__TagAnnotation__AnnotationsAssignment_2_122080 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyStringValueAnnotation__NameAssignment_122111 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEString_in_rule__KeyStringValueAnnotation__ValueAssignment_222142 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_122173 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_122204 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExtendedID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_322235 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValueAssignment_522266 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnnotation_in_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_122297 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyBooleanValueAnnotation__NameAssignment_122328 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_222359 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_122390 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyIntValueAnnotation__NameAssignment_122421 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_rule__KeyIntValueAnnotation__ValueAssignment_222452 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyIntValueAnnotation__AnnotationsAssignment_3_122483 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_122514 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_FLOAT_in_rule__KeyFloatValueAnnotation__ValueAssignment_222545 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_122576 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_synpred14_InternalS3971 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleBoolExpression_in_synpred15_InternalS4020 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__OrAndExpression__Group_1_0__0_in_synpred17_InternalS4069 = new BitSet(new long[]{0x0000000008040002L});
     public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0_in_synpred21_InternalS4220 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleValuedExpression_in_synpred22_InternalS4270 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_2__0_in_synpred30_InternalS4537 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__State__DeclarationsAssignment_5_in_synpred61_InternalS6398 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Declaration__AnnotationsAssignment_0_in_synpred63_InternalS6718 = new BitSet(new long[]{0x0000000000000002L});
 
 }

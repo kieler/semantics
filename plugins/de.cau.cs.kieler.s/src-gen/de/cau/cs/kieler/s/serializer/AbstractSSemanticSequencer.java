@@ -151,8 +151,8 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 				}
 				else break;
 			case KExpressionsPackage.DECLARATION:
-				if(context == grammarAccess.getTypeGroupRule()) {
-					sequence_TypeGroup(context, (Declaration) semanticObject); 
+				if(context == grammarAccess.getDeclarationRule()) {
+					sequence_Declaration(context, (Declaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -465,6 +465,25 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         const?='const'? 
+	 *         input?='input'? 
+	 *         output?='output'? 
+	 *         static?='static'? 
+	 *         signal?='signal'? 
+	 *         type=ValueType? 
+	 *         valuedObjects+=ValuedObject 
+	 *         valuedObjects+=ValuedObject*
+	 *     )
+	 */
+	protected void sequence_Declaration(EObject context, Declaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (signal=[ValuedObject|ID] value=SExpression? continuation=[State|ID]?)
 	 */
 	protected void sequence_Emit(EObject context, Emit semanticObject) {
@@ -570,7 +589,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (name=ID priority=INT typeGroups+=TypeGroup* globalHostCodeInstruction=HOSTCODE? states+=State+)
+	 *     (name=ID priority=INT delcarations+=Declaration* globalHostCodeInstruction=HOSTCODE? states+=State+)
 	 */
 	protected void sequence_Program(EObject context, Program semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -579,7 +598,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (name=ID typeGroups+=TypeGroup* instructions+=Instruction*)
+	 *     (name=ID declarations+=Declaration* instructions+=Instruction*)
 	 */
 	protected void sequence_State(EObject context, State semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -608,25 +627,6 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getTransAccess().getContinuationStateIDTerminalRuleCall_2_0_1(), semanticObject.getContinuation());
 		feeder.finish();
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         const?='const'? 
-	 *         input?='input'? 
-	 *         output?='output'? 
-	 *         static?='static'? 
-	 *         signal?='signal'? 
-	 *         type=ValueType 
-	 *         valuedObjects+=ValuedObject 
-	 *         valuedObjects+=ValuedObject*
-	 *     )
-	 */
-	protected void sequence_TypeGroup(EObject context, Declaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
