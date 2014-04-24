@@ -135,16 +135,16 @@ ruleProgram returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProgramAccess().getDelcarationsDeclarationParserRuleCall_5_0()); 
+	        newCompositeNode(grammarAccess.getProgramAccess().getDeclarationsDeclarationParserRuleCall_5_0()); 
 	    }
-		lv_delcarations_5_0=ruleDeclaration		{
+		lv_declarations_5_0=ruleDeclaration		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProgramRule());
 	        }
        		add(
        			$current, 
-       			"delcarations",
-        		lv_delcarations_5_0, 
+       			"declarations",
+        		lv_declarations_5_0, 
         		"Declaration");
 	        afterParserOrEnumRuleCall();
 	    }

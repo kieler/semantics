@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getPriority <em>Priority</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.Program#getDelcarations <em>Delcarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.Program#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getGlobalHostCodeInstruction <em>Global Host Code Instruction</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getStates <em>States</em>}</li>
  * </ul>
@@ -83,20 +83,20 @@ public interface Program extends EObject
   void setPriority(int value);
 
   /**
-   * Returns the value of the '<em><b>Delcarations</b></em>' containment reference list.
+   * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Delcarations</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Delcarations</em>' containment reference list.
-   * @see de.cau.cs.kieler.s.s.SPackage#getProgram_Delcarations()
+   * @return the value of the '<em>Declarations</em>' containment reference list.
+   * @see de.cau.cs.kieler.s.s.SPackage#getProgram_Declarations()
    * @model containment="true"
    * @generated
    */
-  EList<Declaration> getDelcarations();
+  EList<Declaration> getDeclarations();
 
   /**
    * Returns the value of the '<em><b>Global Host Code Instruction</b></em>' attribute.

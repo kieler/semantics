@@ -85,13 +85,13 @@ public interface SPackage extends EPackage
   int PROGRAM__PRIORITY = 1;
 
   /**
-   * The feature id for the '<em><b>Delcarations</b></em>' containment reference list.
+   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__DELCARATIONS = 2;
+  int PROGRAM__DECLARATIONS = 2;
 
   /**
    * The feature id for the '<em><b>Global Host Code Instruction</b></em>' attribute.
@@ -683,15 +683,15 @@ public interface SPackage extends EPackage
   EAttribute getProgram_Priority();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getDelcarations <em>Delcarations</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getDeclarations <em>Declarations</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Delcarations</em>'.
-   * @see de.cau.cs.kieler.s.s.Program#getDelcarations()
+   * @return the meta object for the containment reference list '<em>Declarations</em>'.
+   * @see de.cau.cs.kieler.s.s.Program#getDeclarations()
    * @see #getProgram()
    * @generated
    */
-  EReference getProgram_Delcarations();
+  EReference getProgram_Declarations();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.Program#getGlobalHostCodeInstruction <em>Global Host Code Instruction</em>}'.
@@ -1200,12 +1200,12 @@ public interface SPackage extends EPackage
     EAttribute PROGRAM__PRIORITY = eINSTANCE.getProgram_Priority();
 
     /**
-     * The meta object literal for the '<em><b>Delcarations</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PROGRAM__DELCARATIONS = eINSTANCE.getProgram_Delcarations();
+    EReference PROGRAM__DECLARATIONS = eINSTANCE.getProgram_Declarations();
 
     /**
      * The meta object literal for the '<em><b>Global Host Code Instruction</b></em>' attribute feature.

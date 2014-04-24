@@ -183,7 +183,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleProgram"
-    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:83:1: ruleProgram returns [EObject current=null] : (otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( (lv_delcarations_5_0= ruleDeclaration ) )* (otherlv_6= '\\'' ( (lv_globalHostCodeInstruction_7_0= RULE_HOSTCODE ) ) otherlv_8= '\\'' )? ( (lv_states_9_0= ruleState ) )+ ) ;
+    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:83:1: ruleProgram returns [EObject current=null] : (otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( (lv_declarations_5_0= ruleDeclaration ) )* (otherlv_6= '\\'' ( (lv_globalHostCodeInstruction_7_0= RULE_HOSTCODE ) ) otherlv_8= '\\'' )? ( (lv_states_9_0= ruleState ) )+ ) ;
     public final EObject ruleProgram() throws RecognitionException {
         EObject current = null;
 
@@ -195,7 +195,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
         Token otherlv_6=null;
         Token lv_globalHostCodeInstruction_7_0=null;
         Token otherlv_8=null;
-        EObject lv_delcarations_5_0 = null;
+        EObject lv_declarations_5_0 = null;
 
         EObject lv_states_9_0 = null;
 
@@ -203,11 +203,11 @@ public class InternalSParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:86:28: ( (otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( (lv_delcarations_5_0= ruleDeclaration ) )* (otherlv_6= '\\'' ( (lv_globalHostCodeInstruction_7_0= RULE_HOSTCODE ) ) otherlv_8= '\\'' )? ( (lv_states_9_0= ruleState ) )+ ) )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:87:1: (otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( (lv_delcarations_5_0= ruleDeclaration ) )* (otherlv_6= '\\'' ( (lv_globalHostCodeInstruction_7_0= RULE_HOSTCODE ) ) otherlv_8= '\\'' )? ( (lv_states_9_0= ruleState ) )+ )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:86:28: ( (otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( (lv_declarations_5_0= ruleDeclaration ) )* (otherlv_6= '\\'' ( (lv_globalHostCodeInstruction_7_0= RULE_HOSTCODE ) ) otherlv_8= '\\'' )? ( (lv_states_9_0= ruleState ) )+ ) )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:87:1: (otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( (lv_declarations_5_0= ruleDeclaration ) )* (otherlv_6= '\\'' ( (lv_globalHostCodeInstruction_7_0= RULE_HOSTCODE ) ) otherlv_8= '\\'' )? ( (lv_states_9_0= ruleState ) )+ )
             {
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:87:1: (otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( (lv_delcarations_5_0= ruleDeclaration ) )* (otherlv_6= '\\'' ( (lv_globalHostCodeInstruction_7_0= RULE_HOSTCODE ) ) otherlv_8= '\\'' )? ( (lv_states_9_0= ruleState ) )+ )
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:87:3: otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( (lv_delcarations_5_0= ruleDeclaration ) )* (otherlv_6= '\\'' ( (lv_globalHostCodeInstruction_7_0= RULE_HOSTCODE ) ) otherlv_8= '\\'' )? ( (lv_states_9_0= ruleState ) )+
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:87:1: (otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( (lv_declarations_5_0= ruleDeclaration ) )* (otherlv_6= '\\'' ( (lv_globalHostCodeInstruction_7_0= RULE_HOSTCODE ) ) otherlv_8= '\\'' )? ( (lv_states_9_0= ruleState ) )+ )
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:87:3: otherlv_0= 'synchronous program' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '(' ( (lv_priority_3_0= RULE_INT ) ) otherlv_4= ')' ( (lv_declarations_5_0= ruleDeclaration ) )* (otherlv_6= '\\'' ( (lv_globalHostCodeInstruction_7_0= RULE_HOSTCODE ) ) otherlv_8= '\\'' )? ( (lv_states_9_0= ruleState ) )+
             {
             otherlv_0=(Token)match(input,17,FOLLOW_17_in_ruleProgram128); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -287,7 +287,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_4, grammarAccess.getProgramAccess().getRightParenthesisKeyword_4());
                   
             }
-            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:135:1: ( (lv_delcarations_5_0= ruleDeclaration ) )*
+            // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:135:1: ( (lv_declarations_5_0= ruleDeclaration ) )*
             loop1:
             do {
                 int alt1=2;
@@ -300,18 +300,18 @@ public class InternalSParser extends AbstractInternalAntlrParser {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:136:1: (lv_delcarations_5_0= ruleDeclaration )
+            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:136:1: (lv_declarations_5_0= ruleDeclaration )
             	    {
-            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:136:1: (lv_delcarations_5_0= ruleDeclaration )
-            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:137:3: lv_delcarations_5_0= ruleDeclaration
+            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:136:1: (lv_declarations_5_0= ruleDeclaration )
+            	    // ../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g:137:3: lv_declarations_5_0= ruleDeclaration
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getProgramAccess().getDelcarationsDeclarationParserRuleCall_5_0()); 
+            	      	        newCompositeNode(grammarAccess.getProgramAccess().getDeclarationsDeclarationParserRuleCall_5_0()); 
             	      	    
             	    }
             	    pushFollow(FOLLOW_ruleDeclaration_in_ruleProgram217);
-            	    lv_delcarations_5_0=ruleDeclaration();
+            	    lv_declarations_5_0=ruleDeclaration();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -322,8 +322,8 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             	      	        }
             	             		add(
             	             			current, 
-            	             			"delcarations",
-            	              		lv_delcarations_5_0, 
+            	             			"declarations",
+            	              		lv_declarations_5_0, 
             	              		"Declaration");
             	      	        afterParserOrEnumRuleCall();
             	      	    

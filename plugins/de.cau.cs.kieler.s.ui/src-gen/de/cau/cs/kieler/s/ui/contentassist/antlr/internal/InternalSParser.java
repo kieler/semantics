@@ -8475,22 +8475,22 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Program__Group__5__Impl"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2616:1: rule__Program__Group__5__Impl : ( ( rule__Program__DelcarationsAssignment_5 )* ) ;
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2616:1: rule__Program__Group__5__Impl : ( ( rule__Program__DeclarationsAssignment_5 )* ) ;
     public final void rule__Program__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2620:1: ( ( ( rule__Program__DelcarationsAssignment_5 )* ) )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2621:1: ( ( rule__Program__DelcarationsAssignment_5 )* )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2620:1: ( ( ( rule__Program__DeclarationsAssignment_5 )* ) )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2621:1: ( ( rule__Program__DeclarationsAssignment_5 )* )
             {
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2621:1: ( ( rule__Program__DelcarationsAssignment_5 )* )
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2622:1: ( rule__Program__DelcarationsAssignment_5 )*
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2621:1: ( ( rule__Program__DeclarationsAssignment_5 )* )
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2622:1: ( rule__Program__DeclarationsAssignment_5 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getDelcarationsAssignment_5()); 
+               before(grammarAccess.getProgramAccess().getDeclarationsAssignment_5()); 
             }
-            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2623:1: ( rule__Program__DelcarationsAssignment_5 )*
+            // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2623:1: ( rule__Program__DeclarationsAssignment_5 )*
             loop22:
             do {
                 int alt22=2;
@@ -8503,10 +8503,10 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
 
                 switch (alt22) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2623:2: rule__Program__DelcarationsAssignment_5
+            	    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:2623:2: rule__Program__DeclarationsAssignment_5
             	    {
-            	    pushFollow(FOLLOW_rule__Program__DelcarationsAssignment_5_in_rule__Program__Group__5__Impl5691);
-            	    rule__Program__DelcarationsAssignment_5();
+            	    pushFollow(FOLLOW_rule__Program__DeclarationsAssignment_5_in_rule__Program__Group__5__Impl5691);
+            	    rule__Program__DeclarationsAssignment_5();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -8520,7 +8520,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getDelcarationsAssignment_5()); 
+               after(grammarAccess.getProgramAccess().getDeclarationsAssignment_5()); 
             }
 
             }
@@ -27693,9 +27693,9 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Program__PriorityAssignment_3"
 
 
-    // $ANTLR start "rule__Program__DelcarationsAssignment_5"
-    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9743:1: rule__Program__DelcarationsAssignment_5 : ( ruleDeclaration ) ;
-    public final void rule__Program__DelcarationsAssignment_5() throws RecognitionException {
+    // $ANTLR start "rule__Program__DeclarationsAssignment_5"
+    // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9743:1: rule__Program__DeclarationsAssignment_5 : ( ruleDeclaration ) ;
+    public final void rule__Program__DeclarationsAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -27707,15 +27707,15 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g:9749:1: ruleDeclaration
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getDelcarationsDeclarationParserRuleCall_5_0()); 
+               before(grammarAccess.getProgramAccess().getDeclarationsDeclarationParserRuleCall_5_0()); 
             }
-            pushFollow(FOLLOW_ruleDeclaration_in_rule__Program__DelcarationsAssignment_519680);
+            pushFollow(FOLLOW_ruleDeclaration_in_rule__Program__DeclarationsAssignment_519680);
             ruleDeclaration();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getDelcarationsDeclarationParserRuleCall_5_0()); 
+               after(grammarAccess.getProgramAccess().getDeclarationsDeclarationParserRuleCall_5_0()); 
             }
 
             }
@@ -27735,7 +27735,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__DelcarationsAssignment_5"
+    // $ANTLR end "rule__Program__DeclarationsAssignment_5"
 
 
     // $ANTLR start "rule__Program__GlobalHostCodeInstructionAssignment_6_1"
@@ -33188,7 +33188,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_47_in_rule__Program__Group__4__Impl5630 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Program__Group__5__Impl_in_rule__Program__Group__55661 = new BitSet(new long[]{0x800303F800000440L,0x0000000000000F40L});
     public static final BitSet FOLLOW_rule__Program__Group__6_in_rule__Program__Group__55664 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Program__DelcarationsAssignment_5_in_rule__Program__Group__5__Impl5691 = new BitSet(new long[]{0x800003F800000442L,0x0000000000000F40L});
+    public static final BitSet FOLLOW_rule__Program__DeclarationsAssignment_5_in_rule__Program__Group__5__Impl5691 = new BitSet(new long[]{0x800003F800000442L,0x0000000000000F40L});
     public static final BitSet FOLLOW_rule__Program__Group__6__Impl_in_rule__Program__Group__65722 = new BitSet(new long[]{0x800303F800000440L,0x0000000000000F40L});
     public static final BitSet FOLLOW_rule__Program__Group__7_in_rule__Program__Group__65725 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Program__Group_6__0_in_rule__Program__Group__6__Impl5752 = new BitSet(new long[]{0x0000000000000002L});
@@ -33781,7 +33781,7 @@ public class InternalSParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl19580 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Program__NameAssignment_119618 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_INT_in_rule__Program__PriorityAssignment_319649 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDeclaration_in_rule__Program__DelcarationsAssignment_519680 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDeclaration_in_rule__Program__DeclarationsAssignment_519680 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__Program__GlobalHostCodeInstructionAssignment_6_119711 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleState_in_rule__Program__StatesAssignment_719742 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__State__NameAssignment_219773 = new BitSet(new long[]{0x0000000000000002L});

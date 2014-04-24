@@ -589,7 +589,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (name=ID priority=INT delcarations+=Declaration* globalHostCodeInstruction=HOSTCODE? states+=State+)
+	 *     (name=ID priority=INT declarations+=Declaration* globalHostCodeInstruction=HOSTCODE? states+=State+)
 	 */
 	protected void sequence_Program(EObject context, Program semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

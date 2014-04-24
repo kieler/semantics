@@ -2619,9 +2619,9 @@ rule__Program__Group__5__Impl
     }
 :
 (
-{ before(grammarAccess.getProgramAccess().getDelcarationsAssignment_5()); }
-(rule__Program__DelcarationsAssignment_5)*
-{ after(grammarAccess.getProgramAccess().getDelcarationsAssignment_5()); }
+{ before(grammarAccess.getProgramAccess().getDeclarationsAssignment_5()); }
+(rule__Program__DeclarationsAssignment_5)*
+{ after(grammarAccess.getProgramAccess().getDeclarationsAssignment_5()); }
 )
 
 ;
@@ -9740,14 +9740,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Program__DelcarationsAssignment_5
+rule__Program__DeclarationsAssignment_5
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getProgramAccess().getDelcarationsDeclarationParserRuleCall_5_0()); }
-	ruleDeclaration{ after(grammarAccess.getProgramAccess().getDelcarationsDeclarationParserRuleCall_5_0()); }
+{ before(grammarAccess.getProgramAccess().getDeclarationsDeclarationParserRuleCall_5_0()); }
+	ruleDeclaration{ after(grammarAccess.getProgramAccess().getDeclarationsDeclarationParserRuleCall_5_0()); }
 )
 
 ;
