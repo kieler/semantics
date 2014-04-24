@@ -14,9 +14,15 @@
 package de.cau.cs.kieler.kico.ui;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtext.EcoreUtil2;
+import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
+import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import de.cau.cs.kieler.core.kgraph.KGraphData;
 import de.cau.cs.kieler.core.kgraph.KNode;
@@ -26,10 +32,13 @@ import de.cau.cs.kieler.core.krendering.KRendering;
 import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
+import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.TransformationDummy;
+import de.cau.cs.kieler.kico.klighd.KiCoModelView;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis;
 import de.cau.cs.kieler.klighd.IAction.ActionContext;
 import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.xtext.effects.XtextEditorHighlightEffect;
 
 /**
  * This is the base abstract class for a KiCo KLighD action for selecting, unselecting
@@ -51,6 +60,7 @@ public abstract class KiCoKlighdAction {
             new HashMap<TransformationDummy, KRoundedRectangle>();
     private static HashMap<TransformationDummy, KText> transformationDummy2KText =
             new HashMap<TransformationDummy, KText>();
+    private static EObject model;
 
     // -------------------------------------------------------------------------
 
@@ -110,10 +120,10 @@ public abstract class KiCoKlighdAction {
      *            the context
      * @return the k text
      */
-    public static KText getKText(final TransformationDummy transformationDummy, final ViewContext context) {
+    public static KText getKText(final TransformationDummy transformationDummy,
+            final ViewContext context) {
         if (!transformationDummy2KText.containsKey(transformationDummy)) {
-            KText kText =
-                    context.getTargetElement(transformationDummy, KText.class);
+            KText kText = context.getTargetElement(transformationDummy, KText.class);
             transformationDummy2KText.put(transformationDummy, kText);
         }
 
@@ -131,14 +141,13 @@ public abstract class KiCoKlighdAction {
      *            the context
      * @return the k rounded rectangle
      */
-    public static KRoundedRectangle getKRoundedRectangle(final TransformationDummy transformationDummy,
-            final ViewContext context) {
+    public static KRoundedRectangle getKRoundedRectangle(
+            final TransformationDummy transformationDummy, final ViewContext context) {
         if (!transformationDummyKRoundedRectangle.containsKey(transformationDummy)) {
             // KNode kNode = context.getViewContext().getTargetElement(transformationDummy,
             // KNode.class);
             KRoundedRectangle kRoundedRectangle =
-                    context.getTargetElement(transformationDummy,
-                            KRoundedRectangle.class);
+                    context.getTargetElement(transformationDummy, KRoundedRectangle.class);
             // KRoundedRectangle kRoundedRectangle = getRectangle(kNode);
             transformationDummyKRoundedRectangle.put(transformationDummy, kRoundedRectangle);
         }
@@ -159,8 +168,8 @@ public abstract class KiCoKlighdAction {
      * @param backgroundColor
      *            the background color
      */
-    public static void setLabelColor(final TransformationDummy transformationDummy, final ViewContext context,
-            KColor foregroundColor, KColor backgroundColor) {
+    public static void setLabelColor(final TransformationDummy transformationDummy,
+            final ViewContext context, KColor foregroundColor, KColor backgroundColor) {
         KText kText = getKText(transformationDummy, context);
         kRenderingExtensions.setForeground(kText, copy(foregroundColor));
         kRenderingExtensions.setSelectionBackground(kText, copy(backgroundColor));
@@ -181,8 +190,8 @@ public abstract class KiCoKlighdAction {
      * @param color2
      *            the color2
      */
-    public static void setStateColor(final TransformationDummy transformationDummy, final ViewContext context,
-            KColor color1, KColor color2) {
+    public static void setStateColor(final TransformationDummy transformationDummy,
+            final ViewContext context, KColor color1, KColor color2) {
         KRoundedRectangle rect = getKRoundedRectangle(transformationDummy, context);
         kRenderingExtensions.setBackgroundGradient(rect, copy(color1), copy(color2), 90);
         kRenderingExtensions.setSelectionBackgroundGradient(rect, copy(color1), copy(color2), 90);
@@ -204,14 +213,31 @@ public abstract class KiCoKlighdAction {
     // -------------------------------------------------------------------------
 
     /**
-     * WORKAROUD: Sets the focus to the current editor and forces KLighD to redraw the diagram.
+     * Update KoCo KLighD Model view
      */
     static public void refreshEditor() {
         // Ensures that the KLighD view redraws the diagram of the curretly selected editor
         IEditorPart editor = KiCoSelectionView.getActiveEditor();
-        if (editor != null) {
-            // TODO: This is a current workaround to force the klight view to repaint
-            editor.setFocus();
+        if (editor != null && editor instanceof XtextEditor) {
+            XtextEditor xpart = (XtextEditor) editor;
+            IXtextDocument document = xpart.getDocument();
+            if (document != null) {
+                document.readOnly(new IUnitOfWork.Void<XtextResource>() {
+
+                    @Override
+                    public void process(final XtextResource state) throws Exception {
+                        model = state.getContents().get(0);
+                    }
+                });
+                if (model != null) {
+                    List<String> transformations =
+                            KiCoSelectionView.getSelectedTransformations(KiCoSelectionView
+                                    .getActiveEditorID());
+                    KiCoModelView.getInstance().showModel(
+                            KielerCompiler.compile(transformations, model,
+                                    KiCoSelectionView.advancedMode), editor.getTitle());
+                }
+            }
         }
     }
 
