@@ -34,6 +34,10 @@ public class TransformationGroup extends Transformation {
     private boolean isCategory = false;
     
     private boolean isFeatureGroup = false;
+    
+    private String categoryColor1 = "";
+    
+    private String categoryColor2 = "";
 
     // -------------------------------------------------------------------------
 
@@ -61,6 +65,14 @@ public class TransformationGroup extends Transformation {
     
     public boolean isFeatureGroup() {
         return isFeatureGroup;
+    }
+    
+    public String getCategoryColor1() {
+        return categoryColor1;
+    }
+    
+    public String getCategoryColor2() {
+        return categoryColor2;
     }
 
     // -------------------------------------------------------------------------
@@ -132,6 +144,14 @@ public class TransformationGroup extends Transformation {
     
     public void setIsFeatureGroup(boolean isFeatureGroup) {
         this.isFeatureGroup = isFeatureGroup;
+    }
+    
+    public void setCategoryColor1(String color) {
+        this.categoryColor1 = color;
+    }
+
+    public void setCategoryColor2(String color) {
+        this.categoryColor2 = color;
     }
     // -------------------------------------------------------------------------
 }

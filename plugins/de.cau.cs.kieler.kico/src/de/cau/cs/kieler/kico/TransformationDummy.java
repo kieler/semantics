@@ -77,6 +77,20 @@ public class TransformationDummy {
         return false;
     }
     
+    public String getColor1() {
+        if (isGroup()) {
+            return ((TransformationGroup) transformation).getCategoryColor1();
+        } 
+        return "";
+    }
+
+    public String getColor2() {
+        if (isGroup()) {
+            return ((TransformationGroup) transformation).getCategoryColor2();
+        } 
+        return "";
+    }
+
     
     public TransformationDummy(Transformation transformation) {
         this.id = transformation.getId();

@@ -131,6 +131,17 @@ class KiCoDiagramSynthesisSSM extends AbstractDiagramSynthesis<List<Transformati
         [it.red = 230; it.green = 230; it.blue = 230];
 
     private static val String ANNOTATION_LABELBREAK = "break"
+    
+    private static val List<List<String>> CATEGORYCOLORS =
+        <List<String>> newArrayList (
+            <String> newArrayList("#cccc77", "#ffaa55", "0"),
+            <String> newArrayList("#aaff99", "#cccc77", "0"),
+            <String> newArrayList("#ffaa55", "#cc55cc", "0"),
+            
+            <String> newArrayList("#0000ff", "#aaaaff", "90")
+        ) 
+    
+    private static var int categoryNum = 0;
 
     // -------------------------------------------------------------------------
     def TransformationDummy container(TransformationDummy transformationDummy) {
@@ -232,6 +243,7 @@ class KiCoDiagramSynthesisSSM extends AbstractDiagramSynthesis<List<Transformati
     // The Main entry transform function   
     override transform(List<TransformationDummy> model) {
         connected.clear
+        categoryNum = 0;
 
         val knode = model.createNode();
         knode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
@@ -274,7 +286,7 @@ class KiCoDiagramSynthesisSSM extends AbstractDiagramSynthesis<List<Transformati
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
             val cornerRadius = 0; //if(!transformationDummy.isGroup) 17 else 8;
             var lineWidth = 01;
-            val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
+            val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth)//.setBackground("#ff00ff".color, 0)
             //            figure.setProperty(KlighdProperties::, true);
             figure.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
             figure.addSingleClickAction(KiCoSelectionAction::ID);
@@ -318,7 +330,7 @@ class KiCoDiagramSynthesisSSM extends AbstractDiagramSynthesis<List<Transformati
 //                                    it.fontSize = 11;
 //                                ]
 //                        ]
-                        invisible = false
+                        invisible = true
                     } else {
 
                     // For simple states we want a larger area 
@@ -382,7 +394,22 @@ class KiCoDiagramSynthesisSSM extends AbstractDiagramSynthesis<List<Transformati
     }
 
     def dispatch KNode translateGroup(TransformationDummy transformationDummy) {
+        
+        val List<List<String>> CATEGORYCOLORS =
+        <List<String>> newArrayList (
+            <String> newArrayList("#bdd7e5", "#5ca2e5", "90"),
+            <String> newArrayList("#bdd7e5", "#5ca2e5", "90"),
+            <String> newArrayList("#bdd7e5", "#5ca2e5", "90"),
+            <String> newArrayList("#bdd7e5", "#5ca2e5", "90"),
+            <String> newArrayList("#bdd7e5", "#5ca2e5", "90"),
+            <String> newArrayList("#bdd7e5", "#5ca2e5", "90"),
+                        
+            <String> newArrayList("#0000ff", "#aaaaff", "90")
+        )         
+        
         return createNode() => [ node |
+            
+            var cornerSize = 0.0f
             
             node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::LINEAR_SEGMENTS)
             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
@@ -390,6 +417,7 @@ class KiCoDiagramSynthesisSSM extends AbstractDiagramSynthesis<List<Transformati
             if (transformationDummy.alternative) {
                 node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
                 node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT);
+                cornerSize = 10.0f
             } else {
                 node.addLayoutParam(LayoutOptions::SEPARATE_CC, true);
             }
@@ -426,14 +454,17 @@ class KiCoDiagramSynthesisSSM extends AbstractDiagramSynthesis<List<Transformati
                 }
                 node.children += childKNode;
             }
-            node.addRectangle() => [
-//                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);  
+            node.addRoundedRectangle(cornerSize, cornerSize) => [
+                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);  
                 if (transformationDummy.featureGroup) {
-                    it.setBackground("#ffaaaa".color, 255)
-                } else
-                if (transformationDummy.category) {
-                    it.setBackgroundGradient("#ffdede".color, "#ffaaaa".color, 90);
-//                    it.setSelectionBackgroundGradient(WHITE, RED, 0); // Selection KLighD trick
+                    it.setBackground("#000".color, 40)
+                } else if (transformationDummy.category) {
+                    it.setBackgroundGradient(
+                        CATEGORYCOLORS.get(categoryNum).get(0).color,
+                        CATEGORYCOLORS.get(categoryNum).get(1).color,
+                        Float::valueOf(CATEGORYCOLORS.get(categoryNum).get(2))
+                    )
+                    categoryNum = categoryNum + 1
                 } else {
                     it.setBackgroundGradient("white".color, GRAY, 90);
                     it.setSelectionBackgroundGradient("white".color, GRAY, 90); // Selection KLighD trick
@@ -442,18 +473,14 @@ class KiCoDiagramSynthesisSSM extends AbstractDiagramSynthesis<List<Transformati
                 it.invisible = false;
                 it.foreground = "gray".color
                 it.lineWidth = 0;
-//                it.addText("[-]" + " " + transformationDummy.label) => [
-//                    it.foreground = "darkGray".color
-//                    it.fontSize = 10
-//                    it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
-//                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-//                ];
                 if (transformationDummy.dependencies.size > 1) {
-                    it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
+                    it.addChildArea.setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                 }
                 
                 if (!transformationDummy.label.empty) {
-                    node.addInsideTopCenteredNodeLabel(transformationDummy.label, 16, KlighdConstants::DEFAULT_FONT_NAME).foreground = "black".color
+                    node.addInsideTopCenteredNodeLabel(transformationDummy.label, 16, KlighdConstants::DEFAULT_FONT_NAME).foreground("black".color).getFirstText => [
+                        addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    ]
                 }
             ];
 //            node.addRectangle() => [
