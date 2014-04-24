@@ -50,11 +50,17 @@ public class KiCoSelectionView extends DiagramViewPart {
     /** The parent. */
     Composite parent;
 
-    public static final ImageDescriptor ADVANCED = AbstractUIPlugin.imageDescriptorFromPlugin(
+    public static final ImageDescriptor ICON_ADVANCED = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconAuto.png");
+    
+    public static final ImageDescriptor ICON_SSM = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSSM.png");
 
     /** The action for toggling the advanced mode. */
     private Action actionAdvancedToggle;
+    
+    /** The action for toggling the SSM mode. */
+    private Action actionSSMToggle;
 
     /** The Constant ID. */
     static final String ID = "de.cau.cs.kieler.kico.selection";
@@ -77,12 +83,18 @@ public class KiCoSelectionView extends DiagramViewPart {
     /** The advaned mode auto selects required transformations. */
     public static boolean advancedMode = true;
 
+    /** The SSM diagram synthesis mode. */
+    public static boolean SSMMode = true;
+    
     /** The last editor. */
     String lastEditor = null;
 
     /** The registered editors. */
     static HashMap<String, List<String>> registeredEditors = KiCoUIPlugin.getInstance()
             .getRegisteredEditors();
+    
+    /** Holds the last used workbench part reference. */
+    private IWorkbenchPartReference lastWorkbenchPartReference;
 
     // -------------------------------------------------------------------------
 
@@ -531,9 +543,22 @@ public class KiCoSelectionView extends DiagramViewPart {
                         List<TransformationDummy> tempModel = KielerCompiler.buildGraph();
                         KielerCompiler.reduceGraph(tempModel, visibleTransformations);
                         model.put(activeEditorID, tempModel);
+                        
+//                        DiagramViewPart klighdPart =
+//                                DiagramViewManager.getInstance().createView(getPartId(), null,
+//                                        tempModel, KlighdSynthesisProperties.newInstance(null));
+                        
+                        KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
+                        if (SSMMode) {
+                            properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesisSSM");
+                        } else {
+                            properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis");
+                        }
+                        
                         DiagramViewPart klighdPart =
                                 DiagramViewManager.getInstance().createView(getPartId(), null,
-                                        tempModel, KlighdSynthesisProperties.newInstance(null));
+                                        tempModel, 
+                                        properties);
                         diagram.put(activeEditorID, klighdPart);
 
                         if (KiCoSelectionView.advancedMode) {
@@ -544,6 +569,8 @@ public class KiCoSelectionView extends DiagramViewPart {
 
                     }
                 }
+                
+                lastWorkbenchPartReference = ref;
             } else {
                 // if (part instanceof EditorPart) {
                 // DiagramViewManager
@@ -569,6 +596,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
         toolBarManager.add(getActionAdvancedToggle());
+        toolBarManager.add(getActionSSMToggle());
 
         DiagramViewManager.getInstance().registerView(this);
 
@@ -648,10 +676,46 @@ public class KiCoSelectionView extends DiagramViewPart {
         };
         actionAdvancedToggle.setText("Autoselect Required Transformations");
         actionAdvancedToggle.setToolTipText("Autoselects additionally required transformations");
-        actionAdvancedToggle.setImageDescriptor(ADVANCED);
+        actionAdvancedToggle.setImageDescriptor(ICON_ADVANCED);
         actionAdvancedToggle.setChecked(advancedMode);
         return actionAdvancedToggle;
     }
+    
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the action to toggle presence of the SSM representation.
+     * 
+     * @return the action 
+     */
+    private Action getActionSSMToggle() {
+        if (actionSSMToggle != null) {
+            return actionSSMToggle;
+        }
+        actionSSMToggle = new Action("", IAction.AS_CHECK_BOX) {
+            public void run() {
+                // TOGGLE
+                SSMMode = !SSMMode;
+                actionSSMToggle.setChecked(SSMMode);
+                KiCoKlighdAction.refreshEditor();
+
+//                if (SSMMode) {
+//                    addRequiredTransformationVisualization(getActiveEditorID());
+//                } else {
+//                    removeRequiredTransformationVisualization(getActiveEditorID());
+//                }
+                lastEditor = "";
+                updateView(lastWorkbenchPartReference);
+
+            }
+        };
+        actionSSMToggle.setText("Toggle SSM Diagram Synthesis");
+        actionSSMToggle.setToolTipText("Toggle SSM Diagram Synthesis");
+        actionSSMToggle.setImageDescriptor(ICON_SSM);
+        actionSSMToggle.setChecked(SSMMode);
+        return actionSSMToggle;
+    }    
 
     // -------------------------------------------------------------------------
 
