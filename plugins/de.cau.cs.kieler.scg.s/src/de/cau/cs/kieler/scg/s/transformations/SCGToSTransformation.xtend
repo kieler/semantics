@@ -149,11 +149,16 @@ class SCGToSTransformation {
 	}
 	
 	def ValuedObject findValuedObjectByName(Program s, String name) {
-    	for(tg : s.typeGroups) {
-    		for(vo : tg.valuedObjects) {
-    			if (vo.name == name) return vo
-    		}
-   		}
+	    for (valuedObject : s.valuedObjects) {
+	        if (valuedObject.name.equals(name)) {
+	            return valuedObject
+	        }
+	    }
+//    	for(tg : s.typeGroups) {
+//    		for(vo : tg.valuedObjects) {
+//    			if (vo.name == name) return vo
+//    		}
+//   		}
    		return null
     }    
     
