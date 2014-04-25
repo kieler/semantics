@@ -1308,13 +1308,17 @@ class SCChartsCoreTransformation {
     // This will encode count delays in transitions.
     def void transformCountDelay(Transition transition, Region targetRootRegion) {
         if (transition.delay > 1) {
-            val parentState = transition.sourceState.parentRegion.parentState
+            val sourceState = transition.sourceState
+            val parentState = sourceState.parentRegion.parentState
 
             val counter = parentState.createVariable(GENERATED_PREFIX + "counter").setTypeInt.uniqueName
-            counter.setInitialValue(0.createIntValue)
+            
+            //Add entry action
+            val entryAction = sourceState.createEntryAction
+            entryAction.addEffect(counter.assign(0.createIntValue))
 
             // Add during action
-            val duringAction = parentState.createDuringAction
+            val duringAction = sourceState.createDuringAction
             duringAction.setTrigger(transition.trigger)
             duringAction.addEffect(counter.assign((1.createIntValue).add(counter.reference)))
 
