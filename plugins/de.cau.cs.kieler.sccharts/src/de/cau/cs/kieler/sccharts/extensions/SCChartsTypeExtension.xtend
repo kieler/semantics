@@ -93,7 +93,7 @@ class SCChartsTypeExtension {
     /**
      * Return a list of all features which should not be part of a SCChart with given type.
      */
-    def List<SCChartsFeature> excludedFeatures(SCChartsType type) {
+    def excludedFeatures(SCChartsType type) {
         switch (type) {
             case EXTENDED:
                 return #[]
@@ -114,14 +114,14 @@ class SCChartsTypeExtension {
     /**
      * Returns true if the given SCChart has given type
      */
-    def boolean isOfType(Region region, SCChartsType type) {
+    def isOfType(Region region, SCChartsType type) {
         type.excludedFeatures.findFirst[region.hasFeature(it)] == null;
     }
 
     /**
      * Returns true if the given SCChart contains given feature
      */
-    def boolean hasFeature(Region region, SCChartsFeature feature) {
+    def hasFeature(Region region, SCChartsFeature feature) {
         switch (feature) {
             //CORE
             case HISTORY:
