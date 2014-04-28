@@ -406,7 +406,8 @@ class SCChartsExtension {
     }
 
     def boolean isHierarchical(State state) {
-        return (state.regions != null && state.regions.size != 0 && state.eAllContents.filter(typeof(State)).size > 0)
+        return ((state.regions != null && state.regions.size != 0 && state.eAllContents.filter(typeof(State)).size > 0)
+        || !state.duringActions.nullOrEmpty || !state.exitActions.nullOrEmpty)
     }
 
     //========== TRANSITIONS ===========
