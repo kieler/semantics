@@ -28,6 +28,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.s.s.Program;
+import de.cau.cs.kieler.s.sc.xtend.S2C;
 import de.cau.cs.kieler.s.sc.xtend.S2SCC;
 import de.cau.cs.kieler.s.sc.xtend.S2SCALT;
 import de.cau.cs.kieler.s.extensions.SExtension;
@@ -101,8 +102,8 @@ public class S2SCPlugin extends AbstractUIPlugin {
      * @param alternativeSyntax the alternative SC syntax should be produced
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    public static void generateSCCode(final Program program, final String outputFile,
-            final String outputFolder, final boolean alternativeSyntax)
+    public static void generateCCode(final Program program, final String outputFile,
+            final String outputFolder, final boolean alternativeSyntax, final String includeHeader)
             throws IOException {
 
         // Calculate/Estimate the buffer size
@@ -119,11 +120,12 @@ public class S2SCPlugin extends AbstractUIPlugin {
             // cmot/27. Aug 2012: use scc style variables instead of signals (S2SCC instead of S2SC)
 
             // S2SCC s2SCC = new S2SCC();
-            S2SCC s2SCC = Guice.createInjector().getInstance(S2SCC.class);
+            S2C s2C = Guice.createInjector().getInstance(S2C.class);
 //            S2SCC s2SCC = (S2SCC) KiCoPlugin.getGuiceInstance(S2SCC.class);
-            S2SCC.bufferSize = bufferSize;
+            S2C.bufferSize = bufferSize;
+            S2C.includeHeader = includeHeader;
 //            ccode = (String) KielerCompiler.compile("S2SC", program);
-            ccode = s2SCC.transform(program).toString();
+            ccode = s2C.transform(program).toString();
         }
 
         // Write out c program
