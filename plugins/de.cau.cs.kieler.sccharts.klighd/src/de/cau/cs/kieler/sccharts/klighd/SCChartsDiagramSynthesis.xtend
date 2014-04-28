@@ -65,7 +65,8 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformationimport de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import static de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramSynthesis.*
 import de.cau.cs.kieler.kico.KielerCompiler
 import de.cau.cs.kieler.kico.ui.KiCoSelectionView
@@ -116,14 +117,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
     @Inject
     extension DependencyTransformation
-    
+
     @Inject
     extension KExpressionsExtension
 
     // -------------------------------------------------------------------------
     // Transformation options   
     // CORE TRANSFORMATIONS
-
     private static val SynthesisOption SHOW_SIGNAL_DECLARATIONS = SynthesisOption::createCheckOption("Declarations",
         true);
 
@@ -177,14 +177,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     override transform(Region model) {
         var transformed = model;
 
-        val transformations = KiCoSelectionView.getSelectedTransformations(KiCoSelectionView.activeEditorID);
-        // ---------
-        // Just one final compiler call of KielerCompiler
-        transformed = KielerCompiler.compile(transformations, transformed, KiCoSelectionView.advancedMode) as Region
-        // ---------
-
+        // Visualization of compiled SCCharts with kico.klighd not here
+        //        val transformations = KiCoSelectionView.getSelectedTransformations(KiCoSelectionView.activeEditorID);
+        //        // ---------
+        //        // Just one final compiler call of KielerCompiler
+        //        transformed = KielerCompiler.compile(transformations, transformed, KiCoSelectionView.advancedMode) as Region
+        //        // ---------
         return transformed.translate();
-    } 
+    }
 
     // -------------------------------------------------------------------------
     // Transform a region
@@ -489,52 +489,50 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                         ]
                     }
                 }
-
-// TODO: Make use of the new type groups and organize visualization accordingly!
-
-//                if (SHOW_SIGNAL_DECLARATIONS.booleanValue) {
-//                    for (sig : s.declarations.valuedObjects) {
-//                        it.addRectangle => [
-//                            it.invisible = true;
-//                            it.addRectangle => [
-//                                it.invisible = true;
-//                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
-//                                    0);
-//                                scopeProvider.parent = s;
-//                                var declaration = "";
-//                                var type = "";
-//                                var init = "";
-//                                var combine = "";
-//                                if (sig.type != ValueType::PURE) {
-//                                    type = sig.type.literal.toLowerCase + " "
-//                                }
-//                                if (sig.combineOperator != null && sig.combineOperator != CombineOperator::NONE) {
-//                                    combine = " combine " + sig.combineOperator.literal.toLowerCase
-//                                }
-//                                if (sig.initialValue != null) {
-//                                    init = " = " + serializer.serialize(sig.initialValue.copy)
-//                                }
-//                                if (sig.isInput) {
-//                                    declaration = declaration + "input ";
-//                                }
-//                                if (sig.isOutput) {
-//                                    declaration = declaration + "output "
-//                                }
-//                                if (sig.isSignal) {
-//                                    declaration = declaration + "signal ";
-//                                }
-//                                if (sig.isStatic) {
-//                                    declaration = declaration + "static ";
-//                                }
-//                                if (!declaration.equals("")) {
-//                                    declaration = declaration.trim + " "
-//                                }
-//                                it.printHighlightedText(declaration + type + sig.name + init + combine, sig)
-//                            ];
-//                        ];
-//                    }
-//
-//                }
+                // TODO: Make use of the new type groups and organize visualization accordingly!
+                //                if (SHOW_SIGNAL_DECLARATIONS.booleanValue) {
+                //                    for (sig : s.declarations.valuedObjects) {
+                //                        it.addRectangle => [
+                //                            it.invisible = true;
+                //                            it.addRectangle => [
+                //                                it.invisible = true;
+                //                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
+                //                                    0);
+                //                                scopeProvider.parent = s;
+                //                                var declaration = "";
+                //                                var type = "";
+                //                                var init = "";
+                //                                var combine = "";
+                //                                if (sig.type != ValueType::PURE) {
+                //                                    type = sig.type.literal.toLowerCase + " "
+                //                                }
+                //                                if (sig.combineOperator != null && sig.combineOperator != CombineOperator::NONE) {
+                //                                    combine = " combine " + sig.combineOperator.literal.toLowerCase
+                //                                }
+                //                                if (sig.initialValue != null) {
+                //                                    init = " = " + serializer.serialize(sig.initialValue.copy)
+                //                                }
+                //                                if (sig.isInput) {
+                //                                    declaration = declaration + "input ";
+                //                                }
+                //                                if (sig.isOutput) {
+                //                                    declaration = declaration + "output "
+                //                                }
+                //                                if (sig.isSignal) {
+                //                                    declaration = declaration + "signal ";
+                //                                }
+                //                                if (sig.isStatic) {
+                //                                    declaration = declaration + "static ";
+                //                                }
+                //                                if (!declaration.equals("")) {
+                //                                    declaration = declaration.trim + " "
+                //                                }
+                //                                it.printHighlightedText(declaration + type + sig.name + init + combine, sig)
+                //                            ];
+                //                        ];
+                //                    }
+                //
+                //                }
                 if (SHOW_SIGNAL_DECLARATIONS.booleanValue) {
                     for (tg : s.declarations) {
                         it.addRectangle => [
@@ -566,24 +564,24 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                                 }
                                 var sigs = ""
                                 var c = 0
-                                for(sig : tg.valuedObjects) {
-                                	var combine = ""
-	                                if (sig.combineOperator != null && sig.combineOperator != CombineOperator::NONE) {
-    	                                combine = " combine " + sig.combineOperator.literal.toLowerCase
-        	                        }
-        	                        var init = ""
-            	                    if (sig.initialValue != null) {
-                	                    init = " = " + serializer.serialize(sig.initialValue.copy)
-                    	            }
-                    	            var card = ""
-                    	            if (sig.cardinalities.size>0) {
-                    	            	for (ca : sig.cardinalities) {
-                    	            		card = card + "[" + ca.toString + "]"
-                    	            	}
-                    	            }
-                    	            sigs = sigs + sig.name + init + combine + card
-                    	            c = c + 1
-                    	            if (c < tg.valuedObjects.size) sigs = sigs + ","
+                                for (sig : tg.valuedObjects) {
+                                    var combine = ""
+                                    if (sig.combineOperator != null && sig.combineOperator != CombineOperator::NONE) {
+                                        combine = " combine " + sig.combineOperator.literal.toLowerCase
+                                    }
+                                    var init = ""
+                                    if (sig.initialValue != null) {
+                                        init = " = " + serializer.serialize(sig.initialValue.copy)
+                                    }
+                                    var card = ""
+                                    if (sig.cardinalities.size > 0) {
+                                        for (ca : sig.cardinalities) {
+                                            card = card + "[" + ca.toString + "]"
+                                        }
+                                    }
+                                    sigs = sigs + sig.name + init + combine + card
+                                    c = c + 1
+                                    if(c < tg.valuedObjects.size) sigs = sigs + ","
                                 }
                                 it.printHighlightedText(declaration + type + sigs, tg)
                             ];
@@ -591,9 +589,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     }
 
                 }
-                
-                
-                
                 if (SHOW_STATE_ACTIONS.booleanValue) {
                     scopeProvider.parent = s;
                     for (action : s.localActions) {

@@ -582,6 +582,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // KlighdSynthesisProperties.newInstance(null));
                 // }
             }
+            KiCoKlighdAction.refreshEditor();
         }
     }
 
