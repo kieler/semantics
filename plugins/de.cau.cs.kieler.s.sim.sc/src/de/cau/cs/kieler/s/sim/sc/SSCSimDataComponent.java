@@ -548,7 +548,7 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
             IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
             String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
-            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder,
+            S2SCPlugin.generateCCode(transformedProgram, scOutputString, outputFolder,
                     alternativeSyntax);
 
             // Compile
