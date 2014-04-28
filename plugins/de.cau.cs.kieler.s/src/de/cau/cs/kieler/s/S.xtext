@@ -65,7 +65,7 @@ ValuedObject returns kexpressions::ValuedObject:
     name=ID ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
-    )? ';' ;
+    )?;
 
 //
 // OLD S DECLARATION

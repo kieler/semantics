@@ -570,11 +570,7 @@ ruleValuedObject returns [EObject current=null]
 	    }
 
 )
-))?	otherlv_6=';' 
-    {
-    	newLeafNode(otherlv_6, grammarAccess.getValuedObjectAccess().getSemicolonKeyword_4());
-    }
-)
+))?)
 ;
 
 
