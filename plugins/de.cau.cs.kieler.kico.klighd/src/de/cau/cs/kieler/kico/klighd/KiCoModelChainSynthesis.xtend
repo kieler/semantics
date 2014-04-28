@@ -32,10 +32,10 @@ import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.List
-import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import javax.inject.Inject
 
 /**
  * Diagram synthesis of a KiCoModelChain.
