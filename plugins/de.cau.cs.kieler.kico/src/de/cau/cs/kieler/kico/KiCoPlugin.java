@@ -135,7 +135,7 @@ public class KiCoPlugin extends AbstractUIPlugin {
      * @param object the object
      * @return the guice instance
      */
-    private Object getGuiceInstance(Object object) {
+    public static Object getGuiceInstance(Object object) {
         Object guiceInstance = Guice.createInjector().getInstance(object.getClass());
         return guiceInstance;
     }
