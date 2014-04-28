@@ -712,7 +712,28 @@ public class KielerCompiler {
      * @param transformationIDs the transformation i ds
      * @return the list
      */
-    public static List<String> calculatePreRequirements(List<String> transformationIDs, boolean noGroups) {
+    public static List<String> calculatePreRequirements(List<String> enabledAndDisabledTransformationIDs, boolean noGroups) {
+        List<String> excludedTransformations = new ArrayList<String>();
+        List<String> transformations = new ArrayList<String>();
+        for (String transformation : enabledAndDisabledTransformationIDs) {
+            if (transformation.startsWith("!")) {
+                excludedTransformations.add(transformation.substring(1));
+            } else {
+                transformations.add(transformation);
+            }
+        }
+        return calculatePreRequirements(transformations, excludedTransformations, noGroups);
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Calculate pre requirements.
+     *
+     * @param transformationIDs the transformation i ds
+     * @return the list
+     */
+    public static List<String> calculatePreRequirements(List<String> transformationIDs, final List<String> excludedTransformationIDs, boolean noGroups) {
         // Auto expansion will resolve dependencies and expand transformation groups
         List<String> processedTransformationIDs = transformationIDs;        
         
@@ -731,6 +752,11 @@ public class KielerCompiler {
 
         // 5. eliminate unmarked nodes
         eliminatedUnmarkedNodes(graph);
+
+        // 5b remove excluded transformations
+        if (excludedTransformationIDs != null && excludedTransformationIDs.size() > 0) {
+            removeFromGraph(graph, excludedTransformationIDs);
+        }
 
         // 6. topological sort
         processedTransformationIDs = topologicalSort(graph);
