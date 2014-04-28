@@ -269,6 +269,10 @@ public class KielerCompiler {
                     toBeDeleted = transformationDummy;
                     break;
                 }
+                if (!found && !removeSelected) {
+                    toBeDeleted = transformationDummy;
+                    break;
+                }
             }
             if (toBeDeleted != null) {
                 graph.remove(toBeDeleted);
