@@ -11,11 +11,6 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.eclipse.xtend.shared.ui.xtendBuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
 			<name>org.eclipse.xtext.ui.shared.xtextBuilder</name>
 			<arguments>
 			</arguments>
@@ -25,12 +20,17 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.xtend.shared.ui.xtendBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.pde.PluginNature</nature>
-		<nature>org.eclipse.xtend.shared.ui.xtendXPandNature</nature>
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 		<nature>net.sf.eclipsecs.core.CheckstyleNature</nature>
+		<nature>org.eclipse.xtend.shared.ui.xtendXPandNature</nature>
 	</natures>
 </projectDescription>
