@@ -170,6 +170,7 @@ class S2C {
    // Generate the  tick function.
    def sTickFunction(Program program) {
        '''    int tick(){
+       guard0 = _GO;
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»
