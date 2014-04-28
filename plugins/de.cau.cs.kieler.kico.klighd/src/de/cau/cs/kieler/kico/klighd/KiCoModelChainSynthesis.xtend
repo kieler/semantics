@@ -23,12 +23,18 @@ import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.util.Pair
+import de.cau.cs.kieler.kiml.options.Direction
+import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import java.util.List
 import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
@@ -70,32 +76,40 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
     private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor() =>
         [it.red = 205; it.green = 220; it.blue = 243];
 
+    override public getDisplayedLayoutOptions() {
+        return newLinkedList(
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::ALGORITHM, emptyList),
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[it.name]),
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 50))
+        );
+    }
+
     // -------------------------------------------------------------------------
     // The Main entry transform function
-    override KNode transform(KiCoModelChain chain) {
+    override KNode transform(KiCoModelChain chainWrapper) {
+        val chain = chainWrapper.models;
         val rootNode = createNode();
 
-        if (!chain.models.empty) {
+        if (!chain.empty) {
 
             //transform first
-            var first = transformModel(chain, 0);
+            var first = transformModel(chain.get(0));
             rootNode.children += first;
 
             //transform rest and add edges in between
-            for (i : 1 ..< chain.models.size) {
-                val second = transformModel(chain, i);
+            for (i : 1 ..< chain.size) {
+                val currentModel = chain.get(i);
+                val second = transformModel(currentModel);
                 rootNode.children += second;
                 val edge = createEdge => [
-                    it.addPolyline => [
-                        it.addArrowDecorator;
+                    it.addPolyline => [                        
                         //if label name is null hide edge
-                        if (chain.edgeLabels.get(i) == null) {
-                            it.invisible = true;
-                        }
+                        it.addArrowDecorator.invisible = currentModel.edgeLabel == null;
+                        it.invisible = currentModel.edgeLabel == null;
                     ]
                     //if available add label
-                    if (chain.edgeLabels.get(i) != null) {
-                        it.createLabel.configureCenterEdgeLabel(chain.edgeLabels.get(i),
+                    if (currentModel.edgeLabel != null) {
+                        it.createLabel.configureCenterEdgeLabel(currentModel.edgeLabel,
                             KlighdConstants::DEFAULT_FONT_SIZE,
                             KlighdConstants::DEFAULT_FONT_NAME);
                     }
@@ -109,18 +123,16 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         return rootNode;
     }
 
-    private def KNode transformModel(KiCoModelChain chain, int index) {
-        val model = chain.models.get(index);
-        val label = chain.labels.get(index);
+    private def KNode transformModel(KiCoModelWrapper model) {
         val node = createNode.associateWith(model);
         var subDiagramParentNode = node
 
         //if label is not null a parent node is created and model diagram is added in collapsed child area
-        if (label != null) {
+        if (model.label != null) {
             val figure = node.createFigure;
 
             //title of parent node
-            figure.addText(label).associateWith(model) => [
+            figure.addText(model.label).associateWith(model) => [
                 it.fontSize = 11;
                 it.setFontBold = true;
                 it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
@@ -133,14 +145,14 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
 
             subDiagramParentNode = createNode() => [
                 it.associateWith(model);
-                it.setLayoutOption(KlighdProperties::EXPAND, false);
+                it.setLayoutOption(KlighdProperties::EXPAND, !model.collapsed);
                 figure.setGridPlacement(1);
                 //Collapse Rectangle
                 it.addRectangle() => [
                     it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
                     it.invisible = true;
                     //This text is only for correct size estimation
-                    it.addText(label) => [
+                    it.addText(model.label) => [
                         it.fontSize = 11;
                         it.setFontBold = true;
                         it.invisible = true;
@@ -178,13 +190,13 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         //Create subdiagram from referenced model synthesis or fallback to component synthesis
         var KNode subDiagramNode = null;
         try {
-            subDiagramNode = LightDiagramServices::translateModel(model, usedContext);
+            subDiagramNode = LightDiagramServices::translateModel(model.model, usedContext);
         } catch (Exception e) {
             //fallthrou
         }
-        if (subDiagramNode == null && model instanceof EObject) { //component synthesis
+        if (subDiagramNode == null && model.model instanceof EObject) { //component synthesis
             subDiagramNode = createNode();
-            val modelObject = model as EObject;
+            val modelObject = model.model as EObject;
             subDiagramNode.children += modelObject.eAllContents.map [
                 it.translateEObject;
             ].toIterable;

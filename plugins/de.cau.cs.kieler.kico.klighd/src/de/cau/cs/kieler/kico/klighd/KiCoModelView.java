@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
@@ -63,6 +64,9 @@ public class KiCoModelView {
      *            title of viewer
      */
     public void showModel(Object model, String viewerName) {
+        if (viewerName == null) {
+            viewerName = "";
+        }
         viewManager.createView(viewID, viewerName, model, KlighdSynthesisProperties.newInstance());
     }
 
@@ -75,45 +79,26 @@ public class KiCoModelView {
      *            title of viewer
      */
     public void showModels(List<Object> models, String viewerName) {
-        showModels(models, null, null, viewerName);
-    }
-
-    /**
-     * Displays multiple models as diagrams in collapsed nodes with given labels.
-     * 
-     * @param models
-     *            List of models to display
-     * @param labels
-     *            List of labels of parent nodes of models
-     * @param viewerName
-     *            title of viewer
-     */
-    public void showModels(List<Object> models, List<String> labels, String viewerName) {
-        showModels(models, labels, null, viewerName);
-    }
-
-    /**
-     * Displays multiple models as diagrams in collapsed nodes with given lables and edges with
-     * given edge labels.
-     * 
-     * @param models
-     *            List of models to display
-     * @param labels
-     *            List of labels of parent nodes of models
-     * @param edgeLabels
-     *            List of labels of edges between parent nodes of models
-     * @param viewerName
-     *            title of viewer
-     */
-    public void showModels(List<Object> models, List<String> labels, List<String> edgeLabels,
-            String viewerName) {
-        // create chain model
-        KiCoModelChain chain = new KiCoModelChain(models, labels, edgeLabels);
-
-        if (viewerName == null) {
-            viewerName = "";
+        List<KiCoModelWrapper> wrappedModels = new LinkedList<KiCoModelWrapper>();
+        for (Object model : models) {
+            wrappedModels.add(new KiCoModelWrapper(model));
         }
+        showWrappedModels(wrappedModels, viewerName);
+    }
 
-        viewManager.createView(viewID, viewerName, chain, KlighdSynthesisProperties.newInstance());
+    /**
+     * Displays multiple models wrapped with additional display information as diagrams in model
+     * viewer.
+     * 
+     * @param models
+     *            List of models to display wrapped with additional display information
+     * @param viewerName
+     *            title of viewer
+     */
+    public void showWrappedModels(List<KiCoModelWrapper> models, String viewerName) {
+        KiCoModelChain chain = new KiCoModelChain();
+        chain.models = models;
+
+        showModel(chain, viewerName);
     }
 }

@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.kico.ui;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -233,9 +234,17 @@ public abstract class KiCoKlighdAction {
                     List<String> transformations =
                             KiCoSelectionView.getSelectedTransformations(KiCoSelectionView
                                     .getActiveEditorID());
-                    KiCoModelView.getInstance().showModel(
+                    EObject compiledModel =
                             KielerCompiler.compile(transformations, model,
-                                    KiCoSelectionView.advancedMode), editor.getTitle());
+                                    KiCoSelectionView.advancedMode);
+                    if (transformations.isEmpty()) {
+                        KiCoModelView.getInstance().showModel(compiledModel, editor.getTitle());
+                    } else {
+                        List<Object> side_by_side = new LinkedList<Object>();
+                        side_by_side.add(model);
+                        side_by_side.add(compiledModel);
+                        KiCoModelView.getInstance().showModels(side_by_side, editor.getTitle());
+                    }
                 }
             }
         }
