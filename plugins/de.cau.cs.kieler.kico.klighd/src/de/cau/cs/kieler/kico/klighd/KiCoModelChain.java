@@ -17,19 +17,33 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Chain of arbitrary models.
+ * 
  * @author als
  * 
  */
 public class KiCoModelChain {
 
+    /** List of models in chain */
     private final List<Object> models;
+    /** List of labels of parent nodes of models */
     private final List<String> labels;
+    /** List of labels of edges between parent nodes of models */
     private final List<String> edgeLabels;
 
     /**
+     * Create a chain of models with optional parent nodes with labels and optional edges with
+     * labels.
+     * <p>
+     * All parameters can be null to indicate their absence and thus exclusion in resulting
+     * diagrams.
+     * 
      * @param edgeLabels
+     *            List of labels of edges between parent nodes of models
      * @param labels
+     *            List of labels of parent nodes of models
      * @param models
+     *            List of models in chain
      * 
      */
     public KiCoModelChain(final List<Object> models, final List<String> labels,
@@ -43,7 +57,7 @@ public class KiCoModelChain {
         // fix labels
         if (labels == null) {
             this.labels = new LinkedList<String>();
-            // fill with nulls
+            // fill with nulls to hide resulting diagram parts
             for (int i = 0; i < models.size(); i++) {
                 this.labels.add(null);
             }
@@ -59,7 +73,7 @@ public class KiCoModelChain {
         // fix edgeLabels
         if (edgeLabels == null || labels == null) {
             this.edgeLabels = new LinkedList<String>();
-            // fill with nulls
+            // fill with nulls to hide resulting diagram parts
             for (int i = 0; i < models.size(); i++) {
                 this.edgeLabels.add(null);
             }

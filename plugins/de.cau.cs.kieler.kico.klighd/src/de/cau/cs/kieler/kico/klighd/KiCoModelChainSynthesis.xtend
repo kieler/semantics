@@ -29,8 +29,11 @@ import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
+ * Diagram synthesis of a KiCoModelChain.
+ * 
  * @author als
  *
  */
@@ -61,7 +64,7 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
     extension KColorExtensions
 
     // -------------------------------------------------------------------------
-    // Some color and pattern constants taken from SCChart
+    // Some color and pattern constants taken from SCCharts
     private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor() =>
         [it.red = 248; it.green = 249; it.blue = 253];
     private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor() =>
@@ -73,18 +76,24 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         val rootNode = createNode();
 
         if (!chain.models.empty) {
+
+            //transform first
             var first = transformModel(chain, 0);
             rootNode.children += first;
+
+            //transform rest and add edges in between
             for (i : 1 ..< chain.models.size) {
                 val second = transformModel(chain, i);
                 rootNode.children += second;
                 val edge = createEdge => [
                     it.addPolyline => [
                         it.addArrowDecorator;
+                        //if label name is null hide edge
                         if (chain.edgeLabels.get(i) == null) {
                             it.invisible = true;
                         }
                     ]
+                    //if available add label
                     if (chain.edgeLabels.get(i) != null) {
                         it.createLabel.configureCenterEdgeLabel(chain.edgeLabels.get(i),
                             KlighdConstants::DEFAULT_FONT_SIZE,
@@ -106,8 +115,11 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         val node = createNode.associateWith(model);
         var subDiagramParentNode = node
 
+        //if label is not null a parent node is created and model diagram is added in collapsed child area
         if (label != null) {
             val figure = node.createFigure;
+
+            //title of parent node
             figure.addText(label).associateWith(model) => [
                 it.fontSize = 11;
                 it.setFontBold = true;
@@ -205,8 +217,10 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
             it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
         ];
 
-        object.eClass.EAllAttributes.filterNull.forEach [ //get all attributes
-            figure.addText(it.name + ": " + String::valueOf(object.eGet(it))) => [ //add a text with name and value of the attribute
+        //add all attributes as string representation
+        object.eClass.EAllAttributes.filterNull.forEach [
+            //add a text with name and value of the attribute
+            figure.addText(it.name + ": " + String::valueOf(object.eGet(it))) => [
                 it.fontSize = 9;
                 it.setGridPlacementData().from(LEFT, 5, 0, TOP, 2, 0).to(RIGHT, 5, 0, BOTTOM, 2, 0);
                 it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
@@ -223,21 +237,20 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
     private def createFigure(KNode node) {
 
         //Code taken from SCChartDiagramsynthesis
-        val figure = node.addRectangle.background = "gray20".color;
-        //val figure = node.addRoundedRectangle(8, 8, 1).background = "white".color;
+        //val figure = node.addRectangle.background = "gray20".color;
+        val figure = node.addRoundedRectangle(8, 8, 1).background = "white".color;
         figure.lineWidth = 1;
         figure.foreground = "gray".color;
-        //figure.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+
+        figure.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
 
         //add shadow if option is activated
         figure.shadow = "black".color;
         figure.shadow.XOffset = 4;
         figure.shadow.YOffset = 4;
-        
 
         //minimal node size is necessary if no text will be added
-        //node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
-
+        node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
         return figure;
     }
 }
