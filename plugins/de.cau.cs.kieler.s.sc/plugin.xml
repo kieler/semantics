@@ -35,14 +35,5 @@
             name="genC">
       </command>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.kico.transformation">
-      <transformationMethod
-            class="de.cau.cs.kieler.s.sc.xtend.S2SCC"
-            id="S2SC"
-            method="transform"
-            name="S to SC">
-      </transformationMethod>
-   </extension>
 
 </plugin>
