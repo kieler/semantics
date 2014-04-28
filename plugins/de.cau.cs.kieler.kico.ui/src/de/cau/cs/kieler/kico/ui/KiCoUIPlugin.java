@@ -30,7 +30,7 @@ import de.cau.cs.kieler.kico.TransformationWrapper;
 public class KiCoUIPlugin extends AbstractUIPlugin {
 
     /** The Constant PLUGIN_ID. */
-    public static final String PLUGIN_ID = "de.cau.cs.kieler.kico.klighd"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.kico.ui"; //$NON-NLS-1$
 
     /** The Constant EXTENSION_POINT_ID. */
     public static final String EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.ui.transformation";

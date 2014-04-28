@@ -252,10 +252,21 @@ class KiCoDiagramSynthesisSSM extends AbstractDiagramSynthesis<List<Transformati
         knode.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
         knode.addLayoutParam(LayoutOptions::LAYOUT_HIERARCHY, false);
         
+        val knode2 = createNode();
+//        knode2.setNodeSize(1960, 700)
+        val fig = knode2.addRectangle => [
+//            it.addImage("de.cau.cs.kieler.kico.ui", "images/KiCoSSMBGArrow.png"); 
+              it.lineWidth = 0;   
+//            it.foreground = "#000".color
+//            it.background = "#a0a".color
+        ]
+        
+        knode.children.add(knode2);
+        
         for (elem : model) {
             if (elem.container == null) {
                 val kNode = elem.translate;
-                knode.children.add(kNode);
+                knode2.children.add(kNode);
             }
         }
 
@@ -397,14 +408,14 @@ class KiCoDiagramSynthesisSSM extends AbstractDiagramSynthesis<List<Transformati
         
         val List<List<String>> CATEGORYCOLORS =
         <List<String>> newArrayList (
-            <String> newArrayList("#bdd7e5", "#5ca2e5", "90"),
-            <String> newArrayList("#bdd7e5", "#5ca2e5", "90"),
-            <String> newArrayList("#bdd7e5", "#5ca2e5", "90"),
-            <String> newArrayList("#bdd7e5", "#5ca2e5", "90"),
-            <String> newArrayList("#bdd7e5", "#5ca2e5", "90"),
-            <String> newArrayList("#bdd7e5", "#5ca2e5", "90"),
+            <String> newArrayList("#bdd7e5", "#5ca2e5", "90", "100"),
+            <String> newArrayList("#bdd7e5", "#5ca2e5", "90", "100"),
+            <String> newArrayList("#bdd7e5", "#5ca2e5", "90", "100"),
+            <String> newArrayList("#bdd7e5", "#5ca2e5", "90", "100"),
+            <String> newArrayList("#bdd7e5", "#5ca2e5", "90", "100"),
+            <String> newArrayList("#bdd7e5", "#5ca2e5", "90", "100"),
                         
-            <String> newArrayList("#0000ff", "#aaaaff", "90")
+            <String> newArrayList("#0000ff", "#aaaaff", "90", "100")
         )         
         
         return createNode() => [ node |
@@ -464,6 +475,7 @@ class KiCoDiagramSynthesisSSM extends AbstractDiagramSynthesis<List<Transformati
                         CATEGORYCOLORS.get(categoryNum).get(1).color,
                         Float::valueOf(CATEGORYCOLORS.get(categoryNum).get(2))
                     )
+                    it.background.alpha = Integer::valueOf(CATEGORYCOLORS.get(categoryNum).get(3))
                     categoryNum = categoryNum + 1
                 } else {
                     it.setBackgroundGradient("white".color, GRAY, 90);

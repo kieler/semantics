@@ -84,7 +84,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static boolean advancedMode = true;
 
     /** The SSM diagram synthesis mode. */
-    public static boolean SSMMode = true;
+    public static boolean SSMMode = false;
     
     /** The last editor. */
     String lastEditor = null;
