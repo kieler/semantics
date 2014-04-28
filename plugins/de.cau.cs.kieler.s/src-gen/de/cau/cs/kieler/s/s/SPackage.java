@@ -85,13 +85,13 @@ public interface SPackage extends EPackage
   int PROGRAM__PRIORITY = 1;
 
   /**
-   * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__TYPE_GROUPS = 2;
+  int PROGRAM__DECLARATIONS = 2;
 
   /**
    * The feature id for the '<em><b>Global Host Code Instruction</b></em>' attribute.
@@ -140,13 +140,13 @@ public interface SPackage extends EPackage
   int STATE__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE__TYPE_GROUPS = 1;
+  int STATE__DECLARATIONS = 1;
 
   /**
    * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
@@ -683,15 +683,15 @@ public interface SPackage extends EPackage
   EAttribute getProgram_Priority();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getTypeGroups <em>Type Groups</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getDeclarations <em>Declarations</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Type Groups</em>'.
-   * @see de.cau.cs.kieler.s.s.Program#getTypeGroups()
+   * @return the meta object for the containment reference list '<em>Declarations</em>'.
+   * @see de.cau.cs.kieler.s.s.Program#getDeclarations()
    * @see #getProgram()
    * @generated
    */
-  EReference getProgram_TypeGroups();
+  EReference getProgram_Declarations();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.Program#getGlobalHostCodeInstruction <em>Global Host Code Instruction</em>}'.
@@ -737,15 +737,15 @@ public interface SPackage extends EPackage
   EAttribute getState_Name();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.State#getTypeGroups <em>Type Groups</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.State#getDeclarations <em>Declarations</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Type Groups</em>'.
-   * @see de.cau.cs.kieler.s.s.State#getTypeGroups()
+   * @return the meta object for the containment reference list '<em>Declarations</em>'.
+   * @see de.cau.cs.kieler.s.s.State#getDeclarations()
    * @see #getState()
    * @generated
    */
-  EReference getState_TypeGroups();
+  EReference getState_Declarations();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.State#getInstructions <em>Instructions</em>}'.
@@ -1200,12 +1200,12 @@ public interface SPackage extends EPackage
     EAttribute PROGRAM__PRIORITY = eINSTANCE.getProgram_Priority();
 
     /**
-     * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PROGRAM__TYPE_GROUPS = eINSTANCE.getProgram_TypeGroups();
+    EReference PROGRAM__DECLARATIONS = eINSTANCE.getProgram_Declarations();
 
     /**
      * The meta object literal for the '<em><b>Global Host Code Instruction</b></em>' attribute feature.
@@ -1242,12 +1242,12 @@ public interface SPackage extends EPackage
     EAttribute STATE__NAME = eINSTANCE.getState_Name();
 
     /**
-     * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference STATE__TYPE_GROUPS = eINSTANCE.getState_TypeGroups();
+    EReference STATE__DECLARATIONS = eINSTANCE.getState_Declarations();
 
     /**
      * The meta object literal for the '<em><b>Instructions</b></em>' containment reference list feature.

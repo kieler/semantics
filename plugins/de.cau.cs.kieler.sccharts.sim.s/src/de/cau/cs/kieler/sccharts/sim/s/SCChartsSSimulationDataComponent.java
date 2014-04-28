@@ -468,7 +468,7 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
 
             // Normal SCC Aborts (@requires: none)
             transformedModel = coreTransformation
-                        .transformAbort(transformedModel);
+                        .transformAbortDefault(transformedModel);
 
             // SCG-normalize: Split Transitions (@requires: none)
             transformedModel = coreTransformation

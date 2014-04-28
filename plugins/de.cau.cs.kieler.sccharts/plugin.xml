@@ -890,7 +890,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
-            dependencies="CONNECTOR"
+            dependencies="INITIALIZATION"
             id="ABORTDEFAULT"
             method="transformAbortDefault"
             name="Abort Default">
@@ -898,7 +898,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
-            dependencies="CONNECTOR"
+            dependencies="INITIALIZATION"
             id="ABORTALTERNATIVE"
             method="transformAbortAlternative"
             name="Abort Alternative">
