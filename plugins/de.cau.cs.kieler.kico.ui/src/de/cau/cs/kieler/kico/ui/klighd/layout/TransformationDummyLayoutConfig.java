@@ -64,10 +64,10 @@ public class TransformationDummyLayoutConfig extends SemanticLayoutConfig {
     protected Object getSemanticValue(final Object semanticElem, final LayoutOptionData layoutOption) {
         if (semanticElem instanceof TransformationDummy) {
             if (layoutOption.equals(LayoutOptions.SPACING)) {
-                return 1f;
+                return 0f;
             }
             if (layoutOption.equals(LayoutOptions.ALGORITHM)) {
-                return "de.cau.cs.kieler.box";
+                return "de.cau.cs.kieler.klay.layered";
             }
         }
         return null;

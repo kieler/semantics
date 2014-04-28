@@ -20,9 +20,13 @@ import java.io.IOException;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import com.google.inject.Guice;
+
 import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
+import de.cau.cs.kieler.kico.KiCoPlugin;
+import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.xtend.S2SCC;
 import de.cau.cs.kieler.s.sc.xtend.S2SCALT;
@@ -113,8 +117,13 @@ public class S2SCPlugin extends AbstractUIPlugin {
         } else {
             // by default, produce the normal/old SC syntax
             // cmot/27. Aug 2012: use scc style variables instead of signals (S2SCC instead of S2SC)
-            S2SCC s2SCC = new S2SCC();
-            ccode = s2SCC.transform(program, outputFolder, bufferSize).toString();
+
+            // S2SCC s2SCC = new S2SCC();
+            S2SCC s2SCC = Guice.createInjector().getInstance(S2SCC.class);
+//            S2SCC s2SCC = (S2SCC) KiCoPlugin.getGuiceInstance(S2SCC.class);
+            S2SCC.bufferSize = bufferSize;
+//            ccode = (String) KielerCompiler.compile("S2SC", program);
+            ccode = s2SCC.transform(program).toString();
         }
 
         // Write out c program

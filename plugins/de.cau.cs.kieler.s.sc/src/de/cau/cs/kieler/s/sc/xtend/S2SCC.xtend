@@ -54,6 +54,8 @@ import de.cau.cs.kieler.s.extensions.SExtension
  */
 class S2SCC { 
     
+    public static String bufferSize;
+    
     @Inject
     extension KExpressionsExtension    
 
@@ -61,10 +63,10 @@ class S2SCC {
     extension SExtension    
     
     // General method to create the c simulation interface.
-    def transform (Program program, String outputFolder, String bufferSize) {
+    def transform (Program program) {
        '''
 «/* Generate the C header */»
-       «scHeader(outputFolder, program)»
+       «scHeader(program)»
 
        «/* Signal Reset, Output */»
        «sResetSignals(program)»
@@ -96,7 +98,7 @@ class S2SCC {
    // -------------------------------------------------------------------------   
    
    // Generate the C header.
-   def scHeader(String outputFolderm, Program program) {
+   def scHeader(Program program) {
        '''
     /*****************************************************************************/
     /*                 G E N E R A T E D     S C    C O D E                      */
@@ -200,12 +202,13 @@ class S2SCC {
    
    // Generate signal constants.
    def sSignalConstants(Program program) {
-       val signals = program.getValuedObjects().filter[e|e.isSignal]
+       val valuedObjects = program.getValuedObjects()
+       val signals = valuedObjects.filter[e|e.isSignal]
        if (!signals.nullOrEmpty) {
        '''typedef enum {«FOR signal : signals SEPARATOR ",
  "»«signal.name»«ENDFOR»} signaltype;
        
-       const char *s2signame[] = {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ", 
+       const char *s2signame[] = {«FOR signal : signals SEPARATOR ", 
 "»"«signal.name»"«ENDFOR»};'''
        }
        else {

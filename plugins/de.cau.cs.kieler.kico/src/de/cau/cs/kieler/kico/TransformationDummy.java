@@ -62,7 +62,36 @@ public class TransformationDummy {
         }
         return false;
     }
+    
+    public boolean isCategory() {
+        if (isGroup() && ((TransformationGroup) transformation).isCategory()) {
+            return true;
+        }
+        return false;
+    }
 
+    public boolean isFeatureGroup() {
+        if (isGroup() && ((TransformationGroup) transformation).isFeatureGroup()) {
+            return true;
+        }
+        return false;
+    }
+    
+    public String getColor1() {
+        if (isGroup()) {
+            return ((TransformationGroup) transformation).getCategoryColor1();
+        } 
+        return "";
+    }
+
+    public String getColor2() {
+        if (isGroup()) {
+            return ((TransformationGroup) transformation).getCategoryColor2();
+        } 
+        return "";
+    }
+
+    
     public TransformationDummy(Transformation transformation) {
         this.id = transformation.getId();
         this.transformation = transformation;

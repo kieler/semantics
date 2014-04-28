@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getPriority <em>Priority</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getTypeGroups <em>Type Groups</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getGlobalHostCodeInstruction <em>Global Host Code Instruction</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getStates <em>States</em>}</li>
  * </ul>
@@ -84,14 +84,14 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   protected int priority = PRIORITY_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getTypeGroups() <em>Type Groups</em>}' containment reference list.
+   * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTypeGroups()
+   * @see #getDeclarations()
    * @generated
    * @ordered
    */
-  protected EList<Declaration> typeGroups;
+  protected EList<Declaration> declarations;
 
   /**
    * The default value of the '{@link #getGlobalHostCodeInstruction() <em>Global Host Code Instruction</em>}' attribute.
@@ -195,13 +195,13 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Declaration> getTypeGroups()
+  public EList<Declaration> getDeclarations()
   {
-    if (typeGroups == null)
+    if (declarations == null)
     {
-      typeGroups = new EObjectContainmentEList<Declaration>(Declaration.class, this, SPackage.PROGRAM__TYPE_GROUPS);
+      declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SPackage.PROGRAM__DECLARATIONS);
     }
-    return typeGroups;
+    return declarations;
   }
 
   /**
@@ -251,8 +251,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case SPackage.PROGRAM__TYPE_GROUPS:
-        return ((InternalEList<?>)getTypeGroups()).basicRemove(otherEnd, msgs);
+      case SPackage.PROGRAM__DECLARATIONS:
+        return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
       case SPackage.PROGRAM__STATES:
         return ((InternalEList<?>)getStates()).basicRemove(otherEnd, msgs);
     }
@@ -273,8 +273,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return getName();
       case SPackage.PROGRAM__PRIORITY:
         return getPriority();
-      case SPackage.PROGRAM__TYPE_GROUPS:
-        return getTypeGroups();
+      case SPackage.PROGRAM__DECLARATIONS:
+        return getDeclarations();
       case SPackage.PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION:
         return getGlobalHostCodeInstruction();
       case SPackage.PROGRAM__STATES:
@@ -300,9 +300,9 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
       case SPackage.PROGRAM__PRIORITY:
         setPriority((Integer)newValue);
         return;
-      case SPackage.PROGRAM__TYPE_GROUPS:
-        getTypeGroups().clear();
-        getTypeGroups().addAll((Collection<? extends Declaration>)newValue);
+      case SPackage.PROGRAM__DECLARATIONS:
+        getDeclarations().clear();
+        getDeclarations().addAll((Collection<? extends Declaration>)newValue);
         return;
       case SPackage.PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION:
         setGlobalHostCodeInstruction((String)newValue);
@@ -331,8 +331,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
       case SPackage.PROGRAM__PRIORITY:
         setPriority(PRIORITY_EDEFAULT);
         return;
-      case SPackage.PROGRAM__TYPE_GROUPS:
-        getTypeGroups().clear();
+      case SPackage.PROGRAM__DECLARATIONS:
+        getDeclarations().clear();
         return;
       case SPackage.PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION:
         setGlobalHostCodeInstruction(GLOBAL_HOST_CODE_INSTRUCTION_EDEFAULT);
@@ -358,8 +358,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SPackage.PROGRAM__PRIORITY:
         return priority != PRIORITY_EDEFAULT;
-      case SPackage.PROGRAM__TYPE_GROUPS:
-        return typeGroups != null && !typeGroups.isEmpty();
+      case SPackage.PROGRAM__DECLARATIONS:
+        return declarations != null && !declarations.isEmpty();
       case SPackage.PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION:
         return GLOBAL_HOST_CODE_INSTRUCTION_EDEFAULT == null ? globalHostCodeInstruction != null : !GLOBAL_HOST_CODE_INSTRUCTION_EDEFAULT.equals(globalHostCodeInstruction);
       case SPackage.PROGRAM__STATES:

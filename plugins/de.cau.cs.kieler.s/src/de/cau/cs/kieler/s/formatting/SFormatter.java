@@ -144,7 +144,7 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         /*
          * DECLARATIONS
          */
-        c.setNoSpace().before(f.getTypeGroupAccess().getSemicolonKeyword_9());
+        c.setNoSpace().before(f.getDeclarationAccess().getSemicolonKeyword_9());
     
     }
 }
