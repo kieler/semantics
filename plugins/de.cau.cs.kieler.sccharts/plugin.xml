@@ -845,7 +845,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
-            dependencies="DURING"
+            dependencies="DURING, ABORT"
             id="COUNTDELAY"
             method="transformCountDelay"
             name="Count Delay">
