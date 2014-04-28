@@ -25,11 +25,6 @@
    </extension>
    <extension
          point="org.eclipse.ui.commands">
-      <command
-            categoryId="de.cau.cs.kieler.sccharts.commands.category"
-            id="de.cau.cs.kieler.sccharts.commands.AllCoreTransformations"
-            name="AllCoreTransformations">
-      </command>
       <category
             id="de.cau.cs.kieler.sccharts.commands.category"
             name="SCCharts Transformations">
@@ -47,7 +42,7 @@
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
-            commandId="SCC_NORMALIZE">
+            commandId="SCC_EXTENDED">
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
@@ -172,9 +167,9 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="SCC_CORE"
-               label="All Core Transformations"
-               mnemonic="C"
+               commandId="SCC_EXTENDED"
+               label="All Extended Transformations"
+               mnemonic="E"
                style="push">
             <visibleWhen>
                <iterate
@@ -195,9 +190,9 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="SCC_NORMALIZE"
-               label="All Normalize Transformations"
-               mnemonic="N"
+               commandId="SCC_CORE"
+               label="All Core Transformations"
+               mnemonic="C"
                style="push">
             <visibleWhen>
                <iterate
@@ -976,7 +971,7 @@
       </transformationGroup>
 
       <transformationGroup
-            id="NORMALIZE"
+            id="CORE"
             isCategory="true"
             name="Core SCCharts"
             transformations="TRIGGEREFFECT, SURFACEDEPTH">
@@ -997,6 +992,12 @@
             method="transformSurfaceDepth"
             name="Surface Depth">
       </transformationMethod>
+      <transformationGroup
+            id="ALL"
+            isCategory="false"
+            isFeatureGroup="false"
+            transformations="EXTENDED, CORE, SCG">
+      </transformationGroup>
 
       
    </extension>   

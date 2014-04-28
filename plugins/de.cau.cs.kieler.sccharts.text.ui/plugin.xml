@@ -429,11 +429,11 @@
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.text.ui.handler.SctModelFileHandler"
-            commandId="SCT_CORE">
+            commandId="SCT_EXTENDED">
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.text.ui.handler.SctModelFileHandler"
-            commandId="SCT_NORMALIZE">
+            commandId="SCT_CORE">
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.text.ui.handler.SctModelFileHandler"
@@ -558,9 +558,9 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="SCT_CORE"
-               label="All Core Transformations"
-               mnemonic="C"
+               commandId="SCT_EXTENDED"
+               label="All Extended Transformations"
+               mnemonic="E"
                style="push">
             <visibleWhen>
                <iterate
@@ -581,9 +581,9 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="SCT_NORMALIZE"
-               label="All Normalize Transformations"
-               mnemonic="N"
+               commandId="SCT_CORE"
+               label="All Core Transformations"
+               mnemonic="C"
                style="push">
             <visibleWhen>
                <iterate
@@ -1194,7 +1194,7 @@
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor
             editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
-            transformations="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT,ABORTDEFAULT,ABORTALTERNATIVE,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, CORE, NORMALIZE,TRIGGEREFFECT, SURFACEDEPTH, ALL"></editor>
+            transformations="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT,ABORTDEFAULT,ABORTALTERNATIVE,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, CORE, NORMALIZE,TRIGGEREFFECT, SURFACEDEPTH"></editor>
    </extension>
        
     
