@@ -1317,8 +1317,12 @@ class SCChartsCoreTransformation {
             val entryAction = sourceState.createEntryAction
             entryAction.addEffect(counter.assign(0.createIntValue))
 
+            // The during action MUST be added to the PARENT state NOT the SOURCE state because
+            // otherwise (for a strong abort) taking the strong abort transition would not be
+            // allowed to be triggered from inside!
+
             // Add during action
-            val duringAction = sourceState.createDuringAction
+            val duringAction = parentState.createDuringAction
             duringAction.setTrigger(transition.trigger)
             duringAction.addEffect(counter.assign((1.createIntValue).add(counter.reference)))
 
