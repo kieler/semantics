@@ -110,8 +110,6 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                 }
 
                 returnHashMap.put(editorID, transformations);
-                return returnHashMap;
-
             } catch (Exception e) {
                 this.showWarning(editors[i].getContributor().getName() + " could not be loaded.",
                         null, e, true);
