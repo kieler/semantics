@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -17,8 +18,10 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
@@ -52,13 +55,13 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     public static final ImageDescriptor ICON_ADVANCED = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconAuto.png");
-    
+
     public static final ImageDescriptor ICON_SSM = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSSM.png");
 
     /** The action for toggling the advanced mode. */
     private Action actionAdvancedToggle;
-    
+
     /** The action for toggling the SSM mode. */
     private Action actionSSMToggle;
 
@@ -85,14 +88,14 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     /** The SSM diagram synthesis mode. */
     public static boolean SSMMode = false;
-    
+
     /** The last editor. */
     String lastEditor = null;
 
     /** The registered editors. */
     static HashMap<String, List<String>> registeredEditors = KiCoUIPlugin.getInstance()
             .getRegisteredEditors();
-    
+
     /** Holds the last used workbench part reference. */
     private IWorkbenchPartReference lastWorkbenchPartReference;
 
@@ -522,6 +525,16 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     // -------------------------------------------------------------------------
 
+    // TODO remove and move to kico.klighd
+    static final IPropertyListener contentChangeListener = new IPropertyListener() {
+
+        public void propertyChanged(Object source, int propId) {
+            if(propId == IWorkbenchPartConstants.PROP_DIRTY){
+                KiCoKlighdAction.refreshModelView(false);
+            }
+        }
+    };
+
     /**
      * Update view.
      * 
@@ -529,6 +542,7 @@ public class KiCoSelectionView extends DiagramViewPart {
      *            the ref
      */
     public void updateView(IWorkbenchPartReference ref) {
+
         if (ref != null) {
             IWorkbenchPart part = ref.getPart(true);
             String editorID = ref.getId();
@@ -538,27 +552,36 @@ public class KiCoSelectionView extends DiagramViewPart {
                     EditorPart editorPart = (EditorPart) part;
                     String partName = (editorPart).getPartName();
                     if (!partName.equals(lastEditor)) {
+                        // remove change listener
+                        if (lastWorkbenchPartReference != null) {
+                            lastWorkbenchPartReference
+                                    .removePropertyListener(contentChangeListener);
+                        }
+                        ref.addPropertyListener(contentChangeListener);
                         lastEditor = partName;
                         int activeEditorID = getActiveEditorID();
                         List<TransformationDummy> tempModel = KielerCompiler.buildGraph();
                         KielerCompiler.reduceGraph(tempModel, visibleTransformations);
                         model.put(activeEditorID, tempModel);
-                        
-//                        DiagramViewPart klighdPart =
-//                                DiagramViewManager.getInstance().createView(getPartId(), null,
-//                                        tempModel, KlighdSynthesisProperties.newInstance(null));
-                        
+
+                        // DiagramViewPart klighdPart =
+                        // DiagramViewManager.getInstance().createView(getPartId(), null,
+                        // tempModel, KlighdSynthesisProperties.newInstance(null));
+
                         KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
                         if (SSMMode) {
-                            properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesisSSM");
+                            properties.setProperty(
+                                    KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+                                    "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesisSSM");
                         } else {
-                            properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis");
+                            properties.setProperty(
+                                    KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+                                    "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis");
                         }
-                        
+
                         DiagramViewPart klighdPart =
                                 DiagramViewManager.getInstance().createView(getPartId(), null,
-                                        tempModel, 
-                                        properties);
+                                        tempModel, properties);
                         diagram.put(activeEditorID, klighdPart);
 
                         if (KiCoSelectionView.advancedMode) {
@@ -567,9 +590,12 @@ public class KiCoSelectionView extends DiagramViewPart {
                         }
                         KiCoSelectionView.addSelectedTransformationVisualization(activeEditorID);
 
+                        // refresh kico.klighd model view
+                        // TODO register appropriate change listener.
+                        KiCoKlighdAction.refreshModelView(true);
                     }
                 }
-                
+
                 lastWorkbenchPartReference = ref;
             } else {
                 // if (part instanceof EditorPart) {
@@ -582,7 +608,6 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // KlighdSynthesisProperties.newInstance(null));
                 // }
             }
-            KiCoKlighdAction.refreshEditor();
         }
     }
 
@@ -665,13 +690,14 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // TOGGLE
                 advancedMode = !advancedMode;
                 actionAdvancedToggle.setChecked(advancedMode);
-                KiCoKlighdAction.refreshEditor();
 
                 if (advancedMode) {
                     addRequiredTransformationVisualization(getActiveEditorID());
                 } else {
                     removeRequiredTransformationVisualization(getActiveEditorID());
                 }
+                
+                KiCoKlighdAction.refreshModelView(true);
 
             }
         };
@@ -681,14 +707,13 @@ public class KiCoSelectionView extends DiagramViewPart {
         actionAdvancedToggle.setChecked(advancedMode);
         return actionAdvancedToggle;
     }
-    
-    
+
     // -------------------------------------------------------------------------
 
     /**
      * Gets the action to toggle presence of the SSM representation.
      * 
-     * @return the action 
+     * @return the action
      */
     private Action getActionSSMToggle() {
         if (actionSSMToggle != null) {
@@ -699,13 +724,12 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // TOGGLE
                 SSMMode = !SSMMode;
                 actionSSMToggle.setChecked(SSMMode);
-                KiCoKlighdAction.refreshEditor();
 
-//                if (SSMMode) {
-//                    addRequiredTransformationVisualization(getActiveEditorID());
-//                } else {
-//                    removeRequiredTransformationVisualization(getActiveEditorID());
-//                }
+                // if (SSMMode) {
+                // addRequiredTransformationVisualization(getActiveEditorID());
+                // } else {
+                // removeRequiredTransformationVisualization(getActiveEditorID());
+                // }
                 lastEditor = "";
                 updateView(lastWorkbenchPartReference);
 
@@ -716,7 +740,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         actionSSMToggle.setImageDescriptor(ICON_SSM);
         actionSSMToggle.setChecked(SSMMode);
         return actionSSMToggle;
-    }    
+    }
 
     // -------------------------------------------------------------------------
 
