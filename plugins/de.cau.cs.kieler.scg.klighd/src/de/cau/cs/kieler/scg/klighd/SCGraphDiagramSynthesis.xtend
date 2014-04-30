@@ -1044,11 +1044,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         for (tn : nodes) {
             kContainer.children += tn.node
 
-            if (nodeGrouping != NODEGROUPING_HIERARCHY)
-                if (tn.node.getData(typeof(KShapeLayout)).getProperty(Properties::LAYER_CONSTRAINT) ==
-                    LayerConstraint::FIRST) {
-                    kContainer.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
-                }
+//            if (nodeGrouping != NODEGROUPING_HIERARCHY)
+//                if (tn.node.getData(typeof(KShapeLayout)).getProperty(Properties::LAYER_CONSTRAINT) ==
+//                    LayerConstraint::FIRST) {
+//                        kContainer.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+//                    }
         }
 
         // Add the container to the original parent.
