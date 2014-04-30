@@ -79,10 +79,10 @@
             name="SCG">
       </transformationMethod>
       <transformationGroup
-            id="SCGraph"
+            id="SCGRAPH"
             isCategory="true"
             name="SCGraph"
-            transformations="SCG, SCGDEP, SCGBBGroup, SCGSCHEDGroup, SCGSEQ">
+            transformations="SCG, SCGDEP, SCGBBGROUP, SCGSCHEDGROUP, SCGSEQ">
       </transformationGroup>
    </extension>
 
