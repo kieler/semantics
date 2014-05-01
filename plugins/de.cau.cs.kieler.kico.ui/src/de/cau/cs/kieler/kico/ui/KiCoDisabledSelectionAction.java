@@ -89,7 +89,7 @@ public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAc
                     .toArray()));
         }
 
-        refreshEditor();
+        refreshModelView(true);
         
         return ActionResult.createResult(true).dontAnimateLayout();
     }

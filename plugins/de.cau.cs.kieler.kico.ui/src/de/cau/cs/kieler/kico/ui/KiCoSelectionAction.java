@@ -102,7 +102,7 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
                     KiCoSelectionView.getActiveEditorID()).toArray()));
         }
 
-        refreshEditor();
+        refreshModelView(true);
 
         return ActionResult.createResult(true).dontAnimateLayout();
     }

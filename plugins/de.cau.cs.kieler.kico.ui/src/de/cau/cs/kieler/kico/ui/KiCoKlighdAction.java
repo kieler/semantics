@@ -212,11 +212,14 @@ public abstract class KiCoKlighdAction {
     }
 
     // -------------------------------------------------------------------------
-
+    // TODO register appropriate change listener.
     /**
      * Update KoCo KLighD Model view
+     * 
+     * @param notDirtyListener
+     *            indicates if its is not called by the EditorPart content change listener
      */
-    static public void refreshEditor() {
+    static public void refreshModelView(boolean notDirtyListener) {
         // Ensures that the KLighD view redraws the diagram of the curretly selected editor
         IEditorPart editor = KiCoSelectionView.getActiveEditor();
         if (editor != null && editor instanceof XtextEditor) {
@@ -231,6 +234,10 @@ public abstract class KiCoKlighdAction {
                     }
                 });
                 if (model != null) {
+                    // check if refreshing is superfluous
+                    if (!notDirtyListener && editor.isDirty()) {
+                        return;
+                    }
                     List<String> transformations =
                             KiCoSelectionView.getSelectedTransformations(KiCoSelectionView
                                     .getActiveEditorID());
@@ -249,7 +256,6 @@ public abstract class KiCoKlighdAction {
             }
         }
     }
-
     // -------------------------------------------------------------------------
 
 }
