@@ -1559,7 +1559,7 @@ class SCChartsCoreTransformation {
             for (duringAction : state.duringActions.immutableCopy) {
                 val region = state.createRegion(GENERATED_PREFIX + "During").uniqueName
                 val initialState = region.createInitialState(GENERATED_PREFIX + "I")
-                val middleState = region.createState(GENERATED_PREFIX + "S")
+                val middleState = region.createState(GENERATED_PREFIX + "S").setTypeConnector
                 val finalState = region.createFinalState(GENERATED_PREFIX + "F")
                 val transition1 = initialState.createTransitionTo(middleState)
                 transition1.setDelay(duringAction.delay);
@@ -1862,6 +1862,7 @@ class SCChartsCoreTransformation {
 
             for (region : regionsDeep) {
                 var counter = 0
+                // FIXME: stateEnum should be static
                 val stateEnum = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + state.id).setTypeInt.
                     uniqueName
                 stateEnumsAll.add(stateEnum)
