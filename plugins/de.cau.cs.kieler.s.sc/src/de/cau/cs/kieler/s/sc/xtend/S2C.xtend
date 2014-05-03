@@ -220,6 +220,10 @@ class S2C {
    def extractCode(String hostCodeString) {
         hostCodeString.substring(1, hostCodeString.length-1);
    }
+
+   def extractCode(TextExpression hostCode) {
+        hostCode.text.extractCode
+   }
    
    // Expand Host code.
    def dispatch CharSequence expand(HostCodeInstruction hostCodeInstruction) {

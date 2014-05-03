@@ -125,12 +125,12 @@ class SCGToSTransformation {
         if (assignment.valuedObject != null && assignment.assignment != null) {
 	    	val sAssignment = SFactory::eINSTANCE.createAssignment
 	    	sAssignment.variable = valuedObjectMapping.get(assignment.valuedObject)
-	    	val expression = assignment.assignment.copyExpression.fix
+	    	val expression = assignment.assignment.copyExpression.fix.fixHostCode
             sAssignment.expression = expression
 	    	instructions += sAssignment
     	} else if (assignment.assignment instanceof TextExpression) {
     	     // This is the case when the valuedObject is null
-    	     val hostCode = (assignment.assignment as TextExpression).text
+    	     val hostCode = (assignment.assignment as TextExpression).text //.copy.fixHostCode as TextExpression
     	     instructions += hostCode.createHostCode
     	}
 	    

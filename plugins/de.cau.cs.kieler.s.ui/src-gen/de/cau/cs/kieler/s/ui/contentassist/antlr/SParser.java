@@ -39,7 +39,6 @@ public class SParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getDeclarationAccess().getAlternatives_4(), "rule__Declaration__Alternatives_4");
 					put(grammarAccess.getInstructionAccess().getAlternatives(), "rule__Instruction__Alternatives");
-					put(grammarAccess.getSExpressionAccess().getAlternatives(), "rule__SExpression__Alternatives");
 					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
 					put(grammarAccess.getOrAndExpressionAccess().getAlternatives_1(), "rule__OrAndExpression__Alternatives_1");
 					put(grammarAccess.getOrAndExpressionAccess().getOperatorAlternatives_1_0_1_0(), "rule__OrAndExpression__OperatorAlternatives_1_0_1_0");
@@ -60,7 +59,6 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 					put(grammarAccess.getProgramAccess().getGroup(), "rule__Program__Group__0");
-					put(grammarAccess.getProgramAccess().getGroup_6(), "rule__Program__Group_6__0");
 					put(grammarAccess.getStateAccess().getGroup(), "rule__State__Group__0");
 					put(grammarAccess.getStateAccess().getGroup_6(), "rule__State__Group_6__0");
 					put(grammarAccess.getDeclarationAccess().getGroup(), "rule__Declaration__Group__0");
@@ -127,7 +125,7 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getProgramAccess().getNameAssignment_1(), "rule__Program__NameAssignment_1");
 					put(grammarAccess.getProgramAccess().getPriorityAssignment_3(), "rule__Program__PriorityAssignment_3");
 					put(grammarAccess.getProgramAccess().getDeclarationsAssignment_5(), "rule__Program__DeclarationsAssignment_5");
-					put(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionAssignment_6_1(), "rule__Program__GlobalHostCodeInstructionAssignment_6_1");
+					put(grammarAccess.getProgramAccess().getGlobalHostCodeInstructionAssignment_6(), "rule__Program__GlobalHostCodeInstructionAssignment_6");
 					put(grammarAccess.getProgramAccess().getStatesAssignment_7(), "rule__Program__StatesAssignment_7");
 					put(grammarAccess.getStateAccess().getNameAssignment_2(), "rule__State__NameAssignment_2");
 					put(grammarAccess.getStateAccess().getDeclarationsAssignment_5(), "rule__State__DeclarationsAssignment_5");

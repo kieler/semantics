@@ -150,15 +150,11 @@ ruleProgram returns [EObject current=null]
 	    }
 
 )
-)*(	otherlv_6='\'' 
-    {
-    	newLeafNode(otherlv_6, grammarAccess.getProgramAccess().getApostropheKeyword_6_0());
-    }
+)*(
 (
-(
-		lv_globalHostCodeInstruction_7_0=RULE_HOSTCODE
+		lv_globalHostCodeInstruction_6_0=RULE_HOSTCODE
 		{
-			newLeafNode(lv_globalHostCodeInstruction_7_0, grammarAccess.getProgramAccess().getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_1_0()); 
+			newLeafNode(lv_globalHostCodeInstruction_6_0, grammarAccess.getProgramAccess().getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -167,28 +163,24 @@ ruleProgram returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"globalHostCodeInstruction",
-        		lv_globalHostCodeInstruction_7_0, 
+        		lv_globalHostCodeInstruction_6_0, 
         		"HOSTCODE");
 	    }
 
 )
-)	otherlv_8='\'' 
-    {
-    	newLeafNode(otherlv_8, grammarAccess.getProgramAccess().getApostropheKeyword_6_2());
-    }
 )?(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getProgramAccess().getStatesStateParserRuleCall_7_0()); 
 	    }
-		lv_states_9_0=ruleState		{
+		lv_states_7_0=ruleState		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProgramRule());
 	        }
        		add(
        			$current, 
        			"states",
-        		lv_states_9_0, 
+        		lv_states_7_0, 
         		"State");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1651,12 +1643,12 @@ ruleSExpression returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
+
 	{ 
 	  /* */ 
 	}
     { 
-        newCompositeNode(grammarAccess.getSExpressionAccess().getExpressionParserRuleCall_0()); 
+        newCompositeNode(grammarAccess.getSExpressionAccess().getExpressionParserRuleCall()); 
     }
     this_Expression_0=ruleExpression
     { 
@@ -1664,11 +1656,6 @@ ruleSExpression returns [EObject current=null]
         afterParserOrEnumRuleCall();
     }
 
-    |this_HOSTCODE_1=RULE_HOSTCODE
-    { 
-    newLeafNode(this_HOSTCODE_1, grammarAccess.getSExpressionAccess().getHOSTCODETerminalRuleCall_1()); 
-    }
-)
 ;
 
 
@@ -4183,8 +4170,6 @@ ruleCombineOperator returns [Enumerator current=null]
 ));
 
 
-
-RULE_HOSTCODESTRINGTERMINAL : '$' ('a'..'z'|'A'..'Z'|'_'|'.'|'"'|'0'..'9')+ '$';
 
 RULE_HOSTCODE : '\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'';
 

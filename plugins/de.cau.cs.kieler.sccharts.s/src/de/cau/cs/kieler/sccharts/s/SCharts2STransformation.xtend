@@ -406,11 +406,12 @@ class SCCharts2STransformation {
     }
 
     // Convert SyncChart text effects and add them to an instructions list.
-    def dispatch void convertToSEffect(TextEffect effect, List<Instruction> instructions) {
-        val sHostCode = SFactory::eINSTANCE.createHostCodeInstruction;
-        sHostCode.setHostCode("'" + effect.text + ";'");
-        instructions.add(sHostCode);
-    }
+// FIXME!
+//    def dispatch void convertToSEffect(TextEffect effect, List<Instruction> instructions) {
+//        val sHostCode = SFactory::eINSTANCE.createHostCodeInstruction;
+//        sHostCode.setHostCode("'" + effect.text + ";'");
+//        instructions.add(sHostCode);
+//    }
 
 
 

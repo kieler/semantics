@@ -31,11 +31,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		private final Assignment cDeclarationsAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cDeclarationsDeclarationParserRuleCall_5_0 = (RuleCall)cDeclarationsAssignment_5.eContents().get(0);
-		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cApostropheKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Assignment cGlobalHostCodeInstructionAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_1_0 = (RuleCall)cGlobalHostCodeInstructionAssignment_6_1.eContents().get(0);
-		private final Keyword cApostropheKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
+		private final Assignment cGlobalHostCodeInstructionAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0 = (RuleCall)cGlobalHostCodeInstructionAssignment_6.eContents().get(0);
 		private final Assignment cStatesAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final RuleCall cStatesStateParserRuleCall_7_0 = (RuleCall)cStatesAssignment_7.eContents().get(0);
 		
@@ -47,8 +44,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//	//	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
 		//
 		//	declarations+=Declaration* //    (((valuedObjects+=ValuedObject)+ ';')*)? 
-		// ("\'" globalHostCodeInstruction=HOSTCODE
-		//	"\'")? states+=State+;
+		// globalHostCodeInstruction=HOSTCODE?
+		//	states+=State+;
 		public ParserRule getRule() { return rule; }
 
 		//"synchronous program" name=ID "(" priority=INT ")" //	((signals += Signal) (signals += Signal)*)?
@@ -58,8 +55,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		////	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
 		//
 		//declarations+=Declaration* //    (((valuedObjects+=ValuedObject)+ ';')*)? 
-		// ("\'" globalHostCodeInstruction=HOSTCODE
-		//"\'")? states+=State+
+		// globalHostCodeInstruction=HOSTCODE?
+		//states+=State+
 		public Group getGroup() { return cGroup; }
 
 		//"synchronous program"
@@ -89,20 +86,11 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//Declaration
 		public RuleCall getDeclarationsDeclarationParserRuleCall_5_0() { return cDeclarationsDeclarationParserRuleCall_5_0; }
 
-		//("\'" globalHostCodeInstruction=HOSTCODE "\'")?
-		public Group getGroup_6() { return cGroup_6; }
-
-		//"\'"
-		public Keyword getApostropheKeyword_6_0() { return cApostropheKeyword_6_0; }
-
-		//globalHostCodeInstruction=HOSTCODE
-		public Assignment getGlobalHostCodeInstructionAssignment_6_1() { return cGlobalHostCodeInstructionAssignment_6_1; }
+		//globalHostCodeInstruction=HOSTCODE?
+		public Assignment getGlobalHostCodeInstructionAssignment_6() { return cGlobalHostCodeInstructionAssignment_6; }
 
 		//HOSTCODE
-		public RuleCall getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_1_0() { return cGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_1_0; }
-
-		//"\'"
-		public Keyword getApostropheKeyword_6_2() { return cApostropheKeyword_6_2; }
+		public RuleCall getGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0() { return cGlobalHostCodeInstructionHOSTCODETerminalRuleCall_6_0; }
 
 		//states+=State+
 		public Assignment getStatesAssignment_7() { return cStatesAssignment_7; }
@@ -393,7 +381,11 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cHostCodeInstructionParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
 		private final RuleCall cAssignmentParserRuleCall_13 = (RuleCall)cAlternatives.eContents().get(13);
 		
-		//Instruction:
+		//// custom terminal rule for strings
+		// //terminal HOSTCODESTRINGTERMINAL returns ecore::EString:
+		//
+		////    '$' ('a'..'z'|'A'..'Z'|'_'|'.'|'"'|'0'..'9')+ '$';
+		// Instruction:
 		//	Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction |
 		//	Assignment;
 		public ParserRule getRule() { return rule; }
@@ -1071,22 +1063,15 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class SExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SExpression");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cHOSTCODETerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		//SExpression returns kexpressions::Expression:
-		//	Expression | HOSTCODE;
+		//SExpression returns kexpressions::Expression: //| HOSTCODE
+		// Expression;
 		public ParserRule getRule() { return rule; }
 
-		//Expression | HOSTCODE
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//Expression
-		public RuleCall getExpressionParserRuleCall_0() { return cExpressionParserRuleCall_0; }
-
-		//HOSTCODE
-		public RuleCall getHOSTCODETerminalRuleCall_1() { return cHOSTCODETerminalRuleCall_1; }
+		////| HOSTCODE
+		// Expression
+		public RuleCall getExpressionParserRuleCall() { return cExpressionParserRuleCall; }
 	}
 	
 	
@@ -1095,7 +1080,6 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	private DeclarationElements pDeclaration;
 	private ValuedObjectElements pValuedObject;
 	private HostCodeInstructionElements pHostCodeInstruction;
-	private TerminalRule tHOSTCODESTRINGTERMINAL;
 	private InstructionElements pInstruction;
 	private AssignmentElements pAssignment;
 	private PrioElements pPrio;
@@ -1158,8 +1142,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//	//	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
 	//
 	//	declarations+=Declaration* //    (((valuedObjects+=ValuedObject)+ ';')*)? 
-	// ("\'" globalHostCodeInstruction=HOSTCODE
-	//	"\'")? states+=State+;
+	// globalHostCodeInstruction=HOSTCODE?
+	//	states+=State+;
 	public ProgramElements getProgramAccess() {
 		return (pProgram != null) ? pProgram : (pProgram = new ProgramElements());
 	}
@@ -1245,13 +1229,10 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// custom terminal rule for strings
-	// terminal HOSTCODESTRINGTERMINAL:
-	//	"$" ("a".."z" | "A".."Z" | "_" | "." | "\"" | "0".."9")+ "$";
-	public TerminalRule getHOSTCODESTRINGTERMINALRule() {
-		return (tHOSTCODESTRINGTERMINAL != null) ? tHOSTCODESTRINGTERMINAL : (tHOSTCODESTRINGTERMINAL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "HOSTCODESTRINGTERMINAL"));
-	} 
-
-	//Instruction:
+	// //terminal HOSTCODESTRINGTERMINAL returns ecore::EString:
+	//
+	////    '$' ('a'..'z'|'A'..'Z'|'_'|'.'|'"'|'0'..'9')+ '$';
+	// Instruction:
 	//	Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction |
 	//	Assignment;
 	public InstructionElements getInstructionAccess() {
@@ -1400,8 +1381,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getAwaitAccess().getRule();
 	}
 
-	//SExpression returns kexpressions::Expression:
-	//	Expression | HOSTCODE;
+	//SExpression returns kexpressions::Expression: //| HOSTCODE
+	// Expression;
 	public SExpressionElements getSExpressionAccess() {
 		return (pSExpression != null) ? pSExpression : (pSExpression = new SExpressionElements());
 	}

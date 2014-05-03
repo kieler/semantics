@@ -23,7 +23,7 @@ Program :
     
     (declarations += Declaration)*
 //    (((valuedObjects+=ValuedObject)+ ';')*)? 
-	('\'' globalHostCodeInstruction = HOSTCODE '\'')?
+	(globalHostCodeInstruction = HOSTCODE)?
 	(states += State)+
 ;
 
@@ -92,8 +92,8 @@ HostCodeInstruction:
 ;
 
 // custom terminal rule for strings
-terminal HOSTCODESTRINGTERMINAL returns ecore::EString:
-    '$' ('a'..'z'|'A'..'Z'|'_'|'.'|'"'|'0'..'9')+ '$';
+//terminal HOSTCODESTRINGTERMINAL returns ecore::EString:
+//    '$' ('a'..'z'|'A'..'Z'|'_'|'.'|'"'|'0'..'9')+ '$';
     
 
 Instruction:
@@ -171,5 +171,5 @@ Await:
 
 
 SExpression returns kexpressions::Expression:
-	Expression | HOSTCODE
+	Expression //| HOSTCODE
 ;

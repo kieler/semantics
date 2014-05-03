@@ -539,6 +539,33 @@ class KExpressionsExtension {
         return newOperatorExpression;
     }
     
+    def Expression fixHostCode(Expression expression) {
+    	if (expression instanceof TextExpression) 
+    		(expression as TextExpression).fixHostCodeInTextExpression
+    	else if (expression instanceof OperatorExpression)
+    		(expression as OperatorExpression).fixHostCodeInOperatorExpression	
+    	else 
+    		expression	
+    }
+    
+    def TextExpression fixHostCodeInTextExpression(TextExpression expression) {
+    	if (expression.text.startsWith("'")) return expression
+    	else return expression.copy => [ setText("'" + expression.getText + "'") ]
+    }
+    
+    def Expression fixHostCodeInOperatorExpression(OperatorExpression expression) {
+    	if (expression == null || expression.subExpressions.nullOrEmpty) {
+    		return expression
+    	}
+        val oeCopy = expression.copy
+        oeCopy.subExpressions.clear
+        expression.subExpressions.forEach [
+        	oeCopy.subExpressions += it.copy.fixHostCode
+        ]
+        
+        oeCopy
+    }
+    
 
     //==========  EXPRESSIONS  ==========
     

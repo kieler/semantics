@@ -513,6 +513,10 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
         hostCodeString.substring(1, hostCodeString.length-1);
    }
    
+   def extractCode(TextExpression hostCode) {
+        hostCode.text.extractCode
+   }
+   
    // Expand Host code.
    def dispatch CharSequence expand(HostCodeInstruction hostCodeInstruction) {
         '''«hostCodeInstruction.hostCode.extractCode»;'''
