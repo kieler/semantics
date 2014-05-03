@@ -48,7 +48,8 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         //c.setIndentationDecrement().before(f.getProgramAccess().getSemicolonKeyword_7_3());
 
         // Each Signal, Input, Output declaration part in a new line
-        c.setLinewrap(1).before(f.getValuedObjectRule());
+//        c.setLinewrap(1).before(f.getValuedObjectRule());
+        c.setLinewrap().after(f.getDeclarationAccess().getSemicolonKeyword_7());
         
         // Put ";" in a new line, one line separates Sig/In/Out parts
         //c.setLinewrap(1).after(f.getProgramAccess().getSignalsKeyword_7_0());
