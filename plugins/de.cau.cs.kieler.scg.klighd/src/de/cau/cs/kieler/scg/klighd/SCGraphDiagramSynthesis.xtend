@@ -300,13 +300,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -------------------------------------------------------------------------
     // -- Constants
     // -------------------------------------------------------------------------
-    /**
-     * Workaround for prefixed spaces
-     * Enter the character code of the char KlighD will recognize as blank. 
-     * Spaces are removed automatically at the moment.
-     */
-    private static val byte KLIGHDSPACERCHARCODE = 255 as byte
-    private static val String KLIGHDSPACERCHAR = "" + KLIGHDSPACERCHARCODE as char
+    /** Spacing for guard indentation. */
+    private static val String KLIGHDSPACERCHAR = " " 
     private static val String KLIGHDSPACER = KLIGHDSPACERCHAR + KLIGHDSPACERCHAR + KLIGHDSPACERCHAR + KLIGHDSPACERCHAR
 
     /** Color codes */
