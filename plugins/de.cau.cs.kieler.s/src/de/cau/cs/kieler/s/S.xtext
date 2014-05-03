@@ -42,26 +42,26 @@ Program :
 State:
 	'state' '(' name = ID ')' '{'
     (declarations += Declaration)*
-	(instructions+=Instruction';')*
+	(instructions += Instruction';')*
 	'}'
 ;
 
 // TODO: ensure signal AND variable declaration in top level....
 
 Declaration returns kexpressions::Declaration:
-    (annotations+=Annotation)*
+//    (annotations+=Annotation)*
     (const?='const')?
     (input?='input')?
     (output?='output')?
     (static?='static')?
-    (signal?='signal')?
-    (type=ValueType)? valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+    ((signal?='signal')|(type=ValueType)) 
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 ;
 
 
 
 ValuedObject returns kexpressions::ValuedObject:
-    (annotations+=Annotation)*
+//    (annotations+=Annotation)*
     name=ID ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)

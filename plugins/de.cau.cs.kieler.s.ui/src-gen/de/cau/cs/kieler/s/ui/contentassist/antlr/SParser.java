@@ -37,6 +37,7 @@ public class SParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
+					put(grammarAccess.getDeclarationAccess().getAlternatives_4(), "rule__Declaration__Alternatives_4");
 					put(grammarAccess.getInstructionAccess().getAlternatives(), "rule__Instruction__Alternatives");
 					put(grammarAccess.getSExpressionAccess().getAlternatives(), "rule__SExpression__Alternatives");
 					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
@@ -63,10 +64,10 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getGroup(), "rule__State__Group__0");
 					put(grammarAccess.getStateAccess().getGroup_6(), "rule__State__Group_6__0");
 					put(grammarAccess.getDeclarationAccess().getGroup(), "rule__Declaration__Group__0");
-					put(grammarAccess.getDeclarationAccess().getGroup_8(), "rule__Declaration__Group_8__0");
+					put(grammarAccess.getDeclarationAccess().getGroup_6(), "rule__Declaration__Group_6__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup(), "rule__ValuedObject__Group__0");
+					put(grammarAccess.getValuedObjectAccess().getGroup_1(), "rule__ValuedObject__Group_1__0");
 					put(grammarAccess.getValuedObjectAccess().getGroup_2(), "rule__ValuedObject__Group_2__0");
-					put(grammarAccess.getValuedObjectAccess().getGroup_3(), "rule__ValuedObject__Group_3__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
 					put(grammarAccess.getPrioAccess().getGroup(), "rule__Prio__Group__0");
 					put(grammarAccess.getPrioAccess().getGroup_3(), "rule__Prio__Group_3__0");
@@ -131,19 +132,17 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getNameAssignment_2(), "rule__State__NameAssignment_2");
 					put(grammarAccess.getStateAccess().getDeclarationsAssignment_5(), "rule__State__DeclarationsAssignment_5");
 					put(grammarAccess.getStateAccess().getInstructionsAssignment_6_0(), "rule__State__InstructionsAssignment_6_0");
-					put(grammarAccess.getDeclarationAccess().getAnnotationsAssignment_0(), "rule__Declaration__AnnotationsAssignment_0");
-					put(grammarAccess.getDeclarationAccess().getConstAssignment_1(), "rule__Declaration__ConstAssignment_1");
-					put(grammarAccess.getDeclarationAccess().getInputAssignment_2(), "rule__Declaration__InputAssignment_2");
-					put(grammarAccess.getDeclarationAccess().getOutputAssignment_3(), "rule__Declaration__OutputAssignment_3");
-					put(grammarAccess.getDeclarationAccess().getStaticAssignment_4(), "rule__Declaration__StaticAssignment_4");
-					put(grammarAccess.getDeclarationAccess().getSignalAssignment_5(), "rule__Declaration__SignalAssignment_5");
-					put(grammarAccess.getDeclarationAccess().getTypeAssignment_6(), "rule__Declaration__TypeAssignment_6");
-					put(grammarAccess.getDeclarationAccess().getValuedObjectsAssignment_7(), "rule__Declaration__ValuedObjectsAssignment_7");
-					put(grammarAccess.getDeclarationAccess().getValuedObjectsAssignment_8_1(), "rule__Declaration__ValuedObjectsAssignment_8_1");
-					put(grammarAccess.getValuedObjectAccess().getAnnotationsAssignment_0(), "rule__ValuedObject__AnnotationsAssignment_0");
-					put(grammarAccess.getValuedObjectAccess().getNameAssignment_1(), "rule__ValuedObject__NameAssignment_1");
-					put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_2_1(), "rule__ValuedObject__InitialValueAssignment_2_1");
-					put(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_3_1(), "rule__ValuedObject__CombineOperatorAssignment_3_1");
+					put(grammarAccess.getDeclarationAccess().getConstAssignment_0(), "rule__Declaration__ConstAssignment_0");
+					put(grammarAccess.getDeclarationAccess().getInputAssignment_1(), "rule__Declaration__InputAssignment_1");
+					put(grammarAccess.getDeclarationAccess().getOutputAssignment_2(), "rule__Declaration__OutputAssignment_2");
+					put(grammarAccess.getDeclarationAccess().getStaticAssignment_3(), "rule__Declaration__StaticAssignment_3");
+					put(grammarAccess.getDeclarationAccess().getSignalAssignment_4_0(), "rule__Declaration__SignalAssignment_4_0");
+					put(grammarAccess.getDeclarationAccess().getTypeAssignment_4_1(), "rule__Declaration__TypeAssignment_4_1");
+					put(grammarAccess.getDeclarationAccess().getValuedObjectsAssignment_5(), "rule__Declaration__ValuedObjectsAssignment_5");
+					put(grammarAccess.getDeclarationAccess().getValuedObjectsAssignment_6_1(), "rule__Declaration__ValuedObjectsAssignment_6_1");
+					put(grammarAccess.getValuedObjectAccess().getNameAssignment_0(), "rule__ValuedObject__NameAssignment_0");
+					put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_1_1(), "rule__ValuedObject__InitialValueAssignment_1_1");
+					put(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_2_1(), "rule__ValuedObject__CombineOperatorAssignment_2_1");
 					put(grammarAccess.getHostCodeInstructionAccess().getHostCodeAssignment(), "rule__HostCodeInstruction__HostCodeAssignment");
 					put(grammarAccess.getAssignmentAccess().getVariableAssignment_0(), "rule__Assignment__VariableAssignment_0");
 					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_2(), "rule__Assignment__ExpressionAssignment_2");

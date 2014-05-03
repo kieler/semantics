@@ -466,13 +466,11 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	/**
 	 * Constraint:
 	 *     (
-	 *         annotations+=Annotation* 
 	 *         const?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 
-	 *         signal?='signal'? 
-	 *         type=ValueType? 
+	 *         (signal?='signal' | type=ValueType) 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject*
 	 *     )
@@ -632,7 +630,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* name=ID initialValue=Expression? combineOperator=CombineOperator?)
+	 *     (name=ID initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
