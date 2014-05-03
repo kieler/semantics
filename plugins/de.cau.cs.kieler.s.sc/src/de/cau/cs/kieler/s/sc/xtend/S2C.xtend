@@ -130,19 +130,21 @@ class S2C {
 
    // Generate variables.
    def sVariables(Program program) {
-       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal] SEPARATOR ";
- "»«signal.type.expand» «signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
-  «IF program.usesPre(signal)»
-     «signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
-  «ENDIF»
-  «ENDFOR»
- '''
+       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal]»
+			«signal.type.expand» «signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
+			«IF program.usesPre(signal)»
+				«signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
+			«ENDIF»
+  		«ENDFOR»
+		'''
    }
 
    // Generate PRE variables setter.
    def setPreVariables(Program program) {
-       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal] SEPARATOR ";
- "»«IF program.usesPre(signal)» PRE_«signal.name» = «signal.name» «ENDIF»«ENDFOR»'''
+       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal]»
+       «IF program.usesPre(signal) 
+ 			» PRE_«signal.name» = «signal.name»;«
+ 		ENDIF»«ENDFOR»'''
    }
 
 
@@ -174,7 +176,8 @@ class S2C {
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»
-       _GO = 0
+       _GO = 0;
+       «program.setPreVariables»
     }
     '''
    }
