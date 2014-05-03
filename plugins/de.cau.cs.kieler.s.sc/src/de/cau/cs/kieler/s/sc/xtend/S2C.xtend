@@ -147,6 +147,15 @@ class S2C {
  		ENDIF»«ENDFOR»'''
    }
 
+   def resetPreVariables(Program program) {
+       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal]»
+       «IF program.usesPre(signal) 
+ 			» PRE_«signal.name» = 0;«
+ 		ENDIF»«ENDFOR»'''
+   }
+   
+   
+
 
    def dispatch expand(ValueType valueType) {
        if (valueType == ValueType::BOOL) {
@@ -163,6 +172,7 @@ class S2C {
    def sResetFunction(Program program) {
        '''    int reset(){
        _GO = 1;
+       «program.resetPreVariables»
     }
     '''
    }
