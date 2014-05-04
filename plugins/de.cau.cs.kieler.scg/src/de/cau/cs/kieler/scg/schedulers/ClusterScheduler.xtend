@@ -134,7 +134,7 @@ class ClusterScheduler extends SimpleScheduler {
             
             if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
                 schedule.schedulingBlocks.add(schedulingBlock)
-                scg.guards += schedulingBlock.createGuardExpression(scg)
+                scg.guards += schedulingBlock.createGuardExpression(schedule, scg)
 //                schedulingBlocks.remove(schedulingBlock)
                 constraints.schedulingBlockClusters.get(clusterPos).remove(schedulingBlock)
                 placed = placed + 1
