@@ -93,7 +93,7 @@ class DependencyTransformation extends AbstractModelTransformation {
         // Finally, add all dependencies. Therefore, search all assignmentdep nodes and create their 
         // dependency information. The data is automatically stored in the SCG by the createDependencies
         // function.
-        scgdep.nodes.filter(typeof(AssignmentDep)).forEach[ it.createDependencies ]
+        scgdep.nodes.filter(typeof(AssignmentDep)).filter[ valuedObject != null ].forEach[ it.createDependencies ]
         
         // Return the SCG with dependency data.
         scgdep
