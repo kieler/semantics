@@ -233,7 +233,7 @@ class SCCharts2STransformation {
         val state = dependencyState.getState
         val sState = state.sState
         
-        if (state.hierarchical) {
+        if (state.hasInnerStatesOrRegions) {
             /////////////////////////
             // Handle macro states //
             /////////////////////////
@@ -320,7 +320,7 @@ class SCCharts2STransformation {
             }
 
             // If necessary, insert a prio statement
-            var sourcePriority = state.priority(state.hierarchical)
+            var sourcePriority = state.priority(state.hasInnerStatesOrRegions)
             var targetPriority = transition.targetState.priority
             if (sourcePriority != targetPriority) {
                 // Change priority

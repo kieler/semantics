@@ -320,7 +320,7 @@ class SCChartsCoreTransformation {
     }
 
     def void optimizeSuperflousImmediateTransitions(State state, Region targetRootRegion) {
-        if (state.outgoingTransitions.size == 1 && !state.hierarchical) {
+        if (state.outgoingTransitions.size == 1 && !state.hasInnerStatesOrRegions) {
             val transition = state.outgoingTransitions.get(0)
             val targetState = transition.targetState
             if (transition.immediate2) {
@@ -354,7 +354,7 @@ class SCChartsCoreTransformation {
     }
 
     def void optimizeSuperflousConditionalStates(State state, Region targetRootRegion) {
-        if (state.outgoingTransitions.size == 2 && !state.hierarchical) {
+        if (state.outgoingTransitions.size == 2 && !state.hasInnerStatesOrRegions) {
             val transition1 = state.outgoingTransitions.get(0)
             val transition2 = state.outgoingTransitions.get(1)
             val targetState2 = transition1.targetState
@@ -762,7 +762,7 @@ class SCChartsCoreTransformation {
         val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
 
         //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
-        if (state.hierarchical && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
+        if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
             val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
 
             // Remember all outgoing transitions and regions
@@ -821,7 +821,7 @@ class SCChartsCoreTransformation {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
-                                if (innerState.hierarchical) {
+                                if (innerState.hasInnerStatesOrRegions || innerState.hasInnerActions) {
 
                                     // HERE DIFFERENCE TO ABORT2()
                                     // We mark the transition as strong abort and handle
@@ -938,7 +938,7 @@ class SCChartsCoreTransformation {
         val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
 
         //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
-        if (state.hierarchical && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
+        if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
             val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
 
             // Remember all outgoing transitions and regions
@@ -997,14 +997,14 @@ class SCChartsCoreTransformation {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
-                                if (innerState.hierarchical) {
+                                if (innerState.hasInnerStatesOrRegions || innerState.hasInnerActions) {
 
                                     // HERE DIFFERENCE TO ABORT1()
                                     // We dig deep in the hierarchy and connect all states with immediate transitions
                                     // to a final state.
                                     // This leads to more transitions but avoids more variables.
                                     strongAbort.setTypeTermination
-                                    val allInnerSimpleStates = innerState.allContainedStates.filter[!hierarchical].
+                                    val allInnerSimpleStates = innerState.allContainedStates.filter[!(hasInnerStatesOrRegions || hasInnerActions)].
                                         filter[!final]
                                     for (innerSimpleState : allInnerSimpleStates) {
                                         val innerFinalStates = innerSimpleState.parentRegion.states.filter[final]
@@ -1619,7 +1619,7 @@ class SCChartsCoreTransformation {
                 }
                 firstState = connector
                 lastState = state
-            } else if (!state.hierarchical) {
+            } else if (!state.hasInnerStatesOrRegions) {
                 val region = state.createRegion(GENERATED_PREFIX + "Entry")
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
                 lastState = region.createFinalState(GENERATED_PREFIX + "Done")
@@ -1717,7 +1717,7 @@ class SCChartsCoreTransformation {
             var State firstState
             var State lastState
 
-            if (!state.hierarchical) {
+            if (!state.hasInnerStatesOrRegions) {
                 val region = state.createRegion(GENERATED_PREFIX + "Exit")
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
                 lastState = region.createFinalState(GENERATED_PREFIX + "Done")
@@ -1729,7 +1729,7 @@ class SCChartsCoreTransformation {
                 firstState.setNotFinal
             } else { // state has several regions (or one region without any final state!)
                 val region = state.createRegion(GENERATED_PREFIX + "Entry").uniqueName
-                firstState = region.createFinalState(GENERATED_PREFIX + "Main")
+                firstState = region.createInitialState(GENERATED_PREFIX + "Main")
                 for (mainRegion : state.regions.filter(e|e != region).toList.immutableCopy) {
                     firstState.regions.add(mainRegion)
                 }
@@ -3750,7 +3750,7 @@ class SCChartsCoreTransformation {
     // Traverse all states 
     def void transformSCCAborts_OLD_IMPLEMENTATION_(State state, Region targetRootRegion) {
 
-        if (state.hierarchical && state.outgoingTransitions.size() > 0) {
+        if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && state.outgoingTransitions.size() > 0) {
 
             // Remember all outgoing transitions
             val originalOutgoingTransitions = ImmutableList::copyOf(state.outgoingTransitions);

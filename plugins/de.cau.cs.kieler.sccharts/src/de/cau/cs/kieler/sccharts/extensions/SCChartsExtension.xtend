@@ -336,7 +336,7 @@ class SCChartsExtension {
     }
     
     def State[] getFinalStates(Region region) {
-        region.allFinalStates.filter[outgoingTransitions.size == 0 && !hierarchical && entryActions.size == 0 && duringActions.size == 0 && exitActions.size == 0]
+        region.allFinalStates.filter[outgoingTransitions.size == 0 && !hasInnerStatesOrRegions && entryActions.size == 0 && duringActions.size == 0 && exitActions.size == 0]
     }
     
     // Get the first (simple) final state if the region contains any, otherwise return null.
@@ -405,10 +405,15 @@ class SCChartsExtension {
         region
     }
 
-    def boolean isHierarchical(State state) {
-        return ((state.regions != null && state.regions.size != 0 && state.eAllContents.filter(typeof(State)).size > 0)
-        || !state.duringActions.nullOrEmpty || !state.exitActions.nullOrEmpty)
+    def boolean hasInnerStatesOrRegions(State state) {
+        return ((state.regions != null && state.regions.size != 0 && state.eAllContents.filter(typeof(State)).size > 0))
     }
+
+    // These are actions that expand to INNER content like during or exit actions.
+    def boolean hasInnerActions(State state) {
+        return (!state.duringActions.nullOrEmpty || !state.exitActions.nullOrEmpty)
+    }
+
 
     //========== TRANSITIONS ===========
     // A transition is a history transition if it is not a reset transition.
@@ -868,7 +873,7 @@ class SCChartsExtension {
     //-------------------------------------------------------------------------
     // This fixes halt states and adds an explicit delayed self transition
     def Region fixPossibleHaltStates(Region rootRegion) {
-        val haltStates = rootRegion.allContainedStates.filter[!hierarchical && outgoingTransitions.nullOrEmpty && !final]
+        val haltStates = rootRegion.allContainedStates.filter[!hasInnerStatesOrRegions && outgoingTransitions.nullOrEmpty && !final]
         
         for (haltState : haltStates) {
             haltState.createTransitionTo(haltState)

@@ -401,7 +401,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                             dependencyNode.getPriority + ""
                         else
                             (dependencyNode.getOrder) + ""
-                        if (s.hierarchical) {
+                        if (s.hasInnerStatesOrRegions || s.hasInnerActions) {
                             if (!dependencyGraph.dependencyNodes.filter(e|e.getState == s && e.getIsJoin).nullOrEmpty) {
                                 val dependencyNodeJoin = dependencyGraph.dependencyNodes.filter(
                                     e|e.getState == s && e.getIsJoin).get(0)
