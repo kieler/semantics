@@ -112,7 +112,7 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
 
     protected boolean doOpenEditor(final Object modelObject, final ExecutionEvent event,
             final ISelection selection) {
-        return true;
+        return false;
     }
 
     // -------------------------------------------------------------------------
