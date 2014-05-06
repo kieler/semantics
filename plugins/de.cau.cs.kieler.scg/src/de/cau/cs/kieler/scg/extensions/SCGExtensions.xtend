@@ -67,6 +67,8 @@ class SCGExtensions {
     
     @Inject
     extension KExpressionsExtension
+    
+    private int MAX_CONTROLFLOW_ACCUMULATION = 100;
 
     // -------------------------------------------------------------------------
     // -- Valued object handling
@@ -214,8 +216,10 @@ class SCGExtensions {
      * @return Returns nothing. 
      */  
     private def void accumulateIndirectControlFlow(ControlFlow next, List<ControlFlow> localFlow, 
-        List<List<ControlFlow>> listOfFlows, Node target, boolean includeTickEdges 
+        List<List<ControlFlow>> listOfFlows, Node target, boolean includeTickEdges, boolean excludeSingleIncoming 
     ) {
+        if (excludeSingleIncoming && next.target.incoming.size<2) return;
+        
     	// Already in the local flow list: loop! Abort.
         if (localFlow.contains(next)) return;
         
@@ -227,16 +231,18 @@ class SCGExtensions {
             return;
         }
         
+        if (localFlow.size == MAX_CONTROLFLOW_ACCUMULATION) return;
+        
         // Otherwise, follow the flow and recursively call this method to proceed on further control flows.
         localFlow.add(next)
         next.target.allNext.forEach[
             val newFlow = <ControlFlow> newArrayList(localFlow)       	    
-            accumulateIndirectControlFlow(newFlow, listOfFlows, target, includeTickEdges)
+            accumulateIndirectControlFlow(newFlow, listOfFlows, target, includeTickEdges, false)
         ]
         
         if (includeTickEdges && next.target instanceof Surface) {
             (next.target as Surface).depth.next.accumulateIndirectControlFlow( 
-                localFlow, listOfFlows, target, includeTickEdges
+                localFlow, listOfFlows, target, includeTickEdges, false
             )
         }
     }
@@ -256,8 +262,14 @@ class SCGExtensions {
 	 */   
     def List<List<ControlFlow>> getIndirectControlFlows(Node source, Node target) {
    	    val pathList = <List<ControlFlow>> newLinkedList
-   	    source.allNext.forEach[ accumulateIndirectControlFlow(newArrayList(), pathList, target, false) ]
+   	    source.allNext.forEach[ accumulateIndirectControlFlow(newArrayList(), pathList, target, false, false) ]
    	    pathList 
+    }
+
+    def List<List<ControlFlow>> getIndirectControlFlowsForLoopDetection(Node source, Node target) {
+        val pathList = <List<ControlFlow>> newLinkedList
+        source.allNext.forEach[ accumulateIndirectControlFlow(newArrayList(), pathList, target, false, true) ]
+        pathList 
     }
     
     /** 
@@ -295,7 +307,7 @@ class SCGExtensions {
      * @return Returns a list of control flow paths containing all instantaneous control flow paths. 
      */
     def List<List<ControlFlow>> getInstantaneousControlFlows(Node source) {
-    	source.getInstantaneousControlFlows(source)
+    	source.getIndirectControlFlowsForLoopDetection(source).filter[ instantaneousFlow ].toList
     }
     
     /**
@@ -324,7 +336,7 @@ class SCGExtensions {
      */   
     def List<List<ControlFlow>> getIndirectControlFlowsBeyondTickBoundaries(Node source, Node target) {
         val pathList = <List<ControlFlow>> newLinkedList
-        source.allNext.forEach[ accumulateIndirectControlFlow(newArrayList(), pathList, target, true) ]
+        source.allNext.forEach[ accumulateIndirectControlFlow(newArrayList(), pathList, target, true, false) ]
         pathList 
     }      
 

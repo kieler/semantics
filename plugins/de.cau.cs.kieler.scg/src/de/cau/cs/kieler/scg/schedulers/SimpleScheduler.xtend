@@ -104,6 +104,13 @@ class SimpleScheduler extends AbstractScheduler {
     /** Storage space for the interleaved assignment analyzer id. */
     protected var String interleavedAssignmentAnalyzerId = ""
     
+    protected val ANALYZER_NODE_LIMIT = 100;
+    
+    private var PROGRESS_SCGSIZE = 0;
+    private var PROGRESS_PLACED = 0;
+    
+    private val List<SchedulingBlock> TSVISITED = <SchedulingBlock> newArrayList; 
+    
     // -------------------------------------------------------------------------
     // -- Scheduler 
     // -------------------------------------------------------------------------
@@ -135,7 +142,12 @@ class SimpleScheduler extends AbstractScheduler {
 		interleavedAssignmentAnalyzerId = assignmentAnalyzer.analysisId
 		
 		// The results are gathered in the analyzer data structure, persisted in the SCG and returned to the caller.
-		assignmentAnalyzer.analyze(loopAnalyzer.analyze(scg)).copyAllAnalyses(scg).SCG as SCGraphSched
+		if (scg.nodes.size <= ANALYZER_NODE_LIMIT)
+		    assignmentAnalyzer.analyze(loopAnalyzer.analyze(scg)).copyAllAnalyses(scg).SCG as SCGraphSched
+		else {
+		    System.out.println("SCG too big for experimental analyses. Skipping...")
+		    scg
+        }
     }    
     
     /**
@@ -212,28 +224,35 @@ class SimpleScheduler extends AbstractScheduler {
     
     protected def int topologicalPlacement(SchedulingBlock schedulingBlock, 
         List<SchedulingBlock> schedulingBlocks, Schedule schedule, 
-        SchedulingConstraints constraints, List<SchedulingBlock> visited, SCGraphSched scg
+        SchedulingConstraints constraints, SCGraphSched scg
     ) {
         var placed = 0 as int
-        if (!visited.contains(schedulingBlock)) {
-            visited.add(schedulingBlock)
+        if (!TSVISITED.contains(schedulingBlock)) {
+            TSVISITED.add(schedulingBlock)
             for(pred : schedulingBlock.basicBlock.predecessors) {
                 for (sb : pred.basicBlock.schedulingBlocks) {
-                    sb.topologicalPlacement(schedulingBlocks, schedule, constraints, visited, scg)
+                    sb.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
                 }
             }
             for(dep : schedulingBlock.dependencies) {
                 if (dep.concurrent && !dep.confluent) {
                     if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
-                        (dep.eContainer as Node).schedulingBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, visited, scg) 
+                        (dep.eContainer as Node).schedulingBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg) 
                 }
             }
             
-            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
+            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg) && !schedule.schedulingBlocks.contains(schedulingBlock)) {
                 schedule.schedulingBlocks.add(schedulingBlock)
                 scg.guards += schedulingBlock.createGuardExpression(schedule, scg)
                 schedulingBlocks.remove(schedulingBlock)
                 placed = placed + 1
+                PROGRESS_PLACED = PROGRESS_PLACED + 1
+                if (PROGRESS_PLACED % 10 == 0) {
+                    System.out.print("o");
+                }
+                if (PROGRESS_PLACED % 100 == 0) {
+                    System.out.println("");
+                }
             }
         } 
         
@@ -246,8 +265,13 @@ class SimpleScheduler extends AbstractScheduler {
         
         val schedulingBlocksCopy = ImmutableList::copyOf(schedulingBlocks)
         
+        PROGRESS_SCGSIZE = schedulingBlocksCopy.size
+        PROGRESS_PLACED = 0
+        System.out.println("Scheduling "+PROGRESS_SCGSIZE+" scheduling blocks...")
+        TSVISITED.clear
+        
         for (sb : schedulingBlocksCopy) {
-            sb.topologicalPlacement(schedulingBlocks, schedule, constraints, <SchedulingBlock> newArrayList, scg)
+            sb.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
         }
         
         schedule.schedulingBlocks.size == schedulingBlocksCopy.size
