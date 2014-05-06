@@ -24,6 +24,9 @@ import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scgsched.ScgschedFactory
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import com.google.common.collect.ImmutableList
+import de.cau.cs.kieler.core.kexpressions.Expression
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -213,6 +216,45 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         } else {
             // No surface found! Synchronizer exists immediately!
             data.guardExpression.expression = terminationExpr
+        }
+        
+        /** Fix for too long empty expressions. */
+        var ok = false
+        while (!ok) {
+            ok = true
+            val emptyCopy = ImmutableList::copyOf(data.guardExpression.emptyExpressions)
+            for(empty : emptyCopy) {
+                var Expression exp = null
+                if (empty.expression instanceof OperatorExpression) {
+                    if ((empty.expression as OperatorExpression).getOperator == OperatorType::NOT) {
+                        exp = (empty.expression as OperatorExpression).subExpressions.head
+                    } else { 
+                        exp = empty.expression
+                    }
+                }
+            val encapsExp = exp
+            if (encapsExp instanceof OperatorExpression) {
+                val opExp = encapsExp as OperatorExpression
+                val depth = opExp.subExpressions.size
+                if (depth > OPERATOREXPRESSION_DEPTHLIMIT) {
+                    ok = false
+                    val emptyExp = ScgschedFactory::eINSTANCE.createEmptyExpression  
+                    emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
+                    emptyExp.valuedObject.name = empty.valuedObject.name + "_tldr"
+                    data.valuedObjects.add(emptyExp.valuedObject)
+                    val subExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+                    subExpression.setOperator(OperatorType::OR)
+                    var gd = OPERATOREXPRESSION_DEPTHLIMIT/2
+                    while (gd < depth-1) {
+                        subExpression.subExpressions += opExp.subExpressions.get(OPERATOREXPRESSION_DEPTHLIMIT/2)
+                        gd = gd + 1
+                    }
+                    emptyExp.expression = subExpression;
+                    (encapsExp as OperatorExpression).subExpressions.add(emptyExp.valuedObject.reference) 
+                    data.guardExpression.emptyExpressions.add(0,emptyExp)
+                }
+            }
+        }
         }
         
         // Return the gathered data (to the scheduler).
