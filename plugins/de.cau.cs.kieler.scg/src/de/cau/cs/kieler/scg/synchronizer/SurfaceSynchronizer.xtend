@@ -73,6 +73,8 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	/** Inject SCG copy extensions. */  
     @Inject
     extension SCGCopyExtensions
+    
+    private val OPERATOREXPRESSION_DEPTHLIMIT = 12
 
     // -------------------------------------------------------------------------
     // -- Synchronizer
