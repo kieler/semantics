@@ -492,14 +492,14 @@ class SimpleScheduler extends AbstractScheduler {
     	else if (predecessor.blockType == BlockType::TRUEBRANCH) {
    			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
    			expression.setOperator(OperatorType::AND)
-   			expression.subExpressions += predecessor.basicBlock.guards.last.reference
+   			expression.subExpressions += predecessor.basicBlock.guards.head.reference
    			expression.subExpressions += predecessor.conditional.condition.copy
    			
    			// Conditional branches are mutual exclusive. Since the other branch may modify the condition 
    			// make sure the subsequent branch will not evaluate to true if the first one was already taken.
    			val twin = predecessor.getSchedulingBlockTwin(BlockType::ELSEBRANCH, schedule, scg)
    			if (schedule.schedulingBlocks.contains(twin)) {
-   				expression.subExpressions.add(0, twin.guard.reference.negate)
+   				expression.subExpressions.add(0, twin.basicBlock.guards.head.reference.negate)
    			} 
    			
    			return expression.fix
@@ -509,14 +509,14 @@ class SimpleScheduler extends AbstractScheduler {
    		else if (predecessor.blockType == BlockType::ELSEBRANCH) {
    			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
    			expression.setOperator(OperatorType::AND)
-   			expression.subExpressions += predecessor.basicBlock.guards.last.reference
+   			expression.subExpressions += predecessor.basicBlock.guards.head.reference
    			expression.subExpressions += predecessor.conditional.condition.copy.negate
 
    			// Conditional branches are mutual exclusive. Since the other branch may modify the condition 
    			// make sure the subsequent branch will not evaluate to true if the first one was already taken.
    			val twin = predecessor.getSchedulingBlockTwin(BlockType::TRUEBRANCH, schedule, scg)
    			if (schedule.schedulingBlocks.contains(twin)) {
-   				expression.subExpressions.add(0, twin.guard.reference.negate)
+   				expression.subExpressions.add(0, twin.basicBlock.guards.head.reference.negate)
    			} 
 
    			return expression.fix
