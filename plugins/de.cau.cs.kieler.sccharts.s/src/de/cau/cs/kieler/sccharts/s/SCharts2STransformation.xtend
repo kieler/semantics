@@ -233,7 +233,7 @@ class SCCharts2STransformation {
         val state = dependencyState.getState
         val sState = state.sState
         
-        if (state.hierarchical) {
+        if (state.hasInnerStatesOrRegions) {
             /////////////////////////
             // Handle macro states //
             /////////////////////////
@@ -320,7 +320,7 @@ class SCCharts2STransformation {
             }
 
             // If necessary, insert a prio statement
-            var sourcePriority = state.priority(state.hierarchical)
+            var sourcePriority = state.priority(state.hasInnerStatesOrRegions)
             var targetPriority = transition.targetState.priority
             if (sourcePriority != targetPriority) {
                 // Change priority
@@ -406,11 +406,12 @@ class SCCharts2STransformation {
     }
 
     // Convert SyncChart text effects and add them to an instructions list.
-    def dispatch void convertToSEffect(TextEffect effect, List<Instruction> instructions) {
-        val sHostCode = SFactory::eINSTANCE.createHostCodeInstruction;
-        sHostCode.setHostCode("'" + effect.text + ";'");
-        instructions.add(sHostCode);
-    }
+// FIXME!
+//    def dispatch void convertToSEffect(TextEffect effect, List<Instruction> instructions) {
+//        val sHostCode = SFactory::eINSTANCE.createHostCodeInstruction;
+//        sHostCode.setHostCode("'" + effect.text + ";'");
+//        instructions.add(sHostCode);
+//    }
 
 
 

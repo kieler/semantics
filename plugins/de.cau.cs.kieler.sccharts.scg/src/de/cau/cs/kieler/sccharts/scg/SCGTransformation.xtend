@@ -48,6 +48,8 @@ import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.scg.optimizer.SuperfluousForkRemover
+import com.google.inject.Guice
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -176,8 +178,14 @@ class SCGTransformation {
                 region.transformSCGConnectNodes(sCGraph)
             }
         }
+        
         // Fix superfluous exit nodes
         sCGraph.trimExitNodes.trimConditioanlNodes
+        
+        // Remove superfluous fork constructs 
+        // ssm, 04.05.2014
+        val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(typeof(SuperfluousForkRemover))
+        superfluousForkRemover.optimize(sCGraph)
     }
            
    // -------------------------------------------------------------------------   

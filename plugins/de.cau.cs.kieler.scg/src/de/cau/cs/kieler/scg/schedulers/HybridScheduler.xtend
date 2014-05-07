@@ -78,7 +78,7 @@ class HybridScheduler extends ClusterScheduler {
 		]
 	} 
 	
-	protected override GuardExpression createSynchronizerBlockGuardExpression(SchedulingBlock schedulingBlock, SCGraph scg) {
+	protected override GuardExpression createSynchronizerBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
 		// The simple scheduler uses the SurfaceSynchronizer. 
 		// The result of the synchronizer is stored in the synchronizerData class joinData.
 		val HybridSynchronizer synchronizer = Guice.createInjector().getInstance(typeof(HybridSynchronizer))

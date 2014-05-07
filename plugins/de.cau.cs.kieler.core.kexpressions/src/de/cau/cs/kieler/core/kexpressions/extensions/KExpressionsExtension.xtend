@@ -77,7 +77,7 @@ class KExpressionsExtension {
             // Remove the valuedObject from the old group and add it to the new group
             declaration._removeValuedObject(valuedObject)
             if (declaration.valuedObjects.size == 0) {
-                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN CASE ONE!
+                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN IF CASE!
             }
             newDeclaration._addValuedObject(valuedObject)
             newDeclaration
@@ -105,8 +105,7 @@ class KExpressionsExtension {
         returnList
     }
 
-    
-    
+   
     
     //=======  DECLARATION WRAPPINGS  ======
     
@@ -538,6 +537,33 @@ class KExpressionsExtension {
         operatorExpressionCopy.subExpressions.remove(0);
         newOperatorExpression.subExpressions.add(operatorExpressionCopy.fixForOperatorExpressionLists);
         return newOperatorExpression;
+    }
+    
+    def Expression fixHostCode(Expression expression) {
+    	if (expression instanceof TextExpression) 
+    		(expression as TextExpression).fixHostCodeInTextExpression
+    	else if (expression instanceof OperatorExpression)
+    		(expression as OperatorExpression).fixHostCodeInOperatorExpression	
+    	else 
+    		expression	
+    }
+    
+    def TextExpression fixHostCodeInTextExpression(TextExpression expression) {
+    	if (expression.text.startsWith("'")) return expression
+    	else return expression.copy => [ setText("'" + expression.getText + "'") ]
+    }
+    
+    def Expression fixHostCodeInOperatorExpression(OperatorExpression expression) {
+    	if (expression == null || expression.subExpressions.nullOrEmpty) {
+    		return expression
+    	}
+        val oeCopy = expression.copy
+        oeCopy.subExpressions.clear
+        expression.subExpressions.forEach [
+        	oeCopy.subExpressions += it.copy.fixHostCode
+        ]
+        
+        oeCopy
     }
     
 

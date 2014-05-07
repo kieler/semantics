@@ -35,7 +35,7 @@ class InterleavedAssignmentAnalyzer extends AbstractAnalyzer {
     override analyze(AnalyzerData analyzerData) {
         val result = new InterleavedAssignmentResult
         
-        analyzerData.SCG.eAllContents.filter(typeof(Write_Write)).forEach[ dependency |
+        analyzerData.SCG.eAllContents.filter(typeof(Write_Write)).filter[ concurrent && !confluent ].forEach[ dependency |
             val assignment1 = dependency.eContainer as Node
             val assignment2 = dependency.target as Node
             val ancestorFork = assignment1.ancestorFork

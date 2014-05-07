@@ -27,11 +27,11 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     public static final String ALL_TRANSFORMATIONS =
             "ALL";
 
+    public static final String EXTENDED_TRANSFORMATIONS =
+            "EXTENDED";
+
     public static final String CORE_TRANSFORMATIONS =
             "CORE";
-
-    public static final String NORMALIZE_TRANSFORMATIONS =
-            "NORMALIZE";
 
     public static final String ABORT_TRANSFORMATION =
             "ABORT";
@@ -112,7 +112,7 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
 
     protected boolean doOpenEditor(final Object modelObject, final ExecutionEvent event,
             final ISelection selection) {
-        return true;
+        return false;
     }
 
     // -------------------------------------------------------------------------
@@ -123,9 +123,9 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
     @Override
     protected String getTargetExtension(EObject model, ExecutionEvent event, ISelection selection) {
         String commandString = getCommandString(event);
-        if (commandString.equals(CORE_TRANSFORMATIONS)) {
+        if (commandString.equals(EXTENDED_TRANSFORMATIONS)) {
             return "core";
-        } else if (commandString.equals(NORMALIZE_TRANSFORMATIONS)) {
+        } else if (commandString.equals(CORE_TRANSFORMATIONS)) {
             return "normalized";
         } else {
             return "transformed";

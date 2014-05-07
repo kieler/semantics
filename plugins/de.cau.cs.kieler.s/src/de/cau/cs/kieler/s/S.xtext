@@ -21,9 +21,9 @@ Program :
 //	(((signals+=Signal)+ ';') | ((variables+=Variable)+ ';'))? 
 //	(((variables+=Variable)|(signals += Signal)) ((variables+=Variable)|(signals += Signal))*)?
     
-    (typeGroups += TypeGroup)*
+    (declarations += Declaration)*
 //    (((valuedObjects+=ValuedObject)+ ';')*)? 
-	('\'' globalHostCodeInstruction = HOSTCODE '\'')?
+	(globalHostCodeInstruction = HOSTCODE)?
 	(states += State)+
 ;
 
@@ -41,29 +41,31 @@ Program :
 
 State:
 	'state' '(' name = ID ')' '{'
-    (typeGroups += TypeGroup)*
-	(instructions+=Instruction';')*
+    (declarations += Declaration)*
+	(instructions += Instruction';')*
 	'}'
 ;
 
 // TODO: ensure signal AND variable declaration in top level....
 
-TypeGroup returns kexpressions::Declaration:
-    (annotations+=Annotation)*
-	(const?='const')?
+Declaration returns kexpressions::Declaration:
+//    (annotations+=Annotation)*
+    (const?='const')?
     (input?='input')?
     (output?='output')?
     (static?='static')?
-    (signal?='signal')?
-    type = ValueType valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
+    ((signal?='signal')|(type=ValueType)) 
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
 ;
 
+
+
 ValuedObject returns kexpressions::ValuedObject:
-    (annotations+=Annotation)*
+//    (annotations+=Annotation)*
     name=ID ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
-    )? ';' ;
+    )?;
 
 //
 // OLD S DECLARATION
@@ -90,8 +92,8 @@ HostCodeInstruction:
 ;
 
 // custom terminal rule for strings
-terminal HOSTCODESTRINGTERMINAL returns ecore::EString:
-    '$' ('a'..'z'|'A'..'Z'|'_'|'.'|'"'|'0'..'9')+ '$';
+//terminal HOSTCODESTRINGTERMINAL returns ecore::EString:
+//    '$' ('a'..'z'|'A'..'Z'|'_'|'.'|'"'|'0'..'9')+ '$';
     
 
 Instruction:
@@ -169,5 +171,5 @@ Await:
 
 
 SExpression returns kexpressions::Expression:
-	Expression | HOSTCODE
+	Expression //| HOSTCODE
 ;

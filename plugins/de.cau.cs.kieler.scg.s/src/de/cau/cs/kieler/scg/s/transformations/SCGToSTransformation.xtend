@@ -75,37 +75,37 @@ class SCGToSTransformation {
 //        }		
 		
 		
-        val initState = SFactory::eINSTANCE.createState => [
-            name = "Init"
-            sProgram.states += it
-        ]
+//        val initState = SFactory::eINSTANCE.createState => [
+//            name = "Init"
+//            sProgram.states += it
+//        ]
         
         val tickState = SFactory::eINSTANCE.createState => [
             name = "Tick"
             sProgram.states += it
         ]
         
-        initState.instructions += SFactory::eINSTANCE.createAssignment => [
-            variable = sProgram.findValuedObjectByName(GOGUARDNAME)
-            expression = TRUE
-        ]
-        
-        initState.instructions += SFactory::eINSTANCE.createTrans => [
-            continuation = tickState
-        ]
+//        initState.instructions += SFactory::eINSTANCE.createAssignment => [
+//            variable = sProgram.findValuedObjectByName(GOGUARDNAME)
+//            expression = TRUE
+//        ]
+//        
+//        initState.instructions += SFactory::eINSTANCE.createTrans => [
+//            continuation = tickState
+//        ]
         
 		scg.nodes.head.transform(tickState.instructions)
 		
-		tickState.instructions += SFactory::eINSTANCE.createPause
+//		tickState.instructions += SFactory::eINSTANCE.createPause
+//
+//        tickState.instructions += SFactory::eINSTANCE.createAssignment => [
+//            variable = sProgram.findValuedObjectByName(GOGUARDNAME)
+//            expression = FALSE
+//        ]
 
-        tickState.instructions += SFactory::eINSTANCE.createAssignment => [
-            variable = sProgram.findValuedObjectByName(GOGUARDNAME)
-            expression = FALSE
-        ]
-
-		tickState.instructions += SFactory::eINSTANCE.createTrans => [
-		    continuation = tickState
-		] 
+//		tickState.instructions += SFactory::eINSTANCE.createTrans => [
+//		    continuation = tickState
+//		] 
 		
 		sProgram
 	}
@@ -125,12 +125,12 @@ class SCGToSTransformation {
         if (assignment.valuedObject != null && assignment.assignment != null) {
 	    	val sAssignment = SFactory::eINSTANCE.createAssignment
 	    	sAssignment.variable = valuedObjectMapping.get(assignment.valuedObject)
-	    	val expression = assignment.assignment.copyExpression.fix
+	    	val expression = assignment.assignment.copyExpression.fix.fixHostCode
             sAssignment.expression = expression
 	    	instructions += sAssignment
     	} else if (assignment.assignment instanceof TextExpression) {
     	     // This is the case when the valuedObject is null
-    	     val hostCode = (assignment.assignment as TextExpression).text
+    	     val hostCode = (assignment.assignment as TextExpression).text //.copy.fixHostCode as TextExpression
     	     instructions += hostCode.createHostCode
     	}
 	    
@@ -149,11 +149,16 @@ class SCGToSTransformation {
 	}
 	
 	def ValuedObject findValuedObjectByName(Program s, String name) {
-    	for(tg : s.typeGroups) {
-    		for(vo : tg.valuedObjects) {
-    			if (vo.name == name) return vo
-    		}
-   		}
+	    for (valuedObject : s.valuedObjects) {
+	        if (valuedObject.name.equals(name)) {
+	            return valuedObject
+	        }
+	    }
+//    	for(tg : s.typeGroups) {
+//    		for(vo : tg.valuedObjects) {
+//    			if (vo.name == name) return vo
+//    		}
+//   		}
    		return null
     }    
     

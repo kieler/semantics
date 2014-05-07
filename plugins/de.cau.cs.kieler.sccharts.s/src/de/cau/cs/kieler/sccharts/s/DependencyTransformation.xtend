@@ -58,7 +58,7 @@ class DependencyTransformation {
             if (state != rootRegion.rootState) {
                 val dependencyNode = (new DependencyNode(state)).map(state, false)
                 dependencyNodes.add(dependencyNode)
-                if (state.hierarchical) {
+                if (state.hasInnerStatesOrRegions) {
 
                     // For hierarchical states additionally create a join-representation
                     val joinDependencyState = (new DependencyNode(state)).map(state, true)
@@ -151,7 +151,7 @@ class DependencyTransformation {
                 return true
             }
             // Hierarchical extension FORK
-            if (transition.targetState.hierarchical) {
+            if (transition.targetState.hasInnerStatesOrRegions) {
                 for (region : transition.targetState.regions) {
                     for (initialState : region.states.filter[isInitial]) {
                         if (state.canReach(state2, initialState)) {
@@ -205,7 +205,7 @@ class DependencyTransformation {
 
         // Control Flow dependencies
         for (transition : state.incomingTransitions) {
-            if (state.hierarchical) {
+            if (state.hasInnerStatesOrRegions) {
                 for (region : state.regions) {
                     for (initialState : region.states.filter[isInitial]) {
                         val newControlFlowDependency = new ControlflowDependency(initialState.dependencyNode,
@@ -219,7 +219,7 @@ class DependencyTransformation {
                     }
                 }
             } // else {
-            if (transition.sourceState.hierarchical) {
+            if (transition.sourceState.hasInnerStatesOrRegions) {
                 val newControlFlowDependency = new ControlflowDependency(state.dependencyNode,
                     transition.sourceState.joinDependencyState)
                 dependencies.add(newControlFlowDependency)
@@ -391,7 +391,7 @@ class DependencyTransformation {
             // =============================
             // This implicitly forms (splitted-) "basic blocks" of the same priority
             if (dependencyNode.outgoingDependencies(dependencies).filter(typeof(DataDependency)).size != 0 ||
-                dependencyNode.state.isFinal ||  dependencyNode.state.isInitial || dependencyNode.state.hierarchical 
+                dependencyNode.state.isFinal ||  dependencyNode.state.isInitial || dependencyNode.state.hasInnerStatesOrRegions 
             ) {
                 tmpPrioOrder.incrementPriority
             }
