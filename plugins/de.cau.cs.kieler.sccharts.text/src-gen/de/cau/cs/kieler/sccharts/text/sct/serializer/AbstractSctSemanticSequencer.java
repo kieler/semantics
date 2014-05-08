@@ -464,7 +464,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         label=STRING? 
 	 *         (
 	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
-	 *             ((declaration+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?)
+	 *             ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?)
 	 *         )?
 	 *     )
 	 */

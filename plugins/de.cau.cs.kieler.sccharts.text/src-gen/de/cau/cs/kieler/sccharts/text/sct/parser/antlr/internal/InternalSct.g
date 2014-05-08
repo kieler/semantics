@@ -543,16 +543,16 @@ ruleSCChart returns [EObject current=null]
 (((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSCChartAccess().getDeclarationDeclarationParserRuleCall_6_1_1_0_0_0()); 
+	        newCompositeNode(grammarAccess.getSCChartAccess().getDeclarationsDeclarationParserRuleCall_6_1_1_0_0_0()); 
 	    }
-		lv_declaration_14_0=ruleDeclaration		{
+		lv_declarations_14_0=ruleDeclaration		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSCChartRule());
 	        }
        		add(
        			$current, 
-       			"declaration",
-        		lv_declaration_14_0, 
+       			"declarations",
+        		lv_declarations_14_0, 
         		"Declaration");
 	        afterParserOrEnumRuleCall();
 	    }

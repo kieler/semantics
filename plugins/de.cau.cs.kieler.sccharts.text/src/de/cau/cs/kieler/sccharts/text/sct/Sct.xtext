@@ -61,7 +61,7 @@ SCChart:
      | 
       ('{'
           (
-            (declaration+=Declaration |
+            (declarations+=Declaration |
              localActions+=LocalAction)*
             (
              (regions+=SingleRegion)(regions+=Region)*

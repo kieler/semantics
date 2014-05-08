@@ -15,11 +15,14 @@ package de.cau.cs.kieler.sccharts.text.sct.scoping;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
@@ -48,19 +51,45 @@ import de.cau.cs.kieler.sccharts.text.sct.sct.SCChart;
  *
  * @author chsch ssm
  */
-public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
+public class SctScopeProvider_old extends AbstractDeclarativeScopeProvider {
 
     private static final SCChartsPackage pack = SCChartsPackage.eINSTANCE;
     
-    public IScope scope_State(EObject context, EReference reference) {
-       if ((context instanceof SCChart) && (reference.getName() == "importedType")) {
+    public IScope scope_SCChart(EObject context, EReference reference) {
+        if ((context instanceof SCChart) && (reference.getName() == "importedType")) {
 
-           
-           return IScope.NULLSCOPE;
-       } else {
-           return IScope.NULLSCOPE;
-       }
-    }
+            
+            return IScope.NULLSCOPE;
+        } else {
+            return IScope.NULLSCOPE;
+        }
+     }
+    
+//    public IScope scope_Scope_referencedScope(EObject context, EReference reference) {
+//      if (context instanceof State) {
+//          State state = (State) context;
+//          Resource theResource = state.eResource();
+//          EList<Resource> set = state.eResource().getResourceSet().getResources();
+//          List<IEObjectDescription> l = new LinkedList<IEObjectDescription>();
+//          for (Resource r : set) {
+//              if (r != theResource) {
+//                  EObject obj = null;
+//                  for (Iterator<EObject> it = r.getAllContents(); it.hasNext();) {
+//                      obj = it.next();
+//                      if (!isProxy(obj)
+//                      && SCChartsPackage.eINSTANCE.getState().isInstance(obj)) {
+//                          l.add(new EObjectDescription(QualifiedName.create(((State) obj).getId()), obj,
+//                                  Collections.<String, String> emptyMap()));
+//                      }
+//                  }
+//              }
+//          }
+//
+//          return new SimpleScope(l);
+//      } else {
+//          return IScope.NULLSCOPE;
+//      }
+//    }
     
     public IScope scope_Binding_formal(EObject context, EReference reference) {
         if (context instanceof Binding) {
@@ -69,15 +98,17 @@ public class SctScopeProvider extends AbstractDeclarativeScopeProvider {
             if (!isProxy(obj)) {
                 refScope = (Scope) obj;
                 
-                return Scopes.scopeFor(Iterables.concat(Iterables.transform(refScope.getDeclarations(),
+                Iterable<ValuedObject> voIterable = Iterables.concat(Iterables.transform(
+                    refScope.getDeclarations(),
                         new Function<Declaration, List<ValuedObject>>() {
-                    /**
-                     * {@inheritDoc}
-                     */
-                    public List<ValuedObject> apply(Declaration input) {
-                        return input.getValuedObjects();
-                    }
-                })));
+                            public List<ValuedObject> apply(Declaration input) {
+                                return input.getValuedObjects();
+                            }
+                        }
+                    )
+                );
+                
+                return Scopes.scopeFor(voIterable);
             } else {
                 return IScope.NULLSCOPE;
             }
