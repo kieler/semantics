@@ -14,10 +14,15 @@
 package de.cau.cs.kieler.kico.klighd;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.widgets.Composite;
@@ -29,6 +34,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
@@ -49,16 +55,23 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  * 
  */
 public class KiCoModelView extends DiagramViewPart {
-
+    
     /** Viewer ID **/
     private static final String ID = "de.cau.cs.kieler.kico.klighd";
+
+    public static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kico.klighd", "icons/KiCoModelViewIconCompile.png");
+
+    /** The action for toggling compile. */
+    private Action actionCompileToggle;
+
     private KiCoSelectionView selectionView;
     private HashMap<String, String> tranformations = new HashMap<String, String>();
+    private Set<String> preferSourceModel = new HashSet<String>();
     private boolean visualizeResourceModels = false;
     private LinkedList<XtextEditor> editors = new LinkedList<XtextEditor>();
     private XtextEditor activeEditor;
     private Object currentModel;
-    private LinkedList<String> preferSourceModel = new LinkedList<String>();
     private String displayMode = KiCoSelectionView.DISPLAY_SINGLE_MODEL;
 
     /**
@@ -118,9 +131,10 @@ public class KiCoModelView extends DiagramViewPart {
                 String editorHash =
                         ((KiCoSelectionView) event.getSource())
                                 .getPartProperty(KiCoSelectionView.ACTIVE_EDITOR_PROPERTY_KEY);
-                if (tranformations.put(editorHash, (String) event.getNewValue()) != event
-                        .getNewValue()) {
-                    preferSourceModel.remove(editorHash);
+                if (event.getNewValue() != null
+                        && !event.getNewValue().equals(
+                                tranformations.put(editorHash, (String) event.getNewValue()))) {
+                    updateCompileButton();
                     updateDiagram(false);
                 }
             } else if (event.getProperty() == KiCoSelectionView.DISPLAY_MODE_PROPERTY_KEY) {
@@ -141,6 +155,7 @@ public class KiCoModelView extends DiagramViewPart {
         // toolBarManager.add(getActionSave());
         // toolBarManager.add(getActionSeparate());
         // toolBarManager.add(getActionResourceVisualization());
+        toolBarManager.add(getActionCompile());
 
         DiagramViewManager.getInstance().registerView(this);
 
@@ -182,6 +197,7 @@ public class KiCoModelView extends DiagramViewPart {
                     editor.removePropertyListener(dirtyPropertyListener);
                 } else if (partRef.getId() == KiCoSelectionView.ID) {
                     setSelectionView(null);
+                    tranformations.clear();
                 }
             }
 
@@ -216,7 +232,54 @@ public class KiCoModelView extends DiagramViewPart {
             }
             editor.addPropertyListener(dirtyPropertyListener);
             activeEditor = editor;
+            updateCompileButton();
             updateDiagram(false);
+        }
+    }
+
+    /**
+     * Gets the action to toggle compile.
+     * 
+     * @return the action
+     */
+    private Action getActionCompile() {
+        if (actionCompileToggle != null) {
+            return actionCompileToggle;
+        }
+        actionCompileToggle = new Action("", IAction.AS_CHECK_BOX) {
+            public void run() {
+                if (activeEditor != null) {
+                    String editorHash = Integer.toString(activeEditor.hashCode());
+                    if (actionCompileToggle.isChecked()) {
+                        preferSourceModel.remove(editorHash);
+                    } else {
+                        preferSourceModel.add(editorHash);
+                    }
+                    updateDiagram(false);
+                }
+            }
+        };
+        actionCompileToggle.setText("Show compiled model");
+        actionCompileToggle.setToolTipText("Show compiled model");
+        //actionCompileToggle.setToolTipText("Show compiled model acording to compiler selection");
+        actionCompileToggle.setImageDescriptor(ICON_COMPILE);
+        updateCompileButton();
+        return actionCompileToggle;
+    }
+
+    /**
+     * 
+     */
+    private void updateCompileButton() {
+        if (activeEditor != null) {
+            String editorHash = Integer.toString(activeEditor.hashCode());
+            actionCompileToggle.setEnabled(tranformations.containsKey(editorHash)
+                    && !tranformations.get(editorHash).isEmpty());
+            actionCompileToggle.setChecked(actionCompileToggle.isEnabled() && !preferSourceModel.contains(editorHash));
+            
+        } else {
+            actionCompileToggle.setChecked(false);
+            actionCompileToggle.setEnabled(false);
         }
     }
 
@@ -240,6 +303,10 @@ public class KiCoModelView extends DiagramViewPart {
                     }
                 });
                 if (currentModel != null) {
+                    // klighd properties
+                    KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
+
+                    // if compiling is available and requested
                     if (tranformations.containsKey(Integer.toString(activeEditor.hashCode()))
                             && !tranformations.get(Integer.toString(activeEditor.hashCode()))
                                     .isEmpty()
@@ -251,6 +318,7 @@ public class KiCoModelView extends DiagramViewPart {
                                         .compile(tranformations.get(Integer.toString(activeEditor
                                                 .hashCode())), (EObject) currentModel);
 
+                        // composite model in given display mode
                         if (compiledModel != null) {
                             if (displayMode == KiCoSelectionView.DISPLAY_SINGLE_MODEL) {
                                 currentModel = compiledModel;
@@ -258,11 +326,11 @@ public class KiCoModelView extends DiagramViewPart {
                                 KiCoModelChain chain = new KiCoModelChain();
                                 chain.models.add(new KiCoModelWrapper(currentModel));
                                 chain.models.add(new KiCoModelWrapper(compiledModel));
+
                                 currentModel = chain;
                             }
                         }
                     }
-                    KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
                     DiagramViewManager.getInstance().createView(ID, null, currentModel, properties);
                 }
             }
