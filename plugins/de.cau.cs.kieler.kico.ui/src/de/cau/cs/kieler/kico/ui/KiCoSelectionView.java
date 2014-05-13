@@ -51,7 +51,7 @@ public class KiCoSelectionView extends DiagramViewPart {
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSSM.png");
     
     public static final ImageDescriptor ICON_SIDE_BY_SIDE = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kico.ui", "icons/KiCoSideBySide.png");
+            "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSideBySide.png");
 
     /** The action for toggling the advanced mode. */
     private Action actionAdvancedToggle;
@@ -690,7 +690,8 @@ public class KiCoSelectionView extends DiagramViewPart {
             }
         };
         actionSideBySideToggle.setText("Enable side-by-side display mode");
-        actionSideBySideToggle.setToolTipText("Enables side-by-side display mode of compiled and source model.");
+        actionSideBySideToggle.setToolTipText("Enable side-by-side display mode");
+        //actionSideBySideToggle.setToolTipText("Enables side-by-side display mode of compiled and source model.");
         actionSideBySideToggle.setImageDescriptor(ICON_SIDE_BY_SIDE);
         actionSideBySideToggle.setChecked(false);
         setPartProperty(DISPLAY_MODE_PROPERTY_KEY, DISPLAY_SINGLE_MODEL);
