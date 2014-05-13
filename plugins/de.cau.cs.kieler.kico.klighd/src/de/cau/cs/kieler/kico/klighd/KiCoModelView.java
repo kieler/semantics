@@ -69,7 +69,7 @@ public class KiCoModelView extends DiagramViewPart {
         setSelectionView(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
                 .findView(KiCoSelectionView.ID));
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -125,6 +125,7 @@ public class KiCoModelView extends DiagramViewPart {
                 }
             } else if (event.getProperty() == KiCoSelectionView.DISPLAY_MODE_PROPERTY_KEY) {
                 displayMode = (String) event.getNewValue();
+                updateDiagram(false);
             }
         }
     };
@@ -239,12 +240,16 @@ public class KiCoModelView extends DiagramViewPart {
                     }
                 });
                 if (currentModel != null) {
-                    if (tranformations.containsKey(activeEditor.hashCode())
-                            && !preferSourceModel.contains(activeEditor.hashCode())) {
+                    if (tranformations.containsKey(Integer.toString(activeEditor.hashCode()))
+                            && !tranformations.get(Integer.toString(activeEditor.hashCode()))
+                                    .isEmpty()
+                            && !preferSourceModel
+                                    .contains(Integer.toString(activeEditor.hashCode()))) {
                         // compile
                         EObject compiledModel =
-                                KielerCompiler.compile(tranformations.get(activeEditor.hashCode()),
-                                        (EObject) currentModel);
+                                KielerCompiler
+                                        .compile(tranformations.get(Integer.toString(activeEditor
+                                                .hashCode())), (EObject) currentModel);
 
                         if (compiledModel != null) {
                             if (displayMode == KiCoSelectionView.DISPLAY_SINGLE_MODEL) {
@@ -258,8 +263,7 @@ public class KiCoModelView extends DiagramViewPart {
                         }
                     }
                     KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
-                    DiagramViewManager.getInstance().createView(ID, null, currentModel,
-                            properties);
+                    DiagramViewManager.getInstance().createView(ID, null, currentModel, properties);
                 }
             }
         }
