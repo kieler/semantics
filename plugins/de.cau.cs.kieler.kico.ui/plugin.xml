@@ -16,7 +16,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            allowMultiple="true"
+            allowMultiple="false"
             category="de.cau.cs.kieler.sim"
             class="de.cau.cs.kieler.kico.ui.KiCoSelectionView"
             icon="icons/KiCoViewIcon.png"

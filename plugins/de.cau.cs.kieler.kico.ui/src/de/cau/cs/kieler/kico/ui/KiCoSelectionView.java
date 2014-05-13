@@ -4,30 +4,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
-import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.TransformationDummy;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis;
@@ -66,7 +57,20 @@ public class KiCoSelectionView extends DiagramViewPart {
     private Action actionSSMToggle;
 
     /** The Constant ID. */
-    static final String ID = "de.cau.cs.kieler.kico.selection";
+    public static final String ID = "de.cau.cs.kieler.kico.selection";
+    
+    /** The active editor property key. */
+    public static final String ACTIVE_EDITOR_PROPERTY_KEY = "de.cau.cs.kieler.kico.ui.activeEditor";
+    
+    /** The active tranformations property key. */
+    public static final String ACTIVE_TRANSFORMATIONS_PROPERTY_KEY = "de.cau.cs.kieler.kico.ui.activeTransformations";
+    
+    /** The active display mode property key. */
+    public static final String DISPLAY_MODE_PROPERTY_KEY = "de.cau.cs.kieler.kico.ui.displayMode";
+    
+    /** Display modes for kico.klighd. */
+    public static final String DISPLAY_SINGLE_MODEL = "single"; 
+    public static final String DISPLAY_SIDE_BY_SIDE = "side-by-side";
 
     /** The graph model of TransformationDummys per editor instance. */
     static HashMap<Integer, List<TransformationDummy>> model =
@@ -525,16 +529,6 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     // -------------------------------------------------------------------------
 
-    // TODO remove and move to kico.klighd
-    static final IPropertyListener contentChangeListener = new IPropertyListener() {
-
-        public void propertyChanged(Object source, int propId) {
-            if(propId == IWorkbenchPartConstants.PROP_DIRTY){
-                KiCoKlighdAction.refreshModelView(false);
-            }
-        }
-    };
-
     /**
      * Update view.
      * 
@@ -552,12 +546,6 @@ public class KiCoSelectionView extends DiagramViewPart {
                     EditorPart editorPart = (EditorPart) part;
                     String partName = (editorPart).getPartName();
                     if (!partName.equals(lastEditor)) {
-                        // remove change listener
-                        if (lastWorkbenchPartReference != null) {
-                            lastWorkbenchPartReference
-                                    .removePropertyListener(contentChangeListener);
-                        }
-                        ref.addPropertyListener(contentChangeListener);
                         lastEditor = partName;
                         int activeEditorID = getActiveEditorID();
                         List<TransformationDummy> tempModel = KielerCompiler.buildGraph();
@@ -590,9 +578,9 @@ public class KiCoSelectionView extends DiagramViewPart {
                         }
                         KiCoSelectionView.addSelectedTransformationVisualization(activeEditorID);
 
-                        // refresh kico.klighd model view
-                        // TODO register appropriate change listener.
-                        KiCoKlighdAction.refreshModelView(true);
+                        setPartProperty(ACTIVE_EDITOR_PROPERTY_KEY,
+                                Integer.toString(activeEditorID));
+                        updateActiveTransformationsProperty();
                     }
                 }
 
@@ -677,9 +665,9 @@ public class KiCoSelectionView extends DiagramViewPart {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action to toggle presence of signals.
+     * Gets the action to toggle advanced mode.
      * 
-     * @return the action delete
+     * @return the action
      */
     private Action getActionAdvancedToggle() {
         if (actionAdvancedToggle != null) {
@@ -696,8 +684,8 @@ public class KiCoSelectionView extends DiagramViewPart {
                 } else {
                     removeRequiredTransformationVisualization(getActiveEditorID());
                 }
-                
-                KiCoKlighdAction.refreshModelView(true);
+
+                updateActiveTransformationsProperty();
 
             }
         };
@@ -796,6 +784,31 @@ public class KiCoSelectionView extends DiagramViewPart {
     }
 
     // -------------------------------------------------------------------------
+
+    /**
+     * Updates the Part property holding currently selected transformations
+     */
+    public static void updateActiveTransformationsProperty() {
+        StringBuilder transString = new StringBuilder();
+        List<String> selectedTrans = selectedTransformations.get(getActiveEditorID());
+        if (selectedTrans != null) {
+            for (String trans : selectedTrans) {
+                transString.append(trans);
+                transString.append(',');
+            }
+            List<String> requiredTrans = requiredTransformations.get(getActiveEditorID());
+            if (advancedMode && requiredTrans != null) {
+                for (String trans : requiredTrans) {
+                    transString.append(trans);
+                    transString.append(',');
+                }
+            }
+            if (transString.length() > 1 && transString.charAt(transString.length() - 1) == ',') {
+                transString.deleteCharAt(transString.length() - 1);
+            }
+        }
+        instance.setPartProperty(ACTIVE_TRANSFORMATIONS_PROPERTY_KEY, transString.toString());
+    }
 
     // -------------------------------------------------------------------------
 }
