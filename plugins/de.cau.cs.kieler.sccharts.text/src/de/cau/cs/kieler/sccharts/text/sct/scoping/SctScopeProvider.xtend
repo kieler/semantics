@@ -47,32 +47,36 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     }
     
     public def IScope scope_Binding_formal(EObject context, EReference reference) {
+        var EObject theContext = context;
         if (context instanceof Binding) {
-            val obj = context.eContainer().eGet(pack.getScope_ReferencedScope(), true);
-            if (!isProxy(obj)) {
-                val refScope = obj as Scope 
+            theContext = context.eContainer;
+        }
+        
+        val obj = theContext.eGet(pack.getScope_ReferencedScope(), true);
+        if (!isProxy(obj)) {
+            val refScope = obj as Scope 
 
-                val voIterable = <ValuedObject> newArrayList 
-                refScope.declarations.forEach[ voIterable += valuedObjects ]
-                
-                return Scopes.scopeFor(voIterable);
-            } else {
-                return IScope.NULLSCOPE;
-            }
-        } else if (context instanceof Scope) {
-            val obj = context.eGet(pack.getScope_ReferencedScope(), false);
-            if (!isProxy(obj)) {
-                val refScope = obj as Scope;
-                
-                val voIterable = refScope.declarations.filter(typeof(ValuedObject))
-                
-                return Scopes.scopeFor(voIterable);
-            } else {
-                return IScope.NULLSCOPE;
-            }
+            val voIterable = <ValuedObject> newArrayList 
+            refScope.declarations.forEach[ voIterable += valuedObjects ]
+            
+            return Scopes.scopeFor(voIterable);
         } else {
             return IScope.NULLSCOPE;
         }
+//        } else if (context instanceof Scope) {
+//            val obj = context.eGet(pack.getScope_ReferencedScope(), false);
+//            if (!isProxy(obj)) {
+//                val refScope = obj as Scope;
+//                
+//                val voIterable = refScope.declarations.filter(typeof(ValuedObject))
+//                
+//                return Scopes.scopeFor(voIterable);
+//            } else {
+//                return IScope.NULLSCOPE;
+//            }
+//        } else {
+//            return IScope.NULLSCOPE;
+//        }
     }    
 
     public def IScope scope_Transition_targetState(Transition trans, EReference reference) {
