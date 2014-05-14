@@ -54,7 +54,7 @@ import java.util.LinkedList
 import java.util.HashMap
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionView
-import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
+import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction//import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
@@ -349,7 +349,8 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     def dispatch KNode translateGroup(TransformationDummy transformationDummy) {
         return createNode() => [ node |
             if (transformationDummy.dependencies.size > 1) {
-                //node.setLayoutOption(KlighdConstants::EXPAND, false);
+                node.setLayoutOption(KlighdProperties::EXPAND, false);
+//                node.initiallyExpand;
             }
             for (child : transformationDummy.dependencies) {
                 val childKNode = child.translate;

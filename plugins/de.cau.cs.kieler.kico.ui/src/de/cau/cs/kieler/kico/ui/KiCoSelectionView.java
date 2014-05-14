@@ -9,13 +9,8 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IPropertyListener;
@@ -27,14 +22,20 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.TransformationDummy;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis;
+import de.cau.cs.kieler.klighd.IDiagramWorkbenchPart;
 import de.cau.cs.kieler.klighd.IViewer;
+import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
+import de.cau.cs.kieler.klighd.util.Iterables2;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 // TODO: Auto-generated Javadoc
@@ -59,12 +60,18 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static final ImageDescriptor ICON_SSM = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSSM.png");
 
+    public static final ImageDescriptor ICON_EXPANDALL = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconExpandAll.png");
+    
     /** The action for toggling the advanced mode. */
     private Action actionAdvancedToggle;
 
     /** The action for toggling the SSM mode. */
     private Action actionSSMToggle;
-
+    
+    /** The action for toggling the SSM mode. */
+    private Action actionExpandAll;
+    
     /** The Constant ID. */
     static final String ID = "de.cau.cs.kieler.kico.selection";
 
@@ -621,6 +628,7 @@ public class KiCoSelectionView extends DiagramViewPart {
 
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
+        toolBarManager.add(getActionExpandAll());
         toolBarManager.add(getActionAdvancedToggle());
         toolBarManager.add(getActionSSMToggle());
 
@@ -740,6 +748,40 @@ public class KiCoSelectionView extends DiagramViewPart {
         actionSSMToggle.setImageDescriptor(ICON_SSM);
         actionSSMToggle.setChecked(SSMMode);
         return actionSSMToggle;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the action to expand all nodes.
+     * 
+     * @return the action
+     */
+    private Action getActionExpandAll() {
+        if (actionExpandAll != null) {
+            return actionExpandAll;
+        }
+        
+        final IDiagramWorkbenchPart thisPart = this;
+        actionExpandAll = new Action("", IAction.AS_PUSH_BUTTON) {
+            public void run() {
+                final IViewer<?> viewer = thisPart.getViewer();
+                for (EObject k : Iterables.filter(Iterables2.toIterable(viewer.getViewContext()
+                        .getViewModel().eAllContents()), new Predicate<EObject>() {
+
+                    public boolean apply(EObject arg0) {
+                        return arg0 instanceof KNode && !viewer.isExpanded(arg0);
+                    }
+                })) {
+                    viewer.expand((KNode) k);
+                }
+                LightDiagramServices.layoutDiagram(thisPart);
+            }
+        };
+        actionExpandAll.setText("Expand All");
+        actionExpandAll.setToolTipText("Expand all collapsed transformation groups.");
+        actionExpandAll.setImageDescriptor(ICON_EXPANDALL);
+        return actionExpandAll;
     }
 
     // -------------------------------------------------------------------------
