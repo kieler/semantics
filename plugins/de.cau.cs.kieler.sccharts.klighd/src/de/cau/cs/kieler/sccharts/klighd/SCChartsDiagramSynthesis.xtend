@@ -345,7 +345,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 node.setParent(node.parent)
             }
             val connector = s.type == StateType::CONNECTOR;
-            val cornerRadius = if(connector) 7 else if(!s.hasRegionsOrDeclarations || !s.referencedState) 17 else 8;
+            val cornerRadius = if(connector) 7 else if(!s.hasRegionsOrDeclarations && !s.referencedState) 17 else 8;
             val lineWidth = if(s.isInitial) 3 else 1;
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
             figure.lineWidth = lineWidth;
