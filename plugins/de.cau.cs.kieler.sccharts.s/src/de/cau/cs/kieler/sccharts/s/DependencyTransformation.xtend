@@ -44,7 +44,7 @@ class DependencyTransformation {
     //--      T R A N S F O R M      T O      D E P E N D E N C I E S        --
     //-------------------------------------------------------------------------
     // Calculate all dependencies and retrieve them as a list.
-    def public DependencyGraph getDependencyGraph(Region rootRegion) {
+    def public DependencyGraph getDependencyGraph(State rootState) {
 
         // Clear dependencies
         val dependencyGraph = new DependencyGraph()
@@ -54,8 +54,8 @@ class DependencyTransformation {
         statesJoin2DependencyNodes = new HashMap<State, DependencyNode>
 
         // Go thru all states and create a dependency representation for it (DepenedencyState)
-        for (state : rootRegion.allContainedStates) {
-            if (state != rootRegion.rootState) {
+        for (state : rootState.allContainedStates) {
+            if (state != rootState.rootState) {
                 val dependencyNode = (new DependencyNode(state)).map(state, false)
                 dependencyNodes.add(dependencyNode)
                 if (state.hasInnerStatesOrRegions) {
@@ -69,7 +69,7 @@ class DependencyTransformation {
         }
 
         // Go thru all regions and states recursively and build up dependencies
-        for (region : rootRegion.rootState.regions) {
+        for (region : rootState.regions) {
             region.transformDependencies(dependencies)
         }
 

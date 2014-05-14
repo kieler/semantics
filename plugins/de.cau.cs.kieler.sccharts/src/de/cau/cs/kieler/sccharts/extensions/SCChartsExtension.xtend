@@ -133,31 +133,42 @@ class SCChartsExtension {
         valuedObject.isSignal && valuedObject.type == ValueType::PURE
     }
 
-    // Return the root region.
-    def Region getRootRegion(Region region) {
+// FIXME
+// Due to the SCCharts grammar changes SCCharts do not have a root region anymore.
+// The top-most element is an SCChart which is a State.
+// If necessary, these function should be re-implemented.
 
-        // Recursively find the root region 
-        if (region.parentState == null) {
-            return region;
-        }
-        region.parentState.parentRegion.rootRegion;
-    }
+//    // Return the root region.
+//    def Region getRootRegion(Region region) {
+//
+//        // Recursively find the root region 
+//        if (region.parentState == null) {
+//            return region;
+//        }
+//        region.parentState.parentRegion.rootRegion;
+//    }
+//
+//    // Return the root region.
+//    def Region getRootRegion(State state) {
+//        state.parentRegion.rootRegion;
+//    }
 
-    // Return the root region.
-    def Region getRootRegion(State state) {
-        state.parentRegion.rootRegion;
+    def State getRootState(State state) {
+        if (state.parentRegion == null) return state;
+        state.parentRegion.rootState
     }
 
     // Return the root state.
     def State getRootState(Region region) {
         // There should exactly be one state in the root region
-        region.rootRegion.states.get(0)
+//        region.rootRegion.states.get(0)
+        region.parentState.rootState
     }
 
-    // Return the root state.
-    def State getRootState(State state) {
-        state.parentRegion.rootState;
-    }
+//    // Return the root state.
+//    def State getRootState(State state) {
+//        state.parentRegion.rootState;
+//    }
     
     def State createSCChart() {
          SCChartsFactory::eINSTANCE.createState
@@ -384,6 +395,11 @@ class SCChartsExtension {
     def State setTypeTextual(State state) {
         state.setType(StateType::TEXTUAL);
         state
+    }
+    
+    // REF
+    def boolean isReferencedState(State state) {
+        state.referencedScope != null
     }
 
     //========== REGIONS ===========

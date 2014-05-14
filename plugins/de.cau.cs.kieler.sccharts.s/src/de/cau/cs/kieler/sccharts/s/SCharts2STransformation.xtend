@@ -167,15 +167,13 @@ class SCCharts2STransformation {
     //--              M A I N   T R A N S F O R M A T I O N                  --
     //-------------------------------------------------------------------------
 
-    def create target : SFactory::eINSTANCE.createProgram() transformS (Region rootRegion) {
-        val rootState = rootRegion.states.head();
-
+    def create target : SFactory::eINSTANCE.createProgram() transformS (State rootState) {
         // Clear traces
         clearStatesMapping
         clearValuedObjectMapping
         
         // Dependency analysis
-        dependencyGraph = rootRegion.dependencyGraph
+        dependencyGraph = rootState.dependencyGraph
         val dependencyStates = dependencyGraph.dependencyNodes
           
         val sortedDependencyStates = dependencyStates.orderSortedStates

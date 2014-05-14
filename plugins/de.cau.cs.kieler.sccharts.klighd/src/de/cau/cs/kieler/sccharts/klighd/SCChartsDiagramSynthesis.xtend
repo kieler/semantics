@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts.klighd
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KColor
@@ -53,23 +54,20 @@ import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.s.DataDependency
 import de.cau.cs.kieler.sccharts.s.DependencyGraph
 import de.cau.cs.kieler.sccharts.s.DependencyTransformation
 import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
 import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
+import de.cau.cs.kieler.sccharts.text.sct.sct.SCChart
 import java.util.List
 import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import static de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramSynthesis.*
-import de.cau.cs.kieler.kico.KielerCompiler
-import de.cau.cs.kieler.kico.ui.KiCoSelectionView
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -78,7 +76,7 @@ import de.cau.cs.kieler.kico.ui.KiCoSelectionView
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
-class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
+class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 
     // -------------------------------------------------------------------------
     // Serialization of actions (state actions and transition labels)   
@@ -167,6 +165,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         [it.red = 248; it.green = 249; it.blue = 253];
     private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor() =>
         [it.red = 205; it.green = 220; it.blue = 243];
+    private static val KColor SCCHARTSRED1 = RENDERING_FACTORY.createKColor() =>
+        [it.red = 253; it.green = 249; it.blue = 248];
+    private static val KColor SCCHARTSRED2 = RENDERING_FACTORY.createKColor() =>
+        [it.red = 243; it.green = 220; it.blue = 205];
+    private static val KColor SCCHARTSGREEN1 = RENDERING_FACTORY.createKColor() =>
+        [it.red = 248; it.green = 253; it.blue = 248];
+    private static val KColor SCCHARTSGREEN2 = RENDERING_FACTORY.createKColor() =>
+        [it.red = 180; it.green = 243; it.blue = 180];
     private static val KColor KEYWORD = RENDERING_FACTORY.createKColor() => [it.red = 115; it.green = 0; it.blue = 65];
     private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() => [it.red = 60; it.green = 60; it.blue = 60];
 
@@ -174,8 +180,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
     // -------------------------------------------------------------------------
     // The Main entry transform function   
-    override transform(Region model) {
-        var transformed = model;
+    override transform(SCChart model) {
+//        var transformed = model;
 
         // Visualization of compiled SCCharts with kico.klighd not here
         //        val transformations = KiCoSelectionView.getSelectedTransformations(KiCoSelectionView.activeEditorID);
@@ -183,7 +189,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
         //        // Just one final compiler call of KielerCompiler
         //        transformed = KielerCompiler.compile(transformations, transformed, KiCoSelectionView.advancedMode) as Region
         //        // ---------
-        return transformed.translate();
+//        return transformed.translate();
+
+        return createNode() => [ children += model.translate ] 
     }
 
     // -------------------------------------------------------------------------
@@ -196,9 +204,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             for (s : r.states) {
                 node.children += s.translate;
             }
-            if (r.eContainer == null) {
-                return;
-            }
+//            if (r.eContainer == null) {
+//                return;
+//            }
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
                 it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
@@ -326,7 +334,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             if (dependencyGraph == null) {
 
                 // Calculate only once
-                dependencyGraph = s.rootRegion.getDependencyGraph
+                dependencyGraph = s.rootState.getDependencyGraph
             }
         }
 
@@ -336,7 +344,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 node.setParent(node.parent)
             }
             val connector = s.type == StateType::CONNECTOR;
-            val cornerRadius = if(connector) 7 else if(!s.hasRegionsOrDeclarations) 17 else 8;
+            val cornerRadius = if(connector) 7 else if(!s.hasRegionsOrDeclarations || !s.referencedState) 17 else 8;
             val lineWidth = if(s.isInitial) 3 else 1;
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
             figure.lineWidth = lineWidth;
@@ -360,6 +368,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     //                        it.setSurroundingSpace(0, 0.3f);
                     //                    ];
                     node.setNodeSize(7, 7);
+                ]
+            else if (s.isReferencedState) 
+                figure => [
+                    it.setBackgroundGradient("#fefef0".color, "#e0a0066".color, 90.0f);
                 ]
             else if (s.isFinal)
                 figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
@@ -389,7 +401,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                     return;
                 }
                 //                it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
-                if (s.hasRegionsOrDeclarations) {
+                if (s.hasRegionsOrDeclarations || s.isReferencedState) {
                     it.setGridPlacement(1);
                 }
                 var priority = ""
@@ -438,7 +450,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
                 }
                 val priorityToShow = priority
                 val prioritySpace = if(priorityToShow.length > 0) "  " else " "
-                if (s.hasRegionsOrDeclarations) {
+                if (s.hasRegionsOrDeclarations || s.referencedState) {
 
                     // Get a smaller window-title-bare if this a macro state 
                     if (!s.label.empty)
@@ -622,7 +634,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 //                        ];
 //                    }
                 }
-                if (s.hasRegionsOrDeclarations) {
+                if (s.hasRegionsOrDeclarations || s.referencedState) {
                     it.addChildArea().setGridPlacementData() => [
                         from(LEFT, 3, 0, TOP, 3, 0).to(RIGHT, 3, 0, BOTTOM, 3, 0)
                         minCellHeight = 5;
@@ -633,6 +645,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
             if (!s.hasNoRegionsWithStates) {
                 for (r : s.regions)
                     node.children += r.translate;
+            }
+            if (s.referencedState) {
+                for (r : (s.referencedScope as State).regions) {
+                    node.children += r.translate;
+                }
             }
             for (t : s.outgoingTransitions)
                 t.translateTransition();

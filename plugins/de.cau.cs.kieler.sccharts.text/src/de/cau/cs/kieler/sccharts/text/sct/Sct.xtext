@@ -123,11 +123,12 @@ LocalAction returns sccharts::LocalAction:
 
 Transition returns sccharts::Transition:
     (annotations += Annotation)*
-    type=TransitionType targetState=[sccharts::State|ID] 
+    (type=TransitionType | type=TransitionTypeLegacy) 
+    targetState=[sccharts::State|ID] 
 //	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
-	( (immediate?='immediate')? (deferred?='deferred')? (history=HistoryType)?  ('with'
+	( (immediate?='immediate')? (deferred?='deferred')? (history=HistoryType)?  (
 	 (
-	   ( (delay=INT)? (trigger=BoolExpression)? ('/' effects+=Effect (';'effects+=Effect)*)? )
+	   (('with' (delay=INT)? trigger=BoolExpression)? (('do'|'/') effects+=Effect (','effects+=Effect)*)? )
 	  |
 	   ( label=STRING )
 	  )
@@ -191,6 +192,8 @@ enum StateType returns sccharts::StateType:
 	NORMAL = 'normal' | CONNECTOR = 'connector' | REFERENCE = 'reference' | TEXTUAL = 'textual';
 
 enum TransitionType returns sccharts::TransitionType:
-	WEAKABORT = '-->' | STRONGABORT = 'o->' | TERMINATION = '>->';
+	WEAKABORT = 'goto' | STRONGABORT = 'abort to' | TERMINATION = 'join to';
 	
+enum TransitionTypeLegacy returns sccharts::TransitionType:
+    WEAKABORT = '-->' | STRONGABORT = 'o->' | TERMINATION = '>->';
 	

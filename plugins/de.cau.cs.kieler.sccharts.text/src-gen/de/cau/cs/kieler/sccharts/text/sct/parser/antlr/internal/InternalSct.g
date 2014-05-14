@@ -1201,10 +1201,10 @@ ruleTransition returns [EObject current=null]
 	    }
 
 )
-)*(
+)*((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getTypeTransitionTypeEnumRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getTypeTransitionTypeEnumRuleCall_1_0_0()); 
 	    }
 		lv_type_1_0=ruleTransitionType		{
 	        if ($current==null) {
@@ -1219,7 +1219,26 @@ ruleTransition returns [EObject current=null]
 	    }
 
 )
-)(
+)
+    |(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getTypeTransitionTypeLegacyEnumRuleCall_1_1_0()); 
+	    }
+		lv_type_2_0=ruleTransitionTypeLegacy		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
+	        }
+       		set(
+       			$current, 
+       			"type",
+        		lv_type_2_0, 
+        		"TransitionTypeLegacy");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))(
 (
 		{ 
 		  /* */ 
@@ -1229,17 +1248,17 @@ ruleTransition returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getTransitionRule());
 	        }
         }
-	otherlv_2=RULE_ID
+	otherlv_3=RULE_ID
 	{
-		newLeafNode(otherlv_2, grammarAccess.getTransitionAccess().getTargetStateStateCrossReference_2_0()); 
+		newLeafNode(otherlv_3, grammarAccess.getTransitionAccess().getTargetStateStateCrossReference_2_0()); 
 	}
 
 )
 )((
 (
-		lv_immediate_3_0=	'immediate' 
+		lv_immediate_4_0=	'immediate' 
     {
-        newLeafNode(lv_immediate_3_0, grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_3_0_0());
+        newLeafNode(lv_immediate_4_0, grammarAccess.getTransitionAccess().getImmediateImmediateKeyword_3_0_0());
     }
  
 	    {
@@ -1252,9 +1271,9 @@ ruleTransition returns [EObject current=null]
 )
 )?(
 (
-		lv_deferred_4_0=	'deferred' 
+		lv_deferred_5_0=	'deferred' 
     {
-        newLeafNode(lv_deferred_4_0, grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_3_1_0());
+        newLeafNode(lv_deferred_5_0, grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_3_1_0());
     }
  
 	    {
@@ -1270,28 +1289,28 @@ ruleTransition returns [EObject current=null]
 		{ 
 	        newCompositeNode(grammarAccess.getTransitionAccess().getHistoryHistoryTypeEnumRuleCall_3_2_0()); 
 	    }
-		lv_history_5_0=ruleHistoryType		{
+		lv_history_6_0=ruleHistoryType		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
 	        }
        		set(
        			$current, 
        			"history",
-        		lv_history_5_0, 
+        		lv_history_6_0, 
         		"HistoryType");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)?(	otherlv_6='with' 
+)?(((	otherlv_7='with' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getTransitionAccess().getWithKeyword_3_3_0());
+    	newLeafNode(otherlv_7, grammarAccess.getTransitionAccess().getWithKeyword_3_3_0_0_0());
     }
-(((
 (
-		lv_delay_7_0=RULE_INT
+(
+		lv_delay_8_0=RULE_INT
 		{
-			newLeafNode(lv_delay_7_0, grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_3_3_1_0_0_0()); 
+			newLeafNode(lv_delay_8_0, grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_3_3_0_0_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1300,7 +1319,7 @@ ruleTransition returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"delay",
-        		lv_delay_7_0, 
+        		lv_delay_8_0, 
         		"INT");
 	    }
 
@@ -1308,51 +1327,34 @@ ruleTransition returns [EObject current=null]
 )?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getTriggerBoolExpressionParserRuleCall_3_3_1_0_1_0()); 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getTriggerBoolExpressionParserRuleCall_3_3_0_0_2_0()); 
 	    }
-		lv_trigger_8_0=ruleBoolExpression		{
+		lv_trigger_9_0=ruleBoolExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
 	        }
        		set(
        			$current, 
        			"trigger",
-        		lv_trigger_8_0, 
+        		lv_trigger_9_0, 
         		"BoolExpression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)?(	otherlv_9='/' 
+))?((	otherlv_10='do' 
     {
-    	newLeafNode(otherlv_9, grammarAccess.getTransitionAccess().getSolidusKeyword_3_3_1_0_2_0());
+    	newLeafNode(otherlv_10, grammarAccess.getTransitionAccess().getDoKeyword_3_3_0_1_0_0());
     }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_3_3_1_0_2_1_0()); 
-	    }
-		lv_effects_10_0=ruleEffect		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
-	        }
-       		add(
-       			$current, 
-       			"effects",
-        		lv_effects_10_0, 
-        		"Effect");
-	        afterParserOrEnumRuleCall();
-	    }
 
-)
-)(	otherlv_11=';' 
+    |	otherlv_11='/' 
     {
-    	newLeafNode(otherlv_11, grammarAccess.getTransitionAccess().getSemicolonKeyword_3_3_1_0_2_2_0());
+    	newLeafNode(otherlv_11, grammarAccess.getTransitionAccess().getSolidusKeyword_3_3_0_1_0_1());
     }
-(
+)(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_3_3_1_0_2_2_1_0()); 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_3_3_0_1_1_0()); 
 	    }
 		lv_effects_12_0=ruleEffect		{
 	        if ($current==null) {
@@ -1367,12 +1369,34 @@ ruleTransition returns [EObject current=null]
 	    }
 
 )
+)(	otherlv_13=',' 
+    {
+    	newLeafNode(otherlv_13, grammarAccess.getTransitionAccess().getCommaKeyword_3_3_0_1_2_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_3_3_0_1_2_1_0()); 
+	    }
+		lv_effects_14_0=ruleEffect		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
+	        }
+       		add(
+       			$current, 
+       			"effects",
+        		lv_effects_14_0, 
+        		"Effect");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 ))*)?)
     |(
 (
-		lv_label_13_0=RULE_STRING
+		lv_label_15_0=RULE_STRING
 		{
-			newLeafNode(lv_label_13_0, grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_3_3_1_1_0()); 
+			newLeafNode(lv_label_15_0, grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_3_3_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1381,12 +1405,12 @@ ruleTransition returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"label",
-        		lv_label_13_0, 
+        		lv_label_15_0, 
         		"STRING");
 	    }
 
 )
-)))?)?)
+))?)?)
 ;
 
 
@@ -4597,22 +4621,47 @@ ruleStateType returns [Enumerator current=null]
 ruleTransitionType returns [Enumerator current=null] 
     @init { enterRule(); }
     @after { leaveRule(); }:
-((	enumLiteral_0='-->' 
+((	enumLiteral_0='goto' 
 	{
         $current = grammarAccess.getTransitionTypeAccess().getWEAKABORTEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_0, grammarAccess.getTransitionTypeAccess().getWEAKABORTEnumLiteralDeclaration_0()); 
     }
 )
-    |(	enumLiteral_1='o->' 
+    |(	enumLiteral_1='abort to' 
 	{
         $current = grammarAccess.getTransitionTypeAccess().getSTRONGABORTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_1, grammarAccess.getTransitionTypeAccess().getSTRONGABORTEnumLiteralDeclaration_1()); 
     }
 )
-    |(	enumLiteral_2='>->' 
+    |(	enumLiteral_2='join to' 
 	{
         $current = grammarAccess.getTransitionTypeAccess().getTERMINATIONEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_2, grammarAccess.getTransitionTypeAccess().getTERMINATIONEnumLiteralDeclaration_2()); 
+    }
+));
+
+
+
+// Rule TransitionTypeLegacy
+ruleTransitionTypeLegacy returns [Enumerator current=null] 
+    @init { enterRule(); }
+    @after { leaveRule(); }:
+((	enumLiteral_0='-->' 
+	{
+        $current = grammarAccess.getTransitionTypeLegacyAccess().getWEAKABORTEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_0, grammarAccess.getTransitionTypeLegacyAccess().getWEAKABORTEnumLiteralDeclaration_0()); 
+    }
+)
+    |(	enumLiteral_1='o->' 
+	{
+        $current = grammarAccess.getTransitionTypeLegacyAccess().getSTRONGABORTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_1, grammarAccess.getTransitionTypeLegacyAccess().getSTRONGABORTEnumLiteralDeclaration_1()); 
+    }
+)
+    |(	enumLiteral_2='>->' 
+	{
+        $current = grammarAccess.getTransitionTypeLegacyAccess().getTERMINATIONEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_2, grammarAccess.getTransitionTypeLegacyAccess().getTERMINATIONEnumLiteralDeclaration_2()); 
     }
 ));
 

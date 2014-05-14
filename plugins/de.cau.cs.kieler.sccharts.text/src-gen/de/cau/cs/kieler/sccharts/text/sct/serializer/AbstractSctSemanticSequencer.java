@@ -522,13 +522,13 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         type=TransitionType 
+	 *         (type=TransitionType | type=TransitionTypeLegacy) 
 	 *         targetState=[State|ID] 
 	 *         (
 	 *             immediate?='immediate'? 
 	 *             deferred?='deferred'? 
 	 *             history=HistoryType? 
-	 *             ((delay=INT? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?) | label=STRING)?
+	 *             (((delay=INT? trigger=BoolExpression)? (effects+=Effect effects+=Effect*)?) | label=STRING)?
 	 *         )?
 	 *     )
 	 */
