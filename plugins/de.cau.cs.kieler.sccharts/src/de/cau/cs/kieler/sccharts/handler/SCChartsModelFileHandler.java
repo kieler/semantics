@@ -7,13 +7,11 @@ import org.eclipse.jface.viewers.ISelection;
 //import org.eclipse.xtext.resource.SaveOptions;
 //import org.eclipse.xtext.serializer.ISerializer;
 
-import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.sccharts.Region;
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation;
 
 /**
  * The abstract handler for SCCharts file formats scc and sct.
@@ -161,8 +159,8 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
         String commandString = getCommandString(event);
         EObject transformed = null;
 
-        SCChartsCoreTransformation transformation =
-                Guice.createInjector().getInstance(SCChartsCoreTransformation.class);
+//        SCChartsCoreTransformation transformation =
+//                Guice.createInjector().getInstance(SCChartsCoreTransformation.class);
 
         transformed = model;
         
